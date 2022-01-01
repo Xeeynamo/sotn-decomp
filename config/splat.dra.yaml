@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     dra
+  base_path:    .
+  target_path:  DRA.BIN
+  asm_path:     asm/dra
+  asset_path:   assets/dra
+  src_path:     src/dra
+  compiler:     GCC
+  symbol_addrs_path:    config/sym.dra.txt
+  undefined_syms_path:  config/undefined_syms.dra.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.dra.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.dra.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: dra
+    type: code
+    start: 0x00000000
+    vram:  0x800A0000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x42398, c]
+      - [0x962AC, data]
+  - [0x119870]

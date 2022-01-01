@@ -1,0 +1,18 @@
+.include "main.inc"
+
+syscalldef InitHeap         0xA0 0x39
+syscalldef Load             0xA0 0x42
+syscalldef Exec             0xA0 0x43
+syscalldef GPU_cw           0xA0 0x49
+syscalldef _bu_init         0xA0 0x70
+syscalldef open             0xB0 0x32
+syscalldef lseek            0xB0 0x33
+syscalldef read             0xB0 0x34
+syscalldef write            0xB0 0x35
+syscalldef close            0xB0 0x36
+syscalldef format           0xB0 0x41
+syscalldef firstfile        0xB0 0x42
+syscalldef nextfile         0xB0 0x43
+syscalldef erase            0xB0 0x45
+syscalldef Krom2RawAdd      0xB0 0x51
+syscalldef ChangeClearPAD   0xB0 0x5B

@@ -1,0 +1,14 @@
+main.exe
+DRA.BIN
+
+*.ld
+*auto.*.txt
+__pycache__
+
+asm/*/*.s
+asm/*/data/*.s
+asm/*/nonmatchings/*.s
+asm/*/nonmatchings/*/*.s
+asm/*/nonmatchings/*/*/*.s
+assets/
+build/
