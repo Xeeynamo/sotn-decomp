@@ -23,7 +23,7 @@ __asm__( \
 #endif
 
 // omit .global
-__asm__(".include \"include/include_asm.inc\"\n");
+__asm__(".include \"macro.inc\"\n");
 
 #else
 #define INCLUDE_ASM(FOLDER, NAME)
