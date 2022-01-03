@@ -102,11 +102,46 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7E08);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E81FC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8D24);
+void func_800E8D24(void) {
+    s8* phi_v1;
+    s32 phi_v0;
+    s8 a0;
+
+    D_80097496 = 0;
+    phi_v1 = &D_80137460;
+    a0 = 0x10;
+    phi_v0 = 0xF;
+    do {
+        *phi_v1 = a0;
+        phi_v1 += 1;
+        phi_v0--;
+    } while (phi_v0 >= 0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8D54);
+// https://decomp.me/scratch/YhofM
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8DF0);
+// void func_800E8DF0(void) {
+//     Unkstruct1* phi_v1;
+//     Unkstruct1* phi_a0;
+//     s32 phi_a1;
+
+//     func_80015238(0);
+//     phi_a0 = &D_80097490;
+//     phi_a1 = 0;
+//     phi_v1 = &D_80097490.unk2;
+    
+//     do {
+//         phi_a1++;
+//         phi_v1->unk2 = 0;
+//         phi_v1->unk0 = 0;
+//         phi_v1 += 1;
+//         phi_a0->unk0 = 0;
+//         phi_a0++;
+//     } while (phi_a1 < 2);
+//     func_800E8D24();
+// }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8E48);
 
@@ -172,6 +207,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA720);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA7CC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD0C);
+// void func_800EAD0C(void) {
+//     func_800EA5E4(4);
+//     func_800EA5E4(5);
+//     func_800EA5E4(6);
+//     func_800EA5E4(7);
+//     func_800EA5E4(8);
+//     if (g_CurrentPlayableCharacter == 0 && D_800974A0 != 0x1F) {
+//         func_800EA5E4(0x17);
+//     }
+// }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD7C);
 

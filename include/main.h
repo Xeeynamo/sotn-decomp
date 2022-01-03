@@ -19,8 +19,8 @@ typedef struct
 } SPRT;
 
 extern s32 D_8003925C;
-extern s32 D_8003C734;                            /* extern */
-extern s32 D_80073080;
+extern s32 D_8003C734;
+extern s32 g_CurrentPlayableCharacter;
 
 extern void func_80015238(s32 arg0);
 extern unsigned char func_80019424();
