@@ -338,15 +338,18 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F53D4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F548C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F54CC);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", IsSpriteOutsideDrawArea);
+// https://decomp.me/scratch/3ZEVB
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5530);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F564C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F57C8);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", ScissorSprite);
+// https://decomp.me/scratch/J7S3a
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5904);
+// https://decomp.me/scratch/DP2LU
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5A90);
 
@@ -381,6 +384,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6618);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F66BC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", drawMenuChar);
+// void drawMenuChar(s32 ch, int x, int y, void* context) {
+//     func_800F5904(context, x, y, 8, 8, (ch & 0xF) * 8, (u32) (ch & 0xF0) >> 1, 0x196, 0x1E, 1, 0);
+// }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F67EC);
 
@@ -783,18 +789,25 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801072DC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801072FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", setMenuBackgroundRect);
+// https://decomp.me/scratch/GPSfb
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107360);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073C0);
+// void func_801073C0(void) {
+//     func_800195C8(0);
+//     func_800199D0(0);
+// }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073E8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107460);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", CopyMapOverlayCallback);
+// https://decomp.me/scratch/1AWN1
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107614);
+//https://decomp.me/scratch/U0IGY
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107750);
 

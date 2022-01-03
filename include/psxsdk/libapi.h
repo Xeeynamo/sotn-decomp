@@ -16,7 +16,7 @@ extern long erase(char *);
 extern long Krom2RawAdd(unsigned long);
 extern void ChangeClearPAD(long);
 extern void StopPAD(void);
-// PAD_init2
+int PAD_init2(s32/*??*/, s32 */*??*/); 
 // PAD_dr
 extern void FlushCache(void);
 extern void DeliverEvent(unsigned long, unsigned long);

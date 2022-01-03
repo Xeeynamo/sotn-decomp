@@ -1,0 +1,60 @@
+#include "common.h"
+#include <psxsdk/libetc.h>
+#include <psxsdk/libapi.h>
+#include <main.h>
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", func_80015238);
+// void func_80015238(s32 arg0) {
+//     D_80073080 = arg0;
+//     D_8003925C = -1;
+//     ResetCallback();
+//     PAD_init2(0x20000001, &D_8003925C);
+//     ChangeClearPAD(0);
+// }
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", func_80015288);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", func_800152B8);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", StopPAD);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_init2);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_dr);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", VSync);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", VSyncWait);
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", ChangeClearRCnt);
+
+int ResetCallback(void) {
+    return D_8002D340->ResetCallback();
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", InterruptCallback);
+
+void *DMACallback(int dma, void (*func)()) {
+    return D_8002D340->DMACallback(dma, func);
+}
+
+INCLUDE_ASM("asm/main/nonmatchings/5A38", VSyncCallback);
+// int VSyncCallback(void (*f)()) {
+//     return D_8002D340->VSyncCallbacks(0, f);
+// }
+
+int VSyncCallbacks(int ch, void (*f)()) {
+    return D_8002D340->VSyncCallbacks(ch, f);
+}
+
+int StopCallback(void) {
+    return D_8002D340->StopCallback();
+}
+
+int RestartCallback(void) {
+    return D_8002D340->RestartCallback();
+}
+
+u16 CheckCallback(void) {
+    return D_8002C2BA;
+}

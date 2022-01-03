@@ -22,17 +22,17 @@ segments:
     vram:  0x80010000
     subalign: 4
     subsegments:
-      - [0x800, rodata]
+      - [0x800, data]
       - [0x15F4, asm]
       - [0x5938, hasm, psxsdk/libapi1]
-      - [0x5A38, asm]
+      - [0x5A38, c]
       - [0x5E60, c, psxsdk/libetc]
-      - [0x5E78, asm]
+      - [0x5E78, c]
       - [0x6864, hasm, psxsdk/libc]
       - [0x6934, c, psxsdk/fprintf]
-      - [0x7190, asm]
+      - [0x7190, c]
       - [0x720C, hasm, psxsdk/libcard]
-      - [0x72A4, asm]
+      - [0x72A4, c]
       - [0x9C14, hasm, psxsdk/libapi2]
       - [0x9C24, c, psxsdk/libapi]
       - [0x9C54, asm]

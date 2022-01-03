@@ -2,6 +2,37 @@
 #define DRA_H
 #include "main.h"
 
+typedef struct {
+    unsigned int unk0;
+    unsigned int unk4;
+    short x0,y0;
+    short unkC,unkE;
+    unsigned int unk10;
+    short x1,y1;
+    unsigned int unk18;
+    unsigned int unk1c;
+    short unk20,unk22;
+    unsigned int unk24;
+    unsigned int unk28;
+    short unk2C,unk2E;
+} UnkPoly;
+
+typedef struct
+{
+    unsigned short x;
+    unsigned short y;
+    unsigned short w;
+    unsigned short h;
+} Rect;
+
+typedef struct
+{
+    Rect tag, unk1;
+    int w;
+    int unk14;
+    int unk18;
+} MenuContext;
+
 extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
 extern s32 D_80073060;
@@ -53,7 +84,11 @@ void func_800F4994(void);
 void func_800F4F48(void);
 void func_800F4FD0(void);
 void func_800F53A4(void);
+s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5);
+bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
+void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1, s32 unk2, bool disableTexShade, s32 unk4);
 s32 func_800F62E8(s32 arg0);
+void drawMenuChar(s32 ch, int x, int y, void* context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 s32 func_800FD664(s32 arg0);
@@ -67,6 +102,7 @@ void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void func_801071CC(s32, u8, s32);
 void func_80107250(s32 arg0, s32 arg1);
+void setMenuBackgroundRect(UnkPoly* arg0, s16 x, s16 y, s16 width, s16 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
