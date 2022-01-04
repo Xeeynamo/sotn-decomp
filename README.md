@@ -1,13 +1,13 @@
 # Castlevania: Symphony of the Night disassembly
 
-Recompilable code that creates 1:1 binaries for the commercial videogame Castlevania: Symphony of the Night. This repository aims to create a full disassembly in C.
+Recompilable code that creates 1:1 binaries for the commercial videogame Castlevania: Symphony of the Night for the PlayStation 1. This repository aims to create a full decompilation in C.
 
 ## Game revision
 
-| SHA-1 checksum                             | File name | Version
-|--------------------------------------------|-----------|---------
-| `54828d4e44ea9575f2a0917ff63def42a304abff` | main.exe  | SLUS-00067
-| `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN   | SLUS-00067
+| SHA-1 checksum                             | File name | Version    | Progress
+|--------------------------------------------|-----------|------------|----------
+| `54828d4e44ea9575f2a0917ff63def42a304abff` | main.exe  | SLUS-00067 | N/A 
+| `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN   | SLUS-00067 | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-dra.json)
 
 ## Build
 
@@ -16,15 +16,15 @@ Recompilable code that creates 1:1 binaries for the commercial videogame Castlev
 1. Run `make extract` to generate the assembly files
 1. Run `make all` to compile the binaries into the `build/` directory
 
-Please double-check if the [MD5 matches](#game-revision).
+# Notes
+
+* I suspect that GCC 2.7.2 / PSY-Q 3.6 have been used to originally compile `DRA.BIN`
+* `main.exe` uses PS-X libraries that might've been created with a different compiler and with `-O1` rather than `-O2`
 
 ## To do
 
 The project is very barebone at the moment and there is a massive room of improvement, mostly in the infrastructure:
 
-* I am not sure which GCC version is the most suitable and the C compiled code might be different from the original assembly
-* There are no utilities to make a diff between the original executable and the current one
-* There is no CI/CD pipeline to track the decompilation progress
-* It is not known which PS1 SDK version has been used for the game
-* The game executable `DRA.BIN` is not yet disassembled
 * The zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are not yet disassembled
+* The progress badge is not automatically updated by a CI/CD pipeline
+* There is no CI/CD pipeline to test the correctness of the compiled code
