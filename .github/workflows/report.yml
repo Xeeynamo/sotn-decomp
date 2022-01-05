@@ -1,0 +1,38 @@
+name: Update progress
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/*.c'
+      - 'src/**/*.c'
+  workflow_dispatch:
+
+jobs:
+  update-progress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repository
+        uses: actions/checkout@v2
+      - name: Clone asset repository
+        uses: actions/checkout@v2
+        with:
+          ref: 'gh-pages'
+          path: 'gh-pages'
+      - name: Set-up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Generate report
+        run: |
+            mkdir -p gh-pages/assets
+            python tools/report_progress.py DRA.BIN 630 src/dra > gh-pages/assets/progress-dra.json
+      - name: Commit report
+        run: |
+            git config --global user.name 'GitHub Action' 
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git commit -m 'Update progress'
+            git push
+        working-directory: gh-pages

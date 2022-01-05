@@ -26,5 +26,4 @@ Recompilable code that creates 1:1 binaries for the commercial videogame Castlev
 The project is very barebone at the moment and there is a massive room of improvement, mostly in the infrastructure:
 
 * The zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are not yet disassembled
-* The progress badge is not automatically updated by a CI/CD pipeline
 * There is no CI/CD pipeline to test the correctness of the compiled code
