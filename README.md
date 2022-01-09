@@ -16,6 +16,10 @@ Recompilable code that creates 1:1 binaries for the commercial videogame Castlev
 1. Run `make extract` to generate the assembly files
 1. Run `make all` to compile the binaries into the `build/` directory
 
+## Non-matching build
+
+Some of the functions that do not fully match the original game can be compiled by defining `#define NON_MATCHING` on a header file or by passing `-DNON_MATCHING to the compiler. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
+
 # Notes
 
 * I suspect that GCC 2.7.2 / PSY-Q 3.6 have been used to originally compile `DRA.BIN`
