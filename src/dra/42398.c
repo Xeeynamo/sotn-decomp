@@ -378,7 +378,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F298C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F483C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F4944);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", IsAlucart);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F4994);
 
@@ -592,7 +592,197 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7244);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F72BC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F74B4);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawPauseMenu);
+#else
+void func_800F622C(MenuContext* context);
+void func_800F66BC(s32, s32 x, s32 y, MenuContext*, s32);
+void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
+extern s32 D_8003C760;
+extern s32 D_8003C9B0;
+extern s32 D_8003C9FC;
+extern s32 D_80097C1C;
+extern s32 D_800A2D68;
+extern s32 D_800A2D6C;
+extern const char* D_800A83AC[];
+extern s32 c_arrExpNext[];
+extern s16 D_8013761C;
+extern s32/*?*/ D_8013763A;
+extern const u8 c_chPlaystationButtons[];
+extern const u8 c_chShoulderButtons[];
+extern s32 g_menuButtonSettingsConfig;
+extern s32 player_stat_str;
+
+void DrawPauseMenu(s32 arg0) {
+    MenuContext* context;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s1;
+    s32 temp_s1_2;
+    s32 temp_s4;
+    s32 temp_v0;
+    s32 playerLevel;
+    s32 temp_v1_2;
+    const char* strPlayerName;
+    s32 expNext;
+    s32 phi_s4;
+    s32 phi_s3;
+    s32 phi_s5;
+    char phi_a0_3;
+    s32 phi_a1;
+    s32 phi_a0_4;
+    s32 phi_a1_2;
+    s32 phi_a2;
+    s32 phi_s4_2;
+    s32 phi_s3_2;
+    s32 phi_s0;
+    s32* phi_s5_2;
+    s32* phi_s1;
+    s32 phi_a0_5;
+    s32 phi_a1_3;
+    s32 phi_s5_3;
+
+    context = &D_8013761C + (arg0 * 15);
+    func_800F53A4();
+    if (arg0 == 1) {
+        func_800F622C(context);
+
+        if (IsAlucart() != 0) {
+            strPlayerName = c_strALUCART;
+        } else {
+            strPlayerName = c_strALUCARD;
+        }
+        DrawMenuStr(strPlayerName, 0x80, 0x28, context);
+        DrawMenuStr(c_strHP, 0x60, 0x38, context);
+        DrawMenuInt(g_playerHp, 0xA8, 0x38, context);
+        DrawMenuChar(0xF, 0xB0, 0x38, context);
+        DrawMenuInt(g_playerHpMax, 0xD0, 0x38, context);
+        DrawMenuStr(c_strMP, 0x60, 0x44, context);
+        DrawMenuInt(g_playerMp, 0xA8, 0x44, context);
+        DrawMenuChar(0xF, 0xB0, 0x44, context);
+        DrawMenuInt(g_playerMpMax, 0xD0, 0x44, context);
+        DrawMenuStr(c_strHEART, 0x60, 0x50, context);
+        DrawMenuInt(g_playerHeart, 0xA8, 0x50, context);
+        DrawMenuChar(0xF, 0xB0, 0x50, context);
+        DrawMenuInt(g_playerHeartMax, 0xD0, 0x50, context);
+        DrawMenuStr(c_strEXP, 0x20, 0xB0, context);
+        DrawMenuInt(g_playerExp, 0x90, 0xB0, context);
+        DrawMenuStr(c_strNEXT, 0x20, 0xBC, context);
+        playerLevel = g_playerLevel;
+        if (playerLevel != 99) {
+            expNext = c_arrExpNext[playerLevel] - g_playerExp;
+        } else {
+            expNext = 0;
+        }
+        DrawMenuInt(expNext, 0x90, 0xBC, context);
+        DrawMenuStr(c_strGOLD, 0x20, 0xC8, context);
+        DrawMenuInt(g_playerGold, 0x90, 0xC8, context);
+        DrawMenuStr(c_strLEVEL, 0xF8, 0x28, context);
+        DrawMenuInt(g_playerLevel, 0x130, 0x28, context);
+        DrawMenuStr(c_strSTATUS, 0xF8, 0x38, context);
+
+        temp_v1_2 = D_80072F2C;
+        phi_s4 = 0x25;
+        if ((temp_v1_2 & 0x8000) != 0) {
+            phi_s4 = 0x28;
+        }
+        if ((temp_v1_2 & 0x4000) != 0) {
+            phi_s4 = 0x26;
+        }
+        if ((temp_v1_2 & 0x80) != 0) {
+            phi_s4 = 0x27;
+        }
+        if (func_800F4944() != 0) {
+            phi_s4 = 0x2D;
+        }
+        DrawMenuStr((&c_strGOLD)[phi_s4], 0x104, 0x44, context); // TODO probably wrong
+        DrawMenuStr(c_strROOMS, 0xF0, 0x96, context);
+        DrawMenuInt(D_8003C760, 0x148, 0x96, context);
+        DrawMenuStr(c_strKILLS, 0xF0, 0xA4, context);
+        DrawMenuInt(g_killCount, 0x148, 0xA4, context);
+        DrawMenuStr(c_strTIME, 0xD0, 0xC0, context);
+        DrawMenuInt(g_timeHours, 0x108, 0xC0, context);
+        DrawMenuChar(0x1A, 0x110, 0xC0, context);
+        func_800F6998(g_timeMinutes, 0x120, 0xC0, context, 2);
+        DrawMenuChar(0x1A, 0x128, 0xC0, context);
+        func_800F6998(g_timeSeconds, 0x138, 0xC0, context, 2);
+    }
+
+    phi_s3 = 0xE8;
+    if (context == &D_8013763A) {
+        phi_s3 = 0xF8;
+        phi_s5 = 0x58;
+    } else {
+        phi_s5 = 0x50;
+    }
+    func_800F66BC(D_800A2D68, phi_s3, phi_s5, context, 1);
+
+    temp_s1 = g_menuButtonSettingsConfig;
+    phi_a1 = phi_s3 + 0x2C;
+    if (temp_s1 < 4) {
+        phi_a0_3 = (s32) c_chPlaystationButtons[temp_s1];
+    } else {
+        DrawMenuChar((s32) c_chPlaystationButtons[temp_s1], phi_s3 + 0x28, phi_s5, context);
+        phi_a0_3 = (s32) c_chShoulderButtons[temp_s1];
+        phi_a1 = phi_s3 + 0x30;
+    }
+    DrawMenuChar(phi_a0_3, phi_a1, phi_s5, context);
+    DrawMenuInt(D_80097C1C, phi_s3 + 0x4C, phi_s5, context);
+
+    temp_s1_2 = D_8003C9FC;
+    phi_a1_2 = phi_s3 + 0x2C;
+    if (temp_s1_2 < 4) {
+        phi_a0_4 = (s32)c_chPlaystationButtons[temp_s1_2];
+        phi_a2 = phi_s5 + 0xA;
+    } else {
+        temp_s0 = phi_s5 + 0xA;
+        DrawMenuChar((s32)c_chPlaystationButtons[temp_s1_2], phi_s3 + 0x28, temp_s0, context);
+        phi_a0_4 = (s32)c_chShoulderButtons[temp_s1_2];
+        phi_a1_2 = phi_s3 + 0x30;
+        phi_a2 = temp_s0;
+    }
+    DrawMenuChar(phi_a0_4, phi_a1_2, phi_a2, context);
+    temp_s0_2 = phi_s3 + 0x4C;
+    DrawMenuInt(D_80097C20, temp_s0_2, phi_s5 + 0xA, context);
+    func_800F66BC(D_800A2D6C, phi_s3, phi_s5 + 0x14, context, 1);
+    DrawMenuInt(D_80097C24, temp_s0_2, phi_s5 + 0x1A, context);
+
+    if (context == &D_8013763A) {
+        phi_s3_2 = 0x20;
+        phi_s5_3 = 0x78;
+    } else {
+        DrawMenuStr(D_800A83AC[D_8003C9B0], 8, 0x28, context);
+        phi_s3_2 = 0xC;
+        phi_s5_3 = 0x46;
+    }
+    phi_s4_2 = 0;
+    phi_s0 = phi_s5_3;
+    phi_s5_2 = &player_stat_str;
+    phi_s1 = &player_stat_str + 0x10;
+    do {
+        DrawMenuStr(*(&c_strSTR + (phi_s4_2 * 4)), phi_s3_2, phi_s0, context);
+        DrawMenuInt(*phi_s5_2, phi_s3_2 + 0x2C, phi_s0, context);
+        temp_v0 = *phi_s1;
+        if (temp_v0 != 0) {
+            if (temp_v0 > 0) {
+                DrawMenuChar(0xB, phi_s3_2 + 0x34, phi_s0, context);
+                phi_a0_5 = *phi_s1;
+                phi_a1_3 = phi_s3_2 + 0x44;
+            } else {
+                DrawMenuChar(0xD, phi_s3_2 + 0x34, phi_s0, context);
+                phi_a0_5 = -(s32) *phi_s1;
+                phi_a1_3 = phi_s3_2 + 0x44;
+            }
+            DrawMenuInt(phi_a0_5, phi_a1_3, phi_s0, context);
+        }
+        temp_s4 = phi_s4_2 + 1;
+        phi_s4_2 = temp_s4;
+        phi_s0 += 0xC;
+        phi_s5_2 += 4;
+        phi_s1 += 4;
+    } while (temp_s4 < 4);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7B60);
 
@@ -609,28 +799,28 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F86E4);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8754);
 #else
-void func_800F8754(MenuContext* context, s32 arg1, s32 arg2) {
-    s32 buttonId;
+void func_800F8754(MenuContext* context, s32 x, s32 y) {
+    s32 curX;
     s32 phi_a1;
 
     if (D_801375DC == 0) {
         D_8013784C = 1;
     }
 
-    DrawMenuStr(c_strSpells, arg1 + 14, arg2 + 20, context);
+    DrawMenuStr(c_strSpells, x + 14, y + 20, context);
     if (D_801375FC == 0) {
         D_8013784C = 1;
     } else {
         D_8013784C = 0;
     }
     
-    phi_a1 = arg1 + 2;
-    DrawMenuStr(c_strFamiliars, phi_a1, arg2 + 68, context);
+    phi_a1 = x + 2;
+    DrawMenuStr(c_strFamiliars, phi_a1, y + 68, context);
     D_8013784C = 0;
-    DrawMenuStr(c_strEquip, arg1 + 18, arg2 + 4, context);
-    buttonId = arg1 + 0xE;
-    DrawMenuStr(c_strRelics, buttonId, arg2 + 36, context);
-    DrawMenuStr(c_strSystem, buttonId, arg2 + 52, context);
+    DrawMenuStr(c_strEquip, x + 18, y + 4, context);
+    curX = x + 0xE;
+    DrawMenuStr(c_strRelics, curX, y + 36, context);
+    DrawMenuStr(c_strSystem, curX, y + 52, context);
 }
 #endif
 
@@ -1676,7 +1866,48 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134678);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134714);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801347F8);
+#else
+void func_801347F8(s32 arg0) {
+    if (D_8013AEEC == 0)
+        return;
+
+    if (((arg0 - 0x601) & 0xFFFF) < 0x2E0U) {
+        s16 playerLevel = D_80139000;
+        s32 temp_v0 = playerLevel * 3;
+        *(&D_801390DC + temp_v0) = arg0 - 0x600;
+        D_80139000 = ++playerLevel;
+        *(&D_801390DE + temp_v0) = 0xFFFF;
+        *(&D_801390E0 + temp_v0) = 0;
+        if (playerLevel == 0x100) {
+            D_80139000 = 0;
+        }
+    } else {
+        s16 temp_v0_2;
+        s16 temp_v0_3;
+        if (arg0 < 0x85) {
+            if (arg0 < 0x80) {
+                if (arg0 < 0x12 && arg0 >= 0x10) {
+                    D_8013980C = 1;
+                }
+            } else {
+                D_8013B61C = 1;
+            }
+        } else if (arg0 < 0x95 && arg0 >= 0x90) {
+            D_8013B61C = 1;
+        }
+        
+        temp_v0_2 = D_80139A70;
+        temp_v0_3 = temp_v0_2 + 1;
+        D_80139A70 = temp_v0_3;
+        D_8013B3E8[temp_v0_2] = arg0;
+        if (temp_v0_3 == 0x100) {
+            D_80139A70 = 0;
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013493C);
 
