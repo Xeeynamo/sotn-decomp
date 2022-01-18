@@ -51,7 +51,13 @@ void func_800E4124(s32 context) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E414C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E44EC);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E44EC)
+#else
+void func_800E44EC(void) {
+   ClearImage(&c_backbufferClear, 0, 0, 0);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
 

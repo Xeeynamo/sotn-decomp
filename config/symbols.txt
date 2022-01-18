@@ -857,6 +857,7 @@ c_strShield = 0x800A8408;
 c_strMedicine = 0x800A840C;
 c_strDarkMethamorphosis = 0x800A8410;
 rect = 0x800ACD98;
+c_backbufferClear = 0x800ACDA0;
 aPbav = 0x800B107C;
 aPbav_0 = 0x800B407C;
 aPbav_2 = 0x800B607C;

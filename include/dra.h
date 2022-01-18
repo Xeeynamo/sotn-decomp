@@ -93,6 +93,7 @@ extern const char *c_strSystem;
 extern const char *c_strFamiliars;
 extern const char *c_strFamiliar;
 extern const char *c_strSpecial2;
+extern RECT c_backbufferClear;
 extern u8  D_80137460;
 extern s32 D_801375DC;
 extern s32 D_801375FC;

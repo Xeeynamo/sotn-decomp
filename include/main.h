@@ -1,22 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 #include <psxsdk/libetc.h>
-
-typedef struct
-{
-    u32 tag;
-    u8 r0;
-    u8 g0;
-    u8 b0;
-    u8 code;
-    s16 x0;
-    s16 y0;
-    s8 u0;
-    s8 v0;
-    u16 clut;
-    s16 w;
-    s16 h;
-} SPRT;
+#include <psxsdk/libgpu.h>
 
 extern s32 D_8003925C;
 extern s32 D_8003C734;
