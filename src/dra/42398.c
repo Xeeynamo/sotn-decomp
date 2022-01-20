@@ -788,7 +788,20 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7B60);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7F64);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F82F4);
+void func_800F82F4(void) {
+    RECT dstRect;
+
+    dstRect.x = 448;
+    dstRect.y = 176;
+    dstRect.w = g_imgUnk8013C200->width >> 2;
+    dstRect.h = g_imgUnk8013C200->height;
+    LoadImage(&dstRect, (u_long*)g_imgUnk8013C200->data);
+
+    dstRect.x = 480;
+    dstRect.w = g_imgUnk8013C270->width >> 2;
+    dstRect.h = g_imgUnk8013C270->height;
+    LoadImage(&dstRect, (u_long*)g_imgUnk8013C270->data);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8374);
 

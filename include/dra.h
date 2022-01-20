@@ -19,11 +19,11 @@ typedef struct {
 
 typedef struct
 {
-    unsigned short x;
-    unsigned short y;
-    unsigned short w;
-    unsigned short h;
-} Rect;
+    unsigned char width;
+    unsigned char height;
+    unsigned short unk2;
+    unsigned char data[0];
+} ImgSrc;
 
 typedef struct
 {
@@ -31,7 +31,7 @@ typedef struct
     s16 cursorY;
     s16 unk4;
     s16 unk6;
-    Rect unk1;
+    RECT unk1;
     int w;
     int unk14;
     int unk18;
@@ -164,6 +164,8 @@ extern s32 D_8013B660;
 extern s16 D_8013B668;
 extern s32 D_8013B694;
 extern s32 D_80138784[487];
+extern ImgSrc* g_imgUnk8013C200;
+extern ImgSrc* g_imgUnk8013C270;
 
 void func_800E4124(s32 arg0);
 void func_800E8D24(void);
@@ -188,6 +190,8 @@ void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
 void DrawSettingsReverseCloak(MenuContext* context);
 void DrawSettingsSound(MenuContext* context);
+void DrawPauseMenu(s32 arg0);
+void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);

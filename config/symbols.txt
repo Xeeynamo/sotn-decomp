@@ -1127,4 +1127,6 @@ g_OverlayCopySrc = 0x80137F80;
 g_OverlayCopyDst = 0x80137F84;
 g_OverlayBlockCount = 0x80137F8C;
 g_OverlayLastBlockSize = 0x80137F90;
+g_imgUnk8013C200 = 0x8013C200;
+g_imgUnk8013C270 = 0x8013C270;
 p = 0x80180014;
