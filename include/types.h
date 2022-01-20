@@ -27,4 +27,8 @@ typedef double f64;
 typedef int bool;
 enum { false, true };
 
+#ifndef NULL
+#define NULL (0)
+#endif
+
 #endif

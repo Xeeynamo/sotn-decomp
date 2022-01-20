@@ -45,6 +45,26 @@ typedef struct
     s16 unk6;
 } Unkstruct1;
 
+typedef struct
+{
+    struct Unkstruct2* next;
+    s16 unk4;
+    s8 unk6;
+    u8 unk7;
+    s16 x;
+    s16 y;
+    s32 unkc;
+    s32* unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2c;
+    s32 unk30;
+} Unkstruct2;
+
 extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
 extern s32 D_80072F2C;
@@ -55,6 +75,7 @@ extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
+extern Unkstruct2 D_80086FEC[];
 extern Unkstruct1 D_80097490;
 extern u16 D_80097494;
 extern s16 D_80097496;
@@ -175,6 +196,7 @@ void func_800E92F4(void);
 void func_800EA5E4(s32);
 void func_800EDA70(s32 *arg0);
 void func_800EDAE4(void);
+void func_800EDE78(s32 index);
 void func_800F4994(void);
 void func_800F4F48(void);
 void func_800F4FD0(void);

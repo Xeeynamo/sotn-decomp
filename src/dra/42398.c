@@ -304,7 +304,20 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDD9C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDE78);
+void func_800EDE78(s32 index) {
+    Unkstruct2* item = &D_80086FEC[index];
+    if (item != NULL) {
+        do {
+            if (item->unk7 == 7) {
+                *item->unk10 = 0;
+                item->unk7 = 0U;
+            }
+            else
+                item->unk7 = 0U;
+            item = item->next;
+        } while (item != NULL);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDEDC);
 
