@@ -1,8 +1,10 @@
 main.exe
 DRA.BIN
+ST/
 
 *.ld
 *auto.*.txt
+generated.symbols.*.txt
 __pycache__
 
 asm/*/*.s
@@ -10,5 +12,9 @@ asm/*/data/*.s
 asm/*/nonmatchings/*.s
 asm/*/nonmatchings/*/*.s
 asm/*/nonmatchings/*/*/*.s
+asm/st/*/data/*.s
+asm/st/*/nonmatchings/*.s
+asm/st/*/nonmatchings/*/*.s
+asm/st/*/nonmatchings/*/*/*.s
 assets/
 build/

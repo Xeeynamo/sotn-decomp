@@ -8,6 +8,8 @@ Recompilable code that creates 1:1 binaries for the commercial videogame Castlev
 |--------------------------------------------|-----------|------------|----------
 | `54828d4e44ea9575f2a0917ff63def42a304abff` | main.exe  | SLUS-00067 | N/A 
 | `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN   | SLUS-00067 | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-dra.json)
+| `adb3303e1ea707c63dfa978511a88cab4f61970a` | ST/MAD.BIN   | SLUS-00067 | ![progress MAD.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-mad.json)
+| `5d06216b895ab5ff892c88b0d9eff67ff16e2bd1` | ST/NO3.BIN   | SLUS-00067 | ![progress NO3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-no3.json)
 
 ## Build
 

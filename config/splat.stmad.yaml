@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     stmad
+  base_path:    .
+  target_path:  ST/MAD.BIN
+  asm_path:     asm/st/mad
+  asset_path:   assets/st/mad
+  src_path:     src/st/mad
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stmad.txt
+  undefined_syms_path:  config/undefined_syms.stmad.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stmad.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stmad.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: stmad
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0xD8C8, c]
+      - [0x197D8, data]
+  - [0x19E94]

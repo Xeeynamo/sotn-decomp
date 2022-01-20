@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     stno3
+  base_path:    .
+  target_path:  ST/NO3.BIN
+  asm_path:     asm/st/no3
+  asset_path:   assets/st/no3
+  src_path:     src/st/no3
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stno3.txt
+  undefined_syms_path:  config/undefined_syms.stno3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stno3.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stno3.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: stno3
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x377D4, c]
+      - [0x570B0, data]
+  - [0x57E18]

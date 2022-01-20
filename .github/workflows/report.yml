@@ -28,6 +28,8 @@ jobs:
         run: |
             mkdir -p gh-pages/assets
             python tools/report_progress.py DRA.BIN 630 src/dra > gh-pages/assets/progress-dra.json
+            python tools/report_progress.py MAD.BIN 116 src/st/mad > gh-pages/assets/progress-mad.json
+            python tools/report_progress.py NO3.BIN 210 src/st/no3 > gh-pages/assets/progress-no3.json
       - name: Commit report
         run: |
             git config --global user.name 'GitHub Action' 
