@@ -51,13 +51,9 @@ void func_800E4124(s32 context) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E414C);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E44EC)
-#else
 void func_800E44EC(void) {
    ClearImage(&c_backbufferClear, 0, 0, 0);
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
 
@@ -127,9 +123,6 @@ void func_800E8D24(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8D54);
 // https://decomp.me/scratch/YhofM
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8DF0);
-#else
 void func_800E8DF0(void) {
     Unkstruct1* phi_v1;
     Unkstruct1* phi_a0;
@@ -150,7 +143,6 @@ void func_800E8DF0(void) {
     } while (phi_a1 < 2);
     func_800E8D24();
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8E48);
 
@@ -272,9 +264,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", SetRoomBackgroundLayer);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", LoadRoomLayer);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDA70);
-#else
 void func_800EDA70(s32 *context) {
     s32 i;
     s32 n = 0xd;
@@ -282,7 +271,6 @@ void func_800EDA70(s32 *context) {
         *context++ = 0;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDA94);
 
@@ -300,9 +288,90 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB08);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB58);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
+#else
+s16 func_800EDC80(u8 arg0, s32 arg1) {
+    s32 phi_s2 = 0;
+    Unkstruct2* phi_s1 = D_80086FEC;
+    u8* phi_s0 = &D_80086FEC->unk7;
+    s16 index;
+    s32 phi_v0;
 
+loop_1:
+    if (*phi_s0 == 0) {
+        func_800EDA70(phi_s1);
+        if (arg1 == 1) {
+            *phi_s0 = arg0;
+            phi_s1->next = NULL;
+            if (D_800A2438 < phi_s2) {
+                D_800A2438 = phi_s2;
+                phi_v0 = phi_s2 << 0x10;
+            } else {
+                goto block_8;
+            }
+            goto block_9;
+        }
+        *phi_s0 = arg0;
+        index = func_800EDC80(arg0 & 0xFF, arg1 - 1);
+        if (index == -1) {
+            *phi_s0 = 0;
+            return -1;
+        }
+        phi_s1->next = (s32) &D_80086FEC[index];
+block_8:
+        phi_v0 = phi_s2 << 0x10;
+block_9:
+        return (s16) (phi_v0 >> 0x10);
+    }
+
+    phi_s2 = phi_s2 + 1;
+    phi_s0 += sizeof(Unkstruct2);
+    phi_s1++;
+    if (phi_s2 >= 0x400) {
+        return -1;
+    }
+    goto loop_1;
+}
+#endif
+
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDD9C);
+#else
+s16 func_800EDD9C(u8 arg0, s32 arg1) {
+    s32 temp_s2;
+    u8 temp_v0;
+    u8* phi_s0;
+    Unkstruct2* phi_s1;
+    s16 phi_s2;
+
+    phi_s1 = D_800973B8;
+    phi_s2 = 0x4FF;
+    phi_s0 = &D_800973B8->unk7;
+loop_1:
+    temp_v0 = *phi_s0;
+    if (temp_v0 == 0) {
+        func_800EDA70(phi_s1);
+        if (arg1 == 1) {
+            *phi_s0 = arg0;
+            phi_s1->next = NULL;
+        } else {
+            *phi_s0 = arg0;
+            phi_s1->next = &D_80086FEC[func_800EDD9C(arg0 & 0xFF, arg1 - 1)];
+        }
+        return phi_s2;
+    }
+
+    temp_s2 = phi_s2 - 1;
+    phi_s0 += -sizeof(Unkstruct2);
+    phi_s1--;
+    phi_s2 = (s16) temp_s2;
+    if (temp_s2 < 0) {
+        return (s16) temp_v0;
+    }
+    goto loop_1;
+}
+#endif
 
 void func_800EDE78(s32 index) {
     Unkstruct2* item = &D_80086FEC[index];
@@ -367,7 +436,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1D54);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1EB0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1FC4);
+void func_800F1FC4(s32 arg0) {
+    func_800F1EB0((playerX >> 8) + g_CurrentRoomLeft, (playerY >> 8) + g_CurrentRoomTop, arg0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2014);
 
@@ -514,13 +585,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6618);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F66BC);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawMenuChar);
-#else
 void DrawMenuChar(s32 ch, int x, int y, void* context) {
     func_800F5904(context, x, y, 8, 8, (ch & 0xF) * 8, (u32) (ch & 0xF0) >> 1, 0x196, 0x1E, 1, 0);
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawMenuStr);
 // https://decomp.me/scratch/S4Dzb
@@ -1252,14 +1319,10 @@ void SetMenuBackgroundRect(UnkPoly* context, s16 x, s16 y, s32 width, s32 height
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107360);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073C0);
-#else
 void func_801073C0(void) {
     func_800195C8(0);
     func_800199D0(0);
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073E8);
 
@@ -1793,16 +1856,12 @@ s32 func_80131F28(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131F38);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131F68);
-#else
 bool func_80131F68(void) {
     if (D_8013B61C == 0) {
         return D_8013901C != 0;
     }
     return true;
 }
-#endif
 
 s16 func_80131F94(void) {
     return D_8013B668;

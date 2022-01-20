@@ -17,3 +17,7 @@
   lui \reg, %hi(\num)
 .endif
 .endm
+
+.macro move a, b
+    addu \a, \b, $zero
+.endm
