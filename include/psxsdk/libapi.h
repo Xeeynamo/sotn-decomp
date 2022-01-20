@@ -1,4 +1,18 @@
 
+struct EXEC {                   
+        unsigned long pc0;      
+        unsigned long gp0;      
+        unsigned long t_addr;   
+        unsigned long t_size;   
+        unsigned long d_addr;   
+        unsigned long d_size;   
+        unsigned long b_addr;   
+        unsigned long b_size;   
+	unsigned long s_addr;
+	unsigned long s_size;
+	unsigned long sp,fp,gp,ret,base;
+};
+
 extern void InitHeap (unsigned long *, unsigned long);
 extern long Load(char *, struct EXEC *);
 extern long Exec(struct EXEC *, long, char **);
