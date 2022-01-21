@@ -65,7 +65,31 @@ typedef struct
     s32 unk30;
 } Unkstruct2;
 
+typedef struct
+{
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10[7];
+    u16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3C;
+    s16 unk40;
+    s16 unk42;
+    s32 unk44;
+    s32 unk48;
+    s32 unk4C;
+    s16 unk50;
+    s16 unk52;
+} Unkstruct3;
+
 extern s32 D_8006BB00;
+extern Unkstruct3* D_8006C26C;
 extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
 extern s32 D_80072F2C;
@@ -88,6 +112,7 @@ extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
 extern Unkstruct2 D_80086FEC[];
+extern u32 D_80097364;
 extern Unkstruct2 D_800973B8[];
 extern s32 playerX;
 extern s32 playerY;
