@@ -154,9 +154,6 @@ void func_80190D8C(s32 arg0) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190F04);
-#else
 void func_80190F04(void) {
     Unkstruct4* s0 = &D_80072B34;
     s32 temp_v0_2;
@@ -178,7 +175,6 @@ void func_80190F04(void) {
             func_80190C78(temp_a0_2 - 0x40);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190FB8);
 

@@ -641,8 +641,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawSettingsButton);
 #else
 extern s32 g_menuButtonSettingsCursorPos;
 extern s32 g_menuButtonSettingsConfig[];
-extern u8 c_chPlaystationButtons[];
-extern u8 c_chShoulderButtons[];
+extern const u8 c_chPlaystationButtons[];
+extern const u8 c_chShoulderButtons[];
 void DrawSettingsButton(MenuContext* context) {
     const int ActionCount = 7;
     const char** strAction;
@@ -673,19 +673,12 @@ void DrawSettingsButton(MenuContext* context) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawSettingsReverseCloak);
-#else
 void DrawSettingsReverseCloak(MenuContext* context) {
     DrawMenuStr(c_strNormal, 176, 48, context);
     DrawMenuStr(c_strReversal, 176, 64, context);
     func_800F5E68(context, g_SettingsCloakMode, 174, 46, 64, 12, 4, 1);
 }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawSettingsSound);
-#else
 void DrawSettingsSound(MenuContext* context) {
     s16 cursorX = context->cursorX;
     s16 cursorY = context->cursorY;
@@ -694,7 +687,6 @@ void DrawSettingsSound(MenuContext* context) {
     DrawMenuStr(c_strMono, subMenuX, cursorY + 0x14, context);
     func_800F5E68(context, g_SettingsSoundMode, cursorX + 2, cursorY + 2, 53, 12, 4, 1);
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7218);
 
@@ -718,8 +710,6 @@ extern const char* D_800A83AC[];
 extern s32 c_arrExpNext[];
 extern s16 D_8013761C;
 extern s32/*?*/ D_8013763A;
-extern const u8 c_chPlaystationButtons[];
-extern const u8 c_chShoulderButtons[];
 extern s32 g_menuButtonSettingsConfig;
 extern s32 player_stat_str;
 
@@ -919,9 +909,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F84CC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F86E4);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8754);
-#else
 void func_800F8754(MenuContext* context, s32 x, s32 y) {
     s32 curX;
     s32 phi_a1;
@@ -945,7 +932,6 @@ void func_800F8754(MenuContext* context, s32 x, s32 y) {
     DrawMenuStr(c_strRelics, curX, y + 36, context);
     DrawMenuStr(c_strSystem, curX, y + 52, context);
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8858);
