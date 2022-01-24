@@ -28,7 +28,7 @@ Thanks to [asm-differ](https://github.com/simonlindholm/asm-differ) you can chec
 
 ## Non-matching build
 
-Some of the functions that do not fully match the original game can be compiled by defining `#define NON_MATCHING` on a header file or by passing `-DNON_MATCHING to the compiler. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
+Some non-matching functions are present in the source code by disabled by the macro `NON_MATCHING`. You can still compile the game binaries by running ` CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
 
 # Notes
 

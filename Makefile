@@ -5,17 +5,15 @@ STMAD           := stmad
 STNO3           := stno3
 
 # Compilers
-GCC_MODERN		:= $(CROSS)gcc
-GCC_272		    := ./bin/cc1
 CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
-CC              := $(GCC_272)
+CC              := ./bin/cc1
 LD              := $(CROSS)ld
 CPP				:= cpp
 OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections
 CC_FLAGS        += -mips1 -mcpu=3000 -quiet -G0 -Wall -fno-builtin -mno-abicalls -fsigned-char -O2
-CPP_FLAGS       := -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
+CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
 
 # Directories
