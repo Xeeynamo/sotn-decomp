@@ -1,6 +1,22 @@
 #include "common.h"
 #include "dra.h"
 
+typedef struct
+{
+    u16 unk0;
+    u16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+} Unkstruct_mad_1;
+
+extern RoomHeader g_rooms[];
+extern Unkstruct_mad_1* D_801997DC;
+
+void func_801908DC(s16);
+void func_801909D8(s16);
+void func_80190B7C(s16);
+void func_80190C78(s16);
 void func_80191D3C(Unkstruct3*);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
@@ -50,15 +66,119 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801909D8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190AD8);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B24);
+void func_80190B24(s32 arg0) {
+    while (true)
+    {
+        if (D_801997DC->unk2 == 0xFFFF)
+            D_801997DC--;
+        else if ((s16)arg0 >= D_801997DC->unk2 || D_801997DC->unk2 == 0xFFFE)
+            break;
+        else
+            D_801997DC--;
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B7C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190C78);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190D8C);
+#else
+typedef struct
+{
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+} Unkstruct_80190D8C_1;
 
+void func_80190838(s16, s16);
+void func_801908DC(s16);
+void func_80190AD8(s16);
+extern s32* D_801803C8;
+extern Unkstruct_80190D8C_1* D_801997D8;
+extern s8 D_801997E0;
+extern s8 D_801997E4;
+extern u16* g_pStObjLayout[];
+
+void func_80190D8C(s32 arg0) {
+    s16 temp_s0;
+    s16 temp_v0_3;
+    s32 temp_a0;
+    u16 temp_a0_2;
+    u16* temp_a1;
+    Unkstruct_80190D8C_1* temp_v1;
+    Unkstruct_mad_1* temp_v0_2;
+    s32 phi_a0;
+    s32 phi_a1;
+    s16 phi_a1_2;
+
+    temp_a0 = arg0 * 4;
+    temp_a1 = g_pStObjLayout[arg0];
+    D_801997D8 = temp_a1;
+    D_801997DC = *(&D_801803C8 + temp_a0);
+    if (*temp_a1 != 0xFFFE) {
+        D_801997D8 = temp_a1 + 1;
+        phi_a0 = func_8018E964() & 0xFF;
+        phi_a1 = 0;
+        
+        while (true)
+        {
+            s32 temp_v0 = phi_a0 - D_801997D8->unk0;
+            phi_a0 = temp_v0;
+            if ((temp_v0 << 0x10) < 0)
+                break;
+
+            D_801997D8++;
+            phi_a1++;
+        }
+
+        D_801997D8 = (temp_v1->unk4 << 0x10) + temp_v1->unk2;
+        temp_v0_2 = (s16)phi_a1 + 1 + D_801997DC;
+        D_801997DC = temp_v0_2;
+        D_801997DC = (temp_v0_2->unk2 << 0x10) + temp_v0_2->unk0;
+    }
+
+    temp_a0_2 = D_80072B34.unkA;
+    temp_v0_3 = temp_a0_2 - 0x40;
+    temp_s0 = temp_a0_2 + 0x140;
+    phi_a1_2 = temp_v0_3;
+    if (temp_v0_3 >> 15) {
+        phi_a1_2 = 0;
+    }
+    D_801997E0 = 0;
+    D_801997E4 = 0;
+    func_80190838(phi_a1_2, phi_a1_2);
+    func_801908DC(temp_s0);
+    func_80190AD8(D_80072B34.unkE + 0x120);
+}
+#endif
+
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190F04);
+#else
+void func_80190F04(void) {
+    Unkstruct4* s0 = &D_80072B34;
+    s32 temp_v0_2;
+
+    if (D_800973B4 != 0) {
+        u16 temp_a0 = D_80072B3E;
+        if (D_800973B4 > 0)
+            func_801908DC(temp_a0 + 0x140);
+        else
+            func_801909D8(temp_a0 - 0x40);
+    }
+    
+    temp_v0_2 = D_800973B8[0].next;
+    if (temp_v0_2 != 0) {
+        u16 temp_a0_2 = s0->unkE;
+        if (temp_v0_2 > 0)
+            func_80190B7C(temp_a0_2 + 0x120);
+        else
+            func_80190C78(temp_a0_2 - 0x40);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190FB8);
 

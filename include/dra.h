@@ -37,6 +37,26 @@ typedef struct
     int unk18;
 } MenuContext;
 
+typedef struct
+{
+    u8 left, top, right, bottom;
+    u8 tileLayoutId;
+    u8 tilesetId;
+    u8 objGfxId;
+    u8 objLayoutId;
+} RoomHeader;
+
+typedef struct
+{
+    u16 x, y;
+    u16 id : 10;
+    u16 unk04_10 : 3;
+    u16 unk04_13 : 3;
+    u8 unk06;
+    u8 unk07;
+    u16 unk08;
+} ObjLayoutEntry;
+
 typedef struct 
 {
     s16 unk0;
@@ -88,10 +108,20 @@ typedef struct
     s16 unk52;
 } Unkstruct3;
 
+typedef struct
+{
+    char unk0[0xA];
+    s16 unkA;
+    s16 unkC;
+    s16 unkE;
+} Unkstruct4;
+
 extern s32 D_8006BB00;
 extern Unkstruct3* D_8006C26C;
 extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
+extern Unkstruct4 D_80072B34;
+extern u16 D_80072B3E;
 extern s32 D_80072F2C;
 extern s32 D_80073060;
 extern s32 D_80073080;
@@ -113,6 +143,7 @@ extern s8  D_80073511;
 extern s8  D_80073512;
 extern Unkstruct2 D_80086FEC[];
 extern u32 D_80097364;
+extern s32 D_800973B4;
 extern Unkstruct2 D_800973B8[];
 extern s32 playerX;
 extern s32 playerY;
@@ -120,7 +151,7 @@ extern s32 D_800973FC;
 extern Unkstruct1 D_80097490;
 extern u16 D_80097494;
 extern s16 D_80097496;
-extern s32 D_800974A0;
+extern s32 g_mapProgramId;
 extern s32 D_800974AC;
 extern u8  D_8009798A;
 extern u8  D_80097A8D;

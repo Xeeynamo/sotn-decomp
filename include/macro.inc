@@ -10,7 +10,7 @@
 .if \num < 0x8000 && \num > 0
   ori \reg, $0, \num & 0xFFFF
 .elseif \num > 0
-  lui \reg, %hi(\num)
+  ori \reg, $0, \num & 0xFFFF
 .elseif \num >= -0x8000
   addiu \reg, $0, \num
 .else
