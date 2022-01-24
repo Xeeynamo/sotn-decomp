@@ -18,6 +18,14 @@ Recompilable code that creates 1:1 binaries for the commercial videogame Castlev
 1. Run `make extract` to generate the assembly files
 1. Run `make all` to compile the binaries into the `build/` directory
 
+## Check for function matching
+
+Thanks to [asm-differ](https://github.com/simonlindholm/asm-differ) you can check if a funtion written in C matches its assembly counterpart.
+
+1. Be sure to resolve the submodule with `git submodule update --init`
+1. Ensure to create a matching binary with `make clean && make extract && make all && mkdir expected && cp -r build expected/`
+1. Choose a function to match (eg. `func_8018E964`), an overlay (eg. `st/mad`) and then invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/mad func_8018E964`
+
 ## Non-matching build
 
 Some of the functions that do not fully match the original game can be compiled by defining `#define NON_MATCHING` on a header file or by passing `-DNON_MATCHING to the compiler. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
