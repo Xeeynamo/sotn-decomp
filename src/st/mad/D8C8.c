@@ -10,6 +10,7 @@ typedef struct
     s16 unk8;
 } Unkstruct_mad_1;
 
+extern s16 D_801809EC[];
 extern RoomHeader g_rooms[];
 extern Unkstruct_mad_1* D_801997DC;
 
@@ -194,18 +195,31 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191E6C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191F24);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019203C);
+s32 func_8019203C(void) {
+    s16 value = D_8006C26C->unk0.Data.unk2 - D_80072E8A;
+    if (value < 0) {
+        value = -value;
+    }
+    return value;
+}
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192078);
+s32 func_80192078(void) {
+    s32 value = D_8006C26C->unk4.Data.unk2 - D_80072E8E;
+    return value < 0 ? -value : value;
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
 
 void func_801920F0(void) {
-    D_8006C26C->unk0 = D_8006C26C->unk0 + D_8006C26C->unk8;
-    D_8006C26C->unk4 = D_8006C26C->unk4 + D_8006C26C->unkC;
+    D_8006C26C->unk0.data = D_8006C26C->unk0.data + D_8006C26C->unk8;
+    D_8006C26C->unk4.data = D_8006C26C->unk4.data + D_8006C26C->unkC;
 }
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192120);
+void func_80192120(void) {
+    if (D_8006C26C->unkC <= 0x5FFFF) {
+        D_8006C26C->unkC = D_8006C26C->unkC + 0x4000;
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019214C);
 
@@ -219,11 +233,24 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192800);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192860);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019288C);
+#else
+s16 func_8019288C(s32 arg0) {
+    return D_801809EC[arg0 & 0xFF];
+}
+#endif
+
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801928A8);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192914);
+#else
+s32 func_80192914(s16 arg0, s16 arg1) {
+    return ((func_800190AC(arg1, arg0) >> 4) + 0x40) & 0xFF;
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019294C);
 
@@ -233,9 +260,30 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801929DC);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192A34);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192AC0);
+#else
+s32 func_80192AC0(s16 arg0, s16 arg1) {
+    return func_800190AC(arg1, arg0) & 0xFFFF;
+}
+#endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192AF0);
+#else
+typedef struct
+{
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+} Unkstruct_mad_2;
+
+s32 func_80192AF0(Unkstruct_mad_1* a, Unkstruct_mad_1* b) {
+    return func_800190AC(b->unk6 - a->unk6, b->unk2 - a->unk2) & 0xFFFF;
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B28);
 
@@ -371,7 +419,22 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198FA0);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199388);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801994D8);
+#else
+Unkstruct2* func_801994D8(Unkstruct2* arg0) {
+    if (arg0 != NULL) {
+loop_1:
+        if (arg0->unk2B != NULL) {
+            arg0 = arg0->next;
+            if (arg0 != NULL) {
+                goto loop_1;
+            }
+        }
+    }
+    return arg0;
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199508);
 
@@ -381,6 +444,12 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019960C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801996EC);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199740);
+void func_80199740(Unkstruct2* arg0) {
+    arg0->unk2B = 0;
+    arg0->unk32 = 8;
+    arg0->next->unk2B = 0;
+    arg0->next->unk7 = 4;
+    arg0->next->unk32 = 8;
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019976C);

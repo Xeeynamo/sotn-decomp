@@ -13,6 +13,7 @@ extern s32 D_8003CACC;
 
 extern void func_80015238(s32 arg0);
 int VSync(s32);
+s32 func_800190AC(s32, s32);
 extern unsigned char func_80019424();
 extern unsigned char func_80019434();
 extern unsigned char func_80019444();

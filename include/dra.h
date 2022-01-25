@@ -65,9 +65,9 @@ typedef struct
     s16 unk6;
 } Unkstruct1;
 
-typedef struct
+typedef struct _Unkstruct2
 {
-    struct Unkstruct2* next;
+    struct _Unkstruct2* next;
     s16 unk4;
     s8 unk6;
     u8 unk7;
@@ -80,15 +80,30 @@ typedef struct
     s32 unk1c;
     s32 unk20;
     s32 unk24;
-    s32 unk28;
-    s32 unk2c;
-    s32 unk30;
+    s16 unk28;
+    s8 unk2A;
+    u8 unk2B;
+    u16 unk2C;
+    u16 unk2E;
+    u16 unk30;
+    u16 unk32;
 } Unkstruct2;
+
+typedef union
+{
+    s32 data;
+    struct
+    {
+        s16 unk0;
+        s16 unk2;
+    } Data;
+    
+} Unkunion1; // big assumption here...
 
 typedef struct
 {
-    s32 unk0;
-    s32 unk4;
+    Unkunion1 unk0;
+    Unkunion1 unk4;
     s32 unk8;
     s32 unkC;
     s32 unk10[7];
@@ -122,6 +137,8 @@ extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
 extern Unkstruct4 D_80072B34;
 extern u16 D_80072B3E;
+extern u16 D_80072E8A;
+extern s16 D_80072E8E;
 extern s32 D_80072F2C;
 extern s32 D_80073060;
 extern s32 D_80073080;
