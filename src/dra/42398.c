@@ -293,7 +293,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
 #else
 s16 func_800EDC80(u8 arg0, s32 arg1) {
     s32 phi_s2 = 0;
-    Unkstruct2* phi_s1 = D_80086FEC;
+    POLY_GT4* phi_s1 = D_80086FEC;
     u8* phi_s0 = &D_80086FEC->unk7;
     s16 index;
     s32 phi_v0;
@@ -303,7 +303,7 @@ loop_1:
         func_800EDA70(phi_s1);
         if (arg1 == 1) {
             *phi_s0 = arg0;
-            phi_s1->next = NULL;
+            phi_s1->tag = NULL;
             if (D_800A2438 < phi_s2) {
                 D_800A2438 = phi_s2;
                 phi_v0 = phi_s2 << 0x10;
@@ -318,7 +318,7 @@ loop_1:
             *phi_s0 = 0;
             return -1;
         }
-        phi_s1->next = (s32) &D_80086FEC[index];
+        phi_s1->tag = (s32) &D_80086FEC[index];
 block_8:
         phi_v0 = phi_s2 << 0x10;
 block_9:
@@ -326,7 +326,7 @@ block_9:
     }
 
     phi_s2 = phi_s2 + 1;
-    phi_s0 += sizeof(Unkstruct2);
+    phi_s0 += sizeof(POLY_GT4);
     phi_s1++;
     if (phi_s2 >= 0x400) {
         return -1;
@@ -342,7 +342,7 @@ s16 func_800EDD9C(u8 arg0, s32 arg1) {
     s32 temp_s2;
     u8 temp_v0;
     u8* phi_s0;
-    Unkstruct2* phi_s1;
+    POLY_GT4* phi_s1;
     s16 phi_s2;
 
     phi_s1 = D_800973B8;
@@ -354,16 +354,16 @@ loop_1:
         func_800EDA70(phi_s1);
         if (arg1 == 1) {
             *phi_s0 = arg0;
-            phi_s1->next = NULL;
+            phi_s1->tag = NULL;
         } else {
             *phi_s0 = arg0;
-            phi_s1->next = &D_80086FEC[func_800EDD9C(arg0 & 0xFF, arg1 - 1)];
+            phi_s1->tag = &D_80086FEC[func_800EDD9C(arg0 & 0xFF, arg1 - 1)];
         }
         return phi_s2;
     }
 
     temp_s2 = phi_s2 - 1;
-    phi_s0 += -sizeof(Unkstruct2);
+    phi_s0 += -sizeof(POLY_GT4);
     phi_s1--;
     phi_s2 = (s16) temp_s2;
     if (temp_s2 < 0) {
@@ -374,16 +374,16 @@ loop_1:
 #endif
 
 void func_800EDE78(s32 index) {
-    Unkstruct2* item = &D_80086FEC[index];
+    POLY_GT4* item = &D_80086FEC[index];
     if (item != NULL) {
         do {
-            if (item->unk7 == 7) {
-                *item->unk10 = 0;
-                item->unk7 = 0U;
+            if (item->code == 7) {
+                *(*(s32**)&item->r1) = 0; // does not make any sense?!
+                item->code = 0U;
             }
             else
-                item->unk7 = 0U;
-            item = item->next;
+                item->code = 0U;
+            item = item->tag;
         } while (item != NULL);
     }
 }
@@ -1312,27 +1312,55 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801072BC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801072DC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801072FC);
+void func_801072FC(POLY_G4* poly) {
+    poly->r0 = 0;
+    poly->g0 = 0;
+    poly->b0 = 0;
+    poly->r1 = 0;
+    poly->g1 = 0;
+    poly->b1 = 0;
+    poly->r2 = 0;
+    poly->g2 = 0;
+    poly->b2 = 0;
+    poly->r3 = 0;
+    poly->g3 = 0;
+    poly->b3 = 0;
+}
+
+
+void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
+    poly->x0 = x;
+    poly->y0 = y;
+    poly->x1 = x + width;
+    poly->y1 = y;
+    poly->x2 = x;
+    poly->x3 = x + width;
+    poly->y2 = y + height;
+    poly->y3 = y + height;
+}
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", SetMenuBackgroundRect);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107360);
 #else
-void SetMenuBackgroundRect(UnkPoly* context, s16 x, s16 y, s32 width, s32 height) {
-    s16 x1 = x + width;
-    s16 y1 = y + height;
-
-    context->x0 = x;
-    context->y0 = y;
-    context->x1 = x1;
-    context->y1 = y;
-    context->unk20 = x;
-    context->unk2C = x1;
-    context->unk22 = y1;
-    context->unk2E = y1;
+void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s8 u, s8 v) {
+    poly->x0 = x;
+    poly->y0 = y;
+    poly->x1 = x + width;
+    poly->y1 = y;
+    poly->x2 = x;
+    poly->x3 = x + width;
+    poly->v0 = v;
+    poly->v1 = v;
+    poly->y2 = y + height;
+    poly->y3 = y + height;
+    poly->u0 = u;
+    poly->u1 = u + width;
+    poly->u2 = u;
+    poly->v2 = v + height;
+    poly->u3 = u + width;
+    poly->v3 = v + height;
 }
 #endif
-
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107360);
 
 void func_801073C0(void) {
     func_800195C8(0);

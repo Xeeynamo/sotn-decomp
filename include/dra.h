@@ -2,21 +2,6 @@
 #define DRA_H
 #include "main.h"
 
-typedef struct {
-    unsigned int unk0;
-    unsigned int unk4;
-    short x0,y0;
-    short unkC,unkE;
-    unsigned int unk10;
-    short x1,y1;
-    unsigned int unk18;
-    unsigned int unk1c;
-    short unk20,unk22;
-    unsigned int unk24;
-    unsigned int unk28;
-    short unk2C,unk2E;
-} UnkPoly;
-
 typedef struct
 {
     unsigned char width;
@@ -64,30 +49,6 @@ typedef struct
     s16 unk4;
     s16 unk6;
 } Unkstruct1;
-
-typedef struct _Unkstruct2
-{
-    struct _Unkstruct2* next;
-    s16 unk4;
-    s8 unk6;
-    u8 unk7;
-    s16 x;
-    s16 y;
-    s32 unkc;
-    s32* unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 unk1c;
-    s32 unk20;
-    s32 unk24;
-    s16 unk28;
-    s8 unk2A;
-    u8 unk2B;
-    u16 unk2C;
-    u16 unk2E;
-    u16 unk30;
-    u16 unk32;
-} Unkstruct2;
 
 typedef union
 {
@@ -158,10 +119,10 @@ extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
-extern Unkstruct2 D_80086FEC[];
+extern POLY_GT4 D_80086FEC[];
 extern u32 D_80097364;
 extern s32 D_800973B4;
-extern Unkstruct2 D_800973B8[];
+extern POLY_GT4 D_800973B8[];
 extern s32 playerX;
 extern s32 playerY;
 extern s32 D_800973FC;
@@ -329,7 +290,7 @@ void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void func_801071CC(s32, u8, s32);
 void func_80107250(s32 arg0, s32 arg1);
-void SetMenuBackgroundRect(UnkPoly* arg0, s16 x, s16 y, s32 width, s32 height);
+void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
 void func_8010E0B8(void);

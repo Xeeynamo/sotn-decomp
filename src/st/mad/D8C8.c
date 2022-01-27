@@ -167,7 +167,7 @@ void func_80190F04(void) {
             func_801909D8(temp_a0 - 0x40);
     }
     
-    temp_v0_2 = D_800973B8[0].next;
+    temp_v0_2 = D_800973B8[0].tag;
     if (temp_v0_2 != 0) {
         u16 temp_a0_2 = s0->unkE;
         if (temp_v0_2 > 0)
@@ -422,11 +422,11 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199388);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801994D8);
 #else
-Unkstruct2* func_801994D8(Unkstruct2* arg0) {
+POLY_GT4* func_801994D8(POLY_GT4* arg0) {
     if (arg0 != NULL) {
 loop_1:
-        if (arg0->unk2B != NULL) {
-            arg0 = arg0->next;
+        if (arg0->p3 != NULL) {
+            arg0 = arg0->tag;
             if (arg0 != NULL) {
                 goto loop_1;
             }
@@ -444,12 +444,12 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019960C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801996EC);
 
-void func_80199740(Unkstruct2* arg0) {
-    arg0->unk2B = 0;
-    arg0->unk32 = 8;
-    arg0->next->unk2B = 0;
-    arg0->next->unk7 = 4;
-    arg0->next->unk32 = 8;
+void func_80199740(POLY_GT4* arg0) {
+    arg0->p3 = 0;
+    arg0->pad3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->code = 4;
+    ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019976C);
