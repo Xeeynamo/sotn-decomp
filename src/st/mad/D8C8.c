@@ -5,13 +5,20 @@ typedef struct
 {
     u16 unk0;
     u16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
 } Unkstruct_mad_1;
+
+typedef struct
+{
+    u8 unk0[0x32];
+    u16 unk32;
+} Unkstruct_mad_2;
 
 extern s16 D_801809EC[];
 extern RoomHeader g_rooms[];
+extern Unkstruct_mad_1 *D_801997D8;
 extern Unkstruct_mad_1* D_801997DC;
 
 void func_801908DC(s16);
@@ -19,12 +26,106 @@ void func_801909D8(s16);
 void func_80190B7C(s16);
 void func_80190C78(s16);
 void func_80191D3C(Unkstruct3*);
+s32 func_80192914(s16 arg0, s16 arg1);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018DC28);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018DF0C);
+#else
+void func_8018DF0C(s32 arg0, s32 arg1) {
+    s32 temp_a3;
+    s32 phi_v1;
+    s16 phi_a2;
+    s32 phi_a3;
+    s16* phi_t0;
+    s32 phi_a3_2;
+    s16* phi_a2_2;
+    s32 phi_v1_2;
+    s32 phi_a3_3;
+    s16* phi_a2_3;
+    s32 phi_v1_3;
+    s32 phi_a3_4;
+    s16* phi_a2_4;
+    s32 phi_v1_4;
+    s32 phi_a3_5;
+    s16* phi_a1;
+    s32 phi_v1_5;
+
+    for (phi_a3 = 0; phi_a3 < 0x10; phi_a3++) {
+        phi_t0 = arg0;
+        phi_v1_2 = 0;
+
+        for (phi_v1 = 0; phi_v1 < 0x20; phi_v1++)
+        {
+            phi_a2 = -(((phi_a3 - 2) < 0xCU) ^ 1) & 3;
+            if (phi_v1 - 2 >= 0x1C) {
+                phi_a2 = 3;
+            }
+
+            *((phi_a3 << 5) + phi_t0) = phi_a2;
+            phi_t0++;
+        }
+    }
+
+    if (arg1 & 4) {
+        for (phi_a3_2 = 6; phi_a3_2 < 0xA; phi_a3_2++) {
+            phi_a2_2 = arg0;
+loop_9:
+            *((phi_a3_2 << 5) + phi_a2_2) = 0;
+            phi_a2_2++;
+            phi_v1_2++;
+            if (phi_v1_2 < 2) {
+                goto loop_9;
+            }
+        }
+    }
+
+    if (arg1 & 8) {
+        for (phi_a3_3 = 6; phi_a3_3 < 0xA; phi_a3_3++) {
+            phi_a2_3 = arg0 + 0x3C;
+            phi_v1_3 = 0x1E;
+loop_14:
+            *((phi_a3_3 << 5) + phi_a2_3) = 0;
+            phi_a2_3++;
+            phi_v1_3++;
+            if (phi_v1_3 < 0x20) {
+                goto loop_14;
+            }
+        }
+    }
+    
+    if (arg1 & 1) {
+        for (phi_a3_4 = 0; phi_a3_4 < 2; phi_a3_4++) {
+            phi_a2_4 = arg0 + 0xC;
+            phi_v1_4 = 6;
+loop_19:
+            *((phi_a3_4 << 6) + ((((arg1 & 8) == 0) << 5) + phi_a2_4)) = 0;
+            phi_a2_4++;
+            phi_v1_4++;
+            if (phi_v1_4 < 0xA) {
+                goto loop_19;
+            }
+        }
+    }
+    
+    if (arg1 & 2) {
+        for (phi_a3_5 = 0xE; phi_a3_5 < 0x10; phi_a3_5++) {
+            phi_a1 = arg0 + 0xC;
+            phi_v1_5 = 6;
+loop_24:
+            *((phi_a3_5 << 6) + ((((arg1 & 8) == 0) << 5) + phi_a1)) = 0;
+            phi_a1++;
+            phi_v1_5++;
+            if (phi_v1_5 < 0xA) {
+                goto loop_24;
+            }
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E090);
 
@@ -57,15 +158,41 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190608);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190720);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190838);
+void func_80190838(s32 arg0) {
+    s32 a1 = 0xFFFE;
+    arg0 = (s16)arg0;
+loop_1:
+    if (D_801997D8->unk0 == a1 || D_801997D8->unk0 < arg0) {
+        D_801997D8++;
+        goto loop_1;
+    }
+}
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190884);
+void func_80190884(s32 arg0) {
+    s32 a2, a3;
+    a3 = 0xFFFF;
+    arg0 = (s16)arg0;
+    a2 = 0xFFFE;
+loop_1:
+    if (D_801997D8->unk0 == a3 || (arg0 < D_801997D8->unk0) && (D_801997D8->unk0 != a2)) {
+        D_801997D8--;
+        goto loop_1;
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801908DC);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801909D8);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190AD8);
+void func_80190AD8(s32 arg0) {
+    s32 a1 = 0xFFFE;
+    arg0 = (s16)arg0;
+loop_1:
+    if (D_801997DC->unk2 == a1 || D_801997DC->unk2 < arg0) {
+        D_801997DC++;
+        goto loop_1;
+    }
+}
 
 void func_80190B24(s32 arg0) {
     while (true)
@@ -189,7 +316,17 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191D3C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191DA8);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191E24);
+#else
+void func_80191E24(Unkstruct_mad_2 *arg0) {
+    if (arg0->unk32 != 0) {
+        u32 temp_a0_2 = arg0->unk32 - 1;
+        s32 *temp_v1 = &D_80096ED8[(temp_a0_2 >> 5) & 0xFFFF];
+        *temp_v1 |= 1 << (temp_a0_2 & 0x1F);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191E6C);
 
@@ -208,7 +345,19 @@ s32 func_80192078(void) {
     return value < 0 ? -value : value;
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
+#else
+s32 func_801920AC(void) {
+    s32 flags, v1;
+    flags = D_80072E8A < D_8006C26C->unk0.Data.unk2;
+    v1 = D_8006C26C->unk4.Data.unk2;
+    if (D_80072E8E < v1) {
+        flags |= 2;
+    }
+    return flags;
+}
+#endif
 
 void func_801920F0(void) {
     D_8006C26C->unk0.data = D_8006C26C->unk0.data + D_8006C26C->unk8;
@@ -252,9 +401,26 @@ s32 func_80192914(s16 arg0, s16 arg1) {
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019294C);
+#else
+s32 func_8019294C(Unkstruct3* a, Unkstruct3* b) {
+    s32 a0 = (u16)b->unk0.Data.unk2 - (u16)a->unk0.Data.unk2;
+    s32 a1 = (u16)b->unk4.Data.unk2 - (u16)a->unk4.Data.unk2;
+    return func_80192914(a0, a1) & 0xFF;
+}
+#endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192994);
+#else
+u32 func_80192994(s32 arg0, s32 arg1) {
+    s32 a0 = arg0 - (u16)D_8006C26C->unk0.Data.unk2;
+    s32 a1 = arg1 - (u16)D_8006C26C->unk4.Data.unk2;
+    return func_80192914(a0, a1) & 0xFF;
+}
+#endif
+
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801929DC);
 
@@ -271,21 +437,22 @@ s32 func_80192AC0(s16 arg0, s16 arg1) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192AF0);
 #else
-typedef struct
-{
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-} Unkstruct_mad_2;
-
-s32 func_80192AF0(Unkstruct_mad_1* a, Unkstruct_mad_1* b) {
-    return func_800190AC(b->unk6 - a->unk6, b->unk2 - a->unk2) & 0xFFFF;
+s32 func_80192AF0(Unkstruct3* a, Unkstruct3* b) {
+    s32 a0 = b->unk4.Data.unk2 - a->unk4.Data.unk2;
+    s32 a1 = b->unk0.Data.unk2 - a->unk0.Data.unk2;
+    return func_800190AC(a0, a1) & 0xFFFF;
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B28);
+#else
+u16 func_80192B28(s32 arg0, s32 arg1) {
+    s16 a0 = arg1 - (u16)D_8006C26C->unk4.Data.unk2;
+    s16 a1 = arg0 - (u16)D_8006C26C->unk0.Data.unk2;
+    return func_800190AC(a0, a1);
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B70);
 
@@ -452,4 +619,37 @@ void func_80199740(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019976C);
+#else
+s32 func_8019976C(s32 arg0, s32 value) {
+    s32 temp_t0;
+    u8* phi_v1;
+    u8* phi_a0;
+    int i;
+    s32 phi_a2;
+    s32 phi_a2_2;
+
+    phi_v1 = arg0 + 4;
+    phi_a2 = 0;
+    for (i = 0, phi_a2_2 = 0; i < 4; i++)  {
+        phi_v1 = phi_a0;
+loop_2:
+        *phi_v1 -= value;
+        if ((u32) *phi_v1 >= 0xF9) {
+            *phi_v1 = 0;
+        } else {
+            phi_a2 |= 1;
+        }
+
+        phi_v1++;
+        if (phi_v1 < (phi_a0 + 3)) {
+            goto loop_2;
+        }
+
+        phi_a0 += 0xC;
+    }
+
+    return phi_a2 & 0xFF;
+}
+#endif
