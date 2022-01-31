@@ -3,23 +3,17 @@
 
 typedef struct
 {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-} Unkstruct_mad_1;
-
-typedef struct
-{
     u8 unk0[0x32];
     u16 unk32;
 } Unkstruct_mad_2;
 
 extern s16 D_801809EC[];
 extern RoomHeader g_rooms[];
-extern Unkstruct_mad_1 *D_801997D8;
-extern Unkstruct_mad_1* D_801997DC;
+extern ObjectInit* g_pStObjLayout[];
+extern ObjectInit** D_801803C8[];
+
+extern ObjectInit *D_801997D8;
+extern ObjectInit* D_801997DC;
 
 void func_801908DC(s16);
 void func_801909D8(s16);
@@ -211,74 +205,60 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B7C);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190C78);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190D8C);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", loadObjLayout);
 #else
-typedef struct
-{
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-} Unkstruct_80190D8C_1;
-
-void func_80190838(s16, s16);
 void func_801908DC(s16);
-void func_80190AD8(s16);
-extern s32* D_801803C8;
-extern Unkstruct_80190D8C_1* D_801997D8;
 extern s8 D_801997E0;
 extern s8 D_801997E4;
-extern u16* g_pStObjLayout[];
 
-void func_80190D8C(s32 arg0) {
+void loadObjLayout(s32 objLayoutId) {
     s16 temp_s0;
     s16 temp_v0_3;
-    s32 temp_a0;
-    u16 temp_a0_2;
-    u16* temp_a1;
-    Unkstruct_80190D8C_1* temp_v1;
-    Unkstruct_mad_1* temp_v0_2;
+    u16* pObjLayoutStart;
+    ObjectInit* temp_v1;
+    ObjectInit* temp_v0_2;
     s32 phi_a0;
-    s32 phi_a1;
+    s16 phi_a1;
     s16 phi_a1_2;
+    Unkstruct4* s1;
 
-    temp_a0 = arg0 * 4;
-    temp_a1 = g_pStObjLayout[arg0];
-    D_801997D8 = temp_a1;
-    D_801997DC = *(&D_801803C8 + temp_a0);
-    if (*temp_a1 != 0xFFFE) {
-        D_801997D8 = temp_a1 + 1;
+    pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    D_801997D8 = pObjLayoutStart;
+    D_801997DC = D_801803C8[objLayoutId];
+    s1 = &D_80072B34;
+    if (*pObjLayoutStart != 0xFFFE) {
+        D_801997D8 = pObjLayoutStart + 1;
         phi_a0 = func_8018E964() & 0xFF;
-        phi_a1 = 0;
         
-        while (true)
+        for (phi_a1 = 0; ; phi_a1++)
         {
             s32 temp_v0 = phi_a0 - D_801997D8->unk0;
+            D_801997D8 = (u16*)D_801997D8 + 1;
             phi_a0 = temp_v0;
-            if ((temp_v0 << 0x10) < 0)
+            if (temp_v0 << 0x10 < 0)
                 break;
 
-            D_801997D8++;
-            phi_a1++;
+            D_801997D8 = (u32*)D_801997D8 + 1;
         }
 
-        D_801997D8 = (temp_v1->unk4 << 0x10) + temp_v1->unk2;
-        temp_v0_2 = (s16)phi_a1 + 1 + D_801997DC;
+        D_801997D8 = (temp_v1->state << 0x10) + temp_v1->unk2;
+        temp_v0_2 = (u32*)D_801997DC + (phi_a1 + 1);
         D_801997DC = temp_v0_2;
         D_801997DC = (temp_v0_2->unk2 << 0x10) + temp_v0_2->unk0;
     }
 
-    temp_a0_2 = D_80072B34.unkA;
-    temp_v0_3 = temp_a0_2 - 0x40;
-    temp_s0 = temp_a0_2 + 0x140;
+    temp_v0_3 = s1->unkA - 0x40;
+    temp_s0 = s1->unkA + 0x140;
     phi_a1_2 = temp_v0_3;
     if (temp_v0_3 >> 15) {
         phi_a1_2 = 0;
     }
+    
     D_801997E0 = 0;
     D_801997E4 = 0;
-    func_80190838(phi_a1_2, phi_a1_2);
+    func_80190838(phi_a1_2);
     func_801908DC(temp_s0);
-    func_80190AD8(D_80072B34.unkE + 0x120);
+    func_80190AD8(((u16)s1->unkE + 0x120) << 0x10 >> 0x10);
 }
 #endif
 

@@ -92,6 +92,15 @@ typedef struct
     s16 unkE;
 } Unkstruct4;
 
+typedef struct
+{
+    u16 unk0;
+    u16 unk2;
+    u16 state;
+    u16 x;
+    u16 y;
+} ObjectInit;
+
 extern s32 D_8006BB00;
 extern Unkstruct3* D_8006C26C;
 extern s32 D_8006C39C;

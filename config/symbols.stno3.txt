@@ -1,0 +1,1 @@
+loadObjLayout = 0x801C3C98;
