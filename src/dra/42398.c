@@ -1285,9 +1285,25 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106590);
+void func_80106590(Unkstruct5* item) {
+    int i, size;
+    u32* ptr;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801065F4);
+    if (item->unk34 & 0x800000) {
+        func_800EDE78(item->unk64);
+    }
+
+    ptr = item;
+    size = sizeof(Unkstruct5) / sizeof(u32);
+    for (i = 0; i < size; i++)
+        *ptr++ = 0;
+}
+
+void func_801065F4(s16 startIndex) {
+    Unkstruct5* pItem;
+    for (pItem = &D_800733D8[startIndex]; pItem < &D_8007EFD8; pItem++)
+        func_80106590(pItem);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106670);
 

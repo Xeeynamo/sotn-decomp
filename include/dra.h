@@ -101,6 +101,16 @@ typedef struct
     u16 y;
 } ObjectInit;
 
+typedef struct
+{
+    s32 unk0;
+    char unk4[0x30];
+    s32 unk34;
+    char unk38[0x2C];
+    s32 unk64;
+    char unk68[0x54];
+} Unkstruct5;
+
 extern s32 D_8006BB00;
 extern Unkstruct3* D_8006C26C;
 extern s32 D_8006C39C;
@@ -123,11 +133,13 @@ extern s32 D_800730C0;
 extern s32 D_800730C4;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
+extern Unkstruct5 D_800733D8[];
 extern s16 D_80073404;
 extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
+extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
 extern s32 D_80096ED8[];
 extern u32 D_80097364;
@@ -298,6 +310,8 @@ void func_800FDE00(void);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
+void func_80106590(Unkstruct5*);
+void func_801065F4(s16 startIndex);
 void func_801071CC(s32, u8, s32);
 void func_80107250(s32 arg0, s32 arg1);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
