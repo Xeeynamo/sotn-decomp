@@ -4,12 +4,6 @@
 #include <psxsdk/libgpu.h>
 
 extern s32 D_8003925C;
-extern u16 D_8003C708;
-extern s32 D_8003C734;
-extern s32 g_SettingsCloakMode;
-extern s32 g_SettingsSoundMode;
-extern s32 g_CurrentPlayableCharacter;
-extern s32 D_8003CACC;
 
 extern void func_80015238(s32 arg0);
 int VSync(s32);

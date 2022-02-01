@@ -152,7 +152,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3A88);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3B84);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", loadObjLayout);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", LoadObjLayout);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
 

@@ -34,4 +34,4 @@ g_pStrObjLayout21 = 0x80181CF6;
 func_8018E994 = 0x8018E994;
 func_8018EDB8 = 0x8018EDB8;
 func_80190F04 = 0x80190F04;
-loadObjLayout = 0x80190D8C;
+LoadObjLayout = 0x80190D8C;

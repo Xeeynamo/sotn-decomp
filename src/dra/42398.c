@@ -402,11 +402,77 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0578);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0608);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F087C);
+#else
+typedef struct
+{
+    s32 foo[5];
+} Unkstruct_800F087C;
+
+s32 func_800FD4C0(s32, s32);
+extern Unkstruct_800F087C D_800A297C;
+
+s32 func_800F087C(u32 chunkX, u32 chunkY) {
+    s32 temp_a0;
+    s32 temp_v1;
+    Unkstruct_800F087C* phi_s1;
+    Unkstruct_800F087C* phi_s0;
+
+    phi_s1 = &D_800A297C;
+    phi_s0 = (u32*)&D_800A297C + 4;
+loop_1:
+    temp_v1 = phi_s1->foo[0];
+    if (temp_v1 != 0x80) {
+        if (temp_v1 == chunkX && phi_s0->foo[-3] == chunkY && phi_s0->foo[-2] == g_mapProgramId) {
+            temp_a0 = phi_s0->foo[-1];
+            if (temp_a0 == 0xFF || func_800FD4C0(temp_a0, 0) == 0)
+                return phi_s0->foo[0] + 2;
+        }
+        phi_s1++;
+        phi_s0++;
+        goto loop_1;
+    }
+
+    return 0;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0940);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0BC0);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/42398", SetNextRoomToLoad);
+#else
+bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
+    RoomLoadDef* pRoomLoad;
+    RoomHeader* pRoom;
+
+    if (D_80072F2C & 0x40000)
+        return false;
+
+    if (func_800F087C(chunkX, chunkY))
+        return false;
+
+    pRoom = D_8003C784;
+loop_3:
+    while (pRoom->left != 0x40) {
+        if (chunkX >= pRoom->left && chunkY >= pRoom->top &&
+            pRoom->right >= chunkX && pRoom->bottom >= chunkY) {
+            pRoomLoad = &pRoom->load;
+            if (pRoom->load.tilesetId == 0xFF) {
+                if (D_800A2464[pRoom->load.tileLayoutId * 5] == 0x1F) {
+                    return false;
+                }
+            }
+            D_801375BC = pRoomLoad;
+            return true;
+        }
+        pRoom++;
+        goto loop_3;
+    }
+    return false;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0CD8);
 

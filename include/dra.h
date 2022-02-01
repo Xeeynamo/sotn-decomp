@@ -24,11 +24,16 @@ typedef struct
 
 typedef struct
 {
-    u8 left, top, right, bottom;
     u8 tileLayoutId;
     u8 tilesetId;
     u8 objGfxId;
     u8 objLayoutId;
+} RoomLoadDef;
+
+typedef struct
+{
+    u8 left, top, right, bottom;
+    RoomLoadDef load;
 } RoomHeader;
 
 typedef struct
@@ -111,6 +116,18 @@ typedef struct
     char unk68[0x54];
 } Unkstruct5;
 
+// main
+extern void (*D_8003C6D8)(s32);
+extern u16 D_8003C708;
+extern s32 D_8003C734;
+extern void (*D_8003C744)(s32, s32);
+extern RoomHeader* D_8003C784;
+extern s32 g_SettingsCloakMode;
+extern s32 g_SettingsSoundMode;
+extern s32 g_CurrentPlayableCharacter;
+extern s32 D_8003CACC;
+
+// dra
 extern s32 D_8006BB00;
 extern Unkstruct3* D_8006C26C;
 extern s32 D_8006C39C;
@@ -172,6 +189,7 @@ extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
 
 extern s32 D_800A2438;
+extern u16 D_800A2464[];
 extern const char* c_strALUCARD;
 extern const char* c_strSTR;
 extern const char* c_strCON;
@@ -221,6 +239,7 @@ extern const char *c_strFamiliar;
 extern const char *c_strSpecial2;
 extern RECT c_backbufferClear;
 extern u8  D_80137460;
+extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
@@ -277,6 +296,8 @@ void func_800EDAE4(void);
 s16 func_800EDC80(u8 arg0, s32 arg1);
 s16 func_800EDD9C(u8 arg0, s32 arg1);
 void func_800EDE78(s32 index);
+s32 func_800F087C(u32, u32);
+bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
 void func_800F1EB0(s32, s32, s32);
 void func_800F2120();
 void func_800F223C(void);
