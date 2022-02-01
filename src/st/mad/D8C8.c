@@ -7,6 +7,68 @@ typedef struct
     u16 unk32;
 } Unkstruct_mad_2;
 
+typedef struct
+{
+    u_long	tag;
+    s8 unk4, unk5, unk6, unk7;
+    s16 unk8, unkA;
+    s16 unkC, unkE;
+    s16 unk10;
+    s8 unk12;
+    s8 unk13;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s8 unk1E;
+    s8 unk1F;
+    s16 unk20;
+    s16 unk22;
+    s8 unk24;
+    s8 unk25;
+    s8 unk26;
+    s8 unk27;
+    s8 unk28;
+    s8 unk29;
+    s8 unk2A;
+    s8 unk2B;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+} Unkstruct_mad_3;
+
+typedef struct
+{
+    u_long	tag;
+    s8 unk4, unk5, unk6, unk7;
+    s16 unk8, unkA;
+    s16 unkC, unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s16 unk1E;
+    s16 unk20;
+    s16 unk22;
+    s8 unk24;
+    s8 unk25;
+    s8 unk26;
+    s8 unk27;
+    s8 unk28;
+    s8 unk29;
+    s8 unk2A;
+    s8 unk2B;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+} Unkstruct_mad_4;
+
 extern s16 D_801809EC[];
 extern RoomHeader g_rooms[];
 extern ObjectInit* g_pStObjLayout[];
@@ -205,13 +267,13 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B7C);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190C78);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", loadObjLayout);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", LoadObjLayout);
 #else
 void func_801908DC(s16);
 extern s8 D_801997E0;
 extern s8 D_801997E4;
 
-void loadObjLayout(s32 objLayoutId) {
+void LoadObjLayout(s32 objLayoutId) {
     s16 temp_s0;
     s16 temp_v0_3;
     u16* pObjLayoutStart;
@@ -488,9 +550,17 @@ void func_801937C4(void) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801937EC);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801938FC);
+void func_801938FC(void) {
+    D_8003C6D8(0x670);
+    D_8003C744(5, 0x4000);
+    func_80191D3C(D_8006C26C);
+}
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019394C);
+void func_8019394C(void) {
+    D_8003C6D8(0x670);
+    D_8003C744(5, 0x8000);
+    func_80191D3C(D_8006C26C);
+}
 
 void func_8019399C(void) {
     func_80191D3C(D_8006C26C);
@@ -587,16 +657,44 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199508);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199584);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019960C);
+void func_8019960C(Unkstruct_mad_3* arg0) {
+    arg0->unk13 = 0;
+    arg0->unk1F = 0;
+    arg0->unk2B = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk14 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk16 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unkA = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk8 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unkE = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unkC = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk12 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk10 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk18 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk1A = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk1C = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk1E = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk24 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk25 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk28 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk2A = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk20 = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk22 = 0;
+}
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801996EC);
+void func_801996EC(Unkstruct_mad_3* arg0) {
+    func_8019960C(arg0);
+    arg0->unk2B = 8;
+    ((Unkstruct_mad_4*)arg0->tag)->unk2B = 1;
+    ((Unkstruct_mad_4*)arg0->tag)->unk7 = 2;
+    ((Unkstruct_mad_4*)arg0->tag)->unk32 = 0xA;
+}
 
-void func_80199740(POLY_GT4* arg0) {
-    arg0->p3 = 0;
-    arg0->pad3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 0;
-    ((POLY_GT4*)arg0->tag)->code = 4;
-    ((POLY_GT4*)arg0->tag)->pad3 = 8;
+void func_80199740(Unkstruct_mad_4* arg0) {
+    arg0->unk2B = 0;
+    arg0->unk32 = 8;
+    ((Unkstruct_mad_4*)arg0->tag)->unk2B = 0;
+    ((Unkstruct_mad_4*)arg0->tag)->unk7 = 4;
+    ((Unkstruct_mad_4*)arg0->tag)->unk32 = 8;
 }
 
 #ifndef NON_MATCHING
