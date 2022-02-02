@@ -354,7 +354,19 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801910A8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191120);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191D3C);
+void func_80191D3C(Unkstruct3* item) {
+    int i, length;
+    u32* ptr;
+
+    if (item->unk34 & 0x800000) {
+        D_8003C6B0(item->unk64);
+    }
+
+    ptr = item;
+    length = sizeof(Unkstruct3) / sizeof(s32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191DA8);
 
@@ -420,9 +432,27 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192408);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192618);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192800);
+Unkstruct3* func_80192800(Unkstruct3* arg0, Unkstruct3* arg1) {
+    while (arg0 < arg1)
+    {
+        if (arg0->unk26 == 0)
+        {
+            func_80191D3C(arg0);
+            return arg0;
+        }
 
+        arg0++;
+    }
+    return NULL;
+}
+
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192860);
+#else
+s32 func_80192860(s32 arg0, s16 arg1) {
+    return D_801809EC[arg0 & 0xFF] * arg1;
+}
+#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019288C);
@@ -432,8 +462,10 @@ s16 func_8019288C(s32 arg0) {
 }
 #endif
 
-
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801928A8);
+void func_801928A8(s32 arg0, s16 arg1) {
+    D_8006C26C->unk8 = func_80192860(arg0 & 0xFF, arg1);
+    D_8006C26C->unkC = func_80192860((arg0 - 0x40) & 0xFF, arg1);
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192914);
@@ -463,8 +495,21 @@ u32 func_80192994(s32 arg0, s32 arg1) {
 }
 #endif
 
-
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801929DC);
+#else
+u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
+    u32 temp_a2 = (arg2 - arg1) << 0x18;
+    u8 phi_v0 = temp_a2 ? -temp_a2 : temp_a2;
+
+    if ((u8)arg0 < phi_v0) {
+        s32 phi_v0_2 = temp_a2 << 0x18 ? (arg1 - arg0) : (arg1 + arg0);
+        return phi_v0_2;
+    }
+    
+    return arg2;
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192A34);
 
@@ -496,7 +541,21 @@ u16 func_80192B28(s32 arg0, s32 arg1) {
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B70);
+#else
+u16 func_80192B70(s32 arg0, s32 arg1, s32 arg2) {
+    u32 temp_a2 = arg2 - arg1;
+    u16 phi_v0 = temp_a2 & 0x800 ? (0x800 - temp_a2) & 0x7FF : temp_a2;
+    
+    if ((u16)arg0 < phi_v0) {
+        u16 ret = temp_a2 & 0x800 ? (arg1 - arg0) : (arg1 + arg0);
+        return ret;
+    }
+
+    return arg2;
+}
+#endif
 
 void func_80192BD0(s32 arg0) {
     D_8006C26C->unk2C = (s16) (arg0 & 0xFF);

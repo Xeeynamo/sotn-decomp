@@ -72,7 +72,10 @@ typedef struct
     Unkunion1 unk4;
     s32 unk8;
     s32 unkC;
-    s32 unk10[7];
+    s32 unk10[5];
+    s16 unk24;
+    u16 unk26;
+    s32 unk28;
     u16 unk2C;
     s16 unk2E;
     s16 unk30;
@@ -87,6 +90,32 @@ typedef struct
     s32 unk4C;
     s16 unk50;
     s16 unk52;
+    s32 unk54;
+    s32 unk58;
+    s32 unk5C;
+    s32 unk60;
+    s32 unk64;
+    s32 unk68;
+    s32 unk6C;
+    s32 unk70;
+    s32 unk74;
+    s32 unk78;
+    s32 unk7C;
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8C;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9C;
+    s32 unkA0;
+    s32 unkA4;
+    s32 unkA8;
+    s32 unkAC;
+    s32 unkB0;
+    s32 unkB4;
+    s32 unkB8;
 } Unkstruct3;
 
 typedef struct
@@ -106,17 +135,8 @@ typedef struct
     u16 y;
 } ObjectInit;
 
-typedef struct
-{
-    s32 unk0;
-    char unk4[0x30];
-    s32 unk34;
-    char unk38[0x2C];
-    s32 unk64;
-    char unk68[0x54];
-} Unkstruct5;
-
 // main
+extern void (*D_8003C6B0)(s32);
 extern void (*D_8003C6D8)(s32);
 extern u16 D_8003C708;
 extern s32 D_8003C734;
@@ -150,7 +170,7 @@ extern s32 D_800730C0;
 extern s32 D_800730C4;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
-extern Unkstruct5 D_800733D8[];
+extern Unkstruct3 D_800733D8[];
 extern s16 D_80073404;
 extern s16 D_80073406;
 extern s8  D_80073510;
@@ -331,7 +351,7 @@ void func_800FDE00(void);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
-void func_80106590(Unkstruct5*);
+void func_80106590(Unkstruct3*);
 void func_801065F4(s16 startIndex);
 void func_801071CC(s32, u8, s32);
 void func_80107250(s32 arg0, s32 arg1);
