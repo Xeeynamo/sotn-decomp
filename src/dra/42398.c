@@ -1351,7 +1351,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
-void func_80106590(Unkstruct3* item) {
+void func_80106590(Entity* item) {
     int i, length;
     u32* ptr;
 
@@ -1360,13 +1360,13 @@ void func_80106590(Unkstruct3* item) {
     }
 
     ptr = item;
-    length = sizeof(Unkstruct3) / sizeof(u32);
+    length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
 
 void func_801065F4(s16 startIndex) {
-    Unkstruct3* pItem;
+    Entity* pItem;
     for (pItem = &D_800733D8[startIndex]; pItem < &D_8007EFD8; pItem++)
         func_80106590(pItem);
 }

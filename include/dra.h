@@ -36,17 +36,6 @@ typedef struct
     RoomLoadDef load;
 } RoomHeader;
 
-typedef struct
-{
-    u16 x, y;
-    u16 id : 10;
-    u16 unk04_10 : 3;
-    u16 unk04_13 : 3;
-    u8 unk06;
-    u8 unk07;
-    u16 unk08;
-} ObjLayoutEntry;
-
 typedef struct 
 {
     s16 unk0;
@@ -57,22 +46,33 @@ typedef struct
 
 typedef union
 {
-    s32 data;
+    s32 value;
     struct
     {
-        s16 unk0;
-        s16 unk2;
+        s16 low;
+        s16 high;
     } Data;
+    struct
+    {
+        s8 unk0;
+        s8 unk1;
+        s16 unk2;
+    } Data1;
     
 } Unkunion1; // big assumption here...
 
 typedef struct
 {
-    Unkunion1 unk0;
-    Unkunion1 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10[5];
+    u8 _[0];
+    Unkunion1 posX;
+    Unkunion1 posY;
+    s32 accelerationX;
+    s32 accelerationY;
+    s16 unk10;
+    s16 unk12;
+    s32 unk14[3];
+    s16 unk20;
+    s16 unk22;
     s16 unk24;
     u16 unk26;
     s32 unk28;
@@ -85,7 +85,8 @@ typedef struct
     s32 unk3C;
     s16 unk40;
     s16 unk42;
-    s32 unk44;
+    s16 unk44;
+    s16 unk46;
     s32 unk48;
     s32 unk4C;
     s16 unk50;
@@ -95,7 +96,8 @@ typedef struct
     s32 unk5C;
     s32 unk60;
     s32 unk64;
-    s32 unk68;
+    s16 unk68;
+    s16 unk6A;
     s32 unk6C;
     s32 unk70;
     s32 unk74;
@@ -116,7 +118,7 @@ typedef struct
     s32 unkB0;
     s32 unkB4;
     s32 unkB8;
-} Unkstruct3;
+} Entity;
 
 typedef struct
 {
@@ -128,11 +130,11 @@ typedef struct
 
 typedef struct
 {
-    u16 unk0;
-    u16 unk2;
-    u16 state;
-    u16 x;
-    u16 y;
+    u16 posX;
+    u16 posY;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
 } ObjectInit;
 
 // main
@@ -149,11 +151,12 @@ extern s32 D_8003CACC;
 
 // dra
 extern s32 D_8006BB00;
-extern Unkstruct3* D_8006C26C;
+extern Entity* D_8006C26C;
 extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
 extern Unkstruct4 D_80072B34;
 extern u16 D_80072B3E;
+extern u16 D_80072B42;
 extern s16 D_80072E8A;
 extern s16 D_80072E8E;
 extern s32 D_80072F2C;
@@ -170,12 +173,13 @@ extern s32 D_800730C0;
 extern s32 D_800730C4;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
-extern Unkstruct3 D_800733D8[];
+extern Entity D_800733D8[];
 extern s16 D_80073404;
 extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
+extern Entity D_80075D88[];
 extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
 extern s32 D_80096ED8[];
@@ -351,7 +355,7 @@ void func_800FDE00(void);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
-void func_80106590(Unkstruct3*);
+void func_80106590(Entity*);
 void func_801065F4(s16 startIndex);
 void func_801071CC(s32, u8, s32);
 void func_80107250(s32 arg0, s32 arg1);
