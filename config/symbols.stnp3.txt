@@ -1,2 +1,15 @@
+PfnEntityUpdates = 0x801808CC;
 LoadObjLayout = 0x801BB508;
 g_pStObjLayout = 0x80180728;
+EntityCandle = 0x801B26FC;
+EntityDamage = 0x801BA608;
+InitializeEntity = 0x801BACAC;
+DestroyEntity = 0x801BC4D4;
+EntityCandleDrop = 0x801BDEF4;
+EntityAreaTitlePopup = 0x801C2860;
+EntityAbsorbOrb = 0x801C34E4;
+EntityMerman2 = 0x801C80DC;
+EntityMerman = 0x801C8238;
+EntityBat = 0x801C997C;
+EntityZombie = 0x801C9BC8;
+EntityBoneScimitar = 0x801C91C4;

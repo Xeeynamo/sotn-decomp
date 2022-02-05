@@ -2,6 +2,8 @@
 #define DRA_H
 #include "main.h"
 
+typedef void (*PfnEntityUpdate)(struct Entity*);
+
 typedef struct
 {
     unsigned char width;
@@ -70,12 +72,15 @@ typedef struct
     s32 accelerationY;
     s16 unk10;
     s16 unk12;
-    s32 unk14[3];
+    s16 unk14;
+    s16 palette;
+    s32 unk18;
+    s32 unk1C;
     s16 unk20;
     s16 unk22;
-    s16 unk24;
-    u16 unk26;
-    s32 unk28;
+    s16 zPriority;
+    u16 objectId;
+    PfnEntityUpdate pfnUpdate;
     u16 unk2C;
     s16 unk2E;
     s16 unk30;
@@ -164,6 +169,8 @@ extern s16 D_80072E8E;
 extern s32 D_80072F2C;
 extern s32 D_80073060;
 extern s32 D_80073080;
+extern u16 D_8007308E;
+extern u16 D_80073092;
 extern s32 g_CurrentRoomHSize;
 extern s32 g_CurrentRoomVSize;
 extern s32 D_800730AC;

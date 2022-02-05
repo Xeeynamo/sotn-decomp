@@ -1,13 +1,14 @@
 #include "common.h"
 #include "dra.h"
 
+extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_801820C4[];
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B77D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B7A64);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandle);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B7B98);
 
@@ -131,9 +132,22 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1B78);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1C80);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C2D98);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityDamage);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C343C);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", InitializeEntity);
+#else
+void InitializeEntity(Entity* entity, ObjectInit* initDesc) {
+    DestroyEntity(entity);
+    entity->objectId = initDesc->unk4 & 0x3FF;
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->posX.Data.high = initDesc->posX - D_8007308E;
+    entity->posY.Data.high = initDesc->posY - D_80073092;
+    entity->unk30 = initDesc->unk8;
+    entity->unk32 = initDesc->unk6 >> 8;
+    entity->unk68 = initDesc->unk4 >> 0xA & 7;
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 
@@ -167,7 +181,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3FB4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C402C);
 
-void func_801C4C64(Entity* item) {
+void DestroyEntity(Entity* item) {
     int i, length;
     u32* ptr;
 
@@ -285,10 +299,10 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6568);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C660C);
 
 void func_801C665C(void) {
-    func_801C4C64(D_8006C3B8);
+    DestroyEntity(D_8006C3B8);
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6684);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandleDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6EF8);
 
@@ -342,9 +356,9 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAD28);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAE20);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAFF0);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAreaTitlePopup);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CBC74);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAbsorbOrb);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC008);
 
@@ -382,7 +396,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF5E0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF6D8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF740);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityWarg);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D04A4);
 
@@ -420,9 +434,9 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D4700);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D48F8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D49C4);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityMerman2);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D4B20);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityMerman);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D56D8);
 
@@ -432,13 +446,13 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D58D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D59D0);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D5AAC);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityBoneScimitar);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D615C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6264);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityBat);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D64B0);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityZombie);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6710);
 

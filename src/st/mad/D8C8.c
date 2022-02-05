@@ -73,7 +73,7 @@ extern s16 D_801809EC[];
 extern RoomHeader g_rooms[];
 extern ObjectInit* g_pStObjLayout[];
 extern ObjectInit** D_801803C8[];
-extern s32 D_80180498[];
+extern PfnEntityUpdate PfnEntityUpdates[];
 
 extern ObjectInit *D_801997D8;
 extern ObjectInit* D_801997DC;
@@ -84,7 +84,7 @@ void func_801908DC(s16);
 void func_801909D8(s16);
 void func_80190B7C(s16);
 void func_80190C78(s16);
-void func_80191D3C(Entity*);
+void DestroyEntity(Entity*);
 s32 func_80192914(s16 arg0, s16 arg1);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
@@ -196,7 +196,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E5AC);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E674);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E830);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandle);
 
 u32 func_8018E964(void) {
     D_80097364 = (D_80097364 * 0x01010101) + 1;
@@ -212,12 +212,12 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018EDB8);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018FEA0);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190544);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", InitializeEntity);
 #else
-void func_80190544(Entity* entity, ObjectInit* initDesc) {
-    func_80191D3C(entity);
-    entity->unk26 = initDesc->unk4 & 0x3FF;
-    entity->unk28 = D_80180498[entity->unk26];
+void InitializeEntity(Entity* entity, ObjectInit* initDesc) {
+    DestroyEntity(entity);
+    entity->objectId = initDesc->unk4 & 0x3FF;
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_80072B3E;
     entity->posY.Data.high = initDesc->posY - D_80072B42;
     entity->unk30 = initDesc->unk8;
@@ -246,13 +246,13 @@ void func_80190608(ObjectInit* initDesc) {
         switch (initDesc->unk4 & 0xE000) {
         case 0x0:
             entity = &D_80075D88[*(u8*)&initDesc->unk6];
-            if (entity->unk26 != 0) {
+            if (entity->objectId != 0) {
                 break;
             }
-            func_80190544(entity, initDesc);
+            InitializeEntity(entity, initDesc);
             break;
         case 0xA000:
-            func_80190544(&D_80075D88[initDesc->unk6], initDesc);
+            InitializeEntity(&D_80075D88[initDesc->unk6], initDesc);
             break;
         }
     }
@@ -417,7 +417,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801910A8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191120);
 
-void func_80191D3C(Entity* item) {
+void DestroyEntity(Entity* item) {
     int i, length;
     u32* ptr;
 
@@ -498,9 +498,9 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192618);
 Entity* func_80192800(Entity* arg0, Entity* arg1) {
     while (arg0 < arg1)
     {
-        if (arg0->unk26 == 0)
+        if (arg0->objectId == 0)
         {
-            func_80191D3C(arg0);
+            DestroyEntity(arg0);
             return arg0;
         }
 
@@ -667,7 +667,7 @@ void func_801937BC(void) {
 }
 
 void func_801937C4(void) {
-    func_80191D3C(D_8006C26C);
+    DestroyEntity(D_8006C26C);
 }
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801937EC);
@@ -675,17 +675,17 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801937EC);
 void func_801938FC(void) {
     D_8003C6D8(0x670);
     D_8003C744(5, 0x4000);
-    func_80191D3C(D_8006C26C);
+    DestroyEntity(D_8006C26C);
 }
 
 void func_8019394C(void) {
     D_8003C6D8(0x670);
     D_8003C744(5, 0x8000);
-    func_80191D3C(D_8006C26C);
+    DestroyEntity(D_8006C26C);
 }
 
 void func_8019399C(void) {
-    func_80191D3C(D_8006C26C);
+    DestroyEntity(D_8006C26C);
 }
 
 Entity* func_801939C4(void) {
