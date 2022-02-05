@@ -14,7 +14,7 @@ Recompilable code that creates 1:1 binaries for the commercial videogame Castlev
 ## Build
 
 1. You need `gcc-mipsel-linux-gnu` that you can easily install on any Debian-based Linux distribution. On Windows it is highly recommended to just use Ubuntu with WSL
-1. Place your `main.exe` from the file `SLUS_000.67` and `DRA.BIN` in the root directory
+1. Place your `main.exe` from the file `SLUS_000.67`, `DRA.BIN` and the `ST` folder in the root directory of the repository
 1. Run `make extract` to generate the assembly files
 1. Run `make all` to compile the binaries into the `build/` directory
 
@@ -30,6 +30,14 @@ Thanks to [asm-differ](https://github.com/simonlindholm/asm-differ) you can chec
 
 Some non-matching functions are present in the source code by disabled by the macro `NON_MATCHING`. You can still compile the game binaries by running ` CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
 
+## Technical details
+
+The game is divided in three modules:
+
+* `main` is the game engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
+* `DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms' (save, loading, teleport) layout.
+* `ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map's specific events, cutscenes, enemies' AI, collisions and more. It also contains the rooms and entities layout.
+
 # Notes
 
 * I suspect that GCC 2.7.2 / PSY-Q 3.6 have been used to originally compile `DRA.BIN`
@@ -39,5 +47,5 @@ Some non-matching functions are present in the source code by disabled by the ma
 
 The project is very barebone at the moment and there is a massive room of improvement, mostly in the infrastructure:
 
-* The zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are not yet disassembled
+* Not all the zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are disassembled
 * There is no CI/CD pipeline to test the correctness of the compiled code
