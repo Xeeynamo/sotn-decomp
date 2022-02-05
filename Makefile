@@ -3,6 +3,7 @@ MAIN            := main
 DRA             := dra
 STMAD           := stmad
 STNO3           := stno3
+STNP3           := stnp3
 
 # Compilers
 CROSS           := mipsel-linux-gnu-
@@ -67,12 +68,23 @@ STNO3_O_FILES    := $(foreach file,$(STNO3_S_FILES),$(BUILD_DIR)/$(file).o) \
 STNO3_TARGET     := $(BUILD_DIR)/$(STNO3)
 STNO3BIN_TARGET  := $(BUILD_DIR)/NO3.BIN
 
+STNP3_ASM_DIRS   := $(ASM_DIR)/st/np3 $(ASM_DIR)/st/np3/data
+STNP3_SRC_DIRS   := $(SRC_DIR)/st/np3
+STNP3_S_FILES    := $(foreach dir,$(STNP3_ASM_DIRS),$(wildcard $(dir)/*.s)) \
+					$(foreach dir,$(STNP3_ASM_DIRS),$(wildcard $(dir)/**/*.s))
+STNP3_C_FILES    := $(foreach dir,$(STNP3_SRC_DIRS),$(wildcard $(dir)/*.c)) \
+					$(foreach dir,$(STNP3_SRC_DIRS),$(wildcard $(dir)/**/*.c))
+STNP3_O_FILES    := $(foreach file,$(STNP3_S_FILES),$(BUILD_DIR)/$(file).o) \
+					$(foreach file,$(STNP3_C_FILES),$(BUILD_DIR)/$(file).o)
+STNP3_TARGET     := $(BUILD_DIR)/$(STNP3)
+STNP3BIN_TARGET  := $(BUILD_DIR)/NP3.BIN
+
 # Tooling
 PYTHON          := python3
 SPLAT_DIR       := $(TOOLS_DIR)/n64splat
 SPLAT           := $(PYTHON) $(SPLAT_DIR)/split.py
 
-all: main dra mad no3
+all: main dra mad no3 np3
 	sha1sum --check slus00067.sha
 clean:
 	rm -rf $(BUILD_DIR)
@@ -138,7 +150,22 @@ $(STNO3_TARGET).elf: $(STNO3_O_FILES)
 	-nostdlib \
 	-s
 
-extract: extract_main extract_dra extract_mad extract_no3
+np3: np3_dirs $(STNP3BIN_TARGET)
+np3_dirs:
+	$(foreach dir,$(STNP3_ASM_DIRS) $(STNP3_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+$(STNP3BIN_TARGET): $(STNP3_TARGET).elf
+	$(OBJCOPY) -O binary $< $@
+$(STNP3_TARGET).elf: $(STNP3_O_FILES)
+	$(LD) -o $@ \
+	-Map $(STNP3_TARGET).map \
+	-T $(STNP3).ld \
+	-T $(CONFIG_DIR)/undefined_syms_auto.$(STNP3).txt \
+	-T $(CONFIG_DIR)/undefined_funcs_auto.$(STNP3).txt \
+	--no-check-sections \
+	-nostdlib \
+	-s
+
+extract: extract_main extract_dra extract_mad extract_no3 extract_np3
 extract_main: $(SPLAT_DIR)
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: $(SPLAT_DIR)
@@ -149,6 +176,9 @@ extract_mad: $(SPLAT_DIR)
 extract_no3: $(SPLAT_DIR)
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.$(STNO3).txt > $(CONFIG_DIR)/generated.symbols.$(STNO3).txt
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(STNO3).yaml
+extract_np3: $(SPLAT_DIR)
+	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.$(STNP3).txt > $(CONFIG_DIR)/generated.symbols.$(STNP3).txt
+	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(STNP3).yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
 $(SPLAT_DIR):
@@ -168,5 +198,5 @@ $(BUILD_DIR)/%.c.s: %.c
 SHELL = /bin/bash -e -o pipefail
 
 .PHONY: all, clean
-.PHONY: main, main_dirs, dra, dra_dirs, mad, mad_dirs, no3, no3_dirs
-.PHONY: extract, extract_main, extract_dra, extract_mad, extract_no3
+.PHONY: main, main_dirs, dra, dra_dirs, mad, mad_dirs, no3, no3_dirs, np3, np3_dirs
+.PHONY: extract, extract_main, extract_dra, extract_mad, extract_no3, extract_np3

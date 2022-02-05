@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     stnp3
+  base_path:    .
+  target_path:  ST/NP3.BIN
+  asm_path:     asm/st/np3
+  asset_path:   assets/st/np3
+  src_path:     src/st/np3
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stnp3.txt
+  undefined_syms_path:  config/undefined_syms.stnp3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stnp3.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stnp3.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: stnp3
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x3246C, c]
+      - [0x52768, data]
+  - [0x53434]

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "dra.h"
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B77D4);
 
