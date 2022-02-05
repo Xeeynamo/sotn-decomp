@@ -1,0 +1,2 @@
+LoadObjLayout = 0x801BB508;
+g_pStObjLayout = 0x80180728;

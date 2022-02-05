@@ -1,6 +1,8 @@
 #include "common.h"
 #include "dra.h"
 
+extern s16 D_80181A50[];
+
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B246C);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
@@ -111,7 +113,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB2F8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB3F4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB508);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", LoadObjLayout);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB680);
 
@@ -123,7 +125,19 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB824);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB89C);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC4D4);
+void func_801BC4D4(Entity* item) {
+    int i, length;
+    u32* ptr;
+
+    if (item->unk34 & 0x800000) {
+        D_8003C7B4(item->unk64);
+    }
+
+    ptr = item;
+    length = sizeof(Entity) / sizeof(s32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC540);
 
@@ -151,7 +165,13 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCD44);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCDA4);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCDD0);
+#else
+s16 func_801BCDD0(s32 arg0) {
+    return D_80181A50[arg0 & 0xFF];
+}
+#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCDEC);
 
@@ -173,15 +193,32 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD06C);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD0B4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD114);
+void func_801BD114(s32 arg0) {
+    D_8006C3B8->unk2C = (s16) (arg0 & 0xFF);
+    D_8006C3B8->unk2E = 0;
+    D_8006C3B8->unk50 = 0;
+    D_8006C3B8->unk52 = 0;
+}
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD134);
+void func_801BD134(s32 arg0) {
+    D_8006C3B8->unk2E = (s16) (arg0 & 0xFF);
+    D_8006C3B8->unk50 = 0;
+    D_8006C3B8->unk52 = 0;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD150);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD1E4);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD2E0);
+#else
+void func_801BD2E0(Entity* arg0) {
+    if (arg0->unk2C == 0) {
+        arg0->unk2C++;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD308);
 
@@ -205,7 +242,9 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BDDD8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BDE7C);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BDECC);
+void func_801BDECC(void) {
+    func_801BC4D4(D_8006C3B8);
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BDEF4);
 

@@ -1,6 +1,8 @@
 #include "common.h"
 #include "dra.h"
 
+extern s16 D_801820C4[];
+
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B77D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
@@ -165,7 +167,19 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3FB4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C402C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4C64);
+void func_801C4C64(Entity* item) {
+    int i, length;
+    u32* ptr;
+
+    if (item->unk34 & 0x800000) {
+        D_8003C7B4(item->unk64);
+    }
+
+    ptr = item;
+    length = sizeof(Entity) / sizeof(s32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4CD0);
 
@@ -193,7 +207,13 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C54D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5534);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5560);
+#else
+s16 func_801C5560(s32 arg0) {
+    return D_801820C4[arg0 & 0xFF];
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
 
@@ -215,15 +235,32 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57FC);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5844);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C58A4);
+void func_801C58A4(s32 arg0) {
+    D_8006C3B8->unk2C = (s16) (arg0 & 0xFF);
+    D_8006C3B8->unk2E = 0;
+    D_8006C3B8->unk50 = 0;
+    D_8006C3B8->unk52 = 0;
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C58C4);
+void func_801C58C4(s32 arg0) {
+    D_8006C3B8->unk2E = (s16) (arg0 & 0xFF);
+    D_8006C3B8->unk50 = 0;
+    D_8006C3B8->unk52 = 0;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C58E0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5974);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5A70);
+#else
+void func_801C5A70(Entity* arg0) {
+    if (arg0->unk2C == 0) {
+        arg0->unk2C++;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5A98);
 
@@ -247,7 +284,9 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6568);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C660C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C665C);
+void func_801C665C(void) {
+    func_801C4C64(D_8006C3B8);
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6684);
 

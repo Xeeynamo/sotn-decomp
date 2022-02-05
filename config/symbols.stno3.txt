@@ -1,1 +1,2 @@
 LoadObjLayout = 0x801C3C98;
+g_pStObjLayout = 0x8018077C;
