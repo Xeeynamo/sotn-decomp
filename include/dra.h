@@ -74,36 +74,45 @@ typedef struct
     s16 unk12;
     s16 unk14;
     s16 palette;
-    s32 unk18;
+    s8 unk18;
+    s8 unk19;
+    s16 unk1A;
     s32 unk1C;
     s16 unk20;
     s16 unk22;
-    s16 zPriority;
+    u16 zPriority;
     u16 objectId;
     PfnEntityUpdate pfnUpdate;
     u16 unk2C;
     s16 unk2E;
-    s16 unk30;
+    u16 subId;
     s16 unk32;
     s32 unk34;
-    s32 unk38;
-    s32 unk3C;
+    s16 unk38;
+    s16 unk3A;
+    s16 unk3C;
+    s16 unk3E;
     s16 unk40;
     s16 unk42;
-    s16 unk44;
-    s16 unk46;
+    u16 unk44;
+    s8 hitboxWidth;
+    s8 hitboxHeight;
     s32 unk48;
     s32 unk4C;
-    s16 unk50;
-    s16 unk52;
-    s32 unk54;
-    s32 unk58;
+    u16 animationFrameIndex;
+    s16 animationFrameDuration;
+    s16 animationSet;
+    s16 animationFrame;
+    s16 unk58;
+    s16 unk5A;
     s32 unk5C;
     s32 unk60;
     s32 unk64;
     s16 unk68;
     s16 unk6A;
-    s32 unk6C;
+    s8 unk6C;
+    s8 unk6D;
+    s16 unk6E;
     s32 unk70;
     s32 unk74;
     s32 unk78;
@@ -142,20 +151,52 @@ typedef struct
     u16 unk8;
 } ObjectInit;
 
+typedef struct
+{
+    s16 unk0;
+    s16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    s16 unkA;
+    u16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s16 unk1E;
+    s16 unk20;
+    u8 hitboxWidth;
+    u8 hitboxHeight;
+    s32 unk24;
+} Unkstruct5;
+
 // main
 extern void (*D_8003C6B0)(s32);
 extern void (*D_8003C6D8)(s32);
+extern void (*D_8003C7DC)(s32);
+extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B4)(s32);
+extern Unkstruct5* D_8003C808;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003CACC;
 
 // dra
+#define MaxEntityCount 32
+#define EntityExplosionID 2
+#define EntityCandleDropID 3
+#define EntityCandleHeartDropID 10
+
 extern s32 D_8006BB00;
 extern Entity* D_8006C26C;
 extern s32 D_8006C39C;
@@ -189,15 +230,20 @@ extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
 extern Entity D_80075D88[];
+extern Entity D_8007D308[];
+extern Entity D_8007D858[];
+extern u16 D_80096EB8;
+extern s32 D_80096ED8[];
+extern u16 D_80097408;
 extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
-extern s32 D_80096ED8[];
 extern u32 D_80097364;
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 extern s32 playerX;
 extern s32 playerY;
 extern s32 D_800973FC;
+extern u8 D_8009741A;
 extern Unkstruct1 D_80097490;
 extern u16 D_80097494;
 extern s16 D_80097496;

@@ -1,10 +1,15 @@
 PfnEntityUpdates = 0x80180920;
-InitializeEntity = 0x801C343C;
+CreateEntity = 0x801C343C;
 DestroyEntity = 0x801C4C64;
 LoadObjLayout = 0x801C3C98;
 g_pStObjLayout = 0x8018077C;
 EntityCandle = 0x801B7A64;
 EntityDamage = 0x801C2D98;
+SpawnExplosionEntity = 0x801C3EC4;
+AnimateEntity = 0x801C4D94;
+AllocEntity = 0x801C54D4;
+InitializeEntity = 0x801C5974;
+ReplaceCandleWithDrop = 0x801C605C;
 EntityCandleDrop = 0x801C6684;
 EntityAreaTitlePopup = 0x801CAFF0;
 EntityAbsorbOrb = 0x801CBC74;
