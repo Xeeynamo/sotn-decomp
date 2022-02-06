@@ -14,12 +14,11 @@ parser.add_argument('source', metavar='src', type=str,
                     help='file name or directory that contains the source code')
 args = parser.parse_args()
 
-def fileLineCount(filePath, funcLineCount):
+def fileLineCount(filePath, funcGetLineScore):
     n = 0
     with open(filePath, "rt") as f:
         for line in f:
-            if funcLineCount(line) == True:
-                n += 1
+            n += funcGetLineScore(line)
     return n
 
 
@@ -39,11 +38,16 @@ def getColor(totalFuncCount, remainingFuncCount):
     else:
         return "yellow"
 
-isIncludeAsm = lambda line: "INCLUDE_ASM" in line
+def isIncludeAsm(line): return "INCLUDE_ASM" in line
+def isPartiallyDecompiled(line): return "#ifndef NON_MATCHING" in line
+def getLineScore(line):
+    if isIncludeAsm(line) == True: return 1.0
+    if isPartiallyDecompiled(line) == True: return -0.25
+    return 0.0
 
 remainingNonmatchingFuncCount = 0
 for filePath in getSourceFilepaths(args.source):
-    remainingNonmatchingFuncCount += fileLineCount(filePath, isIncludeAsm)
+    remainingNonmatchingFuncCount += fileLineCount(filePath, getLineScore)
 
 report = {
     "schemaVersion": 1,
