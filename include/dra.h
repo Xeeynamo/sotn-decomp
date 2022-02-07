@@ -86,7 +86,7 @@ typedef struct
     u16 unk2C;
     s16 unk2E;
     u16 subId;
-    s16 unk32;
+    u16 unk32;
     s32 unk34;
     s16 unk38;
     s16 unk3A;

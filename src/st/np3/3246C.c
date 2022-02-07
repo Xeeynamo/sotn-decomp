@@ -138,7 +138,7 @@ void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
-    entity->unk30 = initDesc->unk8;
+    entity->subId = initDesc->unk8;
     entity->unk32 = initDesc->unk6 >> 8;
     entity->unk68 = initDesc->unk4 >> 0xA & 7;
 }
@@ -299,15 +299,11 @@ void InitializeEntity(u16 *arg0) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD2E0);
-#else
 void func_801BD2E0(Entity* arg0) {
     if (arg0->unk2C == 0) {
         arg0->unk2C++;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD308);
 

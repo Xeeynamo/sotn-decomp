@@ -86,7 +86,7 @@ void func_80190B7C(s16);
 void func_80190C78(s16);
 void SpawnExplosionEntity(u16, Entity *);
 void DestroyEntity(Entity*);
-u8 AnimateEntity(u8 *arg0, Entity *entity);
+s32 AnimateEntity(u8 *arg0, Entity *entity);
 Entity* AllocEntity(Entity* arg0, Entity* arg1);
 s32 func_80192914(s16 arg0, s16 arg1);
 void InitializeEntity(u16 *arg0);
@@ -424,7 +424,7 @@ void func_80190F04(void) {
     s32 temp_v0_2;
 
     if (D_800973B4 != 0) {
-        u16 temp_a0 = D_80072B3E;
+        s16 temp_a0 = D_80072B3E;
         if (D_800973B4 > 0)
             func_801908DC(temp_a0 + 0x140);
         else
@@ -433,7 +433,7 @@ void func_80190F04(void) {
     
     temp_v0_2 = D_800973B8[0].tag;
     if (temp_v0_2 != 0) {
-        u16 temp_a0_2 = s0->unkE;
+        s16 temp_a0_2 = s0->unkE;
         if (temp_v0_2 > 0)
             func_80190B7C(temp_a0_2 + 0x120);
         else
@@ -491,7 +491,7 @@ void func_80191E24(Entity *entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", AnimateEntity);
 #else
-u8 AnimateEntity(u8 *arg0, Entity *arg1) {
+s32 AnimateEntity(u8 *arg0, Entity *arg1) {
     u8 *phi_a2;
     s32 flags;
 
@@ -535,10 +535,15 @@ s32 func_8019203C(void) {
     return value;
 }
 
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192078);
+#else
+// It was matching with GCC 2.7.x
 s32 func_80192078(void) {
     s32 value = D_8006C26C->posY.Data.high - D_80072E8E;
     return value < 0 ? -value : value;
 }
+#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
@@ -609,40 +614,28 @@ void func_801928A8(s32 arg0, s16 arg1) {
     D_8006C26C->accelerationY = func_80192860((arg0 - 0x40) & 0xFF, arg1);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192914);
-#else
 s32 func_80192914(s16 x, s16 y) {
     return ((func_800190AC(y, x) >> 4) + 0x40) & 0xFF;
 }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019294C);
-#else
 s32 func_8019294C(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.Data.high - (u16)a->posX.Data.high;
     s32 diffY = (u16)b->posY.Data.high - (u16)a->posY.Data.high;
     return func_80192914(diffX, diffY) & 0xFF;
 }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192994);
-#else
 u32 func_80192994(s32 x, s32 y) {
-    s32 diffX = x - (u16)D_8006C26C->unk0.Data.high;
-    s32 diffY = y - (u16)D_8006C26C->unk4.Data.high;
+    s32 diffX = x - (u16)D_8006C26C->posX.Data.high;
+    s32 diffY = y - (u16)D_8006C26C->posY.Data.high;
     return func_80192914(diffX, diffY) & 0xFF;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801929DC);
 #else
 u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
-    u32 temp_a2 = (arg2 - arg1) << 0x18;
-    u8 phi_v0 = temp_a2 ? -temp_a2 : temp_a2;
+    s32 temp_a2 = (arg2 - arg1) << 0x18;
+    u32 phi_v0 = temp_a2 ? -temp_a2 : temp_a2;
 
     if ((u8)arg0 < phi_v0) {
         s32 phi_v0_2 = temp_a2 << 0x18 ? (arg1 - arg0) : (arg1 + arg0);
@@ -655,33 +648,21 @@ u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192A34);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192AC0);
-#else
 s32 func_80192AC0(s16 x, s16 y) {
     return func_800190AC(y, x) & 0xFFFF;
 }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192AF0);
-#else
 s32 func_80192AF0(Entity* a, Entity* b) {
-    s32 diffY = b->posY.Data.high - a->posY.Data.high;
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
+    s32 diffY = b->posY.Data.high - a->posY.Data.high;
     return func_800190AC(diffY, diffX) & 0xFFFF;
 }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B28);
-#else
 u16 func_80192B28(s32 x, s32 y) {
-    s16 diffY = y - (u16)D_8006C26C->posY.Data.high;
     s16 diffX = x - (u16)D_8006C26C->posX.Data.high;
+    s16 diffY = y - (u16)D_8006C26C->posY.Data.high;
     return func_800190AC(diffY, diffX);
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B70);
@@ -741,15 +722,11 @@ void InitializeEntity(u16 *arg0) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192DA8);
-#else
 void func_80192DA8(Entity* arg0) {
     if (arg0->unk2C == 0) {
         arg0->unk2C++;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192DD0);
 
@@ -761,6 +738,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80193050);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", ReplaceCandleWithDrop);
 #else
 void ReplaceCandleWithDrop(Entity *entity) {
+    u16 prevSubId;
     u16 subId;
     u16 newSubId;
 
@@ -770,8 +748,10 @@ void ReplaceCandleWithDrop(Entity *entity) {
         return;
     }
 
-    subId = entity->subId &= 0xFFF;
-    if (entity->subId < 0x80) {
+    prevSubId = entity->subId;
+    subId = prevSubId & 0xFFF;
+    entity->subId = subId;
+    if (prevSubId < 0x80) {
         entity->objectId = EntityCandleDropID;
         entity->pfnUpdate = EntityCandleDrop;
         entity->animationFrameDuration = 0;
@@ -830,7 +810,42 @@ Entity* func_801939C4(void) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandleDrop);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80194218);
+#else
+extern Entity D_80180508;
+extern s32 D_80180E18;
+extern s32 D_80180EC4;
+
+void func_80194218(Entity *arg0) {
+    u32 temp_v0;
+
+    if (arg0->unk2C == 0) {
+        InitializeEntity(&D_80180508);
+        arg0->animationSet = 2;
+        arg0->animationFrameIndex = 0;
+        arg0->animationFrameDuration = 0;
+        arg0->unk18 = 0x30;
+        if (arg0->subId & 0xF0) {
+            arg0->palette = 0x8195;
+            arg0->unk18 = 0x10;
+        }
+
+        temp_v0 = arg0->subId & 0xFF00;
+        if (temp_v0) {
+            arg0->zPriority = temp_v0 >> 8;
+        }
+
+        arg0->subId = arg0->subId & 0xF;
+        arg0->accelerationY = *(&D_80180E18 + arg0->subId);
+        return;
+    }
+    arg0->posY.value = arg0->posY.value + arg0->accelerationY;
+    if (!AnimateEntity(*(&D_80180EC4 + arg0->subId), arg0)) {
+        DestroyEntity(arg0);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80194314);
 

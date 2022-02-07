@@ -294,7 +294,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
 s16 func_800EDC80(u8 arg0, s32 arg1) {
     s32 phi_s2 = 0;
     POLY_GT4* phi_s1 = D_80086FEC;
-    u8* phi_s0 = &D_80086FEC->unk7;
+    u8* phi_s0 = &D_80086FEC->code;
     s16 index;
     s32 phi_v0;
 
@@ -347,7 +347,7 @@ s16 func_800EDD9C(u8 arg0, s32 arg1) {
 
     phi_s1 = D_800973B8;
     phi_s2 = 0x4FF;
-    phi_s0 = &D_800973B8->unk7;
+    phi_s0 = &D_800973B8->code;
 loop_1:
     temp_v0 = *phi_s0;
     if (temp_v0 == 0) {
@@ -1379,16 +1379,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010715C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801071CC);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107250);
-#else
 void func_80107250(s32 context, s32 arg1) {
     func_801071CC(context, arg1, 0);
     func_801071CC(context, arg1, 1);
     func_801071CC(context, arg1, 2);
     func_801071CC(context, arg1, 3);
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801072BC);
 

@@ -8,7 +8,7 @@ STNP3           := stnp3
 # Compilers
 CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
-CC              := ./bin/cc1
+CC              := ./bin/cc1-26
 LD              := $(CROSS)ld
 CPP				:= cpp
 OBJCOPY         := $(CROSS)objcopy
