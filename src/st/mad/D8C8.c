@@ -571,8 +571,9 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192860);
+s32 func_80192860(u8 arg0, s16 arg1);
 #else
-s32 func_80192860(s32 arg0, s16 arg1) {
+s32 func_80192860(u8 arg0, s16 arg1) {
     return D_801809EC[arg0 & 0xFF] * arg1;
 }
 #endif
@@ -586,8 +587,8 @@ s16 func_8019288C(s32 arg0) {
 #endif
 
 void func_801928A8(s32 arg0, s16 arg1) {
-    D_8006C26C->accelerationX = func_80192860(arg0 & 0xFF, arg1);
-    D_8006C26C->accelerationY = func_80192860((arg0 - 0x40) & 0xFF, arg1);
+    D_8006C26C->accelerationX = func_80192860(arg0, arg1);
+    D_8006C26C->accelerationY = func_80192860(arg0 - 0x40, arg1);
 }
 
 u8 func_80192914(s16 x, s16 y) {

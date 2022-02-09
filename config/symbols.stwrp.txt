@@ -1,1 +1,8 @@
+PfnEntityUpdates = 0x801803E0;
+EntityCandle = 0x8018726C;
+SpawnExplosionEntity = 0x8018A860;
 DestroyEntity = 0x8018B600;
+AnimateEntity = 0x8018B730;
+AllocEntity = 0x8018BE70;
+InitializeEntity = 0x8018C310;
+ReplaceCandleWithDrop = 0x8018C9F8;
