@@ -11,6 +11,7 @@ AllocEntity = 0x801C54D4;
 InitializeEntity = 0x801C5974;
 ReplaceCandleWithDrop = 0x801C605C;
 EntityCandleDrop = 0x801C6684;
+EntityCandleHeartDrop = 0x801C7098;
 EntityAreaTitlePopup = 0x801CAFF0;
 EntityAbsorbOrb = 0x801CBC74;
 EntityWarg = 0x801CF740;

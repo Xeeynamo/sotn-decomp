@@ -15,6 +15,8 @@ u8 AnimateEntity(u8 *arg0, Entity *entity);
 Entity* AllocEntity(Entity* arg0, Entity* arg1);
 void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
+void EntityCandleDrop(Entity*);
+void EntityCandleHeartDrop(Entity*);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B77D4);
 
@@ -353,7 +355,40 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5BC0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5D18);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", ReplaceCandleWithDrop);
+#else
+extern u8 D_8009796E;
+void ReplaceCandleWithDrop(Entity *entity) {
+    u16 prevSubId;
+    u16 subId;
+    u16 newSubId;
+
+    func_801C4D4C(entity);
+    if ((D_8009796E & 2) == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    prevSubId = entity->subId;
+    subId = prevSubId & 0xFFF;
+    entity->subId = subId;
+    if (prevSubId < 0x80) {
+        entity->objectId = EntityCandleDropID;
+        entity->pfnUpdate = EntityCandleDrop;
+        entity->animationFrameDuration = 0;
+        entity->animationFrameIndex = 0;
+        newSubId = subId;
+    } else {
+        entity->objectId = EntityCandleHeartDropID;
+        entity->pfnUpdate = EntityCandleHeartDrop;
+        newSubId = subId - 0x80;
+    }
+    entity->subId = newSubId;
+    entity->unk6D = 0x10;
+    entity->unk2C = 0;
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
 
@@ -379,7 +414,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6EF8);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6FF4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7098);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandleHeartDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7680);
 
