@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     stdre
+  base_path:    .
+  target_path:  ST/DRE.BIN
+  asm_path:     asm/st/dre
+  asset_path:   assets/st/dre
+  src_path:     src/st/dre
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stdre.txt
+  undefined_syms_path:  config/undefined_syms.stdre.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stdre.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stdre.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: stdre
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x11A64, c]
+      - [0x23260, data]
+  - [0x23FCC]

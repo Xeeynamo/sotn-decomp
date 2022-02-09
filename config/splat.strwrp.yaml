@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     strwrp
+  base_path:    .
+  target_path:  ST/RWRP.BIN
+  asm_path:     asm/st/rwrp
+  asset_path:   assets/st/rwrp
+  src_path:     src/st/rwrp
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.strwrp.txt
+  undefined_syms_path:  config/undefined_syms.strwrp.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.strwrp.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.strwrp.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: strwrp
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x8DF0, c]
+      - [0x15A20, data]
+  - [0x166E8]

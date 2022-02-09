@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     stst0
+  base_path:    .
+  target_path:  ST/ST0.BIN
+  asm_path:     asm/st/st0
+  asset_path:   assets/st/st0
+  src_path:     src/st/st0
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stst0.txt
+  undefined_syms_path:  config/undefined_syms.stst0.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stst0.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stst0.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: stst0
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x27D64, c]
+      - [0x3EB00, data]
+  - [0x425C4]
