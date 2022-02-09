@@ -33,6 +33,12 @@ Thanks to [asm-differ](https://github.com/simonlindholm/asm-differ) you can chec
 
 Some non-matching functions are present in the source code by disabled by the macro `NON_MATCHING`. You can still compile the game binaries by running ` CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
 
+## Restore MAD (debug room)
+
+The debug room overlay `ST/MAD.BIN` was compiled earlier than the first retail release of the game. All the offsets that refers to `DRA.BIN` points to invalid portions of data or to the wrong API calls, effectively breaking the majority of its original functionalities. That is why the debug room does not contain any object. By compiling the debug room with `CPP_FLAGS=-DFIX_MAD make mad` you can restore it by redirecting the old pointers to the retail version of the game. Use `CPP_FLAGS="-DNON_MATCHING -DFIX_MAD" make mad` to compile it with the functions that have not been yet matched. For now it does not really work due to the `undefined reference`. But it will. Someday.
+
+Two important points to know are that not all the offsets have been yet redirected, second is that the checksum will obviously not match.
+
 ## Technical details
 
 The game is divided in three modules:

@@ -176,8 +176,6 @@ typedef struct
 } Unkstruct5;
 
 // main
-extern void (*D_8003C6B0)(s32);
-extern void (*D_8003C6D8)(s32);
 extern void (*D_8003C7DC)(s32);
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
@@ -198,15 +196,10 @@ extern s32 D_8003CACC;
 #define EntityCandleHeartDropID 10
 
 extern s32 D_8006BB00;
-extern Entity* D_8006C26C;
 extern s32 D_8006C39C;
 extern s32 D_8006C3A0;
 extern Entity* D_8006C3B8;
 extern Unkstruct4 D_80072B34;
-extern u16 D_80072B3E;
-extern u16 D_80072B42;
-extern s16 D_80072E8A;
-extern s16 D_80072E8E;
 extern s32 D_80072F2C;
 extern s32 D_80073060;
 extern s32 D_80073080;
@@ -229,26 +222,19 @@ extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
-extern Entity D_80075D88[];
-extern Entity D_8007D308[];
 extern Entity D_8007D858[];
-extern u16 D_80096EB8;
-extern s32 D_80096ED8[];
 extern u16 D_80097408;
 extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
-extern u32 D_80097364;
-extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
 extern s32 playerX;
 extern s32 playerY;
 extern s32 D_800973FC;
-extern u8 D_8009741A;
 extern Unkstruct1 D_80097490;
 extern u16 D_80097494;
 extern s16 D_80097496;
 extern s32 g_mapProgramId;
 extern s32 D_800974AC;
+extern u8  D_8009796E;
 extern u8  D_8009798A;
 extern u8  D_80097A8D;
 extern s32 g_playerLevel;

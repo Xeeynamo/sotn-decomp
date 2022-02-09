@@ -63,6 +63,48 @@ typedef struct
     s16 unk32;
 } Unkstruct_mad_4;
 
+#ifndef FIX_MAD
+extern void (*D_8003C6B0)(s32);
+extern void (*D_8003C6D8)(s32);
+extern Entity* D_8006C26C;
+extern u16 D_80072B3E;
+extern u16 D_80072B42;
+extern s16 D_80072E8A;
+extern s16 D_80072E8E;
+extern Entity D_8007D308[];
+extern u16 D_80096EB8;
+extern u32 D_80097364;
+extern u8 D_8009741A;
+extern Entity D_80075D88[];
+extern s32 D_80096ED8[];
+extern s32 D_800973B4;
+extern POLY_GT4 D_800973B8[];
+#else
+extern s16 D_80072E8A;
+extern s16 D_80072E8E;
+extern u32 D_80097364;
+extern Entity D_80075D88[];
+extern s32 D_80096ED8[];
+extern s32 D_800973B4;
+extern POLY_GT4 D_800973B8[];
+
+#define D_8003C6B0 D_8003C7B4
+#define D_8003C6D8 D_8003C7DC
+#define D_8006C26C D_8006C3B8
+#define D_80072E8A D_80072E8A // TODO
+#define D_80072E8E D_80072E8E // TODO
+#define D_8007D308 D_8007D858
+#define D_80096EB8 D_80097408
+#define D_80097364 D_80097364 // TODO
+#define D_80072B3E D_8007308E
+#define D_80072B42 D_80073092
+#define D_80075D88 D_80075D88 // TODO
+#define D_80096ED8 D_80096ED8 // TODO
+#define D_800973B4 D_800973B4 // TODO
+#define D_800973B8 D_800973B8 // TODO
+#define D_8009741A D_8009796E
+#endif
+
 extern u16 D_801804F0[];
 extern u8* D_80180644[];
 extern u8 D_80180664[];
