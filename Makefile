@@ -10,7 +10,7 @@ CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
 CC              := ./bin/cc1-26
 LD              := $(CROSS)ld
-CPP				:= cpp
+CPP				:= $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1
 CC_FLAGS        += -mips1 -mcpu=3000 -quiet -G0 -Wall -fno-builtin -mno-abicalls -fsigned-char -O2
