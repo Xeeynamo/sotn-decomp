@@ -1,67 +1,6 @@
 #include "common.h"
 #include "dra.h"
 
-typedef struct
-{
-    u_long	tag;
-    s8 unk4, unk5, unk6, unk7;
-    s16 unk8, unkA;
-    s16 unkC, unkE;
-    s16 unk10;
-    s8 unk12;
-    s8 unk13;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    s16 unk1C;
-    s8 unk1E;
-    s8 unk1F;
-    s16 unk20;
-    s16 unk22;
-    s8 unk24;
-    s8 unk25;
-    s8 unk26;
-    s8 unk27;
-    s8 unk28;
-    s8 unk29;
-    s8 unk2A;
-    s8 unk2B;
-    s16 unk2C;
-    s16 unk2E;
-    s16 unk30;
-    s16 unk32;
-} Unkstruct_mad_3;
-
-typedef struct
-{
-    u_long	tag;
-    s8 unk4, unk5, unk6, unk7;
-    s16 unk8, unkA;
-    s16 unkC, unkE;
-    s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    s16 unk1C;
-    s16 unk1E;
-    s16 unk20;
-    s16 unk22;
-    s8 unk24;
-    s8 unk25;
-    s8 unk26;
-    s8 unk27;
-    s8 unk28;
-    s8 unk29;
-    s8 unk2A;
-    s8 unk2B;
-    s16 unk2C;
-    s16 unk2E;
-    s16 unk30;
-    s16 unk32;
-} Unkstruct_mad_4;
 
 #ifndef FIX_MAD
 extern void (*D_8003C6B0)(s32);
@@ -80,9 +19,6 @@ extern s32 D_80096ED8[];
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 #else
-extern s16 D_80072E8A;
-extern s16 D_80072E8E;
-extern u32 D_80097364;
 extern Entity D_80075D88[];
 extern s32 D_80096ED8[];
 extern s32 D_800973B4;
@@ -91,11 +27,11 @@ extern POLY_GT4 D_800973B8[];
 #define D_8003C6B0 D_8003C7B4
 #define D_8003C6D8 D_8003C7DC
 #define D_8006C26C D_8006C3B8
-#define D_80072E8A D_80072E8A // TODO
-#define D_80072E8E D_80072E8E // TODO
+#define D_80072E8A D_800733DA
+#define D_80072E8E D_800733DE
 #define D_8007D308 D_8007D858
 #define D_80096EB8 D_80097408
-#define D_80097364 D_80097364 // TODO
+#define D_80097364 D_800978B8
 #define D_80072B3E D_8007308E
 #define D_80072B42 D_80073092
 #define D_80075D88 D_80075D88 // TODO
@@ -130,7 +66,7 @@ void SpawnExplosionEntity(u16, Entity *);
 void DestroyEntity(Entity*);
 s32 AnimateEntity(u8 *arg0, Entity *entity);
 Entity* AllocEntity(Entity* arg0, Entity* arg1);
-s32 func_80192914(s16 arg0, s16 arg1);
+u8 func_80192914(s16 arg0, s16 arg1);
 void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
 void EntityCandleDrop(Entity*);
@@ -577,15 +513,13 @@ s32 func_8019203C(void) {
     return value;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192078);
-#else
-// It was matching with GCC 2.7.x
 s32 func_80192078(void) {
     s32 value = D_8006C26C->posY.Data.high - D_80072E8E;
-    return value < 0 ? -value : value;
+    if (value < 0) {
+        value = -value;
+    }
+    return value;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
@@ -656,20 +590,20 @@ void func_801928A8(s32 arg0, s16 arg1) {
     D_8006C26C->accelerationY = func_80192860((arg0 - 0x40) & 0xFF, arg1);
 }
 
-s32 func_80192914(s16 x, s16 y) {
-    return ((func_800190AC(y, x) >> 4) + 0x40) & 0xFF;
+u8 func_80192914(s16 x, s16 y) {
+    return ((func_800190AC(y, x) >> 4) + 0x40);
 }
 
-s32 func_8019294C(Entity* a, Entity* b) {
+u8 func_8019294C(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.Data.high - (u16)a->posX.Data.high;
     s32 diffY = (u16)b->posY.Data.high - (u16)a->posY.Data.high;
-    return func_80192914(diffX, diffY) & 0xFF;
+    return func_80192914(diffX, diffY);
 }
 
-u32 func_80192994(s32 x, s32 y) {
+u8 func_80192994(s32 x, s32 y) {
     s32 diffX = x - (u16)D_8006C26C->posX.Data.high;
     s32 diffY = y - (u16)D_8006C26C->posY.Data.high;
-    return func_80192914(diffX, diffY) & 0xFF;
+    return func_80192914(diffX, diffY);
 }
 
 #ifndef NON_MATCHING
@@ -690,14 +624,14 @@ u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192A34);
 
-s32 func_80192AC0(s16 x, s16 y) {
-    return func_800190AC(y, x) & 0xFFFF;
+u16 func_80192AC0(s16 x, s16 y) {
+    return func_800190AC(y, x);
 }
 
-s32 func_80192AF0(Entity* a, Entity* b) {
+u16 func_80192AF0(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
-    return func_800190AC(diffY, diffX) & 0xFFFF;
+    return func_800190AC(diffY, diffX);
 }
 
 u16 func_80192B28(s32 x, s32 y) {
@@ -970,44 +904,44 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199508);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199584);
 
-void func_8019960C(Unkstruct_mad_3* arg0) {
+void func_8019960C(Unkstruct7* arg0) {
     arg0->unk13 = 0;
     arg0->unk1F = 0;
     arg0->unk2B = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk14 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk16 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unkA = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk8 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unkE = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unkC = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk12 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk10 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk18 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk1A = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk1C = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk1E = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk24 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk25 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk28 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk2A = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk20 = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk22 = 0;
+    ((Unkstruct6*)arg0->tag)->unk14 = 0;
+    ((Unkstruct6*)arg0->tag)->unk16 = 0;
+    ((Unkstruct6*)arg0->tag)->unkA = 0;
+    ((Unkstruct6*)arg0->tag)->unk8 = 0;
+    ((Unkstruct6*)arg0->tag)->unkE = 0;
+    ((Unkstruct6*)arg0->tag)->unkC = 0;
+    ((Unkstruct6*)arg0->tag)->unk12 = 0;
+    ((Unkstruct6*)arg0->tag)->unk10 = 0;
+    ((Unkstruct6*)arg0->tag)->unk18 = 0;
+    ((Unkstruct6*)arg0->tag)->unk1A = 0;
+    ((Unkstruct6*)arg0->tag)->unk1C = 0;
+    ((Unkstruct6*)arg0->tag)->unk1E = 0;
+    ((Unkstruct6*)arg0->tag)->unk24 = 0;
+    ((Unkstruct6*)arg0->tag)->unk25 = 0;
+    ((Unkstruct6*)arg0->tag)->unk28 = 0;
+    ((Unkstruct6*)arg0->tag)->unk2A = 0;
+    ((Unkstruct6*)arg0->tag)->unk20 = 0;
+    ((Unkstruct6*)arg0->tag)->unk22 = 0;
 }
 
-void func_801996EC(Unkstruct_mad_3* arg0) {
+void func_801996EC(Unkstruct7* arg0) {
     func_8019960C(arg0);
     arg0->unk2B = 8;
-    ((Unkstruct_mad_4*)arg0->tag)->unk2B = 1;
-    ((Unkstruct_mad_4*)arg0->tag)->unk7 = 2;
-    ((Unkstruct_mad_4*)arg0->tag)->unk32 = 0xA;
+    ((Unkstruct6*)arg0->tag)->unk2B = 1;
+    ((Unkstruct6*)arg0->tag)->unk7 = 2;
+    ((Unkstruct6*)arg0->tag)->unk32 = 0xA;
 }
 
-void func_80199740(Unkstruct_mad_4* arg0) {
+void func_80199740(Unkstruct6* arg0) {
     arg0->unk2B = 0;
     arg0->unk32 = 8;
-    ((Unkstruct_mad_4*)arg0->tag)->unk2B = 0;
-    ((Unkstruct_mad_4*)arg0->tag)->unk7 = 4;
-    ((Unkstruct_mad_4*)arg0->tag)->unk32 = 8;
+    ((Unkstruct6*)arg0->tag)->unk2B = 0;
+    ((Unkstruct6*)arg0->tag)->unk7 = 4;
+    ((Unkstruct6*)arg0->tag)->unk32 = 8;
 }
 
 #ifndef NON_MATCHING

@@ -175,12 +175,75 @@ typedef struct
     s32 unk24;
 } Unkstruct5;
 
+typedef struct
+{
+    u_long	tag;
+    s8 unk4, unk5, unk6, unk7;
+    s16 unk8, unkA;
+    s16 unkC, unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s16 unk1E;
+    s16 unk20;
+    s16 unk22;
+    s8 unk24;
+    s8 unk25;
+    s8 unk26;
+    s8 unk27;
+    s8 unk28;
+    s8 unk29;
+    s8 unk2A;
+    s8 unk2B;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+} Unkstruct6; // This is most likely POLY_GT4
+
+typedef struct
+{
+    u_long	tag;
+    s8 unk4, unk5, unk6, unk7;
+    s16 unk8, unkA;
+    s16 unkC, unkE;
+    s16 unk10;
+    s8 unk12;
+    s8 unk13;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s8 unk1E;
+    s8 unk1F;
+    s16 unk20;
+    s16 unk22;
+    s8 unk24;
+    s8 unk25;
+    s8 unk26;
+    s8 unk27;
+    s8 unk28;
+    s8 unk29;
+    s8 unk2A;
+    s8 unk2B;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+} Unkstruct7;
+
 // main
 extern void (*D_8003C7DC)(s32);
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
+extern void (*D_8003C848)(s32, s32);
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B4)(s32);
 extern Unkstruct5* D_8003C808;
@@ -217,6 +280,8 @@ extern s32 D_800730C4;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 extern Entity D_800733D8[];
+extern s16 D_800733DA;
+extern s16 D_800733DE;
 extern s16 D_80073404;
 extern s16 D_80073406;
 extern s8  D_80073510;
@@ -228,6 +293,7 @@ extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;
 extern s32 playerY;
+extern u32 D_800978B8;
 extern s32 D_800973FC;
 extern Unkstruct1 D_80097490;
 extern u16 D_80097494;
