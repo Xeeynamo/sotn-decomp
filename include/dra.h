@@ -119,7 +119,8 @@ typedef struct
     s32 unk7C;
     s32 unk80;
     s32 unk84;
-    s32 unk88;
+    s16 unk88;
+    s16 unk8A;
     s32 unk8C;
     s32 unk90;
     s32 unk94;
@@ -289,6 +290,7 @@ extern s8  D_80073511;
 extern s8  D_80073512;
 extern Entity D_8007D858[];
 extern u16 D_80097408;
+extern Entity D_8007EF1C;
 extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;

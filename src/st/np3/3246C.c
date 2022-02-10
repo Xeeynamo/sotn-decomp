@@ -190,7 +190,13 @@ void DestroyEntity(Entity* item) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC540);
+void DestroyEntityFromIndex(s16 index) {
+    Entity *entity = &D_800733D8[index];
+    while (entity < &D_8007EF1C) {
+        DestroyEntity(entity);
+        entity++;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC5BC);
 

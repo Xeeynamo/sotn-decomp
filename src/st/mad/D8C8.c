@@ -10,7 +10,9 @@ extern u16 D_80072B3E;
 extern u16 D_80072B42;
 extern s16 D_80072E8A;
 extern s16 D_80072E8E;
+extern Entity D_80072E88[];
 extern Entity D_8007D308[];
+extern Entity D_8007E9CC;
 extern u16 D_80096EB8;
 extern u32 D_80097364;
 extern u8 D_8009741A;
@@ -18,6 +20,7 @@ extern Entity D_80075D88[];
 extern s32 D_80096ED8[];
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
+
 #else
 extern Entity D_80075D88[];
 extern s32 D_80096ED8[];
@@ -29,7 +32,9 @@ extern POLY_GT4 D_800973B8[];
 #define D_8006C26C D_8006C3B8
 #define D_80072E8A D_800733DA
 #define D_80072E8E D_800733DE
+#define D_80072E88 D_800733D8
 #define D_8007D308 D_8007D858
+#define D_8007E9CC D_8007EF1C
 #define D_80096EB8 D_80097408
 #define D_80097364 D_800978B8
 #define D_80072B3E D_8007308E
@@ -451,7 +456,13 @@ void DestroyEntity(Entity* item) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191DA8);
+void DestroyEntityFromIndex(s16 index) {
+    Entity *entity = &D_80072E88[index];
+    while (entity < &D_8007E9CC) {
+        DestroyEntity(entity);
+        entity++;
+    }
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191E24);

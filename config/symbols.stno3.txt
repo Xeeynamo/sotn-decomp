@@ -1,6 +1,7 @@
 PfnEntityUpdates = 0x80180920;
 CreateEntity = 0x801C343C;
 DestroyEntity = 0x801C4C64;
+DestroyEntityFromIndex = 0x801C4CD0;
 LoadObjLayout = 0x801C3C98;
 g_pStObjLayout = 0x8018077C;
 EntityCandle = 0x801B7A64;

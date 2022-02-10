@@ -174,7 +174,13 @@ void DestroyEntity(Entity* item) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B66C);
+void DestroyEntityFromIndex(s16 index) {
+    Entity *entity = &D_800733D8[index];
+    while (entity < &D_8007EF1C) {
+        DestroyEntity(entity);
+        entity++;
+    }
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B6E8);
 
@@ -346,7 +352,29 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", ReplaceCandleWithDrop);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
+#else
+void func_8018CAB0(void) {
+    s32 temp_v1;
+    Entity *entity;
+
+    entity = D_8006C3B8;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88 + entity->unk84;
+        entity->unk84 = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88 = -entity->unk88;
+        }
+        entity = D_8006C3B8;
+    }
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CB34);
 
