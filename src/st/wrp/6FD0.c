@@ -1,23 +1,25 @@
 #include "common.h"
 #include "dra.h"
 
+extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_80180440[];
+extern u16 D_80180458[];
 extern u8* D_801805B8[];
 extern u8 D_801805D8[];
 extern u8 D_801805E0[];
 extern u16 D_801805E8[];
 extern u8 D_801805F8[];
 extern s32 D_80180E08[];
+extern s16 D_80180A94[];
 extern s32 c_GoldPrizes[];
 extern s8 c_HeartPrizes[];
+extern u8 D_8018104C[];
 
-extern PfnEntityUpdate PfnEntityUpdates[];
-extern s16 D_80180A94[];
 extern ObjectInit *D_80193AB0;
 extern ObjectInit *D_80193AB4;
 
 void SpawnExplosionEntity(u16, Entity *);
-u8 AnimateEntity(u8 *arg0, Entity *entity);
+s32 AnimateEntity(u8 *arg0, Entity *entity);
 Entity* AllocEntity(Entity* arg0, Entity* arg1);
 void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
@@ -75,7 +77,20 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018861C);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189734);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189DD8);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CreateEntity);
+#else
+void CreateEntity(Entity *entity, ObjectInit* initDesc) {
+    DestroyEntity(entity);
+    entity->objectId = initDesc->unk4 & 0x3FF;
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->posX.Data.high = initDesc->posX - D_8007308E;
+    entity->posY.Data.high = initDesc->posY - D_80073092;
+    entity->subId = initDesc->unk8;
+    entity->unk32 = initDesc->unk6 >> 8;
+    entity->unk68 = initDesc->unk4 >> 0xA & 7;
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189E9C);
 
@@ -150,6 +165,7 @@ void SpawnExplosionEntity(u16 objectId, Entity *entity) {
 #endif
 
 #ifndef NON_MATCHING
+void func_8018A8D4(u16 objectId, Entity *source, Entity *entity);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A8D4);
 #else
 void func_8018A8D4(u16 objectId, Entity *source, Entity *entity) {
@@ -566,11 +582,70 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801902C8);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801903C8);
+void func_801903C8(Entity *entity) {
+    if (entity->unk2C == 0) {
+        InitializeEntity(D_80180458);
+        entity->unk6C = 0xF0;
+        entity->unk1A = 0x01A0;
+        entity->unk1C = 0x01A0;
+        entity->animationSet = 8;
+        entity->animationFrame = 1;
+        entity->zPriority += 16;
+        if (entity->subId) {
+            entity->palette = entity->subId;
+        } else {
+            entity->palette = 0x8160;
+        }
 
+        entity->unk2C++;
+    } else {
+        func_8018B9B4();
+        if (AnimateEntity(D_8018104C, entity) == 0) {
+            DestroyEntity(entity);
+        }
+    }
+}
+
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80190494);
+#else
+void func_80190494(u16 objectId, Entity *source, Entity *entity) {
+    u16 palette;
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8019055C);
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->posX.Data.high = source->posX.Data.high;
+    entity->posY.Data.high = source->posY.Data.high;
+    entity->unk5A = source->unk5A;
+    entity->zPriority = source->zPriority;
+    entity->animationSet = source->animationSet;
+    entity->unk34 = 0xCD002000;
+
+    palette = source->palette;
+    entity->palette = palette & 0x8000 ? source->unk6A : palette;
+}
+#endif
+
+void func_8019055C(void) {
+    s32 temp_s3;
+    s8 temp_s4;
+    Entity *entity;
+    s32 i;
+
+    temp_s4 = func_801881E8() & 3;
+    temp_s3 = ((func_801881E8() & 0xF) << 8) - 0x800;
+    
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+        if (entity != NULL) {
+            func_8018A8D4(EntityExplosionID, D_8006C3B8, entity);
+            entity->unk85 = 6 - i;
+            entity->unk80 = temp_s3;
+            entity->unk84 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80190614);
 

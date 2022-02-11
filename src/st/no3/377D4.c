@@ -11,7 +11,7 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_801820C4[];
 
 void SpawnExplosionEntity(u16, Entity *);
-u8 AnimateEntity(u8 *arg0, Entity *entity);
+s32 AnimateEntity(u8 *arg0, Entity *entity);
 Entity* AllocEntity(Entity* arg0, Entity* arg1);
 void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
