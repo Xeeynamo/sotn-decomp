@@ -255,6 +255,12 @@ extern s32 D_8003CACC;
 
 // dra
 #define RENDERFLAGS_NOSHADOW 2
+#define PLAYER_ALUCARD 0
+#define PLAYER_RICHTER 1
+#define MAX_GOLD 999999
+#define HEART_VESSEL_INCREASE 5
+#define HEART_VESSEL_RICHTER 30
+#define LIFE_VESSEL_INCREASE 5
 
 #define MaxEntityCount 32
 #define EntityExplosionID 2
@@ -299,6 +305,8 @@ extern s32 playerX;
 extern s32 playerY;
 extern u32 D_800978B8;
 extern s32 D_800973FC;
+extern s32 D_80097410;
+extern s32 D_80097414;
 extern Unkstruct1 D_80097490;
 extern u16 D_80097494;
 extern s16 D_80097496;

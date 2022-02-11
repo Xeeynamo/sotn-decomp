@@ -53,5 +53,7 @@ AnimateEntity = 0x80191E6C;
 AllocEntity = 0x80192800;
 InitializeEntity = 0x80192CAC;
 ReplaceCandleWithDrop = 0x80193394;
+CollectHeartVessel = 0x801938FC;
+CollectLifeVessel = 0x8019394C;
 EntityCandleDrop = 0x801939E0;
 EntityCandleHeartDrop = 0x801943EC;

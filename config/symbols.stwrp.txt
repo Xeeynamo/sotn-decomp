@@ -1,4 +1,6 @@
 PfnEntityUpdates = 0x801803E0;
+c_GoldPrizes = 0x80180E30;
+c_HeartPrizes = 0x80180EC0;
 EntityCandle = 0x8018726C;
 SpawnExplosionEntity = 0x8018A860;
 DestroyEntity = 0x8018B600;
@@ -8,3 +10,6 @@ AllocEntity = 0x8018BE70;
 InitializeEntity = 0x8018C310;
 ReplaceCandleWithDrop = 0x8018C9F8;
 CollectHeart = 0x8018CC90;
+CollectGold = 0x8018CD10;
+CollectHeartVessel = 0x8018CF04;
+CollectLifeVessel = 0x8018CFA8;

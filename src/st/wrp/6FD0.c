@@ -7,7 +7,9 @@ extern u8 D_801805D8[];
 extern u8 D_801805E0[];
 extern u16 D_801805E8[];
 extern u8 D_801805F8[];
-extern s8 D_80180EC0[];
+extern s32 D_80180E08[];
+extern s32 c_GoldPrizes[];
+extern s8 c_HeartPrizes[];
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80180A94[];
@@ -23,6 +25,7 @@ void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
 void func_8018D894(Entity *);
 void func_801916C4(s32);
+void func_80192F40(s32, s32);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80186FD0);
 
@@ -425,7 +428,7 @@ void CollectHeart(u16 heartSize) {
 
     D_8003C7DC(0x67A);
     hearts = &g_playerHeart;
-    *hearts += D_80180EC0[heartSize];
+    *hearts += c_HeartPrizes[heartSize];
     if (g_playerHeartMax < *hearts) {
         *hearts = g_playerHeartMax;
     }
@@ -433,15 +436,55 @@ void CollectHeart(u16 heartSize) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CD10);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectGold);
+#else
+void CollectGold(u16 goldSize) {
+    s32 *gold, *unk;
+    u16 goldSizeIndex;
+
+    gold = &g_playerGold;
+    D_8003C7DC(0x6A9);
+    goldSizeIndex = goldSize - 2;
+    *gold += c_GoldPrizes[goldSizeIndex];
+    if (*gold > MAX_GOLD) {
+        *gold = MAX_GOLD;
+    }
+
+    unk = &D_80097410;
+    if (*unk) {
+        D_8003C7B4(D_80097414);
+        *unk = 0;
+    }
+
+    func_80192F40(D_80180E08[goldSizeIndex], 1);
+    DestroyEntity(D_8006C3B8);
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CF04);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeartVessel);
+#else
+void CollectHeartVessel(void) {
+    if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+        D_8003C7DC(0x67A);
+        g_playerHeart += HEART_VESSEL_RICHTER;
+        if (g_playerHeartMax < g_playerHeart) {
+            g_playerHeart = g_playerHeartMax;
+        }
+    } else {
+        D_8003C7DC(0x67A);
+        D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+    }
+    DestroyEntity(D_8006C3B8);
+}
+#endif
 
-void func_8018CFA8(void) {
+void CollectLifeVessel(void) {
     D_8003C7DC(0x67A);
-    D_8003C848(5, 0x8000);
+    D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C3B8);
 }
 

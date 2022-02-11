@@ -834,15 +834,15 @@ void func_801937C4(void) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801937EC);
 
-void func_801938FC(void) {
+void CollectHeartVessel(void) {
     D_8003C6D8(0x670);
-    D_8003C744(5, 0x4000);
+    D_8003C744(HEART_VESSEL_INCREASE, 0x4000);
     DestroyEntity(D_8006C26C);
 }
 
-void func_8019394C(void) {
+void CollectLifeVessel(void) {
     D_8003C6D8(0x670);
-    D_8003C744(5, 0x8000);
+    D_8003C744(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C26C);
 }
 
