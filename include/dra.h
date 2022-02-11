@@ -254,6 +254,8 @@ extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003CACC;
 
 // dra
+#define RENDERFLAGS_NOSHADOW 2
+
 #define MaxEntityCount 32
 #define EntityExplosionID 2
 #define EntityCandleDropID 3

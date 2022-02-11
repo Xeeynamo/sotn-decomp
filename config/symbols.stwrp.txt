@@ -7,3 +7,4 @@ AnimateEntity = 0x8018B730;
 AllocEntity = 0x8018BE70;
 InitializeEntity = 0x8018C310;
 ReplaceCandleWithDrop = 0x8018C9F8;
+CollectHeart = 0x8018CC90;

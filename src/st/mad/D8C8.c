@@ -76,6 +76,7 @@ void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
+void func_80194218(Entity *);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
@@ -634,7 +635,25 @@ u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192A34);
+void func_80192A34(u16 slope, s16 speed) {
+    Entity* entity;
+    s32 moveX;
+    s32 moveY;
+
+    moveX = func_80016D68(slope) * speed;
+    entity = D_8006C26C;
+    if (moveX < 0) {
+        moveX += 15;
+    }
+    entity->accelerationX = moveX >> 4;
+
+    moveY = rsin(slope) * speed;
+    entity = D_8006C26C;
+    if (moveY < 0) {
+        moveY += 15;
+    }
+    entity->accelerationY = moveY >> 4;
+}
 
 u16 func_80192AC0(s16 x, s16 y) {
     return func_800190AC(y, x);
@@ -681,7 +700,26 @@ void func_80192BF0(s32 arg0) {
     D_8006C26C->animationFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192C0C);
+void func_80192C0C(u16 arg0, u16 arg1) {
+    Entity *entity;
+
+    if (arg1 != 0) {
+        D_8003C6D8(arg1);
+    }
+    if (arg0 == 0xFF) {
+        DestroyEntity(D_8006C26C);
+        return;
+    }
+
+    entity = D_8006C26C;
+    entity->unk19 = 0;
+    entity->objectId = EntityExplosionID;
+    entity->pfnUpdate = func_80194218;
+    entity->subId = arg0;
+    entity->animationFrame = 0;
+    D_8006C26C->unk2C = 0;
+    D_8006C26C->unk2E = 0;
+}
 
 void InitializeEntity(u16 *arg0) {
     u16 temp_v1;
@@ -757,7 +795,29 @@ void ReplaceCandleWithDrop(Entity *entity) {
 
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019344C);
+#else
+void func_8019344C(void) {
+    s32 temp_v1;
+    Entity *entity;
+
+    entity = D_8006C26C;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88 + entity->unk84;
+        entity->unk84 = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88 = -entity->unk88;
+        }
+        entity = D_8006C26C;
+    }
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801934D0);
 
