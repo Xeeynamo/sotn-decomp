@@ -4,6 +4,8 @@
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_80180440[];
 extern u16 D_80180458[];
+extern u16 D_80180494[];
+extern ObjInit2 D_801804E0[];
 extern u8* D_801805B8[];
 extern u8 D_801805D8[];
 extern u8 D_801805E0[];
@@ -13,7 +15,15 @@ extern s32 D_80180E08[];
 extern s16 D_80180A94[];
 extern s32 c_GoldPrizes[];
 extern s8 c_HeartPrizes[];
+extern s32 D_80180EC4[];
+extern u8* D_80180F70[];
+extern u16 D_80180FF8[];
+extern s32 D_80181008[];
+extern s32 D_80181020[];
+extern u8 D_80181038[];
+extern u16 D_8018103C[];
 extern u8 D_8018104C[];
+extern ObjInit2 D_80181134[];
 
 extern ObjectInit *D_80193AB0;
 extern ObjectInit *D_80193AB4;
@@ -29,7 +39,29 @@ void func_8018D894(Entity *);
 void func_801916C4(s32);
 void func_80192F40(s32, s32);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80186FD0);
+void func_80186FD0(Entity *arg0) {
+    ObjInit2 *objInit = &D_801804E0[arg0->subId];
+    if (arg0->unk2C == 0) {
+        InitializeEntity(D_80180494);
+        arg0->animationSet = objInit->animationSet;
+        arg0->zPriority = objInit->zPriority;
+        arg0->unk5A = objInit->unk4;
+        arg0->palette = objInit->palette;
+        arg0->unk19 = objInit->unk8;
+        arg0->unk18 = objInit->unkA;
+
+        if (objInit->unkC != 0) {
+            arg0->unk34 = objInit->unkC;
+        }
+
+        if (arg0->subId == 1) {
+            arg0->unk1C = 0x0200;
+            arg0->unk1A = 0x0200;
+        }
+    }
+
+    AnimateEntity(objInit->unk10, arg0);
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
 
@@ -510,7 +542,39 @@ void func_8018CFF8(void) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D020);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D894);
+#else
+void func_8018D894(Entity *entity) {
+    u16 zPriority;
+
+    if (entity->unk2C == 0) {
+        InitializeEntity(D_80180458);
+        entity->animationSet = 2;
+        entity->animationFrameIndex = 0;
+        entity->animationFrameDuration = 0;
+        entity->unk18 = 0x30;
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->unk18 = 0x10;
+        }
+
+        zPriority = entity->subId & 0xFF00;
+        if (zPriority) {
+            entity->zPriority = zPriority >> 8;
+        }
+        entity->subId &= 15;
+        entity->accelerationY = D_80180EC4[entity->subId];
+    }
+    else
+    {
+        entity->posY.value += entity->accelerationY;
+        if (!AnimateEntity(D_80180F70[entity->subId], entity)) {
+            DestroyEntity(entity);
+        }
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D990);
@@ -568,11 +632,89 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F510);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F750);
+#else
+extern void func_8018F928(Entity*);
+void func_8018F750(Entity *source, s8 count, s16 xOffset, s16 yOffset, s16 xDistance) {
+    Entity *entity;
+    s16 x, y;
+    u8 i;
 
+    y = source->posY.Data.high + yOffset;
+    x = source->posX.Data.high + xOffset;
+    for (i = 0; i < count; i++)
+    {
+        entity = AllocEntity(D_8007A958, D_8007A958 + MaxEntityCount);
+        if (entity != NULL) {
+            entity->objectId = 21;
+            entity->pfnUpdate = func_8018F928;
+            entity->posX.Data.high = x;
+            entity->posY.Data.high = y;
+            entity->subId = i;
+            entity->zPriority = source->zPriority + 1;
+        }
+        i++;
+        x += xDistance;
+    }
+}
+#endif
+
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F838);
+#else
+void func_8018F838(Entity *entity) {
+    if (entity->unk2C == 0) {
+        entity->palette = 0x8195;
+        entity->animationSet = 2;
+        entity->unk34 = 0x0C002000;
+        entity->accelerationY = D_80181020[entity->unk94];
+        entity->unk18 = 16;
+        entity->unk2C = entity->unk2C + 1;
+        entity->animationFrame = D_80181038[entity->subId];
+    }
+    else
+    {
+        entity->animationFrameDuration++;
+        entity->posY.value = entity->posY.value - entity->accelerationY;
+        if ((entity->animationFrameDuration & 1) == 0) {
+            entity->animationFrame++;
+        }
+        if (D_8018103C[entity->subId] < entity->animationFrameDuration) {
+            DestroyEntity(entity);
+        }
+    }
+}
+#endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F928);
+void func_8018F928(Entity *arg0) {
+    u16 temp_v0;
+
+    if (arg0->unk2C == 0) {
+        arg0->unk34 = 0x0C002000;
+        arg0->palette = 0x8195;
+        arg0->animationSet = 5;
+        arg0->animationFrame = 1U;
+        arg0->unk18 = 0x10;
+        arg0->unk19 = 3;
+        temp_v0 = D_80180FF8[arg0->subId];
+        arg0->unk1A = temp_v0;
+        arg0->unk1C = temp_v0;
+        arg0->accelerationY = D_80181008[arg0->subId];
+        arg0->unk2C++;
+    }
+    else
+    {
+        arg0->animationFrameDuration++;
+        arg0->posY.value -= arg0->accelerationY;
+        if ((arg0->animationFrameDuration & 1) == 0) {
+            arg0->animationFrame++;
+        }
+        if (arg0->animationFrameDuration >= 37) {
+            DestroyEntity(arg0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FA1C);
 
@@ -580,7 +722,38 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FC4C);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801902C8);
+void func_801902C8(Entity *entity) {
+    u32 zPriority;
+
+    if (entity->unk2C == 0) {
+        InitializeEntity(D_80180458);
+        entity->palette = 0x8170;
+        entity->animationSet = 5;
+        entity->animationFrame = 1;
+        entity->unk18 = 0x30;
+        if ((entity->subId & 0xF0) != 0) {
+            entity->palette = 0x8195;
+            entity->unk18 = 0x10;
+        }
+
+        zPriority = entity->subId & 0xFF00;
+        if (zPriority != 0) {
+            entity->zPriority = zPriority >> 8;
+        }
+        entity->zPriority += 8;
+    } else {
+        entity->animationFrameDuration++;
+        entity->posY.value -= 0x4000;
+
+        if ((entity->animationFrameDuration & 1) == 0) {
+            entity->animationFrame++;
+        }
+
+        if (entity->animationFrameDuration >= 37) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 void func_801903C8(Entity *entity) {
     if (entity->unk2C == 0) {
@@ -665,7 +838,30 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192610);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801929A4);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192E54);
+void func_80192E54(Entity *arg0) {
+    ObjInit2 *objInit = &D_80181134[arg0->subId];
+    if (arg0->unk2C == 0) {
+        InitializeEntity(D_80180494);
+        arg0->animationSet = objInit->animationSet;
+        arg0->zPriority = objInit->zPriority;
+        arg0->unk5A = objInit->unk4;
+        arg0->palette = objInit->palette;
+        arg0->unk19 = objInit->unk8;
+        arg0->unk18 = objInit->unkA;
+
+        if (objInit->unkC != 0) {
+            arg0->unk34 = objInit->unkC;
+        }
+
+        if (arg0->subId >= 5) {
+            arg0->unk1E = 0x0800;
+            arg0->unk19 = arg0->unk19 | 4;
+        }
+    }
+
+    AnimateEntity(objInit->unk10, arg0);
+}
+
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192F40);
 

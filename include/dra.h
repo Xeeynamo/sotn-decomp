@@ -127,7 +127,9 @@ typedef struct
     s16 unk8A;
     s32 unk8C;
     s32 unk90;
-    s32 unk94;
+    u8 unk94;
+    u8 unk95;
+    s16 unk96;
     s32 unk98;
     s32 unk9C;
     s32 unkA0;
@@ -242,6 +244,21 @@ typedef struct
     s16 unk32;
 } Unkstruct7;
 
+typedef struct
+{
+    u16 animationSet;
+    u16 zPriority;
+    u16 unk4;
+    u16 palette;
+    u8 unk8;
+    u8 unk9;
+    u8 unkA;
+    u8 unkB;
+    u32 unkC;
+    u8* unk10;
+} ObjInit2;
+
+
 // main
 extern void (*D_8003C7DC)(s32);
 extern Unkstruct5* D_8003C704;
@@ -300,6 +317,7 @@ extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
+extern Entity D_8007A958[];
 extern Entity D_8007D858[];
 extern u16 D_80097408;
 extern Entity D_8007EF1C;
