@@ -282,6 +282,8 @@ extern s32 D_8003CACC;
 #define HEART_VESSEL_INCREASE 5
 #define HEART_VESSEL_RICHTER 30
 #define LIFE_VESSEL_INCREASE 5
+#define FALL_GRAVITY 0x4000
+#define FALL_TERMINAL_VELOCITY 0x60000
 
 #define MaxEntityCount 32
 #define EntityExplosionID 2

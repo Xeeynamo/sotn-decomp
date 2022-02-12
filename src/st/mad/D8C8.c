@@ -552,9 +552,9 @@ void func_801920F0(void) {
     D_8006C26C->posY.value = D_8006C26C->posY.value + D_8006C26C->accelerationY;
 }
 
-void func_80192120(void) {
-    if (D_8006C26C->accelerationY <= 0x5FFFF) {
-        D_8006C26C->accelerationY = D_8006C26C->accelerationY + 0x4000;
+void FallEntity(void) {
+    if (D_8006C26C->accelerationY < FALL_TERMINAL_VELOCITY) {
+        D_8006C26C->accelerationY = D_8006C26C->accelerationY + FALL_GRAVITY;
     }
 }
 

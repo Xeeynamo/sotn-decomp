@@ -50,6 +50,7 @@ LoadObjLayout = 0x80190D8C;
 DestroyEntity = 0x80191D3C;
 DestroyEntityFromIndex = 0x80191DA8;
 AnimateEntity = 0x80191E6C;
+FallEntity = 0x80192120;
 AllocEntity = 0x80192800;
 InitializeEntity = 0x80192CAC;
 ReplaceCandleWithDrop = 0x80193394;

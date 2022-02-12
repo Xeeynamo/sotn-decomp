@@ -264,9 +264,9 @@ void func_8018B9B4(void) {
     D_8006C3B8->posY.value = D_8006C3B8->posY.value + D_8006C3B8->accelerationY;
 }
 
-void func_8018B9E4(void) {
-    if (D_8006C3B8->accelerationY <= 0x5FFFF) {
-        D_8006C3B8->accelerationY = D_8006C3B8->accelerationY + 0x4000;
+void FallEntity(void) {
+    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
+        D_8006C3B8->accelerationY = D_8006C3B8->accelerationY + FALL_GRAVITY;
     }
 }
 
@@ -540,7 +540,7 @@ void func_8018CFF8(void) {
     DestroyEntity(D_8006C3B8);
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D020);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandleDrop);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D894);
