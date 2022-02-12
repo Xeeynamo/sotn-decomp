@@ -246,6 +246,16 @@ typedef struct
 
 typedef struct
 {
+    void *addr1;
+    void *addr2;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+} Unkstruct8;
+
+typedef struct
+{
     u16 animationSet;
     u16 zPriority;
     u16 unk4;
@@ -319,6 +329,7 @@ extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
+extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
 extern u16 D_80097408;
@@ -336,6 +347,8 @@ extern u16 D_80097494;
 extern s16 D_80097496;
 extern s32 g_mapProgramId;
 extern s32 D_800974AC;
+extern s32 D_80097908;
+extern s32 D_8009790C;
 extern u8  D_8009796E;
 extern u8  D_8009798A;
 extern u8  D_80097A8D;

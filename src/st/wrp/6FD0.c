@@ -151,8 +151,10 @@ loop_1:
 }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A170);
+void func_8018A170(s16);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A26C);
+void func_8018A26C(s16);
 
 void func_8018A380(s32 arg0) {
     s32 a1 = 0xFFFE;
@@ -177,12 +179,33 @@ void func_8018A3CC(s32 arg0) {
 }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A424);
+void func_8018A424(s16 arg0);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
+void func_8018A520(s16);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A634);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A7AC);
+void func_8018A7AC(void) {
+    Unkstruct8 *s0 = &g_CurrentRoomTileLayout;
+
+    if (D_80097908) {
+        s16 tmp = D_8007308E;
+        if (D_80097908 > 0)
+            func_8018A170(tmp + 0x140);
+        else
+            func_8018A26C(tmp - 0x40);
+    }
+    
+    if (D_8009790C) {
+        s16 tmp = s0->unkE;
+        if (D_8009790C > 0)
+            func_8018A424(s0->unkE + 0x120);
+        else
+            func_8018A520(tmp - 0x40);
+    }
+}
+
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", SpawnExplosionEntity);
