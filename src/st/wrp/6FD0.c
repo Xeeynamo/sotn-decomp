@@ -178,8 +178,34 @@ void func_8018A3CC(s32 arg0) {
     }
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A424);
 void func_8018A424(s16 arg0);
+#else
+void func_80189FB4(ObjectInit*);
+extern s32 D_80097428[];
+extern u8 D_80193ABC;
+
+void func_8018A424(s16 arg0) {
+    if (D_80193ABC) {
+        func_8018A380((s16) (arg0 - D_8009790C));
+        D_80193ABC = 0;
+    }
+    
+    while (true)
+    {
+        if (D_80193AB4->posY != -1 && arg0 >= D_80193AB4->posY) {
+            u8 flag = (D_80193AB4->unk6 >> 8) + 0xFF;
+            if (flag == 0xFF || (1 << (flag & 0x1F) & D_80097428[flag >> 5]) == 0) {
+                func_80189FB4(D_80193AB4);
+            }
+            D_80193AB4++;
+        }
+        else
+            break;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
 void func_8018A520(s16);

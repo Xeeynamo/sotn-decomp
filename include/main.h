@@ -5,7 +5,7 @@
 
 extern s32 D_8003925C;
 
-extern void func_80015238(s32 arg0);
+extern void PadInit(s32 arg0);
 int VSync(s32);
 s32 func_80016D68(s32);
 s32 rsin(s32);

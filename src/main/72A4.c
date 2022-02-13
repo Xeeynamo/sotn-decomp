@@ -2,11 +2,11 @@
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016AA4);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016ADC);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", SetRCnt);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016B7C);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016BB4);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", StartRCnt);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016BE8);
 

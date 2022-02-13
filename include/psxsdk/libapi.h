@@ -30,7 +30,7 @@ extern long erase(char *);
 extern long Krom2RawAdd(unsigned long);
 extern void ChangeClearPAD(long);
 extern void StopPAD(void);
-int PAD_init2(s32/*??*/, s32 */*??*/); 
+int PAD_init(s32/*??*/, s32 */*??*/); 
 // PAD_dr
 extern void FlushCache(void);
 extern void DeliverEvent(unsigned long, unsigned long);
@@ -39,3 +39,5 @@ extern long OpenEvent(unsigned long,long,long,long (*func)());
 extern long EnableEvent(long);
 // ChangeClearRCnt
 extern void _96_remove(void);
+extern long SetRCnt(unsigned long, unsigned short, long);
+extern long StartRCnt(unsigned long);

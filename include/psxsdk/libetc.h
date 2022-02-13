@@ -22,4 +22,8 @@ int StopCallback(void);
 int RestartCallback(void);
 u16 CheckCallback(void);
 
+void PadInit(int mode);
+u_long PadRead(int id);
+void PadStop(void);
+
 #endif

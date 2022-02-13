@@ -128,7 +128,7 @@ void func_800E8DF0(void) {
     Unkstruct1* phi_a0;
     s32 phi_a1;
 
-    func_80015238(0);
+    PadInit(0);
     phi_a0 = &D_80097490;
     phi_a1 = 0;
     phi_v1 = &D_80097490.unk2;

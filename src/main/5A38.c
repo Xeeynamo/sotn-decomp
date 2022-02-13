@@ -3,22 +3,22 @@
 #include <psxsdk/libapi.h>
 #include <main.h>
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", func_80015238);
-// void func_80015238(s32 arg0) {
+INCLUDE_ASM("asm/main/nonmatchings/5A38", PadInit);
+// void PadInit(s32 arg0) {
 //     D_80073080 = arg0;
 //     D_8003925C = -1;
 //     ResetCallback();
-//     PAD_init2(0x20000001, &D_8003925C);
+//     PAD_init(0x20000001, &D_8003925C);
 //     ChangeClearPAD(0);
 // }
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", func_80015288);
+INCLUDE_ASM("asm/main/nonmatchings/5A38", PadRead);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", func_800152B8);
+INCLUDE_ASM("asm/main/nonmatchings/5A38", PadStop);
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", StopPAD);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_init2);
+INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_init);
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_dr);
 
