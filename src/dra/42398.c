@@ -121,30 +121,40 @@ void func_800E8D24(void) {
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8D54);
+void func_800E8D54(void);
 // https://decomp.me/scratch/YhofM
 
-void func_800E8DF0(void) {
-    Unkstruct1* phi_v1;
-    Unkstruct1* phi_a0;
-    s32 phi_a1;
+void InitializePads(void) {
+    Pad* pad;
+    s32 i;
 
     PadInit(0);
-    phi_a0 = &D_80097490;
-    phi_a1 = 0;
-    phi_v1 = &D_80097490.unk2;
-    
-    do {
-        phi_a1++;
-        phi_v1->unk2 = 0;
-        phi_v1->unk0 = 0;
-        phi_v1 += 1;
-        phi_a0->unk0 = 0;
-        phi_a0++;
-    } while (phi_a1 < 2);
+    for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++)
+    {
+        pad->tapped = 0;
+        pad->previous = 0;
+        pad->pressed = 0;
+    }
     func_800E8D24();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8E48);
+void ReadPads(void) {
+    Pad *pad;
+    s32 i;
+    u_long padd;
+
+    for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++)
+    {
+        pad->previous = pad->pressed;
+        padd = PadRead(i >> 1);
+        if ((i & 1) == 0)
+            pad->pressed = padd;
+        else
+            pad->pressed = padd >> 0x10;
+        pad->tapped = (pad->pressed ^ pad->previous) & pad->pressed;
+    }
+    func_800E8D54();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8EE4);
 

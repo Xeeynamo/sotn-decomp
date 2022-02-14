@@ -40,11 +40,11 @@ typedef struct
 
 typedef struct 
 {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-} Unkstruct1;
+    s16 pressed;
+    s16 previous;
+    s16 tapped;
+    s16 repeat;
+} Pad;
 
 typedef union
 {
@@ -285,6 +285,7 @@ extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003CACC;
 
 // dra
+#define PAD_COUNT 2
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
@@ -342,8 +343,7 @@ extern u32 D_800978B8;
 extern s32 D_800973FC;
 extern s32 D_80097410;
 extern s32 D_80097414;
-extern Unkstruct1 D_80097490;
-extern u16 D_80097494;
+extern Pad g_pads[];
 extern s16 D_80097496;
 extern s32 g_mapProgramId;
 extern s32 D_800974AC;
