@@ -610,56 +610,55 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F564C);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", ScissorSprite);
 #else
-bool ScissorSprite(SPRT* sprite, MenuContext* arg1) {
-    s16 spriteX = sprite->x0;
-    s16 spriteY = sprite->y0;
-    if (IsSpriteOutsideDrawArea(spriteX, spriteX + sprite->w, spriteY, spriteY + sprite->h, arg1) == false) {
-        s16 scissorx0;
-        s16 scissory0;
-        s32 scissory1;
-        s32 scissorx1;
-        s32 spritex1;
-        s32 spritey1;
+bool ScissorSprite(SPRT* sprite, MenuContext* context) {
+    s16 scissorx0;
+    s16 scissory0;
+    s32 scissory1;
+    s32 scissorx1;
+    s32 spritex1;
+    s32 spritey1;
 
-        scissorx0 = arg1->unk1.x;
-        if (sprite->x0 < scissorx0) {
-            s32 a0 = sprite->x0;
-            s32 diffx = scissorx0 - a0;
-            sprite->x0 = a0 + diffx;
-            sprite->u0 = sprite->u0 + diffx;
-            sprite->w = sprite->w - diffx;
-        }
+    if (IsSpriteOutsideDrawArea(sprite->x0, sprite->x0 + sprite->w, sprite->y0, sprite->y0 + sprite->h, context))
+        return true;
 
-        scissory0 = arg1->unk1.y;
-        if (sprite->y0 < scissory0) {
-            s32 diffy = scissory0 - sprite->y0;
-            sprite->y0 = sprite->y0 + diffy;
-            sprite->v0 = sprite->v0 + diffy;
-            sprite->h = sprite->h - diffy;
-        }
-
-        scissorx1 = (s16)arg1->unk1.x + (s16)arg1->unk1.w;
-        spritex1 = sprite->x0 + sprite->w;
-        if (scissorx1 < spritex1) {
-            sprite->w = sprite->w - (spritex1 - scissorx1);
-        }
-
-        scissory1 = (s16)arg1->unk1.y + (s16)arg1->unk1.h;
-        spritey1 = sprite->y0 + sprite->h;
-        if (scissory1 < spritey1) {
-            sprite->h = sprite->h - (spritey1 - scissory1);
-        }
-
-        return false;
+    scissorx0 = context->unk1.x;
+    if (sprite->x0 < scissorx0) {
+        s32 diffx = scissorx0 - sprite->x0;
+        sprite->x0 += diffx;
+        sprite->u0 = sprite->u0 + diffx;
+        sprite->w = sprite->w - diffx;
     }
-    return true;
+
+    scissory0 = context->unk1.y;
+    if (sprite->y0 < context->unk1.y) {
+        s32 diffy = scissory0 - sprite->y0;
+        sprite->y0 = sprite->y0 + diffy;
+        sprite->v0 = sprite->v0 + diffy;
+        sprite->h = sprite->h - diffy;
+    }
+
+    scissorx1 = context->unk1.x + context->unk1.w;
+    spritex1 = sprite->x0 + sprite->w;
+    if (scissorx1 < spritex1) {
+        sprite->w = sprite->w - (spritex1 - scissorx1);
+    }
+
+    scissory1 = context->unk1.y + context->unk1.h;
+    spritey1 = sprite->y0 + sprite->h;
+    if (scissory1 < spritey1) {
+        sprite->h = sprite->h - (spritey1 - scissory1);
+    }
+
+    return false;
 }
 #endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5904);
 // https://decomp.me/scratch/DP2LU
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5A90);
+void func_800F5A90(void) {
+    func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5AE4);
 
@@ -689,16 +688,41 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6568);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6618);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F66BC);
+void func_800F66BC(const char* str, s32 x, s32 y, MenuContext* context, bool disableTexShade);
+#else
+void func_800F66BC(const char* str, s32 x, s32 y, MenuContext* context, bool disableTexShade) {
+    const int ChWidth = 12;
+    const int ChHeight = 16;
+    u8 ch;
+    u8 unk;
+    
+loop_1:
+    ch = *str++;
+    if (ch == 0xFF)
+        return;
+    unk = ((u16)(ch & 0x10)) != 0;
+    func_800F5904(context, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth, (ch >> 5) * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
+    x += ChWidth;
+    goto loop_1;
+}
+#endif
 
-void DrawMenuChar(s32 ch, int x, int y, void* context) {
+void DrawMenuChar(char ch, int x, int y, MenuContext* context) {
     func_800F5904(context, x, y, 8, 8, (ch & 0xF) * 8, (u32) (ch & 0xF0) >> 1, 0x196, 0x1E, 1, 0);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawMenuStr);
 // https://decomp.me/scratch/S4Dzb
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawMenuInt);
+void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
+    do {
+        DrawMenuChar((digit % 10) + 16, x, y, context);
+        digit /= 10;
+        x += -8;
+    } while (digit != 0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6998);
 
@@ -774,9 +798,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F72BC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawPauseMenu);
 #else
 void func_800F622C(MenuContext* context);
-void func_800F66BC(s32, s32 x, s32 y, MenuContext*, s32);
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
-extern s32 D_8003C760;
 extern s32 D_8003C9B0;
 extern s32 D_8003C9FC;
 extern s32 D_80097C1C;
@@ -873,7 +895,7 @@ void DrawPauseMenu(s32 arg0) {
         }
         DrawMenuStr((&c_strGOLD)[phi_s4], 0x104, 0x44, context); // TODO probably wrong
         DrawMenuStr(c_strROOMS, 0xF0, 0x96, context);
-        DrawMenuInt(D_8003C760, 0x148, 0x96, context);
+        DrawMenuInt(g_roomCount, 0x148, 0x96, context);
         DrawMenuStr(c_strKILLS, 0xF0, 0xA4, context);
         DrawMenuInt(g_killCount, 0x148, 0xA4, context);
         DrawMenuStr(c_strTIME, 0xD0, 0xC0, context);
@@ -1031,7 +1053,9 @@ void func_800F8858(MenuContext* context) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F892C);
+void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
+    func_800F5904(context, x, y, 16, 16, (index & 7) * 16, ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8990);
 

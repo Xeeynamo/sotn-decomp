@@ -21,7 +21,8 @@ typedef struct
     RECT unk1;
     int w;
     int unk14;
-    int unk18;
+    s16 unk18;
+    s16 unk1A;
 } MenuContext;
 
 typedef struct
@@ -280,9 +281,10 @@ extern void (*D_8003C848)(s32, s32);
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B4)(s32);
 extern Unkstruct5* D_8003C808;
+extern s32 g_roomCount;
+extern s32 g_CurrentPlayableCharacter;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
-extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003CACC;
 
 // dra
@@ -509,7 +511,7 @@ bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1, s32 unk2, bool disableTexShade, s32 unk4);
 void func_800F5E68(MenuContext*, s32 iOption, s32 x, s32 y, s32 w, s32 h, s32, s32);
 s32 func_800F62E8(s32 arg0);
-void DrawMenuChar(s32 ch, int x, int y, void* context);
+void DrawMenuChar(char ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
 void DrawSettingsReverseCloak(MenuContext* context);
