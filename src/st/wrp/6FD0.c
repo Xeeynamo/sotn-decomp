@@ -63,7 +63,71 @@ void func_80186FD0(Entity *arg0) {
     AnimateEntity(objInit->unk10, arg0);
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
+#else
+s32 func_8018B970();
+extern u16 D_80180488[];
+extern u8 D_80180528[];
+extern s8 D_80180530[];
+extern s16 D_80180538[];
+
+void func_801870B0(Entity *entity) {
+    s32 temp_v0;
+    s32 temp_v1;
+    u16 *temp_v0_2;
+    u16 temp_s1;
+    u16 phi_v1;
+
+    temp_s1 = entity->subId;
+    entity->unk6D = 0;
+    if (entity->unk2C != 0) {
+        temp_v1 = temp_s1;
+        if (temp_v1 >= 4) {
+            if (temp_v1 >= 6) {
+                if (temp_v1 == 6 && g_CurrentRoomX)
+                    return;
+                
+                if (g_pads->pressed & PAD_TRIANGLE) {
+                    g_CurrentRoomX = 0;
+                    g_CurrentRoomWidth = 0x00000500;
+                    entity->unk2C++;
+                    return;
+                }
+            }
+        }
+
+        if (entity->unk44 != 0) {
+            temp_v0 = func_8018B970();
+            if (entity->unk7C != 0) {
+                phi_v1 = (temp_v0 & 2) * 2;
+            } else {
+                phi_v1 = (temp_v0 & 1) * 4;
+            }
+
+            temp_v0_2 = &D_80180538[(phi_v1 + temp_s1 * 8) & 0xFFFF];
+            g_CurrentRoomX = (s32) *temp_v0_2++;
+            g_CurrentRoomY = (s32) *temp_v0_2++;
+            g_CurrentRoomWidth = (s32) *temp_v0_2++;
+            g_CurrentRoomHeight = (s32) *temp_v0_2++;
+        }
+    } else {
+        u8 temp_v0_5;
+        InitializeEntity(D_80180488);
+        temp_v0_5 = D_80180530[temp_s1];
+        entity->unk7C = temp_v0_5;
+        if (temp_v0_5 != 0) {
+            entity->hitboxWidth = D_80180528[temp_s1];
+            entity->hitboxHeight = 16;
+        }
+        else
+        {
+            entity->hitboxWidth = 16;
+            entity->hitboxHeight = D_80180528[temp_s1];
+        }
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandle);
