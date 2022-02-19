@@ -270,11 +270,20 @@ typedef struct
     u8* unk10;
 } ObjInit2;
 
+typedef struct
+{
+    u16 programId;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+} Unkstruct10;
 
 // main
 extern void (*D_8003C7DC)(s32);
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
+extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*D_8003C848)(s32, s32);
@@ -321,9 +330,34 @@ extern s32 D_8003CACC;
 #define EntityCandleDropID 3
 #define EntityCandleHeartDropID 10
 
+#define PROGRAM_NO0 0x00
+#define PROGRAM_NO1 0x01
+#define PROGRAM_LIB 0x02
+#define PROGRAM_CAT 0x03
+#define PROGRAM_NO2 0x04
+#define PROGRAM_CHI 0x05
+#define PROGRAM_DAI 0x06
+#define PROGRAM_NP3 0x07
+#define PROGRAM_CEN 0x08
+#define PROGRAM_NO4 0x09
+#define PROGRAM_ARE 0x0A
+#define PROGRAM_TOP 0x0B
+#define PROGRAM_NZ0 0x0C
+#define PROGRAM_NZ1 0x0D
+#define PROGRAM_WRP 0x0E
+#define PROGRAM_NO1_ 0x0F
+#define PROGRAM_NO0_ 0x10
+#define PROGRAM_DRE 0x12
+#define PROGRAM_BO6 0x18
+#define PROGRAM_ST0 0x1F
+#define PROGRAM_MAD 0x40
+#define PROGRAM_NO3 0x41
+#define PROGRAM_INVERTEDCASTLE_FLAG 0x20
+
 extern s32 D_8006BB00;
-extern s32 D_8006C39C;
-extern s32 D_8006C3A0;
+extern s32 D_8006C374;
+extern s32 g_backbufferX;
+extern s32 g_backbufferY;
 extern Entity* D_8006C3B8;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072F2C;
@@ -387,9 +421,10 @@ extern s32 D_80097C24;
 extern s32 g_timeHours;
 extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
+extern s32 D_80097C98;
 
 extern s32 D_800A2438;
-extern u16 D_800A2464[];
+extern Unkstruct10 D_800A2464[];
 extern const char* c_strALUCARD;
 extern const char* c_strSTR;
 extern const char* c_strCON;
@@ -438,6 +473,7 @@ extern const char *c_strFamiliars;
 extern const char *c_strFamiliar;
 extern const char *c_strSpecial2;
 extern RECT c_backbufferClear;
+extern s16 D_800BD07C[];
 extern u8  D_80137460;
 extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
@@ -480,6 +516,7 @@ extern s32 D_8013B61C;
 extern s16 D_8013B658;
 extern s32 D_8013B660;
 extern s16 D_8013B668;
+extern u8  D_8013B680;
 extern s32 D_8013B694;
 extern s32 D_80138784[487];
 extern ImgSrc* g_imgUnk8013C200;
@@ -550,7 +587,6 @@ bool func_80131F68(void);
 s16 func_80131F94(void);
 s32 func_80132134();
 s32 func_80132264();
-s32 func_801324B4(s32, s32, s32);
 s32 func_801326D8();
 void func_8013271C(void);
 void func_80132760(void);

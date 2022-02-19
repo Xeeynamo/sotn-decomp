@@ -45,13 +45,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", entrypoint_sotn);
 void func_800E4124(s32 context) {
     D_8003C734 = context;
     D_80073060 = 0;
-    D_8006C39C = 0;
-    D_8006C3A0 = 0;
+    g_backbufferX = 0;
+    g_backbufferY = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E414C);
 
-void func_800E44EC(void) {
+void ClearBackbuffer(void) {
    ClearImage(&c_backbufferClear, 0, 0, 0);
 }
 
@@ -470,7 +470,7 @@ loop_3:
             pRoom->right >= chunkX && pRoom->bottom >= chunkY) {
             pRoomLoad = &pRoom->load;
             if (pRoom->load.tilesetId == 0xFF) {
-                if (D_800A2464[pRoom->load.tileLayoutId * 5] == 0x1F) {
+                if (D_800A2464[pRoom->load.tileLayoutId].programId == 0x1F) {
                     return false;
                 }
             }
@@ -490,7 +490,23 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1424);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F14CC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F16D0);
+s32 func_800F16D0(void) {
+    if (D_8003C730 != 0)
+        return g_mapProgramId;
+    else if (D_80097C98 == 4)
+        return PROGRAM_TOP | PROGRAM_INVERTEDCASTLE_FLAG;
+    else if (D_80097C98 == 5)
+        return PROGRAM_TOP;
+    else if (D_80097C98 == 6)
+        return PROGRAM_LIB;
+    else {
+        s32 programId = D_800A2464[D_8006C374].programId;
+        if (g_mapProgramId & PROGRAM_INVERTEDCASTLE_FLAG) {
+            programId ^= PROGRAM_INVERTEDCASTLE_FLAG;
+        }
+        return programId;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1770);
 
@@ -2024,7 +2040,18 @@ s16 func_80131F94(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131FA4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131FCC);
+void func_80131FCC(void) {
+    if (D_8013B680 == 0) {
+        D_80138F7C = 0;
+    } else {
+        s32 temp_v1 = D_8013B680;
+        s32 temp_v0 = D_8013B680;
+        if (temp_v0 >= 0 && temp_v1 < 3)
+            D_80138F7C++;
+    }
+    D_8013B680 = 0;
+}
+
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132028);
 
@@ -2036,7 +2063,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801321FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132264);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801324B4);
+#else
+s32 func_801324B4(s8 arg0, s16 arg1, s16 arg2) {
+    return func_8001D374(arg0, D_800BD07C[arg1], D_800BD07C[arg2]);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132500);
 

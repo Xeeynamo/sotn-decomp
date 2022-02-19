@@ -16,6 +16,7 @@ extern unsigned char func_80019444();
 extern void func_800195C8(s32);
 extern void func_800199D0(s32);
 extern s32 func_8001D290(s32, s32);
+extern s32 func_8001D374(s8, s16, s16);
 extern void func_8001D2E0(s32, s32, s32);
 extern void func_800202E0(s16);
 extern void func_80020F44(s16);
