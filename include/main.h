@@ -21,5 +21,6 @@ extern void func_8001D2E0(s32, s32, s32);
 extern void func_800202E0(s16);
 extern void func_80020F44(s16);
 extern void func_80021F6C(s16, s16);
+void func_8002A024(s32, s32);
 
 #endif

@@ -2267,7 +2267,33 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135D8C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80136010);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801361F8);
+void func_80131FCC();
+void func_80133FCC();
+void func_80134F50();
+void func_801353A0();
+void func_80135C2C();
+void func_80135D8C();
+void func_80136010();
+
+void func_801361F8(void) {
+    if (D_8013AEEC != 0) {
+        func_80136010();
+        func_80135C2C();
+        func_80135D8C();
+        func_80134F50();
+        func_80133FCC();
+        func_801353A0();
+        func_8002A024(0, D_80138F28);
+        D_80138F28 = 0;
+        func_80131FCC();
+
+        if (D_80139020) {
+            func_801324B4(0, 0, 0);
+        } else {
+            func_801324B4(0, D_8013B668, D_8013B668);
+        }
+    }
+}
 
 void nullsub_10(void) {
 }
