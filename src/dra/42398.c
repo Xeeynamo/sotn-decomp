@@ -1,7 +1,30 @@
 #include "common.h"
 #include "dra.h"
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
+#else
+void func_800116FC(s32);
+void func_8001195C();
+extern s32 *D_8006C37C;
+extern s32 D_80136300;
+
+void func_800E2398() {
+    s32 temp_v0;
+
+    D_8006C37C = *D_8006C37C; // D_8006C37C->next
+    func_8001195C();
+    temp_v0 = D_80136300++;
+    if ((temp_v0 & 4) != 0) {
+        func_8001195C();
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv((DRAWENV *) ((s32*)D_8006C37C + 1));
+    PutDispEnv((DISPENV *) ((s32*)D_8006C37C + 0x18));
+    func_800116FC(-1);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2438);
 
@@ -546,7 +569,65 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2288);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2404);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F24F4);
+#else
+s32 func_800FD4C0(s32, s32);
+void func_801042C4(s32);
+void func_80105428();
+extern s32 D_8003C730;
+extern s16 D_800733DA;
+extern s32 D_80137598;
+
+void func_800F24F4(void) {
+    s32 castleX;
+    s32 castleY;
+    s32 phi_v1;
+    s32 phi_a0;
+
+    castleX = ((s32) playerX >> 8) + g_CurrentRoomLeft;
+    castleY = ((s32) playerY >> 8) + g_CurrentRoomTop;
+    if (D_8003C708 & 0x20) {
+        phi_v1 = g_mapProgramId;
+        if (phi_v1 == (PROGRAM_NO0 | PROGRAM_INVERTEDCASTLE_FLAG)) {
+            if ((castleX == phi_v1) && (castleY == 0x24)) {
+                if (func_800FD4C0(22, 0) == 0) {
+                    func_800FD4C0(22, 1);
+                }
+                phi_v1 = g_mapProgramId;
+            }
+        }
+
+        if (phi_v1 == (PROGRAM_NO4 | PROGRAM_INVERTEDCASTLE_FLAG) && castleX == 0x12 && castleY == 0x1E)
+        {
+        }
+        else
+        {
+            phi_a0 = 0;
+            if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D && castleY == 0x21) {
+                if (D_800733DA == 0x80) {
+                    D_8003C730 = 1;
+                    phi_a0 = 1;
+                }
+                else
+                {
+                    phi_a0 = 1;
+                    if (func_800FD4C0(9, 0)) {
+                        goto block_18;
+                    }
+                }
+            }
+
+            func_801042C4(phi_a0);
+            D_80137598 = 1;
+            func_80105428();
+            return;
+        }
+    }
+block_18:
+    D_80137598 = 0;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2658);
 
@@ -2137,12 +2218,16 @@ u16 func_80132E38(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132E90);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132F60);
+void func_80132F60();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133290);
+void func_80133290();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133488);
+void func_80133488();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133604);
+void func_80133604();
 
 void func_80133780(s8 arg0) {
     func_8001D2E0(0, 1, arg0 == 1);
@@ -2169,18 +2254,23 @@ s32 func_80133950(void) {
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133960);
+void func_80133960();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133BDC);
+void func_80133BDC();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133FCC);
+void func_80133FCC();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134104);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013415C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801341B4);
+void func_801341B4();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134388);
+void func_80134388();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134508);
 
@@ -2250,8 +2340,50 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134D14);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134E64);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134F50);
+void func_80134F50();
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801353A0);
+#else
+void func_801353A0()
+{
+    if (D_801396F4 == 0)
+        return;
+
+    switch (D_80139868)
+    {
+        case 2:
+            func_80133604();
+            break;
+        case 3:
+            func_80133488();
+            break;
+        case 4:
+            func_80132F60();
+            break;
+        case 6:
+            func_80133290();
+            break;
+        case 8:
+            func_80134388();
+            break;
+        case 10:
+            func_801341B4();
+            break;
+        case 12:
+            func_80133960();
+            break;
+        case 14:
+            func_80133BDC();
+            break;
+        case 16:
+            D_8013B684 = 0;
+        case 0:
+            func_80132E38();
+            break;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135484);
 
@@ -2262,18 +2394,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013572C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135C00);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135C2C);
+void func_80135C2C();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135D8C);
+void func_80135D8C();
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80136010);
-
-void func_80131FCC();
-void func_80133FCC();
-void func_80134F50();
-void func_801353A0();
-void func_80135C2C();
-void func_80135D8C();
-void func_80136010();
 
 void func_801361F8(void) {
     if (D_8013AEEC != 0) {
