@@ -1150,4 +1150,3 @@ g_pStUnkRoomDef = 0x80180010;
 g_pStUnkObjLayouts = 0x8018001C;
 g_pStUnkTilesLayout = 0x80180020;
 g_pStTilesets = 0x80180024;
-D_801997DC = 0x801997DC;
