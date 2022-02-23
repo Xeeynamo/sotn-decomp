@@ -84,7 +84,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E493C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4970);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4A04);
+void func_800E4A04(void) {
+    s32 a[3];
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4A14);
 
@@ -1402,7 +1404,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0B8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0F4);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF110);
+#else
+s32 func_800FF110(s32 arg0) {
+    return D_80139834[arg0];
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF128);
 
