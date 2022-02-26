@@ -1131,6 +1131,7 @@ DrawSettingsButton = 0x800F6FA4;
 DrawSettingsReverseCloak = 0x800F70DC;
 DrawSettingsSound = 0x800F7168;
 DrawPauseMenu = 0x800F74B4;
+DrawHudRichter = 0x80100750;
 SetPolyRect = 0x80107330;
 CopyMapOverlayCallback = 0x801074BC;
 nullsub_10 = 0x801362A4;
