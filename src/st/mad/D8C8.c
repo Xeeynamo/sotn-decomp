@@ -192,7 +192,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandle);
 #else
 void EntityCandle(Entity *entity) {
     u16 temp_s0 = entity->subId >> 0xC;
-    if (entity->unk2C) { // Is initialised?
+    if (entity->initState) {
         AnimateEntity(D_80180644[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity *entityDropItem;
@@ -688,7 +688,7 @@ u16 func_80192B70(s32 arg0, s32 arg1, s32 arg2) {
 #endif
 
 void func_80192BD0(s32 arg0) {
-    D_8006C26C->unk2C = (s16) (arg0 & 0xFF);
+    D_8006C26C->initState = (s16) (arg0 & 0xFF);
     D_8006C26C->unk2E = 0;
     D_8006C26C->animationFrameIndex = 0;
     D_8006C26C->animationFrameDuration = 0;
@@ -717,7 +717,7 @@ void func_80192C0C(u16 arg0, u16 arg1) {
     entity->pfnUpdate = func_80194218;
     entity->subId = arg0;
     entity->animationFrame = 0;
-    D_8006C26C->unk2C = 0;
+    D_8006C26C->initState = 0;
     D_8006C26C->unk2E = 0;
 }
 
@@ -742,15 +742,15 @@ void InitializeEntity(u16 *arg0) {
     D_8006C26C->unk10 = 0;
     D_8006C26C->unk12 = 0;
     D_8006C26C->unk2E = 0;
-    D_8006C26C->unk2C++;
+    D_8006C26C->initState++;
     if (D_8006C26C->zPriority == 0) {
         D_8006C26C->zPriority = D_80096EB8 - 0xC;
     }
 }
 
 void func_80192DA8(Entity* arg0) {
-    if (arg0->unk2C == 0) {
-        arg0->unk2C++;
+    if (arg0->initState == 0) {
+        arg0->initState++;
     }
 }
 
@@ -790,7 +790,7 @@ void ReplaceCandleWithDrop(Entity *entity) {
     }
     entity->subId = newSubId;
     entity->unk6D = 0x10;
-    entity->unk2C = 0;
+    entity->initState = 0;
 }
 
 #endif
@@ -851,7 +851,7 @@ void func_8019399C(void) {
 }
 
 Entity* func_801939C4(void) {
-    D_8006C26C->unk2C = 3;
+    D_8006C26C->initState = 3;
     D_8006C26C->subId = 4;
     return D_8006C26C;
 }
@@ -868,7 +868,7 @@ extern s32 D_80180EC4;
 void func_80194218(Entity *arg0) {
     u32 temp_v0;
 
-    if (arg0->unk2C == 0) {
+    if (arg0->initState == 0) {
         InitializeEntity(&D_80180508);
         arg0->animationSet = 2;
         arg0->animationFrameIndex = 0;

@@ -85,7 +85,7 @@ typedef struct
     u16 zPriority;
     u16 objectId;
     PfnEntityUpdate pfnUpdate;
-    u16 unk2C;
+    u16 initState;
     s16 unk2E;
     u16 subId;
     u16 unk32;

@@ -27,7 +27,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandle);
 #else
 void EntityCandle(Entity *entity) {
     u16 temp_s0 = entity->subId >> 0xC;
-    if (entity->unk2C) { // Is initialised?
+    if (entity->initState) {
         AnimateEntity(D_80180E50[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity *entityDropItem;
@@ -308,7 +308,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57FC);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5844);
 
 void func_801C58A4(s32 arg0) {
-    D_8006C3B8->unk2C = (s16) (arg0 & 0xFF);
+    D_8006C3B8->initState = (s16) (arg0 & 0xFF);
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
@@ -343,15 +343,15 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->unk10 = 0;
     D_8006C3B8->unk12 = 0;
     D_8006C3B8->unk2E = 0;
-    D_8006C3B8->unk2C++;
+    D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
         D_8006C3B8->zPriority = D_80097408 - 0xC;
     }
 }
 
 void func_801C5A70(Entity* arg0) {
-    if (arg0->unk2C == 0) {
-        arg0->unk2C++;
+    if (arg0->initState == 0) {
+        arg0->initState++;
     }
 }
 
@@ -392,7 +392,7 @@ void ReplaceCandleWithDrop(Entity *entity) {
     }
     entity->subId = newSubId;
     entity->unk6D = 0x10;
-    entity->unk2C = 0;
+    entity->initState = 0;
 }
 #endif
 

@@ -41,7 +41,7 @@ void func_80192F40(s32, s32);
 
 void func_80186FD0(Entity *arg0) {
     ObjInit2 *objInit = &D_801804E0[arg0->subId];
-    if (arg0->unk2C == 0) {
+    if (arg0->initState == 0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
@@ -81,7 +81,7 @@ void func_801870B0(Entity *entity) {
 
     temp_s1 = entity->subId;
     entity->unk6D = 0;
-    if (entity->unk2C != 0) {
+    if (entity->initState != 0) {
         temp_v1 = temp_s1;
         if (temp_v1 >= 4) {
             if (temp_v1 >= 6) {
@@ -91,7 +91,7 @@ void func_801870B0(Entity *entity) {
                 if (g_pads->pressed & PAD_TRIANGLE) {
                     g_CurrentRoomX = 0;
                     g_CurrentRoomWidth = 0x00000500;
-                    entity->unk2C++;
+                    entity->initState++;
                     return;
                 }
             }
@@ -134,7 +134,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandle);
 #else
 void EntityCandle(Entity *entity) {
     u16 temp_s0 = entity->subId >> 0xC;
-    if (entity->unk2C) { // Is initialised?
+    if (entity->initState) {
         AnimateEntity(D_801805B8[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity *entityDropItem;
@@ -481,7 +481,7 @@ u16 func_8018C198(s32 x, s32 y) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C1E0);
 
 void func_8018C240(s32 arg0) {
-    D_8006C3B8->unk2C = (s16) (arg0 & 0xFF);
+    D_8006C3B8->initState = (s16) (arg0 & 0xFF);
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
@@ -510,7 +510,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity->pfnUpdate = func_8018D894;
     entity->subId = arg0;
     entity->animationFrame = 0;
-    D_8006C3B8->unk2C = 0;
+    D_8006C3B8->initState = 0;
     D_8006C3B8->unk2E = 0;
 }
 
@@ -535,15 +535,15 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->unk10 = 0;
     D_8006C3B8->unk12 = 0;
     D_8006C3B8->unk2E = 0;
-    D_8006C3B8->unk2C++;
+    D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
         D_8006C3B8->zPriority = D_80097408 - 0xC;
     }
 }
 
 void func_8018C40C(Entity* arg0) {
-    if (arg0->unk2C == 0) {
-        arg0->unk2C++;
+    if (arg0->initState == 0) {
+        arg0->initState++;
     }
 }
 
@@ -661,7 +661,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D894);
 void func_8018D894(Entity *entity) {
     u16 zPriority;
 
-    if (entity->unk2C == 0) {
+    if (entity->initState == 0) {
         InitializeEntity(D_80180458);
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
@@ -777,13 +777,13 @@ void func_8018F750(Entity *source, s8 count, s16 xOffset, s16 yOffset, s16 xDist
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F838);
 #else
 void func_8018F838(Entity *entity) {
-    if (entity->unk2C == 0) {
+    if (entity->initState == 0) {
         entity->palette = 0x8195;
         entity->animationSet = 2;
         entity->unk34 = 0x0C002000;
         entity->accelerationY = D_80181020[entity->unk94];
         entity->unk18 = 16;
-        entity->unk2C = entity->unk2C + 1;
+        entity->initState = entity->initState + 1;
         entity->animationFrame = D_80181038[entity->subId];
     }
     else
@@ -803,7 +803,7 @@ void func_8018F838(Entity *entity) {
 void func_8018F928(Entity *arg0) {
     u16 temp_v0;
 
-    if (arg0->unk2C == 0) {
+    if (arg0->initState == 0) {
         arg0->unk34 = 0x0C002000;
         arg0->palette = 0x8195;
         arg0->animationSet = 5;
@@ -814,7 +814,7 @@ void func_8018F928(Entity *arg0) {
         arg0->unk1A = temp_v0;
         arg0->unk1C = temp_v0;
         arg0->accelerationY = D_80181008[arg0->subId];
-        arg0->unk2C++;
+        arg0->initState++;
     }
     else
     {
@@ -838,7 +838,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 void func_801902C8(Entity *entity) {
     u32 zPriority;
 
-    if (entity->unk2C == 0) {
+    if (entity->initState == 0) {
         InitializeEntity(D_80180458);
         entity->palette = 0x8170;
         entity->animationSet = 5;
@@ -869,7 +869,7 @@ void func_801902C8(Entity *entity) {
 }
 
 void func_801903C8(Entity *entity) {
-    if (entity->unk2C == 0) {
+    if (entity->initState == 0) {
         InitializeEntity(D_80180458);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
@@ -883,7 +883,7 @@ void func_801903C8(Entity *entity) {
             entity->palette = 0x8160;
         }
 
-        entity->unk2C++;
+        entity->initState++;
     } else {
         func_8018B9B4();
         if (AnimateEntity(D_8018104C, entity) == 0) {
@@ -953,7 +953,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801929A4);
 
 void func_80192E54(Entity *arg0) {
     ObjInit2 *objInit = &D_80181134[arg0->subId];
-    if (arg0->unk2C == 0) {
+    if (arg0->initState == 0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
