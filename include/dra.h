@@ -587,7 +587,7 @@ void func_80106590(Entity*);
 void func_801065F4(s16 startIndex);
 void func_801071CC(POLY_GT4 *poly, u8, s32);
 void func_80107250(POLY_GT4 *poly, s32 arg1);
-void func_80107360(POLY_GT4 *poly, s32 x, s32 y, s32 width, s32 height, s8 u, s8 v);
+void func_80107360(POLY_GT4 *poly, s32 x, s32 y, s32 width, s32 height, u8 u, u8 v);
 void SetPolyRect(POLY_GT4 *poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);

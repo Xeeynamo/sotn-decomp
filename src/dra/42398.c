@@ -1536,7 +1536,68 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80100B50);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010183C);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010189C);
+#else
+extern u8 D_800A2EE8[];
+extern u8 D_800A2EED;
+extern u8 D_800A2EF8[];
+extern u8 D_800A2EFD;
+extern u8 D_800A2F08[];
+extern u8 D_800A2F18[];
+extern u8 D_800A2F28[];
+extern u8 D_800A2F2D;
+extern u8 D_800A2F38[];
+extern u8 D_800A2F3D;
+extern u16 D_800A2F48[];
+extern u16 D_800A2F64[];
+extern s32 D_8013796C;
+extern s32 D_80137970;
+extern s32 D_80137998;
+
+void func_8010189C() {
+    POLY_GT4* poly;
+    s32 i;
+
+    D_8013B5E8 = 0;
+    D_80137998 = 0;
+    D_8013796C = g_playerHp;
+    if (g_mapProgramId == 0x1F || g_CurrentPlayableCharacter != 0) {
+        DrawHudRichter();
+        return;
+    }
+
+    D_80137970 = func_800EDD9C(4U, 14);
+    poly = &D_80086FEC[D_80137970];
+    i = 0;
+    if (poly != 0) {
+        do {
+            func_80107360(poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i], D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
+            poly->tpage = 0x1F;
+            poly->clut = D_800A2F48[i];
+            poly->pad2 = 0x1F0;
+            poly->pad3 = D_800A2F64[i];
+
+            if (i == 5) {
+                SetPolyRect(poly, D_800A2EED, D_800A2EFD, D_800A2F3D, D_800A2F2D);
+                poly->y0 = poly->y2;
+                poly->x1 = poly->x0;
+                poly->x2 = poly->x3;
+                poly->y3 = poly->y1;
+            }
+
+            if (i == 1) {
+                poly->p1 = 0;
+                poly->p2 = rand() + 8;
+                poly->p3 = (rand() & 7) + 1;
+            }
+
+            poly = poly->tag;
+            i++;
+        } while (poly != 0);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80101A80);
 
