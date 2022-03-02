@@ -1,5 +1,4 @@
-#include "common.h"
-#include "dra.h"
+#include "stage.h"
 
 extern u16 D_80180AAC[];
 extern u8* D_80180E50[];
@@ -11,9 +10,6 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_801820C4[];
 
 void SpawnExplosionEntity(u16, Entity *);
-s32 AnimateEntity(u8 *arg0, Entity *entity);
-Entity* AllocEntity(Entity* arg0, Entity* arg1);
-void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
@@ -307,15 +303,15 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57FC);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5844);
 
-void func_801C58A4(s32 arg0) {
-    D_8006C3B8->initState = (s16) (arg0 & 0xFF);
+void func_801C58A4(u8 state) {
+    D_8006C3B8->initState = state;
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }
 
-void func_801C58C4(s32 arg0) {
-    D_8006C3B8->unk2E = (s16) (arg0 & 0xFF);
+void func_801C58C4(u8 state) {
+    D_8006C3B8->initState = state;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }

@@ -1,6 +1,4 @@
-#include "common.h"
-#include "dra.h"
-
+#include "stage.h"
 
 #ifndef FIX_MAD
 extern void (*D_8003C6B0)(s32);
@@ -68,11 +66,7 @@ void func_801909D8(s16);
 void func_80190B7C(s16);
 void func_80190C78(s16);
 void SpawnExplosionEntity(u16, Entity *);
-void DestroyEntity(Entity*);
-s32 AnimateEntity(u8 *arg0, Entity *entity);
-Entity* AllocEntity(Entity* arg0, Entity* arg1);
 u8 func_80192914(s16 arg0, s16 arg1);
-void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);

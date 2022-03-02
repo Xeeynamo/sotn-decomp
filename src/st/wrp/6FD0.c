@@ -1,5 +1,4 @@
-#include "common.h"
-#include "dra.h"
+#include "stage.h"
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_80180440[];
@@ -29,9 +28,6 @@ extern ObjectInit *D_80193AB0;
 extern ObjectInit *D_80193AB4;
 
 void SpawnExplosionEntity(u16, Entity *);
-s32 AnimateEntity(u8 *arg0, Entity *entity);
-Entity* AllocEntity(Entity* arg0, Entity* arg1);
-void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);

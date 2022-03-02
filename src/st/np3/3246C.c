@@ -1,5 +1,4 @@
-#include "common.h"
-#include "dra.h"
+#include "stage.h"
 
 extern u16 D_80180A3C[];
 extern u8* D_80180E28[];
@@ -11,9 +10,6 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
 
 void SpawnExplosionEntity(u16, Entity *);
-s32 AnimateEntity(u8 *arg0, Entity *entity);
-Entity* AllocEntity(Entity* arg0, Entity* arg1);
-void InitializeEntity(u16 *arg0);
 void ReplaceCandleWithDrop(Entity *);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B246C);

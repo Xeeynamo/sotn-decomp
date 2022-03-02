@@ -1,4 +1,4 @@
-#include "common.h"
+#include "stage.h"
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191A64);
 
