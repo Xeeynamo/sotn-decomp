@@ -1,0 +1,5 @@
+PfnEntityUpdates = 0x801804B8;
+EntityLockCamera = 0x801A7EB0;
+CreateEntity = 0x801B30E0;
+DestroyEntity = 0x801B4908;
+InitializeEntity = 0x801B584C;

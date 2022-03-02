@@ -1,11 +1,91 @@
 #include "common.h"
 #include "dra.h"
 
+void DestroyEntity(Entity *);
+s32 func_801B4C78();
+void InitializeEntity(u16 *arg0);
+
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7D64);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7E2C);
+#else
+bool func_801A7E2C(Entity *entity) {
+    s16 distance;
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7EB0);
+    distance = D_800733DA - entity->posX.Data.high;
+    if (distance < 0) {
+        distance = -distance;
+    }
+    if (entity->hitboxWidth >= distance) {
+        if ((s16)(D_800733DE - entity->posY.Data.high) < 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif
+
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityLockCamera);
+#else
+extern u16 D_801805B0[];
+extern u8 D_8018065C[];
+extern u8 D_80180660[];
+extern u16 D_80180664[];
+
+void EntityLockCamera(Entity *entity) {
+    s32 temp_v0_2;
+    s32 temp_v1;
+    u16 *temp_v1_2;
+    u16 *temp_v1_5;
+    u8 temp_s1;
+    u8 temp_v0;
+    s32 phi_v1;
+
+    temp_s1 = entity->subId;
+    if (entity->initState == 0) {
+        InitializeEntity(D_801805B0);
+        temp_v1 = temp_s1 & 0xFFFF;
+        entity->unk3C = 1;
+        temp_v0 = D_80180660[temp_v1];
+        entity->unk7C = temp_v0;
+        if (temp_v0) {
+            entity->hitboxWidth = D_8018065C[temp_v1];
+            entity->hitboxHeight = 20;
+        } else {
+            entity->hitboxWidth = 20;
+            entity->hitboxHeight = D_8018065C[temp_v1];
+        }
+    }
+
+    if (entity->subId & 0x100) {
+        temp_v1_2 = &D_80180664[(((temp_s1 & 0xFFFF) * 4) & 0xFFFF)];
+        g_CurrentRoomX = *temp_v1_2++;
+        g_CurrentRoomY = *temp_v1_2++;
+        g_CurrentRoomWidth = *temp_v1_2++;
+        g_CurrentRoomHeight = *temp_v1_2++;
+        DestroyEntity(entity);
+        return;
+    }
+
+    if (func_801A7E2C(entity)) {
+        temp_v0_2 = func_801B4C78();
+        if (entity->unk7C) {
+            phi_v1 = (temp_v0_2 & 2) * 2;
+        } else {
+            phi_v1 = (temp_v0_2 & 1) * 4;
+        }
+
+        temp_v1_5 = &D_80180664[(phi_v1 + temp_s1 * 8) & 0xFFFF];
+        g_CurrentRoomX = *temp_v1_5++;
+        g_CurrentRoomY = *temp_v1_5++;
+        g_CurrentRoomWidth = *temp_v1_5++;
+        g_CurrentRoomHeight = *temp_v1_5++;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A805C);
 
@@ -118,7 +198,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1CA0);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B2A3C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B30E0);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", CreateEntity);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B31A4);
 
@@ -152,7 +232,19 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3C58);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3CD0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4908);
+void DestroyEntity(Entity* item) {
+    int i, length;
+    u32* ptr;
+
+    if (item->unk34 & 0x800000) {
+        D_8003C7B4(item->unk64);
+    }
+
+    ptr = item;
+    length = sizeof(Entity) / sizeof(s32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4974);
 
@@ -212,7 +304,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57B4);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B584C);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", InitializeEntity);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5948);
 
