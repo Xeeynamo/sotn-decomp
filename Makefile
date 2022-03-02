@@ -1,4 +1,5 @@
 .SECONDEXPANSION:
+.SECONDARY:
 
 # Binaries
 MAIN            := main
