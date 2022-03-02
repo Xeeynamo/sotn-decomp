@@ -1,5 +1,30 @@
 PfnEntityUpdates = 0x801804B8;
+g_isSecretStairsButtonPressed = 0x8018089C;
 EntityLockCamera = 0x801A7EB0;
+EntityDialogue = 0x801A9210;
+EntityCutscene = 0x801AA290;
+EntitySecretButton = 0x801AA8DC;
+EntitySecretStairsEmitter = 0x801AABA4;
+EntitySecretStairsChunk = 0x801AACB4;
+EntityStageTitleFadeout = 0x801AB0C8;
+EntityStageTitleCard = 0x801AB5E4;
+EntityDracula = 0x801AC564;
+EntityDraculaMeteorball = 0x801AD658;
+EntityDraculaGlass = 0x801AD8C0;
+EntityDraculaFinalForm = 0x801ADD60;
+EntityDraculaMegaFireball = 0x801AEFD8;
+EntityDraculaRainAttack = 0x801AF154;
 CreateEntity = 0x801B30E0;
 DestroyEntity = 0x801B4908;
+AnimateEntity = 0x801B4A38;
+FallEntity = 0x801B4CEC;
+AllocEntity = 0x801B53CC;
 InitializeEntity = 0x801B584C;
+EntityDraculaFireball = 0x801B6B60;
+EntityClouds = 0x801BAB08;
+EntityClockTower3D = 0x801BB2AC;
+EntityCutscenePhotograph = 0x801BB764;
+EntityCutscenePhotographFire = 0x801BC4D0;
+EntityBackgroundVortex = 0x801BE1B4;
+
+

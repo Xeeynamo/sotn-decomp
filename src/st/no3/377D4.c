@@ -311,7 +311,7 @@ void func_801C58A4(u8 state) {
 }
 
 void func_801C58C4(u8 state) {
-    D_8006C3B8->initState = state;
+    D_8006C3B8->unk2E = state;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }
