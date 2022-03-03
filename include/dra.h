@@ -393,7 +393,7 @@ extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;
 extern s32 playerY;
-extern u32 D_800978B8;
+extern u32 g_randomNext;
 extern s32 D_800973FC;
 extern s32 D_80097410;
 extern s32 D_80097414;

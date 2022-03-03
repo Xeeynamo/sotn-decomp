@@ -4,6 +4,7 @@
 #include "common.h"
 #include "dra.h"
 
+u32 Random();
 void CreateEntity(Entity *entity, ObjectInit* initDesc);
 void DestroyEntity(Entity *);
 void DestroyEntityFromIndex(s16 index);

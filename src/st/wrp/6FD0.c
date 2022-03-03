@@ -156,9 +156,9 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80187F1C);
 
-u32 func_801881E8(void) {
-    D_800978B8 = (D_800978B8 * 0x01010101) + 1;
-    return D_800978B8 >> 0x18;
+u32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
 }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80188218);
@@ -915,8 +915,8 @@ void func_8019055C(void) {
     Entity *entity;
     s32 i;
 
-    temp_s4 = func_801881E8() & 3;
-    temp_s3 = ((func_801881E8() & 0xF) << 8) - 0x800;
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);

@@ -2,6 +2,7 @@ PfnEntityUpdates = 0x801803E0;
 c_GoldPrizes = 0x80180E30;
 c_HeartPrizes = 0x80180EC0;
 EntityCandle = 0x8018726C;
+Random = 0x801881E8;
 CreateEntity = 0x80189DD8;
 SpawnExplosionEntity = 0x8018A860;
 DestroyEntity = 0x8018B600;

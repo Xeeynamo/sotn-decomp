@@ -34,7 +34,7 @@ extern POLY_GT4 D_800973B8[];
 #define D_8007D308 D_8007D858
 #define D_8007E9CC D_8007EF1C
 #define D_80096EB8 D_80097408
-#define D_80097364 D_800978B8
+#define D_80097364 g_randomNext
 #define D_80072B3E D_8007308E
 #define D_80072B42 D_80073092
 #define D_80075D88 D_80075D88 // TODO
@@ -208,7 +208,7 @@ void EntityCandle(Entity *entity) {
 }
 #endif
 
-u32 func_8018E964(void) {
+u32 Random(void) {
     D_80097364 = (D_80097364 * 0x01010101) + 1;
     return D_80097364 >> 0x18;
 }
@@ -364,7 +364,7 @@ void LoadObjLayout(s32 objLayoutId) {
     s1 = &D_80072B34;
     if (*pObjLayoutStart != 0xFFFE) {
         D_801997D8 = pObjLayoutStart + 1;
-        phi_a0 = func_8018E964() & 0xFF;
+        phi_a0 = Random() & 0xFF;
         
         for (phi_a1 = 0; ; phi_a1++)
         {

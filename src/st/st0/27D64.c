@@ -3,7 +3,6 @@
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 
-u32 func_801B186C();
 void func_801B3BDC(u16 objectId, Entity *source, Entity *entity);
 s32 func_801B4C78();
 void func_801B4CBC();
@@ -186,8 +185,8 @@ void EntityDraculaGlass(Entity* entity) {
             s16 radians;
             s32 speed;
             entity->animationFrame = 0x5C;
-            speed = (func_801B186C() & 0x1F) + 0x10;
-            radians = (func_801B186C() * 6) + 0x900;
+            speed = (Random() & 0x1F) + 0x10;
+            radians = (Random() * 6) + 0x900;
             entity->accelerationX = speed * func_80016D68(radians);
             entity->accelerationY = speed * rsin(radians);
             func_801B5794(3);
@@ -273,9 +272,9 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B11E8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1298);
 
-u32 func_801B186C(void) {
-    D_800978B8 = (D_800978B8 * 0x01010101) + 1;
-    return D_800978B8 >> 0x18;
+u32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
 }
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B189C);
