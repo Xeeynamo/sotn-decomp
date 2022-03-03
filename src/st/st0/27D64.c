@@ -5,7 +5,7 @@ extern bool g_isSecretStairsButtonPressed;
 
 void func_801B3BDC(u16 objectId, Entity *source, Entity *entity);
 s32 func_801B4C78();
-void func_801B4CBC();
+void MoveEntity();
 void func_801B5794(u8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7D64);
@@ -192,7 +192,7 @@ void EntityDraculaGlass(Entity* entity) {
             func_801B5794(3);
         }
     case 1:
-        func_801B4CBC();
+        MoveEntity();
         entity->unk1E += 0x20;
         entity->accelerationY += 0x2000;
         if (entity->posY.Data.high >= 205) {
@@ -216,7 +216,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
         break;
     case 3:
-        func_801B4CBC();
+        MoveEntity();
         entity->accelerationY += 0x2000;
         if (entity->posY.Data.high >= 205) {
             DestroyEntity(entity);
@@ -370,14 +370,14 @@ s32 func_801B4C44(void) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4C78);
 
-void func_801B4CBC(void) {
+void MoveEntity(void) {
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
     D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
 }
 
 void FallEntity(void) {
     if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C3B8->accelerationY = D_8006C3B8->accelerationY + FALL_GRAVITY;
+        D_8006C3B8->accelerationY += FALL_GRAVITY;
     }
 }
 

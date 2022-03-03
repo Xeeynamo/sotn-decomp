@@ -541,14 +541,14 @@ s32 func_801920AC(void) {
 }
 #endif
 
-void func_801920F0(void) {
-    D_8006C26C->posX.value = D_8006C26C->posX.value + D_8006C26C->accelerationX;
-    D_8006C26C->posY.value = D_8006C26C->posY.value + D_8006C26C->accelerationY;
+void MoveEntity(void) {
+    D_8006C26C->posX.value += D_8006C26C->accelerationX;
+    D_8006C26C->posY.value += D_8006C26C->accelerationY;
 }
 
 void FallEntity(void) {
     if (D_8006C26C->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C26C->accelerationY = D_8006C26C->accelerationY + FALL_GRAVITY;
+        D_8006C26C->accelerationY += FALL_GRAVITY;
     }
 }
 

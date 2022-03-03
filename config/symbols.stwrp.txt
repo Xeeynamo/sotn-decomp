@@ -8,6 +8,7 @@ SpawnExplosionEntity = 0x8018A860;
 DestroyEntity = 0x8018B600;
 DestroyEntityFromIndex = 0x8018B66C;
 AnimateEntity = 0x8018B730;
+MoveEntity = 0x8018B9B4;
 FallEntity = 0x8018B9E4;
 AllocEntity = 0x8018BE70;
 InitializeEntity = 0x8018C310;

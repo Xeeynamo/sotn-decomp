@@ -250,9 +250,16 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4FA0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4FD4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5018);
+void MoveEntity(void) {
+    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
+    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5048);
+void FallEntity(void) {
+    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
+        D_8006C3B8->accelerationY += FALL_GRAVITY;
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5074);
 

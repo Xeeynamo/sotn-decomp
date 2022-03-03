@@ -18,6 +18,7 @@ Random = 0x801B186C;
 CreateEntity = 0x801B30E0;
 DestroyEntity = 0x801B4908;
 AnimateEntity = 0x801B4A38;
+MoveEntity = 0x801B4CBC;
 FallEntity = 0x801B4CEC;
 AllocEntity = 0x801B53CC;
 InitializeEntity = 0x801B584C;

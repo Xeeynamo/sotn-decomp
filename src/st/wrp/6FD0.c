@@ -368,14 +368,14 @@ s32 func_8018B93C(void) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B970);
 
-void func_8018B9B4(void) {
-    D_8006C3B8->posX.value = D_8006C3B8->posX.value + D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value = D_8006C3B8->posY.value + D_8006C3B8->accelerationY;
+void MoveEntity(void) {
+    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
+    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
 }
 
 void FallEntity(void) {
     if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C3B8->accelerationY = D_8006C3B8->accelerationY + FALL_GRAVITY;
+        D_8006C3B8->accelerationY += FALL_GRAVITY;
     }
 }
 
@@ -881,7 +881,7 @@ void func_801903C8(Entity *entity) {
 
         entity->initState++;
     } else {
-        func_8018B9B4();
+        MoveEntity();
         if (AnimateEntity(D_8018104C, entity) == 0) {
             DestroyEntity(entity);
         }
