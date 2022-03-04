@@ -251,7 +251,7 @@ void func_800EAD0C(void) {
     func_800EA5E4(6);
     func_800EA5E4(7);
     func_800EA5E4(8);
-    if (g_CurrentPlayableCharacter == 0 && g_mapProgramId != 0x1F) {
+    if (g_CurrentPlayableCharacter == 0 && g_mapProgramId != PROGRAM_ST0) {
         func_800EA5E4(0x17);
     }
 }
@@ -1562,7 +1562,7 @@ void func_8010189C() {
     D_8013B5E8 = 0;
     D_80137998 = 0;
     D_8013796C = g_playerHp;
-    if (g_mapProgramId == 0x1F || g_CurrentPlayableCharacter != 0) {
+    if (g_mapProgramId == PROGRAM_ST0 || g_CurrentPlayableCharacter != 0) {
         DrawHudRichter();
         return;
     }
