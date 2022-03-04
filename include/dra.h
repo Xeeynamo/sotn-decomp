@@ -99,7 +99,9 @@ typedef struct
     u16 unk44;
     s8 hitboxWidth;
     s8 hitboxHeight;
-    s32 unk48;
+    u8 unk48;
+    u8 unk49;
+    s16 unk4A;
     s32 unk4C;
     u16 animationFrameIndex;
     s16 animationFrameDuration;
@@ -286,10 +288,12 @@ extern u16 D_8003C708;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
-extern void (*D_8003C848)(s32, s32);
+extern void (*g_pfnUpdateStageEntities)(void);
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B4)(s32);
 extern Unkstruct5* D_8003C808;
+extern void (*D_8003C848)(s32, s32);
+extern s32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 g_CurrentPlayableCharacter;
 extern s32 g_SettingsCloakMode;
@@ -325,6 +329,7 @@ extern s32 D_8003CACC;
 #define FALL_GRAVITY 0x4000
 #define FALL_TERMINAL_VELOCITY 0x60000
 
+#define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
 #define EntityExplosionID 2
 #define EntityCandleDropID 3
@@ -364,9 +369,9 @@ extern s32 D_80072F2C;
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
-extern u16 D_80073092;
-extern s32 g_CurrentRoomHSize;
-extern s32 g_CurrentRoomVSize;
+extern s16 D_80073092;
+extern u16 g_CurrentRoomHSize;
+extern u16 g_CurrentRoomVSize;
 extern s32 D_800730AC;
 extern s32 g_CurrentRoomLeft;
 extern s32 g_CurrentRoomTop;
@@ -376,7 +381,7 @@ extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
-extern Entity D_800733D8[];
+extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
 extern s16 D_800733DE;
 extern s16 D_80073404;
@@ -384,6 +389,7 @@ extern s16 D_80073406;
 extern s8  D_80073510;
 extern s8  D_80073511;
 extern s8  D_80073512;
+extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];

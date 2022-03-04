@@ -161,7 +161,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C14B8);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C184C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C187C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", UpdateStageEntities);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1B78);
 

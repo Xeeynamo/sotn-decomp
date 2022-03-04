@@ -15,6 +15,7 @@ EntityDraculaFinalForm = 0x801ADD60;
 EntityDraculaMegaFireball = 0x801AEFD8;
 EntityDraculaRainAttack = 0x801AF154;
 Random = 0x801B186C;
+UpdateStageEntities = 0x801B189C;
 CreateEntity = 0x801B30E0;
 DestroyEntity = 0x801B4908;
 AnimateEntity = 0x801B4A38;

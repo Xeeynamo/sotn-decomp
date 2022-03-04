@@ -213,7 +213,7 @@ u32 Random(void) {
     return D_80097364 >> 0x18;
 }
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E994);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", UpdateStageEntities);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018EC90);
 

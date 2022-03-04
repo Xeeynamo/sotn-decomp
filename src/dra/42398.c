@@ -1671,7 +1671,7 @@ void func_80106590(Entity* item) {
 
 void func_801065F4(s16 startIndex) {
     Entity* pItem;
-    for (pItem = &D_800733D8[startIndex]; pItem < &D_8007EFD8; pItem++)
+    for (pItem = &D_800733D8[startIndex]; pItem < D_800733D8 + TOTAL_ENTITY_COUNT; pItem++)
         func_80106590(pItem);
 }
 

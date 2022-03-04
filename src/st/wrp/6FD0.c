@@ -161,7 +161,7 @@ u32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80188218);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", UpdateStageEntities);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80188514);
 

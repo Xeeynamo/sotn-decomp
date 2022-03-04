@@ -117,7 +117,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B8E94);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B90BC);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B90EC);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", UpdateStageEntities);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B93E8);
 

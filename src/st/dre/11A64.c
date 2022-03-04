@@ -54,7 +54,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196CC8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196F90);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196FC0);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", UpdateStageEntities);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801972BC);
 
