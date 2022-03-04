@@ -327,7 +327,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        D_8003C7B4(item->unk64);
+        g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
     ptr = item;
@@ -610,7 +610,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        D_8003C7B4(D_80097414);
+        g_pfnFreePolygons(D_80097414);
         *unk = 0;
     }
 
@@ -693,7 +693,7 @@ void func_8018D990(Entity *arg0, s32 renderFlags) {
     s16 left, top, right, bottom;
     u8 colorIntensity;
 
-    poly = &D_80086FEC[arg0->unk64];
+    poly = &D_80086FEC[arg0->firstPolygonIndex];
     
     left = arg0->posX.Data.high - 7;
     right = arg0->posX.Data.high + 7;

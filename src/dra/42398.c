@@ -408,18 +408,18 @@ loop_1:
 }
 #endif
 
-void func_800EDE78(s32 index) {
-    POLY_GT4* item = &D_80086FEC[index];
-    if (item != NULL) {
+void FreePolygons(s32 polygonIndex) {
+    POLY_GT4* poly = &D_80086FEC[polygonIndex];
+    if (poly) {
         do {
-            if (item->code == 7) {
-                *(*(s32**)&item->r1) = 0; // does not make any sense?!
-                item->code = 0U;
+            if (poly->code == 7) {
+                *(*(s32**)&poly->r1) = 0; // does not make any sense?!
+                poly->code = 0U;
             }
             else
-                item->code = 0U;
-            item = item->tag;
-        } while (item != NULL);
+                poly->code = 0U;
+            poly = poly->tag;
+        } while (poly);
     }
 }
 
@@ -1655,15 +1655,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
-void func_80106590(Entity* item) {
+void func_80106590(Entity* poly) {
     int i, length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
-        func_800EDE78(item->unk64);
+    if (poly->unk34 & 0x800000) {
+        FreePolygons(poly->firstPolygonIndex);
     }
 
-    ptr = item;
+    ptr = poly;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;

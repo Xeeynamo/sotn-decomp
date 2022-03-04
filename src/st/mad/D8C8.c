@@ -25,7 +25,7 @@ extern s32 D_80096ED8[];
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 
-#define D_8003C6B0 D_8003C7B4
+#define D_8003C6B0 g_pfnFreePolygons
 #define D_8003C6D8 g_pfnPlaySfx
 #define D_8006C26C D_8006C3B8
 #define D_80072E8A D_800733DA
@@ -442,7 +442,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        D_8003C6B0(item->unk64);
+        D_8003C6B0(item->firstPolygonIndex);
     }
 
     ptr = item;
