@@ -282,7 +282,6 @@ typedef struct
 } Unkstruct10;
 
 // main
-extern void (*D_8003C7DC)(s32);
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
@@ -290,6 +289,7 @@ extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
 extern RoomHeader* D_8003C784;
+extern void (*g_pfnPlaySfx)(s32);
 extern void (*D_8003C7B4)(s32);
 extern Unkstruct5* D_8003C808;
 extern void (*D_8003C848)(s32, s32);

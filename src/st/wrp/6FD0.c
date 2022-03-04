@@ -134,7 +134,7 @@ void EntityCandle(Entity *entity) {
         AnimateEntity(D_801805B8[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity *entityDropItem;
-            D_8003C7DC(0x634);
+            g_pfnPlaySfx(0x634);
             entityDropItem = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(EntityExplosionID, entityDropItem);
@@ -583,7 +583,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeart);
 void CollectHeart(u16 heartSize) {
     s32* hearts;
 
-    D_8003C7DC(0x67A);
+    g_pfnPlaySfx(0x67A);
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[heartSize];
     if (g_playerHeartMax < *hearts) {
@@ -601,7 +601,7 @@ void CollectGold(u16 goldSize) {
     u16 goldSizeIndex;
 
     gold = &g_playerGold;
-    D_8003C7DC(0x6A9);
+    g_pfnPlaySfx(0x6A9);
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {
@@ -626,13 +626,13 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeartVessel);
 #else
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        D_8003C7DC(0x67A);
+        g_pfnPlaySfx(0x67A);
         g_playerHeart += HEART_VESSEL_RICHTER;
         if (g_playerHeartMax < g_playerHeart) {
             g_playerHeart = g_playerHeartMax;
         }
     } else {
-        D_8003C7DC(0x67A);
+        g_pfnPlaySfx(0x67A);
         D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(D_8006C3B8);
@@ -640,7 +640,7 @@ void CollectHeartVessel(void) {
 #endif
 
 void CollectLifeVessel(void) {
-    D_8003C7DC(0x67A);
+    g_pfnPlaySfx(0x67A);
     D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C3B8);
 }

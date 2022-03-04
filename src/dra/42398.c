@@ -2462,9 +2462,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134678);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134714);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801347F8);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", PlaySfx);
 #else
-void func_801347F8(s32 arg0) {
+void PlaySfx(s32 arg0) {
     if (D_8013AEEC == 0)
         return;
 

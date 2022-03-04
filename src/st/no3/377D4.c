@@ -27,7 +27,7 @@ void EntityCandle(Entity *entity) {
         AnimateEntity(D_80180E50[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity *entityDropItem;
-            D_8003C7DC(0x634);
+            g_pfnPlaySfx(0x634);
             entityDropItem = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(EntityExplosionID, entityDropItem);
