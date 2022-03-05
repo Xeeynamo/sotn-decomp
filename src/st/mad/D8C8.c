@@ -1,6 +1,6 @@
 #include "stage.h"
 
-#ifndef FIX_MAD
+// OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
 extern void (*D_8003C6D8)(s32);
 extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
@@ -21,40 +21,13 @@ extern u32 D_80097364;
 extern u8 D_8009741A;
 extern Entity D_80075D88[];
 extern s32 D_80096EAC;
+
+// TODO FIX
 extern s32 D_80096ED8[];
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 
-#else
-extern s32 D_80096ED8[];
-extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
-
-#define D_8003C6B0 g_pfnFreePolygons
-#define D_8003C6D8 g_pfnPlaySfx
-#define g_pfnLoadObjLayout D_8003C8C4
-#define D_8006C26C D_8006C3B8
-#define D_80072E8A D_800733DA
-#define D_80072E8E D_800733DE
-#define D_80072E88 D_800733D8
-#define D_8007D308 D_8007D858
-#define D_8007E9CC D_8007EF1C
-#define D_80096EB8 D_80097408
-#define D_80096EC0 D_80097410
-#define D_80096EC4 D_80097414
-#define D_80097364 g_randomNext
-#define D_80072B3E D_8007308E
-#define D_80072B42 D_80073092
-#define D_80072B58 g_CurrentRoomVSize
-#define D_80075D88 D_800762D8
-#define D_8007EA88 D_8007EFD8
-#define D_80096EAC D_800973FC
-#define D_80096ED8 D_80096ED8 // TODO
-#define D_800973B4 D_800973B4 // TODO
-#define D_800973B8 D_800973B8 // TODO
-#define D_8009741A D_8009796E
-#endif
-
+// ST/MAD
 extern u16 D_801804F0[];
 extern u8* D_80180644[];
 extern u8 D_80180664[];
