@@ -435,8 +435,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4974);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B49F0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", AnimateEntity);
-s32 AnimateEntity(u8 *arg0, Entity *entity);
+#include "st/AnimateEntity.h"
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4AF0);
 

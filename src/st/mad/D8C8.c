@@ -544,42 +544,7 @@ void func_80191E24(Entity *entity) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", AnimateEntity);
-#else
-s32 AnimateEntity(u8 *arg0, Entity *arg1) {
-    u8 *phi_a2;
-    s32 flags;
-
-    phi_a2 = arg0 + (arg1->animationFrameIndex * 2 & 0xFFFF);
-    flags = 0;
-    if (arg1->animationFrameDuration == 0) {
-        if (*phi_a2) {
-            flags = 0x80;
-            if (*phi_a2 == 0xFF) {
-                return 0;
-            }
-
-            arg1->animationFrameDuration = *phi_a2++;
-            arg1->animationFrameIndex++;
-            arg1->animationFrame = *phi_a2++;
-            goto block_6;
-        }
-
-        arg1->animationFrameIndex = 0;
-        arg1->animationFrameDuration = 0;
-        arg1->animationFrameDuration = arg0[0];
-        arg1->animationFrameIndex++;
-        arg1->animationFrame = arg0[1];
-        return 0;
-    }
-
-block_6:
-    arg1->animationFrameDuration--;
-    arg1->animationFrame = phi_a2[-1];
-    return flags | 1;
-}
-#endif
+#include "st/AnimateEntity.h"
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191F24);
 

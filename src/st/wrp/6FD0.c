@@ -161,7 +161,95 @@ u32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", UpdateStageEntities);
+#else
+extern s16 D_80180690[];
+extern u16 D_80194728[];
+
+void UpdateStageEntities(void) {
+    s16 i;
+    Entity* entity;
+    s32* unk;
+
+    for (i = 0; i < 0x20; i++) {
+        if (D_80194728[i]) {
+            D_80194728[i]--;
+        }
+    }
+
+    unk = &D_80097410;
+    if (*unk) {
+        if (!--*unk) {
+            g_pfnFreePolygons(D_80097414);
+        }
+    }
+
+    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+        if (!entity->pfnUpdate)
+            continue;
+            
+        if (entity->initState) {
+            s32 unk34 = entity->unk34;
+            if (unk34 < 0) {
+                u16 posX = entity->posX.Data.high;
+                u16 posY = entity->posY.Data.high;
+                if (unk34 & 0x40000000) {
+                    if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
+                        DestroyEntity(entity);
+                        continue;
+                    }
+                }
+                else
+                {
+                    if ((u16)(posX + 128) > 512 || (u16)(posY + 128) > 480) {
+                        DestroyEntity(entity);
+                        continue;
+                    }
+                }
+            }
+            
+            if ((unk34 & 0x02000000)) {
+                s16 posY = entity->posY.Data.high + D_80073092;
+                s16 test = (g_CurrentRoomVSize * 256) + 128;
+                if (posY > test)
+                {
+                    DestroyEntity(entity);
+                    continue;
+                }
+            }
+
+            if (unk34 & 0xF) {
+                entity->palette = D_80180690[(entity->unk49 << 1) | (unk34 & 1)];
+                entity->unk34--;
+                if ((entity->unk34 & 0xF) == 0) {
+                    entity->palette = entity->unk6A;
+                    entity->unk6A = 0;
+                }
+            }
+
+            if (!(unk34 & 0x20000000) || (unk34 & 0x10000000) ||
+                ((u16)(entity->posX.Data.high + 64) <= 384) &&
+                ((u16)(entity->posY.Data.high + 64) <= 352))
+            {
+                if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
+                    if (!D_800973FC || unk34 & 0x2100 || (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
+                        D_8006C3B8 = entity;
+                        entity->pfnUpdate(entity);
+                        entity->unk44 = 0;
+                        entity->unk48 = 0;
+                    }
+                }
+            }
+        } else {
+            D_8006C3B8 = entity;
+            entity->pfnUpdate(entity);
+            entity->unk44 = 0;
+            entity->unk48 = 0;
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80188514);
 
@@ -346,7 +434,7 @@ void DestroyEntityFromIndex(s16 index) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B6E8);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", AnimateEntity);
+#include "st/AnimateEntity.h"
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B7E8);
 

@@ -196,7 +196,7 @@ void DestroyEntityFromIndex(s16 index) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC5BC);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", AnimateEntity);
+#include "st/AnimateEntity.h"
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC6BC);
 
