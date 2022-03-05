@@ -120,26 +120,42 @@ $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 
 mad_fix: stmad_dirs mad_patch $(BUILD_DIR)/MAD.BIN
 MAD_PATCHES = \
+	-e "s/D_8003BF08/D_8003BF7C/g" -e "s/0x8003BF08/0x8003BF7C/g" \
 	-e "s/D_8003C6B0/g_pfnFreePolygons/g" -e "s/0x8003C6B0/0x8003C7B4/g" \
 	-e "s/D_8003C6D8/g_pfnPlaySfx/g" -e "s/0x8003C6D8/0x8003c7dc/g" \
+	-e "s/D_8003C704/D_8003C808/g" -e "s/0x8003C704/0x8003C808/g" \
+	-e "s/D_8003C724/D_8003C828/g" -e "s/0x8003C724/0x8003C828/g" \
+	-e "s/D_8003C744/D_8003C848/g" -e "s/0x8003C744/0x8003C848/g" \
 	-e "s/g_pfnLoadObjLayout/D_8003C8C4/g" -e "s/0x8003c780/0x8003C8C4/g" \
 	-e "s/D_8006C26C/D_8006C3B8/g" -e "s/0x8006C26C/0x8006C3B8/g" \
 	-e "s/D_80072E8A/D_800733DA/g" -e "s/0x80072E8A/0x800733DA/g" \
 	-e "s/D_80072E8E/D_800733DE/g" -e "s/0x80072E8E/0x800733DE/g" \
 	-e "s/D_80072E88/D_800733D8/g" -e "s/0x80072E88/0x800733D8/g" \
+	-e "s/D_80072EC2/D_80073412/g" -e "s/0x80072EC2/0x80073412/g" \
+	-e "s/D_80072ED0/D_80073420/g" -e "s/0x80072ED0/0x80073420/g" \
+	-e "s/D_80072F40/D_80073490/g" -e "s/0x80072F40/0x80073490/g" \
+	-e "s/D_80072F44/D_80073494/g" -e "s/0x80072F44/0x80073494/g" \
+	-e "s/D_800751C8/D_80075718/g" -e "s/0x800751C8/0x80075718/g" \
+	-e "s/D_8007A408/D_8007A958/g" -e "s/0x8007A408/0x8007A958/g" \
+	-e "s/D_8007BB88/D_8007C0D8/g" -e "s/0x8007BB88/0x8007C0D8/g" \
 	-e "s/D_8007D308/D_8007D858/g" -e "s/0x8007D308/0x8007D858/g" \
 	-e "s/D_8007E9CC/D_8007EF1C/g" -e "s/0x8007E9CC/0x8007EF1C/g" \
+	-e "s/D_80086A9C/D_80086FEC/g" -e "s/0x80086A9C/0x80086FEC/g" \
+	-e "s/D_80096EA8/D_800973F8/g" -e "s/0x80096EA8/0x800973F8/g" \
 	-e "s/D_80096EB8/D_80097408/g" -e "s/0x80096EB8/0x80097408/g" \
 	-e "s/D_80096EC0/D_80097410/g" -e "s/0x80096EC0/0x80097410/g" \
 	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
 	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
+	-e "s/D_8009741B/D_8009796F/g" -e "s/0x8009741B/0x8009796F/g" \
+	-e "s/D_8009741F/D_80097973/g" -e "s/0x8009741F/0x80097973/g" \
 	-e "s/D_80072B3E/D_8007308E/g" -e "s/0x80072B3E/0x8007308E/g" \
 	-e "s/D_80072B42/D_80073092/g" -e "s/0x80072B42/0x80073092/g" \
 	-e "s/D_80072B58/g_CurrentRoomVSize/g" -e "s/0x80072B58/0x800730a8/g" \
 	-e "s/D_80075D88/D_800762D8/g" -e "s/0x80075D88/0x800762D8/g" \
 	-e "s/D_8007EA88/D_8007EFD8/g" -e "s/0x8007EA88/0x8007EFD8/g" \
 	-e "s/D_80096EAC/D_800973FC/g" -e "s/0x80096EAC/0x800973FC/g" \
-	-e "s/D_8009741A/D_8009796E/g" -e "s/0x8009741A/0x8009796E/g"
+	-e "s/D_8009741A/D_8009796E/g" -e "s/0x8009741A/0x8009796E/g" \
+	-e "s/D_800976A0/g_killCount/g" -e "s/0x800976A0/0x80097BF4/g"
 mad_patch:
 	find config -type f -name "*stmad.txt" -print0 | xargs -0 sed -i $(MAD_PATCHES)
 	find asm/st/mad -type f -name "*.s" -print0 | xargs -0 sed -i $(MAD_PATCHES)
