@@ -24,7 +24,7 @@ INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_dr);
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", VSync);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", VSyncWait);
+INCLUDE_ASM("asm/main/nonmatchings/5A38", v_wait);
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", ChangeClearRCnt);
 

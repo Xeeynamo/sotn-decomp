@@ -1749,8 +1749,8 @@ void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s8 u, s8
 #endif
 
 void func_801073C0(void) {
-    func_800195C8(0);
-    func_800199D0(0);
+    CdReadyCallback(NULL);
+    CdDataCallback(NULL);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073E8);

@@ -2,11 +2,11 @@
 
 INCLUDE_ASM("asm/main/nonmatchings/5E78", SetIntrMask);
 
-INCLUDE_ASM("asm/main/nonmatchings/5E78", func_80015694);
+INCLUDE_ASM("asm/main/nonmatchings/5E78", startIntr);
 
-INCLUDE_ASM("asm/main/nonmatchings/5E78", func_80015770);
+INCLUDE_ASM("asm/main/nonmatchings/5E78", trapIntr);
 
-INCLUDE_ASM("asm/main/nonmatchings/5E78", func_80015958);
+INCLUDE_ASM("asm/main/nonmatchings/5E78", setIntr);
 
 INCLUDE_ASM("asm/main/nonmatchings/5E78", func_80015AAC);
 

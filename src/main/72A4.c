@@ -1,4 +1,5 @@
 #include "common.h"
+#include <main.h>
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016AA4);
 
@@ -178,10 +179,37 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", FlushCache);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_800192DC);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/main/nonmatchings/72A4", CdInit);
+#else
+int CdInit() {
+    int i;
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_8001939C);
+    for (i = 4; i != -1; i--) {
+        if ( CdReset(1) ) {
+            CdSyncCallback(def_cbsync);
+            CdReadyCallback(def_cbready);
+            CdReadCallback(def_cbread);
+            return true;
+        }
+    }
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_800193C4);
+    printf("CdInit: Init failed\n");
+    return false;
+}
+#endif
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_800193EC);
+void def_cbsync(u_char intr, u_char *result)
+{
+    DeliverEvent( HwCdRom, EvSpCOMP );
+}
+
+void def_cbready(u_char intr, u_char *result)
+{
+    DeliverEvent( HwCdRom, EvSpDR );
+}
+
+void def_cbread(u_char intr, u_char *result)
+{
+    DeliverEvent( HwCdRom, EvSpDR );
+}
