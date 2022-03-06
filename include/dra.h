@@ -97,8 +97,8 @@ typedef struct
     s16 unk40;
     s16 unk42;
     u16 unk44;
-    s8 hitboxWidth;
-    s8 hitboxHeight;
+    u8 hitboxWidth;
+    u8 hitboxHeight;
     u8 unk48;
     u8 unk49;
     s16 unk4A;
@@ -157,7 +157,7 @@ typedef struct
 {
     u16 posX;
     u16 posY;
-    u16 unk4;
+    u16 flags;
     u16 unk6;
     u16 unk8;
 } ObjectInit;
