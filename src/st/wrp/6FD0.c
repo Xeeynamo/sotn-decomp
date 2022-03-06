@@ -10,8 +10,9 @@ extern u8 D_801805D8[];
 extern u8 D_801805E0[];
 extern u16 D_801805E8[];
 extern u8 D_801805F8[];
-extern s32 D_80180E08[];
+extern u16 D_80180690[];
 extern s16 D_80180A94[];
+extern s32 D_80180E08[];
 extern s32 c_GoldPrizes[];
 extern s8 c_HeartPrizes[];
 extern s32 D_80180EC4[];
@@ -74,22 +75,31 @@ void func_801870B0(Entity *entity) {
     u16 *temp_v0_2;
     u16 temp_s1;
     u16 phi_v1;
+    u16 unk;
 
     temp_s1 = entity->subId;
     entity->unk6D = 0;
     if (entity->initState != 0) {
         temp_v1 = temp_s1;
-        if (temp_v1 >= 4) {
-            if (temp_v1 >= 6) {
-                if (temp_v1 == 6 && g_CurrentRoomX)
-                    return;
-                
-                if (g_pads->pressed & PAD_TRIANGLE) {
-                    g_CurrentRoomX = 0;
-                    g_CurrentRoomWidth = 0x00000500;
-                    entity->initState++;
-                    return;
+        if (temp_v1 > 3) {
+            if (temp_v1 > 5) {
+                if (temp_v1 != 6)
+                {
+test_2:
+                    if (g_CurrentRoomX) return;
                 }
+                else
+                {
+                    if (g_pads->pressed & PAD_TRIANGLE) {
+                        g_CurrentRoomX = 0;
+                        g_CurrentRoomWidth = 1280;
+                        entity->initState++;
+                        return;
+                    }
+                }
+            }
+            else {
+               goto test_2;
             }
         }
 
@@ -101,7 +111,8 @@ void func_801870B0(Entity *entity) {
                 phi_v1 = (temp_v0 & 1) * 4;
             }
 
-            temp_v0_2 = &D_80180538[(phi_v1 + temp_s1 * 8) & 0xFFFF];
+            unk = phi_v1 + temp_s1 * 8;
+            temp_v0_2 = D_80180538 + unk;
             g_CurrentRoomX = (s32) *temp_v0_2++;
             g_CurrentRoomY = (s32) *temp_v0_2++;
             g_CurrentRoomWidth = (s32) *temp_v0_2++;
@@ -164,7 +175,6 @@ u32 Random(void) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", UpdateStageEntities);
 #else
-extern s16 D_80180690[];
 extern u16 D_80194728[];
 
 void UpdateStageEntities(void) {
@@ -251,7 +261,37 @@ void UpdateStageEntities(void) {
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80188514);
+#else
+void func_80188514(void) {
+    Entity* entity;
+    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+        if (!entity->pfnUpdate)
+            continue;
+
+        if (entity->initState) {
+            if (entity->unk34 & 0x10000) {
+                if (entity->unk34 & 0xF) {
+                    entity->palette = D_80180690[entity->unk49 << 1 | entity->unk34 & 1];
+                    entity->unk34--;
+                    if ((entity->unk34 & 0xF) == 0) {
+                        entity->palette = entity->unk6A;
+                        entity->unk6A = 0;
+                    }
+                }
+            }
+            else continue;
+        }
+
+        D_8006C3B8 = entity;
+        entity->pfnUpdate(entity);
+        entity->unk44 = 0;
+        entity->unk48 = 0;
+    }
+}
+
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018861C);
 
@@ -432,7 +472,13 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B6E8);
+void func_8018B6E8(Entity* entity) {
+    if (entity->unk32) {
+        u32 bit = entity->unk32 - 1;
+        u16 index = bit >> 5;
+        D_80097428[index] |= 1 << (bit & 0x1F);
+    }
+}
 
 #include "st/AnimateEntity.h"
 
