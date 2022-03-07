@@ -359,8 +359,28 @@ extern s32 D_8003CACC;
 #define PROGRAM_NO3 0x41
 #define PROGRAM_INVERTEDCASTLE_FLAG 0x20
 
+#define LBA_BIN_F_GAME          0x61CE
+#define LBA_BIN_F_GAME2         0x6252
+#define LBA_STAGE_MAD_ART       0x7D6F
+#define LBA_STAGE_MAD_VH        0x7DEF
+#define LBA_STAGE_MAD_BIN       0x7E28
+#define LBA_STAGE_NO0_ART       0x7E5D
+#define LBA_STAGE_NO0_VH        0x7EDD
+#define LBA_STAGE_NO0_BIN       0x7F16
+#define LBA_STAGE_NO3_ART       0x8297
+#define LBA_STAGE_NO3_VH        0x8317
+#define LBA_STAGE_NO3_BIN       0x834F
+#define LBA_STAGE_ST0_ART       0x9044
+#define LBA_STAGE_ST0_VH        0x90C4
+#define LBA_STAGE_ST0_BIN       0x90F9
+#define LBA_STAGE_NP3_ART       0x917F
+#define LBA_STAGE_NP3_VH        0x91FF
+#define LBA_STAGE_NP3_BIN       0x9235
+
+extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
+extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern Entity* D_8006C3B8;
@@ -479,6 +499,7 @@ extern const char *c_strSystem;
 extern const char *c_strFamiliars;
 extern const char *c_strFamiliar;
 extern const char *c_strSpecial2;
+extern s32 D_800ACC64;
 extern RECT c_backbufferClear;
 extern s16 D_800BD07C[];
 extern u8  D_80137460;
@@ -528,7 +549,8 @@ extern s32 D_80139828;
 extern s32 D_80139834[];
 extern s16 D_80139868;
 extern s16 D_80139A70;
-extern u8 D_8013AEEC;
+extern s32 D_8013AE9C;
+extern u8  D_8013AEEC;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 D_8013B3E8[];
