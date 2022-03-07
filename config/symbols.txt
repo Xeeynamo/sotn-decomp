@@ -1228,6 +1228,7 @@ DrawPauseMenu = 0x800F74B4;
 DrawHudRichter = 0x80100750;
 SetPolyRect = 0x80107330;
 CopyMapOverlayCallback = 0x801074BC;
+UpdateEntityAlucard = 0x8010A5BC;
 PlaySfx = 0x801347F8;
 nullsub_10 = 0x801362A4;
 g_softResetTimer = 0x80136408;

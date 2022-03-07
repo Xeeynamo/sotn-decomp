@@ -1,5 +1,7 @@
 main.exe
 DRA.BIN
+BIN/ARC_F.BIN
+BIN/RIC.BIN
 ST/
 
 *.ld

@@ -63,7 +63,7 @@ define link
 		-s
 endef
 
-all: main dra dre mad no3 np3 st0 wrp rwrp
+all: main dra ric dre mad no3 np3 st0 wrp rwrp
 	sha1sum --check slus00067.sha
 clean:
 	rm -rf $(BUILD_DIR)
@@ -89,6 +89,12 @@ $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
 	$(call link,dra,$@)
+
+ric: ric_dirs $(BUILD_DIR)/RIC.BIN
+$(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
+	$(call link,ric,$@)
 
 dre: stdre_dirs $(BUILD_DIR)/DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
@@ -169,11 +175,14 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
+extract: extract_main extract_dra extract_ric extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
 extract_main: $(SPLAT_DIR)
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: $(SPLAT_DIR)
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(DRA).yaml
+extract_ric: $(SPLAT_DIR)
+	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
+	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.ric.yaml
 extract_st%:
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.st$*.yaml
@@ -196,6 +205,6 @@ $(BUILD_DIR)/%.c.s: %.c
 SHELL = /bin/bash -e -o pipefail
 
 .PHONY: all, clean
-.PHONY: main, dra, dre, mad, no3, np3, st0, wrp, rwrp
+.PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%

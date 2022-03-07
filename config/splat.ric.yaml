@@ -1,0 +1,27 @@
+options:
+  platform:     psx
+  basename:     ric
+  base_path:    .
+  target_path:  BIN/RIC.BIN
+  asm_path:     asm/ric
+  asset_path:   assets/ric
+  src_path:     src/ric
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.ric.txt
+  undefined_syms_path:  config/undefined_syms.ric.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.ric.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.ric.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+segments:
+  - name: ric
+    type: code
+    start: 0x00000000
+    vram:  0x8013C000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x1AC60, c]
+      - [0x37B60, data]
+  - [0x39A58]

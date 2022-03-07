@@ -1,0 +1,1 @@
+UpdateEntityRichter = 0x80157BFC;

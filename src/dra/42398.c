@@ -1809,7 +1809,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010A3F0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010A4A4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010A5BC);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", UpdateEntityAlucard);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010BF64);
 
