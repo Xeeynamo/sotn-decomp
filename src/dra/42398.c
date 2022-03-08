@@ -1655,15 +1655,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
-void func_80106590(Entity* poly) {
+void func_80106590(Entity* entity) {
     int i, length;
     u32* ptr;
 
-    if (poly->unk34 & 0x800000) {
-        FreePolygons(poly->firstPolygonIndex);
+    if (entity->unk34 & 0x800000) {
+        FreePolygons(entity->firstPolygonIndex);
     }
 
-    ptr = poly;
+    ptr = entity;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
