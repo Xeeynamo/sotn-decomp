@@ -26,7 +26,12 @@ void func_800E2398() {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2438);
+void func_800E2438(s32 arg0) {
+    while (PadRead(0))
+        func_800E2398(arg0);
+    while (PadRead(0) == 0)
+        func_800E2398(arg0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E249C);
 

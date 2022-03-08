@@ -469,7 +469,12 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD620);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD658);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD734);
+void func_801CD734() {
+    while (PadRead(0))
+        func_801CD658();
+    while (PadRead(0) == 0)
+        func_801CD658();
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD78C);
 
