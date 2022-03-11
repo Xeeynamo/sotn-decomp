@@ -298,13 +298,13 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", CreateEntity);
 #else
 void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->unk4 & 0x3FF;
+    entity->objectId = initDesc->flags & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_80072B3E;
     entity->posY.Data.high = initDesc->posY - D_80072B42;
     entity->subId = initDesc->unk8;
     entity->unk32 = initDesc->unk6 >> 8;
-    entity->unk68 = initDesc->unk4 >> 0xA & 7;
+    entity->unk68 = initDesc->flags >> 0xA & 7;
 }
 #endif
 
@@ -324,8 +324,8 @@ void func_80190608(ObjectInit* initDesc) {
     }
     
     temp_v1_2 = initDesc->posY;
-    if (temp_v1_2 >= phi_a0 && temp_a2 >= temp_v1_2 && (initDesc->unk4 & 0xE000) != 0x8000) {
-        switch (initDesc->unk4 & 0xE000) {
+    if (temp_v1_2 >= phi_a0 && temp_a2 >= temp_v1_2 && (initDesc->flags & 0xE000) != 0x8000) {
+        switch (initDesc->flags & 0xE000) {
         case 0x0:
             entity = &D_80075D88[*(u8*)&initDesc->unk6];
             if (entity->objectId != 0) {
@@ -449,7 +449,7 @@ void LoadObjLayout(s32 objLayoutId) {
             D_801997D8 = (u32*)D_801997D8 + 1;
         }
 
-        D_801997D8 = (temp_v1->unk4 << 0x10) + temp_v1->posY;
+        D_801997D8 = (temp_v1->flags << 0x10) + temp_v1->posY;
         temp_v0_2 = (u32*)D_801997DC + (phi_a1 + 1);
         D_801997DC = temp_v0_2;
         D_801997DC = (temp_v0_2->posY << 0x10) + temp_v0_2->posX;

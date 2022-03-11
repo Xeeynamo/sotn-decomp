@@ -379,34 +379,36 @@ block_9:
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDD9C);
 #else
 s32 func_800EDD9C(u8 arg0, s32 arg1) {
-    s32 temp_s2;
+    u8 *pCode;
     u8 temp_v0;
     u8* phi_s0;
     POLY_GT4* phi_s1;
     s16 phi_s2;
+    s16 polyIndex;
 
     phi_s1 = D_800973B8;
     phi_s2 = 0x4FF;
     phi_s0 = &D_800973B8->code;
 loop_1:
+    pCode = &phi_s1->code;
     temp_v0 = *phi_s0;
     if (temp_v0 == 0) {
         func_800EDA70(phi_s1);
         if (arg1 == 1) {
             *phi_s0 = arg0;
-            phi_s1->tag = NULL;
+            phi_s1->tag = 0;
         } else {
             *phi_s0 = arg0;
-            phi_s1->tag = &D_80086FEC[func_800EDD9C(arg0 & 0xFF, arg1 - 1)];
+            polyIndex = func_800EDD9C(arg0, arg1 - 1);
+            phi_s1->tag = &D_80086FEC[polyIndex];
         }
         return phi_s2;
     }
 
-    temp_s2 = phi_s2 - 1;
-    phi_s0 += -sizeof(POLY_GT4);
+    phi_s0--;
     phi_s1--;
-    phi_s2 = (s16) temp_s2;
-    if (temp_s2 < 0) {
+    phi_s2--;
+    if (phi_s2 < 0) {
         return (s16) temp_v0;
     }
     goto loop_1;
@@ -850,7 +852,6 @@ extern const u8 c_chShoulderButtons[];
 void DrawSettingsButton(MenuContext* context) {
     const int ActionCount = 7;
     const char** strAction;
-    s32 tmpi;
     s32 curX;
     s32 curY;
     s32 buttonId;
@@ -912,7 +913,6 @@ extern const char* D_800A83AC[];
 extern s32 c_arrExpNext[];
 extern s16 D_8013761C;
 extern s32/*?*/ D_8013763A;
-extern s32 g_menuButtonSettingsConfig;
 extern s32 player_stat_str;
 
 void DrawPauseMenu(s32 arg0) {
@@ -994,7 +994,7 @@ void DrawPauseMenu(s32 arg0) {
         if ((temp_v1_2 & 0x80) != 0) {
             phi_s4 = 0x27;
         }
-        if (func_800F4944() != 0) {
+        if (IsAlucart()) {
             phi_s4 = 0x2D;
         }
         DrawMenuStr((&c_strGOLD)[phi_s4], 0x104, 0x44, context); // TODO probably wrong
@@ -1733,7 +1733,7 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107360);
 #else
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s8 u, s8 v) {
+void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, u8 u, u8 v) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;
@@ -1909,6 +1909,7 @@ s32 func_8010E27C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E390);
+/*?*/s32 func_8010E390(/*?*/s32);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E3B8);
 
@@ -1921,6 +1922,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E4D0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E570);
+/*?*/s32 func_8010E570(/*?*/s32);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E6AC);
 
@@ -1961,6 +1963,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FD24);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FD88);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FDF8);
+s32 func_8010FDF8(/*?*/s32);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80110394);
 

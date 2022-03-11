@@ -174,13 +174,13 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", CreateEntity);
 #else
 void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->unk4 & 0x3FF;
+    entity->objectId = initDesc->flags & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
     entity->subId = initDesc->unk8;
     entity->unk32 = initDesc->unk6 >> 8;
-    entity->unk68 = initDesc->unk4 >> 0xA & 7;
+    entity->unk68 = initDesc->flags >> 0xA & 7;
 }
 #endif
 

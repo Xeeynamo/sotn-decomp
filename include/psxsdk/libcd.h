@@ -28,9 +28,9 @@ typedef struct {
 
 typedef void (*CdlCB)(u_char,u_char *);
 
-static void def_cbsync(u_char intr, u_char *result);
-static void def_cbready(u_char intr, u_char *result);
-static void def_cbread(u_char intr, u_char *result);
+void def_cbsync(u_char intr, u_char *result);
+void def_cbready(u_char intr, u_char *result);
+void def_cbread(u_char intr, u_char *result);
 
 int CdInit(void);
 int CdStatus(void);
