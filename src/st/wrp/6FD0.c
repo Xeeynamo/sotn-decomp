@@ -1146,7 +1146,35 @@ POLY_GT4 *func_801937D8(POLY_GT4 *poly, u8 index) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193854);
+POLY_GT4* func_80193854(POLY_GT4* startPoly, s32 count) {
+    POLY_GT4* poly;
+    s8 unk;
+    s32 i;
+
+    if (startPoly->p3) {
+        startPoly->p3 = 0;
+    } else {
+        startPoly->p3 = 1;
+    }
+
+    poly = startPoly;
+    for (i = 0; i < count; i++) {
+        if (poly->p3) {
+            poly->pad3 &= ~8;
+            unk = 0;
+        } else {
+            poly->pad3 |= 8;
+            unk = 1;
+        }
+
+        poly = poly->tag;
+        if (poly == 0)
+            return 0;
+        poly->p3 = unk;
+    }
+    
+    return poly;
+}
 
 void func_801938DC(Unkstruct7* arg0) {
     arg0->unk13 = 0;
