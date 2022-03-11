@@ -1112,9 +1112,39 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193270);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193658);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801937A8);
+POLY_GT4 *func_801937A8(POLY_GT4 *poly) {
+    while (poly) {
+        if (poly->p3 == 0)
+            return poly;
+        poly = poly->tag;
+    }
+    return NULL;
+}
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801937D8);
+#else
+POLY_GT4 *func_801937D8(POLY_GT4 *poly, u8 index) {
+    while (poly) {
+        s32 i = 1;
+        if (poly->p3 == 0) {
+            if (index >= 1) {
+                do {
+                    poly = poly->tag;
+                    if (poly == 0) {
+                        return 0;
+                    }
+                } while (poly->p3 == 0 && ++i < index);
+            }
+            if (i == index) {
+                return poly;
+            }
+        }
+        poly = poly->tag;
+    }
+    return 0;
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193854);
 
