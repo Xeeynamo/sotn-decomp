@@ -2,6 +2,7 @@
 
 // OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
+extern void (*D_8003C6B8)(s32, s32, Unkstruct7*, s32);
 extern void (*D_8003C6D8)(s32);
 extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
 extern Entity* D_8006C26C;
@@ -948,7 +949,29 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195B44);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195C38);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195E68);
+bool func_80195E68(Unkstruct6* unk) {
+    Unkstruct7 a;
+
+    FallEntity();
+    D_8006C26C->posX.value += D_8006C26C->accelerationX;
+    D_8006C26C->posY.value += D_8006C26C->accelerationY;
+
+    if (D_8006C26C->accelerationY >= 0) {
+        s16 posX = D_8006C26C->posX.Data.high;
+        s16 posY = D_8006C26C->posY.Data.high;
+        posX += unk->x;
+        posY += unk->y;
+        D_8003C6B8(posX, posY, &a, 0);
+        if (a.sp10 & 1) {
+            D_8006C26C->posY.Data.high += a.sp28;
+            D_8006C26C->accelerationY = -D_8006C26C->accelerationY / 2;
+            if (D_8006C26C->accelerationY > -0x10000) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195F64);
 

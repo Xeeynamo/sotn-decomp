@@ -625,7 +625,29 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8014);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8108);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8338);
+bool func_801B8338(Unkstruct6* unk) {
+    Unkstruct7 a;
+
+    FallEntity();
+    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
+    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+
+    if (D_8006C3B8->accelerationY >= 0) {
+        s16 posX = D_8006C3B8->posX.Data.high;
+        s16 posY = D_8006C3B8->posY.Data.high;
+        posX += unk->x;
+        posY += unk->y;
+        D_8003C7BC(posX, posY, &a, 0);
+        if (a.sp10 & 1) {
+            D_8006C3B8->posY.Data.high += a.sp28;
+            D_8006C3B8->accelerationY = -D_8006C3B8->accelerationY / 2;
+            if (D_8006C3B8->accelerationY > -0x10000) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8434);
 

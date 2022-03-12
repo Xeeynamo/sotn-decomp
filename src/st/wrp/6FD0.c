@@ -961,7 +961,29 @@ void func_8018F928(Entity *arg0) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FA1C);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FC4C);
+bool func_8018FC4C(Unkstruct6* unk) {
+    Unkstruct7 a;
+
+    FallEntity();
+    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
+    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+
+    if (D_8006C3B8->accelerationY >= 0) {
+        s16 posX = D_8006C3B8->posX.Data.high;
+        s16 posY = D_8006C3B8->posY.Data.high;
+        posX += unk->x;
+        posY += unk->y;
+        D_8003C7BC(posX, posY, &a, 0);
+        if (a.sp10 & 1) {
+            D_8006C3B8->posY.Data.high += a.sp28;
+            D_8006C3B8->accelerationY = -D_8006C3B8->accelerationY / 2;
+            if (D_8006C3B8->accelerationY > -0x10000) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 
