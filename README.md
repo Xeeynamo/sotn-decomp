@@ -54,7 +54,7 @@ The game is divided in three modules:
 
 # Notes
 
-* I suspect that GCC 2.7.2 / PSY-Q 3.6 have been used to originally compile `DRA.BIN`
+* I suspect that GCC 2.6.x / PSY-Q 3.6 have been used to originally compile `DRA.BIN`
 * `main.exe` uses PS-X libraries that might've been created with a different compiler and with `-O1` rather than `-O2`
 
 ## To do
@@ -63,3 +63,4 @@ The project is very barebone at the moment and there is a massive room of improv
 
 * Not all the zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are disassembled
 * There is no CI/CD pipeline to test the correctness of the compiled code
+* GNU AS might produce incorrect result. ASPSX might need to be used instead as a workaround.
