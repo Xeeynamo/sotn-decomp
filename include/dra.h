@@ -188,68 +188,6 @@ typedef struct
 
 typedef struct
 {
-    u_long	tag;
-    s8 unk4, unk5, unk6, unk7;
-    s16 unk8, unkA;
-    s16 unkC, unkE;
-    s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    s16 unk1C;
-    s16 unk1E;
-    s16 unk20;
-    s16 unk22;
-    s8 unk24;
-    s8 unk25;
-    s8 unk26;
-    s8 unk27;
-    s8 unk28;
-    s8 unk29;
-    s8 unk2A;
-    s8 unk2B;
-    s16 unk2C;
-    s16 unk2E;
-    s16 unk30;
-    s16 unk32;
-} Unkstruct6; // This is most likely POLY_GT4
-
-typedef struct
-{
-    u_long	tag;
-    s8 unk4, unk5, unk6, unk7;
-    s16 unk8, unkA;
-    s16 unkC, unkE;
-    s16 unk10;
-    s8 unk12;
-    s8 unk13;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    s16 unk1C;
-    s8 unk1E;
-    s8 unk1F;
-    s16 unk20;
-    s16 unk22;
-    s8 unk24;
-    s8 unk25;
-    s8 unk26;
-    s8 unk27;
-    s8 unk28;
-    s8 unk29;
-    s8 unk2A;
-    s8 unk2B;
-    s16 unk2C;
-    s16 unk2E;
-    s16 unk30;
-    s16 unk32;
-} Unkstruct7;
-
-typedef struct
-{
     void *addr1;
     void *addr2;
     u16 unk8;

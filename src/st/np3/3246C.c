@@ -550,12 +550,74 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2470);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D24A0);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D251C);
+POLY_GT4* func_801D251C(POLY_GT4* startPoly, s32 count) {
+    POLY_GT4* poly;
+    s8 unk;
+    s32 i;
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D25A4);
+    if (startPoly->p3) {
+        startPoly->p3 = 0;
+    } else {
+        startPoly->p3 = 1;
+    }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2684);
+    poly = startPoly;
+    for (i = 0; i < count; i++) {
+        if (poly->p3) {
+            poly->pad3 &= ~8;
+            unk = 0;
+        } else {
+            poly->pad3 |= 8;
+            unk = 1;
+        }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D26D8);
+        poly = poly->tag;
+        if (poly == 0)
+            return 0;
+        poly->p3 = unk;
+    }
+    
+    return poly;
+}
+
+void func_801D25A4(POLY_GT4* arg0) {
+    arg0->p1 = 0;
+    arg0->p2 = 0;
+    arg0->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->x1 = 0;
+    ((POLY_GT4*)arg0->tag)->y1 = 0;
+    ((POLY_GT4*)arg0->tag)->y0 = 0;
+    ((POLY_GT4*)arg0->tag)->x0 = 0;
+    ((POLY_GT4*)arg0->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u1 = 0;
+    ((POLY_GT4*)arg0->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b2 = 0;
+    ((POLY_GT4*)arg0->tag)->u2 = 0;
+    ((POLY_GT4*)arg0->tag)->v2 = 0;
+    ((POLY_GT4*)arg0->tag)->r3 = 0;
+    ((POLY_GT4*)arg0->tag)->b3 = 0;
+    ((POLY_GT4*)arg0->tag)->x2 = 0;
+    ((POLY_GT4*)arg0->tag)->y2 = 0;
+}
+
+void func_801D2684(POLY_GT4* arg0) {
+    func_801D25A4(arg0);
+    arg0->p3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 1;
+    ((POLY_GT4*)arg0->tag)->code = 2;
+    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
+}
+
+void func_801D26D8(POLY_GT4* arg0) {
+    arg0->p3 = 0;
+    arg0->pad3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->code = 4;
+    ((POLY_GT4*)arg0->tag)->pad3 = 8;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2704);
