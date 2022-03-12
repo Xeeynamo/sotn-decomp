@@ -128,6 +128,7 @@ mad_fix: stmad_dirs mad_patch $(BUILD_DIR)/MAD.BIN
 MAD_PATCHES = \
 	-e "s/D_8003BF08/D_8003BF7C/g" -e "s/0x8003BF08/0x8003BF7C/g" \
 	-e "s/D_8003C6B0/g_pfnFreePolygons/g" -e "s/0x8003C6B0/0x8003C7B4/g" \
+	-e "s/D_8003C6B8/D_8003C7BC/g" -e "s/0x8003C6B8/0x8003C7BC/g" \
 	-e "s/D_8003C6D8/g_pfnPlaySfx/g" -e "s/0x8003C6D8/0x8003c7dc/g" \
 	-e "s/D_8003C704/D_8003C808/g" -e "s/0x8003C704/0x8003C808/g" \
 	-e "s/D_8003C724/D_8003C828/g" -e "s/0x8003C724/0x8003C828/g" \

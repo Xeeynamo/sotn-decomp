@@ -186,6 +186,25 @@ typedef struct
     s32 unk24;
 } Unkstruct5;
 
+typedef struct {
+    s16 x;
+    s16 y;
+} Unkstruct6;
+
+typedef struct {
+    s32 sp10;
+    s32 sp14;
+    s32 sp18;
+    s32 sp1C;
+    s32 sp20;
+    s16 sp24;
+    s16 sp26;
+    s16 sp28;
+    s16 sp2A;
+    s32 sp2C;
+    s32 sp30;
+} Unkstruct7;
+
 typedef struct
 {
     void *addr1;
@@ -227,6 +246,7 @@ extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
 extern RoomHeader* D_8003C784;
+extern void (*D_8003C7BC)(s32, s32, Unkstruct7*, s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
 extern Unkstruct5* D_8003C808;
