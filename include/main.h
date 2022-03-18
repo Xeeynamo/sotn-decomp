@@ -9,12 +9,9 @@ extern s32 D_8003925C;
 
 extern void PadInit(s32 arg0);
 int VSync(s32);
-s32 func_80016D68(s32);
+s32 rcos(s32);
 s32 rsin(s32);
-s32 func_800190AC(s32, s32);
-extern unsigned char func_80019424();
-extern unsigned char func_80019434();
-extern unsigned char func_80019444();
+s32 ratan2(s32, s32);
 extern s32 func_8001D290(s32, s32);
 extern s32 func_8001D374(s8, s16, s16);
 extern void func_8001D2E0(s32, s32, s32);

@@ -636,7 +636,7 @@ void func_801928A8(s32 arg0, s16 arg1) {
 }
 
 u8 func_80192914(s16 x, s16 y) {
-    return ((func_800190AC(y, x) >> 4) + 0x40);
+    return ((ratan2(y, x) >> 4) + 0x40);
 }
 
 u8 func_8019294C(Entity* a, Entity* b) {
@@ -672,7 +672,7 @@ void func_80192A34(u16 slope, s16 speed) {
     s32 moveX;
     s32 moveY;
 
-    moveX = func_80016D68(slope) * speed;
+    moveX = rcos(slope) * speed;
     entity = D_8006C26C;
     if (moveX < 0) {
         moveX += 15;
@@ -688,19 +688,19 @@ void func_80192A34(u16 slope, s16 speed) {
 }
 
 u16 func_80192AC0(s16 x, s16 y) {
-    return func_800190AC(y, x);
+    return ratan2(y, x);
 }
 
 u16 func_80192AF0(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
-    return func_800190AC(diffY, diffX);
+    return ratan2(diffY, diffX);
 }
 
 u16 func_80192B28(s32 x, s32 y) {
     s16 diffX = x - (u16)D_8006C26C->posX.Data.high;
     s16 diffY = y - (u16)D_8006C26C->posY.Data.high;
-    return func_800190AC(diffY, diffX);
+    return ratan2(diffY, diffX);
 }
 
 #ifndef NON_MATCHING

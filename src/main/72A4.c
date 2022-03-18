@@ -1,33 +1,33 @@
 #include "common.h"
 #include <main.h>
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016AA4);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", GsInitVcount);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", SetRCnt);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016B7C);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", GetRCnt);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", StartRCnt);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016BE8);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", StopRCnt);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016C1C);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", ResetRCnt);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016C54);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", GsGetVcount);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016C78);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", GsClearVcount);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", rsin);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", sin_1);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016D68);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", rcos);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", SetFogNear);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016E6C);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016EEC);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", SquareRoot0);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016F7C);
 
@@ -37,7 +37,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017078);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017134);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_8001721C);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", SquareRoot12);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", CompMatrix);
 
@@ -55,7 +55,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017964);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017994);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017AB8);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", PushMatrix);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017B58);
 
@@ -169,7 +169,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", RotMatrixY);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", RotMatrixZ);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_800190AC);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", ratan2);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_8001922C);
 
