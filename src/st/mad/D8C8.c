@@ -193,7 +193,7 @@ void EntityCandle(Entity *entity) {
 }
 #endif
 
-u32 Random(void) {
+s32 Random(void) {
     D_80097364 = (D_80097364 * 0x01010101) + 1;
     return D_80097364 >> 0x18;
 }
