@@ -4,7 +4,7 @@
 #include "common.h"
 #include "dra.h"
 
-u32 Random();
+s32 Random();
 void UpdateStageEntities(void);
 void CreateEntity(Entity *entity, ObjectInit* initDesc);
 void DestroyEntity(Entity *);
