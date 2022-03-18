@@ -187,7 +187,7 @@ void EntityDraculaGlass(Entity* entity) {
             entity->animationFrame = 0x5C;
             speed = (Random() & 0x1F) + 0x10;
             radians = (Random() * 6) + 0x900;
-            entity->accelerationX = speed * func_80016D68(radians);
+            entity->accelerationX = speed * rcos(radians);
             entity->accelerationY = speed * rsin(radians);
             func_801B5794(3);
         }
