@@ -25,7 +25,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", rcos);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", SetFogNear);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80016E6C);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", InitGeom);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", SquareRoot0);
 
@@ -57,7 +57,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017994);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", PushMatrix);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017B58);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", PopMatrix);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017BF8);
 
@@ -67,7 +67,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", ReadColorMatrix);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", TransMatrix);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_80017D0C);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", ScaleMatrix);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", SetRotMatrix);
 
@@ -171,7 +171,7 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", RotMatrixZ);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", ratan2);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_8001922C);
+INCLUDE_ASM("asm/main/nonmatchings/72A4", patch_gte);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", func_8001929C);
 
