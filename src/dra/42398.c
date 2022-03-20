@@ -2412,8 +2412,8 @@ void func_8013271C(void) {
 }
 
 void func_80132760(void) {
-    func_8001D290(0, 0);
-    func_8001D2E0(0, 0, 0);
+    SsSetMVol(0, 0);
+    SsSetSerialAttr(0, 0, 0);
     func_801324B4(0, 0, 0);
     func_80132134();
     func_80132264();
@@ -2462,13 +2462,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80133604);
 void func_80133604();
 
 void func_80133780(s8 arg0) {
-    func_8001D2E0(0, 1, arg0 == 1);
+    SsSetSerialAttr(0, 1, arg0 == 1);
 }
 
 void func_801337B4(void) {
     if (D_80139810 != 0) {
         func_80020F44(D_8013B658);
-        func_800202E0(D_8013B658);
+        SsSeqClose(D_8013B658);
         func_8013415C();
         D_80139810 = 0;
         D_801390C4 = 0;

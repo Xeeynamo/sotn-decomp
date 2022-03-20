@@ -54,7 +54,7 @@ The game is divided in three modules:
 
 # Notes
 
-* I suspect that GCC 2.6.x / PSY-Q 3.6 have been used to originally compile `DRA.BIN`
+* I suspect that GCC 2.6.x / PSY-Q 3.4 have been used to originally compile `DRA.BIN`
 * `main.exe` uses PS-X libraries that might've been created with a different compiler and with `-O1` rather than `-O2`
 
 ## To do
