@@ -583,6 +583,7 @@ void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
+s32 func_800FD4C0(s32, s32);
 s32 func_800FD664(s32 arg0);
 u8 *func_800FD744(s32 arg0);
 u8 *func_800FD760(s32 arg0);

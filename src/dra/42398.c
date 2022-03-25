@@ -444,15 +444,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0578);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0608);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F087C);
-#else
 typedef struct
 {
     s32 foo[5];
 } Unkstruct_800F087C;
 
-s32 func_800FD4C0(s32, s32);
 extern Unkstruct_800F087C D_800A297C;
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
@@ -465,20 +461,18 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     phi_s0 = (u32*)&D_800A297C + 4;
 loop_1:
     temp_v1 = phi_s1->foo[0];
-    if (temp_v1 != 0x80) {
+    if (temp_v1 == 0x80)
+        return 0;
+
         if (temp_v1 == chunkX && phi_s0->foo[-3] == chunkY && phi_s0->foo[-2] == g_mapProgramId) {
             temp_a0 = phi_s0->foo[-1];
             if (temp_a0 == 0xFF || func_800FD4C0(temp_a0, 0) == 0)
                 return phi_s0->foo[0] + 2;
         }
+    phi_s0++;
         phi_s1++;
-        phi_s0++;
         goto loop_1;
     }
-
-    return 0;
-}
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0940);
 
@@ -640,9 +634,6 @@ block_18:
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2658);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F27F4);
-#else
 s32 func_800F27F4(s32 arg0) {
     s32 phi_v0 = 8;
     if (arg0 == 0)
@@ -659,10 +650,7 @@ s32 func_800F27F4(s32 arg0) {
     {
         D_801375C8 = 8;
     }
-
-    return phi_v0;
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2860);
 
@@ -2388,21 +2376,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132500);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801325D8);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801326D8);
-#else
 s32 func_801326D8(void) {
-    s32 retValue = 1;
-    if (D_8013901C == 0) {
-        retValue = 3;
-        if (D_80139810 == 0) {
-            retValue = (D_801390D8 != 0) * 2;
+    if (D_8013901C != 0)
+        return 1;
+    if (D_80139810 != 0)
+        return 3;
+    return (D_801390D8 != 0) * 2;
         }
-    }
-    
-    return retValue;
-}
-#endif
 
 void func_8013271C(void) {
     while (!(func_801326D8() & 0xFF) == 0) {
