@@ -177,11 +177,11 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_main extract_dra extract_ric extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
-extract_main: $(SPLAT_DIR)
+extract_main: $(SPLAT)
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(MAIN).yaml
-extract_dra: $(SPLAT_DIR)
+extract_dra: $(SPLAT)
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.$(DRA).yaml
-extract_ric: $(SPLAT_DIR)
+extract_ric: $(SPLAT)
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.ric.yaml
 extract_st%:
@@ -189,7 +189,7 @@ extract_st%:
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.st$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
-$(SPLAT_DIR):
+$(SPLAT):
 	git submodule init $(SPLAT_DIR)
 	git submodule update $(SPLAT_DIR)
 	pip3 install -r $(SPLAT_DIR)/requirements.txt
