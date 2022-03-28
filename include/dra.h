@@ -128,7 +128,8 @@ typedef struct
     s8 unk85;
     s16 unk86;
     s32 unk88;
-    s32 unk8C;
+    u16 unk8C;
+    u16 unk8E;
     s32 unk90;
     u8 unk94;
     u8 unk95;

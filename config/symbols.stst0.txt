@@ -1,5 +1,6 @@
 PfnEntityUpdates = 0x801804B8;
 g_isSecretStairsButtonPressed = 0x8018089C;
+g_isDraculaFirstFormDefeated = 0x8018090C;
 EntityLockCamera = 0x801A7EB0;
 EntityDialogue = 0x801A9210;
 EntityCutscene = 0x801AA290;

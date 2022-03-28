@@ -2,11 +2,13 @@
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
+extern bool g_isDraculaFirstFormDefeated;
 
 void func_801B3BDC(u16 objectId, Entity *source, Entity *entity);
 s32 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
+void func_801B6B60(Entity*);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7D64);
 
@@ -162,13 +164,169 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AC458);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDracula);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaBody);
+extern u16 D_801805E0[];
+void EntityDraculaBody(Entity* entity) {
+    if (g_isDraculaFirstFormDefeated) {
+        DestroyEntity(entity);
+    }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaFireball);
+    switch (entity->initState) {
+    case 0:
+        InitializeEntity(D_801805E0);
+        entity->unk3C = 1;
+        entity->unk3E = 0x7FFF;
+        entity->unk10 = 3;
+        entity->unk12 = 0x27;
+        entity->hitboxWidth = 12;
+        entity->animationFrame = 0;
+        entity->hitboxHeight = 34;
+        break;
+    case 1:
+        entity->unk14 = entity[-1].unk14;
+        entity->posX.Data.high = entity[-1].posX.Data.high;
+        entity->posY.Data.high = entity[-1].posY.Data.high;
+        entity->unk3C = entity[-1].unk3C & 0xFFFD;
+        break;
+    case 2:
+        entity->unk3C = 0;
+        break;
+    }
 
+    if (g_isDraculaFirstFormDefeated) {
+        entity->unk3C = 0;
+    }
+}
+
+extern u16 D_801805EC[];
+extern u8 D_8018097C[];
+void EntityDraculaFireball(Entity* entity) {
+    u16 temp_v0;
+    u16 temp_v1;
+    s32 phi_v0;
+
+    if (g_isDraculaFirstFormDefeated) {
+        entity->unk34 |= 0x100;
+    }
+    if (entity->unk34 & 0x100) {
+        entity->pfnUpdate = func_801B6B60;
+        entity->initState = 0;
+        entity->subId = 2;
+        return;
+    }
+
+    switch (entity->initState) {
+    case 0:
+        InitializeEntity(D_801805EC);
+        if (entity->unk14 == 0) {
+            entity->accelerationX = -0x20000;
+        }
+        else {
+            entity->accelerationX = 0x20000;
+        }
+
+        if (entity->subId == 1) {
+            entity->accelerationY = -0x8000;
+        }
+        if (entity->subId == 2) {
+            entity->accelerationY = 0x8000;
+        }
+        entity->unk8C = 0x28;
+    case 1:
+        AnimateEntity(D_8018097C, entity);
+        MoveEntity();
+        temp_v0 = entity->unk8C - 1;
+        entity->unk8C = temp_v0;
+        if ((temp_v0 << 0x10) == 0) {
+            entity->accelerationY = 0;
+        }
+        return;
+    }
+}
+
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaMeteorball);
+#else
+extern s32 D_8003C998;
+extern u16 D_801805F8[];
+extern u8 D_80180990[];
+extern u8 D_801809B0[];
+extern s16 D_80180A60[];
+extern s16 D_80180A62[];
+void EntityDraculaMeteorball(Entity* entity) {
+    s32 speedX;
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AD838);
+    if (g_isDraculaFirstFormDefeated) {
+        entity->objectId = 2;
+        entity->pfnUpdate = func_801B6B60;
+        entity->initState = 0;
+        entity->unk2E = 0;
+        entity->subId = 1;
+        return;
+    }
+
+    switch (entity->initState) {
+    case 0:
+        InitializeEntity(D_801805F8);
+        entity->unk3C = 0;
+        entity->unk19 |= 4;
+        break;
+    case 1:
+        if (AnimateEntity(D_801809B0, entity) == 0) {
+            entity->unk3C = 1;
+            func_801B5794(2);
+        }
+        break;
+    case 2:
+        AnimateEntity(&D_80180990, entity);
+        MoveEntity();
+        entity->unk1E += 4;
+        speedX = 0x1000;
+        if (entity->subId != 0) {
+            speedX = 0xE00;
+        }
+
+        if (entity->unk14) {
+            entity->accelerationX += speedX;
+        } else {
+            entity->accelerationX -= speedX;
+        }
+        
+        if ((D_8003C998 & 3) == 0) {
+            Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
+            if (newEntity != 0) {
+                s32 randomPosXYIndex;
+                func_801B3BDC(0x1E, entity, newEntity);
+                newEntity->zPriority = entity->zPriority + 1;
+                randomPosXYIndex = (Random() & 3) * 2;
+                newEntity->posX.Data.high = newEntity->posX.Data.high + D_80180A60[randomPosXYIndex];
+                newEntity->posY.Data.high = newEntity->posY.Data.high + D_80180A62[randomPosXYIndex];
+            }
+        }
+        break;
+    }
+}
+#endif
+
+extern u16 D_801805EC[];
+extern u8 D_801809E0[];
+void func_801AD838(Entity* entity) {
+    if (g_isDraculaFirstFormDefeated) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    if (entity->initState == 0) {
+        InitializeEntity(D_801805EC);
+        entity->animationFrame = 0;
+        entity->unk3C = 0;
+        entity->accelerationY = -0x10000;
+    }
+    MoveEntity();
+
+    if (AnimateEntity(D_801809E0, entity) == 0) {
+        DestroyEntity(entity);
+    }
+}
 
 extern u16 D_801805EC[];
 extern u8 D_80180A40[];
@@ -225,7 +383,19 @@ void EntityDraculaGlass(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801ADAC8);
+bool func_801ADAC8(s32 arg0) {
+    s32 unk = 0xD0;
+    Entity* entity = D_8006C3B8;
+    s16 temp_v1 =  entity->posY.Data.high + arg0;
+
+    if (temp_v1 >= unk) {
+        entity->posY.Data.high = unk - temp_v1 +  entity->posY.Data.high;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801ADB10);
 
@@ -565,6 +735,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6358);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6B60);
+void func_801B6B60(Entity* entity);
 #else
 extern u16 D_8018058C[];
 extern u32 D_80181D7C[];
