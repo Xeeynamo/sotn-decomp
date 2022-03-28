@@ -162,9 +162,9 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AC458);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDracula);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AD430);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaBody);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AD530);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaFireball);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaMeteorball);
 
@@ -564,13 +564,13 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B633C);
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6358);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaFireball);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6B60);
 #else
 extern u16 D_8018058C[];
 extern u32 D_80181D7C[];
 extern u16 D_80181E28[][2];
 
-void EntityDraculaFireball(Entity* entity) {
+void func_801B6B60(Entity* entity) {
     if (entity->initState == 0) {
         u32 zPriority;
 
