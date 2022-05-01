@@ -142,7 +142,9 @@ typedef struct
     s32 unkAC;
     s32 unkB0;
     s32 unkB4;
-    s32 unkB8;
+    u16 unkB8;
+    u8 unkBA;
+    u8 unkBB;
 } Entity;
 
 typedef struct
