@@ -1,5 +1,7 @@
 #include "stage.h"
 
+extern ObjectInit* g_pStObjLayout[];
+extern u8* D_80180310;
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_80180440[];
 extern u16 D_80180458[];
@@ -27,6 +29,8 @@ extern ObjInit2 D_80181134[];
 
 extern ObjectInit *D_80193AB0;
 extern ObjectInit *D_80193AB4;
+extern s8 D_80193AB8;
+extern s8 D_80193ABC;
 
 void SpawnExplosionEntity(u16, Entity *);
 void ReplaceCandleWithDrop(Entity *);
@@ -398,7 +402,58 @@ void func_8018A424(s16 arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
 void func_8018A520(s16);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A634);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", LoadObjLayout);
+#else
+void LoadObjLayout(s32 objLayoutId)
+{
+
+    s16 temp_s0;
+    s16 var_a1_2;
+    u16 temp_v1_2;
+    u16* pObjLayoutStart;
+    Unkstruct8* layout;
+
+    pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    layout = &g_CurrentRoomTileLayout;
+    D_80193AB0 = pObjLayoutStart;
+    D_80193AB4 = *(&D_80180310 + objLayoutId);
+    if (*pObjLayoutStart != 0xFFFE) {
+        s32 var_a0;
+        s16 var_a1;
+        u16* temp_v1;
+
+        D_80193AB0 = pObjLayoutStart + 1;
+        var_a0 = Random() & 0xFF;
+
+        for (var_a1 = 0; ; var_a1++) {
+            s32 temp_v0;
+            temp_v1 = D_80193AB0;
+            D_80193AB0 = (u16*)D_80193AB0 + 1;
+            temp_v0 = var_a0 - temp_v1[0];
+            var_a0 = temp_v0;
+            if ((s16)temp_v0 < 0)
+                break;
+            D_80193AB0 = temp_v1 + 3;
+        }
+
+        D_80193AB0 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_80193AB4 = (var_a1 * 2) + 2 + (u16*)D_80193AB4;
+        D_80193AB4 = ( ((u16*)D_80193AB4)[1] << 0x10) + ((u16*)D_80193AB4)[0];
+    }
+    
+    var_a1_2 = (s16)layout->unkA - 0x40;
+    temp_s0 = layout->unkA + 0x140;
+    if (var_a1_2 < 0) {
+        var_a1_2 = 0;
+    }
+    D_80193AB8 = 0;
+    D_80193ABC = 0;
+    func_8018A0CC(var_a1_2);
+    func_8018A170(temp_s0);
+    func_8018A380((s16)(layout->unkE + 0x120));
+}
+#endif
 
 void func_8018A7AC(void) {
     Unkstruct8 *s0 = &g_CurrentRoomTileLayout;
