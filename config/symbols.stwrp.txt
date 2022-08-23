@@ -2,6 +2,7 @@ g_pStObjLayout = 0x8018023C;
 PfnEntityUpdates = 0x801803E0;
 c_GoldPrizes = 0x80180E30;
 c_HeartPrizes = 0x80180EC0;
+g_stRooms = 0x801811AC;
 EntityCandle = 0x8018726C;
 Random = 0x801881E8;
 UpdateStageEntities = 0x80188218;

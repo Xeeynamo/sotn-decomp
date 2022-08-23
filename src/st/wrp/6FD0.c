@@ -1,5 +1,6 @@
 #include "stage.h"
 
+extern RoomHeader* g_stRooms[];
 extern ObjectInit* g_pStObjLayout[];
 extern u8* D_80180310;
 extern PfnEntityUpdate PfnEntityUpdates[];
@@ -407,7 +408,6 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", LoadObjLayout);
 #else
 void LoadObjLayout(s32 objLayoutId)
 {
-
     s16 temp_s0;
     s16 var_a1_2;
     u16 temp_v1_2;
