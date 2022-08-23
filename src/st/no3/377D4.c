@@ -1,5 +1,7 @@
 #include "stage.h"
 
+extern ObjectInit* g_pStObjLayout[];
+extern u8* D_80180850;
 extern u16 D_80180AAC[];
 extern u8* D_80180E50[];
 extern u8 D_80180E70[];
@@ -8,6 +10,11 @@ extern u16 D_80180E80[];
 extern u8 D_80180E90[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_801820C4[];
+
+extern ObjectInit *D_801D7110;
+extern ObjectInit *D_801D7114;
+extern s8 D_801D7118;
+extern s8 D_801D711C;
 
 void SpawnExplosionEntity(u16, Entity *);
 void ReplaceCandleWithDrop(Entity *);
@@ -159,7 +166,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C13F8);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C14B8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C184C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", Random);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", UpdateStageEntities);
 
@@ -188,23 +195,108 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3618);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3730);
+void func_801C3730(s32 arg0) {
+    s32 a1 = 0xFFFE;
+    arg0 = (s16)arg0;
+loop_1:
+    if (D_801D7110->posX == a1 || D_801D7110->posX < arg0) {
+        D_801D7110++;
+        goto loop_1;
+    }
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C377C);
+void func_801C377C(s32 arg0) {
+    s32 a2, a3;
+    a3 = 0xFFFF;
+    arg0 = (s16)arg0;
+    a2 = 0xFFFE;
+loop_1:
+    if (D_801D7110->posX == a3 || (arg0 < D_801D7110->posX) && (D_801D7110->posX != a2)) {
+        D_801D7110--;
+        goto loop_1;
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C37D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C38D0);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C39E4);
-
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3A30);
+void func_801C39E4(s32 arg0) {
+    s32 a1 = 0xFFFE;
+    arg0 = (s16)arg0;
+loop_1:
+    if (D_801D7114->posY == a1 || D_801D7114->posY < arg0) {
+        D_801D7114++;
+        goto loop_1;
+    }
+}
+void func_801C3A30(s32 arg0) {
+    while (true)
+    {
+        if (D_801D7114->posY == 0xFFFF)
+            D_801D7114--;
+        else if ((s16)arg0 >= D_801D7114->posY || D_801D7114->posY == 0xFFFE)
+            break;
+        else
+            D_801D7114--;
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3A88);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3B84);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", LoadObjLayout);
+#else
+void LoadObjLayout(s32 objLayoutId)
+{
+    s16 temp_s0;
+    s16 var_a1_2;
+    u16 temp_v1_2;
+    u16* pObjLayoutStart;
+    Unkstruct8* layout;
+
+    pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    layout = &g_CurrentRoomTileLayout;
+    D_801D7110 = pObjLayoutStart;
+    D_801D7114 = *(&D_80180850 + objLayoutId);
+    if (*pObjLayoutStart != 0xFFFE) {
+        s32 var_a0;
+        s16 var_a1;
+        u16* temp_v1;
+
+        D_801D7110 = pObjLayoutStart + 1;
+        var_a0 = Random() & 0xFF;
+
+        for (var_a1 = 0; ; var_a1++) {
+            s32 temp_v0;
+            temp_v1 = D_801D7110;
+            D_801D7110 = (u16*)D_801D7110 + 1;
+            temp_v0 = var_a0 - temp_v1[0];
+            var_a0 = temp_v0;
+            if ((s16)temp_v0 < 0)
+                break;
+            D_801D7110 = temp_v1 + 3;
+        }
+
+        D_801D7110 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_801D7114 = (var_a1 * 2) + 2 + (u16*)D_801D7114;
+        D_801D7114 = ( ((u16*)D_801D7114)[1] << 0x10) + ((u16*)D_801D7114)[0];
+    }
+    
+    var_a1_2 = (s16)layout->unkA - 0x40;
+    temp_s0 = layout->unkA + 0x140;
+    if (var_a1_2 < 0) {
+        var_a1_2 = 0;
+    }
+    D_801D7118 = 0;
+    D_801D711C = 0;
+    func_801C3730(var_a1_2);
+    func_801C37D4(temp_s0);
+    func_801C39E4((s16)(layout->unkE + 0x120));
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
 
