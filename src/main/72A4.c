@@ -186,7 +186,7 @@ int CdInit() {
     int i;
 
     for (i = 4; i != -1; i--) {
-        if ( CdReset(1) ) {
+        if (CdReset(1)) {
             CdSyncCallback(def_cbsync);
             CdReadyCallback(def_cbready);
             CdReadCallback(def_cbread);
@@ -199,17 +199,10 @@ int CdInit() {
 }
 #endif
 
-void def_cbsync(u_char intr, u_char *result)
-{
-    DeliverEvent( HwCdRom, EvSpCOMP );
+void def_cbsync(u_char intr, u_char *result) {
+    DeliverEvent(HwCdRom, EvSpCOMP);
 }
 
-void def_cbready(u_char intr, u_char *result)
-{
-    DeliverEvent( HwCdRom, EvSpDR );
-}
+void def_cbready(u_char intr, u_char *result) { DeliverEvent(HwCdRom, EvSpDR); }
 
-void def_cbread(u_char intr, u_char *result)
-{
-    DeliverEvent( HwCdRom, EvSpDR );
-}
+void def_cbread(u_char intr, u_char *result) { DeliverEvent(HwCdRom, EvSpDR); }
