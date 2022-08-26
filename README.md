@@ -19,31 +19,6 @@ All the files refers to the `SLUS-00067` version of the game.
 | `2ae313f4e394422e4c5f37a2d8e976e92f9e3cda` | ST/WRP.BIN | ![progress WRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-wrp.json)
 | `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-rwrp.json)
 
-## Build
-
-1. You need `gcc-mipsel-linux-gnu` that you can easily install on any Debian-based Linux distribution. On Windows it is highly recommended to just use Ubuntu with WSL
-1. Place your `main.exe` from the file `SLUS_000.67`, `DRA.BIN` and the `ST` folder in the root directory of the repository
-1. Run `make extract` to generate the assembly files
-1. Run `make all` to compile the binaries into the `build/` directory
-
-## Check for function matching
-
-Thanks to [asm-differ](https://github.com/simonlindholm/asm-differ) you can check if a funtion written in C matches its assembly counterpart.
-
-1. Be sure to resolve the submodule with `git submodule update --init`
-1. Ensure to create a matching binary with `make clean && make extract && make all && mkdir expected && cp -r build expected/`
-1. Choose a function to match (eg. `func_8018E964`), an overlay (eg. `st/mad`) and then invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/mad func_8018E964`
-
-## Non-matching build
-
-Some non-matching functions are present in the source code by disabled by the macro `NON_MATCHING`. You can still compile the game binaries by running ` CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
-
-## Restore MAD (debug room)
-
-The debug room overlay `ST/MAD.BIN` was compiled earlier than the first retail release of the game. All the offsets that refers to `DRA.BIN` points to invalid portions of data or to the wrong API calls, effectively breaking the majority of its original functionalities. That is why the debug room does not contain any object. By compiling the debug room with `make mad_fix` you can restore it by redirecting the old pointers to the retail version of the game. 
-
-Be aware that not all the offsets have been yet redirected, so it will still be not entirely functional until further update.
-
 ## Technical details
 
 The game is divided in three modules:
@@ -52,15 +27,62 @@ The game is divided in three modules:
 * `DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms' (save, loading, teleport) layout.
 * `ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map's specific events, cutscenes, enemies' AI, collisions and more. It also contains the rooms and entities layout.
 
+## Build
+
+1. You need `gcc-mipsel-linux-gnu` that you can easily install on any Debian-based Linux distribution. On Windows it is highly recommended to just use Ubuntu with WSL
+1. Copy the game's data from your SOTN game copy into the root directory of the repository
+    * `SLUS_000.67` needs to be named `main.exe`
+    * `DRA.BIN` needs to be placed in the root directory
+    * `BIN/RIC.BIN` needs to be placed in `BIN/RIC.BIN`
+    * The content of `ST/{MAP}/{MAP}.BIN` needs to be copied into `ST/`. Create the directory `ST/` if necessary. There is no need to copy `ST/{MAP}/F_{MAP}.BIN`.
+1. Run `make extract` to generate the assembly files
+1. Run `make all` to compile the binaries into the `build/` directory
+
+## Restore MAD (debug room)
+
+The debug room overlay `ST/MAD.BIN` was compiled earlier than the first retail release of the game. All the offsets that refers to `DRA.BIN` points to invalid portions of data or to the wrong API calls, effectively breaking the majority of its original functionalities. That is why the debug room does not contain any object. By compiling the debug room with `make mad_fix` you can restore it by redirecting the old pointers to the retail version of the game. 
+
+Be aware that not all the offsets have been yet redirected, so it will still be not entirely functional until further update.
+
+## Non-matching build
+
+Some non-matching functions are present in the source code by disabled by the macro `NON_MATCHING`. You can still compile the game binaries by running ` CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
+
+## Check function matching
+
+With [asm-differ](https://github.com/simonlindholm/asm-differ) you can check if a funtion written in C matches its assembly counterpart.
+
+1. Be sure to resolve the submodule with `git submodule update --init`
+1. Ensure to create a matching binary with `make clean && make extract && make all && mkdir expected && cp -r build expected/`
+1. Choose a function to match (eg. `func_8018E964`), an overlay (eg. `st/mad`) and then invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/mad func_8018E964`
+
+## Contribute
+
+This guides you step-by-step to contribute to the decompilation project.
+
+1. Choose an overlay to work with (eg. `ST/WRP`)
+1. Look for one of those function which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
+1. Follow [the guide to check the function matching](#check-function-matching)
+1. Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
+1. Copy&paste the entire file content into [mips_to_c](https://simonsoftware.se/other/mips_to_c.py) and decompile it
+1. The code from `mips_to_c` might not be compilable, so keep following `asm-differ` output until you get some assembly code on the console
+1. You will probably have some differences from your compiled code to the original; keep refactoring the code and move variables around until you have a 100% match.
+
+There are a few tricks to make the process more streamlined:
+* Use [decomp.me](https://decomp.me/new) with GCC 2.7.2 for PS1. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output
+* Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to [solve some mismatches](https://github.com/mkst/esa/wiki#decomp-permuter)
+* Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work
+* Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it
+
 # Notes
 
 * I suspect that GCC 2.6.x / PSY-Q 3.4 have been used to originally compile `DRA.BIN`
-* `main.exe` uses PS-X libraries that might've been created with a different compiler and with `-O1` rather than `-O2`
+* `main.exe` uses PS-X libraries that might have been created with a different compiler and with `-O1` rather than `-O2`
 
 ## To do
 
 The project is very barebone at the moment and there is a massive room of improvement, mostly in the infrastructure:
 
 * Not all the zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are disassembled
-* There is no CI/CD pipeline to test the correctness of the compiled code
-* GNU AS might produce incorrect result. ASPSX might need to be used instead as a workaround.
+* GNU AS might produce a slightly different register use compared to the original game. ASPSX might need to be used instead as a workaround but it is old, clunky and not yet integrated in the repo.
+* Split binary data (eg. map layout, graphics, other assets) into individual files
