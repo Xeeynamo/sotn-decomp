@@ -20,6 +20,7 @@ CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx 
 # Directories
 ASM_DIR         := asm
 SRC_DIR         := src
+INCLUDE_DIR     := include
 BUILD_DIR       := build
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
@@ -67,6 +68,9 @@ all: main dra ric dre mad no3 np3 st0 wrp rwrp
 	sha1sum --check slus00067.sha
 clean:
 	rm -rf $(BUILD_DIR)
+format:
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name *.c)
+	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name *.h)
 
 main: main_dirs $(MAIN_TARGET).exe
 main_dirs:
@@ -205,7 +209,7 @@ $(BUILD_DIR)/%.c.s: %.c
 
 SHELL = /bin/bash -e -o pipefail
 
-.PHONY: all, clean
+.PHONY: all, clean, format
 .PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%
