@@ -1,0 +1,33 @@
+name: Format code
+
+on:
+  push:
+    paths:
+      - '**/*.c'
+      - '**/*.h'
+  pull_request:
+    paths:
+      - '**/*.c'
+      - '**/*.h'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get install clang-format
+      - name: Clone main repository
+        uses: actions/checkout@v2
+      - name: Format code
+        run: make format
+      - name: Check if files have been modified
+        id: git-check
+        run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+      - name: Push changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --global user.name 'Formatting bot'
+          git config --global user.email 'xeeynamo@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Format code"
+          git push
