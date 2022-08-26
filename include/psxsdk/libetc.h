@@ -1,10 +1,9 @@
 #ifndef LIBETC_H
 #define LIBETC_H
 
-struct Callbacks
-{
+struct Callbacks {
     void (*unk0)(void);
-    void* (*DMACallback)(int dma, void (*func)());
+    void *(*DMACallback)(int dma, void (*func)());
     void (*unk8)(void);
     int (*ResetCallback)(void);
     int (*StopCallback)(void);

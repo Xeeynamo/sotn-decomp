@@ -1,7 +1,7 @@
 #include "common.h"
-#include <psxsdk/libetc.h>
-#include <psxsdk/libapi.h>
 #include <main.h>
+#include <psxsdk/libapi.h>
+#include <psxsdk/libetc.h>
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", PadInit);
 // void PadInit(s32 arg0) {
@@ -28,9 +28,7 @@ INCLUDE_ASM("asm/main/nonmatchings/5A38", v_wait);
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", ChangeClearRCnt);
 
-int ResetCallback(void) {
-    return D_8002D340->ResetCallback();
-}
+int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", InterruptCallback);
 
@@ -47,14 +45,8 @@ int VSyncCallbacks(int ch, void (*f)()) {
     return D_8002D340->VSyncCallbacks(ch, f);
 }
 
-int StopCallback(void) {
-    return D_8002D340->StopCallback();
-}
+int StopCallback(void) { return D_8002D340->StopCallback(); }
 
-int RestartCallback(void) {
-    return D_8002D340->RestartCallback();
-}
+int RestartCallback(void) { return D_8002D340->RestartCallback(); }
 
-u16 CheckCallback(void) {
-    return D_8002C2BA;
-}
+u16 CheckCallback(void) { return D_8002C2BA; }

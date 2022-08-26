@@ -2,18 +2,16 @@
 #define DRA_H
 #include "main.h"
 
-typedef void (*PfnEntityUpdate)(struct Entity*);
+typedef void (*PfnEntityUpdate)(struct Entity *);
 
-typedef struct
-{
+typedef struct {
     unsigned char width;
     unsigned char height;
     unsigned short unk2;
     unsigned char data[0];
 } ImgSrc;
 
-typedef struct
-{
+typedef struct {
     s16 cursorX;
     s16 cursorY;
     s16 unk4;
@@ -25,47 +23,40 @@ typedef struct
     s16 unk1A;
 } MenuContext;
 
-typedef struct
-{
+typedef struct {
     u8 tileLayoutId;
     u8 tilesetId;
     u8 objGfxId;
     u8 objLayoutId;
 } RoomLoadDef;
 
-typedef struct
-{
+typedef struct {
     u8 left, top, right, bottom;
     RoomLoadDef load;
 } RoomHeader;
 
-typedef struct 
-{
+typedef struct {
     s16 pressed;
     s16 previous;
     s16 tapped;
     s16 repeat;
 } Pad;
 
-typedef union
-{
+typedef union {
     s32 value;
-    struct
-    {
+    struct {
         s16 low;
         s16 high;
     } Data;
-    struct
-    {
+    struct {
         s8 unk0;
         s8 unk1;
         s16 unk2;
     } Data1;
-    
+
 } Unkunion1; // big assumption here...
 
-typedef struct
-{
+typedef struct {
     u8 _[0];
     Unkunion1 posX;
     Unkunion1 posY;
@@ -147,16 +138,14 @@ typedef struct
     u8 unkBB;
 } Entity;
 
-typedef struct
-{
+typedef struct {
     char unk0[0xA];
     s16 unkA;
     s16 unkC;
     s16 unkE;
 } Unkstruct4;
 
-typedef struct
-{
+typedef struct {
     u16 posX;
     u16 posY;
     u16 flags;
@@ -164,8 +153,7 @@ typedef struct
     u16 unk8;
 } ObjectInit;
 
-typedef struct
-{
+typedef struct {
     s16 unk0;
     s16 unk2;
     u16 unk4;
@@ -207,8 +195,7 @@ typedef struct {
     s32 sp30;
 } Unkstruct7;
 
-typedef struct
-{
+typedef struct {
     void *addr1;
     void *addr2;
     u16 unk8;
@@ -217,8 +204,7 @@ typedef struct
     u16 unkE;
 } Unkstruct8;
 
-typedef struct
-{
+typedef struct {
     u16 animationSet;
     u16 zPriority;
     u16 unk4;
@@ -228,11 +214,10 @@ typedef struct
     u8 unkA;
     u8 unkB;
     u32 unkC;
-    u8* unk10;
+    u8 *unk10;
 } ObjInit2;
 
-typedef struct
-{
+typedef struct {
     u16 programId;
     u16 unk2;
     u16 unk4;
@@ -241,17 +226,17 @@ typedef struct
 } Unkstruct10;
 
 // main
-extern Unkstruct5* D_8003C704;
+extern Unkstruct5 *D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
-extern RoomHeader* D_8003C784;
-extern void (*D_8003C7BC)(s32, s32, Unkstruct7*, s32);
+extern RoomHeader *D_8003C784;
+extern void (*D_8003C7BC)(s32, s32, Unkstruct7 *, s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
-extern Unkstruct5* D_8003C808;
+extern Unkstruct5 *D_8003C808;
 extern void (*D_8003C848)(s32, s32);
 extern s32 D_8003C8C4;
 extern s32 g_roomCount;
@@ -262,22 +247,22 @@ extern s32 D_8003CACC;
 
 // dra
 #define PAD_COUNT 2
-#define PAD_L2          0x0001
-#define PAD_R2          0x0002
-#define PAD_L1          0x0004
-#define PAD_R1          0x0008
-#define PAD_TRIANGLE    0x0010
-#define PAD_CIRCLE      0x0020
-#define PAD_CROSS       0x0040
-#define PAD_SQUARE      0x0080
-#define PAD_SELECT      0x0100
-#define PAD_L3          0x0200
-#define PAD_R3          0x0400
-#define PAD_START       0x0800
-#define PAD_UP          0x1000
-#define PAD_RIGHT       0x2000
-#define PAD_DOWN        0x4000
-#define PAD_LEFT        0x8000
+#define PAD_L2 0x0001
+#define PAD_R2 0x0002
+#define PAD_L1 0x0004
+#define PAD_R1 0x0008
+#define PAD_TRIANGLE 0x0010
+#define PAD_CIRCLE 0x0020
+#define PAD_CROSS 0x0040
+#define PAD_SQUARE 0x0080
+#define PAD_SELECT 0x0100
+#define PAD_L3 0x0200
+#define PAD_R3 0x0400
+#define PAD_START 0x0800
+#define PAD_UP 0x1000
+#define PAD_RIGHT 0x2000
+#define PAD_DOWN 0x4000
+#define PAD_LEFT 0x8000
 
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
@@ -319,23 +304,23 @@ extern s32 D_8003CACC;
 #define PROGRAM_NO3 0x41
 #define PROGRAM_INVERTEDCASTLE_FLAG 0x20
 
-#define LBA_BIN_F_GAME          0x61CE
-#define LBA_BIN_F_GAME2         0x6252
-#define LBA_STAGE_MAD_ART       0x7D6F
-#define LBA_STAGE_MAD_VH        0x7DEF
-#define LBA_STAGE_MAD_BIN       0x7E28
-#define LBA_STAGE_NO0_ART       0x7E5D
-#define LBA_STAGE_NO0_VH        0x7EDD
-#define LBA_STAGE_NO0_BIN       0x7F16
-#define LBA_STAGE_NO3_ART       0x8297
-#define LBA_STAGE_NO3_VH        0x8317
-#define LBA_STAGE_NO3_BIN       0x834F
-#define LBA_STAGE_ST0_ART       0x9044
-#define LBA_STAGE_ST0_VH        0x90C4
-#define LBA_STAGE_ST0_BIN       0x90F9
-#define LBA_STAGE_NP3_ART       0x917F
-#define LBA_STAGE_NP3_VH        0x91FF
-#define LBA_STAGE_NP3_BIN       0x9235
+#define LBA_BIN_F_GAME 0x61CE
+#define LBA_BIN_F_GAME2 0x6252
+#define LBA_STAGE_MAD_ART 0x7D6F
+#define LBA_STAGE_MAD_VH 0x7DEF
+#define LBA_STAGE_MAD_BIN 0x7E28
+#define LBA_STAGE_NO0_ART 0x7E5D
+#define LBA_STAGE_NO0_VH 0x7EDD
+#define LBA_STAGE_NO0_BIN 0x7F16
+#define LBA_STAGE_NO3_ART 0x8297
+#define LBA_STAGE_NO3_VH 0x8317
+#define LBA_STAGE_NO3_BIN 0x834F
+#define LBA_STAGE_ST0_ART 0x9044
+#define LBA_STAGE_ST0_VH 0x90C4
+#define LBA_STAGE_ST0_BIN 0x90F9
+#define LBA_STAGE_NP3_ART 0x917F
+#define LBA_STAGE_NP3_VH 0x91FF
+#define LBA_STAGE_NP3_BIN 0x9235
 
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
@@ -343,7 +328,7 @@ extern s32 D_8006C374;
 extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
-extern Entity* D_8006C3B8;
+extern Entity *D_8006C3B8;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
@@ -375,20 +360,20 @@ extern s32 D_800733E0;
 extern s32 D_800733E4;
 extern u16 D_800733EC;
 extern u16 D_800733EE;
-extern s8  D_800733F0;
-extern u8  D_800733F1;
+extern s8 D_800733F0;
+extern u8 D_800733F1;
 extern s16 D_80073404;
 extern u16 D_80073406;
 extern u16 D_8007340A;
 extern u16 D_8007341C;
-extern /*?*/s32 *D_80073424;
+extern /*?*/ s32 *D_80073424;
 extern s16 D_80073428;
 extern s16 D_8007342A;
 extern u16 D_8007342E;
-extern s8  D_80073510;
-extern s8  D_80073511;
-extern s8  D_80073512;
-extern s8  D_80073513;
+extern s8 D_80073510;
+extern s8 D_80073511;
+extern s8 D_80073512;
+extern s8 D_80073513;
 extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
@@ -396,7 +381,7 @@ extern Entity D_8007D858[];
 extern u16 D_80097408;
 extern s32 D_80097428[];
 extern Entity D_8007EF1C;
-extern void* D_8007EFD8;
+extern void *D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;
 extern s32 playerY;
@@ -414,9 +399,9 @@ extern s32 g_mapProgramId;
 extern s32 D_800974AC;
 extern s32 D_80097908;
 extern s32 D_8009790C;
-extern u8  D_8009796E;
-extern u8  D_8009798A;
-extern u8  D_80097A8D;
+extern u8 D_8009796E;
+extern u8 D_8009798A;
+extern u8 D_80097A8D;
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
@@ -436,22 +421,22 @@ extern s32 D_80097C98;
 
 extern s32 D_800A2438;
 extern Unkstruct10 D_800A2464[];
-extern const char* c_strALUCARD;
-extern const char* c_strSTR;
-extern const char* c_strCON;
-extern const char* c_strINT;
-extern const char* c_strLCK;
-extern const char* c_strEXP;
-extern const char* c_strNEXT;
-extern const char* c_strGOLD;
-extern const char* c_strLEVEL;
-extern const char* c_strTIME;
-extern const char* c_strROOMS;
+extern const char *c_strALUCARD;
+extern const char *c_strSTR;
+extern const char *c_strCON;
+extern const char *c_strINT;
+extern const char *c_strLCK;
+extern const char *c_strEXP;
+extern const char *c_strNEXT;
+extern const char *c_strGOLD;
+extern const char *c_strLEVEL;
+extern const char *c_strTIME;
+extern const char *c_strROOMS;
 extern const char *c_strKILLS;
-extern const char* c_strHP;
-extern const char* c_strMP;
-extern const char* c_strHEART;
-extern const char* c_strSTATUS;
+extern const char *c_strHP;
+extern const char *c_strMP;
+extern const char *c_strHEART;
+extern const char *c_strSTATUS;
 extern const char *c_strButton;
 extern const char *c_strCloak;
 extern const char *c_strCloak2;
@@ -471,7 +456,7 @@ extern const char *c_strStereo;
 extern const char *c_strMono;
 extern const char *c_strWindow;
 extern const char *c_strTime;
-extern const char* c_strALUCART;
+extern const char *c_strALUCART;
 extern const char *c_strSSword;
 extern s32 D_800A4B04;
 extern s32 D_800A7718;
@@ -486,13 +471,13 @@ extern const char *c_strSpecial2;
 extern s32 D_800ACC64;
 extern RECT c_backbufferClear;
 extern s16 D_800BD07C[];
-extern u8  D_80137460;
-extern RoomLoadDef* D_801375BC;
+extern u8 D_80137460;
+extern RoomLoadDef *D_801375BC;
 extern s32 D_801375C8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
 extern s32 D_80137618;
-extern s8  D_80137638;
+extern s8 D_80137638;
 extern s32 D_80137844;
 extern s32 D_80137848;
 extern s32 D_8013784C;
@@ -518,9 +503,9 @@ extern s32 D_80138F7C;
 extern s16 D_80139000;
 extern s16 D_80139008;
 extern s16 D_8013901C;
-extern u8  D_80139020;
-extern s8  D_801390C4;
-extern u8  D_801390D8;
+extern u8 D_80139020;
+extern s8 D_801390C4;
+extern u8 D_801390D8;
 extern s16 D_801390DC;
 extern s16 D_801390DE;
 extern s16 D_801390E0;
@@ -528,13 +513,13 @@ extern s16 D_801396EA;
 extern u16 D_801396F4;
 extern s32 D_801397FC;
 extern s32 D_8013980C;
-extern u8  D_80139810;
+extern u8 D_80139810;
 extern s32 D_80139828;
 extern s32 D_80139834[];
 extern s16 D_80139868;
 extern s16 D_80139A70;
 extern s32 D_8013AE9C;
-extern u8  D_8013AEEC;
+extern u8 D_8013AEEC;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 D_8013B3E8[];
@@ -543,12 +528,12 @@ extern s32 D_8013B61C;
 extern s16 D_8013B658;
 extern s32 D_8013B660;
 extern s16 D_8013B668;
-extern u8  D_8013B680;
+extern u8 D_8013B680;
 extern s8 D_8013B684;
 extern s32 D_8013B694;
 extern s32 D_80138784[487];
-extern ImgSrc* g_imgUnk8013C200;
-extern ImgSrc* g_imgUnk8013C270;
+extern ImgSrc *g_imgUnk8013C200;
+extern ImgSrc *g_imgUnk8013C270;
 
 void func_800E4124(s32 arg0);
 void func_800E8D24(void);
@@ -571,19 +556,21 @@ void func_800F4F48(void);
 void func_800F4FD0(void);
 bool IsAlucart();
 void func_800F53A4(void);
-s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5);
-bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
-void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1, s32 unk2, bool disableTexShade, s32 unk4);
-void func_800F5E68(MenuContext*, s32 iOption, s32 x, s32 y, s32 w, s32 h, s32, s32);
+s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext *a5);
+bool ScissorSprite(SPRT *arg0, MenuContext *arg1);
+void func_800F5904(void *, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
+                   s32 unk2, bool disableTexShade, s32 unk4);
+void func_800F5E68(MenuContext *, s32 iOption, s32 x, s32 y, s32 w, s32 h, s32,
+                   s32);
 s32 func_800F62E8(s32 arg0);
-void DrawMenuChar(char ch, int x, int y, MenuContext* context);
-void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
-void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
-void DrawSettingsReverseCloak(MenuContext* context);
-void DrawSettingsSound(MenuContext* context);
+void DrawMenuChar(char ch, int x, int y, MenuContext *context);
+void DrawMenuStr(const char *str, s32 x, s32 y, MenuContext *context);
+void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext *);
+void DrawSettingsReverseCloak(MenuContext *context);
+void DrawSettingsSound(MenuContext *context);
 void DrawPauseMenu(s32 arg0);
 void func_800F82F4(void);
-void func_800F8858(MenuContext* context);
+void func_800F8858(MenuContext *context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 s32 func_800FD4C0(s32, s32);
@@ -591,17 +578,19 @@ s32 func_800FD664(s32 arg0);
 u8 *func_800FD744(s32 arg0);
 u8 *func_800FD760(s32 arg0);
 s32 func_800FD77C(s32 arg0, s32 arg1);
-bool func_800FD7C0(s32, s32);;
+bool func_800FD7C0(s32, s32);
+;
 void func_800FD874(u16 arg0, s32 arg1);
 void func_800FDE00(void);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
-void func_80106590(Entity*);
+void func_80106590(Entity *);
 void func_801065F4(s16 startIndex);
 void func_801071CC(POLY_GT4 *poly, u8, s32);
 void func_80107250(POLY_GT4 *poly, s32 arg1);
-void func_80107360(POLY_GT4 *poly, s32 x, s32 y, s32 width, s32 height, u8 u, u8 v);
+void func_80107360(POLY_GT4 *poly, s32 x, s32 y, s32 width, s32 height, u8 u,
+                   u8 v);
 void SetPolyRect(POLY_GT4 *poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);

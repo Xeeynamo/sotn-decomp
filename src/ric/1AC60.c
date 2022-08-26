@@ -2,8 +2,8 @@
 #include "dra.h"
 
 extern s32 D_801553BC;
-extern /*?*/s32 D_8015591C;
-extern /*?*/s32 D_80155950;
+extern /*?*/ s32 D_8015591C;
+extern /*?*/ s32 D_80155950;
 extern u8 D_80174FAC;
 extern u8 D_80174FB0;
 extern u8 D_80174FB4;
@@ -16,7 +16,7 @@ extern s16 D_80175956;
 
 void func_80156C60(Entity *entity) {
     int i, length;
-    u32* ptr;
+    u32 *ptr;
 
     if (entity->unk34 & 0x800000) {
         g_pfnFreePolygons(entity->firstPolygonIndex);
@@ -42,9 +42,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80157A50);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", UpdateEntityRichter);
 
-void func_801587C0() {
-    D_80175956 = 0;
-}
+void func_801587C0() { D_80175956 = 0; }
 
 void func_801587D0(void) {
     D_80175956 = 1;
@@ -57,7 +55,7 @@ void func_80158814(void) {
     D_80175956 = 0;
     D_8007341C = 0;
     D_8007342E = D_80175950;
-    D_800733F1 = *(u8*)&D_80175952;
+    D_800733F1 = *(u8 *)&D_80175952;
     D_800733EE = D_80175954;
 }
 
@@ -74,7 +72,7 @@ void func_80158F38(void) {
             func_8015CD98(0);
             return;
         }
-        
+
         if (D_80073406 == 0) {
             func_8015CA84(0x14000);
         }
@@ -89,8 +87,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801595D8);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159670);
 
-void func_80159BC8(void)
-{
+void func_80159BC8(void) {
     D_8007342A = 0;
     D_80073428 = 0;
     D_80072F64 = 0;
@@ -156,7 +153,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C6D4);
 
 void func_8015C908(s32 unk0) {
     D_80073404 = unk0;
-    D_80073406= 0;
+    D_80073406 = 0;
 }
 
 void func_8015C920(s32 unk0) {
@@ -171,8 +168,7 @@ void func_8015C93C(s32 speed) {
         if (D_8006C3B8->accelerationX > 0) {
             D_8006C3B8->accelerationX = 0;
         }
-    }
-    else {
+    } else {
         D_8006C3B8->accelerationX -= speed;
         if (D_8006C3B8->accelerationX < 0)
             D_8006C3B8->accelerationX = 0;
@@ -210,22 +206,18 @@ void func_8015CAAC(s32 speed) {
     D_800733E0 = phi_a0;
 }
 
-
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CAD4);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CB58);
 
-void func_8015CC28(void)
-{
+void func_8015CC28(void) {
     D_80073513 = 0;
     D_80073512 = 0;
     D_80073511 = 0;
     D_80073510 = 0;
 }
 
-void func_8015CC50() {
-    func_8015C908(0xF0);
-}
+void func_8015CC50() { func_8015C908(0xF0); }
 
 void func_8015CC70(s16 arg0) {
     D_80073406 = arg0;
@@ -249,7 +241,6 @@ void func_8015CD98(s32 arg0) {
     func_8015C920(&D_801553BC);
 }
 
-
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CDE0);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CE7C);
@@ -268,9 +259,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015D3CC);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015D678);
 
-void func_8015D9B4() {
-    func_8015C908(0x16);
-}
+void func_8015D9B4() { func_8015C908(0x16); }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015D9D4);
 
@@ -320,11 +309,9 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FEA8);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801601DC);
 
-void func_801603B4(void) {
-}
+void func_801603B4(void) {}
 
-void func_801603BC(void) {
-}
+void func_801603BC(void) {}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801603C4);
 
@@ -356,8 +343,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80162604);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80162870);
 
-void func_80162C7C(void) {
-}
+void func_80162C7C(void) {}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80162C84);
 
@@ -393,14 +379,11 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016779C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80167964);
 
-void func_80167A58(void) {
-}
+void func_80167A58(void) {}
 
-void func_80167A60(void) {
-}
+void func_80167A60(void) {}
 
-void func_80167A68(void) {
-}
+void func_80167A68(void) {}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80167A70);
 
