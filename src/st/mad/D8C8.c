@@ -7,14 +7,14 @@ extern void (*D_8003C6D8)(s32);
 extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
 extern Entity *D_8006C26C;
 extern u16 D_80072B3E;
-extern u16 D_80072B42;
+extern s16 D_80072B42;
 extern u16 D_80072B58;
 extern s16 D_80072E8A;
 extern s16 D_80072E8E;
 extern Entity D_80072E88[];
 extern Entity D_8007D308[];
 extern Entity D_8007E9CC;
-extern Entity *D_8007EA88;
+extern void *D_8007EA88;
 extern u16 D_80096EB8;
 extern s32 D_80096EC0;
 extern s32 D_80096EC4;
