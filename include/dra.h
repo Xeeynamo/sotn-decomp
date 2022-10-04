@@ -244,6 +244,22 @@ extern s32 g_CurrentPlayableCharacter;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
+extern s16 D_8003CB0E;
+extern s16 D_8003CB12;
+extern s8 D_8003CB22;
+extern s8 D_8003CB24;
+extern s8 D_8003CB25;
+extern s8 D_8003CB26;
+extern s8 D_8003CB27;
+extern s8 D_8003CB79;
+extern s16 D_80054302;
+extern s16 D_80054306;
+extern s8 D_80054316;
+extern s8 D_80054318;
+extern s8 D_80054319;
+extern s8 D_8005431A;
+extern s8 D_8005431B;
+extern s8 D_8005436D;
 
 // dra
 #define PAD_COUNT 2
@@ -531,10 +547,13 @@ extern s16 D_8013B668;
 extern u8 D_8013B680;
 extern s8 D_8013B684;
 extern s32 D_8013B694;
-extern s32 D_80138784[487];
+extern const char *D_80138784[487];
 extern ImgSrc *g_imgUnk8013C200;
 extern ImgSrc *g_imgUnk8013C270;
 
+void func_800E346C();
+void func_800E34A4(s8 arg0);
+void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
 void func_800E8D24(void);
 void func_800E8DF0(void);
@@ -596,7 +615,7 @@ void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
 void func_80111928(void);
-void func_80131EBC(s32 arg0, s32 arg1);
+void func_80131EBC(const char *str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);
 void func_80131F04(void);
