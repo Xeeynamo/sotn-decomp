@@ -2,9 +2,9 @@
     "search.useIgnoreFiles": false,
     "search.exclude": {
         "**/.git": true,
+        "**/.github": true,
         "build/**": true,
         "expected/**": true,
-        "nonmatchings/**": true,
     },
     "files.associations": {
     },
