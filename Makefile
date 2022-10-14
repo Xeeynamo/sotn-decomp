@@ -39,7 +39,10 @@ MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 # Tooling
 PYTHON          := python3
 SPLAT_DIR       := $(TOOLS_DIR)/n64splat
+SPLAT_APP       := $(SPLAT_DIR)/split.py
 SPLAT           := $(PYTHON) $(SPLAT_DIR)/split.py
+ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
+ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -181,22 +184,28 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_main extract_dra extract_ric extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
-extract_main: $(SPLAT)
+extract_main: require-tools
 	$(SPLAT) --basedir . --target . $(CONFIG_DIR)/splat.$(MAIN).yaml
-extract_dra: $(SPLAT)
+extract_dra: require-tools
 	$(SPLAT) --basedir . --target . $(CONFIG_DIR)/splat.$(DRA).yaml
-extract_ric: $(SPLAT)
+extract_ric: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.ric.yaml
-extract_st%:
+extract_st%: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.st$*.yaml
-$(CONFIG_DIR)/generated.symbols.%.txt:
+$(CONFIG_DIR)/generated.symbols.%.txt: 
 
-$(SPLAT):
+require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
+update-tools: require-tools
+
+$(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
 	git submodule update $(SPLAT_DIR)
 	pip3 install -r $(SPLAT_DIR)/requirements.txt
+$(ASMDIFFER_APP):
+	git submodule init $(SPLAT_DIR)
+	git submodule update $(SPLAT_DIR)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
@@ -213,3 +222,4 @@ SHELL = /bin/bash -e -o pipefail
 .PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%
+.PHONY: require-tools,update-tools
