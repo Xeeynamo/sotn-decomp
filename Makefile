@@ -204,8 +204,8 @@ $(SPLAT_APP):
 	git submodule update $(SPLAT_DIR)
 	pip3 install -r $(SPLAT_DIR)/requirements.txt
 $(ASMDIFFER_APP):
-	git submodule init $(SPLAT_DIR)
-	git submodule update $(SPLAT_DIR)
+	git submodule init $(ASMDIFFER_DIR)
+	git submodule update $(ASMDIFFER_DIR)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
