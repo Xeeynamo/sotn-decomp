@@ -2,7 +2,7 @@ options:
   platform:     psx
   basename:     ric
   base_path:    .
-  target_path:  BIN/RIC.BIN
+  target_path:  iso/BIN/RIC.BIN
   asm_path:     asm/ric
   asset_path:   assets/ric
   src_path:     src/ric
