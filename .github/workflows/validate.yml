@@ -27,7 +27,9 @@ jobs:
           token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
           path: 'data'
       - name: Copy game data
-        run: cp -r data/psx_us10/* .
+        run: |
+          mkdir -p iso
+          cp -r data/psx_us10/* ./iso
       - name: Split game data
         run: make extract
       - name: Build and test
