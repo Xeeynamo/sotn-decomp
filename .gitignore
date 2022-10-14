@@ -4,6 +4,8 @@ BIN/ARC_F.BIN
 BIN/RIC.BIN
 ST/
 
+.vscode/
+
 *.ld
 *auto.*.txt
 generated.symbols.*.txt
