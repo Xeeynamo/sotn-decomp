@@ -2,7 +2,7 @@ options:
   platform:     psx
   basename:     stdre
   base_path:    .
-  target_path:  ST/DRE.BIN
+  target_path:  iso/ST/DRE/DRE.BIN
   asm_path:     asm/st/dre
   asset_path:   assets/st/dre
   src_path:     src/st/dre

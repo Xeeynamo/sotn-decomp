@@ -2,7 +2,7 @@ options:
   platform:     psx
   basename:     dra
   base_path:    .
-  target_path:  DRA.BIN
+  target_path:  iso/DRA.BIN
   asm_path:     asm/dra
   asset_path:   assets/dra
   src_path:     src/dra

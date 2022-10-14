@@ -2,7 +2,7 @@ options:
   platform:     psx
   basename:     stnp3
   base_path:    .
-  target_path:  ST/NP3.BIN
+  target_path:  iso/ST/NP3/NP3.BIN
   asm_path:     asm/st/np3
   asset_path:   assets/st/np3
   src_path:     src/st/np3

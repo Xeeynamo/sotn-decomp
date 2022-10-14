@@ -5,6 +5,7 @@ BIN/RIC.BIN
 ST/
 
 .vscode/
+iso/
 
 *.ld
 *auto.*.txt

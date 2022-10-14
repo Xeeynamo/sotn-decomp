@@ -8,7 +8,7 @@ All the files refers to the `SLUS-00067` version of the game.
 
 | SHA-1 checksum                             | File name  | Progress
 |--------------------------------------------|------------|----------
-| `54828d4e44ea9575f2a0917ff63def42a304abff` | main.exe   | N/A 
+| `54828d4e44ea9575f2a0917ff63def42a304abff` | SLUS_000.67 | N/A 
 | `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN    | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-dra.json)
 | `d076912661e67a38afae0a1b5044ab5f10bcfb39` | RIC.BIN    | ![progress RIC.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-ric.json)
 | `e42976f45b47d1c4912a198ae486b77ee6d77c9c` | ST/DRE.BIN | ![progress DRE.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-dre.json)
@@ -23,18 +23,14 @@ All the files refers to the `SLUS-00067` version of the game.
 
 The game is divided in three modules:
 
-* `main` is the game engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
+* `SLUS_000.67` is the game engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
 * `DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms' (save, loading, teleport) layout.
 * `ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map's specific events, cutscenes, enemies' AI, collisions and more. It also contains the rooms and entities layout.
 
 ## Build
 
 1. You need `gcc-mipsel-linux-gnu` that you can easily install on any Debian-based Linux distribution. On Windows it is highly recommended to just use Ubuntu with WSL
-1. Copy the game's data from your SOTN game copy into the root directory of the repository
-    * `SLUS_000.67` needs to be named `main.exe`
-    * `DRA.BIN` needs to be placed in the root directory
-    * `BIN/RIC.BIN` needs to be placed in `BIN/RIC.BIN`
-    * The content of `ST/{MAP}/{MAP}.BIN` needs to be copied into `ST/`. Create the directory `ST/` if necessary. There is no need to copy `ST/{MAP}/F_{MAP}.BIN`.
+1. Copy the game's data from your SOTN game copy into a new folder in the root directory of the repository called `iso`
 1. Run `make extract` to generate the assembly files
 1. Run `make all` to compile the binaries into the `build/` directory
 
