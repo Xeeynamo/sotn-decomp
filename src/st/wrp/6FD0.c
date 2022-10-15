@@ -493,18 +493,18 @@ void func_8018A8D4(u16 objectId, Entity *source, Entity *entity) {
 }
 #endif
 
-//INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A950);
+// INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A950);
 
 s32 func_8018A950(Unkstruct5 *arg0) {
     s16 var_v0_2;
-    
-    var_v0_2 = (u16) D_800733DA - arg0->unk2;
+
+    var_v0_2 = (u16)D_800733DA - arg0->unk2;
     var_v0_2 = ABS_ALT(var_v0_2);
 
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = (u16) D_800733DE - arg0->unk6;
+        var_v0_2 = (u16)D_800733DE - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
