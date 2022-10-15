@@ -167,7 +167,10 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C13F8);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C14B8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", Random);
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", UpdateStageEntities);
 
