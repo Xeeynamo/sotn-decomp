@@ -45,6 +45,10 @@ ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2CTX           := $(PYTHON) $(M2CTX_APP)
+M2C_DIR         := $(TOOLS_DIR)/m2c
+M2C_APP         := $(M2C_DIR)/m2c.py
+M2C             := $(PYTHON) $(M2C_APP)
+M2C_ARGS		:= -P 4
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -198,11 +202,14 @@ extract_st%: require-tools
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.st$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
+decompile: ctx.c $(M2C_APP)
+	$(M2C_APP) $(M2C_ARGS) --target mipsel-gcc-c --context ctx.c $(FUNC) $(ASSEMBLY)
+
 ctx.c: $(M2CTX_APP)
 	$(M2CTX) $(SOURCE)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
-update-tools: require-tools
+update-tools: require-tools $(M2CTX_APP) $(M2C_APP)
 
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
@@ -213,6 +220,10 @@ $(ASMDIFFER_APP):
 	git submodule update $(ASMDIFFER_DIR)
 $(M2CTX_APP):
 	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
+$(M2C_APP):
+	git submodule init $(M2C_DIR)
+	git submodule update $(M2C_DIR)
+	python3 -m pip install --upgrade pycparser
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<

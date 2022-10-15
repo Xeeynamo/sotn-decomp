@@ -52,7 +52,7 @@ With [asm-differ](https://github.com/simonlindholm/asm-differ) you can check if 
 1. Ensure to create a matching binary with `make clean && make extract && make all && mkdir expected && cp -r build expected/`
 1. Choose a function to match (eg. `func_8018E964`), an overlay (eg. `st/mad`) and then invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/mad func_8018E964`
 
-## Contribute
+## Decompile and contribute
 
 This guides you step-by-step to contribute to the decompilation project.
 
@@ -60,10 +60,8 @@ This guides you step-by-step to contribute to the decompilation project.
 1. Look for one of those function which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
 1. Follow [the guide to check the function matching](#check-function-matching)
 1. Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
-1. Copy&paste the entire assembly file content into [mips_to_c](https://simonsoftware.se/other/mips_to_c.py)
-1. Generate a `ctx.c` context with `SOURCE=src/st/wrp/6FD0.c make ctx.c` and copy&paste it to the bottom part of the page
-1. Click the decompile button!
-1. The code from `mips_to_c` might not be compilable, so keep following `asm-differ` output until you get some assembly code on the console
+1. Run `ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code into `ctx.c.m2c`
+1. Replace the `INCLUDE_ASM` you targeted, replace it with the content of `ctx.c.m2c` and [tweak the code with `asm-differ`](#check-function-matching)
 1. You will probably have some differences from your compiled code to the original; keep refactoring the code and move variables around until you have a 100% match.
 
 There are a few tricks to make the process more streamlined:
