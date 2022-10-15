@@ -4,9 +4,10 @@ BIN/ARC_F.BIN
 BIN/RIC.BIN
 ST/
 
-.vscode/
 iso/
 
+ctx.c
+ctx.c.m2c
 *.ld
 *auto.*.txt
 generated.symbols.*.txt
