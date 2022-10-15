@@ -5,7 +5,7 @@ extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 void func_801B3BDC(u16 objectId, Entity *source, Entity *entity);
-s32 func_801B4C78();
+s16 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
 void func_801B6B60(Entity *);
@@ -638,7 +638,14 @@ s32 func_801B4C44(void) {
     return value;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4C78);
+s16 func_801B4C78(void) {
+    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    
+    if (D_8006C3B8->posY.Data.high >D_800733DE) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 void MoveEntity(void) {
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;

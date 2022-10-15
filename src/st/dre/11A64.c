@@ -124,7 +124,14 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A6A8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A6E4);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A718);
+s16 func_8019A718(void) {
+    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    
+    if (D_8006C3B8->posY.Data.high > D_800733DE) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A75C);
 

@@ -357,7 +357,14 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4F64);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4FA0);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4FD4);
+s16 func_801C4FD4(void) {
+    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    
+    if (D_8006C3B8->posY.Data.high >D_800733DE) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 void MoveEntity(void) {
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
