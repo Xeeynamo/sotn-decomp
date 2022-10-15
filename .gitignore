@@ -6,6 +6,7 @@ ST/
 
 iso/
 
+ctx.c
 *.ld
 *auto.*.txt
 generated.symbols.*.txt

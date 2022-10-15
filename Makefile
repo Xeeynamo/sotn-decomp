@@ -40,9 +40,11 @@ MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 PYTHON          := python3
 SPLAT_DIR       := $(TOOLS_DIR)/n64splat
 SPLAT_APP       := $(SPLAT_DIR)/split.py
-SPLAT           := $(PYTHON) $(SPLAT_DIR)/split.py
+SPLAT           := $(PYTHON) $(SPLAT_APP)
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
+M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
+M2CTX           := $(PYTHON) $(M2CTX_APP)
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -194,7 +196,10 @@ extract_ric: require-tools
 extract_st%: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
 	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.st$*.yaml
-$(CONFIG_DIR)/generated.symbols.%.txt: 
+$(CONFIG_DIR)/generated.symbols.%.txt:
+
+ctx.c: $(M2CTX_APP)
+	$(M2CTX) $(SOURCE)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
 update-tools: require-tools
@@ -206,6 +211,8 @@ $(SPLAT_APP):
 $(ASMDIFFER_APP):
 	git submodule init $(ASMDIFFER_DIR)
 	git submodule update $(ASMDIFFER_DIR)
+$(M2CTX_APP):
+	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
