@@ -19,7 +19,7 @@ jobs:
       - name: Clone main repository
         uses: actions/checkout@v2
         with:
-          submodules: true
+          submodules: false
       - name: Clone game data repository
         uses: actions/checkout@v2
         with:
