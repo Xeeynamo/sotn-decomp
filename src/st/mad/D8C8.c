@@ -505,7 +505,21 @@ void SpawnExplosionEntity(u16 objectId, Entity *entity) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019102C);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801910A8);
+s32 func_801910A8(Unkstruct5 *arg0) {
+    s16 var_v0_2;
+
+    var_v0_2 = (u16)D_80072E8A - arg0->unk2;
+    var_v0_2 = ABS_ALT(var_v0_2);
+
+    if (var_v0_2 >= 0x11) {
+        var_v0_2 = 0;
+    } else {
+        var_v0_2 = (u16)D_80072E8E - arg0->unk6;
+        var_v0_2 = ABS_ALT(var_v0_2);
+        var_v0_2 = var_v0_2 < 0x21;
+    }
+    return var_v0_2;
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191120);
 
@@ -564,17 +578,16 @@ s32 func_80192078(void) {
     return value;
 }
 
-#ifndef NON_MATCHING
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
 #else
-s32 func_801920AC(void) {
-    s32 unk, v1;
-    unk = D_80072E8A < D_8006C26C->posX.Data.high;
-    v1 = D_8006C26C->posY.Data.high;
-    if (D_80072E8E < v1) {
-        unk |= 2;
+s16 func_801920AC(void) {
+    s16 var_a0 = D_8006C26C->posX.Data.high > D_80072E8A;
+
+    if (D_8006C26C->posY.Data.high > D_80072E8E) {
+        var_a0 |= 2;
     }
-    return unk;
+    return var_a0;
 }
 #endif
 

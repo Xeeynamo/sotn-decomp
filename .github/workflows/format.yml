@@ -5,8 +5,9 @@ on:
     paths:
       - '**/*.c'
       - '**/*.h'
-  pull_request:
-    paths:
+  pull_request_target:
+    paths-ignore:
+      - '.github/workflows/**'
       - '**/*.c'
       - '**/*.h'
 

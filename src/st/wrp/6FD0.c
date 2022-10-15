@@ -493,7 +493,21 @@ void func_8018A8D4(u16 objectId, Entity *source, Entity *entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A950);
+s32 func_8018A950(Unkstruct5 *arg0) {
+    s16 var_v0_2;
+
+    var_v0_2 = (u16)D_800733DA - arg0->unk2;
+    var_v0_2 = ABS_ALT(var_v0_2);
+
+    if (var_v0_2 >= 0x11) {
+        var_v0_2 = 0;
+    } else {
+        var_v0_2 = (u16)D_800733DE - arg0->unk6;
+        var_v0_2 = ABS_ALT(var_v0_2);
+        var_v0_2 = var_v0_2 < 0x21;
+    }
+    return var_v0_2;
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A9C8);
 
@@ -547,7 +561,14 @@ s32 func_8018B93C(void) {
     return value;
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B970);
+s16 func_8018B970(void) {
+    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+
+    if (D_8006C3B8->posY.Data.high > D_800733DE) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 void MoveEntity(void) {
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
