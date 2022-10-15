@@ -547,7 +547,14 @@ s32 func_8018B93C(void) {
     return value;
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B970);
+s32 func_8018B970(void) {
+    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    
+    if (D_8006C3B8->posY.Data.high >D_800733DE) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 void MoveEntity(void) {
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
