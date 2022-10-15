@@ -92,7 +92,21 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801996F8);
+s32 func_801996F8(Unkstruct5 *arg0) {
+    s16 var_v0_2;
+
+    var_v0_2 = (u16)D_800733DA - arg0->unk2;
+    var_v0_2 = ABS_ALT(var_v0_2);
+
+    if (var_v0_2 >= 0x11) {
+        var_v0_2 = 0;
+    } else {
+        var_v0_2 = (u16)D_800733DE - arg0->unk6;
+        var_v0_2 = ABS_ALT(var_v0_2);
+        var_v0_2 = var_v0_2 < 0x21;
+    }
+    return var_v0_2;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199770);
 

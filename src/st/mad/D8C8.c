@@ -505,7 +505,21 @@ void SpawnExplosionEntity(u16 objectId, Entity *entity) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019102C);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801910A8);
+s32 func_801910A8(Unkstruct5 *arg0) {
+    s16 var_v0_2;
+
+    var_v0_2 = (u16)D_80072E8A - arg0->unk2;
+    var_v0_2 = ABS_ALT(var_v0_2);
+
+    if (var_v0_2 >= 0x11) {
+        var_v0_2 = 0;
+    } else {
+        var_v0_2 = (u16)D_80072E8E - arg0->unk6;
+        var_v0_2 = ABS_ALT(var_v0_2);
+        var_v0_2 = var_v0_2 < 0x21;
+    }
+    return var_v0_2;
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191120);
 
