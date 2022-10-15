@@ -640,8 +640,8 @@ s32 func_801B4C44(void) {
 
 s16 func_801B4C78(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
-    
-    if (D_8006C3B8->posY.Data.high >D_800733DE) {
+
+    if (D_8006C3B8->posY.Data.high > D_800733DE) {
         var_a0 |= 2;
     }
     return var_a0;
