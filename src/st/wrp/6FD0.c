@@ -493,8 +493,6 @@ void func_8018A8D4(u16 objectId, Entity *source, Entity *entity) {
 }
 #endif
 
-// INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A950);
-
 s32 func_8018A950(Unkstruct5 *arg0) {
     s16 var_v0_2;
 
