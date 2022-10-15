@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "compilerPath": "${default}",
+            "compilerArgs": [
+                "-m32"
+            ],
+            "intelliSenseMode": "${default}", // Shouldn't matter
+            "includePath": [
+                "${workspaceFolder}/**",
+                "src",
+                "build",
+                "include"
+            ],
+            "defines": [
+                "_LANGUAGE_C"
+            ],
+            "cStandard": "gnu89", // C89 + some GNU extensions from C99 like C++ comments
+            "cppStandard": "${default}"
+        }
+    ],
+    "version": 4
+}

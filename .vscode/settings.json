@@ -1,0 +1,11 @@
+{
+    "search.useIgnoreFiles": false,
+    "search.exclude": {
+        "**/.git": true,
+        "**/.github": true,
+        "build/**": true,
+        "expected/**": true,
+    },
+    "files.associations": {
+    },
+}

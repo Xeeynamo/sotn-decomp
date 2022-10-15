@@ -4,7 +4,6 @@ BIN/ARC_F.BIN
 BIN/RIC.BIN
 ST/
 
-.vscode/
 iso/
 
 *.ld
