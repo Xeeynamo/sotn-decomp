@@ -219,7 +219,14 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC7D4);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC844);
+s16 func_801BC844(void) {
+    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    
+    if (D_8006C3B8->posY.Data.high >D_800733DE) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC888);
 

@@ -578,17 +578,16 @@ s32 func_80192078(void) {
     return value;
 }
 
-#ifndef NON_MATCHING
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
 #else
-s32 func_801920AC(void) {
-    s32 unk, v1;
-    unk = D_80072E8A < D_8006C26C->posX.Data.high;
-    v1 = D_8006C26C->posY.Data.high;
-    if (D_80072E8E < v1) {
-        unk |= 2;
+s16 func_801920AC(void) {
+    s16 var_a0 = D_8006C26C->posX.Data.high > D_80072E8A;
+    
+    if (D_8006C26C->posY.Data.high > D_80072E8E) {
+        var_a0 |= 2;
     }
-    return unk;
+    return var_a0;
 }
 #endif
 
