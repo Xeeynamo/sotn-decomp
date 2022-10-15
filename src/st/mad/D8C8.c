@@ -583,7 +583,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
 #else
 s16 func_801920AC(void) {
     s16 var_a0 = D_8006C26C->posX.Data.high > D_80072E8A;
-    
+
     if (D_8006C26C->posY.Data.high > D_80072E8E) {
         var_a0 |= 2;
     }
