@@ -547,7 +547,7 @@ s32 func_8018B93C(void) {
     return value;
 }
 
-s32 func_8018B970(void) {
+s16 func_8018B970(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
     
     if (D_8006C3B8->posY.Data.high >D_800733DE) {
