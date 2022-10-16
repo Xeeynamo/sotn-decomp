@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     stmad
-  base_path:    .
+  base_path:    ..
   target_path:  iso/ST/MAD/MAD.BIN
   asm_path:     asm/st/mad
   asset_path:   assets/st/mad
@@ -14,38 +14,41 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: stmad
     type: code
     start: 0x00000000
     vram:  0x80180000
-    subalign: 4
+    subalign: 2
     subsegments:
-      - [0x0, data]
-      # - [0x11D4, data, objlayout]
-      # # - [0x11D4, bin, assets/st/mad/0.objlayout]
-      # # - [0x11E8, bin, assets/st/mad/1.objlayout]
-      # # - [0x1206, bin, assets/st/mad/2.objlayout]
-      # # - [0x12B0, bin, assets/st/mad/3.objlayout]
-      # # - [0x135A, bin, assets/st/mad/4.objlayout]
-      # # - [0x1404, bin, assets/st/mad/5.objlayout]
-      # # - [0x14AE, bin, assets/st/mad/6.objlayout]
-      # # - [0x1558, bin, assets/st/mad/7.objlayout]
-      # # - [0x1602, bin, assets/st/mad/8.objlayout]
-      # # - [0x16AC, bin, assets/st/mad/9.objlayout]
-      # # - [0x1756, bin, assets/st/mad/10.objlayout]
-      # # - [0x1774, bin, assets/st/mad/11.objlayout]
-      # # - [0x1788, bin, assets/st/mad/12.objlayout]
-      # # - [0x17A6, bin, assets/st/mad/13.objlayout]
-      # # - [0x1850, bin, assets/st/mad/14.objlayout]
-      # # - [0x18FA, bin, assets/st/mad/15.objlayout]
-      # # - [0x19A4, bin, assets/st/mad/16.objlayout]
-      # # - [0x1A4E, bin, assets/st/mad/17.objlayout]
-      # # - [0x1AF8, bin, assets/st/mad/18.objlayout]
-      # # - [0x1BA2, bin, assets/st/mad/19.objlayout]
-      # # - [0x1C4C, bin, assets/st/mad/20.objlayout]
-      # # - [0x1CF6, bin, assets/st/mad/21.objlayout]
-      # - [0x1D14, data]
+      - [0x0, rodata]
+      - [0xE40, rodata]
+      - [0x11D4, rodata] # assets/st/mad/0.objlayout
+      - [0x11E8, rodata] # assets/st/mad/1.objlayout
+      - [0x1206, rodata] # assets/st/mad/2.objlayout
+      - [0x12B0, rodata] # assets/st/mad/3.objlayout
+      - [0x135A, rodata] # assets/st/mad/4.objlayout
+      - [0x1404, rodata] # assets/st/mad/5.objlayout
+      - [0x14AE, rodata] # assets/st/mad/6.objlayout
+      - [0x1558, rodata] # assets/st/mad/7.objlayout
+      - [0x1602, rodata] # assets/st/mad/8.objlayout
+      - [0x16AC, rodata] # assets/st/mad/9.objlayout
+      - [0x1756, rodata] # assets/st/mad/10.objlayout
+      - [0x1774, rodata] # assets/st/mad/11.objlayout
+      - [0x1788, rodata] # assets/st/mad/12.objlayout
+      - [0x17A6, rodata] # assets/st/mad/13.objlayout
+      - [0x1850, rodata] # assets/st/mad/14.objlayout
+      - [0x18FA, rodata] # assets/st/mad/15.objlayout
+      - [0x19A4, rodata] # assets/st/mad/16.objlayout
+      - [0x1A4E, rodata] # assets/st/mad/17.objlayout
+      - [0x1AF8, rodata] # assets/st/mad/18.objlayout
+      - [0x1BA2, rodata] # assets/st/mad/19.objlayout
+      - [0x1C4C, rodata] # assets/st/mad/20.objlayout
+      - [0x1CF6, rodata] # assets/st/mad/21.objlayout
+      - [0x1D14, rodata]
+      - [0xD794, rodata]
+      - [0xD884, rodata]
       - [0xD8C8, c]
       - [0x197D8, data]
   - [0x19E94]

@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     stno3
-  base_path:    .
+  base_path:    ..
   target_path:  iso/ST/NO3/NO3.BIN
   asm_path:     asm/st/no3
   asset_path:   assets/st/no3
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: stno3
     type: code
@@ -21,7 +22,28 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, rodata]
+      - [0xDC0, rodata]
+      - [0xDD0, rodata]
+      - [0xE50, rodata]
+      - [0xE70, rodata]
+      - [0xE80, rodata]
+      - [0xE90, rodata]
+      - [0xEA0, rodata]
+      - [0x11F0, rodata]
+      - [0x1B40, rodata]
+      - [0x26D0, rodata]
+      - [0x3180, rodata]
+      - [0x39A0, rodata]
+      - [0x3AC0, rodata]
+      - [0x3AF0, rodata]
+      - [0x3B30, rodata]
+      - [0x4CE0, rodata]
+      - [0x373E0, rodata]
+      - [0x373E8, rodata]
+      - [0x37458, rodata]
+      - [0x37628, rodata]
+      - [0x376E8, rodata]
       - [0x377D4, c]
       - [0x570B0, data]
   - [0x57E18]

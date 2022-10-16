@@ -76,7 +76,10 @@ endef
 all: main dra ric dre mad no3 np3 st0 wrp rwrp
 	sha1sum --check slus00067.sha
 clean:
-	rm -rf $(BUILD_DIR)
+	git clean -fdx asm/
+	git clean -fdx $(BUILD_DIR)
+	git clean -fdx config/
+	git clean -fx
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name *.c)
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name *.h)
@@ -85,9 +88,7 @@ main: main_dirs $(MAIN_TARGET).exe
 main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
-	$(OBJCOPY) --dump-section .header=$(MAIN_TARGET).header $<
-	$(OBJCOPY) -O binary $< $(MAIN_TARGET).bin
-	cat $(MAIN_TARGET).header $(MAIN_TARGET).bin > $@
+	$(OBJCOPY) -O binary $< $@
 $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
@@ -191,15 +192,15 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 
 extract: extract_main extract_dra extract_ric extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
 extract_main: require-tools
-	$(SPLAT) --basedir . --target . $(CONFIG_DIR)/splat.$(MAIN).yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools
-	$(SPLAT) --basedir . --target . $(CONFIG_DIR)/splat.$(DRA).yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(DRA).yaml
 extract_ric: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
-	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.ric.yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.ric.yaml
 extract_st%: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
-	$(SPLAT) --basedir . $(CONFIG_DIR)/splat.st$*.yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
 decompile: ctx.c $(M2C_APP)
@@ -210,6 +211,7 @@ ctx.c: $(M2CTX_APP)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
 update-tools: require-tools $(M2CTX_APP) $(M2C_APP)
+	pip3 install -r $(SPLAT_DIR)/requirements.txt
 
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)

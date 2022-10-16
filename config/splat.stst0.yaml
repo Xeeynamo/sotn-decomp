@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     stst0
-  base_path:    .
+  base_path:    ..
   target_path:  iso/ST/ST0/ST0.BIN
   asm_path:     asm/st/st0
   asset_path:   assets/st/st0
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: stst0
     type: code
@@ -21,7 +22,14 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, rodata]
+      - [0x580, rodata]
+      - [0x770, rodata]
+      - [0x990, rodata]
+      - [0xAB0, rodata]
+      - [0x279AC, rodata]
+      - [0x27ACC, rodata]
+      - [0x27BFC, rodata]
       - [0x27D64, c]
       - [0x3EB00, data]
   - [0x425C4]

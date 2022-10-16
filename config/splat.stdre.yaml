@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     stdre
-  base_path:    .
+  base_path:    ..
   target_path:  iso/ST/DRE/DRE.BIN
   asm_path:     asm/st/dre
   asset_path:   assets/st/dre
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: stdre
     type: code
@@ -21,7 +22,19 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, rodata]
+      - [0x590, rodata]
+      - [0x610, rodata]
+      - [0x630, rodata]
+      - [0x640, rodata]
+      - [0x650, rodata]
+      - [0x660, rodata]
+      - [0x770, rodata]
+      - [0x16C0, rodata]
+      - [0x11770, rodata]
+      - [0x117A0, rodata]
+      - [0x117F0, rodata]
+      - [0x118D0, rodata]
       - [0x11A64, c]
       - [0x23260, data]
   - [0x23FCC]
