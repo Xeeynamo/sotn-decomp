@@ -88,9 +88,7 @@ main: main_dirs $(MAIN_TARGET).exe
 main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
-	$(OBJCOPY) --dump-section .header=$(MAIN_TARGET).header $<
-	$(OBJCOPY) -O binary $< $(MAIN_TARGET).bin
-	cat $(MAIN_TARGET).header $(MAIN_TARGET).bin > $@
+	$(OBJCOPY) -O binary $< $@
 $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
