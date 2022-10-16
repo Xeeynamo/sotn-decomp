@@ -1,1 +1,2 @@
 UpdateStageEntities = 0x80196FC0;
+func_801A2018 = 0x801A2018;

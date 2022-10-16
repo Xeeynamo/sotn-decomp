@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     stnp3
-  base_path:    .
+  base_path:    ..
   target_path:  iso/ST/NP3/NP3.BIN
   asm_path:     asm/st/np3
   asset_path:   assets/st/np3
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: stnp3
     type: code
@@ -21,7 +22,29 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, rodata]
+      - [0xE50, rodata]
+      - [0x10C0, rodata]
+      - [0x1300, rodata]
+      - [0x1520, rodata]
+      - [0x22B0, rodata]
+      - [0x23D0, rodata]
+      - [0x2400, rodata]
+      - [0x2440, rodata]
+      - [0x2720, rodata]
+      - [0x2740, rodata]
+      - [0x2A20, rodata]
+      - [0x2B00, rodata]
+      - [0x3010, rodata]
+      - [0x33A0, rodata]
+      - [0x3530, rodata]
+      - [0x3570, rodata]
+      - [0x3580, rodata]
+      - [0x3720, rodata]
+      - [0x3760, rodata]
+      - [0x31EA0, rodata]
+      - [0x31FB0, rodata]
+      - [0x32360, rodata]
       - [0x3246C, c]
       - [0x52768, data]
   - [0x53434]

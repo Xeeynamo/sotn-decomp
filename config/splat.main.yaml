@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     main
-  base_path:    .
+  base_path:    ..
   target_path:  iso/SLUS_000.67
   asm_path:     asm/main
   asset_path:   assets/main
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - [0x800, header]
   - name: main
@@ -22,7 +23,10 @@ segments:
     vram:  0x80010000
     subalign: 4
     subsegments:
-      - [0x800, data]
+      - [0x800, rodata]
+      - [0x874, rodata]
+      - [0xC94, rodata]
+      - [0xEB4, rodata]
       - [0x15F4, asm]
       - [0x5938, hasm, psxsdk/libapi1]
       - [0x5A38, c]
@@ -36,5 +40,6 @@ segments:
       - [0x9C14, hasm, psxsdk/libapi2]
       - [0x9C24, c, psxsdk/libapi]
       - [0x9C54, asm]
+      - [0x160B4, asm]
       - [0x1BCE0, data]
   - [0x89800]

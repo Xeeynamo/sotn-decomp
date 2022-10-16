@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     dra
-  base_path:    .
+  base_path:    ..
   target_path:  iso/DRA.BIN
   asm_path:     asm/dra
   asset_path:   assets/dra
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: dra
     type: code
@@ -21,7 +22,34 @@ segments:
     vram:  0x800A0000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, rodata]
+      - [0x2BC0, rodata]
+      - [0x7730, rodata]
+      - [0x8900, rodata]
+      - [0xCEB0, rodata]
+      - [0xD670, rodata]
+      - [0x3B3F0, rodata]
+      - [0x3B530, rodata]
+      - [0x3B560, rodata]
+      - [0x3B790, rodata]
+      - [0x3B7A0, rodata]
+      - [0x3BF10, rodata]
+      - [0x3C160, rodata]
+      - [0x3CC80, rodata]
+      - [0x3CD00, rodata]
+      - [0x3CD10, rodata]
+      - [0x40FC0, rodata]
+      - [0x41360, rodata]
+      - [0x41750, rodata]
+      - [0x418E0, rodata]
+      - [0x41990, rodata]
+      - [0x419B0, rodata]
+      - [0x419D0, rodata]
+      - [0x41A00, rodata]
+      - [0x41F30, rodata]
+      - [0x41F70, rodata]
+      - [0x41FB0, rodata]
+      - [0x42000, rodata]
       - [0x42398, c]
       - [0x962AC, data]
   - [0x119870]
