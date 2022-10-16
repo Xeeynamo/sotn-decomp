@@ -76,7 +76,10 @@ endef
 all: main dra ric dre mad no3 np3 st0 wrp rwrp
 	sha1sum --check slus00067.sha
 clean:
-	rm -rf $(BUILD_DIR)
+	git clean -fdx asm/
+	git clean -fdx $(BUILD_DIR)
+	git clean -fdx config/
+	git clean -fx
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name *.c)
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name *.h)
