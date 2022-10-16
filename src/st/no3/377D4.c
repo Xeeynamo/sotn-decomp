@@ -305,7 +305,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
 
 // TODO: on hold until aspsx pr gets through
 
-/* 
+/*
 void func_801C3E10(void) {
     s32 temp_v0;
     s32 temp_v0_2;
@@ -328,9 +328,9 @@ void func_801C3E10(void) {
             func_801C3A88( (temp + 0x120));
         } else {
         func_801C3B84((s16) (temp - 0x40));
-            
+
         }
-            
+
     }
 }
 */
