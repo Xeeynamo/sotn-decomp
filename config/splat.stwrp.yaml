@@ -1,7 +1,7 @@
 options:
   platform:     psx
   basename:     stwrp
-  base_path:    .
+  base_path:    ..
   target_path:  iso/ST/WRP/WRP.BIN
   asm_path:     asm/st/wrp
   asset_path:   assets/st/wrp
@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
 segments:
   - name: stwrp
     type: code
@@ -21,7 +22,13 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, rodata]
+      - [0x4E0, rodata]
+      - [0x5E0, rodata]
+      - [0x10A0, rodata]
+      - [0x6E70, rodata]
+      - [0x6E90, rodata]
+      - [0x6F10, rodata]
       - [0x6FD0, c]
       - [0x13AA0, data]
   - [0x14768]
