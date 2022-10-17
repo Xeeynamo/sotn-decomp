@@ -17,14 +17,14 @@ extern s32 D_80180C10;
 
 void func_801B246C(Entity *arg0) {
     s32 temp_v0;
-    ObjInit3 *temp_s0 = (ObjInit3*)((arg0->subId * 5) + &D_80180C10);
+    ObjInit2 *temp_s0 = (ObjInit2 *)((arg0->subId * 5) + &D_80180C10);
 
     if (arg0->initState == 0) {
         InitializeEntity(&D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk14 = temp_s0->unk4;
-        arg0->unk5A = temp_s0->unk5;
+        arg0->unk14 = temp_s0->unk4.data1.unk0;
+        arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
         arg0->unk18 = temp_s0->unkA;

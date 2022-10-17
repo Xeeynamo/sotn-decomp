@@ -56,6 +56,14 @@ typedef union {
 
 } Unkunion1; // big assumption here...
 
+typedef union {
+    s16 data;
+    struct {
+        u8 unk0;
+        u8 unk1;
+    } data1;
+} UnkUnion2; // size = 0x2
+
 typedef struct {
     u8 _[0];
     Unkunion1 posX;
@@ -207,7 +215,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ u16 animationSet;
     /* 0x02 */ u16 zPriority;
-    /* 0x04 */ u16 unk4;
+    /* 0x04 */ UnkUnion2 unk4;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 unk8;
     /* 0x09 */ u8 unk9;
@@ -216,19 +224,6 @@ typedef struct {
     /* 0x0C */ u32 unkC;
     /* 0x10 */ u8 *unk10;
 } ObjInit2; // size = 0x14
-
-typedef struct {
-    /* 0x0 */ u16 animationSet;
-    /* 0x2 */ u16 zPriority;
-    /* 0x4 */ u8 unk4;
-    /* 0x5 */ u8 unk5;
-    /* 0x6 */ u16 palette;
-    /* 0x8 */ u8 unk8;
-    /* 0x9 */ u8 unk9;
-    /* 0xA */ s8 unkA;
-    /* 0xB */ u32 unkC;
-    /* 0xF */ u8 *unk10;
-} ObjInit3; // size = 0x14
 
 typedef struct {
     u16 programId;
