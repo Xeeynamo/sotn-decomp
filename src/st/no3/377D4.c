@@ -329,7 +329,8 @@ void LoadObjLayout(s32 objLayoutId) {
 
 <<<<<<< HEAD
 #ifndef NON_MATCHING // TODO: try after resolving aspsx
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10); // https://decomp.me/scratch/cJ3CF
+    INCLUDE_ASM("asm/st/no3/nonmatchings/377D4",
+                func_801C3E10); // https://decomp.me/scratch/cJ3CF
 #else
 =======
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
