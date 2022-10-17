@@ -12,7 +12,32 @@ extern s16 D_80181A50[];
 void SpawnExplosionEntity(u16, Entity *);
 void ReplaceCandleWithDrop(Entity *);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B246C);
+// INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B246C);
+
+extern u16 D_80180A90;
+extern s32 D_80180C10;
+
+void func_801B246C(Entity *arg0) {
+    s32 temp_v0;
+    ObjInit3 *temp_s0 = (arg0->subId * 5) + &D_80180C10;
+
+    if (arg0->initState == 0) {
+        InitializeEntity(&D_80180A90);
+        arg0->animationSet = temp_s0->animationSet;
+        arg0->zPriority = temp_s0->zPriority;
+        arg0->unk14 = (u16)temp_s0->unk4;
+        arg0->unk5A = (s16)temp_s0->unk5;
+        arg0->palette = temp_s0->palette;
+        arg0->unk19 = temp_s0->unk8;
+        arg0->unk18 = temp_s0->unkA;
+        temp_v0 = temp_s0->unkC;
+        if (temp_v0 != 0) {
+            arg0->unk34 = temp_v0;
+        }
+    }
+
+    AnimateEntity(temp_s0->unk10, arg0);
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 

@@ -218,6 +218,19 @@ typedef struct {
 } ObjInit2;
 
 typedef struct {
+    s16 animationSet;
+    s16 zPriority;
+    u8 unk4;
+    u8 unk5;
+    u16 palette;
+    s8 unk8;
+    u8 unk9;
+    s8 unkA;
+    s32 unkC;
+    s32 unk10;
+} ObjInit3;
+
+typedef struct {
     u16 programId;
     u16 unk2;
     u16 unk4;
