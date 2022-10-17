@@ -336,7 +336,7 @@ void func_801C3E10(void) {
     s32 temp_v0;
     s32 temp_v0_2;
     s16 temp_a0;
-    Unkstruct8 *temp_a0_2 = &g_CurrentRoomTileLayout;
+    Unkstruct8* temp_a0_2 = &g_CurrentRoomTileLayout;
 
     temp_v0 = D_80097908;
     if (temp_v0 != 0) {
