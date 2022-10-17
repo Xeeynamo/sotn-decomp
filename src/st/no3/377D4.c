@@ -305,11 +305,9 @@ void LoadObjLayout(s32 objLayoutId) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
-
-// TODO: on hold until aspsx pr gets through
-
-/* 
+#ifndef NON_MATCHING // TODO: try after resolving aspsx
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10); // https://decomp.me/scratch/cJ3CF
+#else
 void func_801C3E10(void) {
     s32 temp_v0;
     s32 temp_v0_2;
@@ -337,7 +335,7 @@ void func_801C3E10(void) {
             
     }
 }
-*/
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", SpawnExplosionEntity);
 
