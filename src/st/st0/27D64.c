@@ -145,30 +145,30 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntitySecretButton);
 extern u16 D_80180628[];
 void EntitySecretStairsEmitter(Entity* entity) {
     switch (entity->initState) {
-        case 0:
-            InitializeEntity(D_80180628);
-            entity->animationFrame = 3;
-            entity->zPriority += 2;
-            if (g_isSecretStairsButtonPressed) {
-                entity->animationFrame = 0;
-                entity->initState = 3;
-            }
-            break;
-        case 1:
-            if (g_isSecretStairsButtonPressed) {
-                g_pfnPlaySfx(0x644);
-                entity->initState++;
-            }
-            break;
-        case 2:
-            entity->posY.value -= 0x4000;
-            if (entity->posY.Data.high < -16) {
-                entity->initState++;
-            }
-            break;
-        case 3:
+    case 0:
+        InitializeEntity(D_80180628);
+        entity->animationFrame = 3;
+        entity->zPriority += 2;
+        if (g_isSecretStairsButtonPressed) {
             entity->animationFrame = 0;
-            break;
+            entity->initState = 3;
+        }
+        break;
+    case 1:
+        if (g_isSecretStairsButtonPressed) {
+            g_pfnPlaySfx(0x644);
+            entity->initState++;
+        }
+        break;
+    case 2:
+        entity->posY.value -= 0x4000;
+        if (entity->posY.Data.high < -16) {
+            entity->initState++;
+        }
+        break;
+    case 3:
+        entity->animationFrame = 0;
+        break;
     }
 }
 
@@ -191,25 +191,25 @@ void EntityDraculaBody(Entity* entity) {
     }
 
     switch (entity->initState) {
-        case 0:
-            InitializeEntity(D_801805E0);
-            entity->unk3C = 1;
-            entity->unk3E = 0x7FFF;
-            entity->unk10 = 3;
-            entity->unk12 = 0x27;
-            entity->hitboxWidth = 12;
-            entity->animationFrame = 0;
-            entity->hitboxHeight = 34;
-            break;
-        case 1:
-            entity->unk14 = entity[-1].unk14;
-            entity->posX.Data.high = entity[-1].posX.Data.high;
-            entity->posY.Data.high = entity[-1].posY.Data.high;
-            entity->unk3C = entity[-1].unk3C & 0xFFFD;
-            break;
-        case 2:
-            entity->unk3C = 0;
-            break;
+    case 0:
+        InitializeEntity(D_801805E0);
+        entity->unk3C = 1;
+        entity->unk3E = 0x7FFF;
+        entity->unk10 = 3;
+        entity->unk12 = 0x27;
+        entity->hitboxWidth = 12;
+        entity->animationFrame = 0;
+        entity->hitboxHeight = 34;
+        break;
+    case 1:
+        entity->unk14 = entity[-1].unk14;
+        entity->posX.Data.high = entity[-1].posX.Data.high;
+        entity->posY.Data.high = entity[-1].posY.Data.high;
+        entity->unk3C = entity[-1].unk3C & 0xFFFD;
+        break;
+    case 2:
+        entity->unk3C = 0;
+        break;
     }
 
     if (g_isDraculaFirstFormDefeated) {
@@ -234,34 +234,34 @@ void EntityDraculaFireball(Entity* entity) {
     }
 
     switch (entity->initState) {
-        case 0:
-            InitializeEntity(D_801805EC);
+    case 0:
+        InitializeEntity(D_801805EC);
 
-            if (entity->unk14 == 0) {
-                entity->accelerationX = -0x20000;
-            } else {
-                entity->accelerationX = 0x20000;
-            }
+        if (entity->unk14 == 0) {
+            entity->accelerationX = -0x20000;
+        } else {
+            entity->accelerationX = 0x20000;
+        }
 
-            if (entity->subId == 1) {
-                entity->accelerationY = -0x8000;
-            }
+        if (entity->subId == 1) {
+            entity->accelerationY = -0x8000;
+        }
 
-            if (entity->subId == 2) {
-                entity->accelerationY = 0x8000;
-            }
-            entity->unk8C = 0x28;
+        if (entity->subId == 2) {
+            entity->accelerationY = 0x8000;
+        }
+        entity->unk8C = 0x28;
 
-        case 1:
-            AnimateEntity(D_8018097C, entity);
-            MoveEntity();
-            temp_v0 = entity->unk8C - 1;
-            entity->unk8C = temp_v0;
+    case 1:
+        AnimateEntity(D_8018097C, entity);
+        MoveEntity();
+        temp_v0 = entity->unk8C - 1;
+        entity->unk8C = temp_v0;
 
-            if ((temp_v0 << 0x10) == 0) {
-                entity->accelerationY = 0;
-            }
-            return;
+        if ((temp_v0 << 0x10) == 0) {
+            entity->accelerationY = 0;
+        }
+        return;
     }
 }
 
@@ -287,46 +287,46 @@ void EntityDraculaMeteorball(Entity* entity) {
     }
 
     switch (entity->initState) {
-        case 0:
-            InitializeEntity(D_801805F8);
-            entity->unk3C = 0;
-            entity->unk19 |= 4;
-            break;
-        case 1:
-            if (AnimateEntity(D_801809B0, entity) == 0) {
-                entity->unk3C = 1;
-                func_801B5794(2);
-            }
-            break;
-        case 2:
-            AnimateEntity(&D_80180990, entity);
-            MoveEntity();
-            entity->unk1E += 4;
-            speedX = 0x1000;
-            if (entity->subId != 0) {
-                speedX = 0xE00;
-            }
+    case 0:
+        InitializeEntity(D_801805F8);
+        entity->unk3C = 0;
+        entity->unk19 |= 4;
+        break;
+    case 1:
+        if (AnimateEntity(D_801809B0, entity) == 0) {
+            entity->unk3C = 1;
+            func_801B5794(2);
+        }
+        break;
+    case 2:
+        AnimateEntity(&D_80180990, entity);
+        MoveEntity();
+        entity->unk1E += 4;
+        speedX = 0x1000;
+        if (entity->subId != 0) {
+            speedX = 0xE00;
+        }
 
-            if (entity->unk14) {
-                entity->accelerationX += speedX;
-            } else {
-                entity->accelerationX -= speedX;
-            }
+        if (entity->unk14) {
+            entity->accelerationX += speedX;
+        } else {
+            entity->accelerationX -= speedX;
+        }
 
-            if ((D_8003C998 & 3) == 0) {
-                Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
-                if (newEntity != 0) {
-                    s32 randomPosXYIndex;
-                    func_801B3BDC(0x1E, entity, newEntity);
-                    newEntity->zPriority = entity->zPriority + 1;
-                    randomPosXYIndex = (Random() & 3) * 2;
-                    newEntity->posX.Data.high = newEntity->posX.Data.high +
-                                                D_80180A60[randomPosXYIndex];
-                    newEntity->posY.Data.high = newEntity->posY.Data.high +
-                                                D_80180A62[randomPosXYIndex];
-                }
+        if ((D_8003C998 & 3) == 0) {
+            Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
+            if (newEntity != 0) {
+                s32 randomPosXYIndex;
+                func_801B3BDC(0x1E, entity, newEntity);
+                newEntity->zPriority = entity->zPriority + 1;
+                randomPosXYIndex = (Random() & 3) * 2;
+                newEntity->posX.Data.high =
+                    newEntity->posX.Data.high + D_80180A60[randomPosXYIndex];
+                newEntity->posY.Data.high =
+                    newEntity->posY.Data.high + D_80180A62[randomPosXYIndex];
             }
-            break;
+        }
+        break;
     }
 }
 #endif
@@ -356,55 +356,55 @@ extern u16 D_801805EC[];
 extern u8 D_80180A40[];
 void EntityDraculaGlass(Entity* entity) {
     switch (entity->initState) {
-        case 0:
-            InitializeEntity(D_801805EC);
-            entity->animationFrame = 0x59;
-            entity->unk19 = 4;
-            entity->unk3C = 0;
-            entity->accelerationX = -0x10000;
-            entity->accelerationY = 0;
-            if (entity->subId) {
-                s16 radians;
-                s32 speed;
-                entity->animationFrame = 0x5C;
-                speed = (Random() & 0x1F) + 0x10;
-                radians = (Random() * 6) + 0x900;
-                entity->accelerationX = speed * rcos(radians);
-                entity->accelerationY = speed * rsin(radians);
-                func_801B5794(3);
-            }
-        case 1:
-            MoveEntity();
-            entity->unk1E += 0x20;
-            entity->accelerationY += 0x2000;
-            if (entity->posY.Data.high >= 205) {
-                g_pfnPlaySfx(0x68B);
-                entity->posY.Data.high = 204;
-                func_801B5794(2);
-            }
-            break;
-        case 2:
-            entity->unk19 = 0;
-            if (AnimateEntity(D_80180A40, entity) == 0) {
-                s32 i;
-                for (i = 0; i < 8; i++) {
-                    Entity* glassShardEntity =
-                        AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
-                    if (glassShardEntity != 0) {
-                        func_801B3BDC(31, entity, glassShardEntity);
-                        glassShardEntity->subId = 1;
-                    }
+    case 0:
+        InitializeEntity(D_801805EC);
+        entity->animationFrame = 0x59;
+        entity->unk19 = 4;
+        entity->unk3C = 0;
+        entity->accelerationX = -0x10000;
+        entity->accelerationY = 0;
+        if (entity->subId) {
+            s16 radians;
+            s32 speed;
+            entity->animationFrame = 0x5C;
+            speed = (Random() & 0x1F) + 0x10;
+            radians = (Random() * 6) + 0x900;
+            entity->accelerationX = speed * rcos(radians);
+            entity->accelerationY = speed * rsin(radians);
+            func_801B5794(3);
+        }
+    case 1:
+        MoveEntity();
+        entity->unk1E += 0x20;
+        entity->accelerationY += 0x2000;
+        if (entity->posY.Data.high >= 205) {
+            g_pfnPlaySfx(0x68B);
+            entity->posY.Data.high = 204;
+            func_801B5794(2);
+        }
+        break;
+    case 2:
+        entity->unk19 = 0;
+        if (AnimateEntity(D_80180A40, entity) == 0) {
+            s32 i;
+            for (i = 0; i < 8; i++) {
+                Entity* glassShardEntity =
+                    AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                if (glassShardEntity != 0) {
+                    func_801B3BDC(31, entity, glassShardEntity);
+                    glassShardEntity->subId = 1;
                 }
-                DestroyEntity(entity);
             }
-            break;
-        case 3:
-            MoveEntity();
-            entity->accelerationY += 0x2000;
-            if (entity->posY.Data.high >= 205) {
-                DestroyEntity(entity);
-            }
-            break;
+            DestroyEntity(entity);
+        }
+        break;
+    case 3:
+        MoveEntity();
+        entity->accelerationY += 0x2000;
+        if (entity->posY.Data.high >= 205) {
+            DestroyEntity(entity);
+        }
+        break;
     }
 }
 
@@ -900,28 +900,28 @@ extern u8 D_801824CC[];
 
 void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->initState) {
-        case 0:
-            InitializeEntity(D_801805D4);
-            entity->animationSet = 0x8007;
-            entity->unk5A = 0x57;
-            entity->palette = 0x8285;
-            entity->unk19 = 8;
-            entity->unk6C = 0x40;
-            entity->unk34 &= 0xF7FFFFFF;
-            if (entity->subId) {
-                entity->unk6C = 0x10;
-                entity->zPriority = 0x1FB;
-                entity->unk18 = 0x50;
-            } else {
-                entity->zPriority = 0x1FE;
-                entity->unk18 = 0x30;
-            }
-        case 1:
-            entity->posY.value -= 0x10000;
-            if (AnimateEntity(D_801824CC, entity) == 0) {
-                DestroyEntity(entity);
-            }
-            break;
+    case 0:
+        InitializeEntity(D_801805D4);
+        entity->animationSet = 0x8007;
+        entity->unk5A = 0x57;
+        entity->palette = 0x8285;
+        entity->unk19 = 8;
+        entity->unk6C = 0x40;
+        entity->unk34 &= 0xF7FFFFFF;
+        if (entity->subId) {
+            entity->unk6C = 0x10;
+            entity->zPriority = 0x1FB;
+            entity->unk18 = 0x50;
+        } else {
+            entity->zPriority = 0x1FE;
+            entity->unk18 = 0x30;
+        }
+    case 1:
+        entity->posY.value -= 0x10000;
+        if (AnimateEntity(D_801824CC, entity) == 0) {
+            DestroyEntity(entity);
+        }
+        break;
     }
 }
 #endif

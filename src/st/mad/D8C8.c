@@ -346,16 +346,16 @@ void func_80190608(ObjectInit* initDesc) {
     if (temp_v1_2 >= phi_a0 && temp_a2 >= temp_v1_2 &&
         (initDesc->flags & 0xE000) != 0x8000) {
         switch (initDesc->flags & 0xE000) {
-            case 0x0:
-                entity = &D_80075D88[*(u8*)&initDesc->unk6];
-                if (entity->objectId != 0) {
-                    break;
-                }
-                CreateEntity(entity, initDesc);
+        case 0x0:
+            entity = &D_80075D88[*(u8*)&initDesc->unk6];
+            if (entity->objectId != 0) {
                 break;
-            case 0xA000:
-                CreateEntity(&D_80075D88[initDesc->unk6], initDesc);
-                break;
+            }
+            CreateEntity(entity, initDesc);
+            break;
+        case 0xA000:
+            CreateEntity(&D_80075D88[initDesc->unk6], initDesc);
+            break;
         }
     }
 }
