@@ -61,6 +61,14 @@ typedef union { // Big assumption here...
 
 } Unkunion1; // side = 0x4
 
+typedef union {
+    s16 data;
+    struct {
+        u8 unk0;
+        u8 unk1;
+    } data1;
+} UnkUnion2; // size = 0x2
+
 typedef struct {
     /* 0x00 */ Unkunion1 posX;
     /* 0x04 */ Unkunion1 posY;
@@ -211,7 +219,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ u16 animationSet;
     /* 0x02 */ u16 zPriority;
-    /* 0x04 */ u16 unk4;
+    /* 0x04 */ UnkUnion2 unk4;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 unk8;
     /* 0x09 */ u8 unk9;
