@@ -343,10 +343,10 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015F96C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015F9F0);
 
-#ifndef NON_MATCHING 
+#ifndef NON_MATCHING
 // This function matches with GCC 2.7.2 using -01 compilation flags
 // https://decomp.me/scratch/VaPMV
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FA5C); 
+INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FA5C);
 #else
 extern s32 D_80154674[];
 extern s32 D_80154675[];
