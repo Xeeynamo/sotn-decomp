@@ -23,7 +23,7 @@ void func_800E2398(s32 arg0) {
     FntPrint();
     temp_v0 = D_80136300;
     D_80136300 = temp_v0 + 1;
-    if ((temp_v0 & 4) != 0) {
+    if (temp_v0 & 4) {
         FntPrint(&aO); // "\no\n"
     }
     DrawSync(0);
@@ -260,7 +260,7 @@ void ReadPads(void) {
     for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
         pad->previous = pad->pressed;
         padd = PadRead(i >> 1);
-        if ((i & 1) == 0)
+        if (!(i & 1))
             pad->pressed = padd;
         else
             pad->pressed = padd >> 0x10;
@@ -337,7 +337,7 @@ void func_800EAD0C(void) {
     func_800EA5E4(6);
     func_800EA5E4(7);
     func_800EA5E4(8);
-    if (g_CurrentPlayableCharacter == 0 && g_mapProgramId != PROGRAM_ST0) {
+    if (g_CurrentPlayableCharacter == 0 && g_mapProgramId != PROGRAM_ST)) {
         func_800EA5E4(0x17);
     }
 }
@@ -501,9 +501,9 @@ void FreePolygons(s32 polygonIndex) {
         do {
             if (poly->code == 7) {
                 *(*(s32**)&poly->r1) = 0; // does not make any sense?!
-                poly->code = 0U;
+                poly->code = 0;
             } else
-                poly->code = 0U;
+                poly->code = 0;
             poly = (POLY_GT4*)poly->tag;
         } while (poly);
     }
@@ -548,6 +548,7 @@ loop_1:
         if (temp_a0 == 0xFF || func_800FD4C0(temp_a0, 0) == 0)
             return phi_s0->foo[0] + 2;
     }
+
     phi_s0++;
     phi_s1++;
     goto loop_1;
