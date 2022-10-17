@@ -1,6 +1,12 @@
 #include "stage.h"
 
+void SpawnExplosionEntity(u16, Entity *);
+void ReplaceCandleWithDrop(Entity *);
+int func_801CD658();
+
 extern u16 D_80180A3C[];
+extern u16 D_80180A90[];
+extern ObjInit2 D_80180C10[];
 extern u8 *D_80180E28[];
 extern u8 D_80180E48[];
 extern u8 D_80180E50[];
@@ -9,11 +15,27 @@ extern u8 D_80180E68[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
 
-void SpawnExplosionEntity(u16, Entity *);
-void ReplaceCandleWithDrop(Entity *);
-void func_801CD658();
+void func_801B246C(Entity *arg0) {
+    s32 temp_v0;
+    ObjInit2 *temp_s0 = &D_80180C10[arg0->subId];
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B246C);
+    if (arg0->initState == 0) {
+        InitializeEntity(D_80180A90);
+        arg0->animationSet = temp_s0->animationSet;
+        arg0->zPriority = temp_s0->zPriority;
+        arg0->unk14 = temp_s0->unk4.data1.unk0;
+        arg0->unk5A = temp_s0->unk4.data1.unk1;
+        arg0->palette = temp_s0->palette;
+        arg0->unk19 = temp_s0->unk8;
+        arg0->unk18 = temp_s0->unkA;
+        temp_v0 = temp_s0->unkC;
+        if (temp_v0 != 0) {
+            arg0->unk34 = temp_v0;
+        }
+    }
+
+    AnimateEntity(temp_s0->unk10, arg0);
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 
