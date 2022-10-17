@@ -1,6 +1,14 @@
 #include "common.h"
 #include "dra.h"
 
+int func_8015DBB0();
+void func_8015C93C();
+int func_8015C9CC();
+void func_8015CD98();
+void func_8015CA84();
+int func_8015CF08();
+int func_8015E380();
+
 extern s32 D_801553BC;
 extern /*?*/ s32 D_8015591C;
 extern /*?*/ s32 D_80155950;
@@ -22,7 +30,7 @@ void func_80156C60(Entity *entity) {
         g_pfnFreePolygons(entity->firstPolygonIndex);
     }
 
-    ptr = entity;
+    ptr = (u32 *)entity;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -156,7 +164,7 @@ void func_8015C908(s32 unk0) {
     D_80073406 = 0;
 }
 
-void func_8015C920(s32 unk0) {
+void func_8015C920(s32 *unk0) {
     D_8006C3B8->unk4C = unk0;
     D_8006C3B8->animationFrameDuration = 0;
     D_8006C3B8->animationFrameIndex = 0;
