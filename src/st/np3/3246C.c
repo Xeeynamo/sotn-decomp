@@ -1,5 +1,8 @@
 #include "stage.h"
 
+void SpawnExplosionEntity(u16, Entity *);
+void ReplaceCandleWithDrop(Entity *);
+
 extern u16 D_80180A3C[];
 extern u8 *D_80180E28[];
 extern u8 D_80180E48[];
@@ -8,12 +11,6 @@ extern u16 D_80180E58[];
 extern u8 D_80180E68[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
-
-void SpawnExplosionEntity(u16, Entity *);
-void ReplaceCandleWithDrop(Entity *);
-
-// INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B246C);
-
 extern u16 D_80180A90;
 extern s32 D_80180C10;
 
@@ -25,8 +22,8 @@ void func_801B246C(Entity *arg0) {
         InitializeEntity(&D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk14 = (u16)temp_s0->unk4;
-        arg0->unk5A = (s16)temp_s0->unk5;
+        arg0->unk14 = temp_s0->unk4;
+        arg0->unk5A = temp_s0->unk5;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
         arg0->unk18 = temp_s0->unkA;
