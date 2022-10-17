@@ -201,14 +201,13 @@ extern u16 D_801805EC[];
 extern u8 D_8018097C[];
 void EntityDraculaFireball(Entity *entity) {
     u16 temp_v0;
-    u16 temp_v1;
-    s32 phi_v0;
 
     if (g_isDraculaFirstFormDefeated) {
         entity->unk34 |= 0x100;
     }
+
     if (entity->unk34 & 0x100) {
-        entity->pfnUpdate = func_801B6B60;
+        entity->pfnUpdate = (PfnEntityUpdate)func_801B6B60;
         entity->initState = 0;
         entity->subId = 2;
         return;
@@ -217,6 +216,7 @@ void EntityDraculaFireball(Entity *entity) {
     switch (entity->initState) {
     case 0:
         InitializeEntity(D_801805EC);
+
         if (entity->unk14 == 0) {
             entity->accelerationX = -0x20000;
         } else {
@@ -226,15 +226,18 @@ void EntityDraculaFireball(Entity *entity) {
         if (entity->subId == 1) {
             entity->accelerationY = -0x8000;
         }
+
         if (entity->subId == 2) {
             entity->accelerationY = 0x8000;
         }
         entity->unk8C = 0x28;
+
     case 1:
         AnimateEntity(D_8018097C, entity);
         MoveEntity();
         temp_v0 = entity->unk8C - 1;
         entity->unk8C = temp_v0;
+
         if ((temp_v0 << 0x10) == 0) {
             entity->accelerationY = 0;
         }
@@ -608,7 +611,7 @@ void DestroyEntity(Entity *item) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = item;
+    ptr = (u32 *)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -934,7 +937,7 @@ POLY_GT4 *func_801BD6A4(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = poly->tag;
+        poly = (POLY_GT4 *)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;

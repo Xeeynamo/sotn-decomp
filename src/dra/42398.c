@@ -1,6 +1,12 @@
 #include "common.h"
 #include "dra.h"
 
+void func_800E2398(s32 arg0);
+s32 func_8010E27C(void);
+int func_801324B4(s8 arg0, s16 arg1, s16 arg2);
+int func_80136010();
+void func_801353A0();
+
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
 #else
@@ -498,7 +504,7 @@ void FreePolygons(s32 polygonIndex) {
                 poly->code = 0U;
             } else
                 poly->code = 0U;
-            poly = poly->tag;
+            poly = (POLY_GT4 *)poly->tag;
         } while (poly);
     }
 }
@@ -530,7 +536,7 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     Unkstruct_800F087C *phi_s0;
 
     phi_s1 = &D_800A297C;
-    phi_s0 = (u32 *)&D_800A297C + 4;
+    phi_s0 = (Unkstruct_800F087C *)((u32 *)&D_800A297C + 4);
 loop_1:
     temp_v1 = phi_s1->foo[0];
     if (temp_v1 == 0x80)
@@ -705,12 +711,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2658);
 
 s32 func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (D_800973FC == 0 && D_8006BB00 == 0 && (D_8003C708 & 0x60) == 0) {
+        if ((D_800973FC == 0) && (D_8006BB00 == 0) && (!(D_8003C708 & 0x60))) {
             D_801375C8 = 1;
-            return 1;
+            return true;
+        } else {
+            return false;
         }
-
-        return 0;
     } else {
         D_801375C8 = 8;
     }
@@ -1728,7 +1734,7 @@ void func_80106590(Entity *entity) {
         FreePolygons(entity->firstPolygonIndex);
     }
 
-    ptr = entity;
+    ptr = (u32 *)entity;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
