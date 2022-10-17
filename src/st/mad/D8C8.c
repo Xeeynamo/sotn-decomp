@@ -359,8 +359,8 @@ void func_80190884(s32 arg0) {
     arg0 = (s16)arg0;
     a2 = 0xFFFE;
 loop_1:
-    if (D_801997D8->posX == a3 ||
-        (arg0 < D_801997D8->posX) && (D_801997D8->posX != a2)) {
+    if ((D_801997D8->posX == a3) ||
+        ((arg0 < D_801997D8->posX) && (D_801997D8->posX != a2))) {
         D_801997D8--;
         goto loop_1;
     }
@@ -403,11 +403,11 @@ loop_1:
     }
 }
 
-void func_80190B24(s32 arg0) {
+void func_80190B24(s16 arg0) {
     while (true) {
         if (D_801997DC->posY == 0xFFFF)
             D_801997DC--;
-        else if ((s16)arg0 >= D_801997DC->posY || D_801997DC->posY == 0xFFFE)
+        else if (arg0 >= (s32)D_801997DC->posY || D_801997DC->posY == 0xFFFE)
             break;
         else
             D_801997DC--;
@@ -531,7 +531,7 @@ void DestroyEntity(Entity *item) {
         D_8003C6B0(item->firstPolygonIndex);
     }
 
-    ptr = item;
+    ptr = (u32 *)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -748,7 +748,7 @@ void func_80192C0C(u16 arg0, u16 arg1) {
     entity = D_8006C26C;
     entity->unk19 = 0;
     entity->objectId = EntityExplosionID;
-    entity->pfnUpdate = func_80194218;
+    entity->pfnUpdate = (PfnEntityUpdate)func_80194218;
     entity->subId = arg0;
     entity->animationFrame = 0;
     D_8006C26C->initState = 0;
@@ -765,7 +765,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C26C->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C26C->unk3A = temp_v1;
-    temp_v0 = temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C704;
+    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C704);
     D_8006C26C->unk3E = temp_v0->unk4;
     D_8006C26C->unk40 = temp_v0->unk6;
     D_8006C26C->unk42 = temp_v0->unk8;
@@ -1046,7 +1046,7 @@ POLY_GT4 *func_80199584(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = poly->tag;
+        poly = (POLY_GT4 *)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
