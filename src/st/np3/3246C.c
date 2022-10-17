@@ -44,7 +44,38 @@ void EntityCandle(Entity *entity) {
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2830);
+#else
+extern u16 D_80180A60;
+
+typedef struct {
+    /* 0x00 */ char pad00[0x2C];
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ char pad2E[0x4E];
+    /* 0x7C */ s8 unk7C;
+    /* 0x7D */ s8 unk7D;
+    /* 0x7E */ s8 unk7E;
+} UnkStruct11; // size = 0x7F
+
+void func_801B2830(UnkStruct11 *arg0) {
+    switch (arg0->unk2C) {
+    case 0:
+        InitializeEntity(&D_80180A60);
+        arg0->unk7C = 0x10;
+        arg0->unk7D = 8;
+        arg0->unk7E = 0x38;
+
+    case 1:
+        D_8003CB25 = arg0->unk7C;
+        D_8003CB26 = arg0->unk7D;
+        D_8003CB27 = arg0->unk7E;
+        D_80054319 = arg0->unk7C;
+        D_8005431A = arg0->unk7D;
+        D_8005431B = arg0->unk7E;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B28E4);
 
