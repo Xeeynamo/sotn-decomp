@@ -93,7 +93,7 @@ typedef struct {
     u8 unk48;
     u8 unk49;
     s16 unk4A;
-    s32 unk4C;
+    s32 *unk4C;
     u16 animationFrameIndex;
     s16 animationFrameDuration;
     s16 animationSet;
