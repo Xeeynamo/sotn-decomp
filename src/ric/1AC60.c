@@ -343,10 +343,10 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015F96C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015F9F0);
 
-#ifndef NON_MATCHING // This function matches with GCC 2.7.2 using -01
-                     // Compilation flags
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60",
-            func_8015FA5C); // https://decomp.me/scratch/VaPMV
+// This function matches with GCC 2.7.2 using -01 Compilation flags
+// https://decomp.me/scratch/VaPMV
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FA5C);
 #else
 extern s32 D_80154674[];
 extern s32 D_80154675[];
@@ -484,7 +484,8 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016A974);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    D_8006C3B8->unk7C = (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C;
+    D_8006C3B8->unk7C.modeU16 =
+        (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
     if (D_8006C3B8->unk82 == 0) {
         D_8006C3B8->unk80++;
         D_8006C3B8->unk82++;
@@ -493,7 +494,8 @@ void func_8016B8E8(s32 arg0) {
 
 void func_8016B92C(s32 arg0) {
     if (D_8006C3B8->unk82 == 0) {
-        D_8006C3B8->unk7C = (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C;
+        D_8006C3B8->unk7C.modeU16 =
+            (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
         D_8006C3B8->unk80++;
         D_8006C3B8->unk82++;
     }

@@ -67,9 +67,12 @@ void EntityCandle(Entity *entity) {
 }
 #endif
 
+// TODO: Probably aspsx or compiler flags
+// https://decomp.me/scratch/sKMmw
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2830);
 #else
+
 extern u16 D_80180A60;
 
 typedef struct {
@@ -81,20 +84,20 @@ typedef struct {
     /* 0x7E */ s8 unk7E;
 } UnkStruct11; // size = 0x7F
 
-void func_801B2830(UnkStruct11 *arg0) {
-    switch (arg0->unk2C) {
+void func_801B2830(Entity *arg0) {
+    switch (arg0->initState) {
     case 0:
         InitializeEntity(&D_80180A60);
-        arg0->unk7C = 0x10;
-        arg0->unk7D = 8;
+        arg0->unk7C.modeU8.unk0 = 0x10;
+        arg0->unk7C.modeU8.unk1 = 8;
         arg0->unk7E = 0x38;
 
     case 1:
-        D_8003CB25 = arg0->unk7C;
-        D_8003CB26 = arg0->unk7D;
+        D_8003CB25 = arg0->unk7C.modeU8.unk0;
+        D_8003CB26 = arg0->unk7C.modeU8.unk1;
         D_8003CB27 = arg0->unk7E;
-        D_80054319 = arg0->unk7C;
-        D_8005431A = arg0->unk7D;
+        D_80054319 = arg0->unk7C.modeU8.unk0;
+        D_8005431A = arg0->unk7C.modeU8.unk1;
         D_8005431B = arg0->unk7E;
     }
 }
