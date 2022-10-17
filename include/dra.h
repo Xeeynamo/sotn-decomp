@@ -2,6 +2,8 @@
 #define DRA_H
 #include "main.h"
 
+struct Entity;
+
 typedef void (*PfnEntityUpdate)(struct Entity *);
 
 typedef struct {
