@@ -161,7 +161,27 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E13C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E5AC);
+extern u16 D_80180544[];
+extern ObjInit2 D_8018056C[];
+void func_8018E5AC(Entity *arg0) {
+    s32 temp_v0;
+    ObjInit2 *temp_s0 = &D_8018056C[arg0->subId];
+
+    if (arg0->initState == 0) {
+        InitializeEntity(D_80180544);
+        arg0->animationSet = temp_s0->animationSet;
+        arg0->zPriority = temp_s0->zPriority;
+        arg0->unk5A = temp_s0->unk4.data;
+        arg0->palette = temp_s0->palette;
+        arg0->unk19 = temp_s0->unk8;
+        arg0->unk18 = temp_s0->unkA;
+        temp_v0 = temp_s0->unkC;
+        if (temp_v0 != 0) {
+            arg0->unk34 = temp_v0;
+        }
+    }
+    AnimateEntity(temp_s0->unk10, arg0);
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E674);
 
