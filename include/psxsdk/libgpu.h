@@ -5,7 +5,7 @@
 typedef struct {
     short x, y; /* offset point on VRAM */
     short w, h; /* width and height */
-} RECT;
+} RECT;         // size = 0x8
 
 typedef struct {
     u_long tag;

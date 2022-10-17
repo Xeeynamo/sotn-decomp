@@ -14,218 +14,228 @@ typedef struct {
 } ImgSrc;
 
 typedef struct {
-    s16 cursorX;
-    s16 cursorY;
-    s16 unk4;
-    s16 unk6;
-    RECT unk1;
-    int w;
-    int unk14;
-    s16 unk18;
-    s16 unk1A;
-} MenuContext;
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ RECT unk1;
+    /* 0x10 */ int w;
+    /* 0x14 */ int unk14;
+    /* 0x18 */ s16 unk18;
+    /* 0x20 */ s16 unk1A;
+} MenuContext; // size = 0x22
 
 typedef struct {
-    u8 tileLayoutId;
-    u8 tilesetId;
-    u8 objGfxId;
-    u8 objLayoutId;
-} RoomLoadDef;
+    /* 0x0 */ u8 tileLayoutId;
+    /* 0x1 */ u8 tilesetId;
+    /* 0x2 */ u8 objGfxId;
+    /* 0x3 */ u8 objLayoutId;
+} RoomLoadDef; // size = 0x4
 
 typedef struct {
-    u8 left, top, right, bottom;
-    RoomLoadDef load;
-} RoomHeader;
+    /* 0x0 */ u8 left;
+    /* 0x1 */ u8 top;
+    /* 0x2 */ u8 right;
+    /* 0x3 */ u8 bottom;
+    /* 0x4 */ RoomLoadDef load;
+} RoomHeader; // size = 0x8
 
 typedef struct {
-    s16 pressed;
-    s16 previous;
-    s16 tapped;
-    s16 repeat;
-} Pad;
+    /* 0x0 */ s16 pressed;
+    /* 0x2 */ s16 previous;
+    /* 0x4 */ s16 tapped;
+    /* 0x6 */ s16 repeat;
+} Pad; // size = 0x8
 
-typedef union {
-    s32 value;
+typedef union { // Big assumption here...
+    s32 value;  // size = 0x4
     struct {
         s16 low;
         s16 high;
-    } Data;
+    } Data; // size = 0x4
     struct {
         s8 unk0;
         s8 unk1;
         s16 unk2;
-    } Data1;
+    } Data1; // size = 0x4
 
-} Unkunion1; // big assumption here...
+} Unkunion1; // side = 0x4
 
-typedef struct {
-    u8 _[0];
-    Unkunion1 posX;
-    Unkunion1 posY;
-    s32 accelerationX;
-    s32 accelerationY;
-    s16 unk10;
-    s16 unk12;
-    u16 unk14;
-    s16 palette;
-    s8 unk18;
-    s8 unk19;
-    s16 unk1A;
-    s16 unk1C;
-    s16 unk1E;
-    s16 unk20;
-    s16 unk22;
-    u16 zPriority;
-    u16 objectId;
-    PfnEntityUpdate pfnUpdate;
-    u16 initState;
-    s16 unk2E;
-    u16 subId;
-    u16 unk32;
-    s32 unk34;
-    s16 unk38;
-    s16 unk3A;
-    s16 unk3C;
-    s16 unk3E;
-    s16 unk40;
-    s16 unk42;
-    u16 unk44;
-    u8 hitboxWidth;
-    u8 hitboxHeight;
-    u8 unk48;
-    u8 unk49;
-    s16 unk4A;
-    s32 *unk4C;
-    u16 animationFrameIndex;
-    s16 animationFrameDuration;
-    s16 animationSet;
-    s16 animationFrame;
-    s16 unk58;
-    s16 unk5A;
-    s32 unk5C;
-    s32 unk60;
-    s32 firstPolygonIndex;
-    s16 unk68;
-    s16 unk6A;
-    u8 unk6C;
-    s8 unk6D;
-    s16 unk6E;
-    s32 unk70;
-    s32 unk74;
-    s32 unk78;
-    u16 unk7C;
-    u16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s8 unk84;
-    s8 unk85;
-    s16 unk86;
-    s32 unk88;
-    u16 unk8C;
-    u16 unk8E;
-    s32 unk90;
-    u8 unk94;
-    u8 unk95;
-    s16 unk96;
-    s32 unk98;
-    s32 unk9C;
-    s32 unkA0;
-    s32 unkA4;
-    s32 unkA8;
-    s32 unkAC;
-    s32 unkB0;
-    s32 unkB4;
-    u16 unkB8;
-    u8 unkBA;
-    u8 unkBB;
-} Entity;
+typedef union {
+    s16 data;
+    struct {
+        u8 unk0;
+        u8 unk1;
+    } data1;
+} UnkUnion2; // size = 0x2
 
 typedef struct {
-    char unk0[0xA];
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-} Unkstruct4;
+    /* 0x00 */ Unkunion1 posX;
+    /* 0x04 */ Unkunion1 posY;
+    /* 0x08 */ s32 accelerationX;
+    /* 0x0C */ s32 accelerationY;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ u16 unk14;
+    /* 0x16 */ s16 palette;
+    /* 0x18 */ s8 unk18;
+    /* 0x19 */ s8 unk19;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ s16 unk1C;
+    /* 0x1E */ s16 unk1E;
+    /* 0x20 */ s16 unk20;
+    /* 0x22 */ s16 unk22;
+    /* 0x24 */ u16 zPriority;
+    /* 0x26 */ u16 objectId;
+    /* 0x28 */ PfnEntityUpdate pfnUpdate;
+    /* 0x2C */ u16 initState;
+    /* 0x2E */ s16 unk2E;
+    /* 0x30 */ u16 subId;
+    /* 0x32 */ u16 unk32;
+    /* 0x34 */ s32 unk34;
+    /* 0x38 */ s16 unk38;
+    /* 0x3A */ s16 unk3A;
+    /* 0x3C */ s16 unk3C;
+    /* 0x3E */ s16 unk3E;
+    /* 0x40 */ s16 unk40;
+    /* 0x42 */ s16 unk42;
+    /* 0x44 */ u16 unk44;
+    /* 0x46 */ u8 hitboxWidth;
+    /* 0x47 */ u8 hitboxHeight;
+    /* 0x48 */ u8 unk48;
+    /* 0x49 */ u8 unk49;
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ s32 *unk4C;
+    /* 0x50 */ u16 animationFrameIndex;
+    /* 0x52 */ s16 animationFrameDuration;
+    /* 0x54 */ s16 animationSet;
+    /* 0x56 */ s16 animationFrame;
+    /* 0x58 */ s16 unk58;
+    /* 0x5A */ s16 unk5A;
+    /* 0x5C */ s32 unk5C;
+    /* 0x60 */ s32 unk60;
+    /* 0x64 */ s32 firstPolygonIndex;
+    /* 0x68 */ s16 unk68;
+    /* 0x6A */ s16 unk6A;
+    /* 0x6C */ u8 unk6C;
+    /* 0x6D */ s8 unk6D;
+    /* 0x6E */ s16 unk6E;
+    /* 0x70 */ s32 unk70;
+    /* 0x74 */ s32 unk74;
+    /* 0x78 */ s32 unk78;
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s8 unk84;
+    /* 0x85 */ s8 unk85;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ u16 unk8C;
+    /* 0x8E */ u16 unk8E;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ u8 unk94;
+    /* 0x95 */ u8 unk95;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ s32 unkA4;
+    /* 0xA8 */ s32 unkA8;
+    /* 0xAC */ s32 unkAC;
+    /* 0xB0 */ s32 unkB0;
+    /* 0xB4 */ s32 unkB4;
+    /* 0xB8 */ u16 unkB8;
+    /* 0xBA */ u8 unkBA;
+    /* 0xBB */ u8 unkBB;
+} Entity; // size = 0xBC
 
 typedef struct {
-    u16 posX;
-    u16 posY;
-    u16 flags;
-    u16 unk6;
-    u16 unk8;
-} ObjectInit;
+    /* 0x0 */ char pad0[0xA];
+    /* 0xA */ s16 unkA;
+    /* 0xC */ s16 unkC;
+    /* 0xE */ s16 unkE;
+} Unkstruct4; // size = 0x10
 
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-    s16 unkA;
-    u16 unkC;
-    s16 unkE;
-    s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    s16 unk1C;
-    s16 unk1E;
-    s16 unk20;
-    u8 hitboxWidth;
-    u8 hitboxHeight;
-    s32 unk24;
-} Unkstruct5;
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 flags;
+    /* 0x6 */ u16 unk6;
+    /* 0x8 */ u16 unk8;
+} ObjectInit; // size = 0xA
 
 typedef struct {
-    s16 x;
-    s16 y;
-} Unkstruct6;
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ u16 unk4;
+    /* 0x06 */ u16 unk6;
+    /* 0x08 */ u16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ s16 unk1C;
+    /* 0x1E */ s16 unk1E;
+    /* 0x20 */ s16 unk20;
+    /* 0x22 */ u8 hitboxWidth;
+    /* 0x23 */ u8 hitboxHeight;
+    /* 0x24 */ s32 unk24;
+} Unkstruct5; // size = 0x28
 
 typedef struct {
-    s32 sp10;
-    s32 sp14;
-    s32 sp18;
-    s32 sp1C;
-    s32 sp20;
-    s16 sp24;
-    s16 sp26;
-    s16 sp28;
-    s16 sp2A;
-    s32 sp2C;
-    s32 sp30;
-} Unkstruct7;
+    /* 0x0 */ s16 x;
+    /* 0x2 */ s16 y;
+} Unkstruct6; // size = 0x4
 
 typedef struct {
-    void *addr1;
-    void *addr2;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-} Unkstruct8;
+    /* 0x00 */ s32 sp10;
+    /* 0x04 */ s32 sp14;
+    /* 0x08 */ s32 sp18;
+    /* 0x0C */ s32 sp1C;
+    /* 0x10 */ s32 sp20;
+    /* 0x14 */ s16 sp24;
+    /* 0x18 */ s16 sp26;
+    /* 0x1C */ s16 sp28;
+    /* 0x20 */ s16 sp2A;
+    /* 0x24 */ s32 sp2C;
+    /* 0x28 */ s32 sp30;
+} Unkstruct7; // size = 0x2C
 
 typedef struct {
-    u16 animationSet;
-    u16 zPriority;
-    u16 unk4;
-    u16 palette;
-    u8 unk8;
-    u8 unk9;
-    u8 unkA;
-    u8 unkB;
-    u32 unkC;
-    u8 *unk10;
-} ObjInit2;
+    /* 0x0 */ void *addr1;
+    /* 0x4 */ void *addr2;
+    /* 0x8 */ u16 unk8;
+    /* 0xA */ u16 unkA;
+    /* 0xC */ u16 unkC;
+    /* 0xE */ u16 unkE;
+} Unkstruct8; // size = 0x10
 
 typedef struct {
-    u16 programId;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-} Unkstruct10;
+    /* 0x00 */ u16 animationSet;
+    /* 0x02 */ u16 zPriority;
+    /* 0x04 */ UnkUnion2 unk4;
+    /* 0x06 */ u16 palette;
+    /* 0x08 */ u8 unk8;
+    /* 0x09 */ u8 unk9;
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u8 *unk10;
+} ObjInit2; // size = 0x14
+
+typedef struct {
+    /* 0x0 */ u16 programId;
+    /* 0x2 */ u16 unk2;
+    /* 0x4 */ u16 unk4;
+    /* 0x6 */ u16 unk6;
+    /* 0x8 */ u16 unk8;
+} Unkstruct10; // size = 0xA
 
 // main
 extern Unkstruct5 *D_8003C704;
