@@ -2,6 +2,7 @@
 
 void SpawnExplosionEntity(u16, Entity *);
 void ReplaceCandleWithDrop(Entity *);
+int func_801CD658();
 
 extern u16 D_80180A3C[];
 extern u8 *D_80180E28[];
@@ -16,7 +17,7 @@ extern s32 D_80180C10;
 
 void func_801B246C(Entity *arg0) {
     s32 temp_v0;
-    ObjInit3 *temp_s0 = (arg0->subId * 5) + &D_80180C10;
+    ObjInit3 *temp_s0 = (ObjInit3*)((arg0->subId * 5) + &D_80180C10);
 
     if (arg0->initState == 0) {
         InitializeEntity(&D_80180A90);

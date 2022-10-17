@@ -215,20 +215,20 @@ typedef struct {
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u32 unkC;
     /* 0x10 */ u8 *unk10;
-} ObjInit2; // size = 0x11
+} ObjInit2; // size = 0x14
 
 typedef struct {
-    /* 0x0 */ s16 animationSet;
-    /* 0x2 */ s16 zPriority;
+    /* 0x0 */ u16 animationSet;
+    /* 0x2 */ u16 zPriority;
     /* 0x4 */ u8 unk4;
     /* 0x5 */ u8 unk5;
     /* 0x6 */ u16 palette;
-    /* 0x8 */ s8 unk8;
+    /* 0x8 */ u8 unk8;
     /* 0x9 */ u8 unk9;
     /* 0xA */ s8 unkA;
-    /* 0xB */ s32 unkC;
-    /* 0xF */ s32 unk10;
-} ObjInit3; // size = 0x13
+    /* 0xB */ u32 unkC;
+    /* 0xF */ u8 *unk10;
+} ObjInit3; // size = 0x14
 
 typedef struct {
     u16 programId;
