@@ -8,6 +8,10 @@
     },
     "files.associations": {
         "main.h": "c",
-        "stage.h": "c"
+        "stage.h": "c",
+        "cmath": "c",
+        "limits": "c",
+        "*.tcc": "c",
+        "type_traits": "c"
     },
 }
