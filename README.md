@@ -1,6 +1,6 @@
 # Castlevania: Symphony of the Night disassembly
 
-the goal of this project is to create a full decompilation in C, that compiles the same binaries as the commercial video game Castlevania: Symphony of the Night for PS1.
+Creates a full decompilation in C, that compiles the same binaries as the commercial video game Castlevania: Symphony of the Night for PS1.
 
 The game is divided in three modules:
 `SLUS_000.67` is the game engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
@@ -26,49 +26,49 @@ All the files refers to the `SLUS-00067` version of the game.
 | `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-pages/assets/progress-rwrp.json)
 
 
-## How to
-* setup the project (assuming linux ubuntu/debian or windows with WSL)
-  * `sudo apt-get install gcc-mipsel-linux-gnu binutils-mips-linux-gnu`
-  * `pip install spimdisasm tqdm intervaltree`
-  * inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
-  * `git submodule update --init`
-  * inside the newly created repo, create a new `iso/` folder, and extract the content of the game disc
+## How to setup the project (assuming linux ubuntu/debian or windows with WSL)
+ * `sudo apt-get install gcc-mipsel-linux-gnu binutils-mips-linux-gnu`
+ * `pip install spimdisasm tqdm intervaltree`
+ * Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
+ * `git submodule update --init`
+ * Inside the newly created repo, create a new `iso/` folder, and extract the content of the game disc
 
-* build
-  * run `make extract` to generate the assembly files in the `asm/` directory
-  * run `make all` to compile the binaries in the `build/` directory
+## How to build
+ * Run `make extract` to generate the assembly files in the `asm/` directory
+ * Run `make all` to compile the binaries in the `build/` directory
 you don’t need to use it now but note that `make clean` deletes the build directory
 Some non-matching functions are present in the source preprocessed by the macro `NON_MATCHING`. You can still compile the game binaries by running `CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
 
-* decompile
-  * after setup and build, choose an overlay (eg. `ST/WRP`)
-  * Look for one of those function which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
-  * Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
-  * Run `SOURCE=src/st/wrp/6FD0.c make ctx.c` then `ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code into ctx.c.m2c
-Replace the `INCLUDE_ASM(...);` you targeted with the content of `ctx.c.m2c` and tweak the code with `asm-differ`
+## How to decompile
+* After setup and build, choose an overlay (eg. `ST/WRP`)
+* Look for one of those function which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
+* Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
+* Run `SOURCE=src/st/wrp/6FD0.c make ctx.c` then `ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code into ctx.c.m2c
+* Replace the `INCLUDE_ASM(...);` you targeted with the content of `ctx.c.m2c`
+* run `mkdir expected && cp -r build expected/` and invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0`
 You will probably have some differences from your compiled code to the original; keep refactoring the code and move variables around until you have a 100% match.
 
 There are a few tricks to make the process more streamlined:
 * Use [decomp.me](https://decomp.me/) with GCC 2.7.2 for PS1. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
-* the “context” section of decomp.me, is provided by the cmd `SOURCE=src/st/wrp/6FD0.c make ctx.c` as mentionned in the how to decompile.
+* The “context” section of decomp.me, is provided by the cmd `SOURCE=src/st/wrp/6FD0.c make ctx.c` as mentionned in the how to decompile.
 * Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches
 * Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work
 * Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it
 
 
-## Ressources:
-* list of ressource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but very useful still). eg: 
-  * PS1’s CPU R3000 instruction [manual](https://cgi.cse.unsw.edu.au/~cs3231/doc/R3000.pdf) and [cheat sheet](https://vhouten.home.xs4all.nl/mipsel/r3000-isa.html)
-  * https://github.com/KernelEquinox/SNEER
-  * Debugging Emulator: https://github.com/grumpycoders/pcsx-redux
-  * Debugging Emulator with Register Breakpoints: https://www.romhacking.net/utilities/267/
-* beginner friendly MIPS video lectures [1](https://www.youtube.com/watch?v=PlavjNH_RRU&list=PLylNWPMX1lPlmEeeMdbEFQo20eHAJL8hx) and [2](https://www.youtube.com/watch?v=qzSdglU0SBc&list=PLylNWPMX1lPnipZzKdCWRj2-un5xvLLdK)
+## Resources:
+* List of ressource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but very useful still). 
+* PS1’s CPU R3000 instruction [manual](https://cgi.cse.unsw.edu.au/~cs3231/doc/R3000.pdf) and [cheat sheet](https://vhouten.home.xs4all.nl/mipsel/r3000-isa.html)
+* https://github.com/KernelEquinox/SNEER
+* Debugging Emulator: https://github.com/grumpycoders/pcsx-redux
+* Debugging Emulator with Register Breakpoints: https://www.romhacking.net/utilities/267/
+* Beginner friendly MIPS video lectures [1](https://www.youtube.com/watch?v=PlavjNH_RRU&list=PLylNWPMX1lPlmEeeMdbEFQo20eHAJL8hx) and [2](https://www.youtube.com/watch?v=qzSdglU0SBc&list=PLylNWPMX1lPnipZzKdCWRj2-un5xvLLdK)
 
 
 ## To do:
 The project is very barebone at the moment and there is a massive room of improvement, mostly in the infrastructure:
 * Not all the zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are disassembled
-* integrate ASPSX instead of GNU AS
+* Integrate ASPSX instead of GNU AS
 * Split binary data (eg. map layout, graphics, other assets) into individual files
 
 
