@@ -333,7 +333,7 @@ void DestroyEntity(Entity *item) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = (u32*)item;
+    ptr = (u32 *)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -447,7 +447,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C3B8->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
     D_8006C3B8->unk3E = temp_v0->unk4;
     D_8006C3B8->unk40 = temp_v0->unk6;
     D_8006C3B8->unk42 = temp_v0->unk8;
@@ -732,7 +732,7 @@ POLY_GT4 *func_801D6E64(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4*)poly->tag;
+        poly = (POLY_GT4 *)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
