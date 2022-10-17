@@ -5,6 +5,8 @@ void ReplaceCandleWithDrop(Entity *);
 int func_801CD658();
 
 extern u16 D_80180A3C[];
+extern u16 D_80180A90[];
+extern ObjInit2 D_80180C10[];
 extern u8 *D_80180E28[];
 extern u8 D_80180E48[];
 extern u8 D_80180E50[];
@@ -12,15 +14,13 @@ extern u16 D_80180E58[];
 extern u8 D_80180E68[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
-extern u16 D_80180A90;
-extern s32 D_80180C10;
 
 void func_801B246C(Entity *arg0) {
     s32 temp_v0;
-    ObjInit2 *temp_s0 = (ObjInit2 *)((arg0->subId * 5) + &D_80180C10);
+    ObjInit2 *temp_s0 = &D_80180C10[arg0->subId];
 
     if (arg0->initState == 0) {
-        InitializeEntity(&D_80180A90);
+        InitializeEntity(D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
         arg0->unk14 = temp_s0->unk4.data1.unk0;

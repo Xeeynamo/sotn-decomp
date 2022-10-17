@@ -3,6 +3,8 @@
 extern ObjectInit *g_pStObjLayout[];
 extern u8 *D_80180850;
 extern u16 D_80180AAC[];
+extern u16 D_80180B00[];
+extern ObjInit2 D_80180BFC[];
 extern u8 *D_80180E50[];
 extern u8 D_80180E70[];
 extern u8 D_80180E78[];
@@ -21,7 +23,27 @@ void ReplaceCandleWithDrop(Entity *);
 void EntityCandleDrop(Entity *);
 void EntityCandleHeartDrop(Entity *);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B77D4);
+void func_801B77D4(Entity *arg0) {
+    s32 temp_v0;
+    ObjInit2 *temp_s0 = &D_80180BFC[arg0->subId];
+
+    if (arg0->initState == 0) {
+        InitializeEntity(D_80180B00);
+        arg0->animationSet = temp_s0->animationSet;
+        arg0->zPriority = temp_s0->zPriority;
+        arg0->unk14 = temp_s0->unk4.data1.unk0;
+        arg0->unk5A = temp_s0->unk4.data1.unk1;
+        arg0->palette = temp_s0->palette;
+        arg0->unk19 = temp_s0->unk8;
+        arg0->unk18 = temp_s0->unkA;
+        temp_v0 = temp_s0->unkC;
+        if (temp_v0 != 0) {
+            arg0->unk34 = temp_v0;
+        }
+    }
+
+    AnimateEntity(temp_s0->unk10, arg0);
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 
@@ -305,9 +327,18 @@ void LoadObjLayout(s32 objLayoutId) {
 }
 #endif
 
+<<<<<<< HEAD
 // TODO: try after resolving aspsx
 // https://decomp.me/scratch/cJ3CF
 #ifndef NON_MATCHING
+=======
+<<<<<<< HEAD
+#ifndef NON_MATCHING // TODO: try after resolving aspsx
+    INCLUDE_ASM("asm/st/no3/nonmatchings/377D4",
+                func_801C3E10); // https://decomp.me/scratch/cJ3CF
+#else
+=======
+>>>>>>> 21ec420318e77aca379a1c1e4dfddd776fe05413
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
 #else
 void func_801C3E10(void) {
