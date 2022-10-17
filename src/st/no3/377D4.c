@@ -305,9 +305,17 @@ void LoadObjLayout(s32 objLayoutId) {
 }
 #endif
 
+<<<<<<< HEAD
 #ifndef NON_MATCHING // TODO: try after resolving aspsx
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10); // https://decomp.me/scratch/cJ3CF
 #else
+=======
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
+
+// TODO: on hold until aspsx pr gets through
+
+/*
+>>>>>>> 0ac505d8d57f497e726eda1dc5949d886af8cc08
 void func_801C3E10(void) {
     s32 temp_v0;
     s32 temp_v0_2;
@@ -330,9 +338,9 @@ void func_801C3E10(void) {
             func_801C3A88( (temp + 0x120));
         } else {
         func_801C3B84((s16) (temp - 0x40));
-            
+
         }
-            
+
     }
 }
 #endif
