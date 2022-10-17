@@ -327,7 +327,37 @@ void LoadObjLayout(s32 objLayoutId) {
 }
 #endif
 
+// TODO: try after resolving aspsx
+// https://decomp.me/scratch/cJ3CF
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3E10);
+#else
+void func_801C3E10(void) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s16 temp_a0;
+    Unkstruct8 *temp_a0_2 = &g_CurrentRoomTileLayout;
+
+    temp_v0 = D_80097908;
+    if (temp_v0 != 0) {
+        temp_a0 = D_8007308E;
+        if (temp_v0 > 0) {
+            func_801C37D4((s16)(D_8007308E + 0x140));
+        } else {
+            func_801C38D0((s16)(temp_a0 - 0x40));
+        }
+    }
+    temp_v0_2 = D_8009790C;
+    if (D_8009790C != 0) {
+        s16 temp = temp_a0_2->unkE;
+        if (D_8009790C > 0) {
+            func_801C3A88((temp + 0x120));
+        } else {
+            func_801C3B84((s16)(temp - 0x40));
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", SpawnExplosionEntity);
 
