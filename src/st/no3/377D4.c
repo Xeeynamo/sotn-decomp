@@ -1,11 +1,11 @@
 #include "stage.h"
 
-extern ObjectInit *g_pStObjLayout[];
-extern u8 *D_80180850;
+extern ObjectInit* g_pStObjLayout[];
+extern u8* D_80180850;
 extern u16 D_80180AAC[];
 extern u16 D_80180B00[];
 extern ObjInit2 D_80180BFC[];
-extern u8 *D_80180E50[];
+extern u8* D_80180E50[];
 extern u8 D_80180E70[];
 extern u8 D_80180E78[];
 extern u16 D_80180E80[];
@@ -13,19 +13,19 @@ extern u8 D_80180E90[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_801820C4[];
 
-extern ObjectInit *D_801D7110;
-extern ObjectInit *D_801D7114;
+extern ObjectInit* D_801D7110;
+extern ObjectInit* D_801D7114;
 extern s8 D_801D7118;
 extern s8 D_801D711C;
 
-void SpawnExplosionEntity(u16, Entity *);
-void ReplaceCandleWithDrop(Entity *);
-void EntityCandleDrop(Entity *);
-void EntityCandleHeartDrop(Entity *);
+void SpawnExplosionEntity(u16, Entity*);
+void ReplaceCandleWithDrop(Entity*);
+void EntityCandleDrop(Entity*);
+void EntityCandleHeartDrop(Entity*);
 
-void func_801B77D4(Entity *arg0) {
+void func_801B77D4(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2 *temp_s0 = &D_80180BFC[arg0->subId];
+    ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
 
     if (arg0->initState == 0) {
         InitializeEntity(D_80180B00);
@@ -50,12 +50,12 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandle);
 #else
-void EntityCandle(Entity *entity) {
+void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
         AnimateEntity(D_80180E50[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity *entityDropItem;
+            Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
                 AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
@@ -205,7 +205,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityDamage);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", CreateEntity);
 #else
-void CreateEntity(Entity *entity, ObjectInit *initDesc) {
+void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->flags & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
@@ -283,8 +283,8 @@ void LoadObjLayout(s32 objLayoutId) {
     s16 temp_s0;
     s16 var_a1_2;
     u16 temp_v1_2;
-    u16 *pObjLayoutStart;
-    Unkstruct8 *layout;
+    u16* pObjLayoutStart;
+    Unkstruct8* layout;
 
     pObjLayoutStart = g_pStObjLayout[objLayoutId];
     layout = &g_CurrentRoomTileLayout;
@@ -293,7 +293,7 @@ void LoadObjLayout(s32 objLayoutId) {
     if (*pObjLayoutStart != 0xFFFE) {
         s32 var_a0;
         s16 var_a1;
-        u16 *temp_v1;
+        u16* temp_v1;
 
         D_801D7110 = pObjLayoutStart + 1;
         var_a0 = Random() & 0xFF;
@@ -301,7 +301,7 @@ void LoadObjLayout(s32 objLayoutId) {
         for (var_a1 = 0;; var_a1++) {
             s32 temp_v0;
             temp_v1 = D_801D7110;
-            D_801D7110 = (u16 *)D_801D7110 + 1;
+            D_801D7110 = (u16*)D_801D7110 + 1;
             temp_v0 = var_a0 - temp_v1[0];
             var_a0 = temp_v0;
             if ((s16)temp_v0 < 0)
@@ -310,8 +310,8 @@ void LoadObjLayout(s32 objLayoutId) {
         }
 
         D_801D7110 = (temp_v1[2] << 0x10) + temp_v1[1];
-        D_801D7114 = (var_a1 * 2) + 2 + (u16 *)D_801D7114;
-        D_801D7114 = (((u16 *)D_801D7114)[1] << 0x10) + ((u16 *)D_801D7114)[0];
+        D_801D7114 = (var_a1 * 2) + 2 + (u16*)D_801D7114;
+        D_801D7114 = (((u16*)D_801D7114)[1] << 0x10) + ((u16*)D_801D7114)[0];
     }
 
     var_a1_2 = (s16)layout->unkA - 0x40;
@@ -333,7 +333,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", SpawnExplosionEntity);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3F38);
 
-s32 func_801C3FB4(Unkstruct5 *arg0) {
+s32 func_801C3FB4(Unkstruct5* arg0) {
     s16 var_v0_2;
 
     var_v0_2 = (u16)D_800733DA - arg0->unk2;
@@ -351,22 +351,22 @@ s32 func_801C3FB4(Unkstruct5 *arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C402C);
 
-void DestroyEntity(Entity *item) {
+void DestroyEntity(Entity* item) {
     int i, length;
-    u32 *ptr;
+    u32* ptr;
 
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = (u32 *)item;
+    ptr = (u32*)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity *entity = &D_800733D8[index];
+    Entity* entity = &D_800733D8[index];
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;
@@ -407,8 +407,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5074);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C52EC);
 
-Entity *AllocEntity(Entity *start, Entity *end) {
-    Entity *current = start;
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
@@ -463,9 +463,9 @@ void func_801C58C4(u8 state) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C58E0);
 
-void InitializeEntity(u16 *arg0) {
+void InitializeEntity(u16* arg0) {
     u16 temp_v1;
-    Unkstruct5 *temp_v0;
+    Unkstruct5* temp_v0;
 
     D_8006C3B8->animationSet = *arg0++;
     D_8006C3B8->animationFrame = *arg0++;
@@ -473,7 +473,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C3B8->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
     D_8006C3B8->unk3E = temp_v0->unk4;
     D_8006C3B8->unk40 = temp_v0->unk6;
     D_8006C3B8->unk42 = temp_v0->unk8;
@@ -490,7 +490,7 @@ void InitializeEntity(u16 *arg0) {
     }
 }
 
-void func_801C5A70(Entity *arg0) {
+void func_801C5A70(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -506,7 +506,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5D18);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", ReplaceCandleWithDrop);
 #else
 extern u8 D_8009796E;
-void ReplaceCandleWithDrop(Entity *entity) {
+void ReplaceCandleWithDrop(Entity* entity) {
     u16 prevSubId;
     u16 subId;
     u16 newSubId;
@@ -583,7 +583,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8F8C);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C9080);
 
-bool func_801C92B0(Unkstruct6 *unk) {
+bool func_801C92B0(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
@@ -737,8 +737,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6DB8);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6DE8);
 
-POLY_GT4 *func_801D6E64(POLY_GT4 *startPoly, s32 count) {
-    POLY_GT4 *poly;
+POLY_GT4* func_801D6E64(POLY_GT4* startPoly, s32 count) {
+    POLY_GT4* poly;
     s8 unk;
     s32 i;
 
@@ -758,7 +758,7 @@ POLY_GT4 *func_801D6E64(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4 *)poly->tag;
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
@@ -767,44 +767,44 @@ POLY_GT4 *func_801D6E64(POLY_GT4 *startPoly, s32 count) {
     return poly;
 }
 
-void func_801D6EEC(POLY_GT4 *arg0) {
+void func_801D6EEC(POLY_GT4* arg0) {
     arg0->p1 = 0;
     arg0->p2 = 0;
     arg0->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y0 = 0;
-    ((POLY_GT4 *)arg0->tag)->x0 = 0;
-    ((POLY_GT4 *)arg0->tag)->clut = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u0 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u1 = 0;
-    ((POLY_GT4 *)arg0->tag)->tpage = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r2 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b2 = 0;
-    ((POLY_GT4 *)arg0->tag)->u2 = 0;
-    ((POLY_GT4 *)arg0->tag)->v2 = 0;
-    ((POLY_GT4 *)arg0->tag)->r3 = 0;
-    ((POLY_GT4 *)arg0->tag)->b3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x2 = 0;
-    ((POLY_GT4 *)arg0->tag)->y2 = 0;
+    ((POLY_GT4*)arg0->tag)->x1 = 0;
+    ((POLY_GT4*)arg0->tag)->y1 = 0;
+    ((POLY_GT4*)arg0->tag)->y0 = 0;
+    ((POLY_GT4*)arg0->tag)->x0 = 0;
+    ((POLY_GT4*)arg0->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u1 = 0;
+    ((POLY_GT4*)arg0->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b2 = 0;
+    ((POLY_GT4*)arg0->tag)->u2 = 0;
+    ((POLY_GT4*)arg0->tag)->v2 = 0;
+    ((POLY_GT4*)arg0->tag)->r3 = 0;
+    ((POLY_GT4*)arg0->tag)->b3 = 0;
+    ((POLY_GT4*)arg0->tag)->x2 = 0;
+    ((POLY_GT4*)arg0->tag)->y2 = 0;
 }
 
-void func_801D6FCC(POLY_GT4 *arg0) {
+void func_801D6FCC(POLY_GT4* arg0) {
     func_801D6EEC(arg0);
     arg0->p3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 1;
-    ((POLY_GT4 *)arg0->tag)->code = 2;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 0xA;
+    ((POLY_GT4*)arg0->tag)->p3 = 1;
+    ((POLY_GT4*)arg0->tag)->code = 2;
+    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
 }
 
-void func_801D7020(POLY_GT4 *arg0) {
+void func_801D7020(POLY_GT4* arg0) {
     arg0->p3 = 0;
     arg0->pad3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->code = 4;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->code = 4;
+    ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D704C);

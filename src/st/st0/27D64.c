@@ -4,17 +4,17 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
-void func_801B3BDC(u16 objectId, Entity *source, Entity *entity);
+void func_801B3BDC(u16 objectId, Entity* source, Entity* entity);
 s16 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
-void func_801B6B60(Entity *);
+void func_801B6B60(Entity*);
 
 extern u16 D_801805BC[];
 extern ObjInit2 D_80180638[];
-void func_801A7D64(Entity *arg0) {
+void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2 *temp_s0 = &D_80180638[arg0->subId];
+    ObjInit2* temp_s0 = &D_80180638[arg0->subId];
 
     if (arg0->initState == 0) {
         InitializeEntity(D_801805BC);
@@ -35,7 +35,7 @@ void func_801A7D64(Entity *arg0) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7E2C);
 #else
-bool func_801A7E2C(Entity *entity) {
+bool func_801A7E2C(Entity* entity) {
     s16 distance;
 
     distance = D_800733DA - entity->posX.Data.high;
@@ -60,11 +60,11 @@ extern u8 D_8018065C[];
 extern u8 D_80180660[];
 extern u16 D_80180664[];
 
-void EntityLockCamera(Entity *entity) {
+void EntityLockCamera(Entity* entity) {
     s32 temp_v0_2;
     s32 temp_v1;
-    u16 *temp_v1_2;
-    u16 *temp_v1_5;
+    u16* temp_v1_2;
+    u16* temp_v1_5;
     u8 temp_s1;
     u8 temp_v0;
     s32 phi_v1;
@@ -143,32 +143,32 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscene);
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntitySecretButton);
 
 extern u16 D_80180628[];
-void EntitySecretStairsEmitter(Entity *entity) {
+void EntitySecretStairsEmitter(Entity* entity) {
     switch (entity->initState) {
-    case 0:
-        InitializeEntity(D_80180628);
-        entity->animationFrame = 3;
-        entity->zPriority += 2;
-        if (g_isSecretStairsButtonPressed) {
+        case 0:
+            InitializeEntity(D_80180628);
+            entity->animationFrame = 3;
+            entity->zPriority += 2;
+            if (g_isSecretStairsButtonPressed) {
+                entity->animationFrame = 0;
+                entity->initState = 3;
+            }
+            break;
+        case 1:
+            if (g_isSecretStairsButtonPressed) {
+                g_pfnPlaySfx(0x644);
+                entity->initState++;
+            }
+            break;
+        case 2:
+            entity->posY.value -= 0x4000;
+            if (entity->posY.Data.high < -16) {
+                entity->initState++;
+            }
+            break;
+        case 3:
             entity->animationFrame = 0;
-            entity->initState = 3;
-        }
-        break;
-    case 1:
-        if (g_isSecretStairsButtonPressed) {
-            g_pfnPlaySfx(0x644);
-            entity->initState++;
-        }
-        break;
-    case 2:
-        entity->posY.value -= 0x4000;
-        if (entity->posY.Data.high < -16) {
-            entity->initState++;
-        }
-        break;
-    case 3:
-        entity->animationFrame = 0;
-        break;
+            break;
     }
 }
 
@@ -185,31 +185,31 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AC458);
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDracula);
 
 extern u16 D_801805E0[];
-void EntityDraculaBody(Entity *entity) {
+void EntityDraculaBody(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
         DestroyEntity(entity);
     }
 
     switch (entity->initState) {
-    case 0:
-        InitializeEntity(D_801805E0);
-        entity->unk3C = 1;
-        entity->unk3E = 0x7FFF;
-        entity->unk10 = 3;
-        entity->unk12 = 0x27;
-        entity->hitboxWidth = 12;
-        entity->animationFrame = 0;
-        entity->hitboxHeight = 34;
-        break;
-    case 1:
-        entity->unk14 = entity[-1].unk14;
-        entity->posX.Data.high = entity[-1].posX.Data.high;
-        entity->posY.Data.high = entity[-1].posY.Data.high;
-        entity->unk3C = entity[-1].unk3C & 0xFFFD;
-        break;
-    case 2:
-        entity->unk3C = 0;
-        break;
+        case 0:
+            InitializeEntity(D_801805E0);
+            entity->unk3C = 1;
+            entity->unk3E = 0x7FFF;
+            entity->unk10 = 3;
+            entity->unk12 = 0x27;
+            entity->hitboxWidth = 12;
+            entity->animationFrame = 0;
+            entity->hitboxHeight = 34;
+            break;
+        case 1:
+            entity->unk14 = entity[-1].unk14;
+            entity->posX.Data.high = entity[-1].posX.Data.high;
+            entity->posY.Data.high = entity[-1].posY.Data.high;
+            entity->unk3C = entity[-1].unk3C & 0xFFFD;
+            break;
+        case 2:
+            entity->unk3C = 0;
+            break;
     }
 
     if (g_isDraculaFirstFormDefeated) {
@@ -219,7 +219,7 @@ void EntityDraculaBody(Entity *entity) {
 
 extern u16 D_801805EC[];
 extern u8 D_8018097C[];
-void EntityDraculaFireball(Entity *entity) {
+void EntityDraculaFireball(Entity* entity) {
     u16 temp_v0;
 
     if (g_isDraculaFirstFormDefeated) {
@@ -234,34 +234,34 @@ void EntityDraculaFireball(Entity *entity) {
     }
 
     switch (entity->initState) {
-    case 0:
-        InitializeEntity(D_801805EC);
+        case 0:
+            InitializeEntity(D_801805EC);
 
-        if (entity->unk14 == 0) {
-            entity->accelerationX = -0x20000;
-        } else {
-            entity->accelerationX = 0x20000;
-        }
+            if (entity->unk14 == 0) {
+                entity->accelerationX = -0x20000;
+            } else {
+                entity->accelerationX = 0x20000;
+            }
 
-        if (entity->subId == 1) {
-            entity->accelerationY = -0x8000;
-        }
+            if (entity->subId == 1) {
+                entity->accelerationY = -0x8000;
+            }
 
-        if (entity->subId == 2) {
-            entity->accelerationY = 0x8000;
-        }
-        entity->unk8C = 0x28;
+            if (entity->subId == 2) {
+                entity->accelerationY = 0x8000;
+            }
+            entity->unk8C = 0x28;
 
-    case 1:
-        AnimateEntity(D_8018097C, entity);
-        MoveEntity();
-        temp_v0 = entity->unk8C - 1;
-        entity->unk8C = temp_v0;
+        case 1:
+            AnimateEntity(D_8018097C, entity);
+            MoveEntity();
+            temp_v0 = entity->unk8C - 1;
+            entity->unk8C = temp_v0;
 
-        if ((temp_v0 << 0x10) == 0) {
-            entity->accelerationY = 0;
-        }
-        return;
+            if ((temp_v0 << 0x10) == 0) {
+                entity->accelerationY = 0;
+            }
+            return;
     }
 }
 
@@ -274,7 +274,7 @@ extern u8 D_80180990[];
 extern u8 D_801809B0[];
 extern s16 D_80180A60[];
 extern s16 D_80180A62[];
-void EntityDraculaMeteorball(Entity *entity) {
+void EntityDraculaMeteorball(Entity* entity) {
     s32 speedX;
 
     if (g_isDraculaFirstFormDefeated) {
@@ -287,53 +287,53 @@ void EntityDraculaMeteorball(Entity *entity) {
     }
 
     switch (entity->initState) {
-    case 0:
-        InitializeEntity(D_801805F8);
-        entity->unk3C = 0;
-        entity->unk19 |= 4;
-        break;
-    case 1:
-        if (AnimateEntity(D_801809B0, entity) == 0) {
-            entity->unk3C = 1;
-            func_801B5794(2);
-        }
-        break;
-    case 2:
-        AnimateEntity(&D_80180990, entity);
-        MoveEntity();
-        entity->unk1E += 4;
-        speedX = 0x1000;
-        if (entity->subId != 0) {
-            speedX = 0xE00;
-        }
-
-        if (entity->unk14) {
-            entity->accelerationX += speedX;
-        } else {
-            entity->accelerationX -= speedX;
-        }
-
-        if ((D_8003C998 & 3) == 0) {
-            Entity *newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
-            if (newEntity != 0) {
-                s32 randomPosXYIndex;
-                func_801B3BDC(0x1E, entity, newEntity);
-                newEntity->zPriority = entity->zPriority + 1;
-                randomPosXYIndex = (Random() & 3) * 2;
-                newEntity->posX.Data.high =
-                    newEntity->posX.Data.high + D_80180A60[randomPosXYIndex];
-                newEntity->posY.Data.high =
-                    newEntity->posY.Data.high + D_80180A62[randomPosXYIndex];
+        case 0:
+            InitializeEntity(D_801805F8);
+            entity->unk3C = 0;
+            entity->unk19 |= 4;
+            break;
+        case 1:
+            if (AnimateEntity(D_801809B0, entity) == 0) {
+                entity->unk3C = 1;
+                func_801B5794(2);
             }
-        }
-        break;
+            break;
+        case 2:
+            AnimateEntity(&D_80180990, entity);
+            MoveEntity();
+            entity->unk1E += 4;
+            speedX = 0x1000;
+            if (entity->subId != 0) {
+                speedX = 0xE00;
+            }
+
+            if (entity->unk14) {
+                entity->accelerationX += speedX;
+            } else {
+                entity->accelerationX -= speedX;
+            }
+
+            if ((D_8003C998 & 3) == 0) {
+                Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
+                if (newEntity != 0) {
+                    s32 randomPosXYIndex;
+                    func_801B3BDC(0x1E, entity, newEntity);
+                    newEntity->zPriority = entity->zPriority + 1;
+                    randomPosXYIndex = (Random() & 3) * 2;
+                    newEntity->posX.Data.high = newEntity->posX.Data.high +
+                                                D_80180A60[randomPosXYIndex];
+                    newEntity->posY.Data.high = newEntity->posY.Data.high +
+                                                D_80180A62[randomPosXYIndex];
+                }
+            }
+            break;
     }
 }
 #endif
 
 extern u16 D_801805EC[];
 extern u8 D_801809E0[];
-void func_801AD838(Entity *entity) {
+void func_801AD838(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
         DestroyEntity(entity);
         return;
@@ -354,63 +354,63 @@ void func_801AD838(Entity *entity) {
 
 extern u16 D_801805EC[];
 extern u8 D_80180A40[];
-void EntityDraculaGlass(Entity *entity) {
+void EntityDraculaGlass(Entity* entity) {
     switch (entity->initState) {
-    case 0:
-        InitializeEntity(D_801805EC);
-        entity->animationFrame = 0x59;
-        entity->unk19 = 4;
-        entity->unk3C = 0;
-        entity->accelerationX = -0x10000;
-        entity->accelerationY = 0;
-        if (entity->subId) {
-            s16 radians;
-            s32 speed;
-            entity->animationFrame = 0x5C;
-            speed = (Random() & 0x1F) + 0x10;
-            radians = (Random() * 6) + 0x900;
-            entity->accelerationX = speed * rcos(radians);
-            entity->accelerationY = speed * rsin(radians);
-            func_801B5794(3);
-        }
-    case 1:
-        MoveEntity();
-        entity->unk1E += 0x20;
-        entity->accelerationY += 0x2000;
-        if (entity->posY.Data.high >= 205) {
-            g_pfnPlaySfx(0x68B);
-            entity->posY.Data.high = 204;
-            func_801B5794(2);
-        }
-        break;
-    case 2:
-        entity->unk19 = 0;
-        if (AnimateEntity(D_80180A40, entity) == 0) {
-            s32 i;
-            for (i = 0; i < 8; i++) {
-                Entity *glassShardEntity =
-                    AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
-                if (glassShardEntity != 0) {
-                    func_801B3BDC(31, entity, glassShardEntity);
-                    glassShardEntity->subId = 1;
-                }
+        case 0:
+            InitializeEntity(D_801805EC);
+            entity->animationFrame = 0x59;
+            entity->unk19 = 4;
+            entity->unk3C = 0;
+            entity->accelerationX = -0x10000;
+            entity->accelerationY = 0;
+            if (entity->subId) {
+                s16 radians;
+                s32 speed;
+                entity->animationFrame = 0x5C;
+                speed = (Random() & 0x1F) + 0x10;
+                radians = (Random() * 6) + 0x900;
+                entity->accelerationX = speed * rcos(radians);
+                entity->accelerationY = speed * rsin(radians);
+                func_801B5794(3);
             }
-            DestroyEntity(entity);
-        }
-        break;
-    case 3:
-        MoveEntity();
-        entity->accelerationY += 0x2000;
-        if (entity->posY.Data.high >= 205) {
-            DestroyEntity(entity);
-        }
-        break;
+        case 1:
+            MoveEntity();
+            entity->unk1E += 0x20;
+            entity->accelerationY += 0x2000;
+            if (entity->posY.Data.high >= 205) {
+                g_pfnPlaySfx(0x68B);
+                entity->posY.Data.high = 204;
+                func_801B5794(2);
+            }
+            break;
+        case 2:
+            entity->unk19 = 0;
+            if (AnimateEntity(D_80180A40, entity) == 0) {
+                s32 i;
+                for (i = 0; i < 8; i++) {
+                    Entity* glassShardEntity =
+                        AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                    if (glassShardEntity != 0) {
+                        func_801B3BDC(31, entity, glassShardEntity);
+                        glassShardEntity->subId = 1;
+                    }
+                }
+                DestroyEntity(entity);
+            }
+            break;
+        case 3:
+            MoveEntity();
+            entity->accelerationY += 0x2000;
+            if (entity->posY.Data.high >= 205) {
+                DestroyEntity(entity);
+            }
+            break;
     }
 }
 
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
-    Entity *entity = D_8006C3B8;
+    Entity* entity = D_8006C3B8;
     s16 temp_v1 = entity->posY.Data.high + arg0;
 
     if (temp_v1 >= unk) {
@@ -479,8 +479,8 @@ extern u16 D_801C2584[];
 
 void UpdateStageEntities(void) {
     s16 i;
-    Entity *entity;
-    s32 *unk;
+    Entity* entity;
+    s32* unk;
 
     for (i = 0; i < 0x20; i++) {
         if (D_801C2584[i]) {
@@ -596,7 +596,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3B68);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3BDC);
 #else
-void func_801B3BDC(u16 objectId, Entity *source, Entity *entity) {
+void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -605,7 +605,7 @@ void func_801B3BDC(u16 objectId, Entity *source, Entity *entity) {
 }
 #endif
 
-s32 func_801B3C58(Unkstruct5 *arg0) {
+s32 func_801B3C58(Unkstruct5* arg0) {
     s16 var_v0_2;
 
     var_v0_2 = (u16)D_800733DA - arg0->unk2;
@@ -623,15 +623,15 @@ s32 func_801B3C58(Unkstruct5 *arg0) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3CD0);
 
-void DestroyEntity(Entity *item) {
+void DestroyEntity(Entity* item) {
     int i, length;
-    u32 *ptr;
+    u32* ptr;
 
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = (u32 *)item;
+    ptr = (u32*)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -689,8 +689,8 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4FD4);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B51E4);
 
-Entity *AllocEntity(Entity *start, Entity *end) {
-    Entity *current = start;
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
@@ -775,13 +775,13 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6358);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6B60);
-void func_801B6B60(Entity *entity);
+void func_801B6B60(Entity* entity);
 #else
 extern u16 D_8018058C[];
 extern u32 D_80181D7C[];
 extern u16 D_80181E28[][2];
 
-void func_801B6B60(Entity *entity) {
+void func_801B6B60(Entity* entity) {
     if (entity->initState == 0) {
         u32 zPriority;
 
@@ -834,7 +834,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8014);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8108);
 
-bool func_801B8338(Unkstruct6 *unk) {
+bool func_801B8338(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
@@ -898,30 +898,30 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscenePhotographFire);
 extern u16 D_801805D4[];
 extern u8 D_801824CC[];
 
-void EntityCutscenePhotographFire(Entity *entity) {
+void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->initState) {
-    case 0:
-        InitializeEntity(D_801805D4);
-        entity->animationSet = 0x8007;
-        entity->unk5A = 0x57;
-        entity->palette = 0x8285;
-        entity->unk19 = 8;
-        entity->unk6C = 0x40;
-        entity->unk34 &= 0xF7FFFFFF;
-        if (entity->subId) {
-            entity->unk6C = 0x10;
-            entity->zPriority = 0x1FB;
-            entity->unk18 = 0x50;
-        } else {
-            entity->zPriority = 0x1FE;
-            entity->unk18 = 0x30;
-        }
-    case 1:
-        entity->posY.value -= 0x10000;
-        if (AnimateEntity(D_801824CC, entity) == 0) {
-            DestroyEntity(entity);
-        }
-        break;
+        case 0:
+            InitializeEntity(D_801805D4);
+            entity->animationSet = 0x8007;
+            entity->unk5A = 0x57;
+            entity->palette = 0x8285;
+            entity->unk19 = 8;
+            entity->unk6C = 0x40;
+            entity->unk34 &= 0xF7FFFFFF;
+            if (entity->subId) {
+                entity->unk6C = 0x10;
+                entity->zPriority = 0x1FB;
+                entity->unk18 = 0x50;
+            } else {
+                entity->zPriority = 0x1FE;
+                entity->unk18 = 0x30;
+            }
+        case 1:
+            entity->posY.value -= 0x10000;
+            if (AnimateEntity(D_801824CC, entity) == 0) {
+                DestroyEntity(entity);
+            }
+            break;
     }
 }
 #endif
@@ -936,8 +936,8 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD5F8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD628);
 
-POLY_GT4 *func_801BD6A4(POLY_GT4 *startPoly, s32 count) {
-    POLY_GT4 *poly;
+POLY_GT4* func_801BD6A4(POLY_GT4* startPoly, s32 count) {
+    POLY_GT4* poly;
     s8 unk;
     s32 i;
 
@@ -957,7 +957,7 @@ POLY_GT4 *func_801BD6A4(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4 *)poly->tag;
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
@@ -966,44 +966,44 @@ POLY_GT4 *func_801BD6A4(POLY_GT4 *startPoly, s32 count) {
     return poly;
 }
 
-void func_801BD72C(POLY_GT4 *arg0) {
+void func_801BD72C(POLY_GT4* arg0) {
     arg0->p1 = 0;
     arg0->p2 = 0;
     arg0->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y0 = 0;
-    ((POLY_GT4 *)arg0->tag)->x0 = 0;
-    ((POLY_GT4 *)arg0->tag)->clut = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u0 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u1 = 0;
-    ((POLY_GT4 *)arg0->tag)->tpage = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r2 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b2 = 0;
-    ((POLY_GT4 *)arg0->tag)->u2 = 0;
-    ((POLY_GT4 *)arg0->tag)->v2 = 0;
-    ((POLY_GT4 *)arg0->tag)->r3 = 0;
-    ((POLY_GT4 *)arg0->tag)->b3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x2 = 0;
-    ((POLY_GT4 *)arg0->tag)->y2 = 0;
+    ((POLY_GT4*)arg0->tag)->x1 = 0;
+    ((POLY_GT4*)arg0->tag)->y1 = 0;
+    ((POLY_GT4*)arg0->tag)->y0 = 0;
+    ((POLY_GT4*)arg0->tag)->x0 = 0;
+    ((POLY_GT4*)arg0->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u1 = 0;
+    ((POLY_GT4*)arg0->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b2 = 0;
+    ((POLY_GT4*)arg0->tag)->u2 = 0;
+    ((POLY_GT4*)arg0->tag)->v2 = 0;
+    ((POLY_GT4*)arg0->tag)->r3 = 0;
+    ((POLY_GT4*)arg0->tag)->b3 = 0;
+    ((POLY_GT4*)arg0->tag)->x2 = 0;
+    ((POLY_GT4*)arg0->tag)->y2 = 0;
 }
 
-void func_801BD80C(POLY_GT4 *arg0) {
+void func_801BD80C(POLY_GT4* arg0) {
     func_801BD72C(arg0);
     arg0->p3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 1;
-    ((POLY_GT4 *)arg0->tag)->code = 2;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 0xA;
+    ((POLY_GT4*)arg0->tag)->p3 = 1;
+    ((POLY_GT4*)arg0->tag)->code = 2;
+    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
 }
 
-void func_801BD860(POLY_GT4 *arg0) {
+void func_801BD860(POLY_GT4* arg0) {
     arg0->p3 = 0;
     arg0->pad3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->code = 4;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->code = 4;
+    ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD88C);
