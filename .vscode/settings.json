@@ -7,5 +7,7 @@
         "expected/**": true,
     },
     "files.associations": {
+        "main.h": "c",
+        "stage.h": "c"
     },
 }
