@@ -200,10 +200,11 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3618);
 
 void func_801C3730(s32 arg0) {
-    s32 a1 = 0xFFFE;
+    s32 a1 = ~1;
     arg0 = (s16)arg0;
+
 loop_1:
-    if (D_801D7110->posX == a1 || D_801D7110->posX < arg0) {
+    if ((D_801D7110->posX == a1) || (D_801D7110->posX < arg0)) {
         D_801D7110++;
         goto loop_1;
     }
@@ -211,9 +212,10 @@ loop_1:
 
 void func_801C377C(s32 arg0) {
     s32 a2, a3;
-    a3 = 0xFFFF;
+    a3 = ~0;
     arg0 = (s16)arg0;
-    a2 = 0xFFFE;
+    a2 = ~1;
+
 loop_1:
     if ((D_801D7110->posX == a3) ||
         ((arg0 < D_801D7110->posX) && (D_801D7110->posX != a2))) {
@@ -227,10 +229,11 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C37D4);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C38D0);
 
 void func_801C39E4(s32 arg0) {
-    s32 a1 = 0xFFFE;
+    s32 a1 = ~1;
     arg0 = (s16)arg0;
+
 loop_1:
-    if (D_801D7114->posY == a1 || D_801D7114->posY < arg0) {
+    if ((D_801D7114->posY == a1) || (D_801D7114->posY < arg0)) {
         D_801D7114++;
         goto loop_1;
     }
@@ -239,7 +242,8 @@ void func_801C3A30(s16 arg0) {
     while (true) {
         if (D_801D7114->posY == 0xFFFF)
             D_801D7114--;
-        else if (arg0 >= (s32)D_801D7114->posY || D_801D7114->posY == 0xFFFE)
+        else if ((arg0 >= (s32)D_801D7114->posY) ||
+                 (D_801D7114->posY == 0xFFFE))
             break;
         else
             D_801D7114--;
