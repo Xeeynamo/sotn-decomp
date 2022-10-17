@@ -1,7 +1,24 @@
 #include "common.h"
 #include "dra.h"
 
+int func_8015DBB0();
+void func_8015C93C();
+int func_8015C9CC();
+void func_8015CD98();
+void func_8015CA84();
+int func_8015CF08();
+int func_8015E380();
+void func_8015CDE0(s32);
+void func_801606BC(Entity *, s32, s32);
+
+extern s16 D_80072F16; // main.h?
+extern u16 D_80072F9A; // main.h?
+extern s32 D_801554B0;
 extern s32 D_801553BC;
+extern s32 D_801554C0;
+extern s32 D_801554C8;
+extern s32 D_801554D0;
+extern s32 D_80155670;
 extern /*?*/ s32 D_8015591C;
 extern /*?*/ s32 D_80155950;
 extern u8 D_80174FAC;
@@ -22,7 +39,7 @@ void func_80156C60(Entity *entity) {
         g_pfnFreePolygons(entity->firstPolygonIndex);
     }
 
-    ptr = entity;
+    ptr = (u32 *)entity;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -156,7 +173,7 @@ void func_8015C908(s32 unk0) {
     D_80073406 = 0;
 }
 
-void func_8015C920(s32 unk0) {
+void func_8015C920(s32 *unk0) {
     D_8006C3B8->unk4C = unk0;
     D_8006C3B8->animationFrameDuration = 0;
     D_8006C3B8->animationFrameIndex = 0;
@@ -231,7 +248,24 @@ void func_8015CC70(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CCC8);
+void func_8015CCC8(s32 arg0, s32 arg1) {
+    func_8015C908(2);
+    func_8015C920(&D_801554C0);
+    D_800733E0 = arg1;
+    D_800733E4 = 0;
+    if (arg0 == 1) {
+        D_80073424 = &D_801554B0;
+        D_80073406 = 4;
+    }
+    if (arg0 == 2) {
+        D_80073424 = &D_801554D0;
+        D_80073406 = 1;
+    }
+    if (arg0 == 3) {
+        D_80073424 = &D_801554C8;
+        D_80073406 = 4;
+    }
+}
 
 void func_8015CD98(s32 arg0) {
     D_800733E0 = arg0;
@@ -243,7 +277,19 @@ void func_8015CD98(s32 arg0) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CDE0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CE7C);
+void func_8015CE7C(void) {
+    if (D_80072F9A != 0) {
+        func_8015CDE0(0);
+    } else {
+        D_80072F64 = 0;
+        func_8015C908(0x19);
+        func_8015C920(&D_80155670);
+        func_8015CA84(0x24000);
+        D_80072F16 = 0x28;
+        D_800733E4 = 0;
+        func_801606BC(D_8006C3B8, 0x50001, 0);
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CF08);
 

@@ -47,7 +47,7 @@ void func_80186FD0(Entity *arg0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4;
+        arg0->unk5A = objInit->unk4.data;
         arg0->palette = objInit->palette;
         arg0->unk19 = objInit->unk8;
         arg0->unk18 = objInit->unkA;
@@ -332,8 +332,8 @@ void func_8018A118(s32 arg0) {
     arg0 = (s16)arg0;
     a2 = 0xFFFE;
 loop_1:
-    if (D_80193AB0->posX == a3 ||
-        (arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2)) {
+    if ((D_80193AB0->posX == a3) ||
+        ((arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
         D_80193AB0--;
         goto loop_1;
     }
@@ -355,11 +355,11 @@ loop_1:
     }
 }
 
-void func_8018A3CC(s32 arg0) {
+void func_8018A3CC(s16 arg0) {
     while (true) {
         if (D_80193AB4->posY == 0xFFFF)
             D_80193AB4--;
-        else if ((s16)arg0 >= D_80193AB4->posY || D_80193AB4->posY == 0xFFFE)
+        else if (arg0 >= (s32)D_80193AB4->posY || D_80193AB4->posY == 0xFFFE)
             break;
         else
             D_80193AB4--;
@@ -519,7 +519,7 @@ void DestroyEntity(Entity *item) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = item;
+    ptr = (u32 *)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -695,7 +695,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity = D_8006C3B8;
     entity->unk19 = 0;
     entity->objectId = EntityExplosionID;
-    entity->pfnUpdate = func_8018D894;
+    entity->pfnUpdate = (PfnEntityUpdate)func_8018D894;
     entity->subId = arg0;
     entity->animationFrame = 0;
     D_8006C3B8->initState = 0;
@@ -712,7 +712,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C3B8->unk3A = temp_v1;
-    temp_v0 = temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808;
+    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
     D_8006C3B8->unk3E = temp_v0->unk4;
     D_8006C3B8->unk40 = temp_v0->unk6;
     D_8006C3B8->unk42 = temp_v0->unk8;
@@ -1159,7 +1159,7 @@ void func_80192E54(Entity *arg0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4;
+        arg0->unk5A = objInit->unk4.data;
         arg0->palette = objInit->palette;
         arg0->unk19 = objInit->unk8;
         arg0->unk18 = objInit->unkA;
@@ -1187,7 +1187,7 @@ POLY_GT4 *func_801937A8(POLY_GT4 *poly) {
     while (poly) {
         if (poly->p3 == 0)
             return poly;
-        poly = poly->tag;
+        poly = (POLY_GT4 *)poly->tag;
     }
     return NULL;
 }
@@ -1238,7 +1238,7 @@ POLY_GT4 *func_80193854(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = poly->tag;
+        poly = (POLY_GT4 *)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;

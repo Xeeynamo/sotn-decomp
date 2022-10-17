@@ -200,10 +200,11 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3618);
 
 void func_801C3730(s32 arg0) {
-    s32 a1 = 0xFFFE;
+    s32 a1 = ~1;
     arg0 = (s16)arg0;
+
 loop_1:
-    if (D_801D7110->posX == a1 || D_801D7110->posX < arg0) {
+    if ((D_801D7110->posX == a1) || (D_801D7110->posX < arg0)) {
         D_801D7110++;
         goto loop_1;
     }
@@ -211,12 +212,13 @@ loop_1:
 
 void func_801C377C(s32 arg0) {
     s32 a2, a3;
-    a3 = 0xFFFF;
+    a3 = ~0;
     arg0 = (s16)arg0;
-    a2 = 0xFFFE;
+    a2 = ~1;
+
 loop_1:
-    if (D_801D7110->posX == a3 ||
-        (arg0 < D_801D7110->posX) && (D_801D7110->posX != a2)) {
+    if ((D_801D7110->posX == a3) ||
+        ((arg0 < D_801D7110->posX) && (D_801D7110->posX != a2))) {
         D_801D7110--;
         goto loop_1;
     }
@@ -227,19 +229,21 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C37D4);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C38D0);
 
 void func_801C39E4(s32 arg0) {
-    s32 a1 = 0xFFFE;
+    s32 a1 = ~1;
     arg0 = (s16)arg0;
+
 loop_1:
-    if (D_801D7114->posY == a1 || D_801D7114->posY < arg0) {
+    if ((D_801D7114->posY == a1) || (D_801D7114->posY < arg0)) {
         D_801D7114++;
         goto loop_1;
     }
 }
-void func_801C3A30(s32 arg0) {
+void func_801C3A30(s16 arg0) {
     while (true) {
         if (D_801D7114->posY == 0xFFFF)
             D_801D7114--;
-        else if ((s16)arg0 >= D_801D7114->posY || D_801D7114->posY == 0xFFFE)
+        else if ((arg0 >= (s32)D_801D7114->posY) ||
+                 (D_801D7114->posY == 0xFFFE))
             break;
         else
             D_801D7114--;
@@ -365,7 +369,7 @@ void DestroyEntity(Entity *item) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = item;
+    ptr = (u32 *)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -479,7 +483,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C3B8->unk3A = temp_v1;
-    temp_v0 = temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808;
+    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
     D_8006C3B8->unk3E = temp_v0->unk4;
     D_8006C3B8->unk40 = temp_v0->unk6;
     D_8006C3B8->unk42 = temp_v0->unk8;
@@ -764,7 +768,7 @@ POLY_GT4 *func_801D6E64(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = poly->tag;
+        poly = (POLY_GT4 *)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
