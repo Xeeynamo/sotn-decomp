@@ -47,7 +47,7 @@ void func_80186FD0(Entity *arg0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4;
+        arg0->unk5A = objInit->unk4.data;
         arg0->palette = objInit->palette;
         arg0->unk19 = objInit->unk8;
         arg0->unk18 = objInit->unkA;
@@ -1159,7 +1159,7 @@ void func_80192E54(Entity *arg0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4;
+        arg0->unk5A = objInit->unk4.data;
         arg0->palette = objInit->palette;
         arg0->unk19 = objInit->unk8;
         arg0->unk18 = objInit->unkA;
