@@ -529,7 +529,7 @@ void DestroyEntity(Entity *item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity *entity = &D_800733D8[index];
-    
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;
