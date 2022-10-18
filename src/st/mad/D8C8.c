@@ -2,10 +2,10 @@
 
 // OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
-extern void (*D_8003C6B8)(s32, s32, Unkstruct7 *, s32);
+extern void (*D_8003C6B8)(s32, s32, Unkstruct7*, s32);
 extern void (*D_8003C6D8)(s32);
 extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
-extern Entity *D_8006C26C;
+extern Entity* D_8006C26C;
 extern u16 D_80072B3E;
 extern s16 D_80072B42;
 extern u16 D_80072B58;
@@ -14,7 +14,7 @@ extern s16 D_80072E8E;
 extern Entity D_80072E88[];
 extern Entity D_8007D308[];
 extern Entity D_8007E9CC;
-extern void *D_8007EA88;
+extern void* D_8007EA88;
 extern u16 D_80096EB8;
 extern s32 D_80096EC0;
 extern s32 D_80096EC4;
@@ -30,19 +30,19 @@ extern POLY_GT4 D_800973B8[];
 
 // ST/MAD
 extern u16 D_801804F0[];
-extern u8 *D_80180644[];
+extern u8* D_80180644[];
 extern u8 D_80180664[];
 extern u8 D_8018066C[];
 extern u16 D_80180674[];
 extern u8 D_80180684[];
 extern s16 D_801809EC[];
 extern RoomHeader g_rooms[];
-extern ObjectInit *g_pStObjLayout[];
-extern ObjectInit **D_801803C8[];
+extern ObjectInit* g_pStObjLayout[];
+extern ObjectInit** D_801803C8[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
-extern ObjectInit *D_801997D8;
-extern ObjectInit *D_801997DC;
+extern ObjectInit* D_801997D8;
+extern ObjectInit* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
 
@@ -50,12 +50,12 @@ void func_801908DC(s16);
 void func_801909D8(s16);
 void func_80190B7C(s16);
 void func_80190C78(s16);
-void SpawnExplosionEntity(u16, Entity *);
+void SpawnExplosionEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
-void ReplaceCandleWithDrop(Entity *);
-void EntityCandleDrop(Entity *);
-void EntityCandleHeartDrop(Entity *);
-void func_80194218(Entity *);
+void ReplaceCandleWithDrop(Entity*);
+void EntityCandleDrop(Entity*);
+void EntityCandleHeartDrop(Entity*);
+void func_80194218(Entity*);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
@@ -69,18 +69,18 @@ void func_8018DF0C(s32 arg0, s32 arg1) {
     s32 phi_v1;
     s16 phi_a2;
     s32 phi_a3;
-    s16 *phi_t0;
+    s16* phi_t0;
     s32 phi_a3_2;
-    s16 *phi_a2_2;
+    s16* phi_a2_2;
     s32 phi_v1_2;
     s32 phi_a3_3;
-    s16 *phi_a2_3;
+    s16* phi_a2_3;
     s32 phi_v1_3;
     s32 phi_a3_4;
-    s16 *phi_a2_4;
+    s16* phi_a2_4;
     s32 phi_v1_4;
     s32 phi_a3_5;
-    s16 *phi_a1;
+    s16* phi_a1;
     s32 phi_v1_5;
 
     for (phi_a3 = 0; phi_a3 < 0x10; phi_a3++) {
@@ -163,9 +163,9 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
-void func_8018E5AC(Entity *arg0) {
+void func_8018E5AC(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2 *temp_s0 = &D_8018056C[arg0->subId];
+    ObjInit2* temp_s0 = &D_8018056C[arg0->subId];
 
     if (arg0->initState == 0) {
         InitializeEntity(D_80180544);
@@ -188,12 +188,12 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E674);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandle);
 #else
-void EntityCandle(Entity *entity) {
+void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
         AnimateEntity(D_80180644[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity *entityDropItem;
+            Entity* entityDropItem;
             D_8003C6D8(0x635);
             entityDropItem =
                 AllocEntity(D_8007D308, D_8007D308 + MaxEntityCount);
@@ -226,8 +226,8 @@ extern u16 D_80199E54[];
 
 void UpdateStageEntities(void) {
     s16 i;
-    Entity *entity;
-    s32 *unk;
+    Entity* entity;
+    s32* unk;
 
     for (i = 0; i < 0x20; i++) {
         if (D_80199E54[i]) {
@@ -315,7 +315,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018FEA0);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", CreateEntity);
 #else
-void CreateEntity(Entity *entity, ObjectInit *initDesc) {
+void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->flags & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
@@ -330,11 +330,11 @@ void CreateEntity(Entity *entity, ObjectInit *initDesc) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190608);
 #else
-void func_80190608(ObjectInit *initDesc) {
+void func_80190608(ObjectInit* initDesc) {
     s16 temp_a2;
     s16 temp_v1_2;
     s16 phi_a0;
-    Entity *entity;
+    Entity* entity;
 
     temp_a2 = D_80072B42 + 0x120;
     phi_a0 = D_80072B42 - 0x40;
@@ -347,7 +347,7 @@ void func_80190608(ObjectInit *initDesc) {
         (initDesc->flags & 0xE000) != 0x8000) {
         switch (initDesc->flags & 0xE000) {
         case 0x0:
-            entity = &D_80075D88[*(u8 *)&initDesc->unk6];
+            entity = &D_80075D88[*(u8*)&initDesc->unk6];
             if (entity->objectId != 0) {
                 break;
             }
@@ -443,13 +443,13 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", LoadObjLayout);
 #else
 void LoadObjLayout(s32 objLayoutId) {
     s16 temp_s0;
-    u16 *pObjLayoutStart;
-    ObjectInit *temp_v1;
-    ObjectInit *temp_v0_2;
+    u16* pObjLayoutStart;
+    ObjectInit* temp_v1;
+    ObjectInit* temp_v0_2;
     s32 phi_a0;
     s16 phi_a1;
     s16 phi_a1_2;
-    Unkstruct4 *s1;
+    Unkstruct4* s1;
 
     pObjLayoutStart = g_pStObjLayout[objLayoutId];
     D_801997D8 = pObjLayoutStart;
@@ -461,16 +461,16 @@ void LoadObjLayout(s32 objLayoutId) {
 
         for (phi_a1 = 0;; phi_a1++) {
             s32 temp_v0 = phi_a0 - D_801997D8->posX;
-            D_801997D8 = (u16 *)D_801997D8 + 1;
+            D_801997D8 = (u16*)D_801997D8 + 1;
             phi_a0 = temp_v0;
             if (temp_v0 << 0x10 < 0)
                 break;
 
-            D_801997D8 = (u32 *)D_801997D8 + 1;
+            D_801997D8 = (u32*)D_801997D8 + 1;
         }
 
         D_801997D8 = (temp_v1->flags << 0x10) + temp_v1->posY;
-        temp_v0_2 = (u32 *)D_801997DC + (phi_a1 + 1);
+        temp_v0_2 = (u32*)D_801997DC + (phi_a1 + 1);
         D_801997DC = temp_v0_2;
         D_801997DC = (temp_v0_2->posY << 0x10) + temp_v0_2->posX;
     }
@@ -490,7 +490,7 @@ void LoadObjLayout(s32 objLayoutId) {
 #endif
 
 void func_80190F04(void) {
-    Unkstruct4 *s0 = &D_80072B34;
+    Unkstruct4* s0 = &D_80072B34;
     s32 temp_v0_2;
 
     if (D_800973B4 != 0) {
@@ -514,7 +514,7 @@ void func_80190F04(void) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", SpawnExplosionEntity);
 #else
-void SpawnExplosionEntity(u16 objectId, Entity *entity) {
+void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -525,7 +525,7 @@ void SpawnExplosionEntity(u16 objectId, Entity *entity) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019102C);
 
-s32 func_801910A8(Unkstruct5 *arg0) {
+s32 func_801910A8(Unkstruct5* arg0) {
     s16 var_v0_2;
 
     var_v0_2 = (u16)D_80072E8A - arg0->unk2;
@@ -543,22 +543,22 @@ s32 func_801910A8(Unkstruct5 *arg0) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191120);
 
-void DestroyEntity(Entity *item) {
+void DestroyEntity(Entity* item) {
     int i, length;
-    u32 *ptr;
+    u32* ptr;
 
     if (item->unk34 & 0x800000) {
         D_8003C6B0(item->firstPolygonIndex);
     }
 
-    ptr = (u32 *)item;
+    ptr = (u32*)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity *entity = &D_80072E88[index];
+    Entity* entity = &D_80072E88[index];
     while (entity < &D_8007E9CC) {
         DestroyEntity(entity);
         entity++;
@@ -567,12 +567,12 @@ void DestroyEntityFromIndex(s16 index) {
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191E24);
-void func_80191E24(Entity *entity);
+void func_80191E24(Entity* entity);
 #else
-void func_80191E24(Entity *entity) {
+void func_80191E24(Entity* entity) {
     if (entity->unk32 != 0) {
         u32 temp_a0_2 = entity->unk32 - 1;
-        s32 *temp_v1 = &D_80096ED8[(temp_a0_2 >> 5) & 0xFFFF];
+        s32* temp_v1 = &D_80096ED8[(temp_a0_2 >> 5) & 0xFFFF];
         *temp_v1 |= 1 << (temp_a0_2 & 0x1F);
     }
 }
@@ -630,8 +630,8 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192408);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192618);
 
-Entity *AllocEntity(Entity *start, Entity *end) {
-    Entity *current = start;
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
@@ -663,7 +663,7 @@ void func_801928A8(s32 arg0, s16 arg1) {
 
 u8 func_80192914(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-u8 func_8019294C(Entity *a, Entity *b) {
+u8 func_8019294C(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.Data.high - (u16)a->posX.Data.high;
     s32 diffY = (u16)b->posY.Data.high - (u16)a->posY.Data.high;
     return func_80192914(diffX, diffY);
@@ -692,7 +692,7 @@ u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
 #endif
 
 void func_80192A34(u16 slope, s16 speed) {
-    Entity *entity;
+    Entity* entity;
     s32 moveX;
     s32 moveY;
 
@@ -713,7 +713,7 @@ void func_80192A34(u16 slope, s16 speed) {
 
 u16 func_80192AC0(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 func_80192AF0(Entity *a, Entity *b) {
+u16 func_80192AF0(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
     return ratan2(diffY, diffX);
@@ -755,7 +755,7 @@ void func_80192BF0(s32 arg0) {
 }
 
 void func_80192C0C(u16 arg0, u16 arg1) {
-    Entity *entity;
+    Entity* entity;
 
     if (arg1 != 0) {
         D_8003C6D8(arg1);
@@ -775,9 +775,9 @@ void func_80192C0C(u16 arg0, u16 arg1) {
     D_8006C26C->unk2E = 0;
 }
 
-void InitializeEntity(u16 *arg0) {
+void InitializeEntity(u16* arg0) {
     u16 temp_v1;
-    Unkstruct5 *temp_v0;
+    Unkstruct5* temp_v0;
 
     D_8006C26C->animationSet = *arg0++;
     D_8006C26C->animationFrame = *arg0++;
@@ -785,7 +785,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C26C->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C26C->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C704);
+    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C704);
     D_8006C26C->unk3E = temp_v0->unk4;
     D_8006C26C->unk40 = temp_v0->unk6;
     D_8006C26C->unk42 = temp_v0->unk8;
@@ -802,7 +802,7 @@ void InitializeEntity(u16 *arg0) {
     }
 }
 
-void func_80192DA8(Entity *arg0) {
+void func_80192DA8(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -817,7 +817,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80193050);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", ReplaceCandleWithDrop);
 #else
-void ReplaceCandleWithDrop(Entity *entity) {
+void ReplaceCandleWithDrop(Entity* entity) {
     u16 prevSubId;
     u16 subId;
     u16 newSubId;
@@ -854,7 +854,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019344C);
 #else
 void func_8019344C(void) {
     s32 temp_v1;
-    Entity *entity;
+    Entity* entity;
 
     entity = D_8006C26C;
     if (entity->accelerationY >= 0) {
@@ -899,7 +899,7 @@ void CollectLifeVessel(void) {
 
 void func_8019399C(void) { DestroyEntity(D_8006C26C); }
 
-Entity *func_801939C4(void) {
+Entity* func_801939C4(void) {
     D_8006C26C->initState = 3;
     D_8006C26C->subId = 4;
     return D_8006C26C;
@@ -914,7 +914,7 @@ extern Entity D_80180508;
 extern s32 D_80180E18;
 extern s32 D_80180EC4;
 
-void func_80194218(Entity *arg0) {
+void func_80194218(Entity* arg0) {
     u32 temp_v0;
 
     if (arg0->initState == 0) {
@@ -966,7 +966,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195B44);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195C38);
 
-bool func_80195E68(Unkstruct6 *unk) {
+bool func_80195E68(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
@@ -1029,7 +1029,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199388);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801994D8);
 #else
-POLY_GT4 *func_801994D8(POLY_GT4 *arg0) {
+POLY_GT4* func_801994D8(POLY_GT4* arg0) {
     if (arg0 != NULL) {
     loop_1:
         if (arg0->p3 != NULL) {
@@ -1045,8 +1045,8 @@ POLY_GT4 *func_801994D8(POLY_GT4 *arg0) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199508);
 
-POLY_GT4 *func_80199584(POLY_GT4 *startPoly, s32 count) {
-    POLY_GT4 *poly;
+POLY_GT4* func_80199584(POLY_GT4* startPoly, s32 count) {
+    POLY_GT4* poly;
     s8 unk;
     s32 i;
 
@@ -1066,7 +1066,7 @@ POLY_GT4 *func_80199584(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4 *)poly->tag;
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
@@ -1075,44 +1075,44 @@ POLY_GT4 *func_80199584(POLY_GT4 *startPoly, s32 count) {
     return poly;
 }
 
-void func_8019960C(POLY_GT4 *arg0) {
+void func_8019960C(POLY_GT4* arg0) {
     arg0->p1 = 0;
     arg0->p2 = 0;
     arg0->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y0 = 0;
-    ((POLY_GT4 *)arg0->tag)->x0 = 0;
-    ((POLY_GT4 *)arg0->tag)->clut = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u0 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u1 = 0;
-    ((POLY_GT4 *)arg0->tag)->tpage = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r2 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b2 = 0;
-    ((POLY_GT4 *)arg0->tag)->u2 = 0;
-    ((POLY_GT4 *)arg0->tag)->v2 = 0;
-    ((POLY_GT4 *)arg0->tag)->r3 = 0;
-    ((POLY_GT4 *)arg0->tag)->b3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x2 = 0;
-    ((POLY_GT4 *)arg0->tag)->y2 = 0;
+    ((POLY_GT4*)arg0->tag)->x1 = 0;
+    ((POLY_GT4*)arg0->tag)->y1 = 0;
+    ((POLY_GT4*)arg0->tag)->y0 = 0;
+    ((POLY_GT4*)arg0->tag)->x0 = 0;
+    ((POLY_GT4*)arg0->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u1 = 0;
+    ((POLY_GT4*)arg0->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b2 = 0;
+    ((POLY_GT4*)arg0->tag)->u2 = 0;
+    ((POLY_GT4*)arg0->tag)->v2 = 0;
+    ((POLY_GT4*)arg0->tag)->r3 = 0;
+    ((POLY_GT4*)arg0->tag)->b3 = 0;
+    ((POLY_GT4*)arg0->tag)->x2 = 0;
+    ((POLY_GT4*)arg0->tag)->y2 = 0;
 }
 
-void func_801996EC(POLY_GT4 *arg0) {
+void func_801996EC(POLY_GT4* arg0) {
     func_8019960C(arg0);
     arg0->p3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 1;
-    ((POLY_GT4 *)arg0->tag)->code = 2;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 0xA;
+    ((POLY_GT4*)arg0->tag)->p3 = 1;
+    ((POLY_GT4*)arg0->tag)->code = 2;
+    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
 }
 
-void func_80199740(POLY_GT4 *arg0) {
+void func_80199740(POLY_GT4* arg0) {
     arg0->p3 = 0;
     arg0->pad3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->code = 4;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->code = 4;
+    ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
 #ifndef NON_MATCHING
@@ -1120,8 +1120,8 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019976C);
 #else
 s32 func_8019976C(s32 arg0, s32 value) {
     s32 temp_t0;
-    u8 *phi_v1;
-    u8 *phi_a0;
+    u8* phi_v1;
+    u8* phi_a0;
     int i;
     s32 phi_a2;
     s32 phi_a2_2;

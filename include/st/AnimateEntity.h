@@ -1,7 +1,7 @@
-s32 AnimateEntity(u8 *frames, Entity *entity) {
+s32 AnimateEntity(u8* frames, Entity* entity) {
     s32 flag = 0;
     u16 currentFrameIndex = entity->animationFrameIndex * 2;
-    u8 *currentFrame = frames + currentFrameIndex;
+    u8* currentFrame = frames + currentFrameIndex;
 
     if (entity->animationFrameDuration == 0) {
         if (currentFrame[0] > 0) {

@@ -105,27 +105,27 @@ typedef struct {
     u_char pad0, pad1; /* reserved */
 } DISPENV;
 
-extern void SetShadeTex(void *p, int tge);
-extern void SetPolyGT3(POLY_GT3 *p);
-extern void SetPolyG4(POLY_G4 *p);
-extern void SetPolyGT4(POLY_GT4 *p);
-extern void SetSprt(SPRT *p);
-extern void SetSprt16(SPRT_16 *p);
-extern void SetSprt8(SPRT_8 *p);
+extern void SetShadeTex(void* p, int tge);
+extern void SetPolyGT3(POLY_GT3* p);
+extern void SetPolyG4(POLY_G4* p);
+extern void SetPolyGT4(POLY_GT4* p);
+extern void SetSprt(SPRT* p);
+extern void SetSprt16(SPRT_16* p);
+extern void SetSprt8(SPRT_8* p);
 extern int ResetGraph(int mode);
 extern int SetGraphReverse(int mode);
 extern int SetGraphQueue(int mode);
 extern u_long DrawSyncCallback(void (*func)());
 extern void SetDispMask(int mask);
 extern int DrawSync(int mode);
-extern int ClearImage(RECT *rect, u_char r, u_char g, u_char b);
-extern int LoadImage(RECT *rect, u_long *p);
-extern int StoreImage(RECT *rect, u_long *p);
-extern int MoveImage(RECT *rect, int x, int y);
-extern u_long *ClearOTag(u_long *ot, int n);
-extern u_long *ClearOTagR(u_long *ot, int n);
-extern void DrawOTag(u_long *p);
-extern DRAWENV *PutDrawEnv(DRAWENV *env);
-extern DISPENV *PutDispEnv(DISPENV *env);
+extern int ClearImage(RECT* rect, u_char r, u_char g, u_char b);
+extern int LoadImage(RECT* rect, u_long* p);
+extern int StoreImage(RECT* rect, u_long* p);
+extern int MoveImage(RECT* rect, int x, int y);
+extern u_long* ClearOTag(u_long* ot, int n);
+extern u_long* ClearOTagR(u_long* ot, int n);
+extern void DrawOTag(u_long* p);
+extern DRAWENV* PutDrawEnv(DRAWENV* env);
+extern DISPENV* PutDispEnv(DISPENV* env);
 
 #endif

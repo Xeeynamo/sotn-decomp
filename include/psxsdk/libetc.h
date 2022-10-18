@@ -3,7 +3,7 @@
 
 struct Callbacks {
     void (*unk0)(void);
-    void *(*DMACallback)(int dma, void (*func)());
+    void* (*DMACallback)(int dma, void (*func)());
     void (*unk8)(void);
     int (*ResetCallback)(void);
     int (*StopCallback)(void);
@@ -12,7 +12,7 @@ struct Callbacks {
 };
 
 extern u16 D_8002C2BA;
-extern struct Callbacks *D_8002D340;
+extern struct Callbacks* D_8002D340;
 
 int ResetCallback(void);
 int VSyncCallback(void (*f)());

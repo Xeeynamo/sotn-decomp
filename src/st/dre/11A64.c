@@ -92,7 +92,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
 
-s32 func_801996F8(Unkstruct5 *arg0) {
+s32 func_801996F8(Unkstruct5* arg0) {
     s16 var_v0_2;
 
     var_v0_2 = (u16)D_800733DA - arg0->unk2;
