@@ -32,7 +32,7 @@ s32 ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", InterruptCallback);
 
-void *DMACallback(s32 dma, void (*func)()) {
+void* DMACallback(int dma, void (*func)()) {
     return D_8002D340->DMACallback(dma, func);
 }
 
