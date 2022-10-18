@@ -199,10 +199,10 @@ s32 CdInit() {
 }
 #endif
 
-void def_cbsync(u_char intr, u_char *result) {
+void def_cbsync(u_char intr, u_char* result) {
     DeliverEvent(HwCdRom, EvSpCOMP);
 }
 
-void def_cbready(u_char intr, u_char *result) { DeliverEvent(HwCdRom, EvSpDR); }
+void def_cbready(u_char intr, u_char* result) { DeliverEvent(HwCdRom, EvSpDR); }
 
-void def_cbread(u_char intr, u_char *result) { DeliverEvent(HwCdRom, EvSpDR); }
+void def_cbread(u_char intr, u_char* result) { DeliverEvent(HwCdRom, EvSpDR); }
