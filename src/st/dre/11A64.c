@@ -174,9 +174,15 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF40);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF88);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AFE8);
+void func_8019AFE8(u8 arg0) {
+    Entity *entity;
 
-//INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B008);
+    entity = D_8006C3B8;
+    entity->initState = arg0;
+    entity->unk2E = 0;
+    entity->animationFrameIndex = 0;
+    entity->animationFrameDuration = 0;
+}
 
 void func_8019B008(u8 arg0) {
     Entity *entity;
