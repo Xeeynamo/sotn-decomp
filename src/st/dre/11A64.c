@@ -194,7 +194,9 @@ s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACC0);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AD2C);
+s32 func_8019AD2C(s16 x, s16 y) {
+    return ((ratan2(y, x) >> 4) + 64) & 0xFF;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AD64);
 
