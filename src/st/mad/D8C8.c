@@ -598,9 +598,6 @@ s32 func_80192078(void) {
     return value;
 }
 
-#ifdef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
-#else
 s16 func_801920AC(void) {
     s16 var_a0 = D_8006C26C->posX.Data.high > D_80072E8A;
 
@@ -609,7 +606,6 @@ s16 func_801920AC(void) {
     }
     return var_a0;
 }
-#endif
 
 void MoveEntity(void) {
     D_8006C26C->posX.value += D_8006C26C->accelerationX;
