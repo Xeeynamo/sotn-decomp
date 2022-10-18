@@ -1,15 +1,15 @@
 #include "common.h"
 #include "dra.h"
 
-int func_8015DBB0();
+s32 func_8015DBB0();
 void func_8015C93C();
-int func_8015C9CC();
+s32 func_8015C9CC();
 void func_8015CD98();
 void func_8015CA84();
-int func_8015CF08();
-int func_8015E380();
+s32 func_8015CF08();
+s32 func_8015E380();
 void func_8015CDE0(s32);
-void func_801606BC(Entity *, s32, s32);
+void func_801606BC(Entity*, s32, s32);
 
 extern s16 D_80072F16; // main.h?
 extern u16 D_80072F9A; // main.h?
@@ -31,15 +31,16 @@ extern u16 D_80175954;
 extern s16 D_80175956;
 extern s16 D_80175956;
 
-void func_80156C60(Entity *entity) {
-    int i, length;
-    u32 *ptr;
+void func_80156C60(Entity* entity) {
+    s32 i;
+    s32 length;
+    u32* ptr;
 
     if (entity->unk34 & 0x800000) {
         g_pfnFreePolygons(entity->firstPolygonIndex);
     }
 
-    ptr = (u32 *)entity;
+    ptr = (u32*)entity;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
@@ -72,7 +73,7 @@ void func_80158814(void) {
     D_80175956 = 0;
     D_8007341C = 0;
     D_8007342E = D_80175950;
-    D_800733F1 = *(u8 *)&D_80175952;
+    D_800733F1 = *(u8*)&D_80175952;
     D_800733EE = D_80175954;
 }
 
@@ -173,7 +174,7 @@ void func_8015C908(s32 unk0) {
     D_80073406 = 0;
 }
 
-void func_8015C920(s32 *unk0) {
+void func_8015C920(s32* unk0) {
     D_8006C3B8->unk4C = unk0;
     D_8006C3B8->animationFrameDuration = 0;
     D_8006C3B8->animationFrameIndex = 0;
@@ -209,7 +210,7 @@ void func_8015C984(s32 speed) {
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C9CC);
 
 void func_8015CA84(s32 speed) {
-    Entity *entity = D_8006C3B8;
+    Entity* entity = D_8006C3B8;
     s32 modX = speed;
     if (entity->unk14 == 1)
         modX = -speed;
@@ -343,9 +344,9 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015F96C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015F9F0);
 
-#ifndef NON_MATCHING
-// This function matches with GCC 2.7.2 using -01 compilation flags
+// This function matches with GCC 2.7.2 using -01 Compilation flags
 // https://decomp.me/scratch/VaPMV
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FA5C);
 #else
 extern s32 D_80154674[];
@@ -484,7 +485,8 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016A974);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    D_8006C3B8->unk7C = (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C;
+    D_8006C3B8->unk7C.modeU16 =
+        (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
     if (D_8006C3B8->unk82 == 0) {
         D_8006C3B8->unk80++;
         D_8006C3B8->unk82++;
@@ -493,7 +495,8 @@ void func_8016B8E8(s32 arg0) {
 
 void func_8016B92C(s32 arg0) {
     if (D_8006C3B8->unk82 == 0) {
-        D_8006C3B8->unk7C = (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C;
+        D_8006C3B8->unk7C.modeU16 =
+            (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
         D_8006C3B8->unk80++;
         D_8006C3B8->unk82++;
     }

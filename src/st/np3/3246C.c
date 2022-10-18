@@ -1,13 +1,13 @@
 #include "stage.h"
 
-void SpawnExplosionEntity(u16, Entity *);
-void ReplaceCandleWithDrop(Entity *);
+void SpawnExplosionEntity(u16, Entity*);
+void ReplaceCandleWithDrop(Entity*);
 int func_801CD658();
 
 extern u16 D_80180A3C[];
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
-extern u8 *D_80180E28[];
+extern u8* D_80180E28[];
 extern u8 D_80180E48[];
 extern u8 D_80180E50[];
 extern u16 D_80180E58[];
@@ -15,9 +15,9 @@ extern u8 D_80180E68[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
 
-void func_801B246C(Entity *arg0) {
+void func_801B246C(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2 *temp_s0 = &D_80180C10[arg0->subId];
+    ObjInit2* temp_s0 = &D_80180C10[arg0->subId];
 
     if (arg0->initState == 0) {
         InitializeEntity(D_80180A90);
@@ -42,12 +42,12 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityCandle);
 #else
-void EntityCandle(Entity *entity) {
+void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
         AnimateEntity(D_80180E28[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity *entityDropItem;
+            Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
                 AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
@@ -67,7 +67,41 @@ void EntityCandle(Entity *entity) {
 }
 #endif
 
+// TODO: Probably aspsx or compiler flags
+// https://decomp.me/scratch/sKMmw
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2830);
+#else
+
+extern u16 D_80180A60;
+
+typedef struct {
+    /* 0x00 */ char pad00[0x2C];
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ char pad2E[0x4E];
+    /* 0x7C */ s8 unk7C;
+    /* 0x7D */ s8 unk7D;
+    /* 0x7E */ s8 unk7E;
+} UnkStruct11; // size = 0x7F
+
+void func_801B2830(Entity* arg0) {
+    switch (arg0->initState) {
+    case 0:
+        InitializeEntity(&D_80180A60);
+        arg0->unk7C.modeU8.unk0 = 0x10;
+        arg0->unk7C.modeU8.unk1 = 8;
+        arg0->unk7E = 0x38;
+
+    case 1:
+        D_8003CB25 = arg0->unk7C.modeU8.unk0;
+        D_8003CB26 = arg0->unk7C.modeU8.unk1;
+        D_8003CB27 = arg0->unk7E;
+        D_80054319 = arg0->unk7C.modeU8.unk0;
+        D_8005431A = arg0->unk7C.modeU8.unk1;
+        D_8005431B = arg0->unk7E;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B28E4);
 
@@ -152,7 +186,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityDamage);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", CreateEntity);
 #else
-void CreateEntity(Entity *entity, ObjectInit *initDesc) {
+void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->flags & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
@@ -192,40 +226,43 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", SpawnExplosionEntity);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB7A8);
 
-s32 func_801BB824(Unkstruct5 *arg0) {
+s32 func_801BB824(Unkstruct5* arg0) {
     s16 var_v0_2;
 
-    var_v0_2 = (u16)D_800733DA - arg0->unk2;
+    var_v0_2 = D_800733DA - arg0->unk2;
     var_v0_2 = ABS_ALT(var_v0_2);
 
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = (u16)D_800733DE - arg0->unk6;
+        var_v0_2 = D_800733DE - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
+
     return var_v0_2;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB89C);
 
-void DestroyEntity(Entity *item) {
-    int i, length;
-    u32 *ptr;
+void DestroyEntity(Entity* item) {
+    s32 i;
+    s32 length;
+    u32* ptr;
 
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
 
-    ptr = (u32 *)item;
+    ptr = (u32*)item;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity *entity = &D_800733D8[index];
+    Entity* entity = &D_800733D8[index];
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;
@@ -259,8 +296,8 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC8E4);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCB5C);
 
-Entity *AllocEntity(Entity *start, Entity *end) {
-    Entity *current = start;
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
@@ -315,9 +352,9 @@ void func_801BD134(s32 arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD150);
 
-void InitializeEntity(u16 *arg0) {
+void InitializeEntity(u16* arg0) {
     u16 temp_v1;
-    Unkstruct5 *temp_v0;
+    Unkstruct5* temp_v0;
 
     D_8006C3B8->animationSet = *arg0++;
     D_8006C3B8->animationFrame = *arg0++;
@@ -325,7 +362,7 @@ void InitializeEntity(u16 *arg0) {
     D_8006C3B8->palette = *arg0++;
     temp_v1 = *arg0++;
     D_8006C3B8->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5 *)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
     D_8006C3B8->unk3E = temp_v0->unk4;
     D_8006C3B8->unk40 = temp_v0->unk6;
     D_8006C3B8->unk42 = temp_v0->unk8;
@@ -342,7 +379,7 @@ void InitializeEntity(u16 *arg0) {
     }
 }
 
-void func_801BD2E0(Entity *arg0) {
+void func_801BD2E0(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -589,8 +626,8 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2470);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D24A0);
 
-POLY_GT4 *func_801D251C(POLY_GT4 *startPoly, s32 count) {
-    POLY_GT4 *poly;
+POLY_GT4* func_801D251C(POLY_GT4* startPoly, s32 count) {
+    POLY_GT4* poly;
     s8 unk;
     s32 i;
 
@@ -610,7 +647,7 @@ POLY_GT4 *func_801D251C(POLY_GT4 *startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4 *)poly->tag;
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;
@@ -619,44 +656,44 @@ POLY_GT4 *func_801D251C(POLY_GT4 *startPoly, s32 count) {
     return poly;
 }
 
-void func_801D25A4(POLY_GT4 *arg0) {
+void func_801D25A4(POLY_GT4* arg0) {
     arg0->p1 = 0;
     arg0->p2 = 0;
     arg0->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y1 = 0;
-    ((POLY_GT4 *)arg0->tag)->y0 = 0;
-    ((POLY_GT4 *)arg0->tag)->x0 = 0;
-    ((POLY_GT4 *)arg0->tag)->clut = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u0 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r1 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->u1 = 0;
-    ((POLY_GT4 *)arg0->tag)->tpage = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->r2 = 0;
-    *(u16 *)&((POLY_GT4 *)arg0->tag)->b2 = 0;
-    ((POLY_GT4 *)arg0->tag)->u2 = 0;
-    ((POLY_GT4 *)arg0->tag)->v2 = 0;
-    ((POLY_GT4 *)arg0->tag)->r3 = 0;
-    ((POLY_GT4 *)arg0->tag)->b3 = 0;
-    ((POLY_GT4 *)arg0->tag)->x2 = 0;
-    ((POLY_GT4 *)arg0->tag)->y2 = 0;
+    ((POLY_GT4*)arg0->tag)->x1 = 0;
+    ((POLY_GT4*)arg0->tag)->y1 = 0;
+    ((POLY_GT4*)arg0->tag)->y0 = 0;
+    ((POLY_GT4*)arg0->tag)->x0 = 0;
+    ((POLY_GT4*)arg0->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->u1 = 0;
+    ((POLY_GT4*)arg0->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)arg0->tag)->b2 = 0;
+    ((POLY_GT4*)arg0->tag)->u2 = 0;
+    ((POLY_GT4*)arg0->tag)->v2 = 0;
+    ((POLY_GT4*)arg0->tag)->r3 = 0;
+    ((POLY_GT4*)arg0->tag)->b3 = 0;
+    ((POLY_GT4*)arg0->tag)->x2 = 0;
+    ((POLY_GT4*)arg0->tag)->y2 = 0;
 }
 
-void func_801D2684(POLY_GT4 *arg0) {
+void func_801D2684(POLY_GT4* arg0) {
     func_801D25A4(arg0);
     arg0->p3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 1;
-    ((POLY_GT4 *)arg0->tag)->code = 2;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 0xA;
+    ((POLY_GT4*)arg0->tag)->p3 = 1;
+    ((POLY_GT4*)arg0->tag)->code = 2;
+    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
 }
 
-void func_801D26D8(POLY_GT4 *arg0) {
+void func_801D26D8(POLY_GT4* arg0) {
     arg0->p3 = 0;
     arg0->pad3 = 8;
-    ((POLY_GT4 *)arg0->tag)->p3 = 0;
-    ((POLY_GT4 *)arg0->tag)->code = 4;
-    ((POLY_GT4 *)arg0->tag)->pad3 = 8;
+    ((POLY_GT4*)arg0->tag)->p3 = 0;
+    ((POLY_GT4*)arg0->tag)->code = 4;
+    ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2704);
