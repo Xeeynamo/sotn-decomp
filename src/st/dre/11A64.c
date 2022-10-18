@@ -143,7 +143,10 @@ s16 func_8019A718(void) {
     return var_a0;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A75C);
+void func_8019A75C(void) {
+    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
+    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+}
 
 void func_8019A78C(void) {
     if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
