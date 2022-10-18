@@ -1046,7 +1046,7 @@ void func_801902C8(Entity *entity) {
         entity->animationSet = 5;
         entity->animationFrame = 1;
         entity->unk18 = 0x30;
-        if ((entity->subId & 0xF0) != 0) {
+        if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
             entity->unk18 = 0x10;
         }
