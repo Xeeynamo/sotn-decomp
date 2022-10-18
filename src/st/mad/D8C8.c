@@ -584,7 +584,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191F24);
 
 s32 func_8019203C(void) {
     s16 value = D_8006C26C->posX.Data.high - D_80072E8A;
-    
+
     if (value < 0) {
         value = -value;
     }
