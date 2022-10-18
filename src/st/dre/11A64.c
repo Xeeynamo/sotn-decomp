@@ -137,7 +137,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A6A8);
 
 s32 func_8019A6E4(void) {
     s32 value = D_8006C3B8->posY.Data.high - D_800733DE;
-   
+
     if (value < 0) {
         value = -value;
     }
@@ -170,20 +170,18 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AA30);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC18);
 
-// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization flags
-// https://decomp.me/scratch/dlcph
+// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
+// flags https://decomp.me/scratch/dlcph
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC78);
 #else
 extern s16 D_80180D80[];
 
-s32 func_8019AC78(u8 arg0, s16 arg1) {
-    return D_80180D80[arg0] * arg1;
-}
+s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 #endif
 
-// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization flags
-// https://decomp.me/scratch/reosO
+// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
+// flags https://decomp.me/scratch/reosO
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACA4);
 #else
@@ -194,9 +192,7 @@ s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACC0);
 
-s32 func_8019AD2C(s16 x, s16 y) {
-    return ((ratan2(y, x) >> 4) + 64) & 0xFF;
-}
+s32 func_8019AD2C(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 64) & 0xFF; }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AD64);
 
@@ -206,11 +202,13 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AE4C);
 
-s32 func_8019AED8(s16 arg0, s16 arg1) {
-    return ratan2(arg1, arg0) & 0xFFFF;
-}
+u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF08);
+u16 func_8019AF08(Entity *a, Entity *b) {
+    s32 diffX = b->posX.Data.high - a->posX.Data.high;
+    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF40);
 
@@ -267,9 +265,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BCAC);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BD50);
 
-void func_8019BDA0(void) {
-    func_8019A3A8(D_8006C3B8);
-}
+void func_8019BDA0(void) { func_8019A3A8(D_8006C3B8); }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
 
