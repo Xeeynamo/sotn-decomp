@@ -312,7 +312,22 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2018);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2400);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2550);
+#else
+POLY_GT4 *func_801A2550(POLY_GT4 *arg0) {
+    if (arg0 != NULL) {
+    loop_1:
+        if (arg0->p3 != NULL) {
+            arg0 = arg0->tag;
+            if (arg0 != NULL) {
+                goto loop_1;
+            }
+        }
+    }
+    return arg0;
+}
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2580);
 
