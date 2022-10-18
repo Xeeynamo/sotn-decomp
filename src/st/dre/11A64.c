@@ -297,7 +297,11 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BCAC);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BD50);
+void func_8019BD50(void) {
+    g_pfnPlaySfx(0x67A);
+    D_8003C848(5, 0x8000);
+    func_8019A3A8(D_8006C3B8);
+}
 
 void func_8019BDA0(void) { func_8019A3A8(D_8006C3B8); }
 
