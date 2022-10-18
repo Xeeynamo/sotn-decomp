@@ -132,8 +132,6 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A6A8);
 
-//INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A6E4);
-
 s32 func_8019A6E4(void) {
     s32 value = D_8006C3B8->posY.Data.high - D_800733DE;
    
