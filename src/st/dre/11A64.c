@@ -210,7 +210,11 @@ u16 func_8019AF08(Entity *a, Entity *b) {
     return ratan2(diffY, diffX);
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF40);
+u16 func_8019AF40(s32 x, s32 y) {
+    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
+    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF88);
 
