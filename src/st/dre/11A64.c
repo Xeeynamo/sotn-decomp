@@ -135,7 +135,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
 
 s32 func_8019A6A8(void) {
     s16 value = D_8006C3B8->posX.Data.high - D_800733DA;
-    
+
     if (value < 0) {
         value = -value;
     }
@@ -199,9 +199,16 @@ s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACC0);
 
-u8 func_8019AD2C(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 64; }
+u8 func_8019AD2C(s16 x, s16 y, u16 z) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AD64);
+u8 func_8019AD64(ObjInit2 *arg0, ObjInit2 *arg1) {
+    u16 x, y, z;
+
+    x = arg1->zPriority - arg0->zPriority;
+    y = arg1->palette - arg0->palette;
+    z = arg0->zPriority;
+    return func_8019AD2C(x, y, z);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADAC);
 
