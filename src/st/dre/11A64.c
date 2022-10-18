@@ -128,6 +128,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A3A8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A414);
 
+// https://decomp.me/scratch/oUPTM
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A490);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A4D8);
@@ -208,10 +209,24 @@ u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
     x = arg1->zPriority - arg0->zPriority;
     y = arg1->palette - arg0->palette;
     z = arg0->zPriority;
+
     return func_8019AD2C(x, y, z);
 }
 
+// https://decomp.me/scratch/zbNsT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADAC);
+#else
+u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
+    s16 x, y, z;
+
+    x = arg0 - D_8006C3B8->posX.Data.high;
+    y = arg1 - D_8006C3B8->posY.Data.high;
+    z = arg2;
+
+    return func_8019AD2C(x, y, z);
+}
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
 
