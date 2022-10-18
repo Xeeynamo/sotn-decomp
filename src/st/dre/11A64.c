@@ -179,7 +179,9 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AE4C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AED8);
+s32 func_8019AED8(s16 arg0, s16 arg1) {
+    return ratan2(arg1, arg0) & 0xFFFF;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF08);
 
