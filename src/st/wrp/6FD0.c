@@ -496,23 +496,25 @@ void func_8018A8D4(u16 objectId, Entity* source, Entity* entity) {
 s32 func_8018A950(Unkstruct5* arg0) {
     s16 var_v0_2;
 
-    var_v0_2 = (u16)D_800733DA - arg0->unk2;
+    var_v0_2 = D_800733DA - arg0->unk2;
     var_v0_2 = ABS_ALT(var_v0_2);
 
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = (u16)D_800733DE - arg0->unk6;
+        var_v0_2 = D_800733DE - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
+
     return var_v0_2;
 }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A9C8);
 
 void DestroyEntity(Entity* item) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
@@ -527,6 +529,7 @@ void DestroyEntity(Entity* item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;
@@ -1046,7 +1049,7 @@ void func_801902C8(Entity* entity) {
         entity->animationSet = 5;
         entity->animationFrame = 1;
         entity->unk18 = 0x30;
-        if ((entity->subId & 0xF0) != 0) {
+        if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
             entity->unk18 = 0x10;
         }

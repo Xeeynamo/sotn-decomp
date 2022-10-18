@@ -3,8 +3,8 @@
 
 void func_800E2398(s32 arg0);
 s32 func_8010E27C(void);
-int func_801324B4(s8 arg0, s16 arg1, s16 arg2);
-int func_80136010();
+s32 func_801324B4(s8 arg0, s16 arg1, s16 arg2);
+s32 func_80136010();
 void func_801353A0();
 
 #ifndef NON_MATCHING
@@ -37,7 +37,7 @@ void func_800E2398(s32 arg0) {
 void func_800E2438(s32 arg0) {
     while (PadRead(0))
         func_800E2398(arg0);
-    while (PadRead(0) == 0)
+    while (!PadRead(0))
         func_800E2398(arg0);
 }
 
@@ -1017,7 +1017,7 @@ void DrawPauseMenu(s32 arg0) {
     if (arg0 == 1) {
         func_800F622C(context);
 
-        if (IsAlucart() != 0) {
+        if (IsAlucart()) {
             strPlayerName = c_strALUCART;
         } else {
             strPlayerName = c_strALUCARD;
@@ -1053,13 +1053,13 @@ void DrawPauseMenu(s32 arg0) {
 
         temp_v1_2 = D_80072F2C;
         phi_s4 = 0x25;
-        if ((temp_v1_2 & 0x8000) != 0) {
+        if (temp_v1_2 & 0x8000) {
             phi_s4 = 0x28;
         }
-        if ((temp_v1_2 & 0x4000) != 0) {
+        if (temp_v1_2 & 0x4000) {
             phi_s4 = 0x26;
         }
-        if ((temp_v1_2 & 0x80) != 0) {
+        if (temp_v1_2 & 0x80) {
             phi_s4 = 0x27;
         }
         if (IsAlucart()) {
@@ -1201,7 +1201,7 @@ void func_800F8754(MenuContext* context, s32 x, s32 y) {
     DrawMenuStr(c_strFamiliars, phi_a1, y + 68, context);
     D_8013784C = 0;
     DrawMenuStr(c_strEquip, x + 18, y + 4, context);
-    curX = x + 0xE;
+    curX = x + 14;
     DrawMenuStr(c_strRelics, curX, y + 36, context);
     DrawMenuStr(c_strSystem, curX, y + 52, context);
 }
@@ -1329,7 +1329,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD5BC);
 
 s32 func_800FD664(s32 context) {
     s32 phi_a0 = context;
-    if ((g_mapProgramId & 0x20) != 0) {
+    if (g_mapProgramId & 0x20) {
         phi_a0 <<= 1;
     }
     return phi_a0;
@@ -1513,7 +1513,7 @@ void DrawHudRichter(void) {
     D_80137990 = 0;
     D_8013798C = 0x9C40U / 400U;
     D_80137988 = 0x9C40U / 400U;
-    D_80137970 = func_800EDD9C(4U, 9);
+    D_80137970 = func_800EDD9C(4, 9);
     poly = &D_80086FEC[D_80137970];
 
     func_80107360(poly, 2, 22, 32, 96, 0, 0);
@@ -1640,7 +1640,7 @@ void func_8010189C() {
     D_80137970 = func_800EDD9C(4U, 14);
     poly = &D_80086FEC[D_80137970];
     i = 0;
-    if (poly != 0) {
+    if (poly != NULL) {
         do {
             func_80107360(poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
                           D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
@@ -1666,7 +1666,7 @@ void func_8010189C() {
 
             poly = poly->tag;
             i++;
-        } while (poly != 0);
+        } while (poly != NULL);
     }
 }
 #endif
@@ -1728,7 +1728,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
 void func_80106590(Entity* entity) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32* ptr;
 
     if (entity->unk34 & 0x800000) {
@@ -1738,11 +1739,12 @@ void func_80106590(Entity* entity) {
     ptr = (u32*)entity;
     length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
-        *ptr++ = 0;
+        *ptr++ = NULL;
 }
 
 void func_801065F4(s16 startIndex) {
     Entity* pItem;
+
     for (pItem = &D_800733D8[startIndex];
          pItem < D_800733D8 + TOTAL_ENTITY_COUNT; pItem++)
         func_80106590(pItem);
@@ -1953,7 +1955,7 @@ s32 func_8010E27C(void) {
             return 1;
         }
     } else {
-        if ((D_80072EE8 & 0x2000) == 0) {
+        if (!(D_80072EE8 & 0x2000)) {
             if (D_80072EE8 & 0x8000) {
                 *tmp = 1;
                 D_80072F6C = 1;
@@ -2553,7 +2555,7 @@ void PlaySfx(s32 arg0) {
     if (D_8013AEEC == 0)
         return;
 
-    if (((arg0 - 0x601) & 0xFFFF) < 0x2E0U) {
+    if (((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
         s16 playerLevel = D_80139000;
         s32 temp_v0 = playerLevel * 3;
         *(&D_801390DC + temp_v0) = arg0 - 0x600;
