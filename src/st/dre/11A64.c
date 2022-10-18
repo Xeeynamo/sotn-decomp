@@ -62,7 +62,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019697C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196CC8);
 
-u32 Random(void) {
+u32 func_80196F90(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return g_randomNext >> 0x18;
 }
