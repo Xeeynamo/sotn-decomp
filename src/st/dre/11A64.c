@@ -137,7 +137,11 @@ s16 func_8019A718(void) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A75C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A78C);
+void func_8019A78C(void) {
+    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
+        D_8006C3B8->accelerationY += FALL_GRAVITY;
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A7B8);
 
