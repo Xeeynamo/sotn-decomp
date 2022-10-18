@@ -2,6 +2,10 @@
 
 s32 func_8019A3A8(Entity *entity);
 
+extern s16 D_801A3F14;
+extern s16 D_801A3F16;
+extern s32 D_801A3F18;
+
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191A64);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191B44);
@@ -34,7 +38,11 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801949E8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194AA0);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194C24);
+void func_80194C24(s32 arg0) {
+    D_801A3F18 = arg0 + 0x100000;
+    D_801A3F16 = 0;
+    D_801A3F14 = 1;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194C50);
 
