@@ -197,7 +197,11 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B024);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B0B8);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B1B4);
+void func_8019B1B4(Entity *arg0) {
+    if (arg0->initState == 0) {
+        arg0->initState++;
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B1DC);
 
