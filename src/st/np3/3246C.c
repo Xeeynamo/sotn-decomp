@@ -67,7 +67,41 @@ void EntityCandle(Entity* entity) {
 }
 #endif
 
+// TODO: Probably aspsx or compiler flags
+// https://decomp.me/scratch/sKMmw
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2830);
+#else
+
+extern u16 D_80180A60;
+
+typedef struct {
+    /* 0x00 */ char pad00[0x2C];
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ char pad2E[0x4E];
+    /* 0x7C */ s8 unk7C;
+    /* 0x7D */ s8 unk7D;
+    /* 0x7E */ s8 unk7E;
+} UnkStruct11; // size = 0x7F
+
+void func_801B2830(Entity* arg0) {
+    switch (arg0->initState) {
+    case 0:
+        InitializeEntity(&D_80180A60);
+        arg0->unk7C.modeU8.unk0 = 0x10;
+        arg0->unk7C.modeU8.unk1 = 8;
+        arg0->unk7E = 0x38;
+
+    case 1:
+        D_8003CB25 = arg0->unk7C.modeU8.unk0;
+        D_8003CB26 = arg0->unk7C.modeU8.unk1;
+        D_8003CB27 = arg0->unk7E;
+        D_80054319 = arg0->unk7C.modeU8.unk0;
+        D_8005431A = arg0->unk7C.modeU8.unk1;
+        D_8005431B = arg0->unk7E;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B28E4);
 
@@ -195,23 +229,25 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB7A8);
 s32 func_801BB824(Unkstruct5* arg0) {
     s16 var_v0_2;
 
-    var_v0_2 = (u16)D_800733DA - arg0->unk2;
+    var_v0_2 = D_800733DA - arg0->unk2;
     var_v0_2 = ABS_ALT(var_v0_2);
 
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = (u16)D_800733DE - arg0->unk6;
+        var_v0_2 = D_800733DE - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
+
     return var_v0_2;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB89C);
 
 void DestroyEntity(Entity* item) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
@@ -226,6 +262,7 @@ void DestroyEntity(Entity* item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;

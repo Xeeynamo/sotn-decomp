@@ -59,7 +59,7 @@ typedef union { // Big assumption here...
         s16 unk2;
     } Data1; // size = 0x4
 
-} Unkunion1; // side = 0x4
+} UnkUnion1; // side = 0x4
 
 typedef union {
     s16 data;
@@ -69,9 +69,18 @@ typedef union {
     } data1;
 } UnkUnion2; // size = 0x2
 
+typedef union {
+    u16 modeU16;
+    struct {
+        u8 unk0;
+        u8 unk1;
+        // u8 unk2;
+    } modeU8;
+} unkUnion3;
+
 typedef struct {
-    /* 0x00 */ Unkunion1 posX;
-    /* 0x04 */ Unkunion1 posY;
+    /* 0x00 */ UnkUnion1 posX;
+    /* 0x04 */ UnkUnion1 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
     /* 0x10 */ s16 unk10;
@@ -123,8 +132,8 @@ typedef struct {
     /* 0x70 */ s32 unk70;
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
-    /* 0x7C */ u16 unk7C;
-    /* 0x7E */ u16 unk7E;
+    /* 0x7C */ unkUnion3 unk7C;
+    /* 0x7E */ u8 unk7E;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s8 unk84;

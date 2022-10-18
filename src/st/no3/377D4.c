@@ -366,23 +366,25 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3F38);
 s32 func_801C3FB4(Unkstruct5* arg0) {
     s16 var_v0_2;
 
-    var_v0_2 = (u16)D_800733DA - arg0->unk2;
+    var_v0_2 = D_800733DA - arg0->unk2;
     var_v0_2 = ABS_ALT(var_v0_2);
 
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = (u16)D_800733DE - arg0->unk6;
+        var_v0_2 = D_800733DE - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
+
     return var_v0_2;
 }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C402C);
 
 void DestroyEntity(Entity* item) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
@@ -397,6 +399,7 @@ void DestroyEntity(Entity* item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;
