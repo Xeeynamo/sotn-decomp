@@ -312,6 +312,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2018);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2400);
 
+// https://decomp.me/scratch/aRsTo
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2550);
 #else
