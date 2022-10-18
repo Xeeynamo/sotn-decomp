@@ -32,7 +32,15 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194774);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801947C8);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019498C);
+void func_8019498C(s16 yOffset) {
+    RECT rect;
+
+    rect.y = (yOffset * 12) + 384;
+    rect.w = 64;
+    rect.x = 0;
+    rect.h = 12;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801949E8);
 
@@ -229,6 +237,28 @@ u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
 #endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
+/*
+s32 func_8019ADF4(s16 arg0, s32 arg1, s32 arg2) {
+    s32 temp_a2;
+    s32 var_v0;
+    s32 var_v0_2;
+
+    temp_a2 = arg2 - arg1;
+    if (temp_a2 & 0x80) {
+        var_v0_2 = -temp_a2;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+    if ((u32) (arg0 & 0xFF) < (u32) (var_v0_2 & 0xFF)) {
+        var_v0 = arg1 + arg0;
+        if (temp_a2 & 0x80) {
+            var_v0 = arg1 - arg0;
+        }
+        return var_v0 & 0xFF;
+    }
+    return arg2 & 0xFF;
+}
+*/
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AE4C);
 
