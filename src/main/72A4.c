@@ -182,8 +182,8 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", func_800192DC);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/main/nonmatchings/72A4", CdInit);
 #else
-s32 CdInit() {
-    s32 i;
+int  CdInit() {
+    int i;
 
     for (i = 4; i != -1; i--) {
         if (CdReset(1)) {
