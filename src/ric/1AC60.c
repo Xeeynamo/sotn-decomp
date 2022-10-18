@@ -1,13 +1,13 @@
 #include "common.h"
 #include "dra.h"
 
-int func_8015DBB0();
+s32 func_8015DBB0();
 void func_8015C93C();
-int func_8015C9CC();
+s32 func_8015C9CC();
 void func_8015CD98();
 void func_8015CA84();
-int func_8015CF08();
-int func_8015E380();
+s32 func_8015CF08();
+s32 func_8015E380();
 void func_8015CDE0(s32);
 void func_801606BC(Entity *, s32, s32);
 
@@ -32,7 +32,8 @@ extern s16 D_80175956;
 extern s16 D_80175956;
 
 void func_80156C60(Entity *entity) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32 *ptr;
 
     if (entity->unk34 & 0x800000) {

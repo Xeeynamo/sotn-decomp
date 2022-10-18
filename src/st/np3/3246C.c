@@ -2,7 +2,7 @@
 
 void SpawnExplosionEntity(u16, Entity *);
 void ReplaceCandleWithDrop(Entity *);
-int func_801CD658();
+s32 func_801CD658();
 
 extern u16 D_80180A3C[];
 extern u16 D_80180A90[];
@@ -239,14 +239,15 @@ s32 func_801BB824(Unkstruct5 *arg0) {
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
-    
+
     return var_v0_2;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB89C);
 
 void DestroyEntity(Entity *item) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32 *ptr;
 
     if (item->unk34 & 0x800000) {
@@ -261,6 +262,7 @@ void DestroyEntity(Entity *item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity *entity = &D_800733D8[index];
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;

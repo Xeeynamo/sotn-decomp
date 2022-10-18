@@ -3,15 +3,15 @@
 
 void func_800E2398(s32 arg0);
 s32 func_8010E27C(void);
-int func_801324B4(s8 arg0, s16 arg1, s16 arg2);
-int func_80136010();
+s32 func_801324B4(s8 arg0, s16 arg1, s16 arg2);
+s32 func_80136010();
 void func_801353A0();
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
 #else
 u_long *FntFlush(int id); /* extern */
-int FntPrint();           /* extern */
+s32 FntPrint();           /* extern */
 extern /*?*/ s32 *D_8006C37C;
 extern s32 D_80136300;
 extern const char *aO;
@@ -1727,7 +1727,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
 void func_80106590(Entity *entity) {
-    int i, length;
+    s32 i;
+    s32 length;
     u32 *ptr;
 
     if (entity->unk34 & 0x800000) {
@@ -1742,6 +1743,7 @@ void func_80106590(Entity *entity) {
 
 void func_801065F4(s16 startIndex) {
     Entity *pItem;
+
     for (pItem = &D_800733D8[startIndex];
          pItem < D_800733D8 + TOTAL_ENTITY_COUNT; pItem++)
         func_80106590(pItem);
