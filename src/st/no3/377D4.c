@@ -386,7 +386,7 @@ void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
-    
+
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }

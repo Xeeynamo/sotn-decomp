@@ -512,11 +512,11 @@ s32 func_8018A950(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A9C8);
 
-void DestroyEntity(Entity *item) {
+void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
-    
+
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
@@ -529,7 +529,7 @@ void DestroyEntity(Entity *item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
-    
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;

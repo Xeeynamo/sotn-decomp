@@ -624,11 +624,11 @@ s32 func_801B3C58(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3CD0);
 
-void DestroyEntity(Entity *item) {
+void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
-    
+
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }

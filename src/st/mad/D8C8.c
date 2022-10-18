@@ -547,9 +547,9 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191120);
 void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
-    u32 *ptr;
+    u32* ptr;
 
-if (item->unk34 & 0x800000) {
+    if (item->unk34 & 0x800000) {
         D_8003C6B0(item->firstPolygonIndex);
     }
 
@@ -1126,7 +1126,7 @@ s32 func_8019976C(s32 arg0, s32 value) {
     u8* phi_v1;
     u8* phi_a0;
     int i;
-    
+
     s32 phi_a2;
     s32 phi_a2_2;
 

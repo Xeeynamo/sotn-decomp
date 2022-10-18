@@ -31,8 +31,7 @@ extern u16 D_80175954;
 extern s16 D_80175956;
 extern s16 D_80175956;
 
-
-void func_80156C60(Entity *entity) {
+void func_80156C60(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;

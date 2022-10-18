@@ -84,7 +84,7 @@ typedef struct {
     /* 0x7E */ s8 unk7E;
 } UnkStruct11; // size = 0x7F
 
-void func_801B2830(Entity *arg0) {
+void func_801B2830(Entity* arg0) {
     switch (arg0->initState) {
     case 0:
         InitializeEntity(&D_80180A60);
@@ -245,11 +245,11 @@ s32 func_801BB824(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB89C);
 
-void DestroyEntity(Entity *item) {
+void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
-    
+
     if (item->unk34 & 0x800000) {
         g_pfnFreePolygons(item->firstPolygonIndex);
     }
@@ -262,7 +262,7 @@ void DestroyEntity(Entity *item) {
 
 void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
-    
+
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;

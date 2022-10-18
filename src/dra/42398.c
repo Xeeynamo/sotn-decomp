@@ -1727,10 +1727,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
-void func_80106590(Entity *entity) {
+void func_80106590(Entity* entity) {
     s32 i;
     s32 length;
-    u32 *ptr;
+    u32* ptr;
 
     if (entity->unk34 & 0x800000) {
         FreePolygons(entity->firstPolygonIndex);
