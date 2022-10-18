@@ -62,7 +62,10 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019697C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196CC8);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196F90);
+u32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", UpdateStageEntities);
 
