@@ -41,7 +41,7 @@ INCLUDE_ASM("asm/main/nonmatchings/5A38", VSyncCallback);
 //     return D_8002D340->VSyncCallbacks(0, f);
 // }
 
-int VSyncCallbacks(s32 ch, void (*f)()) {
+int VSyncCallbacks(int ch, void (*f)()) {
     return D_8002D340->VSyncCallbacks(ch, f);
 }
 
