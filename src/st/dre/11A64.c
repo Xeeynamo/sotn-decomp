@@ -128,18 +128,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A3A8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A414);
 
-#ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A490);
-#else
-void func_8019A490(Entity *entity) { // MATCHES but it's fake
-    u32 temp_a0_2;
-
-    if (entity->unk32 != 0) {
-        temp_a0_2 = entity->unk32 - 1;
-        *(&D_80097428[(temp_a0_2 >> 5) & 0xFFFF]) |= 1 << (temp_a0_2 & 0x1F);
-    }
-}
-#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A4D8);
 
