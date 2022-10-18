@@ -1,5 +1,7 @@
 #include "stage.h"
 
+s32 func_8019A3A8(Entity *entity);
+
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191A64);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191B44);
@@ -143,7 +145,17 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AA30);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC18);
 
+// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization flags
+// https://decomp.me/scratch/dlcph
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC78);
+#else
+extern s16 D_80180D80[];
+
+s32 func_8019AC78(u8 arg0, s16 arg1) {
+    return D_80180D80[arg0] * arg1;
+}
+#endif
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization flags
 // https://decomp.me/scratch/reosO
@@ -151,6 +163,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC78);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACA4);
 #else
 extern s16 D_80180D80[];
+
 s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 #endif
 
@@ -225,7 +238,9 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BCAC);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BD50);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDA0);
+void func_8019BDA0(void) {
+    func_8019A3A8(D_8006C3B8);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
 
