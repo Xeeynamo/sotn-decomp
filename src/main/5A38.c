@@ -28,25 +28,25 @@ INCLUDE_ASM("asm/main/nonmatchings/5A38", v_wait);
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", ChangeClearRCnt);
 
-s32 ResetCallback(void) { return D_8002D340->ResetCallback(); }
+int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", InterruptCallback);
 
-void *DMACallback(s32 dma, void (*func)()) {
+void *DMACallback(s32 int, void (*func)()) {
     return D_8002D340->DMACallback(dma, func);
 }
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", VSyncCallback);
-// s32 VSyncCallback(void (*f)()) {
+// int VSyncCallback(void (*f)()) {
 //     return D_8002D340->VSyncCallbacks(0, f);
 // }
 
-s32 VSyncCallbacks(s32 ch, void (*f)()) {
+int VSyncCallbacks(s32 ch, void (*f)()) {
     return D_8002D340->VSyncCallbacks(ch, f);
 }
 
-s32 StopCallback(void) { return D_8002D340->StopCallback(); }
+int StopCallback(void) { return D_8002D340->StopCallback(); }
 
-s32 RestartCallback(void) { return D_8002D340->RestartCallback(); }
+int RestartCallback(void) { return D_8002D340->RestartCallback(); }
 
 u16 CheckCallback(void) { return D_8002C2BA; }
