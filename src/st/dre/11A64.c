@@ -1,6 +1,6 @@
 #include "stage.h"
 
-s32 func_8019A3A8(Entity *entity);
+s32 func_8019A3A8(Entity* entity);
 
 extern s16 D_801A3F14;
 extern s16 D_801A3F16;
@@ -202,7 +202,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACC0);
 
 u8 func_8019AD2C(s16 x, s16 y, u16 z) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-u8 func_8019AD64(ObjInit2 *arg0, ObjInit2 *arg1) {
+u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
     u16 x, y, z;
 
     x = arg1->zPriority - arg0->zPriority;
@@ -219,7 +219,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AE4C);
 
 u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_8019AF08(Entity *a, Entity *b) {
+u16 func_8019AF08(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
     return ratan2(diffY, diffX);
@@ -234,7 +234,7 @@ u16 func_8019AF40(s32 x, s32 y) {
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF88);
 
 void func_8019AFE8(u8 arg0) {
-    Entity *entity;
+    Entity* entity;
 
     entity = D_8006C3B8;
     entity->initState = arg0;
@@ -244,7 +244,7 @@ void func_8019AFE8(u8 arg0) {
 }
 
 void func_8019B008(u8 arg0) {
-    Entity *entity;
+    Entity* entity;
 
     entity = D_8006C3B8;
     entity->unk2E = arg0;
@@ -256,7 +256,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B024);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B0B8);
 
-void func_8019B1B4(Entity *arg0) {
+void func_8019B1B4(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -358,7 +358,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2400);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2550);
 #else
-POLY_GT4 *func_801A2550(POLY_GT4 *arg0) {
+POLY_GT4* func_801A2550(POLY_GT4* arg0) {
     if (arg0 != NULL) {
     loop_1:
         if (arg0->p3 != NULL) {
