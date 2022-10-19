@@ -855,6 +855,7 @@ void ReplaceCandleWithDrop(Entity* entity) {
 
 #endif
 
+// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019344C);
 #else
