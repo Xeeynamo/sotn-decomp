@@ -785,7 +785,7 @@ void CollectHeart(u16 heartSize) {
     if (g_playerHeartMax < *hearts) {
         *hearts = g_playerHeartMax;
     }
-    
+
     DestroyEntity(D_8006C3B8);
 }
 #endif
