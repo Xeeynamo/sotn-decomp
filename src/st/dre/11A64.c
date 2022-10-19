@@ -2,6 +2,7 @@
 
 s32 func_8019A3A8(Entity* entity);
 
+extern PfnEntityUpdate* D_801803C4[];
 extern s16 D_801A3EDE;
 extern u16 D_801A3EE0;
 extern s16 D_801A3EE2;
@@ -125,7 +126,19 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801993DC);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199554);
 
+// https://decomp.me/scratch/FLExi
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
+#else
+void func_80199608(u16 objectId, Entity* entity) {
+    func_8019A3A8(entity);
+
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_801803C4[objectId];
+    entity->posX.Data.high = (s16)(u16)D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = (s16)(u16)D_8006C3B8->posY.Data.high;
+}
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
 
@@ -317,7 +330,7 @@ s32 func_8019AF88(s32 arg0, s32 arg1, unsigned short arg2) {
         } else {
             var_v0 = arg1 + var_v0;
         }
-        
+
         return var_v0 & 0xFFFF;
     }
 
