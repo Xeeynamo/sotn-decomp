@@ -14,6 +14,7 @@ extern s8 D_801A3EEF;
 extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
+extern s8 D_801811AC[]; // c_HeartPrizes[]
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191A64);
 
@@ -408,7 +409,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 //https://decomp.me/scratch/HB8wO
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B858);
 #else
 void func_8019B858(void) {
@@ -434,7 +435,20 @@ void func_8019B858(void) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B8DC);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BA38);
+void func_8019BA38(u16 arg0)
+{
+    s32* hearts;
+
+    g_pfnPlaySfx(0x67A);
+    hearts = &g_playerHeart;
+    *hearts += D_801811AC[arg0];
+
+    if (g_playerHeartMax < *hearts) {
+        *hearts = g_playerHeartMax;
+    }
+
+    func_8019A3A8(D_8006C3B8);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BAB8);
 
