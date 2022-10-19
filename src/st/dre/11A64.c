@@ -406,6 +406,8 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
 
+// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
+//https://decomp.me/scratch/HB8wO
 #ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B858);
 #else
