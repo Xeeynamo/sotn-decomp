@@ -408,13 +408,8 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
-<<<<<<< HEAD
 //https://decomp.me/scratch/HB8wO
 #ifndef NON_MATCHING
-=======
-// https://decomp.me/scratch/HB8wO
-#ifdef NON_MATCHING
->>>>>>> 33f60079cae7da89e3e2164f6345d62ed6574b6e
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B858);
 #else
 void func_8019B858(void) {
@@ -440,6 +435,9 @@ void func_8019B858(void) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B8DC);
 
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BA38);
+#else
 void func_8019BA38(u16 arg0)
 {
     s32* hearts;
@@ -454,6 +452,7 @@ void func_8019BA38(u16 arg0)
 
     func_8019A3A8(D_8006C3B8);
 }
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BAB8);
 
