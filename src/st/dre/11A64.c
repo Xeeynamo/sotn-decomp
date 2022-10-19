@@ -1,6 +1,6 @@
 #include "stage.h"
 
-s32 func_8019A3A8(Entity* entity);
+void func_8019A3A8(Entity* entity);
 
 extern PfnEntityUpdate* D_801803C4[];
 extern s16 D_801A3EDE;
@@ -173,7 +173,20 @@ s32 func_801996F8(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199770);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A3A8);
+void func_8019A3A8(Entity* item) {
+    s32 i;
+    s32 length;
+    u32* ptr;
+
+    if (item->unk34 & 0x800000) {
+        g_pfnFreePolygons(item->firstPolygonIndex);
+    }
+
+    ptr = (u32*)item;
+    length = sizeof(Entity) / sizeof(s32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
 
 void func_8019A414(s16 index) { // DestroyEntityFromIndex
     Entity* entity = &D_800733D8[index];
