@@ -772,6 +772,7 @@ void func_8018CAB0(void) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CB34);
 
+// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeart);
 #else
