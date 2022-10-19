@@ -317,7 +317,7 @@ s32 func_8019AF88(s32 arg0, s32 arg1, unsigned short arg2) {
         } else {
             var_v0 = arg1 + var_v0;
         }
-        
+
         return var_v0 & 0xFFFF;
     }
 
