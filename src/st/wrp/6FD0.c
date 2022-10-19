@@ -755,8 +755,8 @@ void func_8018CAB0(void) {
 
     entity = D_8006C3B8;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84;
-        entity->unk84 = temp_v1;
+        temp_v1 = entity->unk88 + entity->unk84.value;
+        entity->unk84.value = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
             entity->unk88 = -entity->unk88;
@@ -1131,9 +1131,9 @@ void func_8019055C(void) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
         if (entity != NULL) {
             func_8018A8D4(EntityExplosionID, D_8006C3B8, entity);
-            entity->unk85 = 6 - i;
+            entity->unk84.Data1.unk1 = 6 - i;
             entity->unk80 = temp_s3;
-            entity->unk84 = temp_s4;
+            entity->unk84.Data1.unk0 = temp_s4;
         }
     }
 }

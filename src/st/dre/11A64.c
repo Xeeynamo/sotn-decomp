@@ -190,11 +190,11 @@ void func_8019A3A8(Entity* item) {
 
 void func_8019A414(s16 index) { // DestroyEntityFromIndex
     Entity* entity = &D_800733D8[index];
-  
-        while (entity < &D_8007EF1C) {
-            func_8019A3A8(entity);
-            entity++;
-        }
+
+    while (entity < &D_8007EF1C) {
+        func_8019A3A8(entity);
+        entity++;
+    }
 }
 
 // https://decomp.me/scratch/oUPTM
@@ -406,7 +406,29 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
 
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B858);
+#else
+void func_8019B858(void) {
+    s32 temp_v1;
+    Entity* entity = D_8006C3B8;
+    
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88 + entity->unk84.value;
+        entity->unk84.value = temp_v1;
+        entity->accelerationX = temp_v1;
+
+        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
+            entity->unk88 = -entity->unk88;
+        } 
+        entity = D_8006C3B8;
+    }
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B8DC);
 

@@ -860,14 +860,14 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019344C);
 #else
 void func_8019344C(void) {
     s32 temp_v1;
-    Entity* entity;
+    Entity* entity = D_8006C26C;
 
-    entity = D_8006C26C;
-    if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84;
-        entity->unk84 = temp_v1;
+        if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88 + entity->unk84.value;
+        entity->unk84.value = temp_v1;
         entity->accelerationX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+
+        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
             entity->unk88 = -entity->unk88;
         }
         entity = D_8006C26C;

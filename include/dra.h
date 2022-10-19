@@ -77,7 +77,15 @@ typedef union {
         // u8 unk2;
     } modeU8;
 } unkUnion3;
-
+/*
+typedef union {
+    s32 modeS32;
+    struct {
+        s16 unk0;
+        s16 unk2;
+    } modeS16;
+} unkUnion3;
+*/
 typedef struct {
     /* 0x00 */ UnkUnion1 posX;
     /* 0x04 */ UnkUnion1 posY;
@@ -135,11 +143,12 @@ typedef struct {
     /* 0x7C */ unkUnion3 unk7C;
     /* 0x7E */ u8 unk7E;
     /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s8 unk84;
-    /* 0x85 */ s8 unk85;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s32 unk88;
+    /* 0x82 */ s16 unk82; 
+    /* 0x84 */ UnkUnion1 unk84; // s8
+    ///* 0x85 */ s8 unk85; // s8
+    ///* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
     /* 0x8C */ u16 unk8C;
     /* 0x8E */ u16 unk8E;
     /* 0x90 */ s32 unk90;
