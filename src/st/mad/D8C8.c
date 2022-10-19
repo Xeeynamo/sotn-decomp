@@ -713,7 +713,7 @@ void func_80192A34(u16 slope, s16 speed) {
     if (moveY < 0) {
         moveY += 15;
     }
-    
+
     entity->accelerationY = moveY >> 4;
 }
 
