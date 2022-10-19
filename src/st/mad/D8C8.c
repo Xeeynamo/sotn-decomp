@@ -862,7 +862,7 @@ void func_8019344C(void) {
     s32 temp_v1;
     Entity* entity = D_8006C26C;
 
-        if (entity->accelerationY >= 0) {
+    if (entity->accelerationY >= 0) {
         temp_v1 = entity->unk88 + entity->unk84.value;
         entity->unk84.value = temp_v1;
         entity->accelerationX = temp_v1;

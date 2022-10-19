@@ -143,10 +143,10 @@ typedef struct {
     /* 0x7C */ unkUnion3 unk7C;
     /* 0x7E */ u8 unk7E;
     /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82; 
+    /* 0x82 */ s16 unk82;
     /* 0x84 */ UnkUnion1 unk84; // s8
-    ///* 0x85 */ s8 unk85; // s8
-    ///* 0x86 */ s16 unk86;
+                                ///* 0x85 */ s8 unk85; // s8
+                                ///* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ u16 unk8C;

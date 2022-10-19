@@ -414,7 +414,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B858);
 void func_8019B858(void) {
     s32 temp_v1;
     Entity* entity = D_8006C3B8;
-    
+
     if (entity->accelerationY >= 0) {
         temp_v1 = entity->unk88 + entity->unk84.value;
         entity->unk84.value = temp_v1;
@@ -422,7 +422,7 @@ void func_8019B858(void) {
 
         if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
             entity->unk88 = -entity->unk88;
-        } 
+        }
         entity = D_8006C3B8;
     }
 
