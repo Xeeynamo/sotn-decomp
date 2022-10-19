@@ -140,7 +140,8 @@ void func_80199608(u16 objectId, Entity* entity) {
 }
 #endif
 
-// same as above
+// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
+// https://decomp.me/scratch/99NPO
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
 #else
@@ -174,7 +175,14 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199770);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A3A8);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A414);
+void func_8019A414(s16 index) {
+    Entity* entity = &D_800733D8[index];
+  
+        while (entity < &D_8007EF1C) {
+            func_8019A3A8(entity);
+            entity++;
+        }
+}
 
 // https://decomp.me/scratch/oUPTM
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A490);
