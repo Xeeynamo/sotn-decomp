@@ -217,13 +217,17 @@ s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 // flags https://decomp.me/scratch/reosO
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACA4);
+s32 func_8019AC78(u8, s16);
 #else
 extern s16 D_80180D80[];
 
 s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 #endif
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACC0);
+void func_8019ACC0(s32 arg0, s16 arg1) {
+    D_8006C3B8->accelerationX = func_8019AC78(arg0, arg1);
+    D_8006C3B8->accelerationY = func_8019AC78(arg0 - 0x40, arg1);
+}
 
 u8 func_8019AD2C(s16 x, s16 y, u16 z) { return ((ratan2(y, x) >> 4) + 0x40); }
 
@@ -293,6 +297,32 @@ u16 func_8019AF40(s32 x, s32 y) {
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF88);
+/*
+s32 func_8019AF88(s32 arg0, s32 arg1, unsigned short arg2) {
+    u16 temp_a2;
+    u16 var_v0;
+    u16 var_v0_2;
+    var_v0 = arg0;
+    temp_a2 = arg2 - arg1;
+
+    if (temp_a2 & 0x800) {
+        var_v0 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (((u32)(var_v0 & 0xFFFF)) < ((u32)(var_v0_2 & 0xFFFF))) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + var_v0;
+        }
+        
+        return var_v0 & 0xFFFF;
+    }
+
+    return arg2 & 0xFFFF;
+}*/
 
 void func_8019AFE8(u8 arg0) {
     Entity* entity;

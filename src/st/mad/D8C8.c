@@ -633,6 +633,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192618);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
+
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
@@ -699,16 +700,20 @@ void func_80192A34(u16 slope, s16 speed) {
 
     moveX = rcos(slope) * speed;
     entity = D_8006C26C;
+
     if (moveX < 0) {
         moveX += 15;
     }
+
     entity->accelerationX = moveX >> 4;
 
     moveY = rsin(slope) * speed;
     entity = D_8006C26C;
+
     if (moveY < 0) {
         moveY += 15;
     }
+    
     entity->accelerationY = moveY >> 4;
 }
 
