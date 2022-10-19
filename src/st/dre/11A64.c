@@ -140,7 +140,18 @@ void func_80199608(u16 objectId, Entity* entity) {
 }
 #endif
 
+// same as above
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
+#else
+void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2) {
+    func_8019A3A8(arg2);
+    arg2->objectId = objectId;
+    arg2->pfnUpdate = D_801803C4[objectId];
+    arg2->posX.Data.high = arg1->posX.Data.high;
+    arg2->posY.Data.high = arg1->posY.Data.high;
+}
+#endif
 
 s32 func_801996F8(Unkstruct5* arg0) {
     s16 var_v0_2;
