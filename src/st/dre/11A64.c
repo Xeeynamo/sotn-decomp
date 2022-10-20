@@ -9,9 +9,10 @@ void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
-void func_8019A490();              
+void func_8019A490();
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
+Entity* func_8019AC18(Entity*, Entity*);
 
 extern Entity D_801804E8;
 extern Entity D_8018050C;
@@ -227,6 +228,7 @@ void func_80199608(u16 objectId, Entity* entity) {
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 // https://decomp.me/scratch/99NPO
 #ifndef NON_MATCHING
+void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
 #else
 void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2) {
@@ -697,7 +699,22 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F170);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F23C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F304);
+void func_8019F304(void) {
+    Entity* entity;
+    s8 temp_s4 = func_80196F90() & 3;
+    s16 temp_s3 = ((func_80196F90() & 0xF) << 8) - 0x800;
+    s32 i;
+    
+    for (i = 0; i < 6; i++) {
+        entity = func_8019AC18(&D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            func_8019967C(2, D_8006C3B8, entity);
+            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk80 = temp_s3;
+            entity->unk84.Data1.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F3BC);
 
