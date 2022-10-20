@@ -15,6 +15,7 @@ void func_8019C7DC(struct Entity*);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(Entity*, Entity*);
 
+extern u16 D_80181420[];
 extern Entity* D_80180470;
 extern Entity* D_80181338;
 extern PfnEntityUpdate D_801803C4[];
@@ -815,7 +816,30 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A13B8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A174C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A1BFC);
+void func_801A1BFC(Entity* entity) {
+    ObjInit2* obj = &D_80181420[entity->subId * 10];    
+
+    if (entity->initState == 0) {
+        func_8019B0B8(&D_801804AC);
+        entity->animationSet = obj->animationSet;
+        entity->zPriority = obj->zPriority;
+        entity->unk5A = obj->unk4.data;
+        entity->palette = obj->palette;
+        entity->unk19 = obj->unk8;
+        entity->unk18 = obj->unkA;
+
+        if (obj->unkC != 0) {
+            entity->unk34 = obj->unkC;
+        }
+
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 = entity->unk19 | 4;
+        }
+    }
+    
+    func_8019A4D8(obj->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A1CE8);
 
