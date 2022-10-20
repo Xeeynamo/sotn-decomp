@@ -387,29 +387,30 @@ u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
-/*
-s32 func_8019ADF4(s16 arg0, s32 arg1, s32 arg2) {
-    s32 temp_a2;
-    s32 var_v0;
-    s32 var_v0_2;
-
-    temp_a2 = arg2 - arg1;
-    if (temp_a2 & 0x80) {
-        var_v0_2 = -temp_a2;
+//INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
+u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    u8 var_v0_2;
+    s8 temp_a2 = arg2 - arg1;
+  
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
     } else {
-        var_v0_2 = temp_a2;
+        var_v0 = temp_a2;
     }
-    if ((u32) (arg0 & 0xFF) < (u32) (var_v0_2 & 0xFF)) {
-        var_v0 = arg1 + arg0;
-        if (temp_a2 & 0x80) {
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
             var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
         }
-        return var_v0 & 0xFF;
+        
+        return var_v0;
     }
-    return arg2 & 0xFF;
+
+    return arg2;
 }
-*/
 
 void func_8019AE4C(u16 slope, s16 speed) {
     Entity* entity;
@@ -449,7 +450,7 @@ u16 func_8019AF40(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-s32 func_8019AF88(u16 arg0, u16 arg1, u16 arg2) {
+u16 func_8019AF88(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -466,8 +467,10 @@ s32 func_8019AF88(u16 arg0, u16 arg1, u16 arg2) {
         } else {
             var_v0 = arg1 + arg0;
         }
+
         return var_v0;
     }
+
     return arg2;
 }
 
@@ -525,7 +528,41 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B304);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
+// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
+
+void func_8019A490();               /* extern */
+void func_8019BDC8(struct Entity*); /* extern */
+void func_8019C7DC(struct Entity*); /* extern */
+
+void func_8019B7A0(Entity* arg0) {
+    u16 temp_a0;
+    u16 var_v1;
+
+    func_8019A490();
+    if (!(D_8009796E & 2)) {
+        func_8019A3A8(arg0);
+        return;
+    }
+    
+    temp_a0 = arg0->subId & 0xFFF;
+    var_v1 = temp_a0;
+    arg0->subId = var_v1;
+    if (var_v1 < 0x80) {
+        arg0->objectId = 3;
+        arg0->pfnUpdate = func_8019BDC8;
+        arg0->animationFrameDuration = 0;
+        arg0->animationFrameIndex = 0;
+    } else {
+        var_v1 = temp_a0 - 0x80;
+        arg0->objectId = 0xA;
+        arg0->pfnUpdate = func_8019C7DC;
+    }
+
+    arg0->subId = var_v1;
+    temp_a0 = 0;
+    arg0->unk6D = 0x10;
+    arg0->initState = temp_a0;
+}
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 #ifndef NON_MATCHING
@@ -554,6 +591,7 @@ void func_8019B858(void) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B8DC);
 
+// at -v0 register swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BA38);
 #else
