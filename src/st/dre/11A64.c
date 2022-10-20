@@ -33,7 +33,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80192104);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193B3C);
 
 void func_80193D7C(Entity* entity) {
-    if (arg0->initState == 0) {
+    if (entity->initState == 0) {
         func_8019B0B8(&D_801804E8);
     }
     entity->posX.Data.high = entity[-1].posX.Data.high;
