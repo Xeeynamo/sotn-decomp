@@ -152,6 +152,23 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801984DC);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198B80);
 
+/*
+void func_80198B80(Entity* ent1, Entity* ent2) {
+    func_8019A3A8(ent1);
+    ent1->objectId = ent2->posY.Data.low;
+    ent1->objectId = ent1->objectId & 0x3FF;
+
+    do { //! FAKE https://decomp.me/scratch/zysYC
+        ent1->pfnUpdate = D_801803C4[ent1->objectId];
+    } while (0);
+
+    ent1->posX.Data.high = ent2->posX.Data.low - D_8007308E;
+    ent1->posY.Data.high = ent2->posX.Data.high - D_80073092;
+    ent1->subId = ent2->accelerationX.Data.low;
+    ent1->unk32 = ((u16)ent2->posY.Data.high) >> 8;
+    ent1->unk68 = ((u16)ent2->posY.Data.low >> 0xA) & 7;
+}
+*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198C44);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198D5C);
@@ -176,7 +193,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801993DC);
 
 void func_80199554(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
-    
+
     if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
         if (D_80097908 > 0) {
@@ -432,33 +449,27 @@ u16 func_8019AF40(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AF88);
-/*
-s32 func_8019AF88(s32 arg0, s32 arg1, unsigned short arg2) {
-    u16 temp_a2;
-    u16 var_v0;
+s32 func_8019AF88(u16 arg0, u16 arg1, u16 arg2) {
+    u16 var_v0 = arg1;
+    u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
-    var_v0 = arg0;
-    temp_a2 = arg2 - arg1;
 
     if (temp_a2 & 0x800) {
-        var_v0 = (0x800 - temp_a2) & 0x7FF;
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
     } else {
-        var_v0 = temp_a2;
+        var_v0_2 = temp_a2;
     }
 
-    if (((u32)(var_v0 & 0xFFFF)) < ((u32)(var_v0_2 & 0xFFFF))) {
+    if (var_v0_2 > arg0) {
         if (temp_a2 & 0x800) {
             var_v0 = arg1 - arg0;
         } else {
-            var_v0 = arg1 + var_v0;
+            var_v0 = arg1 + arg0;
         }
-
-        return var_v0 & 0xFFFF;
+        return var_v0;
     }
-
-    return arg2 & 0xFFFF;
-}*/
+    return arg2;
+}
 
 void func_8019AFE8(u8 arg0) {
     Entity* entity;
