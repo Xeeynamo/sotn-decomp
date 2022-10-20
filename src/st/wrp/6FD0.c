@@ -879,13 +879,9 @@ void func_8018D894(Entity* entity) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D990);
-#else
 void func_8018D990(Entity* arg0, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
-    u8 colorIntensity;
 
     poly = &D_80086FEC[arg0->firstPolygonIndex];
 
@@ -903,21 +899,16 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     poly->y3 = bottom;
     poly->y2 = bottom;
 
-    colorIntensity = renderFlags & RENDERFLAGS_NOSHADOW ? 255 : 128;
-    poly->b3 = colorIntensity;
-    poly->b2 = colorIntensity;
-    poly->b1 = colorIntensity;
-    poly->b0 = colorIntensity;
-    poly->g3 = colorIntensity;
-    poly->g2 = colorIntensity;
-    poly->g1 = colorIntensity;
-    poly->g0 = colorIntensity;
-    poly->r3 = colorIntensity;
-    poly->r2 = colorIntensity;
-    poly->r1 = colorIntensity;
-    poly->r0 = colorIntensity;
+    if (renderFlags & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
+        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 255;        
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
+        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 128;
+    }
 }
-#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018DA34);
 

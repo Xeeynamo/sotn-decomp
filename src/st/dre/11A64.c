@@ -36,16 +36,20 @@ void func_80193D7C(Entity* entity) {
     if (entity->initState == 0) {
         func_8019B0B8(&D_801804E8);
     }
+
     entity->posX.Data.high = entity[-1].posX.Data.high;
     entity->animationFrame = 0;
     entity->posY.Data.high = entity[-1].posY.Data.high;
     entity->unk14 = entity[-1].unk14;
+
     if (entity[-1].animationFrame == 0x32) {
         entity->animationFrame = 0x3E;
     }
+
     if (entity[-1].animationFrame == 0x33) {
         entity->animationFrame = 0x3F;
     }
+
     entity->zPriority = D_800733FC + 4;
 }
 
@@ -530,7 +534,36 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C63C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C738);
+void func_8019C738(Entity* arg0, s32 renderFlags) {
+    POLY_GT4* poly;
+    s16 left, top, right, bottom;
+
+    poly = &D_80086FEC[arg0->firstPolygonIndex];
+
+    left = arg0->posX.Data.high - 7;
+    right = arg0->posX.Data.high + 7;
+    poly->x2 = left;
+    poly->x0 = left;
+    poly->x3 = right;
+    poly->x1 = right;
+
+    top = arg0->posY.Data.high - 7;
+    bottom = arg0->posY.Data.high + 7;
+    poly->y1 = top;
+    poly->y0 = top;
+    poly->y3 = bottom;
+    poly->y2 = bottom;
+
+    if (renderFlags & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
+        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 255;        
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
+        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 128;
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C7DC);
 
