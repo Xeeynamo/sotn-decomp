@@ -677,21 +677,28 @@ u8 func_80192994(s32 x, s32 y) {
     return func_80192914(diffX, diffY);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801929DC);
-#else
-u8 func_801929DC(s32 arg0, s32 arg1, s32 arg2) {
-    s32 temp_a2 = (arg2 - arg1) << 0x18;
-    u32 phi_v0 = temp_a2 ? -temp_a2 : temp_a2;
+u8 func_801929DC(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
 
-    if ((u8)arg0 < phi_v0) {
-        s32 phi_v0_2 = temp_a2 << 0x18 ? (arg1 - arg0) : (arg1 + arg0);
-        return phi_v0_2;
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
     }
 
     return arg2;
 }
-#endif
 
 void func_80192A34(u16 slope, s16 speed) {
     Entity* entity;

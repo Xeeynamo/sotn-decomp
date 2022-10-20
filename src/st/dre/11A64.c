@@ -2,15 +2,18 @@
 
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
-void func_8019B0B8(Entity*); // Member unconfirmed
+void func_8019B0B8(Entity*);
 void func_8019A3A8(Entity* entity);
 void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
+void func_8019A490();              
+void func_8019BDC8(struct Entity*);
+void func_8019C7DC(struct Entity*);
 
-extern Entity D_801804E8; // Type unconfirmed
+extern Entity D_801804E8;
 extern Entity D_8018050C;
 extern u16 D_800733FC;
 extern PfnEntityUpdate D_801803C4[];
@@ -382,7 +385,6 @@ u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
 }
 #endif
 
-// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
 u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     u8 var_v0;
     s8 temp_a2 = arg2 - arg1;
@@ -521,12 +523,6 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B1DC);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B304);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
-
-// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B7A0);
-
-void func_8019A490();               /* extern */
-void func_8019BDC8(struct Entity*); /* extern */
-void func_8019C7DC(struct Entity*); /* extern */
 
 void func_8019B7A0(Entity* arg0) {
     u16 temp_a0;
