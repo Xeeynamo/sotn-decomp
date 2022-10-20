@@ -175,7 +175,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801992C8);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801993DC);
 
 void func_80199554(void) {
-    Unkstruct8* CurrentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
     
     if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
@@ -186,7 +186,7 @@ void func_80199554(void) {
         }
     }
     if (D_8009790C != 0) {
-        s16 tmp = CurrentRoomTileLayout->unkE;
+        s16 tmp = currentRoomTileLayout->unkE;
         if (D_8009790C > 0) {
             func_801991CC(tmp + 0x120);
         } else {

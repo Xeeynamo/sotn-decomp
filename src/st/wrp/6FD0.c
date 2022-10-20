@@ -449,7 +449,7 @@ void LoadObjLayout(s32 objLayoutId) {
 #endif
 
 void func_8018A7AC(void) {
-    Unkstruct8* s0 = &g_CurrentRoomTileLayout;
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
@@ -460,9 +460,9 @@ void func_8018A7AC(void) {
     }
 
     if (D_8009790C != 0) {
-        s16 tmp = s0->unkE;
+        s16 tmp = currentRoomTileLayout->unkE;
         if (D_8009790C > 0)
-            func_8018A424(s0->unkE + 0x120);
+            func_8018A424(currentRoomTileLayout->unkE + 0x120);
         else
             func_8018A520(tmp - 0x40);
     }
