@@ -14,6 +14,7 @@ void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 Entity* func_8019AC18(Entity*, Entity*);
 
+extern PfnEntityUpdate D_801803C4[];
 extern Entity D_801804E8;
 extern Entity D_8018050C;
 extern u16 D_800733FC;
@@ -497,6 +498,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     if (arg1 != 0) {
         func_801A046C(arg1);
     }
+
     if (arg0 == 0xFF) {
         func_8019A3A8(D_8006C3B8);
         return;
@@ -697,14 +699,40 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F070);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F170);
 
+// a0 -> v0 register swap
+#ifndef NON_MATCHING
+void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F23C);
+#else
+void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
+    u16 palette;
+
+    func_8019A3A8(ent2);
+
+    ent2->objectId = arg0;
+    ent2->pfnUpdate = D_801803C4[arg0];
+    ent2->posX.Data.high = ent1->posX.Data.high;
+    ent2->posY.Data.high = ent1->posY.Data.high;
+    ent2->unk5A = ent1->unk5A;
+    ent2->zPriority = ent1->zPriority;
+    ent2->animationSet = ent1->animationSet;
+    ent2->unk34 = -0x32FFE000;
+    palette = ent1->palette;
+
+    if (palette & 0x8000) {
+        ent2->palette = ent1->unk6A;
+    } else {
+        ent2->palette = palette;
+    }
+}
+#endif
 
 void func_8019F304(void) {
     Entity* entity;
     s8 temp_s4 = func_80196F90() & 3;
     s16 temp_s3 = ((func_80196F90() & 0xF) << 8) - 0x800;
     s32 i;
-    
+
     for (i = 0; i < 6; i++) {
         entity = func_8019AC18(&D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
