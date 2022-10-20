@@ -4,6 +4,10 @@ void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
 void func_8019B0B8(Entity*); // Member unconfirmed
 void func_8019A3A8(Entity* entity);
+void func_80198F18(s16);
+void func_80199014(s16);
+void func_801991CC(s16);
+void func_801992C8(s16);
 
 extern Entity* D_801804E8; // Type unconfirmed
 extern Entity* D_8018050C;
@@ -170,7 +174,26 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801992C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801993DC);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199554);
+void func_80199554(void) {
+    Unkstruct8* CurrentRoomTileLayout = &g_CurrentRoomTileLayout;
+    
+    if (D_80097908 != 0) {
+        s16 tmp = D_8007308E;
+        if (D_80097908 > 0) {
+            func_80198F18(tmp + 0x140);
+        } else {
+            func_80199014(tmp - 0x40);
+        }
+    }
+    if (D_8009790C != 0) {
+        s16 tmp = CurrentRoomTileLayout->unkE;
+        if (D_8009790C > 0) {
+            func_801991CC(tmp + 0x120);
+        } else {
+            func_801992C8(tmp - 0x40);
+        }
+    }
+}
 
 // https://decomp.me/scratch/FLExi
 #ifndef NON_MATCHING
@@ -542,16 +565,13 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BAB8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BCAC);
-#else
 void func_8019BCAC(void) { // CollectHeartVessel
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
-        g_playerHeart += HEART_VESSEL_RICHTER;
+        g_playerHeart->unk0 += HEART_VESSEL_RICHTER;
 
-        if (g_playerHeartMax < g_playerHeart) {
-            g_playerHeart = g_playerHeartMax;
+        if (g_playerHeart->unk4 < g_playerHeart->unk0) {
+            g_playerHeart->unk0 = g_playerHeart->unk4;
         }
     } else {
         g_pfnPlaySfx(0x67A);
@@ -559,7 +579,6 @@ void func_8019BCAC(void) { // CollectHeartVessel
     }
     func_8019A3A8(D_8006C3B8);
 }
-#endif
 
 void func_8019BD50(void) { // CollectLifeVessel
     g_pfnPlaySfx(0x67A);

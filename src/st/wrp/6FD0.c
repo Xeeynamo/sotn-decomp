@@ -451,7 +451,7 @@ void LoadObjLayout(s32 objLayoutId) {
 void func_8018A7AC(void) {
     Unkstruct8* s0 = &g_CurrentRoomTileLayout;
 
-    if (D_80097908) {
+    if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
@@ -459,7 +459,7 @@ void func_8018A7AC(void) {
             func_8018A26C(tmp - 0x40);
     }
 
-    if (D_8009790C) {
+    if (D_8009790C != 0) {
         s16 tmp = s0->unkE;
         if (D_8009790C > 0)
             func_8018A424(s0->unkE + 0x120);
@@ -819,15 +819,13 @@ void CollectGold(u16 goldSize) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeartVessel);
-#else
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
-        g_playerHeart += HEART_VESSEL_RICHTER;
-        if (g_playerHeartMax < g_playerHeart) {
-            g_playerHeart = g_playerHeartMax;
+        g_playerHeart->unk0 += HEART_VESSEL_RICHTER;
+
+        if (g_playerHeart->unk4 < g_playerHeart->unk0) {
+            g_playerHeart->unk0 = g_playerHeart->unk4;
         }
     } else {
         g_pfnPlaySfx(0x67A);
@@ -835,7 +833,6 @@ void CollectHeartVessel(void) {
     }
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 void CollectLifeVessel(void) {
     g_pfnPlaySfx(0x67A);

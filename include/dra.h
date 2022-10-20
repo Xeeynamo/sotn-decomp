@@ -158,6 +158,11 @@ typedef struct {
     /* 0xBB */ u8 unkBB;
 } Entity; // size = 0xBC
 
+typedef struct playerHeart {
+s32 unk0;
+s32 unk4;
+} playerHeart;
+
 typedef struct {
     s32 unk0;
     char pad4[0x27];
@@ -450,7 +455,7 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern s32 g_playerHeart;
+extern playerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
 extern s32 g_playerHp;
 extern s32 g_playerHpMax;
