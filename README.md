@@ -57,7 +57,7 @@ There are a few tricks to make the process more streamlined:
 
 
 ## Resources:
-* List of ressource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but very useful still). 
+* List of resource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but very useful still). 
 * PS1’s CPU R3000 instruction [manual](https://cgi.cse.unsw.edu.au/~cs3231/doc/R3000.pdf) and [cheat sheet](https://vhouten.home.xs4all.nl/mipsel/r3000-isa.html)
 * https://github.com/KernelEquinox/SNEER
 * Debugging Emulator: https://github.com/grumpycoders/pcsx-redux
