@@ -159,6 +159,14 @@ typedef struct {
 } Entity; // size = 0xBC
 
 typedef struct {
+    s32 unk0;
+    char pad4[0x27];
+    u8 unk2B;
+    char padx[0x6];
+    u16 unk32;
+} unkStruct3;
+
+typedef struct {
     /* 0x0 */ char pad0[0xA];
     /* 0xA */ s16 unkA;
     /* 0xC */ s16 unkC;

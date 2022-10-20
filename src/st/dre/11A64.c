@@ -600,18 +600,11 @@ POLY_GT4* func_801A2550(POLY_GT4* arg0) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2580);
 
-// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A25FC);
-
-typedef struct {
-    s32 unk0;
-    char pad4[0x27];
-    u8 unk2B;
-    char padx[0x6];
-    u16 unk32;
-} unkStructX;
-
 // https://decomp.me/scratch/IIvQX a0 -> v0 register swap
-unkStructX* func_801A25FC(unkStructX* arg0, s32 arg1) {
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A25FC);
+#else
+unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
     s32 i;
     s8 var_a2;
 
@@ -638,6 +631,7 @@ unkStructX* func_801A25FC(unkStructX* arg0, s32 arg1) {
     }
     return arg0;
 }
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2684);
 
