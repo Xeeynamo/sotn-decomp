@@ -9,7 +9,7 @@ void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
-void func_8019A490();              
+void func_8019A490();
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 
