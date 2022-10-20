@@ -154,17 +154,17 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801984DC);
 
-void func_80198B80(Entity* arg0, ObjectInit* arg1) { // CreateEntity
-    func_8019A3A8(arg0);
-    arg0->objectId = arg1->flags & 0x3FF;
+void func_80198B80(Entity* entity, ObjectInit* initDesc) { // CreateEntity
+    func_8019A3A8(entity);
+    entity->objectId = initDesc->flags & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
-        arg0->pfnUpdate = D_801803C4[arg0->objectId];
+        entity->pfnUpdate = D_801803C4[entity->objectId];
     } while (0);
-    arg0->posX.Data.high = arg1->posX - D_8007308E;
-    arg0->posY.Data.high = arg1->posY - (u16)D_80073092;
-    arg0->subId = arg1->unk8;
-    arg0->unk32 = arg1->unk6 >> 8;
-    arg0->unk68 = (arg1->flags >> 0xA) & 7;
+    entity->posX.Data.high = initDesc->posX - D_8007308E;
+    entity->posY.Data.high = initDesc->posY - (u16)D_80073092;
+    entity->subId = initDesc->unk8;
+    entity->unk32 = initDesc->unk6 >> 8;
+    entity->unk68 = (initDesc->flags >> 0xA) & 7;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198C44);

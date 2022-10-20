@@ -312,20 +312,18 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018EDB8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018FEA0);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", CreateEntity);
-#else
 void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->flags & 0x3FF;
+    do { //! FAKE https://decomp.me/scratch/zysYC
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    } while (0);
     entity->posX.Data.high = initDesc->posX - D_80072B3E;
     entity->posY.Data.high = initDesc->posY - D_80072B42;
     entity->subId = initDesc->unk8;
     entity->unk32 = initDesc->unk6 >> 8;
     entity->unk68 = initDesc->flags >> 0xA & 7;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190608);
@@ -1089,8 +1087,8 @@ POLY_GT4* func_80199584(POLY_GT4* startPoly, s32 count) {
         }
 
         poly = (POLY_GT4*)poly->tag;
-        if (poly == 0)
-            return 0;
+        if (poly == NULL)
+            return NULL;
         poly->p3 = unk;
     }
 
