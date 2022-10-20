@@ -201,49 +201,7 @@ void func_8019A414(s16 index) { // DestroyEntityFromIndex
 // https://decomp.me/scratch/oUPTM
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A490);
 
-// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A4D8);
-
-typedef struct {
-    /* 0x0 */ s8 unk0;
-    /* 0x1 */ s8 unk1;
-} something;
-
-s32 func_8019A4D8(something* arg0, Entity* arg1) {
-    s32 var_a3;
-    u8* temp_a2;
-    something* var_a2;
-    something temp_v1;
-    u8 temp_v1_2;
-
-    var_a3 = 0;
-    var_a2 = arg0 + ((arg1->animationFrameIndex * 2) & 0xFFFF);
-    if (arg1->animationFrameDuration == 0) {
-        temp_v1 = *var_a2;
-        if (temp_v1.unk0 != 0) {
-            var_a3 = 0x80;
-            if (temp_v1.unk0 == 0xFF) {
-                return 0;
-            }
-            temp_a2 = var_a2 + 1;
-            arg1->animationFrameDuration = 0 /*(s16) *var_a2->unk0*/;
-            temp_v1_2 = *temp_a2;
-            var_a2 = temp_a2 + 1;
-            arg1->animationFrameIndex += 1;
-            arg1->animationFrame = (s16)temp_v1_2;
-            goto block_6;
-        }
-        arg1->animationFrameIndex = 0;
-        arg1->animationFrameDuration = 0;
-        arg1->animationFrameDuration = (s16)arg0->unk0; // u8 s8
-        arg1->animationFrameIndex += 1;
-        arg1->animationFrame = (s16)arg0->unk1;
-        return 0;
-    }
-block_6:
-    arg1->animationFrameDuration = (u16)arg1->animationFrameDuration - 1;
-    arg1->animationFrame = (s16)var_a2->unk1;
-    return (var_a3 | 1) & 0xFF;
-}
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A4D8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
 
