@@ -316,7 +316,7 @@ void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->flags & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     } while (0);
     entity->posX.Data.high = initDesc->posX - D_80072B3E;
     entity->posY.Data.high = initDesc->posY - D_80072B42;

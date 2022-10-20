@@ -704,7 +704,7 @@ void func_8019F304(void) {
     s8 temp_s4 = func_80196F90() & 3;
     s16 temp_s3 = ((func_80196F90() & 0xF) << 8) - 0x800;
     s32 i;
-    
+
     for (i = 0; i < 6; i++) {
         entity = func_8019AC18(&D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
