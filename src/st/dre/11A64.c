@@ -32,21 +32,21 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80192104);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193B3C);
 
-void func_80193D7C(Entity* arg0) {
+void func_80193D7C(Entity* entity) {
     if (arg0->initState == 0) {
         func_8019B0B8(&D_801804E8);
     }
-    arg0->posX.Data.high = arg0[-1].posX.Data.high;
-    arg0->animationFrame = 0;
-    arg0->posY.Data.high = arg0[-1].posY.Data.high;
-    arg0->unk14 = arg0[-1].unk14;
-    if (arg0[-1].animationFrame == 0x32) {
-        arg0->animationFrame = 0x3E;
+    entity->posX.Data.high = entity[-1].posX.Data.high;
+    entity->animationFrame = 0;
+    entity->posY.Data.high = entity[-1].posY.Data.high;
+    entity->unk14 = entity[-1].unk14;
+    if (entity[-1].animationFrame == 0x32) {
+        entity->animationFrame = 0x3E;
     }
-    if (arg0[-1].animationFrame == 0x33) {
-        arg0->animationFrame = 0x3F;
+    if (entity[-1].animationFrame == 0x33) {
+        entity->animationFrame = 0x3F;
     }
-    arg0->zPriority = D_800733FC + 4;
+    entity->zPriority = D_800733FC + 4;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193E18);
