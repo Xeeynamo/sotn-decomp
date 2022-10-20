@@ -6,6 +6,7 @@ void func_8019B0B8(Entity*); // Member unconfirmed
 void func_8019A3A8(Entity* entity);
 
 extern Entity* D_801804E8; // Type unconfirmed
+extern Entity* D_8018050C;
 extern u16 D_800733FC;
 extern PfnEntityUpdate* D_801803C4[];
 extern s16 D_801A3EDE;
@@ -20,6 +21,7 @@ extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern s8 D_801811AC[]; // c_HeartPrizes[]
+extern s32 D_80180668;
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191A64);
 
@@ -60,7 +62,26 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194214);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194488);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801946C4);
+void func_801946C4(Entity* entity) {
+    switch (entity->initState) {
+    case 0:
+        func_8019B0B8(&D_8018050C);
+        entity->animationFrame = 0;
+        entity->unk19 = 4;
+        entity->unk3C = 0;
+    case 1:
+        if (entity[-1].animationFrame != 0) {
+            entity->unk3C = 1;
+            entity->animationFrame = 0x56;
+        }
+        if (entity->unk48 != 0) {
+            D_80180668 = 1;
+        }
+        if (entity[-1].objectId != 0x1E) {
+            func_8019A3A8(entity);
+        }
+    }
+}
 
 void func_80194774(void) {
     D_801A3EE4 = 2;
