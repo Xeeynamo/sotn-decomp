@@ -13,7 +13,10 @@ void func_8019A490();
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 Entity* func_8019AC18(Entity*, Entity*);
+s32 func_8019A4D8(Entity*, Entity*);
 
+extern Entity* D_80180470;
+extern Entity* D_80181338;
 extern PfnEntityUpdate D_801803C4[];
 extern Entity D_801804E8;
 extern Entity D_8018050C;
@@ -697,7 +700,32 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019EAF0);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F070);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F170);
+void func_8019F170(Entity* arg0) {
+    if (arg0->initState == 0) {
+        func_8019B0B8(&D_80180470);
+        arg0->unk6C = 0xF0;
+        arg0->unk1A = 0x1A0;
+        arg0->unk1C = 0x1A0;
+        arg0->animationSet = 8;
+        arg0->animationFrame = 1;
+        arg0->zPriority += 0x10;
+
+        if (arg0->subId != 0) {
+            arg0->palette = (s16)arg0->subId;
+        } else {
+            arg0->palette = 0x8160;
+        }
+
+        arg0->initState++;
+        return;
+    }
+
+    func_8019A75C();
+
+    if (!func_8019A4D8(&D_80181338, arg0)) {
+        func_8019A3A8(arg0);
+    }
+}
 
 // a0 -> v0 register swap
 #ifndef NON_MATCHING
