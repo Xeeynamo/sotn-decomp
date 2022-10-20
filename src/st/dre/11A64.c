@@ -1,6 +1,7 @@
 #include "stage.h"
 
 void func_8019A3A8(Entity* entity);
+void func_8019C63C(Entity*);
 
 extern PfnEntityUpdate* D_801803C4[];
 extern s16 D_801A3EDE;
@@ -411,7 +412,26 @@ void func_8019B008(u8 arg0) {
     entity->animationFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B024);
+void func_8019B024(u16 arg0, u16 arg1) {
+    Entity* entity;
+
+    if (arg1 != 0) {
+        func_801A046C(arg1);
+    }
+    if (arg0 == 0xFF) {
+        func_8019A3A8(D_8006C3B8);
+        return;
+    }
+
+    entity = D_8006C3B8;
+    entity->unk19 = 0;
+    entity->objectId = EntityExplosionID;
+    entity->pfnUpdate = (PfnEntityUpdate)func_8019C63C;
+    entity->subId = arg0;
+    entity->animationFrame = 0;
+    D_8006C3B8->initState = 0;
+    D_8006C3B8->unk2E = 0;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B0B8);
 
