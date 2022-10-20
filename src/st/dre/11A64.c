@@ -817,7 +817,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A13B8);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A174C);
 
 void func_801A1BFC(Entity* entity) {
-    ObjInit2* obj = &D_80181420[entity->subId * 10];    
+    ObjInit2* obj = &D_80181420[entity->subId * 10];
 
     if (entity->initState == 0) {
         func_8019B0B8(&D_801804AC);
@@ -837,7 +837,7 @@ void func_801A1BFC(Entity* entity) {
             entity->unk19 = entity->unk19 | 4;
         }
     }
-    
+
     func_8019A4D8(obj->unk10, entity);
 }
 
