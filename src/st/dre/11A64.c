@@ -8,11 +8,12 @@ void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
+void func_801A046C(u16);
 
-extern Entity* D_801804E8; // Type unconfirmed
-extern Entity* D_8018050C;
+extern Entity D_801804E8; // Type unconfirmed
+extern Entity D_8018050C;
 extern u16 D_800733FC;
-extern PfnEntityUpdate* D_801803C4[];
+extern PfnEntityUpdate D_801803C4[];
 extern s16 D_801A3EDE;
 extern u16 D_801A3EE0;
 extern s16 D_801A3EE2;
@@ -385,7 +386,6 @@ u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
 // INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
 u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     u8 var_v0;
-    u8 var_v0_2;
     s8 temp_a2 = arg2 - arg1;
 
     if (temp_a2 < 0) {
