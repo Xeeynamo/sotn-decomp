@@ -3,6 +3,7 @@
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
 void func_8019B0B8(Entity*); // Member unconfirmed
+void func_8019A3A8(Entity* entity);
 
 extern Entity* D_801804E8; // Type unconfirmed
 extern u16 D_800733FC;
@@ -520,11 +521,28 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BAB8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BCAC);
+#else
+void func_8019BCAC(void) { // CollectHeartVessel
+    if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+        g_pfnPlaySfx(0x67A);
+        g_playerHeart += HEART_VESSEL_RICHTER;
 
-void func_8019BD50(void) {
+        if (g_playerHeartMax < g_playerHeart) {
+            g_playerHeart = g_playerHeartMax;
+        }
+    } else {
+        g_pfnPlaySfx(0x67A);
+        D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+    }
+    func_8019A3A8(D_8006C3B8);
+}
+#endif
+
+void func_8019BD50(void) { // CollectLifeVessel
     g_pfnPlaySfx(0x67A);
-    D_8003C848(5, 0x8000);
+    D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     func_8019A3A8(D_8006C3B8);
 }
 
@@ -555,13 +573,13 @@ void func_8019C738(Entity* arg0, s32 renderFlags) {
     poly->y2 = bottom;
 
     if (renderFlags & RENDERFLAGS_NOSHADOW) {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
-        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
-        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 255;        
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
     } else {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
-        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
-        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 128;
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
     }
 }
 
