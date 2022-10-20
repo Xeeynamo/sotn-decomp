@@ -35,8 +35,33 @@ extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern s8 D_801811AC[]; // c_HeartPrizes[]
 extern s32 D_80180668;
+extern Entity* D_801804AC;
+extern u16 D_80180528[];
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191A64);
+void func_80191A64(Entity* entity) {
+    ObjInit2* obj = &D_80180528[entity->subId * 10];
+
+    if (entity->initState == 0) {
+        func_8019B0B8(&D_801804AC);
+        entity->animationSet = obj->animationSet;
+        entity->zPriority = obj->zPriority;
+        entity->unk5A = obj->unk4.data;
+        entity->palette = obj->palette;
+        entity->unk19 = obj->unk8;
+        entity->unk18 = obj->unkA;
+
+        if (obj->unkC != 0) {
+            entity->unk34 = obj->unkC;
+        }
+
+        if (entity->subId == 1) {
+            entity->unk1C = 0x200;
+            entity->unk1A = 0x200;
+        }
+    }
+
+    func_8019A4D8(obj->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191B44);
 
@@ -851,6 +876,7 @@ unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
 }
 #endif
 
+// need a weird struct for this one
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2684);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2764);

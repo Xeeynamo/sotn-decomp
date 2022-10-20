@@ -842,7 +842,7 @@ void ReplaceCandleWithDrop(Entity* entity) {
     u16 newSubId;
 
     func_80191E24(entity);
-    if ((D_8009741A & 2) == 0) {
+    if (!(D_8009741A & 2)) {
         DestroyEntity(entity);
         return;
     }
