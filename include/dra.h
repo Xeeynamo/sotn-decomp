@@ -159,8 +159,8 @@ typedef struct {
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {
-s32 unk0;
-s32 unk4;
+    s32 unk0;
+    s32 unk4;
 } playerHeart;
 
 typedef struct {
