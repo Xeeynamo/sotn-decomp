@@ -731,21 +731,27 @@ u16 func_80192B28(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192B70);
-#else
-u16 func_80192B70(s32 arg0, s32 arg1, s32 arg2) {
-    u32 temp_a2 = arg2 - arg1;
-    u16 phi_v0 = temp_a2 & 0x800 ? (0x800 - temp_a2) & 0x7FF : temp_a2;
+u16 func_80192B70(u16 arg0, u16 arg1, u16 arg2) {
+    u16 var_v0 = arg1;
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0_2;
 
-    if ((u16)arg0 < phi_v0) {
-        u16 ret = temp_a2 & 0x800 ? (arg1 - arg0) : (arg1 + arg0);
-        return ret;
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
     }
 
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+        return var_v0;
+    }
     return arg2;
 }
-#endif
 
 void func_80192BD0(s32 arg0) {
     D_8006C26C->initState = (s16)(arg0 & 0xFF);
