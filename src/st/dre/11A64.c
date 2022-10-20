@@ -176,7 +176,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801993DC);
 
 void func_80199554(void) {
     Unkstruct8* CurrentRoomTileLayout = &g_CurrentRoomTileLayout;
-    
+
     if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
         if (D_80097908 > 0) {
