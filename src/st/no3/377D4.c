@@ -17,6 +17,9 @@ extern ObjectInit* D_801D7110;
 extern ObjectInit* D_801D7114;
 extern s8 D_801D7118;
 extern s8 D_801D711C;
+extern s16 D_801D7D60;
+extern s16 D_801D7D62;
+extern s32 D_801D7D64;
 
 void SpawnExplosionEntity(u16, Entity*);
 void ReplaceCandleWithDrop(Entity*);
@@ -165,7 +168,11 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE7BC);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE870);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE9F4);
+void func_801BE9F4(s32 arg0) {
+    D_801D7D64 = arg0 + 0x100000;
+    D_801D7D62 = 0;
+    D_801D7D60 = 1;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BEA20);
 
@@ -412,9 +419,27 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4D4C);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4E4C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4F64);
+s16 func_801C4F64(void) {
+    s16 temp_v1;
+    s16 var_a0;
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4FA0);
+    temp_v1 = (u16) D_8006C3B8->posX.Data.high - (u16) D_800733DA;
+    var_a0 = temp_v1;
+    if (temp_v1 >> 0x10) {
+        var_a0 = -temp_v1;
+    }
+    return var_a0;
+}
+
+s32 func_801C4FA0(void) {
+    s32 var_v0;
+
+    var_v0 = D_8006C3B8->posY.Data.high - D_800733DE;
+    if (var_v0 < 0) {
+        var_v0 = -var_v0;
+    }
+    return var_v0;
+}
 
 s16 func_801C4FD4(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
@@ -463,9 +488,15 @@ s16 func_801C5560(s32 arg0) { return D_801820C4[arg0 & 0xFF]; }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C55E8);
+s32 func_801C55E8(s16 arg0, s16 arg1) {
+    return ((ratan2((s32) arg1, (s32) arg0) >> 4) + 0x40) & 0xFF;
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5620);
+s32 func_801C5620(Entity *arg0, Entity *arg1) {
+    s16 a = arg1->posX.Data.high - arg0->posX.Data.high;
+    s16 b = arg1->posY.Data.high - arg0->posY.Data.high;
+    return func_801C55E8(a, b) & 0xFF;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5668);
 
@@ -473,9 +504,15 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C56B0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5794);
+u16 func_801C5794(s16 arg0, s16 arg1) {
+    return ratan2((s32) arg1, (s32) arg0);
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57C4);
+u16 func_801C57C4(Entity *a, Entity *b) {
+    s32 diffX = b->posX.Data.high - a->posX.Data.high;
+    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57FC);
 
