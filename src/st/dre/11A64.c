@@ -164,23 +164,6 @@ void func_80198B80(Entity *arg0, ObjectInit *arg1)
     arg0->unk68 = (arg1->flags >> 0xA) & 7;
 }
 
-/*
-void func_80198B80(Entity* ent1, Entity* ent2) {
-    func_8019A3A8(ent1);
-    ent1->objectId = ent2->posY.Data.low;
-    ent1->objectId = ent1->objectId & 0x3FF;
-
-    do { //! FAKE https://decomp.me/scratch/zysYC
-        ent1->pfnUpdate = D_801803C4[ent1->objectId];
-    } while (0);
-
-    ent1->posX.Data.high = ent2->posX.Data.low - D_8007308E;
-    ent1->posY.Data.high = ent2->posX.Data.high - D_80073092;
-    ent1->subId =*((u16*)&ent2->accelerationX);
-    ent1->unk32 = ((u16)ent2->posY.Data.high) >> 8;
-    ent1->unk68 = ((u16)ent2->posY.Data.low >> 0xA) & 7;
-}
-*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198C44);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198D5C);
