@@ -154,7 +154,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801984DC);
 
-void func_80198B80(Entity* arg0, ObjectInit* arg1) {
+void func_80198B80(Entity* arg0, ObjectInit* arg1) { // CreateEntity
     func_8019A3A8(arg0);
     arg0->objectId = arg1->flags & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
