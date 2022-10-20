@@ -181,7 +181,7 @@ typedef struct {
 typedef struct {
     /* 0x0 */ u16 posX;
     /* 0x2 */ u16 posY;
-    /* 0x4 */ u16 flags;
+    /* 0x4 */ u16 flags; // maybe misnamed
     /* 0x6 */ u16 unk6;
     /* 0x8 */ u16 unk8;
 } ObjectInit; // size = 0xA
