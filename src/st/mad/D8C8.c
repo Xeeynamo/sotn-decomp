@@ -751,7 +751,7 @@ u16 func_80192B70(u16 arg0, u16 arg1, u16 arg2) {
 
         return var_v0;
     }
-    
+
     return arg2;
 }
 

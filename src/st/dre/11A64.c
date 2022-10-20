@@ -399,12 +399,12 @@ u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
 }
 #endif
 
-//INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
+// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADF4);
 u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     u8 var_v0;
     u8 var_v0_2;
     s8 temp_a2 = arg2 - arg1;
-  
+
     if (temp_a2 < 0) {
         var_v0 = -temp_a2;
     } else {
@@ -417,7 +417,7 @@ u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
         } else {
             var_v0 = arg1 + arg0;
         }
-        
+
         return var_v0;
     }
 
@@ -555,7 +555,7 @@ void func_8019B7A0(Entity* arg0) {
         func_8019A3A8(arg0);
         return;
     }
-    
+
     temp_a0 = arg0->subId & 0xFFF;
     var_v1 = temp_a0;
     arg0->subId = var_v1;
