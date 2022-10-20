@@ -900,13 +900,13 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     poly->y2 = bottom;
 
     if (renderFlags & RENDERFLAGS_NOSHADOW) {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
-        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
-        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 255;        
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
     } else {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 =
-        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 
-        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 128;
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
     }
 }
 
