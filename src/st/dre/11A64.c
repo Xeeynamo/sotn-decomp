@@ -713,7 +713,45 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E2B8);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
+/*
+s32 func_8019E6D0(void);
 
+typedef struct {
+    u16 unk0;
+    u32 unk2;
+    u16 unk6;
+    char padA[0x16];
+    s32 unk24;
+} unkStructX;
+
+void func_8019E4F8(unkStructX* arg0, u8 arg1, s32 arg3, s32 arg4, s32 arg6) {
+    s16 temp_s6;
+    s16 i;
+    s16 var_s1;
+    Entity* entity;
+
+    temp_s6 = arg0->unk6 + arg6;
+
+    // if ((arg1 & 0xFF) > 0)
+    //{
+    for(i = 0, var_s1 = (u16)arg0->unk2 + arg4; i < (arg1 & 0xFF); i++) {
+
+    //do {
+        entity = func_8019AC18(&D_8007A958, &D_8007A958[32]);
+        if (entity != NULL) {
+            entity->objectId = 0x15;
+            entity->pfnUpdate = func_8019E6D0;
+            entity->posX.Data.high = var_s1;
+            entity->posY.Data.high = temp_s6;
+            entity->subId = i;
+            entity->zPriority = arg0->unk24 + 1;
+        }
+        //i += 1;
+        var_s1 += (s16)arg6;
+    }// while (i < (arg1 & 0xFF));
+    //}
+}
+*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E6D0);
@@ -817,7 +855,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A13B8);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A174C);
 
 void func_801A1BFC(Entity* entity) {
-    ObjInit2* obj = &D_80181420[entity->subId * 10];    
+    ObjInit2* obj = &D_80181420[entity->subId * 10];
 
     if (entity->initState == 0) {
         func_8019B0B8(&D_801804AC);
@@ -837,7 +875,7 @@ void func_801A1BFC(Entity* entity) {
             entity->unk19 = entity->unk19 | 4;
         }
     }
-    
+
     func_8019A4D8(obj->unk10, entity);
 }
 
