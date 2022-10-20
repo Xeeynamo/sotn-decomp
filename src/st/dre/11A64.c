@@ -150,15 +150,14 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801984DC);
 
-void func_80198B80(Entity *arg0, ObjectInit *arg1)
-{
+void func_80198B80(Entity* arg0, ObjectInit* arg1) {
     func_8019A3A8(arg0);
     arg0->objectId = arg1->flags & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
         arg0->pfnUpdate = D_801803C4[arg0->objectId];
     } while (0);
     arg0->posX.Data.high = arg1->posX - D_8007308E;
-    arg0->posY.Data.high = arg1->posY - (u16) D_80073092;
+    arg0->posY.Data.high = arg1->posY - (u16)D_80073092;
     arg0->subId = arg1->unk8;
     arg0->unk32 = arg1->unk6 >> 8;
     arg0->unk68 = (arg1->flags >> 0xA) & 7;
@@ -542,7 +541,7 @@ void func_8019B7A0(Entity* arg0) {
     temp_a0 = arg0->subId & 0xFFF;
     var_v1 = temp_a0;
     arg0->subId = var_v1;
-    
+
     if (var_v1 < 0x80) {
         arg0->objectId = 3;
         arg0->pfnUpdate = func_8019BDC8;
