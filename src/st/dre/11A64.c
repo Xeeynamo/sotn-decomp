@@ -2,7 +2,10 @@
 
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
+void func_8019B0B8(Entity*); // Member unconfirmed
 
+extern Entity* D_801804E8; // Type unconfirmed
+extern u16 D_800733FC;
 extern PfnEntityUpdate* D_801803C4[];
 extern s16 D_801A3EDE;
 extern u16 D_801A3EE0;
@@ -29,7 +32,22 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80192104);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193B3C);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193D7C);
+void func_80193D7C(Entity* arg0) {
+    if (arg0->initState == 0) {
+        func_8019B0B8(&D_801804E8);
+    }
+    arg0->posX.Data.high = arg0[-1].posX.Data.high;
+    arg0->animationFrame = 0;
+    arg0->posY.Data.high = arg0[-1].posY.Data.high;
+    arg0->unk14 = arg0[-1].unk14;
+    if (arg0[-1].animationFrame == 0x32) {
+        arg0->animationFrame = 0x3E;
+    }
+    if (arg0[-1].animationFrame == 0x33) {
+        arg0->animationFrame = 0x3F;
+    }
+    arg0->zPriority = D_800733FC + 4;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193E18);
 
