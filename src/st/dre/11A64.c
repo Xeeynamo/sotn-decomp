@@ -14,6 +14,9 @@ void func_8019C7DC(struct Entity*);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 
+extern u16 D_80180470;
+extern s32 D_801811B0[];
+extern u32 D_8018125C[];
 extern s16 D_801812E4[];
 extern u32 D_801812F4[];
 extern u16 D_80181420[];
@@ -705,7 +708,43 @@ void func_8019BDA0(void) { func_8019A3A8(D_8006C3B8); }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
 
+// at -> a0 reg swap
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C63C);
+#else
+void func_8019C63C(Entity* arg0) {
+    u32 temp_v0;
+    u32 temp;
+
+    if (arg0->initState == 0) {
+        func_8019B0B8(&D_80180470);
+        arg0->animationSet = 2;
+        arg0->animationFrameIndex = 0;
+        arg0->animationFrameDuration = 0;
+        arg0->unk18 = 0x30;
+
+        if (arg0->subId & 0xF0) {
+            arg0->palette = 0x8195;
+            arg0->unk18 = 0x10;
+        }
+
+        temp_v0 = arg0->subId & 0xFF00;
+
+        if (temp_v0 != 0) {
+            arg0->zPriority = (u16)(temp_v0 >> 8);
+        }
+
+        arg0->subId &= 0xF;
+        arg0->accelerationY = D_801811B0[arg0->subId];
+        return;
+    }
+
+    arg0->posY.value += arg0->accelerationY;
+    if (!func_8019A4D8(D_8018125C[arg0->subId], arg0)) {
+        func_8019A3A8(arg0);
+    }
+}
+#endif
 
 void func_8019C738(Entity* arg0, s32 renderFlags) {
     POLY_GT4* poly;
@@ -1020,25 +1059,5 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2A58);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2C9C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2E20);
-/*
-extern s16 D_801815E8[];
 
-void func_801A2E20(Entity* arg0) {
-    Entity* entity;
-    s32 i;
-
-    if (arg0->initState == 0) {
-        for (i = 0; D_801815E8[i] != 1; i++) {
-            entity = func_8019AC18(D_8007D858, &D_8007D858[32]);
-            if (entity == NULL) {
-                break;
-            }
-            func_80199608(0x16, entity);
-            entity->posX.Data.high = i - D_8007308E.posX.value;
-            entity->posY.Data.high = i - D_8007308E.posY.value;
-            entity->subId = i;
-        }
-    }
-    arg0->initState += 1;
-}*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2F10);
