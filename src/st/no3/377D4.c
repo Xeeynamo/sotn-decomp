@@ -1,5 +1,10 @@
 #include "stage.h"
 
+void SpawnExplosionEntity(u16, Entity*);
+void ReplaceCandleWithDrop(Entity*);
+void EntityCandleDrop(Entity*);
+void EntityCandleHeartDrop(Entity*);
+
 extern ObjectInit* g_pStObjLayout[];
 extern u8* D_80180850;
 extern u16 D_80180AAC[];
@@ -12,7 +17,6 @@ extern u16 D_80180E80[];
 extern u8 D_80180E90[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_801820C4[];
-
 extern ObjectInit* D_801D7110;
 extern ObjectInit* D_801D7114;
 extern s8 D_801D7118;
@@ -21,10 +25,6 @@ extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
 
-void SpawnExplosionEntity(u16, Entity*);
-void ReplaceCandleWithDrop(Entity*);
-void EntityCandleDrop(Entity*);
-void EntityCandleHeartDrop(Entity*);
 
 void func_801B77D4(Entity* arg0) {
     s32 temp_v0;
@@ -421,14 +421,12 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4E4C);
 
 s16 func_801C4F64(void) {
     s16 temp_v1;
-    s16 var_a0;
 
-    temp_v1 = (u16) D_8006C3B8->posX.Data.high - (u16) D_800733DA;
-    var_a0 = temp_v1;
-    if (temp_v1 >> 0x10) {
-        var_a0 = -temp_v1;
+    temp_v1 = D_8006C3B8->posX.Data.high - D_800733DA;
+    if (temp_v1 < 0) {
+        temp_v1 = -temp_v1;
     }
-    return var_a0;
+    return temp_v1;
 }
 
 s32 func_801C4FA0(void) {
@@ -488,14 +486,14 @@ s16 func_801C5560(s32 arg0) { return D_801820C4[arg0 & 0xFF]; }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
 
-s32 func_801C55E8(s16 arg0, s16 arg1) {
-    return ((ratan2((s32) arg1, (s32) arg0) >> 4) + 0x40) & 0xFF;
+u8 func_801C55E8(s16 arg0, s16 arg1) {
+    return ((ratan2(arg1, arg0) >> 4) + 0x40);
 }
 
-s32 func_801C5620(Entity *arg0, Entity *arg1) {
+u8 func_801C5620(Entity *arg0, Entity *arg1) {
     s16 a = arg1->posX.Data.high - arg0->posX.Data.high;
     s16 b = arg1->posY.Data.high - arg0->posY.Data.high;
-    return func_801C55E8(a, b) & 0xFF;
+    return func_801C55E8(a, b);
 }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5668);
@@ -505,7 +503,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C56B0);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
 
 u16 func_801C5794(s16 arg0, s16 arg1) {
-    return ratan2((s32) arg1, (s32) arg0);
+    return ratan2(arg1, arg0);
 }
 
 u16 func_801C57C4(Entity *a, Entity *b) {
