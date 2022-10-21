@@ -8,9 +8,10 @@ void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
-void func_8019A490();
+void func_8019A490(void);
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
+void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 
@@ -863,7 +864,33 @@ void func_8019E6D0(Entity* entity) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E7C4);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E9F4);
+bool func_8019E9F4(Unkstruct6* arg0) {
+    Unkstruct7 sp10;
+
+    func_8019A78C();
+    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
+    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+
+    if (D_8006C3B8->accelerationY >= 0) {
+        s16 posX = D_8006C3B8->posX.Data.high;
+        s16 posY = D_8006C3B8->posY.Data.high;
+        posX += arg0->x;
+        posY += arg0->y;
+
+        D_8003C7BC(posX, posY, &sp10, 0);
+
+        if (sp10.sp10 & 1) {
+            D_8006C3B8->posY.Data.high += sp10.sp28;
+            D_8006C3B8->accelerationY = -D_8006C3B8->accelerationY / 2;
+
+            if (D_8006C3B8->accelerationY > -0x10000) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019EAF0);
 
@@ -886,7 +913,7 @@ void func_8019F070(Entity* entity) {
         if (temp_v0 != 0) {
             entity->zPriority = temp_v0 >> 8;
         }
-        
+
         entity->zPriority += 8;
         return;
     }
