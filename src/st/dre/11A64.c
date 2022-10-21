@@ -3,7 +3,6 @@
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
 void func_8019B0B8(u16* arg0);
-void func_8019A3A8(Entity* entity);
 void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
@@ -15,6 +14,8 @@ void func_8019C7DC(struct Entity*);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 
+extern s16 D_801812E4[];
+extern u32 D_801812F4[];
 extern u16 D_80181420[];
 extern u16 D_80180470;
 extern u8 D_80181338;
@@ -776,11 +777,11 @@ void func_8019E5E0(Entity* entity) {
         return;
     }
 
-    entity->animationFrameDuration = ((u16)entity->animationFrameDuration) + 1;
+    entity->animationFrameDuration++;
     entity->posY.value -= entity->accelerationY;
 
     if (!(entity->animationFrameDuration & 1)) {
-        entity->animationFrame = entity->animationFrame + 1;
+        entity->animationFrame++;
     }
 
     if (D_80181328[entity->subId] < entity->animationFrameDuration) {
@@ -789,7 +790,37 @@ void func_8019E5E0(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E6D0);
+void func_8019E6D0(Entity* entity) {
+    u16 temp_v0;
+    u32 temp2;
+
+    if (!entity->initState) {
+        entity->unk34 = 0x0C002000;
+        entity->palette = 0x8195;
+        entity->animationSet = 5;
+        entity->animationFrame = 1;
+        entity->unk18 = 0x10;
+        entity->unk19 = 3;
+        temp_v0 = D_801812E4[entity->subId];
+        entity->unk1A = temp_v0;
+        entity->unk1C = temp_v0;
+        temp2 = D_801812F4[entity->subId];
+        entity->initState += 1;
+        entity->accelerationY = temp2;
+        return;
+    }
+
+    entity->animationFrameDuration++;
+    entity->posY.value -= entity->accelerationY;
+
+    if (!(entity->animationFrameDuration & 1)) {
+        entity->animationFrame++;
+    }
+
+    if (entity->animationFrameDuration >= 0x25) {
+        func_8019A3A8(entity);
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E7C4);
 
