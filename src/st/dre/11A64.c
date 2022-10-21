@@ -766,8 +766,10 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
 
-// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
-
+#ifndef NON_MATCHING // at -> a1 register swap
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
+void func_8019E5E0(Entity* entity);
+#else
 void func_8019E5E0(Entity* entity) {
     u8 new_var2;
     u32 new_var;
@@ -796,6 +798,7 @@ void func_8019E5E0(Entity* entity) {
         func_8019A3A8(entity);
     }
 }
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E6D0);
 
