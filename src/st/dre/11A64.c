@@ -732,11 +732,10 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
 
 // INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
 
-
 void func_8019E5E0(Entity* entity) {
     u8 new_var2;
     u32 new_var;
-    
+
     if (!entity->initState) {
         new_var = D_8018130C[entity->unk94];
         entity->unk34 = 0x0C002000;
