@@ -13,11 +13,11 @@ void func_8019A490();
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 Entity* func_8019AC18(Entity*, Entity*);
-s32 func_8019A4D8(Entity*, Entity*);
+s32 func_8019A4D8(u8*, Entity*);
 
 extern u16 D_80181420[];
-extern Entity* D_80180470;
-extern Entity* D_80181338;
+extern Entity D_80180470;
+extern u8 D_80181338;
 extern PfnEntityUpdate D_801803C4[];
 extern Entity D_801804E8;
 extern Entity D_8018050C;
@@ -36,11 +36,11 @@ extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern s8 D_801811AC[]; // c_HeartPrizes[]
 extern s32 D_80180668;
-extern Entity* D_801804AC;
+extern Entity D_801804AC;
 extern u16 D_80180528[];
 
 void func_80191A64(Entity* entity) {
-    ObjInit2* obj = &D_80180528[entity->subId * 10];
+    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
 
     if (entity->initState == 0) {
         func_8019B0B8(&D_801804AC);
@@ -243,6 +243,7 @@ void func_80199554(void) {
 
 // https://decomp.me/scratch/FLExi
 #ifndef NON_MATCHING
+void func_80199608(u16 objectId, Entity* entity);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
 #else
 void func_80199608(u16 objectId, Entity* entity) {
@@ -362,7 +363,19 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A7B8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AA30);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC18);
+Entity* func_8019AC18(Entity* start, Entity* end) {
+    Entity* current = start;
+
+    while (current < end) {
+        if (current->objectId == 0) {
+            func_8019A3A8(current);
+            return current;
+        }
+
+        current++;
+    }
+    return NULL;
+}
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
 // flags https://decomp.me/scratch/dlcph
@@ -713,45 +726,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E2B8);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
-/*
-s32 func_8019E6D0(void);
 
-typedef struct {
-    u16 unk0;
-    u32 unk2;
-    u16 unk6;
-    char padA[0x16];
-    s32 unk24;
-} unkStructX;
-
-void func_8019E4F8(unkStructX* arg0, u8 arg1, s32 arg3, s32 arg4, s32 arg6) {
-    s16 temp_s6;
-    s16 i;
-    s16 var_s1;
-    Entity* entity;
-
-    temp_s6 = arg0->unk6 + arg6;
-
-    // if ((arg1 & 0xFF) > 0)
-    //{
-    for(i = 0, var_s1 = (u16)arg0->unk2 + arg4; i < (arg1 & 0xFF); i++) {
-
-    //do {
-        entity = func_8019AC18(&D_8007A958, &D_8007A958[32]);
-        if (entity != NULL) {
-            entity->objectId = 0x15;
-            entity->pfnUpdate = func_8019E6D0;
-            entity->posX.Data.high = var_s1;
-            entity->posY.Data.high = temp_s6;
-            entity->subId = i;
-            entity->zPriority = arg0->unk24 + 1;
-        }
-        //i += 1;
-        var_s1 += (s16)arg6;
-    }// while (i < (arg1 & 0xFF));
-    //}
-}
-*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E6D0);
@@ -954,5 +929,25 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2A58);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2C9C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2E20);
+/*
+extern s16 D_801815E8[];
 
+void func_801A2E20(Entity* arg0) {
+    Entity* entity;
+    s32 i;
+
+    if (arg0->initState == 0) {
+        for (i = 0; D_801815E8[i] != 1; i++) {
+            entity = func_8019AC18(D_8007D858, &D_8007D858[32]);
+            if (entity == NULL) {
+                break;
+            }
+            func_80199608(0x16, entity);
+            entity->posX.Data.high = i - D_8007308E.posX.value;
+            entity->posY.Data.high = i - D_8007308E.posY.value;
+            entity->subId = i;
+        }
+    }
+    arg0->initState += 1;
+}*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2F10);
