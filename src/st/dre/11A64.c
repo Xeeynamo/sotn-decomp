@@ -2,7 +2,7 @@
 
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
-void func_8019B0B8(Entity*);
+// void func_8019B0B8(Entity*);
 void func_8019A3A8(Entity* entity);
 void func_80198F18(s16);
 void func_80199014(s16);
@@ -559,7 +559,43 @@ void func_8019B024(u16 arg0, u16 arg1) {
     D_8006C3B8->unk2E = 0;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B0B8);
+// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B0B8);
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+} someStruct;
+
+void func_8019B0B8(u16* arg0) {
+    Entity* temp_a0_4;
+    Entity* entity;
+    Unkstruct5* temp_v0;
+    u16* temp_a0 = arg0;
+    u16 temp_v1;
+    someStruct* temp_a0_3;
+
+    D_8006C3B8->animationSet = *arg0++;
+    D_8006C3B8->animationFrame = *arg0++;
+    D_8006C3B8->unk5A = *arg0++;
+    D_8006C3B8->palette = *arg0++;
+    temp_v1 = *arg0++;
+    D_8006C3B8->unk3A = temp_v1;
+    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    D_8006C3B8->unk3E = temp_v0->unk4;
+    D_8006C3B8->unk40 = temp_v0->unk6;
+    D_8006C3B8->unk42 = temp_v0->unk8;
+    D_8006C3B8->unk3C = temp_v0->unkC;
+    D_8006C3B8->hitboxWidth = temp_v0->hitboxWidth;
+    D_8006C3B8->hitboxHeight = temp_v0->hitboxHeight;
+    D_8006C3B8->unk34 = temp_v0->unk24;
+    D_8006C3B8->unk10 = 0;
+    D_8006C3B8->unk12 = 0;
+    D_8006C3B8->unk2E = 0;
+    D_8006C3B8->initState++;
+    if (D_8006C3B8->zPriority == 0) {
+        D_8006C3B8->zPriority = D_80097408 - 0xC;
+    }
+}
 
 void func_8019B1B4(Entity* arg0) {
     if (arg0->initState == 0) {
@@ -573,7 +609,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B304);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
 
-void func_8019B7A0(Entity* arg0) {
+void func_8019B7A0(Entity* arg0) { // InitializeEntity
     u16 temp_a0;
     u16 var_v1;
 
@@ -732,11 +768,10 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
 
 // INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
 
-
 void func_8019E5E0(Entity* entity) {
     u8 new_var2;
     u32 new_var;
-    
+
     if (!entity->initState) {
         new_var = D_8018130C[entity->unk94];
         entity->unk34 = 0x0C002000;
