@@ -867,7 +867,41 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E9F4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019EAF0);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F070);
+void func_8019F070(Entity* entity) {
+    u32 temp_v0;
+
+    if (entity->initState == 0) {
+        func_8019B0B8(&D_80180470);
+        entity->palette = 0x8170;
+        entity->animationSet = 5;
+        entity->animationFrame = 1;
+        entity->unk18 = 0x30;
+
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->unk18 = 0x10;
+        }
+
+        temp_v0 = entity->subId & 0xFF00;
+        if (temp_v0 != 0) {
+            entity->zPriority = temp_v0 >> 8;
+        }
+        
+        entity->zPriority += 8;
+        return;
+    }
+
+    entity->animationFrameDuration++;
+    entity->posY.value -= 0x4000;
+
+    if (!(entity->animationFrameDuration & 1)) {
+        entity->animationFrame++;
+    }
+
+    if (entity->animationFrameDuration >= 0x25) {
+        func_8019A3A8(entity);
+    }
+}
 
 void func_8019F170(Entity* entity) {
     if (!entity->initState) {
@@ -962,7 +996,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A174C);
 void func_801A1BFC(Entity* entity) {
     ObjInit2* obj = (ObjInit2*)&D_80181420[entity->subId * 10];
 
-    if (entity->initState == 0) {
+    if (!entity->initState) {
         func_8019B0B8(&D_801804AC);
         entity->animationSet = obj->animationSet;
         entity->zPriority = obj->zPriority;
