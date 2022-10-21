@@ -2,7 +2,7 @@
 
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
-// void func_8019B0B8(Entity*);
+void func_8019B0B8(u16* arg0);
 void func_8019A3A8(Entity* entity);
 void func_80198F18(s16);
 void func_80199014(s16);
@@ -16,11 +16,11 @@ Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 
 extern u16 D_80181420[];
-extern Entity D_80180470;
+extern u16 D_80180470;
 extern u8 D_80181338;
 extern PfnEntityUpdate D_801803C4[];
-extern Entity D_801804E8;
-extern Entity D_8018050C;
+extern u16 D_801804E8;
+extern u16 D_8018050C;
 extern u16 D_800733FC;
 extern PfnEntityUpdate D_801803C4[];
 extern s16 D_801A3EDE;
@@ -36,7 +36,7 @@ extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern s8 D_801811AC[]; // c_HeartPrizes[]
 extern s32 D_80180668;
-extern Entity D_801804AC;
+extern u16 D_801804AC;
 extern u16 D_80180528[];
 extern u32 D_8018130C[];
 extern u8 D_80181324[];
@@ -559,20 +559,9 @@ void func_8019B024(u16 arg0, u16 arg1) {
     D_8006C3B8->unk2E = 0;
 }
 
-// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B0B8);
-
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-} someStruct;
-
 void func_8019B0B8(u16* arg0) {
-    Entity* temp_a0_4;
-    Entity* entity;
-    Unkstruct5* temp_v0;
-    u16* temp_a0 = arg0;
     u16 temp_v1;
-    someStruct* temp_a0_3;
+    Unkstruct5* temp_v0;
 
     D_8006C3B8->animationSet = *arg0++;
     D_8006C3B8->animationFrame = *arg0++;
@@ -872,7 +861,7 @@ void func_8019F304(void) {
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        entity = func_8019AC18(&D_8007D858, &D_8007D858[32]);
+        entity = func_8019AC18(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             func_8019967C(2, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
@@ -901,7 +890,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A13B8);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A174C);
 
 void func_801A1BFC(Entity* entity) {
-    ObjInit2* obj = &D_80181420[entity->subId * 10];
+    ObjInit2* obj = (ObjInit2*)&D_80181420[entity->subId * 10];
 
     if (entity->initState == 0) {
         func_8019B0B8(&D_801804AC);
