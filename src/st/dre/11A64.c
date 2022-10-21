@@ -38,6 +38,9 @@ extern s8 D_801811AC[]; // c_HeartPrizes[]
 extern s32 D_80180668;
 extern Entity D_801804AC;
 extern u16 D_80180528[];
+extern u32 D_8018130C[];
+extern u8 D_80181324[];
+extern u16 D_80181328[];
 
 void func_80191A64(Entity* entity) {
     ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
@@ -727,7 +730,37 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
+// INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
+
+
+void func_8019E5E0(Entity* entity) {
+    u8 new_var2;
+    u32 new_var;
+    
+    if (!entity->initState) {
+        new_var = D_8018130C[entity->unk94];
+        entity->unk34 = 0x0C002000;
+        entity->palette = 0x8195;
+        entity->animationSet = 2;
+        entity->accelerationY = new_var;
+        new_var2 = D_80181324[entity->subId];
+        entity->unk18 = 0x10;
+        entity->initState++;
+        entity->animationFrame = new_var2;
+        return;
+    }
+
+    entity->animationFrameDuration = ((u16)entity->animationFrameDuration) + 1;
+    entity->posY.value -= entity->accelerationY;
+
+    if (!(entity->animationFrameDuration & 1)) {
+        entity->animationFrame = entity->animationFrame + 1;
+    }
+
+    if (D_80181328[entity->subId] < entity->animationFrameDuration) {
+        func_8019A3A8(entity);
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E6D0);
 
