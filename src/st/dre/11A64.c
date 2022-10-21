@@ -886,7 +886,7 @@ void func_8019F070(Entity* entity) {
         if (temp_v0 != 0) {
             entity->zPriority = temp_v0 >> 8;
         }
-        
+
         entity->zPriority += 8;
         return;
     }
