@@ -716,7 +716,7 @@ void func_8019C63C(Entity* arg0) {
     u32 temp_v0;
     u32 temp;
 
-    if (arg0->initState == 0) {
+    if (!arg0->initState) {
         func_8019B0B8(&D_80180470);
         arg0->animationSet = 2;
         arg0->animationFrameIndex = 0;
@@ -869,30 +869,30 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019EAF0);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F070);
 
-void func_8019F170(Entity* arg0) {
-    if (arg0->initState == 0) {
+void func_8019F170(Entity* entity) {
+    if (!entity->initState) {
         func_8019B0B8(&D_80180470);
-        arg0->unk6C = 0xF0;
-        arg0->unk1A = 0x1A0;
-        arg0->unk1C = 0x1A0;
-        arg0->animationSet = 8;
-        arg0->animationFrame = 1;
-        arg0->zPriority += 0x10;
+        entity->unk6C = 0xF0;
+        entity->unk1A = 0x1A0;
+        entity->unk1C = 0x1A0;
+        entity->animationSet = 8;
+        entity->animationFrame = 1;
+        entity->zPriority += 0x10;
 
-        if (arg0->subId != 0) {
-            arg0->palette = (s16)arg0->subId;
+        if (entity->subId != 0) {
+            entity->palette = entity->subId;
         } else {
-            arg0->palette = 0x8160;
+            entity->palette = 0x8160;
         }
 
-        arg0->initState++;
+        entity->initState++;
         return;
     }
 
     func_8019A75C();
 
-    if (!func_8019A4D8(&D_80181338, arg0)) {
-        func_8019A3A8(arg0);
+    if (!func_8019A4D8(&D_80181338, entity)) {
+        func_8019A3A8(entity);
     }
 }
 
