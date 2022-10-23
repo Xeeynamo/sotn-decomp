@@ -73,8 +73,7 @@ define link
 		-s
 endef
 
-all: main dra ric dre mad no3 np3 st0 wrp rwrp
-	sha1sum --check slus00067.sha
+all: main dra ric dre mad no3 np3 st0 wrp rwrp check
 clean:
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
@@ -83,6 +82,11 @@ clean:
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name *.c)
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name *.h)
+check:
+	sha1sum --check slus00067.sha
+expected: check
+	rm -rf expected/build
+	cp -r build expected/
 
 main: main_dirs $(MAIN_TARGET).exe
 main_dirs:
@@ -236,7 +240,7 @@ $(BUILD_DIR)/%.c.o: %.c
 
 SHELL = /bin/bash -e -o pipefail
 
-.PHONY: all, clean, format
+.PHONY: all, clean, format, check, expected
 .PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%

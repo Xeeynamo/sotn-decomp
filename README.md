@@ -45,7 +45,7 @@ Some non-matching functions are present in the source preprocessed by the macro 
 * Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
 * Run `SOURCE=src/st/wrp/6FD0.c make ctx.c` then `ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code into ctx.c.m2c
 * Replace the `INCLUDE_ASM(...);` you targeted with the content of `ctx.c.m2c`
-* run `mkdir expected && cp -r build expected/` and invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0`
+* run `make expected` and invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0`
 You will probably have some differences from your compiled code to the original; keep refactoring the code and move variables around until you have a 100% match.
 
 There are a few tricks to make the process more streamlined:
