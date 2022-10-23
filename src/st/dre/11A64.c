@@ -215,7 +215,41 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198E74);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198EC0);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198F18);
+/*
+? func_80198C44(void *, void *); 
+void func_80198E74(s16);         
+extern void *D_801A32C4;
+extern u8 D_801A32CC;
 
+void func_80198F18(s16 arg0)
+{
+    s32 temp_a0;
+    u16 temp_v1;
+    u32 temp_v1_2;
+    void *temp_a1;
+
+    if (D_801A32CC != 0)
+    {
+        func_80198E74((s16) (arg0 - D_80097908));
+        D_801A32CC = 0;
+    }
+loop_3:
+    temp_a1 = D_801A32C4;
+    temp_v1 = temp_a1->unk0;
+    if ((temp_v1 != 0xFFFF) && (arg0 >= (s32) temp_v1))
+    {
+        temp_a0 = ((u16) temp_a1->unk6 >> 8) + 0xFF;
+        temp_v1_2 = temp_a0 & 0xFF;
+        if ((temp_v1_2 == 0xFF) || !((1 << (temp_a0 & 0x1F)) & D_80097428[temp_v1_2 >> 5]))
+        {
+            func_80198C44(temp_a1, temp_a1);
+        }
+        D_801A32C4 += 0xA;
+        goto loop_3;
+    }
+}
+
+*/
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199014);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199128);
@@ -239,6 +273,7 @@ void func_80199554(void) {
             func_80199014(tmp - 0x40);
         }
     }
+
     if (D_8009790C != 0) {
         s16 tmp = currentRoomTileLayout->unkE;
         if (D_8009790C > 0) {
