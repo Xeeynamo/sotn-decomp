@@ -105,6 +105,12 @@ typedef struct {
     u_char pad0, pad1; /* reserved */
 } DISPENV;
 
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_MODE; /* Drawing Mode */
+
+extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetPolyGT3(POLY_GT3* p);
 extern void SetPolyG4(POLY_G4* p);
@@ -117,6 +123,7 @@ extern int SetGraphReverse(int mode);
 extern int SetGraphQueue(int mode);
 extern u_long DrawSyncCallback(void (*func)());
 extern void SetDispMask(int mask);
+extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
 extern int DrawSync(int mode);
 extern int ClearImage(RECT* rect, u_char r, u_char g, u_char b);
 extern int LoadImage(RECT* rect, u_long* p);

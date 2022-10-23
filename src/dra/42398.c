@@ -750,7 +750,19 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F53D4);
+void func_800F53D4(s32 tpage, s32 arg1);
+#else
+void func_800F53D4(s32 tpage, s32 arg1) {
+    DR_MODE* drawMode = &D_8006C37C->drawModes[D_8009792C];
+    if (D_80137614 != 0) {
+        SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
+        AddPrim(&D_8006C37C->unk_0474[arg1], drawMode);
+        D_8009792C += 1;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F548C)
 
@@ -769,7 +781,49 @@ s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5) {
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5530);
+#else
+// If necessary, decrease the draw area of the polygon if it's out of the
+// context's boundaries. Returns 1 if the drawing will be skipped (eg. polygon
+// is completely of ouf boundaries)
+s32 func_800F5530(POLY_G4* arg0, MenuContext* context) {
+    s32 temp_v1;
+    s32 temp_v1_2;
+
+    if (IsSpriteOutsideDrawArea(arg0->x0, arg0->x1, arg0->y0, arg0->y2,
+                                context))
+        return 1;
+
+    if (arg0->x0 < context->unk1.x) {
+        s32 diff = context->unk1.x - arg0->x0;
+        arg0->x0 += diff;
+        arg0->x2 += diff;
+    }
+
+    if (arg0->y0 < context->unk1.y) {
+        s32 diff = context->unk1.y - arg0->y0;
+        arg0->y0 += diff;
+        arg0->y1 += diff;
+    }
+
+    temp_v1 = context->unk1.x + context->unk1.w;
+    if (temp_v1 < arg0->x1) {
+        s32 diff = arg0->x1 - temp_v1;
+        arg0->x1 -= diff;
+        arg0->x3 -= diff;
+    }
+
+    temp_v1_2 = context->unk1.y + context->unk1.h;
+    if (temp_v1_2 < arg0->y2) {
+        s32 diff = arg0->y2 - temp_v1_2;
+        arg0->y2 -= diff;
+        arg0->y3 -= diff;
+    }
+
+    return 0;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F564C);
 
@@ -831,13 +885,69 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5AE4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5B90);
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5D44);
+void func_800F5D44(MenuContext* context, s32 posX, s32 posY, s32 width,
+                   s32 height, s32 r, s32 g, s32 b);
+#else
+// NOTE: used to draw the menu cursor
+void func_800F5D44(MenuContext* context, s32 posX, s32 posY, s32 width,
+                   s32 height, s32 r, s32 g, s32 b) {
+    POLY_G4* prim;
+    s32 temp_s2;
+    s32 temp_t1;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5E68);
+    temp_t1 = D_8006C37C;
+    prim = &D_8006C37C->unk_D874[D_80097934]; // get next available primitive?
+    prim->x0 = posX;
+    prim->y0 = posY;
+    prim->x1 = posX + width;
+    prim->y1 = posY;
+    prim->x2 = posX;
+    prim->x3 = posX + width;
+    temp_s2 = context->unk18 + 1;
+    prim->y2 = posY + height;
+    prim->y3 = posY + height;
+    prim->code &= 0xFC;
+    if (func_800F5530(prim, context) == 0) { // check prim boundaries?
+        prim->r0 = r;
+        prim->r1 = r;
+        prim->r2 = r;
+        prim->r3 = r;
+        prim->g0 = g;
+        prim->g1 = g;
+        prim->g2 = g;
+        prim->g3 = g;
+        prim->b0 = b;
+        prim->b1 = b;
+        prim->b2 = b;
+        prim->b3 = b;
+        AddPrim(&D_8006C37C->unk_0474[temp_s2], (void*)prim);
+        D_80097934 += 1;
+        func_800F53D4(0, temp_s2);
+    }
+}
+#endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5EF0);
+void func_800F5E68(MenuContext* context, s32 iOption, s32 x, s32 y, s32 w,
+                   s32 h, s32 yGap, s32 bColorMode) {
+    s32 r;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F622C);
+    if (bColorMode) {
+        if (g_menuCursorBlinkTimer & 0x20) {
+            r = (g_menuCursorBlinkTimer & 0x1F) + 0x60;
+        } else {
+            r = 0x7F - (g_menuCursorBlinkTimer & 0x1F);
+        }
+    } else {
+        r = 0x80;
+    }
+    func_800F5D44(context, x, y + (iOption * (h + yGap)), w, h, r, 0, 0);
+}
+
+INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawRelicsMenu);
+
+INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawMenuAlucardPortrait);
 
 s32 func_800F62E8(s32 context) {
     s32 temp_v0 = context * 3;
@@ -845,15 +955,57 @@ s32 func_800F62E8(s32 context) {
     return phi_v0 >> 2;
 }
 
+// Apply cloak palette
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6304);
 
+// Draw menu Alucard cloak preview
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F643C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6508);
+void func_800F6508(MenuContext* context, s32 x, s32 y) {
+    s32 yellow;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6568);
+    if (g_menuCursorBlinkTimer & 0x10) {
+        yellow = ((g_menuCursorBlinkTimer & 0xF) * 2) + 0x60;
+    } else {
+        yellow = 0x7F - (g_menuCursorBlinkTimer & 0xF);
+    }
+    func_800F5D44(context, x, y, 0x70, 0xB, yellow, yellow, 0);
+}
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6618);
+// Draw main menu cursor
+void func_800F6568(MenuContext* arg0) {
+    s32 height;
+    s32 r;
+
+    height = arg0->unk6 / 5;
+    if (g_menuCursorBlinkTimer & 0x20) {
+        r = (g_menuCursorBlinkTimer & 0x1F) + 0x40;
+    } else {
+        r = 0x5F - (g_menuCursorBlinkTimer & 0x1F);
+    }
+    func_800F5D44(arg0, arg0->cursorX,
+                  arg0->cursorY + (height * g_menuMainCursorIndex), arg0->unk4,
+                  height, r, 0, 0);
+}
+
+void func_800F6618(s32 menuContextIndex,
+                   s32 bColorMode) { // Draw equip menu cursor
+    s32 temp_v1;
+    s32 r;
+    MenuContext* context = &D_8013761C[menuContextIndex * 0x1E];
+
+    if (bColorMode != 0) {
+        r = 0x80;
+    } else {
+        if (g_menuCursorBlinkTimer & 0x20) {
+            r = (g_menuCursorBlinkTimer & 0x1F) + 0x40;
+        } else {
+            r = 0x5F - (g_menuCursorBlinkTimer & 0x1F);
+        }
+    }
+    func_800F5D44(context, 0x70, (g_menuRelicsCursorIndex * 0xD) + 0x1C, 0x71,
+                  0xB, r, 0, 0);
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F66BC);
@@ -972,7 +1124,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawPauseMenu);
 #else
 void func_800F622C(MenuContext* context);
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
-extern s32 D_8003C9B0;
 extern s32 D_8003C9FC;
 extern s32 D_80097C1C;
 extern s32 D_800A2D68;
@@ -1124,7 +1275,7 @@ void DrawPauseMenu(s32 arg0) {
         phi_s3_2 = 0x20;
         phi_s5_3 = 0x78;
     } else {
-        DrawMenuStr(D_800A83AC[D_8003C9B0], 8, 0x28, context);
+        DrawMenuStr(D_800A83AC[g_menuRelicsCursorIndex], 8, 0x28, context);
         phi_s3_2 = 0xC;
         phi_s5_3 = 0x46;
     }
@@ -1157,7 +1308,7 @@ void DrawPauseMenu(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7B60);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawSpellMenu);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7F64);
 
@@ -1232,7 +1383,7 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8990);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8990); // Draw menu inventory
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8C98);
 
