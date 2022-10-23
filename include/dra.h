@@ -284,7 +284,7 @@ extern void (*D_8003C848)(s32, s32);
 extern s32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 g_CurrentPlayableCharacter;
-extern s32 g_menuCursorBlinkTimer;
+extern s32 g_blinkTimer;
 extern s32 g_menuMainCursorIndex;
 extern s32 g_menuRelicsCursorIndex;
 extern s32 g_SettingsCloakMode;
@@ -628,7 +628,6 @@ void func_800F4F48(void);
 void func_800F4FD0(void);
 bool IsAlucart();
 void func_800F53A4(void);
-s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
