@@ -22,8 +22,9 @@ typedef struct {
     /* 0x10 */ int w;
     /* 0x14 */ int unk14;
     /* 0x18 */ s16 unk18;
-    /* 0x20 */ s16 unk1A;
-} MenuContext; // size = 0x22
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ s16 unk1C;
+} MenuContext; // size = 0x1E
 
 typedef struct {
     /* 0x0 */ u8 tileLayoutId;
@@ -246,6 +247,15 @@ typedef struct {
     /* 0x8 */ u16 unk8;
 } Unkstruct10; // size = 0xA
 
+typedef struct {
+    /* 0x0000 */ char unk_00[0x474];
+    /* 0x0474 */ u32 unk_0474[0]; // unk length, unk elem size
+    char _unk_0474[0x800];
+    /* 0x0C74 */ DR_MODE drawModes[0]; // unk length
+    u8 _unk_0C74[0xCC00];
+    /* 0xD874 */ POLY_G4 unk_D874[0]; // unk length
+} GpuBufferUnk;
+
 // main
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
@@ -262,6 +272,9 @@ extern void (*D_8003C848)(s32, s32);
 extern s32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 g_CurrentPlayableCharacter;
+extern s32 g_menuCursorBlinkTimer;
+extern s32 g_menuMainCursorIndex;
+extern s32 g_menuRelicsCursorIndex;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
@@ -362,6 +375,7 @@ extern s8 D_8005436D;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
+extern GpuBufferUnk* D_8006C37C;
 extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
@@ -436,6 +450,8 @@ extern s32 g_mapProgramId;
 extern s32 D_800974AC;
 extern s32 D_80097908;
 extern s32 D_8009790C;
+extern s32 D_8009792C;
+extern s32 D_80097934;
 extern u8 D_8009796E;
 extern u8 D_8009798A;
 extern u8 D_80097A8D;
@@ -506,6 +522,7 @@ extern const char* c_strFamiliars;
 extern const char* c_strFamiliar;
 extern const char* c_strSpecial2;
 extern s32 D_800ACC64;
+extern RECT D_800ACD80;
 extern RECT c_backbufferClear;
 extern s16 D_800BD07C[];
 extern u8 D_80137460;
@@ -513,7 +530,10 @@ extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
+extern s32 D_80137614;
 extern s32 D_80137618;
+extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
+                        // 2-byte aigned
 extern s8 D_80137638;
 extern s32 D_80137844;
 extern s32 D_80137848;
@@ -600,8 +620,6 @@ s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
-void func_800F5E68(MenuContext*, s32 iOption, s32 x, s32 y, s32 w, s32 h, s32,
-                   s32);
 s32 func_800F62E8(s32 arg0);
 void DrawMenuChar(char ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);

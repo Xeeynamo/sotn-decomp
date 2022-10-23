@@ -268,7 +268,6 @@ void EntityDraculaFireball(Entity* entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaMeteorball);
 #else
-extern s32 D_8003C998;
 extern u16 D_801805F8[];
 extern u8 D_80180990[];
 extern u8 D_801809B0[];
@@ -313,7 +312,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             entity->accelerationX -= speedX;
         }
 
-        if ((D_8003C998 & 3) == 0) {
+        if ((g_menuCursorBlinkTimer & 3) == 0) { // lolwut?
             Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
