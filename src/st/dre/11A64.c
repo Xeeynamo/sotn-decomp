@@ -216,8 +216,8 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198EC0);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198F18);
 /*
-? func_80198C44(void *, void *); 
-void func_80198E74(s16);         
+? func_80198C44(void *, void *);
+void func_80198E74(s16);
 extern void *D_801A32C4;
 extern u8 D_801A32CC;
 
@@ -240,7 +240,8 @@ loop_3:
     {
         temp_a0 = ((u16) temp_a1->unk6 >> 8) + 0xFF;
         temp_v1_2 = temp_a0 & 0xFF;
-        if ((temp_v1_2 == 0xFF) || !((1 << (temp_a0 & 0x1F)) & D_80097428[temp_v1_2 >> 5]))
+        if ((temp_v1_2 == 0xFF) || !((1 << (temp_a0 & 0x1F)) &
+D_80097428[temp_v1_2 >> 5]))
         {
             func_80198C44(temp_a1, temp_a1);
         }
