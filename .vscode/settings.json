@@ -8,6 +8,7 @@
     },
     "files.associations": {
         "main.h": "c",
+        "dra.h": "c",
         "stage.h": "c",
         "cmath": "c",
         "limits": "c",
