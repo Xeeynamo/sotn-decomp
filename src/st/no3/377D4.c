@@ -25,7 +25,6 @@ extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
 
-
 void func_801B77D4(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
@@ -490,7 +489,7 @@ u8 func_801C55E8(s16 arg0, s16 arg1) {
     return ((ratan2(arg1, arg0) >> 4) + 0x40);
 }
 
-u8 func_801C5620(Entity *arg0, Entity *arg1) {
+u8 func_801C5620(Entity* arg0, Entity* arg1) {
     s16 a = arg1->posX.Data.high - arg0->posX.Data.high;
     s16 b = arg1->posY.Data.high - arg0->posY.Data.high;
     return func_801C55E8(a, b);
@@ -502,11 +501,9 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C56B0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
 
-u16 func_801C5794(s16 arg0, s16 arg1) {
-    return ratan2(arg1, arg0);
-}
+u16 func_801C5794(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_801C57C4(Entity *a, Entity *b) {
+u16 func_801C57C4(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
     return ratan2(diffY, diffX);
