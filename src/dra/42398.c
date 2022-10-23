@@ -767,14 +767,15 @@ void func_800F53D4(s32 tpage, s32 arg1) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F548C)
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", IsSpriteOutsideDrawArea);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", IsOutsideDrawArea);
+bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context);
 #else
-s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5) {
-    s16 scissorX = (s16)a5->unk1.x;
+bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context) {
+    s16 scissorX = (s16)context->unk1.x;
     if (scissorX < x1) {
-        s16 scissorY = (s16)a5->unk1.y;
-        if (scissorY < y1 && x0 < (scissorX + (s16)a5->unk1.w))
-            return (y0 < scissorY + (s16)a5->unk1.h) ^ 1;
+        s16 scissorY = (s16)context->unk1.y;
+        if (scissorY < y1 && x0 < (scissorX + (s16)context->unk1.w))
+            return (y0 < scissorY + (s16)context->unk1.h) ^ 1;
     }
 
     return true;
@@ -782,50 +783,89 @@ s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5) {
 #endif
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5530);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", ScissorPolyG4);
+bool ScissorPolyG4(POLY_G4* arg0, MenuContext* context);
 #else
-// If necessary, decrease the draw area of the polygon if it's out of the
-// context's boundaries. Returns 1 if the drawing will be skipped (eg. polygon
-// is completely of ouf boundaries)
-s32 func_800F5530(POLY_G4* arg0, MenuContext* context) {
-    s32 temp_v1;
-    s32 temp_v1_2;
+bool ScissorPolyG4(POLY_G4* poly, MenuContext* context) {
+    s32 scissorX;
+    s32 scissorY;
 
-    if (IsSpriteOutsideDrawArea(arg0->x0, arg0->x1, arg0->y0, arg0->y2,
-                                context))
-        return 1;
+    if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, context))
+        return true;
 
-    if (arg0->x0 < context->unk1.x) {
-        s32 diff = context->unk1.x - arg0->x0;
-        arg0->x0 += diff;
-        arg0->x2 += diff;
+    if (poly->x0 < context->unk1.x) {
+        s32 diff = context->unk1.x - poly->x0;
+        poly->x0 += diff;
+        poly->x2 += diff;
     }
 
-    if (arg0->y0 < context->unk1.y) {
-        s32 diff = context->unk1.y - arg0->y0;
-        arg0->y0 += diff;
-        arg0->y1 += diff;
+    if (poly->y0 < context->unk1.y) {
+        s32 diff = context->unk1.y - poly->y0;
+        poly->y0 += diff;
+        poly->y1 += diff;
     }
 
-    temp_v1 = context->unk1.x + context->unk1.w;
-    if (temp_v1 < arg0->x1) {
-        s32 diff = arg0->x1 - temp_v1;
-        arg0->x1 -= diff;
-        arg0->x3 -= diff;
+    scissorX = context->unk1.x + context->unk1.w;
+    if (scissorX < poly->x1) {
+        s32 diff = poly->x1 - scissorX;
+        poly->x1 -= diff;
+        poly->x3 -= diff;
     }
 
-    temp_v1_2 = context->unk1.y + context->unk1.h;
-    if (temp_v1_2 < arg0->y2) {
-        s32 diff = arg0->y2 - temp_v1_2;
-        arg0->y2 -= diff;
-        arg0->y3 -= diff;
+    scissorY = context->unk1.y + context->unk1.h;
+    if (scissorY < poly->y2) {
+        s32 diff = poly->y2 - scissorY;
+        poly->y2 -= diff;
+        poly->y3 -= diff;
     }
 
-    return 0;
+    return false;
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F564C);
+bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
+    s32 scissorX;
+    s32 scissorY;
+
+    if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, context))
+        return true;
+
+    if (poly->x0 < context->unk1.x) {
+        s32 diff = context->unk1.x - poly->x0;
+        poly->x0 += diff;
+        poly->x2 += diff;
+        poly->u0 += diff;
+        poly->u2 += diff;
+    }
+
+    if (poly->y0 < context->unk1.y) {
+        s32 diff = context->unk1.y - poly->y0;
+        poly->y0 += diff;
+        poly->y1 += diff;
+        poly->v0 += diff;
+        poly->v1 += diff;
+    }
+
+    scissorX = context->unk1.x + context->unk1.w;
+    if (scissorX < poly->x1) {
+        s32 diff = poly->x1 - scissorX;
+        poly->x1 -= diff;
+        poly->x3 -= diff;
+        poly->u1 -= diff;
+        poly->u3 -= diff;
+    }
+
+    scissorY = context->unk1.y + context->unk1.h;
+    if (scissorY < poly->y2) {
+        s32 diff = poly->y2 - scissorY;
+        poly->y2 -= diff;
+        poly->y3 -= diff;
+        poly->v2 -= diff;
+        poly->v3 -= diff;
+    }
+
+    return false;
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", ScissorSprite);
@@ -838,8 +878,8 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     s32 spritex1;
     s32 spritey1;
 
-    if (IsSpriteOutsideDrawArea(sprite->x0, sprite->x0 + sprite->w, sprite->y0,
-                                sprite->y0 + sprite->h, context))
+    if (IsOutsideDrawArea(sprite->x0, sprite->x0 + sprite->w, sprite->y0,
+                          sprite->y0 + sprite->h, context))
         return true;
 
     scissorx0 = context->unk1.x;
@@ -884,6 +924,9 @@ void func_800F5A90(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5AE4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5B90);
+void func_800F5B90(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
+                   s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 argA,
+                   s32 argB);
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5D44);
@@ -909,7 +952,7 @@ void func_800F5D44(MenuContext* context, s32 posX, s32 posY, s32 width,
     prim->y2 = posY + height;
     prim->y3 = posY + height;
     prim->code &= 0xFC;
-    if (func_800F5530(prim, context) == 0) { // check prim boundaries?
+    if (ScissorPolyG4(prim, context) == 0) { // check prim boundaries?
         prim->r0 = r;
         prim->r1 = r;
         prim->r2 = r;
@@ -934,10 +977,10 @@ void func_800F5E68(MenuContext* context, s32 iOption, s32 x, s32 y, s32 w,
     s32 r;
 
     if (bColorMode) {
-        if (g_menuCursorBlinkTimer & 0x20) {
-            r = (g_menuCursorBlinkTimer & 0x1F) + 0x60;
+        if (g_blinkTimer & 0x20) {
+            r = (g_blinkTimer & 0x1F) + 0x60;
         } else {
-            r = 0x7F - (g_menuCursorBlinkTimer & 0x1F);
+            r = 0x7F - (g_blinkTimer & 0x1F);
         }
     } else {
         r = 0x80;
@@ -964,10 +1007,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F643C);
 void func_800F6508(MenuContext* context, s32 x, s32 y) {
     s32 yellow;
 
-    if (g_menuCursorBlinkTimer & 0x10) {
-        yellow = ((g_menuCursorBlinkTimer & 0xF) * 2) + 0x60;
+    if (g_blinkTimer & 0x10) {
+        yellow = ((g_blinkTimer & 0xF) * 2) + 0x60;
     } else {
-        yellow = 0x7F - (g_menuCursorBlinkTimer & 0xF);
+        yellow = 0x7F - (g_blinkTimer & 0xF);
     }
     func_800F5D44(context, x, y, 0x70, 0xB, yellow, yellow, 0);
 }
@@ -978,10 +1021,10 @@ void func_800F6568(MenuContext* arg0) {
     s32 r;
 
     height = arg0->unk6 / 5;
-    if (g_menuCursorBlinkTimer & 0x20) {
-        r = (g_menuCursorBlinkTimer & 0x1F) + 0x40;
+    if (g_blinkTimer & 0x20) {
+        r = (g_blinkTimer & 0x1F) + 0x40;
     } else {
-        r = 0x5F - (g_menuCursorBlinkTimer & 0x1F);
+        r = 0x5F - (g_blinkTimer & 0x1F);
     }
     func_800F5D44(arg0, arg0->cursorX,
                   arg0->cursorY + (height * g_menuMainCursorIndex), arg0->unk4,
@@ -997,10 +1040,10 @@ void func_800F6618(s32 menuContextIndex,
     if (bColorMode != 0) {
         r = 0x80;
     } else {
-        if (g_menuCursorBlinkTimer & 0x20) {
-            r = (g_menuCursorBlinkTimer & 0x1F) + 0x40;
+        if (g_blinkTimer & 0x20) {
+            r = (g_blinkTimer & 0x1F) + 0x40;
         } else {
-            r = 0x5F - (g_menuCursorBlinkTimer & 0x1F);
+            r = 0x5F - (g_blinkTimer & 0x1F);
         }
     }
     func_800F5D44(context, 0x70, (g_menuRelicsCursorIndex * 0xD) + 0x1C, 0x71,
