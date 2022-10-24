@@ -492,7 +492,13 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5534);
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5534); // not mathching only locally: https://decomp.me/scratch/6ZStN
+#else 
+s32 func_801C5534(u8 arg0, s16 arg1) {
+    return D_801820C4[arg0] * arg1;
+}
+#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5560);
