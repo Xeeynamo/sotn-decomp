@@ -16,6 +16,7 @@ void func_8019A78C(void);
 void func_80199608(u16 objectId, Entity* entity);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
+void func_8019E5E0(Entity* entity);
 
 extern u8* D_80180610[];
 extern u8 D_80180630[];
@@ -88,7 +89,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191D00);
 void func_80191D00(Entity* entity) {
     Entity* temp_v0;
     u16 temp_s0 = entity->subId >> 0xC;
-    
+
     if (entity->initState != 0) {
         func_8019A4D8(D_80180610[temp_s0], entity);
         if (entity->unk44 != 0) {
@@ -827,13 +828,13 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E1C8);
 // https://decomp.me/scratch/LpjYl 92.57%
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E2B8);
 
+// https://decomp.me/scratch/lcx4I
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
 
 #ifndef NON_MATCHING // at -> a1 register swap
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
-void func_8019E5E0(Entity* entity);
 #else
 void func_8019E5E0(Entity* entity) {
     u8 new_var2;
