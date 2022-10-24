@@ -88,7 +88,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191D00);
 void func_80191D00(Entity* entity) {
     Entity* temp_v0;
     u16 temp_s0 = entity->subId >> 0xC;
-    
+
     if (entity->initState != 0) {
         func_8019A4D8(D_80180610[temp_s0], entity);
         if (entity->unk44 != 0) {
