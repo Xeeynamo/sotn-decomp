@@ -718,12 +718,12 @@ void func_8019B8DC(u16 arg0) {
 
         D_8006C3B8->accelerationX = 0;
         D_8006C3B8->accelerationY = 0;
-        
+
         if (sp10.sp10 & 4) {
             D_8006C3B8->posY.value += 0x2000;
             return;
         }
-        
+
         D_8006C3B8->posY.Data.high =
             (u16)D_8006C3B8->posY.Data.high + (u16)sp10.sp28;
         return;
