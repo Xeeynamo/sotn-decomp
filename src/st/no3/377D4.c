@@ -520,7 +520,11 @@ u8 func_801C5620(Entity* arg0, Entity* arg1) {
     return func_801C55E8(a, b);
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5668);
+u8 func_801C5668(s32 arg0, s32 arg1) {
+    s16 a = (arg0 - (u16) D_8006C3B8->posX.Data.high);
+    s16 b = (arg1 - (u16) D_8006C3B8->posY.Data.high);
+    return func_801C55E8(a, b);
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C56B0);
 
