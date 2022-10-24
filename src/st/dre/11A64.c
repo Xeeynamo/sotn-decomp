@@ -13,6 +13,7 @@ void func_8019A490(void);
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 void func_8019A78C(void);
+void func_8019B858(void);
 void func_80199608(u16 objectId, Entity* entity);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
@@ -694,7 +695,45 @@ void func_8019B858(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B8DC);
+void func_8019B8DC(u16 arg0) {
+    Unkstruct7 sp10;
+
+    if (D_8006C3B8->accelerationX < 0) {
+        D_8003C7BC(D_8006C3B8->posX.Data.high, D_8006C3B8->posY.Data.high - 7,
+                   &sp10, 0);
+        if (sp10.sp10 & 5) {
+            D_8006C3B8->accelerationY = 0;
+        }
+    }
+
+    D_8003C7BC(D_8006C3B8->posX.Data.high, D_8006C3B8->posY.Data.high + 7,
+               &sp10, 0);
+
+    if (arg0) {
+        if (!(sp10.sp10 & 5)) {
+            func_8019A75C();
+            func_8019A78C();
+            return;
+        }
+
+        D_8006C3B8->accelerationX = 0;
+        D_8006C3B8->accelerationY = 0;
+        
+        if (sp10.sp10 & 4) {
+            D_8006C3B8->posY.value += 0x2000;
+            return;
+        }
+        
+        D_8006C3B8->posY.Data.high =
+            (u16)D_8006C3B8->posY.Data.high + (u16)sp10.sp28;
+        return;
+    }
+
+    if (!(sp10.sp10 & 5)) {
+        func_8019A75C();
+        func_8019B858();
+    }
+}
 
 // at -v0 register swap
 #ifndef NON_MATCHING
