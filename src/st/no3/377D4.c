@@ -501,9 +501,11 @@ s32 func_801C5534(u8 arg0, s16 arg1) {
 #endif
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5560);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5560); // non matching only locally : https://decomp.me/scratch/34DLf
 #else
-s16 func_801C5560(s32 arg0) { return D_801820C4[arg0 & 0xFF]; }
+s16 func_801C5560(u8 arg0) {
+    return D_801820C4[arg0];
+}
 #endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
