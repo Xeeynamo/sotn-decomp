@@ -41,24 +41,44 @@ typedef struct {
 } POLY_G4; /* Gouraud Quadrangle */
 
 typedef struct {
-    u_long tag;
-    u_char r0, g0, b0, code;
-    short x0, y0;
-    u_char u0, v0;
-    u_short clut;
-    u_char r1, g1, b1, p1;
-    short x1, y1;
-    u_char u1, v1;
-    u_short tpage;
-    u_char r2, g2, b2, p2;
-    short x2, y2;
-    u_char u2, v2;
-    u_short pad2;
-    u_char r3, g3, b3, p3;
-    short x3, y3;
-    u_char u3, v3;
-    u_short pad3;
-} POLY_GT4; /* Gouraud Textured Quadrangle */
+    /* 0x00 */ u_long tag;
+    /* 0x04 */ u_char r0;
+    /* 0x05 */ u_char g0;
+    /* 0x06 */ u_char b0;
+    /* 0x07 */ u_char code;
+    /* 0x08 */ short x0;
+    /* 0x0A */ short y0;
+    /* 0x0C */ u_char u0;
+    /* 0x0D */ u_char v0;
+    /* 0x0E */ u_short clut;
+    /* 0x10 */ u_char r1;
+    /* 0x11 */ u_char g1;
+    /* 0x12 */ u_char b1;
+    /* 0x13 */ u_char p1;
+    /* 0x14 */ short x1;
+    /* 0x16 */ short y1;
+    /* 0x18 */ u_char u1;
+    /* 0x19 */ u_char v1;
+    /* 0x1A */ u_short tpage;
+    /* 0x1C */ u_char r2;
+    /* 0x1D */ u_char g2;
+    /* 0x1E */ u_char b2;
+    /* 0x1F */ u_char p2;
+    /* 0x20 */ short x2;
+    /* 0x22 */ short y2;
+    /* 0x24 */ u_char u2;
+    /* 0x25 */ u_char v2;
+    /* 0x26 */ u_short pad2;
+    /* 0x28 */ u_char r3;
+    /* 0x29 */ u_char g3;
+    /* 0x2A */ u_char b3;
+    /* 0x2B */ u_char p3;
+    /* 0x2C */ short x3;
+    /* 0x2E */ short y3;
+    /* 0x30 */ u_char u3;
+    /* 0x31 */ u_char v3;
+    /* 0x32 */ u_short pad3;
+} POLY_GT4; /* Gouraud Textured Quadrangle, size = 0x34*/
 
 typedef struct {
     u_long tag;
