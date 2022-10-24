@@ -1,5 +1,6 @@
 #include "stage.h"
 
+void func_8019B7A0(Entity* arg0);
 void func_8019A3A8(Entity* entity);
 void func_8019C63C(Entity*);
 void func_8019B0B8(u16* arg0);
@@ -12,9 +13,16 @@ void func_8019A490(void);
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 void func_8019A78C(void);
+void func_80199608(u16 objectId, Entity* entity);
 Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 
+extern u8* D_80180610[];
+extern u8 D_80180630[];
+extern u8 D_80180638[];
+extern u16 D_80180640[];
+extern u8 D_80180650[];
+extern u16 D_80180458[];
 extern u16 D_80180470;
 extern s32 D_801811B0[];
 extern u32 D_8018125C[];
@@ -74,7 +82,33 @@ void func_80191A64(Entity* entity) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191B44);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191D00);
+#else
+void func_80191D00(Entity* entity) {
+    Entity* temp_v0;
+    u16 temp_s0 = entity->subId >> 0xC;
+    
+    if (entity->initState != 0) {
+        func_8019A4D8(D_80180610[temp_s0], entity);
+        if (entity->unk44 != 0) {
+            g_pfnPlaySfx(0x634);
+            temp_v0 = func_8019AC18(D_8007D858, &D_8007D858[32]);
+            if (temp_v0 != NULL) {
+                func_80199608(2, temp_v0);
+                temp_v0->subId = D_80180638[temp_s0];
+            }
+            func_8019B7A0(entity);
+        }
+    } else {
+        func_8019B0B8(D_80180458);
+        entity->zPriority = D_80097408 - 20;
+        entity->unk18 = D_80180650[temp_s0];
+        entity->hitboxHeight = D_80180630[temp_s0];
+        entity->animationSet = D_80180640[temp_s0];
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80191E34);
 
@@ -252,7 +286,6 @@ void func_80199554(void) {
 
 // https://decomp.me/scratch/FLExi
 #ifndef NON_MATCHING
-void func_80199608(u16 objectId, Entity* entity);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
 #else
 void func_80199608(u16 objectId, Entity* entity) {
@@ -524,11 +557,11 @@ u16 func_8019AF88(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_8019AFE8(u8 arg0) {
+void func_8019AFE8(u8 initState) {
     Entity* entity;
 
     entity = D_8006C3B8;
-    entity->initState = arg0;
+    entity->initState = initState;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
