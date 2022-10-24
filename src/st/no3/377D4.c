@@ -165,7 +165,16 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE134);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE444);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE544);
+void func_801BE544(void) {
+    D_801D7D30 = 0x182;
+    D_801D7D2E = 0x182;
+    D_801D7D32 = 0;
+    D_801D7D36 = 0;
+    D_801D7D3A = 0;
+    D_801D7D3B = 8;
+    D_801D7D2A = D_801D7D2C + 0x14;
+}
+
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE598);
 
