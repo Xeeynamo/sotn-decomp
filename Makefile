@@ -214,8 +214,9 @@ ctx.c: $(M2CTX_APP)
 	$(M2CTX) $(SOURCE)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
-update-tools: require-tools $(M2CTX_APP) $(M2C_APP)
-	pip3 install -r $(SPLAT_DIR)/requirements.txt
+update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
+	sudo apt-get install -y $(cat tools/requirements-debian.txt)
+	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
@@ -244,4 +245,4 @@ SHELL = /bin/bash -e -o pipefail
 .PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%
-.PHONY: require-tools,update-tools
+.PHONY: require-tools,update-dependencies

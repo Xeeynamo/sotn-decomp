@@ -24,3 +24,4 @@ asm/st/*/nonmatchings/*/*.s
 asm/st/*/nonmatchings/*/*/*.s
 assets/
 build/
+expected/
