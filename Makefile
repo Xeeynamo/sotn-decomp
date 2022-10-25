@@ -207,11 +207,9 @@ extract_st%: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
-decompile: ctx.c $(M2C_APP)
-	$(M2C_APP) $(M2C_ARGS) --target mipsel-gcc-c --context ctx.c $(FUNC) $(ASSEMBLY)
-
-ctx.c: $(M2CTX_APP)
+decompile: $(M2C_APP)
 	$(M2CTX) $(SOURCE)
+	$(M2C_APP) $(M2C_ARGS) --target mipsel-gcc-c --context ctx.c $(FUNC) $(ASSEMBLY)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
