@@ -178,7 +178,8 @@ void func_801BE544(void) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE598);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE75C); //https://decomp.me/scratch/ErGo1
+//https://decomp.me/scratch/ErGo1
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE75C);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE7BC);
 
@@ -429,7 +430,8 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4D4C); // https://decomp.me/scratch/pHwri
+// https://decomp.me/scratch/pHwri
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4D4C);
 
 #include "st/AnimateEntity.h"
 
