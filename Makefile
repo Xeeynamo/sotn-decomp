@@ -213,7 +213,7 @@ decompile: $(M2C_APP)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
-	sudo apt-get install -y $(cat tools/requirements-debian.txt)
+	sudo apt-get install -y $$(cat tools/requirements-debian.txt)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 
 $(SPLAT_APP):
