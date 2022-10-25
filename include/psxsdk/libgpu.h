@@ -31,7 +31,7 @@ typedef struct {
     /* 0x13 */ u_char p1;
     /* 0x14 */ short x1;
     /* 0x16 */ short y1;
-    /* 0x18 */ u_char u1
+    /* 0x18 */ u_char u1;
     /* 0x19 */ u_char v1;
     /* 0x1A */ u_short tpage;
     /* 0x1C */ u_char r2;
@@ -51,7 +51,7 @@ typedef struct {
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
     /* 0x07 */ u_char code;
-    /* 0x08 */ short x0
+    /* 0x08 */ short x0;
     /* 0x0A */ short y0;
     /* 0x0C */ u_char r1;
     /* 0x0D */ u_char g1;
