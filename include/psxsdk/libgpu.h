@@ -38,12 +38,12 @@ typedef struct {
     /* 0x1D */ u_char g2;
     /* 0x1E */ u_char b2;
     /* 0x1F */ u_char p2;
-    /* 0x2A */ short x2;
-    /* 0x2C */ short y2;
-    /* 0x2E */ u_char u2;
-    /* 0x2F */ u_char v2;
-    /* 0x30 */ u_short pad2;
-} POLY_GT3; /* Gouraud Textured Triangle, size = 0x32 */
+    /* 0x20 */ short x2;
+    /* 0x22 */ short y2;
+    /* 0x24 */ u_char u2;
+    /* 0x25 */ u_char v2;
+    /* 0x26 */ u_short pad2;
+} POLY_GT3; /* Gouraud Textured Triangle, size = 0x28 */
 
 typedef struct {
     /* 0x00 */ u_long tag;
@@ -64,14 +64,14 @@ typedef struct {
     /* 0x16 */ u_char b2;
     /* 0x17 */ u_char pad2;
     /* 0x18 */ short x2;
-    /* 0x2A */ short y2;
-    /* 0x2C */ u_char r3;
-    /* 0x2D */ u_char g3;
-    /* 0x2E */ u_char b3;
-    /* 0x2F */ u_char pad3;
-    /* 0x30 */ short x3;
-    /* 0x32 */ short y3;
-} POLY_G4; /* Gouraud Quadrangle, size = 0x34 */
+    /* 0x1A */ short y2;
+    /* 0x1C */ u_char r3;
+    /* 0x1D */ u_char g3;
+    /* 0x1E */ u_char b3;
+    /* 0x1F */ u_char pad3;
+    /* 0x20 */ short x3;
+    /* 0x22 */ short y3;
+} POLY_G4; /* Gouraud Quadrangle, size = 0x24 */
 
 typedef struct {
     /* 0x00 */ u_long tag;
@@ -171,13 +171,14 @@ typedef struct {
     /* 0x08 */ RECT screen;       /* display start point */
     /* 0x10 */ u_char isinter;    /* interlace 0: off 1: on */
     /* 0x11 */ u_char isrgb24;    /* RGB24 bit mode */
-    /* 0x12 */ u_char pad0, pad1; /* reserved */
-} DISPENV; /* size = 0x13 */
+    /* 0x12 */ u_char pad0;       /* reserved */
+    /* 0x13 */ u_char pad1;       /* reserved */
+} DISPENV; /* size = 0x14 */
 
 typedef struct {
     /* 0x00 */ u_long tag;
     /* 0x04 */ u_long code[2];
-} DR_MODE; /* Drawing Mode, size = 0x08 */
+} DR_MODE; /* Drawing Mode, size = 0x0C */
 
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
