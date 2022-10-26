@@ -197,7 +197,7 @@ typedef struct unkStruct3 {
     /* 0x29 */ char pad[0x1];
     /* 0x2A */ s8 unk2A;
     /* 0x2B */ u8 unk2B;
-    /* 0x2C */ u16 unk2C;                           /* inferred */
+    /* 0x2C */ u16 unk2C;
     /* 0x2E */ char pad2E[4];
     /* 0x32 */ u16 unk32;
 } unkStruct3;
