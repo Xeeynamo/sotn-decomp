@@ -450,33 +450,27 @@ void func_8019ACC0(s32 arg0, s16 arg1) {
     D_8006C3B8->accelerationX = func_8019AC78(arg0, arg1);
     D_8006C3B8->accelerationY = func_8019AC78(arg0 - 0x40, arg1);
 }
+u8 func_8019AD2C(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-u8 func_8019AD2C(s16 x, s16 y, u16 z) { return ((ratan2(y, x) >> 4) + 0x40); }
 
 u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
-    u16 x, y, z;
+    u16 x, y;
 
     x = arg1->zPriority - arg0->zPriority;
     y = arg1->palette - arg0->palette;
-    z = arg0->zPriority;
 
-    return func_8019AD2C(x, y, z);
+    return func_8019AD2C(x, y);
 }
 
-// https://decomp.me/scratch/zbNsT
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ADAC);
-#else
-u8 func_8019ADAC(s16 arg0, s16 arg1, u16 arg2) {
-    s16 x, y, z;
+u8 func_8019ADAC(s16 arg0, s16 arg1) {
+    s16 x, y;
 
     x = arg0 - D_8006C3B8->posX.Data.high;
     y = arg1 - D_8006C3B8->posY.Data.high;
-    z = arg2;
 
-    return func_8019AD2C(x, y, z);
+    return func_8019AD2C(x, y);
 }
-#endif
+
 
 u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     u8 var_v0;
