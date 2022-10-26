@@ -164,12 +164,14 @@ typedef struct playerHeart {
     s32 unk4;
 } playerHeart;
 
-typedef struct {
-    s32 unk0;
-    char pad4[0x27];
-    u8 unk2B;
-    char padx[0x6];
-    u16 unk32;
+typedef struct unkStructX {
+    /* 0x00 */ struct unkStructX* unk0;
+    /* 0x04 */ char pad4[0x3];
+    /* 0x07 */ s8 unk7;
+    /* 0x08 */ char pad2B[0x23];
+    /* 0x2B */ u8 unk2B;
+    /* 0x2C */ char padX[0x6];
+    /* 0x32 */ u16 unk32;
 } unkStruct3;
 
 typedef struct {

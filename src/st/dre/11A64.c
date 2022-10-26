@@ -246,6 +246,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198C44);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198D5C);
 
+// https://decomp.me/scratch/3zqeH 87.89 %
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198E74);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198EC0);
@@ -254,6 +255,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198F18);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199014);
 
+// same as func_80198E74
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199128);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199174);
@@ -286,6 +288,7 @@ void func_80199554(void) {
     }
 }
 
+// at -> v0 reg swap
 // https://decomp.me/scratch/FLExi
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
@@ -427,6 +430,7 @@ Entity* func_8019AC18(Entity* start, Entity* end) {
 }
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
+// at -v0 reg swap
 // flags https://decomp.me/scratch/dlcph
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC78);
@@ -437,6 +441,7 @@ s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 #endif
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
+// at -v0 reg swap
 // flags https://decomp.me/scratch/reosO
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACA4);
@@ -450,6 +455,7 @@ void func_8019ACC0(s32 arg0, s16 arg1) {
     D_8006C3B8->accelerationX = func_8019AC78(arg0, arg1);
     D_8006C3B8->accelerationY = func_8019AC78(arg0 - 0x40, arg1);
 }
+
 u8 func_8019AD2C(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
 u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
@@ -1159,7 +1165,7 @@ unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
             arg0->unk32 |= 8;
         }
 
-        if (arg0->unk0 != 0) {
+        if (arg0->unk0 != NULL) {
             arg0->unk2B = var_a2;
         } else {
             return NULL;
@@ -1172,7 +1178,14 @@ unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
 // need a weird struct for this one
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2684);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2764);
+void func_801A2764(unkStruct3 *arg0)
+{
+    func_801A2684(arg0);
+    arg0->unk2B = 8;
+    arg0->unk0->unk2B = 1;
+    arg0->unk0->unk7 = 2;
+    arg0->unk0->unk32 = 0xA;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A27B8);
 
