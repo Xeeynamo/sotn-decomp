@@ -9,7 +9,7 @@ void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
-void func_8019A490(void);
+void func_8019A490(Entity* entity);
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
 void func_8019A78C(void);
@@ -357,8 +357,13 @@ void func_8019A414(s16 index) { // DestroyEntityFromIndex
     }
 }
 
-// https://decomp.me/scratch/oUPTM
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A490);
+void func_8019A490(Entity *arg0) {
+    if (arg0->unk32) {
+        u32 temp_a0 = arg0->unk32 - 1;
+        u16 index = temp_a0 >> 5;
+        D_80097428[index] |= 1 << (temp_a0 & 0x1F);
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A4D8);
 
@@ -642,7 +647,7 @@ void func_8019B7A0(Entity* entity) { // InitializeEntity
     u16 temp_a0;
     u16 var_v1;
 
-    func_8019A490();
+    func_8019A490(entity);
     if (!(D_8009796E & 2)) {
         func_8019A3A8(entity);
         return;
@@ -1126,23 +1131,16 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2018);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2400);
 
-// https://decomp.me/scratch/aRsTo
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2550);
-#else
-POLY_GT4* func_801A2550(POLY_GT4* arg0) {
-    if (arg0 != NULL) {
-    loop_1:
-        if (arg0->p3 != NULL) {
-            arg0 = arg0->tag;
-            if (arg0 != NULL) {
-                goto loop_1;
-            }
+POLY_GT4* func_801A2550(POLY_GT4* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = (POLY_GT4*)poly->tag;
+        } else {
+            return poly;
         }
     }
-    return arg0;
+    return NULL;
 }
-#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2580);
 
