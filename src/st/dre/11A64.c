@@ -20,6 +20,9 @@ Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern s32 D_8009740C[];
+extern ObjectInit* D_801A32C4;
+extern ObjectInit* D_801A32C8;
 extern u16 D_8007308E;
 extern u8* D_80180610[];
 extern u8 D_80180630[];
@@ -207,7 +210,18 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194FF4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801950F8);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801961DC);
+
+void func_801961DC(s16 arg0) {
+    s16 temp_v0 = arg0 - *(s16*)D_8009740C;
+    
+    if (temp_v0 > 1) {
+        D_8009740C[0]++;
+    } else if (temp_v0 < -1) {
+        D_8009740C[0]--;
+    } else {
+        D_8009740C[0] = arg0;
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196238);
 
@@ -247,19 +261,51 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198C44);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198D5C);
 
-// https://decomp.me/scratch/3zqeH 87.89 %
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198E74);
+void func_80198E74(s16 arg0) {
+    while (1) {
+        if ((D_801A32C4->posX != 0xFFFE) && ((s32)D_801A32C4->posX >= arg0)) {
+            break;
+        }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198EC0);
+        D_801A32C4++;
+    }
+}
+
+void func_80198EC0(s16 arg0) {
+    while (1) {
+        if (D_801A32C4->posX != 0xFFFF) {
+            if ((arg0 >= (s32)D_801A32C4->posX) || (D_801A32C4->posX == 0xFFFE)) {
+                break;
+            }
+        }
+        D_801A32C4--;
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198F18);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199014);
 
-// same as func_80198E74
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199128);
+void func_80199128(s16 arg0) {
+    while (1) {
+        if ((D_801A32C8->posY != 0xFFFE) && ((s32)D_801A32C8->posY >= arg0)) {
+            break;
+        }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199174);
+        D_801A32C8++;
+    }
+}
+
+void func_80199174(s16 arg0) {
+    while (1) {
+        if (D_801A32C8->posY != 0xFFFF) {
+            if (((s32)arg0 >= D_801A32C8->posY) || (D_801A32C8->posY == 0xFFFE)) {
+                break;
+            }
+        }
+        D_801A32C8--;
+    }
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801991CC);
 
