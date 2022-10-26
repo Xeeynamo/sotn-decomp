@@ -1046,22 +1046,16 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198FA0);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199388);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801994D8);
-#else
-POLY_GT4* func_801994D8(POLY_GT4* arg0) {
-    if (arg0 != NULL) {
-    loop_1:
-        if (arg0->p3 != NULL) {
-            arg0 = arg0->tag;
-            if (arg0 != NULL) {
-                goto loop_1;
-            }
+POLY_GT4* func_801994D8(POLY_GT4* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = (POLY_GT4*)poly->tag;
+        } else {
+            return poly;
         }
     }
-    return arg0;
+    return NULL;
 }
-#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80199508);
 
