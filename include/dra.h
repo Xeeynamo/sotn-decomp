@@ -164,6 +164,14 @@ typedef struct playerHeart {
     s32 unk4;
 } playerHeart;
 
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 flags; // maybe misnamed
+    /* 0x6 */ u16 unk6;
+    /* 0x8 */ u16 unk8;
+} ObjectInit; // size = 0xA
+
 typedef struct unkStructX {
     /* 0x00 */ struct unkStructX* unk0;
     /* 0x04 */ char pad4[0x3];
@@ -180,14 +188,6 @@ typedef struct {
     /* 0xC */ s16 unkC;
     /* 0xE */ s16 unkE;
 } Unkstruct4; // size = 0x10
-
-typedef struct {
-    /* 0x0 */ u16 posX;
-    /* 0x2 */ u16 posY;
-    /* 0x4 */ u16 flags; // maybe misnamed
-    /* 0x6 */ u16 unk6;
-    /* 0x8 */ u16 unk8;
-} ObjectInit; // size = 0xA
 
 typedef struct {
     /* 0x00 */ s16 unk0;
