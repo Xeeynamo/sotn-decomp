@@ -175,10 +175,9 @@ void func_801BE544(void) {
     D_801D7D2A = D_801D7D2C + 0x14;
 }
 
-
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE598);
 
-//https://decomp.me/scratch/ErGo1
+// https://decomp.me/scratch/ErGo1
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE75C);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE7BC);
@@ -497,19 +496,15 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 #ifndef NON_MATCHING
 // not mathching only locally: https://decomp.me/scratch/6ZStN
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5534);
-#else 
-s32 func_801C5534(u8 arg0, s16 arg1) {
-    return D_801820C4[arg0] * arg1;
-}
+#else
+s32 func_801C5534(u8 arg0, s16 arg1) { return D_801820C4[arg0] * arg1; }
 #endif
 
 #ifndef NON_MATCHING
 // non matching only locally : https://decomp.me/scratch/34DLf
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5560);
-#else 
-s16 func_801C5560(u8 arg0) {
-    return D_801820C4[arg0];
-}
+#else
+s16 func_801C5560(u8 arg0) { return D_801820C4[arg0]; }
 #endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
@@ -525,12 +520,12 @@ u8 func_801C5620(Entity* arg0, Entity* arg1) {
 }
 
 u8 func_801C5668(s32 arg0, s32 arg1) {
-    s16 a = (arg0 - (u16) D_8006C3B8->posX.Data.high);
-    s16 b = (arg1 - (u16) D_8006C3B8->posY.Data.high);
+    s16 a = (arg0 - (u16)D_8006C3B8->posX.Data.high);
+    s16 b = (arg1 - (u16)D_8006C3B8->posY.Data.high);
     return func_801C55E8(a, b);
 }
 
-//https://decomp.me/scratch/0GgS4
+// https://decomp.me/scratch/0GgS4
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C56B0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
@@ -769,7 +764,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CEF88);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF438);
 
-void func_801CF58C(Entity *arg0) {
+void func_801CF58C(Entity* arg0) {
     arg0->accelerationX = 0;
     arg0->unk86 = 0x100;
     func_801C58A4(6);
@@ -921,5 +916,5 @@ void func_801D7020(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-//https://decomp.me/scratch/cZhs0
+// https://decomp.me/scratch/cZhs0
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D704C);
