@@ -452,7 +452,6 @@ void func_8019ACC0(s32 arg0, s16 arg1) {
 }
 u8 func_8019AD2C(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-
 u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
     u16 x, y;
 
@@ -470,7 +469,6 @@ u8 func_8019ADAC(s16 arg0, s16 arg1) {
 
     return func_8019AD2C(x, y);
 }
-
 
 u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     u8 var_v0;
