@@ -172,11 +172,30 @@ typedef struct {
     /* 0x8 */ u16 unk8;
 } ObjectInit; // size = 0xA
 
-typedef struct unkStructX {
-    /* 0x00 */ struct unkStructX* unk0;
+typedef struct unkStruct3 {
+    /* 0x00 */ struct unkStruct3* unk0;
     /* 0x04 */ char pad4[0x3];
     /* 0x07 */ s8 unk7;
-    /* 0x08 */ char pad2B[0x23];
+    /* 0x00 */ s16 unk8;
+    /* 0x00 */ s16 unkA;
+    /* 0x00 */ s16 unkC;
+    /* 0x00 */ s16 unkE;
+    /* 0x00 */ s16 unk10;
+    /* 0x00 */ UnkUnion2 unk12;
+    /* 0x00 */ s16 unk14;
+    /* 0x00 */ s16 unk16;
+    /* 0x00 */ s16 unk18;
+    /* 0x00 */ s16 unk1A;
+    /* 0x00 */ s16 unk1C;
+    /* 0x00 */ UnkUnion2 unk1E;
+    /* 0x00 */ s16 unk20;
+    /* 0x00 */ s16 unk22;
+    /* 0x00 */ s8 unk24;
+    /* 0x00 */ s8 unk25;
+    /* 0x00 */ char pad27[0x2];
+    /* 0x00 */ s8 unk28;
+    /* 0x00 */ char pad[0x1];
+    /* 0x00 */ s8 unk2A;
     /* 0x2B */ u8 unk2B;
     /* 0x2C */ char padX[0x6];
     /* 0x32 */ u16 unk32;

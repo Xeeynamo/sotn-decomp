@@ -1175,8 +1175,29 @@ unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
 }
 #endif
 
-// need a weird struct for this one
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2684);
+void func_801A2684(unkStruct3* arg0) {
+    arg0->unk12.data1.unk1 = 0;
+    arg0->unk1E.data1.unk1 = 0;
+    arg0->unk2B = 0;
+    arg0->unk0->unk14 = 0;
+    arg0->unk0->unk16 = 0;
+    arg0->unk0->unkA = 0;
+    arg0->unk0->unk8 = 0;
+    arg0->unk0->unkE = 0;
+    arg0->unk0->unkC = 0;
+    arg0->unk0->unk12.data = 0;
+    arg0->unk0->unk10 = 0;
+    arg0->unk0->unk18 = 0;
+    arg0->unk0->unk1A = 0;
+    arg0->unk0->unk1C = 0;
+    arg0->unk0->unk1E.data = 0;
+    arg0->unk0->unk24 = 0;
+    arg0->unk0->unk25 = 0;
+    arg0->unk0->unk28 = 0;
+    arg0->unk0->unk2A = 0;
+    arg0->unk0->unk20 = 0;
+    arg0->unk0->unk22 = 0;
+}
 
 void func_801A2764(unkStruct3* arg0) {
     func_801A2684(arg0);
@@ -1186,7 +1207,13 @@ void func_801A2764(unkStruct3* arg0) {
     arg0->unk0->unk32 = 0xA;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A27B8);
+void func_801A27B8(unkStruct3* arg0) {
+    arg0->unk2B = 0;
+    arg0->unk32 = 8;
+    arg0->unk0->unk2B = 0;
+    arg0->unk0->unk7 = 4;
+    arg0->unk0->unk32 = 8;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A27E4);
 
