@@ -55,8 +55,8 @@ typedef union { // Big assumption here...
         s16 high;
     } Data; // size = 0x4
     struct {
-        s8 unk0;
-        s8 unk1;
+        u8 unk0;
+        u8 unk1;
         s16 unk2;
     } Data1; // size = 0x4
 

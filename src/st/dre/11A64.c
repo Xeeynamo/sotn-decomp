@@ -25,13 +25,12 @@ extern u8 D_80180638[];
 extern u16 D_80180640[];
 extern u8 D_80180650[];
 extern u16 D_80180458[];
-extern u16 D_80180470;
+extern u16 D_80180470[];
 extern s32 D_801811B0[];
 extern u32 D_8018125C[];
 extern s16 D_801812E4[];
 extern u32 D_801812F4[];
 extern u16 D_80181420[];
-extern u16 D_80180470;
 extern u8 D_80181338;
 extern PfnEntityUpdate D_801803C4[];
 extern u16 D_801804E8;
@@ -639,35 +638,35 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B304);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019B45C);
 
-void func_8019B7A0(Entity* arg0) { // InitializeEntity
+void func_8019B7A0(Entity* entity) { // InitializeEntity
     u16 temp_a0;
     u16 var_v1;
 
     func_8019A490();
     if (!(D_8009796E & 2)) {
-        func_8019A3A8(arg0);
+        func_8019A3A8(entity);
         return;
     }
 
-    temp_a0 = arg0->subId & 0xFFF;
+    temp_a0 = entity->subId & 0xFFF;
     var_v1 = temp_a0;
-    arg0->subId = var_v1;
+    entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        arg0->objectId = 3;
-        arg0->pfnUpdate = func_8019BDC8;
-        arg0->animationFrameDuration = 0;
-        arg0->animationFrameIndex = 0;
+        entity->objectId = 3;
+        entity->pfnUpdate = func_8019BDC8;
+        entity->animationFrameDuration = 0;
+        entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        arg0->objectId = 0xA;
-        arg0->pfnUpdate = func_8019C7DC;
+        entity->objectId = 0xA;
+        entity->pfnUpdate = func_8019C7DC;
     }
 
-    arg0->subId = var_v1;
+    entity->subId = var_v1;
     temp_a0 = 0;
-    arg0->unk6D = 0x10;
-    arg0->initState = temp_a0;
+    entity->unk6D = 0x10;
+    entity->initState = temp_a0;
 }
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
@@ -718,12 +717,12 @@ void func_8019B8DC(u16 arg0) {
 
         D_8006C3B8->accelerationX = 0;
         D_8006C3B8->accelerationY = 0;
-        
+
         if (sp10.sp10 & 4) {
             D_8006C3B8->posY.value += 0x2000;
             return;
         }
-        
+
         D_8006C3B8->posY.Data.high =
             (u16)D_8006C3B8->posY.Data.high + (u16)sp10.sp28;
         return;
@@ -787,55 +786,55 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C63C);
 #else
-void func_8019C63C(Entity* arg0) {
+void func_8019C63C(Entity* entity) {
     u32 temp_v0;
     u32 temp;
 
-    if (!arg0->initState) {
+    if (!entity->initState) {
         func_8019B0B8(&D_80180470);
-        arg0->animationSet = 2;
-        arg0->animationFrameIndex = 0;
-        arg0->animationFrameDuration = 0;
-        arg0->unk18 = 0x30;
+        entity->animationSet = 2;
+        entity->animationFrameIndex = 0;
+        entity->animationFrameDuration = 0;
+        entity->unk18 = 0x30;
 
-        if (arg0->subId & 0xF0) {
-            arg0->palette = 0x8195;
-            arg0->unk18 = 0x10;
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->unk18 = 0x10;
         }
 
-        temp_v0 = arg0->subId & 0xFF00;
+        temp_v0 = entity->subId & 0xFF00;
 
         if (temp_v0 != 0) {
-            arg0->zPriority = (u16)(temp_v0 >> 8);
+            entity->zPriority = (u16)(temp_v0 >> 8);
         }
 
-        arg0->subId &= 0xF;
-        arg0->accelerationY = D_801811B0[arg0->subId];
+        entity->subId &= 0xF;
+        entity->accelerationY = D_801811B0[entity->subId];
         return;
     }
 
-    arg0->posY.value += arg0->accelerationY;
-    if (!func_8019A4D8(D_8018125C[arg0->subId], arg0)) {
-        func_8019A3A8(arg0);
+    entity->posY.value += entity->accelerationY;
+    if (!func_8019A4D8(D_8018125C[entity->subId], entity)) {
+        func_8019A3A8(entity);
     }
 }
 #endif
 
-void func_8019C738(Entity* arg0, s32 renderFlags) {
+void func_8019C738(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[arg0->firstPolygonIndex];
+    poly = &D_80086FEC[entity->firstPolygonIndex];
 
-    left = arg0->posX.Data.high - 7;
-    right = arg0->posX.Data.high + 7;
+    left = entity->posX.Data.high - 7;
+    right = entity->posX.Data.high + 7;
     poly->x2 = left;
     poly->x0 = left;
     poly->x3 = right;
     poly->x1 = right;
 
-    top = arg0->posY.Data.high - 7;
-    bottom = arg0->posY.Data.high + 7;
+    top = entity->posY.Data.high - 7;
+    bottom = entity->posY.Data.high + 7;
     poly->y1 = top;
     poly->y0 = top;
     poly->y3 = bottom;
@@ -973,7 +972,7 @@ void func_8019F070(Entity* entity) {
     u32 temp_v0;
 
     if (entity->initState == 0) {
-        func_8019B0B8(&D_80180470);
+        func_8019B0B8(D_80180470);
         entity->palette = 0x8170;
         entity->animationSet = 5;
         entity->animationFrame = 1;
@@ -1007,7 +1006,7 @@ void func_8019F070(Entity* entity) {
 
 void func_8019F170(Entity* entity) {
     if (!entity->initState) {
-        func_8019B0B8(&D_80180470);
+        func_8019B0B8(D_80180470);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
@@ -1077,6 +1076,7 @@ void func_8019F304(void) {
     }
 }
 
+// https://decomp.me/scratch/Hfk9n
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F3BC);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F594);
