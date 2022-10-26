@@ -20,6 +20,7 @@ Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern u16 D_8007308E;
 extern u8* D_80180610[];
 extern u8 D_80180630[];
 extern u8 D_80180638[];
