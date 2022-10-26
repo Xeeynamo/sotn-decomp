@@ -357,7 +357,7 @@ void func_8019A414(s16 index) { // DestroyEntityFromIndex
     }
 }
 
-void func_8019A490(Entity *arg0) {
+void func_8019A490(Entity* arg0) {
     if (arg0->unk32) {
         u32 temp_a0 = arg0->unk32 - 1;
         u16 index = temp_a0 >> 5;
