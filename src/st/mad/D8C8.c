@@ -601,9 +601,6 @@ s32 func_80192078(void) {
     return value;
 }
 
-#ifdef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801920AC);
-#else
 s16 func_801920AC(void) {
     s16 var_a0 = D_8006C26C->posX.Data.high > D_80072E8A;
 
@@ -612,7 +609,6 @@ s16 func_801920AC(void) {
     }
     return var_a0;
 }
-#endif
 
 void MoveEntity(void) {
     D_8006C26C->posX.value += D_8006C26C->accelerationX;
@@ -646,18 +642,9 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192860);
-s32 func_80192860(u8 arg0, s16 arg1);
-#else
 s32 func_80192860(u8 arg0, s16 arg1) { return D_801809EC[arg0 & 0xFF] * arg1; }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019288C);
-#else
-s16 func_8019288C(s32 arg0) { return D_801809EC[arg0 & 0xFF]; }
-#endif
+s16 func_8019288C(u8 arg0) { return D_801809EC[arg0]; }
 
 void func_801928A8(s32 arg0, s16 arg1) {
     D_8006C26C->accelerationX = func_80192860(arg0, arg1);
