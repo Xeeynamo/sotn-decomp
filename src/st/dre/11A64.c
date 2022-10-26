@@ -9,6 +9,7 @@ void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
+s32 func_8019AC78(u8, s16);
 void func_8019A490(Entity* entity);
 void func_8019BDC8(struct Entity*);
 void func_8019C7DC(struct Entity*);
@@ -439,7 +440,6 @@ s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 // flags https://decomp.me/scratch/reosO
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACA4);
-s32 func_8019AC78(u8, s16);
 #else
 extern s16 D_80180D80[];
 
