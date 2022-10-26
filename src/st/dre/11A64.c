@@ -1178,8 +1178,7 @@ unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
 // need a weird struct for this one
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2684);
 
-void func_801A2764(unkStruct3 *arg0)
-{
+void func_801A2764(unkStruct3* arg0) {
     func_801A2684(arg0);
     arg0->unk2B = 8;
     arg0->unk0->unk2B = 1;
