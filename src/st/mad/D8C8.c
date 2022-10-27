@@ -638,7 +638,7 @@ u8 func_8019214C(void) {
 
     MoveEntity();
     FallEntity();
-    
+
     entity = D_8006C26C;
 
     if (unkState & 1) {
