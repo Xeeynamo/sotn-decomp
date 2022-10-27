@@ -3,7 +3,7 @@
 
 void func_800E2398(s32 arg0);
 s32 func_8010E27C(void);
-s32 func_801324B4(s8 arg0, s16 arg1, s16 arg2);
+void func_801324B4(s8 arg0, s16 arg1, s16 arg2);
 s32 func_80136010();
 void func_801353A0();
 
@@ -915,7 +915,6 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
 #endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F5904);
-// https://decomp.me/scratch/DP2LU
 
 void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);

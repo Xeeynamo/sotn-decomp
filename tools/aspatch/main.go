@@ -51,7 +51,15 @@ func patchLine(w *bufio.Writer, line string) error {
 	}
 
 	switch tokens[0] {
+	case "lb":
+		fallthrough
+	case "lbu":
+		fallthrough
 	case "lh":
+		fallthrough
+	case "lhu":
+		fallthrough
+	case "lw":
 		switch len(tokens) {
 		case 5: // variant without pointer
 			w.WriteString(line)
@@ -60,6 +68,7 @@ func patchLine(w *bufio.Writer, line string) error {
 				return fmt.Errorf("unable to parse '%s'", line)
 			}
 
+			op := tokens[0]
 			dstReg := tokens[1] + tokens[2]
 			addr := tokens[4]
 			ptrReg := tokens[6] + tokens[7]
@@ -68,7 +77,7 @@ func patchLine(w *bufio.Writer, line string) error {
 			if err != nil || iAddr > 0x10000 {
 				w.WriteString(fmt.Sprintf("\tlui\t$1,%%hi(%s)\n", addr))
 				w.WriteString(fmt.Sprintf("\taddu\t$1,$1,%s\n", ptrReg))
-				w.WriteString(fmt.Sprintf("\tlh\t%s,%%lo(%s)($1)\n", dstReg, addr))
+				w.WriteString(fmt.Sprintf("\t%s\t%s,%%lo(%s)($1)\n", op, dstReg, addr))
 			} else {
 				// fallback
 				w.WriteString(line)

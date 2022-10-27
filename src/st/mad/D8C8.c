@@ -198,9 +198,6 @@ void func_8018E5AC(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E674);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandle);
-#else
 void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
@@ -224,7 +221,6 @@ void EntityCandle(Entity* entity) {
         entity->animationSet = D_80180674[temp_s0];
     }
 }
-#endif
 
 s32 Random(void) {
     D_80097364 = (D_80097364 * 0x01010101) + 1;
@@ -522,9 +518,6 @@ void func_80190F04(void) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", SpawnExplosionEntity);
-#else
 void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
@@ -532,7 +525,6 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posX.Data.high = D_8006C26C->posX.Data.high;
     entity->posY.Data.high = D_8006C26C->posY.Data.high;
 }
-#endif
 
 // at -> v0 reg swap
 #ifndef NON_MATCHING
@@ -956,10 +948,6 @@ Entity* func_801939C4(void) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandleDrop);
 
-// at -> a0 reg swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80194218);
-#else
 void func_80194218(Entity* entity) {
     u32 temp_v0;
 
@@ -990,7 +978,6 @@ void func_80194218(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80194314);
