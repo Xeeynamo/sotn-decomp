@@ -60,7 +60,7 @@ void EntityCandle(Entity* entity) {
             Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
-                AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(EntityExplosionID, entityDropItem);
                 entityDropItem->subId = D_80180E78[temp_s0];

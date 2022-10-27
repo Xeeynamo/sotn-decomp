@@ -1056,7 +1056,7 @@ void func_80196934(void) {
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&D_8007D308, &D_8007D308[32]);
+        entity = AllocEntity(D_8007D308, &D_8007D308[32]);
         if (entity != NULL) {
             func_8019102C(2, D_8006C26C, entity);
             entity->unk84.Data1.unk1 = 6 - i;
