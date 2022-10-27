@@ -643,7 +643,6 @@ u8 func_8019214C(void) {
 
     if (unkState & 1) {
         entity->accelerationY = 0;
-        return unkState;
     }
 
     return unkState;
