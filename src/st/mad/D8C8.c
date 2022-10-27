@@ -1045,7 +1045,29 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801965E4);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801966B0);
 
+// at -> v0 reg swap
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019686C);
+#else
+void func_8019686C(u16 arg0, Entity* arg1, Entity* arg2) {
+    DestroyEntity(arg2);
+    arg2->objectId = arg0;
+    arg2->pfnUpdate = PfnEntityUpdates[arg0];
+    arg2->posX.Data.high = (s16)arg1->posX.Data.high;
+    arg2->posY.Data.high = (s16)arg1->posY.Data.high;
+    arg2->unk5A = (s16)arg1->unk5A;
+    arg2->zPriority = arg1->zPriority;
+    arg2->animationSet = (s16)arg1->animationSet;
+    arg2->unk34 = 0xCD002000;
+
+    if ((u16)arg1->palette & 0x8000) {
+        arg2->palette = arg1->unk6A;
+        return;
+    }
+    
+    arg2->palette = (s16)arg1->palette;
+}
+#endif
 
 void func_80196934(void) {
     Entity* entity;
