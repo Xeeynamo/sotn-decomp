@@ -1064,7 +1064,7 @@ void func_8019686C(u16 arg0, Entity* arg1, Entity* arg2) {
         arg2->palette = arg1->unk6A;
         return;
     }
-    
+
     arg2->palette = (s16)arg1->palette;
 }
 #endif
