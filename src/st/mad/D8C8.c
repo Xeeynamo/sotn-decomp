@@ -1029,7 +1029,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019572C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019583C);
 
-// https://decomp.me/scratch/X3ho9
+// https://decomp.me/scratch/3IMus
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019596C);
 
 // at -> a1 reg swap
