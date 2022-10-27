@@ -52,7 +52,7 @@ extern s32 D_80180FCC[];
 extern s32 D_80180FE4[];
 extern u8 D_80180FFC[];
 extern u16 D_80181000[];
-extern u8 D_801810F4[];
+extern ObjInit2 D_801810F4[];
 extern u16 D_801804F0[];
 extern u16 D_80180508;
 extern u8* D_80180644[];
@@ -1247,7 +1247,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198650);
 
 void func_80198B00(Entity* entity) {
     s32 temp_v0;
-    ObjInit2* obj = (ObjInit2*)&D_801810F4[entity->subId * 0x14];
+    ObjInit2* obj = &D_801810F4[entity->subId];
 
     if (entity->initState == 0) {
         InitializeEntity(D_80180544);
