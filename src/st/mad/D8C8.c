@@ -1025,6 +1025,8 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195520);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019563C);
 
+// https://decomp.me/scratch/CrGOA MATCHED but we need to figure out
+// the correct member for the Entity struct yet
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019572C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019583C);

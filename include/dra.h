@@ -159,8 +159,8 @@ typedef struct {
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {
-    s32 unk0;
-    s32 unk4;
+    s32 current;
+    s32 max;
 } playerHeart;
 
 typedef struct {
@@ -566,7 +566,7 @@ extern s32 D_801375FC;
 extern s32 D_80137614;
 extern s32 D_80137618;
 extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
-                        // 2-byte signed
+                        // 2-byte aligned
 extern s8 D_80137638;
 extern s32 D_80137844;
 extern s32 D_80137848;

@@ -1233,7 +1233,7 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuStr(c_strHEART, 0x60, 0x50, context);
         DrawMenuInt(g_playerHeart, 0xA8, 0x50, context);
         DrawMenuChar(0xF, 0xB0, 0x50, context);
-        DrawMenuInt(g_playerHeartMax, 0xD0, 0x50, context);
+        DrawMenuInt(g_playerHeart->max, 0xD0, 0x50, context);
         DrawMenuStr(c_strEXP, 0x20, 0xB0, context);
         DrawMenuInt(g_playerExp, 0x90, 0xB0, context);
         DrawMenuStr(c_strNEXT, 0x20, 0xBC, context);

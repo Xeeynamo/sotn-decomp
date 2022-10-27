@@ -783,8 +783,8 @@ void CollectHeart(u16 heartSize) {
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[heartSize];
 
-    if (g_playerHeartMax < *hearts) {
-        *hearts = g_playerHeartMax;
+    if (g_playerHeart->max < *hearts) {
+        *hearts = g_playerHeart->max;
     }
 
     DestroyEntity(D_8006C3B8);
@@ -822,10 +822,10 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
-        g_playerHeart->unk0 += HEART_VESSEL_RICHTER;
+        g_playerHeart->current += HEART_VESSEL_RICHTER;
 
-        if (g_playerHeart->unk4 < g_playerHeart->unk0) {
-            g_playerHeart->unk0 = g_playerHeart->unk4;
+        if (g_playerHeart->max < g_playerHeart->current) {
+            g_playerHeart->current = g_playerHeart->max;
         }
     } else {
         g_pfnPlaySfx(0x67A);

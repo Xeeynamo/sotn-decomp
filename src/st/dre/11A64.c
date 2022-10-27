@@ -20,6 +20,7 @@ Entity* func_8019AC18(Entity*, Entity*);
 s32 func_8019A4D8(u8*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern s16 D_80180D80[];
 extern s32 D_8009740C[];
 extern ObjectInit* D_801A32C4;
 extern ObjectInit* D_801A32C8;
@@ -477,16 +478,7 @@ Entity* func_8019AC18(Entity* start, Entity* end) {
     return NULL;
 }
 
-// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
-// at -v0 reg swap
-// flags https://decomp.me/scratch/dlcph
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AC78);
-#else
-extern s16 D_80180D80[];
-
 s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
-#endif
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
 // at -v0 reg swap
@@ -796,8 +788,8 @@ void func_8019BA38(u16 arg0) {
     hearts = &g_playerHeart;
     *hearts += D_801811AC[arg0];
 
-    if (g_playerHeartMax < *hearts) {
-        *hearts = g_playerHeartMax;
+    if (g_playerHeart->max < *hearts) {
+        *hearts = g_playerHeart->max;
     }
 
     func_8019A3A8(D_8006C3B8);
@@ -811,10 +803,10 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 void func_8019BCAC(void) { // CollectHeartVessel
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
-        g_playerHeart->unk0 += HEART_VESSEL_RICHTER;
+        g_playerHeart->current += HEART_VESSEL_RICHTER;
 
-        if (g_playerHeart->unk4 < g_playerHeart->unk0) {
-            g_playerHeart->unk0 = g_playerHeart->unk4;
+        if (g_playerHeart->max < g_playerHeart->current) {
+            g_playerHeart->current = g_playerHeart->max;
         }
     } else {
         g_pfnPlaySfx(0x67A);
