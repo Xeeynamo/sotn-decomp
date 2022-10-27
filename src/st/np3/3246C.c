@@ -39,9 +39,6 @@ void func_801B246C(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityCandle);
-#else
 void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
@@ -65,7 +62,6 @@ void EntityCandle(Entity* entity) {
         entity->animationSet = D_80180E58[temp_s0];
     }
 }
-#endif
 
 // TODO: Probably aspsx or compiler flags
 // https://decomp.me/scratch/sKMmw
@@ -311,11 +307,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCDA4);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCDD0);
-#else
 s16 func_801BCDD0(s32 arg0) { return D_80181A50[arg0 & 0xFF]; }
-#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCDEC);
 

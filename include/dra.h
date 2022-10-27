@@ -22,8 +22,9 @@ typedef struct {
     /* 0x10 */ int w;
     /* 0x14 */ int unk14;
     /* 0x18 */ s16 unk18;
-    /* 0x20 */ s16 unk1A;
-} MenuContext; // size = 0x22
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ s16 unk1C;
+} MenuContext; // size = 0x1E
 
 typedef struct {
     /* 0x0 */ u8 tileLayoutId;
@@ -54,8 +55,8 @@ typedef union { // Big assumption here...
         s16 high;
     } Data; // size = 0x4
     struct {
-        s8 unk0;
-        s8 unk1;
+        u8 unk0;
+        u8 unk1;
         s16 unk2;
     } Data1; // size = 0x4
 
@@ -74,7 +75,6 @@ typedef union {
     struct {
         u8 unk0;
         u8 unk1;
-        // u8 unk2;
     } modeU8;
 } unkUnion3;
 
@@ -134,12 +134,11 @@ typedef struct {
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
     /* 0x7E */ u8 unk7E;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ UnkUnion2 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ s8 unk84;
-    /* 0x85 */ s8 unk85;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s32 unk88;
+    /* 0x84 */ UnkUnion1 unk84;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
     /* 0x8C */ u16 unk8C;
     /* 0x8E */ u16 unk8E;
     /* 0x90 */ s32 unk90;
@@ -159,20 +158,55 @@ typedef struct {
     /* 0xBB */ u8 unkBB;
 } Entity; // size = 0xBC
 
+typedef struct playerHeart {
+    s32 current;
+    s32 max;
+} playerHeart;
+
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 flags; // maybe misnamed
+    /* 0x6 */ u16 unk6;
+    /* 0x8 */ u16 unk8;
+} ObjectInit; // size = 0xA
+
+typedef struct unkStruct3 {
+    /* 0x00 */ struct unkStruct3* unk0;
+    /* 0x04 */ char pad4[0x3];
+    /* 0x07 */ s8 unk7;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ UnkUnion2 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ s16 unk1C;
+    /* 0x1E */ UnkUnion2 unk1E;
+    /* 0x20 */ s16 unk20;
+    /* 0x22 */ s16 unk22;
+    /* 0x24 */ s8 unk24;
+    /* 0x25 */ s8 unk25;
+    /* 0x26 */ char pad26[0x2];
+    /* 0x28 */ s8 unk28;
+    /* 0x29 */ char pad[0x1];
+    /* 0x2A */ s8 unk2A;
+    /* 0x2B */ u8 unk2B;
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ char pad2E[4];
+    /* 0x32 */ u16 unk32;
+} unkStruct3;
+
 typedef struct {
     /* 0x0 */ char pad0[0xA];
     /* 0xA */ s16 unkA;
     /* 0xC */ s16 unkC;
     /* 0xE */ s16 unkE;
 } Unkstruct4; // size = 0x10
-
-typedef struct {
-    /* 0x0 */ u16 posX;
-    /* 0x2 */ u16 posY;
-    /* 0x4 */ u16 flags;
-    /* 0x6 */ u16 unk6;
-    /* 0x8 */ u16 unk8;
-} ObjectInit; // size = 0xA
 
 typedef struct {
     /* 0x00 */ s16 unk0;
@@ -246,6 +280,15 @@ typedef struct {
     /* 0x8 */ u16 unk8;
 } Unkstruct10; // size = 0xA
 
+typedef struct {
+    /* 0x0000 */ char unk_00[0x474];
+    /* 0x0474 */ u32 unk_0474[0]; // unk length, unk elem size
+    char _unk_0474[0x800];
+    /* 0x0C74 */ DR_MODE drawModes[0]; // unk length
+    u8 _unk_0C74[0xCC00];
+    /* 0xD874 */ POLY_G4 unk_D874[0]; // unk length
+} GpuBufferUnk;
+
 // main
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
@@ -254,7 +297,7 @@ extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
 extern RoomHeader* D_8003C784;
-extern void (*D_8003C7BC)(s32, s32, Unkstruct7*, s32);
+extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
 extern Unkstruct5* D_8003C808;
@@ -262,6 +305,9 @@ extern void (*D_8003C848)(s32, s32);
 extern s32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 g_CurrentPlayableCharacter;
+extern s32 g_blinkTimer;
+extern s32 g_menuMainCursorIndex;
+extern s32 g_menuRelicsCursorIndex;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
@@ -362,6 +408,7 @@ extern s8 D_8005436D;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
+extern GpuBufferUnk* D_8006C37C;
 extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
@@ -436,6 +483,8 @@ extern s32 g_mapProgramId;
 extern s32 D_800974AC;
 extern s32 D_80097908;
 extern s32 D_8009790C;
+extern s32 D_8009792C;
+extern s32 D_80097934;
 extern u8 D_8009796E;
 extern u8 D_8009798A;
 extern u8 D_80097A8D;
@@ -443,7 +492,7 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern s32 g_playerHeart;
+extern playerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
 extern s32 g_playerHp;
 extern s32 g_playerHpMax;
@@ -506,6 +555,7 @@ extern const char* c_strFamiliars;
 extern const char* c_strFamiliar;
 extern const char* c_strSpecial2;
 extern s32 D_800ACC64;
+extern RECT D_800ACD80;
 extern RECT c_backbufferClear;
 extern s16 D_800BD07C[];
 extern u8 D_80137460;
@@ -513,7 +563,10 @@ extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
+extern s32 D_80137614;
 extern s32 D_80137618;
+extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
+                        // 2-byte aligned
 extern s8 D_80137638;
 extern s32 D_80137844;
 extern s32 D_80137848;
@@ -596,12 +649,9 @@ void func_800F4F48(void);
 void func_800F4FD0(void);
 bool IsAlucart();
 void func_800F53A4(void);
-s32 IsSpriteOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* a5);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
-void func_800F5E68(MenuContext*, s32 iOption, s32 x, s32 y, s32 w, s32 h, s32,
-                   s32);
 s32 func_800F62E8(s32 arg0);
 void DrawMenuChar(char ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);

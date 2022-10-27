@@ -68,7 +68,6 @@ void func_80186FD0(Entity* arg0) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
 #else
-s32 func_8018B970();
 extern u16 D_80180488[];
 extern u8 D_80180528[];
 extern s8 D_80180530[];
@@ -107,7 +106,7 @@ void func_801870B0(Entity* entity) {
 
         if (entity->unk44 != 0) {
             temp_v0 = func_8018B970();
-            if (entity->unk7C != 0) {
+            if (entity->unk7C.modeU16 != 0) {
                 phi_v1 = (temp_v0 & 2) * 2;
             } else {
                 phi_v1 = (temp_v0 & 1) * 4;
@@ -124,7 +123,7 @@ void func_801870B0(Entity* entity) {
         u8 temp_v0_5;
         InitializeEntity(D_80180488);
         temp_v0_5 = D_80180530[temp_s1];
-        entity->unk7C = temp_v0_5;
+        entity->unk7C.modeU16 = temp_v0_5;
         if (temp_v0_5 != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
@@ -136,9 +135,6 @@ void func_801870B0(Entity* entity) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandle);
-#else
 void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
@@ -162,7 +158,6 @@ void EntityCandle(Entity* entity) {
         entity->animationSet = D_801805E8[temp_s0];
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);
 
@@ -449,9 +444,9 @@ void LoadObjLayout(s32 objLayoutId) {
 #endif
 
 void func_8018A7AC(void) {
-    Unkstruct8* s0 = &g_CurrentRoomTileLayout;
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
-    if (D_80097908) {
+    if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
@@ -459,18 +454,15 @@ void func_8018A7AC(void) {
             func_8018A26C(tmp - 0x40);
     }
 
-    if (D_8009790C) {
-        s16 tmp = s0->unkE;
+    if (D_8009790C != 0) {
+        s16 tmp = currentRoomTileLayout->unkE;
         if (D_8009790C > 0)
-            func_8018A424(s0->unkE + 0x120);
+            func_8018A424(currentRoomTileLayout->unkE + 0x120);
         else
             func_8018A520(tmp - 0x40);
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", SpawnExplosionEntity);
-#else
 void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
@@ -478,12 +470,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posX.Data.high = D_8006C3B8->posX.Data.high;
     entity->posY.Data.high = D_8006C3B8->posY.Data.high;
 }
-#endif
 
-#ifndef NON_MATCHING
-void func_8018A8D4(u16 objectId, Entity* source, Entity* entity);
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A8D4);
-#else
 void func_8018A8D4(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
@@ -491,7 +478,6 @@ void func_8018A8D4(u16 objectId, Entity* source, Entity* entity) {
     entity->posX.Data.high = source->posX.Data.high;
     entity->posY.Data.high = source->posY.Data.high;
 }
-#endif
 
 s32 func_8018A950(Unkstruct5* arg0) {
     s16 var_v0_2;
@@ -601,18 +587,9 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018BED0);
-s32 func_8018BED0(u8 arg0, s16 arg1);
-#else
 s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0 & 0xFF] * arg1; }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018BEFC);
-#else
 s16 func_8018BEFC(s32 arg0) { return D_80180A94[arg0 & 0xFF]; }
-#endif
 
 void func_8018BF18(s32 arg0, s16 arg1) {
     D_8006C3B8->accelerationX = func_8018BED0(arg0, arg1);
@@ -755,8 +732,8 @@ void func_8018CAB0(void) {
 
     entity = D_8006C3B8;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84;
-        entity->unk84 = temp_v1;
+        temp_v1 = entity->unk88 + entity->unk84.value;
+        entity->unk84.value = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
             entity->unk88 = -entity->unk88;
@@ -772,21 +749,19 @@ void func_8018CAB0(void) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CB34);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeart);
-#else
 void CollectHeart(u16 heartSize) {
     s32* hearts;
 
     g_pfnPlaySfx(0x67A);
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[heartSize];
-    if (g_playerHeartMax < *hearts) {
-        *hearts = g_playerHeartMax;
+
+    if (g_playerHeart->max < *hearts) {
+        *hearts = g_playerHeart->max;
     }
+
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectGold);
@@ -816,15 +791,13 @@ void CollectGold(u16 goldSize) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeartVessel);
-#else
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
-        g_playerHeart += HEART_VESSEL_RICHTER;
-        if (g_playerHeartMax < g_playerHeart) {
-            g_playerHeart = g_playerHeartMax;
+        g_playerHeart->current += HEART_VESSEL_RICHTER;
+
+        if (g_playerHeart->max < g_playerHeart->current) {
+            g_playerHeart->current = g_playerHeart->max;
         }
     } else {
         g_pfnPlaySfx(0x67A);
@@ -832,7 +805,6 @@ void CollectHeartVessel(void) {
     }
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 void CollectLifeVessel(void) {
     g_pfnPlaySfx(0x67A);
@@ -844,9 +816,6 @@ void func_8018CFF8(void) { DestroyEntity(D_8006C3B8); }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandleDrop);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D894);
-#else
 void func_8018D894(Entity* entity) {
     u16 zPriority;
 
@@ -874,15 +843,10 @@ void func_8018D894(Entity* entity) {
         }
     }
 }
-#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D990);
-#else
 void func_8018D990(Entity* arg0, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
-    u8 colorIntensity;
 
     poly = &D_80086FEC[arg0->firstPolygonIndex];
 
@@ -900,21 +864,16 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     poly->y3 = bottom;
     poly->y2 = bottom;
 
-    colorIntensity = renderFlags & RENDERFLAGS_NOSHADOW ? 255 : 128;
-    poly->b3 = colorIntensity;
-    poly->b2 = colorIntensity;
-    poly->b1 = colorIntensity;
-    poly->b0 = colorIntensity;
-    poly->g3 = colorIntensity;
-    poly->g2 = colorIntensity;
-    poly->g1 = colorIntensity;
-    poly->g0 = colorIntensity;
-    poly->r3 = colorIntensity;
-    poly->r2 = colorIntensity;
-    poly->r1 = colorIntensity;
-    poly->r0 = colorIntensity;
+    if (renderFlags & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
+    }
 }
-#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018DA34);
 
@@ -1097,9 +1056,6 @@ void func_801903C8(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80190494);
-#else
 void func_80190494(u16 objectId, Entity* source, Entity* entity) {
     u16 palette;
 
@@ -1116,7 +1072,6 @@ void func_80190494(u16 objectId, Entity* source, Entity* entity) {
     palette = source->palette;
     entity->palette = palette & 0x8000 ? source->unk6A : palette;
 }
-#endif
 
 void func_8019055C(void) {
     s32 temp_s3;
@@ -1131,9 +1086,9 @@ void func_8019055C(void) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
         if (entity != NULL) {
             func_8018A8D4(EntityExplosionID, D_8006C3B8, entity);
-            entity->unk85 = 6 - i;
-            entity->unk80 = temp_s3;
-            entity->unk84 = temp_s4;
+            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk80.data = temp_s3;
+            entity->unk84.Data1.unk0 = temp_s4;
         }
     }
 }
