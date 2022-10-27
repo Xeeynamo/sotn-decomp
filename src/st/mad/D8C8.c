@@ -635,13 +635,17 @@ void FallEntity(void) {
 u8 func_8019214C(void) {
     u8 unkState;
     Entity* entity;
+
     MoveEntity();
     FallEntity();
+    
     entity = D_8006C26C;
+
     if (unkState & 1) {
         entity->accelerationY = 0;
         return unkState;
     }
+
     return unkState;
 }
 
