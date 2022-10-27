@@ -49,6 +49,9 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS		:= -P 4
+GO				:= /usr/local/go/bin/go
+GOPATH			:= $(HOME)/go
+ASPATCH			:= $(GOPATH)/bin/aspatch
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -73,7 +76,8 @@ define link
 		-s
 endef
 
-all: main dra ric dre mad no3 np3 st0 wrp rwrp check
+all: build check
+build: main dra ric dre mad no3 np3 st0 wrp rwrp
 clean:
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
@@ -207,15 +211,15 @@ extract_st%: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
-decompile: ctx.c $(M2C_APP)
+decompile: $(M2C_APP)
+	$(M2CTX) $(SOURCE)
 	$(M2C_APP) $(M2C_ARGS) --target mipsel-gcc-c --context ctx.c $(FUNC) $(ASSEMBLY)
 
-ctx.c: $(M2CTX_APP)
-	$(M2CTX) $(SOURCE)
-
-require-tools: $(SPLAT_APP) $(ASMDIFFER_APP)
-update-tools: require-tools $(M2CTX_APP) $(M2C_APP)
-	pip3 install -r $(SPLAT_DIR)/requirements.txt
+require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
+update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
+	sudo apt-get install -y $$(cat tools/requirements-debian.txt)
+	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
+	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
@@ -230,13 +234,19 @@ $(M2C_APP):
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
+$(GO):
+	curl -L -o go1.19.2.linux-amd64.tar.gz https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
+	sudo tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
+	rm go1.19.2.linux-amd64.tar.gz
+$(ASPATCH): $(GO)
+	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.bin.o: %.bin
 	$(LD) -r -b binary -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c
-	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(AS) $(AS_FLAGS) -o $@
+$(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
+	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
 SHELL = /bin/bash -e -o pipefail
 
@@ -244,4 +254,4 @@ SHELL = /bin/bash -e -o pipefail
 .PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%
-.PHONY: require-tools,update-tools
+.PHONY: require-tools,update-dependencies
