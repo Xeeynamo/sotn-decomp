@@ -1056,18 +1056,51 @@ void func_80195A54(Entity* entity) {
 
     entity->animationFrameDuration++;
     entity->posY.value -= entity->accelerationY;
-    
+
     if (!(entity->animationFrameDuration & 1)) {
         entity->animationFrame++;
     }
-    
+
     if (D_80181000[entity->subId] < entity->animationFrameDuration) {
         DestroyEntity(entity);
     }
 }
 #endif
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195B44);
+// INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195B44);
+
+extern u16 D_80180FBC[];
+extern s32 D_80180FCC[];
+
+void func_80195B44(Entity* entity) {
+    u16 temp_v0;
+    
+    if (entity->initState == 0) {
+        entity->unk34 = 0x0C002000;
+        entity->palette = 0x8195;
+        entity->animationSet = 5;
+        entity->animationFrame = 1;
+        entity->unk18 = 0x10;
+        entity->unk19 = 3;
+        temp_v0 = D_80180FBC[entity->subId];
+        entity->unk1A = D_80180FBC[entity->subId];
+        entity->unk1C = temp_v0;
+        entity->accelerationY = D_80180FCC[entity->subId];
+        entity->initState++;
+        return;
+    }
+
+    entity->animationFrameDuration++;
+    entity->posY.value -= entity->accelerationY;
+
+    if (!(entity->animationFrameDuration & 1)) {
+        entity->animationFrame += 1;
+    }
+
+    if (entity->animationFrameDuration >= 37) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195C38);
 
