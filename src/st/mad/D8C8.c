@@ -29,6 +29,7 @@ extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 
 // ST/MAD
+extern u8 D_801810F4;
 extern u16 D_801804F0[];
 extern u8* D_80180644[];
 extern u8 D_80180664[];
@@ -1056,7 +1057,7 @@ void func_80196934(void) {
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D308, &D_8007D308[32]);
+        entity = AllocEntity(D_8007D308, &D_8007D308[MaxEntityCount]);
         if (entity != NULL) {
             func_8019102C(2, D_8006C26C, entity);
             entity->unk84.Data1.unk1 = 6 - i;
@@ -1082,7 +1083,26 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801982BC);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198650);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198B00);
+void func_80198B00(Entity* entity) {
+    s32 temp_v0;
+    ObjInit2* temp_s0;
+
+    temp_s0 = (entity->subId * 0x14) + &D_801810F4;
+    if (entity->initState == 0) {
+        InitializeEntity(&D_80180544);
+        entity->animationSet = temp_s0->animationSet;
+        entity->zPriority = temp_s0->zPriority;
+        entity->unk5A = temp_s0->unk4.data;
+        entity->palette = temp_s0->palette;
+        entity->unk19 = temp_s0->unk8;
+        entity->unk18 = temp_s0->unkA;
+        temp_v0 = temp_s0->unkC;
+        if (temp_v0 != 0) {
+            entity->unk34 = temp_v0;
+        }
+    }
+    AnimateEntity(temp_s0->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198BC8);
 
