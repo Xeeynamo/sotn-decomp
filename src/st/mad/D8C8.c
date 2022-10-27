@@ -525,13 +525,12 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019102C);
 #else
-void func_8019102C(u16 objectId, Entity *ent1, Entity *ent2)
-{
+void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->objectId = objectId;
     ent2->pfnUpdate = PfnEntityUpdates[objectId];
-    ent2->posX.Data.high = (s16) ent1->posX.Data.high;
-    ent2->posY.Data.high = (s16) ent1->posY.Data.high;
+    ent2->posX.Data.high = (s16)ent1->posX.Data.high;
+    ent2->posY.Data.high = (s16)ent1->posY.Data.high;
 }
 #endif
 
