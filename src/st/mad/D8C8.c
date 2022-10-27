@@ -1071,7 +1071,7 @@ void func_80195A54(Entity* entity) {
 
 void func_80195B44(Entity* entity) {
     u16 temp_v0;
-    
+
     if (entity->initState == 0) {
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
