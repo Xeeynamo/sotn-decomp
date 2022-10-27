@@ -1054,7 +1054,7 @@ void func_80196934(void) {
 
     temp_s4 = Random() & 3;
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
-    
+
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D308, &D_8007D308[32]);
         if (entity != NULL) {
