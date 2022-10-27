@@ -526,10 +526,6 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.Data.high = D_8006C26C->posY.Data.high;
 }
 
-// at -> v0 reg swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019102C);
-#else
 void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->objectId = objectId;
@@ -537,7 +533,6 @@ void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2) {
     ent2->posX.Data.high = (s16)ent1->posX.Data.high;
     ent2->posY.Data.high = (s16)ent1->posY.Data.high;
 }
-#endif
 
 s32 func_801910A8(Unkstruct5* arg0) {
     s16 var_v0_2;
@@ -979,9 +974,6 @@ void func_80194218(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80194314);
-#else
 void func_80194314(Entity* entity) {
     if (entity->initState != 0) {
         if (entity->posY.Data.high >= 0xF1) {
@@ -1002,7 +994,6 @@ void func_80194314(Entity* entity) {
         entity->zPriority -= 1;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandleHeartDrop);
 
@@ -1021,10 +1012,6 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019583C);
 // https://decomp.me/scratch/3IMus
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019596C);
 
-// at -> a1 reg swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195A54);
-#else
 void func_80195A54(Entity* entity) {
     if (entity->initState == 0) {
         entity->accelerationY = D_80180FE4[entity->unk94];
@@ -1048,7 +1035,6 @@ void func_80195A54(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-#endif
 
 void func_80195B44(Entity* entity) {
     u16 temp_v0;
@@ -1174,10 +1160,6 @@ void func_801965E4(Entity* entity) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801966B0);
 
-// at -> v0 reg swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019686C);
-#else
 void func_8019686C(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->objectId = objectId;
@@ -1196,7 +1178,6 @@ void func_8019686C(u16 objectId, Entity* ent1, Entity* ent2) {
 
     ent2->palette = (s16)ent1->palette;
 }
-#endif
 
 void func_80196934(void) {
     Entity* entity;
