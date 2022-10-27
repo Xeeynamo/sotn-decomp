@@ -60,6 +60,7 @@ extern u8 D_8018065C[];
 extern u8 D_80180660[];
 extern u16 D_80180664[];
 
+bool func_801A7E2C(Entity* entity);
 void EntityLockCamera(Entity* entity) {
     s32 temp_v0_2;
     s32 temp_v1;
@@ -75,7 +76,7 @@ void EntityLockCamera(Entity* entity) {
         temp_v1 = temp_s1 & 0xFFFF;
         entity->unk3C = 1;
         temp_v0 = D_80180660[temp_v1];
-        entity->unk7C = temp_v0;
+        entity->unk7C.modeU16 = temp_v0;
         if (temp_v0) {
             entity->hitboxWidth = D_8018065C[temp_v1];
             entity->hitboxHeight = 20;
@@ -97,7 +98,7 @@ void EntityLockCamera(Entity* entity) {
 
     if (func_801A7E2C(entity)) {
         temp_v0_2 = func_801B4C78();
-        if (entity->unk7C) {
+        if (entity->unk7C.modeU16) {
             phi_v1 = (temp_v0_2 & 2) * 2;
         } else {
             phi_v1 = (temp_v0_2 & 1) * 4;
@@ -265,9 +266,6 @@ void EntityDraculaFireball(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaMeteorball);
-#else
 extern u16 D_801805F8[];
 extern u8 D_80180990[];
 extern u8 D_801809B0[];
@@ -328,7 +326,6 @@ void EntityDraculaMeteorball(Entity* entity) {
         break;
     }
 }
-#endif
 
 extern u16 D_801805EC[];
 extern u8 D_801809E0[];
@@ -592,9 +589,6 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3AB4);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3B68);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3BDC);
-#else
 void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
@@ -602,7 +596,6 @@ void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
     entity->posX.Data.high = source->posX.Data.high;
     entity->posY.Data.high = source->posY.Data.high;
 }
-#endif
 
 s32 func_801B3C58(Unkstruct5* arg0) {
     s16 var_v0_2;
@@ -907,7 +900,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityClockTower3D);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscenePhotograph);
 
-#ifndef NON_MATCHING
+#ifndef NON_MATCHING // TODO fix 'li' opcode with ASPATCH
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscenePhotographFire);
 #else
 extern u16 D_801805D4[];

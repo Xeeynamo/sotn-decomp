@@ -57,9 +57,6 @@ void func_801B77D4(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandle);
-#else
 void EntityCandle(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
@@ -83,7 +80,6 @@ void EntityCandle(Entity* entity) {
         entity->animationSet = D_80180E80[temp_s0];
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B7B98);
 
@@ -493,19 +489,9 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-#ifndef NON_MATCHING
-// not mathching only locally: https://decomp.me/scratch/6ZStN
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5534);
-#else
 s32 func_801C5534(u8 arg0, s16 arg1) { return D_801820C4[arg0] * arg1; }
-#endif
 
-#ifndef NON_MATCHING
-// non matching only locally : https://decomp.me/scratch/34DLf
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5560);
-#else
 s16 func_801C5560(u8 arg0) { return D_801820C4[arg0]; }
-#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
 
