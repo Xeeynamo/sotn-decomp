@@ -488,7 +488,7 @@ void func_8016B8E8(s32 arg0) {
     D_8006C3B8->unk7C.modeU16 =
         (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
     if (D_8006C3B8->unk82 == 0) {
-        D_8006C3B8->unk80++;
+        D_8006C3B8->unk80.data++;
         D_8006C3B8->unk82++;
     }
 }
@@ -497,7 +497,7 @@ void func_8016B92C(s32 arg0) {
     if (D_8006C3B8->unk82 == 0) {
         D_8006C3B8->unk7C.modeU16 =
             (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
-        D_8006C3B8->unk80++;
+        D_8006C3B8->unk80.data++;
         D_8006C3B8->unk82++;
     }
 }

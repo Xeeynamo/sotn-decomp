@@ -682,7 +682,21 @@ void FallEntity(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4D18);
+u8 func_801B4D18(void) {
+    u8 unkState;
+    Entity* entity;
+
+    MoveEntity();
+    FallEntity();
+
+    entity = D_8006C3B8;
+
+    if (unkState & 1) {
+        entity->accelerationY = 0;
+    }
+
+    return unkState;
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4D5C);
 
