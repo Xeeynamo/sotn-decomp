@@ -1053,11 +1053,14 @@ void func_80195A54(Entity* entity) {
         entity->initState++;
         return;
     }
+
     entity->animationFrameDuration++;
     entity->posY.value -= entity->accelerationY;
+    
     if (!(entity->animationFrameDuration & 1)) {
         entity->animationFrame++;
     }
+    
     if (D_80181000[entity->subId] < entity->animationFrameDuration) {
         DestroyEntity(entity);
     }
