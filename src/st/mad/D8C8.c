@@ -1083,7 +1083,7 @@ void func_80195B44(Entity* entity) {
         entity->unk18 = 0x10;
         entity->unk19 = 3;
         temp_v0 = D_80180FBC[entity->subId];
-        entity->unk1A = D_80180FBC[entity->subId];
+        entity->unk1A = temp_v0;
         entity->unk1C = temp_v0;
         entity->accelerationY = D_80180FCC[entity->subId];
         entity->initState++;
