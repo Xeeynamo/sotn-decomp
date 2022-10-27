@@ -52,7 +52,7 @@ extern s32 D_80180FCC[];
 extern s32 D_80180FE4[];
 extern u8 D_80180FFC[];
 extern u16 D_80181000[];
-extern u8 D_801810F4;
+extern u8 D_801810F4[];
 extern u16 D_801804F0[];
 extern u16 D_80180508;
 extern u8* D_80180644[];
@@ -1119,7 +1119,42 @@ bool func_80195E68(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195F64);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801964E4);
+void func_801964E4(Entity* entity) {
+    u32 temp_v0;
+
+    if (entity->initState == 0) {
+        InitializeEntity(&D_80180508);
+        entity->palette = 0x8170;
+        entity->animationSet = 5;
+        entity->animationFrame = 1;
+        entity->unk18 = 0x30;
+
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->unk18 = 0x10;
+        }
+
+        temp_v0 = entity->subId & 0xFF00;
+
+        if (temp_v0 != 0) {
+            entity->zPriority = (u16)(temp_v0 >> 8);
+        }
+
+        entity->zPriority += 8;
+        return;
+    }
+
+    entity->animationFrameDuration++;
+    entity->posY.value -= 0x4000;
+
+    if (!(entity->animationFrameDuration & 1)) {
+        entity->animationFrame++;
+    }
+
+    if (entity->animationFrameDuration >= 0x25) {
+        DestroyEntity(entity);
+    }
+}
 
 void func_801965E4(Entity* entity) {
     if (entity->initState == 0) {
@@ -1214,7 +1249,7 @@ void func_80198B00(Entity* entity) {
     s32 temp_v0;
     ObjInit2* temp_s0;
 
-    temp_s0 = (entity->subId * 0x14) + &D_801810F4;
+    temp_s0 = &D_801810F4[entity->subId * 0x14];
     if (entity->initState == 0) {
         InitializeEntity(D_80180544);
         entity->animationSet = temp_s0->animationSet;
