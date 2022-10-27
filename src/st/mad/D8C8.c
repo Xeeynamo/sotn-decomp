@@ -169,7 +169,6 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E13C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
-
 void func_8018E5AC(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_8018056C[arg0->subId];
@@ -1012,8 +1011,8 @@ void func_80194314(Entity* entity) {
 
     InitializeEntity(&D_801804F0);
     entity->animationFrame = entity->unk7C.modeU8.unk0;
-    entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0*2];
-    entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0*2];
+    entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0 * 2];
+    entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0 * 2];
 
     if (entity->subId != 0) {
         entity->zPriority -= 1;
