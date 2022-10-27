@@ -1247,22 +1247,22 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198650);
 
 void func_80198B00(Entity* entity) {
     s32 temp_v0;
-    ObjInit2* temp_s0 = (ObjInit2*)&D_801810F4[entity->subId * 0x14];
+    ObjInit2* obj = (ObjInit2*)&D_801810F4[entity->subId * 0x14];
 
     if (entity->initState == 0) {
         InitializeEntity(D_80180544);
-        entity->animationSet = temp_s0->animationSet;
-        entity->zPriority = temp_s0->zPriority;
-        entity->unk5A = temp_s0->unk4.data;
-        entity->palette = temp_s0->palette;
-        entity->unk19 = temp_s0->unk8;
-        entity->unk18 = temp_s0->unkA;
-        temp_v0 = temp_s0->unkC;
+        entity->animationSet = obj->animationSet;
+        entity->zPriority = obj->zPriority;
+        entity->unk5A = obj->unk4.data;
+        entity->palette = obj->palette;
+        entity->unk19 = obj->unk8;
+        entity->unk18 = obj->unkA;
+        temp_v0 = obj->unkC;
         if (temp_v0 != 0) {
             entity->unk34 = temp_v0;
         }
     }
-    AnimateEntity(temp_s0->unk10, entity);
+    AnimateEntity(obj->unk10, entity);
 }
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198BC8);
