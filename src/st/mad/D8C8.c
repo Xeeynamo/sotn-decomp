@@ -33,6 +33,8 @@ extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
 extern s16 D_80180ED8[];
 extern s16 D_80180EDA[];
+extern u16 D_80180FBC[];
+extern s32 D_80180FCC[];
 extern s32 D_80180FE4[];
 extern u8 D_80180FFC[];
 extern u16 D_80181000[];
@@ -1067,11 +1069,6 @@ void func_80195A54(Entity* entity) {
 }
 #endif
 
-// INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195B44);
-
-extern u16 D_80180FBC[];
-extern s32 D_80180FCC[];
-
 void func_80195B44(Entity* entity) {
     u16 temp_v0;
     
@@ -1094,7 +1091,7 @@ void func_80195B44(Entity* entity) {
     entity->posY.value -= entity->accelerationY;
 
     if (!(entity->animationFrameDuration & 1)) {
-        entity->animationFrame += 1;
+        entity->animationFrame++;
     }
 
     if (entity->animationFrameDuration >= 37) {
