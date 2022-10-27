@@ -1,5 +1,17 @@
 #include "stage.h"
 
+void func_801908DC(s16);
+void func_801909D8(s16);
+void func_80190B7C(s16);
+void func_80190C78(s16);
+void SpawnExplosionEntity(u16, Entity*);
+u8 func_80192914(s16 arg0, s16 arg1);
+void ReplaceCandleWithDrop(Entity*);
+void EntityCandleDrop(Entity*);
+void EntityCandleHeartDrop(Entity*);
+void func_80194218(Entity*);
+void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2);
+
 // OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
 extern void (*D_8003C6B8)(s32, s32, Unkstruct7*, s32);
@@ -59,18 +71,6 @@ extern ObjectInit* D_801997D8;
 extern ObjectInit* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
-
-void func_801908DC(s16);
-void func_801909D8(s16);
-void func_80190B7C(s16);
-void func_80190C78(s16);
-void SpawnExplosionEntity(u16, Entity*);
-u8 func_80192914(s16 arg0, s16 arg1);
-void ReplaceCandleWithDrop(Entity*);
-void EntityCandleDrop(Entity*);
-void EntityCandleHeartDrop(Entity*);
-void func_80194218(Entity*);
-void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
