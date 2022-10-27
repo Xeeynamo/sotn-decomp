@@ -521,7 +521,19 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
 }
 #endif
 
+// at -> v0 reg swap
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019102C);
+#else
+void func_8019102C(u16 objectId, Entity *ent1, Entity *ent2)
+{
+    DestroyEntity(ent2);
+    ent2->objectId = objectId;
+    ent2->pfnUpdate = PfnEntityUpdates[objectId];
+    ent2->posX.Data.high = (s16) ent1->posX.Data.high;
+    ent2->posY.Data.high = (s16) ent1->posY.Data.high;
+}
+#endif
 
 s32 func_801910A8(Unkstruct5* arg0) {
     s16 var_v0_2;
