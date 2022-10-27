@@ -32,6 +32,8 @@ extern POLY_GT4 D_800973B8[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
 extern s16 D_80180ED8[];
+extern s32 D_80180E18[];
+extern s32 D_80180EC4[];
 extern s16 D_80180EDA[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
@@ -963,13 +965,10 @@ Entity* func_801939C4(void) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandleDrop);
 
+// at -> a0 reg swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80194218);
 #else
-extern Entity D_80180508;
-extern s32 D_80180E18;
-extern s32 D_80180EC4;
-
 void func_80194218(Entity* entity) {
     u32 temp_v0;
 
@@ -979,6 +978,7 @@ void func_80194218(Entity* entity) {
         entity->animationFrameIndex = 0;
         entity->animationFrameDuration = 0;
         entity->unk18 = 0x30;
+
         if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
             entity->unk18 = 0x10;
@@ -990,11 +990,12 @@ void func_80194218(Entity* entity) {
         }
 
         entity->subId = entity->subId & 0xF;
-        entity->accelerationY = *(&D_80180E18 + entity->subId);
+        entity->accelerationY = D_80180E18[entity->subId];
         return;
     }
-    entity->posY.value = entity->posY.value + entity->accelerationY;
-    if (!AnimateEntity(*(&D_80180EC4 + entity->subId), entity)) {
+
+    entity->posY.value += entity->accelerationY;
+    if (!AnimateEntity(D_80180EC4[entity->subId], entity)) {
         DestroyEntity(entity);
     }
 }
