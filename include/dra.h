@@ -135,7 +135,7 @@ typedef struct {
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
     /* 0x7E */ u8 unk7E;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ UnkUnion2 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ UnkUnion1 unk84;
     /* 0x88 */ s16 unk88;

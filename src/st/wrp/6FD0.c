@@ -1123,7 +1123,7 @@ void func_8019055C(void) {
         if (entity != NULL) {
             func_8018A8D4(EntityExplosionID, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80 = temp_s3;
+            entity->unk80.data = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }
