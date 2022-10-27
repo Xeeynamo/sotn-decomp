@@ -1249,7 +1249,7 @@ void func_80198B00(Entity* entity) {
     s32 temp_v0;
     ObjInit2* temp_s0;
 
-    temp_s0 = &D_801810F4[entity->subId * 0x14];
+    temp_s0 = (ObjInit2*)&D_801810F4[entity->subId * 0x14];
     if (entity->initState == 0) {
         InitializeEntity(D_80180544);
         entity->animationSet = temp_s0->animationSet;
