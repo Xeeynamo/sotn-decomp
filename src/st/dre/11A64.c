@@ -337,11 +337,6 @@ void func_80199554(void) {
     }
 }
 
-// at -> v0 reg swap
-// https://decomp.me/scratch/FLExi
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199608);
-#else
 void func_80199608(u16 objectId, Entity* entity) {
     func_8019A3A8(entity);
 
@@ -350,7 +345,6 @@ void func_80199608(u16 objectId, Entity* entity) {
     entity->posX.Data.high = (s16)(u16)D_8006C3B8->posX.Data.high;
     entity->posY.Data.high = (s16)(u16)D_8006C3B8->posY.Data.high;
 }
-#endif
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 // https://decomp.me/scratch/99NPO
@@ -480,16 +474,8 @@ Entity* func_8019AC18(Entity* start, Entity* end) {
 
 s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 
-// This function matches with PSYQ4.0 GCC 2.7.2 with -01 and -02 Optimization
-// at -v0 reg swap
-// flags https://decomp.me/scratch/reosO
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019ACA4);
-#else
 extern s16 D_80180D80[];
-
 s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
-#endif
 
 void func_8019ACC0(s32 arg0, s16 arg1) {
     D_8006C3B8->accelerationX = func_8019AC78(arg0, arg1);
@@ -825,10 +811,6 @@ void func_8019BDA0(void) { func_8019A3A8(D_8006C3B8); }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
 
-// at -> a0 reg swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C63C);
-#else
 void func_8019C63C(Entity* entity) {
     u32 temp_v0;
     u32 temp;
@@ -861,7 +843,6 @@ void func_8019C63C(Entity* entity) {
         func_8019A3A8(entity);
     }
 }
-#endif
 
 void func_8019C738(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
