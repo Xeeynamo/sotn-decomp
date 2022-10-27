@@ -68,7 +68,7 @@ void EntityCandle(Entity* entity) {
             Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
-                AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(EntityExplosionID, entityDropItem);
                 entityDropItem->subId = D_80180E78[temp_s0];
@@ -766,10 +766,10 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF438);
 
 void func_801CF58C(Entity* arg0) {
     arg0->accelerationX = 0;
-    arg0->unk86 = 0x100;
+    arg0->unk84.Data.high = 0x100;
     func_801C58A4(6);
     g_pfnPlaySfx(0x783);
-    arg0->unk80 = 0x20;
+    arg0->unk80.data = 0x20;
 }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF5E0);

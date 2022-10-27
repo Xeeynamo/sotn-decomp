@@ -449,9 +449,9 @@ void LoadObjLayout(s32 objLayoutId) {
 #endif
 
 void func_8018A7AC(void) {
-    Unkstruct8* s0 = &g_CurrentRoomTileLayout;
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
-    if (D_80097908) {
+    if (D_80097908 != 0) {
         s16 tmp = D_8007308E;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
@@ -459,10 +459,10 @@ void func_8018A7AC(void) {
             func_8018A26C(tmp - 0x40);
     }
 
-    if (D_8009790C) {
-        s16 tmp = s0->unkE;
+    if (D_8009790C != 0) {
+        s16 tmp = currentRoomTileLayout->unkE;
         if (D_8009790C > 0)
-            func_8018A424(s0->unkE + 0x120);
+            func_8018A424(currentRoomTileLayout->unkE + 0x120);
         else
             func_8018A520(tmp - 0x40);
     }
@@ -755,8 +755,8 @@ void func_8018CAB0(void) {
 
     entity = D_8006C3B8;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84;
-        entity->unk84 = temp_v1;
+        temp_v1 = entity->unk88 + entity->unk84.value;
+        entity->unk84.value = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
             entity->unk88 = -entity->unk88;
@@ -772,6 +772,7 @@ void func_8018CAB0(void) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CB34);
 
+// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeart);
 #else
@@ -781,9 +782,11 @@ void CollectHeart(u16 heartSize) {
     g_pfnPlaySfx(0x67A);
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[heartSize];
-    if (g_playerHeartMax < *hearts) {
-        *hearts = g_playerHeartMax;
+
+    if (g_playerHeart->max < *hearts) {
+        *hearts = g_playerHeart->max;
     }
+
     DestroyEntity(D_8006C3B8);
 }
 #endif
@@ -816,15 +819,13 @@ void CollectGold(u16 goldSize) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectHeartVessel);
-#else
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
-        g_playerHeart += HEART_VESSEL_RICHTER;
-        if (g_playerHeartMax < g_playerHeart) {
-            g_playerHeart = g_playerHeartMax;
+        g_playerHeart->current += HEART_VESSEL_RICHTER;
+
+        if (g_playerHeart->max < g_playerHeart->current) {
+            g_playerHeart->current = g_playerHeart->max;
         }
     } else {
         g_pfnPlaySfx(0x67A);
@@ -832,7 +833,6 @@ void CollectHeartVessel(void) {
     }
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 void CollectLifeVessel(void) {
     g_pfnPlaySfx(0x67A);
@@ -876,13 +876,9 @@ void func_8018D894(Entity* entity) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018D990);
-#else
 void func_8018D990(Entity* arg0, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
-    u8 colorIntensity;
 
     poly = &D_80086FEC[arg0->firstPolygonIndex];
 
@@ -900,21 +896,16 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     poly->y3 = bottom;
     poly->y2 = bottom;
 
-    colorIntensity = renderFlags & RENDERFLAGS_NOSHADOW ? 255 : 128;
-    poly->b3 = colorIntensity;
-    poly->b2 = colorIntensity;
-    poly->b1 = colorIntensity;
-    poly->b0 = colorIntensity;
-    poly->g3 = colorIntensity;
-    poly->g2 = colorIntensity;
-    poly->g1 = colorIntensity;
-    poly->g0 = colorIntensity;
-    poly->r3 = colorIntensity;
-    poly->r2 = colorIntensity;
-    poly->r1 = colorIntensity;
-    poly->r0 = colorIntensity;
+    if (renderFlags & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
+    }
 }
-#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018DA34);
 
@@ -1131,9 +1122,9 @@ void func_8019055C(void) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
         if (entity != NULL) {
             func_8018A8D4(EntityExplosionID, D_8006C3B8, entity);
-            entity->unk85 = 6 - i;
-            entity->unk80 = temp_s3;
-            entity->unk84 = temp_s4;
+            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk80.data = temp_s3;
+            entity->unk84.Data1.unk0 = temp_s4;
         }
     }
 }
