@@ -33,6 +33,9 @@ extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
 extern s16 D_80180ED8[];
 extern s16 D_80180EDA[];
+extern s32 D_80180FE4[];
+extern u8 D_80180FFC[];
+extern u16 D_80181000[];
 extern u8 D_801810F4;
 extern u16 D_801804F0[];
 extern u16 D_80180508;
@@ -168,7 +171,6 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E090);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E13C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E1D4);
-
 
 void func_8018E5AC(Entity* arg0) {
     s32 temp_v0;
@@ -1012,8 +1014,8 @@ void func_80194314(Entity* entity) {
 
     InitializeEntity(&D_801804F0);
     entity->animationFrame = entity->unk7C.modeU8.unk0;
-    entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0*2];
-    entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0*2];
+    entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0 * 2];
+    entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0 * 2];
 
     if (entity->subId != 0) {
         entity->zPriority -= 1;
@@ -1033,9 +1035,34 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019572C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019583C);
 
+// https://decomp.me/scratch/X3ho9
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019596C);
 
+// at -> a1 reg swap
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195A54);
+#else
+void func_80195A54(Entity* entity) {
+    if (entity->initState == 0) {
+        entity->accelerationY = D_80180FE4[entity->unk94];
+        entity->unk34 = 0x0C002000;
+        entity->palette = 0x8195;
+        entity->animationSet = 2;
+        entity->animationFrame = D_80180FFC[entity->subId];
+        entity->unk18 = 0x10;
+        entity->initState++;
+        return;
+    }
+    entity->animationFrameDuration++;
+    entity->posY.value -= entity->accelerationY;
+    if (!(entity->animationFrameDuration & 1)) {
+        entity->animationFrame++;
+    }
+    if (D_80181000[entity->subId] < entity->animationFrameDuration) {
+        DestroyEntity(entity);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195B44);
 

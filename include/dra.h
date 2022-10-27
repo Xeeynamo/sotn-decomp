@@ -75,7 +75,6 @@ typedef union {
     struct {
         u8 unk0;
         u8 unk1;
-        // u8 unk2;
     } modeU8;
 } unkUnion3;
 
