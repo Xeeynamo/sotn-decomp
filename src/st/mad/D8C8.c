@@ -56,6 +56,7 @@ void ReplaceCandleWithDrop(Entity*);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
 void func_80194218(Entity*);
+void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
@@ -1045,7 +1046,25 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801966B0);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019686C);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80196934);
+void func_80196934(void) {
+    Entity* entity;
+    s16 temp_s3;
+    s32 i;
+    u8 temp_s4;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(&D_8007D308, &D_8007D308[32]);
+        if (entity != NULL) {
+            func_8019102C(2, D_8006C26C, entity);
+            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk80 = temp_s3;
+            entity->unk84.Data1.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801969EC);
 
