@@ -921,7 +921,7 @@ void func_801937BC(void) {}
 
 void func_801937C4(void) { DestroyEntity(D_8006C26C); }
 
-//https://decomp.me/scratch/GsS0m
+// https://decomp.me/scratch/GsS0m
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801937EC);
 
 void CollectHeartVessel(void) {

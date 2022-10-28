@@ -5,7 +5,7 @@
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
-typedef void (*UnkFunctionUpdate1)(struct Entity*, u32,struct Entity*);
+typedef void (*UnkFunctionUpdate1)(struct Entity*, u32, struct Entity*);
 
 typedef struct {
     unsigned char width;
