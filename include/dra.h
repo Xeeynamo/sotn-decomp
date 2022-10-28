@@ -372,9 +372,6 @@ extern s8 D_8005436D;
 
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
-#define EntityExplosionID 2
-#define EntityCandleDropID 3
-#define EntityCandleHeartDropID 10
 
 #define PROGRAM_NO0 0x00
 #define PROGRAM_NO1 0x01

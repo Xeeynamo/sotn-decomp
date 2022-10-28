@@ -67,7 +67,7 @@ void EntityCandle(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(EntityExplosionID, entityDropItem);
+                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId = D_80180E78[temp_s0];
             }
             ReplaceCandleWithDrop(entity);
@@ -603,13 +603,13 @@ void ReplaceCandleWithDrop(Entity* entity) {
     subId = prevSubId & 0xFFF;
     entity->subId = subId;
     if (prevSubId < 0x80) {
-        entity->objectId = EntityCandleDropID;
+        entity->objectId = ENTITY_ITEM_DROP;
         entity->pfnUpdate = EntityCandleDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
         newSubId = subId;
     } else {
-        entity->objectId = EntityCandleHeartDropID;
+        entity->objectId = ENTITY_HEART_DROP;
         entity->pfnUpdate = EntityCandleHeartDrop;
         newSubId = subId - 0x80;
     }
