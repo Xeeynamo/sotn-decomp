@@ -5,6 +5,7 @@
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
+typedef void (*UnkFunctionUpdate1)(struct Entity*, u32,struct Entity*);
 
 typedef struct {
     unsigned char width;
@@ -152,10 +153,11 @@ typedef struct {
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ s32 unkAC;
     /* 0xB0 */ s32 unkB0;
-    /* 0xB4 */ s32 unkB4;
-    /* 0xB8 */ u16 unkB8;
-    /* 0xBA */ u8 unkBA;
-    /* 0xBB */ u8 unkBB;
+    /* 0xB4 */ s16 unkB4;
+    /* 0xB6 */ s16 unk86;
+    /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+    ///* 0xBA */ u8 unkBA;
+    ///* 0xBB */ u8 unkBB;
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {
@@ -288,6 +290,17 @@ typedef struct {
     u8 _unk_0C74[0xCC00];
     /* 0xD874 */ POLY_G4 unk_D874[0]; // unk length
 } GpuBufferUnk;
+
+typedef enum {
+    ENTITY_INITSTATE_0,
+    ENTITY_INITSTATE_1,
+    ENTITY_INITSTATE_2,
+    ENTITY_INITSTATE_3,
+    ENTITY_INITSTATE_4,
+    ENTITY_INITSTATE_5,
+    ENTITY_INITSTATE_6,
+    ENTITY_INITSTATE_7
+} EntityInitStates;
 
 // main
 extern Unkstruct5* D_8003C704;

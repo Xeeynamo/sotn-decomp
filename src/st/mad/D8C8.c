@@ -41,6 +41,8 @@ extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 
 // ST/MAD
+extern u8 D_8003BEE8[];
+extern u16 D_80180F5C[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
 extern s16 D_80180ED8[];
@@ -919,6 +921,7 @@ void func_801937BC(void) {}
 
 void func_801937C4(void) { DestroyEntity(D_8006C26C); }
 
+//https://decomp.me/scratch/GsS0m
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801937EC);
 
 void CollectHeartVessel(void) {
@@ -999,7 +1002,54 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityCandleHeartDrop);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801949C0);
 
+// v1 -> a0 reg swap
+// https://decomp.me/scratch/h3CVU
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195520);
+#else
+void func_80195520(Entity* entity, u32 arg1) {
+    u16 temp_v0_2;
+    u16 temp_v1;
+    u16 var_v1;
+    u32 temp_a0;
+
+    if (entity->initState == ENTITY_INITSTATE_0) {
+        temp_v0_2 = entity->subId;
+        temp_a0 = temp_v0_2 & 0xFFFF;
+        var_v1 = temp_v0_2;
+        entity->unkB4 = var_v1;
+
+        if ((D_8003BEE8[temp_a0 >> 3] >> (var_v1 & 7)) & 1) {
+            DestroyEntity(entity);
+            return;
+        }
+
+        var_v1 = D_80180F5C[temp_a0];
+
+        if (var_v1 < 0x80) {
+            entity->unkFuncB8 = EntityCandleDrop;
+        } else {
+            entity->unkFuncB8 = EntityCandleHeartDrop;
+            var_v1 -= 0x80;
+        }
+
+        entity->subId = var_v1 + 0x8000;
+        goto block_10;
+    }
+
+    temp_v1 = entity->unkB4;
+
+    if (entity->initState < 5) {
+        arg1 = temp_v1 / 8;
+        if (entity->unk48 != 0) {
+            D_8003BEE8[arg1] |= (1 << (temp_v1 & 7));
+            entity->initState = 5;
+        }
+    }
+block_10:
+    entity->unkFuncB8(entity, arg1, entity);
+}
+#endif
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019563C);
 
@@ -1179,6 +1229,7 @@ void func_8019686C(u16 objectId, Entity* ent1, Entity* ent2) {
     ent2->palette = (s16)ent1->palette;
 }
 
+// https://decomp.me/scratch/fA367 TODO: 0x80 entity member unconfirmed
 void func_80196934(void) {
     Entity* entity;
     s16 temp_s3;
