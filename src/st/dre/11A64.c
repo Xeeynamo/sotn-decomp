@@ -620,7 +620,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
 
     entity = D_8006C3B8;
     entity->unk19 = 0;
-    entity->objectId = EntityExplosionID;
+    entity->objectId = ENTITY_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)func_8019C63C;
     entity->subId = arg0;
     entity->animationFrame = 0;

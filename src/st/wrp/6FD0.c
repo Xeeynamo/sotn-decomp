@@ -145,7 +145,7 @@ void EntityCandle(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(EntityExplosionID, entityDropItem);
+                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId = D_801805E0[temp_s0];
             }
             ReplaceCandleWithDrop(entity);
@@ -674,7 +674,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
 
     entity = D_8006C3B8;
     entity->unk19 = 0;
-    entity->objectId = EntityExplosionID;
+    entity->objectId = ENTITY_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)func_8018D894;
     entity->subId = arg0;
     entity->animationFrame = 0;
@@ -1085,7 +1085,7 @@ void func_8019055C(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
         if (entity != NULL) {
-            func_8018A8D4(EntityExplosionID, D_8006C3B8, entity);
+            func_8018A8D4(ENTITY_EXPLOSION, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
             entity->unk80.data = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
