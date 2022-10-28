@@ -29,6 +29,7 @@ jobs:
             mkdir -p gh-report/assets
             python tools/report_progress.py DRA.BIN 630 src/dra > gh-report/assets/progress-dra.json
             python tools/report_progress.py RIC.BIN 155 src/ric > gh-report/assets/progress-ric.json
+            python tools/report_progress.py CEN.BIN 128 src/st/cen > gh-report/assets/progress-cen.json
             python tools/report_progress.py DRE.BIN 136 src/st/dre > gh-report/assets/progress-dre.json
             python tools/report_progress.py MAD.BIN 116 src/st/mad > gh-report/assets/progress-mad.json
             python tools/report_progress.py NO3.BIN 210 src/st/no3 > gh-report/assets/progress-no3.json

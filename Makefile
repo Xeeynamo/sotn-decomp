@@ -77,7 +77,7 @@ define link
 endef
 
 all: build check
-build: main dra ric dre mad no3 np3 st0 wrp rwrp
+build: main dra ric cen dre mad no3 np3 st0 wrp rwrp
 clean:
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
@@ -117,6 +117,10 @@ $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
+
+cen: stcen_dirs $(BUILD_DIR)/CEN.BIN
+$(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
+	$(OBJCOPY) -O binary $< $@
 
 dre: stdre_dirs $(BUILD_DIR)/DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
@@ -198,7 +202,7 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
+extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools

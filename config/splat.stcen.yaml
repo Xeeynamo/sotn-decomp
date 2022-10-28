@@ -1,0 +1,28 @@
+options:
+  platform:     psx
+  basename:     stcen
+  base_path:    ..
+  target_path:  iso/ST/CEN/CEN.BIN
+  asm_path:     asm/st/cen
+  asset_path:   assets/st/cen
+  src_path:     src/st/cen
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stcen.txt
+  undefined_syms_path:  config/undefined_syms.stcen.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stcen.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stcen.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+segments:
+  - name: stcen
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+      - [0x0, data]
+      - [0xD600, c]
+      - [0x1C704, rodata]
+  - [0x1D46C]
