@@ -109,7 +109,7 @@ void func_80191D00(Entity* entity) {
         }
     } else {
         func_8019B0B8(D_80180458);
-        entity->zPriority = D_80097408 - 20;
+        entity->zPriority = g_zEntityCenter - 20;
         entity->blendMode = D_80180650[temp_s0];
         entity->hitboxHeight = D_80180630[temp_s0];
         entity->animationSet = D_80180640[temp_s0];
@@ -651,7 +651,7 @@ void func_8019B0B8(u16* arg0) {
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
-        D_8006C3B8->zPriority = D_80097408 - 0xC;
+        D_8006C3B8->zPriority = g_zEntityCenter - 0xC;
     }
 }
 

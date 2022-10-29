@@ -39,8 +39,7 @@ void func_801B246C(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 
-void EntityCandle(Entity* entity) {
-    u16 temp_s0 = entity->subId >> 0xC;
+void EntityBreakable(Entity* entity) {
     if (entity->initState) {
         AnimateEntity(D_80180E28[temp_s0], entity);
         if (entity->unk44) { // If the candle is destroyed
@@ -367,7 +366,7 @@ void InitializeEntity(u16* arg0) {
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
-        D_8006C3B8->zPriority = D_80097408 - 0xC;
+        D_8006C3B8->zPriority = g_zEntityCenter - 0xC;
     }
 }
 

@@ -1,7 +1,5 @@
 PfnEntityUpdates = 0x801808CC;
-LoadObjLayout = 0x801BB508;
-g_pStObjLayout = 0x80180728;
-EntityCandle = 0x801B26FC;
+EntityBreakable = 0x801B26FC;
 UpdateStageEntities = 0x801B90EC;
 EntityDamage = 0x801BA608;
 SpawnExplosionEntity = 0x801BB734;
