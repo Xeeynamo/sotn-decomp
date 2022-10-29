@@ -7,17 +7,11 @@
 #include "stage.h"
 
 void SpawnExplosionEntity(u16, Entity*);
-void ReplaceCandleWithDrop(Entity*);
+void ReplaceBreakableWithItemDrop(Entity*);
 int func_801CD658();
 
-extern u16 D_80180A3C[];
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
-extern u8* D_80180E28[];
-extern u8 D_80180E48[];
-extern u8 D_80180E50[];
-extern u16 D_80180E58[];
-extern u8 D_80180E68[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
 
@@ -33,7 +27,7 @@ void func_801B246C(Entity* arg0) {
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
-        arg0->unk18 = temp_s0->unkA;
+        arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
             arg0->unk34 = temp_v0;
@@ -45,27 +39,34 @@ void func_801B246C(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 
-void EntityCandle(Entity* entity) {
-    u16 temp_s0 = entity->subId >> 0xC;
+extern u16 g_eBreakableInit[];
+extern u8* g_eBreakableAnimations[8];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableAnimationSets[];
+extern u8 g_eBreakableBlendModes[];
+void EntityBreakable(Entity* entity) {
+    u16 breakableType = entity->subId >> 0xC;
     if (entity->initState) {
-        AnimateEntity(D_80180E28[temp_s0], entity);
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
-                AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(EntityExplosionID, entityDropItem);
-                entityDropItem->subId = D_80180E50[temp_s0];
+                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
+                entityDropItem->subId =
+                    g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceCandleWithDrop(entity);
+            ReplaceBreakableWithItemDrop(entity);
         }
     } else {
-        InitializeEntity(D_80180A3C);
-        entity->zPriority = D_80097408 - 0x14;
-        entity->unk18 = D_80180E68[temp_s0];
-        entity->hitboxHeight = D_80180E48[temp_s0];
-        entity->animationSet = D_80180E58[temp_s0];
+        InitializeEntity(g_eBreakableInit);
+        entity->zPriority = g_zEntityCenter - 0x14;
+        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animationSet = g_eBreakableAnimationSets[breakableType];
     }
 }
 
@@ -224,7 +225,13 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", LoadObjLayout);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB680);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", SpawnExplosionEntity);
+void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->posX.Data.high = D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = D_8006C3B8->posY.Data.high;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB7A8);
 
@@ -373,7 +380,7 @@ void InitializeEntity(u16* arg0) {
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
-        D_8006C3B8->zPriority = D_80097408 - 0xC;
+        D_8006C3B8->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
@@ -389,7 +396,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD430);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD588);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", ReplaceCandleWithDrop);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", ReplaceBreakableWithItemDrop);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD984);
 
@@ -467,7 +474,27 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityAbsorbOrb);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3878);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3D28);
+extern ObjInit2 D_801820F0[];
+void EntityRoomForeground(Entity* entity) {
+    ObjInit2* objInit = &D_801820F0[entity->subId];
+    if (entity->initState == 0) {
+        InitializeEntity(D_80180A90);
+        entity->animationSet = objInit->animationSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.data;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->unk34 = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 |= 4;
+        }
+    }
+    AnimateEntity(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3E14);
 

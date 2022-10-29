@@ -88,7 +88,7 @@ typedef struct {
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 unk14;
     /* 0x16 */ s16 palette;
-    /* 0x18 */ s8 unk18;
+    /* 0x18 */ s8 blendMode;
     /* 0x19 */ s8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
@@ -268,7 +268,7 @@ typedef struct {
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 unk8;
     /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 unkA;
+    /* 0x0A */ u8 blendMode;
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u32 unkC;
     /* 0x10 */ u8* unk10;
@@ -372,9 +372,6 @@ extern s8 D_8005436D;
 
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
-#define EntityExplosionID 2
-#define EntityCandleDropID 3
-#define EntityCandleHeartDropID 10
 
 #define PROGRAM_NO0 0x00
 #define PROGRAM_NO1 0x01
@@ -475,7 +472,7 @@ extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
-extern u16 D_80097408;
+extern u16 g_zEntityCenter;
 extern s32 D_80097428[];
 extern Entity D_8007EF1C;
 extern void* D_8007EFD8;

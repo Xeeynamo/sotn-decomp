@@ -179,7 +179,7 @@ MAD_PATCHES = \
 	-e "s/D_8007E9CC/D_8007EF1C/g" -e "s/0x8007E9CC/0x8007EF1C/g" \
 	-e "s/D_80086A9C/D_80086FEC/g" -e "s/0x80086A9C/0x80086FEC/g" \
 	-e "s/D_80096EA8/D_800973F8/g" -e "s/0x80096EA8/0x800973F8/g" \
-	-e "s/D_80096EB8/D_80097408/g" -e "s/0x80096EB8/0x80097408/g" \
+	-e "s/D_80096EB8/g_zEntityCenter/g" -e "s/0x80096EB8/0x80097408/g" \
 	-e "s/D_80096EC0/D_80097410/g" -e "s/0x80096EC0/0x80097410/g" \
 	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
 	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
@@ -206,7 +206,11 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
+<<<<<<< HEAD
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stst0 extract_stwrp extract_strwrp
+=======
+extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
+>>>>>>> 38c43a56d5e0d51e908ec0ea13315fd2cb185ab2
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools

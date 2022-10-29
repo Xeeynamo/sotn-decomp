@@ -1,9 +1,12 @@
+<<<<<<< HEAD
 /*
  * File: D600.c
  * Overlay: CEN
  * Description: Center Cube Area (Final Boss)
  */
 
+=======
+>>>>>>> 38c43a56d5e0d51e908ec0ea13315fd2cb185ab2
 #include "common.h"
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018D600);
