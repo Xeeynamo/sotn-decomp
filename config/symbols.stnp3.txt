@@ -14,6 +14,7 @@ SpawnExplosionEntity = 0x801BB734;
 CreateEntity = 0x801BACAC;
 DestroyEntity = 0x801BC4D4;
 DestroyEntityFromIndex = 0x801BC540;
+PreventEntityFromRespawning = 0x801BC5BC;
 AnimateEntity = 0x801BC604;
 AllocEntity = 0x801BCD44;
 InitializeEntity = 0x801BD1E4;

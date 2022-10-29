@@ -640,12 +640,12 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-void func_801B49F0(Entity* entity) {
-    if (entity->unk32) {
-        u32 value = (entity->unk32 - 1);
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex) {
+        u32 value = (entity->objectRoomIndex - 1);
         u16 index = value / 32;
         u16 bit = value % 32;
-        D_80097428[index] |= 1 << bit;
+        g_entityDestroyed[index] |= 1 << bit;
     }
 }
 

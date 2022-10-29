@@ -303,7 +303,7 @@ void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
     entity->subId = initDesc->unk8;
-    entity->unk32 = initDesc->unk6 >> 8;
+    entity->objectRoomIndex = initDesc->unk6 >> 8;
     entity->unk68 = initDesc->flags >> 0xA & 7;
 }
 #endif
@@ -367,7 +367,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A424);
 void func_8018A424(s16 arg0);
 #else
 void func_80189FB4(ObjectInit*);
-extern s32 D_80097428[];
+extern s32 g_entityDestroyed[];
 extern u8 D_80193ABC;
 
 void func_8018A424(s16 arg0) {
@@ -380,7 +380,7 @@ void func_8018A424(s16 arg0) {
         if (D_80193AB4->posY != -1 && arg0 >= D_80193AB4->posY) {
             u8 flag = (D_80193AB4->unk6 >> 8) + 0xFF;
             if (flag == 0xFF ||
-                (1 << (flag & 0x1F) & D_80097428[flag >> 5]) == 0) {
+                (1 << (flag & 0x1F) & g_entityDestroyed[flag >> 5]) == 0) {
                 func_80189FB4(D_80193AB4);
             }
             D_80193AB4++;
@@ -523,12 +523,12 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-void func_8018B6E8(Entity* entity) {
-    if (entity->unk32) {
-        u32 value = (entity->unk32 - 1);
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex) {
+        u32 value = (entity->objectRoomIndex - 1);
         u16 index = value / 32;
         u16 bit = value % 32;
-        D_80097428[index] |= 1 << bit;
+        g_entityDestroyed[index] |= 1 << bit;
     }
 }
 
@@ -727,7 +727,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 temp_a0;
     u16 var_v1;
 
-    func_8018B6E8(entity);
+    PreventEntityFromRespawning(entity);
     if (!(D_8009796E & 2)) {
         DestroyEntity(entity);
         return;
