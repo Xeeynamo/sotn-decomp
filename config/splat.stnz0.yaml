@@ -1,0 +1,38 @@
+options:
+  platform:     psx
+  basename:     stnz0
+  base_path:    ..
+  target_path:  iso/ST/NZ0/NZ0.BIN
+  asm_path:     asm/st/nz0
+  asset_path:   assets/st/nz0
+  src_path:     src/st/nz0
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stnz0.txt
+  undefined_syms_path:  config/undefined_syms.stnz0.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stnz0.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stnz0.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+segments:
+  - name: stnz0
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+      - [0x0, rodata]
+      - [0x18C0, rodata]
+      - [0x1DD0, rodata]
+      - [0x20A0, rodata]
+      - [0x20B0, rodata]
+      - [0x2220, rodata]
+      - [0x2600, rodata]
+      - [0x2710, rodata]
+      - [0x2840, rodata]
+      - [0x2850, rodata]
+      - [0x30790, rodata]
+      - [0x394D4, c]
+      - [0x4AA10, data]
+  - [0x4B780]

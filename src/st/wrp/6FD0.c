@@ -1,4 +1,18 @@
+/*
+ * File: 6FD0.c
+ * Overlay: WRP
+ * Description: All warp rooms.
+ */
+
 #include "stage.h"
+
+void SpawnExplosionEntity(u16, Entity*);
+void ReplaceCandleWithDrop(Entity*);
+void EntityCandleDrop(Entity*);
+void EntityCandleHeartDrop(Entity*);
+void func_8018D894(Entity*);
+void func_801916C4(s32);
+void func_80192F40(s32, s32);
 
 extern RoomHeader* g_stRooms[];
 extern ObjectInit* g_pStObjLayout[];
@@ -27,19 +41,10 @@ extern u8 D_80181038[];
 extern u16 D_8018103C[];
 extern u8 D_8018104C[];
 extern ObjInit2 D_80181134[];
-
 extern ObjectInit* D_80193AB0;
 extern ObjectInit* D_80193AB4;
 extern s8 D_80193AB8;
 extern s8 D_80193ABC;
-
-void SpawnExplosionEntity(u16, Entity*);
-void ReplaceCandleWithDrop(Entity*);
-void EntityCandleDrop(Entity*);
-void EntityCandleHeartDrop(Entity*);
-void func_8018D894(Entity*);
-void func_801916C4(s32);
-void func_80192F40(s32, s32);
 
 void func_80186FD0(Entity* arg0) {
     ObjInit2* objInit = &D_801804E0[arg0->subId];
