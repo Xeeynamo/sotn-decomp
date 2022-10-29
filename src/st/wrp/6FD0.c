@@ -722,7 +722,36 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C55C);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", ReplaceBreakableWithItemDrop);
+void ReplaceBreakableWithItemDrop(Entity* entity) {
+    u16 temp_a0;
+    u16 var_v1;
+
+    func_8018B6E8(entity);
+    if (!(D_8009796E & 2)) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    temp_a0 = entity->subId & 0xFFF;
+    var_v1 = temp_a0;
+    entity->subId = var_v1;
+
+    if (var_v1 < 0x80) {
+        entity->objectId = ENTITY_ITEM_DROP;
+        entity->pfnUpdate = EntityCandleDrop;
+        entity->animationFrameDuration = 0;
+        entity->animationFrameIndex = 0;
+    } else {
+        var_v1 = temp_a0 - 0x80;
+        entity->objectId = ENTITY_HEART_DROP;
+        entity->pfnUpdate = EntityCandleHeartDrop;
+    }
+
+    entity->subId = var_v1;
+    temp_a0 = 0;
+    entity->unk6D = 0x10;
+    entity->initState = temp_a0;
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
@@ -876,7 +905,7 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018DA34);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandleHeartDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018E01C);
 
