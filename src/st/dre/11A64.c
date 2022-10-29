@@ -1,7 +1,7 @@
 #include "stage.h"
 
 void ReplaceBreakableWithItemDrop(Entity* arg0);
-void func_8019A3A8(Entity* entity);
+void DestroyEntity(Entity* entity);
 void func_8019C63C(Entity*);
 void InitializeEntity(u16* arg0);
 void func_80198F18(s16);
@@ -11,8 +11,8 @@ void func_801992C8(s16);
 void func_801A046C(u16);
 s32 func_8019AC78(u8, s16);
 void func_8019A490(Entity* entity);
-void func_8019BDC8(struct Entity*);
-void func_8019C7DC(struct Entity*);
+void EntityCandleDrop(struct Entity*);
+void EntityCandleHeartDrop(struct Entity*);
 void func_8019A78C(void);
 void func_8019B858(void);
 void SpawnExplosionEntity(u16 objectId, Entity* entity);
@@ -161,7 +161,7 @@ void func_801946C4(Entity* entity) {
             D_80180668 = 1;
         }
         if (entity[-1].objectId != 0x1E) {
-            func_8019A3A8(entity);
+            DestroyEntity(entity);
         }
     }
 }
@@ -240,7 +240,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801984DC);
 
 void func_80198B80(Entity* entity, ObjectInit* initDesc) { // CreateEntity
-    func_8019A3A8(entity);
+    DestroyEntity(entity);
     entity->objectId = initDesc->flags & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
         entity->pfnUpdate = D_801803C4[entity->objectId];
@@ -333,7 +333,7 @@ void func_80199554(void) {
 }
 
 void SpawnExplosionEntity(u16 objectId, Entity* entity) {
-    func_8019A3A8(entity);
+    DestroyEntity(entity);
 
     entity->objectId = objectId;
     entity->pfnUpdate = D_801803C4[objectId];
@@ -348,7 +348,7 @@ void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
 #else
 void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2) {
-    func_8019A3A8(arg2);
+    DestroyEntity(arg2);
     arg2->objectId = objectId;
     arg2->pfnUpdate = D_801803C4[objectId];
     arg2->posX.Data.high = arg1->posX.Data.high;
@@ -375,7 +375,7 @@ s32 func_801996F8(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199770);
 
-void func_8019A3A8(Entity* item) { // DestroyEntity
+void DestroyEntity(Entity* item) { // DestroyEntity
     s32 i;
     s32 length;
     u32* ptr;
@@ -394,7 +394,7 @@ void func_8019A414(s16 index) { // DestroyEntityFromIndex
     Entity* entity = &D_800733D8[index];
 
     while (entity < &D_8007EF1C) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
         entity++;
     }
 }
@@ -489,7 +489,7 @@ Entity* func_8019AC18(Entity* start, Entity* end) {
 
     while (current < end) {
         if (current->objectId == 0) {
-            func_8019A3A8(current);
+            DestroyEntity(current);
             return current;
         }
 
@@ -640,7 +640,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     }
 
     if (arg0 == 0xFF) {
-        func_8019A3A8(D_8006C3B8);
+        DestroyEntity(D_8006C3B8);
         return;
     }
 
@@ -699,7 +699,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
     func_8019A490(entity);
     if (!(D_8009796E & 2)) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
         return;
     }
 
@@ -708,14 +708,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = 3;
-        entity->pfnUpdate = func_8019BDC8;
+        entity->objectId = ENTITY_ITEM_DROP;
+        entity->pfnUpdate = EntityCandleDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = 0xA;
-        entity->pfnUpdate = func_8019C7DC;
+        entity->objectId = ENTITY_HEART_DROP;
+        entity->pfnUpdate = EntityCandleHeartDrop;
     }
 
     entity->subId = var_v1;
@@ -804,7 +804,7 @@ void func_8019BA38(u16 arg0) {
         *hearts = g_playerHeart->max;
     }
 
-    func_8019A3A8(D_8006C3B8);
+    DestroyEntity(D_8006C3B8);
 }
 #endif
 
@@ -824,18 +824,18 @@ void func_8019BCAC(void) { // CollectHeartVessel
         g_pfnPlaySfx(0x67A);
         D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
-    func_8019A3A8(D_8006C3B8);
+    DestroyEntity(D_8006C3B8);
 }
 
 void func_8019BD50(void) { // CollectLifeVessel
     g_pfnPlaySfx(0x67A);
     D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
-    func_8019A3A8(D_8006C3B8);
+    DestroyEntity(D_8006C3B8);
 }
 
-void func_8019BDA0(void) { func_8019A3A8(D_8006C3B8); }
+void func_8019BDA0(void) { DestroyEntity(D_8006C3B8); }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BDC8);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityCandleDrop);
 
 void func_8019C63C(Entity* entity) {
     u32 temp_v0;
@@ -866,7 +866,7 @@ void func_8019C63C(Entity* entity) {
 
     entity->posY.value += entity->accelerationY;
     if (!AnimateEntity(D_8018125C[entity->subId], entity)) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
     }
 }
 
@@ -901,7 +901,7 @@ void func_8019C738(Entity* entity, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019C7DC);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityCandleHeartDrop);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019CDC4);
 
@@ -949,7 +949,7 @@ void func_8019E5E0(Entity* entity) {
     }
 
     if (D_80181328[entity->subId] < entity->animationFrameDuration) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
     }
 }
 #endif
@@ -982,7 +982,7 @@ void func_8019E6D0(Entity* entity) {
     }
 
     if (entity->animationFrameDuration >= 0x25) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
     }
 }
 
@@ -1050,7 +1050,7 @@ void func_8019F070(Entity* entity) {
     }
 
     if (entity->animationFrameDuration >= 0x25) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
     }
 }
 
@@ -1077,7 +1077,7 @@ void func_8019F170(Entity* entity) {
     func_8019A75C();
 
     if (!AnimateEntity(&D_80181338, entity)) {
-        func_8019A3A8(entity);
+        DestroyEntity(entity);
     }
 }
 
@@ -1089,7 +1089,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F23C);
 void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
     u16 palette;
 
-    func_8019A3A8(ent2);
+    DestroyEntity(ent2);
 
     ent2->objectId = arg0;
     ent2->pfnUpdate = D_801803C4[arg0];

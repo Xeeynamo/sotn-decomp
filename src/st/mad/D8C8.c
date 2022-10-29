@@ -852,13 +852,9 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192EF8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80193050);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", ReplaceBreakableWithItemDrop);
-#else
 void ReplaceBreakableWithItemDrop(Entity* entity) {
-    u16 prevSubId;
-    u16 subId;
-    u16 newSubId;
+    u16 temp_a0;
+    u16 var_v1;
 
     func_80191E24(entity);
     if (!(D_8009741A & 2)) {
@@ -866,26 +862,26 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
         return;
     }
 
-    prevSubId = entity->subId;
-    subId = prevSubId & 0xFFF;
-    entity->subId = subId;
-    if (prevSubId < 0x80) {
+    temp_a0 = entity->subId & 0xFFF;
+    var_v1 = temp_a0;
+    entity->subId = var_v1;
+
+    if (var_v1 < 0x80) {
         entity->objectId = ENTITY_ITEM_DROP;
         entity->pfnUpdate = EntityCandleDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
-        newSubId = subId;
     } else {
+        var_v1 = temp_a0 - 0x80;
         entity->objectId = ENTITY_HEART_DROP;
         entity->pfnUpdate = EntityCandleHeartDrop;
-        newSubId = subId - 0x80;
     }
-    entity->subId = newSubId;
-    entity->unk6D = 0x10;
-    entity->initState = 0;
-}
 
-#endif
+    entity->subId = var_v1;
+    entity->unk6D = 0x10;
+    temp_a0 = 0;
+    entity->initState = temp_a0;
+}
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
 #ifndef NON_MATCHING
