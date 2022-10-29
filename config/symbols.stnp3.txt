@@ -25,4 +25,5 @@ EntityMerman2 = 0x801C80DC;
 EntityMerman = 0x801C8238;
 EntityBat = 0x801C997C;
 EntityZombie = 0x801C9BC8;
+EntityRoomForeground = 0x801C3D28;
 EntityBoneScimitar = 0x801C91C4;

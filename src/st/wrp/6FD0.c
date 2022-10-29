@@ -1111,28 +1111,25 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192610);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801929A4);
 
-void func_80192E54(Entity* arg0) {
-    ObjInit2* objInit = &D_80181134[arg0->subId];
-    if (arg0->initState == 0) {
+void EntityRoomForeground(Entity *entity) {
+    ObjInit2* objInit = &D_80181134[entity->subId];
+    if (entity->initState == 0) {
         InitializeEntity(D_80180494);
-        arg0->animationSet = objInit->animationSet;
-        arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4.data;
-        arg0->palette = objInit->palette;
-        arg0->unk19 = objInit->unk8;
-        arg0->blendMode = objInit->blendMode;
-
+        entity->animationSet = objInit->animationSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.data;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
-            arg0->unk34 = objInit->unkC;
+            entity->unk34 = objInit->unkC;
         }
-
-        if (arg0->subId >= 5) {
-            arg0->unk1E = 0x0800;
-            arg0->unk19 = arg0->unk19 | 4;
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 |= 4;
         }
     }
-
-    AnimateEntity(objInit->unk10, arg0);
+    AnimateEntity(objInit->unk10, entity);
 }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192F40);

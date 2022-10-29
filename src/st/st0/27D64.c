@@ -890,7 +890,27 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9EA8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA6EC);
+extern ObjInit2 D_80181FE8[];
+void EntityRoomForeground(Entity *entity) {
+    ObjInit2* objInit = &D_80181FE8[entity->subId];
+    if (entity->initState == 0) {
+        InitializeEntity(D_801805BC);
+        entity->animationSet = objInit->animationSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.data;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->unk34 = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 |= 4;
+        }
+    }
+    AnimateEntity(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA7D8);
 

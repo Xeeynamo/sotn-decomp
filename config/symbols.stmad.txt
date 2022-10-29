@@ -60,3 +60,4 @@ CollectHeartVessel = 0x801938FC;
 CollectLifeVessel = 0x8019394C;
 EntityCandleDrop = 0x801939E0;
 EntityCandleHeartDrop = 0x801943EC;
+EntityRoomForeground = 0x80198B00;

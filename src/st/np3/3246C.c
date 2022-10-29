@@ -461,7 +461,27 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityAbsorbOrb);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3878);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3D28);
+extern ObjInit2 D_801820F0[];
+void EntityRoomForeground(Entity *entity) {
+    ObjInit2* objInit = &D_801820F0[entity->subId];
+    if (entity->initState == 0) {
+        InitializeEntity(D_80180A90);
+        entity->animationSet = objInit->animationSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.data;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->unk34 = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 |= 4;
+        }
+    }
+    AnimateEntity(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3E14);
 
