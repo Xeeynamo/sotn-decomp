@@ -379,7 +379,13 @@ void func_801C3E10(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", SpawnExplosionEntity);
+void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->posX.Data.high = D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = D_8006C3B8->posY.Data.high;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3F38);
 

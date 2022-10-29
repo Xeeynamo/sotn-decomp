@@ -219,7 +219,13 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", LoadObjLayout);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB680);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", SpawnExplosionEntity);
+void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->posX.Data.high = D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = D_8006C3B8->posY.Data.high;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB7A8);
 
