@@ -1,4 +1,10 @@
 PfnEntityUpdates = 0x80180920;
+g_eBreakableInit = 0x80180AAC;
+g_eBreakableAnimations = 0x80180E50;
+g_eBreakableHitboxes = 0x80180E70;
+g_eBreakableExplosionTypes = 0x80180E78;
+g_eBreakableAnimationSets = 0x80180E80;
+g_eBreakableBlendModes = 0x80180E90;
 CreateEntity = 0x801C343C;
 DestroyEntity = 0x801C4C64;
 DestroyEntityFromIndex = 0x801C4CD0;

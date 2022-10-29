@@ -55,13 +55,7 @@ extern s32 D_80180FE4[];
 extern u8 D_80180FFC[];
 extern u16 D_80181000[];
 extern ObjInit2 D_801810F4[];
-extern u16 D_801804F0[];
 extern u16 D_80180508;
-extern u8* D_80180644[];
-extern u8 D_80180664[];
-extern u8 D_8018066C[];
-extern u16 D_80180674[];
-extern u8 D_80180684[];
 extern s16 D_801809EC[];
 extern u8 D_80181010;
 extern RoomHeader g_rooms[];
@@ -200,10 +194,16 @@ void func_8018E5AC(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018E674);
 
+extern u16 g_eBreakableInit[];
+extern u8* g_eBreakableAnimations[8];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableAnimationSets[];
+extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
-    u16 temp_s0 = entity->subId >> 0xC;
+    u16 breakableType = entity->subId >> 0xC;
     if (entity->initState) {
-        AnimateEntity(D_80180644[temp_s0], entity);
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
             D_8003C6D8(0x635);
@@ -211,16 +211,16 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D308, D_8007D308 + MaxEntityCount);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
-                entityDropItem->subId = D_8018066C[temp_s0];
+                entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceCandleWithDrop(entity);
         }
     } else {
-        InitializeEntity(D_801804F0);
+        InitializeEntity(g_eBreakableInit);
         entity->zPriority = D_80096EB8 - 0x14;
-        entity->blendMode = D_80180684[temp_s0];
-        entity->hitboxHeight = D_80180664[temp_s0];
-        entity->animationSet = D_80180674[temp_s0];
+        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animationSet = g_eBreakableAnimationSets[breakableType];
     }
 }
 
@@ -988,7 +988,7 @@ void func_80194314(Entity* entity) {
         return;
     }
 
-    InitializeEntity(&D_801804F0);
+    InitializeEntity(g_eBreakableInit);
     entity->animationFrame = entity->unk7C.modeU8.unk0;
     entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0 * 2];
     entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0 * 2];

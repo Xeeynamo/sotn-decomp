@@ -6,7 +6,6 @@ void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
 
 extern u8* D_80180850;
-extern u16 D_80180AAC[];
 extern u16 D_80180B00[];
 extern ObjInit2 D_80180BFC[];
 extern s16 D_801820C4[];
@@ -52,15 +51,16 @@ void func_801B77D4(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 
-extern u8* D_80180E50[];
-extern u8 D_80180E70[];
-extern u8 D_80180E78[];
-extern u16 D_80180E80[];
-extern u8 D_80180E90[];
+extern u16 g_eBreakableInit[];
+extern u8* g_eBreakableAnimations[8];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableAnimationSets[];
+extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
-    u16 temp_s0 = entity->subId >> 0xC;
+    u16 breakableType = entity->subId >> 0xC;
     if (entity->initState) {
-        AnimateEntity(D_80180E50[temp_s0], entity);
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
@@ -68,16 +68,16 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
-                entityDropItem->subId = D_80180E78[temp_s0];
+                entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceCandleWithDrop(entity);
         }
     } else {
-        InitializeEntity(D_80180AAC);
+        InitializeEntity(g_eBreakableInit);
         entity->zPriority = g_zEntityCenter - 0x14;
-        entity->blendMode = D_80180E90[temp_s0];
-        entity->hitboxHeight = D_80180E70[temp_s0];
-        entity->animationSet = D_80180E80[temp_s0];
+        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animationSet = g_eBreakableAnimationSets[breakableType];
     }
 }
 
