@@ -40,17 +40,6 @@ extern ObjectInit* D_80193AB4;
 extern s8 D_80193AB8;
 extern s8 D_80193ABC;
 
-<<<<<<< HEAD
-=======
-void SpawnExplosionEntity(u16, Entity*);
-void ReplaceBreakableWithItemDrop(Entity*);
-void EntityCandleDrop(Entity*);
-void EntityCandleHeartDrop(Entity*);
-void func_8018D894(Entity*);
-void func_801916C4(s32);
-void func_80192F40(s32, s32);
-
->>>>>>> 38c43a56d5e0d51e908ec0ea13315fd2cb185ab2
 void func_80186FD0(Entity* arg0) {
     ObjInit2* objInit = &D_801804E0[arg0->subId];
     if (arg0->initState == 0) {
