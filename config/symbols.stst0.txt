@@ -26,6 +26,7 @@ MoveEntity = 0x801B4CBC;
 FallEntity = 0x801B4CEC;
 AllocEntity = 0x801B53CC;
 InitializeEntity = 0x801B584C;
+EntityRoomForeground = 0x801BA6EC;
 EntityClouds = 0x801BAB08;
 EntityClockTower3D = 0x801BB2AC;
 EntityCutscenePhotograph = 0x801BB764;

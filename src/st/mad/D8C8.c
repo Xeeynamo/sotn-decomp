@@ -1266,10 +1266,8 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801982BC);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80198650);
 
-void func_80198B00(Entity* entity) {
-    s32 temp_v0;
+void EntityRoomForeground(Entity* entity) {
     ObjInit2* obj = &D_801810F4[entity->subId];
-
     if (entity->initState == 0) {
         InitializeEntity(D_80180544);
         entity->animationSet = obj->animationSet;
@@ -1278,9 +1276,8 @@ void func_80198B00(Entity* entity) {
         entity->palette = obj->palette;
         entity->unk19 = obj->unk8;
         entity->blendMode = obj->blendMode;
-        temp_v0 = obj->unkC;
-        if (temp_v0 != 0) {
-            entity->unk34 = temp_v0;
+        if (obj->unkC != 0) {
+            entity->unk34 = obj->unkC;
         }
     }
     AnimateEntity(obj->unk10, entity);
