@@ -74,7 +74,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(D_80180AAC);
-        entity->zPriority = D_80097408 - 0x14;
+        entity->zPriority = g_zEntityCenter - 0x14;
         entity->blendMode = D_80180E90[temp_s0];
         entity->hitboxHeight = D_80180E70[temp_s0];
         entity->animationSet = D_80180E80[temp_s0];
@@ -568,7 +568,7 @@ void InitializeEntity(u16* arg0) {
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
-        D_8006C3B8->zPriority = D_80097408 - 0xC;
+        D_8006C3B8->zPriority = g_zEntityCenter - 0xC;
     }
 }
 

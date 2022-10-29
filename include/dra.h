@@ -472,7 +472,7 @@ extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
-extern u16 D_80097408;
+extern u16 g_zEntityCenter;
 extern s32 D_80097428[];
 extern Entity D_8007EF1C;
 extern void* D_8007EFD8;
