@@ -206,11 +206,7 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-<<<<<<< HEAD
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stst0 extract_stwrp extract_strwrp
-=======
-extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
->>>>>>> 38c43a56d5e0d51e908ec0ea13315fd2cb185ab2
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools
