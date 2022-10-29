@@ -4,14 +4,8 @@ void SpawnExplosionEntity(u16, Entity*);
 void ReplaceCandleWithDrop(Entity*);
 int func_801CD658();
 
-extern u16 D_80180A3C[];
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
-extern u8* D_80180E28[];
-extern u8 D_80180E48[];
-extern u8 D_80180E50[];
-extern u16 D_80180E58[];
-extern u8 D_80180E68[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80181A50[];
 
@@ -39,26 +33,33 @@ void func_801B246C(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2540);
 
+extern u16 g_eBreakableInit[];
+extern u8* g_eBreakableAnimations[8];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableAnimationSets[];
+extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
+    u16 breakableType = entity->subId >> 0xC;
     if (entity->initState) {
-        AnimateEntity(D_80180E28[temp_s0], entity);
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
-                AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
-                entityDropItem->subId = D_80180E50[temp_s0];
+                entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceCandleWithDrop(entity);
         }
     } else {
-        InitializeEntity(D_80180A3C);
-        entity->zPriority = D_80097408 - 0x14;
-        entity->blendMode = D_80180E68[temp_s0];
-        entity->hitboxHeight = D_80180E48[temp_s0];
-        entity->animationSet = D_80180E58[temp_s0];
+        InitializeEntity(g_eBreakableInit);
+        entity->zPriority = g_zEntityCenter - 0x14;
+        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animationSet = g_eBreakableAnimationSets[breakableType];
     }
 }
 
