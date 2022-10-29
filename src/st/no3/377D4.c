@@ -68,7 +68,8 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
-                entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
+                entityDropItem->subId =
+                    g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
         }

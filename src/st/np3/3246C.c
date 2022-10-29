@@ -50,7 +50,8 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
-                entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
+                entityDropItem->subId =
+                    g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
         }
@@ -462,7 +463,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityAbsorbOrb);
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3878);
 
 extern ObjInit2 D_801820F0[];
-void EntityRoomForeground(Entity *entity) {
+void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_801820F0[entity->subId];
     if (entity->initState == 0) {
         InitializeEntity(D_80180A90);
