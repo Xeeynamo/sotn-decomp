@@ -25,4 +25,7 @@ segments:
       - [0x0, data]
       - [0xD600, c]
       - [0x1C704, rodata]
+      - [0x1C764, rodata]
+      - [0x1D374, rodata]
+      - [0x1D424, rodata]
   - [0x1D46C]
