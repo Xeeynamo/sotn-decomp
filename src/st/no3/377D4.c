@@ -1,7 +1,7 @@
 #include "stage.h"
 
 void SpawnExplosionEntity(u16, Entity*);
-void ReplaceCandleWithDrop(Entity*);
+void ReplaceBreakableWithItemDrop(Entity*);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
 
@@ -70,7 +70,7 @@ void EntityBreakable(Entity* entity) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceCandleWithDrop(entity);
+            ReplaceBreakableWithItemDrop(entity);
         }
     } else {
         InitializeEntity(g_eBreakableInit);
@@ -585,10 +585,10 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5BC0);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5D18);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", ReplaceCandleWithDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", ReplaceBreakableWithItemDrop);
 #else
 extern u8 D_8009796E;
-void ReplaceCandleWithDrop(Entity* entity) {
+void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 prevSubId;
     u16 subId;
     u16 newSubId;

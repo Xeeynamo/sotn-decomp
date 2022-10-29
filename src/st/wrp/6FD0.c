@@ -28,7 +28,7 @@ extern s8 D_80193AB8;
 extern s8 D_80193ABC;
 
 void SpawnExplosionEntity(u16, Entity*);
-void ReplaceCandleWithDrop(Entity*);
+void ReplaceBreakableWithItemDrop(Entity*);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
 void func_8018D894(Entity*);
@@ -148,7 +148,7 @@ void EntityBreakable(Entity* entity) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceCandleWithDrop(entity);
+            ReplaceBreakableWithItemDrop(entity);
         }
     } else {
         InitializeEntity(g_eBreakableInit);
@@ -721,7 +721,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C55C);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", ReplaceCandleWithDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", ReplaceBreakableWithItemDrop);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
