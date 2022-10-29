@@ -375,7 +375,7 @@ s32 func_801996F8(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199770);
 
-void DestroyEntity(Entity* item) { // DestroyEntity
+void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -390,7 +390,7 @@ void DestroyEntity(Entity* item) { // DestroyEntity
         *ptr++ = 0;
 }
 
-void func_8019A414(s16 index) { // DestroyEntityFromIndex
+void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
 
     while (entity < &D_8007EF1C) {
@@ -399,11 +399,12 @@ void func_8019A414(s16 index) { // DestroyEntityFromIndex
     }
 }
 
-void func_8019A490(Entity* arg0) {
-    if (arg0->unk32) {
-        u32 temp_a0 = arg0->unk32 - 1;
-        u16 index = temp_a0 >> 5;
-        D_80097428[index] |= 1 << (temp_a0 & 0x1F);
+void func_8019A490(Entity* entity) {
+    if (entity->unk32) {
+        u32 value = (entity->unk32 - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        D_80097428[index] |= 1 << bit;
     }
 }
 

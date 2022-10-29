@@ -580,18 +580,14 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191E24);
-void func_80191E24(Entity* entity);
-#else
 void func_80191E24(Entity* entity) {
     if (entity->unk32 != 0) {
-        u32 temp_a0_2 = entity->unk32 - 1;
-        s32* temp_v1 = &D_80096ED8[(temp_a0_2 >> 5) & 0xFFFF];
-        *temp_v1 |= 1 << (temp_a0_2 & 0x1F);
+        u32 value = (entity->unk32 - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        D_80096ED8[index] |= 1 << bit;
     }
 }
-#endif
 
 #include "st/AnimateEntity.h"
 

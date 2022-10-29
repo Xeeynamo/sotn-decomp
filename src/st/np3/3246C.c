@@ -3,6 +3,8 @@
 void SpawnExplosionEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 int func_801CD658();
+void EntityCandleDrop(Entity* entity);
+void EntityCandleHeartDrop(Entity* entity);
 
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
@@ -272,7 +274,14 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC5BC);
+void func_801BC5BC(Entity* entity) {
+    if (entity->unk32) {
+        u32 value = (entity->unk32 - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        D_80097428[index] |= 1 << bit;
+    }
+}
 
 #include "st/AnimateEntity.h"
 
@@ -390,7 +399,37 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD430);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD588);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", ReplaceBreakableWithItemDrop);
+void ReplaceBreakableWithItemDrop(Entity* entity) {
+    u16 temp_a0;
+    u16 var_v1;
+
+    func_801BC5BC(entity);
+    if (!(D_8009796E & 2)) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    temp_a0 = entity->subId & 0xFFF;
+    var_v1 = temp_a0;
+    entity->subId = var_v1;
+
+
+    if (var_v1 < 0x80) {
+        entity->objectId = ENTITY_ITEM_DROP;
+        entity->pfnUpdate = EntityCandleDrop;
+        entity->animationFrameDuration = 0;
+        entity->animationFrameIndex = 0;
+    } else {
+        var_v1 = temp_a0 - 0x80;
+        entity->objectId = ENTITY_HEART_DROP;
+        entity->pfnUpdate = EntityCandleHeartDrop;
+    }
+
+    entity->subId = var_v1;
+    temp_a0 = 0;
+    entity->unk6D = 0x10;
+    entity->initState = temp_a0;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD984);
 
@@ -414,7 +453,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BE768);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BE864);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BE908);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityCandleHeartDrop);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BEEF0);
 
