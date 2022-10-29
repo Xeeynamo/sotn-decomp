@@ -432,8 +432,14 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-// https://decomp.me/scratch/pHwri
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4D4C);
+void func_801C4D4C(Entity* entity) {
+    if (entity->unk32) {
+        u32 value = (entity->unk32 - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        D_80097428[index] |= 1 << bit;
+    }
+}
 
 #include "st/AnimateEntity.h"
 

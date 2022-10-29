@@ -525,9 +525,10 @@ void DestroyEntityFromIndex(s16 index) {
 
 void func_8018B6E8(Entity* entity) {
     if (entity->unk32) {
-        u32 bit = entity->unk32 - 1;
-        u16 index = bit >> 5;
-        D_80097428[index] |= 1 << (bit & 0x1F);
+        u32 value = (entity->unk32 - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        D_80097428[index] |= 1 << bit;
     }
 }
 
