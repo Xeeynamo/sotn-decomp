@@ -413,7 +413,6 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     var_v1 = temp_a0;
     entity->subId = var_v1;
 
-
     if (var_v1 < 0x80) {
         entity->objectId = ENTITY_ITEM_DROP;
         entity->pfnUpdate = EntityCandleDrop;
