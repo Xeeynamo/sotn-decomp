@@ -333,7 +333,7 @@ void CreateEntity(Entity* entity, ObjectInit* initDesc) {
     entity->posX.Data.high = initDesc->posX - D_80072B3E;
     entity->posY.Data.high = initDesc->posY - D_80072B42;
     entity->subId = initDesc->unk8;
-    entity->unk32 = initDesc->unk6 >> 8;
+    entity->objectRoomIndex = initDesc->unk6 >> 8;
     entity->unk68 = initDesc->flags >> 0xA & 7;
 }
 
@@ -580,9 +580,9 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-void func_80191E24(Entity* entity) {
-    if (entity->unk32 != 0) {
-        u32 value = (entity->unk32 - 1);
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex != 0) {
+        u32 value = (entity->objectRoomIndex - 1);
         u16 index = value / 32;
         u16 bit = value % 32;
         D_80096ED8[index] |= 1 << bit;
@@ -852,7 +852,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 temp_a0;
     u16 var_v1;
 
-    func_80191E24(entity);
+    PreventEntityFromRespawning(entity);
     if (!(D_8009741A & 2)) {
         DestroyEntity(entity);
         return;

@@ -12,6 +12,7 @@ func_801A2018 = 0x801A2018;
 EntityRoomForeground = 0x801A1BFC;
 DestroyEntity = 0x8019A3A8;
 DestroyEntityFromIndex = 0x8019A414;
+PreventEntityFromRespawning = 0x8019A490;
 AnimateEntity = 0x8019A4D8;
 InitializeEntity = 0x8019B0B8;
 SpawnExplosionEntity = 0x8019B7A0;

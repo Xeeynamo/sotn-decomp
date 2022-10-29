@@ -50,6 +50,7 @@ SpawnExplosionEntity = 0x80190FB8;
 LoadObjLayout = 0x80190D8C;
 DestroyEntity = 0x80191D3C;
 DestroyEntityFromIndex = 0x80191DA8;
+PreventEntityFromRespawning = 0x80191E24;
 AnimateEntity = 0x80191E6C;
 MoveEntity = 0x801920F0;
 FallEntity = 0x80192120;

@@ -178,6 +178,7 @@ MAD_PATCHES = \
 	-e "s/D_80096EB8/g_zEntityCenter/g" -e "s/0x80096EB8/0x80097408/g" \
 	-e "s/D_80096EC0/D_80097410/g" -e "s/0x80096EC0/0x80097410/g" \
 	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
+	-e "s/D_80096ED8/g_entityDestroyed/g" \
 	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
 	-e "s/D_8009741B/D_8009796F/g" -e "s/0x8009741B/0x8009796F/g" \
 	-e "s/D_8009741F/D_80097973/g" -e "s/0x8009741F/0x80097973/g" \

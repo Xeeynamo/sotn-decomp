@@ -101,7 +101,7 @@ typedef struct {
     /* 0x2C */ u16 initState;
     /* 0x2E */ s16 unk2E;
     /* 0x30 */ u16 subId;
-    /* 0x32 */ u16 unk32;
+    /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 unk3A;
@@ -473,7 +473,7 @@ extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
 extern u16 g_zEntityCenter;
-extern s32 D_80097428[];
+extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
 extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];

@@ -8,6 +8,7 @@ g_eBreakableBlendModes = 0x80180E90;
 CreateEntity = 0x801C343C;
 DestroyEntity = 0x801C4C64;
 DestroyEntityFromIndex = 0x801C4CD0;
+PreventEntityFromRespawning = 0x801C4D4C;
 LoadObjLayout = 0x801C3C98;
 g_pStObjLayout = 0x8018077C;
 g_stRooms = 0x80183CC4;
