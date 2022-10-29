@@ -6,7 +6,12 @@
 
 #include "common.h"
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801B94D4);
+extern u32 g_randomNext;
+
+u32 func_801B94D4(void) { // Random
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801B9504);
 

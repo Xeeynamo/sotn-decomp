@@ -20,7 +20,7 @@ segments:
     type: code
     start: 0x00000000
     vram:  0x80180000
-    subalign: 2
+    subalign: 4
     subsegments:
       - [0x0, rodata]
       - [0x18C0, rodata]
