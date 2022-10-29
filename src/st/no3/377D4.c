@@ -9,11 +9,6 @@ extern u8* D_80180850;
 extern u16 D_80180AAC[];
 extern u16 D_80180B00[];
 extern ObjInit2 D_80180BFC[];
-extern u8* D_80180E50[];
-extern u8 D_80180E70[];
-extern u8 D_80180E78[];
-extern u16 D_80180E80[];
-extern u8 D_80180E90[];
 extern s16 D_801820C4[];
 extern ObjectInit* D_801D7110;
 extern ObjectInit* D_801D7114;
@@ -45,7 +40,7 @@ void func_801B77D4(Entity* arg0) {
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
-        arg0->unk18 = temp_s0->unkA;
+        arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
             arg0->unk34 = temp_v0;
@@ -57,7 +52,12 @@ void func_801B77D4(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 
-void EntityCandle(Entity* entity) {
+extern u8* D_80180E50[];
+extern u8 D_80180E70[];
+extern u8 D_80180E78[];
+extern u16 D_80180E80[];
+extern u8 D_80180E90[];
+void EntityBreakable(Entity* entity) {
     u16 temp_s0 = entity->subId >> 0xC;
     if (entity->initState) {
         AnimateEntity(D_80180E50[temp_s0], entity);
@@ -75,7 +75,7 @@ void EntityCandle(Entity* entity) {
     } else {
         InitializeEntity(D_80180AAC);
         entity->zPriority = D_80097408 - 0x14;
-        entity->unk18 = D_80180E90[temp_s0];
+        entity->blendMode = D_80180E90[temp_s0];
         entity->hitboxHeight = D_80180E70[temp_s0];
         entity->animationSet = D_80180E80[temp_s0];
     }
