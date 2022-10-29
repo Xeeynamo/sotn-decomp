@@ -6,7 +6,7 @@ void func_80190B7C(s16);
 void func_80190C78(s16);
 void SpawnExplosionEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
-void ReplaceCandleWithDrop(Entity*);
+void ReplaceBreakableWithItemDrop(Entity*);
 void EntityCandleDrop(Entity*);
 void EntityCandleHeartDrop(Entity*);
 void func_80194218(Entity*);
@@ -213,7 +213,7 @@ void EntityBreakable(Entity* entity) {
                 SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId = g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceCandleWithDrop(entity);
+            ReplaceBreakableWithItemDrop(entity);
         }
     } else {
         InitializeEntity(g_eBreakableInit);
@@ -852,9 +852,9 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80192EF8);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80193050);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", ReplaceCandleWithDrop);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", ReplaceBreakableWithItemDrop);
 #else
-void ReplaceCandleWithDrop(Entity* entity) {
+void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 prevSubId;
     u16 subId;
     u16 newSubId;
