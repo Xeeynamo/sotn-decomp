@@ -1,3 +1,9 @@
+/*
+ * File: 11A64.c
+ * Overlay: DRE
+ * Description: Nightmare
+ */
+
 #include "stage.h"
 
 void ReplaceBreakableWithItemDrop(Entity* arg0);

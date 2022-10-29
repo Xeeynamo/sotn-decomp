@@ -1,3 +1,9 @@
+/*
+ * File: 377D4.c
+ * Overlay: NO3
+ * Description: Castle Entrance
+ */
+
 #include "stage.h"
 
 void SpawnExplosionEntity(u16, Entity*);

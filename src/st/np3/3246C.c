@@ -1,3 +1,9 @@
+/*
+ * File: 3246C.c
+ * Overlay: NP3
+ * Description: Castle Entrance (After entering Alchemy Laboratory)
+ */
+
 #include "stage.h"
 
 void SpawnExplosionEntity(u16, Entity*);

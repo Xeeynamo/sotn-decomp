@@ -1,3 +1,9 @@
+/*
+ * File: 27D64.c
+ * Overlay: ST0
+ * Description: Final Stage: Bloodletting
+ */
+
 #include "stage.h"
 
 extern PfnEntityUpdate PfnEntityUpdates[];

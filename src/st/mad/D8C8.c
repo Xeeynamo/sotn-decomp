@@ -1,3 +1,9 @@
+/*
+ * File: D8C8.c
+ * Overlay: MAD
+ * Description: Debug Area. Unused ingame.
+ */
+
 #include "stage.h"
 
 void func_801908DC(s16);
