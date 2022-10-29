@@ -72,7 +72,7 @@ void func_80191A64(Entity* entity) {
         entity->unk5A = obj->unk4.data;
         entity->palette = obj->palette;
         entity->unk19 = obj->unk8;
-        entity->unk18 = obj->unkA;
+        entity->blendMode = obj->blendMode;
 
         if (obj->unkC != 0) {
             entity->unk34 = obj->unkC;
@@ -110,7 +110,7 @@ void func_80191D00(Entity* entity) {
     } else {
         func_8019B0B8(D_80180458);
         entity->zPriority = D_80097408 - 20;
-        entity->unk18 = D_80180650[temp_s0];
+        entity->blendMode = D_80180650[temp_s0];
         entity->hitboxHeight = D_80180630[temp_s0];
         entity->animationSet = D_80180640[temp_s0];
     }
@@ -820,11 +820,11 @@ void func_8019C63C(Entity* entity) {
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
         entity->animationFrameDuration = 0;
-        entity->unk18 = 0x30;
+        entity->blendMode = 0x30;
 
         if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
-            entity->unk18 = 0x10;
+            entity->blendMode = 0x10;
         }
 
         temp_v0 = entity->subId & 0xFF00;
@@ -909,7 +909,7 @@ void func_8019E5E0(Entity* entity) {
         entity->animationSet = 2;
         entity->accelerationY = new_var;
         new_var2 = D_80181324[entity->subId];
-        entity->unk18 = 0x10;
+        entity->blendMode = 0x10;
         entity->initState++;
         entity->animationFrame = new_var2;
         return;
@@ -937,7 +937,7 @@ void func_8019E6D0(Entity* entity) {
         entity->palette = 0x8195;
         entity->animationSet = 5;
         entity->animationFrame = 1;
-        entity->unk18 = 0x10;
+        entity->blendMode = 0x10;
         entity->unk19 = 3;
         temp_v0 = D_801812E4[entity->subId];
         entity->unk1A = temp_v0;
@@ -1000,11 +1000,11 @@ void func_8019F070(Entity* entity) {
         entity->palette = 0x8170;
         entity->animationSet = 5;
         entity->animationFrame = 1;
-        entity->unk18 = 0x30;
+        entity->blendMode = 0x30;
 
         if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
-            entity->unk18 = 0x10;
+            entity->blendMode = 0x10;
         }
 
         temp_v0 = entity->subId & 0xFF00;
@@ -1129,7 +1129,7 @@ void func_801A1BFC(Entity* entity) {
         entity->unk5A = obj->unk4.data;
         entity->palette = obj->palette;
         entity->unk19 = obj->unk8;
-        entity->unk18 = obj->unkA;
+        entity->blendMode = obj->blendMode;
 
         if (obj->unkC != 0) {
             entity->unk34 = obj->unkC;

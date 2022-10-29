@@ -27,7 +27,7 @@ void func_801B246C(Entity* arg0) {
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
-        arg0->unk18 = temp_s0->unkA;
+        arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
             arg0->unk34 = temp_v0;
@@ -57,7 +57,7 @@ void EntityCandle(Entity* entity) {
     } else {
         InitializeEntity(D_80180A3C);
         entity->zPriority = D_80097408 - 0x14;
-        entity->unk18 = D_80180E68[temp_s0];
+        entity->blendMode = D_80180E68[temp_s0];
         entity->hitboxHeight = D_80180E48[temp_s0];
         entity->animationSet = D_80180E58[temp_s0];
     }

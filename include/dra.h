@@ -88,7 +88,7 @@ typedef struct {
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 unk14;
     /* 0x16 */ s16 palette;
-    /* 0x18 */ s8 unk18;
+    /* 0x18 */ s8 blendMode;
     /* 0x19 */ s8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
@@ -268,7 +268,7 @@ typedef struct {
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 unk8;
     /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 unkA;
+    /* 0x0A */ u8 blendMode;
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u32 unkC;
     /* 0x10 */ u8* unk10;
