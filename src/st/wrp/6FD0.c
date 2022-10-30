@@ -13,7 +13,15 @@ void EntityCandleHeartDrop(Entity*);
 void func_8018D894(Entity*);
 void func_801916C4(s32);
 void func_80192F40(s32, s32);
-
+/*
+void func_8018861C();
+void func_8018A7AC(void);
+s32* g_pStOverlay[] = {
+    (void*)UpdateStageEntities,
+    (void*)func_8018861C,
+    (void*)func_8018A7AC,
+};
+*/
 extern RoomHeader* g_stRooms[];
 extern ObjectInit* g_pStObjLayout[];
 extern u8* D_80180310;
