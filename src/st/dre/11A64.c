@@ -28,8 +28,8 @@ void func_8019E5E0(Entity* entity);
 
 extern s16 D_80180D80[];
 extern s32 D_8009740C[];
-extern ObjectInit* D_801A32C4;
-extern ObjectInit* D_801A32C8;
+extern LayoutObject* D_801A32C4;
+extern LayoutObject* D_801A32C8;
 extern u16 D_8007308E;
 extern u16 D_801804AC[];
 extern u16 D_80180470[];
@@ -245,17 +245,17 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801984DC);
 
-void func_80198B80(Entity* entity, ObjectInit* initDesc) { // CreateEntity
+void func_80198B80(Entity* entity, LayoutObject* initDesc) { // CreateEntity
     DestroyEntity(entity);
-    entity->objectId = initDesc->flags & 0x3FF;
+    entity->objectId = initDesc->objectId & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
         entity->pfnUpdate = D_801803C4[entity->objectId];
     } while (0);
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - (u16)D_80073092;
-    entity->subId = initDesc->unk8;
-    entity->objectRoomIndex = initDesc->unk6 >> 8;
-    entity->unk68 = (initDesc->flags >> 0xA) & 7;
+    entity->subId = initDesc->subId;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80198C44);
