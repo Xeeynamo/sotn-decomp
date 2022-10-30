@@ -38,8 +38,8 @@ extern u8 D_80181038[];
 extern u16 D_8018103C[];
 extern u8 D_8018104C[];
 extern ObjInit2 D_80181134[];
-extern ObjectInit* D_80193AB0;
-extern ObjectInit* D_80193AB4;
+extern LayoutObject* D_80193AB0;
+extern LayoutObject* D_80193AB4;
 extern s8 D_80193AB8;
 extern s8 D_80193ABC;
 
@@ -308,15 +308,15 @@ void func_80189734(Entity*);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CreateEntity);
 #else
-void CreateEntity(Entity* entity, ObjectInit* initDesc) {
+void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->flags & 0x3FF;
+    entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
-    entity->subId = initDesc->unk8;
-    entity->objectRoomIndex = initDesc->unk6 >> 8;
-    entity->unk68 = initDesc->flags >> 0xA & 7;
+    entity->subId = initDesc->subId;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 #endif
 
@@ -378,7 +378,7 @@ void func_8018A3CC(s16 arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A424);
 void func_8018A424(s16 arg0);
 #else
-void func_80189FB4(ObjectInit*);
+void func_80189FB4(LayoutObject*);
 extern s32 g_entityDestroyed[];
 extern u8 D_80193ABC;
 
@@ -1334,20 +1334,20 @@ void* D_80180040[];
 void* D_801800B4[];
 void* D_80180168[];
 void* D_801801EC[];
-ObjectInit D_80181228[];
-ObjectInit D_80181250[];
-ObjectInit D_801812A0[];
-ObjectInit D_801812C8[];
-ObjectInit D_80181278[];
-ObjectInit D_801812F0[];
-ObjectInit D_80181304[];
-ObjectInit D_80181324[];
-ObjectInit D_8018134C[];
-ObjectInit D_80181374[];
-ObjectInit D_8018139C[];
-ObjectInit D_801813C4[];
-ObjectInit D_801813EC[];
-ObjectInit D_80181400[];
+LayoutObject D_80181228[];
+LayoutObject D_80181250[];
+LayoutObject D_801812A0[];
+LayoutObject D_801812C8[];
+LayoutObject D_80181278[];
+LayoutObject D_801812F0[];
+LayoutObject D_80181304[];
+LayoutObject D_80181324[];
+LayoutObject D_8018134C[];
+LayoutObject D_80181374[];
+LayoutObject D_8018139C[];
+LayoutObject D_801813C4[];
+LayoutObject D_801813EC[];
+LayoutObject D_80181400[];
 void* D_80181420[];
 void* D_80181764[];
 void* D_80181D08[];
@@ -1550,7 +1550,7 @@ void* D_801801EC[] = {
     /* 0x238 */ (void*)D_801801B8,
 };
 
-ObjectInit* g_pStObjLayout[] = {
+LayoutObject* g_pStObjLayout[] = {
     /* 0x23C */ D_801812F0,
     /* 0x240 */ 0x80181228,
     /* 0x244 */ D_80181250,
@@ -3346,93 +3346,93 @@ RoomHeader g_stRooms[] = {
 };
 u8 g_stRoomsEndSignature[] = {64, 0, 0, 0};
 
-ObjectInit D_80181228[] = {
+LayoutObject D_80181228[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 3},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_80181250[] = {
+LayoutObject D_80181250[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 4},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_80181278[] = {
+LayoutObject D_80181278[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 1},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_801812A0[] = {
+LayoutObject D_801812A0[] = {
     {-2, -2, 0, 0, 0},
     {128, 144, 22, 16, 2},
     {248, 97, 5, 144, 256},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_801812C8[] = {
+LayoutObject D_801812C8[] = {
     {-2, -2, 0, 0, 0},
     {128, 144, 22, 16, 0},
     {248, 97, 5, 144, 256},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_801812F0[] = {
+LayoutObject D_801812F0[] = {
     {-2, -2, 0, 0, 0},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_80181304[] = {
+LayoutObject D_80181304[] = {
     {-2, -2, 0, 0, 0},
     {0, 56, 8, 128, 0},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_80181324[] = {
+LayoutObject D_80181324[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 3},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_8018134C[] = {
+LayoutObject D_8018134C[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 4},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_80181374[] = {
+LayoutObject D_80181374[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 1},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_8018139C[] = {
+LayoutObject D_8018139C[] = {
     {-2, -2, 0, 0, 0},
     {248, 97, 5, 144, 256},
     {128, 144, 22, 16, 2},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_801813C4[] = {
+LayoutObject D_801813C4[] = {
     {-2, -2, 0, 0, 0},
     {248, 97, 5, 144, 256},
     {128, 144, 22, 16, 0},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_801813EC[] = {
+LayoutObject D_801813EC[] = {
     {-2, -2, 0, 0, 0},
     {-1, -1, 0, 0, 0},
 };
 
-ObjectInit D_80181400[] = {
+LayoutObject D_80181400[] = {
     {-2, -2, 0, 0, 0},
     {0, 56, 8, 128, 0},
     {-1, -1, 0, 0, 0},

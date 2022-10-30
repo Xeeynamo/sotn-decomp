@@ -166,14 +166,6 @@ typedef struct playerHeart {
 } playerHeart;
 
 typedef struct {
-    /* 0x0 */ u16 posX;
-    /* 0x2 */ u16 posY;
-    /* 0x4 */ u16 flags; // maybe misnamed
-    /* 0x6 */ u16 unk6;
-    /* 0x8 */ u16 unk8;
-} ObjectInit; // size = 0xA
-
-typedef struct {
     /* 0x00 */ u16 animationSet;
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ UnkUnion2 unk4;
