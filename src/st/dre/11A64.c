@@ -16,7 +16,7 @@ void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
 s32 func_8019AC78(u8, s16);
-void func_8019A490(Entity* entity);
+void PreventEntityFromRespawning(Entity* entity);
 void EntityCandleDrop(struct Entity*);
 void EntityCandleHeartDrop(struct Entity*);
 void func_8019A78C(void);
@@ -254,7 +254,7 @@ void func_80198B80(Entity* entity, ObjectInit* initDesc) { // CreateEntity
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - (u16)D_80073092;
     entity->subId = initDesc->unk8;
-    entity->unk32 = initDesc->unk6 >> 8;
+    entity->objectRoomIndex = initDesc->unk6 >> 8;
     entity->unk68 = (initDesc->flags >> 0xA) & 7;
 }
 
@@ -381,7 +381,7 @@ s32 func_801996F8(Unkstruct5* arg0) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80199770);
 
-void DestroyEntity(Entity* item) { // DestroyEntity
+void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -396,7 +396,7 @@ void DestroyEntity(Entity* item) { // DestroyEntity
         *ptr++ = 0;
 }
 
-void func_8019A414(s16 index) { // DestroyEntityFromIndex
+void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &D_800733D8[index];
 
     while (entity < &D_8007EF1C) {
@@ -405,11 +405,12 @@ void func_8019A414(s16 index) { // DestroyEntityFromIndex
     }
 }
 
-void func_8019A490(Entity* arg0) {
-    if (arg0->unk32) {
-        u32 temp_a0 = arg0->unk32 - 1;
-        u16 index = temp_a0 >> 5;
-        D_80097428[index] |= 1 << (temp_a0 & 0x1F);
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex) {
+        u32 value = (entity->objectRoomIndex - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        g_entityDestroyed[index] |= 1 << bit;
     }
 }
 
@@ -703,7 +704,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 temp_a0;
     u16 var_v1;
 
-    func_8019A490(entity);
+    PreventEntityFromRespawning(entity);
     if (!(D_8009796E & 2)) {
         DestroyEntity(entity);
         return;

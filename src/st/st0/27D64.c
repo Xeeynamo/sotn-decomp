@@ -637,9 +637,23 @@ void DestroyEntity(Entity* item) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4974);
+void DestroyEntityFromIndex(s16 index) {
+    Entity* entity = &D_800733D8[index];
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B49F0);
+    while (entity < &D_8007EF1C) {
+        DestroyEntity(entity);
+        entity++;
+    }
+}
+
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex) {
+        u32 value = (entity->objectRoomIndex - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        g_entityDestroyed[index] |= 1 << bit;
+    }
+}
 
 #include "st/AnimateEntity.h"
 
