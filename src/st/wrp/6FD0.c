@@ -3344,7 +3344,7 @@ RoomHeader g_stRooms[] = {
     {35, 21, 35, 21, {30, -1, 0, 0}}, {17, 38, 17, 38, {31, -1, 0, 0}},
     {33, 44, 33, 44, {32, -1, 0, 0}},
 };
-u8 g_stRoomsEndSignature[] = { 64, 0, 0, 0 };
+u8 g_stRoomsEndSignature[] = {64, 0, 0, 0};
 
 const char D_80186E30[] = "step %x\n";
 const char D_80186E3C[] = "move_room%x\n";
