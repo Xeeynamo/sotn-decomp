@@ -15,8 +15,8 @@ extern u8* D_80180850;
 extern u16 D_80180B00[];
 extern ObjInit2 D_80180BFC[];
 extern s16 D_801820C4[];
-extern ObjectInit* D_801D7110;
-extern ObjectInit* D_801D7114;
+extern LayoutObject* D_801D7110;
+extern LayoutObject* D_801D7114;
 extern s8 D_801D7118;
 extern s8 D_801D711C;
 extern s16 D_801D7D30;
@@ -30,7 +30,7 @@ extern u16 D_801D7D2C;
 extern s16 D_801D7D2E;
 extern s8 D_801D7D3A;
 extern s8 D_801D7D3B;
-extern ObjectInit* g_pStObjLayout[];
+extern LayoutObject* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 void func_801B77D4(Entity* arg0) {
@@ -231,15 +231,15 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityDamage);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", CreateEntity);
 #else
-void CreateEntity(Entity* entity, ObjectInit* initDesc) {
+void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->flags & 0x3FF;
+    entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
-    entity->subId = initDesc->unk8;
-    entity->objectRoomIndex = initDesc->unk6 >> 8;
-    entity->unk68 = initDesc->flags >> 0xA & 7;
+    entity->subId = initDesc->subId;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 #endif
 

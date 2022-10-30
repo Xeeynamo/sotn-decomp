@@ -16,12 +16,20 @@
 #define ENTITY_RELIC 11
 #define ENTITY_COLLECTABLE 12
 
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 objectId;
+    /* 0x6 */ u16 objectRoomIndex;
+    /* 0x8 */ u16 subId;
+} LayoutObject; // size = 0xA
+
 typedef (*PfnOverlayEntry)(void);
 typedef (*PfnLoadObjectLayout)(s32 layoutId);
 
 s32 Random();
 void UpdateStageEntities(void);
-void CreateEntity(Entity* entity, ObjectInit* initDesc);
+void CreateEntity(Entity* entity, LayoutObject* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntityFromIndex(s16 index);
 s32 AnimateEntity(u8* frames, Entity* entity);

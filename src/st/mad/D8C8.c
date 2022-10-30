@@ -65,12 +65,12 @@ extern u16 D_80180508;
 extern s16 D_801809EC[];
 extern u8 D_80181010;
 extern RoomHeader g_rooms[];
-extern ObjectInit* g_pStObjLayout[];
-extern ObjectInit** D_801803C8[];
+extern LayoutObject* g_pStObjLayout[];
+extern LayoutObject** D_801803C8[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
-extern ObjectInit* D_801997D8;
-extern ObjectInit* D_801997DC;
+extern LayoutObject* D_801997D8;
+extern LayoutObject* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
 
@@ -330,23 +330,23 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018EDB8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018FEA0);
 
-void CreateEntity(Entity* entity, ObjectInit* initDesc) {
+void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->flags & 0x3FF;
+    entity->objectId = initDesc->objectId & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
         entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     } while (0);
     entity->posX.Data.high = initDesc->posX - D_80072B3E;
     entity->posY.Data.high = initDesc->posY - D_80072B42;
-    entity->subId = initDesc->unk8;
-    entity->objectRoomIndex = initDesc->unk6 >> 8;
-    entity->unk68 = initDesc->flags >> 0xA & 7;
+    entity->subId = initDesc->subId;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190608);
 #else
-void func_80190608(ObjectInit* initDesc) {
+void func_80190608(LayoutObject* initDesc) {
     s16 temp_a2;
     s16 temp_v1_2;
     s16 phi_a0;
@@ -360,17 +360,17 @@ void func_80190608(ObjectInit* initDesc) {
 
     temp_v1_2 = initDesc->posY;
     if (temp_v1_2 >= phi_a0 && temp_a2 >= temp_v1_2 &&
-        (initDesc->flags & 0xE000) != 0x8000) {
-        switch (initDesc->flags & 0xE000) {
+        (initDesc->objectId & 0xE000) != 0x8000) {
+        switch (initDesc->objectId & 0xE000) {
         case 0x0:
-            entity = &D_80075D88[*(u8*)&initDesc->unk6];
+            entity = &D_80075D88[*(u8*)&->objectRoomIndex];
             if (entity->objectId != 0) {
                 break;
             }
             CreateEntity(entity, initDesc);
             break;
         case 0xA000:
-            CreateEntity(&D_80075D88[initDesc->unk6], initDesc);
+            CreateEntity(&D_80075D88[->objectRoomIndex], initDesc);
             break;
         }
     }
@@ -460,8 +460,8 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", LoadObjLayout);
 void LoadObjLayout(s32 objLayoutId) {
     s16 temp_s0;
     u16* pObjLayoutStart;
-    ObjectInit* temp_v1;
-    ObjectInit* temp_v0_2;
+    LayoutObject* temp_v1;
+    LayoutObject* temp_v0_2;
     s32 phi_a0;
     s16 phi_a1;
     s16 phi_a1_2;
@@ -485,7 +485,7 @@ void LoadObjLayout(s32 objLayoutId) {
             D_801997D8 = (u32*)D_801997D8 + 1;
         }
 
-        D_801997D8 = (temp_v1->flags << 0x10) + temp_v1->posY;
+        D_801997D8 = (temp_v1->objectId << 0x10) + temp_v1->posY;
         temp_v0_2 = (u32*)D_801997DC + (phi_a1 + 1);
         D_801997DC = temp_v0_2;
         D_801997DC = (temp_v0_2->posY << 0x10) + temp_v0_2->posX;
