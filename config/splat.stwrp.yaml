@@ -22,7 +22,7 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, rodata]
+      - [0x0, data]
       - [0x4E0, rodata]
       - [0x5E0, rodata]
       - [0x10A0, rodata]
@@ -30,5 +30,5 @@ segments:
       - [0x6E90, rodata]
       - [0x6F10, rodata]
       - [0x6FD0, c]
-      - [0x13AA0, data]
+      - [0x13AA0, rodata]
   - [0x14768]
