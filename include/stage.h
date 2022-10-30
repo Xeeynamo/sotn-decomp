@@ -16,6 +16,9 @@
 #define ENTITY_RELIC 11
 #define ENTITY_COLLECTABLE 12
 
+typedef (*PfnOverlayEntry)(void);
+typedef (*PfnLoadObjectLayout)(s32 layoutId);
+
 s32 Random();
 void UpdateStageEntities(void);
 void CreateEntity(Entity* entity, ObjectInit* initDesc);
