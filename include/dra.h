@@ -173,6 +173,19 @@ typedef struct {
     /* 0x8 */ u16 unk8;
 } ObjectInit; // size = 0xA
 
+typedef struct {
+    /* 0x00 */ u16 animationSet;
+    /* 0x02 */ u16 zPriority;
+    /* 0x04 */ UnkUnion2 unk4;
+    /* 0x06 */ u16 palette;
+    /* 0x08 */ u8 unk8;
+    /* 0x09 */ u8 unk9;
+    /* 0x0A */ u8 blendMode;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u8* unk10;
+} ObjInit2; // size = 0x14
+
 typedef struct unkStruct3 {
     /* 0x00 */ struct unkStruct3* unk0;
     /* 0x04 */ char pad4[0x3];
@@ -260,19 +273,6 @@ typedef struct {
     /* 0xC */ u16 unkC;
     /* 0xE */ u16 unkE;
 } Unkstruct8; // size = 0x10
-
-typedef struct {
-    /* 0x00 */ u16 animationSet;
-    /* 0x02 */ u16 zPriority;
-    /* 0x04 */ UnkUnion2 unk4;
-    /* 0x06 */ u16 palette;
-    /* 0x08 */ u8 unk8;
-    /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 blendMode;
-    /* 0x0B */ u8 unkB;
-    /* 0x0C */ u32 unkC;
-    /* 0x10 */ u8* unk10;
-} ObjInit2; // size = 0x14
 
 typedef struct {
     /* 0x0 */ u16 programId;
