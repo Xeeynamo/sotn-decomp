@@ -23,7 +23,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 6FD0]
-      - [0x1228, rodata]
+      - [0x1420, rodata]
       - [0x6E30, .rodata, 6FD0]
       - [0x6E70, rodata] # jtbl
       - [0x6E90, rodata] # jtbl
