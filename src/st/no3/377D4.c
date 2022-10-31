@@ -247,7 +247,6 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3618);
 
-
 void func_801C3730(s16 arg0) {
     while (true) {
         if ((D_801D7110->posX != (u16)~1) && !(D_801D7110->posX < arg0)) {
@@ -257,10 +256,11 @@ void func_801C3730(s16 arg0) {
     }
 }
 
-void func_801C377C(s16 arg0) {   
+void func_801C377C(s16 arg0) {
     while (true) {
-        if ((D_801D7110->posX == (u16)~0) || ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))) {
-           D_801D7110--;
+        if ((D_801D7110->posX == (u16)~0) ||
+            ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))) {
+            D_801D7110--;
         } else {
             break;
         }
@@ -630,10 +630,11 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
 #ifdef NON_MATCHING
 void func_801C6114(void) {
-   if (D_8006C3B8->accelerationY >= 0) {
+    if (D_8006C3B8->accelerationY >= 0) {
         D_8006C3B8->unk84.value = D_8006C3B8->unk88 + D_8006C3B8->unk84.value;
         D_8006C3B8->accelerationX = D_8006C3B8->unk84.value;
-        if ((D_8006C3B8->accelerationX == 0x10000) || (D_8006C3B8->accelerationX == -0x10000)) {
+        if ((D_8006C3B8->accelerationX == 0x10000) ||
+            (D_8006C3B8->accelerationX == -0x10000)) {
             D_8006C3B8->unk88 = -D_8006C3B8->unk88;
         }
     }
