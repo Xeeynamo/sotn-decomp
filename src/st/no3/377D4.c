@@ -247,28 +247,23 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3618);
 
-void func_801C3730(s32 arg0) {
-    s32 a1 = ~1;
-    arg0 = (s16)arg0;
-
-loop_1:
-    if ((D_801D7110->posX == a1) || (D_801D7110->posX < arg0)) {
+void func_801C3730(s16 arg0) {
+    while (true) {
+        if ((D_801D7110->posX != (u16)~1) && !(D_801D7110->posX < arg0)) {
+            break;
+        }
         D_801D7110++;
-        goto loop_1;
     }
 }
 
-void func_801C377C(s32 arg0) {
-    s32 a2, a3;
-    a3 = ~0;
-    arg0 = (s16)arg0;
-    a2 = ~1;
-
-loop_1:
-    if ((D_801D7110->posX == a3) ||
-        ((arg0 < D_801D7110->posX) && (D_801D7110->posX != a2))) {
-        D_801D7110--;
-        goto loop_1;
+void func_801C377C(s16 arg0) {
+    while (true) {
+        if ((D_801D7110->posX == (u16)~0) ||
+            ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))) {
+            D_801D7110--;
+        } else {
+            break;
+        }
     }
 }
 
@@ -276,22 +271,21 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C37D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C38D0);
 
-void func_801C39E4(s32 arg0) {
-    s32 a1 = ~1;
-    arg0 = (s16)arg0;
-
-loop_1:
-    if ((D_801D7114->posY == a1) || (D_801D7114->posY < arg0)) {
+void func_801C39E4(s16 arg0) {
+    while (true) {
+        if ((D_801D7114->posY != (u16)~1) && !(D_801D7114->posY < arg0)) {
+            break;
+        }
         D_801D7114++;
-        goto loop_1;
     }
 }
+
 void func_801C3A30(s16 arg0) {
     while (true) {
-        if (D_801D7114->posY == 0xFFFF)
+        if (D_801D7114->posY == (u16)~0)
             D_801D7114--;
         else if ((arg0 >= (s32)D_801D7114->posY) ||
-                 (D_801D7114->posY == 0xFFFE))
+                 (D_801D7114->posY == (u16)~1))
             break;
         else
             D_801D7114--;
@@ -634,7 +628,23 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->initState = temp_a0;
 }
 
+#ifdef NON_MATCHING
+void func_801C6114(void) {
+    if (D_8006C3B8->accelerationY >= 0) {
+        D_8006C3B8->unk84.value = D_8006C3B8->unk88 + D_8006C3B8->unk84.value;
+        D_8006C3B8->accelerationX = D_8006C3B8->unk84.value;
+        if ((D_8006C3B8->accelerationX == 0x10000) ||
+            (D_8006C3B8->accelerationX == -0x10000)) {
+            D_8006C3B8->unk88 = -D_8006C3B8->unk88;
+        }
+    }
+    if (D_8006C3B8->accelerationY < 0x4000) {
+        D_8006C3B8->accelerationY += 0x2000;
+    }
+}
+#else
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6198);
 
