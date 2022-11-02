@@ -5,19 +5,6 @@
  */
 
 #include "common.h"
-/*
-#include "dra.h"
-
-
-void func_80190E7C(void);
-void func_80191280(void);
-void func_80193410(void);
-
-s32 g_pStOverlay[] = {
-    (void*)func_80190E7C,
-    (void*)func_80191280,
-    (void*)func_80193410,
-};*/
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018D600);
 
