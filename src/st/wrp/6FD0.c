@@ -356,7 +356,7 @@ void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityItemDrop(Entity*);
 void EntityNumericDamage(Entity*);
-void EntityUnkId05(Entity*);
+void EntityRedDoor(Entity*);
 void EntityUnkId06(Entity*);
 void EntityAbsorbOrb(Entity*);
 void EntityRoomForeground(Entity*);
@@ -381,7 +381,7 @@ const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
     /* 3EC */ (PfnEntityUpdate)EntityItemDrop,
     /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
-    /* 3F4 */ (PfnEntityUpdate)EntityUnkId05,
+    /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
     /* 3F8 */ (PfnEntityUpdate)EntityUnkId06,
     /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
@@ -3045,7 +3045,7 @@ s32 func_8018A950(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId05);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;

@@ -379,7 +379,7 @@ s32 func_801996F8(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityUnkId05);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
