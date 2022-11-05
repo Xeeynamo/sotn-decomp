@@ -49,7 +49,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS		:= -P 4
-GO				:= /usr/local/go/bin/go
+GO				:= $(TOOLS_DIR)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 
@@ -226,7 +226,6 @@ decompile: $(M2C_APP)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
-	sudo apt-get install -y $$(cat tools/requirements-debian.txt)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
@@ -244,9 +243,9 @@ $(M2C_APP):
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
 $(GO):
-	curl -L -o go1.19.2.linux-amd64.tar.gz https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
-	sudo tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
-	rm go1.19.2.linux-amd64.tar.gz
+	curl -L -o go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+	tar -C $(TOOLS_DIR) -xzf go1.19.3.linux-amd64.tar.gz
+	rm go1.19.3.linux-amd64.tar.gz
 $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
