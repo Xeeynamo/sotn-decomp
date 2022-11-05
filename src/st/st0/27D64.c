@@ -565,7 +565,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1B98);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1CA0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B2A3C);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityNumericDamage);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", CreateEntity);
 
@@ -620,7 +620,7 @@ s32 func_801B3C58(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3CD0);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityUnkId05);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -771,7 +771,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", InitializeEntity);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5948);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDummy);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5970);
 
@@ -888,7 +888,7 @@ bool func_801B8338(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8434);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B89B4);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityUnkId06);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8AB4);
 
@@ -906,7 +906,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9BB8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9DB0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9EA8);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityAbsorbOrb);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
 
