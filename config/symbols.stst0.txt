@@ -19,7 +19,9 @@ EntityDraculaMegaFireball = 0x801AEFD8;
 EntityDraculaRainAttack = 0x801AF154;
 Random = 0x801B186C;
 UpdateStageEntities = 0x801B189C;
+EntityNumericDamage = 0x801B2A3C;
 CreateEntity = 0x801B30E0;
+EntityUnkId05 = 0x801B3CD0;
 DestroyEntity = 0x801B4908;
 DestroyEntityFromIndex = 0x801B4974;
 PreventEntityFromRespawning = 0x801B49F0;
@@ -28,6 +30,9 @@ MoveEntity = 0x801B4CBC;
 FallEntity = 0x801B4CEC;
 AllocEntity = 0x801B53CC;
 InitializeEntity = 0x801B584C;
+EntityDummy = 0x801B5948;
+EntityUnkId06 = 0x801B89B4;
+EntityAbsorbOrb = 0x801B9EA8;
 EntityRoomForeground = 0x801BA6EC;
 EntityClouds = 0x801BAB08;
 EntityClockTower3D = 0x801BB2AC;
@@ -36,5 +41,3 @@ EntityCutscenePhotographFire = 0x801BC4D0;
 func_801BC5C0 = 0x801BC5C0;
 func_801BD8F0 = 0x801BD8F0;
 EntityBackgroundVortex = 0x801BE1B4;
-
-

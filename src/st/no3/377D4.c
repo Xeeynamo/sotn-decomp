@@ -8,8 +8,8 @@
 
 void SpawnExplosionEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
-void EntityCandleDrop(Entity*);
-void EntityCandleHeartDrop(Entity*);
+void EntityItemDrop(Entity*);
+void EntityHeartDrop(Entity*);
 
 extern u8* D_80180850;
 extern u16 D_80180B00[];
@@ -226,7 +226,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1B78);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1C80);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityDamage);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityNumericDamage);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", CreateEntity);
@@ -406,7 +406,7 @@ s32 func_801C3FB4(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C402C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId05);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -585,7 +585,7 @@ void InitializeEntity(u16* arg0) {
     }
 }
 
-void func_801C5A70(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -613,13 +613,13 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
     if (var_v1 < 0x80) {
         entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityCandleDrop;
+        entity->pfnUpdate = EntityItemDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
         entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityCandleHeartDrop;
+        entity->pfnUpdate = EntityHeartDrop;
     }
 
     entity->subId = var_v1;
@@ -664,21 +664,21 @@ void func_801C660C(void) {
 
 void func_801C665C(void) { DestroyEntity(D_8006C3B8); }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandleDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityItemDrop);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6EF8);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityExplosion);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6FF4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandleHeartDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7680);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7930);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRelicItem);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8400);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityInventoryItem);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8528);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0D);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8A84);
 
@@ -720,7 +720,7 @@ bool func_801C92B0(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C93AC);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C992C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId06);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C9A2C);
 
@@ -740,13 +740,13 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAD28);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAE20);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAreaTitlePopup);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC008);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC4B8);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRoomForeground);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC5A4);
 

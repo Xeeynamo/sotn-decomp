@@ -9,8 +9,8 @@
 void SpawnExplosionEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 int func_801CD658();
-void EntityCandleDrop(Entity* entity);
-void EntityCandleHeartDrop(Entity* entity);
+void EntityItemDrop(Entity* entity);
+void EntityHeartDrop(Entity* entity);
 
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
@@ -186,7 +186,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B93E8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B94F0);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityDamage);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityNumericDamage);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", CreateEntity);
@@ -254,7 +254,7 @@ s32 func_801BB824(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB89C);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId05);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -393,7 +393,7 @@ void InitializeEntity(u16* arg0) {
     }
 }
 
-void func_801BD2E0(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -421,13 +421,13 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
     if (var_v1 < 0x80) {
         entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityCandleDrop;
+        entity->pfnUpdate = EntityItemDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
         entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityCandleHeartDrop;
+        entity->pfnUpdate = EntityHeartDrop;
     }
 
     entity->subId = var_v1;
@@ -452,21 +452,21 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BDE7C);
 
 void func_801BDECC(void) { DestroyEntity(D_8006C3B8); }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityCandleDrop);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityItemDrop);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BE768);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityExplosion);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BE864);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityCandleHeartDrop);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BEEF0);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BF1A0);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityRelicItem);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BFC70);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityInventoryItem);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BFD98);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0D);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C02F4);
 
@@ -486,7 +486,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C0B20);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C0C1C);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C119C);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId06);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C129C);
 
@@ -506,11 +506,11 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C2598);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C2690);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityAreaTitlePopup);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C3878);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0C);
 
 extern ObjInit2 D_801820F0[];
 void EntityRoomForeground(Entity* entity) {
