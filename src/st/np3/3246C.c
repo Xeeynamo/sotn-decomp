@@ -345,7 +345,8 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BCF78);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD004);
 
-// duplicates: func_80194DC4,func_8019AF08,func_80192AF0,func_801C57C4,func_801BD034,func_801B56BC,func_8018C160,func_8018E0E0
+// duplicates:
+// func_80194DC4,func_8019AF08,func_80192AF0,func_801C57C4,func_801BD034,func_801B56BC,func_8018C160,func_8018E0E0
 u16 func_801BD034(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;

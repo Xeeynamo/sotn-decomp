@@ -141,7 +141,8 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194D08);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194D94);
 
-// duplicates: func_80194DC4,func_8019AF08,func_80192AF0,func_801C57C4,func_801BD034,func_801B56BC,func_8018C160,func_8018E0E0
+// duplicates:
+// func_80194DC4,func_8019AF08,func_80192AF0,func_801C57C4,func_801BD034,func_801B56BC,func_8018C160,func_8018E0E0
 u16 func_80194DC4(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
