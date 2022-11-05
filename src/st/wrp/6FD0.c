@@ -364,7 +364,7 @@ void EntityStageNamePopup(Entity*);
 void EntityHeartDrop(Entity*);
 void EntityRelicItem(Entity*);
 void EntityInventoryItem(Entity*);
-void EntityUnkId0C(Entity*);
+void EntityEnemyBlood(Entity*);
 void EntityUnkId0D(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
@@ -389,7 +389,7 @@ const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 408 */ (PfnEntityUpdate)EntityHeartDrop,
     /* 40C */ (PfnEntityUpdate)EntityRelicItem,
     /* 410 */ (PfnEntityUpdate)EntityInventoryItem,
-    /* 414 */ (PfnEntityUpdate)EntityUnkId0C,
+    /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
     /* 418 */ (PfnEntityUpdate)EntityUnkId0D,
     /* 41C */ (PfnEntityUpdate)EntityDummy,
     /* 420 */ (PfnEntityUpdate)EntityDummy,
@@ -3687,7 +3687,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0C);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->subId];
