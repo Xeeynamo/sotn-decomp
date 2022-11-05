@@ -104,7 +104,12 @@ INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018E024);
 
 INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018E0B0);
 
-INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018E0E0);
+// duplicates: func_80194DC4,func_8019AF08,func_80192AF0,func_801C57C4,func_801BD034,func_801B56BC,func_8018C160,func_8018E0E0
+u16 func_8018E0E0(Entity* a, Entity* b) {
+    s32 diffX = b->posX.Data.high - a->posX.Data.high;
+    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
 INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018E118);
 

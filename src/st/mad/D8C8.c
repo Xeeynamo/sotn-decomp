@@ -745,6 +745,7 @@ void func_80192A34(u16 slope, s16 speed) {
 
 u16 func_80192AC0(s16 x, s16 y) { return ratan2(y, x); }
 
+// duplicates: func_80194DC4,func_8019AF08,func_80192AF0,func_801C57C4,func_801BD034,func_801B56BC,func_8018C160,func_8018E0E0
 u16 func_80192AF0(Entity* a, Entity* b) {
     s32 diffX = b->posX.Data.high - a->posX.Data.high;
     s32 diffY = b->posY.Data.high - a->posY.Data.high;
