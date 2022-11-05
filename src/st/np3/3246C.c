@@ -486,7 +486,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C0B20);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C0C1C);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId06);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityIntenseExplosion);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C129C);
 

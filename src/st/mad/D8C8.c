@@ -1143,7 +1143,7 @@ bool func_80195E68(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195F64);
 
-void EntityUnkId06(Entity* entity) {
+void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
     if (entity->initState == 0) {
         InitializeEntity(&D_80180508);
