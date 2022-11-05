@@ -1025,7 +1025,7 @@ bool func_8019E9F4(Unkstruct6* arg0) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019EAF0);
 
-void EntityUnkId06(Entity* entity) {
+void EntityIntenseExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->initState == 0) {

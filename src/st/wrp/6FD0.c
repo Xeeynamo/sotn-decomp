@@ -357,7 +357,7 @@ void EntityExplosion(Entity*);
 void EntityItemDrop(Entity*);
 void EntityNumericDamage(Entity*);
 void EntityRedDoor(Entity*);
-void EntityUnkId06(Entity*);
+void EntityIntenseExplosion(Entity*);
 void EntityAbsorbOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
@@ -382,7 +382,7 @@ const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3EC */ (PfnEntityUpdate)EntityItemDrop,
     /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
     /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
-    /* 3F8 */ (PfnEntityUpdate)EntityUnkId06,
+    /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
     /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
     /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
@@ -3578,7 +3578,7 @@ bool func_8018FC4C(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 
-void EntityUnkId06(Entity* entity) {
+void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
     if (entity->initState == 0) {
         InitializeEntity(D_80180458);

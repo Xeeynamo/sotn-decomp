@@ -888,7 +888,7 @@ bool func_801B8338(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8434);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityUnkId06);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityIntenseExplosion);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8AB4);
 
