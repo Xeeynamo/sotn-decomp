@@ -910,11 +910,72 @@ void func_8019344C(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801934D0);
+void func_801934D0(u16 arg0) {
+    Unkstruct7 sp10;
+
+    if (D_8006C26C->accelerationX < 0) {
+        D_8003C6B8(D_8006C26C->posX.Data.high, D_8006C26C->posY.Data.high - 7,
+                   &sp10, 0);
+        if (sp10.sp10 & 5) {
+            D_8006C26C->accelerationY = 0;
+        }
+    }
+
+    D_8003C6B8(D_8006C26C->posX.Data.high, D_8006C26C->posY.Data.high + 7,
+               &sp10, 0);
+
+    if (arg0) {
+        if (!(sp10.sp10 & 5)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        D_8006C26C->accelerationX = 0;
+        D_8006C26C->accelerationY = 0;
+
+        if (sp10.sp10 & 4) {
+            D_8006C26C->posY.value += 0x2000;
+            return;
+        }
+
+        D_8006C26C->posY.Data.high =
+            (u16)D_8006C26C->posY.Data.high + (u16)sp10.sp28;
+        return;
+    }
+
+    if (!(sp10.sp10 & 5)) {
+        MoveEntity();
+        func_8019344C();
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019362C);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_801936E0);
+extern s32 D_8009769C; // g_playerGold?
+void* const D_80180D60[];
+const s32  D_80180D88[]; // c_GoldPrizes
+void func_801936E0(u16 goldSize) { // CollectGold
+    s32 *gold, *unk;
+    u16 goldSizeIndex;
+
+    D_8003C6D8(0x69D);
+    gold = &D_8009769C;
+    goldSizeIndex = goldSize - 2;
+    *gold += D_80180D88[goldSizeIndex];
+    if (*gold > MAX_GOLD) {
+        *gold = MAX_GOLD;
+    }
+
+    unk = &D_80096EC0;
+    if (*unk) {
+        D_8003C6B0(D_80096EC4); // g_pfnFreePolygons
+        *unk = 0;
+    }
+
+    func_80198BC8(D_80180D60[goldSizeIndex], 1);
+    DestroyEntity(D_8006C26C);
+}
 
 void func_801937BC(void) {}
 

@@ -232,7 +232,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019697C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196CC8);
 
-u32 func_80196F90(void) {
+u32 func_80196F90(void) { // Random
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return g_randomNext >> 0x18;
 }
@@ -340,19 +340,12 @@ void func_80199554(void) {
 
 void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
-
     entity->objectId = objectId;
     entity->pfnUpdate = D_801803C4[objectId];
-    entity->posX.Data.high = (s16)(u16)D_8006C3B8->posX.Data.high;
-    entity->posY.Data.high = (s16)(u16)D_8006C3B8->posY.Data.high;
+    entity->posX.Data.high = D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = D_8006C3B8->posY.Data.high;
 }
 
-// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
-// https://decomp.me/scratch/99NPO
-#ifndef NON_MATCHING
-void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2);
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019967C);
-#else
 void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2) {
     DestroyEntity(arg2);
     arg2->objectId = objectId;
@@ -360,7 +353,6 @@ void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2) {
     arg2->posX.Data.high = arg1->posX.Data.high;
     arg2->posY.Data.high = arg1->posY.Data.high;
 }
-#endif
 
 s32 func_801996F8(Unkstruct5* arg0) {
     s16 var_v0_2;
@@ -796,10 +788,6 @@ void func_8019B8DC(u16 arg0) {
     }
 }
 
-// at -v0 register swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BA38);
-#else
 void func_8019BA38(u16 arg0) {
     s32* hearts;
 
@@ -813,7 +801,6 @@ void func_8019BA38(u16 arg0) {
 
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BAB8);
 
@@ -928,9 +915,6 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E4F8);
 
-#ifndef NON_MATCHING // at -> a1 register swap
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E5E0);
-#else
 void func_8019E5E0(Entity* entity) {
     u8 new_var2;
     u32 new_var;
@@ -959,7 +943,6 @@ void func_8019E5E0(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-#endif
 
 void func_8019E6D0(Entity* entity) {
     u16 temp_v0;
@@ -1088,11 +1071,6 @@ void func_8019F170(Entity* entity) {
     }
 }
 
-// a0 -> v0 register swap
-#ifndef NON_MATCHING
-void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2);
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019F23C);
-#else
 void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
     u16 palette;
 
@@ -1114,7 +1092,6 @@ void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
         ent2->palette = palette;
     }
 }
-#endif
 
 void func_8019F304(void) {
     Entity* entity;

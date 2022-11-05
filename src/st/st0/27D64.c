@@ -746,13 +746,48 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B55A8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5600);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B568C);
+u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B56BC);
+u16 func_801B56BC(Entity* a, Entity* b) {
+    s32 diffX = b->posX.Data.high - a->posX.Data.high;
+    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B56F4);
+u16 func_801B56F4(s32 x, s32 y) {
+    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
+    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B573C);
+#else
+// very minor reg swap
+u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0 = arg1;
+    u16 var_v0_2;
+
+    if (temp_a2 & 0x800) {
+        var_v0_2 = temp_a2 & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
+#endif
 
 void func_801B5794(u8 state) {
     D_8006C3B8->initState = state;
