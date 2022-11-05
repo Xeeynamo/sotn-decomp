@@ -24,8 +24,8 @@ typedef struct {
     /* 0x8 */ u16 subId;
 } LayoutObject; // size = 0xA
 
-typedef (*PfnOverlayEntry)(void);
-typedef (*PfnLoadObjectLayout)(s32 layoutId);
+typedef void (*PfnOverlayEntry)(void);
+typedef void (*PfnLoadObjectLayout)(s32 layoutId);
 
 s32 Random();
 void UpdateStageEntities(void);
