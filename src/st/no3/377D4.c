@@ -744,7 +744,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityEnemyBlood);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRoomForeground);
 

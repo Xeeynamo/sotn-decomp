@@ -1260,7 +1260,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80197B94);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityUnkId0C);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* obj = &D_801810F4[entity->subId];

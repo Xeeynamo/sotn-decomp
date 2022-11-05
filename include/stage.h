@@ -17,7 +17,7 @@
 #define ENTITY_HEART_DROP 10
 #define ENTITY_RELIC 11
 #define ENTITY_COLLECTABLE 12
-#define ENTITY_UNKNOWN_0C 13
+#define ENTITY_ENEMY_BLOOD 13
 #define ENTITY_UNKNOWN_0D 14
 
 // Flags for entity->unk34

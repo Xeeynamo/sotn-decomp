@@ -510,7 +510,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0C);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityEnemyBlood);
 
 extern ObjInit2 D_801820F0[];
 void EntityRoomForeground(Entity* entity) {
