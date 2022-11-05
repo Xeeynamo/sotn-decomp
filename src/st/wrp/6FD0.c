@@ -2890,7 +2890,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A26C);
 void func_8018A26C(s16);
 
 void func_8018A380(s32 arg0) {
-    s32 a1 = 0xFFFE;
+    s16 a1 = -2;
     arg0 = (s16)arg0;
 loop_1:
     if (D_80193AB4->posY == a1 || D_80193AB4->posY < arg0) {
@@ -3137,9 +3137,9 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0 & 0xFF] * arg1; }
+s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 
-s16 func_8018BEFC(s32 arg0) { return D_80180A94[arg0 & 0xFF]; }
+s16 func_8018BEFC(u8 arg0) { return D_80180A94[arg0]; }
 
 void func_8018BF18(s32 arg0, s16 arg1) {
     D_8006C3B8->accelerationX = func_8018BED0(arg0, arg1);
@@ -3160,7 +3160,28 @@ u8 func_8018C004(s32 x, s32 y) {
     return func_8018BF84(diffX, diffY);
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C04C);
+u8 func_8018C04C(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_8018C0A4(u16 slope, s16 speed) {
     Entity* entity;
@@ -3196,17 +3217,39 @@ u16 func_8018C198(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C1E0);
+u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
+    u16 var_v0 = arg1;
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0_2;
 
-void func_8018C240(s32 arg0) {
-    D_8006C3B8->initState = (s16)(arg0 & 0xFF);
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
+
+void func_8018C240(u8 initState) {
+    D_8006C3B8->initState = initState;
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }
 
-void func_8018C260(s32 arg0) {
-    D_8006C3B8->unk2E = (s16)(arg0 & 0xFF);
+void func_8018C260(u8 arg0) {
+    D_8006C3B8->unk2E = arg0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }
@@ -3326,7 +3369,45 @@ void func_8018CAB0(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CB34);
+void func_8018CB34(u16 arg0) {
+    Unkstruct7 sp10;
+
+    if (D_8006C3B8->accelerationX < 0) {
+        D_8003C7BC(D_8006C3B8->posX.Data.high, D_8006C3B8->posY.Data.high - 7,
+                   &sp10, 0);
+        if (sp10.sp10 & 5) {
+            D_8006C3B8->accelerationY = 0;
+        }
+    }
+
+    D_8003C7BC(D_8006C3B8->posX.Data.high, D_8006C3B8->posY.Data.high + 7,
+               &sp10, 0);
+
+    if (arg0) {
+        if (!(sp10.sp10 & 5)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        D_8006C3B8->accelerationX = 0;
+        D_8006C3B8->accelerationY = 0;
+
+        if (sp10.sp10 & 4) {
+            D_8006C3B8->posY.value += 0x2000;
+            return;
+        }
+
+        D_8006C3B8->posY.Data.high =
+            (u16)D_8006C3B8->posY.Data.high + (u16)sp10.sp28;
+        return;
+    }
+
+    if (!(sp10.sp10 & 5)) {
+        MoveEntity();
+        func_8018CAB0();
+    }
+}
 
 void CollectHeart(u16 heartSize) {
     s32* hearts;
@@ -3342,15 +3423,12 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(D_8006C3B8);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectGold);
-#else
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
-    gold = &g_playerGold;
     g_pfnPlaySfx(0x6A9);
+    gold = &g_playerGold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {
@@ -3366,7 +3444,6 @@ void CollectGold(u16 goldSize) {
     func_80192F40(D_80180E08[goldSizeIndex], 1);
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
@@ -3470,7 +3547,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F510);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F750);
 #else
 extern void func_8018F928(Entity*);
