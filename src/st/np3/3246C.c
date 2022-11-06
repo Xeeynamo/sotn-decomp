@@ -409,7 +409,7 @@ void func_801BD134(u8 arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD150);
 
-void InitializeEntity(u16* arg0) {
+void InitializeEntity(const u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 

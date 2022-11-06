@@ -175,7 +175,7 @@ typedef struct {
     /* 0x0A */ u8 blendMode;
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u32 unkC;
-    /* 0x10 */ u8* unk10;
+    /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
 typedef struct unkStruct3 {
