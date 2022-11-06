@@ -3901,10 +3901,10 @@ s32 func_80193A3C(u8* arg0, u8 value) {
             } else {
                 ret |= 1;
             }
-    
+
             *ptrCur++ = phi_v0;
-        } while((s32)ptrCur < ptrEnd);
-        
+        } while ((s32)ptrCur < ptrEnd);
+
         phi_a0 += 0xC;
     }
 
