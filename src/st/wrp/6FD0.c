@@ -1256,8 +1256,9 @@ const u8* const D_80180F70[] = {
     D_80180ED8, D_80180EEC, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-const void* const D_80180F84[] = {
-    0x80186F48,
+extern const char D_80186F48[];
+const char* const D_80180F84[] = {
+    D_80186F48,
 };
 
 const s16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
