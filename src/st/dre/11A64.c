@@ -9,7 +9,6 @@
 void ReplaceBreakableWithItemDrop(Entity* arg0);
 void DestroyEntity(Entity* entity);
 void EntityExplosion(Entity*);
-void InitializeEntity(u16* arg0);
 void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
@@ -23,7 +22,6 @@ void func_8019A78C(void);
 void func_8019B858(void);
 void SpawnExplosionEntity(u16 objectId, Entity* entity);
 Entity* func_8019AC18(Entity*, Entity*);
-s32 AnimateEntity(u8*, Entity*);
 void func_8019E5E0(Entity* entity);
 
 extern s16 D_80180D80[];
@@ -406,7 +404,7 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-bool AnimateEntity(u8* frames, Entity* entity) {
+bool AnimateEntity(const u8 frames[], Entity* entity) {
     s32 flag = 0;
     u16 currentFrameIndex = entity->animationFrameIndex * 2;
     u8* currentFrame = frames + currentFrameIndex;
@@ -653,7 +651,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     D_8006C3B8->unk2E = 0;
 }
 
-void InitializeEntity(u16* arg0) {
+void InitializeEntity(const u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 

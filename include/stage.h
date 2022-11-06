@@ -40,10 +40,10 @@ void UpdateStageEntities(void);
 void CreateEntity(Entity* entity, LayoutObject* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntityFromIndex(s16 index);
-s32 AnimateEntity(u8* frames, Entity* entity);
+s32 AnimateEntity(const u8 frames[], Entity* entity);
 void MoveEntity(void);
 void FallEntity(void);
 Entity* AllocEntity(Entity* start, Entity* end);
-void InitializeEntity(u16* arg0);
+void InitializeEntity(const u16 arg0[]);
 
 #endif
