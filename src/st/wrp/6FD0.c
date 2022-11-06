@@ -3746,6 +3746,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801914CC);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801916C4);
 
+s32 func_80193A3C(u8* arg0, u8 value);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801917BC);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityStageNamePopup);
@@ -3885,38 +3886,27 @@ void func_80193A10(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193A3C);
-#else
-s32 func_80193A3C(u8* arg0, u8 arg1) {
-    s32 temp_v0;
-    u8 phi_v0;
-    u8* phi_a0;
+s32 func_80193A3C(u8* arg0, u8 value) {
+    s32 ret = 0;
+    u8* phi_a0 = arg0 + 4;
     s32 i;
-    s32 phi_a2;
 
-    phi_a2 = 0;
-    phi_a0 = arg0 + 4;
     for (i = 0; i < 4; i++) {
-        u8* phi_v1 = phi_a0;
-        s32 end = phi_a0 + 3;
-    loop_2:
-        temp_v0 = *phi_v1 - arg1;
-        phi_v0 = temp_v0;
-        if (temp_v0 < 0) {
-            phi_v0 = 0;
-        } else {
-            phi_a2 |= 1;
-        }
-
-        *phi_v1++ = phi_v0;
-        if ((s32)phi_v1 < end) {
-            goto loop_2;
-        }
-
+        u8* ptrCur = phi_a0;
+        s32 ptrEnd = phi_a0 + 3;
+        do {
+            s32 phi_v0 = *ptrCur - value;
+            if (phi_v0 < 0) {
+                phi_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+    
+            *ptrCur++ = phi_v0;
+        } while((s32)ptrCur < ptrEnd);
+        
         phi_a0 += 0xC;
     }
 
-    return phi_a2;
+    return ret;
 }
-#endif
