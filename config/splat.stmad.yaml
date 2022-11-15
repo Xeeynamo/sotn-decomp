@@ -46,6 +46,9 @@ segments:
       # - [0x1BA2, rodata] # assets/st/mad/19.objlayout
       # - [0x1C4C, rodata] # assets/st/mad/20.objlayout
       # - [0x1CF6, rodata] # assets/st/mad/21.objlayout
+      - [0x1404, rodata]
+      - [0x1774, rodata]
+      - [0x19A4, rodata]
       - [0x1D14, rodata]
       - [0xD794, rodata]
       - [0xD884, rodata]

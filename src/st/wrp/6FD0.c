@@ -2848,14 +2848,14 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189E9C);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189FB4);
 
-void func_8018A0CC(s32 arg0) {
-    s32 a1 = 0xFFFE;
-    arg0 = (s16)arg0;
-loop_1:
-    if (D_80193AB0->posX == a1 || D_80193AB0->posX < arg0) {
-        D_80193AB0++;
-        goto loop_1;
-    }
+void func_8018A0CC(s16 arg0) {
+    do {
+    loop_1:
+        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < arg0) {
+            D_80193AB0++;
+            goto loop_1;
+        }
+    } while (0);
 }
 
 void func_8018A118(s32 arg0) {
@@ -3401,7 +3401,7 @@ void CollectHeart(u16 heartSize) {
     s32* hearts;
 
     g_pfnPlaySfx(0x67A);
-    hearts = &g_playerHeart;
+    hearts = &g_playerHeart->current;
     *hearts += c_HeartPrizes[heartSize];
 
     if (g_playerHeart->max < *hearts) {

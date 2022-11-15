@@ -16,11 +16,15 @@ void func_801992C8(s16);
 void func_801A046C(u16);
 s32 func_8019AC78(u8, s16);
 void PreventEntityFromRespawning(Entity* entity);
+void EntityCandleDrop(struct Entity*);
+void EntityCandleHeartDrop(struct Entity*);
+void FallEntity(void);
+void func_8019B858(void);
+void SpawnExplosionEntity(u16 objectId, Entity* entity);
+Entity* AllocEntity(Entity*, Entity*);
 void EntityItemDrop(struct Entity*);
 void EntityHeartDrop(struct Entity*);
 void func_8019A78C(void);
-void func_8019B858(void);
-void SpawnExplosionEntity(u16 objectId, Entity* entity);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
@@ -52,7 +56,7 @@ extern s8 D_801A3EEF;
 extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
-extern s8 D_801811AC[]; // c_HeartPrizes[]
+extern s8 c_HeartPrizes[];
 extern s32 D_80180668;
 extern u16 D_80180528[];
 extern u32 D_8018130C[];
@@ -100,7 +104,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
             g_pfnPlaySfx(0x634);
-            temp_v0 = func_8019AC18(D_8007D858, &D_8007D858[32]);
+            temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
                 SpawnExplosionEntity(2, temp_v0);
                 temp_v0->subId = g_eBreakableExplosionTypes[temp_s0];
@@ -230,7 +234,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019697C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196CC8);
 
-u32 func_80196F90(void) { // Random
+s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return g_randomNext >> 0x18;
 }
@@ -243,7 +247,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityNumericDamage);
 
-void func_80198B80(Entity* entity, LayoutObject* initDesc) { // CreateEntity
+void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
@@ -404,7 +408,7 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-bool AnimateEntity(const u8 frames[], Entity* entity) {
+s32 AnimateEntity(const u8 frames[], Entity* entity) {
     s32 flag = 0;
     u16 currentFrameIndex = entity->animationFrameIndex * 2;
     u8* currentFrame = frames + currentFrameIndex;
@@ -466,12 +470,12 @@ s16 func_8019A718(void) {
     return var_a0;
 }
 
-void func_8019A75C(void) { // MoveEntity
+void MoveEntity(void) {
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
     D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
 }
 
-void func_8019A78C(void) { // FallEntity
+void FallEntity(void) {
     if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
         D_8006C3B8->accelerationY += FALL_GRAVITY;
     }
@@ -481,7 +485,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A7B8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019AA30);
 
-Entity* func_8019AC18(Entity* start, Entity* end) {
+Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
@@ -762,8 +766,8 @@ void func_8019B8DC(u16 arg0) {
 
     if (arg0) {
         if (!(sp10.sp10 & 5)) {
-            func_8019A75C();
-            func_8019A78C();
+            MoveEntity();
+            FallEntity();
             return;
         }
 
@@ -781,7 +785,7 @@ void func_8019B8DC(u16 arg0) {
     }
 
     if (!(sp10.sp10 & 5)) {
-        func_8019A75C();
+        MoveEntity();
         func_8019B858();
     }
 }
@@ -791,7 +795,7 @@ void func_8019BA38(u16 arg0) {
 
     g_pfnPlaySfx(0x67A);
     hearts = &g_playerHeart;
-    *hearts += D_801811AC[arg0];
+    *hearts += c_HeartPrizes[arg0];
 
     if (g_playerHeart->max < *hearts) {
         *hearts = g_playerHeart->max;
@@ -804,7 +808,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BAB8);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
-void func_8019BCAC(void) { // CollectHeartVessel
+void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_pfnPlaySfx(0x67A);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
@@ -819,7 +823,7 @@ void func_8019BCAC(void) { // CollectHeartVessel
     DestroyEntity(D_8006C3B8);
 }
 
-void func_8019BD50(void) { // CollectLifeVessel
+void CollectLifeVessel(void) {
     g_pfnPlaySfx(0x67A);
     D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C3B8);
@@ -979,7 +983,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E7C4);
 bool func_8019E9F4(Unkstruct6* arg0) {
     Unkstruct7 sp10;
 
-    func_8019A78C();
+    FallEntity();
     D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
     D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
 
@@ -1062,7 +1066,7 @@ void func_8019F170(Entity* entity) {
         return;
     }
 
-    func_8019A75C();
+    MoveEntity();
 
     if (!AnimateEntity(&D_80181338, entity)) {
         DestroyEntity(entity);
@@ -1093,12 +1097,12 @@ void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
 
 void func_8019F304(void) {
     Entity* entity;
-    s8 temp_s4 = func_80196F90() & 3;
-    s16 temp_s3 = ((func_80196F90() & 0xF) << 8) - 0x800;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        entity = func_8019AC18(D_8007D858, &D_8007D858[32]);
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             func_8019967C(2, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
@@ -1241,7 +1245,33 @@ void func_801A27B8(unkStruct3* arg0) {
     arg0->unk0->unk32 = 8;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A27E4);
+s32 func_801A27E4(s32 arg0, u8 arg1) {
+    s32 var_v0;
+    s32 ret = 0;
+    u8* var_a0 = arg0 + 4;
+    u8* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        var_v1 = var_a0;
+        do {
+            var_v0 = *var_v1 - arg1;
+
+            if (var_v0 < 0) {
+                var_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            *var_v1 = var_v0;
+            var_v1++;
+        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+
+        var_a0 += 0xC;
+    }
+
+    return ret;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2848);
 
