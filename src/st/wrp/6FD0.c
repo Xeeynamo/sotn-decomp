@@ -22,25 +22,25 @@ const PfnLoadObjectLayout g_pfnStLoadObjectLayout =
 // *** Overlay exports end ***
 
 // *** Layout definition start ***
-extern const RoomHeader const g_stRooms[];
-void* const D_80180040[];
-void* const D_801800B4[];
-void* const D_80180168[];
-void* const D_801801EC[];
+extern const RoomHeader g_stRooms[];
+const void* const D_80180040[];
+const void* const D_801800B4[];
+const void* const D_80180168[];
+const void* const D_801801EC[];
 const u32 D_80181D08[];
-u32* const D_80186D88[];
-u32* const D_80182D68[];
-u32* const D_80186D78[];
+const u32* const D_80182D68[];
+const u32* const D_80186D78[];
+const u32* const D_80186D88[];
 void func_80188514(void);
 
-void* const g_pStUnkRoomDef[] = {
+const void* const g_pStUnkRoomDef[] = {
     /* 0x10 */ g_stRooms,
     /* 0x14 */ D_80180040,
     /* 0x18 */ D_801800B4,
 };
-void* const g_pStUnkObjLayouts = NULL;
-void** const g_pStUnkTilesLayout = D_80180168;
-void* const g_pStTilesets[] = {
+const void* const g_pStUnkObjLayouts = NULL;
+const void** const g_pStUnkTilesLayout = (const void** const)D_80180168;
+const void* const g_pStTilesets[] = {
     /* 0x024 */ D_801801EC,
     /* 0x028 */ func_80188514,
     /* 0x02C */ 0x00000000,
@@ -49,7 +49,7 @@ void* const g_pStTilesets[] = {
     /* 0x038 */ 0x00000000,
     /* 0x03C */ 0x00000000,
 };
-void* const D_80180040[] = {
+const void* const D_80180040[] = {
     /* 0x040 */ 0x00000000,
     /* 0x044 */ D_80186D88,
     /* 0x048 */ 0x00000000,
@@ -75,14 +75,14 @@ void* const D_80180040[] = {
     /* 0x098 */ 0x00000000,
     /* 0x09C */ 0x00000000,
 };
-void* const D_801800A0[] = {
-    /* 0x0A0 */ 0x00000005,
-    /* 0x0A4 */ 0x00002000,
-    /* 0x0A8 */ 0x00000010,
-    /* 0x0AC */ D_80181D08,
-    /* 0x0B0 */ 0xFFFFFFFF,
+const void* const D_801800A0[] = {
+    /* 0x0A0 */ (void*)0x00000005,
+    /* 0x0A4 */ (void*)0x00002000,
+    /* 0x0A8 */ (void*)0x00000010,
+    /* 0x0AC */ (void*)D_80181D08,
+    /* 0x0B0 */ (void*)0xFFFFFFFF,
 };
-void* const D_801800B4[] = {
+const void* const D_801800B4[] = {
     /* 0x0B4 */ D_801800A0,
 };
 
@@ -92,73 +92,73 @@ const u32 D_80182168[];
 const u32 D_80182368[];
 const u32 D_80182568[];
 const u32 D_80182768[];
-void* const D_801800B8[] = {
+const void* const D_801800B8[] = {
     /* 0x0B8 */ 0x00000000,
     /* 0x0BC */ 0x00000000,
     /* 0x0C0 */ 0x00000000,
     /* 0x0C4 */ 0x00000000,
 };
-void* const D_801800C8[] = {
-    /* 0x0C8 */ D_80181D68,
-    /* 0x0CC */ D_80186D78,
-    /* 0x0D0 */ 0x01328328,
-    /* 0x0D4 */ 0x00030060,
+const void* const D_801800C8[] = {
+    /* 0x0C8 */ (void*)D_80181D68,
+    /* 0x0CC */ (void*)D_80186D78,
+    /* 0x0D0 */ (void*)0x01328328,
+    /* 0x0D4 */ (void*)0x00030060,
 };
-void* const D_801800D8[] = {
-    /* 0x0D8 */ D_80181F68,
-    /* 0x0DC */ D_80186D78,
-    /* 0x0E0 */ 0x01565565,
-    /* 0x0E4 */ 0x00030060,
+const void* const D_801800D8[] = {
+    /* 0x0D8 */ (void*)D_80181F68,
+    /* 0x0DC */ (void*)D_80186D78,
+    /* 0x0E0 */ (void*)0x01565565,
+    /* 0x0E4 */ (void*)0x00030060,
 };
-void* const D_801800E8[] = {
-    /* 0x0E8 */ D_80182168,
-    /* 0x0EC */ D_80186D78,
-    /* 0x0F0 */ 0x0147B47B,
-    /* 0x0F4 */ 0x00030060,
+const void* const D_801800E8[] = {
+    /* 0x0E8 */ (void*)D_80182168,
+    /* 0x0EC */ (void*)D_80186D78,
+    /* 0x0F0 */ (void*)0x0147B47B,
+    /* 0x0F4 */ (void*)0x00030060,
 };
-void* const D_801800F8[] = {
-    /* 0x0F8 */ D_80182368,
-    /* 0x0FC */ D_80186D78,
-    /* 0x100 */ 0x0198F98F,
-    /* 0x104 */ 0x00030060,
+const void* const D_801800F8[] = {
+    /* 0x0F8 */ (void*)D_80182368,
+    /* 0x0FC */ (void*)D_80186D78,
+    /* 0x100 */ (void*)0x0198F98F,
+    /* 0x104 */ (void*)0x00030060,
 };
-void* const D_80180108[] = {
-    /* 0x108 */ D_80182568,
-    /* 0x10C */ D_80186D78,
-    /* 0x110 */ 0x01B23B23,
-    /* 0x114 */ 0x00030060,
+const void* const D_80180108[] = {
+    /* 0x108 */ (void*)D_80182568,
+    /* 0x10C */ (void*)D_80186D78,
+    /* 0x110 */ (void*)0x01B23B23,
+    /* 0x114 */ (void*)0x00030060,
 };
-void* const D_80180118[] = {
-    /* 0x118 */ D_80182768,
-    /* 0x11C */ D_80182D68,
-    /* 0x120 */ 0x40B22B22,
-    /* 0x124 */ 0x02030020,
+const void* const D_80180118[] = {
+    /* 0x118 */ (void*)D_80182768,
+    /* 0x11C */ (void*)D_80182D68,
+    /* 0x120 */ (void*)0x40B22B22,
+    /* 0x124 */ (void*)0x02030020,
 };
-void* const D_80180128[] = {
-    /* 0x128 */ D_80182768,
-    /* 0x12C */ D_80182D68,
-    /* 0x130 */ 0x41990990,
-    /* 0x134 */ 0x0203001F,
+const void* const D_80180128[] = {
+    /* 0x128 */ (void*)D_80182768,
+    /* 0x12C */ (void*)D_80182D68,
+    /* 0x130 */ (void*)0x41990990,
+    /* 0x134 */ (void*)0x0203001F,
 };
-void* const D_80180138[] = {
-    /* 0x138 */ D_80182768,
-    /* 0x13C */ D_80182D68,
-    /* 0x140 */ 0x40564564,
-    /* 0x144 */ 0x0203001E,
+const void* const D_80180138[] = {
+    /* 0x138 */ (void*)D_80182768,
+    /* 0x13C */ (void*)D_80182D68,
+    /* 0x140 */ (void*)0x40564564,
+    /* 0x144 */ (void*)0x0203001E,
 };
-void* const D_80180148[] = {
-    /* 0x148 */ D_80182768,
-    /* 0x14C */ D_80182D68,
-    /* 0x150 */ 0x4147C47C,
-    /* 0x154 */ 0x0203001D,
+const void* const D_80180148[] = {
+    /* 0x148 */ (void*)D_80182768,
+    /* 0x14C */ (void*)D_80182D68,
+    /* 0x150 */ (void*)0x4147C47C,
+    /* 0x154 */ (void*)0x0203001D,
 };
-void* const D_80180158[] = {
-    /* 0x158 */ D_80182768,
-    /* 0x15C */ D_80182D68,
-    /* 0x160 */ 0x40327327,
-    /* 0x164 */ 0x0203001C,
+const void* const D_80180158[] = {
+    /* 0x158 */ (void*)D_80182768,
+    /* 0x15C */ (void*)D_80182D68,
+    /* 0x160 */ (void*)0x40327327,
+    /* 0x164 */ (void*)0x0203001C,
 };
-void* const D_80180168[] = {
+const void* const D_80180168[] = {
     /* 0x168 */ D_801800C8,
     /* 0x16C */ D_801800B8,
     /* 0x170 */ D_801800D8,
@@ -183,24 +183,24 @@ void* const D_80180168[] = {
 
 const u32 D_80181420[];
 const u32 D_80181764[];
-void* const D_801801B8[] = {
-    /* 0x1B8 */ 0x00000000,
-    /* 0x1BC */ 0x00000000,
-    /* 0x1C0 */ 0x00000000,
-    /* 0x1C4 */ 0x00000000,
-    /* 0x1C8 */ 0xFFFFFFFF,
+const void* const D_801801B8[] = {
+    /* 0x1B8 */ (void*)0x00000000,
+    /* 0x1BC */ (void*)0x00000000,
+    /* 0x1C0 */ (void*)0x00000000,
+    /* 0x1C4 */ (void*)0x00000000,
+    /* 0x1C8 */ (void*)0xFFFFFFFF,
 };
-void* const D_801801CC[] = {
-    /* 0x1CC */ 0x00000004,
-    /* 0x1D0 */ 0x00400100,
-    /* 0x1D4 */ 0x00800080,
-    /* 0x1D8 */ D_80181420,
-    /* 0x1DC */ 0x00600100,
-    /* 0x1E0 */ 0x00800080,
-    /* 0x1E4 */ D_80181764,
-    /* 0x1E8 */ 0xFFFFFFFF,
+const void* const D_801801CC[] = {
+    /* 0x1CC */ (void*)0x00000004,
+    /* 0x1D0 */ (void*)0x00400100,
+    /* 0x1D4 */ (void*)0x00800080,
+    /* 0x1D8 */ (void*)D_80181420,
+    /* 0x1DC */ (void*)0x00600100,
+    /* 0x1E0 */ (void*)0x00800080,
+    /* 0x1E4 */ (void*)D_80181764,
+    /* 0x1E8 */ (void*)0xFFFFFFFF,
 };
-void* const D_801801EC[] = {
+const void* const D_801801EC[] = {
     /* 0x1EC */ D_801801B8,
     /* 0x1F0 */ D_801801B8,
     /* 0x1F4 */ D_801801B8,
@@ -225,14 +225,14 @@ void* const D_801801EC[] = {
 // *** Layout definition end ***
 
 // *** Layout object definition start ***
-const LayoutObject const D_80181228[];
-const LayoutObject const D_80181250[];
-const LayoutObject const D_801812A0[];
-const LayoutObject const D_801812C8[];
-const LayoutObject const D_80181278[];
-const LayoutObject const D_801812F0[];
-const LayoutObject const D_80181304[];
-LayoutObject* const g_pStObjLayout[] = {
+const LayoutObject D_80181228[];
+const LayoutObject D_80181250[];
+const LayoutObject D_801812A0[];
+const LayoutObject D_801812C8[];
+const LayoutObject D_80181278[];
+const LayoutObject D_801812F0[];
+const LayoutObject D_80181304[];
+const LayoutObject* const g_pStObjLayout[] = {
     /* 0x23C */ D_801812F0,
     /* 0x240 */ D_80181228,
     /* 0x244 */ D_80181250,
@@ -288,14 +288,14 @@ LayoutObject* const g_pStObjLayout[] = {
     /* 0x30C */ D_80181304,
 };
 
-const LayoutObject const D_80181324[];
-const LayoutObject const D_8018134C[];
-const LayoutObject const D_80181374[];
-const LayoutObject const D_8018139C[];
-const LayoutObject const D_801813C4[];
-const LayoutObject const D_801813EC[];
-const LayoutObject const D_80181400[];
-void* const D_80180310[] = {
+const LayoutObject D_80181324[];
+const LayoutObject D_8018134C[];
+const LayoutObject D_80181374[];
+const LayoutObject D_8018139C[];
+const LayoutObject D_801813C4[];
+const LayoutObject D_801813EC[];
+const LayoutObject D_80181400[];
+const void* const D_80180310[] = {
     /* 310 */ D_801813EC,
     /* 314 */ D_80181324,
     /* 318 */ D_8018134C,
@@ -353,21 +353,21 @@ void* const D_80180310[] = {
 
 // *** Object definition start ***
 void EntityBreakable(Entity*);
-void func_8018D894(Entity*);
-void EntityCandleDrop(Entity*);
-void func_80189734(Entity*);
-void func_8018A9C8(Entity*);
-void func_801902C8(Entity*);
-void func_80192610(Entity*);
+void EntityExplosion(Entity*);
+void EntityItemDrop(Entity*);
+void EntityNumericDamage(Entity*);
+void EntityRedDoor(Entity*);
+void EntityIntenseExplosion(Entity*);
+void EntityAbsorbOrb(Entity*);
 void EntityRoomForeground(Entity*);
-void func_8019198C(Entity*);
-void EntityCandleHeartDrop(Entity*);
-void func_8018E2CC(Entity*);
-void func_8018ED9C(Entity*);
-void func_801929A4(Entity*);
-void func_8018EEC4(Entity*);
-void func_8018C40C(Entity*);
-void func_8018C40C(Entity*);
+void EntityStageNamePopup(Entity*);
+void EntityHeartDrop(Entity*);
+void EntityRelicItem(Entity*);
+void EntityInventoryItem(Entity*);
+void EntityEnemyBlood(Entity*);
+void EntityUnkId0D(Entity*);
+void EntityDummy(Entity*);
+void EntityDummy(Entity*);
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
 void func_8018F510(Entity*);
@@ -378,21 +378,21 @@ void func_80187F1C(Entity*);
 const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3E0 */ (PfnEntityUpdate)D_80181400,
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
-    /* 3E8 */ (PfnEntityUpdate)func_8018D894,
-    /* 3EC */ (PfnEntityUpdate)EntityCandleDrop,
-    /* 3F0 */ (PfnEntityUpdate)func_80189734,
-    /* 3F4 */ (PfnEntityUpdate)func_8018A9C8,
-    /* 3F8 */ (PfnEntityUpdate)func_801902C8,
-    /* 3FC */ (PfnEntityUpdate)func_80192610,
+    /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
+    /* 3EC */ (PfnEntityUpdate)EntityItemDrop,
+    /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
+    /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
+    /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
+    /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
-    /* 404 */ (PfnEntityUpdate)func_8019198C,
-    /* 408 */ (PfnEntityUpdate)EntityCandleHeartDrop,
-    /* 40C */ (PfnEntityUpdate)func_8018E2CC,
-    /* 410 */ (PfnEntityUpdate)func_8018ED9C,
-    /* 414 */ (PfnEntityUpdate)func_801929A4,
-    /* 418 */ (PfnEntityUpdate)func_8018EEC4,
-    /* 41C */ (PfnEntityUpdate)func_8018C40C,
-    /* 420 */ (PfnEntityUpdate)func_8018C40C,
+    /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
+    /* 408 */ (PfnEntityUpdate)EntityHeartDrop,
+    /* 40C */ (PfnEntityUpdate)EntityRelicItem,
+    /* 410 */ (PfnEntityUpdate)EntityInventoryItem,
+    /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
+    /* 418 */ (PfnEntityUpdate)EntityUnkId0D,
+    /* 41C */ (PfnEntityUpdate)EntityDummy,
+    /* 420 */ (PfnEntityUpdate)EntityDummy,
     /* 424 */ (PfnEntityUpdate)func_80186FD0,
     /* 428 */ (PfnEntityUpdate)func_801870B0,
     /* 42C */ (PfnEntityUpdate)func_8018F510,
@@ -438,7 +438,7 @@ const u16 D_801804C4[] = {
 // owned by func_80186FD0
 const u32 D_801804D0[] = {0x00FF0140};
 const u32 D_801804D4[] = {0x26022502, 0x26022702, 0x00000000};
-const ObjInit2 const D_801804E0[] = {
+const ObjInit2 D_801804E0[] = {
     {0x0006, 0x01FA, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0x00000000,
      D_801804D0},
     {0x8001, 0x00C0, 0x0000, 0x0000, 0x03, 0x00, 0x30, 0x00, 0x00000000,
@@ -548,7 +548,7 @@ const s16 D_80180538[] = {
 // owned by EntityBreakable
 const u8 D_801805A8[] = {4, 1, 4, 2, 0, 0, 0, 0};
 const u8 D_801805B0[] = {4, 0, 4, 0, 0, 0, 0, 0};
-u8* const g_eBreakableAnimations[] = {
+const u8* const g_eBreakableAnimations[] = {
     /* 5B8 */ D_801805A8,
     /* 5BC */ D_801805B0,
     /* 5C0 */ 0,
@@ -1158,24 +1158,35 @@ const u16 D_80180DF4[] = {
     /* E06 */ 0x0016,
 };
 
-void* const D_80180E08[] = {
-    /* E08 */ 0x80186F08,
-    /* E0C */ 0x80186F00,
-    /* E10 */ 0x80186EF8,
-    /* E14 */ 0x80186EF0,
-    /* E18 */ 0x80186EE8,
-    /* E1C */ 0x80186EE0,
-    /* E20 */ 0x80186ED8,
-    /* E24 */ 0x80186ED0,
-    /* E28 */ 0x80186EC8,
-    /* E2C */ 0x80186EC0,
+extern const u8 D_80186EC0[];
+extern const u8 D_80186EC8[];
+extern const u8 D_80186ED0[];
+extern const u8 D_80186ED8[];
+extern const u8 D_80186EE0[];
+extern const u8 D_80186EE8[];
+extern const u8 D_80186EF0[];
+extern const u8 D_80186EF8[];
+extern const u8 D_80186F00[];
+extern const u8 D_80186F08[];
+const u8* const D_80180E08[] = {
+    // u8 is an assumption
+    /* E08 */ D_80186F08,
+    /* E0C */ D_80186F00,
+    /* E10 */ D_80186EF8,
+    /* E14 */ D_80186EF0,
+    /* E18 */ D_80186EE8,
+    /* E1C */ D_80186EE0,
+    /* E20 */ D_80186ED8,
+    /* E24 */ D_80186ED0,
+    /* E28 */ D_80186EC8,
+    /* E2C */ D_80186EC0,
 };
 
 const s32 c_GoldPrizes[] = {
     1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000,
 };
 
-s16* const D_80180E58[] = {
+const s16* const D_80180E58[] = {
     /* E58 */ D_80180C94,
     /* E5C */ D_80180C98,
     /* E60 */ D_80180CC4,
@@ -1216,64 +1227,38 @@ const s32 D_80180EC4[] = {
     /* ED0 */ 0xFFFE8000,
     /* ED4 */ 0xFFFD0000,
 };
-const s32 D_80180ED8[] = {
-    /* ED8 */ 0x02020102,
-    /* EDC */ 0x04020302,
-    /* EE0 */ 0x06020502,
-    /* EE4 */ 0x08020702,
-    /* EE8 */ 0x00000000,
-};
 
+const u8 D_80180ED8[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
+    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x00, 0x00, 0x00, 0x00,
+};
 const u8 D_80180EEC[] = {
-    /* EEC */ 0x01, 0x09, 0x02, 0x0A,
-    /* EF0 */ 0x02, 0x0B, 0x02, 0x0C,
-    /* EF4 */ 0x02, 0x0D, 0x02, 0x0E,
-    /* EF8 */ 0x02, 0x0F, 0x02, 0x10,
-    /* EFC */ 0x02, 0x11, 0x02, 0x12,
-    /* F00 */ 0x03, 0x13, 0x04, 0x14,
-    /* F04 */ 0x00, 0x00, 0x00, 0x00,
+    0x01, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D,
+    0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x12,
+    0x03, 0x13, 0x04, 0x14, 0x00, 0x00, 0x00, 0x00,
 };
 const u8 D_80180F08[] = {
-    /* F08 */ 0x02, 0x15, 0x02, 0x16,
-    /* F0C */ 0x02, 0x17, 0x02, 0x18,
-    /* F10 */ 0x02, 0x19, 0x02, 0x1A,
-    /* F14 */ 0x02, 0x1B, 0x02, 0x1C,
-    /* F18 */ 0x02, 0x1D, 0x02, 0x1E,
-    /* F1C */ 0x02, 0x1F, 0x02, 0x20,
-    /* F20 */ 0x02, 0x21, 0x02, 0x22,
-    /* F24 */ 0x02, 0x23, 0x02, 0x24,
-    /* F28 */ 0x02, 0x25, 0x02, 0x26,
-    /* F2C */ 0x02, 0x27, 0x02, 0x28,
-    /* F30 */ 0x02, 0x29, 0x02, 0x2A,
-    /* F34 */ 0x00, 0x00, 0x00, 0x00,
+    0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A,
+    0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20,
+    0x02, 0x21, 0x02, 0x22, 0x02, 0x23, 0x02, 0x24, 0x02, 0x25, 0x02, 0x26,
+    0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00, 0x00, 0x00,
 };
 const u8 D_80180F38[] = {
-    /* F38 */ 0x02, 0x2B, 0x02, 0x2C,
-    /* F3C */ 0x02, 0x2D, 0x02, 0x2E,
-    /* F40 */ 0x02, 0x2F, 0x02, 0x30,
-    /* F44 */ 0x02, 0x31, 0x02, 0x32,
-    /* F48 */ 0x02, 0x33, 0x02, 0x34,
-    /* F4C */ 0x02, 0x35, 0x02, 0x36,
-    /* F50 */ 0x02, 0x37, 0x02, 0x38,
-    /* F54 */ 0x02, 0x39, 0x02, 0x3A,
-    /* F58 */ 0x02, 0x3B, 0x02, 0x3C,
-    /* F5C */ 0x02, 0x3D, 0x02, 0x3E,
-    /* F60 */ 0x02, 0x3F, 0x02, 0x40,
-    /* F64 */ 0x02, 0x41, 0x02, 0x42,
-    /* F68 */ 0x00, 0x00, 0x00, 0x00,
+    0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x02, 0x2E, 0x02, 0x2F, 0x02,
+    0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34, 0x02, 0x35,
+    0x02, 0x36, 0x02, 0x37, 0x02, 0x38, 0x02, 0x39, 0x02, 0x3A, 0x02,
+    0x3B, 0x02, 0x3C, 0x02, 0x3D, 0x02, 0x3E, 0x02, 0x3F, 0x02, 0x40,
+    0x02, 0x41, 0x02, 0x42, 0x00, 0x00, 0x00, 0x00,
 };
 const u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
-u8* const D_80180F70[] = {
-    /* F70 */ D_80180ED8,
-    /* F74 */ D_80180EEC,
-    /* F78 */ D_80180F08,
-    /* F7C */ D_80180F38,
-    /* F80 */ D_80180F6C,
+const u8* const D_80180F70[] = {
+    D_80180ED8, D_80180EEC, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-void* const D_80180F84[] = {
-    /* F84 */ 0x80186F48,
+extern const char D_80186F48[];
+const char* const D_80180F84[] = {
+    D_80186F48,
 };
 
 const s16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
@@ -1374,19 +1359,19 @@ const u32 D_80181110[] = {
     /* 1118 */ 0x03030603,
     /* 111C */ 0x00000000,
 };
-const u32 D_80181120 = 0x00FF0140;
-const u32 D_80181124 = 0x00FF0240;
-const u32 D_80181128 = 0x00FF0240;
-const u32 D_8018112C = 0x00FF0140;
-const u32 D_80181130 = 0x00FF0340;
+const u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
+const u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
+const u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
+const u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
+const u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
 
 const ObjInit2 D_80181134[] = {
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, &D_80181120},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, &D_80181128},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, &D_8018112C},
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, &D_80181124},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, &D_80181130},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, &D_8018112C},
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181120},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181128},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181124},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181130},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
 };
 
 const RoomHeader g_stRooms[] = {
@@ -1808,7 +1793,8 @@ const u32 D_80182C68[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-u32* const D_80182D68[] = {D_80182968, D_80182A68, D_80182B68, D_80182C68};
+const u32* const D_80182D68[] = {D_80182968, D_80182A68, D_80182B68,
+                                 D_80182C68};
 
 const u32 D_80182D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -2506,7 +2492,7 @@ const u32 D_80185D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-u32* const D_80186D78[] = {
+const u32* const D_80186D78[] = {
     D_80182D78,
     D_80183D78,
     D_80184D78,
@@ -2519,7 +2505,7 @@ const u32 D_80186DDC[];
 const u32 D_80186DF8[];
 const u32 D_80186E14[];
 
-u32* const D_80186D88[] = {
+const u32* const D_80186D88[] = {
     /* 6D88 */ 0x00000000,
     /* 6D8C */ D_80186DA4,
     /* 6D90 */ D_80186DC0,
@@ -2595,7 +2581,7 @@ extern u16 D_80194728[];
 // *** bss? section end ***
 
 void func_80186FD0(Entity* arg0) {
-    ObjInit2* objInit = &D_801804E0[arg0->subId];
+    const ObjInit2* objInit = &D_801804E0[arg0->subId];
     if (arg0->initState == 0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
@@ -2684,6 +2670,8 @@ void func_801870B0(Entity* entity) {
 }
 #endif
 
+void SpawnExplosionEntity(u16 objectId, Entity* entity);
+void ReplaceBreakableWithItemDrop(Entity*);
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
     if (entity->initState) {
@@ -2745,10 +2733,10 @@ void UpdateStageEntities(void) {
 
         if (entity->initState) {
             s32 unk34 = entity->unk34;
-            if (unk34 < 0) {
+            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 u16 posX = entity->posX.Data.high;
                 u16 posY = entity->posY.Data.high;
-                if (unk34 & 0x40000000) {
+                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
                         DestroyEntity(entity);
                         continue;
@@ -2838,7 +2826,8 @@ void func_80188514(void) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018861C);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189734);
+// https://decomp.me/scratch/m0PKE
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CreateEntity);
@@ -2889,7 +2878,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A26C);
 void func_8018A26C(s16);
 
 void func_8018A380(s32 arg0) {
-    s32 a1 = 0xFFFE;
+    s16 a1 = -2;
     arg0 = (s16)arg0;
 loop_1:
     if (D_80193AB4->posY == a1 || D_80193AB4->posY < arg0) {
@@ -3044,7 +3033,7 @@ s32 func_8018A950(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A9C8);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -3136,9 +3125,9 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0 & 0xFF] * arg1; }
+s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 
-s16 func_8018BEFC(s32 arg0) { return D_80180A94[arg0 & 0xFF]; }
+s16 func_8018BEFC(u8 arg0) { return D_80180A94[arg0]; }
 
 void func_8018BF18(s32 arg0, s16 arg1) {
     D_8006C3B8->accelerationX = func_8018BED0(arg0, arg1);
@@ -3159,7 +3148,28 @@ u8 func_8018C004(s32 x, s32 y) {
     return func_8018BF84(diffX, diffY);
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C04C);
+u8 func_8018C04C(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_8018C0A4(u16 slope, s16 speed) {
     Entity* entity;
@@ -3195,17 +3205,39 @@ u16 func_8018C198(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C1E0);
+u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
+    u16 var_v0 = arg1;
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0_2;
 
-void func_8018C240(s32 arg0) {
-    D_8006C3B8->initState = (s16)(arg0 & 0xFF);
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
+
+void func_8018C240(u8 initState) {
+    D_8006C3B8->initState = initState;
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }
 
-void func_8018C260(s32 arg0) {
-    D_8006C3B8->unk2E = (s16)(arg0 & 0xFF);
+void func_8018C260(u8 arg0) {
+    D_8006C3B8->unk2E = arg0;
     D_8006C3B8->animationFrameIndex = 0;
     D_8006C3B8->animationFrameDuration = 0;
 }
@@ -3224,14 +3256,14 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity = D_8006C3B8;
     entity->unk19 = 0;
     entity->objectId = ENTITY_EXPLOSION;
-    entity->pfnUpdate = (PfnEntityUpdate)func_8018D894;
+    entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->subId = arg0;
     entity->animationFrame = 0;
     D_8006C3B8->initState = 0;
     D_8006C3B8->unk2E = 0;
 }
 
-void InitializeEntity(u16* arg0) {
+void InitializeEntity(const u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -3258,7 +3290,7 @@ void InitializeEntity(u16* arg0) {
     }
 }
 
-void func_8018C40C(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -3286,13 +3318,13 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
     if (var_v1 < 0x80) {
         entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityCandleDrop;
+        entity->pfnUpdate = EntityItemDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
         entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityCandleHeartDrop;
+        entity->pfnUpdate = EntityHeartDrop;
     }
 
     entity->subId = var_v1;
@@ -3325,7 +3357,45 @@ void func_8018CAB0(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CB34);
+void func_8018CB34(u16 arg0) {
+    Unkstruct7 sp10;
+
+    if (D_8006C3B8->accelerationX < 0) {
+        D_8003C7BC(D_8006C3B8->posX.Data.high, D_8006C3B8->posY.Data.high - 7,
+                   &sp10, 0);
+        if (sp10.sp10 & 5) {
+            D_8006C3B8->accelerationY = 0;
+        }
+    }
+
+    D_8003C7BC(D_8006C3B8->posX.Data.high, D_8006C3B8->posY.Data.high + 7,
+               &sp10, 0);
+
+    if (arg0) {
+        if (!(sp10.sp10 & 5)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        D_8006C3B8->accelerationX = 0;
+        D_8006C3B8->accelerationY = 0;
+
+        if (sp10.sp10 & 4) {
+            D_8006C3B8->posY.value += 0x2000;
+            return;
+        }
+
+        D_8006C3B8->posY.Data.high =
+            (u16)D_8006C3B8->posY.Data.high + (u16)sp10.sp28;
+        return;
+    }
+
+    if (!(sp10.sp10 & 5)) {
+        MoveEntity();
+        func_8018CAB0();
+    }
+}
 
 void CollectHeart(u16 heartSize) {
     s32* hearts;
@@ -3341,15 +3411,12 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(D_8006C3B8);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CollectGold);
-#else
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
-    gold = &g_playerGold;
     g_pfnPlaySfx(0x6A9);
+    gold = &g_playerGold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {
@@ -3365,7 +3432,6 @@ void CollectGold(u16 goldSize) {
     func_80192F40(D_80180E08[goldSizeIndex], 1);
     DestroyEntity(D_8006C3B8);
 }
-#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
@@ -3392,9 +3458,9 @@ void CollectLifeVessel(void) {
 
 void func_8018CFF8(void) { DestroyEntity(D_8006C3B8); }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandleDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityItemDrop);
 
-void func_8018D894(Entity* entity) {
+void EntityExplosion(Entity* entity) {
     u16 zPriority;
 
     if (entity->initState == 0) {
@@ -3453,15 +3519,15 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityCandleHeartDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018E01C);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018E2CC);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRelicItem);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018ED9C);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityInventoryItem);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018EEC4);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0D);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
 
@@ -3469,7 +3535,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F510);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F750);
 #else
 extern void func_8018F928(Entity*);
@@ -3577,9 +3643,8 @@ bool func_8018FC4C(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 
-void func_801902C8(Entity* entity) {
+void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
-
     if (entity->initState == 0) {
         InitializeEntity(D_80180458);
         entity->palette = 0x8170;
@@ -3681,16 +3746,17 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801914CC);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801916C4);
 
+s32 func_80193A3C(u8* arg0, u8 value);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801917BC);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8019198C);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityStageNamePopup);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192610);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801929A4);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
-    ObjInit2* objInit = &D_80181134[entity->subId];
+    const ObjInit2* objInit = &D_80181134[entity->subId];
     if (entity->initState == 0) {
         InitializeEntity(D_80180494);
         entity->animationSet = objInit->animationSet;
@@ -3725,30 +3791,32 @@ POLY_GT4* func_801937A8(POLY_GT4* poly) {
     return NULL;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801937D8);
-#else
 POLY_GT4* func_801937D8(POLY_GT4* poly, u8 index) {
-    while (poly) {
-        s32 i = 1;
+    if (poly) {
+        s32 index_ = index;
+    loop_2:
         if (poly->p3 == 0) {
-            if (index >= 1) {
+            POLY_GT4* var_v0 = NULL;
+            POLY_GT4* firstPoly = poly;
+            s32 i = 1;
+            if (i < index_) {
                 do {
-                    poly = poly->tag;
-                    if (poly == 0) {
-                        return 0;
-                    }
+                    poly = (POLY_GT4*)poly->tag;
+                    if (!poly)
+                        return NULL;
                 } while (poly->p3 == 0 && ++i < index);
             }
-            if (i == index) {
-                return poly;
-            }
+            var_v0 = firstPoly;
+            if (i == index_)
+                return var_v0;
         }
-        poly = poly->tag;
+        poly = (POLY_GT4*)poly->tag;
+        if (poly) {
+            goto loop_2;
+        }
     }
-    return 0;
+    return NULL;
 }
-#endif
 
 POLY_GT4* func_80193854(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
@@ -3820,38 +3888,27 @@ void func_80193A10(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193A3C);
-#else
-s32 func_80193A3C(u8* arg0, u8 arg1) {
-    s32 temp_v0;
-    u8 phi_v0;
-    u8* phi_a0;
+s32 func_80193A3C(u8* arg0, u8 value) {
+    s32 ret = 0;
+    u8* phi_a0 = arg0 + 4;
     s32 i;
-    s32 phi_a2;
 
-    phi_a2 = 0;
-    phi_a0 = arg0 + 4;
     for (i = 0; i < 4; i++) {
-        u8* phi_v1 = phi_a0;
-        s32 end = phi_a0 + 3;
-    loop_2:
-        temp_v0 = *phi_v1 - arg1;
-        phi_v0 = temp_v0;
-        if (temp_v0 < 0) {
-            phi_v0 = 0;
-        } else {
-            phi_a2 |= 1;
-        }
+        u8* ptrCur = phi_a0;
+        s32 ptrEnd = phi_a0 + 3;
+        do {
+            s32 phi_v0 = *ptrCur - value;
+            if (phi_v0 < 0) {
+                phi_v0 = 0;
+            } else {
+                ret |= 1;
+            }
 
-        *phi_v1++ = phi_v0;
-        if ((s32)phi_v1 < end) {
-            goto loop_2;
-        }
+            *ptrCur++ = phi_v0;
+        } while ((s32)ptrCur < ptrEnd);
 
         phi_a0 += 0xC;
     }
 
-    return phi_a2;
+    return ret;
 }
-#endif

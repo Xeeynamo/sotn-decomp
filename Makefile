@@ -49,7 +49,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS		:= -P 4
-GO				:= /usr/local/go/bin/go
+GO				:= $(TOOLS_DIR)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 
@@ -84,8 +84,8 @@ clean:
 	git clean -fdx config/
 	git clean -fx
 format:
-	clang-format -i $$(find $(SRC_DIR)/ -type f -name *.c)
-	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name *.h)
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
+	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 check:
 	sha1sum --check slus00067.sha
 expected: check
@@ -182,7 +182,7 @@ MAD_PATCHES = \
 	-e "s/D_80096EB8/g_zEntityCenter/g" -e "s/0x80096EB8/0x80097408/g" \
 	-e "s/D_80096EC0/D_80097410/g" -e "s/0x80096EC0/0x80097410/g" \
 	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
-	-e "s/D_80096ED8/g_entityDestroyed/g" \
+	-e "s/D_80096ED8/g_entityDestroyed/g" \ -e "s/D_8009769C/g_playerGold/g" \
 	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
 	-e "s/D_8009741B/D_8009796F/g" -e "s/0x8009741B/0x8009796F/g" \
 	-e "s/D_8009741F/D_80097973/g" -e "s/0x8009741F/0x80097973/g" \
@@ -226,7 +226,6 @@ decompile: $(M2C_APP)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
-	sudo apt-get install -y $$(cat tools/requirements-debian.txt)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
@@ -244,9 +243,9 @@ $(M2C_APP):
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
 $(GO):
-	curl -L -o go1.19.2.linux-amd64.tar.gz https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
-	sudo tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
-	rm go1.19.2.linux-amd64.tar.gz
+	curl -L -o go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+	tar -C $(TOOLS_DIR) -xzf go1.19.3.linux-amd64.tar.gz
+	rm go1.19.3.linux-amd64.tar.gz
 $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
