@@ -110,6 +110,8 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB80C);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB920);
 
+// TODO: try after resolving aspsx
+// https://decomp.me/scratch/cJ3CF
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BBA98);
 
 void SpawnExplosionEntity(u16 objectId, Entity* entity) {
