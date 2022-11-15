@@ -457,7 +457,7 @@ void CollectLifeVessel(void) {
     DestroyEntity(D_8006C3B8);
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BE2E4); // Unique
+void func_801BE2E4(void) { DestroyEntity(D_8006C3B8); }
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityCandleDrop);
 
