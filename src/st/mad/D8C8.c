@@ -1436,7 +1436,7 @@ s32 func_8019976C(s32 arg0, u8 value) {
     u8* phi_v1 = arg0 + 4;
     u8* phi_a0;
     s32 i;
-    
+
     phi_a0 += 4;
 
     for (i = 0; i < 4; i++) {
@@ -1444,7 +1444,7 @@ s32 func_8019976C(s32 arg0, u8 value) {
         
         do {
             *phi_v1 -= value;
-            
+
             if ((u32)*phi_v1 >= 0xF9) {
                 *phi_v1 = 0;
             } else {
