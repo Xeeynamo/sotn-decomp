@@ -8,6 +8,7 @@
 
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
+void func_801BDD9C(void);
 
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -22,7 +23,6 @@ extern s32 D_80181F04[];
 extern u16 D_80181F20[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
-extern u16 D_80180BE0[];
 extern ObjInit2 D_80182014[];
 extern u16 D_80180C1C[];
 
@@ -140,38 +140,7 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-bool AnimateEntity(u8* frames, Entity* entity) {
-    s32 flag = 0;
-    u16 currentFrameIndex = entity->animationFrameIndex * 2;
-    u8* currentFrame = frames + currentFrameIndex;
-
-    if (entity->animationFrameDuration == 0) {
-        if (currentFrame[0] > 0) {
-            flag = 0x80;
-            if (currentFrame[0] == 0xFF) {
-                return false;
-            }
-
-            entity->animationFrameDuration = *currentFrame++;
-            entity->animationFrame = *currentFrame++;
-            entity->animationFrameIndex++;
-        } else {
-            currentFrame = frames;
-            entity->animationFrameIndex = 0;
-            entity->animationFrameDuration = 0;
-            entity->animationFrameDuration = *currentFrame++;
-            entity->animationFrame = *currentFrame++;
-            entity->animationFrameIndex++;
-            return false;
-        }
-    }
-
-    entity->animationFrameDuration = entity->animationFrameDuration - 1;
-    entity->animationFrame = currentFrame[-1];
-    flag |= true;
-
-    return (u8)flag;
-}
+#include "st/AnimateEntity.h"
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BCAD4);
 
@@ -366,7 +335,7 @@ void func_801BD54C(u8 arg0) {
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BD568); // Unique
 
-void InitializeEntity(u16* arg0) {
+void InitializeEntity(const u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -453,7 +422,7 @@ void CollectHeart(u16 heartSize) {
     s32* hearts;
 
     g_pfnPlaySfx(0x67A);
-    hearts = &g_playerHeart;
+    hearts = (s32*)&g_playerHeart;
     *hearts += c_HeartPrizes[heartSize];
 
     if (g_playerHeart->max < *hearts) {
@@ -566,8 +535,6 @@ void func_801C0B24(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-
-// INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C0C14);
 
 void func_801C0C14(Entity* entity) {
     u16 temp_v0;

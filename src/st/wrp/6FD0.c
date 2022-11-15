@@ -3401,7 +3401,7 @@ void CollectHeart(u16 heartSize) {
     s32* hearts;
 
     g_pfnPlaySfx(0x67A);
-    hearts = &g_playerHeart;
+    hearts = &g_playerHeart->current;
     *hearts += c_HeartPrizes[heartSize];
 
     if (g_playerHeart->max < *hearts) {

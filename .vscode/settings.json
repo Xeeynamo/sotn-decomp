@@ -14,6 +14,7 @@
         "limits": "c",
         "*.tcc": "c",
         "type_traits": "c",
-        "common.h": "c"
+        "common.h": "c",
+        "random": "c"
     },
 }

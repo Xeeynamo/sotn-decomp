@@ -22,7 +22,6 @@ void FallEntity(void);
 void func_8019B858(void);
 void SpawnExplosionEntity(u16 objectId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
-s32 AnimateEntity(u8*, Entity*);
 void EntityItemDrop(struct Entity*);
 void EntityHeartDrop(struct Entity*);
 void func_8019A78C(void);
@@ -235,7 +234,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019697C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80196CC8);
 
-u32 func_80196F90(void) { // Random
+s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return g_randomNext >> 0x18;
 }
@@ -409,7 +408,7 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-bool AnimateEntity(const u8 frames[], Entity* entity) {
+s32 AnimateEntity(const u8 frames[], Entity* entity) {
     s32 flag = 0;
     u16 currentFrameIndex = entity->animationFrameIndex * 2;
     u8* currentFrame = frames + currentFrameIndex;
@@ -1098,8 +1097,8 @@ void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
 
 void func_8019F304(void) {
     Entity* entity;
-    s8 temp_s4 = func_80196F90() & 3;
-    s16 temp_s3 = ((func_80196F90() & 0xF) << 8) - 0x800;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
 
     for (i = 0; i < 6; i++) {
