@@ -829,4 +829,3 @@ s32 func_801D2704(s32 arg0, u8 arg1) {
 
     return ret;
 }
-

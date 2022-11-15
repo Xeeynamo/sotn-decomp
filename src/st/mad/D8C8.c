@@ -1441,7 +1441,7 @@ s32 func_8019976C(s32 arg0, u8 value) {
 
     for (i = 0; i < 4; i++) {
         phi_v1 = phi_a0;
-        
+
         do {
             *phi_v1 -= value;
 
