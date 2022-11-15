@@ -73,7 +73,8 @@ void func_801BB3B8(s16 arg0) {
 void func_801BB404(s16 arg0) {
     do {
     loop_1:
-        if ((D_801CAA74->posX == 0xFFFF) || ((arg0 < D_801CAA74->posX) && (D_801CAA74->posX != 0xFFFE))) {
+        if ((D_801CAA74->posX == 0xFFFF) ||
+            ((arg0 < D_801CAA74->posX) && (D_801CAA74->posX != 0xFFFE))) {
             D_801CAA74--;
             goto loop_1;
         }
@@ -89,7 +90,8 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB66C);
 void func_801BB6B8(s16 arg0) {
     do {
     loop_1:
-        if ((D_801CAA78->posY == 0xFFFF) || ((arg0 < D_801CAA78->posY) && (D_801CAA78->posY != 0xFFFE))) {
+        if ((D_801CAA78->posY == 0xFFFF) ||
+            ((arg0 < D_801CAA78->posY) && (D_801CAA78->posY != 0xFFFE))) {
             D_801CAA78--;
             goto loop_1;
         }
