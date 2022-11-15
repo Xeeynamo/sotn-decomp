@@ -28,6 +28,7 @@ extern u16 D_80180C1C[];
 extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
 extern u8 D_801822B4[];
+PfnEntityUpdate D_80180A90[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -107,7 +108,13 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB920);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BBA98);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", SpawnExplosionEntity);
+void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_80180A90[objectId];
+    entity->posX.Data.high = D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = D_8006C3B8->posY.Data.high;
+}
 
 void func_801BBBC0(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
