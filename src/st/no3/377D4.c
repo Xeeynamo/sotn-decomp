@@ -960,4 +960,3 @@ s32 func_801D704C(s32 arg0, u8 arg1) {
 
     return ret;
 }
-
