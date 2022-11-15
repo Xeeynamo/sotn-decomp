@@ -1429,38 +1429,34 @@ void func_80199740(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019976C);
-#else
-s32 func_8019976C(s32 arg0, s32 value) {
-    s32 temp_t0;
-    u8* phi_v1;
+//! FAKE
+s32 func_8019976C(s32 arg0, u8 value) {
+    s32 var_v0;
+    u8 ret = 0;
+    u8* phi_v1 = arg0 + 4;
     u8* phi_a0;
-    int i;
+    s32 i;
+    
+    phi_a0 += 4;
 
-    s32 phi_a2;
-    s32 phi_a2_2;
-
-    phi_v1 = arg0 + 4;
-    phi_a2 = 0;
-    for (i = 0, phi_a2_2 = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
+        
         phi_v1 = phi_a0;
-    loop_2:
-        *phi_v1 -= value;
-        if ((u32)*phi_v1 >= 0xF9) {
-            *phi_v1 = 0;
-        } else {
-            phi_a2 |= 1;
-        }
+        do {
 
-        phi_v1++;
-        if (phi_v1 < (phi_a0 + 3)) {
-            goto loop_2;
-        }
+            *phi_v1 -= value;
+            
+            if ((u32)*phi_v1 >= 0xF9) {
+                *phi_v1 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            phi_v1++;
+        } while ((s32)phi_v1 < (s32)(phi_a0 + 3));
 
         phi_a0 += 0xC;
     }
 
-    return phi_a2 & 0xFF;
+    return ret;
 }
-#endif
