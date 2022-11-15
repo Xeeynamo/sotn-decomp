@@ -926,7 +926,7 @@ s32 func_801CA0FC(s32 arg0, u8 arg1) {
             } else {
                 ret |= 1;
             }
-            
+
             *var_v1 = var_v0;
             var_v1++;
         } while (((s32)var_v1 < ((s32)var_a0 + 3)));
