@@ -35,6 +35,7 @@ extern u8 D_801822B4[];
 PfnEntityUpdate D_80180A90[];
 extern s32 D_801824B8;
 extern s32 D_801824C0;
+extern u16 D_80180C88;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -873,7 +874,27 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6494); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6574); // Unique
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6678); // Unique
+void func_801C6678(Entity* entity) {
+    if (entity->initState == 0) {
+        InitializeEntity(&D_80180C88);
+        entity->unk1A = 0x120;
+        entity->unk1C = 0x200;
+        entity->unk6C = 0;
+        entity->unk3C = 0;
+        entity->unk19 = entity->unk19 | 0xB;
+        return;
+    }
+
+    entity->unk14 = entity[-1].unk14;
+    entity->zPriority = entity[-1].zPriority - 1;
+    entity->animationFrame = entity[-1].animationFrame;
+    entity->posX.Data.high = entity[-1].posX.Data.high;
+    entity->posY.Data1.unk2 = entity[-1].posY.value - 0x14;
+
+    if (entity[-1].objectId != 0x2E) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C672C); // Unique
 
