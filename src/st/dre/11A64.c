@@ -1245,7 +1245,33 @@ void func_801A27B8(unkStruct3* arg0) {
     arg0->unk0->unk32 = 8;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A27E4);
+s32 func_801A27E4(s32 arg0, u8 arg1) {
+    s32 var_v0;
+    s32 ret = 0;
+    u8* var_a0 = arg0 + 4;
+    u8* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        var_v1 = var_a0;
+        do {
+            var_v0 = *var_v1 - arg1;
+
+            if (var_v0 < 0) {
+                var_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            *var_v1 = var_v0;
+            var_v1++;
+        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+
+        var_a0 += 0xC;
+    }
+
+    return ret;
+}
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2848);
 
