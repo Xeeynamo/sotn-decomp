@@ -567,7 +567,36 @@ void func_801BEB80(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BEC7C);
+POLY_GT4* func_801BEC7C(Entity* entity, s32 arg1) {
+    POLY_GT4* poly;
+    s16 left, top, right, bottom;
+
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+
+    left = entity->posX.Data.high - 7;
+    right = entity->posX.Data.high + 7;
+    poly->x2 = left;
+    poly->x0 = left;
+    poly->x3 = right;
+    poly->x1 = right;
+
+    top = entity->posY.Data.high - 7;
+    bottom = entity->posY.Data.high + 7;
+    poly->y1 = top;
+    poly->y0 = top;
+    poly->y3 = bottom;
+    poly->y2 = bottom;
+
+    if (arg1 & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityCandleHeartDrop);
 
