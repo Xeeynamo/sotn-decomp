@@ -412,7 +412,28 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BD9A0);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BDCE4); // Unique
 
+// https://decomp.me/scratch/W8pIb branch problem, probably aspsx
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BDD9C);
+#else
+void func_801BDD9C(void) {
+    if (D_8006C3B8->accelerationY >= 0) {
+        D_8006C3B8->unk84.value += D_8006C3B8->unk88;
+        D_8006C3B8->accelerationX = D_8006C3B8->unk84.value;
+        
+        if ((D_8006C3B8->accelerationX == 0x10000) ||
+            (D_8006C3B8->accelerationX == -0x10000)) {
+            D_8006C3B8->unk88 = -D_8006C3B8->unk88;
+            
+        }
+        
+    }
+
+    if (D_8006C3B8->accelerationY < 0x4000) {
+        D_8006C3B8->accelerationY += 0x2000;
+    }
+}
+#endif
 
 void func_801BDE20(u16 arg0) {
     Unkstruct7 sp10;
