@@ -9,6 +9,10 @@
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
+s32 func_801BCF74(s32*);
+s32 func_801BD720(s32*, s32);
+void func_801BEB80(Entity*);
+void func_801C29B0(s32);
 
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -29,6 +33,8 @@ extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
 extern u8 D_801822B4[];
 PfnEntityUpdate D_80180A90[];
+extern s32 D_801824B8;
+extern s32 D_801824C0;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -369,7 +375,24 @@ void func_801BD54C(u8 arg0) {
     entity->animationFrameDuration = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BD568); // Unique
+void func_801BD568(u16 arg0, u16 arg1) {
+    if (arg1 != 0) {
+        func_801C29B0(arg1);
+    }
+
+    if (arg0 == 0xFF) {
+        DestroyEntity(D_8006C3B8);
+        return;
+    }
+
+    D_8006C3B8->objectId = 2;
+    D_8006C3B8->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
+    D_8006C3B8->subId = arg0;
+    D_8006C3B8->animationFrame = 0;
+    D_8006C3B8->unk19 = 0;
+    D_8006C3B8->initState = 0;
+    D_8006C3B8->unk2E = 0;
+}
 
 void InitializeEntity(const u16 arg0[]) {
     u16 temp_v1;
@@ -420,13 +443,11 @@ void func_801BDD9C(void) {
     if (D_8006C3B8->accelerationY >= 0) {
         D_8006C3B8->unk84.value += D_8006C3B8->unk88;
         D_8006C3B8->accelerationX = D_8006C3B8->unk84.value;
-        
+
         if ((D_8006C3B8->accelerationX == 0x10000) ||
             (D_8006C3B8->accelerationX == -0x10000)) {
             D_8006C3B8->unk88 = -D_8006C3B8->unk88;
-            
         }
-        
     }
 
     if (D_8006C3B8->accelerationY < 0x4000) {
@@ -806,7 +827,19 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5568); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5D20);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5F2C); // Unique
+void func_801C5F2C(Entity* arg0) {
+    if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
+        arg0->posX.value -= arg0->accelerationX;
+    }
+
+    if (!(func_801BD720(&D_801824C0, 3) & 2)) {
+        if ((--arg0->unk7C.modeU8.unk0) == 0) {
+            func_801BD52C(4);
+        }
+    } else {
+        func_801BD52C(5);
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5FC4); // Unique
 
