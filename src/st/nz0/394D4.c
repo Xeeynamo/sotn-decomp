@@ -27,6 +27,7 @@ extern ObjInit2 D_80182014[];
 extern u16 D_80180C1C[];
 extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
+extern u8 D_801822B4[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -746,7 +747,14 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3F9C); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4198); // Unique
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4550); // Unique
+void func_801C4550(void) {
+    if (D_8006C3B8->unk82 > 0) {
+        D_8006C3B8->unk82 -= 3;
+    } else {
+        func_801BD52C(D_801822B4[(Random() & 7)]);
+        D_8006C3B8->unk82 = 0x100;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C45BC); // Unique
 
