@@ -25,6 +25,8 @@ extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 extern u16 D_80180C1C[];
+extern LayoutObject* D_801CAA74;
+extern LayoutObject* D_801CAA78;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -58,9 +60,25 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB188);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB2A0);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB3B8);
+void func_801BB3B8(s16 arg0) {
+    do {
+    loop_1:
+        if ((D_801CAA74->posX == 0xFFFE) || (D_801CAA74->posX < arg0)) {
+            D_801CAA74++;
+            goto loop_1;
+        }
+    } while (0);
+}
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB404);
+void func_801BB404(s16 arg0) {
+    do {
+    loop_1:
+        if ((D_801CAA74->posX == 0xFFFF) || ((arg0 < D_801CAA74->posX) && (D_801CAA74->posX != 0xFFFE))) {
+            D_801CAA74--;
+            goto loop_1;
+        }
+    } while (0);
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB45C);
 
@@ -68,7 +86,15 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB558);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB66C);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB6B8);
+void func_801BB6B8(s16 arg0) {
+    do {
+    loop_1:
+        if ((D_801CAA78->posY == 0xFFFF) || ((arg0 < D_801CAA78->posY) && (D_801CAA78->posY != 0xFFFE))) {
+            D_801CAA78--;
+            goto loop_1;
+        }
+    } while (0);
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB710);
 
@@ -722,7 +748,15 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4550); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C45BC); // Unique
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4CC0); // Unique
+void func_801C4CC0(void) {
+    if (D_8006C3B8->subId != 0) {
+        D_8006C3B8->unk1E += 0x80;
+    } else {
+        D_8006C3B8->unk1E -= 0x80;
+    }
+
+    D_8006C3B8->unk1E &= 0xFFF;
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4D18); // Unique
 
