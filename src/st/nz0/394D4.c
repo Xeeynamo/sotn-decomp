@@ -69,7 +69,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB188);
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB2A0);
 
 void func_801BB3B8(s16 arg0) {
-    while(1) {
+    while (1) {
         if ((D_801CAA74->posX != 0xFFFE) && (D_801CAA74->posX >= arg0)) {
             break;
         }
@@ -78,12 +78,12 @@ void func_801BB3B8(s16 arg0) {
 }
 
 void func_801BB404(s16 arg0) {
-    while(1) {
+    while (1) {
         if (!(D_801CAA74->posX == 0xFFFF) &&
             ((arg0 >= D_801CAA74->posX) || (D_801CAA74->posX == 0xFFFE))) {
-                break;
+            break;
         }
-            D_801CAA74--;
+        D_801CAA74--;
     }
 }
 
