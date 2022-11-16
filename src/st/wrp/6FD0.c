@@ -2678,7 +2678,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(0x634);
+            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -3400,7 +3400,7 @@ void func_8018CB34(u16 arg0) {
 void CollectHeart(u16 heartSize) {
     s32* hearts;
 
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart->current;
     *hearts += c_HeartPrizes[heartSize];
 
@@ -3415,7 +3415,7 @@ void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
-    g_pfnPlaySfx(0x6A9);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_GOLD);
     gold = &g_playerGold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
@@ -3437,21 +3437,21 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(0x67A);
+        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(0x67A);
+        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
         D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(D_8006C3B8);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C3B8);
 }

@@ -163,7 +163,7 @@ void EntitySecretStairsEmitter(Entity* entity) {
         break;
     case 1:
         if (g_isSecretStairsButtonPressed) {
-            g_pfnPlaySfx(0x644);
+            g_pfnPlaySfx(NA_SE_SECRET_STAIRS);
             entity->initState++;
         }
         break;
@@ -380,7 +380,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->unk1E += 0x20;
         entity->accelerationY += 0x2000;
         if (entity->posY.Data.high >= 205) {
-            g_pfnPlaySfx(0x68B);
+            g_pfnPlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.Data.high = 204;
             func_801B5794(2);
         }

@@ -4,6 +4,7 @@
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
+#include "sfx.h"
 
 // Those entity IDs are common across all stages
 #define ENTITY_BREAKABLE 1

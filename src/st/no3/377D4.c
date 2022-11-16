@@ -69,7 +69,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(0x634);
+            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -663,7 +663,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6450);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6568);
 
 void func_801C660C(void) {
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     D_8003C848(5, 0x8000);
     DestroyEntity(D_8006C3B8);
 }
