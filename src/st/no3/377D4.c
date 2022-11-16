@@ -1,22 +1,22 @@
+/*
+ * File: 377D4.c
+ * Overlay: NO3
+ * Description: Castle Entrance
+ */
+
 #include "stage.h"
 
 void SpawnExplosionEntity(u16, Entity*);
-void ReplaceCandleWithDrop(Entity*);
-void EntityCandleDrop(Entity*);
-void EntityCandleHeartDrop(Entity*);
+void ReplaceBreakableWithItemDrop(Entity*);
+void EntityItemDrop(Entity*);
+void EntityHeartDrop(Entity*);
 
 extern u8* D_80180850;
-extern u16 D_80180AAC[];
 extern u16 D_80180B00[];
 extern ObjInit2 D_80180BFC[];
-extern u8* D_80180E50[];
-extern u8 D_80180E70[];
-extern u8 D_80180E78[];
-extern u16 D_80180E80[];
-extern u8 D_80180E90[];
 extern s16 D_801820C4[];
-extern ObjectInit* D_801D7110;
-extern ObjectInit* D_801D7114;
+extern LayoutObject* D_801D7110;
+extern LayoutObject* D_801D7114;
 extern s8 D_801D7118;
 extern s8 D_801D711C;
 extern s16 D_801D7D30;
@@ -30,7 +30,7 @@ extern u16 D_801D7D2C;
 extern s16 D_801D7D2E;
 extern s8 D_801D7D3A;
 extern s8 D_801D7D3B;
-extern ObjectInit* g_pStObjLayout[];
+extern LayoutObject* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 void func_801B77D4(Entity* arg0) {
@@ -45,7 +45,7 @@ void func_801B77D4(Entity* arg0) {
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
-        arg0->unk18 = temp_s0->unkA;
+        arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
             arg0->unk34 = temp_v0;
@@ -57,27 +57,34 @@ void func_801B77D4(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B78A8);
 
-void EntityCandle(Entity* entity) {
-    u16 temp_s0 = entity->subId >> 0xC;
+extern u16 g_eBreakableInit[];
+extern u8* g_eBreakableAnimations[8];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableAnimationSets[];
+extern u8 g_eBreakableBlendModes[];
+void EntityBreakable(Entity* entity) {
+    u16 breakableType = entity->subId >> 0xC;
     if (entity->initState) {
-        AnimateEntity(D_80180E50[temp_s0], entity);
+        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
             g_pfnPlaySfx(0x634);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(EntityExplosionID, entityDropItem);
-                entityDropItem->subId = D_80180E78[temp_s0];
+                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
+                entityDropItem->subId =
+                    g_eBreakableExplosionTypes[breakableType];
             }
-            ReplaceCandleWithDrop(entity);
+            ReplaceBreakableWithItemDrop(entity);
         }
     } else {
-        InitializeEntity(D_80180AAC);
-        entity->zPriority = D_80097408 - 0x14;
-        entity->unk18 = D_80180E90[temp_s0];
-        entity->hitboxHeight = D_80180E70[temp_s0];
-        entity->animationSet = D_80180E80[temp_s0];
+        InitializeEntity(g_eBreakableInit);
+        entity->zPriority = g_zEntityCenter - 0x14;
+        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
+        entity->animationSet = g_eBreakableAnimationSets[breakableType];
     }
 }
 
@@ -219,20 +226,20 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1B78);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1C80);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityDamage);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityNumericDamage);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", CreateEntity);
 #else
-void CreateEntity(Entity* entity, ObjectInit* initDesc) {
+void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->flags & 0x3FF;
+    entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
-    entity->subId = initDesc->unk8;
-    entity->unk32 = initDesc->unk6 >> 8;
-    entity->unk68 = initDesc->flags >> 0xA & 7;
+    entity->subId = initDesc->subId;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 #endif
 
@@ -240,28 +247,23 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3500);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3618);
 
-void func_801C3730(s32 arg0) {
-    s32 a1 = ~1;
-    arg0 = (s16)arg0;
-
-loop_1:
-    if ((D_801D7110->posX == a1) || (D_801D7110->posX < arg0)) {
+void func_801C3730(s16 arg0) {
+    while (true) {
+        if ((D_801D7110->posX != (u16)~1) && !(D_801D7110->posX < arg0)) {
+            break;
+        }
         D_801D7110++;
-        goto loop_1;
     }
 }
 
-void func_801C377C(s32 arg0) {
-    s32 a2, a3;
-    a3 = ~0;
-    arg0 = (s16)arg0;
-    a2 = ~1;
-
-loop_1:
-    if ((D_801D7110->posX == a3) ||
-        ((arg0 < D_801D7110->posX) && (D_801D7110->posX != a2))) {
-        D_801D7110--;
-        goto loop_1;
+void func_801C377C(s16 arg0) {
+    while (true) {
+        if ((D_801D7110->posX == (u16)~0) ||
+            ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))) {
+            D_801D7110--;
+        } else {
+            break;
+        }
     }
 }
 
@@ -269,22 +271,21 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C37D4);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C38D0);
 
-void func_801C39E4(s32 arg0) {
-    s32 a1 = ~1;
-    arg0 = (s16)arg0;
-
-loop_1:
-    if ((D_801D7114->posY == a1) || (D_801D7114->posY < arg0)) {
+void func_801C39E4(s16 arg0) {
+    while (true) {
+        if ((D_801D7114->posY != (u16)~1) && !(D_801D7114->posY < arg0)) {
+            break;
+        }
         D_801D7114++;
-        goto loop_1;
     }
 }
+
 void func_801C3A30(s16 arg0) {
     while (true) {
-        if (D_801D7114->posY == 0xFFFF)
+        if (D_801D7114->posY == (u16)~0)
             D_801D7114--;
         else if ((arg0 >= (s32)D_801D7114->posY) ||
-                 (D_801D7114->posY == 0xFFFE))
+                 (D_801D7114->posY == (u16)~1))
             break;
         else
             D_801D7114--;
@@ -378,9 +379,21 @@ void func_801C3E10(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", SpawnExplosionEntity);
+void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->posX.Data.high = D_8006C3B8->posX.Data.high;
+    entity->posY.Data.high = D_8006C3B8->posY.Data.high;
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3F38);
+void func_801C3F38(u16 objectId, Entity* source, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->posX.Data.high = source->posX.Data.high;
+    entity->posY.Data.high = source->posY.Data.high;
+}
 
 s32 func_801C3FB4(Unkstruct5* arg0) {
     s16 var_v0_2;
@@ -399,7 +412,7 @@ s32 func_801C3FB4(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C402C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -425,8 +438,14 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-// https://decomp.me/scratch/pHwri
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4D4C);
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex) {
+        u32 value = (entity->objectRoomIndex - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        g_entityDestroyed[index] |= 1 << bit;
+    }
+}
 
 #include "st/AnimateEntity.h"
 
@@ -545,7 +564,7 @@ void func_801C58C4(u8 state) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C58E0);
 
-void InitializeEntity(u16* arg0) {
+void InitializeEntity(const u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -568,11 +587,11 @@ void InitializeEntity(u16* arg0) {
     D_8006C3B8->unk2E = 0;
     D_8006C3B8->initState++;
     if (D_8006C3B8->zPriority == 0) {
-        D_8006C3B8->zPriority = D_80097408 - 0xC;
+        D_8006C3B8->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
-void func_801C5A70(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->initState == 0) {
         arg0->initState++;
     }
@@ -584,42 +603,54 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5BC0);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5D18);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", ReplaceCandleWithDrop);
-#else
-extern u8 D_8009796E;
-void ReplaceCandleWithDrop(Entity* entity) {
-    u16 prevSubId;
-    u16 subId;
-    u16 newSubId;
+void ReplaceBreakableWithItemDrop(Entity* entity) {
+    u16 temp_a0;
+    u16 var_v1;
 
-    func_801C4D4C(entity);
-    if ((D_8009796E & 2) == 0) {
+    PreventEntityFromRespawning(entity);
+    if (!(D_8009796E & 2)) {
         DestroyEntity(entity);
         return;
     }
 
-    prevSubId = entity->subId;
-    subId = prevSubId & 0xFFF;
-    entity->subId = subId;
-    if (prevSubId < 0x80) {
-        entity->objectId = EntityCandleDropID;
-        entity->pfnUpdate = EntityCandleDrop;
+    temp_a0 = entity->subId & 0xFFF;
+    var_v1 = temp_a0;
+    entity->subId = var_v1;
+
+    if (var_v1 < 0x80) {
+        entity->objectId = ENTITY_ITEM_DROP;
+        entity->pfnUpdate = EntityItemDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
-        newSubId = subId;
     } else {
-        entity->objectId = EntityCandleHeartDropID;
-        entity->pfnUpdate = EntityCandleHeartDrop;
-        newSubId = subId - 0x80;
+        var_v1 = temp_a0 - 0x80;
+        entity->objectId = ENTITY_HEART_DROP;
+        entity->pfnUpdate = EntityHeartDrop;
     }
-    entity->subId = newSubId;
-    entity->unk6D = 0x10;
-    entity->initState = 0;
-}
-#endif
 
+    entity->subId = var_v1;
+    temp_a0 = 0;
+    entity->unk6D = 0x10;
+    entity->initState = temp_a0;
+}
+
+#ifdef NON_MATCHING
+void func_801C6114(void) {
+    if (D_8006C3B8->accelerationY >= 0) {
+        D_8006C3B8->unk84.value = D_8006C3B8->unk88 + D_8006C3B8->unk84.value;
+        D_8006C3B8->accelerationX = D_8006C3B8->unk84.value;
+        if ((D_8006C3B8->accelerationX == 0x10000) ||
+            (D_8006C3B8->accelerationX == -0x10000)) {
+            D_8006C3B8->unk88 = -D_8006C3B8->unk88;
+        }
+    }
+    if (D_8006C3B8->accelerationY < 0x4000) {
+        D_8006C3B8->accelerationY += 0x2000;
+    }
+}
+#else
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6198);
 
@@ -639,21 +670,21 @@ void func_801C660C(void) {
 
 void func_801C665C(void) { DestroyEntity(D_8006C3B8); }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandleDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityItemDrop);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6EF8);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityExplosion);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6FF4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCandleHeartDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7680);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7930);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRelicItem);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8400);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityInventoryItem);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8528);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0D);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8A84);
 
@@ -695,7 +726,7 @@ bool func_801C92B0(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C93AC);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C992C);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityIntenseExplosion);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C9A2C);
 
@@ -715,13 +746,13 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAD28);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CAE20);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAreaTitlePopup);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC008);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityEnemyBlood);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC4B8);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRoomForeground);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC5A4);
 
@@ -902,5 +933,30 @@ void func_801D7020(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-// https://decomp.me/scratch/cZhs0
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D704C);
+s32 func_801D704C(s32 arg0, u8 arg1) {
+    s32 var_v0;
+    s32 ret = 0;
+    u8* var_a0 = arg0 + 4;
+    u8* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        var_v1 = var_a0;
+        do {
+            var_v0 = *var_v1 - arg1;
+
+            if (var_v0 < 0) {
+                var_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            *var_v1 = var_v0;
+            var_v1++;
+        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+
+        var_a0 += 0xC;
+    }
+
+    return ret;
+}

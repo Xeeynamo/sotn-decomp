@@ -5,6 +5,7 @@
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
+typedef void (*UnkFunctionUpdate1)(struct Entity*, u32, struct Entity*);
 
 typedef struct {
     unsigned char width;
@@ -87,7 +88,7 @@ typedef struct {
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 unk14;
     /* 0x16 */ s16 palette;
-    /* 0x18 */ s8 unk18;
+    /* 0x18 */ s8 blendMode;
     /* 0x19 */ s8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
@@ -100,7 +101,7 @@ typedef struct {
     /* 0x2C */ u16 initState;
     /* 0x2E */ s16 unk2E;
     /* 0x30 */ u16 subId;
-    /* 0x32 */ u16 unk32;
+    /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 unk3A;
@@ -152,10 +153,11 @@ typedef struct {
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ s32 unkAC;
     /* 0xB0 */ s32 unkB0;
-    /* 0xB4 */ s32 unkB4;
-    /* 0xB8 */ u16 unkB8;
-    /* 0xBA */ u8 unkBA;
-    /* 0xBB */ u8 unkBB;
+    /* 0xB4 */ s16 unkB4;
+    /* 0xB6 */ s16 unk86;
+    /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+    ///* 0xBA */ u8 unkBA;
+    ///* 0xBB */ u8 unkBB;
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {
@@ -164,12 +166,17 @@ typedef struct playerHeart {
 } playerHeart;
 
 typedef struct {
-    /* 0x0 */ u16 posX;
-    /* 0x2 */ u16 posY;
-    /* 0x4 */ u16 flags; // maybe misnamed
-    /* 0x6 */ u16 unk6;
-    /* 0x8 */ u16 unk8;
-} ObjectInit; // size = 0xA
+    /* 0x00 */ u16 animationSet;
+    /* 0x02 */ u16 zPriority;
+    /* 0x04 */ UnkUnion2 unk4;
+    /* 0x06 */ u16 palette;
+    /* 0x08 */ u8 unk8;
+    /* 0x09 */ u8 unk9;
+    /* 0x0A */ u8 blendMode;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ const u8* unk10;
+} ObjInit2; // size = 0x14
 
 typedef struct unkStruct3 {
     /* 0x00 */ struct unkStruct3* unk0;
@@ -260,19 +267,6 @@ typedef struct {
 } Unkstruct8; // size = 0x10
 
 typedef struct {
-    /* 0x00 */ u16 animationSet;
-    /* 0x02 */ u16 zPriority;
-    /* 0x04 */ UnkUnion2 unk4;
-    /* 0x06 */ u16 palette;
-    /* 0x08 */ u8 unk8;
-    /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 unkA;
-    /* 0x0B */ u8 unkB;
-    /* 0x0C */ u32 unkC;
-    /* 0x10 */ u8* unk10;
-} ObjInit2; // size = 0x14
-
-typedef struct {
     /* 0x0 */ u16 programId;
     /* 0x2 */ u16 unk2;
     /* 0x4 */ u16 unk4;
@@ -288,6 +282,17 @@ typedef struct {
     u8 _unk_0C74[0xCC00];
     /* 0xD874 */ POLY_G4 unk_D874[0]; // unk length
 } GpuBufferUnk;
+
+typedef enum {
+    ENTITY_INITSTATE_0,
+    ENTITY_INITSTATE_1,
+    ENTITY_INITSTATE_2,
+    ENTITY_INITSTATE_3,
+    ENTITY_INITSTATE_4,
+    ENTITY_INITSTATE_5,
+    ENTITY_INITSTATE_6,
+    ENTITY_INITSTATE_7
+} EntityInitStates;
 
 // main
 extern Unkstruct5* D_8003C704;
@@ -359,9 +364,6 @@ extern s8 D_8005436D;
 
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
-#define EntityExplosionID 2
-#define EntityCandleDropID 3
-#define EntityCandleHeartDropID 10
 
 #define PROGRAM_NO0 0x00
 #define PROGRAM_NO1 0x01
@@ -462,8 +464,8 @@ extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
-extern u16 D_80097408;
-extern s32 D_80097428[];
+extern u16 g_zEntityCenter;
+extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
 extern void* D_8007EFD8;
 extern POLY_GT4 D_80086FEC[];

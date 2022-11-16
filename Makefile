@@ -49,7 +49,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS		:= -P 4
-GO				:= /usr/local/go/bin/go
+GO				:= $(TOOLS_DIR)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 
@@ -77,15 +77,15 @@ define link
 endef
 
 all: build check
-build: main dra ric dre mad no3 np3 st0 wrp rwrp
+build: main dra ric cen dre mad no3 np3 nz0 st0 wrp rwrp
 clean:
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
 	git clean -fdx config/
 	git clean -fx
 format:
-	clang-format -i $$(find $(SRC_DIR)/ -type f -name *.c)
-	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name *.h)
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
+	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 check:
 	sha1sum --check slus00067.sha
 expected: check
@@ -118,6 +118,10 @@ $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
 
+cen: stcen_dirs $(BUILD_DIR)/CEN.BIN
+$(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
+	$(OBJCOPY) -O binary $< $@
+
 dre: stdre_dirs $(BUILD_DIR)/DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
 	$(OBJCOPY) -O binary $< $@
@@ -132,6 +136,10 @@ $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 
 np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
+	$(OBJCOPY) -O binary $< $@
+
+nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN
+$(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
 	$(OBJCOPY) -O binary $< $@
 
 st0: stst0_dirs $(BUILD_DIR)/ST0.BIN
@@ -171,9 +179,10 @@ MAD_PATCHES = \
 	-e "s/D_8007E9CC/D_8007EF1C/g" -e "s/0x8007E9CC/0x8007EF1C/g" \
 	-e "s/D_80086A9C/D_80086FEC/g" -e "s/0x80086A9C/0x80086FEC/g" \
 	-e "s/D_80096EA8/D_800973F8/g" -e "s/0x80096EA8/0x800973F8/g" \
-	-e "s/D_80096EB8/D_80097408/g" -e "s/0x80096EB8/0x80097408/g" \
+	-e "s/D_80096EB8/g_zEntityCenter/g" -e "s/0x80096EB8/0x80097408/g" \
 	-e "s/D_80096EC0/D_80097410/g" -e "s/0x80096EC0/0x80097410/g" \
 	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
+	-e "s/D_80096ED8/g_entityDestroyed/g" \ -e "s/D_8009769C/g_playerGold/g" \
 	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
 	-e "s/D_8009741B/D_8009796F/g" -e "s/0x8009741B/0x8009796F/g" \
 	-e "s/D_8009741F/D_80097973/g" -e "s/0x8009741F/0x80097973/g" \
@@ -198,7 +207,7 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stst0 extract_stwrp extract_strwrp
+extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stst0 extract_stwrp extract_strwrp
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools
@@ -217,7 +226,6 @@ decompile: $(M2C_APP)
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
-	sudo apt-get install -y $$(cat tools/requirements-debian.txt)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
@@ -235,16 +243,16 @@ $(M2C_APP):
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
 $(GO):
-	curl -L -o go1.19.2.linux-amd64.tar.gz https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
-	sudo tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
-	rm go1.19.2.linux-amd64.tar.gz
+	curl -L -o go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+	tar -C $(TOOLS_DIR) -xzf go1.19.3.linux-amd64.tar.gz
+	rm go1.19.3.linux-amd64.tar.gz
 $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.bin.o: %.bin
-	$(LD) -r -b binary -o $@ $<
+	$(LD) -r -b binary -o -Map %.map $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 

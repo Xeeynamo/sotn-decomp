@@ -1,3 +1,9 @@
+/*
+ * File: 27D64.c
+ * Overlay: ST0
+ * Description: Final Stage: Bloodletting
+ */
+
 #include "stage.h"
 
 extern PfnEntityUpdate PfnEntityUpdates[];
@@ -23,7 +29,7 @@ void func_801A7D64(Entity* arg0) {
         arg0->unk5A = temp_s0->unk4.data;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
-        arg0->unk18 = temp_s0->unkA;
+        arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
             arg0->unk34 = temp_v0;
@@ -559,7 +565,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1B98);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1CA0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B2A3C);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityNumericDamage);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", CreateEntity);
 
@@ -614,7 +620,7 @@ s32 func_801B3C58(Unkstruct5* arg0) {
     return var_v0_2;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3CD0);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -631,9 +637,23 @@ void DestroyEntity(Entity* item) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4974);
+void DestroyEntityFromIndex(s16 index) {
+    Entity* entity = &D_800733D8[index];
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B49F0);
+    while (entity < &D_8007EF1C) {
+        DestroyEntity(entity);
+        entity++;
+    }
+}
+
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->objectRoomIndex) {
+        u32 value = (entity->objectRoomIndex - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        g_entityDestroyed[index] |= 1 << bit;
+    }
+}
 
 #include "st/AnimateEntity.h"
 
@@ -726,13 +746,48 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B55A8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5600);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B568C);
+u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B56BC);
+u16 func_801B56BC(Entity* a, Entity* b) {
+    s32 diffX = b->posX.Data.high - a->posX.Data.high;
+    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B56F4);
+u16 func_801B56F4(s32 x, s32 y) {
+    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
+    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    return ratan2(diffY, diffX);
+}
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B573C);
+#else
+// very minor reg swap
+u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0 = arg1;
+    u16 var_v0_2;
+
+    if (temp_a2 & 0x800) {
+        var_v0_2 = temp_a2 & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
+#endif
 
 void func_801B5794(u8 state) {
     D_8006C3B8->initState = state;
@@ -751,7 +806,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", InitializeEntity);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5948);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDummy);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5970);
 
@@ -797,11 +852,11 @@ void func_801B6B60(Entity* entity) {
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
         entity->animationFrameDuration = 0;
-        entity->unk18 = 0x30;
+        entity->blendMode = 0x30;
 
         if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
-            entity->unk18 = 0x10;
+            entity->blendMode = 0x10;
         }
 
         zPriority = entity->subId & 0xFF00;
@@ -868,7 +923,7 @@ bool func_801B8338(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8434);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B89B4);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityIntenseExplosion);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8AB4);
 
@@ -886,11 +941,31 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9BB8);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9DB0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9EA8);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityAbsorbOrb);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA6EC);
+extern ObjInit2 D_80181FE8[];
+void EntityRoomForeground(Entity* entity) {
+    ObjInit2* objInit = &D_80181FE8[entity->subId];
+    if (entity->initState == 0) {
+        InitializeEntity(D_801805BC);
+        entity->animationSet = objInit->animationSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.data;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->unk34 = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 |= 4;
+        }
+    }
+    AnimateEntity(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA7D8);
 
@@ -919,10 +994,10 @@ void EntityCutscenePhotographFire(Entity* entity) {
         if (entity->subId) {
             entity->unk6C = 0x10;
             entity->zPriority = 0x1FB;
-            entity->unk18 = 0x50;
+            entity->blendMode = 0x50;
         } else {
             entity->zPriority = 0x1FE;
-            entity->unk18 = 0x30;
+            entity->blendMode = 0x30;
         }
     case 1:
         entity->posY.value -= 0x10000;
@@ -1014,7 +1089,33 @@ void func_801BD860(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD88C);
+s32 func_801BD88C(s32 arg0, u8 arg1) {
+    s32 var_v0;
+    s32 ret = 0;
+    u8* var_a0 = arg0 + 4;
+    u8* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        var_v1 = var_a0;
+        do {
+            var_v0 = *var_v1 - arg1;
+
+            if (var_v0 < 0) {
+                var_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            *var_v1 = var_v0;
+            var_v1++;
+        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+
+        var_a0 += 0xC;
+    }
+
+    return ret;
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD8F0);
 

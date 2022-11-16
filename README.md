@@ -17,18 +17,21 @@ All the files refers to the `SLUS-00067` version of the game.
 | `54828d4e44ea9575f2a0917ff63def42a304abff` | SLUS_000.67 | N/A 
 | `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN    | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dra.json)
 | `d076912661e67a38afae0a1b5044ab5f10bcfb39` | RIC.BIN    | ![progress RIC.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-ric.json)
+| `42226b6d9ed24448eed61b3c6cd2949e96bebab6` | ST/CEN.BIN | ![progress CEN.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-cen.json)
 | `e42976f45b47d1c4912a198ae486b77ee6d77c9c` | ST/DRE.BIN | ![progress DRE.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dre.json)
 | `adb3303e1ea707c63dfa978511a88cab4f61970a` | ST/MAD.BIN | ![progress MAD.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-mad.json)
 | `5d06216b895ab5ff892c88b0d9eff67ff16e2bd1` | ST/NO3.BIN | ![progress NO3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-no3.json)
 | `7c78a2bec6a26acfb62456e7f517915fe0c0e3f5` | ST/NP3.BIN | ![progress NP3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-np3.json)
+| `b10b9c2be721cf9cbed3aa94be468ba9e23bc68b` | ST/NZ0.BIN | ![progress NZ0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-nz0.json)
 | `bc2fabbe5ef0d1288490b6f1ddbf11092a2c0c57` | ST/ST0.BIN | ![progress ST0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-st0.json)
 | `2ae313f4e394422e4c5f37a2d8e976e92f9e3cda` | ST/WRP.BIN | ![progress WRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-wrp.json)
 | `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json)
 
 
-## How to setup the project (assuming Ubuntu 22.04/Debian 11 or Windows with WSL)
+## How to setup the project (assuming Ubuntu 20.04/Debian 11 or Windows with WSL)
 
  1. Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
+ 1. Run `sudo apt-get install -y $(cat tools/requirements-debian.txt)`
  1. Run `make update-dependencies`
  1. Inside the newly created repo, create a new `iso/` folder, and extract the content of the game disc
 
@@ -88,3 +91,14 @@ Be aware that not all the offsets have been yet redirected, so it will still be 
 * I suspect that GCC 2.6.x / PSY-Q 3.4 have been used to originally compile DRA.BIN
 * `main.exe` uses PS-X libraries that might have been created with a different compiler and with `-O1` rather than `-O2`
 
+## Troubleshooting
+
+### Not getting an "OK" on Ubuntu 22.04
+
+Debian>=12 and Ubuntu>=22.04 uses `binutils-mipsel-linux-gnu`>=2.38 which, for some unknown reasons, it generates broken binaries. You need to downgrade to 2.34 or 2.35 with the following:
+
+```shell
+curl -L -o binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb http://ftp.de.debian.org/debian/pool/main/b/binutils-mipsen/binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
+dpkg -i binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
+rm binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
+```
