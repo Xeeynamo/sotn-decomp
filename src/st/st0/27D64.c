@@ -316,7 +316,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             entity->accelerationX -= speedX;
         }
 
-        if ((g_blinkTimer & 3) == 0) { // lolwut?
+        if (!(g_blinkTimer & 3)) { // lolwut?
             Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;

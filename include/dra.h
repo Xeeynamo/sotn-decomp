@@ -138,7 +138,8 @@ typedef struct {
     /* 0x80 */ UnkUnion2 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ UnkUnion1 unk84;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ s8 unk88;
+    /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ u16 unk8C;
     /* 0x8E */ u16 unk8E;
@@ -156,8 +157,6 @@ typedef struct {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unk86;
     /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
-    ///* 0xBA */ u8 unkBA;
-    ///* 0xBB */ u8 unkBB;
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {
