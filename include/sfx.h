@@ -1,7 +1,7 @@
 /*
  * File: sfx.h
  * Description: SOTN Sound Effects
- * 
+ *
  * Glosary:
  * NA = North America
  * JP = Japan
