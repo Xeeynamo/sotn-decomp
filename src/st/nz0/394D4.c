@@ -41,6 +41,8 @@ extern u16 D_80180C88;
 extern const u8* D_80181F30;
 extern const u16* D_80180CF4;
 extern s32 D_80182600[];
+extern s32* D_8018216C;
+extern s32* D_80182174;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -880,7 +882,28 @@ void EntityRoomForeground(Entity* entity) {
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C33D8);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3708); // Unique
+void func_801C3708(void) {
+    s32 temp_s0;
+    s32 temp_v0;
+
+    temp_s0 = func_801BCF74(&D_8018216C);
+    temp_v0 = func_801BD720(&D_80182174, 3);
+
+    if ((temp_s0 == 0x80) || (temp_v0 & 2)) {
+        func_801BD52C(5);
+        return;
+    }
+
+    if (D_8006C3B8->unk7C.modeU8.unk0 == 0) {
+        if (func_801BCBEC() < 0x40) {
+            if (D_8006C3B8->unk14 != (func_801BCC5C() & 1)) {
+                func_801BD52C(4);
+            }
+        }
+    } else {
+        D_8006C3B8->unk7C.modeU8.unk0 = (s8)D_8006C3B8->unk7C.modeU8.unk0 - 1;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBoneScimitar);
 
@@ -1002,8 +1025,6 @@ void func_801C77B8(Entity* entity) {
         break;
     }
 }
-
-
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7884); // Unique
 
