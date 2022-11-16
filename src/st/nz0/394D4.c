@@ -15,6 +15,7 @@ void func_801BEB80(Entity*);
 void func_801C29B0(s32);
 void EntityCandleDrop(Entity* entity);
 void EntityCandleHeartDrop(Entity* entity);
+void func_801C33D8(const u32*, s32);
 
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -47,6 +48,8 @@ extern const u16* D_80180BD4;
 extern const s32 D_80181D3C[];
 extern const u16* D_80180C94;
 extern u16 D_80182424[];
+extern const u32 D_80181CEC[];
+extern const s32 c_GoldPrizes[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -554,7 +557,27 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(D_8006C3B8);
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", CollectGold);
+void CollectGold(u16 goldSize) {
+    s32 *gold, *unk;
+    u16 goldSizeIndex;
+
+    g_pfnPlaySfx(0x6A9);
+    gold = &g_playerGold;
+    goldSizeIndex = goldSize - 2;
+    *gold += c_GoldPrizes[goldSizeIndex];
+    if (*gold > MAX_GOLD) {
+        *gold = MAX_GOLD;
+    }
+
+    unk = &D_80097410;
+    if (*unk) {
+        g_pfnFreePolygons(D_80097414);
+        *unk = 0;
+    }
+
+    func_801C33D8(D_80181CEC[goldSizeIndex], 1);
+    DestroyEntity(D_8006C3B8);
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BE0D8); // Unique
 
