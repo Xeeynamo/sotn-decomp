@@ -56,7 +56,7 @@ jobs:
       - name: Generate duplicates report
         run: python3 tools/find_duplicates -a
       - name: Rename output file into something more meaningful
-        run: mv *_all_matches.txt duplicates.txt
+        run: mv *_all_matches.txt gh-report/duplicates.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 
