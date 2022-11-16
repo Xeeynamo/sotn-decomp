@@ -961,7 +961,7 @@ void func_801C3E94(Entity* entity) {
     InitializeEntity(&D_80180C58);
     entity->unk19 = 4;
     entity->animationFrame = entity->subId + 16;
-    
+
     if (entity->unk14 != 0) {
         entity->accelerationX = -entity->accelerationX;
     }
