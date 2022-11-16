@@ -12,7 +12,7 @@ void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);
 void func_801BEB80(Entity*);
-// void func_801C29B0(s32);
+void func_801C29B0(s32);
 void EntityCandleDrop(Entity* entity);
 void EntityCandleHeartDrop(Entity* entity);
 void func_801C33D8(const u32*, s32);
@@ -52,6 +52,8 @@ extern const u32 D_80181CEC[];
 extern const s32 c_GoldPrizes[];
 extern const u16 D_80180CA0[];
 extern u32 D_80182488[];
+extern const u16* D_80180C58;
+extern s16 D_801820E4[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -936,7 +938,39 @@ void func_801C3708(void) {
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBoneScimitar);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3E94); // Unique
+// Not matching by a single instruction, must likely compiler version
+// https://decomp.me/scratch/irC21
+#ifndef NON_MATCHING
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3E94);
+#else
+void func_801C3E94(Entity* entity) {
+    if (entity->initState) {
+        entity->unk88--;
+        if (entity->unk88 & 0xFF) {
+            entity->unk1E += D_801820E4[entity->subId];
+            FallEntity();
+            MoveEntity();
+            return;
+        }
+        entity->objectId = OBJECT_02;
+        entity->pfnUpdate = func_801BEB80;
+        entity->subId = 0;
+        entity->initState = 0;
+        return;
+    }
+    InitializeEntity(&D_80180C58);
+    entity->unk19 = 4;
+    entity->animationFrame = entity->subId + 16;
+    
+    if (entity->unk14 != 0) {
+        entity->accelerationX = -entity->accelerationX;
+    }
+
+    if (entity->subId & 0xF00) {
+        entity->palette += entity->subId / 256;
+    }
+}
+#endif
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3F9C); // Unique
 
@@ -990,7 +1024,7 @@ void func_801C5F2C(Entity* arg0) {
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5FC4); // Unique
 
 void func_801C6494(Entity* entity) {
-    if (entity->initState != ENTITY_INITSTATE_0) {
+    if (entity->initState) {
         entity->unk88--;
         if (entity->unk88 & 0xFF) {
             entity->unk1E += D_80182424[entity->subId];
@@ -1008,7 +1042,7 @@ void func_801C6494(Entity* entity) {
 
     InitializeEntity(&D_80180C94);
     entity->unk19 = 4;
-    entity->animationFrame = entity->subId + 0xF;
+    entity->animationFrame = entity->subId + 15;
 
     if (entity->unk14 != 0) {
         entity->accelerationX = -entity->accelerationX;
@@ -1029,25 +1063,22 @@ void func_801C6574(Entity* entity) {
         entity->accelerationY += 0x2400;
         MoveEntity();
 
-        if (entity->posY.Data.high >= 0xF1) {
+        if (entity->posY.Data.high > 240) {
             DestroyEntity(entity);
         }
     } else {
         InitializeEntity(&D_80180CA0);
         entity->posY.value -= 0x1000;
         value = func_801BCBEC();
-        value = value >> 5;
-
-        if (value >= 8) {
-            value = 7;
-        }
-
+        value /= 32;
+        value = CLAMP_MAX(value, 7);
         var_a0 = D_80182488[value];
         value = entity->unk14;
 
         if (value > 0) {
             var_a0 = -var_a0;
         }
+
         entity->accelerationY = -0x48000;
         entity->accelerationX = var_a0;
         entity->unk19 = 4;
