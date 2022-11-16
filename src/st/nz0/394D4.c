@@ -1003,8 +1003,6 @@ void func_801C77B8(Entity* entity) {
     }
 }
 
-
-
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7884); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7958); // Unique
