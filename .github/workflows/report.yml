@@ -39,6 +39,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+      - name: Install secondary pre-requirements
+        run: pip3 install -r tools/requirements-python.txt
       - name: Generate progress report
         run: |
             mkdir -p gh-report/assets
