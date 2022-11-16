@@ -38,6 +38,7 @@ PfnEntityUpdate D_80180A90[];
 extern s32 D_801824B8;
 extern s32 D_801824C0;
 extern u16 D_80180C88;
+extern const u8* D_80181F30;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -774,7 +775,32 @@ void func_801C15B4(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C16B4); // Unique
+void func_801C16B4(Entity* entity) {
+    if (entity->initState == ENTITY_INITSTATE_0) {
+        InitializeEntity(&D_80180BE0);
+        entity->unk6C = 0xF0;
+        entity->unk1A = 0x1A0;
+        entity->unk1C = 0x1A0;
+        entity->animationSet = 8;
+        entity->animationFrame = 1;
+        entity->zPriority += 0x10;
+
+        if (entity->subId != 0) {
+            entity->palette = entity->subId;
+        } else {
+            entity->palette = 0x8160;
+        }
+
+        entity->initState++;
+        return;
+    }
+
+    MoveEntity();
+
+    if (AnimateEntity(&D_80181F30, entity) == 0) {
+        DestroyEntity(entity);
+    }
+}
 
 void func_801C1780(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);

@@ -15,6 +15,9 @@
         "*.tcc": "c",
         "type_traits": "c",
         "common.h": "c",
-        "random": "c"
+        "random": "c",
+        "types.h": "c",
+        "macros.h": "c",
+        "include_asm.h": "c"
     },
 }
