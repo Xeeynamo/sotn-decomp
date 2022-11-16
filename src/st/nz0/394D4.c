@@ -43,6 +43,8 @@ extern const u16* D_80180CF4;
 extern s32 D_80182600[];
 extern s32* D_8018216C;
 extern s32* D_80182174;
+extern const u16* D_80180BD4;
+extern const s32 D_80181D3C[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -1026,7 +1028,31 @@ void func_801C77B8(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7884); // Unique
+void func_801C7884(Entity* entity) {
+    u16 subId = entity->subId;
+
+    switch (entity->initState) {
+    case ENTITY_INITSTATE_0:
+        InitializeEntity(&D_80180BD4);
+        entity->unk3C = 0;
+
+    case ENTITY_INITSTATE_1:
+        MoveEntity();
+        AnimateEntity(D_80181D3C[subId], entity);
+
+        entity->accelerationY = rsin(entity->unk1E) * 2;
+        entity->unk1E += 0x20;
+
+        if (entity[-1].initState != 1) {
+            entity->objectId = OBJECT_03;
+            entity->pfnUpdate = EntityCandleDrop;
+            entity->animationFrameDuration = 0;
+            entity->animationFrameIndex = 0;
+            entity->initState = ENTITY_INITSTATE_0;
+            entity->unk3C = 1;
+        }
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7958); // Unique
 
