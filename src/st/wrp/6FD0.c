@@ -3547,7 +3547,7 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
 
     x = (u16)source->posX.Data.high + xOffset;
     y = (u16)source->posY.Data.high + yOffset;
-    
+
     for (i = 0; i < count; i++) {
         entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
         if (entity != NULL) {
