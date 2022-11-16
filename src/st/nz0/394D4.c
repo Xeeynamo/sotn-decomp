@@ -92,7 +92,14 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB45C);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB558);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB66C);
+void func_801BB66C(s16 arg0) {
+    while (true) {
+        if ((D_801CAA78->posY != 0xFFFE) && (D_801CAA78->posY >= arg0)) {
+            break;
+        }
+        D_801CAA78++;
+    }
+}
 
 void func_801BB6B8(s16 arg0) {
     while (true) {
@@ -802,9 +809,11 @@ void EntityRoomForeground(Entity* entity) {
         entity->palette = objInit->palette;
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
+
         if (objInit->unkC != 0) {
             entity->unk34 = objInit->unkC;
         }
+
         if (entity->subId >= 5) {
             entity->unk1E = 0x800;
             entity->unk19 |= 4;
@@ -1030,12 +1039,12 @@ void func_801CA0D0(unkStruct3* arg0) {
 s32 func_801CA0FC(s32 arg0, u8 arg1) {
     s32 var_v0;
     s32 ret = 0;
-    u8* var_a0 = arg0 + 4;
+    s32* j = arg0 + 4;
     u8* var_v1;
     s32 i;
 
-    for (i = 0; i < 4; i++) {
-        var_v1 = var_a0;
+    for (i = 0; i < 4; i++, j += 3) {
+        var_v1 = j;
         do {
             var_v0 = *var_v1 - arg1;
 
@@ -1047,9 +1056,7 @@ s32 func_801CA0FC(s32 arg0, u8 arg1) {
 
             *var_v1 = var_v0;
             var_v1++;
-        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
-
-        var_a0 += 0xC;
+        } while ((s32)var_v1 < (s32)j + 3);
     }
 
     return ret;
