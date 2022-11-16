@@ -18,6 +18,14 @@
         "random": "c",
         "types.h": "c",
         "macros.h": "c",
-        "include_asm.h": "c"
+        "include_asm.h": "c",
+        "optional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "utility": "c"
     },
 }

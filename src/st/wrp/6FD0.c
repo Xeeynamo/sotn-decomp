@@ -3539,25 +3539,25 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F750);
 #else
 extern void func_8018F928(Entity*);
-void func_8018F750(Entity* source, s8 count, s16 xOffset, s16 yOffset,
+void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
                    s16 xDistance) {
     Entity* entity;
-    s16 x, y;
+    s32 x, y;
     u8 i;
 
-    y = source->posY.Data.high + yOffset;
-    x = source->posX.Data.high + xOffset;
+    x = (u16)source->posX.Data.high + xOffset;
+    y = (u16)source->posY.Data.high + yOffset;
+    
     for (i = 0; i < count; i++) {
-        entity = AllocEntity(D_8007A958, D_8007A958 + MaxEntityCount);
+        entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
         if (entity != NULL) {
-            entity->objectId = 21;
+            entity->objectId = 0x15;
             entity->pfnUpdate = func_8018F928;
             entity->posX.Data.high = x;
             entity->posY.Data.high = y;
             entity->subId = i;
             entity->zPriority = source->zPriority + 1;
         }
-        i++;
         x += xDistance;
     }
 }

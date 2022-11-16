@@ -12,7 +12,7 @@ void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);
 void func_801BEB80(Entity*);
-void func_801C29B0(s32);
+// void func_801C29B0(s32);
 void EntityCandleDrop(Entity* entity);
 void EntityCandleHeartDrop(Entity* entity);
 void func_801C33D8(const u32*, s32);
@@ -50,6 +50,8 @@ extern const u16* D_80180C94;
 extern u16 D_80182424[];
 extern const u32 D_80181CEC[];
 extern const s32 c_GoldPrizes[];
+extern const u16 D_80180CA0[];
+extern u32 D_80182488[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -863,7 +865,7 @@ void func_801C1848(void) {
         if (entity != NULL) {
             func_801BBBC0(2, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80 = temp_s3;
+            entity->unk80.data = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }
@@ -1013,7 +1015,44 @@ void func_801C6494(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6574); // Unique
+void func_801C6574(Entity* entity) {
+    s32 var_a0;
+    u32 value;
+
+    if (entity->initState) {
+        if (entity->unk34 & 0x100) {
+            func_801BD568(0, 0);
+            return;
+        }
+
+        entity->unk1E += 0x80;
+        entity->accelerationY += 0x2400;
+        MoveEntity();
+
+        if (entity->posY.Data.high >= 0xF1) {
+            DestroyEntity(entity);
+        }
+    } else {
+        InitializeEntity(&D_80180CA0);
+        entity->posY.value -= 0x1000;
+        value = func_801BCBEC();
+        value = value >> 5;
+
+        if (value >= 8) {
+            value = 7;
+        }
+
+        var_a0 = D_80182488[value];
+        value = entity->unk14;
+
+        if (value > 0) {
+            var_a0 = -var_a0;
+        }
+        entity->accelerationY = -0x48000;
+        entity->accelerationX = var_a0;
+        entity->unk19 = 4;
+    }
+}
 
 void func_801C6678(Entity* entity) {
     if (entity->initState == 0) {
