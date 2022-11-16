@@ -13,6 +13,8 @@ s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);
 void func_801BEB80(Entity*);
 void func_801C29B0(s32);
+void EntityCandleDrop(Entity* entity);
+void EntityCandleHeartDrop(Entity* entity);
 
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -440,7 +442,33 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BD848);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BD9A0);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BDCE4); // Unique
+void func_801BDCE4(Entity* entity) {
+    u16 subId;
+
+    PreventEntityFromRespawning(entity);
+
+    if (!(D_8009796E & 2)) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    subId = entity->subId &= 0xFFF;
+
+    if (subId < 0x80) {
+        entity->objectId = OBJECT_03;
+        entity->pfnUpdate = EntityCandleDrop;
+        entity->animationFrameDuration = 0;
+        entity->animationFrameIndex = 0;
+    } else {
+        subId -= 0x80;
+        entity->objectId = OBJECT_0A;
+        entity->pfnUpdate = (PfnEntityUpdate)EntityCandleHeartDrop;
+    }
+
+    entity->subId = subId;
+    entity->unk6D = 0x10;
+    entity->initState = 0;
+}
 
 // https://decomp.me/scratch/W8pIb branch problem, probably aspsx
 #ifndef NON_MATCHING
