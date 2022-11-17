@@ -1149,7 +1149,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7048); // Unique
 void func_801C7538(Entity* entity) {
     s32 new_var;
     s16 var_v0;
-    
+
     switch (entity->initState) {
     case 0:
         InitializeEntity(&D_80180CF4);
