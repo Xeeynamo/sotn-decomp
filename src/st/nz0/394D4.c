@@ -1146,7 +1146,42 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6C6C); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7048); // Unique
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7538); // Unique
+void func_801C7538(Entity* entity) {
+    s32 new_var;
+    s16 var_v0;
+    
+    switch (entity->initState) {
+    case 0:
+        InitializeEntity(&D_80180CF4);
+        entity->unk19 = 4;
+        entity->animationFrame = entity->subId;
+        entity->palette += entity->unk84.Data.high;
+        entity->accelerationX = entity->unk84.Data.low << 12;
+        entity->accelerationX += 0x8000 - (Random() << 8);
+        entity->accelerationY -= (Random() & 0x1F) << 12;
+        break;
+
+    case 1:
+        MoveEntity();
+        entity->accelerationY += 0x2000;
+
+        if (entity->accelerationX != 0) {
+            if (entity->unk14 == 0) {
+                new_var = (u16)entity->unk1E - 16;
+                var_v0 = new_var;
+            } else {
+                var_v0 = entity->unk1E + 16;
+            }
+        } else if (entity->unk14 != 0) {
+            var_v0 = entity->unk1E - 16;
+        } else {
+            var_v0 = entity->unk1E + 16;
+        }
+
+        entity->unk1E = var_v0;
+        break;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7654); // Unique
 
