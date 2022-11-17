@@ -54,6 +54,7 @@ extern const u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern const u16* D_80180C58;
 extern s16 D_801820E4[];
+extern const u8* D_80180C04;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -684,7 +685,36 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C01B0);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C070C);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C07FC); // Unique
+void func_801C07FC(Entity* entity) {
+    Entity* newEntity;
+    u8 temp_v0;
+
+    switch (entity->initState) {
+    case 0:
+        InitializeEntity(&D_80180C04);
+        entity->unk8C = entity->unk80.entityPtr->objectId;
+
+    case 1:
+        temp_v0 = entity->unk7C.modeU8.unk0++;
+        if (temp_v0 >= 5) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                func_801BBBC0(2, entity, newEntity);
+                newEntity->objectId = OBJECT_02;
+                newEntity->pfnUpdate = func_801BEB80;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.modeU8.unk0 = 0;
+        }
+
+        entity->posX.Data.high = entity->unk80.entityPtr->posX.Data.high;
+        entity->posY.Data.high = entity->unk80.entityPtr->posY.Data.high;
+
+        if (entity->unk80.entityPtr->objectId != entity->unk8C) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C090C);
 
@@ -859,15 +889,16 @@ void func_801C1780(u16 objectId, Entity* ent1, Entity* ent2) {
 void func_801C1848(void) {
     Entity* entity;
     s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    Entity* temp_s3;
     s32 i;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             func_801BBBC0(2, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80.data = temp_s3;
+            entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }
@@ -961,7 +992,7 @@ void func_801C3E94(Entity* entity) {
     InitializeEntity(&D_80180C58);
     entity->unk19 = 4;
     entity->animationFrame = entity->subId + 16;
-    
+
     if (entity->unk14 != 0) {
         entity->accelerationX = -entity->accelerationX;
     }
@@ -977,11 +1008,11 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3F9C); // Unique
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4198); // Unique
 
 void func_801C4550(void) {
-    if (D_8006C3B8->unk82 > 0) {
-        D_8006C3B8->unk82 -= 3;
+    if (D_8006C3B8->unk80.modeS16.unk2 > 0) {
+        D_8006C3B8->unk80.modeS16.unk2 -= 3;
     } else {
         func_801BD52C(D_801822B4[(Random() & 7)]);
-        D_8006C3B8->unk82 = 0x100;
+        D_8006C3B8->unk80.modeS16.unk2 = 0x100;
     }
 }
 

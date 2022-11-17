@@ -1050,8 +1050,8 @@ void func_80194314(Entity* entity) {
 
     InitializeEntity(g_eBreakableInit);
     entity->animationFrame = entity->unk7C.modeU8.unk0;
-    entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0 * 2];
-    entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0 * 2];
+    entity->accelerationX = D_80180ED8[entity->unk80.modeS8.unk0 * 2];
+    entity->accelerationY = D_80180EDA[entity->unk80.modeS8.unk0 * 2];
 
     if (entity->subId != 0) {
         entity->zPriority -= 1;
@@ -1301,7 +1301,7 @@ void func_80196934(void) {
         if (entity != NULL) {
             func_8019102C(2, D_8006C26C, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80.data = temp_s3;
+            entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }

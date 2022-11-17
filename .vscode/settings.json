@@ -26,6 +26,8 @@
         "array": "c",
         "functional": "c",
         "tuple": "c",
-        "utility": "c"
+        "utility": "c",
+        "string": "c",
+        "string_view": "c"
     },
 }
