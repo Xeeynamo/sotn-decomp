@@ -7,6 +7,7 @@
 #include "stage.h"
 
 void DestroyEntity(Entity* item);
+void func_8018F928(Entity*);
 void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
@@ -16,6 +17,7 @@ void func_801C29B0(s32);
 void EntityCandleDrop(Entity* entity);
 void EntityCandleHeartDrop(Entity* entity);
 void func_801C33D8(const u32*, s32);
+void func_801C0B24(Entity* entity);
 
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -585,6 +587,7 @@ void CollectGold(u16 goldSize) {
 }
 
 // https://decomp.me/scratch/2vxD2
+// https://decomp.me/scratch/peM5t by stuckpixel
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BE0D8);
 
 void CollectHeartVessel(void) {
@@ -717,6 +720,7 @@ void func_801C07FC(Entity* entity) {
     }
 }
 
+// https://decomp.me/scratch/0VI4v
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C090C);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C0A3C);

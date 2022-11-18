@@ -15,6 +15,7 @@
  * VO = Voice
  * DR = Dracula
  * DE = Death
+ * SH = Shaft
  * ML = Master Librarian
  * FE = Ferryman
  * AL = Alucard
