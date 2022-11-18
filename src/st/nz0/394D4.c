@@ -1193,8 +1193,7 @@ void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
 <<<<<<< HEAD
-    switch (entity->initState)
-    {
+    switch (entity->initState) {
     case ENTITY_INITSTATE_0:
 =======
     switch (entity->initState) {
