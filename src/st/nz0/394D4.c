@@ -1192,8 +1192,7 @@ void func_801C7538(Entity* entity) {
 void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
-    switch (entity->initState)
-    {
+    switch (entity->initState) {
     case 0:
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;
@@ -1208,8 +1207,8 @@ void func_801C7654(Entity* entity) {
         MoveEntity();
         entity->accelerationY += 0x2000;
 
-        D_8003C7BC(entity->posX.Data.high, entity->posY.Data.high + 8, &sp10.sp10,
-                   0);
+        D_8003C7BC(entity->posX.Data.high, entity->posY.Data.high + 8,
+                   &sp10.sp10, 0);
 
         if (sp10.sp10 & 1) {
             entity->unk19 = 2;
