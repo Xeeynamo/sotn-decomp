@@ -2880,7 +2880,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A26C);
 void func_8018A26C(s16);
 
 void func_8018A380(s32 arg0) {
-    s16 a1 = -2;
+    u16 a1 = -2;
     arg0 = (s16)arg0;
 loop_1:
     if (D_80193AB4->posY == (s32)a1 || D_80193AB4->posY < (s32)arg0) {

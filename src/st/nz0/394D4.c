@@ -18,6 +18,7 @@ void EntityCandleDrop(Entity* entity);
 void EntityCandleHeartDrop(Entity* entity);
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
+void func_801C4CC0(void);
 
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -1033,7 +1034,65 @@ void func_801C4CC0(void) {
     D_8006C3B8->unk1E &= 0xFFF;
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4D18); // Unique
+// INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4D18); //
+// Unique
+extern s32 D_80180C70;
+extern u32 D_801822BC[];
+extern u32 D_801822C8[];
+
+void func_801C4D18(Entity* entity) {
+    s32 var_v0;
+
+    if (entity->unk34 & 0x100) {
+        func_801C29B0(0x66B);
+        func_801BD568(0, 0);
+        return;
+    }
+
+    switch (entity->initState) {
+    case 0:
+        InitializeEntity(&D_80180C70);
+        entity->unk19 = 4;
+        entity->accelerationY = D_801822C8[entity->subId];
+        var_v0 = D_801822BC[entity->subId];
+
+        if (entity->unk14 == 0) {
+            entity->accelerationX = -var_v0;
+        } else {
+            entity->accelerationX = var_v0;
+        }
+
+        entity->unk7C.modeU16 = -0x40;
+
+        if (entity->subId == 2) {
+            entity->initState++;
+            return;
+        }
+        break;
+
+    case 1:
+        func_801C4CC0();
+        if ((u16)entity->unk7C.modeU16 < 0x20) {
+            if (entity->unk14 != 0) {
+                var_v0 = entity->accelerationX - 0x2000;
+            } else {
+                var_v0 = entity->accelerationX + 0x2000;
+            }
+            entity->accelerationX = var_v0;
+        }
+
+        entity->unk7C.modeU16 += 1;
+        MoveEntity();
+        break;
+    //block_19:
+        
+    case 2:
+        func_801C4CC0();
+        entity->accelerationY += 0x2000;
+        MoveEntity();
+        break;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4EAC);
 
@@ -1192,8 +1251,7 @@ void func_801C7538(Entity* entity) {
 void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
-    switch (entity->initState)
-    {
+    switch (entity->initState) {
     case ENTITY_INITSTATE_0:
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;

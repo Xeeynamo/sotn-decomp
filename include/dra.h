@@ -72,7 +72,7 @@ typedef union {
 } UnkUnion2; // size = 0x2
 
 typedef union {
-    u16 modeU16;
+    s16 modeU16;
     struct {
         u8 unk0;
         u8 unk1;
@@ -87,7 +87,7 @@ typedef struct Entity {
     /* 0x10 */ s16 unk10;
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 unk14;
-    /* 0x16 */ s16 palette;
+    /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ s8 unk19;
     /* 0x1A */ s16 unk1A;
@@ -134,6 +134,7 @@ typedef struct Entity {
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
+    ///* 0x7C */ s16 unk7C;
     /* 0x7E */ u8 unk7E;
     union {
         /* 0x80 */ struct Entity* entityPtr;
