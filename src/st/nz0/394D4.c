@@ -1084,8 +1084,8 @@ void func_801C4D18(Entity* entity) {
         entity->unk7C.modeU16 += 1;
         MoveEntity();
         break;
-    //block_19:
-        
+        // block_19:
+
     case 2:
         func_801C4CC0();
         entity->accelerationY += 0x2000;
