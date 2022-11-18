@@ -699,11 +699,11 @@ void func_801C07FC(Entity* entity) {
     u8 temp_v0;
 
     switch (entity->initState) {
-    case 0:
+    case ENTITY_INITSTATE_0:
         InitializeEntity(&D_80180C04);
         entity->unk8C = entity->unk80.entityPtr->objectId;
 
-    case 1:
+    case ENTITY_INITSTATE_1:
         temp_v0 = entity->unk7C.modeU8.unk0++;
         if (temp_v0 >= 5) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -1047,7 +1047,7 @@ void func_801C4D18(Entity* entity) {
     }
 
     switch (entity->initState) {
-    case 0:
+    case ENTITY_INITSTATE_0:
         InitializeEntity(&D_80180C70);
         entity->unk19 = 4;
         entity->accelerationY = D_801822C8[entity->subId];
@@ -1067,7 +1067,7 @@ void func_801C4D18(Entity* entity) {
         }
         break;
 
-    case 1:
+    case ENTITY_INITSTATE_1:
         func_801C4CC0();
         if ((u16)entity->unk7C.modeS16 < 0x20) {
             if (entity->unk14 != 0) {
@@ -1082,7 +1082,7 @@ void func_801C4D18(Entity* entity) {
         MoveEntity();
         break;
 
-    case 2:
+    case ENTITY_INITSTATE_2:
         func_801C4CC0();
         entity->accelerationY += 0x2000;
         MoveEntity();
@@ -1212,7 +1212,7 @@ void func_801C7538(Entity* entity) {
     s16 var_v0;
 
     switch (entity->initState) {
-    case 0:
+    case ENTITY_INITSTATE_0:
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 4;
         entity->animationFrame = entity->subId;
@@ -1222,7 +1222,7 @@ void func_801C7538(Entity* entity) {
         entity->accelerationY -= (Random() & 0x1F) << 12;
         break;
 
-    case 1:
+    case ENTITY_INITSTATE_1:
         MoveEntity();
         entity->accelerationY += 0x2000;
 
