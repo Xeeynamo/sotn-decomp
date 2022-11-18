@@ -1194,7 +1194,7 @@ void func_801C7654(Entity* entity) {
 
     switch (entity->initState)
     {
-    case 0:
+    case ENTITY_INITSTATE_0:
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;
         entity->palette = 0x816D;
@@ -1203,7 +1203,7 @@ void func_801C7654(Entity* entity) {
         entity->accelerationY = rsin(entity->unk1E) * 0x10;
         break;
 
-    case 1:
+    case ENTITY_INITSTATE_1:
         AnimateEntity(&D_801825F0, entity);
         MoveEntity();
         entity->accelerationY += 0x2000;
@@ -1220,7 +1220,7 @@ void func_801C7654(Entity* entity) {
         }
         break;
 
-    case 2:
+    case ENTITY_INITSTATE_2:
         MoveEntity();
         entity->unk1C -= 8;
         if (!(entity->unk1C << 0x10)) {
