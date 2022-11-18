@@ -72,7 +72,7 @@ typedef union {
 } UnkUnion2; // size = 0x2
 
 typedef union {
-    s16 modeU16;
+    s16 modeS16;
     struct {
         u8 unk0;
         u8 unk1;

@@ -2585,7 +2585,7 @@ void func_801870B0(Entity* entity) {
 
         if (entity->unk44 != 0) {
             temp_v0 = func_8018B970();
-            if (entity->unk7C.modeU16 != 0) {
+            if (entity->unk7C.modeS16 != 0) {
                 phi_v1 = (temp_v0 & 2) * 2;
             } else {
                 phi_v1 = (temp_v0 & 1) * 4;
@@ -2602,7 +2602,7 @@ void func_801870B0(Entity* entity) {
         u8 temp_v0_5;
         InitializeEntity(D_80180488);
         temp_v0_5 = D_80180530[temp_s1];
-        entity->unk7C.modeU16 = temp_v0_5;
+        entity->unk7C.modeS16 = temp_v0_5;
         if (temp_v0_5 != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;

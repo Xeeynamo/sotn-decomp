@@ -1059,7 +1059,7 @@ void func_801C4D18(Entity* entity) {
             entity->accelerationX = var_v0;
         }
 
-        entity->unk7C.modeU16 = -0x40;
+        entity->unk7C.modeS16 = -0x40;
 
         if (entity->subId == 2) {
             entity->initState++;
@@ -1069,7 +1069,7 @@ void func_801C4D18(Entity* entity) {
 
     case 1:
         func_801C4CC0();
-        if ((u16)entity->unk7C.modeU16 < 0x20) {
+        if ((u16)entity->unk7C.modeS16 < 0x20) {
             if (entity->unk14 != 0) {
                 var_v0 = entity->accelerationX - 0x2000;
             } else {
@@ -1078,7 +1078,7 @@ void func_801C4D18(Entity* entity) {
             entity->accelerationX = var_v0;
         }
 
-        entity->unk7C.modeU16 += 1;
+        entity->unk7C.modeS16 += 1;
         MoveEntity();
         break;
 
