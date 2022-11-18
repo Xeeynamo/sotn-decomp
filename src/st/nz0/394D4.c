@@ -59,6 +59,9 @@ extern const u16* D_80180C58;
 extern s16 D_801820E4[];
 extern const u16 D_80180C04;
 extern u8 D_801825F0;
+extern s32 D_80180C70;
+extern u32 D_801822BC[];
+extern u32 D_801822C8[];
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -1034,12 +1037,6 @@ void func_801C4CC0(void) {
     D_8006C3B8->unk1E &= 0xFFF;
 }
 
-// INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C4D18); //
-// Unique
-extern s32 D_80180C70;
-extern u32 D_801822BC[];
-extern u32 D_801822C8[];
-
 void func_801C4D18(Entity* entity) {
     s32 var_v0;
 
@@ -1084,7 +1081,6 @@ void func_801C4D18(Entity* entity) {
         entity->unk7C.modeU16 += 1;
         MoveEntity();
         break;
-        // block_19:
 
     case 2:
         func_801C4CC0();
