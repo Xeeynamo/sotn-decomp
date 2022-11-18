@@ -165,8 +165,16 @@ typedef struct Entity {
     /* 0xAC */ s32 unkAC;
     /* 0xB0 */ s32 unkB0;
     /* 0xB4 */ s16 unkB4;
-    /* 0xB6 */ s16 unk86;
+    /* 0xB6 */ s16 unkB6;
+    union {
     /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+    struct {
+    /* 0xB8 */ u8 unk0;
+    /* 0xB9 */ u8 unk1;
+    /* 0xBA */ u8 unk2;
+    /* 0xBB */ u8 unk3;
+    } modeU8;
+    } unkB8;
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {

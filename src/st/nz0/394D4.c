@@ -22,9 +22,9 @@ extern PfnEntityUpdate D_80180A90[];
 extern s16 D_80181978[];
 extern s8 c_HeartPrizes[];
 extern Entity* D_8006C3B8;
-extern u16 D_80180BE0[];
+extern const u16 D_80180BE0[];
 extern s32 D_80181DA8[];
-extern s32 D_80181E54[];
+extern const u8 *D_80181E54[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
@@ -39,22 +39,22 @@ PfnEntityUpdate D_80180A90[];
 extern s32 D_801824B8;
 extern s32 D_801824C0;
 extern u16 D_80180C88;
-extern const u8* D_80181F30;
+extern const u8 D_80181F30;
 extern const u16* D_80180CF4;
 extern s32 D_80182600[];
-extern s32* D_8018216C;
-extern s32* D_80182174;
+extern s32 D_8018216C;
+extern s32 D_80182174;
 extern const u16* D_80180BD4;
 extern const s32 D_80181D3C[];
 extern const u16* D_80180C94;
 extern u16 D_80182424[];
-extern const u32 D_80181CEC[];
+extern const u32* D_80181CEC[];
 extern const s32 c_GoldPrizes[];
 extern const u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern const u16* D_80180C58;
 extern s16 D_801820E4[];
-extern const u8* D_80180C04;
+extern const u16 D_80180C04;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -90,7 +90,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB2A0);
 
 void func_801BB3B8(s16 arg0) {
     while (true) {
-        if ((D_801CAA74->posX != 0xFFFE) && (D_801CAA74->posX >= arg0)) {
+        if ((D_801CAA74->posX != 0xFFFE) && (D_801CAA74->posX >= (s32)arg0)) {
             break;
         }
         D_801CAA74++;
@@ -100,7 +100,7 @@ void func_801BB3B8(s16 arg0) {
 void func_801BB404(s16 arg0) {
     while (true) {
         if (!(D_801CAA74->posX == 0xFFFF) &&
-            ((arg0 >= D_801CAA74->posX) || (D_801CAA74->posX == 0xFFFE))) {
+            (((s32)arg0 >= D_801CAA74->posX) || (D_801CAA74->posX == 0xFFFE))) {
             break;
         }
         D_801CAA74--;
@@ -113,7 +113,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BB558);
 
 void func_801BB66C(s16 arg0) {
     while (true) {
-        if ((D_801CAA78->posY != 0xFFFE) && (D_801CAA78->posY >= arg0)) {
+        if ((D_801CAA78->posY != 0xFFFE) && (D_801CAA78->posY >= (s32)arg0)) {
             break;
         }
         D_801CAA78++;
@@ -123,7 +123,7 @@ void func_801BB66C(s16 arg0) {
 void func_801BB6B8(s16 arg0) {
     while (true) {
         if (!(D_801CAA78->posY == 0xFFFF) &&
-            ((arg0 >= D_801CAA78->posY) || (D_801CAA78->posY == 0xFFFE))) {
+            (((s32)arg0 >= D_801CAA78->posY) || (D_801CAA78->posY == 0xFFFE))) {
             break;
         }
         D_801CAA78--;
@@ -584,7 +584,8 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(D_8006C3B8);
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BE0D8); // Unique
+// https://decomp.me/scratch/2vxD2
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BE0D8);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
@@ -615,7 +616,7 @@ void func_801BEB80(Entity* entity) {
     u32 temp_v0;
 
     if (entity->initState == 0) {
-        InitializeEntity(&D_80180BE0);
+        InitializeEntity(D_80180BE0);
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
         entity->animationFrameDuration = 0;
@@ -642,7 +643,7 @@ void func_801BEB80(Entity* entity) {
     }
 }
 
-POLY_GT4* func_801BEC7C(Entity* entity, s32 arg1) {
+void func_801BEC7C(Entity* entity, s32 arg1) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
@@ -739,7 +740,7 @@ void func_801C0B24(Entity* entity) {
         entity->animationFrame++;
     }
 
-    if (D_80181F20[entity->subId] < entity->animationFrameDuration) {
+    if (D_80181F20[entity->subId] < (s32)entity->animationFrameDuration) {
         DestroyEntity(entity);
     }
 }
@@ -842,7 +843,7 @@ void func_801C15B4(Entity* entity) {
 
 void func_801C16B4(Entity* entity) {
     if (entity->initState == ENTITY_INITSTATE_0) {
-        InitializeEntity(&D_80180BE0);
+        InitializeEntity(D_80180BE0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
@@ -889,9 +890,8 @@ void func_801C1780(u16 objectId, Entity* ent1, Entity* ent2) {
 void func_801C1848(void) {
     Entity* entity;
     s8 temp_s4 = Random() & 3;
-    Entity* temp_s3;
+    s8* temp_s3 = (s8*)((Random() & 0xF) << 8) - 0x800; // TODO: fix type
     s32 i;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -1149,7 +1149,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7048); // Unique
 void func_801C7538(Entity* entity) {
     s32 new_var;
     s16 var_v0;
-    
+
     switch (entity->initState) {
     case 0:
         InitializeEntity(&D_80180CF4);
@@ -1355,12 +1355,12 @@ void func_801CA0D0(unkStruct3* arg0) {
 s32 func_801CA0FC(s32 arg0, u8 arg1) {
     s32 var_v0;
     s32 ret = 0;
-    s32* j = arg0 + 4;
+    s32 j = arg0 + 4;
     u8* var_v1;
     s32 i;
 
-    for (i = 0; i < 4; i++, j += 3) {
-        var_v1 = j;
+    for (i = 0; i < 4; i++, j += 12) {
+        var_v1 = (u8*)j;
         do {
             var_v0 = *var_v1 - arg1;
 

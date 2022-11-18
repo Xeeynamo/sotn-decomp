@@ -1087,14 +1087,14 @@ void EntityInventoryItem(Entity* entity, u32 arg1) {
         var_v1 = D_80180F5C[temp_a0];
 
         if (var_v1 < 0x80) {
-            entity->unkFuncB8 = EntityItemDrop;
+            entity->unkB8.unkFuncB8 = EntityItemDrop;
         } else {
-            entity->unkFuncB8 = EntityHeartDrop;
+            entity->unkB8.unkFuncB8 = EntityHeartDrop;
             var_v1 -= 0x80;
         }
 
         entity->subId = var_v1 + 0x8000;
-        goto block_10;
+        return;
     }
 
     temp_v1 = entity->unkB4;
@@ -1106,8 +1106,7 @@ void EntityInventoryItem(Entity* entity, u32 arg1) {
             entity->initState = 5;
         }
     }
-block_10:
-    entity->unkFuncB8(entity, arg1, entity);
+    entity->unkB8.unkFuncB8(entity, arg1, entity);
 }
 #endif
 

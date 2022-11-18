@@ -953,7 +953,7 @@ s32 func_801D704C(s32 arg0, u8 arg1) {
 
             *var_v1 = var_v0;
             var_v1++;
-        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+        } while ((s32)var_v1 < ((s32)var_a0 + 3));
 
         var_a0 += 0xC;
     }
