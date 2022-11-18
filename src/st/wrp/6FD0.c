@@ -2893,7 +2893,8 @@ void func_8018A3CC(s16 arg0) {
     while (true) {
         if (D_80193AB4->posY == 0xFFFF)
             D_80193AB4--;
-        else if ((s32)arg0 >= (s32)D_80193AB4->posY || D_80193AB4->posY == 0xFFFE)
+        else if ((s32)arg0 >= (s32)D_80193AB4->posY ||
+                 D_80193AB4->posY == 0xFFFE)
             break;
         else
             D_80193AB4--;

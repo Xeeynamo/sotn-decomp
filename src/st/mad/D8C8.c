@@ -956,7 +956,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019362C);
 
 extern s32 D_8009769C; // g_playerGold?
 void* const D_80180D60[];
-const s32 D_80180D88[];            // c_GoldPrizes
+const s32 D_80180D88[]; // c_GoldPrizes
 
 void func_801936E0(u16 goldSize) { // CollectGold
     s32 *gold, *unk;
