@@ -30,9 +30,11 @@ func TestPatchLoadByteWithPointer(t *testing.T) {
 	assertPatch(t,
 		"\tlb\t$2,D_801809EC($4)\n",
 
+		"\t.set\tnoat\n",
 		"\tlui\t$1,%hi(D_801809EC)\n",
 		"\taddu\t$1,$1,$4\n",
 		"\tlb\t$2,%lo(D_801809EC)($1)\n",
+		"\t.set\tat\n",
 	)
 }
 
@@ -40,9 +42,11 @@ func TestPatchLoadByteUnsignedWithPointer(t *testing.T) {
 	assertPatch(t,
 		"\tlbu\t$2,D_801809EC($4)\n",
 
+		"\t.set\tnoat\n",
 		"\tlui\t$1,%hi(D_801809EC)\n",
 		"\taddu\t$1,$1,$4\n",
 		"\tlbu\t$2,%lo(D_801809EC)($1)\n",
+		"\t.set\tat\n",
 	)
 }
 
@@ -50,9 +54,11 @@ func TestPatchLoadHalfWithPointer(t *testing.T) {
 	assertPatch(t,
 		"\tlh\t$2,D_801809EC($4)\n",
 
+		"\t.set\tnoat\n",
 		"\tlui\t$1,%hi(D_801809EC)\n",
 		"\taddu\t$1,$1,$4\n",
 		"\tlh\t$2,%lo(D_801809EC)($1)\n",
+		"\t.set\tat\n",
 	)
 }
 
@@ -60,9 +66,11 @@ func TestPatchLoadHalfUnsignedWithPointer(t *testing.T) {
 	assertPatch(t,
 		"\tlhu\t$2,D_801809EC($4)\n",
 
+		"\t.set\tnoat\n",
 		"\tlui\t$1,%hi(D_801809EC)\n",
 		"\taddu\t$1,$1,$4\n",
 		"\tlhu\t$2,%lo(D_801809EC)($1)\n",
+		"\t.set\tat\n",
 	)
 }
 
@@ -70,9 +78,11 @@ func TestPatchLoadWordWithPointer(t *testing.T) {
 	assertPatch(t,
 		"\tlw\t$2,D_801809EC($4)\n",
 
+		"\t.set\tnoat\n",
 		"\tlui\t$1,%hi(D_801809EC)\n",
 		"\taddu\t$1,$1,$4\n",
 		"\tlw\t$2,%lo(D_801809EC)($1)\n",
+		"\t.set\tat\n",
 	)
 }
 
