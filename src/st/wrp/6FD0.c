@@ -11,6 +11,8 @@ void UpdateStageEntities(void);
 void func_8018861C(void);
 void func_8018A7AC(void);
 void LoadObjLayout(s32 objLayoutId);
+void func_801916C4(u16);
+void func_8018CAB0(void);
 
 const PfnOverlayEntry g_pStOverlay[] = {
     (PfnOverlayEntry)UpdateStageEntities,
@@ -2851,7 +2853,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189FB4);
 void func_8018A0CC(s16 arg0) {
     do {
     loop_1:
-        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < arg0) {
+        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < (s32)arg0) {
             D_80193AB0++;
             goto loop_1;
         }
@@ -2865,7 +2867,7 @@ void func_8018A118(s32 arg0) {
     a2 = 0xFFFE;
 loop_1:
     if ((D_80193AB0->posX == a3) ||
-        ((arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
+        (((s32)arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
         D_80193AB0--;
         goto loop_1;
     }
@@ -2881,7 +2883,7 @@ void func_8018A380(s32 arg0) {
     s16 a1 = -2;
     arg0 = (s16)arg0;
 loop_1:
-    if (D_80193AB4->posY == a1 || D_80193AB4->posY < arg0) {
+    if (D_80193AB4->posY == (s32)a1 || D_80193AB4->posY < (s32)arg0) {
         D_80193AB4++;
         goto loop_1;
     }
@@ -2891,7 +2893,7 @@ void func_8018A3CC(s16 arg0) {
     while (true) {
         if (D_80193AB4->posY == 0xFFFF)
             D_80193AB4--;
-        else if (arg0 >= (s32)D_80193AB4->posY || D_80193AB4->posY == 0xFFFE)
+        else if ((s32)arg0 >= (s32)D_80193AB4->posY || D_80193AB4->posY == 0xFFFE)
             break;
         else
             D_80193AB4--;
@@ -3411,6 +3413,8 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(D_8006C3B8);
 }
 
+void func_80192F40(const u8*, s32);
+
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
@@ -3895,7 +3899,7 @@ s32 func_80193A3C(u8* arg0, u8 value) {
 
     for (i = 0; i < 4; i++) {
         u8* ptrCur = phi_a0;
-        s32 ptrEnd = phi_a0 + 3;
+        s32 ptrEnd = (s32)phi_a0 + 3;
         do {
             s32 phi_v0 = *ptrCur - value;
             if (phi_v0 < 0) {

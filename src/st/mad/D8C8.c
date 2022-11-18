@@ -17,6 +17,8 @@ void EntityItemDrop(Entity*);
 void EntityHeartDrop(Entity*);
 void EntityExplosion(Entity*);
 void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2);
+void func_80198BC8(void* const, s32);
+void func_8019344C(void);
 
 // OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
@@ -955,6 +957,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019362C);
 extern s32 D_8009769C; // g_playerGold?
 void* const D_80180D60[];
 const s32 D_80180D88[];            // c_GoldPrizes
+
 void func_801936E0(u16 goldSize) { // CollectGold
     s32 *gold, *unk;
     u16 goldSizeIndex;
@@ -1032,7 +1035,7 @@ void EntityExplosion(Entity* entity) {
     }
 
     entity->posY.value += entity->accelerationY;
-    if (!AnimateEntity(D_80180EC4[entity->subId], entity)) {
+    if (!AnimateEntity((const u8*)D_80180EC4[entity->subId], entity)) {
         DestroyEntity(entity);
     }
 }
@@ -1140,7 +1143,7 @@ void func_80195A54(Entity* entity) {
         entity->animationFrame++;
     }
 
-    if (D_80181000[entity->subId] < entity->animationFrameDuration) {
+    if (D_80181000[entity->subId] < (s32)entity->animationFrameDuration) {
         DestroyEntity(entity);
     }
 }
@@ -1430,9 +1433,8 @@ void func_80199740(POLY_GT4* arg0) {
 
 //! FAKE
 s32 func_8019976C(s32 arg0, u8 value) {
-    s32 var_v0;
     u8 ret = 0;
-    u8* phi_v1 = arg0 + 4;
+    u8* phi_v1 = (u8*)arg0 + 4;
     u8* phi_a0;
     s32 i;
 
