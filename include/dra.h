@@ -167,13 +167,13 @@ typedef struct Entity {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
-    /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
-    struct {
-    /* 0xB8 */ u8 unk0;
-    /* 0xB9 */ u8 unk1;
-    /* 0xBA */ u8 unk2;
-    /* 0xBB */ u8 unk3;
-    } modeU8;
+        /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+        struct {
+            /* 0xB8 */ u8 unk0;
+            /* 0xB9 */ u8 unk1;
+            /* 0xBA */ u8 unk2;
+            /* 0xBB */ u8 unk3;
+        } modeU8;
     } unkB8;
 } Entity; // size = 0xBC
 
