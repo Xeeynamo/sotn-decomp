@@ -75,9 +75,11 @@ func patchLine(w *bufio.Writer, line string) error {
 
 			iAddr, err := strconv.Atoi(addr) // check if it's a digit or identifier
 			if err != nil || iAddr > 0x10000 {
+				w.WriteString("\t.set\tnoat\n")
 				w.WriteString(fmt.Sprintf("\tlui\t$1,%%hi(%s)\n", addr))
 				w.WriteString(fmt.Sprintf("\taddu\t$1,$1,%s\n", ptrReg))
 				w.WriteString(fmt.Sprintf("\t%s\t%s,%%lo(%s)($1)\n", op, dstReg, addr))
+				w.WriteString("\t.set\tat\n")
 			} else {
 				// fallback
 				w.WriteString(line)
