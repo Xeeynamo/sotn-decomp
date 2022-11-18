@@ -1192,14 +1192,9 @@ void func_801C7538(Entity* entity) {
 void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
-<<<<<<< HEAD
     switch (entity->initState)
     {
     case ENTITY_INITSTATE_0:
-=======
-    switch (entity->initState) {
-    case 0:
->>>>>>> 9c81bbacec8bf5c47a14237146c67c48d01b35d4
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;
         entity->palette = 0x816D;
