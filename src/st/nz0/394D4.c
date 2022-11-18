@@ -57,6 +57,7 @@ extern u32 D_80182488[];
 extern const u16* D_80180C58;
 extern s16 D_801820E4[];
 extern const u16 D_80180C04;
+extern u8 D_801825F0;
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -1144,7 +1145,8 @@ void func_801C6678(Entity* entity) {
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C672C); // Unique
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6B24); // Unique
+// https://decomp.me/scratch/T0T7K mostly regalloc
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6B24);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C6C6C); // Unique
 
@@ -1187,7 +1189,46 @@ void func_801C7538(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7654); // Unique
+void func_801C7654(Entity* entity) {
+    Unkstruct7 sp10;
+
+    switch (entity->initState)
+    {
+    case 0:
+        InitializeEntity(&D_80180BE0);
+        entity->animationSet = 2;
+        entity->palette = 0x816D;
+        entity->blendMode = 0x70;
+        entity->accelerationX = rcos(entity->unk1E) * 0x10;
+        entity->accelerationY = rsin(entity->unk1E) * 0x10;
+        break;
+
+    case 1:
+        AnimateEntity(&D_801825F0, entity);
+        MoveEntity();
+        entity->accelerationY += 0x2000;
+
+        D_8003C7BC(entity->posX.Data.high, entity->posY.Data.high + 8, &sp10.sp10,
+                   0);
+
+        if (sp10.sp10 & 1) {
+            entity->unk19 = 2;
+            entity->unk1C = 0x100;
+            entity->accelerationY = 0x4000;
+            entity->accelerationX *= 8;
+            entity->initState++;
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        entity->unk1C -= 8;
+        if (!(entity->unk1C << 0x10)) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 void func_801C77B8(Entity* entity) {
     s16 temp_v1_2;
