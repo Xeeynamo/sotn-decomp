@@ -1192,8 +1192,7 @@ void func_801C7538(Entity* entity) {
 void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
-    switch (entity->initState)
-    {
+    switch (entity->initState) {
     case ENTITY_INITSTATE_0:
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;
