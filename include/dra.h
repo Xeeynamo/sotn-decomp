@@ -294,6 +294,11 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
+typedef struct {		
+	DRAWENV		draw;			// drawing environment
+	DISPENV		disp;			// display environment
+} DisplayBuffer;
+
 // main
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
@@ -316,6 +321,7 @@ extern s32 g_menuRelicsCursorIndex;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
+extern DisplayBuffer D_8003CB0C;
 extern s16 D_8003CB0E;
 extern s16 D_8003CB12;
 extern s8 D_8003CB22;
@@ -324,6 +330,7 @@ extern s8 D_8003CB25;
 extern s8 D_8003CB26;
 extern s8 D_8003CB27;
 extern s8 D_8003CB79;
+extern DRAWENV D_80054300;
 extern s16 D_80054302;
 extern s16 D_80054306;
 extern s8 D_80054316;
@@ -331,6 +338,7 @@ extern s8 D_80054318;
 extern s8 D_80054319;
 extern s8 D_8005431A;
 extern s8 D_8005431B;
+extern DISPENV D_8005435C;
 extern s8 D_8005436D;
 
 // dra

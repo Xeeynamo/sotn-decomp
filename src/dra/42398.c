@@ -1,6 +1,14 @@
 #include "common.h"
 #include "dra.h"
 
+#define DISP_ALL_H 240
+#define DISP_STAGE_W 256
+#define DISP_STAGE_H DISP_ALL_H
+#define DISP_MENU_W 384
+#define DISP_MENU_H DISP_ALL_H
+#define DISP_UNK2_W 512
+#define DISP_UNK2_H DISP_ALL_H
+
 void func_800E2398(s32 arg0);
 s32 func_8010E27C(void);
 void func_801324B4(s8 arg0, s16 arg1, s16 arg2);
@@ -146,13 +154,48 @@ void func_800E34DC(s32 arg0) {
     D_8003CB79 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E3574);
+// Set stage display buffer
+void func_800E3574(void) {
+    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&D_80054300, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&D_8003CB0C.disp, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    func_800E34DC(0);
+}
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E3618);
+// Set CGI display buffer?
+void func_800E3618(s32 width) {
+    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&D_80054300, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&D_8003CB0C.disp, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, width, DISP_ALL_H);
+    func_800E34DC(1);
+}
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E36C8);
+// Set menu display buffer
+void func_800E36C8(void) {
+    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&D_80054300, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&D_8003CB0C.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    func_800E34DC(1);
+}
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E376C);
+void func_800E376C(void) {
+    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&D_80054300, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&D_8003CB0C.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    D_80054302 = DISP_UNK2_W / 2;
+    D_80054306 = DISP_UNK2_H;
+    D_8003CB12 = DISP_UNK2_H;
+    D_8003CB0E = 0;
+    D_80054318 = 1;
+    D_8003CB24 = 1;
+    func_800E346C();
+    D_8005436D = 0;
+    D_8003CB79 = 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E385C);
 

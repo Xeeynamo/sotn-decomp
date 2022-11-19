@@ -204,5 +204,7 @@ extern u_long* ClearOTagR(u_long* ot, int n);
 extern void DrawOTag(u_long* p);
 extern DRAWENV* PutDrawEnv(DRAWENV* env);
 extern DISPENV* PutDispEnv(DISPENV* env);
+extern DISPENV *SetDefDispEnv(DISPENV *env, int x, int y, int w, int h);
+extern DRAWENV *SetDefDrawEnv(DRAWENV *env, int x, int y, int w, int h);
 
 #endif

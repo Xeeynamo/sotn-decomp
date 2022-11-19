@@ -83,6 +83,7 @@ stup0 = 0x80010E9C;
 main = 0x80010EB8;
 LoadTPage = 0x8001112C;
 LoadClut2 = 0x80011218;
+SetDefDrawEnv = 0x80011280;
 SetDefDispEnv = 0x80011310;
 SetDumpFnt = 0x8001134C;
 FntLoad = 0x8001138C;
