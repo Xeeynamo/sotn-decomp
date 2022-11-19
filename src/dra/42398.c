@@ -158,7 +158,8 @@ void func_800E34DC(s32 arg0) {
 void func_800E3574(void) {
     SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     SetDefDrawEnv(&D_80054300, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDispEnv(&D_8003CB0C.disp, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&D_8003CB0C.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+                  DISP_STAGE_H);
     SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_800E34DC(0);
 }

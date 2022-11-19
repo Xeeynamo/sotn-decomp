@@ -294,9 +294,9 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
-typedef struct {		
-	DRAWENV		draw;			// drawing environment
-	DISPENV		disp;			// display environment
+typedef struct {
+    DRAWENV draw; // drawing environment
+    DISPENV disp; // display environment
 } DisplayBuffer;
 
 // main
