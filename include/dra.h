@@ -126,7 +126,7 @@ typedef struct {
     /* 0x60 */ s32 unk60;
     /* 0x64 */ s32 firstPolygonIndex;
     /* 0x68 */ s16 unk68;
-    /* 0x6A */ s16 unk6A;
+    /* 0x6A */ u16 unk6A;
     /* 0x6C */ u8 unk6C;
     /* 0x6D */ s8 unk6D;
     /* 0x6E */ s16 unk6E;
@@ -434,7 +434,7 @@ extern u16 D_80072F6E;
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
-extern s16 D_80073092;
+extern u16 D_80073092;
 extern u16 g_CurrentRoomHSize;
 extern u16 g_CurrentRoomVSize;
 extern s32 D_800730AC;
