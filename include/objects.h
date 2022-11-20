@@ -1,7 +1,7 @@
 /*
  * File: objects.h
  * Description: SOTN Object header
- * 
+ *
  * These entity IDs are common across all stages
  */
 
