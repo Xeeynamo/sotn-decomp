@@ -418,7 +418,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
         return;
     }
 
-    D_8006C3B8->objectId = 2;
+    D_8006C3B8->objectId = ENTITY_EXPLOSION;
     D_8006C3B8->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
     D_8006C3B8->subId = arg0;
     D_8006C3B8->animationFrame = 0;
@@ -479,13 +479,13 @@ void func_801BDCE4(Entity* entity) {
     subId = entity->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        entity->objectId = OBJECT_03;
+        entity->objectId = ENTITY_ITEM_DROP;
         entity->pfnUpdate = EntityCandleDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         subId -= 0x80;
-        entity->objectId = OBJECT_0A;
+        entity->objectId = ENTITY_HEART_DROP;
         entity->pfnUpdate = (PfnEntityUpdate)EntityCandleHeartDrop;
     }
 
@@ -709,7 +709,7 @@ void func_801C07FC(Entity* entity) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 func_801BBBC0(2, entity, newEntity);
-                newEntity->objectId = OBJECT_02;
+                newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = func_801BEB80;
                 newEntity->subId = entity->subId;
             }
@@ -992,7 +992,7 @@ void func_801C3E94(Entity* entity) {
             MoveEntity();
             return;
         }
-        entity->objectId = OBJECT_02;
+        entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = func_801BEB80;
         entity->subId = 0;
         entity->initState = 0;
@@ -1124,7 +1124,7 @@ void func_801C6494(Entity* entity) {
             return;
         }
 
-        entity->objectId = OBJECT_02;
+        entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
         entity->subId = 0;
         entity->initState = ENTITY_INITSTATE_0;
@@ -1328,7 +1328,7 @@ void func_801C7884(Entity* entity) {
         entity->unk1E += 0x20;
 
         if (entity[-1].initState != 1) {
-            entity->objectId = OBJECT_03;
+            entity->objectId = ENTITY_ITEM_DROP;
             entity->pfnUpdate = EntityCandleDrop;
             entity->animationFrameDuration = 0;
             entity->animationFrameIndex = 0;

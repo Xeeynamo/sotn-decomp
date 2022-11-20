@@ -3498,7 +3498,7 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
     for (i = 0; i < count; i++) {
         entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
         if (entity != NULL) {
-            entity->objectId = 0x15;
+            entity->objectId = ENTITY_0F;
             entity->pfnUpdate = func_8018F928;
             entity->posX.Data.high = x;
             entity->posY.Data.high = y;
