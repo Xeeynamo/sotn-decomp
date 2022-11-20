@@ -2766,6 +2766,7 @@ void func_80188514(void) {
 
 #endif
 
+// https://decomp.me/scratch/Nq66t
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018861C);
 
 // https://decomp.me/scratch/m0PKE
@@ -2781,12 +2782,46 @@ void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     entity->posX.Data.high = initDesc->posX - D_8007308E;
     entity->posY.Data.high = initDesc->posY - D_80073092;
     entity->subId = initDesc->subId;
-    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->objectRoomIndex = initDesc->objectRoomIndex;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 #endif
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189E9C);
+#else
+void func_80189E9C(LayoutObject* layoutObj) {
+    s16 temp_v0, posY;
+    u16 initFlags;
+
+    temp_v0 = D_80073092 - 0x40;
+    if (temp_v0 < 0) {
+        temp_v0 = 0;
+    }
+
+    if ((s16)layoutObj->posY < temp_v0)
+        return;
+    if (((s16)(D_80073092 + 0x120) < layoutObj->posY))
+        return;
+
+    initFlags = layoutObj->objectId & 0xE000;
+    if (initFlags != 0x8000) {
+        Entity* entity;
+        switch (initFlags) {
+        case 0x0:
+            entity = &D_800762D8[layoutObj->objectRoomIndex];
+            if (entity->objectId == 0) {
+                CreateEntity(entity, layoutObj);
+            }
+            break;
+        case 0xA000:
+            entity = &D_800762D8[layoutObj->objectRoomIndex];
+            CreateEntity(entity, layoutObj);
+            break;
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189FB4);
 
