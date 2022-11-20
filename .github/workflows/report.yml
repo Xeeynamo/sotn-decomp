@@ -57,8 +57,8 @@ jobs:
             python tools/report_progress.py RWRP.BIN 110 src/st/rwrp > gh-report/assets/progress-rwrp.json
       # - name: Generate duplicates report
       #   run: python3 tools/find_duplicates.py -a
-      - name: Rename output file into something more meaningful
-        run: mv *_all_matches.txt gh-report/duplicates.txt
+      # - name: Rename output file into something more meaningful
+      #   run: mv *_all_matches.txt gh-report/duplicates.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 

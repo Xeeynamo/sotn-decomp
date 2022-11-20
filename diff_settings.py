@@ -14,8 +14,12 @@ def apply(config, args):
     name = overlay[3:] if isMapOverlay else overlay
     longname = f'st{overlay[3:]}' if isMapOverlay else overlay
 
+    if isMapOverlay:
+        config['baseimg'] = 'iso/' + (f'ST/{name}/{name}.BIN').upper()
+    else:
+        config['baseimg'] = 'iso/' + (f'{name}.BIN').upper()
+
     config["arch"] = "mipsel"
-    config['baseimg'] = f'{name}.bin'
-    config['myimg'] = f'build/{name}.bin'
+    config['myimg'] = 'build/' + (f'{name}.bin').upper()
     config['mapfile'] = f'build/{longname}.map'
     config['source_directories'] = [f'src/{overlay}', 'include', f'asm/{overlay}']
