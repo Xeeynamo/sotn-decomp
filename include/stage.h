@@ -12,17 +12,17 @@
 
 typedef struct {
     /* 0x00 */ const u8* gfxPage;
-    /* 0x01 */ const u8* gfxIndex;
-    /* 0x02 */ const u8* clut;
-    /* 0x03 */ const u8* collision;
+    /* 0x04 */ const u8* gfxIndex;
+    /* 0x08 */ const u8* clut;
+    /* 0x0C */ const u8* collision;
 } TileDefinition; // size = 0x10
 
 typedef struct {
     /* 0x00 */ const u32 left : 6;
-    /* 0x01 */ const u32 top : 6;
-    /* 0x02 */ const u32 right : 6;
-    /* 0x03 */ const u32 bottom : 6;
-    /* 0x04 */ const u32 flags : 8;
+    /* 0x04 */ const u32 top : 6;
+    /* 0x08 */ const u32 right : 6;
+    /* 0x0C */ const u32 bottom : 6;
+    /* 0x10 */ const u32 flags : 8;
 } LayoutRect; // size = 0x14
 
 typedef struct {
@@ -35,8 +35,8 @@ typedef struct {
 } LayerDef; // size = 0x10
 
 typedef struct {
-    LayerDef* foreground;
-    LayerDef* background;
+    /* 0x00 */ LayerDef* foreground;
+    /* 0x04 */ LayerDef* background;
 } LayoutMap; // size = 0x8
 
 typedef struct {
