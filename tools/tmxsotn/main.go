@@ -44,7 +44,9 @@ func convertMap(binPath string, gfxPath string, mapName string) error {
 		Layers:      make([]tiled.Layer, 0),
 	}
 
-	appendRoom(&m, &layers, 0)
+	for i := 0; i < len(layers.Rooms); i++ {
+		appendRoom(&m, &layers, i)
+	}
 
 	gfxTilesets, err := getGfxTilesets(gfxPath)
 	if err != nil {
@@ -105,9 +107,11 @@ func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
 	}
 
 	m.Layers = append(m.Layers, tiled.Layer{
-		Name:   name,
-		Width:  layerIn.Width() * tileSize,
-		Height: layerIn.Height() * tileSize,
+		Name:    name,
+		Width:   layerIn.Width() * tileSize,
+		Height:  layerIn.Height() * tileSize,
+		OffsetX: float32(layerIn.Rect.Left) * 256,
+		OffsetY: float32(layerIn.Rect.Top) * 256,
 		Properties: []tiled.Property{
 			tiled.GetIntProperty("flags", int(layerIn.Flags)),
 			tiled.GetIntProperty("unkC", int(layerIn.UnkC)),
