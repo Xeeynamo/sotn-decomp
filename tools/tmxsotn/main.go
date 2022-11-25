@@ -16,7 +16,6 @@ func main() {
 	err := convertMap(
 		"../../iso/ST/WRP/WRP.BIN",
 		"../../iso/ST/WRP/F_WRP.BIN",
-		"wrp.tmx",
 		"wrp",
 	)
 	if err != nil {
@@ -24,7 +23,7 @@ func main() {
 	}
 }
 
-func convertMap(binPath string, gfxPath string, outPath string, name string) error {
+func convertMap(binPath string, gfxPath string, mapName string) error {
 	stageRaw, err := os.ReadFile(binPath)
 	if err != nil {
 		return err
@@ -45,7 +44,7 @@ func convertMap(binPath string, gfxPath string, outPath string, name string) err
 		Layers:      make([]tiled.Layer, 0),
 	}
 
-	appendLayer(&m, &layers, 0)
+	appendRoom(&m, &layers, 0)
 
 	gfxTilesets, err := getGfxTilesets(gfxPath)
 	if err != nil {
@@ -56,7 +55,7 @@ func convertMap(binPath string, gfxPath string, outPath string, name string) err
 	for i := 0; i < len(gfxTilesets); i++ {
 		gfxTileset := gfxTilesets[i]
 		size := gfxTileset.Img.Rect.Size()
-		fileName := fmt.Sprintf("%s_%d_%d.png", name, gfxTileset.Clut, gfxTileset.Partition)
+		fileName := fmt.Sprintf("%s_%d_%d.png", mapName, gfxTileset.Clut, gfxTileset.Partition)
 		m.Tilesets[i] = tiled.Tileset{
 			FirstGID:   uint32(1 | (gfxTileset.Clut << 10) | (gfxTileset.Partition << 18)),
 			Name:       fmt.Sprintf("%d %d", gfxTileset.Clut, gfxTileset.Partition),
@@ -77,7 +76,7 @@ func convertMap(binPath string, gfxPath string, outPath string, name string) err
 		png.Encode(outFile, gfxTileset.Img)
 	}
 
-	return m.EncodeToFile(outPath)
+	return m.EncodeToFile(fmt.Sprintf("%s.tmx", mapName))
 }
 
 func getGfxTilesets(filePath string) ([]gfx.ImageInfo, error) {
@@ -94,30 +93,43 @@ func getGfxTilesets(filePath string) ([]gfx.ImageInfo, error) {
 	return images, nil
 }
 
-func appendLayer(m *tiled.Map, layers *sotn.LayerBucket, roomIdx int) {
-	room := layers.Rooms[0]
-	lin := layers.Layers[room.Foreground]
-	lout := tiled.Layer{}
+func appendRoom(m *tiled.Map, layers *sotn.LayerBucket, roomIdx int) {
+	room := layers.Rooms[roomIdx]
+	appendLayer(m, &layers.Layers[room.Background], fmt.Sprintf("room %d bg", roomIdx))
+	appendLayer(m, &layers.Layers[room.Foreground], fmt.Sprintf("room %d fg", roomIdx))
+}
 
-	lout.Name = fmt.Sprintf("room %d fg", roomIdx)
-	lout.Width = lin.Width() * tileSize
-	lout.Height = lin.Height() * tileSize
-	lout.Data.Encoding = "csv"
-	lout.Properties = []tiled.Property{
-		tiled.GetIntProperty("flags", int(lin.Flags)),
-		tiled.GetIntProperty("unkC", int(lin.UnkC)),
-		tiled.GetIntProperty("unkE", int(lin.UnkE)),
-		tiled.GetIntProperty("unkF", int(lin.UnkF)),
+func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
+	if layerIn.Flags == 0 {
+		return
 	}
 
-	for _, tid := range lin.Layout {
-		id := 1 + int(lin.TileDef.Tiles[tid]) |
-			(int(lin.TileDef.Palettes[tid]) << 10) |
-			(int(lin.TileDef.Pages[tid]) << 18)
-		lout.Data.Content += fmt.Sprintf("%d,", id)
+	m.Layers = append(m.Layers, tiled.Layer{
+		Name:   name,
+		Width:  layerIn.Width() * tileSize,
+		Height: layerIn.Height() * tileSize,
+		Properties: []tiled.Property{
+			tiled.GetIntProperty("flags", int(layerIn.Flags)),
+			tiled.GetIntProperty("unkC", int(layerIn.UnkC)),
+			tiled.GetIntProperty("unkE", int(layerIn.UnkE)),
+			tiled.GetIntProperty("unkF", int(layerIn.UnkF)),
+		},
+		Data: tiled.LayerData{
+			Encoding: "csv",
+			Content:  getLayerContentAsCsv(layerIn.Layout, layerIn.TileDef),
+		},
+	})
+}
+
+func getLayerContentAsCsv(data []uint16, tileDef sotn.TileDefinition) string {
+	content := ""
+	for _, tid := range data {
+		id := 1 + int(tileDef.Tiles[tid]) |
+			(int(tileDef.Palettes[tid]) << 10) |
+			(int(tileDef.Pages[tid]) << 18)
+		content += fmt.Sprintf("%d,", id)
 	}
+
 	// remove last ',' character
-	lout.Data.Content = lout.Data.Content[:len(lout.Data.Content)-1]
-
-	m.Layers = append(m.Layers, lout)
+	return content[:len(content)-1]
 }
