@@ -47,7 +47,7 @@ func convertGfxToPng(inGfx string, outBase string) error {
 		go func(index int) {
 			defer wc.Done()
 			imgInfo := images[index]
-			fileName := fmt.Sprintf("%s_%d_%d.png", outBase, imgInfo.Partition, imgInfo.Clut)
+			fileName := fmt.Sprintf("%s_%d_%d.png", outBase, imgInfo.Clut, imgInfo.Partition)
 			outFile, err := os.Create(fileName)
 			if err != nil {
 				lastErr = err // hack-y way to check errors in go routines

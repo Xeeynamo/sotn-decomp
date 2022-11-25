@@ -1,5 +1,7 @@
 go 1.19
 
-use ./tools/gfxsotn
-
-use ./tools/sotn-disk
+use (
+	./tools/gfxsotn
+	./tools/tmxsotn
+	./tools/sotn-disk
+)
