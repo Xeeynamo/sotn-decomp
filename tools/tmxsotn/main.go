@@ -86,7 +86,7 @@ func getGfxTilesets(filePath string) ([]gfx.ImageInfo, error) {
 		return []gfx.ImageInfo{}, err
 	}
 
-	images, err := gfx.GetGfxAsImages(gfxData, gfx.DefaultConfig)
+	images, err := gfx.GetGfxAsImages(gfxData)
 	if err != nil {
 		return []gfx.ImageInfo{}, err
 	}

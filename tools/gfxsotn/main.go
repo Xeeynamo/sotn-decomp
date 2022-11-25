@@ -35,7 +35,7 @@ func convertGfxToPng(inGfx string, outBase string) error {
 		return err
 	}
 
-	images, err := gfx.GetGfxAsImages(gfxData, gfx.DefaultConfig)
+	images, err := gfx.GetGfxAsImages(gfxData)
 	if err != nil {
 		return err
 	}
