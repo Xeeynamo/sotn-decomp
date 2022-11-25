@@ -19,3 +19,4 @@ EntityAbsorbOrb = 0x801C2AA8;
 EntityRoomForeground = 0x801C32EC;
 EntityBoneScimitar = 0x801C37E4;
 EntityAreaTitlePopup = 0x801C8CAC;
+c_GoldPrizes = 0x80181D14;

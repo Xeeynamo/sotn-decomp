@@ -163,7 +163,7 @@ void EntitySecretStairsEmitter(Entity* entity) {
         break;
     case 1:
         if (g_isSecretStairsButtonPressed) {
-            g_pfnPlaySfx(0x644);
+            g_pfnPlaySfx(NA_SE_SECRET_STAIRS);
             entity->initState++;
         }
         break;
@@ -281,7 +281,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     s32 speedX;
 
     if (g_isDraculaFirstFormDefeated) {
-        entity->objectId = 2;
+        entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = func_801B6B60;
         entity->initState = 0;
         entity->unk2E = 0;
@@ -316,7 +316,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             entity->accelerationX -= speedX;
         }
 
-        if ((g_blinkTimer & 3) == 0) { // lolwut?
+        if (!(g_blinkTimer & 3)) { // lolwut?
             Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
@@ -380,7 +380,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->unk1E += 0x20;
         entity->accelerationY += 0x2000;
         if (entity->posY.Data.high >= 205) {
-            g_pfnPlaySfx(0x68B);
+            g_pfnPlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.Data.high = 204;
             func_801B5794(2);
         }
@@ -1092,12 +1092,12 @@ void func_801BD860(POLY_GT4* arg0) {
 s32 func_801BD88C(s32 arg0, u8 arg1) {
     s32 var_v0;
     s32 ret = 0;
-    u8* var_a0 = arg0 + 4;
+    s32 j = arg0 + 4;
     u8* var_v1;
     s32 i;
 
-    for (i = 0; i < 4; i++) {
-        var_v1 = var_a0;
+    for (i = 0; i < 4; i++, j += 12) {
+        var_v1 = (u8*)j;
         do {
             var_v0 = *var_v1 - arg1;
 
@@ -1109,9 +1109,7 @@ s32 func_801BD88C(s32 arg0, u8 arg1) {
 
             *var_v1 = var_v0;
             var_v1++;
-        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
-
-        var_a0 += 0xC;
+        } while ((s32)var_v1 < (s32)j + 3);
     }
 
     return ret;

@@ -11,6 +11,8 @@ void UpdateStageEntities(void);
 void func_8018861C(void);
 void func_8018A7AC(void);
 void LoadObjLayout(s32 objLayoutId);
+void func_801916C4(u16);
+void func_8018CAB0(void);
 
 const PfnOverlayEntry g_pStOverlay[] = {
     (PfnOverlayEntry)UpdateStageEntities,
@@ -2583,7 +2585,7 @@ void func_801870B0(Entity* entity) {
 
         if (entity->unk44 != 0) {
             temp_v0 = func_8018B970();
-            if (entity->unk7C.modeU16 != 0) {
+            if (entity->unk7C.modeS16 != 0) {
                 phi_v1 = (temp_v0 & 2) * 2;
             } else {
                 phi_v1 = (temp_v0 & 1) * 4;
@@ -2600,7 +2602,7 @@ void func_801870B0(Entity* entity) {
         u8 temp_v0_5;
         InitializeEntity(D_80180488);
         temp_v0_5 = D_80180530[temp_s1];
-        entity->unk7C.modeU16 = temp_v0_5;
+        entity->unk7C.modeS16 = temp_v0_5;
         if (temp_v0_5 != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
@@ -2620,7 +2622,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(0x634);
+            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -2828,7 +2830,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189FB4);
 void func_8018A0CC(s16 arg0) {
     do {
     loop_1:
-        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < arg0) {
+        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < (s32)arg0) {
             D_80193AB0++;
             goto loop_1;
         }
@@ -2842,7 +2844,7 @@ void func_8018A118(s32 arg0) {
     a2 = 0xFFFE;
 loop_1:
     if ((D_80193AB0->posX == a3) ||
-        ((arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
+        (((s32)arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
         D_80193AB0--;
         goto loop_1;
     }
@@ -2855,10 +2857,10 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A26C);
 void func_8018A26C(s16);
 
 void func_8018A380(s32 arg0) {
-    s16 a1 = -2;
+    u16 a1 = -2;
     arg0 = (s16)arg0;
 loop_1:
-    if (D_80193AB4->posY == a1 || D_80193AB4->posY < arg0) {
+    if (D_80193AB4->posY == (s32)a1 || D_80193AB4->posY < (s32)arg0) {
         D_80193AB4++;
         goto loop_1;
     }
@@ -2868,7 +2870,8 @@ void func_8018A3CC(s16 arg0) {
     while (true) {
         if (D_80193AB4->posY == 0xFFFF)
             D_80193AB4--;
-        else if (arg0 >= (s32)D_80193AB4->posY || D_80193AB4->posY == 0xFFFE)
+        else if ((s32)arg0 >= (s32)D_80193AB4->posY ||
+                 D_80193AB4->posY == 0xFFFE)
             break;
         else
             D_80193AB4--;
@@ -3377,7 +3380,7 @@ void func_8018CB34(u16 arg0) {
 void CollectHeart(u16 heartSize) {
     s32* hearts;
 
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart->current;
     *hearts += c_HeartPrizes[heartSize];
 
@@ -3388,11 +3391,13 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(D_8006C3B8);
 }
 
+void func_80192F40(const u8*, s32);
+
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
-    g_pfnPlaySfx(0x6A9);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_GOLD);
     gold = &g_playerGold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
@@ -3414,21 +3419,21 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(0x67A);
+        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(0x67A);
+        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
         D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(D_8006C3B8);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C3B8);
 }
@@ -3516,16 +3521,17 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F750);
 #else
 extern void func_8018F928(Entity*);
-void func_8018F750(Entity* source, s8 count, s16 xOffset, s16 yOffset,
+void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
                    s16 xDistance) {
     Entity* entity;
-    s16 x, y;
+    s32 x, y;
     u8 i;
 
-    y = source->posY.Data.high + yOffset;
-    x = source->posX.Data.high + xOffset;
+    x = (u16)source->posX.Data.high + xOffset;
+    y = (u16)source->posY.Data.high + yOffset;
+
     for (i = 0; i < count; i++) {
-        entity = AllocEntity(D_8007A958, D_8007A958 + MaxEntityCount);
+        entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
         if (entity != NULL) {
             entity->objectId = 21;
             entity->pfnUpdate = func_8018F928;
@@ -3534,7 +3540,6 @@ void func_8018F750(Entity* source, s8 count, s16 xOffset, s16 yOffset,
             entity->subId = i;
             entity->zPriority = source->zPriority + 1;
         }
-        i++;
         x += xDistance;
     }
 }
@@ -3707,7 +3712,7 @@ void func_8019055C(void) {
         if (entity != NULL) {
             func_8018A8D4(ENTITY_EXPLOSION, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80.data = temp_s3;
+            entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }
@@ -3872,7 +3877,7 @@ s32 func_80193A3C(u8* arg0, u8 value) {
 
     for (i = 0; i < 4; i++) {
         u8* ptrCur = phi_a0;
-        s32 ptrEnd = phi_a0 + 3;
+        s32 ptrEnd = (s32)phi_a0 + 3;
         do {
             s32 phi_v0 = *ptrCur - value;
             if (phi_v0 < 0) {

@@ -14,7 +14,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-focal
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu

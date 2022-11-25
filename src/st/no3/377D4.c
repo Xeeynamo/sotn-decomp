@@ -69,7 +69,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(0x634);
+            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -663,7 +663,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6450);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6568);
 
 void func_801C660C(void) {
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     D_8003C848(5, 0x8000);
     DestroyEntity(D_8006C3B8);
 }
@@ -786,7 +786,7 @@ void func_801CF58C(Entity* arg0) {
     arg0->unk84.Data.high = 0x100;
     func_801C58A4(6);
     g_pfnPlaySfx(0x783);
-    arg0->unk80.data = 0x20;
+    arg0->unk80.modeS16.unk0 = 0x20;
 }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF5E0);
@@ -953,7 +953,7 @@ s32 func_801D704C(s32 arg0, u8 arg1) {
 
             *var_v1 = var_v0;
             var_v1++;
-        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+        } while ((s32)var_v1 < ((s32)var_a0 + 3));
 
         var_a0 += 0xC;
     }

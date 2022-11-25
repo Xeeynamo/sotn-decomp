@@ -3,55 +3,41 @@
 
 #include "common.h"
 #include "dra.h"
-
-// Those entity IDs are common across all stages
-#define ENTITY_BREAKABLE 1
-#define ENTITY_EXPLOSION 2
-#define ENTITY_ITEM_DROP 3
-#define ENTITY_NUMERIC_DAMAGE 4
-#define ENTITY_RED_DOOR 5
-#define ENTITY_INTENSE_EXPLOSION 6
-#define ENTITY_ABSORB_ORB 7
-#define ENTITY_ROOM_FOREGROUND 8
-#define ENTITY_STAGE_NAME_POPUP 9
-#define ENTITY_HEART_DROP 10
-#define ENTITY_RELIC 11
-#define ENTITY_COLLECTABLE 12
-#define ENTITY_ENEMY_BLOOD 13
-#define ENTITY_UNKNOWN_0D 14
+#include "objects.h"
+#include "sfx.h"
 
 // Flags for entity->unk34
 #define ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 #define ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
 typedef struct {
-    const u8* gfxPage;
-    const u8* gfxIndex;
-    const u8* clut;
-    const u8* collision;
-} TileDefinition;
+    /* 0x00 */ const u8* gfxPage;
+    /* 0x04 */ const u8* gfxIndex;
+    /* 0x08 */ const u8* clut;
+    /* 0x0C */ const u8* collision;
+} TileDefinition; // size = 0x10
 
 typedef struct {
-    const u32 left : 6;
-    const u32 top : 6;
-    const u32 right : 6;
-    const u32 bottom : 6;
-    const u32 flags : 8;
-} LayoutRect;
+    /* 0x00 */ const u32 left : 6;
+    /* 0x04 */ const u32 top : 6;
+    /* 0x08 */ const u32 right : 6;
+    /* 0x0C */ const u32 bottom : 6;
+    /* 0x10 */ const u32 flags : 8;
+} LayoutRect; // size = 0x14
 
 typedef struct {
-    /* 00 */ const u16* layout;
-    /* 04 */ const TileDefinition* tileDef;
-    /* 08 */ const u32 rect;
-    /* 0C */ const u16 unkC;
-    /* 0E */ const u8 unkE;
-    /* 0F */ const u8 unkF;
-} LayerDef;
+    /* 0x00 */ const u16* layout;
+    /* 0x04 */ const TileDefinition* tileDef;
+    /* 0x08 */ const u32 rect;
+    /* 0x0C */ const u16 unkC;
+    /* 0x0E */ const u8 unkE;
+    /* 0x0F */ const u8 unkF;
+} LayerDef; // size = 0x10
 
 typedef struct {
-    LayerDef* foreground;
-    LayerDef* background;
-} LayoutMap;
+    /* 0x00 */ LayerDef* foreground;
+    /* 0x04 */ LayerDef* background;
+} LayoutMap; // size = 0x8
 
 typedef struct {
     /* 0x0 */ u16 posX;

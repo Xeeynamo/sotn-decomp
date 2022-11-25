@@ -17,6 +17,8 @@ void EntityItemDrop(Entity*);
 void EntityHeartDrop(Entity*);
 void EntityExplosion(Entity*);
 void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2);
+void func_80198BC8(void* const, s32);
+void func_8019344C(void);
 
 // OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
@@ -954,7 +956,8 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019362C);
 
 extern s32 D_8009769C; // g_playerGold?
 void* const D_80180D60[];
-const s32 D_80180D88[];            // c_GoldPrizes
+const s32 D_80180D88[]; // c_GoldPrizes
+
 void func_801936E0(u16 goldSize) { // CollectGold
     s32 *gold, *unk;
     u16 goldSizeIndex;
@@ -1032,7 +1035,7 @@ void EntityExplosion(Entity* entity) {
     }
 
     entity->posY.value += entity->accelerationY;
-    if (!AnimateEntity(D_80180EC4[entity->subId], entity)) {
+    if (!AnimateEntity((const u8*)D_80180EC4[entity->subId], entity)) {
         DestroyEntity(entity);
     }
 }
@@ -1050,8 +1053,8 @@ void func_80194314(Entity* entity) {
 
     InitializeEntity(g_eBreakableInit);
     entity->animationFrame = entity->unk7C.modeU8.unk0;
-    entity->accelerationX = D_80180ED8[entity->unk80.data1.unk0 * 2];
-    entity->accelerationY = D_80180EDA[entity->unk80.data1.unk0 * 2];
+    entity->accelerationX = D_80180ED8[entity->unk80.modeS8.unk0 * 2];
+    entity->accelerationY = D_80180EDA[entity->unk80.modeS8.unk0 * 2];
 
     if (entity->subId != 0) {
         entity->zPriority -= 1;
@@ -1087,14 +1090,14 @@ void EntityInventoryItem(Entity* entity, u32 arg1) {
         var_v1 = D_80180F5C[temp_a0];
 
         if (var_v1 < 0x80) {
-            entity->unkFuncB8 = EntityItemDrop;
+            entity->unkB8.unkFuncB8 = EntityItemDrop;
         } else {
-            entity->unkFuncB8 = EntityHeartDrop;
+            entity->unkB8.unkFuncB8 = EntityHeartDrop;
             var_v1 -= 0x80;
         }
 
         entity->subId = var_v1 + 0x8000;
-        goto block_10;
+        return;
     }
 
     temp_v1 = entity->unkB4;
@@ -1106,8 +1109,7 @@ void EntityInventoryItem(Entity* entity, u32 arg1) {
             entity->initState = 5;
         }
     }
-block_10:
-    entity->unkFuncB8(entity, arg1, entity);
+    entity->unkB8.unkFuncB8(entity, arg1, entity);
 }
 #endif
 
@@ -1141,7 +1143,7 @@ void func_80195A54(Entity* entity) {
         entity->animationFrame++;
     }
 
-    if (D_80181000[entity->subId] < entity->animationFrameDuration) {
+    if (D_80181000[entity->subId] < (s32)entity->animationFrameDuration) {
         DestroyEntity(entity);
     }
 }
@@ -1301,7 +1303,7 @@ void func_80196934(void) {
         if (entity != NULL) {
             func_8019102C(2, D_8006C26C, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80.data = temp_s3;
+            entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }
@@ -1431,9 +1433,8 @@ void func_80199740(POLY_GT4* arg0) {
 
 //! FAKE
 s32 func_8019976C(s32 arg0, u8 value) {
-    s32 var_v0;
     u8 ret = 0;
-    u8* phi_v1 = arg0 + 4;
+    u8* phi_v1 = (u8*)arg0 + 4;
     u8* phi_a0;
     s32 i;
 

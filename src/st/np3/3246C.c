@@ -53,7 +53,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(0x634);
+            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
