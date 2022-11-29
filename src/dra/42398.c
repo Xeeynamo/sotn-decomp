@@ -11,7 +11,7 @@
 
 void func_800E2398(s32 arg0);
 s32 func_8010E27C(void);
-void func_801324B4(s8 arg0, s16 arg1, s16 arg2);
+//void func_801324B4(s8 arg0, s16 arg1, s16 arg2);
 s32 func_80136010();
 void func_801353A0();
 void func_800F9808(s32);
@@ -2683,13 +2683,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801321FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132264);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801324B4);
-#else
 void func_801324B4(s8 arg0, s16 arg1, s16 arg2) {
-    SsSetSerialVol(arg0, D_800BD07C[arg1], D_800BD07C[arg2]);
+    s32 voll = D_800BD07C[arg1];
+    s32 volr = D_800BD07C[arg2];
+
+    SsSetSerialVol(arg0, voll, volr);
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132500);
 
