@@ -2180,7 +2180,11 @@ void func_8010DA2C(s32* arg0) {
     D_8006C3B8->animationFrameIndex = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DA48);
+void func_8010DA48(s32 arg0) {
+    D_8006C3B8->unkAC = arg0;
+    D_8006C3B8->animationFrameDuration = 0;
+    D_8006C3B8->animationFrameIndex = 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DA70);
 
