@@ -513,6 +513,7 @@ extern s32 D_80097908;
 extern s32 D_8009790C;
 extern s32 D_8009792C;
 extern s32 D_80097934;
+extern u8 D_80097964[];
 extern u8 D_8009796E;
 extern u8 D_8009798A;
 extern u8 D_80097A8D;

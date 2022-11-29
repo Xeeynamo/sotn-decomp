@@ -1688,7 +1688,19 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDE20);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE044);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE3A8);
+extern u8 D_80097964[];
+
+s32 func_800FE3A8(s32 arg0) {
+    /*
+     * also matches without the temp like this:
+     * return (D_80097964[arg0] & ~0xfd) != 0;
+     * if that array contains a bitmask, it would make
+     * more sense that way.
+     */
+    s32 temp = 2;
+
+    return (D_80097964[arg0] & temp) != 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE3C4);
 
