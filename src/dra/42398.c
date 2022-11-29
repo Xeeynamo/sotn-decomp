@@ -10,8 +10,9 @@
 #define DISP_UNK2_H DISP_ALL_H
 
 void func_800E2398(s32 arg0);
+void func_800FADC0();
 s32 func_8010E27C(void);
-// void func_801324B4(s8 arg0, s16 arg1, s16 arg2);
+void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
 s32 func_80136010();
 void func_801353A0();
 void func_800F9808(s32);
@@ -1558,7 +1559,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAD34);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FADC0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAE98);
+void func_800FAE98(void) {
+    func_800FADC0();
+    D_800978F8 = 0x40;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAEC4);
 
@@ -2248,7 +2252,12 @@ void func_8010E390(s32 arg0) {
     D_8006C3B8->accelerationX = arg0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E3B8);
+void func_8010E3B8(s32 arg0) {
+    if (D_8007340A == 1) {
+        arg0 = -arg0;
+    }
+    D_800733E0 = arg0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E3E0);
 
@@ -2931,7 +2940,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135624);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013572C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135C00);
+s16 func_80135C00(s16 arg0) {
+    arg0++;
+    
+    if (arg0 == 0x100) {
+        arg0 = 0;
+    }
+
+    return arg0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135C2C);
 void func_80135C2C();

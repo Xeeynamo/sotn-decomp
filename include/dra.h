@@ -511,6 +511,7 @@ extern Pad g_pads[];
 extern s16 D_80097496;
 extern s32 g_mapProgramId;
 extern s32 D_800974AC;
+extern s32 D_800978F8;
 extern s32 D_80097908;
 extern s32 D_8009790C;
 extern s32 D_8009792C;
