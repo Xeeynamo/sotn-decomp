@@ -449,7 +449,7 @@ void func_800ECE2C(void) {
     // TODO: fix once the real struct type is found
     s32 i;
 
-    for (D_800730A0 = 0, i = 90; i >= 0; i-=6) {
+    for (D_800730A0 = 0, i = 90; i >= 0; i -= 6) {
         D_800730F4[i].unk0 = 0;
     }
 }
