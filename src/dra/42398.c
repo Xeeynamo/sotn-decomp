@@ -1726,7 +1726,7 @@ void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0B8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0F4);
+void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
@@ -2150,7 +2150,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D800);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DA2C);
+void func_8010DA2C(s32* arg0) {
+    D_8006C3B8->unk4C = arg0;
+    D_8006C3B8->animationFrameDuration = 0;
+    D_8006C3B8->animationFrameIndex = 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DA48);
 
