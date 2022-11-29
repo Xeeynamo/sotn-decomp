@@ -2946,7 +2946,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013572C);
 
 s16 func_80135C00(s16 arg0) {
     arg0++;
-    
+
     if (arg0 == 0x100) {
         arg0 = 0;
     }
