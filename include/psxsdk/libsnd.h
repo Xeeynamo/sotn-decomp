@@ -5,10 +5,10 @@
 extern void SsSeqClose(short seq_access_num);
 
 /*
-* Sets the main volume value in voll and volr respectively.
-* Each can be set from 0 to 127.
-* It is essential to set it before SEQ data is played.
-*/
+ * Sets the main volume value in voll and volr respectively.
+ * Each can be set from 0 to 127.
+ * It is essential to set it before SEQ data is played.
+ */
 extern void SsSetMVol(short voll, short volr);
 
 // Carries out attribute setting relating to CD audio.
