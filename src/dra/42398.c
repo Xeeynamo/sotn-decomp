@@ -436,21 +436,23 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EBBAC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECBF8);
 
-// sw -> sb Probably compiler
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECE2C);
-#else
+typedef struct unkstruct_800ECE2C {
+    s32 unk0;
+    s32 unk4;
+} unkstruct_800ECE2C;
+
 extern s32 D_800730A0;
-extern s8 D_800730F4[];
+extern unkstruct_800ECE2C D_800730F4[];
 
 void func_800ECE2C(void) {
+    // !FAKE: iterator values are likely wrong
+    // TODO: fix once the real struct type is found
     s32 i;
 
-    for (D_800730A0 = 0, i = 720; i >= 0; i -= 0x30) {
-        D_800730F4[i] = 0;
+    for (D_800730A0 = 0, i = 90; i >= 0; i-=6) {
+        D_800730F4[i].unk0 = 0;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECE58);
 
