@@ -103,7 +103,7 @@ void EntityBreakable(Entity* entity) {
     if (entity->initState != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
-            g_pfnPlaySfx(0x634);
+            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
             temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
                 SpawnExplosionEntity(2, temp_v0);
@@ -793,7 +793,7 @@ void func_8019B8DC(u16 arg0) {
 void func_8019BA38(u16 arg0) {
     s32* hearts;
 
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[arg0];
 
@@ -810,21 +810,21 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(0x67A);
+        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(0x67A);
+        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
         D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(D_8006C3B8);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(0x67A);
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
     D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(D_8006C3B8);
 }
@@ -1106,7 +1106,7 @@ void func_8019F304(void) {
         if (entity != NULL) {
             func_8019967C(2, D_8006C3B8, entity);
             entity->unk84.Data1.unk1 = 6 - i;
-            entity->unk80 = temp_s3;
+            entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.Data1.unk0 = temp_s4;
         }
     }

@@ -72,14 +72,14 @@ typedef union {
 } UnkUnion2; // size = 0x2
 
 typedef union {
-    u16 modeU16;
+    s16 modeS16;
     struct {
         u8 unk0;
         u8 unk1;
     } modeU8;
 } unkUnion3;
 
-typedef struct {
+typedef struct Entity {
     /* 0x00 */ UnkUnion1 posX;
     /* 0x04 */ UnkUnion1 posY;
     /* 0x08 */ s32 accelerationX;
@@ -87,7 +87,7 @@ typedef struct {
     /* 0x10 */ s16 unk10;
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 unk14;
-    /* 0x16 */ s16 palette;
+    /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ s8 unk19;
     /* 0x1A */ s16 unk1A;
@@ -126,7 +126,7 @@ typedef struct {
     /* 0x60 */ s32 unk60;
     /* 0x64 */ s32 firstPolygonIndex;
     /* 0x68 */ s16 unk68;
-    /* 0x6A */ s16 unk6A;
+    /* 0x6A */ u16 unk6A;
     /* 0x6C */ u8 unk6C;
     /* 0x6D */ s8 unk6D;
     /* 0x6E */ s16 unk6E;
@@ -134,11 +134,23 @@ typedef struct {
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
+    ///* 0x7C */ s16 unk7C;
     /* 0x7E */ u8 unk7E;
-    /* 0x80 */ UnkUnion2 unk80;
-    /* 0x82 */ s16 unk82;
+    union {
+        /* 0x80 */ struct Entity* entityPtr;
+        s32 modeS32;
+        struct {
+            /* 0x80 */ s16 unk0;
+            /* 0x82 */ s16 unk2;
+        } modeS16;
+        struct {
+            /* 0x80 */ u8 unk0;
+            /* 0x81 */ u8 unk1;
+        } modeS8;
+    } unk80; // size = 0x4
     /* 0x84 */ UnkUnion1 unk84;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ s8 unk88;
+    /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ u16 unk8C;
     /* 0x8E */ u16 unk8E;
@@ -154,10 +166,16 @@ typedef struct {
     /* 0xAC */ s32 unkAC;
     /* 0xB0 */ s32 unkB0;
     /* 0xB4 */ s16 unkB4;
-    /* 0xB6 */ s16 unk86;
-    /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
-    ///* 0xBA */ u8 unkBA;
-    ///* 0xBB */ u8 unkBB;
+    /* 0xB6 */ s16 unkB6;
+    union {
+        /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+        struct {
+            /* 0xB8 */ u8 unk0;
+            /* 0xB9 */ u8 unk1;
+            /* 0xBA */ u8 unk2;
+            /* 0xBB */ u8 unk3;
+        } modeU8;
+    } unkB8;
 } Entity; // size = 0xBC
 
 typedef struct playerHeart {
@@ -294,6 +312,11 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
+typedef struct {
+    DRAWENV draw; // drawing environment
+    DISPENV disp; // display environment
+} DisplayBuffer;
+
 // main
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
@@ -316,6 +339,7 @@ extern s32 g_menuRelicsCursorIndex;
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
+extern DisplayBuffer D_8003CB0C;
 extern s16 D_8003CB0E;
 extern s16 D_8003CB12;
 extern s8 D_8003CB22;
@@ -324,6 +348,7 @@ extern s8 D_8003CB25;
 extern s8 D_8003CB26;
 extern s8 D_8003CB27;
 extern s8 D_8003CB79;
+extern DRAWENV D_80054300;
 extern s16 D_80054302;
 extern s16 D_80054306;
 extern s8 D_80054316;
@@ -331,6 +356,7 @@ extern s8 D_80054318;
 extern s8 D_80054319;
 extern s8 D_8005431A;
 extern s8 D_8005431B;
+extern DISPENV D_8005435C;
 extern s8 D_8005436D;
 
 // dra
@@ -426,7 +452,7 @@ extern u16 D_80072F6E;
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
-extern s16 D_80073092;
+extern u16 D_80073092;
 extern u16 g_CurrentRoomHSize;
 extern u16 g_CurrentRoomVSize;
 extern s32 D_800730AC;

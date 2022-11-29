@@ -485,20 +485,20 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016A974);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    D_8006C3B8->unk7C.modeU16 =
-        (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
-    if (D_8006C3B8->unk82 == 0) {
-        D_8006C3B8->unk80.data++;
-        D_8006C3B8->unk82++;
+    D_8006C3B8->unk7C.modeS16 =
+        (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeS16;
+    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
+        D_8006C3B8->unk80.modeS16.unk0++;
+        D_8006C3B8->unk80.modeS16.unk2++;
     }
 }
 
 void func_8016B92C(s32 arg0) {
-    if (D_8006C3B8->unk82 == 0) {
-        D_8006C3B8->unk7C.modeU16 =
-            (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeU16;
-        D_8006C3B8->unk80.data++;
-        D_8006C3B8->unk82++;
+    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
+        D_8006C3B8->unk7C.modeS16 =
+            (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeS16;
+        D_8006C3B8->unk80.modeS16.unk0++;
+        D_8006C3B8->unk80.modeS16.unk2++;
     }
 }
 
