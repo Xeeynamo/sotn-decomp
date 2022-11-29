@@ -1712,17 +1712,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEEA4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF064);
 
-void func_800FF0A0(s32 context) { *(&D_80139828 + (context * 1)) = 0; }
+void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0B8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0F4);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF110);
-#else
-s32 func_800FF110(s32 arg0) { return D_80139834[arg0]; }
-#endif
+s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF128);
 

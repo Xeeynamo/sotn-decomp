@@ -632,7 +632,7 @@ extern u16 D_801396F4;
 extern s32 D_801397FC;
 extern s32 D_8013980C;
 extern u8 D_80139810;
-extern s32 D_80139828;
+extern s32 D_80139828[];
 extern s32 D_80139834[];
 extern s16 D_80139868;
 extern s16 D_80139A70;
