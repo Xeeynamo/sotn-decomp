@@ -665,6 +665,7 @@ void func_800E8DF0(void);
 void func_800E92E4(void);
 void func_800E92F4(void);
 void func_800EA5E4(s32);
+void func_800EA538(s32);
 void func_800EDA70(s32* arg0);
 void func_800EDAE4(void);
 s16 func_800EDC80(u8 arg0, s32 arg1);

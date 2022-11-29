@@ -1142,7 +1142,10 @@ void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6998);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6A48);
+void func_800F6A48(void) {
+    func_800EA538(6);
+    func_800EA5E4(0x411);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F6A70);
 
