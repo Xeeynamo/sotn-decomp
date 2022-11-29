@@ -86,7 +86,7 @@ typedef struct Entity {
     /* 0x0C */ s32 accelerationY;
     /* 0x10 */ s16 unk10;
     /* 0x12 */ s16 unk12;
-    /* 0x14 */ u16 unk14;
+    /* 0x14 */ u16 unk14; // related to accelerationX ?
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ s8 unk19;

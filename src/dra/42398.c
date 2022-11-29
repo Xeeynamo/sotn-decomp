@@ -16,6 +16,7 @@ s32 func_80136010();
 void func_801353A0();
 void func_800F9808(s32);
 void func_801026BC(s32);
+void func_8010E390(s32);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
@@ -2240,8 +2241,12 @@ s32 func_8010E27C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E390);
-/*?*/ s32 func_8010E390(/*?*/ s32);
+void func_8010E390(s32 arg0) {
+    if (D_8006C3B8->unk14 == 1) {
+        arg0 = -arg0;
+    }
+    D_8006C3B8->accelerationX = arg0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E3B8);
 
