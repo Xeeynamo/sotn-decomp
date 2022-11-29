@@ -1973,7 +1973,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80104790);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105078);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105408);
+void func_80105408(void) {
+    D_80072EF4 = 0x1000;
+    D_80072EFC = 1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80105428);
 
