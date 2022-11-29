@@ -336,7 +336,7 @@ void func_800E92F4(void) {
 
 typedef struct struct_8013B15C {
     /* 0x000 */ s32 unk_000;
-    /* 0x000 */ char unk_004[0x274];
+    /* 0x004 */ char unk_004[0x274];
 } struct_8013B15C; // size = 0x278
 
 extern struct_8013B15C D_8013B15C[];
