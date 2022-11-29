@@ -14,6 +14,8 @@ s32 func_8010E27C(void);
 void func_801324B4(s8 arg0, s16 arg1, s16 arg2);
 s32 func_80136010();
 void func_801353A0();
+void func_800F9808(s32);
+void func_801026BC(s32);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
@@ -1533,7 +1535,7 @@ void func_800FAC30(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAC48);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAC98);
+void func_800FAC98(void) { func_800F9808(2); }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FACB8);
 
@@ -1929,7 +1931,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102628);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801026BC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801027A4);
+void func_801027A4(void) { func_801026BC(0); }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801027C4);
 
@@ -2631,11 +2633,14 @@ void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
 
 void func_80131ED8(s32 value) { D_80138F20 = value; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131EE8);
+void func_80131EE8(void) {
+    D_80139020 = 1;
+    D_8013B694 = 0;
+}
 
 void func_80131F04(void) {
     D_80139020 = 0;
-    D_8013B694 = D_8013B694 + 1;
+    D_8013B694++;
 }
 
 s32 func_80131F28(void) { return D_80138F7C; }
