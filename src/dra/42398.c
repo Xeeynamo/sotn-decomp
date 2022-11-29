@@ -1688,8 +1688,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDE20);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE044);
 
-extern u8 D_80097964[];
-
 s32 func_800FE3A8(s32 arg0) {
     /*
      * also matches without the temp like this:
