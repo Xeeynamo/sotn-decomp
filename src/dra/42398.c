@@ -396,8 +396,10 @@ void func_800EAD0C(void) {
     func_800EA5E4(6);
     func_800EA5E4(7);
     func_800EA5E4(8);
-    if (g_CurrentPlayableCharacter == 0 && g_mapProgramId != PROGRAM_ST)) {
-        func_800EA5E4(0x17);
+    if (g_CurrentPlayableCharacter == 0) {
+        if (g_mapProgramId != PROGRAM_ST0) {
+            func_800EA5E4(0x17);
+        }
     }
 }
 #endif
@@ -434,7 +436,21 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EBBAC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECBF8);
 
+// sw -> sb Probably compiler
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECE2C);
+#else
+extern s32 D_800730A0;
+extern s8 D_800730F4[];
+
+void func_800ECE2C(void) {
+    s32 i;
+
+    for (D_800730A0 = 0, i = 720; i >= 0; i -= 0x30) {
+        D_800730F4[i] = 0;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECE58);
 
