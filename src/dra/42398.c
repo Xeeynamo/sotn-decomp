@@ -334,9 +334,20 @@ void func_800E92F4(void) {
     D_8013B3D0 = 0;
 }
 
+typedef struct struct_8013B15C {
+    /* 0x000 */ s32 unk_000;
+    /* 0x000 */ char unk_004[0x274];
+} struct_8013B15C; // size = 0x278
+
+extern struct_8013B15C D_8013B15C[];
+
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9508);
+s32 func_800E9508(s32 arg0) {
+    s32 temp = D_8013B15C[arg0].unk_000;
+
+    return temp;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
