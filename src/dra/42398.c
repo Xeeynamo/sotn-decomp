@@ -464,8 +464,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", LoadRoomLayer);
 
 void func_800EDA70(s32* context) {
     s32 i;
-    s32 n = 0xd;
-    for (i = 0; i < n; i++) {
+    s32 n;
+    
+    for (n= 0xd, i = 0; i < n; i++) {
         *context++ = 0;
     }
 }
