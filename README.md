@@ -1,4 +1,4 @@
-# Castlevania: Symphony of the Night Decompilation Project
+# Castlevania: Symphony of the Night Decompilation
 
 This is a WIP decompilation of Castlevania Symphony of the Night for the PSX. The purpose of the project is to recreate a source code base for the game from scratch, using information found inside the game along with static and/or dynamic analysis. We aim to produce a codebase that compiles byte-for-byte to the same binaries of the game, this type of approach is called Matching Decompilation.
 
