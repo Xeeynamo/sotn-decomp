@@ -665,7 +665,7 @@ extern const char* D_80138784[487];
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 
-void func_800E346C();
+void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
@@ -683,12 +683,12 @@ void FreePolygons(s32 index);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
 void func_800F1EB0(s32, s32, s32);
-void func_800F2120();
+void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
 void func_800F4F48(void);
 void func_800F4FD0(void);
-bool IsAlucart();
+bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
@@ -722,6 +722,7 @@ void func_801071CC(POLY_GT4* poly, u8, s32);
 void func_80107250(POLY_GT4* poly, s32 arg1);
 void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, u8 u,
                    u8 v);
+void func_801073C0(void);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
@@ -735,15 +736,15 @@ s32 func_80131F28(void);
 s32 func_80131F38(void);
 bool func_80131F68(void);
 s16 func_80131F94(void);
-s32 func_80132134();
-s32 func_80132264();
-s32 func_801326D8();
+s32 func_80132134(void);
+s32 func_80132264(void);
+s32 func_801326D8(void);
 void func_8013271C(void);
 void func_80132760(void);
 void func_801337B4(void);
 s32 func_80133940(void);
 s32 func_80133950(void);
-void func_8013415C();
-void func_801361F8();
+void func_8013415C(void);
+void func_801361F8(void);
 
 #endif
