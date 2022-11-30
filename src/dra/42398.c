@@ -338,7 +338,8 @@ void func_800E92F4(void) {
 
 typedef struct struct_8013B15C {
     /* 0x000 */ s32 unk_000;
-    /* 0x004 */ char unk_004[0x274];
+    u8 unk_004;
+    /* 0x004 */ char unk_008[0x270];
 } struct_8013B15C; // size = 0x278
 
 extern struct_8013B15C D_8013B15C[];
@@ -1258,7 +1259,7 @@ u8 func_800F7218(u16 arg0, u16 arg1) {
         var_v0 = 0xE3;
     }
 
-    return var_v0;//var_v0;
+    return var_v0;
 }
 #endif
 
@@ -2334,7 +2335,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010ED54);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EDB8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FAF4);
+void func_8010FAF4(void) {
+    func_80106590(&D_80073F98);
+    D_80072F66 = 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB24);
 
