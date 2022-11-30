@@ -1258,7 +1258,7 @@ u8 func_800F7218(u16 arg0, u16 arg1) {
         var_v0 = 0xE3;
     }
 
-    return var_v0;//var_v0;
+    return var_v0; // var_v0;
 }
 #endif
 
