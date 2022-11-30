@@ -476,7 +476,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDA94);
 void func_800EDAE4(void) {
     s32 i;
     s32* phi_v1 = &D_800974AC;
-    
+
     for (i = 15; i >= 0; i--) {
         *phi_v1 = 0;
         phi_v1 += 0x10;
