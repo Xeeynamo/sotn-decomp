@@ -340,8 +340,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
 
 typedef struct struct_8013B15C {
     /* 0x000 */ s32 unk_000;
-    u8 unk_004;
-    /* 0x004 */ char unk_008[0x270];
+    /* 0x004 */ char unk_008[0x274];
 } struct_8013B15C; // size = 0x278
 
 extern struct_8013B15C D_8013B15C[];
