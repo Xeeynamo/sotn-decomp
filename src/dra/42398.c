@@ -1576,7 +1576,11 @@ void func_800FAB8C(s32 arg0) {
     D_80137639[arg0 * 0x1E] = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FABBC);
+void func_800FABBC(s32 arg0) {
+    // The two symbols might be the same array
+    D_80137638[arg0 * 0x1E] = 3;
+    D_80137639[arg0 * 0x1E] = 0;
+}
 
 void func_800FABEC(s32 context) { D_80137638[context * 30] = 0; }
 
