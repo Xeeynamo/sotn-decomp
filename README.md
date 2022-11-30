@@ -34,7 +34,7 @@ This repo does not include any assets or assembly code necessary for compiling t
  1. Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
  1. Run `sudo apt-get install -y $(cat tools/requirements-debian.txt)`
  1. Run `make update-dependencies`
- 1. Inside the newly created repo, create a new `iso/` folder, and extract the content of the game disc
+ 1. Inside the newly created repo, create a new `iso/` folder, and extract the contents of the game disc
 
 ## How to build
 
