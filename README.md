@@ -1,14 +1,15 @@
-# Castlevania: Symphony of the Night disassembly
+# Castlevania: Symphony of the Night Decompilation Project
 
-Creates a full decompilation in C, that compiles the same binaries as the commercial video game Castlevania: Symphony of the Night for PS1.
+This is a WIP decompilation of Castlevania Symphony of the Night for the PSX. The purpose of the project is to recreate a source code base for the game from scratch, using information found inside the game along with static and/or dynamic analysis. We aim to produce a codebase that compiles byte for byte to the same binaries of the game, this type of approach is called Matching Decompilation.
 
 The game is divided in three modules:
 `SLUS_000.67` is the game engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
-`DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms' (save, loading, teleport) layout.
-`ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map's specific events, cutscenes, enemies' AI, collisions and more. It also contains the rooms and entities layout.
+`DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms (save, loading, teleport) layout.
+`ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map specific events, cutscenes, enemy AI, collisions and more. It also contains the rooms and entities layout.
 
 All the files refer to the `SLUS-00067` version of the game.
 
+This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.
 
 ## Bins decomp progress
 
@@ -48,7 +49,7 @@ Some non-matching functions are present in the source preprocessed by the macro 
 
 1. Run `make clean extract all expected` at least once
 1. After setup and build, choose an overlay (eg. `ST/WRP`)
-1. Look for one of those function which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
+1. Look for one of those functions which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
 1. Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
 1. Run `SOURCE=src/st/wrp/6FD0.c ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code on the console
 1. Replace the `INCLUDE_ASM(...);` you targeted with the console output content
@@ -60,9 +61,9 @@ There are a few tricks to make the process more streamlined:
 
 1. Use [decomp.me](https://decomp.me/) with GCC 2.7.2 for PS1. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
 1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/st/wrp/6FD0.c make ctx.c` as mentionned in the how to decompile.
-1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches
-1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work
-1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it
+1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches.
+1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
+1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it.
 
 
 ## Resources:
