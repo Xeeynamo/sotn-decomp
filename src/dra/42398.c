@@ -1570,7 +1570,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAB1C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAB8C);
+void func_800FAB8C(s32 arg0) {
+    // The two symbols might be the same array
+    D_80137638[arg0 * 0x1E] = 1;
+    D_80137639[arg0 * 0x1E] = 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FABBC);
 
@@ -2724,6 +2728,7 @@ void func_80131F04(void) {
 
 s32 func_80131F28(void) { return D_80138F7C; }
 
+// https://decomp.me/scratch/4f6B1
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131F38);
 
 bool func_80131F68(void) {
