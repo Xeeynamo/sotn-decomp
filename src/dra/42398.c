@@ -1543,8 +1543,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9690);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F96F4);
 
-void func_800F97DC(void)
-{
+void func_800F97DC(void) {
     D_8013794C = &D_8007EFE4;
     D_80137950 = 0x180;
     D_80137954 = 0;

@@ -608,7 +608,7 @@ extern s8 D_80137638[];
 extern s32 D_80137844;
 extern s32 D_80137848;
 extern s32 D_8013784C;
-extern s32 *D_8013794C;
+extern s32* D_8013794C;
 extern s32 D_80137950;
 extern s32 D_80137954;
 extern s32 D_80137960;
