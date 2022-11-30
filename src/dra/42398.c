@@ -10,11 +10,11 @@
 #define DISP_UNK2_H DISP_ALL_H
 
 void func_800E2398(s32 arg0);
-void func_800FADC0();
+void func_800FADC0(void);
 s32 func_8010E27C(void);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
-s32 func_80136010();
-void func_801353A0();
+s32 func_80136010(void);
+void func_801353A0(void);
 void func_800F9808(s32);
 void func_801026BC(s32);
 void func_8010E390(s32);
@@ -336,6 +336,8 @@ void func_800E92F4(void) {
     D_8013B3D0 = 0;
 }
 
+INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
+
 typedef struct struct_8013B15C {
     /* 0x000 */ s32 unk_000;
     u8 unk_004;
@@ -343,8 +345,6 @@ typedef struct struct_8013B15C {
 } struct_8013B15C; // size = 0x278
 
 extern struct_8013B15C D_8013B15C[];
-
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
 
 s32 func_800E9508(s32 arg0) {
     s32 temp = D_8013B15C[arg0].unk_000;
