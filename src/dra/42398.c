@@ -1242,25 +1242,17 @@ void DrawSettingsSound(MenuContext* context) {
                   12, 4, 1);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7218);
-#else
 u8 func_800F7218(u16 arg0, u16 arg1) {
-    u8 var_v0;
-
     if (arg0 == arg1) {
         return 0xE4;
     }
 
-    if (arg0 >= arg1) {
-        var_v0 = 0xE5;
+    if (arg0 < arg1) {
+        return 0xE3;
     } else {
-        var_v0 = 0xE3;
+        return 0xE5;
     }
-
-    return var_v0;
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7244);
 
