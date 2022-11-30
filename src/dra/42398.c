@@ -2292,7 +2292,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E4D0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E570);
-/*?*/ s32 func_8010E570(/*?*/ s32);
+/*?*/ void func_8010E570(/*?*/ s32);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E6AC);
 
@@ -2444,7 +2444,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80117DEC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801182F8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118614);
+void func_80118614(void) {
+    if (D_8007342A < 0) {
+        func_8010E570(0);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118640);
 
