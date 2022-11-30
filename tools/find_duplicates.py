@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# tool to detect if a function has duplicates, adapted from https://github.com/pmret/papermario
+# tool to detect if a function has duplicates, inspired by https://github.com/pmret/papermario and adapted for sotn decomp
 
 import argparse
 from collections import Counter, OrderedDict
@@ -9,6 +9,7 @@ from Levenshtein import ratio
 import os
 import re
 import sys
+import glob
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 root_dir = script_dir + "/../"
@@ -48,8 +49,10 @@ def get_all_s_files():
         for f in files:
             if "data." in f or "nonmatchings" not in os.path.join(root, f):
                 continue
-            elif f.endswith(".s") and not f.endswith("data.s"):    
-                ret.add(f[:-2])
+            elif f.endswith(".s") and not f.endswith("data.s"):
+                overlay = root.split("/")[-3].upper()
+                if overlay in roms_bytes.keys(): 
+                    ret.add((overlay,f[:-2]))
     return ret
 
 
@@ -60,7 +63,7 @@ def get_symbol_length(sym_name):
     return 0
 
 
-# read instructions ? returns tuple of 1 out of 4 utf8 decoded bytes, raw bits
+# read instructions, returns tuple of 1 out of 4 utf8 decoded bytes, raw bits
 def get_symbol_bytes(offsets, func):
     if func not in offsets or "start" not in offsets[func] or "end" not in offsets[func]:
         return None
@@ -74,11 +77,11 @@ def get_symbol_bytes(offsets, func):
     while len(bs) > 0 and bs[-1] == 0: # removing zeros at the end
         bs.pop()
 
-    insns = bs[0::4] # read one in 4 byte, why ?
+    insns = bs[3::4] # read one in 4 byte to only consider the mips opcode and immediates and regalloc https://student.cs.uwaterloo.ca/~isg/res/mips/opcodes
 
     ret = []
     for ins in insns:
-        ret.append(ins >> 2) ## why ?
+        ret.append(ins >> 2) #we alread read only 1 byte in 4 but in this byte, we need the 6 first bits only, discarding the 2 we dont want with this >> 2
 
     result = bytes(ret).decode('utf-8'), bs, data_type
     return result
@@ -128,15 +131,15 @@ def parse_map(map_files): # returns list of syms[fn] = (bin, rom, cur_file, prev
                 elif "/" in fn:
                     cur_file = fn
                 else:
-                    syms[fn] = (key, rom, cur_file, prev_sym, ram, data_type)
-                    prev_sym = fn
+                    syms[key,fn] = (key, rom, cur_file, prev_sym, ram, data_type)
+                    prev_sym = (key,fn)
     return syms
 
 
 def get_map_offsets(syms):
     offsets = {}
     for sym in syms:
-        if sym == "header": 
+        if sym[1] == "header": 
             a = 0
         prev_sym = syms[sym][3]
         if sym not in offsets:
@@ -212,129 +215,105 @@ def do_query(query):
     if args.num_out < num_matches:
         more_str = " (showing only " + str(args.num_out) + "):"
 
-    print(query + " - found " + str(num_matches) + " matches total" + more_str)
+    print(query[0] + query[1]  + " - found " + str(num_matches) + " matches total" + more_str)
     for match in matches:
         if i == args.num_out:
             break
         match_str = "{:.3f} - {}".format(matches[match], match)
         if match not in s_files:
-           match_str += " (decompiled)"
+           match_str += " - (decompiled)"
         print(match_str)
         i += 1
     print()
 
-# this does the same as def all_matches but comment the actual C files instead of outputing a .txt file
-def all_matches_comment(all_funcs_flag):
-    match_dict = dict()
-    to_match_files = list(s_files.copy())
+def all_matches_comment():
     c_files_list = list()
     for root, dirs, files in os.walk(root_dir + "src"):
                 for f in files:
                     if f.endswith(".c"):
                         c_files_list.append(os.path.join(root, f))
 
-
-    # the following comment was already present in the papermario version, not sure to understand it...
-
-    # assumption that after half the functions have been matched, nothing of significance is left
-    # since duplicates that already have been discovered are removed from tp_match_files
-    if all_funcs_flag:
-        iter_limit = 0
-    else:
-        iter_limit = len(s_files) / 2
-
-    num_decomped_dupes = 0
-    num_undecomped_dupes = 0
-    num_perfect_dupes = 0
-
-    i = 0
-    while len(to_match_files) > iter_limit:
-        file = to_match_files[0]
-
-        i += 1
-        print("File matching progress: {:%}".format(i / (len(s_files) - iter_limit)), end='\r')
-
-        if get_symbol_length(file) < 16:
-            to_match_files.remove(file)
-            continue
-
-        matches = get_matches(file)
-        num_matches = len(matches)
-        if num_matches == 0:
-            to_match_files.remove(file)
-            continue
-
-        num_undecomped_dupes += 1
-
-        match_list = []
-        for match in matches:
-            if match in to_match_files:
-                i += 1
-                to_match_files.remove(match)
-
-            match_str = "{:.2f} - {}".format(matches[match], match)
-            if matches[match] >= 0.995:
-                num_perfect_dupes += 1
-
-            if match not in s_files:
-                num_decomped_dupes += 1
-                match_str += " (decompiled)"
-            else:
-                num_undecomped_dupes += 1
-
-            match_list.append(match_str)
-
-        match_dict.update({file: (num_matches, match_list)})
-        to_match_files.remove(file)
-
-    sorted_dict = OrderedDict(sorted(match_dict.items(), key=lambda item: item[1][0], reverse=True))
-
     print("Starting to scan .c files to comment the definitions", end='\n')
-    for file_name, matches in sorted_dict.items():
-        whole_matches = matches[1]
-        whole_matches.append("ref. - " + file_name)
-        for match in whole_matches:
+    for dupesFuncGroups in parseTxt():
+        comment0 = "//(script generated comment, do not edit)Found duplicates:"
+        comment1 = ""
+        for dupesFuncGroup in dupesFuncGroups:
+            score = dupesFuncGroup[0].strip('\n').strip(' ')
+            rom = dupesFuncGroup[1].strip('\n').strip(' ')
+            function = dupesFuncGroup[2].strip('\n').strip(' ')
+
+            if len(dupesFuncGroup) > 3:
+                isDecompiled = dupesFuncGroup[3].strip('\n').strip(' ')
+            else: isDecompiled = ""
+            comment1 += ", " + score + " - " + rom + " - " + function + " - " + isDecompiled
+        comment1 += '\n'
+
+        for dupesFuncGroup in dupesFuncGroups:
+            score = dupesFuncGroup[0].strip('\n').strip(' ')
+            rom = dupesFuncGroup[1].strip('\n').strip(' ')
+            function = dupesFuncGroup[2].strip('\n').strip(' ')
+
             for c_file in c_files_list:
                 dirty = False
                 with open(c_file, 'r') as c_file_content:
                     copy = c_file_content.readlines()
                     counter = 0
                     for line in copy:
-                        if match[7:] in line:
-                            # ASM include
+                        if function in line and c_file.split('/')[-2].upper() == rom:
+                            # detecting ASM include
                             if line.startswith("INCLUDE_ASM"):
                                 dirty = True
                                 # detecting already present genereted comment and update it
-                                if copy[counter - 2].startswith("//Found duplicates"):
-                                        copy[counter - 1] = "//" + ',' + ','.join(whole_matches) + "\n"
+                                if copy[counter - 1].startswith("//(script generated comment"):
+                                        copy[counter - 1] = comment0 + comment1
                                 # no generated comment detected
                                 else :
-                                    copy[counter] = "//Found duplicates (script generated comment, do not edit):\n" + "//" + ','.join(whole_matches) + "\n" + line
-                            # C definition
+                                    copy[counter] = comment0 + comment1 + line
+                            # detecting C definition
                             elif (not line.startswith(" ") and not line.startswith("  ") and not line.startswith("/")) and not line.endswith(";\n"):
                                 dirty = True
                                 # detecting already present genereted comment and update it
-                                if copy[counter - 2].startswith("//Found duplicates"):
-                                    copy[counter - 1] = "//" + ','.join(whole_matches) + "\n"
+                                if copy[counter - 1].startswith("//(script generated comment"):
+                                    copy[counter - 1] = comment0 + comment1
                                 # no generated comment detected
                                 else :
-                                    copy[counter] = "//Found duplicates (script generated comment, do not edit):\n" + "//" + ','.join(whole_matches) + "\n" + line
-                            # C definition
+                                    copy[counter] = comment0 + comment1 + line
                             
                         counter += 1
+                        if dirty: break # we only want to comment what comes first the ASM include or the C definition, not both
 
                 if dirty :
                     with open(c_file, 'w') as c_file_content:
                         c_file_content.writelines(copy)
 
-            print(match + "\n")
+                print(function + "\n")
 
+def all_matches_uncomment():
+    c_files_list = list()
+    for root, dirs, files in os.walk(root_dir + "src"):
+                for f in files:
+                    if f.endswith(".c"):
+                        c_files_list.append(os.path.join(root, f))
+
+    print("Starting to scan .c files to uncomment the definitions", end='\n')
+    for c_file in c_files_list:
+        dirty = False
+        with open(c_file, 'r') as c_file_content:
+            copy = c_file_content.readlines()
+            counter = 0
+            for line in copy:
+                if line.startswith("//(script generated comment"):
+                        dirty = True
+                        copy[counter] = ""
+                counter += 1
+
+        if dirty :
+            with open(c_file, 'w') as c_file_content:
+                c_file_content.writelines(copy)
 
 def all_matches(all_funcs_flag):
     match_dict = dict()
     to_match_files = list(s_files.copy())
-
-    # the following comment was already present in the papermario version, not sure to understand it...
 
     # assumption that after half the functions have been matched, nothing of significance is left
     # since duplicates that already have been discovered are removed from tp_match_files
@@ -372,13 +351,16 @@ def all_matches(all_funcs_flag):
                 i += 1
                 to_match_files.remove(match)
 
-            match_str = "{:.2f} - {}".format(matches[match], match)
+            fourLetterString = match[0] # aligning string for output
+            if len(fourLetterString) == 3:
+                fourLetterString += " "
+            match_str = "{:.2f} - {} - {}".format(matches[match], fourLetterString, match [1]) # 0-1 float, overlay, function name
             if matches[match] >= 0.995:
                 num_perfect_dupes += 1
 
             if match not in s_files:
                 num_decomped_dupes += 1
-                match_str += " (decompiled)"
+                match_str += " - (decompiled)"
             else:
                 num_undecomped_dupes += 1
 
@@ -403,7 +385,10 @@ def output_match_dict(match_dict, num_decomped_dupes, num_undecomped_dupes, num_
 
     print("Creating output file: " + out_file.name, end='\n')
     for file_name, matches in sorted_dict.items():
-        out_file.write(file_name + " - found " + str(matches[0]) + " matches total:\n")
+        fourLetterString = file_name[0] # aligning string for output
+        if len(fourLetterString) == 3:
+            fourLetterString += " "
+        out_file.write("ref. - " + fourLetterString + " - " + file_name[1] + " - found " + str(matches[0]) + " matches total:\n")
         for match in matches[1]:
             out_file.write(match + "\n")
         out_file.write("\n")
@@ -419,10 +404,10 @@ def do_cross_query():
 
     sym_bytes = {}
     for sym_name in map_syms:
-        if not sym_name.startswith("D_") and \
-           not sym_name.startswith("_binary") and \
-           not sym_name.startswith("jtbl_") and \
-           not re.match(r"L[0-9A-F]{8}", sym_name):
+        if not sym_name[1].startswith("D_") and \
+           not sym_name[1].startswith("_binary") and \
+           not sym_name[1].startswith("jtbl_") and \
+           not re.match(r"L[0-9A-F]{8}", sym_name[1]):
             if get_symbol_length(sym_name) > 16:
                 sym_bytes[sym_name] = get_symbol_bytes(map_offsets, sym_name)
 
@@ -451,11 +436,58 @@ def do_cross_query():
             clusters.append([sym_name])
     print(ccount.most_common(100))
 
+def parseTxt(file = "" ):
+    #get latest .txt
+    if file == "":
+        folder_path = root_dir
+        file_type = '*all_matches.txt'
+        files = glob.glob(folder_path + file_type)
+        if len(files) == 0:
+            sys.exit("no file of type *all_matches.txt available, aborting \n")
+        # redid the parsing of the date since "file = max(files, key=os.path.getctime)" was sometimes wrong if 2 .txt were created the same day ??
+        elif len (files) > 1:
+            fileDated = OrderedDict()
+            recentFile = None
+            recentFileDate = datetime(1, 1, 1, 0, 0, 0)
+            for file in files:
+                filesName = file.split('/')[-1]
+                fileYear = int(filesName.split('-')[0])
+                fileMonth = int(filesName.split('-')[1])
+                fileDay = int(filesName.split('-')[2])
+                fileHour = int(filesName.split('-')[3])
+                fileMin = int(filesName.split('-')[4])
+                fileSec = int(filesName.split('-')[5][0:1])
+                d = datetime(fileYear, fileMonth, fileDay, fileHour, fileMin, fileSec)
+                if d > recentFileDate:
+                    recentFile = file
+
+        print("latest file is" + recentFile)
+
+    # rebuild the list of function based on the choosen txt
+    dupesGroupList = []
+    groupList = []
+    with open(recentFile, 'r') as f:
+        lineCounter = 0
+        for line in f:
+            if lineCounter < 6: # skipping the first few lines
+                lineCounter += 1
+                continue
+            elif len(line) < 3: #if line only contains /n
+                dupesGroupList.append(groupList)
+                groupList = []
+            else:
+                lineSplit = line.split(" - ")
+                if len(lineSplit) < 4:
+                    groupList.append((line.split(" - ")[0],line.split(" - ")[1], line.split(" - ")[2]))
+                else :
+                    groupList.append((line.split(" - ")[0],line.split(" - ")[1], line.split(" - ")[2], line.split(" - ")[3]))
+    return dupesGroupList
 
 parser = argparse.ArgumentParser(description="Tool to find duplicates for a specific function or to find all duplicates across the codebase.")
 group = parser.add_mutually_exclusive_group()
 group.add_argument("-a", "--all", help="find ALL duplicates and output them into a file", action='store_true', required=False)
-group.add_argument("-ac", "--allcomment", help="same as --all but comment the .c files instead of outputing a txt file", action='store_true', required=False)
+group.add_argument("-ac", "--allcomment", help="take the output txt file of --all and comment the .c files", action='store_true', required=False)
+group.add_argument("-auc", "--alluncomment", help="undo --allcomment", action='store_true', required=False)
 group.add_argument("-c", "--cross", help="do a cross query over the codebase", action='store_true', required=False)
 group.add_argument("-s", "--short", help="find MOST duplicates besides some very small duplicates. Cuts the runtime in half with minimal loss", action='store_true', required=False)
 parser.add_argument("query", help="function or file", nargs='?', default=None)
@@ -480,6 +512,7 @@ if __name__ == "__main__":
     s_files = get_all_s_files()
 
     # directory of a file or function
+    # TODO: directory feature currently broken, not sure the effort to fix is worth atm
     query_dir = find_dir(args.query)
 
     if query_dir is not None:
@@ -497,10 +530,11 @@ if __name__ == "__main__":
             answer = input("This will comment and saves 2 lines before duplicated functions in all .c files, \nare you sure you want to continue ? (y/n) \n")
             if answer.lower() in ["y","yes"]:
                 args.threshold = 0.985
-                all_matches_comment(True)
+                all_matches_comment()
             else:
                 print ("aborted \n")
-
+        elif args.alluncomment:
+            all_matches_uncomment()
             
         elif args.short:
             args.threshold = 0.985
@@ -509,4 +543,4 @@ if __name__ == "__main__":
             if args.query is None:
                 parser.print_help()
             else:
-                do_query(args.query)
+                do_query((args.query.split(",")[0],args.query.split(",")[1]))
