@@ -7,7 +7,7 @@ The game is divided in three modules:
 `DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms' (save, loading, teleport) layout.
 `ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map's specific events, cutscenes, enemies' AI, collisions and more. It also contains the rooms and entities layout.
 
-All the files refers to the `SLUS-00067` version of the game.
+All the files refer to the `SLUS-00067` version of the game.
 
 
 ## Bins decomp progress

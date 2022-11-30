@@ -465,8 +465,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", LoadRoomLayer);
 void func_800EDA70(s32* context) {
     s32 i;
     s32 n;
-    
-    for (n= 0xd, i = 0; i < n; i++) {
+
+    for (n = 13, i = 0; i < n; i++) {
         *context++ = 0;
     }
 }
@@ -476,7 +476,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDA94);
 void func_800EDAE4(void) {
     s32 i;
     s32* phi_v1 = &D_800974AC;
-    for (i = 0xF; i >= 0; i--) {
+    
+    for (i = 15; i >= 0; i--) {
         *phi_v1 = 0;
         phi_v1 += 0x10;
     }
