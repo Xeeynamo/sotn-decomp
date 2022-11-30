@@ -1,6 +1,6 @@
 # Castlevania: Symphony of the Night Decompilation Project
 
-This is a WIP decompilation of Castlevania Symphony of the Night for the PSX. The purpose of the project is to recreate a source code base for the game from scratch, using information found inside the game along with static and/or dynamic analysis. We aim to produce a codebase that compiles byte for byte to the same binaries of the game, this type of approach is called Matching Decompilation.
+This is a WIP decompilation of Castlevania Symphony of the Night for the PSX. The purpose of the project is to recreate a source code base for the game from scratch, using information found inside the game along with static and/or dynamic analysis. We aim to produce a codebase that compiles byte-for-byte to the same binaries of the game, this type of approach is called Matching Decompilation.
 
 The game is divided in three modules:
 `SLUS_000.67` is the game engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
