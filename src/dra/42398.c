@@ -1991,7 +1991,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80101A80);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801024DC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801025F4);
+typedef struct Unkstruct_80086FFA {
+    /* 0x00*/ u16 unk0;
+    /* 0x02 */ char unk2[0x32];
+} Unkstruct_80086FFA; // size = 0x34
+
+extern Unkstruct_80086FFA D_80086FFA[];
+
+u16 func_801025F4(void)
+{
+    return D_80086FFA[D_8013799C].unk0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102628);
 
@@ -2483,7 +2493,13 @@ void func_80118614(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118640);
+void func_80118640(void)
+{
+    if (D_8007342A < 0)
+    {
+        func_8010E470(0, 0);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118670);
 
