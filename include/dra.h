@@ -595,6 +595,7 @@ extern const char* c_strSpecial2;
 extern s32 D_800ACC64;
 extern RECT D_800ACD80;
 extern RECT c_backbufferClear;
+extern s32 D_800B0914;
 extern s16 D_800BD07C[];
 extern u8 D_80137460;
 extern RoomLoadDef* D_801375BC;
