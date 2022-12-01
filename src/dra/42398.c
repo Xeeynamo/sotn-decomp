@@ -381,6 +381,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9880);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9B18);
 
+// https://decomp.me/scratch/kHOQh match with struct
+
 void func_800E9BA4(u16* arg0, s32 arg1) {
     s32 i;
     u16* var_v1 = D_800A0518[0];
