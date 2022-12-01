@@ -543,7 +543,7 @@ extern s32 g_timeHours;
 extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
 extern s32 D_80097C98;
-
+extern u16 D_800A0518[][0x10];
 extern s32 D_800A2438;
 extern Unkstruct10 D_800A2464[];
 extern const char* c_strALUCARD;
@@ -649,7 +649,7 @@ extern u16 D_801396F4;
 extern s32 D_801397FC;
 extern s32 D_8013980C;
 extern u8 D_80139810;
-
+extern s32 D_80139828[];
 extern s32 D_80139834[];
 extern s16 D_80139868;
 extern s16 D_80139A70;

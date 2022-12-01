@@ -381,7 +381,18 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9880);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9B18);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9BA4);
+void func_800E9BA4(u16* arg0, s32 arg1) {
+    s32 i;
+    u16* var_v1 = D_800A0518[0];
+
+    var_v1 = D_800A0518[arg1];
+
+    for (i = 0; i < 16; i++) {
+        *arg0 = *var_v1;
+        var_v1++;
+        arg0++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9BDC);
 
@@ -1584,7 +1595,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAB1C);
 
-typedef struct Unkstruct_80137638{
+typedef struct Unkstruct_80137638 {
     u8 unk0;
     u8 unk1;
     u8 pad2[0x1E - 0x02];
@@ -1799,25 +1810,19 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE914);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE97C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEE6C);
-extern s32 D_80139828[];
+// !FAKE:
+void func_800FEE6C(void) {
+    s32* var_v1;
 
-/*
-void func_800FEE6C(void)
-{
-    s32 *var_v1;
-    s32 i;
     var_v1 = &D_80139828;
 
-    for (i = 0; i < 0x40; i+=4) {
-    //do {
-        if (D_80139828[i] != 0)
-        {
-            D_80139828[i] -= 1;
+    do {
+        if (*var_v1 != 0) {
+            *var_v1 -= 1;
         }
-        //i++;
-    }// while ((s32) var_v1 < (s32) D_80139828[0x40]);
-}*/
+        var_v1++;
+    } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEEA4);
 
