@@ -2876,9 +2876,9 @@ void func_80131FCC(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132028);
 
 void func_80132134(void) {
-    D_8013AE8C = 0x7F;
-    D_8013B698 = 0x7F;
-    SsSetMVol(D_8013AE8C, D_8013B698);
+    g_volumeL = 0x7F;
+    g_volumeR = 0x7F;
+    SsSetMVol(g_volumeL, g_volumeR);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013216C);

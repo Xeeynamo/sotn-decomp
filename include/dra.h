@@ -656,6 +656,8 @@ extern s16 D_80139868;
 extern s16 D_80139A70;
 extern s16 D_8013AE8C;
 extern s32 D_8013AE9C;
+extern s16 g_volumeL;
+extern s16 g_volumeR;
 extern s16 D_8013B698;
 extern u8 D_8013AEEC;
 extern s32 D_8013B158;
