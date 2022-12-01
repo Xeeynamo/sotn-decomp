@@ -2703,7 +2703,6 @@ void func_8012CFF0(void)
     D_800B0914 = 0;
 }
 
-
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D024);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D178);
