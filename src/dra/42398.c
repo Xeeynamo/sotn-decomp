@@ -2737,8 +2737,12 @@ void func_80131F04(void) {
 
 s32 func_80131F28(void) { return D_80138F7C; }
 
-// https://decomp.me/scratch/4f6B1
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80131F38);
+u16 func_80131F38(void) {
+    if (D_80139810 == 0) {
+        return 0; 
+    } 
+    return D_80139810 | 0x200;
+}
 
 bool func_80131F68(void) {
     if (D_8013B61C == 0) {

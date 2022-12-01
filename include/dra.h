@@ -735,7 +735,7 @@ void func_80131ED8(s32 value);
 void func_80131EE8(void);
 void func_80131F04(void);
 s32 func_80131F28(void);
-s32 func_80131F38(void);
+u16 func_80131F38(void);
 bool func_80131F68(void);
 s16 func_80131F94(void);
 s32 func_80132134(void);
