@@ -247,10 +247,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5584);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5D30);
 
-void func_800E6218(void)
-{
-    if (D_8006CBC4 != 0)
-    {
+void func_800E6218(void) {
+    if (D_8006CBC4 != 0) {
         D_80170000();
     }
 }
@@ -1586,21 +1584,27 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAB1C);
 
+typedef struct Unkstruct_80137638{
+    u8 unk0;
+    u8 unk1;
+    u8 pad2[0x1E - 0x02];
+} Unkstruct_80137638; // size = 0x1E
+
+Unkstruct_80137638 D_80137638[];
+
 void func_800FAB8C(s32 arg0) {
-    // The two symbols might be the same array
-    D_80137638[arg0 * 0x1E] = 1;
-    D_80137639[arg0 * 0x1E] = 0;
+    D_80137638[arg0].unk0 = 1;
+    D_80137638[arg0].unk1 = 0;
 }
 
 void func_800FABBC(s32 arg0) {
-    // The two symbols might be the same array
-    D_80137638[arg0 * 0x1E] = 3;
-    D_80137639[arg0 * 0x1E] = 0;
+    D_80137638[arg0].unk0 = 3;
+    D_80137638[arg0].unk1 = 0;
 }
 
-void func_800FABEC(s32 context) { D_80137638[context * 30] = 0; }
+void func_800FABEC(s32 context) { D_80137638[context].unk0 = 0; }
 
-void func_800FAC0C(s32 context) { D_80137638[context * 30] = 2; }
+void func_800FAC0C(s32 context) { D_80137638[context].unk0 = 2; }
 
 void func_800FAC30(void) {
     D_80137844 = 0;
@@ -1796,6 +1800,24 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE914);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE97C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEE6C);
+extern s32 D_80139828[];
+
+/*
+void func_800FEE6C(void)
+{
+    s32 *var_v1;
+    s32 i;
+    var_v1 = &D_80139828;
+
+    for (i = 0; i < 0x40; i+=4) {
+    //do {
+        if (D_80139828[i] != 0)
+        {
+            D_80139828[i] -= 1;
+        }
+        //i++;
+    }// while ((s32) var_v1 < (s32) D_80139828[0x40]);
+}*/
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEEA4);
 
@@ -2026,7 +2048,21 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801027C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801028AC);
 
+// https://decomp.me/scratch/8D47k
+// That's either a compiler flag, wrong compiler, or asspsx issue
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102CD8);
+#else
+extern s32 D_800A3194[];
+extern u16 D_801379AC[2];
+extern s32 D_801379B0;
+
+void func_80102CD8(s32 arg0) {
+    D_801379AC[0] = arg0;
+    D_801379AC[1] = 0;
+    D_801379B0 = D_800A3194[arg0];
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102D08);
 
