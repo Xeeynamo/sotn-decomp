@@ -221,7 +221,17 @@ void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E493C);
+void func_800E493C(void) {
+    u32 var_a0;
+
+    if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
+        var_a0 = 6;
+        PlaySfx(var_a0);
+    } else {
+        var_a0 = 5;
+        PlaySfx(var_a0);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4970);
 
