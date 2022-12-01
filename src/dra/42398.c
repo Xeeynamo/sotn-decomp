@@ -394,7 +394,18 @@ void func_800E9BA4(u16* arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9BDC);
+void func_800E9BDC(u8* arg0, s32 arg1) {
+    s32 i;
+    u8* var_a1;
+
+    var_a1 = D_800A1F18[arg1];
+
+    for (i = 0; i < 384; i++) {
+        *arg0 = *var_a1;
+        var_a1++;
+        arg0++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9C14);
 
