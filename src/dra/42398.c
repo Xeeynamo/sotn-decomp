@@ -1795,7 +1795,12 @@ s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF128);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF460);
+s32 func_800FF460(s32 arg0) {
+    if (arg0 == 0) {
+        return 0;
+    }
+    return arg0 + ((arg0 * D_80097BE4) >> 7);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF494);
 

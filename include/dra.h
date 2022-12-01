@@ -525,6 +525,7 @@ extern u8 D_80097964[];
 extern u8 D_8009796E;
 extern u8 D_8009798A;
 extern u8 D_80097A8D;
+extern u32 D_80097BE4;
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
