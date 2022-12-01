@@ -1998,10 +1998,7 @@ typedef struct Unkstruct_80086FFA {
 
 extern Unkstruct_80086FFA D_80086FFA[];
 
-u16 func_801025F4(void)
-{
-    return D_80086FFA[D_8013799C].unk0;
-}
+u16 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102628);
 
@@ -2493,10 +2490,8 @@ void func_80118614(void) {
     }
 }
 
-void func_80118640(void)
-{
-    if (D_8007342A < 0)
-    {
+void func_80118640(void) {
+    if (D_8007342A < 0) {
         func_8010E470(0, 0);
     }
 }
