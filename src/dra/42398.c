@@ -2739,8 +2739,8 @@ s32 func_80131F28(void) { return D_80138F7C; }
 
 u16 func_80131F38(void) {
     if (D_80139810 == 0) {
-        return 0; 
-    } 
+        return 0;
+    }
     return D_80139810 | 0x200;
 }
 
