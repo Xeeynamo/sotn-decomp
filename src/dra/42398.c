@@ -1584,7 +1584,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAB1C);
 
-typedef struct Unkstruct_80137638{
+typedef struct Unkstruct_80137638 {
     u8 unk0;
     u8 unk1;
     u8 pad2[0x1E - 0x02];
