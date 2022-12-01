@@ -494,17 +494,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECBF8);
 typedef struct unkstruct_800ECE2C {
     s32 unk0;
     s32 unk4;
+    u8 pad8[0x30 - 0x8]
 } unkstruct_800ECE2C;
 
 extern s32 D_800730A0;
 extern unkstruct_800ECE2C D_800730F4[];
 
 void func_800ECE2C(void) {
-    // !FAKE: iterator values are likely wrong
-    // TODO: fix once the real struct type is found
     s32 i;
 
-    for (D_800730A0 = 0, i = 90; i >= 0; i -= 6) {
+    D_800730A0 = 0;
+    for (i = 0; i < 16; i++) {
         D_800730F4[i].unk0 = 0;
     }
 }
