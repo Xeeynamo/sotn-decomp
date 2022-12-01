@@ -470,6 +470,8 @@ typedef struct unkstruct_80072FA0 {
 
 extern unkstruct_80072FA0 D_80072FA0[];
 
+// https://decomp.me/scratch/n0Z3p match with -fforce-addr
+
 s32 func_800EB720(void) {
     s32 i;
     unkstruct_80072FA0* temp = D_80072FA0;
