@@ -444,6 +444,7 @@ extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern Entity* D_8006C3B8;
+extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EF4;
@@ -666,6 +667,7 @@ extern u8 D_8013B680;
 extern s8 D_8013B684;
 extern s32 D_8013B694;
 extern const char* D_80138784[487];
+extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 
