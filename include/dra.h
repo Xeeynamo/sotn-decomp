@@ -560,7 +560,6 @@ extern s32 D_80097C98;
 extern u16 D_800A0518[][0x10];
 extern s32 D_800A1F18[];
 extern s32 D_800A2438;
-extern s8 D_800A4B12[];
 extern s32 player_equip_head[];
 extern Unkstruct10 D_800A2464[];
 extern const char* c_strALUCARD;

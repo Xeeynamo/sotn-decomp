@@ -1714,9 +1714,15 @@ s32 func_800FD664(s32 context) {
     return phi_a0;
 }
 
+typedef struct Unkstruct_800A4B12 {
+ u8 unk0;
+ char unk1[0x33];
+} Unkstruct_800A4B12;
+
+extern Unkstruct_800A4B12 D_800A4B12[];
+
 u8 func_800FD688(s32 arg0) {
-    // player_equip_head type is likely wrong
-    return D_800A4B12[player_equip_head[arg0] * 0x34];
+    return D_800A4B12[player_equip_head[arg0]].unk0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD6C4);
