@@ -417,8 +417,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA48C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA538);
 
-void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3)
-{
+void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[3] = arg0;
     D_8003C0EC[0] = arg1;
     D_8003C0EC[1] = arg2;
