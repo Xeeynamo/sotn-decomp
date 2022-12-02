@@ -334,6 +334,7 @@ typedef struct unkstruct_80072FA0 {
 extern unkstruct_80072FA0 D_80072FA0[];
 
 // main
+extern s32 D_8003C0EC[4];
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
