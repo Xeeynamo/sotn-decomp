@@ -890,7 +890,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F298C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F483C);
 
-s32 IsAlucart(void) {
+bool IsAlucart(void) {
     if (func_800FD7C0(0xA8, 0) && func_800FD7C0(0xA7, 0) &&
         func_800FD7C0(0x59, 2))
         return true;
@@ -925,6 +925,7 @@ void func_800F53D4(s32 tpage, s32 arg1) {
 }
 #endif
 
+// https://decomp.me/scratch/uYbAV
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F548C)
 
 #ifndef NON_MATCHING
