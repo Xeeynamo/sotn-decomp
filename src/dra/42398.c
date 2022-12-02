@@ -297,9 +297,9 @@ void func_800E8D24(void) {
     } while (phi_v0 >= 0);
 }
 
+// https://decomp.me/scratch/YhofM
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8D54);
 void func_800E8D54(void);
-// https://decomp.me/scratch/YhofM
 
 void InitializePads(void) {
     Pad* pad;
@@ -353,14 +353,14 @@ void func_800E92F4(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
 
 typedef struct struct_8013B15C {
-    /* 0x000 */ s32 unk_000;
-    /* 0x004 */ char unk_008[0x274];
+    /* 0x000 */ s32 unk000;
+    /* 0x004 */ char unk008[0x274];
 } struct_8013B15C; // size = 0x278
 
 extern struct_8013B15C D_8013B15C[];
 
 s32 func_800E9508(s32 arg0) {
-    s32 temp = D_8013B15C[arg0].unk_000;
+    s32 temp = D_8013B15C[arg0].unk000;
 
     return temp;
 }
@@ -1877,7 +1877,13 @@ s32 func_800FF064(s32 arg0) {
 
 void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF0B8);
+void func_800FF0B8(void) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        func_800FF0A0(i);
+    }
+}
 
 void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
