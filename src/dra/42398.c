@@ -458,7 +458,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB098);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB314);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB4F8);
+void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
+    LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB534);
 

@@ -180,6 +180,31 @@ typedef struct {
     /* 0x04 */ u_long code[2];
 } DR_MODE; /* Drawing Mode, size = 0x0C */
 
+// clang-format off
+
+/*
+ * Loads a texture pattern from the memory area starting at the address pix into
+ * the frame buffer area starting at the address (x, y), and calculates the
+ * texture page ID for the loaded texture pattern. The texture pattern size w
+ * represents the number of pixels, not the actual size of the transfer area in
+ * the frame buffer.
+ */
+extern u_short LoadTPage(u_long* pix,  // Pointer to texture pattern start address
+          int tp,       // Bit depth (0 = 4-bit; 1 = 8-bit; 2 = 16-bit)
+          int abr,      // Semitransparency rate
+          int x, int y, // Destination frame buffer address
+          int w, int h  // Texture pattern size
+);
+
+// clang-format on
+
+typedef struct PixPattern {
+    u8 w;
+    u8 h;
+    u8 x;
+    u8 y;
+} PixPattern;
+
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetPolyGT3(POLY_GT3* p);
