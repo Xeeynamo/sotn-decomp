@@ -328,7 +328,7 @@ typedef struct PlayerMp {
 typedef struct unkstruct_80072FA0 {
     char unk0[0x4];
     u16 unk4;
-    char unk8[0x6]
+    char unk8[0x6];
 } unkstruct_80072FA0; // size = 0xC
 
 extern unkstruct_80072FA0 D_80072FA0[];
@@ -484,7 +484,6 @@ extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
-extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
 extern s16 D_800733DE;

@@ -497,7 +497,21 @@ s32 func_800EB720(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB758);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EBB70);
+void func_800EBB70(void) {
+    s8* var_a0;
+    Entity* var_a2 = &D_800733D8[0];
+    s32 i;
+    u32 j;
+
+    for (i = 0; i < ARRAY_COUNT(D_800733D8); i++) {
+        var_a0 = (s8*)var_a2;
+        for (j = 0; j < 188; j++) {
+            var_a0[0] = 0;
+            var_a0++;
+        }
+        var_a2++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EBBAC);
 
@@ -506,7 +520,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECBF8);
 typedef struct unkstruct_800ECE2C {
     s32 unk0;
     s32 unk4;
-    u8 pad8[0x30 - 0x8]
+    u8 pad8[0x30 - 0x8];
 } unkstruct_800ECE2C;
 
 extern s32 D_800730A0;
@@ -1714,15 +1728,13 @@ s32 func_800FD664(s32 context) {
 }
 
 typedef struct Unkstruct_800A4B12 {
- u8 unk0;
- char unk1[0x33];
+    u8 unk0;
+    char unk1[0x34 - 0x1];
 } Unkstruct_800A4B12;
 
 extern Unkstruct_800A4B12 D_800A4B12[];
 
-u8 func_800FD688(s32 arg0) {
-    return D_800A4B12[player_equip_head[arg0]].unk0;
-}
+u8 func_800FD688(s32 arg0) { return D_800A4B12[player_equip_head[arg0]].unk0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD6C4);
 
