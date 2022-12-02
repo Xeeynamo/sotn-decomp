@@ -446,7 +446,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD7C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAEA4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAEEC);
+void func_800EAEEC(void) {
+    unkstruct_80072FA0* var_v1 = &D_80072FA0;
+    s32 i;
+
+    for (i = 0; i < 16; i++, var_v1++) {
+        var_v1->unk4 = 0;
+    }
+
+    func_800EAEA4();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAF28);
 
@@ -465,14 +474,6 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB534);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB6B4);
-
-typedef struct unkstruct_80072FA0 {
-    char unk0[0x4];
-    u16 unk4;
-    char unk8[0x6]
-} unkstruct_80072FA0; // size = 0xC
-
-extern unkstruct_80072FA0 D_80072FA0[];
 
 // https://decomp.me/scratch/n0Z3p match with -fforce-addr
 
@@ -1872,13 +1873,13 @@ void func_800FEE6C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEEA4);
 
 s32 func_800FF064(s32 arg0) {
-    s32 nextPlayerMp;
+    s32 playerMp;
 
-    nextPlayerMp = g_playerMp.current - 4;
+    playerMp = g_playerMp.current - 4;
 
-    if (nextPlayerMp > 0) {
+    if (playerMp > 0) {
         if (arg0 != 0) {
-            g_playerMp.current = nextPlayerMp;
+            g_playerMp.current = playerMp;
         }
         return 0;
     }

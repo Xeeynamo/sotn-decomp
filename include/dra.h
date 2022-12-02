@@ -325,6 +325,14 @@ typedef struct PlayerMp {
     s32 max;
 } PlayerMp;
 
+typedef struct unkstruct_80072FA0 {
+    char unk0[0x4];
+    u16 unk4;
+    char unk8[0x6]
+} unkstruct_80072FA0; // size = 0xC
+
+extern unkstruct_80072FA0 D_80072FA0[];
+
 // main
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
