@@ -777,7 +777,15 @@ s32 func_800F16D0(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1770);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F17C8);
+u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
+    s32 temp_v0 = (arg1 / 2) + (arg2 * 4);
+    
+    if (!(arg1 & 1)) {
+        return arg0[temp_v0] & 0xF;
+    }
+    
+    return (u8)arg0[temp_v0] >> 4;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F180C);
 
