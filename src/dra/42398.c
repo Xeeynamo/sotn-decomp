@@ -1844,7 +1844,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE914);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE97C);
 
-// !FAKE:
+// !FAKE: explicitly casting two pointers to s32
+// before comparing them, that's weird
 void func_800FEE6C(void) {
     s32* var_v1;
 
