@@ -1377,9 +1377,9 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuChar(0xF, 0xB0, 0x38, context);
         DrawMenuInt(g_playerHpMax, 0xD0, 0x38, context);
         DrawMenuStr(c_strMP, 0x60, 0x44, context);
-        DrawMenuInt(g_playerMp, 0xA8, 0x44, context);
+        DrawMenuInt(g_playerMp.current, 0xA8, 0x44, context);
         DrawMenuChar(0xF, 0xB0, 0x44, context);
-        DrawMenuInt(g_playerMpMax, 0xD0, 0x44, context);
+        DrawMenuInt(g_playerMp.max, 0xD0, 0x44, context);
         DrawMenuStr(c_strHEART, 0x60, 0x50, context);
         DrawMenuInt(g_playerHeart, 0xA8, 0x50, context);
         DrawMenuChar(0xF, 0xB0, 0x50, context);
@@ -1860,7 +1860,19 @@ void func_800FEE6C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEEA4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF064);
+s32 func_800FF064(s32 arg0) {
+    s32 nextPlayerMp;
+
+    nextPlayerMp = g_playerMp.current - 4;
+
+    if (nextPlayerMp > 0) {
+        if (arg0 != 0) {
+            g_playerMp.current = nextPlayerMp;
+        }
+        return 0;
+    }
+    return -1;
+}
 
 void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 

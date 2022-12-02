@@ -320,6 +320,11 @@ typedef struct {
     DISPENV disp; // display environment
 } DisplayBuffer;
 
+typedef struct PlayerMp {
+    s32 current;
+    s32 max;
+} PlayerMp;
+
 // main
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
@@ -535,7 +540,7 @@ extern playerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
 extern s32 g_playerHp;
 extern s32 g_playerHpMax;
-extern s32 g_playerMp;
+extern PlayerMp g_playerMp;
 extern s32 g_playerMpMax;
 extern s32 D_80097C20;
 extern s32 D_80097C24;
