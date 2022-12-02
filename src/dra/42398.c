@@ -1834,7 +1834,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE3C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE728);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE8B4);
+bool func_800FE8B4(s32 arg0, s32 arg1) {
+    if (g_playerMp.current >= arg0) {
+        if (arg1 != 0) {
+            g_playerMp.current -= arg0;
+        }
+        return false;
+    }
+    return true;
+}
 
 void func_800FE8F0(void) {
     if (D_8013B5E8 == 0) {
