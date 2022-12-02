@@ -482,34 +482,35 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB6B4);
 
 // https://decomp.me/scratch/n0Z3p match with -fforce-addr
 
-s32 func_800EB720(void) {
+bool func_800EB720(void) {
     s32 i;
     unkstruct_80072FA0* temp = D_80072FA0;
 
     for (i = 0; i < 0x10; i++) {
         if (temp[i].unk4 != 0) {
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB758);
 
+// clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
-    s8* var_a0;
-    Entity* var_a2 = &D_800733D8[0];
+    s8* byte;
+    Entity* entity = &D_800733D8[0];
     s32 i;
     u32 j;
 
     for (i = 0; i < ARRAY_COUNT(D_800733D8); i++) {
-        var_a0 = (s8*)var_a2;
+        byte = (s8*)entity;
         for (j = 0; j < 188; j++) {
-            var_a0[0] = 0;
-            var_a0++;
+            byte[0] = 0;
+            byte++;
         }
-        var_a2++;
+        entity++;
     }
 }
 
@@ -804,9 +805,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2014);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2120);
 
 void func_800F223C(void) {
-    g_mapProgramId = g_mapProgramId ^ 0x20;
+    g_mapProgramId ^= 0x20;
     func_800F2120();
-    g_mapProgramId = g_mapProgramId ^ 0x20;
+    g_mapProgramId ^= 0x20;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2288);
