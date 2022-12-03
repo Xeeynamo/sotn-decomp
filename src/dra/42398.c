@@ -2810,11 +2810,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127CC8);
 
-void func_80127EAC(s16 arg0)
-{
+void func_80127EAC(s16 arg0) {
     D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0)
-    {
+    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
         D_8006C3B8->unk80.modeS16.unk0++;
         D_8006C3B8->unk80.modeS16.unk2++;
     }
