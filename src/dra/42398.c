@@ -933,7 +933,6 @@ void func_800F53D4(s32 tpage, s32 arg1) {
 }
 #endif
 
-// https://decomp.me/scratch/uYbAV
 u8 func_800F548C(u8 arg0) {
     u16 temp = arg0;
     if (arg0 & 0x80) {
@@ -2812,7 +2811,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127CC8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127EAC);
+void func_80127EAC(s16 arg0)
+{
+    D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
+    if (D_8006C3B8->unk80.modeS16.unk2 == 0)
+    {
+        D_8006C3B8->unk80.modeS16.unk0++;
+        D_8006C3B8->unk80.modeS16.unk2++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127EF0);
 
