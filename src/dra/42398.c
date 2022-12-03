@@ -2522,10 +2522,9 @@ void func_8010FAF4(void) {
     D_80072F66 = 0;
 }
 
-//INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB24);
+// INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB24);
 
-void func_8010FB24(void)
-{
+void func_8010FB24(void) {
     D_800733E4 = 0;
     D_800733E0 = 0;
     func_8010D584(0x22);
