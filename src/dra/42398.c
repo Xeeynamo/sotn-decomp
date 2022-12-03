@@ -934,7 +934,14 @@ void func_800F53D4(s32 tpage, s32 arg1) {
 #endif
 
 // https://decomp.me/scratch/uYbAV
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F548C)
+u8 func_800F548C(u8 arg0) {
+    u16 temp = arg0;
+    if (arg0 & 0x80) {
+        arg0 &= 0x7F;
+        return func_800F548C(arg0 + 3);
+    }
+    return temp << 4;
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", IsOutsideDrawArea);
@@ -2347,6 +2354,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801083F0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80108448);
 
+// https://decomp.me/scratch/QZk8K
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801092E8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80109328);
@@ -2515,7 +2523,16 @@ void func_8010FAF4(void) {
     D_80072F66 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB24);
+//INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB24);
+
+void func_8010FB24(void)
+{
+    D_800733E4 = 0;
+    D_800733E0 = 0;
+    func_8010D584(0x22);
+    func_8010E168(1, 0x10);
+    func_8010E3E0();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB68);
 
