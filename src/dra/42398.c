@@ -2758,7 +2758,23 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80120DD0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80121980);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80121F14);
+typedef struct Unkstruct_80138094 {
+    s32 unk0;
+    s32 unk4;
+    char pad[12];
+} Unkstruct_80138094;
+
+extern Unkstruct_80138094 D_80138094[];
+
+void func_80121F14(s32 arg0, s32 arg1) {
+    Unkstruct_80138094* ptr = &D_80138094;
+    s32 i;
+
+    for (i = 0; i < 16; i++, ptr++) {
+        ptr->unk0 += arg0;
+        ptr->unk4 += arg1;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80121F58);
 
@@ -2810,11 +2826,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127CC8);
 
-void func_80127EAC(s16 arg0)
-{
+void func_80127EAC(s16 arg0) {
     D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0)
-    {
+    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
         D_8006C3B8->unk80.modeS16.unk0++;
         D_8006C3B8->unk80.modeS16.unk2++;
     }
