@@ -2780,7 +2780,7 @@ extern Unkstruct_80138094 D_80138094[];
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = &D_80138094;
     s32 i;
-    
+
     for (i = 0; i < 16; i++, ptr++) {
         ptr->unk0 = arg0 + ptr->unk0;
         ptr->unk4 = arg1 + ptr->unk4;
