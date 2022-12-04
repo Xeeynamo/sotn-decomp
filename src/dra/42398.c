@@ -2430,7 +2430,18 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E0D0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E168);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E1EC);
+void func_8010E1EC(s32 speed) {
+    if (D_8006C3B8->accelerationX < 0) {
+        D_8006C3B8->accelerationX += speed;
+        if (D_8006C3B8->accelerationX > 0) {
+            D_8006C3B8->accelerationX = 0;
+        }
+    } else {
+        D_8006C3B8->accelerationX -= speed;
+        if (D_8006C3B8->accelerationX < 0)
+            D_8006C3B8->accelerationX = 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E234);
 
@@ -2769,10 +2780,10 @@ extern Unkstruct_80138094 D_80138094[];
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = &D_80138094;
     s32 i;
-
+    
     for (i = 0; i < 16; i++, ptr++) {
-        ptr->unk0 += arg0;
-        ptr->unk4 += arg1;
+        ptr->unk0 = arg0 + ptr->unk0;
+        ptr->unk4 = arg1 + ptr->unk4;
     }
 }
 
