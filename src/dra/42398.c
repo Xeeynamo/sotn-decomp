@@ -1953,9 +1953,46 @@ s32 func_800FF460(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF494);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF60C);
+void func_800FF60C(void) {
+    s32* var_a0;
+    s32 temp_v1;
+    s32 var_a0_2;
+    s32 i;
+    s32* temp;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF6C4);
+    func_800EA538(6);
+
+    i = 0;
+    temp = D_800A2FBC;
+
+    while (1) {
+        if (player_equip_ring2 == temp[i]) {
+            break;
+        }
+        if (temp[i] == -1) {
+            break;
+        }
+        i += 2;
+    }
+
+    var_a0_2 = D_800A2FC0[i];
+    if ((player_equip_ring2 == 0x32) && (g_SettingsCloakMode != 0)) {
+        var_a0_2++;
+    }
+    func_800EA5E4(var_a0_2);
+    if (player_equip_ring2 == 0x38) {
+        func_800EA5E4(0x415);
+    }
+}
+
+void func_800FF60C();
+
+void func_800FF6C4(void) {
+    if ((g_mapProgramId != 0x1F) &&
+        (g_CurrentPlayableCharacter == PLAYER_ALUCARD)) {
+        func_800FF60C();
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF708);
 
