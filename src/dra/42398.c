@@ -2280,8 +2280,7 @@ void func_80103EAC(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80103ED4);
 
-void func_8010427C(void)
-{
+void func_8010427C(void) {
     FreePolygons(D_80137E40);
     FreePolygons(D_80137E44);
     FreePolygons(D_80137E48);
