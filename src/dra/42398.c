@@ -276,7 +276,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7BB8);
 void func_800E7D08(void) {
     s32 i;
 
-    for (i = 0; i < 0x400; i++) {
+    for (i = 0; i < 1024; i++) {
         D_80136460[i] = 0;
         D_80136C60[i] = 0;
     }
@@ -2563,7 +2563,12 @@ void func_8010E3B8(s32 arg0) {
     D_800733E0 = arg0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E3E0);
+void func_8010E3E0(void) {
+    if (D_80072F68[0] != 0) {
+        func_80106590(&D_80073F98);
+        D_80072F68[0] = 0;
+    }
+}
 
 void func_8010E42C(u16 arg0) {
     D_80073406 = arg0;

@@ -450,9 +450,6 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_VH 0x91FF
 #define LBA_STAGE_NP3_BIN 0x9235
 
-
-
-
 extern s32 aBu1d1dS;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
@@ -470,10 +467,14 @@ extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
+
+// Probably part of the same array / struct
 extern u16 D_80072F64;
 extern s16 D_80072F66;
+extern u16 D_80072F68[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
+
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
