@@ -1891,7 +1891,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD9D4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDB18);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDC94);
+bool func_800FDC94(s32 arg0) {
+    u8 temp_a0 = D_800A841C[arg0 * 0x1C];
+    
+    if (g_playerMp.current < (s32)temp_a0) {
+        return false;
+    } else {
+        g_playerMp.current -= temp_a0;
+        return true;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDCE0);
 
