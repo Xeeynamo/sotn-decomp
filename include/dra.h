@@ -743,7 +743,8 @@ bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
 s32 func_800F62E8(s32 arg0);
-void func_800F98AC();
+void func_800F98AC(s32 arg0, s32 arg1);
+void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(char ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);

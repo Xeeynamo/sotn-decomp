@@ -1682,7 +1682,14 @@ void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
     func_800F98AC(arg0, arg1);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9D88);
+void func_800F9D88(s32 arg0, s32 arg1, s32 arg2) {
+    if (arg2 != 0) {
+        D_8013794C = &D_80082FE4;
+    }
+    D_80137950 = 0;
+    D_80137954 = 0x100;
+    func_800F99B8(arg0, arg1, 0);
+}
 
 void func_800F9DD0(u8* arg0, u8* arg1) {
     s32 i;
@@ -1892,12 +1899,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD9D4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDB18);
 
 bool func_800FDC94(s32 arg0) {
-    u8 temp_a0 = D_800A841C[arg0 * 0x1C];
-    
-    if (g_playerMp.current < (s32)temp_a0) {
+    u8 temp = D_800A841C[arg0 * 0x1C];
+
+    if (g_playerMp.current < (s32)temp) {
         return false;
     } else {
-        g_playerMp.current -= temp_a0;
+        g_playerMp.current -= temp;
         return true;
     }
 }
