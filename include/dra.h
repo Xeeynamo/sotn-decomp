@@ -463,6 +463,7 @@ extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EF4;
+extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
