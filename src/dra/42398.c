@@ -1954,22 +1954,18 @@ s32 func_800FF460(s32 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF494);
 
 void func_800FF60C(void) {
-    s32* var_a0;
-    s32 temp_v1;
     s32 var_a0_2;
     s32 i;
-    s32* temp;
 
     func_800EA538(6);
 
     i = 0;
-    temp = D_800A2FBC;
-
     while (1) {
-        if (player_equip_ring2 == temp[i]) {
+        if (player_equip_ring2 == D_800A2FBC[i]) {
             break;
         }
-        if (temp[i] == -1) {
+
+        if (D_800A2FBC[i] == -1) {
             break;
         }
         i += 2;
