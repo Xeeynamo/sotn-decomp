@@ -1900,7 +1900,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDB18);
 
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
-    
+
     if (g_playerMp.current < (s32)temp) {
         return false;
     } else {
@@ -2979,7 +2979,14 @@ void func_80127EAC(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127EF0);
+void func_80127EF0(s32 arg0) {
+    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
+        D_8006C3B8->unk7C.modeS16 =
+            (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeS16;
+        D_8006C3B8->unk80.modeS16.unk0++;
+        D_8006C3B8->unk80.modeS16.unk2++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127F40);
 
