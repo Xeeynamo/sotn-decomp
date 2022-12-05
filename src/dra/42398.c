@@ -1647,7 +1647,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9D40);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9D88);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9DD0);
+void func_800F9DD0(u8* arg0, u8* arg1) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        if (*arg0 == 0)
+            break;
+        *arg1++ = *arg0++;
+        *arg1++ = *arg0++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9E18);
 
