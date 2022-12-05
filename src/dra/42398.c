@@ -2981,8 +2981,7 @@ void func_80127EAC(s16 arg0) {
 
 void func_80127EF0(s16 arg0) {
     if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk7C.modeS16 =
-            (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
+        D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
         D_8006C3B8->unk80.modeS16.unk0++;
         D_8006C3B8->unk80.modeS16.unk2++;
     }
