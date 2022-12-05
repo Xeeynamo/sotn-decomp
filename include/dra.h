@@ -502,6 +502,7 @@ extern /*?*/ s32* D_80073424;
 extern s16 D_80073428;
 extern s16 D_8007342A;
 extern u16 D_8007342E;
+extern u8 D_80073484;
 extern s8 D_80073510;
 extern s8 D_80073511;
 extern s8 D_80073512;
