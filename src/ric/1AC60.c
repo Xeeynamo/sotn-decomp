@@ -493,10 +493,10 @@ void func_8016B8E8(s32 arg0) {
     }
 }
 
-void func_8016B92C(s32 arg0) {
+void func_8016B92C(s16 arg0) {
     if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
         D_8006C3B8->unk7C.modeS16 =
-            (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeS16;
+            (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
         D_8006C3B8->unk80.modeS16.unk0++;
         D_8006C3B8->unk80.modeS16.unk2++;
     }
