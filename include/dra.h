@@ -465,6 +465,7 @@ extern s32 D_80072EE8;
 extern s32 D_80072EF4;
 extern u16 D_80072EF6;
 extern s32 D_80072EFC;
+extern s16 D_80072F0A;
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
 

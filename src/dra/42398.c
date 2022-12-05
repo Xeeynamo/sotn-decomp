@@ -2280,8 +2280,7 @@ void func_80103EAC(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80103ED4);
 
-void func_8010427C(void)
-{
+void func_8010427C(void) {
     FreePolygons(D_80137E40);
     FreePolygons(D_80137E44);
     FreePolygons(D_80137E48);
@@ -3015,7 +3014,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CCE4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CED4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CFA8);
+void func_8012CFA8(void) {
+    func_8010DA48(0xEA);
+    D_80073406 = 6;
+    D_800B0914 = 0;
+    D_800733E0 = 0;
+    D_80072F0A = 8;
+}
 
 void func_8012CFF0(void) {
     D_80073406 = 3;
