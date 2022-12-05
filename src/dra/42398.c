@@ -463,7 +463,25 @@ void func_800EAD0C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD7C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAEA4);
+extern s16 D_801374F8;
+extern s16 D_80137538;
+
+void func_800EAEA4(void) {
+    u16* var_v1 = &D_801374F8;
+    s32 i;
+
+    for (i = 0; i < 32; i++) {
+        *var_v1 = 0xFFFF;
+        var_v1++;
+    }
+
+    var_v1 = &D_80137538;
+
+    for (i = 0; i < 32; i++) {
+        *var_v1 = 0xFFFF;
+        var_v1++;
+    }
+}
 
 void func_800EAEEC(void) {
     unkstruct_80072FA0* var_v1 = &D_80072FA0;
