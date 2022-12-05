@@ -2443,7 +2443,19 @@ void func_8010E1EC(s32 speed) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E234);
+void func_8010E234(s32 speed) {
+    if (D_8006C3B8->accelerationY < 0) {
+        D_8006C3B8->accelerationY += speed;
+        if (D_8006C3B8->accelerationY > 0) {
+            D_8006C3B8->accelerationY = 0;
+        }
+    } else {
+        D_8006C3B8->accelerationY -= speed;
+        if (D_8006C3B8->accelerationY < 0) {
+            D_8006C3B8->accelerationY = 0;
+        }
+    }
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E27C);
