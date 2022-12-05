@@ -2662,7 +2662,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111830);
 
 void func_80111928(void) { D_801396EA = 0; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111938);
+void func_80111938(void) {
+    D_801396EA = 1;
+    D_801396E4 = D_8007342E;
+    D_801396E6 = D_800733F1;
+    D_801396E8 = D_800733EE;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011197C);
 
