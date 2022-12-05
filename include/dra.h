@@ -450,6 +450,9 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_VH 0x91FF
 #define LBA_STAGE_NP3_BIN 0x9235
 
+
+
+
 extern s32 aBu1d1dS;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
@@ -559,6 +562,7 @@ extern s32 g_timeHours;
 extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
 extern s32 D_80097C98;
+extern s32 D_800A04EC;
 extern u16 D_800A0518[][0x10];
 extern s32 D_800A1F18[];
 extern s32 D_800A2438;
@@ -619,6 +623,8 @@ extern RECT D_800ACD80;
 extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
+extern s16 D_80136460[];
+extern s16 D_80136C60[];
 extern u8 D_80137460;
 extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
