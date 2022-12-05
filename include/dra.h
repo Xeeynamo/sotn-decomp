@@ -450,6 +450,7 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_VH 0x91FF
 #define LBA_STAGE_NP3_BIN 0x9235
 
+extern s32 aBu1d1dS;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
