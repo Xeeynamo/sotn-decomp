@@ -522,6 +522,7 @@ extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
 extern s32 D_8007EFE4;
 extern void* D_8007EFD8;
+extern s32 D_80082FE4;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;
 extern s32 playerY;
@@ -735,6 +736,7 @@ bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
 s32 func_800F62E8(s32 arg0);
+void func_800F98AC();
 void DrawMenuChar(char ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
