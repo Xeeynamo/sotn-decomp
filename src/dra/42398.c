@@ -2542,7 +2542,16 @@ void func_8010E3B8(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E3E0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E42C);
+void func_8010E42C(u16 arg0) {
+    D_80073406 = arg0;
+    D_80073404 = 0x12;
+
+    if (!(arg0 & 1)) {
+        func_8010DA48(0xF4);
+    } else {
+        func_8010DA48(0xF5);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 
