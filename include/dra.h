@@ -1,6 +1,7 @@
 #ifndef DRA_H
 #define DRA_H
 #include "main.h"
+#include "unkstruct.h"
 
 struct Entity;
 
@@ -324,12 +325,6 @@ typedef struct PlayerMp {
     s32 current;
     s32 max;
 } PlayerMp;
-
-typedef struct unkstruct_80072FA0 {
-    char unk0[0x4];
-    u16 unk4;
-    char unk8[0x6];
-} unkstruct_80072FA0; // size = 0xC
 
 extern unkstruct_80072FA0 D_80072FA0[];
 
@@ -723,6 +718,7 @@ extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 
+void func_8002A09C(void*);
 void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
@@ -799,6 +795,7 @@ s32 func_80131F28(void);
 u16 func_80131F38(void);
 bool func_80131F68(void);
 s16 func_80131F94(void);
+void func_801321FC();
 void func_80132134(void);
 s32 func_80132264(void);
 s32 func_801326D8(void);
