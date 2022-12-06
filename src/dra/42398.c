@@ -355,7 +355,12 @@ void func_800E91B0(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9208);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E928C);
+void func_800E928C(void) {
+    TestEvent(D_8007EFD8);
+    TestEvent(D_8007EFDC);
+    TestEvent(D_8007EFE0);
+    TestEvent(D_80086FE4);
+}
 
 void func_800E92E4(void) { D_8013B660 = 0; }
 
