@@ -634,6 +634,7 @@ extern s16 D_801374F8;
 extern RoomLoadDef* D_801375BC;
 extern s16 D_80137538;
 extern s32 D_801375C8;
+extern s32 D_801375CC;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
 extern s32 D_80137614;

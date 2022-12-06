@@ -1772,7 +1772,32 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB0FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB160);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB1EC);
+// !FAKE:
+s32 func_800FB1EC(s32 arg0) {
+    if (D_801375CC != 0) {
+        goto block_3;
+    }
+    if (arg0 != 0) {
+        goto block_7;
+    }
+block_2:
+    return 1;
+block_3:
+    if (arg0 == 0x1A) {
+        goto block_2;
+    }
+    if (arg0 == 0) {
+        goto block_2;
+    }
+    if (arg0 == 0x30) {
+        goto block_2;
+    }
+    if (arg0 == 0x39) {
+        goto block_2;
+    }
+block_7:
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB23C);
 
@@ -2981,8 +3006,7 @@ void func_80127EAC(s16 arg0) {
 
 void func_80127EF0(s16 arg0) {
     if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk7C.modeS16 =
-            (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
+        D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
         D_8006C3B8->unk80.modeS16.unk0++;
         D_8006C3B8->unk80.modeS16.unk2++;
     }
