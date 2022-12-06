@@ -479,6 +479,10 @@ extern u16 D_80072F6E;
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
+extern s32 D_80073068;
+extern s32 D_8007306C;
+extern s32 D_80073070;
+extern s32 D_80073078;
 extern u16 D_80073092;
 extern u16 g_CurrentRoomHSize;
 extern u16 g_CurrentRoomVSize;
@@ -741,6 +745,7 @@ void func_800F4F48(void);
 void func_800F4FD0(void);
 bool IsAlucart(void);
 s32 SquareRoot12(s32, s32);
+void TestEvent(s32);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,

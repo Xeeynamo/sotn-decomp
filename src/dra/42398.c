@@ -346,7 +346,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E908C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E912C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E91B0);
+void func_800E91B0(void) {
+    TestEvent(D_80073068);
+    TestEvent(D_8007306C);
+    TestEvent(D_80073070);
+    TestEvent(D_80073078);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9208);
 
