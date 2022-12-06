@@ -600,7 +600,7 @@ void func_800EDAE4(void) {
     s32 i;
     s32* phi_v1 = &D_800974AC;
 
-    for (i = 15; i >= 0; i--) {
+    for (i = 0; i < 16; i++) {
         *phi_v1 = 0;
         phi_v1 += 0x10;
     }
@@ -3119,7 +3119,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012EF2C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012F178);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012F83C);
+s32 func_8012F83C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 temp_a0 = arg0 - arg2;
+    s32 temp_a1 = arg1 - arg3;
+
+    return ((SquareRoot12((SQ(temp_a0) + SQ(temp_a1)) << 12, temp_a1) >> 12) <
+            arg4) ^
+           1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012F894);
 
