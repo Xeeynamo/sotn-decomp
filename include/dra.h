@@ -614,6 +614,7 @@ extern const char* c_strSSword;
 extern s32 D_800A4B04;
 extern s32 D_800A7718;
 extern u16 D_800A7734;
+extern RECT D_800ACD90;
 extern s8 D_800A841C[]; // related to player MP
 extern const char* c_strEquip;
 extern const char* c_strSpells;
@@ -682,7 +683,7 @@ extern s16 D_801390DC;
 extern s16 D_801390DE;
 extern s16 D_801390E0;
 extern u16 D_801396E4;
-extern s16 D_801396E6;
+extern u16 D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern u16 D_801396F4;

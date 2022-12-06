@@ -1747,7 +1747,10 @@ void func_800FAC30(void) {
     D_80137848 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAC48);
+void func_800FAC48(void) {
+    ClearImage(&D_800ACD90, 0, 0, 0);
+    ClearImage(&D_800ACD90 + 7, 0, 0, 0);
+}
 
 void func_800FAC98(void) { func_800F9808(2); }
 
@@ -2737,6 +2740,7 @@ void func_80111938(void) {
     D_801396E8 = D_800733EE;
 }
 
+// D_801396E6 wants to be a s8 in this function
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011197C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801119C4);
