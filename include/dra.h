@@ -135,7 +135,6 @@ typedef struct Entity {
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
-    ///* 0x7C */ s16 unk7C;
     /* 0x7E */ u8 unk7E;
     union {
         /* 0x80 */ struct Entity* entityPtr;
@@ -804,6 +803,7 @@ void func_80132760(void);
 void func_801337B4(void);
 s32 func_80133940(void);
 s32 func_80133950(void);
+void func_80133FCC();
 void func_8013415C(void);
 void func_801361F8(void);
 
