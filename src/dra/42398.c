@@ -3243,26 +3243,18 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132A04);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132C2C);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132E38);
-#else
+extern s16 D_80139868[];
+
 u16 func_80132E38(void) {
-    s32 temp_a1;
-    s32 phi_a1 = 0;
-    u16* phi_v1 = &D_80139868;
-    u16* phi_a0 = &D_80139868 + 1;
+    s32 i;
 
-    do {
-        temp_a1 = phi_a1 + 1;
-        *phi_v1 = *phi_a0;
-        phi_a0++;
-        phi_v1++;
-        phi_a1 = temp_a1;
-    } while (temp_a1 < 0xFF);
+    for (i = 0; i < 0xFF; i++) {
+        D_80139868[i] = D_80139868[i + 1];
+    }
+    D_801396F4--;
 
-    return --D_801396F4;
+    return D_801396F4;
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132E90);
 
