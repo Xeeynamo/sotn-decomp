@@ -1006,6 +1006,7 @@ u8 func_800F548C(u8 arg0) {
     return temp << 4;
 }
 
+// https://decomp.me/scratch/GoqWa
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", IsOutsideDrawArea);
 bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context);
