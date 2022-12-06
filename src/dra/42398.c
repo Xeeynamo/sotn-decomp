@@ -999,6 +999,7 @@ void func_800F53D4(s32 tpage, s32 arg1) {
 
 u8 func_800F548C(u8 arg0) {
     u16 temp = arg0;
+
     if (arg0 & 0x80) {
         arg0 &= 0x7F;
         return func_800F548C(arg0 + 3);
@@ -1006,22 +1007,18 @@ u8 func_800F548C(u8 arg0) {
     return temp << 4;
 }
 
-// https://decomp.me/scratch/GoqWa
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", IsOutsideDrawArea);
-bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context);
-#else
 bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context) {
-    s16 scissorX = (s16)context->unk1.x;
-    if (scissorX < x1) {
-        s16 scissorY = (s16)context->unk1.y;
-        if (scissorY < y1 && x0 < (scissorX + (s16)context->unk1.w))
-            return (y0 < scissorY + (s16)context->unk1.h) ^ 1;
+    if (!(x1 > context->unk1.x)) {
+        return true;
     }
-
+    if (!(context->unk1.y < y1)) {
+        return true;
+    }
+    if (x0 < (context->unk1.x + context->unk1.w)) {
+        return (y0 < (context->unk1.y + context->unk1.h)) ^ 1;
+    }
     return true;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", ScissorPolyG4);
