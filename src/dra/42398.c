@@ -255,7 +255,23 @@ void func_800E6218(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6250);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6300);
+typedef struct unkStruct_800A872C {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ char unk4[0xC];
+} unkStruct_800A872C; // size = 0x10
+
+extern unkStruct_800A872C D_800A872C[];
+
+s32 func_800E6300(void) {
+    s32 i;
+
+    for (i = 0; i < 0x1E; i++) {
+        if ((D_800A872C[i].unk0 > 0) && ((D_80097964[i] & 2) != 0)) {
+            return D_800A872C[i].unk0;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6358);
 
