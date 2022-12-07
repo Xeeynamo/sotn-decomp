@@ -1802,31 +1802,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB0FC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB160);
 
-// !FAKE:
-s32 func_800FB1EC(s32 arg0) {
-    if (D_801375CC != 0) {
-        goto block_3;
+bool func_800FB1EC(s32 arg0) {
+    if (D_801375CC == 0) {
+        if (arg0 == 0) {
+            return true;
+        }
+    } else if ((arg0 == 0x1A) || (arg0 == 0) || (arg0 == 0x30) ||
+               (arg0 == 0x39)) {
+        return true;
     }
-    if (arg0 != 0) {
-        goto block_7;
-    }
-block_2:
-    return 1;
-block_3:
-    if (arg0 == 0x1A) {
-        goto block_2;
-    }
-    if (arg0 == 0) {
-        goto block_2;
-    }
-    if (arg0 == 0x30) {
-        goto block_2;
-    }
-    if (arg0 == 0x39) {
-        goto block_2;
-    }
-block_7:
-    return 0;
+
+    return false;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB23C);
