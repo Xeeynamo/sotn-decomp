@@ -3320,7 +3320,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134508);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134564);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801345C0);
+extern Unkstruct_80138FB4* D_801390C8;
+
+void func_801345C0(void) {
+    D_801390C8->unk0 = 0x300000;
+    D_801390C8->unk4 = 0x4000;
+    D_801390C8->unk36 = 8;
+    func_8002A09C(D_801390C8);
+    D_80138F28 |= 0x300000;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013461C);
 
