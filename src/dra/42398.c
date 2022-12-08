@@ -2415,21 +2415,18 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->y3 = y + height;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107360);
-#else
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, u8 u,
-                   u8 v) {
+void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
+                   s32 v) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;
     poly->y1 = y;
     poly->x2 = x;
+    poly->y2 = y + height;
     poly->x3 = x + width;
+    poly->y3 = y + height;
     poly->v0 = v;
     poly->v1 = v;
-    poly->y2 = y + height;
-    poly->y3 = y + height;
     poly->u0 = u;
     poly->u1 = u + width;
     poly->u2 = u;
@@ -2437,7 +2434,6 @@ void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, u8 u,
     poly->u3 = u + width;
     poly->v3 = v + height;
 }
-#endif
 
 void func_801073C0(void) {
     CdReadyCallback(NULL);
@@ -2446,7 +2442,11 @@ void func_801073C0(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073E8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80107460);
+void func_80107460(void) {
+    D_80137F7C = &D_801EC000[D_80137F6C << 0x9];
+    CdGetSector(D_80137F7C, 0x200);
+    D_80137F6C = (D_80137F6C + 1) & 7;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", CopyMapOverlayCallback);
 // https://decomp.me/scratch/1AWN1
@@ -2480,18 +2480,18 @@ void func_801083BC(void) {
     D_800ACC64[0] = 0;
 }
 
-s32 func_801083F0(void) {
+bool func_801083F0(void) {
     D_8006C398 = 1;
     D_8006BAFC = 0x19;
 
     if (D_8013AE9C == 0) {
-        return 0;
+        return false;
     } else {
         D_8013AE9C--;
         D_800ACC64[0] += 4;
     }
 
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80108448);
@@ -2634,6 +2634,7 @@ s32 func_8010E27C(void) {
 }
 #endif
 
+// https://decomp.me/scratch/YvoMU
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
 void func_8010E390(s32 arg0) {

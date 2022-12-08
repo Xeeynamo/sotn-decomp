@@ -671,6 +671,8 @@ extern s32 D_80137E48;
 extern s32 D_80137E4C;
 extern s32 D_80137E64;
 extern s32 D_80137E68;
+extern s32 D_80137F6C;
+extern void* D_80137F7C;
 extern s32 D_80138F20;
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
@@ -716,6 +718,7 @@ extern const char* D_80138784[487];
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
+extern s32 D_801EC000[];
 
 void func_8002A09C(void*);
 void func_800E346C(void);
@@ -777,8 +780,8 @@ void func_80106590(Entity*);
 void func_801065F4(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u8, s32);
 void func_80107250(POLY_GT4* poly, s32 arg1);
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, u8 u,
-                   u8 v);
+void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
+                   s32 v);
 void func_801073C0(void);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
