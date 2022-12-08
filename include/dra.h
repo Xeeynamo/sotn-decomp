@@ -633,6 +633,8 @@ extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 D_80137460;
 extern s16 D_801374F8;
+extern u8* D_80137578;
+extern s32 D_80137580;
 extern RoomLoadDef* D_801375BC;
 extern s16 D_80137538;
 extern s32 D_801375C8;
