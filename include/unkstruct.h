@@ -49,3 +49,7 @@ typedef struct Unkstruct_80138FB4 {
     /* 0x08 */ char pad8[0x2E];
     /* 0x36 */ s16 unk36;
 } Unkstruct_80138FB4; // size = unknown
+
+typedef struct Unkstruct_80137990 {
+    /* 0x00 */ s32 unk0;
+} Unkstruct_80137990;

@@ -526,7 +526,7 @@ u32 func_800EB03C(void) {
         return (temp_v1 >> 0) & 0xF;
     } else {
         D_80137580 = 1;
-        temp_v1 = D_80137578[0];
+        temp_v1 = *D_80137578;
         return (temp_v1 >> 4) & 0xF;
     }
 }
@@ -2106,6 +2106,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF708);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FF7B8);
 
+extern Unkstruct_80137990 D_80137990;
+
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawHudRichter);
 #else
@@ -2120,7 +2122,7 @@ void DrawHudRichter(void) {
     D_8003C744 = NULL;
     D_80137980 = 50;
     D_80137984 = 0;
-    D_80137990 = 0;
+    D_80137990.unk0 = 0;
     D_8013798C = 0x9C40U / 400U;
     D_80137988 = 0x9C40U / 400U;
     D_80137970 = func_800EDD9C(4, 9);
@@ -2214,7 +2216,24 @@ void DrawHudRichter(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80100B50);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010183C);
+extern Unkstruct_80137990 D_80137990;
+
+bool func_8010183C(s32 arg0) {
+    if (arg0 == 0) {
+        if (D_80137990.unk0 == 0) {
+            D_80137990.unk0 = 1;
+            return true;
+        }
+        return false;
+    } else if (arg0 == 1) {
+        if (D_80137990.unk0 == 0x15) {
+            D_80137990.unk0 = 0x33;
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010189C);
