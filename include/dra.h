@@ -463,9 +463,9 @@ extern s16 D_80072F0A;
 extern s16 D_80072F18;
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
-
+extern u16 D_80072F92;
 // Probably part of the same array / struct
-extern u16 D_80072F64;
+extern u16 D_80072F64[];
 extern s16 D_80072F66;
 extern u16 D_80072F68[];
 extern u16 D_80072F6C;

@@ -2737,7 +2737,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E7AC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E940);
+void func_8010E940(void) {
+    D_80072F64[0] |= 0x21;
+    func_8010DA48(0x20);
+    D_80073406 = 0;
+    D_800733E4 = -0x44000;
+    if (D_80072F92 != 0) {
+        D_800733E4 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E9A4);
 
