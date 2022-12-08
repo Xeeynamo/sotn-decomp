@@ -793,8 +793,8 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
-// void func_8010E470(s32, s32);
 void func_80111928(void);
+void func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);
@@ -815,5 +815,4 @@ s32 func_80133950(void);
 void func_80133FCC();
 void func_8013415C(void);
 void func_801361F8(void);
-
 #endif
