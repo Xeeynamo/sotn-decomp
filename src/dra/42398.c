@@ -1702,7 +1702,18 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8E18);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8F28);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9690);
+void func_800F9690(void) {
+    POLY_GT4* poly = &D_80086FEC[D_8013783C];
+
+    if (D_80137608 != 0) {
+        poly->pad3 = 0x80;
+    } else {
+        poly->pad3 = 8;
+    }
+    if (D_801376B0 != 0) {
+        poly->pad3 = 8;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F96F4);
 
