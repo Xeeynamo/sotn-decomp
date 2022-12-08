@@ -2914,7 +2914,30 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118970);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118B18);
 
+// https://decomp.me/scratch/LmXYY
+// nops between assignments probably aspsx
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118C28);
+#else
+extern u8 D_800ACFB4[];
+extern u8 D_800ACFB5[];
+extern u8 D_800ACFB6[];
+extern u8 D_800ACFB7[];
+extern u8 D_8013803C;
+extern u8 D_80138040;
+extern u8 D_80138044;
+extern u8 D_80138048;
+
+void func_80118C28(s32 arg0) {
+    s32 temp_a0;
+
+    temp_a0 = arg0 * 4;
+    D_8013803C = D_800ACFB4[temp_a0];
+    D_80138040 = D_800ACFB5[temp_a0];
+    D_80138044 = D_800ACFB6[temp_a0];
+    D_80138048 = D_800ACFB7[temp_a0];
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118C84);
 
