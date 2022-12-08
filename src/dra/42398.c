@@ -2477,10 +2477,22 @@ void func_801083BC(void) {
     D_8006C398 = 1;
     D_8006BAFC = 25;
     D_8013AE9C = 10;
-    D_800ACC64 = 0;
+    D_800ACC64[0] = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801083F0);
+s32 func_801083F0(void) {
+    D_8006C398 = 1;
+    D_8006BAFC = 0x19;
+
+    if (D_8013AE9C == 0) {
+        return 0;
+    } else {
+        D_8013AE9C--;
+        D_800ACC64[0] += 4;
+    }
+
+    return 1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80108448);
 

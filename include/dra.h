@@ -624,7 +624,7 @@ extern const char* c_strSystem;
 extern const char* c_strFamiliars;
 extern const char* c_strFamiliar;
 extern const char* c_strSpecial2;
-extern s32 D_800ACC64;
+extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT c_backbufferClear;
 extern s32 D_800B0914;
