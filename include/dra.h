@@ -460,6 +460,7 @@ extern s32 D_80072EF4;
 extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s16 D_80072F0A;
+extern s16 D_80072F18;
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
 
@@ -469,7 +470,6 @@ extern s16 D_80072F66;
 extern u16 D_80072F68[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
-
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
@@ -498,7 +498,7 @@ extern u16 D_800733EC;
 extern u16 D_800733EE;
 extern s8 D_800733F0;
 extern u8 D_800733F1;
-extern s16 D_80073404;
+extern u16 D_80073404;
 extern u16 D_80073406;
 extern u16 D_8007340A;
 extern u16 D_8007341C;

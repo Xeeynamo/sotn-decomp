@@ -1,7 +1,9 @@
 #include "main.h"
+
 /* Unkstruct section:
  * These are to be merged later on
  */
+
 typedef struct unkstruct_80072FA0 {
     /* 0x00 */ char unk0[0x4];
     /* 0x04 */ u16 unk4;
