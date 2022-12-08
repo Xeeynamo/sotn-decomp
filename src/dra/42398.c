@@ -3330,7 +3330,15 @@ void func_801345C0(void) {
     D_80138F28 |= 0x300000;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013461C);
+extern Unkstruct_80138FB4* D_801390CC;
+
+void func_8013461C(void) {
+    D_801390CC->unk0 = 0xC00000;
+    D_801390CC->unk4 = 0x4000;
+    D_801390CC->unk36 = 8;
+    func_8002A09C(D_801390CC);
+    D_80138F28 |= 0xC00000;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134678);
 
