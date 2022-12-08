@@ -615,8 +615,11 @@ extern const char* c_strSSword;
 extern s32 D_800A4B04;
 extern s32 D_800A7718;
 extern u16 D_800A7734;
+extern s8 D_800A841C[];  // related to player MP
+extern s32 D_800ACC64[]; // probably a struct
+extern RECT D_800ACD80;
 extern RECT D_800ACD90;
-extern s8 D_800A841C[]; // related to player MP
+extern u8 D_800ACF4C[];
 extern const char* c_strEquip;
 extern const char* c_strSpells;
 extern const char* c_strRelics;
@@ -624,8 +627,6 @@ extern const char* c_strSystem;
 extern const char* c_strFamiliars;
 extern const char* c_strFamiliar;
 extern const char* c_strSpecial2;
-extern s32 D_800ACC64[]; // probably a struct
-extern RECT D_800ACD80;
 extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
@@ -789,7 +790,7 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
-void func_8010E470(s32, s32);
+// void func_8010E470(s32, s32);
 void func_80111928(void);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);

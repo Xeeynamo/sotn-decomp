@@ -2576,7 +2576,7 @@ void func_8010DA2C(s32* arg0) {
     D_8006C3B8->animationFrameIndex = 0;
 }
 
-void func_8010DA48(s32 arg0) {
+void func_8010DA48(u32 arg0) {
     D_8006C3B8->unkAC = arg0;
     D_8006C3B8->animationFrameDuration = 0;
     D_8006C3B8->animationFrameIndex = 0;
@@ -2701,7 +2701,19 @@ void func_8010E42C(u16 arg0) {
     }
 }
 
+// https://decomp.me/scratch/wgVVw // nop in between array assignments
+// aspsx
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
+#else
+void func_8010E470(s32 arg0, s32 arg1) {
+    D_800733E0 = arg1;
+    D_800733E4 = 0;
+    D_80073404 = 2;
+    D_80073406 = D_800ACF4C[arg0 * 2 + 0];
+    func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E4D0);
 
