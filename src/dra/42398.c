@@ -2016,7 +2016,19 @@ void func_800FE8F0(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE914);
+void func_800FE914(s32 arg0) {
+    s32 temp_v0;
+
+    temp_v0 = arg0 + g_playerHeart->current;
+    if (g_playerHeart->current < g_playerHeart->max) {
+        g_playerHeart->current = arg0 + g_playerHeart->current;
+        if (g_playerHeart->max < g_playerHeart->current) {
+            g_playerHeart->current = g_playerHeart->max;
+        }
+        func_8011AAFC(D_800733D8, 0x63, 0);
+        PlaySfx(0x67A);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE97C);
 
