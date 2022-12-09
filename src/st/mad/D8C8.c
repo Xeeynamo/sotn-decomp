@@ -1434,7 +1434,7 @@ void func_80199740(POLY_GT4* arg0) {
 //! FAKE
 s32 func_8019976C(s32 arg0, u8 value) {
     u8 ret = 0;
-    u8* phi_v1 = (u8*)arg0 + 4;
+    u8* phi_v1;
     u8* phi_a0;
     s32 i;
 

@@ -634,7 +634,9 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->initState = temp_a0;
 }
 
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
+#else
 void func_801C6114(void) {
     if (D_8006C3B8->accelerationY >= 0) {
         D_8006C3B8->unk84.value = D_8006C3B8->unk88 + D_8006C3B8->unk84.value;
@@ -648,8 +650,6 @@ void func_801C6114(void) {
         D_8006C3B8->accelerationY += 0x2000;
     }
 }
-#else
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
 #endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6198);
