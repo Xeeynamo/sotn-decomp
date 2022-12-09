@@ -2436,7 +2436,7 @@ void func_801065F4(s16 startIndex) {
     Entity* pItem;
 
     for (pItem = &D_800733D8[startIndex];
-         pItem < D_800733D8 + TOTAL_ENTITY_COUNT; pItem++)
+         pItem < &D_800733D8[TOTAL_ENTITY_COUNT]; pItem++)
         func_80106590(pItem);
 }
 
@@ -2853,7 +2853,16 @@ void func_8010FD24(void) {
     D_80072F18 = 4;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FD88);
+void func_8010FD88(void) {
+    D_80073404 = 0;
+    D_80073406 = 3;
+    func_8010E390(0xFFFC8000);
+    D_8006C3B8->accelerationY = 0;
+    func_8010DA48(0xDB);
+    func_8011AAFC(D_8006C3B8, 0, 0);
+    D_80072F66 = 0;
+    PlaySfx(0x617);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FDF8);
 s32 func_8010FDF8(/*?*/ s32);
