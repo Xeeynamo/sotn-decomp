@@ -2960,7 +2960,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113AAC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113D7C);
 
-// !FAKE:
+// !FAKE: too many temps
 s16 func_80113E68(void) {
     s16 rnd = rand();
     s32 temp_v0;
