@@ -1,5 +1,6 @@
 #include "common.h"
 #include "dra.h"
+#include "sfx.h"
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -222,14 +223,10 @@ void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
 
 void func_800E493C(void) {
-    u32 var_a0;
-
     if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
-        var_a0 = 6;
-        PlaySfx(var_a0);
+        PlaySfx(6);
     } else {
-        var_a0 = 5;
-        PlaySfx(var_a0);
+        PlaySfx(5);
     }
 }
 
@@ -541,7 +538,13 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB534);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB6B4);
+void func_800EB6B4(void) {
+    s32 i;
+
+    for (i = 0; i < 32; i++) {
+        func_800EB534(D_80137478[i], D_801374B8[i], i);
+    }
+}
 
 // https://decomp.me/scratch/n0Z3p match with -fforce-addr
 
@@ -2017,16 +2020,13 @@ void func_800FE8F0(void) {
 }
 
 void func_800FE914(s32 arg0) {
-    s32 temp_v0;
-
-    temp_v0 = arg0 + g_playerHeart->current;
     if (g_playerHeart->current < g_playerHeart->max) {
         g_playerHeart->current = arg0 + g_playerHeart->current;
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
         func_8011AAFC(D_800733D8, 0x63, 0);
-        PlaySfx(0x67A);
+        PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }
 
@@ -2035,9 +2035,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE97C);
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
 void func_800FEE6C(void) {
-    s32* var_v1;
-
-    var_v1 = &D_80139828;
+    s32* var_v1 = &D_80139828;
 
     do {
         if (*var_v1 != 0) {
@@ -3335,7 +3333,19 @@ void func_80132134(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013216C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801321FC);
+void func_801321FC(void) {
+    s32 i;
+
+    func_8013216C();
+    D_8013B690 = 0;
+
+    for (i = 0; i < 4; i++) {
+        D_8013B650[i] = 0;
+        D_8013AED4[i] = 0;
+    }
+    D_80139804 = 0;
+    D_8013B664 = 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132264);
 
