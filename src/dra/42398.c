@@ -3065,7 +3065,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B530);
+void func_8011B530(Entity* entity) {
+    if (D_80073404 != 0x25) {
+        func_80106590(entity);
+    } else if (entity->initState == ENTITY_INITSTATE_0) {
+        entity->unk34 = 0x60000;
+        func_8011A328(entity, 5);
+        entity->initState++;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B5A4);
 
