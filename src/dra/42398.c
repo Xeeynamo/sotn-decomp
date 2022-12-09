@@ -203,6 +203,8 @@ void func_800E376C(void) {
     D_8003CB79 = 0;
 }
 
+// https://decomp.me/scratch/Ocshz
+// mips to c doesn't support this function very well
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E385C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E38CC);
@@ -1787,7 +1789,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA8C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAB1C);
+void func_800FAB1C(void) {
+    Entity* entity = &D_800736C8;
+    s32 i;
+
+    for (i = 4; i < 64; i++) {
+        if ((u32)((entity->objectId + 0xFF30) & 0xFFFF) < 16) {
+            func_80106590(entity);
+        }
+        entity++;
+    }
+}
 
 Unkstruct_80137638 D_80137638[];
 
