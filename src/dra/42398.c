@@ -2512,7 +2512,7 @@ void func_801073C0(void) {
 
 s32 func_801073E8(void) {
     u8 sp10;
-    
+
     if (CdSync(1, &sp10) == 0) {
         D_80137F9C = 0;
         return D_80137F9C;
