@@ -464,22 +464,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA720);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA7CC);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD0C);
-#else
-void func_800EAD0C(void) {
+s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(4);
     func_800EA5E4(5);
     func_800EA5E4(6);
     func_800EA5E4(7);
     func_800EA5E4(8);
-    if (g_CurrentPlayableCharacter == 0) {
-        if (g_mapProgramId != PROGRAM_ST0) {
-            func_800EA5E4(0x17);
-        }
+
+    if ((g_CurrentPlayableCharacter == 0) && (g_mapProgramId != PROGRAM_ST0)) {
+        func_800EA5E4(0x17);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD7C);
 
