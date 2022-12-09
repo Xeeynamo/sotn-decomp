@@ -1,5 +1,6 @@
 #include "common.h"
 #include "dra.h"
+#include "objects.h"
 #include "sfx.h"
 
 #define DISP_ALL_H 240
@@ -3001,7 +3002,21 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118670);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801186EC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011879C);
+Entity* func_8011879C(s16 arg0, s16 arg1) {
+    Entity* entity = &D_800733D8[arg0];
+    s16 var_a0 = arg0;
+
+    if (arg0 < arg1) {
+        while (var_a0 < arg1) {
+            if (entity->objectId == ENTITY_MIN) {
+                return entity;
+            }
+            var_a0++;
+            entity++;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118810);
 
