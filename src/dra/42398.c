@@ -2824,7 +2824,16 @@ void func_8010FC50(void) {
     D_80072F18 = 4;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FCB8);
+void func_8010FCB8(void) {
+    D_800733E4 = 0;
+    D_800733E0 = 0;
+    func_8010D584(0x23);
+    func_8010E3E0();
+    func_8011AAFC(D_8006C3B8, 0x10075, 0);
+    func_8010DA48(0xF1);
+    PlaySfx(0x6F1);
+    D_80072F18 = 4;
+}
 
 void func_8010FD24(void) {
     D_800733E4 = 0;
