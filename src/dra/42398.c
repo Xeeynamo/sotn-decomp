@@ -382,11 +382,6 @@ void func_800E92F4(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
 
-typedef struct struct_8013B15C {
-    /* 0x000 */ s32 unk000;
-    /* 0x004 */ char unk008[0x274];
-} struct_8013B15C; // size = 0x278
-
 extern struct_8013B15C D_8013B15C[];
 
 s32 func_800E9508(s32 arg0) {

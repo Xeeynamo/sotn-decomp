@@ -53,3 +53,8 @@ typedef struct Unkstruct_80138FB4 {
 typedef struct Unkstruct_80137990 {
     /* 0x00 */ s32 unk0;
 } Unkstruct_80137990;
+
+typedef struct struct_8013B15C {
+    /* 0x000 */ s32 unk000;
+    /* 0x004 */ char unk008[0x274];
+} struct_8013B15C; // size = 0x278
