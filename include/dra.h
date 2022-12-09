@@ -686,6 +686,7 @@ extern s32 D_80137E64;
 extern s32 D_80137E68;
 extern s32 D_80137F6C;
 extern void* D_80137F7C;
+extern s32 D_80137F9C;
 extern s32 D_80138F20;
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
@@ -738,6 +739,7 @@ extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
 
+s32 func_80019444();
 void func_8002A09C(void*);
 void func_800E346C(void);
 void func_800E34A4(s8 arg0);

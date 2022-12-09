@@ -2357,7 +2357,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801027C4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801028AC);
 
 // https://decomp.me/scratch/8D47k
-// That's either a compiler flag, wrong compiler, or asspsx issue
+// That's either a compiler flag, wrong compiler, or aspsx issue
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102CD8);
 #else
@@ -2510,7 +2510,22 @@ void func_801073C0(void) {
     CdDataCallback(NULL);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801073E8);
+s32 func_801073E8(void) {
+    u8 sp10;
+    
+    if (CdSync(1, &sp10) == 0) {
+        D_80137F9C = 0;
+        return D_80137F9C;
+    } else {
+        if ((((u32)(func_80019444() - 0x10)) < 2) || (!(sp10 & 0x10))) {
+            CdControlF(1, 0);
+            D_80137F9C = 0;
+            return D_80137F9C;
+        }
+        D_80137F9C = 1;
+        return D_80137F9C;
+    }
+}
 
 void func_80107460(void) {
     D_80137F7C = &D_801EC000[D_80137F6C << 0x9];
