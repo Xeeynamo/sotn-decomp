@@ -1645,7 +1645,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8374);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F84CC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F86E4);
+void func_800F86E4(void) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        FreePolygons(D_801377FC[i]);
+    }
+
+    FreePolygons(D_8013783C);
+    FreePolygons(D_80137840);
+}
 
 void func_800F8754(MenuContext* context, s32 x, s32 y) {
     s32 curX;

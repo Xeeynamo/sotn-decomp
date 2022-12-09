@@ -655,6 +655,8 @@ extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
 // extern u8 D_80137639[];
 extern u8 D_801376B0;
 extern s32 D_8013783C;
+extern s32 D_801377FC[];
+extern s32 D_80137840;
 extern s32 D_80137844;
 extern s32 D_80137848;
 extern s32 D_8013784C;
@@ -672,7 +674,6 @@ extern s32 D_80137980;
 extern s32 D_80137984;
 extern u32 D_80137988;
 extern u32 D_8013798C;
-
 extern s32 D_80137994;
 extern u32 D_8013799C;
 extern s32 D_80137E40;
