@@ -456,6 +456,7 @@ extern Entity* D_8006C3B8;
 extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
+extern s32 D_80072EEC;
 extern s32 D_80072EF4;
 extern u16 D_80072EF6;
 extern s32 D_80072EFC;
