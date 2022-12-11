@@ -3163,7 +3163,21 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80119F70);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A290);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A328);
+void func_800FD9D4(Unkstruct9*);
+
+void func_8011A328(Entity* entity, s32 arg1) {
+    Unkstruct9 sp10;
+
+    func_800FD9D4(&sp10);
+    entity->unk40 = sp10.sp28;
+    entity->unk42 = sp10.sp26;
+    entity->unk3C = sp10.sp20;
+    entity->unk49 = sp10.sp1D;
+    entity->unk58 = sp10.sp1E;
+    entity->unk6A = sp10.sp22;
+    entity->objectRoomIndex = sp10.sp24;
+    func_80118894(entity);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A3AC);
 
