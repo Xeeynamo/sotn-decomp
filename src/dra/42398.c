@@ -448,11 +448,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA48C);
 extern Unkstruct_8006C3CC D_8006C3CC[];
 
 void func_800EA538(s32 arg0) {
-    s32 temp;
-    s32 i;
     Unkstruct_8006C3CC* var_v0;
-    s32 var_a1_2;
+    s32 temp;
     s32 v1;
+    s32 i;
 
     // !FAKE:
     temp = 0x8000;
@@ -2957,7 +2956,30 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111D24);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011203C);
+typedef struct Unkstruct_80073FC4 {
+    u16 unk0;
+} Unkstruct_80073FC4;
+
+extern Unkstruct_80073FC4 D_80073FC4;
+
+s32 func_8011203C(void) {
+    s32 funcRet = func_80111D24();
+    
+    if (D_80073FC4.unk0 == 5) {
+        if (funcRet == 0) {
+            func_80106590((Entity*)(&D_80073FC4.unk0 - 0x16));
+            return 1;
+        }
+        return 0;
+    }
+    if ((u16)D_80073FC4.unk0 < 3) {
+        if (D_80073FC4.unk0 != 0) {
+            D_80072F66 = 0;
+            D_80073FC4.unk0 = 3;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801120B4);
 

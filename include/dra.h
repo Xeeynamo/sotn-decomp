@@ -811,6 +811,7 @@ void func_8010D584(s16 arg0);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
 void func_80111928(void);
+s32 func_80111D24();
 void func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
