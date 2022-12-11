@@ -2506,7 +2506,30 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106A28);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010715C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801071CC);
+void func_801071CC(POLY_GT4* poly, u8 arg1, s32 arg2) {
+    switch (arg2) {
+    case 0:
+        poly->b0 = arg1;
+        poly->g0 = arg1;
+        poly->r0 = arg1;
+        break;
+    case 1:
+        poly->b1 = arg1;
+        poly->g1 = arg1;
+        poly->r1 = arg1;
+        break;
+    case 2:
+        poly->b2 = arg1;
+        poly->g2 = arg1;
+        poly->r2 = arg1;
+        break;
+    case 3:
+        poly->b3 = arg1;
+        poly->g3 = arg1;
+        poly->r3 = arg1;
+        break;
+    }
+}
 
 void func_80107250(POLY_GT4* poly, s32 arg1) {
     func_801071CC(poly, arg1, 0);
