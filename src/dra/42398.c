@@ -1476,7 +1476,17 @@ u8 func_800F7218(u16 arg0, u16 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F7244);
+void func_800F7244(void) {
+    s32 i;
+
+    g_someValue = D_80097C1C[0];
+    D_80137930 = D_80097C20;
+    D_80137934 = D_80097C24;
+
+    for (i = 0; i < 4; i++) {
+        D_80137938[i] = D_80097C1C[i - 0x19] + D_80097C1C[i - 0x15];
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F72BC);
 
