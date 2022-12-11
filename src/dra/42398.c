@@ -533,7 +533,18 @@ void func_800EAEEC(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAF28);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAFC8);
+void func_800EAFC8(s32 arg0) {
+    u8 temp = arg0;
+
+    if (D_80137584 == 0) {
+        D_80137584 = 1;
+        *D_8013757C = temp;
+    } else {
+        D_80137584 = 0;
+        *D_8013757C += arg0 * 16;
+        D_8013757C++;
+    }
+}
 
 u32 func_800EB03C(void) {
     u8 temp_v1;
