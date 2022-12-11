@@ -2964,7 +2964,7 @@ extern Unkstruct_80073FC4 D_80073FC4;
 
 s32 func_8011203C(void) {
     s32 funcRet = func_80111D24();
-    
+
     if (D_80073FC4.unk0 == 5) {
         if (funcRet == 0) {
             func_80106590((Entity*)(&D_80073FC4.unk0 - 0x16));
