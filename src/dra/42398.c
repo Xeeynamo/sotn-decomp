@@ -3163,12 +3163,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80119F70);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A290);
 
-void func_800FD9D4(Unkstruct9*);
+void func_800FD9D4(Unkstruct9*, s32 arg1);
 
 void func_8011A328(Entity* entity, s32 arg1) {
     Unkstruct9 sp10;
 
-    func_800FD9D4(&sp10);
+    func_800FD9D4(&sp10, arg1);
     entity->unk40 = sp10.sp28;
     entity->unk42 = sp10.sp26;
     entity->unk3C = sp10.sp20;
