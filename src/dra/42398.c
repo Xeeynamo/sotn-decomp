@@ -2892,7 +2892,35 @@ void func_8010EA54(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EADC);
+s32 func_8010EADC(s16 arg0, s16 arg1) {
+    Entity* var_v1;
+    s32 var_a2;
+    s32 var_t0;
+    s32 i;
+
+    i = 0;
+    var_a2 = 0;
+    var_t0 = 0;
+    var_v1 = &D_80074C08;
+
+    for (; i < 16; i++) {
+        if (var_v1[i - 1].objectRoomIndex == 0) {
+            var_t0++;
+        }
+
+        if (var_v1[i].posX.Data.low != 0) {
+            if (var_v1[i].posX.Data.low == arg0) {
+                var_a2 += 1;
+            }
+        }
+
+        if (var_a2 >= arg1) {
+            return -1;
+        }
+    }
+
+    return (var_t0 == 0) ? -1 : 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
 

@@ -530,7 +530,8 @@ extern s8 D_80073512;
 extern s8 D_80073513;
 extern Entity D_800736C8;
 extern Entity D_80073F98;
-extern Entity D_80073FC4;   // unconfirmed / weird
+extern Entity D_80073FC4; // unconfirmed / weird
+extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
