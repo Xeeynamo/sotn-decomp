@@ -640,6 +640,7 @@ extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT D_800ACD90;
 extern u8 D_800ACF4C[];
+extern s16 D_800ACF60[];
 extern const char* c_strEquip;
 extern const char* c_strSpells;
 extern const char* c_strRelics;

@@ -2874,7 +2874,23 @@ void func_8010E940(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E9A4);
 
+// https://decomp.me/scratch/9jKqU
+// matching in decomp.me, probably aspsx
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EA54);
+#else
+void func_8010EA54(s32 arg0) {
+    s16 temp_hi;
+
+    if (arg0 != 0) {
+        temp_hi = rand() % arg0;
+
+        if (temp_hi < 4) {
+            PlaySfx(D_800ACF60[temp_hi]);
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EADC);
 
