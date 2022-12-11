@@ -382,7 +382,7 @@ void func_800E92F4(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E930C);
 
-extern struct_8013B15C D_8013B15C[];
+extern Unkstruct_8013B15C D_8013B15C[];
 
 s32 func_800E9508(s32 arg0) {
     s32 temp = D_8013B15C[arg0].unk000;
@@ -445,7 +445,36 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA2B0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA48C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA538);
+extern Unkstruct_8006C3CC D_8006C3CC[];
+
+void func_800EA538(s32 arg0) {
+    s32 temp;
+    s32 i;
+    Unkstruct_8006C3CC* var_v0;
+    s32 var_a1_2;
+    s32 v1;
+
+    // !FAKE:
+    temp = 0x8000;
+    v1 = (temp >> (arg0 - 1));
+
+    if (arg0 != 0) {
+        for (i = 0; i < 32; i++) {
+            if (v1 & D_8006C3CC[i].unk0) {
+                D_8006C3CC[i].unk0 = 0;
+            }
+        }
+        return;
+    }
+
+    D_8003C0F8 = 0;
+    var_v0 = &D_8006C3C4;
+
+    for (i = 0; i < 32; i++) {
+        var_v0->unk8 = 0;
+        var_v0++;
+    }
+}
 
 void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[3] = arg0;
@@ -467,7 +496,8 @@ s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(7);
     func_800EA5E4(8);
 
-    if ((g_CurrentPlayableCharacter == 0) && (g_mapProgramId != PROGRAM_ST0)) {
+    if ((g_CurrentPlayableCharacter == PLAYER_ALUCARD) &&
+        (g_mapProgramId != PROGRAM_ST0)) {
         func_800EA5E4(0x17);
     }
 }
@@ -1985,6 +2015,7 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
+// https://decomp.me/scratch/5ufgy
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDCE0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDD44);

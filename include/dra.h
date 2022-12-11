@@ -329,6 +329,7 @@ extern unkstruct_80072FA0 D_80072FA0[];
 
 // main
 extern s32 D_8003C0EC[4];
+extern s32 D_8003C0F8;
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
@@ -448,6 +449,7 @@ extern s32 aBu1d1dS;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
+extern u16 D_8006C3C4;
 extern GpuBufferUnk* D_8006C37C;
 extern s32 D_8006C398;
 extern s32 g_backbufferX;
