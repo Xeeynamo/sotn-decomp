@@ -213,7 +213,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C9CC);
 void func_8015CA84(s32 speed) {
     Entity* entity = D_8006C3B8;
     s32 modX = speed;
-    
+
     if (entity->unk14 == 1)
         modX = -speed;
     entity->accelerationX = modX;
