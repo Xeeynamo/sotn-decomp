@@ -22,7 +22,11 @@ extern long open(char*, unsigned long);
 extern long lseek(long, long, long);
 extern long read(long, void*, long);
 extern long write(long, void*, long);
-extern long close(long);
+/*
+ * Close releases the file descriptor.
+ * fd is returned when successful, and -1 in all other cases.
+ */
+extern int close(int fd);
 extern long format(char*);
 extern struct DIRENTRY* firstfile(char*, struct DIRENTRY*);
 extern struct DIRENTRY* nextfile(struct DIRENTRY*);

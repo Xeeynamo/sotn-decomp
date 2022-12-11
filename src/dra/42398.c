@@ -405,7 +405,21 @@ s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
     return -(erase(buffer) == 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9804);
+s32 func_800E9804(s32 arg0) {
+    s32 funcRet = func_800E912C();
+    s32 ret = 0;
+
+    if (funcRet != 0) {
+        close(D_80137474);
+        if (funcRet == 1) {
+            D_8006C3AC |= funcRet << arg0;
+            return 1;
+        }
+        ret = -3;
+        return ret;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9880);
 
@@ -453,7 +467,7 @@ void func_800EA538(s32 arg0) {
     s32 v1;
     s32 i;
 
-    // !FAKE:
+    // !FAKE: 0x8000 inside a temp is weird
     temp = 0x8000;
     v1 = (temp >> (arg0 - 1));
 
@@ -582,8 +596,8 @@ void func_800EB6B4(void) {
 // https://decomp.me/scratch/n0Z3p match with -fforce-addr
 
 bool func_800EB720(void) {
-    s32 i;
     unkstruct_80072FA0* temp = D_80072FA0;
+    s32 i;
 
     for (i = 0; i < 0x10; i++) {
         if (temp[i].unk4 != 0) {
