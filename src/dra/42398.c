@@ -2956,29 +2956,24 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111D24);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 
-typedef struct Unkstruct_80073FC4 {
-    u16 unk0;
-} Unkstruct_80073FC4;
-
 extern Unkstruct_80073FC4 D_80073FC4;
 
-s32 func_8011203C(void) {
+bool func_8011203C(void) {
     s32 funcRet = func_80111D24();
-    
+
     if (D_80073FC4.unk0 == 5) {
         if (funcRet == 0) {
             func_80106590((Entity*)(&D_80073FC4.unk0 - 0x16));
-            return 1;
+            return true;
         }
-        return 0;
-    }
-    if ((u16)D_80073FC4.unk0 < 3) {
+        return false;
+    } else if (D_80073FC4.unk0 < 3) {
         if (D_80073FC4.unk0 != 0) {
             D_80072F66 = 0;
             D_80073FC4.unk0 = 3;
         }
     }
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801120B4);
