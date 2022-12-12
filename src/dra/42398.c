@@ -2895,22 +2895,22 @@ void func_8010EA54(s32 arg0) {
 s32 func_8010EADC(s16 arg0, s16 arg1) {
     Entity* var_v1;
     s32 var_a2;
-    s32 var_t0;
+    s32 ret;
     s32 i;
 
     i = 0;
     var_a2 = 0;
-    var_t0 = 0;
+    ret = 0;
     var_v1 = &D_80074C08;
 
     for (; i < 16; i++) {
         if (var_v1[i - 1].objectRoomIndex == 0) {
-            var_t0++;
+            ret++;
         }
 
         if (var_v1[i].posX.Data.low != 0) {
             if (var_v1[i].posX.Data.low == arg0) {
-                var_a2 += 1;
+                var_a2++;
             }
         }
 
@@ -2919,7 +2919,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
         }
     }
 
-    return (var_t0 == 0) ? -1 : 0;
+    return (ret == 0) ? -1 : 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
@@ -3036,12 +3036,17 @@ void func_80111928(void) { D_801396EA = 0; }
 void func_80111938(void) {
     D_801396EA = 1;
     D_801396E4 = D_8007342E;
-    D_801396E6 = D_800733F1;
+    D_801396E6.typeShort = D_800733F1;
     D_801396E8 = D_800733EE;
 }
 
-// D_801396E6 wants to be a s8 in this function
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011197C);
+void func_8011197C(void) {
+    D_801396EA = 0;
+    D_8007341C = 0;
+    D_8007342E = D_801396E4;
+    D_800733F1 = D_801396E6.typeByte;
+    D_800733EE = D_801396E8;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801119C4);
 
@@ -3187,7 +3192,17 @@ void func_80118640(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118670);
+// INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118670);
+void func_80118670(void) {
+    if (D_80073428.typeInt == 0x10007) {
+        func_8011AAFC(D_8006C3B8, 0x160028, 0);
+        PlaySfx(0x67D);
+        func_8011AAFC(D_8006C3B8, 0x70, 0);
+    }
+    if (D_8007342A < 0) {
+        func_8010E570(0);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801186EC);
 
@@ -3478,7 +3493,7 @@ void func_8012CB0C(void) {
     D_80073484 = 0xDE;
     D_800733E4 = 0;
     D_800B0914 = 0;
-    D_80073428 = 0;
+    D_80073428.typeShort = 0;
     D_8007342A = 0;
     D_80073406 = 7;
 }

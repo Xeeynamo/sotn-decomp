@@ -80,6 +80,12 @@ typedef union {
     } modeU8;
 } unkUnion3;
 
+typedef union {
+    byte typeByte;
+    short typeShort;
+    int typeInt;
+} MultiType;
+
 typedef struct Entity {
     /* 0x00 */ UnkUnion1 posX;
     /* 0x04 */ UnkUnion1 posY;
@@ -520,7 +526,7 @@ extern u16 D_80073406;
 extern u16 D_8007340A;
 extern u16 D_8007341C;
 extern /*?*/ s32* D_80073424;
-extern s16 D_80073428;
+extern MultiType D_80073428;
 extern s16 D_8007342A;
 extern u16 D_8007342E;
 extern u8 D_80073484;
@@ -725,7 +731,7 @@ extern s16 D_801390DC;
 extern s16 D_801390DE;
 extern s16 D_801390E0;
 extern u16 D_801396E4;
-extern u16 D_801396E6;
+extern MultiType D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern u16 D_801396F4;

@@ -30,6 +30,12 @@
         "string": "c",
         "string_view": "c",
         "objects.h": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "atomic": "c",
+        "cstddef": "c",
+        "memory_resource": "c",
+        "fstream": "c",
+        "memory": "c",
+        "typeinfo": "c"
     },
 }

@@ -108,7 +108,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159670);
 
 void func_80159BC8(void) {
     D_8007342A = 0;
-    D_80073428 = 0;
+    D_80073428.typeShort = 0;
     D_80072F64[0] = 0;
     D_80072F66 = 0;
     D_800733F1 = D_800733F1 & 0xFB;
@@ -243,7 +243,7 @@ void func_8015CC70(s16 arg0) {
     D_80073406 = arg0;
     D_80073404 = 0x0020;
     D_8007342A = 0;
-    D_80073428 = 0;
+    D_80073428.typeShort = 0;
     if (arg0 & 1) {
         D_80073424 = &D_80155950;
     } else {
