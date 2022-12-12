@@ -302,19 +302,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7E08);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E81FC);
 
 void func_800E8D24(void) {
-    s8* phi_v1;
-    s32 phi_v0;
-    s8 a0;
+    s8* ptr;
+    s32 i;
 
     D_80097496 = 0;
-    phi_v1 = &D_80137460;
-    a0 = 0x10;
-    phi_v0 = 0xF;
-    do {
-        *phi_v1 = a0;
-        phi_v1 += 1;
-        phi_v0--;
-    } while (phi_v0 >= 0);
+    ptr = &D_80137460;
+
+    for (i = 0; i < 16; i++) {
+        *ptr = 0x10;
+        ptr++;
+    }
 }
 
 // https://decomp.me/scratch/YhofM
@@ -1351,8 +1348,8 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
             r = 0x5F - (g_blinkTimer & 0x1F);
         }
     }
-    DrawMenuRect(context, 0x70, (g_menuRelicsCursorIndex * 0xD) + 0x1C, 0x71,
-                 0xB, r, 0, 0);
+    DrawMenuRect(context, 0x70, (g_menuRelicsCursorIndex.unk0 * 0xD) + 0x1C,
+                 0x71, 0xB, r, 0, 0);
 }
 
 #ifndef NON_MATCHING
@@ -1884,7 +1881,23 @@ void func_800FAC48(void) {
 
 void func_800FAC98(void) { func_800F9808(2); }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FACB8);
+bool func_800FACB8(void) {
+    if (D_80097494 & 2) {
+        g_menuRelicsCursorIndex.unk0++;
+        if (g_menuRelicsCursorIndex.unk0 == 7) {
+            g_menuRelicsCursorIndex.unk0 = 0;
+        }
+        return true;
+    }
+    if (D_80097494 & 1) {
+        g_menuRelicsCursorIndex.unk0--;
+        if (g_menuRelicsCursorIndex.unk0 == -1) {
+            g_menuRelicsCursorIndex.unk0 = 6;
+        }
+        return true;
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAD34);
 
