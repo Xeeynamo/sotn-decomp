@@ -173,7 +173,8 @@ typedef struct Entity {
     /* 0xAD */ s8 unkAD;
     /* 0xAE */ s8 unkAE;
     /* 0xAF */ s8 unkAF;
-    /* 0xB0 */ s32 unkB0;
+    /* 0xB0 */ s16 unkB0;
+    /* 0xB2 */ s16 unkB2;
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
