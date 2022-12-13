@@ -462,7 +462,7 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_VH 0x91FF
 #define LBA_STAGE_NP3_BIN 0x9235
 
-extern s32 aBu1d1dS;
+extern const char aBu1d1dS;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
@@ -798,6 +798,7 @@ void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
+s32 func_800F4D38(s32, s32);
 void func_800F4F48(void);
 void func_800F4FD0(void);
 bool IsAlucart(void);

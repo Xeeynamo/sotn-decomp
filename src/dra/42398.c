@@ -1049,7 +1049,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F4994);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F4D38);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F4F48);
+void func_800F4F48(void) {
+    s32 i;
+
+    for (i = 0; i < 2; i++) {
+        player_equip_head[i + 7] =
+            func_800F4D38(player_equip_head[i], player_equip_head[1 - i]);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F4FD0);
 
