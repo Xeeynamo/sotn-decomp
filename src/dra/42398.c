@@ -3319,7 +3319,20 @@ void func_80118C28(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118C84);
+s32 func_80118C84(s16 arg0, s16 arg1) {
+    Entity* entity = func_8011879C(0x38, 0x40);
+
+    if (entity != NULL) {
+        func_80106590(entity);
+        entity->objectId = ENTITY_13;
+        entity->posX.value = D_800733D8->posX.value;
+        entity->posY.value = D_800733DC[0];
+        entity->unk80.modeS16.unk0 = arg0;
+        entity->unk80.modeS16.unk2 = arg1;
+        return 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118D0C);
 

@@ -516,6 +516,7 @@ extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
+extern s32 D_800733DC[];
 extern s16 D_800733DE;
 extern s32 D_800733E0;
 extern s32 D_800733E4;
