@@ -233,7 +233,23 @@ void func_800E493C(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4970);
+void func_800E4970(void) {
+    func_800E4124(4);
+    D_80073060 = 2;
+    ClearBackbuffer();
+    func_800E3574();
+    func_800EAD7C();
+    func_801065F4(0);
+    func_800EDA94();
+    func_800EA538(0);
+    func_800ECE2C();
+    func_800EAEEC();
+    func_800EDAE4();
+    PlaySfx(0x12);
+    PlaySfx(0xB);
+    func_80132760();
+    func_800E493C();
+}
 
 void func_800E4A04(void) { s32 a[3]; }
 
@@ -2559,12 +2575,15 @@ void func_801072FC(POLY_G4* poly) {
     poly->r0 = 0;
     poly->g0 = 0;
     poly->b0 = 0;
+
     poly->r1 = 0;
     poly->g1 = 0;
     poly->b1 = 0;
+
     poly->r2 = 0;
     poly->g2 = 0;
     poly->b2 = 0;
+
     poly->r3 = 0;
     poly->g3 = 0;
     poly->b3 = 0;
@@ -3177,22 +3196,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116838);
 
-// !FAKE: Label
 void func_8011690C(s16 arg0) {
     if (D_800733F6[0] < arg0) {
         D_800733F6[0] += 16;
         if (arg0 < D_800733F6[0]) {
             D_800733F6[0] = arg0;
-            goto block_3;
         }
-    } else {
-    block_3:;
-
-        if (arg0 < D_800733F6[0]) {
-            D_800733F6[0] -= 16;
-            if (D_800733F6[0] < arg0) {
-                D_800733F6[0] = arg0;
-            }
+    }
+    if (arg0 < D_800733F6[0]) {
+        D_800733F6[0] -= 16;
+        if (D_800733F6[0] < arg0) {
+            D_800733F6[0] = arg0;
         }
     }
 }

@@ -65,7 +65,3 @@ typedef struct Unkstruct_8006C3CC {
     /* 0x8 */ u16 unk8;
     /* 0xA */ char padA[0x36];
 } Unkstruct_8006C3CC; // size = 0x40
-
-typedef struct Unkstruct_80073FC4 {
-    /* 0x00 */ u16 unk0;
-} Unkstruct_80073FC4;
