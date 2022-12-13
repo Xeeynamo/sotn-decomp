@@ -3177,7 +3177,25 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116838);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011690C);
+// !FAKE: Label
+void func_8011690C(s16 arg0) {
+    if (D_800733F6[0] < arg0) {
+        D_800733F6[0] += 16;
+        if (arg0 < D_800733F6[0]) {
+            D_800733F6[0] = arg0;
+            goto block_3;
+        }
+    } else {
+    block_3:;
+
+        if (arg0 < D_800733F6[0]) {
+            D_800733F6[0] -= 16;
+            if (D_800733F6[0] < arg0) {
+                D_800733F6[0] = arg0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116994);
 
