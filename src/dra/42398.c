@@ -2771,7 +2771,18 @@ void func_8010E0B8(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E0D0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E168);
+void func_8010E168(s32 arg0, s16 arg1) {
+    s16 var_v1;
+    s32 var_v0;
+    if (arg0 == 0) {
+        func_8011AAFC(D_8006C3B8, 0x15002C, 0);
+        if (arg1 >= D_80072F1A[0]) {
+            D_80072F1A[0] = arg1;
+        }
+    } else if (D_80072F1C[0] <= arg1) {
+        D_80072F1C[0] = arg1;
+    }
+}
 
 void func_8010E1EC(s32 speed) {
     if (D_8006C3B8->accelerationX < 0) {
@@ -3237,7 +3248,6 @@ void func_80118640(void) {
     }
 }
 
-// INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80118670);
 void func_80118670(void) {
     if (D_80073428.typeInt == 0x10007) {
         func_8011AAFC(D_8006C3B8, 0x160028, 0);

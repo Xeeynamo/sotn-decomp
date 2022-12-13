@@ -483,6 +483,8 @@ extern s32 D_80072EFC;
 extern s16 D_80072F00[];
 extern s16 D_80072F0A;
 extern s16 D_80072F18;
+extern s16 D_80072F1A[];
+extern s16 D_80072F1C[];
 extern s32 D_80072F20;
 extern s32 D_80072F2C;
 extern u16 D_80072F92;
