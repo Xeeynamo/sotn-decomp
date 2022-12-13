@@ -439,6 +439,7 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_BIN 0x9235
 
 extern const char aBu1d1dS;
+extern s32* aBu1d1d;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
@@ -575,6 +576,7 @@ extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
 extern s32 D_80097C98;
 extern s32 D_800A04EC;
+extern s32 D_800A0510[];
 extern u16 D_800A0518[][0x10];
 extern s32 D_800A1F18[];
 extern s32 D_800A2438;
@@ -759,6 +761,8 @@ void func_800E4124(s32 arg0);
 void func_800E8D24(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
+s32 func_800E9208(void);
+void func_800E928C(void);
 void func_800E92E4(void);
 void func_800E92F4(void);
 void func_800EA5E4(s32);

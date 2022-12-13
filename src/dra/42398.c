@@ -436,7 +436,25 @@ s32 func_800E9804(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9880);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9B18);
+s32 func_800E9B18(s32 arg0, s32 arg1) {
+    s32* sp10;
+    s32 ret;
+
+    D_8006C3AC &= D_800A0510[arg0];
+    fprintf(&sp10, &aBu1d1d, arg0, arg1);
+    func_800E928C();
+    format(&sp10);
+    ret = func_800E9208();
+
+    if (ret != 1) {
+        if (ret == 3) {
+            ret = -1;
+        } else {
+            ret = -3;
+        }
+    }
+    return ret;
+}
 
 // https://decomp.me/scratch/kHOQh match with struct
 
@@ -1922,7 +1940,16 @@ bool func_800FACB8(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAD34);
+void func_800FAD34(s32 arg0, u8 arg1, u16 arg2, u16 arg3) {
+    D_80137608 = 0;
+    func_800F9808(2);
+
+    if (arg1) {
+        D_80137608 = 1;
+        func_800F99B8(arg0, 2, 0);
+        func_800EB534(arg2, arg3, 0x1F);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FADC0);
 
