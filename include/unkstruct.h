@@ -80,3 +80,28 @@ typedef struct Unkstruct_8011A290 {
     /* 0x11 */ char pad11[0x1];
     /* 0x12 */ u16 sp22;
 } Unkstruct_8011A290;
+
+typedef struct {
+    /* 0x00 */ s32 sp10;
+    /* 0x04 */ s32 sp14;
+    /* 0x08 */ s32 sp18;
+    /* 0x0C */ s32 sp1C;
+    /* 0x10 */ s32 sp20;
+    /* 0x14 */ s16 sp24;
+    /* 0x18 */ s16 sp26;
+    /* 0x1C */ s16 sp28;
+    /* 0x20 */ s16 sp2A;
+    /* 0x24 */ s32 sp2C;
+    /* 0x28 */ s32 sp30;
+} Unkstruct7; // size = 0x2C
+
+typedef struct Unkstruct_8011A328 {
+    /* 0x00 */ char pad0[0xD];
+    /* 0x0D */ s8 sp1D;
+    /* 0x0E */ s16 sp1E;
+    /* 0x10 */ s16 sp20;
+    /* 0x12 */ s16 sp22;
+    /* 0x14 */ s16 sp24;
+    /* 0x16 */ s16 sp26;
+    /* 0x18 */ s16 sp28;
+} Unkstruct_8011A328;

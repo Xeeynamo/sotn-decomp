@@ -3359,10 +3359,10 @@ void func_8011A290(Entity* entity) {
     func_80118894(entity);
 }
 
-void func_800FD9D4(Unkstruct9*, s32 arg1);
+void func_800FD9D4(Unkstruct_8011A328*, s32 arg1);
 
 void func_8011A328(Entity* entity, s32 arg1) {
-    Unkstruct9 sp10;
+    Unkstruct_8011A328 sp10;
 
     func_800FD9D4(&sp10, arg1);
     entity->unk40 = sp10.sp28;
