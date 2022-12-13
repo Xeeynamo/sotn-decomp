@@ -2919,6 +2919,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E9A4);
 
 // https://decomp.me/scratch/9jKqU
 // matching in decomp.me, probably aspsx
+// TODO: aspatch div macro
+// https://discord.com/channels/710646040331681844/815529862604390411/1051628313073958992
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EA54);
 #else
