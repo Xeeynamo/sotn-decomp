@@ -1348,8 +1348,8 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
             r = 0x5F - (g_blinkTimer & 0x1F);
         }
     }
-    DrawMenuRect(context, 0x70, (g_menuRelicsCursorIndex.unk0 * 0xD) + 0x1C,
-                 0x71, 0xB, r, 0, 0);
+    DrawMenuRect(context, 0x70, (g_menuRelicsCursorIndex[0] * 0xD) + 0x1C, 0x71,
+                 0xB, r, 0, 0);
 }
 
 #ifndef NON_MATCHING
@@ -1883,16 +1883,16 @@ void func_800FAC98(void) { func_800F9808(2); }
 
 bool func_800FACB8(void) {
     if (D_80097494 & 2) {
-        g_menuRelicsCursorIndex.unk0++;
-        if (g_menuRelicsCursorIndex.unk0 == 7) {
-            g_menuRelicsCursorIndex.unk0 = 0;
+        g_menuRelicsCursorIndex[0]++;
+        if (g_menuRelicsCursorIndex[0] == 7) {
+            g_menuRelicsCursorIndex[0] = 0;
         }
         return true;
     }
     if (D_80097494 & 1) {
-        g_menuRelicsCursorIndex.unk0--;
-        if (g_menuRelicsCursorIndex.unk0 == -1) {
-            g_menuRelicsCursorIndex.unk0 = 6;
+        g_menuRelicsCursorIndex[0]--;
+        if (g_menuRelicsCursorIndex[0] == -1) {
+            g_menuRelicsCursorIndex[0] = 6;
         }
         return true;
     }

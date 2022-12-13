@@ -69,8 +69,3 @@ typedef struct Unkstruct_8006C3CC {
 typedef struct Unkstruct_80073FC4 {
     /* 0x00 */ u16 unk0;
 } Unkstruct_80073FC4;
-
-typedef struct UnkstructCursor {
-    s32 unk0;
-    s32 unk4;
-} UnkstructMenuCursor;

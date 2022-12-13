@@ -364,7 +364,7 @@ extern s32 g_roomCount;
 extern s32 g_CurrentPlayableCharacter;
 extern s32 g_blinkTimer;
 extern s32 g_menuMainCursorIndex;
-extern UnkstructMenuCursor g_menuRelicsCursorIndex;
+extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
