@@ -2482,7 +2482,30 @@ extern Unkstruct_80086FFA D_80086FFA[];
 
 u16 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102628);
+void func_80102628(s32 arg0) {
+    POLY_GT4* poly;
+    s32 temp;
+    s32 i = 0;
+
+    poly = &D_80086FEC[D_8013799C];
+    
+    if (poly != NULL) {
+        temp = arg0 / 2;
+        while (poly != NULL) {
+            poly->y0 = 0;
+            poly->u0 = (u8)temp;
+            poly->v0 = 0xF0;
+            poly->b0 = 0;
+            poly->g0 = 0;
+            poly->r0 = 0;
+            poly->pad2 = 0x1FD;
+            poly->pad3 = 8;
+            poly->x0 = temp * (i & 1);
+            poly = (POLY_GT4*)poly->tag;
+            i++;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801026BC);
 
