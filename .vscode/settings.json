@@ -36,6 +36,7 @@
         "memory_resource": "c",
         "fstream": "c",
         "memory": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "complex": "c"
     },
 }

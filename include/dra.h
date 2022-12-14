@@ -208,7 +208,9 @@ typedef struct {
 
 typedef struct unkStruct3 {
     /* 0x00 */ struct unkStruct3* unk0;
-    /* 0x04 */ char pad4[0x3];
+    /* 0x04 */ s8 unk4;
+    /* 0x04 */ char pad4[0x1];
+    /* 0x05 */ s8 unk6;
     /* 0x07 */ s8 unk7;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
@@ -551,6 +553,7 @@ extern s32 D_800974AC;
 extern s32 D_800978F8;
 extern s32 D_80097908;
 extern s32 D_8009790C;
+extern s32 D_80097914;
 extern s32 D_8009792C;
 extern s32 D_80097934;
 extern u8 D_80097964[];
@@ -652,6 +655,7 @@ extern u8* D_80137578;
 extern u8* D_8013757C;
 extern s32 D_80137580;
 extern s32 D_80137584;
+extern s32* D_80137590;
 extern RoomLoadDef* D_801375BC;
 extern s16 D_80137538;
 extern s32 D_801375C8;

@@ -830,7 +830,24 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0334);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F04A4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0578);
+void func_800F0578(s32 arg0) {
+    D_80137590 = (s32*)0x801E8000;
+    *((s32*)0x801E8000) = 0;
+
+    func_800EFBF8();
+
+    switch (arg0) {
+    case 0:
+    case 2:
+        func_800F0334(arg0);
+        D_80097914 = arg0 == 0 ? 1 : 4;
+        break;
+    case 1:
+        D_80097914 = 2;
+    default:
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0608);
 
@@ -2488,7 +2505,7 @@ void func_80102628(s32 arg0) {
     s32 i = 0;
 
     poly = &D_80086FEC[D_8013799C];
-    
+
     if (poly != NULL) {
         temp = arg0 / 2;
         while (poly != NULL) {
