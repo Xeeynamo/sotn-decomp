@@ -2488,7 +2488,7 @@ void func_80102628(s32 arg0) {
     s32 i = 0;
 
     poly = &D_80086FEC[D_8013799C];
-    
+
     if (poly != NULL) {
         temp = arg0 / 2;
         while (poly != NULL) {
