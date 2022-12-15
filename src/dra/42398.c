@@ -3019,11 +3019,29 @@ void func_8010E470(s32 arg0, s32 arg1) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E4D0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E570);
-/*?*/ void func_8010E570(/*?*/ s32);
+void func_8010E570(/*?*/ s32);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E6AC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E7AC);
+void func_8010E7AC(void) {
+    func_8010D584(3);
+
+    if (D_80072F70 != 1) {
+        func_8010DA48(0x1C);
+    }
+
+    D_800733E4 = 0x20000;
+    D_800733E0 = 0;
+    D_80072F0C = 8;
+
+    if (D_80072F24 & 1) {
+        D_80072F0A = 8;
+    } else {
+        D_80072F0A = 0;
+    }
+
+    D_80072F64[0] = 0x10;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
 
