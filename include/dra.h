@@ -845,7 +845,7 @@ void func_8010E0B8(void);
 void func_80111928(void);
 void func_80118894(Entity*);
 s32 func_80111D24(void);
-void func_8011AAFC(Entity* entity, s32, s32);
+Entity* func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);

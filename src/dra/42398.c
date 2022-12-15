@@ -2891,7 +2891,24 @@ void func_8010E0B8(void) {
     D_80073510 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E0D0);
+void func_8010E0D0(s32 arg0) {
+    Entity* entity;
+
+    if (arg0 == 1) {
+        entity = func_8011AAFC(D_800733D8, 0x47002C, 0);
+
+        if (entity != NULL) {
+            entity->unk34 = entity->unk34 | 0x10000;
+        }
+
+        entity = func_8011AAFC(D_800733D8, 0x40002C, 0);
+
+        if (entity != NULL) {
+            entity->unk34 = entity->unk34 | 0x10000;
+        }
+    }
+    func_8010DFF0(1, 1);
+}
 
 void func_8010E168(s32 arg0, s16 arg1) {
     s16 var_v1;
