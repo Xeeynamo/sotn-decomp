@@ -105,3 +105,20 @@ typedef struct Unkstruct_8011A328 {
     /* 0x16 */ s16 sp26;
     /* 0x18 */ s16 sp28;
 } Unkstruct_8011A328;
+
+typedef struct Unkstruct_800ACEC6 {
+    /* 0x00 */ s16 unk0; /* D_800ACEC6 */
+    /* 0x02 */ char pad2[0xE];
+    /* 0x10 */ s16 unk10; /* D_800ACED6 */
+    /* 0x12 */ char pad12[0x8];
+    /* 0x1A */ s16 unk1A; /* D_800ACEE0 */
+    /* 0x1C */ s16 unk1C; /* D_800ACEE2 */
+} Unkstruct_800ACEC6;
+
+typedef struct Unkstruct_8010BF64 {
+    /* 0x00 */ char pad0[0x14];
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
+} Unkstruct_8010BF64;

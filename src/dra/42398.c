@@ -276,7 +276,7 @@ extern unkStruct_800A872C D_800A872C[];
 s32 func_800E6300(void) {
     s32 i;
 
-    for (i = 0; i < 0x1E; i++) {
+    for (i = 0; i < 30; i++) {
         if ((D_800A872C[i].unk0 > 0) && ((D_80097964[i] & 2) != 0)) {
             return D_800A872C[i].unk0;
         }
@@ -2830,7 +2830,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010A4A4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", UpdateEntityAlucard);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010BF64);
+void func_8010BF64(Unkstruct_8010BF64* arg0) {
+    if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+        arg0->unk14 = D_800ACEC6.unk1A - ((D_80072F2C >> 1) & 2);
+        arg0->unk1C = D_800ACEC6.unk1C + ((D_80072F2C >> 1) & 2);
+        arg0->unk18 = D_800ACEC6.unk10 - 1;
+        arg0->unk20 = D_800ACEC6.unk0 + 1;
+        return;
+    }
+    D_8013C00C();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010BFFC);
 

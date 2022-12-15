@@ -465,7 +465,7 @@ extern s16 D_80072F18;
 extern s16 D_80072F1A[];
 extern s16 D_80072F1C[];
 extern s32 D_80072F20;
-extern s32 D_80072F2C;
+extern u32 D_80072F2C;
 extern u16 D_80072F92;
 
 // Probably part of the same array / struct
@@ -632,6 +632,7 @@ extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT D_800ACD90;
+extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF60[];
 extern const char* c_strEquip;
@@ -705,6 +706,7 @@ extern s32 D_80137E68;
 extern s32 D_80137F6C;
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
+extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
@@ -758,7 +760,7 @@ extern u8 D_8013B680;
 extern s8 D_8013B684;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
-extern const char* D_80138784[487];
+extern void (*D_8013C00C)(void);
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
