@@ -507,6 +507,7 @@ extern u16 D_800733EE;
 extern s8 D_800733F0;
 extern u8 D_800733F1;
 extern s16 D_800733F6[];
+extern u16 D_800733FC;
 extern u16 D_80073404;
 extern u16 D_80073406;
 extern u16 D_8007340A;

@@ -3035,7 +3035,24 @@ void func_8010E470(s32 arg0, s32 arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E4D0);
+void func_8010E4D0(void) {
+    func_80111CC0();
+
+    D_800733EE = 0x8100;
+    D_800733FC = g_zEntityCenter;
+
+    if ((u32)(D_80072F92 - 1) < 2U) {
+        func_8010DA48(0xC7);
+        D_800733E4 = 0;
+        D_800733E0 = 0;
+        func_8010D584(6);
+        func_80111CC0();
+        PlaySfx(0x6F2);
+        return;
+    }
+    func_80111CC0();
+    func_8010E470(0, 0);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E570);
 void func_8010E570(/*?*/ s32);
