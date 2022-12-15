@@ -842,8 +842,10 @@ void func_800F0578(s32 arg0) {
         func_800F0334(arg0);
         D_80097914 = arg0 == 0 ? 1 : 4;
         break;
+
     case 1:
         D_80097914 = 2;
+
     default:
         break;
     }
@@ -858,22 +860,18 @@ typedef struct {
 extern Unkstruct_800F087C D_800A297C;
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
-    s32 temp_a0;
-    s32 temp_v1;
     Unkstruct_800F087C* phi_s1;
     Unkstruct_800F087C* phi_s0;
 
     phi_s1 = &D_800A297C;
     phi_s0 = (Unkstruct_800F087C*)((u32*)&D_800A297C + 4);
 loop_1:
-    temp_v1 = phi_s1->foo[0];
-    if (temp_v1 == 0x80)
+    if (phi_s1->foo[0] == 0x80)
         return 0;
 
-    if (temp_v1 == chunkX && phi_s0->foo[-3] == chunkY &&
+    if (phi_s1->foo[0] == chunkX && phi_s0->foo[-3] == chunkY &&
         phi_s0->foo[-2] == g_mapProgramId) {
-        temp_a0 = phi_s0->foo[-1];
-        if (temp_a0 == 0xFF || func_800FD4C0(temp_a0, 0) == 0)
+        if (phi_s0->foo[-1] == 0xFF || func_800FD4C0(phi_s0->foo[-1], 0) == 0)
             return phi_s0->foo[0] + 2;
     }
 
@@ -2561,7 +2559,35 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102E04);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102EB8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801030B4);
+void func_801030B4(s32 arg0, unkStruct3* unkstruct3, s32 arg2) {
+    s32 var_v1;
+    u16 var_v0;
+    if (arg2 == arg0) {
+        if (g_blinkTimer & 0x20) {
+            var_v1 = (g_blinkTimer & 0x1F) + 0x60;
+        } else {
+            var_v1 = 0x7F - (g_blinkTimer & 0x1F);
+        }
+
+        unkstruct3->unk4 = unkstruct3->unk10.data1.unk0 = var_v1 - 0x10;
+        unkstruct3->unk1C.data1.unk0 = unkstruct3->unk28 = var_v1 + 0x10;
+        unkstruct3->unk2A = 0;
+        unkstruct3->unk1E.data1.unk0 = 0;
+        unkstruct3->unk12.data1.unk0 = 0;
+        unkstruct3->unk6 = 0;
+        unkstruct3->unk32 = 0x404;
+    } else {
+        unkstruct3->unk12.data1.unk0 = 0x60;
+        unkstruct3->unk6 = 0x60;
+        unkstruct3->unk2A = 0x80;
+        unkstruct3->unk1E.data1.unk0 = 0x80;
+        unkstruct3->unk28 = 0;
+        unkstruct3->unk1C.data1.unk0 = 0;
+        unkstruct3->unk10.data1.unk0 = 0;
+        unkstruct3->unk4 = 0;
+        unkstruct3->unk32 = 0x415;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80103148);
 

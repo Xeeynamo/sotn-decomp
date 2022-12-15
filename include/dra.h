@@ -216,13 +216,13 @@ typedef struct unkStruct3 {
     /* 0x0A */ s16 unkA;
     /* 0x0C */ s16 unkC;
     /* 0x0E */ s16 unkE;
-    /* 0x10 */ s16 unk10;
+    /* 0x10 */ UnkUnion2 unk10;
     /* 0x12 */ UnkUnion2 unk12;
     /* 0x14 */ s16 unk14;
     /* 0x16 */ s16 unk16;
     /* 0x18 */ s16 unk18;
     /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
+    /* 0x1C */ UnkUnion2 unk1C;
     /* 0x1E */ UnkUnion2 unk1E;
     /* 0x20 */ s16 unk20;
     /* 0x22 */ s16 unk22;
@@ -231,7 +231,7 @@ typedef struct unkStruct3 {
     /* 0x26 */ char pad26[0x2];
     /* 0x28 */ s8 unk28;
     /* 0x29 */ char pad[0x1];
-    /* 0x2A */ s8 unk2A;
+    /* 0x2A */ u8 unk2A;
     /* 0x2B */ u8 unk2B;
     /* 0x2C */ u16 unk2C;
     /* 0x2E */ char pad2E[4];

@@ -1421,10 +1421,10 @@ void func_801C9F9C(unkStruct3* arg0) {
     arg0->unk0->unkE = 0;
     arg0->unk0->unkC = 0;
     arg0->unk0->unk12.data = 0;
-    arg0->unk0->unk10 = 0;
+    arg0->unk0->unk10.data = 0;
     arg0->unk0->unk18 = 0;
     arg0->unk0->unk1A = 0;
-    arg0->unk0->unk1C = 0;
+    arg0->unk0->unk1C.data = 0;
     arg0->unk0->unk1E.data = 0;
     arg0->unk0->unk24 = 0;
     arg0->unk0->unk25 = 0;
