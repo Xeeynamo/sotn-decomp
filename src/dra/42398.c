@@ -918,6 +918,8 @@ loop_3:
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0CD8);
 
+// https://decomp.me/scratch/syk2c
+// Matching, but D_800730F4 wants to be a single s32
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1424);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F14CC);
