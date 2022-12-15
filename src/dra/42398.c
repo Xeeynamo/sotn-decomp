@@ -3836,7 +3836,20 @@ void func_80132134(void) {
     SsSetMVol(g_volumeL, g_volumeR);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013216C);
+void func_8013216C(void) {
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        D_8013B620[i] = 0;
+        D_8013B614[i] = 0;
+        D_8013AE84[i] = 0;
+        D_8013B66C[i] = 0;
+        D_8013B5EC[i] = 0;
+        D_8013B628[i] = 0;
+        D_8013B648[i] = 0;
+        D_8013AEA0[i] = 0;
+    }
+}
 
 void func_801321FC(void) {
     s32 i;
