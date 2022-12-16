@@ -17,7 +17,7 @@ s32 func_8010E27C(void);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
 s32 func_80136010(void);
 void func_801353A0(void);
-void func_800F9808(s32);
+// void func_800F9808(s32);
 void func_801026BC(s32);
 void func_8010E390(s32);
 
@@ -1873,7 +1873,21 @@ void func_800F97DC(void) {
     D_80137954 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9808);
+void func_800F9808(u32 arg0) {
+    s32 temp_s0;
+    s32 i;
+    u8* oldPos;
+
+    temp_s0 = (arg0 == 2) ? 32 : 0;
+    arg0 = func_800F548C(arg0);
+    oldPos = D_8013794C;
+
+    for (i = 0; i < ((temp_s0 + 0x100) * 8); i++) {
+        *D_8013794C++ = 0;
+    }
+
+    LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F98AC);
 
