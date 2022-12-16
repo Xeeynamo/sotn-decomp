@@ -1,11 +1,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 #include <psxsdk/kernel.h>
+#include <psxsdk/libapi.h>
 #include <psxsdk/libcd.h>
 #include <psxsdk/libetc.h>
 #include <psxsdk/libgpu.h>
 #include <psxsdk/libsnd.h>
-#include <psxsdk/libapi.h>
 
 extern s32 D_8003925C;
 
