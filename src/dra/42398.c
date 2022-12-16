@@ -420,11 +420,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9610);
 
-s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress, s32 fd) {
+s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
+                  s32 fd) {
     s32 file[8];
     s32 nBytes;
     s32 ret;
-    
+
     fprintf(&file, &aBu1d1dS, arg0, arg1, arg2);
     nBytes = fd << 0xD;
 

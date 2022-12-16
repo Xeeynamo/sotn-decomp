@@ -12,7 +12,6 @@ s32 func_8015E380();
 void func_8015CDE0(s32);
 void func_801606BC(Entity*, s32, s32);
 
-//extern s16 D_80072F16; // main.h?
 extern u16 D_80072F9A; // main.h?
 extern s32 D_801554B0;
 extern s32 D_801553BC;
