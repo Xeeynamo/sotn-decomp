@@ -2827,7 +2827,29 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80108448);
 // https://decomp.me/scratch/QZk8K
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801092E8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80109328);
+// clang-format off
+
+void func_80109328(void) {
+    s16* new_var;
+
+    D_80072F86 = 0;
+// !FAKE:
+    new_var = &D_800733F6[0];
+    if ((*new_var == 0x800) && (D_80073404 == 8)) {
+// !FAKE:
+do {    D_800733F6[0] = 0;                  } while (0);
+        D_8007342E = 0x9D;
+        D_800733EC = (D_800733EC + 1) & 1;
+    }
+
+    if (D_80072F16[0] != 0) {
+        D_80072F16[0] = 0;
+        func_801092E8(0);
+    }
+    D_800733F0 = 0;
+}
+
+// clang-format on
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801093C4);
 
@@ -3184,9 +3206,6 @@ void func_8010FB24(void) {
     func_8010E3E0();
 }
 
-// INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FB68);
-extern s16 D_80072F16;
-
 void func_8010FB68(void) {
     D_800733E4 = 0;
     D_800733E0 = 0;
@@ -3195,7 +3214,7 @@ void func_8010FB68(void) {
     func_8010DA48(0xBA);
     PlaySfx(0x6F3);
     PlaySfx(0x67D);
-    D_80072F16 = func_800FDB18(3, 0x400);
+    D_80072F16[0] = func_800FDB18(3, 0x400);
     func_801092E8(1);
     func_8011AAFC(D_8006C3B8, 0x110028, 0);
     func_80118C28(0xB);
