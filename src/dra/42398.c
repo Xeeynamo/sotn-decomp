@@ -366,7 +366,20 @@ void ReadPads(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E8EE4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E908C);
+s32 func_800E908C(void) {
+    if (TestEvent(D_80073068) == 1) {
+        return 1;
+    } else if (TestEvent(D_8007306C) == 1) {
+        return 2;
+    } else if (TestEvent(D_80073070) == 1) {
+        return 3;
+    } else if (TestEvent(D_80073078) == 1) {
+        return 4;
+    } else if (D_80137470-- < 0) {
+        return 2;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E912C);
 

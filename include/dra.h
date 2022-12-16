@@ -652,6 +652,7 @@ extern s16 D_800BD07C[];
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 D_80137460;
+extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
 extern u16 D_801374B8[];
