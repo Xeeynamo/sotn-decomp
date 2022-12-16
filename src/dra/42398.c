@@ -3443,7 +3443,22 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115BB0);
+void func_80115BB0(void) {
+    D_800733F1 = 4;
+    D_800733E4 = 0;
+    D_800733E0 = 0;
+    D_8007342A = 4;
+
+    if (D_80097420 == 0) {
+        if (D_80072F20 & 1) {
+            func_8010E570(0);
+        } else {
+            func_8010E7AC();
+        }
+        func_8011AAFC(D_8006C3B8, 0x4A0000 | 0x2C, 0);
+        D_80097D37 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115C50);
 

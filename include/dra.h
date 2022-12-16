@@ -551,6 +551,7 @@ extern POLY_GT4 D_800973B8[];
 extern s32 D_800973FC;
 extern s32 D_80097410;
 extern s32 D_80097414;
+extern s32 D_80097420;
 extern Pad g_pads[];
 extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern s16 D_80097496;
@@ -584,6 +585,7 @@ extern s32 g_timeHours;
 extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
 extern s32 D_80097C98;
+extern s8 D_80097D37;
 extern s32 D_800A04EC;
 extern s32 D_800A0510[];
 extern u16 D_800A0518[][0x10];
