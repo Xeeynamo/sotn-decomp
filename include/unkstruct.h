@@ -122,3 +122,10 @@ typedef struct Unkstruct_8010BF64 {
     /* 0x1C */ s32 unk1C;
     /* 0x20 */ s32 unk20;
 } Unkstruct_8010BF64;
+
+// related to SFX
+typedef struct Unkstruct_801390DC {
+    /* 0x00 */ u16 unk00;
+    /* 0x02 */ u16 unk02;
+    /* 0x04 */ u16 unk04;
+} Unkstruct_801390DC; 

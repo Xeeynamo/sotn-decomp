@@ -17,7 +17,6 @@ s32 func_8010E27C(void);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
 s32 func_80136010(void);
 void func_801353A0(void);
-// void func_800F9808(s32);
 void func_801026BC(s32);
 void func_8010E390(s32);
 
@@ -4200,48 +4199,51 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134714);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/42398", PlaySfx);
-#else
-void PlaySfx(s32 arg0) {
-    if (D_8013AEEC == 0)
-        return;
+void PlaySfx(s16 sfxId) {
+    u16 offset;
 
-    if (((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
-        s16 playerLevel = D_80139000;
-        s32 temp_v0 = playerLevel * 3;
-        *(&D_801390DC + temp_v0) = arg0 - 0x600;
-        D_80139000 = ++playerLevel;
-        *(&D_801390DE + temp_v0) = 0xFFFF;
-        *(&D_801390E0 + temp_v0) = 0;
-        if (playerLevel == 0x100) {
-            D_80139000 = 0;
-        }
-    } else {
-        s16 temp_v0_2;
-        s16 temp_v0_3;
-        if (arg0 < 0x85) {
-            if (arg0 < 0x80) {
-                if (arg0 < 0x12 && arg0 >= 0x10) {
-                    D_8013980C = 1;
-                }
-            } else {
-                D_8013B61C = 1;
+    if (D_8013AEEC != 0) {
+        offset = (u32)(sfxId - 0x601);
+        if (offset < 0x2E0) {
+            D_801390DC[D_80139000].unk00 = sfxId - 0x600;
+            D_801390DC[D_80139000].unk02 = 0xFFFF;
+            D_801390DC[D_80139000].unk04 = 0;
+            D_80139000++;
+            if (D_80139000 == 0x100) {
+                D_80139000 = 0;
             }
-        } else if (arg0 < 0x95 && arg0 >= 0x90) {
-            D_8013B61C = 1;
-        }
+        } else {
+            switch (sfxId) {
+            case 0x10:
+            case 0x11:
+                D_8013980C = 1;
+                break;
 
-        temp_v0_2 = D_80139A70;
-        temp_v0_3 = temp_v0_2 + 1;
-        D_80139A70 = temp_v0_3;
-        D_8013B3E8[temp_v0_2] = arg0;
-        if (temp_v0_3 == 0x100) {
-            D_80139A70 = 0;
+            case 0x80:
+            case 0x81:
+            case 0x82:
+            case 0x83:
+            case 0x84:
+            case 0x90:
+            case 0x91:
+            case 0x92:
+            case 0x93:
+            case 0x94:
+                D_8013B61C = 1;
+                break;
+
+            default:
+                break;
+            }
+
+            D_8013B3E8[D_80139A70] = sfxId;
+            D_80139A70++;
+            if (D_80139A70 == 0x100) {
+                D_80139A70 = 0;
+            }
         }
     }
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013493C);
 
