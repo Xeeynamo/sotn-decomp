@@ -18,9 +18,27 @@ extern long Load(char*, struct EXEC*);
 extern long Exec(struct EXEC*, long, char**);
 // GPU_cw
 extern void _bu_init(void);
-extern long open(char*, unsigned long);
+
+/*
+ * Opens a device for low-level input/output and returns
+ * the descriptor. Returns -1 on failure.
+ */
+extern long open(char* devname, // Pointer to a filename
+                 int flag       // Open mode
+);
+
 extern long lseek(long, long, long);
-extern long read(long, void*, long);
+
+/*
+ * Reads n bytes from the descriptor
+ * fd to the are specified by buf.
+ * Returns the actual number of bytes
+ * read into the are. An error returns -1
+ */
+extern long read(long fd,   // File descriptor
+                 void* buf, // Pointer to read buffer address
+                 long n     // Number of bytes to read
+);
 extern long write(long, void*, long);
 
 /*

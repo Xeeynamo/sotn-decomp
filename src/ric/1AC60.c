@@ -12,7 +12,7 @@ s32 func_8015E380();
 void func_8015CDE0(s32);
 void func_801606BC(Entity*, s32, s32);
 
-extern s16 D_80072F16; // main.h?
+//extern s16 D_80072F16; // main.h?
 extern u16 D_80072F9A; // main.h?
 extern s32 D_801554B0;
 extern s32 D_801553BC;
@@ -288,7 +288,7 @@ void func_8015CE7C(void) {
         func_8015C908(0x19);
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
-        D_80072F16 = 0x28;
+        D_80072F16[0] = 0x28;
         D_800733E4 = 0;
         func_801606BC(D_8006C3B8, 0x50001, 0);
     }

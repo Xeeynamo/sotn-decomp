@@ -37,6 +37,9 @@
         "fstream": "c",
         "memory": "c",
         "typeinfo": "c",
-        "complex": "c"
+        "complex": "c",
+        "iosfwd": "c",
+        "sstream": "c",
+        "streambuf": "c"
     },
 }

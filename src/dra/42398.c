@@ -420,7 +420,29 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9610);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9640);
+s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress, s32 fd) {
+    s32 file[8];
+    s32 nBytes;
+    s32 ret;
+    
+    fprintf(&file, &aBu1d1dS, arg0, arg1, arg2);
+    nBytes = fd << 0xD;
+
+    if (fd == 0) {
+        nBytes = 0x2B8;
+    }
+
+    fd = open(&file, 0x8001);
+    ret = -1;
+
+    if (fd != (-1)) {
+        D_80137474 = fd;
+        func_800E91B0();
+        read(fd, readBufferAddress, nBytes);
+        ret = 0;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E96E8);
 

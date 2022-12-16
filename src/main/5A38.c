@@ -1,6 +1,5 @@
 #include "common.h"
 #include <main.h>
-#include <psxsdk/libapi.h>
 #include <psxsdk/libetc.h>
 
 INCLUDE_ASM("asm/main/nonmatchings/5A38", PadInit);
