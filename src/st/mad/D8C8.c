@@ -1438,16 +1438,15 @@ s32 func_8019976C(Unkstruct_80128BBC* arg0, u8 value) {
     Unkstruct_80128BBC_Sub* temp = arg0->unk04;
 
     for (i = 0; i < 4; i++, temp++) {
-        for(j = 0; j < 3; j++) {
+        for (j = 0; j < 3; j++) {
             temp->unk00[j] -= value;
 
-            if(temp->unk00[j] > 248) {
+            if (temp->unk00[j] > 248) {
                 temp->unk00[j] = 0;
             } else {
                 ret |= 1;
             }
         }
-
     }
     return ret;
 }
