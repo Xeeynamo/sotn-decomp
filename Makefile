@@ -226,7 +226,7 @@ decompile: $(M2C_APP)
 
 context:
 	$(M2CTX) $(SOURCE)
-	@echo ctx.c file has been updated.
+	@echo ctx.c has been updated.
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)

@@ -40,6 +40,15 @@
         "complex": "c",
         "iosfwd": "c",
         "sstream": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "cstdlib": "c",
+        "algorithm": "c",
+        "sfx.h": "c",
+        "libc.h": "c",
+        "cwchar": "cpp",
+        "vector": "cpp",
+        "initializer_list": "cpp",
+        "new": "cpp",
+        "stdexcept": "cpp"
     },
 }

@@ -12,7 +12,7 @@ typedef unsigned long long uint64_t;
 typedef unsigned char u_char;
 typedef unsigned short u_short;
 typedef unsigned int u_long;
-
+typedef unsigned int size_t;
 typedef signed char s8;
 typedef signed short s16;
 typedef signed int s32;
@@ -25,8 +25,7 @@ typedef float f32;
 typedef double f64;
 
 typedef signed char byte;
-typedef int bool;
-typedef enum { false, true };
+typedef enum { false, true } bool;
 
 #ifndef NULL
 #define NULL (0)

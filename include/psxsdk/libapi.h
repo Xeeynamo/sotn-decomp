@@ -65,7 +65,15 @@ int PAD_init(s32 /*??*/, s32* /*??*/);
 // PAD_dr
 extern void FlushCache(void);
 extern void DeliverEvent(unsigned long, unsigned long);
-extern long TestEvent(long);
+
+/*
+ * Checks to see whether or not the event specified by the descriptor
+ * event has occurred. If so, the function restores the event state to
+ * EvStACTIVE.
+ * Returns 1 if the event is found to have occurred, 0 otherwise.
+ */
+extern long TestEvent(unsigned long event // Event descriptor
+);
 extern long OpenEvent(unsigned long, long, long, long (*func)());
 extern long EnableEvent(long);
 // ChangeClearRCnt

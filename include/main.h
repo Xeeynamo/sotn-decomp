@@ -6,6 +6,7 @@
 #include <psxsdk/libetc.h>
 #include <psxsdk/libgpu.h>
 #include <psxsdk/libsnd.h>
+#include <psxsdk/libc.h>
 
 extern s32 D_8003925C;
 

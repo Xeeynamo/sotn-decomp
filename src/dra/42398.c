@@ -418,21 +418,22 @@ s32 func_800E9508(s32 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9610);
+int sprintf(char* str, const char* format, ...);
 
 s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
                   s32 fd) {
-    s32 file[8];
+    char file[32];
     s32 nBytes;
     s32 ret;
 
-    fprintf(&file, &aBu1d1dS, arg0, arg1, arg2);
+    sprintf(file, &aBu1d1dS, arg0, arg1, arg2);
     nBytes = fd << 0xD;
 
     if (fd == 0) {
         nBytes = 0x2B8;
     }
 
-    fd = open(&file, 0x8001);
+    fd = open(file, 0x8001);
     ret = -1;
 
     if (fd != (-1)) {
@@ -449,7 +450,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E96E8);
 s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
     char buffer[0x20];
 
-    fprintf(buffer, &aBu1d1dS, arg0, arg1, arg2);
+    sprintf(buffer, &aBu1d1dS, arg0, arg1, arg2);
     return -(erase(buffer) == 0);
 }
 
@@ -472,11 +473,11 @@ s32 func_800E9804(s32 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9880);
 
 s32 func_800E9B18(s32 arg0, s32 arg1) {
-    s32* sp10;
+    char sp10;
     s32 ret;
 
     D_8006C3AC &= D_800A0510[arg0];
-    fprintf(&sp10, &aBu1d1d, arg0, arg1);
+    sprintf(&sp10, &aBu1d1d, arg0, arg1);
     func_800E928C();
     format(&sp10);
     ret = func_800E9208();
@@ -510,7 +511,7 @@ void func_800E9BDC(u8* arg0, s32 arg1) {
     s32 i;
     u8* var_a1;
 
-    var_a1 = D_800A1F18[arg1];
+    var_a1 = (u8*)D_800A1F18[arg1];
 
     for (i = 0; i < 384; i++) {
         *arg0 = *var_a1;
@@ -547,7 +548,7 @@ void func_800EA538(s32 arg0) {
     }
 
     D_8003C0F8 = 0;
-    var_v0 = &D_8006C3C4;
+    var_v0 = (Unkstruct_8006C3CC*)&D_8006C3C4;
 
     for (i = 0; i < 32; i++) {
         var_v0->unk8 = 0;
@@ -601,7 +602,7 @@ void func_800EAEA4(void) {
 }
 
 void func_800EAEEC(void) {
-    unkstruct_80072FA0* var_v1 = &D_80072FA0;
+    unkstruct_80072FA0* var_v1 = &D_80072FA0[0];
     s32 i;
 
     for (i = 0; i < 16; i++, var_v1++) {
@@ -741,7 +742,7 @@ void func_800EDA94(void) {
     s32 i;
 
     i = 0;
-    poly = &D_80086FEC;
+    poly = D_80086FEC;
 
     for (; i < 1280; i++) {
         func_800EDA70((s32*)poly);
@@ -1020,7 +1021,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F180C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1868);
 
 void func_800F18C4(s32 arg0, s32 arg1) {
-    s32 sp10[5];
+    s8 sp10[20];
     s32 i;
     s32 j;
 
@@ -1028,7 +1029,7 @@ void func_800F18C4(s32 arg0, s32 arg1) {
 
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 5; j++) {
-            func_800F1770(&sp10, j, i, 0);
+            func_800F1770(sp10, j, i, 0);
         }
     }
     func_800F1868(arg0, arg1, &sp10);
@@ -1120,7 +1121,7 @@ block_18:
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2658);
 
-s32 func_800F27F4(s32 arg0) {
+bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
         if ((D_800973FC == 0) && (D_8006BB00 == 0) && (!(D_8003C708 & 0x60))) {
             D_801375C8 = 1;
@@ -1459,9 +1460,8 @@ void func_800F6568(MenuContext* arg0) {
 
 // Draw equip menu cursor
 void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
-    s32 temp_v1;
     s32 r;
-    MenuContext* context = &D_8013761C[menuContextIndex * 0x1E];
+    MenuContext* context = (MenuContext*)&D_8013761C[menuContextIndex * 0x1E];
 
     if (bColorMode != 0) {
         r = 0x80;
@@ -1908,7 +1908,7 @@ void func_800F9690(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F96F4);
 
 void func_800F97DC(void) {
-    D_8013794C = &D_8007EFE4;
+    D_8013794C = (s8*)&D_8007EFE4;
     D_80137950 = 0x180;
     D_80137954 = 0;
 }
@@ -1916,11 +1916,11 @@ void func_800F97DC(void) {
 void func_800F9808(u32 arg0) {
     s32 temp_s0;
     s32 i;
-    u8* oldPos;
+    PixPattern* oldPos;
 
     temp_s0 = (arg0 == 2) ? 32 : 0;
     arg0 = func_800F548C(arg0);
-    oldPos = D_8013794C;
+    oldPos = (PixPattern*)D_8013794C;
 
     for (i = 0; i < ((temp_s0 + 0x100) * 8); i++) {
         *D_8013794C++ = 0;
@@ -2295,7 +2295,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE97C);
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
 void func_800FEE6C(void) {
-    s32* var_v1 = &D_80139828;
+    s32* var_v1 = D_80139828;
 
     do {
         if (*var_v1 != 0) {
@@ -2653,7 +2653,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102EB8);
 
 void func_801030B4(s32 arg0, unkStruct3* unkstruct3, s32 arg2) {
     s32 var_v1;
-    u16 var_v0;
+
     if (arg2 == arg0) {
         if (g_blinkTimer & 0x20) {
             var_v1 = (g_blinkTimer & 0x1F) + 0x60;
@@ -3025,8 +3025,6 @@ void func_8010E0D0(s32 arg0) {
 }
 
 void func_8010E168(s32 arg0, s16 arg1) {
-    s16 var_v1;
-    s32 var_v0;
     if (arg0 == 0) {
         func_8011AAFC(D_8006C3B8, 0x15002C, 0);
         if (arg1 >= D_80072F1A[0]) {
@@ -3234,7 +3232,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     i = 0;
     var_a2 = 0;
     ret = 0;
-    var_v1 = &D_80074C08;
+    var_v1 = D_80074C08;
 
     for (; i < 16; i++) {
         if (var_v1[i - 1].objectRoomIndex == 0) {
@@ -3752,7 +3750,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80121980);
 extern Unkstruct_80138094 D_80138094[];
 
 void func_80121F14(s32 arg0, s32 arg1) {
-    Unkstruct_80138094* ptr = &D_80138094;
+    Unkstruct_80138094* ptr = D_80138094;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
@@ -3838,7 +3836,7 @@ s32 func_80128BBC(s32 arg0, u8 value) {
     u8* var_v1;
     s32 i;
 
-    var_a0 = arg0 + 4;
+    var_a0 = (u8*)(arg0 + 4);
 
     for (i = 0; i < 4; i++) {
         var_v1 = var_a0;

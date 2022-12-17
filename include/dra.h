@@ -315,6 +315,11 @@ typedef struct {
     DISPENV disp; // display environment
 } DisplayBuffer;
 
+typedef struct PlayerHP {
+    s32 current;
+    s32 max;
+} PlayerHP;
+
 typedef struct PlayerMp {
     s32 current;
     s32 max;
@@ -441,7 +446,7 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_BIN 0x9235
 
 extern const char aBu1d1dS;
-extern s32* aBu1d1d;
+extern const char aBu1d1d;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
@@ -537,8 +542,8 @@ extern Entity D_8007EF1C;
 extern s32 D_8007EFDC;
 extern s32 D_8007EFE0;
 extern s32 D_8007EFE4;
-extern void* D_8007EFD8;
-extern s32 D_80082FE4;
+extern unsigned long D_8007EFD8;
+extern s8 D_80082FE4;
 extern s32 D_80086FE4;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;
@@ -575,12 +580,6 @@ extern s32 g_playerGold;
 extern s32 g_killCount;
 extern playerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
-
-typedef struct PlayerHP {
-    s32 current;
-    s32 max;
-} PlayerHP;
-
 extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
 extern PlayerMp g_playerMp;
@@ -782,6 +781,9 @@ extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
 
+void SetRoomForegroundLayer(s32 /* ? */);
+void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
+void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
 void func_8002A09C(void*);
 void func_800E346C(void);
@@ -797,14 +799,22 @@ void func_800E92E4(void);
 void func_800E92F4(void);
 void func_800EA5E4(s32);
 void func_800EA538(s32);
+void func_800EAD7C(void);
+void func_800EAEEC(void);
 void func_800EB534(u16, u16, s32);
+void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
+void func_800EDA94(void);
 void func_800EDAE4(void);
 s16 func_800EDC80(u8 arg0, s32 arg1);
 s32 func_800EDD9C(u8 arg0, s32 arg1);
+void func_800EFBF8(void);
 void FreePolygons(s32 index);
+void func_800F0334(s32);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
+void func_800F180C(s32, s32, void*);
+void func_800F1868(s32, s32, void*);
 void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
@@ -840,6 +850,7 @@ bool func_800FD7C0(s32, s32);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
 void func_800FDE00(void);
+void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
@@ -850,12 +861,18 @@ void func_80107250(POLY_GT4* poly, s32 arg1);
 void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
                    s32 v);
 void func_801073C0(void);
+void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
+void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
+void func_8010E470(s32, s32);
+void func_8010E83C(s32 arg0);
 void func_80111928(void);
+void func_80111CC0(void);
 void func_80118894(Entity*);
+void func_80118C28(s32 arg0);
 s32 func_80111D24(void);
 Entity* func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
