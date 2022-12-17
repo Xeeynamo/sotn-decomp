@@ -1431,32 +1431,23 @@ void func_80199740(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-//! FAKE
-s32 func_8019976C(s32 arg0, u8 value) {
+s32 func_8019976C(Unkstruct_80128BBC* arg0, u8 value) {
     u8 ret = 0;
-    u8* phi_v1;
-    u8* phi_a0;
     s32 i;
+    s32 j;
+    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
 
-    phi_a0 += 4;
+    for (i = 0; i < 4; i++, temp++) {
+        for(j = 0; j < 3; j++) {
+            temp->unk00[j] -= value;
 
-    for (i = 0; i < 4; i++) {
-        phi_v1 = phi_a0;
-
-        do {
-            *phi_v1 -= value;
-
-            if ((u32)*phi_v1 >= 0xF9) {
-                *phi_v1 = 0;
+            if(temp->unk00[j] > 248) {
+                temp->unk00[j] = 0;
             } else {
                 ret |= 1;
             }
+        }
 
-            phi_v1++;
-        } while ((s32)phi_v1 < (s32)(phi_a0 + 3));
-
-        phi_a0 += 0xC;
     }
-
     return ret;
 }
