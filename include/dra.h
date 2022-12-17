@@ -188,11 +188,6 @@ typedef struct Entity {
     } unkB8;
 } Entity; // size = 0xBC
 
-typedef struct playerHeart {
-    s32 current;
-    s32 max;
-} playerHeart;
-
 typedef struct {
     /* 0x00 */ u16 animationSet;
     /* 0x02 */ u16 zPriority;
@@ -315,6 +310,11 @@ typedef struct {
     DISPENV disp; // display environment
 } DisplayBuffer;
 
+typedef struct PlayerHeart {
+    s32 current;
+    s32 max;
+} PlayerHeart;
+
 typedef struct PlayerHP {
     s32 current;
     s32 max;
@@ -324,8 +324,6 @@ typedef struct PlayerMp {
     s32 current;
     s32 max;
 } PlayerMp;
-
-extern unkstruct_80072FA0 D_80072FA0[];
 
 // main
 extern s32 D_8003C0EC[4];
@@ -484,6 +482,7 @@ extern u16 D_80072F68[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern s16 D_80072F86;
+extern unkstruct_80072FA0 D_80072FA0[];
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
@@ -515,6 +514,7 @@ extern s8 D_800733F0;
 extern u8 D_800733F1;
 extern s16 D_800733F6[];
 extern u16 D_800733FC;
+extern s16 D_800733FE;
 extern u16 D_80073404;
 extern u16 D_80073406;
 extern u16 D_8007340A;
@@ -522,6 +522,7 @@ extern u16 D_8007341C;
 extern /*?*/ s32* D_80073424;
 extern MultiType D_80073428;
 extern s16 D_8007342A;
+extern s16 D_8007342C;
 extern u16 D_8007342E;
 extern u8 D_80073484;
 extern s8 D_80073510;
@@ -530,6 +531,7 @@ extern s8 D_80073512;
 extern s8 D_80073513;
 extern Entity D_800736C8;
 extern Entity D_80073F98;
+extern u16 D_80073FBE;
 extern Entity D_80073FC4; // unconfirmed / weird
 extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // D_800733D8 + 0x40
@@ -578,7 +580,7 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern playerHeart g_playerHeart[];
+extern PlayerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
 extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;

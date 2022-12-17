@@ -3471,7 +3471,21 @@ s16 func_80113E68(void) {
     return (temp_v0 - ((var_a1 >> 4) * 0x10));
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113EE0);
+void func_80113EE0(void) {
+    D_800733F1 &= 0xF3;
+    D_8007342C = 1;
+    D_8007342A = 0;
+    D_80073428.typeShort = 0;
+    D_800733FE = 0;
+    D_800733F0 = 0;
+    *D_80072F64 = 0;
+    D_80072F66 = 0;
+    *D_800733F6 = 0;
+    D_800733FC = g_zEntityCenter;
+    if (D_80073FBE == 0x22) {
+        func_8010FAF4();
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113F7C);
 
