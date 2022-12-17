@@ -520,7 +520,25 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B97C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016C1BC);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016C6C4);
+s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
+    u8 ret = 0;
+    s32 i;
+    s32 j;
+    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
+
+    for (i = 0; i < 4; i++, temp++) {
+        for (j = 0; j < 3; j++) {
+            temp->unk00[j] -= value;
+
+            if (temp->unk00[j] < 16) {
+                temp->unk00[j] = 16;
+            } else {
+                ret |= 1;
+            }
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016C734);
 
