@@ -697,15 +697,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EBBAC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECBF8);
 
-extern s32 D_800730A0;
-extern Unkstruct_800ECE2C D_800730F4[];
+extern Unkstruct_800ECE2C D_800730A0;
 
 void func_800ECE2C(void) {
     s32 i;
 
-    D_800730A0 = 0;
+    D_800730A0.unk00 = 0;
     for (i = 0; i < 16; i++) {
-        D_800730F4[i].unk0 = 0;
+        D_800730A0.unk54[i].unk00[0] = 0;
     }
 }
 
@@ -715,7 +714,18 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", SetRoomForegroundLayer);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", SetRoomBackgroundLayer);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", LoadRoomLayer);
+extern Unkstruct_8003C794* D_8003C794;
+
+void LoadRoomLayer(s32 arg0) {
+    s32 i;
+
+    SetRoomForegroundLayer(D_8003C794[arg0].unk00);
+    SetRoomBackgroundLayer(0, D_8003C794[arg0].unk04);
+
+    for (i = 1; i < 16; i++) {
+        D_800730A0.unk54[i].unk00[0] = 0;
+    }
+}
 
 void func_800EDA70(s32* context) {
     s32 i;
@@ -953,9 +963,17 @@ loop_3:
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0CD8);
 
-// https://decomp.me/scratch/syk2c
-// Matching, but D_800730F4 wants to be a single s32
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1424);
+void func_800F1424(void) {
+    if (D_8009749C[0] & 8) {
+        D_800730A0.unk00 ^= 2;
+    }
+    if (D_8009749C[0] & 4) {
+        D_800730A0.unk00 ^= 1;
+    }
+    if ((D_8009749C[0] & 1) && (D_800730A0.unk3C != 0)) {
+        D_800730A0.unk54[0].unk00[0] ^= 1;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F14CC);
 
