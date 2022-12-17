@@ -574,7 +574,13 @@ extern s32 g_playerGold;
 extern s32 g_killCount;
 extern playerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
-extern s32 g_playerHp;
+
+typedef struct PlayerHP {
+    s32 current;
+    s32 max;
+} PlayerHP;
+
+extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
 extern PlayerMp g_playerMp;
 extern s32 g_playerMpMax;

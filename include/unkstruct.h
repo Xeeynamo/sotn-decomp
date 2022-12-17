@@ -128,4 +128,10 @@ typedef struct Unkstruct_801390DC {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ u16 unk02;
     /* 0x04 */ u16 unk04;
-} Unkstruct_801390DC; 
+} Unkstruct_801390DC;
+
+typedef struct Unkstruct_800FD5BC {
+    /* 0x00 */ s32 arg0;
+    /* 0x04 */ s32 arg4;
+    /* 0x08 */ s32 arg8;
+} Unkstruct_800FD5BC;
