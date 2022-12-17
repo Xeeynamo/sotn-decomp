@@ -147,3 +147,13 @@ typedef struct Unkstruct_800FD5BC {
     /* 0x04 */ s32 arg4;
     /* 0x08 */ s32 arg8;
 } Unkstruct_800FD5BC;
+
+typedef struct Unkstruct_80128BBC_Sub {
+    /* 0x00 */ u8 unk00[3];
+    /* 0x03 */ char unk03[9];
+} Unkstruct_80128BBC_Sub;
+
+typedef struct Unkstruct_80128BBC {
+    /* 0x00 */ char unk00[4];
+    /* 0x04 */ Unkstruct_80128BBC_Sub unk04[4];
+} Unkstruct_80128BBC;

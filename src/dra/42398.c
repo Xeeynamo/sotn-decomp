@@ -3829,33 +3829,23 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127F40);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80128714);
 
-//! FAKE
-s32 func_80128BBC(s32 arg0, u8 value) {
+s32 func_80128BBC(Unkstruct_80128BBC* arg0, u8 value) {
     u8 ret = 0;
-    u8* var_a0;
-    u8* var_v1;
     s32 i;
+    s32 j;
+    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
 
-    var_a0 = (u8*)(arg0 + 4);
+    for (i = 0; i < 4; i++, temp++) {
+        for (j = 0; j < 3; j++) {
+            temp->unk00[j] -= value;
 
-    for (i = 0; i < 4; i++) {
-        var_v1 = var_a0;
-
-        do {
-            *var_v1 -= value;
-
-            if (*var_v1 < 16) {
-                *var_v1 = 16;
+            if (temp->unk00[j] < 16) {
+                temp->unk00[j] = 16;
             } else {
                 ret |= 1;
             }
-
-            var_v1++;
-        } while ((s32)var_v1 < (s32)(var_a0 + 3));
-
-        var_a0 += 0xC;
+        }
     }
-
     return ret;
 }
 
