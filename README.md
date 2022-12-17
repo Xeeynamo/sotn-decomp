@@ -60,7 +60,7 @@ You will probably have some differences from your compiled code to the original;
 There are a few tricks to make the process more streamlined:
 
 1. Use [decomp.me](https://decomp.me/) with GCC 2.7.2 for PS1. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
-1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/st/wrp/6FD0.c make context` as mentioned in the how to decompile.
+1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/dra/42398.c make context` as mentioned in the how to decompile.
 1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches.
 1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
 1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it.
