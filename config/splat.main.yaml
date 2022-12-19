@@ -33,7 +33,7 @@ segments:
       - [0x5E60, c, psxsdk/libetc]
       - [0x5E78, c]
       - [0x6864, hasm, psxsdk/libc]
-      - [0x6934, c, psxsdk/fprintf]
+      - [0x6934, c, psxsdk/sprintf]
       - [0x7190, c]
       - [0x720C, hasm, psxsdk/libcard]
       - [0x72A4, c]

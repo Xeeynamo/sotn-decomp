@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 #include <psxsdk/kernel.h>
+#include <psxsdk/libapi.h>
+#include <psxsdk/libc.h>
 #include <psxsdk/libcd.h>
 #include <psxsdk/libetc.h>
 #include <psxsdk/libgpu.h>

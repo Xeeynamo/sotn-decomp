@@ -12,7 +12,6 @@ s32 func_8015E380();
 void func_8015CDE0(s32);
 void func_801606BC(Entity*, s32, s32);
 
-extern s16 D_80072F16; // main.h?
 extern u16 D_80072F9A; // main.h?
 extern s32 D_801554B0;
 extern s32 D_801553BC;
@@ -108,7 +107,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159670);
 
 void func_80159BC8(void) {
     D_8007342A = 0;
-    D_80073428 = 0;
+    D_80073428.typeShort = 0;
     D_80072F64[0] = 0;
     D_80072F66 = 0;
     D_800733F1 = D_800733F1 & 0xFB;
@@ -213,6 +212,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C9CC);
 void func_8015CA84(s32 speed) {
     Entity* entity = D_8006C3B8;
     s32 modX = speed;
+
     if (entity->unk14 == 1)
         modX = -speed;
     entity->accelerationX = modX;
@@ -242,7 +242,7 @@ void func_8015CC70(s16 arg0) {
     D_80073406 = arg0;
     D_80073404 = 0x0020;
     D_8007342A = 0;
-    D_80073428 = 0;
+    D_80073428.typeShort = 0;
     if (arg0 & 1) {
         D_80073424 = &D_80155950;
     } else {
@@ -287,7 +287,7 @@ void func_8015CE7C(void) {
         func_8015C908(0x19);
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
-        D_80072F16 = 0x28;
+        D_80072F16[0] = 0x28;
         D_800733E4 = 0;
         func_801606BC(D_8006C3B8, 0x50001, 0);
     }
@@ -520,7 +520,25 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B97C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016C1BC);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016C6C4);
+s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
+    u8 ret = 0;
+    s32 i;
+    s32 j;
+    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
+
+    for (i = 0; i < 4; i++, temp++) {
+        for (j = 0; j < 3; j++) {
+            temp->unk00[j] -= value;
+
+            if (temp->unk00[j] < 16) {
+                temp->unk00[j] = 16;
+            } else {
+                ret |= 1;
+            }
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016C734);
 
