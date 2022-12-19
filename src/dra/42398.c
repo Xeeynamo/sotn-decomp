@@ -12,6 +12,7 @@
 #define DISP_UNK2_H DISP_ALL_H
 
 void func_800E2398(s32 arg0);
+s32 func_800E81FC(s32, s32);
 void func_800FADC0(void);
 s32 func_8010E27C(void);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
@@ -289,7 +290,20 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6FD4);
 
 void nullsub_9(void) {}
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E738C);
+void func_800E738C(void) {
+    if (D_80073060 == 1) {
+        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
+            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 && func_800E81FC(7, 0) >= 0)) {
+            if (func_80131F68() != 0) {
+                PlaySfx(0x80);
+            }
+            func_800E346C();
+            D_80073060++;
+            return;
+        }
+    }
+    D_8003C7B0();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7458);
 
