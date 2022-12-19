@@ -293,7 +293,8 @@ void nullsub_9(void) {}
 void func_800E738C(void) {
     if (D_80073060 == 1) {
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 && func_800E81FC(7, 0) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 &&
+             func_800E81FC(7, 0) >= 0)) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
