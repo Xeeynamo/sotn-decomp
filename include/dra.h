@@ -80,6 +80,12 @@ typedef union {
     } modeU8;
 } unkUnion3;
 
+typedef union {
+    byte typeByte;
+    short typeShort;
+    int typeInt;
+} MultiType;
+
 typedef struct Entity {
     /* 0x00 */ UnkUnion1 posX;
     /* 0x04 */ UnkUnion1 posY;
@@ -167,7 +173,8 @@ typedef struct Entity {
     /* 0xAD */ s8 unkAD;
     /* 0xAE */ s8 unkAE;
     /* 0xAF */ s8 unkAF;
-    /* 0xB0 */ s32 unkB0;
+    /* 0xB0 */ s16 unkB0;
+    /* 0xB2 */ s16 unkB2;
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
@@ -180,11 +187,6 @@ typedef struct Entity {
         } modeU8;
     } unkB8;
 } Entity; // size = 0xBC
-
-typedef struct playerHeart {
-    s32 current;
-    s32 max;
-} playerHeart;
 
 typedef struct {
     /* 0x00 */ u16 animationSet;
@@ -201,19 +203,21 @@ typedef struct {
 
 typedef struct unkStruct3 {
     /* 0x00 */ struct unkStruct3* unk0;
-    /* 0x04 */ char pad4[0x3];
+    /* 0x04 */ s8 unk4;
+    /* 0x04 */ char pad4[0x1];
+    /* 0x05 */ s8 unk6;
     /* 0x07 */ s8 unk7;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ s16 unkC;
     /* 0x0E */ s16 unkE;
-    /* 0x10 */ s16 unk10;
+    /* 0x10 */ UnkUnion2 unk10;
     /* 0x12 */ UnkUnion2 unk12;
     /* 0x14 */ s16 unk14;
     /* 0x16 */ s16 unk16;
     /* 0x18 */ s16 unk18;
     /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
+    /* 0x1C */ UnkUnion2 unk1C;
     /* 0x1E */ UnkUnion2 unk1E;
     /* 0x20 */ s16 unk20;
     /* 0x22 */ s16 unk22;
@@ -222,7 +226,7 @@ typedef struct unkStruct3 {
     /* 0x26 */ char pad26[0x2];
     /* 0x28 */ s8 unk28;
     /* 0x29 */ char pad[0x1];
-    /* 0x2A */ s8 unk2A;
+    /* 0x2A */ u8 unk2A;
     /* 0x2B */ u8 unk2B;
     /* 0x2C */ u16 unk2C;
     /* 0x2E */ char pad2E[4];
@@ -263,20 +267,6 @@ typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Unkstruct6; // size = 0x4
-
-typedef struct {
-    /* 0x00 */ s32 sp10;
-    /* 0x04 */ s32 sp14;
-    /* 0x08 */ s32 sp18;
-    /* 0x0C */ s32 sp1C;
-    /* 0x10 */ s32 sp20;
-    /* 0x14 */ s16 sp24;
-    /* 0x18 */ s16 sp26;
-    /* 0x1C */ s16 sp28;
-    /* 0x20 */ s16 sp2A;
-    /* 0x24 */ s32 sp2C;
-    /* 0x28 */ s32 sp30;
-} Unkstruct7; // size = 0x2C
 
 typedef struct {
     /* 0x0 */ void* addr1;
@@ -320,15 +310,24 @@ typedef struct {
     DISPENV disp; // display environment
 } DisplayBuffer;
 
+typedef struct PlayerHeart {
+    s32 current;
+    s32 max;
+} PlayerHeart;
+
+typedef struct PlayerHP {
+    s32 current;
+    s32 max;
+} PlayerHP;
+
 typedef struct PlayerMp {
     s32 current;
     s32 max;
 } PlayerMp;
 
-extern unkstruct_80072FA0 D_80072FA0[];
-
 // main
 extern s32 D_8003C0EC[4];
+extern s32 D_8003C0F8;
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
@@ -336,6 +335,7 @@ extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
 extern RoomHeader* D_8003C784;
+extern void (*D_8003C7B0)();
 extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
@@ -346,7 +346,7 @@ extern s32 g_roomCount;
 extern s32 g_CurrentPlayableCharacter;
 extern s32 g_blinkTimer;
 extern s32 g_menuMainCursorIndex;
-extern s32 g_menuRelicsCursorIndex;
+extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
@@ -444,14 +444,18 @@ extern s8 D_8005436D;
 #define LBA_STAGE_NP3_VH 0x91FF
 #define LBA_STAGE_NP3_BIN 0x9235
 
-extern s32 aBu1d1dS;
+extern const char* aBu1d1dS;
+extern const char* aBu1d1d;
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
+extern s32 D_8006C3AC;
+extern u16 D_8006C3C4;
 extern GpuBufferUnk* D_8006C37C;
 extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
+extern s32 D_8006C3B0;
 extern Entity* D_8006C3B8;
 extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
@@ -462,9 +466,15 @@ extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s16 D_80072F00[];
 extern s16 D_80072F0A;
+extern s16 D_80072F0C;
+extern s16 D_80072F16[2];
 extern s16 D_80072F18;
+extern s16 D_80072F1A[];
+extern s16 D_80072F1C[];
 extern s32 D_80072F20;
-extern s32 D_80072F2C;
+extern s32 D_80072F24;
+extern u32 D_80072F2C;
+extern u16 D_80072F70;
 extern u16 D_80072F92;
 
 // Probably part of the same array / struct
@@ -473,6 +483,8 @@ extern s16 D_80072F66;
 extern u16 D_80072F68[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
+extern s16 D_80072F86;
+extern unkstruct_80072FA0 D_80072FA0[];
 extern s32 D_80073060;
 extern s32 D_80073080;
 extern u16 D_8007308E;
@@ -494,6 +506,7 @@ extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
+extern s32 D_800733DC[];
 extern s16 D_800733DE;
 extern s32 D_800733E0;
 extern s32 D_800733E4;
@@ -501,13 +514,17 @@ extern u16 D_800733EC;
 extern u16 D_800733EE;
 extern s8 D_800733F0;
 extern u8 D_800733F1;
+extern s16 D_800733F6[];
+extern u16 D_800733FC;
+extern s16 D_800733FE;
 extern u16 D_80073404;
 extern u16 D_80073406;
 extern u16 D_8007340A;
 extern u16 D_8007341C;
 extern /*?*/ s32* D_80073424;
-extern s16 D_80073428;
+extern MultiType D_80073428;
 extern s16 D_8007342A;
+extern s16 D_8007342C;
 extern u16 D_8007342E;
 extern u8 D_80073484;
 extern s8 D_80073510;
@@ -516,6 +533,9 @@ extern s8 D_80073512;
 extern s8 D_80073513;
 extern Entity D_800736C8;
 extern Entity D_80073F98;
+extern u16 D_80073FBE;
+extern Entity D_80073FC4; // unconfirmed / weird
+extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // D_800733D8 + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
@@ -526,8 +546,8 @@ extern Entity D_8007EF1C;
 extern s32 D_8007EFDC;
 extern s32 D_8007EFE0;
 extern s32 D_8007EFE4;
-extern void* D_8007EFD8;
-extern s32 D_80082FE4;
+extern unsigned long D_8007EFD8;
+extern s8 D_80082FE4;
 extern s32 D_80086FE4;
 extern POLY_GT4 D_80086FEC[];
 extern s32 playerX;
@@ -540,13 +560,18 @@ extern POLY_GT4 D_800973B8[];
 extern s32 D_800973FC;
 extern s32 D_80097410;
 extern s32 D_80097414;
+extern s32 D_80097420;
 extern Pad g_pads[];
+extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern s16 D_80097496;
+extern u16 D_8009749C[];
 extern s32 g_mapProgramId;
 extern s32 D_800974AC;
+extern s32 D_800978AC;
 extern s32 D_800978F8;
 extern s32 D_80097908;
 extern s32 D_8009790C;
+extern s32 D_80097914;
 extern s32 D_8009792C;
 extern s32 D_80097934;
 extern u8 D_80097964[];
@@ -558,22 +583,37 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern playerHeart g_playerHeart[];
+extern PlayerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
-extern s32 g_playerHp;
+extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
 extern PlayerMp g_playerMp;
 extern s32 g_playerMpMax;
+extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
 extern s32 g_timeHours;
 extern s32 g_timeMinutes;
 extern s32 g_timeSeconds;
 extern s32 D_80097C98;
+extern s8 D_80097D37;
 extern s32 D_800A04EC;
+extern s32 D_800A0510[];
 extern u16 D_800A0518[][0x10];
 extern s32 D_800A1F18[];
 extern s32 D_800A2438;
+extern u8 D_800A2EE8[];
+extern u8 D_800A2EED;
+extern u8 D_800A2EF8[];
+extern u8 D_800A2EFD;
+extern u8 D_800A2F08[];
+extern u8 D_800A2F18[];
+extern u8 D_800A2F28[];
+extern u8 D_800A2F2D;
+extern u8 D_800A2F38[];
+extern u8 D_800A2F3D;
+extern u16 D_800A2F48[];
+extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
 extern s32 player_equip_ring2;
@@ -623,7 +663,9 @@ extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT D_800ACD90;
+extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern s16 D_800ACF60[];
 extern const char* c_strEquip;
 extern const char* c_strSpells;
 extern const char* c_strRelics;
@@ -637,11 +679,16 @@ extern s16 D_800BD07C[];
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 D_80137460;
+extern s32 D_80137470;
+extern s32 D_80137474;
 extern u16 D_80137478[];
 extern u16 D_801374B8[];
 extern s16 D_801374F8;
 extern u8* D_80137578;
+extern u8* D_8013757C;
 extern s32 D_80137580;
+extern s32 D_80137584;
+extern s32* D_80137590;
 extern RoomLoadDef* D_801375BC;
 extern s16 D_80137538;
 extern s32 D_801375C8;
@@ -662,12 +709,17 @@ extern s32 D_80137840;
 extern s32 D_80137844;
 extern s32 D_80137848;
 extern s32 D_8013784C;
-extern s32* D_8013794C;
+extern s32 g_someValue;
+extern s32 D_80137930;
+extern s32 D_80137934;
+extern s32 D_80137938[];
+extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
+extern s32 D_8013796C;
 extern s32 D_80137970;
 extern s32 D_80137974;
 extern u32 D_80137978;
@@ -677,6 +729,7 @@ extern s32 D_80137984;
 extern u32 D_80137988;
 extern u32 D_8013798C;
 extern s32 D_80137994;
+extern s32 D_80137998;
 extern u32 D_8013799C;
 extern s32 D_80137E40;
 extern s32 D_80137E44;
@@ -687,6 +740,7 @@ extern s32 D_80137E68;
 extern s32 D_80137F6C;
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
+extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
@@ -696,11 +750,9 @@ extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_801390C4;
 extern u8 D_801390D8;
-extern s16 D_801390DC;
-extern s16 D_801390DE;
-extern s16 D_801390E0;
+extern Unkstruct_801390DC D_801390DC[];
 extern u16 D_801396E4;
-extern u16 D_801396E6;
+extern MultiType D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern u16 D_801396F4;
@@ -710,36 +762,48 @@ extern s32 D_8013980C;
 extern u8 D_80139810;
 extern s32 D_80139828[];
 extern s32 D_80139834[];
-
 extern s16 D_80139A70;
 extern s16 D_8013AE8C;
+extern s16 D_8013AE84[];
+extern s16 D_8013AEA0[];
+extern s16 D_8013AE94;
 extern s32 D_8013AE9C;
 extern s16 D_8013AED4[];
 extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B698;
+extern s16 D_8013AEE0;
 extern u8 D_8013AEEC;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 D_8013B3E8[];
 extern s32 D_8013B5E8;
+extern s8 D_8013B5EC[];
+extern s8 D_8013B614[];
 extern s32 D_8013B61C;
+extern s16 D_8013B620[];
+extern s32 D_8013B628[];
+extern s16 D_8013B648[];
 extern s16 D_8013B650[];
 extern s16 D_8013B658;
 extern s32 D_8013B660;
 extern s16 D_8013B664;
 extern s16 D_8013B668;
+extern s16 D_8013B66C[];
 extern u8 D_8013B680;
 extern s8 D_8013B684;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
-extern const char* D_80138784[487];
+extern void (*D_8013C00C)(void);
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
 
-s32 func_80019444();
+void SetRoomForegroundLayer(s32 /* ? */);
+void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
+void PlaySfx(s16 sfxId);
+s32 func_80019444(void);
 void func_8002A09C(void*);
 void func_800E346C(void);
 void func_800E34A4(s8 arg0);
@@ -747,27 +811,38 @@ void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
 void func_800E8D24(void);
 void func_800E8DF0(void);
+s32 func_800E912C(void);
+s32 func_800E9208(void);
+void func_800E928C(void);
 void func_800E92E4(void);
 void func_800E92F4(void);
 void func_800EA5E4(s32);
 void func_800EA538(s32);
+void func_800EAD7C(void);
+void func_800EAEEC(void);
 void func_800EB534(u16, u16, s32);
+void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
+void func_800EDA94(void);
 void func_800EDAE4(void);
 s16 func_800EDC80(u8 arg0, s32 arg1);
 s32 func_800EDD9C(u8 arg0, s32 arg1);
+void func_800EFBF8(void);
 void FreePolygons(s32 index);
+void func_800F0334(s32);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
+void func_800F180C(s32, s32, void*);
+void func_800F1868(s32, s32, void*);
 void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
+s32 func_800F4D38(s32, s32);
 void func_800F4F48(void);
 void func_800F4FD0(void);
 bool IsAlucart(void);
 s32 SquareRoot12(s32, s32);
-void TestEvent(s32);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
@@ -791,9 +866,10 @@ u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
 s32 func_800FD77C(s32 arg0, s32 arg1);
 bool func_800FD7C0(s32, s32);
-;
 void func_800FD874(u16 arg0, s32 arg1);
+s16 func_800FDB18(s32, s32);
 void func_800FDE00(void);
+void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
@@ -804,12 +880,20 @@ void func_80107250(POLY_GT4* poly, s32 arg1);
 void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
                    s32 v);
 void func_801073C0(void);
+void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
+void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
+void func_8010E470(s32, s32);
+void func_8010E83C(s32 arg0);
 void func_80111928(void);
-void func_8011AAFC(Entity* entity, s32, s32);
+void func_80111CC0(void);
+void func_80118894(Entity*);
+void func_80118C28(s32 arg0);
+s32 func_80111D24(void);
+Entity* func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);
@@ -818,8 +902,8 @@ s32 func_80131F28(void);
 u16 func_80131F38(void);
 bool func_80131F68(void);
 s16 func_80131F94(void);
-void func_8013216C();
-void func_801321FC();
+void func_8013216C(void);
+void func_801321FC(void);
 void func_80132134(void);
 s32 func_80132264(void);
 s32 func_801326D8(void);
@@ -828,7 +912,7 @@ void func_80132760(void);
 void func_801337B4(void);
 s32 func_80133940(void);
 s32 func_80133950(void);
-void func_80133FCC();
+void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);
 #endif

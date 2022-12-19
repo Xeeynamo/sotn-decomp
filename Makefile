@@ -224,6 +224,10 @@ decompile: $(M2C_APP)
 	$(M2CTX) $(SOURCE)
 	$(M2C_APP) $(M2C_ARGS) --target mipsel-gcc-c --context ctx.c $(FUNC) $(ASSEMBLY)
 
+context:
+	$(M2CTX) $(SOURCE)
+	@echo ctx.c has been updated.
+
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
