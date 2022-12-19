@@ -21,5 +21,6 @@ typedef enum {
     /* 0x0C */ ENTITY_COLLECTABLE,
     /* 0x0D */ ENTITY_ENEMY_BLOOD,
     /* 0x0E */ ENTITY_0E,
-    /* 0x0F */ ENTITY_0F
+    /* 0x0F */ ENTITY_0F,
+    /* 0x13 */ ENTITY_13 = 0x13
 } SotnEntityIds;
