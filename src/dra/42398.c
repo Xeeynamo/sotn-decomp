@@ -540,7 +540,6 @@ s32 func_800E9508(s32 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9610);
-int sprintf(char* str, const char* format, ...);
 
 s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
                   s32 fd) {
@@ -548,7 +547,7 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     s32 nBytes;
     s32 ret;
 
-    sprintf(file, &aBu1d1dS, arg0, arg1, arg2);
+    sprintf(file, g_strMemcardSavePath, arg0, arg1, arg2);
     nBytes = fd << 0xD;
 
     if (fd == 0) {
@@ -572,7 +571,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E96E8);
 s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
     char buffer[0x20];
 
-    sprintf(buffer, &aBu1d1dS, arg0, arg1, arg2);
+    sprintf(buffer, g_strMemcardSavePath, arg0, arg1, arg2);
     return -(erase(buffer) == 0);
 }
 
@@ -595,13 +594,13 @@ s32 func_800E9804(s32 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9880);
 
 s32 func_800E9B18(s32 arg0, s32 arg1) {
-    char sp10;
+    char buffer[0x8];
     s32 ret;
 
     D_8006C3AC &= D_800A0510[arg0];
-    sprintf(&sp10, &aBu1d1d, arg0, arg1);
+    sprintf(buffer, g_strMemcardRootPath, arg0, arg1);
     func_800E928C();
-    format(&sp10);
+    format(buffer);
     ret = func_800E9208();
 
     if (ret != 1) {
