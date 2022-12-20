@@ -13,13 +13,14 @@
 
 void func_800E2398(s32 arg0);
 s32 func_800E81FC(s32, s32);
+void func_800ECBF8(void);
 void func_800FADC0(void);
-s32 func_8010E27C(void);
-void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
-s32 func_80136010(void);
-void func_801353A0(void);
 void func_801026BC(s32);
+s32 func_8010E27C(void);
 void func_8010E390(s32);
+void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
+void func_801353A0(void);
+s32 func_80136010(void);
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
@@ -223,7 +224,113 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E414C);
 
 void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 
+// TODO aspatch jump points to the wrong instruction,
+// otherwise this is fully decompiled
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
+#else
+
+void func_800E451C(void) {
+    switch (D_80073060) {
+    case 0x0:
+        ClearBackbuffer();
+        func_800ECBF8();
+        func_800EAD7C();
+        func_800ECE2C();
+        func_800EDA94();
+        func_800EDAE4();
+        func_800EBB70();
+        func_801065F4(0);
+        func_800EA538(0);
+        func_800EAEEC();
+        func_800E3574();
+        g_mapProgramId = 0x45;
+        if (D_800978AC != 0) {
+            if (D_8006C3B0 == 0) {
+                D_8006C398 = 1;
+                D_8006BAFC = 1;
+                goto block_15;
+            }
+            return;
+        }
+    block_15:
+        D_80073060++;
+        break;
+    case 0x64:
+        if (D_8006C3B0 == 0) {
+            RECT sp18;
+            sp18.x = 0;
+            sp18.y = 0;
+            sp18.w = 0x280;
+            sp18.h = 0x100;
+            LoadImage(&sp18, (u32*)0x80180014);
+
+            sp18.x = 0;
+            sp18.y = 0x100;
+            LoadImage(&sp18, (u32*)0x80180014);
+
+            SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&D_80054300, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&D_8003CB0C.disp, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&D_8005435C, 0, 0, 0x280, 0x100);
+            SetDispMask(0);
+            D_8013640C = 0x6E;
+            D_80073060++;
+        }
+        break;
+    case 0x65:
+        SetDispMask(1);
+        if (D_8013640C == 0 || --D_8013640C == 0) {
+            ClearImage(&D_800ACDF0, 0, 0, 0);
+            func_800E3574();
+            g_mapProgramId = 0x45;
+            if (D_800978AC != 0) {
+                if (D_8006C3B0 != 0) {
+                    break;
+                }
+                D_8006C398 = 1;
+                D_8006BAFC = 1;
+            }
+            D_80073060 = 1;
+        }
+        break;
+    case 0x1:
+        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
+            (D_800978AC == 0 && func_800E81FC(2, 0) >= 0 &&
+             func_800E81FC(0, 0) >= 0)) {
+            D_80073060++;
+        }
+        break;
+    case 0x2:
+        D_80073060 = 3;
+        break;
+    case 0x3:
+        D_80073060 = 4;
+        break;
+    case 0x4:
+        if (D_800978AC != 0) {
+            D_8006C398 = 1;
+            D_8006BAFC = 0x100;
+        }
+        D_80073060 = 5;
+        break;
+    case 0x5:
+        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
+            (D_800978AC == 0 && func_800E81FC(0, 1) >= 0)) {
+            D_8003C9A4 = 0;
+            D_80073060++;
+        }
+        break;
+    case 0x6:
+        if (D_8003C734 == 1) {
+            g_pfnTestStageEntities();
+        } else {
+            g_pfnLoadObjLayout();
+        }
+        break;
+    }
+}
+#endif
 
 void func_800E493C(void) {
     if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
@@ -711,7 +818,110 @@ void func_800EBB70(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EBBAC);
 
+// The loop at the end is weird, the rest is matching
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800ECBF8);
+#else
+typedef struct {
+    s16 unk00, unk02;
+    u16 unk04, unk06;
+    u16 unk08, unk0A;
+    u16 unk0c, unk0E;
+    u16 unk10, unk12;
+    u16 unk14, unk16;
+    u16 unk18, unk1A;
+    u16 unk1c;
+    u8 unk1E, unk1F;
+    u16 unk20;
+    u8 unk22, unk23;
+    u16 unk24, unk26;
+} Unkstruct_800ECBF8_1; /* size = 0x28 */
+
+typedef struct {
+    s16 unk0, unk4;
+} Unkstruct_800ECBF8_2; /* size = 0x4 */
+
+extern POLY_GT4 D_8004077C[0x300];
+extern POLY_G4 D_8004A37C[0x100];
+extern POLY_GT3 D_8004C77C[0x30];
+extern LINE_G2 D_8004CEFC[0x100];
+extern SPRT_16 D_8004E2FC[0x280];
+extern TILE D_80050AFC[0x100];
+extern SPRT D_80051AFC[0x200];
+extern POLY_GT4 D_80057F70[0x300];
+extern POLY_G4 D_80061B70[0x100];
+extern POLY_GT3 D_80063F70[0x30];
+extern LINE_G2 D_800646F0[0x100];
+extern SPRT_16 D_80065AF0[0x280];
+extern TILE D_800682F0[0x100];
+extern SPRT D_800692F0[0x200];
+extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
+extern Unkstruct_800ECBF8_2 D_800A21B8[0x10];
+
+void func_800ECBF8(void) {
+    int i;
+    POLY_GT4 *a1, *a2;
+    SPRT_16 *b1, *b2;
+    TILE *c1, *c2;
+    LINE_G2 *d1, *d2;
+    POLY_G4 *e1, *e2;
+    SPRT *f1, *f2;
+    POLY_GT3 *g1, *g2;
+
+    Unkstruct_800ECBF8_1* var_v1;
+    Unkstruct_800ECBF8_2 *var_a2, *var_a0;
+
+    for (a1 = D_8004077C, a2 = D_80057F70, i = 0; i < 0x300; i++, a1++, a2++) {
+        SetPolyGT4(a1);
+        SetPolyGT4(a2);
+    }
+
+    for (b1 = D_8004E2FC, b2 = D_80065AF0, i = 0; i < 0x280; i++, b1++, b2++) {
+        SetSprt16(b1);
+        SetSprt16(b2);
+    }
+
+    for (c1 = D_80050AFC, c2 = D_800682F0, i = 0; i < 0x100; i++, c1++, c2++) {
+        SetTile(c1);
+        SetTile(c2);
+    }
+
+    for (d1 = D_8004CEFC, d2 = D_800646F0, i = 0; i < 0x100; i++, d1++, d2++) {
+        SetLineG2(d1);
+        SetLineG2(d2);
+    }
+
+    for (e1 = D_8004A37C, e2 = D_80061B70, i = 0; i < 0x100; i++, e1++, e2++) {
+        SetPolyG4(e1);
+        SetPolyG4(e2);
+    }
+
+    for (f1 = D_80051AFC, f2 = D_800692F0, i = 0; i < 0x200; i++, f1++, f2++) {
+        SetSprt(f1);
+        SetSprt(f2);
+    }
+
+    for (g1 = D_8004C77C, g2 = D_80063F70, i = 0; i < 0x30; i++, g1++, g2++) {
+        SetPolyGT3(g1);
+        SetPolyGT3(g2);
+    }
+
+    var_v1 = &D_80097D1C;
+    i = 0;
+    var_a0 = &D_800A21B8;
+    var_a2 = &D_800A21B8;
+    do {
+        var_v1->unk00 = var_a2->unk0;
+        var_v1->unk02 = var_a0->unk4 & 0x1FF;
+        var_v1->unk23 = (var_a0->unk4 >> 8) & ~1;
+        var_v1->unk1F = (var_v1->unk00 >> 6) + 0x10;
+        var_a2++;
+        i++;
+        var_a0++;
+        var_v1++;
+    } while (i < 0x10);
+}
+#endif
 
 extern Unkstruct_800ECE2C D_800730A0;
 
