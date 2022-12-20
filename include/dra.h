@@ -335,7 +335,9 @@ extern s32 D_8003C734;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
 extern void (*g_pfnTestStageEntities)(void);
+#ifndef STAGE_MAD
 extern void (*g_pfnLoadObjLayout)(void);
+#endif
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
 extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
