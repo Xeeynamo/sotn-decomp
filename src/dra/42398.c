@@ -10,6 +10,7 @@
 #define DISP_MENU_H DISP_ALL_H
 #define DISP_UNK2_W 512
 #define DISP_UNK2_H DISP_ALL_H
+#define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
 void func_800E2398(s32 arg0);
 s32 func_800E3278(void);
@@ -143,42 +144,43 @@ s32 func_800E3278() {
 #endif
 
 void func_800E346C(void) {
-    D_8003CB25 = 0;
-    D_8003CB26 = 0;
-    D_8003CB27 = 0;
-    D_80054319 = 0;
-    D_8005431A = 0;
-    D_8005431B = 0;
+    D_8003CB08.buf.draw.r0 = 0;
+    D_8003CB08.buf.draw.g0 = 0;
+    D_8003CB08.buf.draw.b0 = 0;
+    D_800542FC.buf.draw.r0 = 0;
+    D_800542FC.buf.draw.g0 = 0;
+    D_800542FC.buf.draw.b0 = 0;
 }
 
 void func_800E34A4(s8 arg0) {
-    D_8003CB25 = arg0;
-    D_8003CB26 = arg0;
-    D_8003CB27 = arg0;
-    D_80054319 = arg0;
-    D_8005431A = arg0;
-    D_8005431B = arg0;
+    D_8003CB08.buf.draw.r0 = arg0;
+    D_8003CB08.buf.draw.g0 = arg0;
+    D_8003CB08.buf.draw.b0 = arg0;
+    D_800542FC.buf.draw.r0 = arg0;
+    D_800542FC.buf.draw.g0 = arg0;
+    D_800542FC.buf.draw.b0 = arg0;
 }
 
 void func_800E34DC(s32 arg0) {
-    D_8003CB0E = 0x0014;
-    D_8003CB12 = 0x00CF;
+    D_8003CB08.buf.draw.clip.y = 0x0014;
+    D_8003CB08.buf.draw.clip.h = 0x00CF;
     D_80054302 = arg0 == 0 ? 0x0014 : 0x0114;
-    D_80054306 = 0x00CF;
-    D_80054318 = 1;
-    D_8003CB24 = 1;
+    D_800542FC.buf.draw.clip.h = 0x00CF;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
     func_800E346C();
-    D_80054316 = 0;
-    D_8003CB22 = 0;
-    D_8005436D = 0;
-    D_8003CB79 = 0;
+    D_800542FC.buf.draw.dtd = 0;
+    D_8003CB08.buf.draw.dtd = 0;
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
 }
 
 // Set stage display buffer
 void func_800E3574(void) {
-    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&D_80054300, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDispEnv(&D_8003CB0C.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+                  DISP_STAGE_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
     SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_800E34DC(0);
@@ -186,36 +188,36 @@ void func_800E3574(void) {
 
 // Set CGI display buffer?
 void func_800E3618(s32 width) {
-    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, width, DISP_ALL_H);
-    SetDefDrawEnv(&D_80054300, 0, 256, width, DISP_ALL_H);
-    SetDefDispEnv(&D_8003CB0C.disp, 0, 256, width, DISP_ALL_H);
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, width, DISP_ALL_H);
     SetDefDispEnv(&D_8005435C, 0, 0, width, DISP_ALL_H);
     func_800E34DC(1);
 }
 
 // Set menu display buffer
 void func_800E36C8(void) {
-    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
-    SetDefDrawEnv(&D_80054300, 128, 256, DISP_MENU_W, DISP_MENU_H);
-    SetDefDispEnv(&D_8003CB0C.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
     SetDefDispEnv(&D_8005435C, 0, 0, DISP_MENU_W, DISP_MENU_H);
     func_800E34DC(1);
 }
 
 void func_800E376C(void) {
-    SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDrawEnv(&D_80054300, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8003CB0C.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    D_80054302 = DISP_UNK2_W / 2;
-    D_80054306 = DISP_UNK2_H;
-    D_8003CB12 = DISP_UNK2_H;
-    D_8003CB0E = 0;
-    D_80054318 = 1;
-    D_8003CB24 = 1;
+    D_800542FC.buf.draw.clip.y = DISP_UNK2_W / 2;
+    D_800542FC.buf.draw.clip.h = DISP_UNK2_H;
+    D_8003CB08.buf.draw.clip.h = DISP_UNK2_H;
+    D_8003CB08.buf.draw.clip.y = 0;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
     func_800E346C();
-    D_8005436D = 0;
-    D_8003CB79 = 0;
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
 }
 
 // https://decomp.me/scratch/Ocshz
@@ -225,9 +227,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E385C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E38CC);
 
 void entrypoint_sotn(void) {
-    s32 var_a1;
-    void (**var_a0)();
-    void (**var_v1)();
+    s32 i;
 
     SetVideoMode(0);
     InitializePads();
@@ -244,11 +244,8 @@ void entrypoint_sotn(void) {
     D_800542FC.unk0 = &D_8003CB08;
     ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
     ClearImage(&D_800ACD88[1], 0, 0, 0);
-    var_a1 = 0;
-    var_a0 = &g_pfnUpdateStageEntities;
-    var_v1 = &D_800A0004;
-    for (; var_a1 < 0x50; var_a1++) {
-        *var_a0++ = *var_v1++;
+    for (i = 0; i < 0x50; i++) {
+        (&g_pfnUpdateStageEntities)[i] = (&D_800A0004)[i];
     }
     g_blinkTimer = 0;
     D_8003C99C = 0;
@@ -332,13 +329,12 @@ loop_5:
         if (nullsub_8() != 0) {
             func_800E7AEC();
         }
-        if ((D_8003C0F8 == 0) && (D_800973EC == 0)) {
+        if (D_8003C0F8 == 0 && D_800973EC == 0) {
             func_800ECE58();
             func_800EBBAC();
-            if ((D_8003C734 == 2) && (D_800BD1C0 != 0)) {
-                s32 temp_a0_2 = D_801362B0;
-                if (temp_a0_2 != 0) {
-                    func_80106670(temp_a0_2);
+            if (D_8003C734 == 2 && D_800BD1C0 != 0) {
+                if (D_801362B0 != 0) {
+                    func_80106670(D_801362B0);
                 }
             }
         }
@@ -351,14 +347,12 @@ loop_5:
         GsClearVcount();
         func_800EB314();
         ReadPads();
-        if (((u16)g_pads->pressed & 0x900) == 0x900) {
-            s32 temp_v0_2;
-            if (D_80097494 & 0x800) {
+        if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
+            if (D_80097494 & PAD_START) {
                 g_softResetTimer = 1;
             }
-            temp_v0_2 = g_softResetTimer;
-            if (temp_v0_2 != 0) {
-                g_softResetTimer = temp_v0_2 + 1;
+            if (g_softResetTimer != 0) {
+                g_softResetTimer++;
             } else {
                 g_softResetTimer = 0;
             }
@@ -377,8 +371,8 @@ loop_5:
             func_800E4124(1);
             goto loop_5;
         }
-        PutDrawEnv(&D_8006C37C->unk4);
-        PutDispEnv(&D_8006C37C->unk60);
+        PutDrawEnv(&D_8006C37C->buf.draw);
+        PutDispEnv(&D_8006C37C->buf.disp);
         DrawOTag(D_801362CC);
         func_800EA7CC();
         func_801361F8();
@@ -498,9 +492,9 @@ void func_800E451C(void) {
             sp18.y = 0x100;
             LoadImage(&sp18, (u32*)0x80180014);
 
-            SetDefDrawEnv(&D_8003CB0C.draw, 0, 0, 0x280, 0x100);
-            SetDefDrawEnv(&D_80054300, 0, 0x100, 0x280, 0x100);
-            SetDefDispEnv(&D_8003CB0C.disp, 0, 0x100, 0x280, 0x100);
+            SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&D_800542FC.buf.draw, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&D_8003CB08.buf.disp, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&D_8005435C, 0, 0, 0x280, 0x100);
             SetDispMask(0);
             D_8013640C = 0x6E;
@@ -2166,11 +2160,11 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuStr(c_strKILLS, 0xF0, 0xA4, context);
         DrawMenuInt(g_killCount, 0x148, 0xA4, context);
         DrawMenuStr(c_strTIME, 0xD0, 0xC0, context);
-        DrawMenuInt(g_timeHours, 0x108, 0xC0, context);
+        DrawMenuInt(g_GameTimer.hours, 0x108, 0xC0, context);
         DrawMenuChar(0x1A, 0x110, 0xC0, context);
-        func_800F6998(g_timeMinutes, 0x120, 0xC0, context, 2);
+        func_800F6998(g_GameTimer.minutes, 0x120, 0xC0, context, 2);
         DrawMenuChar(0x1A, 0x128, 0xC0, context);
-        func_800F6998(g_timeSeconds, 0x138, 0xC0, context, 2);
+        func_800F6998(g_GameTimer.seconds, 0x138, 0xC0, context, 2);
     }
 
     phi_s3 = 0xE8;
