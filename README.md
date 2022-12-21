@@ -1,13 +1,12 @@
 # Castlevania: Symphony of the Night Decompilation
 
-This is a WIP decompilation of Castlevania Symphony of the Night for the PSX. The purpose of the project is to recreate a source code base for the game from scratch, using information found inside the game along with static and/or dynamic analysis. We aim to produce a codebase that compiles byte-for-byte to the same binaries of the game, this type of approach is called Matching Decompilation.
+A work-in-progress decompilation of Castlevania Symphony of the Night for PlayStation 1. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles the same binaries of the game, byte-for-byte to the same binaries of the game, effectively being a matching decompilation. Currently it only supports the US version of the game `SLUS-00067`.
 
 The game is divided into three modules:
-`SLUS_000.67` is the main engine of the game. It contains all the necessary logic to interact with the gamepad, CD, memory card, the SPU and to render the sprites on-screen. It appears to not contain any game logic by itself.
-`DRA` is the game itself. It contains the gameloop and the necessary API to draw maps, entities, load levels, handle entities, animations and collisions. It also contains some common data such as Alucard's sprites, candle's sprites and the common rooms (save, loading, teleport) layout.
-`ST/` are the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map specific events, cutscenes, enemy AI, collisions and more. It also contains the rooms and entities layout.
 
-All the files refer to the `SLUS-00067` version of the game.
+* `SLUS_000.67` the main executable. It contains all the hardware API (eg. gamepad, CD, memory card, GPU renderer) of the PlayStation 1 console. It does not contain any game logic.
+* `DRA` the game engine. It contains the business logic (eg. gameloop, API to draw maps, entities, load levels, handle entities, animations and collisions) and some data such as Alucard's sprites or the loading/save rooms.
+* `ST/` the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map specific events, cutscenes, enemy AI, collisions and more. It also contains the rooms and entities layout. Each overlay can be considered as its own mini-game. The title screen `SEL.BIN` is an example of how a stage overlay can act very differently.
 
 This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.
 
@@ -29,23 +28,25 @@ This repo does not include any assets or assembly code necessary for compiling t
 | `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json)
 
 
-## How to setup the project (assuming Ubuntu 20.04/Debian 11 or Windows with WSL)
+## Setup the project
+
+This assumes you have Ubuntu 20.04 or Debian 11, either as a primary OS or within WSL in Windows.
 
  1. Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
  1. Run `sudo apt-get install -y $(cat tools/requirements-debian.txt)`
  1. Run `make update-dependencies`
  1. Inside the newly created repo, create a new `iso/` folder, and extract the contents of the game disc
 
-## How to build
+## Build
 
- 1. Run `make extract` to generate the assembly files in the `asm/` directory
- 1. Run `make all` to compile the binaries in the `build/` directory
+1. Run `make extract` to generate the assembly files for the functions not yet decompiled.
+1. Run `make all` to compile the binaries in the `build/` directory.
 
 In case there are any changes in the `config/` folder, you might need to run `make clean` to reset the extraction.
 
 Some non-matching functions are present in the source preprocessed by the macro `NON_MATCHING`. You can still compile the game binaries by running `CPP_FLAGS=-DNON_MATCHING make`. In theory they might be logically equivalent in-game, but I cannot promise that. Few of them could match by tuning or changing the compiler.
 
-## How to decompile
+## Start decompilation
 
 1. Run `make clean extract all expected` at least once
 1. After setup and build, choose an overlay (eg. `ST/WRP`)
@@ -53,13 +54,13 @@ Some non-matching functions are present in the source preprocessed by the macro 
 1. Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
 1. Run `SOURCE=src/st/wrp/6FD0.c ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code on the console
 1. Replace the `INCLUDE_ASM(...);` you targeted with the console output content
-1. and invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0`
+1. Invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0`
 
 You will probably have some differences from your compiled code to the original; keep refactoring the code and move variables around until you have a 100% match.
 
 There are a few tricks to make the process more streamlined:
 
-1. Use [decomp.me](https://decomp.me/) with GCC 2.7.2 for PS1. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
+1. Use [decomp.me](https://decomp.me/) with PSY-Q 4.0. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
 1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/dra/42398.c make context` as mentioned in the how to decompile.
 1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches.
 1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
@@ -68,13 +69,12 @@ There are a few tricks to make the process more streamlined:
 
 ## Resources:
 
-* List of resource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but very useful still). 
+* List of resource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but still very useful). 
 * PS1’s CPU R3000 instruction [manual](https://cgi.cse.unsw.edu.au/~cs3231/doc/R3000.pdf) and [cheat sheet](https://vhouten.home.xs4all.nl/mipsel/r3000-isa.html)
-* https://github.com/KernelEquinox/SNEER
-* Debugging Emulator: https://github.com/grumpycoders/pcsx-redux
-* Debugging Emulator with Register Breakpoints: https://www.romhacking.net/utilities/267/
-* Beginner friendly MIPS video lectures [1](https://www.youtube.com/watch?v=PlavjNH_RRU&list=PLylNWPMX1lPlmEeeMdbEFQo20eHAJL8hx) and [2](https://www.youtube.com/watch?v=qzSdglU0SBc&list=PLylNWPMX1lPnipZzKdCWRj2-un5xvLLdK)
-
+* [SOTN map viewer written in C](https://github.com/KernelEquinox/SotN-Editor)
+* [PCSX emulator with debugger](https://www.romhacking.net/utilities/267/)
+* [NO$PSX emulator with debugger](https://problemkaputt.de/psx.htm)
+* Beginner friendly MIPS video lectures [1](https://www.youtube.com/watch?v=PlavjNH_RRU&list=PLylNWPMX1lPlmEeeMdbEFQo20eHAJL8hx), [2](https://www.youtube.com/watch?v=qzSdglU0SBc&list=PLylNWPMX1lPnipZzKdCWRj2-un5xvLLdK)
 
 ## To do:
 
@@ -83,7 +83,6 @@ The project is very barebone at the moment and there is a massive room of improv
 * Not all the zone overlays (`ST/{ZONE}/{ZONE}.BIN`) are disassembled
 * Integrate ASPSX instead of GNU AS
 * Split binary data (eg. map layout, graphics, other assets) into individual files
-
 
 ## Notes
 
