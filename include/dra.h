@@ -302,15 +302,19 @@ typedef struct {
 } DisplayBuffer;
 
 typedef struct {
-    /* 0x0000 */ void* unk0; /* inferred */
-    /* 0x0004 */ DisplayBuffer buf;
-    /* 0x0074 */ char pad74[0x400]; /* maybe part of unk60[0x34]? */
-    /* 0x0474 */ s8 _unk_0474[0x800];
-    /* 0x0474 */ u32 unk_0474[0]; /* overlap */
-    /* 0x0C74 */ u8 _unk_0C74[0xCC00];
-    /* 0x0C74 */ DR_MODE drawModes[0]; /* overlap */
-    /* 0xD874 */ POLY_G4 unk_D874[0];
-} GpuBufferUnk; /* size = 0xD874 */
+    /* 0x00000 */ void* unk0;
+    /* 0x00004 */ DisplayBuffer buf;
+    /* 0x00074 */ char pad74[0x400];
+    /* 0x00474 */ s8 _unk_0474[0x800];
+    /* 0x00474 */ DR_MODE drawModes[0x400];
+    /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
+    /* 0x0D874 */ POLY_G4 polyG4[0x100];
+    /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];
+    /* 0x103F4 */ LINE_G2 lineG2[0x100];
+    /* 0x117F4 */ SPRT_16 sprite16[0x280];
+    /* 0x13FF4 */ TILE tiles[0x100];
+    /* 0x14FF4 */ SPRT sprite[0x200];
+} GpuBuffer; /* size = 0x177F4 */
 
 typedef struct PlayerHeart {
     s32 current;
@@ -368,8 +372,8 @@ extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
 extern s32 D_8003CB00;
 extern s32 D_8003CB04;
-extern GpuBufferUnk D_8003CB08;
-extern GpuBufferUnk D_800542FC;
+extern GpuBuffer D_8003CB08;
+extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
@@ -454,7 +458,7 @@ extern s32 D_8006BB00;
 extern s32 D_8006C374;
 extern s32 D_8006C3AC;
 extern u16 D_8006C3C4;
-extern GpuBufferUnk* D_8006C37C;
+extern GpuBuffer* D_8006C37C;
 extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
@@ -786,7 +790,7 @@ extern s32 D_8013900C;
 extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_801390C4;
-extern GpuBufferUnk* D_801390D4;
+extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
 extern Unkstruct_801390DC D_801390DC[];
 extern u16 D_801396E4;
