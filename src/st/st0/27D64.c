@@ -129,7 +129,15 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8984);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A89D8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8B9C);
+void func_801A8B9C(s16 yOffset) {
+    RECT rect;
+
+    rect.y = (yOffset * 12) + 384;
+    rect.w = 64;
+    rect.x = 0;
+    rect.h = 12;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8BF8);
 
