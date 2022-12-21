@@ -297,15 +297,13 @@ typedef enum {
 } EntityInitStates;
 
 typedef struct {
-    DRAWENV draw; // drawing environment
-    DISPENV disp; // display environment
+    /* 0x00 */ DRAWENV draw; // drawing environment
+    /* 0x58 */ DISPENV disp; // display environment
 } DisplayBuffer;
 
-// TODO GpuBufferUnk should use DisplayBuffer at 0x0004
 typedef struct {
-    /* 0x0000 */ void* unk0;        /* inferred */
-    /* 0x0004 */ DRAWENV unk4;      /* inferred */
-    /* 0x0060 */ DISPENV unk60;     /* inferred */
+    /* 0x0000 */ void* unk0; /* inferred */
+    /* 0x0004 */ DisplayBuffer buf;
     /* 0x0074 */ char pad74[0x400]; /* maybe part of unk60[0x34]? */
     /* 0x0474 */ s8 _unk_0474[0x800];
     /* 0x0474 */ u32 unk_0474[0]; /* overlap */
@@ -345,7 +343,7 @@ extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
-extern void (*g_pfnUpdateStageEntities)(void);
+extern void (*g_pfnUpdateStageEntities)(void); // TODO to 0x50 array of funcs
 extern void (*g_pfnTestStageEntities)(void);
 #ifndef STAGE_MAD
 extern void (*g_pfnLoadObjLayout)(void);
@@ -371,26 +369,9 @@ extern s32 D_8003CACC;
 extern s32 D_8003CB00;
 extern s32 D_8003CB04;
 extern GpuBufferUnk D_8003CB08;
-extern DisplayBuffer D_8003CB0C; // TODO overlap
-extern s16 D_8003CB0E; // TODO overlap
-extern s16 D_8003CB12; // TODO overlap
-extern s8 D_8003CB22; // TODO overlap
-extern s8 D_8003CB24; // TODO overlap
-extern s8 D_8003CB25; // TODO overlap
-extern s8 D_8003CB26; // TODO overlap
-extern s8 D_8003CB27; // TODO overlap
-extern s8 D_8003CB79;
 extern GpuBufferUnk D_800542FC;
-extern DRAWENV D_80054300; // TODO overlap
-extern s16 D_80054302; // TODO overlap
-extern s16 D_80054306; // TODO overlap
-extern s8 D_80054316; // TODO overlap
-extern s8 D_80054318; // TODO overlap
-extern s8 D_80054319; // TODO overlap
-extern s8 D_8005431A; // TODO overlap
-extern s8 D_8005431B; // TODO overlap
-extern DISPENV D_8005435C; // TODO overlap
-extern s8 D_8005436D;
+extern s16 D_80054302;     // TODO overlap, hard to remove
+extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 // dra
 #define PAD_COUNT 2
@@ -621,14 +602,11 @@ extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
 extern GameTimer g_GameTimer;
-extern s32 g_timeHours; // TODO overlap
-extern s32 g_timeMinutes; // TODO overlap
-extern s32 g_timeSeconds; // TODO overlap
 extern s32 D_80097C98;
 extern s8 D_80097D37;
 extern s32 D_800987B4;
 extern s32 D_80098850;
-extern void (*D_800A0004)();
+extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A04EC;
 extern s32 D_800A0510[];
 extern u16 D_800A0518[][0x10];
