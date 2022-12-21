@@ -1,14 +1,54 @@
-#include "common.h"
+#include "stage.h"
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AC048);
+typedef struct {
+    u32 unk0;
+    u32 unk4;
+} Unkstruct_801ACBE4;
+
+extern u8 D_8018046C[0x20 * 3];
+extern u32 D_801822E4[];
+extern Unkstruct_801ACBE4 D_801BAF18[];
+extern s32 D_801BAFDC;
+extern s32 D_801BAFE0;
+extern s32 D_801BAFE4;
+extern s32 D_801BAFE8;
+extern s32 D_801BC3D8;
+extern s32 D_801BC3DC;
+extern s32 D_801BC3E0;
+extern s32 D_801D6B04;
+extern s32 D_801D6B08;
+extern s32 D_801D6B0C;
+extern s32 D_801D6B20;
+
+void func_801B84F0();
+
+void func_801AC048(void) {
+    D_801D6B0C = 1;
+    D_801D6B08 = 0;
+    D_801BC3E0 = 0;
+    D_801D6B04 = 0;
+    D_801BC3D8 = 0;
+    D_801BC3DC = 0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AC084);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AC174);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACBE4);
+void func_801ACBE4(s32 arg0, u16 arg1) {
+    POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
+    while (poly != NULL) {
+        poly->pad3 = arg1;
+        poly = (POLY_GT4*)poly->tag;
+    }
+}
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACC3C);
+void func_801ACC3C(void) {
+    s32 i;
+    for (i = 0; i < 21; i++) {
+        func_801ACBE4(i, 8);
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACC7C);
 
@@ -60,7 +100,12 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEED8);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B17C8);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B18CC);
+void func_801B18CC(s32 arg0) {
+    D_8003C734 = arg0;
+    D_80073060 = 0;
+    g_backbufferX = 0;
+    g_backbufferY = 0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B18F4);
 
@@ -74,9 +119,37 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1A98);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1B88);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1C78);
+void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
+    switch (vertexIndex) {
+    case 0:
+        poly->b0 = colorIntensity;
+        poly->g0 = colorIntensity;
+        poly->r0 = colorIntensity;
+        break;
+    case 1:
+        poly->b1 = colorIntensity;
+        poly->g1 = colorIntensity;
+        poly->r1 = colorIntensity;
+        break;
+    case 2:
+        poly->b2 = colorIntensity;
+        poly->g2 = colorIntensity;
+        poly->r2 = colorIntensity;
+        break;
+    case 3:
+        poly->b3 = colorIntensity;
+        poly->g3 = colorIntensity;
+        poly->r3 = colorIntensity;
+        break;
+    }
+}
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1CFC);
+void func_801B1CFC(POLY_GT4* poly, u8 colorIntensity) {
+    func_801B1C78(poly, colorIntensity, 0);
+    func_801B1C78(poly, colorIntensity, 1);
+    func_801B1C78(poly, colorIntensity, 2);
+    func_801B1C78(poly, colorIntensity, 3);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1D68);
 
@@ -120,7 +193,14 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B27A8);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B28D4);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2984);
+s32 func_801B2984(u32 arg0) {
+    s32 i;
+    for (i = 0, arg0 &= 0xFF; i < 0x20; i++) {
+        if (D_8018046C[i * 3] == arg0)
+            return i;
+    }
+    return 0x20;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B29C0);
 
@@ -138,7 +218,13 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2CF8);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2D1C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2D6C);
+void func_801B2D6C(void) {
+    func_801B84F0();
+    D_801BAFDC = 0;
+    D_801BAFE0 = 0;
+    D_801BAFE4 = 0;
+    D_801BAFE8 = 0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2DAC);
 
@@ -246,7 +332,7 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8414);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8498);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B84F0);
+void func_801B84F0(void) { D_801D6B20 = 0; }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8500);
 
@@ -272,7 +358,13 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8D24);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8DB0);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8DE8);
+void func_801B8DE8(u8* arg0, s32 arg1) {
+    u8* src = (u8*)D_801822E4[arg1];
+    s32 i;
+    for (i = 0; i < 0x180; i++) {
+        *arg0++ = *src++;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8E20);
 
@@ -304,7 +396,7 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA498);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA524);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA5C0);
+u16 func_801BA5C0(u16* arg0) { return *arg0; }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA5CC);
 

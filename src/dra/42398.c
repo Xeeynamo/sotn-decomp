@@ -3166,27 +3166,27 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106A28);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010715C);
 
-void func_801071CC(POLY_GT4* poly, u8 arg1, s32 arg2) {
-    switch (arg2) {
+void func_801071CC(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
+    switch (vertexIndex) {
     case 0:
-        poly->b0 = arg1;
-        poly->g0 = arg1;
-        poly->r0 = arg1;
+        poly->b0 = colorIntensity;
+        poly->g0 = colorIntensity;
+        poly->r0 = colorIntensity;
         break;
     case 1:
-        poly->b1 = arg1;
-        poly->g1 = arg1;
-        poly->r1 = arg1;
+        poly->b1 = colorIntensity;
+        poly->g1 = colorIntensity;
+        poly->r1 = colorIntensity;
         break;
     case 2:
-        poly->b2 = arg1;
-        poly->g2 = arg1;
-        poly->r2 = arg1;
+        poly->b2 = colorIntensity;
+        poly->g2 = colorIntensity;
+        poly->r2 = colorIntensity;
         break;
     case 3:
-        poly->b3 = arg1;
-        poly->g3 = arg1;
-        poly->r3 = arg1;
+        poly->b3 = colorIntensity;
+        poly->g3 = colorIntensity;
+        poly->r3 = colorIntensity;
         break;
     }
 }
