@@ -226,6 +226,7 @@ extern void SetLineG2(LINE_G2* p);
 extern void SetPolyGT3(POLY_GT3* p);
 extern void SetPolyG4(POLY_G4* p);
 extern void SetPolyGT4(POLY_GT4* p);
+extern void SetSemiTrans(void* p, int abe);
 extern void SetSprt(SPRT* p);
 extern void SetSprt16(SPRT_16* p);
 extern void SetSprt8(SPRT_8* p);

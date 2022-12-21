@@ -27,7 +27,7 @@ void func_800ECE58(void);
 void func_800EDEDC(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
-void func_80106670(s32);
+void func_80106670(s32 blendMode);
 void func_80108448(void);
 s32 func_8010E27C(void);
 void func_8010E390(s32);
@@ -304,7 +304,7 @@ loop_5:
     D_800978C4 = 1;
 
     while (true) {
-        GpuBufferUnk* temp_v1_2;
+        GpuBuffer* temp_v1_2;
 
         D_801390D4 = D_8006C37C;
         temp_v1_2 = D_8006C37C->unk0;
@@ -1058,20 +1058,20 @@ typedef struct {
     s16 unk0, unk4;
 } Unkstruct_800ECBF8_2; /* size = 0x4 */
 
-extern POLY_GT4 D_8004077C[0x300];
-extern POLY_G4 D_8004A37C[0x100];
-extern POLY_GT3 D_8004C77C[0x30];
-extern LINE_G2 D_8004CEFC[0x100];
-extern SPRT_16 D_8004E2FC[0x280];
-extern TILE D_80050AFC[0x100];
-extern SPRT D_80051AFC[0x200];
-extern POLY_GT4 D_80057F70[0x300];
-extern POLY_G4 D_80061B70[0x100];
-extern POLY_GT3 D_80063F70[0x30];
-extern LINE_G2 D_800646F0[0x100];
-extern SPRT_16 D_80065AF0[0x280];
-extern TILE D_800682F0[0x100];
-extern SPRT D_800692F0[0x200];
+extern POLY_GT4 D_8004077C[0x300]; // TODO D_8003CB08.polyGT4
+extern POLY_G4 D_8004A37C[0x100];  // TODO D_8003CB08.polyG4
+extern POLY_GT3 D_8004C77C[0x30];  // TODO D_8003CB08.polyGT3
+extern LINE_G2 D_8004CEFC[0x100];  // TODO D_8003CB08.lineG2
+extern SPRT_16 D_8004E2FC[0x280];  // TODO D_8003CB08.sprite16
+extern TILE D_80050AFC[0x100];     // TODO D_8003CB08.tiles
+extern SPRT D_80051AFC[0x200];     // TODO D_8003CB08.sprite
+extern POLY_GT4 D_80057F70[0x300]; // TODO D_800542FC.polyGT4
+extern POLY_G4 D_80061B70[0x100];  // TODO D_80542FC8.polyG4
+extern POLY_GT3 D_80063F70[0x30];  // TODO D_800542FC.polyGT3
+extern LINE_G2 D_800646F0[0x100];  // TODO D_80542FC8.lineG2
+extern SPRT_16 D_80065AF0[0x280];  // TODO D_8003542FCsprite16
+extern TILE D_800682F0[0x100];     // TODO D_8542FC08.tiles
+extern SPRT D_800692F0[0x200];     // TODO D_80542FC8.sprite
 extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
 extern Unkstruct_800ECBF8_2 D_800A21B8[0x10];
 
@@ -3158,6 +3158,8 @@ void func_801065F4(s16 startIndex) {
         func_80106590(pItem);
 }
 
+// Print debug hitboxes
+void func_80106670(s32 blendMode);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106670);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106A28);
