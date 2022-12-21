@@ -285,15 +285,6 @@ typedef struct {
     /* 0x8 */ u16 unk8;
 } Unkstruct10; // size = 0xA
 
-typedef struct {
-    /* 0x0000 */ char unk_00[0x474];
-    /* 0x0474 */ u32 unk_0474[0]; // unk length, unk elem size
-    char _unk_0474[0x800];
-    /* 0x0C74 */ DR_MODE drawModes[0]; // unk length
-    u8 _unk_0C74[0xCC00];
-    /* 0xD874 */ POLY_G4 unk_D874[0]; // unk length
-} GpuBufferUnk;
-
 typedef enum {
     ENTITY_INITSTATE_0,
     ENTITY_INITSTATE_1,
@@ -310,6 +301,19 @@ typedef struct {
     DISPENV disp; // display environment
 } DisplayBuffer;
 
+// TODO GpuBufferUnk should use DisplayBuffer at 0x0004
+typedef struct {
+    /* 0x0000 */ void* unk0;        /* inferred */
+    /* 0x0004 */ DRAWENV unk4;      /* inferred */
+    /* 0x0060 */ DISPENV unk60;     /* inferred */
+    /* 0x0074 */ char pad74[0x400]; /* maybe part of unk60[0x34]? */
+    /* 0x0474 */ s8 _unk_0474[0x800];
+    /* 0x0474 */ u32 unk_0474[0]; /* overlap */
+    /* 0x0C74 */ u8 _unk_0C74[0xCC00];
+    /* 0x0C74 */ DR_MODE drawModes[0]; /* overlap */
+    /* 0xD874 */ POLY_G4 unk_D874[0];
+} GpuBufferUnk; /* size = 0xD874 */
+
 typedef struct PlayerHeart {
     s32 current;
     s32 max;
@@ -325,6 +329,13 @@ typedef struct PlayerMp {
     s32 max;
 } PlayerMp;
 
+typedef struct {
+    s32 hours;
+    s32 minutes;
+    s32 seconds;
+    s32 frames;
+} GameTimer;
+
 // main
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -332,6 +343,7 @@ extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
+extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
 extern void (*g_pfnUpdateStageEntities)(void);
 extern void (*g_pfnTestStageEntities)(void);
@@ -347,6 +359,7 @@ extern Unkstruct5* D_8003C808;
 extern void (*D_8003C848)(s32, s32);
 extern s32 D_8003C8C4;
 extern s32 g_roomCount;
+extern s32 D_8003C99C;
 extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003C9A4;
 extern s32 g_blinkTimer;
@@ -355,24 +368,28 @@ extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
-extern DisplayBuffer D_8003CB0C;
-extern s16 D_8003CB0E;
-extern s16 D_8003CB12;
-extern s8 D_8003CB22;
-extern s8 D_8003CB24;
-extern s8 D_8003CB25;
-extern s8 D_8003CB26;
-extern s8 D_8003CB27;
+extern s32 D_8003CB00;
+extern s32 D_8003CB04;
+extern GpuBufferUnk D_8003CB08;
+extern DisplayBuffer D_8003CB0C; // TODO overlap
+extern s16 D_8003CB0E; // TODO overlap
+extern s16 D_8003CB12; // TODO overlap
+extern s8 D_8003CB22; // TODO overlap
+extern s8 D_8003CB24; // TODO overlap
+extern s8 D_8003CB25; // TODO overlap
+extern s8 D_8003CB26; // TODO overlap
+extern s8 D_8003CB27; // TODO overlap
 extern s8 D_8003CB79;
-extern DRAWENV D_80054300;
-extern s16 D_80054302;
-extern s16 D_80054306;
-extern s8 D_80054316;
-extern s8 D_80054318;
-extern s8 D_80054319;
-extern s8 D_8005431A;
-extern s8 D_8005431B;
-extern DISPENV D_8005435C;
+extern GpuBufferUnk D_800542FC;
+extern DRAWENV D_80054300; // TODO overlap
+extern s16 D_80054302; // TODO overlap
+extern s16 D_80054306; // TODO overlap
+extern s8 D_80054316; // TODO overlap
+extern s8 D_80054318; // TODO overlap
+extern s8 D_80054319; // TODO overlap
+extern s8 D_8005431A; // TODO overlap
+extern s8 D_8005431B; // TODO overlap
+extern DISPENV D_8005435C; // TODO overlap
 extern s8 D_8005436D;
 
 // dra
@@ -562,6 +579,7 @@ extern s32 D_80096ED8[];
 extern u32 D_80097364;
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
+extern s32 D_800973EC; // flag to check if the menu is shown
 extern s32 D_800973FC;
 extern s32 D_80097410;
 extern s32 D_80097414;
@@ -571,13 +589,18 @@ extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern s16 D_80097496;
 extern u16 D_8009749C[];
 extern s32 g_mapProgramId;
+extern s32 D_800974A4;
 extern s32 D_800974AC;
 extern s32 D_800978AC;
+extern s32 D_800978C4;
 extern s32 D_800978F8;
+extern s32 D_80097904;
 extern s32 D_80097908;
 extern s32 D_8009790C;
+extern s32 D_80097910;
 extern s32 D_80097914;
-extern s32 D_8009792C;
+extern s32 D_80097928;
+extern Unkstruct_Entrypoint D_8009792C;
 extern s32 D_80097934;
 extern u8 D_80097964[];
 extern u8 D_8009796E;
@@ -597,11 +620,15 @@ extern s32 g_playerMpMax;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
-extern s32 g_timeHours;
-extern s32 g_timeMinutes;
-extern s32 g_timeSeconds;
+extern GameTimer g_GameTimer;
+extern s32 g_timeHours; // TODO overlap
+extern s32 g_timeMinutes; // TODO overlap
+extern s32 g_timeSeconds; // TODO overlap
 extern s32 D_80097C98;
 extern s8 D_80097D37;
+extern s32 D_800987B4;
+extern s32 D_80098850;
+extern void (*D_800A0004)();
 extern s32 D_800A04EC;
 extern s32 D_800A0510[];
 extern u16 D_800A0518[][0x10];
@@ -667,6 +694,7 @@ extern u16 D_800A7734;
 extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
+extern RECT D_800ACD88[2];
 extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
 extern Unkstruct_800ACEC6 D_800ACEC6;
@@ -682,6 +710,28 @@ extern const char* c_strSpecial2;
 extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
+extern s32 D_800BD1C0;
+extern s32 D_801362AC;
+extern s32 D_801362B0;
+extern s32 D_801362B4;
+extern s32 D_801362B8;
+extern s32 D_801362BC;
+extern s32 D_801362C0;
+extern s32 D_801362C4;
+extern s32 D_801362C8;
+extern u32* D_801362CC;
+extern s32 D_801362D4;
+extern s32 D_801362D8;
+extern Unkstruct_Entrypoint D_801362DC;
+extern s32 D_801362E0;
+extern s32 D_801362E4;
+extern s32 D_801362E8;
+extern s32 D_801362EC;
+extern s32 D_801362F0;
+extern s32 D_801362F4;
+extern s32 D_801362F8;
+extern s32 D_801362FC;
+extern s32 g_softResetTimer;
 extern s32 D_8013640C;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
@@ -751,11 +801,14 @@ extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
+extern s32 D_80138FB0;
 extern s16 D_80139000;
 extern s16 D_80139008;
+extern s32 D_8013900C;
 extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_801390C4;
+extern GpuBufferUnk* D_801390D4;
 extern u8 D_801390D8;
 extern Unkstruct_801390DC D_801390DC[];
 extern u16 D_801396E4;

@@ -1,3 +1,5 @@
+#ifndef KERNEL_H
+#define KERNEL_H
 
 #define DescMask 0xff000000
 #define DescTH DescMask
@@ -71,3 +73,8 @@
 
 #define TcbStUNUSED 0x1000
 #define TcbStACTIVE 0x4000
+
+void InitCARD(long val);
+long StartCARD(void);
+
+#endif
