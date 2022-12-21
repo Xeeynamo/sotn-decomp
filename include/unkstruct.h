@@ -157,3 +157,15 @@ typedef struct Unkstruct_80128BBC {
     /* 0x00 */ char unk00[4];
     /* 0x04 */ Unkstruct_80128BBC_Sub unk04[4];
 } Unkstruct_80128BBC;
+
+typedef struct {
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+    u32 unkC;
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+    u32 unk20;
+} Unkstruct_Entrypoint;

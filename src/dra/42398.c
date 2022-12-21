@@ -12,13 +12,26 @@
 #define DISP_UNK2_H DISP_ALL_H
 
 void func_800E2398(s32 arg0);
+s32 func_800E3278(void);
+void func_800E385C(u32*);
+void func_800E7AEC(void);
+void func_800E7BB8(void);
 s32 func_800E81FC(s32, s32);
+void func_800E8EE4(void);
+void func_800EA7CC(void);
+void func_800EB314(void);
+void func_800EBBAC(void);
 void func_800ECBF8(void);
+void func_800ECE58(void);
+void func_800EDEDC(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
+void func_80106670(s32);
+void func_80108448(void);
 s32 func_8010E27C(void);
 void func_8010E390(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
+void func_801325D8(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
@@ -64,7 +77,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2B00);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2E98);
 
-void nullsub_8(void) {}
+s32 nullsub_8(void) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2F3C);
 
@@ -211,7 +224,223 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E385C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E38CC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", entrypoint_sotn);
+void entrypoint_sotn(void) {
+    s32 var_a1;
+    void (**var_a0)();
+    void (**var_v1)();
+
+    SetVideoMode(0);
+    InitializePads();
+    InitCARD(1);
+    StartCARD();
+    _bu_init();
+    ChangeClearPAD(0);
+    func_800E8EE4();
+    ResetGraph(0);
+    SetGraphDebug(0);
+    InitGeom();
+    GsInitVcount();
+    D_8003CB08.unk0 = &D_800542FC;
+    D_800542FC.unk0 = &D_8003CB08;
+    ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
+    ClearImage(&D_800ACD88[1], 0, 0, 0);
+    var_a1 = 0;
+    var_a0 = &g_pfnUpdateStageEntities;
+    var_v1 = &D_800A0004;
+    for (; var_a1 < 0x50; var_a1++) {
+        *var_a0++ = *var_v1++;
+    }
+    g_blinkTimer = 0;
+    D_8003C99C = 0;
+    D_800987B4 = 0;
+    D_8003CB00 = 0;
+    D_8003CB04 = 0;
+    D_8006C37C = &D_8003CB08;
+    func_80131ED8(0xB9B6);
+    func_801325D8();
+    while (func_800E3278() < 0)
+        ;
+    VSyncCallback(func_800E7BB8);
+    FntLoad(0x380, 0x100);
+    SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
+    SetDispMask(1);
+    func_800E4124(0);
+    D_801362DC.unk0 = 0U;
+    D_801362E0 = 0;
+    D_801362E4 = 0;
+    D_801362E8 = 0;
+    D_801362EC = 0;
+    D_801362F0 = 0;
+    D_801362F4 = 0;
+    D_801362F8 = 0;
+    D_801362FC = 0;
+    D_80098850 = 0;
+loop_5:
+    D_8003C73C = 0;
+    func_800E3574();
+    func_800ECBF8();
+    func_800EAD7C();
+    func_800ECE2C();
+    func_800EDA94();
+    func_800EDAE4();
+    func_801065F4(0);
+    func_800EA538(0);
+    func_800EAEEC();
+    D_801362B4 = 0x20;
+    D_8013900C = 0x200;
+    D_800BD1C0 = 0;
+    D_801362B0 = 0;
+    D_801362B8 = 0;
+    D_801362BC = 0;
+    D_80138FB0 = 0;
+    D_801362AC = 0;
+    D_801362C0 = 0;
+    D_801362C4 = 0;
+    D_801362C8 = 0;
+    D_801362D8 = 0;
+    D_80097914 = 0;
+    D_8003C704 = NULL;
+    D_800973EC = 0;
+    D_800974A4 = 0;
+    D_8006C398 = 0;
+    D_80097928 = 0;
+    D_80097910 = 0;
+    D_80097904 = 0;
+    D_8006C3AC = 0;
+    D_80097C98 = 0;
+    g_softResetTimer = 0;
+    D_800978C4 = 1;
+
+    while (true) {
+        GpuBufferUnk* temp_v1_2;
+
+        D_801390D4 = D_8006C37C;
+        temp_v1_2 = D_8006C37C->unk0;
+        g_blinkTimer++;
+        D_8006C37C = temp_v1_2;
+        D_801362CC = (u32*)temp_v1_2->_unk_0474;
+        ClearOTag((u32*)temp_v1_2->_unk_0474, 0x200);
+        D_8009792C.unk0 = 0;
+        D_8009792C.unk20 = 0U;
+        D_8009792C.unk4 = 0U;
+        D_8009792C.unk8 = 0U;
+        D_8009792C.unkC = 0U;
+        D_8009792C.unk10 = 0U;
+        D_8009792C.unk14 = 0U;
+        D_8009792C.unk18 = 0U;
+        D_8009792C.unk1C = 0U;
+        if (nullsub_8() != 0) {
+            func_800E7AEC();
+        }
+        if ((D_8003C0F8 == 0) && (D_800973EC == 0)) {
+            func_800ECE58();
+            func_800EBBAC();
+            if ((D_8003C734 == 2) && (D_800BD1C0 != 0)) {
+                s32 temp_a0_2 = D_801362B0;
+                if (temp_a0_2 != 0) {
+                    func_80106670(temp_a0_2);
+                }
+            }
+        }
+        func_800EDEDC();
+        func_80108448();
+        func_800E385C(D_801362CC);
+        DrawSync(0);
+        D_801362D4 = GsGetVcount();
+        VSync(D_8003C73C);
+        GsClearVcount();
+        func_800EB314();
+        ReadPads();
+        if (((u16)g_pads->pressed & 0x900) == 0x900) {
+            s32 temp_v0_2;
+            if (D_80097494 & 0x800) {
+                g_softResetTimer = 1;
+            }
+            temp_v0_2 = g_softResetTimer;
+            if (temp_v0_2 != 0) {
+                g_softResetTimer = temp_v0_2 + 1;
+            } else {
+                g_softResetTimer = 0;
+            }
+        } else {
+            g_softResetTimer = 0;
+        }
+        if (g_softResetTimer >= 0x80) {
+            g_softResetTimer = 0;
+            ClearBackbuffer();
+            func_801073C0();
+            PlaySfx(0x12);
+            PlaySfx(0xB);
+            func_801361F8();
+            VSync(D_8003C73C);
+            func_80132760();
+            func_800E4124(1);
+            goto loop_5;
+        }
+        PutDrawEnv(&D_8006C37C->unk4);
+        PutDispEnv(&D_8006C37C->unk60);
+        DrawOTag(D_801362CC);
+        func_800EA7CC();
+        func_801361F8();
+        if (func_80131F28() >= 0x385) {
+            CdInit();
+            func_80132760();
+        }
+
+        if (D_801362DC.unk0 < D_8009792C.unk0) {
+            D_801362DC.unk0 = D_8009792C.unk0;
+        }
+        if (D_801362DC.unk4 < D_8009792C.unk4) {
+            D_801362DC.unk4 = D_8009792C.unk4;
+        }
+        if (D_801362DC.unk8 < D_8009792C.unk8) {
+            D_801362DC.unk8 = D_8009792C.unk8;
+        }
+        if (D_801362DC.unkC < D_8009792C.unkC) {
+            D_801362DC.unkC = D_8009792C.unkC;
+        }
+        if (D_801362DC.unk10 < D_8009792C.unk10) {
+            D_801362DC.unk10 = D_8009792C.unk10;
+        }
+        if (D_801362DC.unk14 < D_8009792C.unk14) {
+            D_801362DC.unk14 = D_8009792C.unk14;
+        }
+        if (D_801362DC.unk18 < D_8009792C.unk18) {
+            D_801362DC.unk18 = D_8009792C.unk18;
+        }
+        if (D_801362DC.unk1C < D_8009792C.unk1C) {
+            D_801362DC.unk1C = D_8009792C.unk1C;
+        }
+        if (D_801362DC.unk20 < D_8009792C.unk20) {
+            D_801362DC.unk20 = D_8009792C.unk20;
+        }
+
+        // Update game timer
+        D_801362D4 = (D_801362D4 + 0xFF) >> 8;
+        D_8003C99C += D_801362D4;
+        if (D_800973EC == 0 && D_800974A4 == 0) {
+            g_GameTimer.frames += D_801362D4;
+            if (g_GameTimer.frames >= 60) {
+                g_GameTimer.frames -= 60;
+                g_GameTimer.seconds++;
+                if (g_GameTimer.seconds >= 60) {
+                    g_GameTimer.seconds -= 60;
+                    g_GameTimer.minutes++;
+                    if (g_GameTimer.minutes >= 60) {
+                        g_GameTimer.minutes -= 60;
+                        g_GameTimer.hours++;
+                        if (g_GameTimer.hours >= 100) {
+                            g_GameTimer.seconds = 59;
+                            g_GameTimer.minutes = 59;
+                            g_GameTimer.hours = 99;
+                        }
+                    }
+                }
+            }
+        }
+        rand();
+    }
+}
 
 void func_800E4124(s32 context) {
     D_8003C734 = context;
