@@ -12,7 +12,7 @@
 #define DISP_UNK2_H DISP_ALL_H
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
-void func_800E2398(s32 arg0);
+void func_800E2398(const char* str);
 s32 func_800E3278(void);
 void func_800E385C(u32*);
 void func_800E7AEC(void);
@@ -39,35 +39,30 @@ s32 func_80136010(void);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
 #else
-u_long* FntFlush(int id); /* extern */
-int FntPrint();           /* extern */
-extern /*?*/ s32* D_8006C37C;
+u_long* FntFlush(int id);
+int FntPrint();
 extern s32 D_80136300;
 extern const char* aO;
 
-void func_800E2398(s32 arg0) {
-    s32 temp_v0;
-
-    D_8006C37C = *D_8006C37C;
-    FntPrint();
-    temp_v0 = D_80136300;
-    D_80136300 = temp_v0 + 1;
-    if (temp_v0 & 4) {
+void func_800E2398(const char* str) {
+    D_8006C37C = D_8006C37C->unk0;
+    FntPrint(str);
+    if (D_80136300++ & 4) {
         FntPrint(&aO); // "\no\n"
     }
     DrawSync(0);
     VSync(0);
-    PutDrawEnv((DRAWENV*)(D_8006C37C + 1));
-    PutDispEnv((DISPENV*)(D_8006C37C + 0x18));
+    PutDrawEnv(&D_8006C37C->buf.draw);
+    PutDispEnv(&D_8006C37C->buf.disp);
     FntFlush(-1);
 }
 #endif
 
-void func_800E2438(s32 arg0) {
+void func_800E2438(const char* str) {
     while (PadRead(0))
-        func_800E2398(arg0);
+        func_800E2398(str);
     while (!PadRead(0))
-        func_800E2398(arg0);
+        func_800E2398(str);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E249C);
