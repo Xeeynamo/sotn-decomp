@@ -310,8 +310,8 @@ loop_5:
         temp_v1_2 = D_8006C37C->unk0;
         g_blinkTimer++;
         D_8006C37C = temp_v1_2;
-        D_801362CC = (u32*)temp_v1_2->_unk_0474;
-        ClearOTag((u32*)temp_v1_2->_unk_0474, 0x200);
+        D_801362CC = temp_v1_2->_unk_0474;
+        ClearOTag(temp_v1_2->_unk_0474, 0x200);
         D_8009792C.unk0 = 0;
         D_8009792C.unk20 = 0U;
         D_8009792C.unk4 = 0U;

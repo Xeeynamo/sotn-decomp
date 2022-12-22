@@ -305,7 +305,7 @@ typedef struct {
     /* 0x00000 */ void* unk0;
     /* 0x00004 */ DisplayBuffer buf;
     /* 0x00074 */ char pad74[0x400];
-    /* 0x00474 */ s8 _unk_0474[0x800];
+    /* 0x00474 */ u32 _unk_0474[0x200];
     /* 0x00474 */ DR_MODE drawModes[0x400];
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
     /* 0x0D874 */ POLY_G4 polyG4[0x100];
@@ -341,6 +341,7 @@ typedef struct {
 // main
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
+extern u16 D_8003C104[];
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;

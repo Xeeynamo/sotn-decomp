@@ -14,25 +14,21 @@ typedef struct {
     u32 unk4;
 } Unkstruct_801ACBE4;
 
+extern u8* D_801803BC;
+extern u8* D_801803C0;
 extern u8 D_8018046C[0x20 * 3];
 extern u32 D_801822E4[];
+extern RECT D_801825A4;
+extern const char D_801A7D84[];
 extern Unkstruct_801ACBE4 D_801BAF18[];
+extern s32 D_801BAFD4;
+extern s32 D_801BAFD8;
 extern s32 D_801BAFDC;
 extern s32 D_801BAFE0;
 extern s32 D_801BAFE4;
 extern s32 D_801BAFE8;
-extern s32 D_801BC3D8;
-extern s32 D_801BC3DC;
-extern s32 D_801BC3E0;
-extern s32 D_801D6B04;
-extern s32 D_801D6B08;
-extern s32 D_801D6B0C;
-extern s32 D_801D6B20;
-
 extern s32 D_801BAFEC;
 extern s32 D_801BAFF0;
-extern s32 D_801BC650;
-extern s32 D_801BC8C8;
 extern s16 D_801BC35A;
 extern u16 D_801BC35C;
 extern s16 D_801BC35E;
@@ -44,9 +40,16 @@ extern s8 D_801BC36B;
 extern s16 D_801BC390;
 extern s16 D_801BC392;
 extern s32 D_801BC394;
-extern s32 D_801BAFD4;
-extern s32 D_801BAFD8;
-extern RECT D_801825A4;
+extern s32 D_801BC3D8;
+extern s32 D_801BC3DC;
+extern s32 D_801BC3E0;
+extern s32 D_801BC650;
+extern s32 D_801BC8C8;
+extern s32 D_801BC8E0[];
+extern s32 D_801D6B04;
+extern s32 D_801D6B08;
+extern s32 D_801D6B0C;
+extern s32 D_801D6B20;
 
 void func_801B84F0();
 
@@ -92,7 +95,10 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD134);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD1D0);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD218);
+void func_801AD218(void) {
+    func_801B2AFC(D_801803C0, 52, 196, 1);
+    func_801B2AFC(D_801803BC, 52, 212, 1);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD260);
 
@@ -296,8 +302,13 @@ void func_801B26A0(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
     poly->v3 = v + height;
 }
 
+extern RECT D_80182584;
+
+void func_801B2700(s32 arg0, s32 arg1);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2700);
 
+void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
+                   s32 tge, s32 c);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B27A8);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B28D4);
@@ -313,9 +324,20 @@ s32 func_801B2984(u32 arg0) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B29C0);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2A9C);
+void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
+    func_801B27A8(x, y, 8, 8, (img & 0xF) * 8, (img & 0xF0) / 2, 0x196, 0x1E,
+                  tge, 0x80);
+}
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2AFC);
+void func_801B2AFC(u8* imgs, s32 x, s32 y, s32 tge) {
+    while (true) {
+        if (*imgs == 0xFF)
+            break;
+        func_801B2A9C(*imgs, x, y, tge);
+        x += 8;
+        imgs++;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2B78);
 
@@ -356,7 +378,26 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2E5C);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2F50);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3120);
+void func_801B3120(void) {
+    s32* var_a0;
+    s32* var_v0;
+    s32* var_v1;
+    s32 i;
+    s32 n;
+
+    D_801BAFEC = 0;
+    i = 0;
+    n = -1;
+    var_v0 = D_801BC8E0;
+    var_a0 = var_v0 + 0xEA;
+    var_v1 = var_v0;
+    for (; i < 0xF; i++) {
+        *var_v1 = n;
+        *var_a0 = n;
+        var_a0++;
+        var_v1++;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3164);
 
@@ -545,7 +586,11 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B884C);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B88F4);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B89C8);
+s32 func_801B89C8(s32 memcardSlot, s32 memcardSubSlot, const char* path) {
+    char buf[0x20];
+    sprintf(buf, D_801A7D84, memcardSlot, memcardSubSlot, path);
+    return -(erase(buf) == 0);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8A10);
 
