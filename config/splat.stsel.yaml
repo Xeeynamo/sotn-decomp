@@ -1,0 +1,28 @@
+options:
+  platform:     psx
+  basename:     stsel
+  base_path:    ..
+  target_path:  iso/ST/SEL/SEL.BIN
+  asm_path:     asm/st/sel
+  asset_path:   assets/st/sel
+  src_path:     src/st/sel
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.stsel.txt
+  undefined_syms_path:  config/undefined_syms.stsel.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.stsel.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.stsel.txt
+  find_file_boundaries: yes
+  enable_ld_alignment_hack: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+segments:
+  - name: stsel
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 2
+    subsegments:
+      - [0x0, rodata]
+      - [0x2C048, c]
+      - [0x3AEE4, data]
+  - [0x56B28]

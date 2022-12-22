@@ -6,6 +6,8 @@
 #include <psxsdk/libcd.h>
 #include <psxsdk/libetc.h>
 #include <psxsdk/libgpu.h>
+#include <psxsdk/libgs.h>
+#include <psxsdk/libgte.h>
 #include <psxsdk/libsnd.h>
 
 extern s32 D_8003925C;
@@ -15,6 +17,7 @@ int VSync(s32);
 s32 rcos(s32);
 s32 rsin(s32);
 s32 ratan2(s32, s32);
+void* DMACallback(int dma, void (*func)());
 extern s32 func_8001D290(s32, s32);
 extern s32 func_8001D374(s8, s16, s16);
 extern void func_8001D2E0(s32, s32, s32);

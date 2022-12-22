@@ -5,6 +5,9 @@
         "**/.github": true,
         "build/**": true,
         "expected/**": true,
+        "tools/**": true,
+        "tools/aspatch/**": false,
+        "tools/gfxsotn/**": false,
     },
     "files.associations": {
         "main.h": "c",

@@ -16,6 +16,14 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ u_long tag;
+    /* 0x04 */ u_char r0, g0, b0, code;
+    /* 0x08 */ short x0, y0;
+    /* 0x0C */ u_char r1, g1, b1, p1;
+    /* 0x10 */ short x1, y1;
+} LINE_G2; /* size = 0x14 */
+
+typedef struct {
+    /* 0x00 */ u_long tag;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -155,6 +163,13 @@ typedef struct {
 } SPRT_8; /* 8x8 Sprite, size = 0x10 */
 
 typedef struct {
+    /* 0x00 */ u_long tag;
+    /* 0x04 */ u_char r0, g0, b0, code;
+    /* 0x08 */ short x0, y0;
+    /* 0x0C */ short w, h;
+} TILE; /* free size Tile, size = 0x10 */
+
+typedef struct {
     /* 0x00 */ RECT clip;     /* clip area */
     /* 0x08 */ short ofs[2];  /* drawing offset */
     /* 0x0A */ RECT tw;       /* texture window */
@@ -207,20 +222,27 @@ extern u_short LoadTPage(PixPattern* pix,  // Pointer to texture pattern start a
 
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
+extern void SetLineG2(LINE_G2* p);
 extern void SetPolyGT3(POLY_GT3* p);
 extern void SetPolyG4(POLY_G4* p);
 extern void SetPolyGT4(POLY_GT4* p);
+extern void SetSemiTrans(void* p, int abe);
 extern void SetSprt(SPRT* p);
 extern void SetSprt16(SPRT_16* p);
 extern void SetSprt8(SPRT_8* p);
+extern void SetTile(TILE* p);
 extern int ResetGraph(int mode);
+int SetGraphDebug(int level);
 extern int SetGraphReverse(int mode);
 extern int SetGraphQueue(int mode);
 extern u_long DrawSyncCallback(void (*func)());
+extern void FntLoad(int tx, int ty);
 extern void SetDispMask(int mask);
 extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
-extern int DrawSync(int mode);
+extern void SetDumpFnt(int id);
 extern int ClearImage(RECT* rect, u_char r, u_char g, u_char b);
+extern int DrawSync(int mode);
+extern int FntOpen(int x, int y, int w, int h, int isbg, int n);
 extern int LoadImage(RECT* rect, u_long* p);
 extern int StoreImage(RECT* rect, u_long* p);
 extern int MoveImage(RECT* rect, int x, int y);
