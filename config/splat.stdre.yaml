@@ -8,11 +8,9 @@ options:
   src_path:     src/st/dre
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.stdre.txt
-  undefined_syms_path:  config/undefined_syms.stdre.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.stdre.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.stdre.txt
   find_file_boundaries: yes
-  enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
 segments:

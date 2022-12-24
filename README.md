@@ -52,17 +52,15 @@ Some non-matching functions are present in the source preprocessed by the macro 
 1. Run `make clean extract all expected` at least once
 1. After setup and build, choose an overlay (eg. `ST/WRP`)
 1. Look for one of those functions which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
-1. Look for its assembly file (eg. `asm/st/wrp/nonmatchings/6FD0/func_801873A0.s`)
-1. Run `SOURCE=src/st/wrp/6FD0.c ASSEMBLY=asm/st/wrp/nonmatchings/6FD0/func_801873A0.s make decompile` to dump the decompiled code on the console
-1. Replace the `INCLUDE_ASM(...);` you targeted with the console output content
-1. Invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0`
-
-You will probably have some differences from your compiled code to the original; keep refactoring the code and move variables around until you have a 100% match.
+1. Run `./tools/decompile.py func_801873A0` to decompile the function in the C source code where the function is supposed to be located
+1. If the function does not compile, try addressing the compilation errors until `make` compiles
+1. If the function does not match, invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0` and refactor the code until it matches
+1. If the function matches, try refactoring to keep the code clean while checking if the function still matches once in a while
 
 There are a few tricks to make the process more streamlined:
 
 1. Use [decomp.me](https://decomp.me/) with PSY-Q 4.0. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
-1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/dra/42398.c make context` as mentioned in the how to decompile.
+1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/wrp/6FD0.c make context` as mentioned in the how to decompile.
 1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches.
 1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
 1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it.
