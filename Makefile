@@ -224,10 +224,6 @@ extract_st%: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
-decompile: $(M2C_APP)
-	$(M2CTX) $(SOURCE)
-	$(M2C_APP) $(M2C_ARGS) --target mipsel-gcc-c --context ctx.c $(FUNC) $(ASSEMBLY)
-
 context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
