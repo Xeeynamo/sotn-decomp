@@ -8,11 +8,9 @@ options:
   src_path:     src/ric
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.ric.txt
-  undefined_syms_path:  config/undefined_syms.ric.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.ric.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.ric.txt
   find_file_boundaries: yes
-  enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
 segments:

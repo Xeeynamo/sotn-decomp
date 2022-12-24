@@ -8,11 +8,9 @@ options:
   src_path:     src/st/mad
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.stmad.txt
-  undefined_syms_path:  config/undefined_syms.stmad.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.stmad.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.stmad.txt
   find_file_boundaries: yes
-  enable_ld_alignment_hack: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
 segments:
