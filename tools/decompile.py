@@ -205,15 +205,15 @@ if __name__ == "__main__":
 
     ctx = get_c_context(func.src_path)
     dec = decompile(func, ctx)
-    decres = guess_unknown_type(dec)
-    match inject_decompiled_function_into_file(func, decres):
-        case InjectRes.SUCCESS:
-            print(f"function '{func.name}' decompiled successfully!")
-        case InjectRes.NON_MATCHING:
-            print(f"function '{func.name}' decompiled but not matching")
-        case InjectRes.NOT_COMPILABLE:
-            print(f"function '{func.name}' decompiled but cannot be compiled")
-        case InjectRes.NOT_INJECTED:
-            print(f"function '{func.name}' might already be decompiled")
-        case _:
-            print("unhandled error!")
+    dec_res = guess_unknown_type(dec)
+    inject_res = inject_decompiled_function_into_file(func, dec_res)
+    if InjectRes.SUCCESS:
+        print(f"function '{func.name}' decompiled successfully!")
+    elif InjectRes.NON_MATCHING:
+        print(f"function '{func.name}' decompiled but not matching")
+    elif InjectRes.NOT_COMPILABLE:
+        print(f"function '{func.name}' decompiled but cannot be compiled")
+    elif InjectRes.NOT_INJECTED:
+        print(f"function '{func.name}' might already be decompiled")
+    else _:
+        print("unhandled error!")
