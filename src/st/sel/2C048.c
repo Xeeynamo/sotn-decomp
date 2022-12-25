@@ -231,7 +231,8 @@ extern /*?*/ u8* D_801BAFD0;
 
 void func_801B1F34(void) { D_801BAFD0 = &D_80080FE4; }
 
-#ifdef NON_MATCHING
+// TODO accidentially pushed
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1F4C);
 #else
 s32 func_801B1EF4(s32, s32); /* extern */
