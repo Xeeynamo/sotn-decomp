@@ -186,6 +186,19 @@ def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> Inj
         raise e
 
 
+def show_asm_differ_command(func: NonMatchingFunc):
+    isStage = True
+    if func.overlay_name == "dra" or \
+       func.overlay_name == "ric" or \
+       func.overlay_name == "main":
+        isStage = False
+
+    tool_path = os.path.join(root_dir, "tools/asm-differ/diff.py")
+    tool_path = os.path.relpath(tool_path)
+    overlay_name = f"st/{func.overlay_name}" if isStage else func.overlay_name
+    print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
+
+
 parser = argparse.ArgumentParser(
     description="automatically decompiles a function")
 parser.add_argument("function", help="function name to decompile")
@@ -207,13 +220,15 @@ if __name__ == "__main__":
     dec = decompile(func, ctx)
     dec_res = guess_unknown_type(dec)
     inject_res = inject_decompiled_function_into_file(func, dec_res)
-    if InjectRes.SUCCESS:
+    if inject_res == InjectRes.SUCCESS:
         print(f"function '{func.name}' decompiled successfully!")
-    elif InjectRes.NON_MATCHING:
+    elif inject_res == InjectRes.NON_MATCHING:
         print(f"function '{func.name}' decompiled but not matching")
-    elif InjectRes.NOT_COMPILABLE:
+        show_asm_differ_command(func)
+    elif inject_res == InjectRes.NOT_COMPILABLE:
         print(f"function '{func.name}' decompiled but cannot be compiled")
-    elif InjectRes.NOT_INJECTED:
+        show_asm_differ_command(func)
+    elif inject_res == InjectRes.NOT_INJECTED:
         print(f"function '{func.name}' might already be decompiled")
     else:
         print("unhandled error!")
