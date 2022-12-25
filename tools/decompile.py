@@ -215,5 +215,5 @@ if __name__ == "__main__":
         print(f"function '{func.name}' decompiled but cannot be compiled")
     elif InjectRes.NOT_INJECTED:
         print(f"function '{func.name}' might already be decompiled")
-    else _:
+    else:
         print("unhandled error!")
