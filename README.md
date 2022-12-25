@@ -31,12 +31,12 @@ This repo does not include any assets or assembly code necessary for compiling t
 
 ## Setup the project
 
-This assumes you have Ubuntu 20.04 or Debian 11, either as a primary OS or within WSL in Windows.
+This assumes you have Ubuntu, Debian or WSL in Windows.
 
 1. Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
 1. Run `sudo apt-get install -y $(cat tools/requirements-debian.txt)`
 1. Run `make update-dependencies`
-1. Inside the newly created repo, create a new `iso/` folder, and extract the contents of the game disc
+1. Inside the newly created repo, create a new `iso/` folder, and extract the game content from the ISO or disc
 
 ## Build
 
@@ -89,15 +89,3 @@ The project is very barebone at the moment and there is a massive room of improv
 Be aware that not all the offsets have been yet redirected, so it will still be not entirely functional until further update.
 * I suspect that GCC 2.6.x / PSY-Q 3.4 have been used to originally compile DRA.BIN
 * `main.exe` uses PS-X libraries that might have been created with a different compiler and with `-O1` rather than `-O2`
-
-## Troubleshooting
-
-### Not getting an "OK" on Ubuntu 22.04
-
-Debian>=12 and Ubuntu>=22.04 uses `binutils-mipsel-linux-gnu`>=2.38 which, for some unknown reasons, it generates broken binaries. You need to downgrade to 2.34 or 2.35 with the following:
-
-```shell
-curl -L -o binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb http://ftp.de.debian.org/debian/pool/main/b/binutils-mipsen/binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
-dpkg -i binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
-rm binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
-```
