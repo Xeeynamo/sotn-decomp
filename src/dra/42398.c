@@ -3708,6 +3708,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
 
+// https://decomp.me/scratch/N8Srk
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
