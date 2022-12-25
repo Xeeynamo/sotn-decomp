@@ -13,6 +13,10 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  section_order:
+    - ".rodata"
+    - ".text"
+    - ".data"
 segments:
   - name: stst0
     type: code
