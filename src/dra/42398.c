@@ -3422,7 +3422,34 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DDA0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DF70);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DFF0);
+void func_8010DFF0(s32 arg0, s32 arg1) {
+    POLY_GT4* poly;
+    s32 i;
+
+    if (arg0 != 0) {
+        D_80073511 = 1;
+        D_80073662 = 0;
+        D_800735A6 = 0;
+        D_800734EA = 0;
+        poly = &D_80086FEC[D_800734F8];
+
+        for (i = 0; i < 6; i++) {
+            poly->x1 = 0;
+            poly = (POLY_GT4*)poly->tag;
+        }
+    }
+
+    D_80073510 = 1;
+    D_80073512 = 10;
+
+    if (arg1 != 0) {
+        if (arg1 < 4) {
+            D_80072F1E = 4;
+        } else {
+            D_80072F1E = arg1;
+        }
+    }
+}
 
 void func_8010E0A8(void) { D_80073512 = 0; }
 
