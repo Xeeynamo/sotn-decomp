@@ -166,11 +166,11 @@ def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> Inj
         newcode = ""
         for line in lines:
             if line.startswith("INCLUDE_ASM(") and func.name in line:
-                newcode += "#ifdef NON_MATCHING\n"
-                newcode += line + "\n"
-                newcode += "#else\n"
+                newcode += "//#ifndef NON_MATCHING\n"
+                newcode += f"//{line}\n"
+                newcode += "//#else\n"
                 newcode += dec
-                newcode += "#endif\n"
+                newcode += "//#endif\n"
             else:
                 newcode += line + "\n"
         with open(func.src_path, "w") as file:
