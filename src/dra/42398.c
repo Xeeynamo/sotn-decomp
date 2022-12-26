@@ -3857,28 +3857,27 @@ void func_80111CC0(void) {
     }
 }
 
-// !FAKE: There's a struct inside the stack.
 bool func_80111D24(void) {
-    s32 sp10[9];
-    s32 move = 0xC000;
+    s32 sp10[9]; // !FAKE: There's a struct inside the stack.
+    s32 speed = 0xC000;
     s16 posX = D_800733D8->posX.Data.high;
     s16 posY = D_800733D8->posY.Data.high;
-    s32 temp_s0_2;
-    s32 temp_v1;
+    s32 hitboxLeftMargin;
+    s32 hitboxRightMargin;
 
     CheckCollision(posX - 7, posY, &sp10, 0);
-    temp_s0_2 = sp10[0] & 0x10;
+    hitboxLeftMargin = sp10[0] & 0x10;
     CheckCollision(posX + 7, posY, &sp10, 0);
-    temp_v1 = sp10[0] & 0x10;
-    
-    if (temp_v1 & temp_s0_2) {
-        func_8010E390(move);
+    hitboxRightMargin = sp10[0] & 0x10;
+
+    if (hitboxRightMargin & hitboxLeftMargin) {
+        func_8010E390(speed);
         return true;
-    } else if (temp_v1 != 0) {
-        D_800733D8->accelerationX = -move;
+    } else if (hitboxRightMargin != 0) {
+        D_800733D8->accelerationX = -speed;
         return true;
-    } else if (temp_s0_2 != 0) {
-        D_800733D8->accelerationX = move;
+    } else if (hitboxLeftMargin != 0) {
+        D_800733D8->accelerationX = speed;
         return true;
     }
     return false;
