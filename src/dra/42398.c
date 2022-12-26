@@ -3870,7 +3870,7 @@ bool func_80111D24(void) {
     temp_s0_2 = sp10[0] & 0x10;
     CheckCollision(posX + 7, posY, &sp10, 0);
     temp_v1 = sp10[0] & 0x10;
-    
+
     if (temp_v1 & temp_s0_2) {
         func_8010E390(move);
         return true;
