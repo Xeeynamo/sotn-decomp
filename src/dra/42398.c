@@ -1479,7 +1479,23 @@ void func_800F18C4(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1954);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1A3C);
+void func_800F1A3C(s32 arg0) {
+    if (arg0 == 0) {
+        func_800F18C4(0xE, 0x2B);
+        func_800F18C4(0x10, 0x2B);
+        func_800F18C4(0x2B, 0x2A);
+        func_800F18C4(0x2C, 0x2A);
+        func_800F18C4(0x2D, 0x2A);
+        func_800F18C4(0x30, 0x2A);
+    } else {
+        func_800F1954(0xE, 0x2B, 0);
+        func_800F1954(0x10, 0x2B, 1);
+        func_800F1954(0x2B, 0x2A, 2);
+        func_800F1954(0x2C, 0x2A, 2);
+        func_800F1954(0x2D, 0x2A, 2);
+        func_800F1954(0x30, 0x2A, 2);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1B08);
 
