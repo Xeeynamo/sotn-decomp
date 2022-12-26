@@ -36,7 +36,9 @@ This assumes you have Ubuntu, Debian or WSL in Windows.
 1. Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
 1. Run `sudo apt-get install -y $(cat tools/requirements-debian.txt)`
 1. Run `make update-dependencies`
-1. Inside the newly created repo, create a new `iso/` folder, and extract the game content from the ISO or disc
+1. Inside the newly created repo, create a new `iso/` folder and put the game disc image in, both BIN and CUE files
+1. Rename the CUE file as `sotn.cue`
+1. Run `make extract_iso`
 
 ## Build
 

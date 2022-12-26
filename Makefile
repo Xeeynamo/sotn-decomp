@@ -52,6 +52,7 @@ M2C_ARGS		:= -P 4
 GO				:= $(TOOLS_DIR)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
+SOTNDISK		:= $(GOPATH)/bin/sotn-disk
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -211,6 +212,8 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
+extract_iso: $(SOTNDISK)
+	$(SOTNDISK) extract iso/sotn.cue iso/
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
@@ -252,6 +255,8 @@ $(GO):
 	rm go1.19.3.linux-amd64.tar.gz
 $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
+$(SOTNDISK): $(GO)
+	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<

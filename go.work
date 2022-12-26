@@ -1,4 +1,7 @@
 go 1.19
 
 use ./tools/aspatch
+
 use ./tools/gfxsotn
+
+use ./tools/sotn-disk
