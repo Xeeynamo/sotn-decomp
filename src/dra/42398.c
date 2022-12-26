@@ -2497,7 +2497,7 @@ void func_800FAE98(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAEC4);
 
-// https://decomp.me/scratch/njlbz
+// https://decomp.me/scratch/HEhaF by @pixel-stuck
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAF44);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB004);
@@ -3857,37 +3857,31 @@ void func_80111CC0(void) {
     }
 }
 
-// !FAKE: If this is real i might not be
+// !FAKE: There's a struct inside the stack.
 bool func_80111D24(void) {
     s32 sp10[9];
-    int new_var;
-    s16 temp_s0;
-    s16 temp_s1;
+    s32 move = 0xC000;
+    s16 posX = D_800733D8->posX.Data.high;
+    s16 posY = D_800733D8->posY.Data.high;
     s32 temp_s0_2;
     s32 temp_v1;
 
-    temp_s0 = D_800733DA;
-    temp_s1 = D_800733DE;
-    CheckCollision(temp_s0 - 7, D_800733DE, &sp10, 0);
+    CheckCollision(posX - 7, posY, &sp10, 0);
     temp_s0_2 = sp10[0] & 0x10;
-    new_var = 0xC000;
-    CheckCollision(temp_s0 + 7, temp_s1, &sp10, 0);
+    CheckCollision(posX + 7, posY, &sp10, 0);
     temp_v1 = sp10[0] & 0x10;
+    
     if (temp_v1 & temp_s0_2) {
-        func_8010E390(0xC000);
+        func_8010E390(move);
+        return true;
+    } else if (temp_v1 != 0) {
+        D_800733D8->accelerationX = -move;
+        return true;
+    } else if (temp_s0_2 != 0) {
+        D_800733D8->accelerationX = move;
         return true;
     }
-    if (temp_v1 != 0) {
-        D_800733E0 = -0xC000;
-        return true;
-    }
-    if (temp_s0_2 == 0) {
-        if ((temp_s1 && temp_s1)) {
-        }
-        return false;
-    }
-    D_800733E0 = new_var;
-    return true;
+    return false;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
