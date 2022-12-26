@@ -697,7 +697,7 @@ extern const char* c_strALUCART;
 extern const char* c_strSSword;
 extern s32 D_800A4B04;
 extern s32 D_800A7718;
-extern u16 D_800A7734;
+extern u16 D_800A7734[];
 extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;

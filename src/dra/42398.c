@@ -2497,6 +2497,7 @@ void func_800FAE98(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAEC4);
 
+// https://decomp.me/scratch/njlbz
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAF44);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB004);
