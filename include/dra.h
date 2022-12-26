@@ -869,6 +869,7 @@ extern s32 D_801EC000[];
 
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
+s32 CheckCollision(s32, s16, s32*, s32);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
 void func_8002A09C(void*);
@@ -959,7 +960,7 @@ void func_80111928(void);
 void func_80111CC0(void);
 void func_80118894(Entity*);
 void func_80118C28(s32 arg0);
-s32 func_80111D24(void);
+bool func_80111D24(void);
 Entity* func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);

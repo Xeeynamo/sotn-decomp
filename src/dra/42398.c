@@ -3857,7 +3857,38 @@ void func_80111CC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111D24);
+// !FAKE: If this is real i might not be
+bool func_80111D24(void) {
+    s32 sp10[9];
+    int new_var;
+    s16 temp_s0;
+    s16 temp_s1;
+    s32 temp_s0_2;
+    s32 temp_v1;
+
+    temp_s0 = D_800733DA;
+    temp_s1 = D_800733DE;
+    CheckCollision(temp_s0 - 7, D_800733DE, &sp10, 0);
+    temp_s0_2 = sp10[0] & 0x10;
+    new_var = 0xC000;
+    CheckCollision(temp_s0 + 7, temp_s1, &sp10, 0);
+    temp_v1 = sp10[0] & 0x10;
+    if (temp_v1 & temp_s0_2) {
+        func_8010E390(0xC000);
+        return true;
+    }
+    if (temp_v1 != 0) {
+        D_800733E0 = -0xC000;
+        return true;
+    }
+    if (temp_s0_2 == 0) {
+        if ((temp_s1 && temp_s1)) {
+        }
+        return false;
+    }
+    D_800733E0 = new_var;
+    return true;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 
