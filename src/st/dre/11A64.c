@@ -365,7 +365,7 @@ s32 func_801996F8(Unkstruct5* arg0) {
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = D_800733DE - arg0->unk6;
+        var_v0_2 = D_800733D8->posY.Data.high - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
@@ -453,7 +453,7 @@ s32 func_8019A6A8(void) {
 }
 
 s32 func_8019A6E4(void) {
-    s32 value = D_8006C3B8->posY.Data.high - D_800733DE;
+    s32 value = D_8006C3B8->posY.Data.high - D_800733D8->posY.Data.high;
 
     if (value < 0) {
         value = -value;
@@ -464,7 +464,7 @@ s32 func_8019A6E4(void) {
 s16 func_8019A718(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high > D_800733DE) {
+    if (D_8006C3B8->posY.Data.high > D_800733D8->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

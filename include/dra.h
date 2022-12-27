@@ -539,7 +539,7 @@ extern s32 g_CurrentRoomHeight;
 // Beginning of Player Character
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
-extern s16 D_800733DE; // D_800733D8.posY.Data.high
+//extern s16 D_800733D8->posY.Data.high; // D_800733D8->posY.Data.high
 extern s32 D_800733E0;
 extern s32 D_800733E4;
 extern u16 D_800733EC;
