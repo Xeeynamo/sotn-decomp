@@ -3379,10 +3379,10 @@ void func_80109328(void) {
 
     D_80072F86 = 0;
 // !FAKE:
-    new_var = &D_800733F6[0];
+    new_var = &D_800733D8->unk1E;
     if ((*new_var == 0x800) && (D_80073404 == 8)) {
 // !FAKE:
-do {    D_800733F6[0] = 0;                  } while (0);
+do {    D_800733D8->unk1E = 0;                  } while (0);
         D_8007342E = 0x9D;
         D_800733D8->unk14 = (D_800733D8->unk14 + 1) & 1;
     }
@@ -4000,7 +4000,7 @@ void func_80113EE0(void) {
     D_800733F0 = 0;
     *D_80072F64 = 0;
     D_80072F66 = 0;
-    *D_800733F6 = 0;
+    D_800733D8->unk1E = 0;
     D_800733FC = g_zEntityCenter;
     if (D_80073FBE == 0x22) {
         func_8010FAF4();
@@ -4071,16 +4071,18 @@ bool func_80116838(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    if (D_800733F6[0] < arg0) {
-        D_800733F6[0] += 16;
-        if (arg0 < D_800733F6[0]) {
-            D_800733F6[0] = arg0;
+    s16* temp = &D_800733D8->unk1E;
+
+    if (*temp < arg0) {
+        *temp += 16;
+        if (arg0 < *temp) {
+            *temp = arg0;
         }
     }
-    if (arg0 < D_800733F6[0]) {
-        D_800733F6[0] -= 16;
-        if (D_800733F6[0] < arg0) {
-            D_800733F6[0] = arg0;
+    if (arg0 < *temp) {
+        *temp -= 16;
+        if (*temp < arg0) {
+            *temp = arg0;
         }
     }
 }
