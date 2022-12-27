@@ -3384,7 +3384,7 @@ void func_80109328(void) {
 // !FAKE:
 do {    D_800733F6[0] = 0;                  } while (0);
         D_8007342E = 0x9D;
-        D_800733EC = (D_800733EC + 1) & 1;
+        D_800733D8->unk14 = (D_800733D8->unk14 + 1) & 1;
     }
 
     if (D_80072F16[0] != 0) {
@@ -3568,7 +3568,7 @@ s32 func_8010E27C(void) {
         return 0;
 
     retValue = 1;
-    tmp = &D_800733EC;
+    tmp = &D_800733D8->unk14;
     if (*tmp == 1) {
         if (D_80072EE8 & 0x2000) {
             *tmp = 0;
