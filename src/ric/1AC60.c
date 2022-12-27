@@ -110,7 +110,8 @@ void func_80159BC8(void) {
     g_EntityArray[PLAYER_CHARACTER].animationFrameIndex = 0;
     D_80072F64[0] = 0;
     D_80072F66 = 0;
-    g_EntityArray[PLAYER_CHARACTER].unk19 = g_EntityArray[PLAYER_CHARACTER].unk19 & 0xFB;
+    g_EntityArray[PLAYER_CHARACTER].unk19 =
+        g_EntityArray[PLAYER_CHARACTER].unk19 & 0xFB;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159C04);
