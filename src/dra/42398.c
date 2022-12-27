@@ -3380,7 +3380,7 @@ void func_80109328(void) {
     D_80072F86 = 0;
 // !FAKE:
     new_var = &D_800733D8->unk1E;
-    if ((*new_var == 0x800) && (D_80073404 == 8)) {
+    if ((*new_var == 0x800) && (D_800733D8->initState == 8)) {
 // !FAKE:
 do {    D_800733D8->unk1E = 0;                  } while (0);
         D_8007342E = 0x9D;
@@ -3434,7 +3434,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D010);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 
 void func_8010D584(s16 context) {
-    D_80073404 = context;
+    D_800733D8->initState = context;
     D_80073406 = 0;
 }
 
@@ -3617,7 +3617,7 @@ void func_8010E3E0(void) {
 
 void func_8010E42C(u16 arg0) {
     D_80073406 = arg0;
-    D_80073404 = 0x12;
+    D_800733D8->initState = 0x12;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -3634,7 +3634,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 void func_8010E470(s32 arg0, s32 arg1) {
     D_800733D8->accelerationX = arg1;
     D_800733D8->accelerationY = 0;
-    D_80073404 = 2;
+    D_800733D8->initState = 2;
     D_80073406 = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
@@ -3835,7 +3835,7 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    D_80073404 = 0;
+    D_800733D8->initState = 0;
     D_80073406 = 3;
     func_8010E390(0xFFFC8000);
     D_8006C3B8->accelerationY = 0;
@@ -4252,7 +4252,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
 void func_8011B530(Entity* entity) {
-    if (D_80073404 != 0x25) {
+    if (D_800733D8->initState != 0x25) {
         func_80106590(entity);
     } else if (entity->initState == ENTITY_INITSTATE_0) {
         entity->unk34 = 0x60000;

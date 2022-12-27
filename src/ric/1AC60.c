@@ -170,7 +170,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C4AC);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C6D4);
 
 void func_8015C908(s32 unk0) {
-    D_80073404 = unk0;
+    D_800733D8->initState = unk0;
     D_80073406 = 0;
 }
 
@@ -240,7 +240,7 @@ void func_8015CC50() { func_8015C908(0xF0); }
 
 void func_8015CC70(s16 arg0) {
     D_80073406 = arg0;
-    D_80073404 = 0x0020;
+    D_800733D8->initState = 0x0020;
     D_8007342A = 0;
     D_80073428.typeShort = 0;
     if (arg0 & 1) {
