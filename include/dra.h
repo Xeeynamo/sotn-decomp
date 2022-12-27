@@ -296,10 +296,7 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
-typedef enum {
-    MONO,
-    STEREO
-} SoundMode;
+typedef enum { MONO, STEREO } SoundMode;
 
 typedef struct {
     /* 0x00 */ DRAWENV draw; // drawing environment
@@ -723,6 +720,8 @@ extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
+extern s32 D_800DC4C0;
+extern s8 D_800DC4C4;
 extern s32 D_801362AC;
 extern s32 D_801362B0;
 extern s32 D_801362B4;

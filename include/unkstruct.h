@@ -169,3 +169,13 @@ typedef struct {
     u32 unk1C;
     u32 unk20;
 } Unkstruct_Entrypoint;
+
+typedef struct Unkstruct_aSimCBinDemoKey {
+    s32 unk0;
+    s8 unk4;
+    char pad5[0x3];
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+} Unkstruct_aSimCBinDemoKey;

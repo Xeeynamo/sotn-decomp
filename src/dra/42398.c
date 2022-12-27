@@ -1316,7 +1316,32 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EFBF8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0334);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F04A4);
+extern Unkstruct_aSimCBinDemoKey aSimCBinDemoKey;
+
+void func_800F04A4(void) {
+    Unkstruct_aSimCBinDemoKey sp10[10];
+    char pad[12];
+    s32 temp;
+    s32 device;
+
+    sp10[0] = aSimCBinDemoKey;
+
+    device = open((char*)&sp10, 0x200);
+
+    if (device >= 0) {
+        if (write(device, (void*)0x801E8000, 0x2000) < 0) {
+            close(device);
+            return;
+        } else if (close(device) >= 0) {
+            // !FAKE:
+            sp10[0].unk0 = D_800DC4C0;
+            sp10[0].unk4 = (temp = D_800DC4C4);
+            do {
+                func_800E2438(&sp10);
+            } while (0);
+        }
+    }
+}
 
 void func_800F0578(s32 arg0) {
     D_80137590 = (s32*)0x801E8000;
