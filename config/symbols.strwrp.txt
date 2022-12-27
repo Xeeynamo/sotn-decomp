@@ -1,3 +1,2 @@
 UpdateStageEntities = 0x8018A198;
 func_801951F0 = 0x801951F0;
-g_EntityArray = 0x800733D8;

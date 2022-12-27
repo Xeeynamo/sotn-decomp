@@ -1,1 +1,0 @@
-g_EntityArray = 0x800733D8;

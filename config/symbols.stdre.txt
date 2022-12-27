@@ -33,4 +33,3 @@ EntityAbsorbOrb = 0x801A13B8;
 EntityRoomForeground = 0x801A1BFC;
 func_801A2018 = 0x801A2018;
 Random = 0x80196F90;
-g_EntityArray = 0x800733D8;

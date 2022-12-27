@@ -37,4 +37,3 @@ EntityMerman = 0x801C8238;
 EntityBoneScimitar = 0x801C91C4;
 EntityBat = 0x801C997C;
 EntityZombie = 0x801C9BC8;
-g_EntityArray = 0x800733D8;
