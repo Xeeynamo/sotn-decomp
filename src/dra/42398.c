@@ -3644,7 +3644,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     D_800733EE = 0x8100;
-    D_800733FC = g_zEntityCenter;
+    D_800733D8->zPriority = g_zEntityCenter;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
@@ -4001,7 +4001,7 @@ void func_80113EE0(void) {
     *D_80072F64 = 0;
     D_80072F66 = 0;
     D_800733D8->unk1E = 0;
-    D_800733FC = g_zEntityCenter;
+    D_800733D8->zPriority = g_zEntityCenter;
     if (D_80073FBE == 0x22) {
         func_8010FAF4();
     }

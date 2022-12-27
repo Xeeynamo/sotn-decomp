@@ -43,7 +43,6 @@ extern u8 D_80181338;
 extern PfnEntityUpdate D_801803C4[];
 extern u16 D_801804E8;
 extern u16 D_8018050C;
-extern u16 D_800733FC;
 extern PfnEntityUpdate D_801803C4[];
 extern s16 D_801A3EDE;
 extern u16 D_801A3EE0;
@@ -144,7 +143,7 @@ void func_80193D7C(Entity* entity) {
         entity->animationFrame = 0x3F;
     }
 
-    entity->zPriority = D_800733FC + 4;
+    entity->zPriority = D_800733D8->zPriority + 4;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193E18);
