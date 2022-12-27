@@ -521,15 +521,15 @@ void func_801BDE20(u16 arg0) {
     Unkstruct7 sp10;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        D_8003C7BC(g_CurrentEntity->posX.Data.high, g_CurrentEntity->posY.Data.high - 7,
-                   &sp10, 0);
+        D_8003C7BC(g_CurrentEntity->posX.Data.high,
+                   g_CurrentEntity->posY.Data.high - 7, &sp10, 0);
         if (sp10.sp10 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    D_8003C7BC(g_CurrentEntity->posX.Data.high, g_CurrentEntity->posY.Data.high + 7,
-               &sp10, 0);
+    D_8003C7BC(g_CurrentEntity->posX.Data.high,
+               g_CurrentEntity->posY.Data.high + 7, &sp10, 0);
 
     if (arg0) {
         if (!(sp10.sp10 & 5)) {
@@ -805,7 +805,8 @@ bool func_801C0F38(Unkstruct6* unk) {
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
             g_CurrentEntity->posY.Data.high += a.sp28;
-            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;
             }
@@ -974,7 +975,8 @@ void func_801C3708(void) {
             }
         }
     } else {
-        g_CurrentEntity->unk7C.modeU8.unk0 = (s8)g_CurrentEntity->unk7C.modeU8.unk0 - 1;
+        g_CurrentEntity->unk7C.modeU8.unk0 =
+            (s8)g_CurrentEntity->unk7C.modeU8.unk0 - 1;
     }
 }
 

@@ -641,7 +641,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
 #else
 void func_801C6114(void) {
     if (g_CurrentEntity->accelerationY >= 0) {
-        g_CurrentEntity->unk84.value = g_CurrentEntity->unk88 + g_CurrentEntity->unk84.value;
+        g_CurrentEntity->unk84.value =
+            g_CurrentEntity->unk88 + g_CurrentEntity->unk84.value;
         g_CurrentEntity->accelerationX = g_CurrentEntity->unk84.value;
         if ((g_CurrentEntity->accelerationX == 0x10000) ||
             (g_CurrentEntity->accelerationX == -0x10000)) {
@@ -717,7 +718,8 @@ bool func_801C92B0(Unkstruct6* unk) {
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
             g_CurrentEntity->posY.Data.high += a.sp28;
-            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;
             }

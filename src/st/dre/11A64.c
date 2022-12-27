@@ -755,15 +755,15 @@ void func_8019B8DC(u16 arg0) {
     Unkstruct7 sp10;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        D_8003C7BC(g_CurrentEntity->posX.Data.high, g_CurrentEntity->posY.Data.high - 7,
-                   &sp10, 0);
+        D_8003C7BC(g_CurrentEntity->posX.Data.high,
+                   g_CurrentEntity->posY.Data.high - 7, &sp10, 0);
         if (sp10.sp10 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    D_8003C7BC(g_CurrentEntity->posX.Data.high, g_CurrentEntity->posY.Data.high + 7,
-               &sp10, 0);
+    D_8003C7BC(g_CurrentEntity->posX.Data.high,
+               g_CurrentEntity->posY.Data.high + 7, &sp10, 0);
 
     if (arg0) {
         if (!(sp10.sp10 & 5)) {
@@ -998,7 +998,8 @@ bool func_8019E9F4(Unkstruct6* arg0) {
 
         if (sp10.sp10 & 1) {
             g_CurrentEntity->posY.Data.high += sp10.sp28;
-            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
 
             if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;

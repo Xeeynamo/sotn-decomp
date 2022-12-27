@@ -511,7 +511,8 @@ void func_8016B8E8(s32 arg0) {
 
 void func_8016B92C(s16 arg0) {
     if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->unk7C.modeS16 = (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+        g_CurrentEntity->unk7C.modeS16 =
+            (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
         g_CurrentEntity->unk80.modeS16.unk0++;
         g_CurrentEntity->unk80.modeS16.unk2++;
     }

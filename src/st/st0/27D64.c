@@ -923,7 +923,8 @@ bool func_801B8338(Unkstruct6* unk) {
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
             g_CurrentEntity->posY.Data.high += a.sp28;
-            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;
             }
