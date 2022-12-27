@@ -45,7 +45,14 @@ CdlCB CdReadyCallback(CdlCB func);
 int CdControl(u_char com, u_char* param, u_char* result);
 int CdControlB(u_char com, u_char* param, u_char* result);
 int CdControlF(u_char com, u_char* param);
-int CdMix(CdlATV* vol);
+
+/*
+ * Sets the audio volume for CD audio (CD-DA, ADPCM).
+ * Return value: 1
+ */
+int CdMix(CdlATV* vol // Pointer to attenuator volume
+);
+
 int CdGetSector(void* madr, int size);
 void(*CdDataCallback(void (*func)()));
 CdlLOC* CdIntToPos(int i, CdlLOC* p);
