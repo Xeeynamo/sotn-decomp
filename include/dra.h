@@ -540,8 +540,8 @@ extern s32 g_CurrentRoomHeight;
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
 //extern s16 D_800733D8->posY.Data.high; // D_800733D8->posY.Data.high
-extern s32 D_800733E0;
-extern s32 D_800733E4;
+//extern s32 D_800733D8->accelerationX; // D_800733D8->accelerationX
+//extern s32 D_800733D8->accelerationY; // D_800733D8->accelerationY
 extern u16 D_800733EC;
 extern u16 D_800733EE;
 extern s8 D_800733F0;

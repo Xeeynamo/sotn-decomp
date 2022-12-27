@@ -222,7 +222,7 @@ void func_8015CAAC(s32 speed) {
     s32 phi_a0 = speed;
     if (D_8007340A == 1)
         phi_a0 = -speed;
-    D_800733E0 = phi_a0;
+    D_800733D8->accelerationX = phi_a0;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CAD4);
@@ -253,8 +253,8 @@ void func_8015CC70(s16 arg0) {
 void func_8015CCC8(s32 arg0, s32 arg1) {
     func_8015C908(2);
     func_8015C920(&D_801554C0);
-    D_800733E0 = arg1;
-    D_800733E4 = 0;
+    D_800733D8->accelerationX = arg1;
+    D_800733D8->accelerationY = 0;
     if (arg0 == 1) {
         D_80073424 = &D_801554B0;
         D_80073406 = 4;
@@ -270,8 +270,8 @@ void func_8015CCC8(s32 arg0, s32 arg1) {
 }
 
 void func_8015CD98(s32 arg0) {
-    D_800733E0 = arg0;
-    D_800733E4 = 0;
+    D_800733D8->accelerationX = arg0;
+    D_800733D8->accelerationY = 0;
     D_80072F64[0] = 0;
     func_8015C908(0);
     func_8015C920(&D_801553BC);
@@ -288,7 +288,7 @@ void func_8015CE7C(void) {
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
         D_80072F16[0] = 0x28;
-        D_800733E4 = 0;
+        D_800733D8->accelerationY = 0;
         func_801606BC(D_8006C3B8, 0x50001, 0);
     }
 }
