@@ -176,34 +176,34 @@ void func_8015C908(s32 unk0) {
 }
 
 void func_8015C920(s32* unk0) {
-    D_8006C3B8->unk4C = unk0;
-    D_8006C3B8->animationFrameDuration = 0;
-    D_8006C3B8->animationFrameIndex = 0;
+    g_CurrentEntity->unk4C = unk0;
+    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
 }
 
 void func_8015C93C(s32 speed) {
-    if (D_8006C3B8->accelerationX < 0) {
-        D_8006C3B8->accelerationX += speed;
-        if (D_8006C3B8->accelerationX > 0) {
-            D_8006C3B8->accelerationX = 0;
+    if (g_CurrentEntity->accelerationX < 0) {
+        g_CurrentEntity->accelerationX += speed;
+        if (g_CurrentEntity->accelerationX > 0) {
+            g_CurrentEntity->accelerationX = 0;
         }
     } else {
-        D_8006C3B8->accelerationX -= speed;
-        if (D_8006C3B8->accelerationX < 0)
-            D_8006C3B8->accelerationX = 0;
+        g_CurrentEntity->accelerationX -= speed;
+        if (g_CurrentEntity->accelerationX < 0)
+            g_CurrentEntity->accelerationX = 0;
     }
 }
 
 void func_8015C984(s32 speed) {
-    if (D_8006C3B8->accelerationY < 0) {
-        D_8006C3B8->accelerationY += speed;
-        if (D_8006C3B8->accelerationY > 0) {
-            D_8006C3B8->accelerationY = 0;
+    if (g_CurrentEntity->accelerationY < 0) {
+        g_CurrentEntity->accelerationY += speed;
+        if (g_CurrentEntity->accelerationY > 0) {
+            g_CurrentEntity->accelerationY = 0;
         }
     } else {
-        D_8006C3B8->accelerationY -= speed;
-        if (D_8006C3B8->accelerationY < 0) {
-            D_8006C3B8->accelerationY = 0;
+        g_CurrentEntity->accelerationY -= speed;
+        if (g_CurrentEntity->accelerationY < 0) {
+            g_CurrentEntity->accelerationY = 0;
         }
     }
 }
@@ -211,7 +211,7 @@ void func_8015C984(s32 speed) {
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C9CC);
 
 void func_8015CA84(s32 speed) {
-    Entity* entity = D_8006C3B8;
+    Entity* entity = g_CurrentEntity;
     s32 modX = speed;
 
     if (entity->unk14 == 1)
@@ -290,7 +290,7 @@ void func_8015CE7C(void) {
         func_8015CA84(0x24000);
         D_80072F16[0] = 0x28;
         g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-        func_801606BC(D_8006C3B8, 0x50001, 0);
+        func_801606BC(g_CurrentEntity, 0x50001, 0);
     }
 }
 
@@ -501,19 +501,19 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016A974);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    D_8006C3B8->unk7C.modeS16 =
-        (arg0 << 0x10 >> 0xF) - D_8006C3B8->unk7C.modeS16;
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk80.modeS16.unk0++;
-        D_8006C3B8->unk80.modeS16.unk2++;
+    g_CurrentEntity->unk7C.modeS16 =
+        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->unk7C.modeS16;
+    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->unk80.modeS16.unk0++;
+        g_CurrentEntity->unk80.modeS16.unk2++;
     }
 }
 
 void func_8016B92C(s16 arg0) {
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-        D_8006C3B8->unk80.modeS16.unk0++;
-        D_8006C3B8->unk80.modeS16.unk2++;
+    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->unk7C.modeS16 = (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+        g_CurrentEntity->unk80.modeS16.unk0++;
+        g_CurrentEntity->unk80.modeS16.unk2++;
     }
 }
 

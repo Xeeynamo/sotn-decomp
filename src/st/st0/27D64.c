@@ -421,7 +421,7 @@ void EntityDraculaGlass(Entity* entity) {
 
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
-    Entity* entity = D_8006C3B8;
+    Entity* entity = g_CurrentEntity;
     s16 temp_v1 = entity->posY.Data.high + arg0;
 
     if (temp_v1 >= unk) {
@@ -553,7 +553,7 @@ void UpdateStageEntities(void) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
                         (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
-                        D_8006C3B8 = entity;
+                        g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
                         entity->unk48 = 0;
@@ -561,7 +561,7 @@ void UpdateStageEntities(void) {
                 }
             }
         } else {
-            D_8006C3B8 = entity;
+            g_CurrentEntity = entity;
             entity->pfnUpdate(entity);
             entity->unk44 = 0;
             entity->unk48 = 0;
@@ -669,7 +669,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4AF0);
 
 s16 func_801B4C08(void) {
-    s16 value = D_8006C3B8->posX.Data.high - D_800733DA;
+    s16 value = g_CurrentEntity->posX.Data.high - D_800733DA;
     if (value < 0) {
         value = -value;
     }
@@ -677,7 +677,7 @@ s16 func_801B4C08(void) {
 }
 
 s32 func_801B4C44(void) {
-    s32 value = D_8006C3B8->posY.Data.high -
+    s32 value = g_CurrentEntity->posY.Data.high -
                 g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
     if (value < 0) {
         value = -value;
@@ -686,9 +686,9 @@ s32 func_801B4C44(void) {
 }
 
 s16 func_801B4C78(void) {
-    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high >
+    if (g_CurrentEntity->posY.Data.high >
         g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
         var_a0 |= 2;
     }
@@ -696,13 +696,13 @@ s16 func_801B4C78(void) {
 }
 
 void MoveEntity(void) {
-    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
 }
 
 void FallEntity(void) {
-    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C3B8->accelerationY += FALL_GRAVITY;
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
     }
 }
 
@@ -713,7 +713,7 @@ u8 func_801B4D18(void) {
     MoveEntity();
     FallEntity();
 
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
 
     if (unkState & 1) {
         entity->accelerationY = 0;
@@ -766,8 +766,8 @@ u16 func_801B56BC(Entity* a, Entity* b) {
 }
 
 u16 func_801B56F4(s32 x, s32 y) {
-    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
-    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    s16 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
     return ratan2(diffY, diffX);
 }
 
@@ -801,16 +801,16 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 #endif
 
 void func_801B5794(u8 state) {
-    D_8006C3B8->initState = state;
-    D_8006C3B8->unk2E = 0;
-    D_8006C3B8->animationFrameIndex = 0;
-    D_8006C3B8->animationFrameDuration = 0;
+    g_CurrentEntity->initState = state;
+    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
+    g_CurrentEntity->animationFrameDuration = 0;
 }
 
 void func_801B57B4(u8 arg0) {
-    D_8006C3B8->unk2E = arg0;
-    D_8006C3B8->animationFrameIndex = 0;
-    D_8006C3B8->animationFrameDuration = 0;
+    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->animationFrameIndex = 0;
+    g_CurrentEntity->animationFrameDuration = 0;
 }
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
@@ -912,19 +912,19 @@ bool func_801B8338(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
-    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
 
-    if (D_8006C3B8->accelerationY >= 0) {
-        s16 posX = D_8006C3B8->posX.Data.high;
-        s16 posY = D_8006C3B8->posY.Data.high;
+    if (g_CurrentEntity->accelerationY >= 0) {
+        s16 posX = g_CurrentEntity->posX.Data.high;
+        s16 posY = g_CurrentEntity->posY.Data.high;
         posX += unk->x;
         posY += unk->y;
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
-            D_8006C3B8->posY.Data.high += a.sp28;
-            D_8006C3B8->accelerationY = -D_8006C3B8->accelerationY / 2;
-            if (D_8006C3B8->accelerationY > -0x10000) {
+            g_CurrentEntity->posY.Data.high += a.sp28;
+            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;
             }
         }

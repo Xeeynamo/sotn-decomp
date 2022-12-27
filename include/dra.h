@@ -486,7 +486,7 @@ extern s32 D_8006C398;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 D_8006C3B0;
-extern Entity* D_8006C3B8;
+extern Entity* g_CurrentEntity;
 extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;

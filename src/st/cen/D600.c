@@ -128,7 +128,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194394);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019444C);
 
 s32 func_80194564(void) {
-    s16 value = D_8006C3B8->posX.Data.high - D_800733DA;
+    s16 value = g_CurrentEntity->posX.Data.high - D_800733DA;
 
     if (value < 0) {
         value = -value;
@@ -137,7 +137,7 @@ s32 func_80194564(void) {
 }
 
 s32 func_801945A0(void) {
-    s32 value = D_8006C3B8->posY.Data.high -
+    s32 value = g_CurrentEntity->posY.Data.high -
                 g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
 
     if (value < 0) {
@@ -147,9 +147,9 @@ s32 func_801945A0(void) {
 }
 
 s16 func_801945D4(void) {
-    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high >
+    if (g_CurrentEntity->posY.Data.high >
         g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
         var_a0 |= 2;
     }
@@ -157,13 +157,13 @@ s16 func_801945D4(void) {
 }
 
 void func_80194618(void) {
-    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
 }
 
 void func_80194648(void) {
-    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C3B8->accelerationY += FALL_GRAVITY;
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
     }
 }
 
@@ -193,7 +193,7 @@ void func_80194D08(u16 slope, s16 speed) {
     s32 moveY;
 
     moveX = rcos(slope) * speed;
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
 
     if (moveX < 0) {
         moveX += 15;
@@ -202,7 +202,7 @@ void func_80194D08(u16 slope, s16 speed) {
     entity->accelerationX = moveX >> 4;
 
     moveY = rsin(slope) * speed;
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
 
     if (moveY < 0) {
         moveY += 15;
@@ -220,8 +220,8 @@ u16 func_80194DC4(Entity* a, Entity* b) {
 }
 
 u16 func_80194DFC(s32 x, s32 y) {
-    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
-    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    s16 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
     return ratan2(diffY, diffX);
 }
 
@@ -230,7 +230,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194E44);
 void func_80194EA4(u8 initState) {
     Entity* entity;
 
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
     entity->initState = initState;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
@@ -240,7 +240,7 @@ void func_80194EA4(u8 initState) {
 void func_80194EC4(u8 arg0) {
     Entity* entity;
 
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
     entity->unk2E = arg0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;

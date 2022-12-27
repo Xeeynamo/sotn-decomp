@@ -3440,15 +3440,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D800);
 
 void func_8010DA2C(s32* arg0) {
-    D_8006C3B8->unk4C = arg0;
-    D_8006C3B8->animationFrameDuration = 0;
-    D_8006C3B8->animationFrameIndex = 0;
+    g_CurrentEntity->unk4C = arg0;
+    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
 }
 
 void func_8010DA48(u32 arg0) {
-    D_8006C3B8->unkAC = arg0;
-    D_8006C3B8->animationFrameDuration = 0;
-    D_8006C3B8->animationFrameIndex = 0;
+    g_CurrentEntity->unkAC = arg0;
+    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DA70);
@@ -3518,7 +3518,7 @@ void func_8010E0D0(s32 arg0) {
 
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        func_8011AAFC(D_8006C3B8, 0x15002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x15002C, 0);
         if (arg1 >= D_80072F1A[0]) {
             D_80072F1A[0] = arg1;
         }
@@ -3528,28 +3528,28 @@ void func_8010E168(s32 arg0, s16 arg1) {
 }
 
 void func_8010E1EC(s32 speed) {
-    if (D_8006C3B8->accelerationX < 0) {
-        D_8006C3B8->accelerationX += speed;
-        if (D_8006C3B8->accelerationX > 0) {
-            D_8006C3B8->accelerationX = 0;
+    if (g_CurrentEntity->accelerationX < 0) {
+        g_CurrentEntity->accelerationX += speed;
+        if (g_CurrentEntity->accelerationX > 0) {
+            g_CurrentEntity->accelerationX = 0;
         }
     } else {
-        D_8006C3B8->accelerationX -= speed;
-        if (D_8006C3B8->accelerationX < 0)
-            D_8006C3B8->accelerationX = 0;
+        g_CurrentEntity->accelerationX -= speed;
+        if (g_CurrentEntity->accelerationX < 0)
+            g_CurrentEntity->accelerationX = 0;
     }
 }
 
 void func_8010E234(s32 speed) {
-    if (D_8006C3B8->accelerationY < 0) {
-        D_8006C3B8->accelerationY += speed;
-        if (D_8006C3B8->accelerationY > 0) {
-            D_8006C3B8->accelerationY = 0;
+    if (g_CurrentEntity->accelerationY < 0) {
+        g_CurrentEntity->accelerationY += speed;
+        if (g_CurrentEntity->accelerationY > 0) {
+            g_CurrentEntity->accelerationY = 0;
         }
     } else {
-        D_8006C3B8->accelerationY -= speed;
-        if (D_8006C3B8->accelerationY < 0) {
-            D_8006C3B8->accelerationY = 0;
+        g_CurrentEntity->accelerationY -= speed;
+        if (g_CurrentEntity->accelerationY < 0) {
+            g_CurrentEntity->accelerationY = 0;
         }
     }
 }
@@ -3592,10 +3592,10 @@ s32 func_8010E27C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
 void func_8010E390(s32 arg0) {
-    if (D_8006C3B8->unk14 == 1) {
+    if (g_CurrentEntity->unk14 == 1) {
         arg0 = -arg0;
     }
-    D_8006C3B8->accelerationX = arg0;
+    g_CurrentEntity->accelerationX = arg0;
 }
 
 void func_8010E3B8(s32 arg0) {
@@ -3764,7 +3764,7 @@ void func_8010ED54(u8 arg0) {
     player->accelerationX = 0;
     func_8010D584(0xF);
     func_8010DA48(arg0);
-    func_8011AAFC(D_8006C3B8, 0x14003D, 0);
+    func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
     D_80072F68[0] = 0;
 }
 
@@ -3797,7 +3797,7 @@ void func_8010FB68(void) {
     PlaySfx(0x67D);
     D_80072F16[0] = func_800FDB18(3, 0x400);
     func_801092E8(1);
-    func_8011AAFC(D_8006C3B8, 0x110028, 0);
+    func_8011AAFC(g_CurrentEntity, 0x110028, 0);
     func_80118C28(0xB);
 }
 
@@ -3821,7 +3821,7 @@ void func_8010FC50(void) {
     player->accelerationX = 0;
     func_8010D584(0x21);
     func_8010E3E0();
-    func_8011AAFC(D_8006C3B8, 0x75, 0);
+    func_8011AAFC(g_CurrentEntity, 0x75, 0);
     func_8010DA48(0xF0);
     PlaySfx(0x6F1);
     D_80072F18 = 4;
@@ -3834,7 +3834,7 @@ void func_8010FCB8(void) {
     player->accelerationX = 0;
     func_8010D584(0x23);
     func_8010E3E0();
-    func_8011AAFC(D_8006C3B8, 0x10075, 0);
+    func_8011AAFC(g_CurrentEntity, 0x10075, 0);
     func_8010DA48(0xF1);
     PlaySfx(0x6F1);
     D_80072F18 = 4;
@@ -3848,7 +3848,7 @@ void func_8010FD24(void) {
     func_8010D584(0x27);
     func_8010E3E0();
     func_8010DA48(0xF1);
-    func_8011AAFC(D_8006C3B8, 0x170028, 0);
+    func_8011AAFC(g_CurrentEntity, 0x170028, 0);
     D_80072F18 = 4;
 }
 
@@ -3858,9 +3858,9 @@ void func_8010FD88(void) {
     player->initState = ENTITY_INITSTATE_0;
     player->unk2E = 3;
     func_8010E390(0xFFFC8000);
-    D_8006C3B8->accelerationY = 0;
+    g_CurrentEntity->accelerationY = 0;
     func_8010DA48(0xDB);
-    func_8011AAFC(D_8006C3B8, 0, 0);
+    func_8011AAFC(g_CurrentEntity, 0, 0);
     D_80072F66 = 0;
     PlaySfx(0x617);
 }
@@ -3915,10 +3915,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801119C4);
 
 void func_80111CC0(void) {
     if (D_80072F00[1] != 0) {
-        func_8011AAFC(D_8006C3B8, 0x17002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x17002C, 0);
     }
     if (D_80072F00[0] != 0) {
-        func_8011AAFC(D_8006C3B8, 0x16002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x16002C, 0);
     }
 }
 
@@ -4057,7 +4057,7 @@ void func_80115BB0(void) {
         } else {
             func_8010E7AC();
         }
-        func_8011AAFC(D_8006C3B8, 0x4A0000 | 0x2C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x4A0000 | 0x2C, 0);
         D_80097D37 = 0;
     }
 }
@@ -4087,17 +4087,15 @@ void func_8011678C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
 bool func_80116838(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    if ((player->unk2E != 0) &&
+    if ((g_EntityArray->unk2E != 0) &&
         ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
         D_800AFDA6 = 6;
-        D_800733EE = 0x810D;
+        g_EntityArray->palette = 0x810D;
         D_80072F86 = 0;
         D_80072F88 = 0;
-        func_8011AAFC(D_8006C3B8, 0x21002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x21002C, 0);
         g_EntityArray->accelerationY = g_EntityArray->accelerationY >> 1;
         return true;
     }
@@ -4105,18 +4103,18 @@ bool func_80116838(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    s16* temp = &g_EntityArray[PLAYER_CHARACTER].unk1E;
+    s16* player_unk1E = &g_EntityArray[PLAYER_CHARACTER].unk1E;
 
-    if (*temp < arg0) {
-        *temp += 16;
-        if (arg0 < *temp) {
-            *temp = arg0;
+    if (*player_unk1E < arg0) {
+        *player_unk1E += 16;
+        if (arg0 < *player_unk1E) {
+            *player_unk1E = arg0;
         }
     }
-    if (arg0 < *temp) {
-        *temp -= 16;
-        if (*temp < arg0) {
-            *temp = arg0;
+    if (arg0 < *player_unk1E) {
+        *player_unk1E -= 16;
+        if (*player_unk1E < arg0) {
+            *player_unk1E = arg0;
         }
     }
 }
@@ -4136,26 +4134,30 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80117DEC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801182F8);
 
 void func_80118614(void) {
-    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 void func_80118640(void) {
-    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->animationFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
 
 void func_80118670(void) {
-    // TODO: replace D_80073428 with
-    // g_EntityArray[PLAYER_CHARACTER].animationFrameIndex somehow
+    Entity* player = GET_PLAYER(g_EntityArray);
+    // TODO: replace D_80073428 with player->animationFrameIndex somehow
     if (D_80073428.typeInt == 0x10007) {
-        func_8011AAFC(D_8006C3B8, 0x160028, 0);
+        func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(0x67D);
-        func_8011AAFC(D_8006C3B8, 0x70, 0);
+        func_8011AAFC(g_CurrentEntity, 0x70, 0);
     }
-    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+    if (player->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
@@ -4213,12 +4215,13 @@ void func_80118C28(s32 arg0) {
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
     Entity* entity = func_8011879C(0x38, 0x40);
+    Entity* player = GET_PLAYER(g_EntityArray);
 
     if (entity != NULL) {
         func_80106590(entity);
         entity->objectId = ENTITY_13;
-        entity->posX.value = g_EntityArray[PLAYER_CHARACTER].posX.value;
-        entity->posY.value = g_EntityArray[PLAYER_CHARACTER].posY.value;
+        entity->posX.value = player->posX.value;
+        entity->posY.value = player->posY.value;
         entity->unk80.modeS16.unk0 = arg0;
         entity->unk80.modeS16.unk2 = arg1;
         return 0;
@@ -4398,18 +4401,20 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127CC8);
 
 void func_80127EAC(s16 arg0) {
-    D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk80.modeS16.unk0++;
-        D_8006C3B8->unk80.modeS16.unk2++;
+    g_CurrentEntity->unk7C.modeS16 =
+        (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->unk80.modeS16.unk0++;
+        g_CurrentEntity->unk80.modeS16.unk2++;
     }
 }
 
 void func_80127EF0(s16 arg0) {
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-        D_8006C3B8->unk80.modeS16.unk0++;
-        D_8006C3B8->unk80.modeS16.unk2++;
+    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->unk7C.modeS16 =
+            (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+        g_CurrentEntity->unk80.modeS16.unk0++;
+        g_CurrentEntity->unk80.modeS16.unk2++;
     }
 }
 
@@ -4464,12 +4469,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C97C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CA64);
 
 void func_8012CB0C(void) {
-    g_EntityArray[PLAYER_CHARACTER].unkAC = 0xDE;
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unkAC = 0xDE;
+    player->accelerationY = 0;
     D_800B0914 = 0;
-    g_EntityArray[PLAYER_CHARACTER].animationFrameIndex = 0;
-    g_EntityArray[PLAYER_CHARACTER].animationFrameDuration = 0;
-    g_EntityArray[PLAYER_CHARACTER].unk2E = 7;
+    player->animationFrameIndex = 0;
+    player->animationFrameDuration = 0;
+    player->unk2E = 7;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CB4C);
@@ -4500,15 +4507,19 @@ void func_8012CED4(void) {
 }
 
 void func_8012CFA8(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     func_8010DA48(0xEA);
-    g_EntityArray[PLAYER_CHARACTER].unk2E = 6;
+    player->unk2E = 6;
     D_800B0914 = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    player->accelerationX = 0;
     D_80072F0A = 8;
 }
 
 void func_8012CFF0(void) {
-    g_EntityArray[PLAYER_CHARACTER].unk2E = 3;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unk2E = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
 }
