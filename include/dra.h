@@ -547,9 +547,9 @@ extern u16 D_800733EE;   // D_800733D8->palette
 extern s8 D_800733F0;    // D_800733D8->blendMode
 extern u8 D_800733F1;    // D_800733D8->unk19
 extern s16 D_800733F6[]; // D_800733D8->unk1E
-extern u16 D_800733FC; // D_800733D8->zPriority
-extern s16 D_800733FE;
-extern u16 D_80073404;
+extern u16 D_800733FC;   // D_800733D8->zPriority
+extern s16 D_800733FE;   // D_800733D8->objectId
+extern u16 D_80073404;   // D_800733D8->initState
 extern u16 D_80073406;
 extern u16 D_8007340A;
 extern u16 D_8007341C;
