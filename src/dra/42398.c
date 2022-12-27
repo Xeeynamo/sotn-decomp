@@ -784,6 +784,7 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     return ret;
 }
 
+// https://decomp.me/scratch/6dWJG very close (branching)
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E96E8);
 
 s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
