@@ -146,7 +146,7 @@ s32 func_80194564(void) {
 s32 func_801945A0(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
     s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
-    
+
     if (yDistance < 0) {
         yDistance = -yDistance;
     }
@@ -236,7 +236,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194E44);
 
 void func_80194EA4(u8 initState) {
     Entity* entity = g_CurrentEntity;
-    
+
     entity->initState = initState;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
@@ -245,7 +245,7 @@ void func_80194EA4(u8 initState) {
 
 void func_80194EC4(u8 arg0) {
     Entity* entity = g_CurrentEntity;
-    
+
     entity->unk2E = arg0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
