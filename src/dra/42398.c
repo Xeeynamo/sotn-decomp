@@ -3993,7 +3993,7 @@ s16 func_80113E68(void) {
 
 void func_80113EE0(void) {
     D_800733D8->unk19 &= 0xF3;
-    D_8007342C = 1;
+    D_800733D8->animationSet = 1;
     D_800733D8->animationFrameDuration = 0;
     D_800733D8->animationFrameIndex = 0;
     D_800733D8->objectId = 0;

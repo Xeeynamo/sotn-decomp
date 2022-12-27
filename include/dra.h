@@ -556,7 +556,7 @@ extern u16 D_8007341C;       // D_800733D8->unk44
 extern s32* D_80073424;      // D_800733D8->unk4C
 extern MultiType D_80073428; // D_800733D8->animationFrameIndex
 extern s16 D_8007342A;       // D_800733D8->animationFrameDuration
-extern s16 D_8007342C;
+extern s16 D_8007342C;       // D_800733D8->animationSet
 extern u16 D_8007342E;
 extern u8 D_80073484;
 // End of Player Character
