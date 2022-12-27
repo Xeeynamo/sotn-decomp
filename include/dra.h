@@ -553,7 +553,7 @@ extern u16 D_80073404;   // D_800733D8->initState
 extern u16 D_80073406;   // D_800733D8->unk2E
 extern u16 D_8007340A;   // D_800733D8->objectRoomIndex
 extern u16 D_8007341C;   // D_800733D8->unk44
-extern /*?*/ s32* D_80073424;
+extern s32* D_80073424;  // D_800733D8->unk4C
 extern MultiType D_80073428;
 extern s16 D_8007342A;
 extern s16 D_8007342C;
