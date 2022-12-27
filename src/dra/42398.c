@@ -3429,8 +3429,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D010);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 
 void func_8010D584(s16 context) {
-    g_EntityArray[PLAYER_CHARACTER].initState = context;
-    g_EntityArray[PLAYER_CHARACTER].unk2E = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->initState = context;
+    player->unk2E = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
@@ -3597,10 +3599,12 @@ void func_8010E390(s32 arg0) {
 }
 
 void func_8010E3B8(s32 arg0) {
-    if (g_EntityArray[PLAYER_CHARACTER].objectRoomIndex == 1) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->objectRoomIndex == 1) {
         arg0 = -arg0;
     }
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = arg0;
+    player->accelerationX = arg0;
 }
 
 void func_8010E3E0(void) {
@@ -3611,8 +3615,10 @@ void func_8010E3E0(void) {
 }
 
 void func_8010E42C(u16 arg0) {
-    g_EntityArray[PLAYER_CHARACTER].unk2E = arg0;
-    g_EntityArray[PLAYER_CHARACTER].initState = 0x12;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unk2E = arg0;
+    player->initState = 0x12;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -3627,24 +3633,28 @@ void func_8010E42C(u16 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 #else
 void func_8010E470(s32 arg0, s32 arg1) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = arg1;
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].initState = ENTITY_INITSTATE_2;
-    g_EntityArray[PLAYER_CHARACTER].unk2E = D_800ACF4C[arg0 * 2 + 0];
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationX = arg1;
+    player->accelerationY = 0;
+    player->initState = ENTITY_INITSTATE_2;
+    player->unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
 #endif
 
 void func_8010E4D0(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     func_80111CC0();
 
     D_800733EE = 0x8100;
-    g_EntityArray[PLAYER_CHARACTER].zPriority = g_zEntityCenter;
+    player->zPriority = g_zEntityCenter;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
-        g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-        g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+        player->accelerationY = 0;
+        player->accelerationX = 0;
         func_8010D584(6);
         func_80111CC0();
         PlaySfx(0x6F2);
@@ -3987,16 +3997,18 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    g_EntityArray->unk19 &= 0xF3;
-    g_EntityArray[PLAYER_CHARACTER].animationSet = 1;
-    g_EntityArray[PLAYER_CHARACTER].animationFrameDuration = 0;
-    g_EntityArray[PLAYER_CHARACTER].animationFrameIndex = 0;
-    g_EntityArray[PLAYER_CHARACTER].objectId = 0;
+    Entity* entity = &g_EntityArray[PLAYER_CHARACTER];
+
+    entity->unk19 &= 0xF3;
+    entity->animationSet = 1;
+    entity->animationFrameDuration = 0;
+    entity->animationFrameIndex = 0;
+    entity->objectId = 0;
     D_800733F0 = 0;
     *D_80072F64 = 0;
     D_80072F66 = 0;
-    g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
-    g_EntityArray[PLAYER_CHARACTER].zPriority = g_zEntityCenter;
+    entity->unk1E = 0;
+    entity->zPriority = g_zEntityCenter;
     if (D_80073FBE == 0x22) {
         func_8010FAF4();
     }
@@ -4011,10 +4023,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
 void func_80115BB0(void) {
-    g_EntityArray[PLAYER_CHARACTER].unk19 = 4;
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
-    g_EntityArray[PLAYER_CHARACTER].animationFrameDuration = 4;
+    Entity* entity = &g_EntityArray[PLAYER_CHARACTER];
+
+    entity->unk19 = 4;
+    entity->accelerationY = 0;
+    entity->accelerationX = 0;
+    entity->animationFrameDuration = 4;
 
     if (D_80097420 == 0) {
         if (D_80072F20 & 1) {
@@ -4040,8 +4054,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116408);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801166A4);
 
 void func_8011678C(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     if (D_80072EF6 != 2) {
         func_8010E570(0);
     }
@@ -4050,7 +4066,9 @@ void func_8011678C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
 bool func_80116838(void) {
-    if ((g_EntityArray[PLAYER_CHARACTER].unk2E != 0) &&
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if ((player->unk2E != 0) &&
         ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
@@ -4249,7 +4267,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
 void func_8011B530(Entity* entity) {
-    if (g_EntityArray->initState != 0x25) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->initState != 0x25) {
         func_80106590(entity);
     } else if (entity->initState == ENTITY_INITSTATE_0) {
         entity->unk34 = 0x60000;
