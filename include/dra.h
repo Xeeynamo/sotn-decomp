@@ -106,7 +106,7 @@ typedef struct Entity {
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 initState;
-    /* 0x2E */ s16 unk2E;
+    /* 0x2E */ u16 unk2E;
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
@@ -550,7 +550,7 @@ extern s16 D_800733F6[]; // D_800733D8->unk1E
 extern u16 D_800733FC;   // D_800733D8->zPriority
 extern s16 D_800733FE;   // D_800733D8->objectId
 extern u16 D_80073404;   // D_800733D8->initState
-extern u16 D_80073406;
+extern u16 D_80073406;   // D_800733D8->unk2E
 extern u16 D_8007340A;
 extern u16 D_8007341C;
 extern /*?*/ s32* D_80073424;
