@@ -3992,7 +3992,7 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    D_800733F1 &= 0xF3;
+    D_800733D8->unk19 &= 0xF3;
     D_8007342C = 1;
     D_8007342A = 0;
     D_80073428.typeShort = 0;
@@ -4016,7 +4016,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
 void func_80115BB0(void) {
-    D_800733F1 = 4;
+    D_800733D8->unk19 = 4;
     D_800733D8->accelerationY = 0;
     D_800733D8->accelerationX = 0;
     D_8007342A = 4;
