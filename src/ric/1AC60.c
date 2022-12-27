@@ -64,17 +64,17 @@ void func_801587C0() { D_80175956 = 0; }
 
 void func_801587D0(void) {
     D_80175956 = 1;
-    D_80175950 = g_EntityArray->animationFrame;
-    D_80175952 = g_EntityArray->unk19;
-    D_80175954 = g_EntityArray->palette;
+    D_80175950 = g_EntityArray[PLAYER_CHARACTER].animationFrame;
+    D_80175952 = g_EntityArray[PLAYER_CHARACTER].unk19;
+    D_80175954 = g_EntityArray[PLAYER_CHARACTER].palette;
 }
 
 void func_80158814(void) {
     D_80175956 = 0;
-    g_EntityArray->unk44 = 0;
-    g_EntityArray->animationFrame = D_80175950;
-    g_EntityArray->unk19 = *(u8*)&D_80175952;
-    g_EntityArray->palette = D_80175954;
+    g_EntityArray[PLAYER_CHARACTER].unk44 = 0;
+    g_EntityArray[PLAYER_CHARACTER].animationFrame = D_80175950;
+    g_EntityArray[PLAYER_CHARACTER].unk19 = *(u8*)&D_80175952;
+    g_EntityArray[PLAYER_CHARACTER].palette = D_80175954;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015885C);
@@ -91,7 +91,7 @@ void func_80158F38(void) {
             return;
         }
 
-        if (g_EntityArray->unk2E == 0) {
+        if (g_EntityArray[PLAYER_CHARACTER].unk2E == 0) {
             func_8015CA84(0x14000);
         }
     }
@@ -106,11 +106,11 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801595D8);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159670);
 
 void func_80159BC8(void) {
-    g_EntityArray->animationFrameDuration = 0;
-    g_EntityArray->animationFrameIndex = 0;
+    g_EntityArray[PLAYER_CHARACTER].animationFrameDuration = 0;
+    g_EntityArray[PLAYER_CHARACTER].animationFrameIndex = 0;
     D_80072F64[0] = 0;
     D_80072F66 = 0;
-    g_EntityArray->unk19 = g_EntityArray->unk19 & 0xFB;
+    g_EntityArray[PLAYER_CHARACTER].unk19 = g_EntityArray[PLAYER_CHARACTER].unk19 & 0xFB;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159C04);
@@ -126,7 +126,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015AFE0);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015B098);
 
 void func_8015B18C(void) {
-    if (g_EntityArray->animationFrameDuration < 0) {
+    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
         func_8015CD98(0);
         D_80072F66 = 0;
     }
@@ -170,8 +170,8 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C4AC);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C6D4);
 
 void func_8015C908(s32 unk0) {
-    g_EntityArray->initState = unk0;
-    g_EntityArray->unk2E = 0;
+    g_EntityArray[PLAYER_CHARACTER].initState = unk0;
+    g_EntityArray[PLAYER_CHARACTER].unk2E = 0;
 }
 
 void func_8015C920(s32* unk0) {
@@ -220,9 +220,9 @@ void func_8015CA84(s32 speed) {
 
 void func_8015CAAC(s32 speed) {
     s32 phi_a0 = speed;
-    if (g_EntityArray->objectRoomIndex == 1)
+    if (g_EntityArray[PLAYER_CHARACTER].objectRoomIndex == 1)
         phi_a0 = -speed;
-    g_EntityArray->accelerationX = phi_a0;
+    g_EntityArray[PLAYER_CHARACTER].accelerationX = phi_a0;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CAD4);
@@ -239,39 +239,39 @@ void func_8015CC28(void) {
 void func_8015CC50() { func_8015C908(0xF0); }
 
 void func_8015CC70(s16 arg0) {
-    g_EntityArray->unk2E = arg0;
-    g_EntityArray->initState = 0x0020;
-    g_EntityArray->animationFrameDuration = 0;
-    g_EntityArray->animationFrameIndex = 0;
+    g_EntityArray[PLAYER_CHARACTER].unk2E = arg0;
+    g_EntityArray[PLAYER_CHARACTER].initState = 0x0020;
+    g_EntityArray[PLAYER_CHARACTER].animationFrameDuration = 0;
+    g_EntityArray[PLAYER_CHARACTER].animationFrameIndex = 0;
     if (arg0 & 1) {
-        g_EntityArray->unk4C = &D_80155950;
+        g_EntityArray[PLAYER_CHARACTER].unk4C = &D_80155950;
     } else {
-        g_EntityArray->unk4C = &D_8015591C;
+        g_EntityArray[PLAYER_CHARACTER].unk4C = &D_8015591C;
     }
 }
 
 void func_8015CCC8(s32 arg0, s32 arg1) {
     func_8015C908(2);
     func_8015C920(&D_801554C0);
-    g_EntityArray->accelerationX = arg1;
-    g_EntityArray->accelerationY = 0;
+    g_EntityArray[PLAYER_CHARACTER].accelerationX = arg1;
+    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
     if (arg0 == 1) {
-        g_EntityArray->unk4C = &D_801554B0;
-        g_EntityArray->unk2E = 4;
+        g_EntityArray[PLAYER_CHARACTER].unk4C = &D_801554B0;
+        g_EntityArray[PLAYER_CHARACTER].unk2E = 4;
     }
     if (arg0 == 2) {
-        g_EntityArray->unk4C = &D_801554D0;
-        g_EntityArray->unk2E = 1;
+        g_EntityArray[PLAYER_CHARACTER].unk4C = &D_801554D0;
+        g_EntityArray[PLAYER_CHARACTER].unk2E = 1;
     }
     if (arg0 == 3) {
-        g_EntityArray->unk4C = &D_801554C8;
-        g_EntityArray->unk2E = 4;
+        g_EntityArray[PLAYER_CHARACTER].unk4C = &D_801554C8;
+        g_EntityArray[PLAYER_CHARACTER].unk2E = 4;
     }
 }
 
 void func_8015CD98(s32 arg0) {
-    g_EntityArray->accelerationX = arg0;
-    g_EntityArray->accelerationY = 0;
+    g_EntityArray[PLAYER_CHARACTER].accelerationX = arg0;
+    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
     D_80072F64[0] = 0;
     func_8015C908(0);
     func_8015C920(&D_801553BC);
@@ -288,7 +288,7 @@ void func_8015CE7C(void) {
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
         D_80072F16[0] = 0x28;
-        g_EntityArray->accelerationY = 0;
+        g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
         func_801606BC(D_8006C3B8, 0x50001, 0);
     }
 }
@@ -446,12 +446,12 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801656B0);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80165DD8);
 
 void func_80166024() {
-    g_EntityArray->palette = 0x815E;
+    g_EntityArray[PLAYER_CHARACTER].palette = 0x815E;
     D_800733F0 = 0x70;
 }
 
 void func_80166044() {
-    g_EntityArray->palette = 0x8120;
+    g_EntityArray[PLAYER_CHARACTER].palette = 0x8120;
     D_800733F0 = 0;
 }
 
