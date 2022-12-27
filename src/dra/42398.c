@@ -4055,7 +4055,21 @@ void func_8011678C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116838);
+bool func_80116838(void) {
+    if ((D_80073406 != 0) &&
+        ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
+        func_8010D584(9);
+        func_8010DA48(0xCA);
+        D_800AFDA6 = 6;
+        D_800733EE = 0x810D;
+        D_80072F86 = 0;
+        D_80072F88 = 0;
+        func_8011AAFC(D_8006C3B8, 0x21002C, 0);
+        D_800733E4 = D_800733E4 >> 1;
+        return true;
+    }
+    return false;
+}
 
 void func_8011690C(s16 arg0) {
     if (D_800733F6[0] < arg0) {
