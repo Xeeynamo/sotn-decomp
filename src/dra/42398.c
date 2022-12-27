@@ -3994,7 +3994,7 @@ s16 func_80113E68(void) {
 void func_80113EE0(void) {
     D_800733D8->unk19 &= 0xF3;
     D_8007342C = 1;
-    D_8007342A = 0;
+    D_800733D8->animationFrameDuration = 0;
     D_800733D8->animationFrameIndex = 0;
     D_800733D8->objectId = 0;
     D_800733F0 = 0;
@@ -4019,7 +4019,7 @@ void func_80115BB0(void) {
     D_800733D8->unk19 = 4;
     D_800733D8->accelerationY = 0;
     D_800733D8->accelerationX = 0;
-    D_8007342A = 4;
+    D_800733D8->animationFrameDuration = 4;
 
     if (D_80097420 == 0) {
         if (D_80072F20 & 1) {
@@ -4102,13 +4102,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80117DEC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801182F8);
 
 void func_80118614(void) {
-    if (D_8007342A < 0) {
+    if (D_800733D8->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 void func_80118640(void) {
-    if (D_8007342A < 0) {
+    if (D_800733D8->animationFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
@@ -4120,7 +4120,7 @@ void func_80118670(void) {
         PlaySfx(0x67D);
         func_8011AAFC(D_8006C3B8, 0x70, 0);
     }
-    if (D_8007342A < 0) {
+    if (D_800733D8->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
@@ -4431,7 +4431,7 @@ void func_8012CB0C(void) {
     D_800733D8->accelerationY = 0;
     D_800B0914 = 0;
     D_800733D8->animationFrameIndex = 0;
-    D_8007342A = 0;
+    D_800733D8->animationFrameDuration = 0;
     D_800733D8->unk2E = 7;
 }
 
@@ -4452,7 +4452,7 @@ void func_8012CED4(void) {
         if (D_80138438 & 0x40) {
             D_800733D8->animationFrameIndex = 4;
             D_800733D8->accelerationX = 0;
-            D_8007342A = 1;
+            D_800733D8->animationFrameDuration = 1;
         }
     }
     D_800733D8->unk2E = 5;

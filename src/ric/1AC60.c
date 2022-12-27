@@ -106,7 +106,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801595D8);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159670);
 
 void func_80159BC8(void) {
-    D_8007342A = 0;
+    D_800733D8->animationFrameDuration = 0;
     D_800733D8->animationFrameIndex = 0;
     D_80072F64[0] = 0;
     D_80072F66 = 0;
@@ -126,7 +126,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015AFE0);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015B098);
 
 void func_8015B18C(void) {
-    if (D_8007342A < 0) {
+    if (D_800733D8->animationFrameDuration < 0) {
         func_8015CD98(0);
         D_80072F66 = 0;
     }
@@ -241,7 +241,7 @@ void func_8015CC50() { func_8015C908(0xF0); }
 void func_8015CC70(s16 arg0) {
     D_800733D8->unk2E = arg0;
     D_800733D8->initState = 0x0020;
-    D_8007342A = 0;
+    D_800733D8->animationFrameDuration = 0;
     D_800733D8->animationFrameIndex = 0;
     if (arg0 & 1) {
         D_800733D8->unk4C = &D_80155950;
