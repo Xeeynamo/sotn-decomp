@@ -3648,7 +3648,7 @@ void func_8010E4D0(void) {
 
     func_80111CC0();
 
-    D_800733EE = 0x8100;
+    player->palette = 0x8100;
     player->zPriority = g_zEntityCenter;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
@@ -3670,14 +3670,16 @@ void func_8010E570(/*?*/ s32);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E6AC);
 
 void func_8010E7AC(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     func_8010D584(3);
 
     if (D_80072F70 != 1) {
         func_8010DA48(0x1C);
     }
 
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0x20000;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    player->accelerationY = 0x20000;
+    player->accelerationX = 0;
     D_80072F0C = 8;
 
     if (D_80072F24 & 1) {
@@ -3692,12 +3694,14 @@ void func_8010E7AC(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
 
 void func_8010E940(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     D_80072F64[0] |= 0x21;
     func_8010DA48(0x20);
-    g_EntityArray[PLAYER_CHARACTER].unk2E = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = -0x44000;
+    player->unk2E = 0;
+    player->accelerationY = -0x44000;
     if (D_80072F92 != 0) {
-        g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
+        player->accelerationY = 0;
     }
 }
 
@@ -3724,17 +3728,12 @@ void func_8010EA54(s32 arg0) {
 #endif
 
 s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity* var_v1;
+    Entity* var_v1 = D_80074C08;
+    s32 i;
     s32 var_a2;
     s32 ret;
-    s32 i;
 
-    i = 0;
-    var_a2 = 0;
-    ret = 0;
-    var_v1 = D_80074C08;
-
-    for (; i < 16; i++) {
+    for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
         if (var_v1[i - 1].objectRoomIndex == 0) {
             ret++;
         }
@@ -3759,8 +3758,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0xF);
     func_8010DA48(arg0);
     func_8011AAFC(D_8006C3B8, 0x14003D, 0);
@@ -3775,16 +3776,20 @@ void func_8010FAF4(void) {
 }
 
 void func_8010FB24(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x22);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
 
 void func_8010FB68(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x20);
     func_8010E3E0();
     func_8010DA48(0xBA);
@@ -3797,8 +3802,10 @@ void func_8010FB68(void) {
 }
 
 void func_8010FBF4(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x25);
     func_8010E3E0();
     func_8010DA48(0xDA);
@@ -3808,8 +3815,10 @@ void func_8010FBF4(void) {
 }
 
 void func_8010FC50(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x21);
     func_8010E3E0();
     func_8011AAFC(D_8006C3B8, 0x75, 0);
@@ -3819,8 +3828,10 @@ void func_8010FC50(void) {
 }
 
 void func_8010FCB8(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x23);
     func_8010E3E0();
     func_8011AAFC(D_8006C3B8, 0x10075, 0);
@@ -3830,8 +3841,10 @@ void func_8010FCB8(void) {
 }
 
 void func_8010FD24(void) {
-    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
-    g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x27);
     func_8010E3E0();
     func_8010DA48(0xF1);
@@ -3840,8 +3853,10 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    g_EntityArray[PLAYER_CHARACTER].initState = ENTITY_INITSTATE_0;
-    g_EntityArray[PLAYER_CHARACTER].unk2E = 3;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->initState = ENTITY_INITSTATE_0;
+    player->unk2E = 3;
     func_8010E390(0xFFFC8000);
     D_8006C3B8->accelerationY = 0;
     func_8010DA48(0xDB);
@@ -3878,18 +3893,22 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111830);
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     D_801396EA = 1;
-    D_801396E4 = g_EntityArray[PLAYER_CHARACTER].animationFrame;
-    D_801396E6.typeShort = g_EntityArray[PLAYER_CHARACTER].unk19;
-    D_801396E8 = D_800733EE;
+    D_801396E4 = player->animationFrame;
+    D_801396E6.typeShort = player->unk19;
+    D_801396E8 = player->palette;
 }
 
 void func_8011197C(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     D_801396EA = 0;
-    g_EntityArray[PLAYER_CHARACTER].unk44 = 0;
-    g_EntityArray[PLAYER_CHARACTER].animationFrame = D_801396E4;
-    g_EntityArray[PLAYER_CHARACTER].unk19 = D_801396E6.typeByte;
-    D_800733EE = D_801396E8;
+    player->unk44 = 0;
+    player->animationFrame = D_801396E4;
+    player->unk19 = D_801396E6.typeByte;
+    player->palette = D_801396E8;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801119C4);
@@ -3904,10 +3923,11 @@ void func_80111CC0(void) {
 }
 
 bool func_80111D24(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
     s32 sp10[9]; // !FAKE: There's a struct inside the stack.
     s32 speed = 0xC000;
-    s16 posX = g_EntityArray[PLAYER_CHARACTER].posX.Data.high;
-    s16 posY = g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
+    s16 posX = player->posX.Data.high;
+    s16 posY = player->posY.Data.high;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
@@ -3920,10 +3940,10 @@ bool func_80111D24(void) {
         func_8010E390(speed);
         return true;
     } else if (hitboxRightMargin != 0) {
-        g_EntityArray[PLAYER_CHARACTER].accelerationX = -speed;
+        player->accelerationX = -speed;
         return true;
     } else if (hitboxLeftMargin != 0) {
-        g_EntityArray[PLAYER_CHARACTER].accelerationX = speed;
+        player->accelerationX = speed;
         return true;
     }
     return false;
@@ -3983,12 +4003,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113D7C);
 
 // !FAKE: too many temps
 s16 func_80113E68(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
     s16 rnd = rand();
     s32 temp_v0;
     s32 var_a1;
 
     temp_v0 = rnd;
-    g_EntityArray[PLAYER_CHARACTER].unkAC = (rnd % 3) + 0x2E;
+    player->unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -3997,18 +4018,18 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    Entity* entity = &g_EntityArray[PLAYER_CHARACTER];
+    Entity* player = GET_PLAYER(g_EntityArray);
 
-    entity->unk19 &= 0xF3;
-    entity->animationSet = 1;
-    entity->animationFrameDuration = 0;
-    entity->animationFrameIndex = 0;
-    entity->objectId = 0;
-    D_800733F0 = 0;
+    player->unk19 &= 0xF3;
+    player->animationSet = 1;
+    player->animationFrameDuration = 0;
+    player->animationFrameIndex = 0;
+    player->objectId = 0;
+    player->blendMode = 0;
     *D_80072F64 = 0;
     D_80072F66 = 0;
-    entity->unk1E = 0;
-    entity->zPriority = g_zEntityCenter;
+    player->unk1E = 0;
+    player->zPriority = g_zEntityCenter;
     if (D_80073FBE == 0x22) {
         func_8010FAF4();
     }
@@ -4023,12 +4044,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
 void func_80115BB0(void) {
-    Entity* entity = &g_EntityArray[PLAYER_CHARACTER];
+    Entity* player = GET_PLAYER(g_EntityArray);
 
-    entity->unk19 = 4;
-    entity->accelerationY = 0;
-    entity->accelerationX = 0;
-    entity->animationFrameDuration = 4;
+    player->unk19 = 4;
+    player->accelerationY = 0;
+    player->accelerationX = 0;
+    player->animationFrameDuration = 4;
 
     if (D_80097420 == 0) {
         if (D_80072F20 & 1) {

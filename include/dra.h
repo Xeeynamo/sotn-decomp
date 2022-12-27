@@ -539,27 +539,27 @@ extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;       // g_EntityArray->posX.Data.high
-extern s16 D_800733DE;       // g_EntityArray->posY.Data.high
-extern s32 D_800733E0;       // g_EntityArray->accelerationX
-extern s32 D_800733E8;       // g_EntityArray->accelerationY
-extern u16 D_800733EC;       // g_EntityArray->unk14
-extern u16 D_800733EE;       // g_EntityArray->palette
-extern s8 D_800733F0;        // g_EntityArray->blendMode
-extern u8 D_800733F1;        // g_EntityArray->unk19
-extern s16 D_800733F6[];     // g_EntityArray->unk1E
-extern u16 D_800733FC;       // g_EntityArray->zPriority
-extern s16 D_800733FE;       // g_EntityArray->objectId
-extern u16 D_80073404;       // g_EntityArray->initState
-extern u16 D_80073406;       // g_EntityArray->unk2E
-extern u16 D_8007340A;       // g_EntityArray->objectRoomIndex
-extern u16 D_8007341C;       // g_EntityArray->unk44
-extern s32* D_80073424;      // g_EntityArray->unk4C
-extern MultiType D_80073428; // g_EntityArray->animationFrameIndex
-extern s16 D_8007342A;       // g_EntityArray->animationFrameDuration
-extern s16 D_8007342C;       // g_EntityArray->animationSet
-extern u16 D_8007342E;       // g_EntityArray->animationFrame
-extern u8 D_80073484;        // g_EntityArray->unkAC
+extern s16 D_800733DA;       // player->posX.Data.high
+extern s16 D_800733DE;       // player->posY.Data.high
+extern s32 D_800733E0;       // player->accelerationX
+extern s32 D_800733E8;       // player->accelerationY
+extern u16 D_800733EC;       // player->unk14
+extern u16 D_800733EE;       // player->palette
+extern s8 D_800733F0;        // player->blendMode
+extern u8 D_800733F1;        // player->unk19
+extern s16 D_800733F6[];     // player->unk1E
+extern u16 D_800733FC;       // player->zPriority
+extern s16 D_800733FE;       // player->objectId
+extern u16 D_80073404;       // player->initState
+extern u16 D_80073406;       // player->unk2E
+extern u16 D_8007340A;       // player->objectRoomIndex
+extern u16 D_8007341C;       // player->unk44
+extern s32* D_80073424;      // player->unk4C
+extern MultiType D_80073428; // player->animationFrameIndex
+extern s16 D_8007342A;       // player->animationFrameDuration
+extern s16 D_8007342C;       // player->animationSet
+extern u16 D_8007342E;       // player->animationFrame
+extern u8 D_80073484;        // player->unkAC
 // End of Player Character
 
 extern s16 D_800734EA;
