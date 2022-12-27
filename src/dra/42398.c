@@ -3995,7 +3995,7 @@ void func_80113EE0(void) {
     D_800733D8->unk19 &= 0xF3;
     D_8007342C = 1;
     D_8007342A = 0;
-    D_80073428.typeShort = 0;
+    D_800733D8->animationFrameIndex = 0;
     D_800733D8->objectId = 0;
     D_800733F0 = 0;
     *D_80072F64 = 0;
@@ -4114,6 +4114,7 @@ void func_80118640(void) {
 }
 
 void func_80118670(void) {
+    // TODO: replace D_80073428 with D_800733D8->animationFrameIndex somehow
     if (D_80073428.typeInt == 0x10007) {
         func_8011AAFC(D_8006C3B8, 0x160028, 0);
         PlaySfx(0x67D);
@@ -4429,7 +4430,7 @@ void func_8012CB0C(void) {
     D_80073484 = 0xDE;
     D_800733D8->accelerationY = 0;
     D_800B0914 = 0;
-    D_80073428.typeShort = 0;
+    D_800733D8->animationFrameIndex = 0;
     D_8007342A = 0;
     D_800733D8->unk2E = 7;
 }
@@ -4449,7 +4450,7 @@ void func_8012CED4(void) {
         func_8010E390(0x10000);
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
-            D_80073428.typeShort = 4;
+            D_800733D8->animationFrameIndex = 4;
             D_800733D8->accelerationX = 0;
             D_8007342A = 1;
         }
