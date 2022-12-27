@@ -538,14 +538,14 @@ extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA; // D_800733D8->posX.Data.high
-extern s16 D_800733DE; // D_800733D8->posY.Data.high
-extern s32 D_800733E0; // D_800733D8->accelerationX
-extern s32 D_800733E8; // D_800733D8->accelerationY
-extern u16 D_800733EC; // D_800733D8->unk14
-extern u16 D_800733EE; // D_800733D8->palette
-extern s8 D_800733F0;  // D_800733D8->blendMode
-extern u8 D_800733F1;  // D_800733D8->unk19
+extern s16 D_800733DA;   // D_800733D8->posX.Data.high
+extern s16 D_800733DE;   // D_800733D8->posY.Data.high
+extern s32 D_800733E0;   // D_800733D8->accelerationX
+extern s32 D_800733E8;   // D_800733D8->accelerationY
+extern u16 D_800733EC;   // D_800733D8->unk14
+extern u16 D_800733EE;   // D_800733D8->palette
+extern s8 D_800733F0;    // D_800733D8->blendMode
+extern u8 D_800733F1;    // D_800733D8->unk19
 extern s16 D_800733F6[]; // D_800733D8->unk1E
 extern u16 D_800733FC; // D_800733D8->zPriority
 extern s16 D_800733FE;
