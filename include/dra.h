@@ -296,10 +296,7 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
-typedef enum {
-    MONO,
-    STEREO
-} SoundMode;
+typedef enum { MONO, STEREO } SoundMode;
 
 typedef struct {
     /* 0x00 */ DRAWENV draw; // drawing environment
