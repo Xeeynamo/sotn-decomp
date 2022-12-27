@@ -544,8 +544,8 @@ extern s32 D_800733E0; // D_800733D8->accelerationX
 extern s32 D_800733E8; // D_800733D8->accelerationY
 extern u16 D_800733EC; // D_800733D8->unk14
 extern u16 D_800733EE; // D_800733D8->palette
-extern s8 D_800733F0; // D_800733D8->blendMode
-extern u8 D_800733F1; // D_800733D8->unk19
+extern s8 D_800733F0;  // D_800733D8->blendMode
+extern u8 D_800733F1;  // D_800733D8->unk19
 extern s16 D_800733F6[];
 extern u16 D_800733FC;
 extern s16 D_800733FE;
