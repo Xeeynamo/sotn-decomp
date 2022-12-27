@@ -1553,7 +1553,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F24F4);
 #else
 void func_801042C4(s32);
 void func_80105428();
-extern s16 D_800733DA;
 extern s32 D_80137598;
 
 void func_800F24F4(void) {
@@ -1581,7 +1580,7 @@ void func_800F24F4(void) {
             phi_a0 = 0;
             if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D &&
                 castleY == 0x21) {
-                if (D_800733DA == 0x80) {
+                if (D_800733D8->posX.value == 0x80) {
                     D_8003C730 = 1;
                     phi_a0 = 1;
                 } else {
@@ -4181,7 +4180,7 @@ s32 func_80118C84(s16 arg0, s16 arg1) {
         func_80106590(entity);
         entity->objectId = ENTITY_13;
         entity->posX.value = D_800733D8->posX.value;
-        entity->posY.value = D_800733DC[0];
+        entity->posY.value = D_800733D8->posY.value;
         entity->unk80.modeS16.unk0 = arg0;
         entity->unk80.modeS16.unk2 = arg1;
         return 0;

@@ -535,10 +535,11 @@ extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
+
+// Beginning of Player Character
 extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;
-extern s32 D_800733DC[];
-extern s16 D_800733DE;
+extern s16 D_800733DE; // D_800733D8.posY.Data.high
 extern s32 D_800733E0;
 extern s32 D_800733E4;
 extern u16 D_800733EC;
@@ -558,6 +559,8 @@ extern s16 D_8007342A;
 extern s16 D_8007342C;
 extern u16 D_8007342E;
 extern u8 D_80073484;
+// End of Player Character
+
 extern s16 D_800734EA;
 extern s32 D_800734F8;
 extern s8 D_80073510;
