@@ -96,7 +96,7 @@ typedef struct Entity {
     /* 0x14 */ u16 unk14; // related to accelerationX ?
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
-    /* 0x19 */ s8 unk19;
+    /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
     /* 0x1E */ s16 unk1E;
@@ -106,7 +106,7 @@ typedef struct Entity {
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 initState;
-    /* 0x2E */ s16 unk2E;
+    /* 0x2E */ u16 unk2E;
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
@@ -169,7 +169,7 @@ typedef struct Entity {
     /* 0xA0 */ s32 unkA0;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
-    /* 0xAC */ s8 unkAC;
+    /* 0xAC */ u8 unkAC;
     /* 0xAD */ s8 unkAD;
     /* 0xAE */ s8 unkAE;
     /* 0xAF */ s8 unkAF;
@@ -296,6 +296,8 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
+typedef enum { MONO, STEREO } SoundMode;
+
 typedef struct {
     /* 0x00 */ DRAWENV draw; // drawing environment
     /* 0x58 */ DISPENV disp; // display environment
@@ -379,6 +381,7 @@ extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 // dra
+#define PLAYER_CHARACTER 0
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
 #define PAD_R2 0x0002
@@ -498,6 +501,7 @@ extern s16 D_80072F16[2];
 extern s16 D_80072F18;
 extern s16 D_80072F1A[];
 extern s16 D_80072F1C[];
+extern s16 D_80072F1E;
 extern s32 D_80072F20;
 extern s32 D_80072F24;
 extern u32 D_80072F2C;
@@ -511,6 +515,7 @@ extern u16 D_80072F68[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern s16 D_80072F86;
+extern s16 D_80072F88;
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060;
 extern s32 D_80073080;
@@ -531,39 +536,46 @@ extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
-extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;
-extern s32 D_800733DC[];
-extern s16 D_800733DE;
-extern s32 D_800733E0;
-extern s32 D_800733E4;
-extern u16 D_800733EC;
-extern u16 D_800733EE;
-extern s8 D_800733F0;
-extern u8 D_800733F1;
-extern s16 D_800733F6[];
-extern u16 D_800733FC;
-extern s16 D_800733FE;
-extern u16 D_80073404;
-extern u16 D_80073406;
-extern u16 D_8007340A;
-extern u16 D_8007341C;
-extern /*?*/ s32* D_80073424;
-extern MultiType D_80073428;
-extern s16 D_8007342A;
-extern s16 D_8007342C;
-extern u16 D_8007342E;
-extern u8 D_80073484;
+
+// Beginning of Player Character
+extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
+extern s16 D_800733DA;       // g_EntityArray->posX.Data.high
+extern s16 D_800733DE;       // g_EntityArray->posY.Data.high
+extern s32 D_800733E0;       // g_EntityArray->accelerationX
+extern s32 D_800733E8;       // g_EntityArray->accelerationY
+extern u16 D_800733EC;       // g_EntityArray->unk14
+extern u16 D_800733EE;       // g_EntityArray->palette
+extern s8 D_800733F0;        // g_EntityArray->blendMode
+extern u8 D_800733F1;        // g_EntityArray->unk19
+extern s16 D_800733F6[];     // g_EntityArray->unk1E
+extern u16 D_800733FC;       // g_EntityArray->zPriority
+extern s16 D_800733FE;       // g_EntityArray->objectId
+extern u16 D_80073404;       // g_EntityArray->initState
+extern u16 D_80073406;       // g_EntityArray->unk2E
+extern u16 D_8007340A;       // g_EntityArray->objectRoomIndex
+extern u16 D_8007341C;       // g_EntityArray->unk44
+extern s32* D_80073424;      // g_EntityArray->unk4C
+extern MultiType D_80073428; // g_EntityArray->animationFrameIndex
+extern s16 D_8007342A;       // g_EntityArray->animationFrameDuration
+extern s16 D_8007342C;       // g_EntityArray->animationSet
+extern u16 D_8007342E;       // g_EntityArray->animationFrame
+extern u8 D_80073484;        // g_EntityArray->unkAC
+// End of Player Character
+
+extern s16 D_800734EA;
+extern s32 D_800734F8;
 extern s8 D_80073510;
 extern s8 D_80073511;
 extern s8 D_80073512;
 extern s8 D_80073513;
+extern s16 D_800735A6;
+extern s16 D_80073662;
 extern Entity D_800736C8;
 extern Entity D_80073F98;
 extern u16 D_80073FBE;
 extern Entity D_80073FC4; // unconfirmed / weird
 extern Entity D_80074C08[];
-extern Entity D_800762D8[]; // D_800733D8 + 0x40
+extern Entity D_800762D8[]; // g_EntityArray + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
@@ -589,6 +601,7 @@ extern s32 D_800973FC;
 extern s32 D_80097410;
 extern s32 D_80097414;
 extern s32 D_80097420;
+extern s32 D_8009744C;
 extern Pad g_pads[];
 extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern s16 D_80097496;
@@ -692,7 +705,7 @@ extern const char* c_strALUCART;
 extern const char* c_strSSword;
 extern s32 D_800A4B04;
 extern s32 D_800A7718;
-extern u16 D_800A7734;
+extern u16 D_800A7734[];
 extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
@@ -702,6 +715,7 @@ extern RECT D_800ACDF0;
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF60[];
+extern s16 D_800AFDA6;
 extern const char* c_strEquip;
 extern const char* c_strSpells;
 extern const char* c_strRelics;
@@ -713,6 +727,8 @@ extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
+extern s32 D_800DC4C0;
+extern s8 D_800DC4C4;
 extern s32 D_801362AC;
 extern s32 D_801362B0;
 extern s32 D_801362B4;
@@ -799,6 +815,8 @@ extern s32 D_80137E68;
 extern s32 D_80137F6C;
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
+extern s32 D_80138430;
+extern s32 D_80138438;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern s32 D_80138F28;
@@ -809,6 +827,7 @@ extern s16 D_80139008;
 extern s32 D_8013900C;
 extern s16 D_8013901C;
 extern u8 D_80139020;
+extern u8 D_801390A8;
 extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
@@ -825,6 +844,7 @@ extern u8 D_80139810;
 extern s32 D_80139828[];
 extern s32 D_80139834[];
 extern s16 D_80139A70;
+extern s16 D_8013AE7C;
 extern s16 D_8013AE8C;
 extern s16 D_8013AE84[];
 extern s16 D_8013AEA0[];
@@ -864,6 +884,7 @@ extern s32 D_801EC000[];
 
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
+s32 CheckCollision(s32, s16, s32*, s32);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
 void func_8002A09C(void*);
@@ -896,6 +917,8 @@ s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
 void func_800F180C(s32, s32, void*);
 void func_800F1868(s32, s32, void*);
+void func_800F18C4(s32, s32);
+void func_800F1954(s32, s32, s32);
 void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
@@ -932,6 +955,7 @@ void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
 void func_800FDE00(void);
 void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
+s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
@@ -954,7 +978,7 @@ void func_80111928(void);
 void func_80111CC0(void);
 void func_80118894(Entity*);
 void func_80118C28(s32 arg0);
-s32 func_80111D24(void);
+bool func_80111D24(void);
 Entity* func_8011AAFC(Entity* entity, s32, s32);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);

@@ -172,7 +172,7 @@ s32 func_801BBC3C(Unkstruct5* arg0) {
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = D_800733DE - arg0->unk6;
+        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
@@ -198,7 +198,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &D_800733D8[index];
+    Entity* entity = &g_EntityArray[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -229,7 +229,8 @@ s32 func_801BCBEC(void) {
 }
 
 s32 func_801BCC28(void) {
-    s32 value = D_8006C3B8->posY.Data.high - D_800733DE;
+    s32 value = D_8006C3B8->posY.Data.high -
+                g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
 
     if (value < 0) {
         value = -value;
@@ -240,7 +241,8 @@ s32 func_801BCC28(void) {
 s16 func_801BCC5C(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high > D_800733DE) {
+    if (D_8006C3B8->posY.Data.high >
+        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
@@ -1349,7 +1351,7 @@ s32 func_801C7CF0(Unkstruct5* arg0) {
     if (var_v0_2 >= 0x19) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = D_800733DE - arg0->unk6;
+        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
