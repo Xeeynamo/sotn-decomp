@@ -3875,7 +3875,7 @@ void func_80111928(void) { D_801396EA = 0; }
 void func_80111938(void) {
     D_801396EA = 1;
     D_801396E4 = D_8007342E;
-    D_801396E6.typeShort = D_800733F1;
+    D_801396E6.typeShort = D_800733D8->unk19;
     D_801396E8 = D_800733EE;
 }
 
@@ -3883,7 +3883,7 @@ void func_8011197C(void) {
     D_801396EA = 0;
     D_8007341C = 0;
     D_8007342E = D_801396E4;
-    D_800733F1 = D_801396E6.typeByte;
+    D_800733D8->unk19 = D_801396E6.typeByte;
     D_800733EE = D_801396E8;
 }
 
