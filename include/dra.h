@@ -169,7 +169,7 @@ typedef struct Entity {
     /* 0xA0 */ s32 unkA0;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
-    /* 0xAC */ s8 unkAC;
+    /* 0xAC */ u8 unkAC;
     /* 0xAD */ s8 unkAD;
     /* 0xAE */ s8 unkAE;
     /* 0xAF */ s8 unkAF;
@@ -558,7 +558,7 @@ extern MultiType D_80073428; // D_800733D8->animationFrameIndex
 extern s16 D_8007342A;       // D_800733D8->animationFrameDuration
 extern s16 D_8007342C;       // D_800733D8->animationSet
 extern u16 D_8007342E;       // D_800733D8->animationFrame
-extern u8 D_80073484;
+extern u8 D_80073484;        // D_800733D8->unkAC
 // End of Player Character
 
 extern s16 D_800734EA;

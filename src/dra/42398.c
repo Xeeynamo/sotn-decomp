@@ -3983,7 +3983,7 @@ s16 func_80113E68(void) {
     s32 var_a1;
 
     temp_v0 = rnd;
-    D_80073484 = (rnd % 3) + 0x2E;
+    D_800733D8->unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -4427,7 +4427,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C97C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CA64);
 
 void func_8012CB0C(void) {
-    D_80073484 = 0xDE;
+    D_800733D8->unkAC = 0xDE;
     D_800733D8->accelerationY = 0;
     D_800B0914 = 0;
     D_800733D8->animationFrameIndex = 0;
