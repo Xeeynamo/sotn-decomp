@@ -220,7 +220,7 @@ void func_8015CA84(s32 speed) {
 
 void func_8015CAAC(s32 speed) {
     s32 phi_a0 = speed;
-    if (D_8007340A == 1)
+    if (D_800733D8->objectRoomIndex == 1)
         phi_a0 = -speed;
     D_800733D8->accelerationX = phi_a0;
 }

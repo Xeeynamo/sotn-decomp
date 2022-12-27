@@ -551,7 +551,7 @@ extern u16 D_800733FC;   // D_800733D8->zPriority
 extern s16 D_800733FE;   // D_800733D8->objectId
 extern u16 D_80073404;   // D_800733D8->initState
 extern u16 D_80073406;   // D_800733D8->unk2E
-extern u16 D_8007340A;
+extern u16 D_8007340A;   // D_800733D8->objectRoomIndex
 extern u16 D_8007341C;
 extern /*?*/ s32* D_80073424;
 extern MultiType D_80073428;

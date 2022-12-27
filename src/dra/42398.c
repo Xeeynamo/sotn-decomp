@@ -3602,7 +3602,7 @@ void func_8010E390(s32 arg0) {
 }
 
 void func_8010E3B8(s32 arg0) {
-    if (D_8007340A == 1) {
+    if (D_800733D8->objectRoomIndex == 1) {
         arg0 = -arg0;
     }
     D_800733D8->accelerationX = arg0;
