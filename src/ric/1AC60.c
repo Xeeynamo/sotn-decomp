@@ -66,7 +66,7 @@ void func_801587D0(void) {
     D_80175956 = 1;
     D_80175950 = D_8007342E;
     D_80175952 = D_800733F1;
-    D_80175954 = D_800733EE;
+    D_80175954 = D_800733D8->palette;
 }
 
 void func_80158814(void) {
@@ -74,7 +74,7 @@ void func_80158814(void) {
     D_8007341C = 0;
     D_8007342E = D_80175950;
     D_800733F1 = *(u8*)&D_80175952;
-    D_800733EE = D_80175954;
+    D_800733D8->palette = D_80175954;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015885C);
@@ -446,12 +446,12 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801656B0);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80165DD8);
 
 void func_80166024() {
-    D_800733EE = 0x815E;
+    D_800733D8->palette = 0x815E;
     D_800733F0 = 0x70;
 }
 
 void func_80166044() {
-    D_800733EE = 0x8120;
+    D_800733D8->palette = 0x8120;
     D_800733F0 = 0;
 }
 
