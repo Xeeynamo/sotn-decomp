@@ -4558,7 +4558,36 @@ void func_801324B4(s8 s_num, s16 arg1, s16 arg2) {
     SsSetSerialVol(s_num, voll, volr);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132500);
+void func_80132500(u8 soundMode) {
+    CdlATV audioVolume;
+
+    switch (soundMode) {
+    case MONO:
+        if (D_801390A8 != 0) { // D_801390A8 fake symbol or part of another
+            func_80021174();
+            audioVolume.val2 = 128; // CD (R) --> SPU (R)
+            audioVolume.val0 = 128; // CD (L) --> SPU (L)
+            audioVolume.val3 = 128; // CD Right sound transferred to left
+            audioVolume.val1 = 128; // CD Left sound transferred to right
+            CdMix(&audioVolume);
+            D_8013AE7C = 108;
+            D_801390A8 = 0;
+        }
+        break;
+    case STEREO:
+        if (D_801390A8 != 1) {
+            func_80021188();
+            audioVolume.val2 = 224; // CD (R) --> SPU (R)
+            audioVolume.val0 = 224; // CD (L) --> SPU (L)
+            audioVolume.val3 = 0;
+            audioVolume.val1 = 0;
+            CdMix(&audioVolume);
+            D_8013AE7C = 127;
+            D_801390A8 = 1;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801325D8);
 

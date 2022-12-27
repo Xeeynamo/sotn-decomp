@@ -296,6 +296,11 @@ typedef enum {
     ENTITY_INITSTATE_7
 } EntityInitStates;
 
+typedef enum {
+    MONO,
+    STEREO
+} SoundMode;
+
 typedef struct {
     /* 0x00 */ DRAWENV draw; // drawing environment
     /* 0x58 */ DISPENV disp; // display environment
@@ -814,6 +819,7 @@ extern s16 D_80139008;
 extern s32 D_8013900C;
 extern s16 D_8013901C;
 extern u8 D_80139020;
+extern u8 D_801390A8;
 extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
@@ -830,6 +836,7 @@ extern u8 D_80139810;
 extern s32 D_80139828[];
 extern s32 D_80139834[];
 extern s16 D_80139A70;
+extern s16 D_8013AE7C;
 extern s16 D_8013AE8C;
 extern s16 D_8013AE84[];
 extern s16 D_8013AEA0[];
