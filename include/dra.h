@@ -142,6 +142,7 @@ typedef struct Entity {
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
     /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
     union {
         /* 0x80 */ struct Entity* entityPtr;
         s32 modeS32;
@@ -242,9 +243,9 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 unk2; // compared to Entity posX
     /* 0x04 */ u16 unk4;
-    /* 0x06 */ u16 unk6;
+    /* 0x06 */ u16 unk6; // compared to Entity posY
     /* 0x08 */ u16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ u16 unkC;
@@ -381,7 +382,6 @@ extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 // dra
-#define PLAYER_CHARACTER 0
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
 #define PAD_R2 0x0002
@@ -537,7 +537,9 @@ extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 
-// Beginning of Player Character
+// Entity* player = GET_PLAYER(g_EntityArray);
+// player->
+// Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;       // player->posX.Data.high
 extern s16 D_800733DE;       // player->posY.Data.high
@@ -560,16 +562,26 @@ extern s16 D_8007342A;       // player->animationFrameDuration
 extern s16 D_8007342C;       // player->animationSet
 extern u16 D_8007342E;       // player->animationFrame
 extern u8 D_80073484;        // player->unkAC
-// End of Player Character
+// End of Player Character offset = 0x80073494
 
-extern s16 D_800734EA;
-extern s32 D_800734F8;
-extern s8 D_80073510;
-extern s8 D_80073511;
-extern s8 D_80073512;
-extern s8 D_80073513;
+// Beginning of g_EntityArray[1] offset = 0x80073494
+
+extern s16 D_800734EA; // animationFrame
+extern s32 D_800734F8; // firstPolygonIndex
+extern s8 D_80073510;  // unk7C
+extern s8 D_80073511;  // unk7E
+extern s8 D_80073512;  // unk80.modeS8.unk8
+extern s8 D_80073513;  // unk84.Data1.unk0
+
+// End of g_EntityArray[1] offset = 0x80073550
+
+// Beginning of g_EntityArray[2] offset = 0x80073550
+
 extern s16 D_800735A6;
 extern s16 D_80073662;
+
+// End of g_EntityArray[2] offset = 0x8007360C
+
 extern Entity D_800736C8;
 extern Entity D_80073F98;
 extern u16 D_80073FBE;

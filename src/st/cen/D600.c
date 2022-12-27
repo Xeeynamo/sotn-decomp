@@ -127,30 +127,37 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194394);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019444C);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s32 func_80194564(void) {
-    s16 value = g_CurrentEntity->posX.Data.high - D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
 
-    if (value < 0) {
-        value = -value;
+    if (xDistance < 0) {
+        xDistance = -xDistance;
     }
-    return value;
+    return xDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_801945A0(void) {
-    s32 value = g_CurrentEntity->posY.Data.high -
-                g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
-
-    if (value < 0) {
-        value = -value;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+    
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return value;
+    return yDistance;
 }
 
 s16 func_801945D4(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high >
-        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
@@ -228,9 +235,8 @@ u16 func_80194DFC(s32 x, s32 y) {
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194E44);
 
 void func_80194EA4(u8 initState) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
+    Entity* entity = g_CurrentEntity;
+    
     entity->initState = initState;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
@@ -238,9 +244,8 @@ void func_80194EA4(u8 initState) {
 }
 
 void func_80194EC4(u8 arg0) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
+    Entity* entity = g_CurrentEntity;
+    
     entity->unk2E = arg0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
@@ -250,9 +255,9 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194EE0);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194F74);
 
-void func_80195070(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+void func_80195070(Entity* entity) {
+    if (entity->initState == 0) {
+        entity->initState++;
     }
 }
 

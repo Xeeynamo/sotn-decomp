@@ -244,20 +244,21 @@ void func_801BB7A8(u16 objectId, Entity* source, Entity* entity) {
 }
 
 s32 func_801BB824(Unkstruct5* arg0) {
-    s16 var_v0_2;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 diff;
 
-    var_v0_2 = D_800733DA - arg0->unk2;
-    var_v0_2 = ABS_ALT(var_v0_2);
+    diff = player->posX.Data.high - arg0->unk2;
+    diff = ABS_ALT(diff);
 
-    if (var_v0_2 >= 0x11) {
-        var_v0_2 = 0;
+    if (diff >= 17) {
+        diff = 0;
     } else {
-        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
-        var_v0_2 = ABS_ALT(var_v0_2);
-        var_v0_2 = var_v0_2 < 0x21;
+        diff = player->posY.Data.high - arg0->unk6;
+        diff = ABS_ALT(diff);
+        diff = diff < 33;
     }
 
-    return var_v0_2;
+    return diff;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityRedDoor);

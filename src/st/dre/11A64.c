@@ -347,29 +347,30 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.Data.high = g_CurrentEntity->posY.Data.high;
 }
 
-void func_8019967C(u16 objectId, Entity* arg1, Entity* arg2) {
-    DestroyEntity(arg2);
-    arg2->objectId = objectId;
-    arg2->pfnUpdate = D_801803C4[objectId];
-    arg2->posX.Data.high = arg1->posX.Data.high;
-    arg2->posY.Data.high = arg1->posY.Data.high;
+void func_8019967C(u16 objectId, Entity* a, Entity* b) {
+    DestroyEntity(b);
+    b->objectId = objectId;
+    b->pfnUpdate = D_801803C4[objectId];
+    b->posX.Data.high = a->posX.Data.high;
+    b->posY.Data.high = a->posY.Data.high;
 }
 
 s32 func_801996F8(Unkstruct5* arg0) {
-    s16 var_v0_2;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 diff;
 
-    var_v0_2 = D_800733DA - arg0->unk2;
-    var_v0_2 = ABS_ALT(var_v0_2);
+    diff = player->posX.Data.high - arg0->unk2;
+    diff = ABS_ALT(diff);
 
-    if (var_v0_2 >= 0x11) {
-        var_v0_2 = 0;
+    if (diff >= 17) {
+        diff = 0;
     } else {
-        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
-        var_v0_2 = ABS_ALT(var_v0_2);
-        var_v0_2 = var_v0_2 < 0x21;
+        diff = player->posY.Data.high - arg0->unk6;
+        diff = ABS_ALT(diff);
+        diff = diff < 33;
     }
 
-    return var_v0_2;
+    return diff;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityRedDoor);
@@ -442,30 +443,37 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s32 func_8019A6A8(void) {
-    s16 value = g_CurrentEntity->posX.Data.high - D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
 
-    if (value < 0) {
-        value = -value;
+    if (xDistance < 0) {
+        xDistance = -xDistance;
     }
-    return value;
+    return xDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_8019A6E4(void) {
-    s32 value = g_CurrentEntity->posY.Data.high -
-                g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
 
-    if (value < 0) {
-        value = -value;
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return value;
+    return yDistance;
 }
 
 s16 func_8019A718(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high >
-        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
@@ -755,15 +763,15 @@ void func_8019B8DC(u16 arg0) {
     Unkstruct7 sp10;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        D_8003C7BC(g_CurrentEntity->posX.Data.high, g_CurrentEntity->posY.Data.high - 7,
-                   &sp10, 0);
+        D_8003C7BC(g_CurrentEntity->posX.Data.high,
+                   g_CurrentEntity->posY.Data.high - 7, &sp10, 0);
         if (sp10.sp10 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    D_8003C7BC(g_CurrentEntity->posX.Data.high, g_CurrentEntity->posY.Data.high + 7,
-               &sp10, 0);
+    D_8003C7BC(g_CurrentEntity->posX.Data.high,
+               g_CurrentEntity->posY.Data.high + 7, &sp10, 0);
 
     if (arg0) {
         if (!(sp10.sp10 & 5)) {
@@ -998,7 +1006,8 @@ bool func_8019E9F4(Unkstruct6* arg0) {
 
         if (sp10.sp10 & 1) {
             g_CurrentEntity->posY.Data.high += sp10.sp28;
-            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
 
             if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;

@@ -1,3 +1,9 @@
+typedef enum {
+    PLAYER_CHARACTER,
+    UNK_ENTITY_1,
+    UNK_ENTITY_2
+} EntityTypes;
+
 #define SQ(x) ((x) * (x))
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
 #define ABS_ALT(x) ((x) < 0 ? -(x) : (x))

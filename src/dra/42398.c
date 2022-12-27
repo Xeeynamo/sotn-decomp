@@ -3388,7 +3388,7 @@ void func_80109328(void) {
         D_80072F16[0] = 0;
         func_801092E8(0);
     }
-    D_800733F0 = 0;
+    g_EntityArray[PLAYER_CHARACTER].blendMode = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801093C4);
@@ -4164,11 +4164,11 @@ void func_80118670(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801186EC);
 
-Entity* func_8011879C(s16 arg0, s16 arg1) {
-    Entity* entity = &g_EntityArray[arg0];
-    s16 var_a0 = arg0;
+Entity* func_8011879C(s16 entityIndex, s16 arg1) {
+    Entity* entity = &g_EntityArray[entityIndex];
+    s16 var_a0 = entityIndex;
 
-    if (arg0 < arg1) {
+    if (entityIndex < arg1) {
         while (var_a0 < arg1) {
             if (entity->objectId == ENTITY_MIN) {
                 return entity;

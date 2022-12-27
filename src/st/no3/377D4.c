@@ -396,20 +396,21 @@ void func_801C3F38(u16 objectId, Entity* source, Entity* entity) {
 }
 
 s32 func_801C3FB4(Unkstruct5* arg0) {
-    s16 var_v0_2;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 diff;
 
-    var_v0_2 = D_800733DA - arg0->unk2;
-    var_v0_2 = ABS_ALT(var_v0_2);
+    diff = player->posX.Data.high - arg0->unk2;
+    diff = ABS_ALT(diff);
 
-    if (var_v0_2 >= 0x11) {
-        var_v0_2 = 0;
+    if (diff >= 17) {
+        diff = 0;
     } else {
-        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
-        var_v0_2 = ABS_ALT(var_v0_2);
-        var_v0_2 = var_v0_2 < 0x21;
+        diff = player->posY.Data.high - arg0->unk6;
+        diff = ABS_ALT(diff);
+        diff = diff < 33;
     }
 
-    return var_v0_2;
+    return diff;
 }
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRedDoor);
@@ -451,32 +452,37 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4E4C);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s16 func_801C4F64(void) {
-    s16 temp_v1;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
 
-    temp_v1 = g_CurrentEntity->posX.Data.high - D_800733DA;
-    if (temp_v1 < 0) {
-        temp_v1 = -temp_v1;
+    if (xDistance < 0) {
+        xDistance = -xDistance;
     }
-    return temp_v1;
+    return xDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_801C4FA0(void) {
-    s32 var_v0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
 
-    var_v0 = g_CurrentEntity->posY.Data.high -
-             g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
-    if (var_v0 < 0) {
-        var_v0 = -var_v0;
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return var_v0;
+    return yDistance;
 }
 
 s16 func_801C4FD4(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high >
-        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
@@ -641,7 +647,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
 #else
 void func_801C6114(void) {
     if (g_CurrentEntity->accelerationY >= 0) {
-        g_CurrentEntity->unk84.value = g_CurrentEntity->unk88 + g_CurrentEntity->unk84.value;
+        g_CurrentEntity->unk84.value =
+            g_CurrentEntity->unk88 + g_CurrentEntity->unk84.value;
         g_CurrentEntity->accelerationX = g_CurrentEntity->unk84.value;
         if ((g_CurrentEntity->accelerationX == 0x10000) ||
             (g_CurrentEntity->accelerationX == -0x10000)) {
@@ -717,7 +724,8 @@ bool func_801C92B0(Unkstruct6* unk) {
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
             g_CurrentEntity->posY.Data.high += a.sp28;
-            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationY / 2;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;
             }
