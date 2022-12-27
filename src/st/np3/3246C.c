@@ -306,7 +306,8 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
 s16 func_801BC844(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high > g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (D_8006C3B8->posY.Data.high >
+        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

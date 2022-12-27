@@ -464,7 +464,8 @@ s16 func_801C4F64(void) {
 s32 func_801C4FA0(void) {
     s32 var_v0;
 
-    var_v0 = D_8006C3B8->posY.Data.high - g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
+    var_v0 = D_8006C3B8->posY.Data.high -
+             g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
     if (var_v0 < 0) {
         var_v0 = -var_v0;
     }
@@ -474,7 +475,8 @@ s32 func_801C4FA0(void) {
 s16 func_801C4FD4(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high > g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (D_8006C3B8->posY.Data.high >
+        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
