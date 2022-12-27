@@ -4439,7 +4439,25 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CC30);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CCE4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CED4);
+void func_8012CED4(void) {
+    if ((D_80073406 == 2) && (D_800B0914 == D_80073406)) {
+        func_8010DA48(0xE7);
+        D_800B0914 = 1;
+    } else {
+        func_8010DA48(0xE8);
+        func_8010E390(0x10000);
+        D_800B0914 = 0;
+        if (D_80138438 & 0x40) {
+            D_80073428.typeShort = 4;
+            D_800733E0 = 0;
+            D_8007342A = 1;
+        }
+    }
+    D_80073406 = 5;
+    D_80072F0A = 8;
+    D_800733E4 = 0;
+    D_80138430 -= 0x100;
+}
 
 void func_8012CFA8(void) {
     func_8010DA48(0xEA);

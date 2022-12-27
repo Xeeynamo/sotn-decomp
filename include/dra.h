@@ -811,6 +811,8 @@ extern s32 D_80137E68;
 extern s32 D_80137F6C;
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
+extern s32 D_80138430;
+extern s32 D_80138438;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern s32 D_80138F28;
