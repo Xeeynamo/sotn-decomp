@@ -49,7 +49,7 @@ bool func_801A7E2C(Entity* entity) {
         distance = -distance;
     }
     if (entity->hitboxWidth >= distance) {
-        if ((s16)(D_800733D8->posY.Data.high - entity->posY.Data.high) < 0) {
+        if ((s16)(g_EntityArray->posY.Data.high - entity->posY.Data.high) < 0) {
             return true;
         }
     }
@@ -620,7 +620,7 @@ s32 func_801B3C58(Unkstruct5* arg0) {
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = D_800733D8->posY.Data.high - arg0->unk6;
+        var_v0_2 = g_EntityArray->posY.Data.high - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
@@ -646,7 +646,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &D_800733D8[index];
+    Entity* entity = &g_EntityArray[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -676,7 +676,7 @@ s16 func_801B4C08(void) {
 }
 
 s32 func_801B4C44(void) {
-    s32 value = D_8006C3B8->posY.Data.high - D_800733D8->posY.Data.high;
+    s32 value = D_8006C3B8->posY.Data.high - g_EntityArray->posY.Data.high;
     if (value < 0) {
         value = -value;
     }
@@ -686,7 +686,7 @@ s32 func_801B4C44(void) {
 s16 func_801B4C78(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high > D_800733D8->posY.Data.high) {
+    if (D_8006C3B8->posY.Data.high > g_EntityArray->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

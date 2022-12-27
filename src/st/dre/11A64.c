@@ -143,7 +143,7 @@ void func_80193D7C(Entity* entity) {
         entity->animationFrame = 0x3F;
     }
 
-    entity->zPriority = D_800733D8->zPriority + 4;
+    entity->zPriority = g_EntityArray->zPriority + 4;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193E18);
@@ -364,7 +364,7 @@ s32 func_801996F8(Unkstruct5* arg0) {
     if (var_v0_2 >= 0x11) {
         var_v0_2 = 0;
     } else {
-        var_v0_2 = D_800733D8->posY.Data.high - arg0->unk6;
+        var_v0_2 = g_EntityArray->posY.Data.high - arg0->unk6;
         var_v0_2 = ABS_ALT(var_v0_2);
         var_v0_2 = var_v0_2 < 0x21;
     }
@@ -390,7 +390,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &D_800733D8[index];
+    Entity* entity = &g_EntityArray[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -452,7 +452,7 @@ s32 func_8019A6A8(void) {
 }
 
 s32 func_8019A6E4(void) {
-    s32 value = D_8006C3B8->posY.Data.high - D_800733D8->posY.Data.high;
+    s32 value = D_8006C3B8->posY.Data.high - g_EntityArray->posY.Data.high;
 
     if (value < 0) {
         value = -value;
@@ -463,7 +463,7 @@ s32 func_8019A6E4(void) {
 s16 func_8019A718(void) {
     s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
 
-    if (D_8006C3B8->posY.Data.high > D_800733D8->posY.Data.high) {
+    if (D_8006C3B8->posY.Data.high > g_EntityArray->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

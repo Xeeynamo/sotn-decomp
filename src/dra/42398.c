@@ -1020,11 +1020,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB758);
 // clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
     s8* byte;
-    Entity* entity = &D_800733D8[0];
+    Entity* entity = &g_EntityArray[0];
     s32 i;
     u32 j;
 
-    for (i = 0; i < ARRAY_COUNT(D_800733D8); i++) {
+    for (i = 0; i < ARRAY_COUNT(g_EntityArray); i++) {
         byte = (s8*)entity;
         for (j = 0; j < 188; j++) {
             byte[0] = 0;
@@ -1580,7 +1580,7 @@ void func_800F24F4(void) {
             phi_a0 = 0;
             if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D &&
                 castleY == 0x21) {
-                if (D_800733D8->posX.value == 0x80) {
+                if (g_EntityArray->posX.value == 0x80) {
                     D_8003C730 = 1;
                     phi_a0 = 1;
                 } else {
@@ -2767,7 +2767,7 @@ void func_800FE914(s32 arg0) {
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
-        func_8011AAFC(D_800733D8, 0x63, 0);
+        func_8011AAFC(g_EntityArray, 0x63, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }
@@ -3195,8 +3195,8 @@ void func_80106590(Entity* entity) {
 void func_801065F4(s16 startIndex) {
     Entity* pItem;
 
-    for (pItem = &D_800733D8[startIndex];
-         pItem < &D_800733D8[TOTAL_ENTITY_COUNT]; pItem++)
+    for (pItem = &g_EntityArray[startIndex];
+         pItem < &g_EntityArray[TOTAL_ENTITY_COUNT]; pItem++)
         func_80106590(pItem);
 }
 
@@ -3379,12 +3379,12 @@ void func_80109328(void) {
 
     D_80072F86 = 0;
 // !FAKE:
-    new_var = &D_800733D8->unk1E;
-    if ((*new_var == 0x800) && (D_800733D8->initState == 8)) {
+    new_var = &g_EntityArray->unk1E;
+    if ((*new_var == 0x800) && (g_EntityArray->initState == 8)) {
 // !FAKE:
-do {    D_800733D8->unk1E = 0;                  } while (0);
-        D_800733D8->animationFrame = 0x9D;
-        D_800733D8->unk14 = (D_800733D8->unk14 + 1) & 1;
+do {    g_EntityArray->unk1E = 0;                  } while (0);
+        g_EntityArray->animationFrame = 0x9D;
+        g_EntityArray->unk14 = (g_EntityArray->unk14 + 1) & 1;
     }
 
     if (D_80072F16[0] != 0) {
@@ -3434,8 +3434,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D010);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 
 void func_8010D584(s16 context) {
-    D_800733D8->initState = context;
-    D_800733D8->unk2E = 0;
+    g_EntityArray->initState = context;
+    g_EntityArray->unk2E = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
@@ -3504,13 +3504,13 @@ void func_8010E0D0(s32 arg0) {
     Entity* entity;
 
     if (arg0 == 1) {
-        entity = func_8011AAFC(D_800733D8, 0x47002C, 0);
+        entity = func_8011AAFC(g_EntityArray, 0x47002C, 0);
 
         if (entity != NULL) {
             entity->unk34 = entity->unk34 | 0x10000;
         }
 
-        entity = func_8011AAFC(D_800733D8, 0x40002C, 0);
+        entity = func_8011AAFC(g_EntityArray, 0x40002C, 0);
 
         if (entity != NULL) {
             entity->unk34 = entity->unk34 | 0x10000;
@@ -3568,7 +3568,7 @@ s32 func_8010E27C(void) {
         return 0;
 
     retValue = 1;
-    tmp = &D_800733D8->unk14;
+    tmp = &g_EntityArray->unk14;
     if (*tmp == 1) {
         if (D_80072EE8 & 0x2000) {
             *tmp = 0;
@@ -3602,10 +3602,10 @@ void func_8010E390(s32 arg0) {
 }
 
 void func_8010E3B8(s32 arg0) {
-    if (D_800733D8->objectRoomIndex == 1) {
+    if (g_EntityArray->objectRoomIndex == 1) {
         arg0 = -arg0;
     }
-    D_800733D8->accelerationX = arg0;
+    g_EntityArray->accelerationX = arg0;
 }
 
 void func_8010E3E0(void) {
@@ -3616,8 +3616,8 @@ void func_8010E3E0(void) {
 }
 
 void func_8010E42C(u16 arg0) {
-    D_800733D8->unk2E = arg0;
-    D_800733D8->initState = 0x12;
+    g_EntityArray->unk2E = arg0;
+    g_EntityArray->initState = 0x12;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -3632,10 +3632,10 @@ void func_8010E42C(u16 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 #else
 void func_8010E470(s32 arg0, s32 arg1) {
-    D_800733D8->accelerationX = arg1;
-    D_800733D8->accelerationY = 0;
-    D_800733D8->initState = ENTITY_INITSTATE_2;
-    D_800733D8->unk2E = D_800ACF4C[arg0 * 2 + 0];
+    g_EntityArray->accelerationX = arg1;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->initState = ENTITY_INITSTATE_2;
+    g_EntityArray->unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
 #endif
@@ -3644,12 +3644,12 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     D_800733EE = 0x8100;
-    D_800733D8->zPriority = g_zEntityCenter;
+    g_EntityArray->zPriority = g_zEntityCenter;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
-        D_800733D8->accelerationY = 0;
-        D_800733D8->accelerationX = 0;
+        g_EntityArray->accelerationY = 0;
+        g_EntityArray->accelerationX = 0;
         func_8010D584(6);
         func_80111CC0();
         PlaySfx(0x6F2);
@@ -3671,8 +3671,8 @@ void func_8010E7AC(void) {
         func_8010DA48(0x1C);
     }
 
-    D_800733D8->accelerationY = 0x20000;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0x20000;
+    g_EntityArray->accelerationX = 0;
     D_80072F0C = 8;
 
     if (D_80072F24 & 1) {
@@ -3689,10 +3689,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
 void func_8010E940(void) {
     D_80072F64[0] |= 0x21;
     func_8010DA48(0x20);
-    D_800733D8->unk2E = 0;
-    D_800733D8->accelerationY = -0x44000;
+    g_EntityArray->unk2E = 0;
+    g_EntityArray->accelerationY = -0x44000;
     if (D_80072F92 != 0) {
-        D_800733D8->accelerationY = 0;
+        g_EntityArray->accelerationY = 0;
     }
 }
 
@@ -3754,8 +3754,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0xF);
     func_8010DA48(arg0);
     func_8011AAFC(D_8006C3B8, 0x14003D, 0);
@@ -3770,16 +3770,16 @@ void func_8010FAF4(void) {
 }
 
 void func_8010FB24(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0x22);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
 
 void func_8010FB68(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0x20);
     func_8010E3E0();
     func_8010DA48(0xBA);
@@ -3792,8 +3792,8 @@ void func_8010FB68(void) {
 }
 
 void func_8010FBF4(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0x25);
     func_8010E3E0();
     func_8010DA48(0xDA);
@@ -3803,8 +3803,8 @@ void func_8010FBF4(void) {
 }
 
 void func_8010FC50(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0x21);
     func_8010E3E0();
     func_8011AAFC(D_8006C3B8, 0x75, 0);
@@ -3814,8 +3814,8 @@ void func_8010FC50(void) {
 }
 
 void func_8010FCB8(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0x23);
     func_8010E3E0();
     func_8011AAFC(D_8006C3B8, 0x10075, 0);
@@ -3825,8 +3825,8 @@ void func_8010FCB8(void) {
 }
 
 void func_8010FD24(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     func_8010D584(0x27);
     func_8010E3E0();
     func_8010DA48(0xF1);
@@ -3835,8 +3835,8 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    D_800733D8->initState = ENTITY_INITSTATE_0;
-    D_800733D8->unk2E = 3;
+    g_EntityArray->initState = ENTITY_INITSTATE_0;
+    g_EntityArray->unk2E = 3;
     func_8010E390(0xFFFC8000);
     D_8006C3B8->accelerationY = 0;
     func_8010DA48(0xDB);
@@ -3874,16 +3874,16 @@ void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
     D_801396EA = 1;
-    D_801396E4 = D_800733D8->animationFrame;
-    D_801396E6.typeShort = D_800733D8->unk19;
+    D_801396E4 = g_EntityArray->animationFrame;
+    D_801396E6.typeShort = g_EntityArray->unk19;
     D_801396E8 = D_800733EE;
 }
 
 void func_8011197C(void) {
     D_801396EA = 0;
-    D_800733D8->unk44 = 0;
-    D_800733D8->animationFrame = D_801396E4;
-    D_800733D8->unk19 = D_801396E6.typeByte;
+    g_EntityArray->unk44 = 0;
+    g_EntityArray->animationFrame = D_801396E4;
+    g_EntityArray->unk19 = D_801396E6.typeByte;
     D_800733EE = D_801396E8;
 }
 
@@ -3901,8 +3901,8 @@ void func_80111CC0(void) {
 bool func_80111D24(void) {
     s32 sp10[9]; // !FAKE: There's a struct inside the stack.
     s32 speed = 0xC000;
-    s16 posX = D_800733D8->posX.Data.high;
-    s16 posY = D_800733D8->posY.Data.high;
+    s16 posX = g_EntityArray->posX.Data.high;
+    s16 posY = g_EntityArray->posY.Data.high;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
@@ -3915,10 +3915,10 @@ bool func_80111D24(void) {
         func_8010E390(speed);
         return true;
     } else if (hitboxRightMargin != 0) {
-        D_800733D8->accelerationX = -speed;
+        g_EntityArray->accelerationX = -speed;
         return true;
     } else if (hitboxLeftMargin != 0) {
-        D_800733D8->accelerationX = speed;
+        g_EntityArray->accelerationX = speed;
         return true;
     }
     return false;
@@ -3983,7 +3983,7 @@ s16 func_80113E68(void) {
     s32 var_a1;
 
     temp_v0 = rnd;
-    D_800733D8->unkAC = (rnd % 3) + 0x2E;
+    g_EntityArray->unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -3992,16 +3992,16 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    D_800733D8->unk19 &= 0xF3;
-    D_800733D8->animationSet = 1;
-    D_800733D8->animationFrameDuration = 0;
-    D_800733D8->animationFrameIndex = 0;
-    D_800733D8->objectId = 0;
+    g_EntityArray->unk19 &= 0xF3;
+    g_EntityArray->animationSet = 1;
+    g_EntityArray->animationFrameDuration = 0;
+    g_EntityArray->animationFrameIndex = 0;
+    g_EntityArray->objectId = 0;
     D_800733F0 = 0;
     *D_80072F64 = 0;
     D_80072F66 = 0;
-    D_800733D8->unk1E = 0;
-    D_800733D8->zPriority = g_zEntityCenter;
+    g_EntityArray->unk1E = 0;
+    g_EntityArray->zPriority = g_zEntityCenter;
     if (D_80073FBE == 0x22) {
         func_8010FAF4();
     }
@@ -4016,10 +4016,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
 void func_80115BB0(void) {
-    D_800733D8->unk19 = 4;
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
-    D_800733D8->animationFrameDuration = 4;
+    g_EntityArray->unk19 = 4;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
+    g_EntityArray->animationFrameDuration = 4;
 
     if (D_80097420 == 0) {
         if (D_80072F20 & 1) {
@@ -4045,8 +4045,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116408);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801166A4);
 
 void func_8011678C(void) {
-    D_800733D8->accelerationY = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationY = 0;
+    g_EntityArray->accelerationX = 0;
     if (D_80072EF6 != 2) {
         func_8010E570(0);
     }
@@ -4055,7 +4055,7 @@ void func_8011678C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
 bool func_80116838(void) {
-    if ((D_800733D8->unk2E != 0) &&
+    if ((g_EntityArray->unk2E != 0) &&
         ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
@@ -4064,14 +4064,14 @@ bool func_80116838(void) {
         D_80072F86 = 0;
         D_80072F88 = 0;
         func_8011AAFC(D_8006C3B8, 0x21002C, 0);
-        D_800733D8->accelerationY = D_800733D8->accelerationY >> 1;
+        g_EntityArray->accelerationY = g_EntityArray->accelerationY >> 1;
         return true;
     }
     return false;
 }
 
 void func_8011690C(s16 arg0) {
-    s16* temp = &D_800733D8->unk1E;
+    s16* temp = &g_EntityArray->unk1E;
 
     if (*temp < arg0) {
         *temp += 16;
@@ -4102,25 +4102,25 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80117DEC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801182F8);
 
 void func_80118614(void) {
-    if (D_800733D8->animationFrameDuration < 0) {
+    if (g_EntityArray->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 void func_80118640(void) {
-    if (D_800733D8->animationFrameDuration < 0) {
+    if (g_EntityArray->animationFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
 
 void func_80118670(void) {
-    // TODO: replace D_80073428 with D_800733D8->animationFrameIndex somehow
+    // TODO: replace D_80073428 with g_EntityArray->animationFrameIndex somehow
     if (D_80073428.typeInt == 0x10007) {
         func_8011AAFC(D_8006C3B8, 0x160028, 0);
         PlaySfx(0x67D);
         func_8011AAFC(D_8006C3B8, 0x70, 0);
     }
-    if (D_800733D8->animationFrameDuration < 0) {
+    if (g_EntityArray->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
@@ -4128,7 +4128,7 @@ void func_80118670(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801186EC);
 
 Entity* func_8011879C(s16 arg0, s16 arg1) {
-    Entity* entity = &D_800733D8[arg0];
+    Entity* entity = &g_EntityArray[arg0];
     s16 var_a0 = arg0;
 
     if (arg0 < arg1) {
@@ -4182,8 +4182,8 @@ s32 func_80118C84(s16 arg0, s16 arg1) {
     if (entity != NULL) {
         func_80106590(entity);
         entity->objectId = ENTITY_13;
-        entity->posX.value = D_800733D8->posX.value;
-        entity->posY.value = D_800733D8->posY.value;
+        entity->posX.value = g_EntityArray->posX.value;
+        entity->posY.value = g_EntityArray->posY.value;
         entity->unk80.modeS16.unk0 = arg0;
         entity->unk80.modeS16.unk2 = arg1;
         return 0;
@@ -4253,7 +4253,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
 void func_8011B530(Entity* entity) {
-    if (D_800733D8->initState != 0x25) {
+    if (g_EntityArray->initState != 0x25) {
         func_80106590(entity);
     } else if (entity->initState == ENTITY_INITSTATE_0) {
         entity->unk34 = 0x60000;
@@ -4427,12 +4427,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C97C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CA64);
 
 void func_8012CB0C(void) {
-    D_800733D8->unkAC = 0xDE;
-    D_800733D8->accelerationY = 0;
+    g_EntityArray->unkAC = 0xDE;
+    g_EntityArray->accelerationY = 0;
     D_800B0914 = 0;
-    D_800733D8->animationFrameIndex = 0;
-    D_800733D8->animationFrameDuration = 0;
-    D_800733D8->unk2E = 7;
+    g_EntityArray->animationFrameIndex = 0;
+    g_EntityArray->animationFrameDuration = 0;
+    g_EntityArray->unk2E = 7;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CB4C);
@@ -4442,7 +4442,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CC30);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CCE4);
 
 void func_8012CED4(void) {
-    if ((D_800733D8->unk2E == 2) && (D_800B0914 == D_800733D8->unk2E)) {
+    if ((g_EntityArray->unk2E == 2) && (D_800B0914 == g_EntityArray->unk2E)) {
         func_8010DA48(0xE7);
         D_800B0914 = 1;
     } else {
@@ -4450,27 +4450,27 @@ void func_8012CED4(void) {
         func_8010E390(0x10000);
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
-            D_800733D8->animationFrameIndex = 4;
-            D_800733D8->accelerationX = 0;
-            D_800733D8->animationFrameDuration = 1;
+            g_EntityArray->animationFrameIndex = 4;
+            g_EntityArray->accelerationX = 0;
+            g_EntityArray->animationFrameDuration = 1;
         }
     }
-    D_800733D8->unk2E = 5;
+    g_EntityArray->unk2E = 5;
     D_80072F0A = 8;
-    D_800733D8->accelerationY = 0;
+    g_EntityArray->accelerationY = 0;
     D_80138430 -= 0x100;
 }
 
 void func_8012CFA8(void) {
     func_8010DA48(0xEA);
-    D_800733D8->unk2E = 6;
+    g_EntityArray->unk2E = 6;
     D_800B0914 = 0;
-    D_800733D8->accelerationX = 0;
+    g_EntityArray->accelerationX = 0;
     D_80072F0A = 8;
 }
 
 void func_8012CFF0(void) {
-    D_800733D8->unk2E = 3;
+    g_EntityArray->unk2E = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
 }

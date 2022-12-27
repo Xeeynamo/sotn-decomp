@@ -537,28 +537,28 @@ extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character
-extern Entity D_800733D8[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;       // D_800733D8->posX.Data.high
-extern s16 D_800733DE;       // D_800733D8->posY.Data.high
-extern s32 D_800733E0;       // D_800733D8->accelerationX
-extern s32 D_800733E8;       // D_800733D8->accelerationY
-extern u16 D_800733EC;       // D_800733D8->unk14
-extern u16 D_800733EE;       // D_800733D8->palette
-extern s8 D_800733F0;        // D_800733D8->blendMode
-extern u8 D_800733F1;        // D_800733D8->unk19
-extern s16 D_800733F6[];     // D_800733D8->unk1E
-extern u16 D_800733FC;       // D_800733D8->zPriority
-extern s16 D_800733FE;       // D_800733D8->objectId
-extern u16 D_80073404;       // D_800733D8->initState
-extern u16 D_80073406;       // D_800733D8->unk2E
-extern u16 D_8007340A;       // D_800733D8->objectRoomIndex
-extern u16 D_8007341C;       // D_800733D8->unk44
-extern s32* D_80073424;      // D_800733D8->unk4C
-extern MultiType D_80073428; // D_800733D8->animationFrameIndex
-extern s16 D_8007342A;       // D_800733D8->animationFrameDuration
-extern s16 D_8007342C;       // D_800733D8->animationSet
-extern u16 D_8007342E;       // D_800733D8->animationFrame
-extern u8 D_80073484;        // D_800733D8->unkAC
+extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
+extern s16 D_800733DA;       // g_EntityArray->posX.Data.high
+extern s16 D_800733DE;       // g_EntityArray->posY.Data.high
+extern s32 D_800733E0;       // g_EntityArray->accelerationX
+extern s32 D_800733E8;       // g_EntityArray->accelerationY
+extern u16 D_800733EC;       // g_EntityArray->unk14
+extern u16 D_800733EE;       // g_EntityArray->palette
+extern s8 D_800733F0;        // g_EntityArray->blendMode
+extern u8 D_800733F1;        // g_EntityArray->unk19
+extern s16 D_800733F6[];     // g_EntityArray->unk1E
+extern u16 D_800733FC;       // g_EntityArray->zPriority
+extern s16 D_800733FE;       // g_EntityArray->objectId
+extern u16 D_80073404;       // g_EntityArray->initState
+extern u16 D_80073406;       // g_EntityArray->unk2E
+extern u16 D_8007340A;       // g_EntityArray->objectRoomIndex
+extern u16 D_8007341C;       // g_EntityArray->unk44
+extern s32* D_80073424;      // g_EntityArray->unk4C
+extern MultiType D_80073428; // g_EntityArray->animationFrameIndex
+extern s16 D_8007342A;       // g_EntityArray->animationFrameDuration
+extern s16 D_8007342C;       // g_EntityArray->animationSet
+extern u16 D_8007342E;       // g_EntityArray->animationFrame
+extern u8 D_80073484;        // g_EntityArray->unkAC
 // End of Player Character
 
 extern s16 D_800734EA;
@@ -574,7 +574,7 @@ extern Entity D_80073F98;
 extern u16 D_80073FBE;
 extern Entity D_80073FC4; // unconfirmed / weird
 extern Entity D_80074C08[];
-extern Entity D_800762D8[]; // D_800733D8 + 0x40
+extern Entity D_800762D8[]; // g_EntityArray + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];

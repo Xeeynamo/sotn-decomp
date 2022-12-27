@@ -1,2 +1,3 @@
 UpdateEntityRichter = 0x80157BFC;
 func_8017328C = 0x8017328C;
+g_EntityArray = 0x800733D8;
