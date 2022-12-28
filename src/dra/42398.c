@@ -1294,6 +1294,7 @@ loop_1:
 
 void FreePolygons(s32 polygonIndex) {
     POLY_GT4* poly = &D_80086FEC[polygonIndex];
+
     if (poly) {
         do {
             if (poly->code == 7) {
@@ -4075,7 +4076,28 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116208);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116408);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801166A4);
+void func_801166A4(void) {
+    switch (g_EntityArray[PLAYER_CHARACTER].unk2E) {
+    case 0:
+        func_80113EE0();
+        D_80072F60 = 0x8166;
+        D_80072F04 = 6;
+        g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+        g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
+        g_EntityArray[PLAYER_CHARACTER].unkAC = 0x33;
+        func_8011AAFC(g_CurrentEntity, 0, 0);
+        func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
+        g_EntityArray[PLAYER_CHARACTER].unk2E += 1;
+        return;
+
+    case 1:
+        if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+            PlaySfx(0x6F2);
+            func_8010E570(0);
+        }
+        return;
+    }
+}
 
 void func_8011678C(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
