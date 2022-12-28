@@ -1184,10 +1184,7 @@ void func_800EDA94(void) {
     POLY_GT4* poly;
     s32 i;
 
-    i = 0;
-    poly = D_80086FEC;
-
-    for (; i < 1280; i++) {
+    for (i = 0, poly = D_80086FEC; i < 1280; i++) {
         func_800EDA70((s32*)poly);
         poly->code = 0;
         poly++;
