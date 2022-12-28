@@ -3373,10 +3373,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80108448);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801092E8);
 
 void func_80109328(void) {
-    s16* new_var = &g_EntityArray[PLAYER_CHARACTER].unk1E;
+    s16* player_unk1E = &g_EntityArray[PLAYER_CHARACTER].unk1E;
 
     D_80072F86 = 0;
-    if ((*new_var == 0x800) && (g_EntityArray[PLAYER_CHARACTER].step == 8)) {
+    if ((*player_unk1E == 0x800) &&
+        (g_EntityArray[PLAYER_CHARACTER].step == 8)) {
         g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
         g_EntityArray[PLAYER_CHARACTER].animationFrame = 0x9D;
         g_EntityArray[PLAYER_CHARACTER].unk14 =
