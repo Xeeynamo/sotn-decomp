@@ -25,7 +25,7 @@ void func_801B246C(Entity* arg0) {
         InitializeEntity(D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk14 = temp_s0->unk4.data1.unk0;
+        arg0->facing = temp_s0->unk4.data1.unk0;
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;

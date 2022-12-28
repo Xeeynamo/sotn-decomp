@@ -3378,8 +3378,8 @@ void func_80109328(void) {
         (g_EntityArray[PLAYER_CHARACTER].step == 8)) {
         g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
         g_EntityArray[PLAYER_CHARACTER].animationFrame = 0x9D;
-        g_EntityArray[PLAYER_CHARACTER].unk14 =
-            (g_EntityArray[PLAYER_CHARACTER].unk14 + 1) & 1;
+        g_EntityArray[PLAYER_CHARACTER].facing =
+            (g_EntityArray[PLAYER_CHARACTER].facing + 1) & 1;
     }
 
     if (D_80072F16[0] != 0) {
@@ -3569,7 +3569,7 @@ s32 func_8010E27C(void) {
         return 0;
 
     retValue = 1;
-    tmp = &g_EntityArray->unk14;
+    tmp = &g_EntityArray->facing;
     if (*tmp == 1) {
         if (D_80072EE8 & 0x2000) {
             *tmp = 0;
@@ -3596,7 +3596,7 @@ s32 func_8010E27C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
 void func_8010E390(s32 arg0) {
-    if (g_CurrentEntity->unk14 == 1) {
+    if (g_CurrentEntity->facing == 1) {
         arg0 = -arg0;
     }
     g_CurrentEntity->accelerationX = arg0;

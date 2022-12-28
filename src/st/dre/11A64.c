@@ -133,7 +133,7 @@ void func_80193D7C(Entity* entity) {
     entity->posX.Data.high = entity[-1].posX.Data.high;
     entity->animationFrame = 0;
     entity->posY.Data.high = entity[-1].posY.Data.high;
-    entity->unk14 = entity[-1].unk14;
+    entity->facing = entity[-1].facing;
 
     if (entity[-1].animationFrame == 0x32) {
         entity->animationFrame = 0x3E;

@@ -93,7 +93,7 @@ typedef struct Entity {
     /* 0x0C */ s32 accelerationY;
     /* 0x10 */ s16 unk10;
     /* 0x12 */ s16 unk12;
-    /* 0x14 */ u16 unk14; // related to accelerationX ?
+    /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ u8 unk19;
@@ -547,7 +547,7 @@ extern s16 D_800733DA;       // player->posX.Data.high
 extern s16 D_800733DE;       // player->posY.Data.high
 extern s32 D_800733E0;       // player->accelerationX
 extern s32 D_800733E8;       // player->accelerationY
-extern u16 D_800733EC;       // player->unk14
+extern u16 D_800733EC;       // player->facing
 extern u16 D_800733EE;       // player->palette
 extern s8 D_800733F0;        // player->blendMode
 extern u8 D_800733F1;        // player->unk19
