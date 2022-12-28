@@ -105,7 +105,7 @@ typedef struct Entity {
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
-    /* 0x2C */ u16 initState;
+    /* 0x2C */ u16 step;
     /* 0x2E */ u16 unk2E;
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
@@ -142,6 +142,7 @@ typedef struct Entity {
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
     /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
     union {
         /* 0x80 */ struct Entity* entityPtr;
         s32 modeS32;
@@ -242,9 +243,9 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 unk2; // compared to Entity posX
     /* 0x04 */ u16 unk4;
-    /* 0x06 */ u16 unk6;
+    /* 0x06 */ u16 unk6; // compared to Entity posY
     /* 0x08 */ u16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ u16 unkC;
@@ -286,15 +287,15 @@ typedef struct {
 } Unkstruct10; // size = 0xA
 
 typedef enum {
-    ENTITY_INITSTATE_0,
-    ENTITY_INITSTATE_1,
-    ENTITY_INITSTATE_2,
-    ENTITY_INITSTATE_3,
-    ENTITY_INITSTATE_4,
-    ENTITY_INITSTATE_5,
-    ENTITY_INITSTATE_6,
-    ENTITY_INITSTATE_7
-} EntityInitStates;
+    ENTITY_STEP_0,
+    ENTITY_STEP_1,
+    ENTITY_STEP_2,
+    ENTITY_STEP_3,
+    ENTITY_STEP_4,
+    ENTITY_STEP_5,
+    ENTITY_STEP_6,
+    ENTITY_STEP_7
+} EntitySteps;
 
 typedef enum { MONO, STEREO } SoundMode;
 
@@ -381,7 +382,6 @@ extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 // dra
-#define PLAYER_CHARACTER 0
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
 #define PAD_R2 0x0002
@@ -479,14 +479,14 @@ extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
 extern s32 D_8006C374;
-extern s32 D_8006C3AC;
-extern u16 D_8006C3C4;
 extern GpuBuffer* D_8006C37C;
 extern s32 D_8006C398;
+extern s32 D_8006C3AC;
+extern u16 D_8006C3C4;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 D_8006C3B0;
-extern Entity* D_8006C3B8;
+extern Entity* g_CurrentEntity;
 extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
@@ -495,6 +495,7 @@ extern s32 D_80072EF4;
 extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s16 D_80072F00[];
+extern s16 D_80072F04;
 extern s16 D_80072F0A;
 extern s16 D_80072F0C;
 extern s16 D_80072F16[2];
@@ -509,6 +510,7 @@ extern u16 D_80072F70;
 extern u16 D_80072F92;
 
 // Probably part of the same array / struct
+extern u16 D_80072F60;
 extern u16 D_80072F64[];
 extern s16 D_80072F66;
 extern u16 D_80072F68[];
@@ -537,45 +539,62 @@ extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 
-// Beginning of Player Character
+// Entity* player = GET_PLAYER(g_EntityArray);
+// player->
+// Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;       // g_EntityArray->posX.Data.high
-extern s16 D_800733DE;       // g_EntityArray->posY.Data.high
-extern s32 D_800733E0;       // g_EntityArray->accelerationX
-extern s32 D_800733E8;       // g_EntityArray->accelerationY
-extern u16 D_800733EC;       // g_EntityArray->unk14
-extern u16 D_800733EE;       // g_EntityArray->palette
-extern s8 D_800733F0;        // g_EntityArray->blendMode
-extern u8 D_800733F1;        // g_EntityArray->unk19
-extern s16 D_800733F6[];     // g_EntityArray->unk1E
-extern u16 D_800733FC;       // g_EntityArray->zPriority
-extern s16 D_800733FE;       // g_EntityArray->objectId
-extern u16 D_80073404;       // g_EntityArray->initState
-extern u16 D_80073406;       // g_EntityArray->unk2E
-extern u16 D_8007340A;       // g_EntityArray->objectRoomIndex
-extern u16 D_8007341C;       // g_EntityArray->unk44
-extern s32* D_80073424;      // g_EntityArray->unk4C
-extern MultiType D_80073428; // g_EntityArray->animationFrameIndex
-extern s16 D_8007342A;       // g_EntityArray->animationFrameDuration
-extern s16 D_8007342C;       // g_EntityArray->animationSet
-extern u16 D_8007342E;       // g_EntityArray->animationFrame
-extern u8 D_80073484;        // g_EntityArray->unkAC
-// End of Player Character
+extern s16 D_800733DA;       // player->posX.Data.high
+extern s16 D_800733DE;       // player->posY.Data.high
+extern s32 D_800733E0;       // player->accelerationX
+extern s32 D_800733E8;       // player->accelerationY
+extern u16 D_800733EC;       // player->unk14
+extern u16 D_800733EE;       // player->palette
+extern s8 D_800733F0;        // player->blendMode
+extern u8 D_800733F1;        // player->unk19
+extern s16 D_800733F6[];     // player->unk1E
+extern u16 D_800733FC;       // player->zPriority
+extern s16 D_800733FE;       // player->objectId
+extern u16 D_80073404;       // player->step
+extern u16 D_80073406;       // player->unk2E
+extern u16 D_8007340A;       // player->objectRoomIndex
+extern u16 D_8007341C;       // player->unk44
+extern s32* D_80073424;      // player->unk4C
+extern MultiType D_80073428; // player->animationFrameIndex
+extern s16 D_8007342A;       // player->animationFrameDuration
+extern s16 D_8007342C;       // player->animationSet
+extern u16 D_8007342E;       // player->animationFrame
+extern u8 D_80073484;        // player->unkAC
+// End of Player Character offset = 0x80073494
 
-extern s16 D_800734EA;
-extern s32 D_800734F8;
-extern s8 D_80073510;
-extern s8 D_80073511;
-extern s8 D_80073512;
-extern s8 D_80073513;
-extern s16 D_800735A6;
-extern s16 D_80073662;
-extern Entity D_800736C8;
-extern Entity D_80073F98;
-extern u16 D_80073FBE;
-extern Entity D_80073FC4; // unconfirmed / weird
+// Beginning of g_EntityArray[1] offset = 0x80073494
+
+extern s16 D_800734EA; // entity->animationFrame
+extern s32 D_800734F8; // entity->firstPolygonIndex
+extern s8 D_80073510;  // entity->unk7C.modeU8.unk0
+extern s8 D_80073511;  // entity->unk7C.modeU8.unk1
+extern s8 D_80073512;  // entity->unk7E
+extern s8 D_80073513;  // entity->unk7F
+
+// End of g_EntityArray[1] offset = 0x80073550
+
+// Beginning of g_EntityArray[2] offset = 0x80073550
+
+extern s16 D_800735A6; // entity->animationFrame
+
+// End of g_EntityArray[2] offset = 0x8007360C
+
+// Beginning of g_EntityArray[3] offset = 0x8007360C
+
+extern s16 D_80073662; // entity->animationFrame
+
+// End of g_EntityArray[3] offset = 0x800736C8
+
+extern Entity D_800736C8; // g_EntityArray[4]
+extern Entity D_80073F98; // g_EntityArray[16]
+extern u16 D_80073FBE;    // g_EntityArray[16].objectId
+extern Entity D_80073FC4; // g_EntityArray[16].step
 extern Entity D_80074C08[];
-extern Entity D_800762D8[]; // g_EntityArray + 0x40
+extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
@@ -882,6 +901,9 @@ extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
 
+void InitializePads(void);
+void ReadPads(void);
+void ClearBackbuffer(void);
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
 s32 CheckCollision(s32, s16, s32*, s32);

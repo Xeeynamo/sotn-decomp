@@ -1,6 +1,6 @@
 # Castlevania: Symphony of the Night Decompilation
 
-A work-in-progress decompilation of Castlevania Symphony of the Night for PlayStation 1. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles the same binaries of the game, byte-for-byte to the same binaries of the game, effectively being a matching decompilation. Currently it only supports the US version of the game `SLUS-00067`.
+A work-in-progress decompilation of Castlevania Symphony of the Night for PlayStation 1. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation. Currently it only supports the US version of the game `SLUS-00067`.
 
 The game is divided into three modules:
 
