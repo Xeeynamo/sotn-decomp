@@ -1,8 +1,11 @@
 typedef enum {
     PLAYER_CHARACTER,
     UNK_ENTITY_1,
-    UNK_ENTITY_2
+    UNK_ENTITY_2,
+    UNK_ENTITY_3
 } EntityTypes;
+
+#define GET_PLAYER(player) (&(player)[PLAYER_CHARACTER])
 
 #define SQ(x) ((x) * (x))
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
@@ -16,4 +19,3 @@ typedef enum {
 #define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
 #define ARRAY_COUNTU(arr) (u32)(sizeof(arr) / sizeof(arr[0]))
 
-#define GET_PLAYER(player) (&(player)[PLAYER_CHARACTER])

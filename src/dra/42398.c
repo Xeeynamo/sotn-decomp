@@ -3462,14 +3462,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DDA0);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DF70);
 
 void func_8010DFF0(s32 arg0, s32 arg1) {
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity2 = &g_EntityArray[UNK_ENTITY_2];
+    Entity* entity3 = &g_EntityArray[UNK_ENTITY_3];
     POLY_GT4* poly;
     s32 i;
 
     if (arg0 != 0) {
-        D_80073511 = 1;
-        D_80073662 = 0;
-        D_800735A6 = 0;
-        D_800734EA = 0;
+        entity->unk7C.modeU8.unk1 = 1;
+        entity3->animationFrame = 0;
+        entity2->animationFrame = 0;
+        entity->animationFrame = 0;
         poly = &D_80086FEC[D_800734F8];
 
         for (i = 0; i < 6; i++) {
@@ -3478,8 +3481,8 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    D_80073510 = 1;
-    D_80073512 = 10;
+    g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk0 = 1;
+    g_EntityArray[UNK_ENTITY_1].unk7E = 10;
 
     if (arg1 != 0) {
         if (arg1 < 4) {
@@ -4151,8 +4154,9 @@ void func_80118640(void) {
 
 void func_80118670(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    // TODO: replace D_80073428 with player->animationFrameIndex somehow
-    if (D_80073428.typeInt == 0x10007) {
+    s32* animationFrameIndex = (u16*)&player->animationFrameIndex;
+
+    if (*animationFrameIndex == 0x10007) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(0x67D);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);

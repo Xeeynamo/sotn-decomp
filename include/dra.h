@@ -566,23 +566,28 @@ extern u8 D_80073484;        // player->unkAC
 
 // Beginning of g_EntityArray[1] offset = 0x80073494
 
-extern s16 D_800734EA; // animationFrame
-extern s32 D_800734F8; // firstPolygonIndex
-extern s8 D_80073510;  // unk7C
-extern s8 D_80073511;  // unk7E
-extern s8 D_80073512;  // unk80.modeS8.unk8
-extern s8 D_80073513;  // unk84.Data1.unk0
+extern s16 D_800734EA; // entity->animationFrame
+extern s32 D_800734F8; // entity->firstPolygonIndex
+extern s8 D_80073510;  // entity->unk7C.modeU8.unk0
+extern s8 D_80073511;  // entity->unk7C.modeU8.unk1
+extern s8 D_80073512;  // entity->unk7E
+extern s8 D_80073513;  // entity->unk7F
 
 // End of g_EntityArray[1] offset = 0x80073550
 
 // Beginning of g_EntityArray[2] offset = 0x80073550
 
-extern s16 D_800735A6;
-extern s16 D_80073662;
+extern s16 D_800735A6; // entity->animationFrame
 
 // End of g_EntityArray[2] offset = 0x8007360C
 
+// Beginning of g_EntityArray[3] offset = 0x8007360C
+
+extern s16 D_80073662; // entity->animationFrame
 extern Entity D_800736C8;
+
+// End of g_EntityArray[3] offset = 0x800736C8
+
 extern Entity D_80073F98;
 extern u16 D_80073FBE;
 extern Entity D_80073FC4; // unconfirmed / weird

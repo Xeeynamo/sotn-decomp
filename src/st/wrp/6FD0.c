@@ -2988,20 +2988,21 @@ void func_8018A8D4(u16 objectId, Entity* source, Entity* entity) {
 }
 
 s32 func_8018A950(Unkstruct5* arg0) {
-    s16 var_v0_2;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 diff;
 
-    var_v0_2 = D_800733DA - arg0->unk2;
-    var_v0_2 = ABS_ALT(var_v0_2);
+    diff = player->posX.Data.high - arg0->unk2;
+    diff = ABS_ALT(diff);
 
-    if (var_v0_2 >= 0x11) {
-        var_v0_2 = 0;
+    if (diff >= 17) {
+        diff = 0;
     } else {
-        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
-        var_v0_2 = ABS_ALT(var_v0_2);
-        var_v0_2 = var_v0_2 < 0x21;
+        diff = player->posY.Data.high - arg0->unk6;
+        diff = ABS_ALT(diff);
+        diff = diff < 33;
     }
 
-    return var_v0_2;
+    return diff;
 }
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRedDoor);
@@ -3043,28 +3044,37 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B7E8);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s16 func_8018B900(void) {
-    s16 value = g_CurrentEntity->posX.Data.high - D_800733DA;
-    if (value < 0) {
-        value = -value;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+
+    if (xDistance < 0) {
+        xDistance = -xDistance;
     }
-    return value;
+    return xDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_8018B93C(void) {
-    s32 value = g_CurrentEntity->posY.Data.high -
-                g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
-    if (value < 0) {
-        value = -value;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return value;
+    return yDistance;
 }
 
 s16 func_8018B970(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high >
-        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

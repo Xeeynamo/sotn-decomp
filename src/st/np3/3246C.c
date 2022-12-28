@@ -305,10 +305,10 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC7D4);
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
 
 s16 func_801BC844(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high >
-        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
