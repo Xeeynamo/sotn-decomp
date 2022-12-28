@@ -1,5 +1,16 @@
 package iso9660
 
+const (
+	isDirectoryFlag = 2
+
+	// the following flags are used in the CD-XA extension
+	isMode2ExFlag       = 0x08
+	isMode2Form2ExFlag  = 0x10
+	isInterleavedExFlag = 0x20
+	isCDDAExFlag        = 0x40
+	isDirectoryExFlag   = 0x80
+)
+
 type DirectoryEntry struct {
 	DirectoryRecordLength byte
 
@@ -61,12 +72,40 @@ func parseDirectoryEntry(data []byte) DirectoryEntry {
 	return de
 }
 
+func serializeDirectoryEntry(de DirectoryEntry) []byte {
+	data := make([]byte, de.DirectoryRecordLength)
+
+	data[0] = de.DirectoryRecordLength
+	data[1] = de.ExtendedAttributeRecordLength
+	copy(data[2:10], serialize32(de.ExtentLocation))
+	copy(data[10:18], serialize32(de.DataLength))
+	copy(data[18:25], serializeTimestamp(de.RecordingDateTime))
+	data[25] = de.FileFlags
+	data[26] = de.FileUnitSize
+	data[27] = de.InterleaveGapSize
+	copy(data[28:32], serialize16(de.VolumeSequenceNumber))
+	data[32] = de.FileIdentifierLength
+	copy(data[33:], []byte(de.FileIdentifier))
+
+	uxaFlag := byte(0xD)
+	if (de.FileFlags & isDirectoryFlag) == isDirectoryFlag {
+		uxaFlag |= isDirectoryExFlag
+	}
+	// TODO uxaFlag |= isMode2Form2ExFlag | isInterleavedExFlag
+	data[data[0]-10+0] = uxaFlag
+	data[data[0]-10+1] = 0x55
+	data[data[0]-10+2] = 0x58
+	data[data[0]-10+3] = 0x41
+
+	return data
+}
+
 func (de DirectoryEntry) IsHidden() bool {
 	return (de.FileFlags & 1) == 1
 }
 
 func (de DirectoryEntry) IsDirectory() bool {
-	return (de.FileFlags & 2) == 2
+	return (de.FileFlags & isDirectoryFlag) == isDirectoryFlag
 }
 
 func (de DirectoryEntry) IsAssociatedFile() bool {

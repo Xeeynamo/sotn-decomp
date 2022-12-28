@@ -235,6 +235,8 @@ require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
+	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
+	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)

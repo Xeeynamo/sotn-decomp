@@ -4,23 +4,15 @@ package iso9660
 
 import (
 	"errors"
+	"fmt"
 	"io"
 )
 
 type TrackMode int
-type VolumeType byte
 
 const (
 	TrackMode1_2048 = TrackMode(0x800)
 	TrackMode2_2352 = TrackMode(0x930)
-)
-
-const (
-	VolumeTypeBoot = VolumeType(iota)
-	VolumeTypePrimary
-	VolumeTypeSupplementary
-	VolumeTypePartition
-	VolumeTypeTerminator = VolumeType(0xFF)
 )
 
 var (
@@ -44,6 +36,8 @@ func OpenImage(r io.ReaderAt, mode TrackMode) (*Image, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Printf("%+v\n", parsePVD(pvdSec))
 
 	return &Image{
 		reader: r,
@@ -72,7 +66,7 @@ func (file File) GetChildren() ([]File, error) {
 	for {
 		// horrible hack as it can read unnecessary bytes, but it works
 		if offset+bufSafe > secSize {
-			sec, err := readSector(file.reader, int64(chloc), file.mode)
+			sec, err := readSector(file.reader, location(chloc), file.mode)
 			if err != nil {
 				return nil, err
 			}
@@ -97,7 +91,7 @@ func (file File) GetChildren() ([]File, error) {
 
 func (file File) WriteFile(w io.Writer) error {
 	size := file.DataLength.LSB
-	sector := int64(file.ExtentLocation.LSB)
+	sector := location(file.ExtentLocation.LSB)
 
 	for size > 0 {
 		sec, err := readSector(file.reader, sector, file.mode)
