@@ -4088,14 +4088,17 @@ void func_801166A4(void) {
         func_8011AAFC(g_CurrentEntity, 0, 0);
         func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
         g_EntityArray[PLAYER_CHARACTER].unk2E += 1;
-        return;
+        break;
 
     case 1:
         if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
             PlaySfx(0x6F2);
             func_8010E570(0);
         }
-        return;
+        break;
+
+    default:
+        break;
     }
 }
 
