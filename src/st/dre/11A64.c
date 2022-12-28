@@ -65,7 +65,7 @@ extern u16 D_80181328[];
 void func_80191A64(Entity* entity) {
     ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(&D_801804AC);
         entity->animationSet = obj->animationSet;
         entity->zPriority = obj->zPriority;
@@ -99,7 +99,7 @@ void EntityBreakable(Entity* entity) {
     Entity* temp_v0;
     u16 temp_s0 = entity->subId >> 0xC;
 
-    if (entity->initState != 0) {
+    if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
             g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
@@ -126,7 +126,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80192104);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193B3C);
 
 void func_80193D7C(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(&D_801804E8);
     }
 
@@ -153,7 +153,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194214);
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80194488);
 
 void func_801946C4(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(&D_8018050C);
         entity->animationFrame = 0;
@@ -623,11 +623,11 @@ u16 func_8019AF88(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_8019AFE8(u8 initState) {
+void func_8019AFE8(u8 step) {
     Entity* entity;
 
     entity = g_CurrentEntity;
-    entity->initState = initState;
+    entity->step = step;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
@@ -660,7 +660,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->subId = arg0;
     entity->animationFrame = 0;
-    g_CurrentEntity->initState = 0;
+    g_CurrentEntity->step = 0;
     g_CurrentEntity->unk2E = 0;
 }
 
@@ -685,15 +685,15 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->initState++;
+    g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
 void func_8019B1B4(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+    if (arg0->step == 0) {
+        arg0->step++;
     }
 }
 
@@ -731,7 +731,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
     temp_a0 = 0;
     entity->unk6D = 0x10;
-    entity->initState = temp_a0;
+    entity->step = temp_a0;
 }
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
@@ -846,7 +846,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp_v0;
     u32 temp;
 
-    if (!entity->initState) {
+    if (!entity->step) {
         InitializeEntity(&D_80180470);
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
@@ -930,7 +930,7 @@ void func_8019E5E0(Entity* entity) {
     u8 new_var2;
     u32 new_var;
 
-    if (!entity->initState) {
+    if (!entity->step) {
         new_var = D_8018130C[entity->unk94];
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
@@ -938,7 +938,7 @@ void func_8019E5E0(Entity* entity) {
         entity->accelerationY = new_var;
         new_var2 = D_80181324[entity->subId];
         entity->blendMode = 0x10;
-        entity->initState++;
+        entity->step++;
         entity->animationFrame = new_var2;
         return;
     }
@@ -959,7 +959,7 @@ void func_8019E6D0(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 
-    if (!entity->initState) {
+    if (!entity->step) {
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
         entity->animationSet = 5;
@@ -970,7 +970,7 @@ void func_8019E6D0(Entity* entity) {
         entity->unk1A = temp_v0;
         entity->unk1C = temp_v0;
         temp2 = D_801812F4[entity->subId];
-        entity->initState += 1;
+        entity->step += 1;
         entity->accelerationY = temp2;
         return;
     }
@@ -1023,7 +1023,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019EAF0);
 void EntityIntenseExplosion(Entity* entity) {
     u32 temp_v0;
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180470);
         entity->palette = 0x8170;
         entity->animationSet = 5;
@@ -1057,7 +1057,7 @@ void EntityIntenseExplosion(Entity* entity) {
 }
 
 void func_8019F170(Entity* entity) {
-    if (!entity->initState) {
+    if (!entity->step) {
         InitializeEntity(D_80180470);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
@@ -1072,7 +1072,7 @@ void func_8019F170(Entity* entity) {
             entity->palette = 0x8160;
         }
 
-        entity->initState++;
+        entity->step++;
         return;
     }
 
@@ -1144,7 +1144,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A174C);
 extern ObjInit2 D_80181420[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181420[entity->subId];
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801804AC);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;

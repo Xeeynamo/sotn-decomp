@@ -234,10 +234,10 @@ u16 func_80194DFC(s32 x, s32 y) {
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194E44);
 
-void func_80194EA4(u8 initState) {
+void func_80194EA4(u8 step) {
     Entity* entity = g_CurrentEntity;
 
-    entity->initState = initState;
+    entity->step = step;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
@@ -256,8 +256,8 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194EE0);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194F74);
 
 void func_80195070(Entity* entity) {
-    if (entity->initState == 0) {
-        entity->initState++;
+    if (entity->step == 0) {
+        entity->step++;
     }
 }
 

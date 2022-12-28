@@ -21,7 +21,7 @@ void func_801B246C(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180C10[arg0->subId];
 
-    if (arg0->initState == 0) {
+    if (arg0->step == 0) {
         InitializeEntity(D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
@@ -49,7 +49,7 @@ extern u16 g_eBreakableAnimationSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
-    if (entity->initState) {
+    if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
@@ -90,7 +90,7 @@ typedef struct {
 } UnkStruct11; // size = 0x7F
 
 void func_801B2830(Entity* arg0) {
-    switch (arg0->initState) {
+    switch (arg0->step) {
     case 0:
         InitializeEntity(&D_80180A60);
         arg0->unk7C.modeU8.unk0 = 0x10;
@@ -396,8 +396,8 @@ u16 func_801BD06C(s32 x, s32 y) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD0B4);
 
-void func_801BD114(u8 initState) {
-    g_CurrentEntity->initState = initState;
+void func_801BD114(u8 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->animationFrameIndex = 0;
     g_CurrentEntity->animationFrameDuration = 0;
@@ -432,15 +432,15 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->initState++;
+    g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
 void EntityDummy(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+    if (arg0->step == 0) {
+        arg0->step++;
     }
 }
 
@@ -478,7 +478,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
     temp_a0 = 0;
     entity->unk6D = 0x10;
-    entity->initState = temp_a0;
+    entity->step = temp_a0;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD984);
@@ -560,7 +560,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityEnemyBlood);
 extern ObjInit2 D_801820F0[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_801820F0[entity->subId];
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180A90);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;

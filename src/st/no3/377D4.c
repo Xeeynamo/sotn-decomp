@@ -37,7 +37,7 @@ void func_801B77D4(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
 
-    if (arg0->initState == 0) {
+    if (arg0->step == 0) {
         InitializeEntity(D_80180B00);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
@@ -65,7 +65,7 @@ extern u16 g_eBreakableAnimationSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
-    if (entity->initState) {
+    if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
@@ -558,7 +558,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57FC);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5844);
 
 void func_801C58A4(u8 state) {
-    g_CurrentEntity->initState = state;
+    g_CurrentEntity->step = state;
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->animationFrameIndex = 0;
     g_CurrentEntity->animationFrameDuration = 0;
@@ -593,15 +593,15 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->initState++;
+    g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
 void EntityDummy(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+    if (arg0->step == 0) {
+        arg0->step++;
     }
 }
 
@@ -639,7 +639,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
     temp_a0 = 0;
     entity->unk6D = 0x10;
-    entity->initState = temp_a0;
+    entity->step = temp_a0;
 }
 
 #ifndef NON_MATCHING

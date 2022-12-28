@@ -2517,7 +2517,7 @@ extern u16 D_80194728[];
 
 void func_80186FD0(Entity* arg0) {
     const ObjInit2* objInit = &D_801804E0[arg0->subId];
-    if (arg0->initState == 0) {
+    if (arg0->step == 0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
@@ -2553,7 +2553,7 @@ void func_801870B0(Entity* entity) {
 
     temp_s1 = entity->subId;
     entity->unk6D = 0;
-    if (entity->initState != 0) {
+    if (entity->step != 0) {
         temp_v1 = temp_s1;
         if (temp_v1 > 3) {
             if (temp_v1 > 5) {
@@ -2565,7 +2565,7 @@ void func_801870B0(Entity* entity) {
                     if (g_pads->pressed & PAD_TRIANGLE) {
                         g_CurrentRoomX = 0;
                         g_CurrentRoomWidth = 1280;
-                        entity->initState++;
+                        entity->step++;
                         return;
                     }
                 }
@@ -2609,7 +2609,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
-    if (entity->initState) {
+    if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
@@ -2666,7 +2666,7 @@ void UpdateStageEntities(void) {
         if (!entity->pfnUpdate)
             continue;
 
-        if (entity->initState) {
+        if (entity->step) {
             s32 unk34 = entity->unk34;
             if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 u16 posX = entity->posX.Data.high;
@@ -2735,7 +2735,7 @@ void func_80188514(void) {
         if (!entity->pfnUpdate)
             continue;
 
-        if (entity->initState) {
+        if (entity->step) {
             if (entity->unk34 & 0x10000) {
                 if (entity->unk34 & 0xF) {
                     entity->palette =
@@ -3212,8 +3212,8 @@ u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_8018C240(u8 initState) {
-    g_CurrentEntity->initState = initState;
+void func_8018C240(u8 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->animationFrameIndex = 0;
     g_CurrentEntity->animationFrameDuration = 0;
@@ -3242,7 +3242,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->subId = arg0;
     entity->animationFrame = 0;
-    g_CurrentEntity->initState = 0;
+    g_CurrentEntity->step = 0;
     g_CurrentEntity->unk2E = 0;
 }
 
@@ -3267,15 +3267,15 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->initState++;
+    g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
 void EntityDummy(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+    if (arg0->step == 0) {
+        arg0->step++;
     }
 }
 
@@ -3313,7 +3313,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
     temp_a0 = 0;
     entity->unk6D = 0x10;
-    entity->initState = temp_a0;
+    entity->step = temp_a0;
 }
 
 #ifndef NON_MATCHING
@@ -3448,7 +3448,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityItemDrop);
 void EntityExplosion(Entity* entity) {
     u16 zPriority;
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180458);
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
@@ -3552,13 +3552,13 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F838);
 #else
 void func_8018F838(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         entity->palette = 0x8195;
         entity->animationSet = 2;
         entity->unk34 = 0x0C002000;
         entity->accelerationY = D_80181020[entity->unk94];
         entity->blendMode = 16;
-        entity->initState = entity->initState + 1;
+        entity->step = entity->step + 1;
         entity->animationFrame = D_80181038[entity->subId];
     } else {
         entity->animationFrameDuration++;
@@ -3576,7 +3576,7 @@ void func_8018F838(Entity* entity) {
 void func_8018F928(Entity* arg0) {
     u16 temp_v0;
 
-    if (arg0->initState == 0) {
+    if (arg0->step == 0) {
         arg0->unk34 = 0x0C002000;
         arg0->palette = 0x8195;
         arg0->animationSet = 5;
@@ -3587,7 +3587,7 @@ void func_8018F928(Entity* arg0) {
         arg0->unk1A = temp_v0;
         arg0->unk1C = temp_v0;
         arg0->accelerationY = D_80181008[arg0->subId];
-        arg0->initState++;
+        arg0->step++;
     } else {
         arg0->animationFrameDuration++;
         arg0->posY.value -= arg0->accelerationY;
@@ -3631,7 +3631,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FD48);
 
 void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180458);
         entity->palette = 0x8170;
         entity->animationSet = 5;
@@ -3662,7 +3662,7 @@ void EntityIntenseExplosion(Entity* entity) {
 }
 
 void func_801903C8(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180458);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
@@ -3676,7 +3676,7 @@ void func_801903C8(Entity* entity) {
             entity->palette = 0x8160;
         }
 
-        entity->initState++;
+        entity->step++;
     } else {
         MoveEntity();
         if (AnimateEntity(D_8018104C, entity) == 0) {
@@ -3743,7 +3743,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     const ObjInit2* objInit = &D_80181134[entity->subId];
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180494);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;

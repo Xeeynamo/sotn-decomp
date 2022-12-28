@@ -399,11 +399,11 @@ u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_801BD52C(u8 initState) {
+void func_801BD52C(u8 step) {
     Entity* entity;
 
     entity = g_CurrentEntity;
-    entity->initState = initState;
+    entity->step = step;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
@@ -433,7 +433,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
     g_CurrentEntity->subId = arg0;
     g_CurrentEntity->animationFrame = 0;
     g_CurrentEntity->unk19 = 0;
-    g_CurrentEntity->initState = 0;
+    g_CurrentEntity->step = 0;
     g_CurrentEntity->unk2E = 0;
 }
 
@@ -458,15 +458,15 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->initState++;
+    g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
     }
 }
 
 void func_801BD6F8(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+    if (arg0->step == 0) {
+        arg0->step++;
     }
 }
 
@@ -501,7 +501,7 @@ void func_801BDCE4(Entity* entity) {
 
     entity->subId = subId;
     entity->unk6D = 0x10;
-    entity->initState = 0;
+    entity->step = 0;
 }
 
 // https://decomp.me/scratch/W8pIb branch problem, probably aspsx
@@ -633,7 +633,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityCandleDrop);
 void func_801BEB80(Entity* entity) {
     u32 temp_v0;
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180BE0);
         entity->animationSet = 2;
         entity->animationFrameIndex = 0;
@@ -708,12 +708,12 @@ void func_801C07FC(Entity* entity) {
     Entity* newEntity;
     u8 temp_v0;
 
-    switch (entity->initState) {
-    case ENTITY_INITSTATE_0:
+    switch (entity->step) {
+    case ENTITY_STEP_0:
         InitializeEntity(&D_80180C04);
         entity->unk8C = entity->unk80.entityPtr->objectId;
 
-    case ENTITY_INITSTATE_1:
+    case ENTITY_STEP_1:
         temp_v0 = entity->unk7C.modeU8.unk0++;
         if (temp_v0 >= 5) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -741,14 +741,14 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C090C);
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C0A3C);
 
 void func_801C0B24(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         entity->accelerationY = D_80181F04[entity->unk94];
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
         entity->animationSet = 2;
         entity->animationFrame = D_80181F1C[entity->subId];
         entity->blendMode = 0x10;
-        entity->initState++;
+        entity->step++;
         return;
     }
 
@@ -768,7 +768,7 @@ void func_801C0C14(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 
-    if (!entity->initState) {
+    if (!entity->step) {
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
         entity->animationSet = 5;
@@ -779,7 +779,7 @@ void func_801C0C14(Entity* entity) {
         entity->unk1A = temp_v0;
         entity->unk1C = temp_v0;
         temp2 = D_80181EEC[entity->subId];
-        entity->initState += 1;
+        entity->step += 1;
         entity->accelerationY = temp2;
         return;
     }
@@ -828,7 +828,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C1034);
 void func_801C15B4(Entity* entity) {
     u32 temp_v0;
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180BE0);
         entity->palette = 0x8170;
         entity->animationSet = 5;
@@ -862,7 +862,7 @@ void func_801C15B4(Entity* entity) {
 }
 
 void func_801C16B4(Entity* entity) {
-    if (entity->initState == ENTITY_INITSTATE_0) {
+    if (entity->step == ENTITY_STEP_0) {
         InitializeEntity(D_80180BE0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
@@ -877,7 +877,7 @@ void func_801C16B4(Entity* entity) {
             entity->palette = 0x8160;
         }
 
-        entity->initState++;
+        entity->step++;
         return;
     }
 
@@ -941,7 +941,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C2E3C);
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80182014[entity->subId];
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180C1C);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
@@ -996,7 +996,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBoneScimitar);
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C3E94);
 #else
 void func_801C3E94(Entity* entity) {
-    if (entity->initState) {
+    if (entity->step) {
         entity->unk88--;
         if (entity->unk88 & 0xFF) {
             entity->unk1E += D_801820E4[entity->subId];
@@ -1007,7 +1007,7 @@ void func_801C3E94(Entity* entity) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = func_801BEB80;
         entity->subId = 0;
-        entity->initState = 0;
+        entity->step = 0;
         return;
     }
     InitializeEntity(&D_80180C58);
@@ -1058,8 +1058,8 @@ void func_801C4D18(Entity* entity) {
         return;
     }
 
-    switch (entity->initState) {
-    case ENTITY_INITSTATE_0:
+    switch (entity->step) {
+    case ENTITY_STEP_0:
         InitializeEntity(&D_80180C70);
         entity->unk19 = 4;
         entity->accelerationY = D_801822C8[entity->subId];
@@ -1074,12 +1074,12 @@ void func_801C4D18(Entity* entity) {
         entity->unk7C.modeS16 = -0x40;
 
         if (entity->subId == 2) {
-            entity->initState++;
+            entity->step++;
             return;
         }
         break;
 
-    case ENTITY_INITSTATE_1:
+    case ENTITY_STEP_1:
         func_801C4CC0();
         if ((u16)entity->unk7C.modeS16 < 0x20) {
             if (entity->unk14 != 0) {
@@ -1094,7 +1094,7 @@ void func_801C4D18(Entity* entity) {
         MoveEntity();
         break;
 
-    case ENTITY_INITSTATE_2:
+    case ENTITY_STEP_2:
         func_801C4CC0();
         entity->accelerationY += 0x2000;
         MoveEntity();
@@ -1127,7 +1127,7 @@ void func_801C5F2C(Entity* arg0) {
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5FC4); // Unique
 
 void func_801C6494(Entity* entity) {
-    if (entity->initState) {
+    if (entity->step) {
         entity->unk88--;
         if (entity->unk88 & 0xFF) {
             entity->unk1E += D_80182424[entity->subId];
@@ -1139,7 +1139,7 @@ void func_801C6494(Entity* entity) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
         entity->subId = 0;
-        entity->initState = ENTITY_INITSTATE_0;
+        entity->step = ENTITY_STEP_0;
         return;
     }
 
@@ -1156,7 +1156,7 @@ void func_801C6574(Entity* entity) {
     s32 var_a0;
     u32 value;
 
-    if (entity->initState) {
+    if (entity->step) {
         if (entity->unk34 & 0x100) {
             func_801BD568(0, 0);
             return;
@@ -1189,7 +1189,7 @@ void func_801C6574(Entity* entity) {
 }
 
 void func_801C6678(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(&D_80180C88);
         entity->unk1A = 0x120;
         entity->unk1C = 0x200;
@@ -1223,8 +1223,8 @@ void func_801C7538(Entity* entity) {
     s32 new_var;
     s16 var_v0;
 
-    switch (entity->initState) {
-    case ENTITY_INITSTATE_0:
+    switch (entity->step) {
+    case ENTITY_STEP_0:
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 4;
         entity->animationFrame = entity->subId;
@@ -1234,7 +1234,7 @@ void func_801C7538(Entity* entity) {
         entity->accelerationY -= (Random() & 0x1F) << 12;
         break;
 
-    case ENTITY_INITSTATE_1:
+    case ENTITY_STEP_1:
         MoveEntity();
         entity->accelerationY += 0x2000;
 
@@ -1259,8 +1259,8 @@ void func_801C7538(Entity* entity) {
 void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
-    switch (entity->initState) {
-    case ENTITY_INITSTATE_0:
+    switch (entity->step) {
+    case ENTITY_STEP_0:
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;
         entity->palette = 0x816D;
@@ -1269,7 +1269,7 @@ void func_801C7654(Entity* entity) {
         entity->accelerationY = rsin(entity->unk1E) * 0x10;
         break;
 
-    case ENTITY_INITSTATE_1:
+    case ENTITY_STEP_1:
         AnimateEntity(&D_801825F0, entity);
         MoveEntity();
         entity->accelerationY += 0x2000;
@@ -1282,11 +1282,11 @@ void func_801C7654(Entity* entity) {
             entity->unk1C = 0x100;
             entity->accelerationY = 0x4000;
             entity->accelerationX *= 8;
-            entity->initState++;
+            entity->step++;
         }
         break;
 
-    case ENTITY_INITSTATE_2:
+    case ENTITY_STEP_2:
         MoveEntity();
         entity->unk1C -= 8;
         if (!(entity->unk1C << 0x10)) {
@@ -1299,8 +1299,8 @@ void func_801C7654(Entity* entity) {
 void func_801C77B8(Entity* entity) {
     s16 temp_v1_2;
 
-    switch (entity->initState) {
-    case ENTITY_INITSTATE_0:
+    switch (entity->step) {
+    case ENTITY_STEP_0:
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 3;
         entity->unk1C = 0x100;
@@ -1310,7 +1310,7 @@ void func_801C77B8(Entity* entity) {
         entity->accelerationY = D_80182600[entity->subId];
         break;
 
-    case ENTITY_INITSTATE_1:
+    case ENTITY_STEP_1:
         MoveEntity();
         temp_v1_2 = entity->unk1C - 8;
         entity->accelerationY -= 0x400;
@@ -1327,24 +1327,24 @@ void func_801C77B8(Entity* entity) {
 void func_801C7884(Entity* entity) {
     u16 subId = entity->subId;
 
-    switch (entity->initState) {
-    case ENTITY_INITSTATE_0:
+    switch (entity->step) {
+    case ENTITY_STEP_0:
         InitializeEntity(&D_80180BD4);
         entity->unk3C = 0;
 
-    case ENTITY_INITSTATE_1:
+    case ENTITY_STEP_1:
         MoveEntity();
         AnimateEntity(D_80181D3C[subId], entity);
 
         entity->accelerationY = rsin(entity->unk1E) * 2;
         entity->unk1E += 0x20;
 
-        if (entity[-1].initState != 1) {
+        if (entity[-1].step != 1) {
             entity->objectId = ENTITY_ITEM_DROP;
             entity->pfnUpdate = EntityCandleDrop;
             entity->animationFrameDuration = 0;
             entity->animationFrameIndex = 0;
-            entity->initState = ENTITY_INITSTATE_0;
+            entity->step = ENTITY_STEP_0;
             entity->unk3C = 1;
         }
     }

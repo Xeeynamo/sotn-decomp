@@ -105,7 +105,7 @@ typedef struct Entity {
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
-    /* 0x2C */ u16 initState;
+    /* 0x2C */ u16 step;
     /* 0x2E */ u16 unk2E;
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
@@ -287,15 +287,15 @@ typedef struct {
 } Unkstruct10; // size = 0xA
 
 typedef enum {
-    ENTITY_INITSTATE_0,
-    ENTITY_INITSTATE_1,
-    ENTITY_INITSTATE_2,
-    ENTITY_INITSTATE_3,
-    ENTITY_INITSTATE_4,
-    ENTITY_INITSTATE_5,
-    ENTITY_INITSTATE_6,
-    ENTITY_INITSTATE_7
-} EntityInitStates;
+    ENTITY_STEP_0,
+    ENTITY_STEP_1,
+    ENTITY_STEP_2,
+    ENTITY_STEP_3,
+    ENTITY_STEP_4,
+    ENTITY_STEP_5,
+    ENTITY_STEP_6,
+    ENTITY_STEP_7
+} EntitySteps;
 
 typedef enum { MONO, STEREO } SoundMode;
 
@@ -552,7 +552,7 @@ extern u8 D_800733F1;        // player->unk19
 extern s16 D_800733F6[];     // player->unk1E
 extern u16 D_800733FC;       // player->zPriority
 extern s16 D_800733FE;       // player->objectId
-extern u16 D_80073404;       // player->initState
+extern u16 D_80073404;       // player->step
 extern u16 D_80073406;       // player->unk2E
 extern u16 D_8007340A;       // player->objectRoomIndex
 extern u16 D_8007341C;       // player->unk44
@@ -590,9 +590,9 @@ extern s16 D_80073662; // entity->animationFrame
 extern Entity D_800736C8; // g_EntityArray[4]
 extern Entity D_80073F98; // g_EntityArray[16]
 extern u16 D_80073FBE;    // g_EntityArray[16].objectId
-extern Entity D_80073FC4; // g_EntityArray[16].initState
+extern Entity D_80073FC4; // g_EntityArray[16].step
 extern Entity D_80074C08[];
-extern Entity D_800762D8[]; // g_EntityArray + 0x40
+extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];

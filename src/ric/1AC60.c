@@ -182,7 +182,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C6D4);
 void func_8015C908(s32 unk0) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->initState = unk0;
+    player->step = unk0;
     player->unk2E = 0;
 }
 
@@ -257,7 +257,7 @@ void func_8015CC70(s16 arg0) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
     player->unk2E = arg0;
-    player->initState = 0x0020;
+    player->step = 0x0020;
     player->animationFrameDuration = 0;
     player->animationFrameIndex = 0;
     if (arg0 & 1) {

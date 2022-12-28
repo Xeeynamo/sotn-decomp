@@ -3376,8 +3376,7 @@ void func_80109328(void) {
     s16* new_var = &g_EntityArray[PLAYER_CHARACTER].unk1E;
 
     D_80072F86 = 0;
-    if ((*new_var == 0x800) &&
-        (g_EntityArray[PLAYER_CHARACTER].initState == 8)) {
+    if ((*new_var == 0x800) && (g_EntityArray[PLAYER_CHARACTER].step == 8)) {
         g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
         g_EntityArray[PLAYER_CHARACTER].animationFrame = 0x9D;
         g_EntityArray[PLAYER_CHARACTER].unk14 =
@@ -3431,7 +3430,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 void func_8010D584(s16 context) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->initState = context;
+    player->step = context;
     player->unk2E = 0;
 }
 
@@ -3624,7 +3623,7 @@ void func_8010E42C(u16 arg0) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
     player->unk2E = arg0;
-    player->initState = 0x12;
+    player->step = 0x12;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -3643,7 +3642,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
 
     player->accelerationX = arg1;
     player->accelerationY = 0;
-    player->initState = ENTITY_INITSTATE_2;
+    player->step = ENTITY_STEP_2;
     player->unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
@@ -3861,7 +3860,7 @@ void func_8010FD24(void) {
 void func_8010FD88(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->initState = ENTITY_INITSTATE_0;
+    player->step = ENTITY_STEP_0;
     player->unk2E = 3;
     func_8010E390(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
@@ -3960,16 +3959,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
 
-    if (g_EntityArray[16].initState == 5) {
+    if (g_EntityArray[16].step == ENTITY_STEP_5) {
         if (collision == false) {
             func_80106590(&g_EntityArray[16]);
             return true;
         }
         return false;
-    } else if (g_EntityArray[16].initState < 3) {
-        if (g_EntityArray[16].initState != 0) {
+    } else if (g_EntityArray[16].step <= ENTITY_STEP_2) {
+        if (g_EntityArray[16].step != ENTITY_STEP_0) {
             D_80072F66 = 0;
-            g_EntityArray[16].initState = 3;
+            g_EntityArray[16].step = ENTITY_STEP_3;
         }
     }
     return false;
@@ -4300,12 +4299,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 void func_8011B530(Entity* entity) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    if (player->initState != 0x25) {
+    if (player->step != 0x25) {
         func_80106590(entity);
-    } else if (entity->initState == ENTITY_INITSTATE_0) {
+    } else if (entity->step == ENTITY_STEP_0) {
         entity->unk34 = 0x60000;
         func_8011A328(entity, 5);
-        entity->initState++;
+        entity->step++;
     }
 }
 

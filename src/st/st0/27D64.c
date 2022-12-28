@@ -22,7 +22,7 @@ void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180638[arg0->subId];
 
-    if (arg0->initState == 0) {
+    if (arg0->step == 0) {
         InitializeEntity(D_801805BC);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
@@ -79,7 +79,7 @@ void EntityLockCamera(Entity* entity) {
     s32 phi_v1;
 
     temp_s1 = entity->subId;
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801805B0);
         temp_v1 = temp_s1 & 0xFFFF;
         entity->unk3C = 1;
@@ -161,26 +161,26 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntitySecretButton);
 
 extern u16 D_80180628[];
 void EntitySecretStairsEmitter(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_80180628);
         entity->animationFrame = 3;
         entity->zPriority += 2;
         if (g_isSecretStairsButtonPressed) {
             entity->animationFrame = 0;
-            entity->initState = 3;
+            entity->step = 3;
         }
         break;
     case 1:
         if (g_isSecretStairsButtonPressed) {
             g_pfnPlaySfx(NA_SE_SECRET_STAIRS);
-            entity->initState++;
+            entity->step++;
         }
         break;
     case 2:
         entity->posY.value -= 0x4000;
         if (entity->posY.Data.high < -16) {
-            entity->initState++;
+            entity->step++;
         }
         break;
     case 3:
@@ -207,7 +207,7 @@ void EntityDraculaBody(Entity* entity) {
         DestroyEntity(entity);
     }
 
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805E0);
         entity->unk3C = 1;
@@ -245,12 +245,12 @@ void EntityDraculaFireball(Entity* entity) {
 
     if (entity->unk34 & 0x100) {
         entity->pfnUpdate = (PfnEntityUpdate)func_801B6B60;
-        entity->initState = 0;
+        entity->step = 0;
         entity->subId = 2;
         return;
     }
 
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805EC);
 
@@ -293,13 +293,13 @@ void EntityDraculaMeteorball(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = func_801B6B60;
-        entity->initState = 0;
+        entity->step = 0;
         entity->unk2E = 0;
         entity->subId = 1;
         return;
     }
 
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805F8);
         entity->unk3C = 0;
@@ -351,7 +351,7 @@ void func_801AD838(Entity* entity) {
         return;
     }
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801805EC);
         entity->animationFrame = 0;
         entity->unk3C = 0;
@@ -367,7 +367,7 @@ void func_801AD838(Entity* entity) {
 extern u16 D_801805EC[];
 extern u8 D_80180A40[];
 void EntityDraculaGlass(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805EC);
         entity->animationFrame = 0x59;
@@ -511,7 +511,7 @@ void UpdateStageEntities(void) {
         if (!entity->pfnUpdate)
             continue;
 
-        if (entity->initState) {
+        if (entity->step) {
             s32 unk34 = entity->unk34;
             if (unk34 < 0) {
                 u16 posX = entity->posX.Data.high;
@@ -812,7 +812,7 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 #endif
 
 void func_801B5794(u8 state) {
-    g_CurrentEntity->initState = state;
+    g_CurrentEntity->step = state;
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->animationFrameIndex = 0;
     g_CurrentEntity->animationFrameDuration = 0;
@@ -867,7 +867,7 @@ extern u32 D_80181D7C[];
 extern u16 D_80181E28[][2];
 
 void func_801B6B60(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         u32 zPriority;
 
         InitializeEntity(D_8018058C);
@@ -971,7 +971,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
 extern ObjInit2 D_80181FE8[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181FE8[entity->subId];
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801805BC);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
@@ -1005,7 +1005,7 @@ extern u16 D_801805D4[];
 extern u8 D_801824CC[];
 
 void EntityCutscenePhotographFire(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805D4);
         entity->animationSet = 0x8007;
