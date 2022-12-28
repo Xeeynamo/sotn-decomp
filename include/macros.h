@@ -2,7 +2,8 @@ typedef enum {
     PLAYER_CHARACTER,
     UNK_ENTITY_1,
     UNK_ENTITY_2,
-    UNK_ENTITY_3
+    UNK_ENTITY_3,
+    UNK_ENTITY_4
 } EntityTypes;
 
 #define GET_PLAYER(player) (&(player)[PLAYER_CHARACTER])

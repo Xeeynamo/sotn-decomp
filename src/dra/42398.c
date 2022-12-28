@@ -2461,7 +2461,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA8C4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
 void func_800FAB1C(void) {
-    Entity* entity = &D_800736C8;
+    Entity* entity = &g_EntityArray[UNK_ENTITY_4];
     s32 i;
 
     for (i = 4; i < 64; i++) {
@@ -3470,7 +3470,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_EntityArray[UNK_ENTITY_3].animationFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animationFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animationFrame = 0;
-        poly = &D_80086FEC[D_800734F8];
+        poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
@@ -3490,11 +3490,17 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
     }
 }
 
-void func_8010E0A8(void) { D_80073512 = 0; }
+void func_8010E0A8(void) {
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+
+    entity->unk7E = 0;
+}
 
 void func_8010E0B8(void) {
-    D_80073511 = 0;
-    D_80073510 = 0;
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+
+    entity->unk7C.modeU8.unk1 = 0;
+    entity->unk7C.modeU8.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {

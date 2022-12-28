@@ -584,9 +584,14 @@ extern s16 D_800735A6; // entity->animationFrame
 // Beginning of g_EntityArray[3] offset = 0x8007360C
 
 extern s16 D_80073662; // entity->animationFrame
-extern Entity D_800736C8;
 
 // End of g_EntityArray[3] offset = 0x800736C8
+
+// Beginning of g_EntityArray[4] offset = 0x800736C8
+
+extern Entity D_800736C8;
+
+// End of g_EntityArray[4] offset = 0x80073784
 
 extern Entity D_80073F98;
 extern u16 D_80073FBE;
