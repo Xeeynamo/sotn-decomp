@@ -22,7 +22,7 @@ void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180638[arg0->subId];
 
-    if (arg0->initState == 0) {
+    if (arg0->step == 0) {
         InitializeEntity(D_801805BC);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
@@ -42,9 +42,10 @@ void func_801A7D64(Entity* arg0) {
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7E2C);
 #else
 bool func_801A7E2C(Entity* entity) {
+    Entity* player = GET_PLAYER(g_EntityArray);
     s16 distance;
 
-    distance = D_800733DA - entity->posX.Data.high;
+    distance = player->posX.Data.high - entity->posX.Data.high;
     if (distance < 0) {
         distance = -distance;
     }
@@ -78,7 +79,7 @@ void EntityLockCamera(Entity* entity) {
     s32 phi_v1;
 
     temp_s1 = entity->subId;
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801805B0);
         temp_v1 = temp_s1 & 0xFFFF;
         entity->unk3C = 1;
@@ -160,26 +161,26 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntitySecretButton);
 
 extern u16 D_80180628[];
 void EntitySecretStairsEmitter(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_80180628);
         entity->animationFrame = 3;
         entity->zPriority += 2;
         if (g_isSecretStairsButtonPressed) {
             entity->animationFrame = 0;
-            entity->initState = 3;
+            entity->step = 3;
         }
         break;
     case 1:
         if (g_isSecretStairsButtonPressed) {
             g_pfnPlaySfx(NA_SE_SECRET_STAIRS);
-            entity->initState++;
+            entity->step++;
         }
         break;
     case 2:
         entity->posY.value -= 0x4000;
         if (entity->posY.Data.high < -16) {
-            entity->initState++;
+            entity->step++;
         }
         break;
     case 3:
@@ -206,7 +207,7 @@ void EntityDraculaBody(Entity* entity) {
         DestroyEntity(entity);
     }
 
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805E0);
         entity->unk3C = 1;
@@ -244,12 +245,12 @@ void EntityDraculaFireball(Entity* entity) {
 
     if (entity->unk34 & 0x100) {
         entity->pfnUpdate = (PfnEntityUpdate)func_801B6B60;
-        entity->initState = 0;
+        entity->step = 0;
         entity->subId = 2;
         return;
     }
 
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805EC);
 
@@ -292,13 +293,13 @@ void EntityDraculaMeteorball(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = func_801B6B60;
-        entity->initState = 0;
+        entity->step = 0;
         entity->unk2E = 0;
         entity->subId = 1;
         return;
     }
 
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805F8);
         entity->unk3C = 0;
@@ -350,7 +351,7 @@ void func_801AD838(Entity* entity) {
         return;
     }
 
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801805EC);
         entity->animationFrame = 0;
         entity->unk3C = 0;
@@ -366,7 +367,7 @@ void func_801AD838(Entity* entity) {
 extern u16 D_801805EC[];
 extern u8 D_80180A40[];
 void EntityDraculaGlass(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805EC);
         entity->animationFrame = 0x59;
@@ -421,7 +422,7 @@ void EntityDraculaGlass(Entity* entity) {
 
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
-    Entity* entity = D_8006C3B8;
+    Entity* entity = g_CurrentEntity;
     s16 temp_v1 = entity->posY.Data.high + arg0;
 
     if (temp_v1 >= unk) {
@@ -510,7 +511,7 @@ void UpdateStageEntities(void) {
         if (!entity->pfnUpdate)
             continue;
 
-        if (entity->initState) {
+        if (entity->step) {
             s32 unk34 = entity->unk34;
             if (unk34 < 0) {
                 u16 posX = entity->posX.Data.high;
@@ -553,7 +554,7 @@ void UpdateStageEntities(void) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
                         (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
-                        D_8006C3B8 = entity;
+                        g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
                         entity->unk48 = 0;
@@ -561,7 +562,7 @@ void UpdateStageEntities(void) {
                 }
             }
         } else {
-            D_8006C3B8 = entity;
+            g_CurrentEntity = entity;
             entity->pfnUpdate(entity);
             entity->unk44 = 0;
             entity->unk48 = 0;
@@ -613,20 +614,21 @@ void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
 }
 
 s32 func_801B3C58(Unkstruct5* arg0) {
-    s16 var_v0_2;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 diff;
 
-    var_v0_2 = D_800733DA - arg0->unk2;
-    var_v0_2 = ABS_ALT(var_v0_2);
+    diff = player->posX.Data.high - arg0->unk2;
+    diff = ABS_ALT(diff);
 
-    if (var_v0_2 >= 0x11) {
-        var_v0_2 = 0;
+    if (diff >= 17) {
+        diff = 0;
     } else {
-        var_v0_2 = g_EntityArray[PLAYER_CHARACTER].posY.Data.high - arg0->unk6;
-        var_v0_2 = ABS_ALT(var_v0_2);
-        var_v0_2 = var_v0_2 < 0x21;
+        diff = player->posY.Data.high - arg0->unk6;
+        diff = ABS_ALT(diff);
+        diff = diff < 33;
     }
 
-    return var_v0_2;
+    return diff;
 }
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityRedDoor);
@@ -668,41 +670,50 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4AF0);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s16 func_801B4C08(void) {
-    s16 value = D_8006C3B8->posX.Data.high - D_800733DA;
-    if (value < 0) {
-        value = -value;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+
+    if (xDistance < 0) {
+        xDistance = -xDistance;
     }
-    return value;
+    return xDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_801B4C44(void) {
-    s32 value = D_8006C3B8->posY.Data.high -
-                g_EntityArray[PLAYER_CHARACTER].posY.Data.high;
-    if (value < 0) {
-        value = -value;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return value;
+    return yDistance;
 }
 
 s16 func_801B4C78(void) {
-    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (D_8006C3B8->posY.Data.high >
-        g_EntityArray[PLAYER_CHARACTER].posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
 }
 
 void MoveEntity(void) {
-    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
 }
 
 void FallEntity(void) {
-    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C3B8->accelerationY += FALL_GRAVITY;
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
     }
 }
 
@@ -713,7 +724,7 @@ u8 func_801B4D18(void) {
     MoveEntity();
     FallEntity();
 
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
 
     if (unkState & 1) {
         entity->accelerationY = 0;
@@ -766,8 +777,8 @@ u16 func_801B56BC(Entity* a, Entity* b) {
 }
 
 u16 func_801B56F4(s32 x, s32 y) {
-    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
-    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    s16 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
     return ratan2(diffY, diffX);
 }
 
@@ -801,16 +812,16 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 #endif
 
 void func_801B5794(u8 state) {
-    D_8006C3B8->initState = state;
-    D_8006C3B8->unk2E = 0;
-    D_8006C3B8->animationFrameIndex = 0;
-    D_8006C3B8->animationFrameDuration = 0;
+    g_CurrentEntity->step = state;
+    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
+    g_CurrentEntity->animationFrameDuration = 0;
 }
 
 void func_801B57B4(u8 arg0) {
-    D_8006C3B8->unk2E = arg0;
-    D_8006C3B8->animationFrameIndex = 0;
-    D_8006C3B8->animationFrameDuration = 0;
+    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->animationFrameIndex = 0;
+    g_CurrentEntity->animationFrameDuration = 0;
 }
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
@@ -856,7 +867,7 @@ extern u32 D_80181D7C[];
 extern u16 D_80181E28[][2];
 
 void func_801B6B60(Entity* entity) {
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         u32 zPriority;
 
         InitializeEntity(D_8018058C);
@@ -912,19 +923,20 @@ bool func_801B8338(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
-    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
 
-    if (D_8006C3B8->accelerationY >= 0) {
-        s16 posX = D_8006C3B8->posX.Data.high;
-        s16 posY = D_8006C3B8->posY.Data.high;
+    if (g_CurrentEntity->accelerationY >= 0) {
+        s16 posX = g_CurrentEntity->posX.Data.high;
+        s16 posY = g_CurrentEntity->posY.Data.high;
         posX += unk->x;
         posY += unk->y;
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
-            D_8006C3B8->posY.Data.high += a.sp28;
-            D_8006C3B8->accelerationY = -D_8006C3B8->accelerationY / 2;
-            if (D_8006C3B8->accelerationY > -0x10000) {
+            g_CurrentEntity->posY.Data.high += a.sp28;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
+            if (g_CurrentEntity->accelerationY > -0x10000) {
                 return true;
             }
         }
@@ -959,7 +971,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
 extern ObjInit2 D_80181FE8[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181FE8[entity->subId];
-    if (entity->initState == 0) {
+    if (entity->step == 0) {
         InitializeEntity(D_801805BC);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
@@ -993,7 +1005,7 @@ extern u16 D_801805D4[];
 extern u8 D_801824CC[];
 
 void EntityCutscenePhotographFire(Entity* entity) {
-    switch (entity->initState) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(D_801805D4);
         entity->animationSet = 0x8007;
