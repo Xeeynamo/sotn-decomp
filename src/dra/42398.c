@@ -1338,7 +1338,7 @@ void func_800F04A4(void) {
             sp10[0].unk0 = D_800DC4C0;
             sp10[0].unk4 = (temp = D_800DC4C4);
             do {
-                func_800E2438(&sp10);
+                func_800E2438((const char*)&sp10);
             } while (0);
         }
     }
@@ -3936,9 +3936,9 @@ bool func_80111D24(void) {
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
-    CheckCollision(posX - 7, posY, &sp10, 0);
+    CheckCollision(posX - 7, posY, (s32*)&sp10, 0);
     hitboxLeftMargin = sp10[0] & 0x10;
-    CheckCollision(posX + 7, posY, &sp10, 0);
+    CheckCollision(posX + 7, posY, (s32*)&sp10, 0);
     hitboxRightMargin = sp10[0] & 0x10;
 
     if (hitboxRightMargin & hitboxLeftMargin) {
@@ -4156,7 +4156,7 @@ void func_80118640(void) {
 
 void func_80118670(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    s32* animationFrameIndex = (u16*)&player->animationFrameIndex;
+    s32* animationFrameIndex = (s32*)&player->animationFrameIndex;
 
     if (*animationFrameIndex == 0x10007) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);

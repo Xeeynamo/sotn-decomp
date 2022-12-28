@@ -899,6 +899,9 @@ extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
 
+void InitializePads(void);
+void ReadPads(void);
+void ClearBackbuffer(void);
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
 s32 CheckCollision(s32, s16, s32*, s32);
