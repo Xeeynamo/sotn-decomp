@@ -3462,17 +3462,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DDA0);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DF70);
 
 void func_8010DFF0(s32 arg0, s32 arg1) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
-    Entity* entity2 = &g_EntityArray[UNK_ENTITY_2];
-    Entity* entity3 = &g_EntityArray[UNK_ENTITY_3];
     POLY_GT4* poly;
     s32 i;
 
     if (arg0 != 0) {
-        entity->unk7C.modeU8.unk1 = 1;
-        entity3->animationFrame = 0;
-        entity2->animationFrame = 0;
-        entity->animationFrame = 0;
+        g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk1 = 1;
+        g_EntityArray[UNK_ENTITY_3].animationFrame = 0;
+        g_EntityArray[UNK_ENTITY_2].animationFrame = 0;
+        g_EntityArray[UNK_ENTITY_1].animationFrame = 0;
         poly = &D_80086FEC[D_800734F8];
 
         for (i = 0; i < 6; i++) {
