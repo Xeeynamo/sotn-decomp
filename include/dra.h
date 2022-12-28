@@ -589,8 +589,8 @@ extern s16 D_80073662; // entity->animationFrame
 
 extern Entity D_800736C8; // g_EntityArray[4]
 extern Entity D_80073F98; // g_EntityArray[16]
-extern u16 D_80073FBE;
-extern Entity D_80073FC4; // unconfirmed / weird
+extern u16 D_80073FBE;    // g_EntityArray[16].objectId
+extern Entity D_80073FC4; // g_EntityArray[16].initState
 extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // g_EntityArray + 0x40
 extern Unkstruct8 g_CurrentRoomTileLayout;

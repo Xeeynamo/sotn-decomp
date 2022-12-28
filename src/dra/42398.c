@@ -3958,18 +3958,18 @@ bool func_80111D24(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 
 bool func_8011203C(void) {
-    s32 funcRet = func_80111D24();
+    s32 collision = func_80111D24();
 
-    if ((u16)D_80073FC4.posX.Data.low == 5) {
-        if (funcRet == 0) {
-            func_80106590((Entity*)(&D_80073FC4.posX.Data.low - 0x16));
+    if (g_EntityArray[16].initState == 5) {
+        if (collision == false) {
+            func_80106590(&g_EntityArray[16]);
             return true;
         }
         return false;
-    } else if ((u16)D_80073FC4.posX.Data.low < 3) {
-        if ((u16)D_80073FC4.posX.Data.low != 0) {
+    } else if (g_EntityArray[16].initState < 3) {
+        if (g_EntityArray[16].initState != 0) {
             D_80072F66 = 0;
-            D_80073FC4.posX.Data.low = 3;
+            g_EntityArray[16].initState = 3;
         }
     }
     return false;
@@ -4036,7 +4036,7 @@ void func_80113EE0(void) {
     D_80072F66 = 0;
     player->unk1E = 0;
     player->zPriority = g_zEntityCenter;
-    if (D_80073FBE == 0x22) {
+    if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }
 }
