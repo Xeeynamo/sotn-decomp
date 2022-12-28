@@ -3959,16 +3959,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
 
-    if (g_EntityArray[16].step == ENTITY_STEP_5) {
+    if (g_EntityArray[UNK_ENTITY_10].step == ENTITY_STEP_5) {
         if (collision == false) {
-            func_80106590(&g_EntityArray[16]);
+            func_80106590(&g_EntityArray[UNK_ENTITY_10]);
             return true;
         }
         return false;
-    } else if (g_EntityArray[16].step <= ENTITY_STEP_2) {
-        if (g_EntityArray[16].step != ENTITY_STEP_0) {
+    } else if (g_EntityArray[UNK_ENTITY_10].step <= ENTITY_STEP_2) {
+        if (g_EntityArray[UNK_ENTITY_10].step != ENTITY_STEP_0) {
             D_80072F66 = 0;
-            g_EntityArray[16].step = ENTITY_STEP_3;
+            g_EntityArray[UNK_ENTITY_10].step = ENTITY_STEP_3;
         }
     }
     return false;
