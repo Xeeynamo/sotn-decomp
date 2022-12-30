@@ -320,7 +320,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             speedX = 0xE00;
         }
 
-        if (entity->facing) {
+        if (entity->facing != 0) {
             entity->accelerationX += speedX;
         } else {
             entity->accelerationX -= speedX;

@@ -3558,57 +3558,59 @@ void func_8010E234(s32 speed) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E27C);
-#else
 s32 func_8010E27C(void) {
-    s32 retValue;
-    u16* tmp;
-
-    if (D_80072F64 & 2)
+    u16* facing;
+    s32 ret = 0;
+    if (*D_80072F64 & 2) {
         return 0;
+    }
 
-    retValue = 1;
-    tmp = &g_EntityArray->facing;
-    if (*tmp == 1) {
+    facing = &g_EntityArray->facing;
+    if ((*facing == 1)) {
         if (D_80072EE8 & 0x2000) {
-            *tmp = 0;
+            *facing = 0;
             D_80072F6C = 1;
             return -1;
-        }
-        if (D_80072EE8 & 0x8000) {
+        } else if (D_80072EE8 & 0x8000) {
             return 1;
-        }
+        } 
     } else {
         if (!(D_80072EE8 & 0x2000)) {
             if (D_80072EE8 & 0x8000) {
-                *tmp = 1;
+                *facing = 1;
                 D_80072F6C = 1;
                 return -1;
             }
+            return 0;
         }
+        return 1;
     }
-    return retValue;
+    return 0; 
 }
-#endif
 
 // https://decomp.me/scratch/YvoMU
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
-void func_8010E390(s32 arg0) {
+/*
+ * Updates the Entity acceleration in the X Axis
+*/
+void func_8010E390(s32 accelerationX) {
     if (g_CurrentEntity->facing == 1) {
-        arg0 = -arg0;
+        accelerationX = -accelerationX;
     }
-    g_CurrentEntity->accelerationX = arg0;
+    g_CurrentEntity->accelerationX = accelerationX;
 }
 
-void func_8010E3B8(s32 arg0) {
+/*
+ * Updates the Player acceleration in the X Axis
+*/
+void func_8010E3B8(s32 accelerationX) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
     if (player->objectRoomIndex == 1) {
-        arg0 = -arg0;
+        accelerationX = -accelerationX;
     }
-    player->accelerationX = arg0;
+    player->accelerationX = accelerationX;
 }
 
 void func_8010E3E0(void) {
