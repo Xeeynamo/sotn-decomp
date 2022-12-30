@@ -102,6 +102,12 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 
 	img.WriteData(4, []byte(usLicense))
 	img.WriteData(5, playstationLogo)
+
+	// TODO HACK force the image to have a specific length
+	if err := img.WriteSector(0x37E9B, iso9660.MakeSector()); err != nil {
+		return err
+	}
+
 	if err := img.FlushChanges(); err != nil {
 		return err
 	}
@@ -128,7 +134,7 @@ func writeCue(cuePath string, imgPath string, mode iso9660.TrackMode) error {
 	case iso9660.TrackMode1_2048:
 		w.WriteString("  TRACK 01 MODE1/2048\n")
 	case iso9660.TrackMode2_2352:
-		w.WriteString("  TRACK 01 MODE2/2336\n")
+		w.WriteString("  TRACK 01 MODE2/2352\n")
 	}
 	w.WriteString("    FLAGS DCP\n")
 	w.WriteString("    INDEX 01 00:00:00\n")

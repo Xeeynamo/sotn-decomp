@@ -4,7 +4,6 @@ package iso9660
 
 import (
 	"errors"
-	"fmt"
 	"io"
 )
 
@@ -36,8 +35,6 @@ func OpenImage(r io.ReaderAt, mode TrackMode) (*Image, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Printf("%+v\n", parsePVD(pvdSec))
 
 	return &Image{
 		reader: r,

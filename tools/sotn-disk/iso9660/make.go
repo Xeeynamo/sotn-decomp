@@ -93,6 +93,11 @@ func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 	img.dirMap[""] = &img.root
 	img.dirMap["."] = &img.root // alias
 
+	// writes the first reserved 16 sectors
+	for i := location(0); i < 16; i++ {
+		img.WriteSector(i, MakeSector())
+	}
+
 	return img, nil
 }
 
@@ -135,13 +140,6 @@ func (img *WritableImage) FlushChanges() error {
 	}
 	img.Pvd.DirectoryRecord = img.root.dirent
 
-	if img.mode == TrackMode2_2352 {
-		img.writer.WriteAt([]byte{
-			0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-			0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x02, 0x00, 0x02,
-			0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x08, 0x00,
-		}, 0)
-	}
 	writeSector(img.writer, pvdLoc, img.mode, serializePVD(img.Pvd))
 	writeSector(img.writer, tvdLoc, img.mode, serializeTVD(DefaultTVD))
 
