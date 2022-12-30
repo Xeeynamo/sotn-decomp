@@ -3561,6 +3561,7 @@ void func_8010E234(s32 speed) {
 s32 func_8010E27C(void) {
     u16* facing;
     s32 ret = 0;
+
     if (*D_80072F64 & 2) {
         return 0;
     }
@@ -3573,7 +3574,7 @@ s32 func_8010E27C(void) {
             return -1;
         } else if (D_80072EE8 & 0x8000) {
             return 1;
-        } 
+        }
     } else {
         if (!(D_80072EE8 & 0x2000)) {
             if (D_80072EE8 & 0x8000) {
@@ -3585,7 +3586,7 @@ s32 func_8010E27C(void) {
         }
         return 1;
     }
-    return 0; 
+    return 0;
 }
 
 // https://decomp.me/scratch/YvoMU
@@ -3593,7 +3594,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
 /*
  * Updates the Entity acceleration in the X Axis
-*/
+ */
 void func_8010E390(s32 accelerationX) {
     if (g_CurrentEntity->facing == 1) {
         accelerationX = -accelerationX;
@@ -3603,7 +3604,7 @@ void func_8010E390(s32 accelerationX) {
 
 /*
  * Updates the Player acceleration in the X Axis
-*/
+ */
 void func_8010E3B8(s32 accelerationX) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
