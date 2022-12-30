@@ -3566,7 +3566,6 @@ void func_8010E234(s32 speed) {
 
 s32 func_8010E27C(void) {
     u16* facing;
-    s32 ret = 0;
 
     if (*D_80072F64 & 2) {
         return 0;
