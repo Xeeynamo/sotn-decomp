@@ -113,7 +113,7 @@ typedef struct Entity {
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 unk3A;
     /* 0x3C */ s16 unk3C;
-    /* 0x3E */ s16 unk3E;
+    /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 unk40;
     /* 0x42 */ s16 unk42;
     /* 0x44 */ u16 unk44;
@@ -551,7 +551,7 @@ extern u16 D_800733EC;       // player->facing
 extern u16 D_800733EE;       // player->palette
 extern s8 D_800733F0;        // player->blendMode
 extern u8 D_800733F1;        // player->unk19
-extern s16 D_800733F6;     // player->unk1E
+extern s16 D_800733F6;       // player->unk1E
 extern u16 D_800733FC;       // player->zPriority
 extern s16 D_800733FE;       // player->objectId
 extern u16 D_80073404;       // player->step

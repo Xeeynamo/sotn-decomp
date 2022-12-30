@@ -830,7 +830,7 @@ void InitializeEntity(const u16 arg0[]) {
     temp_v1 = *arg0++;
     D_8006C26C->unk3A = temp_v1;
     temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C704);
-    D_8006C26C->unk3E = temp_v0->unk4;
+    D_8006C26C->hitPoints = temp_v0->unk4;
     D_8006C26C->unk40 = temp_v0->unk6;
     D_8006C26C->unk42 = temp_v0->unk8;
     D_8006C26C->unk3C = temp_v0->unkC;
