@@ -1325,7 +1325,7 @@ extern Unkstruct_aSimCBinDemoKey aSimCBinDemoKey;
 
 void func_800F04A4(void) {
     Unkstruct_aSimCBinDemoKey sp10[10];
-    char pad[12];
+    char pad[12]; // !FAKE: Intentional padding to fix the stack pointer
     s32 temp;
     s32 device;
 
