@@ -181,7 +181,7 @@ s32 func_801BBC3C(Unkstruct5* arg0) {
     return diff;
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BBCB4);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityTransitionDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
