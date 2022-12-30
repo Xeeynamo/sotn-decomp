@@ -551,7 +551,7 @@ extern u16 D_800733EC;       // player->facing
 extern u16 D_800733EE;       // player->palette
 extern s8 D_800733F0;        // player->blendMode
 extern u8 D_800733F1;        // player->unk19
-extern s16 D_800733F6[];     // player->unk1E
+extern s16 D_800733F6;     // player->unk1E
 extern u16 D_800733FC;       // player->zPriority
 extern s16 D_800733FE;       // player->objectId
 extern u16 D_80073404;       // player->step

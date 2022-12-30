@@ -3567,7 +3567,7 @@ s32 func_8010E27C(void) {
     }
 
     facing = &g_EntityArray->facing;
-    if ((*facing == 1)) {
+    if (*facing == 1) {
         if (D_80072EE8 & 0x2000) {
             *facing = 0;
             D_80072F6C = 1;

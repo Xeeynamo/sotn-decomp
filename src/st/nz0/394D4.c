@@ -1350,7 +1350,7 @@ void func_801C7884(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7958); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBloodSkeleton); // Unique
 
 s32 func_801C7CF0(Unkstruct5* arg0) {
     Entity* player = GET_PLAYER(g_EntityArray);

@@ -18,5 +18,6 @@ EntityCandleHeartDrop = 0x801BED20;
 EntityAbsorbOrb = 0x801C2AA8;
 EntityRoomForeground = 0x801C32EC;
 EntityBoneScimitar = 0x801C37E4;
+EntityBloodSkeleton = 0x801C7958;
 EntityAreaTitlePopup = 0x801C8CAC;
 c_GoldPrizes = 0x80181D14;
