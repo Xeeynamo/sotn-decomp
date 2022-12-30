@@ -114,7 +114,7 @@ typedef struct Entity {
     /* 0x3A */ s16 unk3A;
     /* 0x3C */ s16 unk3C;
     /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 attackDamage;
+    /* 0x40 */ s16 unk40;
     /* 0x42 */ s16 unk42;
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;

@@ -3258,7 +3258,7 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk3A = temp_v1;
     temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
-    g_CurrentEntity->attackDamage = temp_v0->unk6;
+    g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
     g_CurrentEntity->unk3C = temp_v0->unkC;
     g_CurrentEntity->hitboxWidth = temp_v0->hitboxWidth;

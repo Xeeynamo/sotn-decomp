@@ -4275,7 +4275,7 @@ void func_8011A290(Entity* entity) {
     Unkstruct_8011A290 sp10;
 
     func_800FE3C4(&sp10, entity->unkB0, 0);
-    entity->attackDamage = sp10.sp10;
+    entity->unk40 = sp10.sp10;
     entity->unk42 = sp10.sp14;
     entity->unk3C = sp10.sp1C;
     entity->unk49 = sp10.sp17;
@@ -4292,7 +4292,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     Unkstruct_8011A328 sp10;
 
     func_800FD9D4(&sp10, arg1);
-    entity->attackDamage = sp10.sp28;
+    entity->unk40 = sp10.sp28;
     entity->unk42 = sp10.sp26;
     entity->unk3C = sp10.sp20;
     entity->unk49 = sp10.sp1D;
