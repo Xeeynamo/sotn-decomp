@@ -74,7 +74,7 @@ func writeSector(w io.WriterAt, loc location, mode TrackMode, s sectorData) erro
 		binary.LittleEndian.PutUint32(block[0x818:], computeEDC(block[0x10:0x818]))
 		calcPParity(block)
 		calcQParity(block)
-		replicateBugs(block)
+		//replicateBugs(block)
 
 		if _, err := w.WriteAt(block, offset); err != nil {
 			return err

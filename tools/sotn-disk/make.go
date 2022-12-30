@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strconv"
 	"strings"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/iso9660"
@@ -14,6 +15,11 @@ import (
 var (
 	usLicense = "          Licensed  by          Sony Computer Entertainment Amer  ica "
 )
+
+type makeFileMeta struct {
+	name string
+	time iso9660.Timestamp
+}
 
 func isPathFile(str string) bool {
 	return len(str) > 2 &&
@@ -25,19 +31,55 @@ func removePathVersion(str string) string {
 	return str[:len(str)-2]
 }
 
-func readFileList(fileListPath string) ([]string, error) {
+func readFileList(fileListPath string) ([]makeFileMeta, error) {
+	atoi := func(s string) (byte, error) {
+		v, err := strconv.Atoi(s)
+		return byte(v), err
+	}
+
 	content, err := ioutil.ReadFile(fileListPath)
 	if err != nil {
 		return nil, err
 	}
 
-	return strings.Split(string(content), "\n"), nil
+	metaList := make([]makeFileMeta, 0)
+	for _, v := range strings.Split(string(content), "\n") {
+		tokens := strings.Split(v, ",")
+		meta := makeFileMeta{name: tokens[0]}
+		if len(tokens) > 1 {
+			time := tokens[1]
+			if len(time) != len("19970901-134500-36") {
+				return nil, fmt.Errorf("wrong date time format '%s'", time)
+			}
+
+			var err error
+			if meta.time.Year, err = atoi(time[2:4]); err != nil {
+				return nil, err
+			} else if meta.time.Month, err = atoi(time[4:6]); err != nil {
+				return nil, err
+			} else if meta.time.Day, err = atoi(time[6:8]); err != nil {
+				return nil, err
+			} else if meta.time.Hour, err = atoi(time[9:11]); err != nil {
+				return nil, err
+			} else if meta.time.Minute, err = atoi(time[11:13]); err != nil {
+				return nil, err
+			} else if meta.time.Second, err = atoi(time[13:15]); err != nil {
+				return nil, err
+			} else if meta.time.Offset, err = atoi(time[16:18]); err != nil {
+				return nil, err
+			}
+		}
+
+		metaList = append(metaList, meta)
+	}
+
+	return metaList, nil
 }
 
-func validateFileList(filePaths []string, basePath string) error {
-	for _, filePath := range filePaths {
-		if isPathFile(filePath) {
-			fullPath := path.Join(basePath, removePathVersion((filePath)))
+func validateFileList(metas []makeFileMeta, basePath string) error {
+	for _, meta := range metas {
+		if isPathFile(meta.name) {
+			fullPath := path.Join(basePath, removePathVersion((meta.name)))
 			if _, err := os.Stat(fullPath); err != nil {
 				return err
 			}
@@ -48,12 +90,12 @@ func validateFileList(filePaths []string, basePath string) error {
 }
 
 func makeDisc(cuePath string, inputPath string, fileListPath string) error {
-	filePaths, err := readFileList(fileListPath)
+	metas, err := readFileList(fileListPath)
 	if err != nil {
 		return err
 	}
 
-	if err := validateFileList(filePaths, inputPath); err != nil {
+	if err := validateFileList(metas, inputPath); err != nil {
 		return err
 	}
 
@@ -76,26 +118,24 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	img.Pvd.PublisherIdentifier = iso9660.ToAString("KONAMI", 128)
 	img.Pvd.DataPreparerIdentifier = iso9660.ToAString("KONAMI", 128)
 	img.Pvd.ApplicationIdentifier = iso9660.ToAString("PLAYSTATION", 128)
-	img.Pvd.VolumeCreationDateTime.Year = "1997"
-	img.Pvd.VolumeCreationDateTime.Month = "09"
-	img.Pvd.VolumeCreationDateTime.Day = "01"
-	img.Pvd.VolumeCreationDateTime.Hour = "13"
-	img.Pvd.VolumeCreationDateTime.Minute = "45"
-	img.Pvd.VolumeCreationDateTime.Second = "00"
-	img.Pvd.VolumeCreationDateTime.Hundredth = "00"
-	img.Pvd.VolumeCreationDateTime.Offset = 36
-	img.Pvd.DirectoryRecord.RecordingDateTime = iso9660.Timestamp{
-		Year:   97,
-		Month:  9,
-		Day:    1,
-		Hour:   13,
-		Minute: 45,
-		Second: 0,
-		Offset: 36,
+
+	// define root timestamp, if present
+	if len(metas) > 0 && metas[0].name == "" {
+		rootts := metas[0].time
+		img.Pvd.VolumeCreationDateTime.Year = fmt.Sprintf("19%02d", rootts.Year)
+		img.Pvd.VolumeCreationDateTime.Month = fmt.Sprintf("%02d", rootts.Month)
+		img.Pvd.VolumeCreationDateTime.Day = fmt.Sprintf("%02d", rootts.Day)
+		img.Pvd.VolumeCreationDateTime.Hour = fmt.Sprintf("%02d", rootts.Hour)
+		img.Pvd.VolumeCreationDateTime.Minute = fmt.Sprintf("%02d", rootts.Minute)
+		img.Pvd.VolumeCreationDateTime.Second = fmt.Sprintf("%02d", rootts.Second)
+		img.Pvd.VolumeCreationDateTime.Hundredth = "00"
+		img.Pvd.VolumeCreationDateTime.Offset = rootts.Offset
+		img.Pvd.DirectoryRecord.RecordingDateTime = rootts
+		metas = metas[1:]
 	}
 
-	for _, filePath := range filePaths {
-		if err := img.AddFile(filePath, inputPath); err != nil {
+	for _, meta := range metas {
+		if err := img.AddFile(meta.name, inputPath, meta.time); err != nil {
 			return err
 		}
 	}

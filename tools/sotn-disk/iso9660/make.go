@@ -27,23 +27,6 @@ type WritableImage struct {
 	order  []string
 }
 
-var CastlevaniaSOTNTimestamp = Timestamp{
-	// Year:   97,
-	// Month:  9,
-	// Day:    1,
-	// Hour:   13,
-	// Minute: 45,
-	// Second: 0,
-	// Offset: 36,
-	Year:   0xCC,
-	Month:  0xCC,
-	Day:    0xCC,
-	Hour:   0xCC,
-	Minute: 0xCC,
-	Second: 0xCC,
-	Offset: 0xCC,
-} // TODO
-
 func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 	img := &WritableImage{
 		writer: w,
@@ -80,7 +63,7 @@ func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 			ExtendedAttributeRecordLength: 0,
 			ExtentLocation:                Data32{LSB: 0, MSB: 0}, // to be filled
 			DataLength:                    Data32{LSB: 2048, MSB: 0},
-			RecordingDateTime:             CastlevaniaSOTNTimestamp,
+			RecordingDateTime:             Timestamp{},
 			FileFlags:                     2,
 			FileUnitSize:                  0,
 			InterleaveGapSize:             0,
@@ -164,7 +147,7 @@ func (img *WritableImage) FlushChanges() error {
 	return nil
 }
 
-func (img *WritableImage) AddFile(filePath string, basePath string) error {
+func (img *WritableImage) AddFile(filePath string, basePath string, ts Timestamp) error {
 	var fullPath string
 	if isFileName(filePath) {
 		fullPath = path.Join(basePath, removePathVersion(filePath))
@@ -178,12 +161,12 @@ func (img *WritableImage) AddFile(filePath string, basePath string) error {
 		return err
 	}
 
-	img.addDirEntry(filePath, fullPath)
+	img.addDirEntry(filePath, fullPath, ts)
 	img.order = append(img.order, filePath)
 	return nil
 }
 
-func (img *WritableImage) addDirEntry(name string, fullPath string) {
+func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp) {
 	parent := &img.root
 	localPath := parent.dirent.FileIdentifier
 	split := strings.Split(name, "/")
@@ -196,6 +179,7 @@ func (img *WritableImage) addDirEntry(name string, fullPath string) {
 				dirent:   makeDirectoryEntry(s),
 				children: nil,
 			}
+			node.dirent.RecordingDateTime = ts
 			parent.children = append(parent.children, node)
 			img.dirMap[name] = node
 			return
@@ -214,6 +198,13 @@ func (img *WritableImage) addDirEntry(name string, fullPath string) {
 			parent = nextParent
 		}
 	}
+
+	// Hack to always ensure to insert the right metadata into the
+	// DirectoryEntry there might be a bug where if the name 'ST/NO3/NO3.BIN'
+	// is inserted and then 'ST/NO3', then 'ST/NO3' will be created during the
+	// first insert but it will not hold any of the metadata.
+	// This is only appied for directories and not for files.
+	img.dirMap[localPath].dirent.RecordingDateTime = ts
 }
 
 func calcSizeDirTree(dt *dirTree) error {
@@ -265,6 +256,7 @@ func (img *WritableImage) writeTree() error {
 
 func (img *WritableImage) writeNode(node *dirTree) error {
 	loc := location(node.dirent.ExtentLocation.LSB)
+	fmt.Printf("writeNode %06d '%s'\n", loc, node.dirent.FileIdentifier)
 	if node.children != nil {
 		parentName := filepath.Base(filepath.Dir(node.name))
 		finalData := make([]byte, 0)
@@ -273,7 +265,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			ExtendedAttributeRecordLength: 0,
 			ExtentLocation:                make32(uint32(loc)),
 			DataLength:                    node.dirent.DataLength,
-			RecordingDateTime:             CastlevaniaSOTNTimestamp,
+			RecordingDateTime:             node.dirent.RecordingDateTime,
 			FileFlags:                     isDirectoryFlag,
 			VolumeSequenceNumber:          make16(1),
 			FileIdentifierLength:          1,
@@ -284,7 +276,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			ExtendedAttributeRecordLength: 0,
 			ExtentLocation:                img.dirMap[parentName].dirent.ExtentLocation,
 			DataLength:                    img.dirMap[parentName].dirent.DataLength,
-			RecordingDateTime:             CastlevaniaSOTNTimestamp,
+			RecordingDateTime:             img.dirMap[parentName].dirent.RecordingDateTime,
 			FileFlags:                     isDirectoryFlag,
 			VolumeSequenceNumber:          make16(1),
 			FileIdentifierLength:          1,
@@ -419,7 +411,6 @@ func makeDirectoryEntry(name string) DirectoryEntry {
 		ExtendedAttributeRecordLength: 0,
 		ExtentLocation:                make32(0),
 		DataLength:                    make32(0),
-		RecordingDateTime:             CastlevaniaSOTNTimestamp,
 		FileFlags:                     fileFlags,
 		FileUnitSize:                  0,
 		InterleaveGapSize:             0,
