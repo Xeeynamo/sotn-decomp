@@ -2390,7 +2390,51 @@ void func_800F9690(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F96F4);
+void func_800F96F4(void) { // !Fake:
+    s32 new_var2;
+    POLY_GT4* temp_a0;
+    s32 temp_a2;
+    unkStruct3* temp_a0_2;
+    s32* temp;
+    s32* new_var;
+
+    new_var = &D_80137848;
+    temp_a0 = &D_80086FEC[D_80137840];
+    temp_a2 = D_80137692 == 0;
+    temp = &D_80137844;
+
+    if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
+        (&D_80086FEC[D_80137840])->pad3 = 0x80;
+        if (D_80137844[0] == 1) {
+            (&D_80086FEC[D_80137840])->clut = 0x188;
+        } else {
+            D_80137844[0] -= 1;
+            (&D_80086FEC[D_80137840])->clut = 0x181;
+        }
+    } else {
+        temp_a0->pad3 = 8;
+    }
+
+    temp_a0_2 = temp_a0->tag;
+    temp = new_var;
+
+    if (((*temp) != 0) && (temp_a2 != 0)) {
+        temp_a0_2->unk32 = 0x80;
+        new_var2 = *temp;
+        if (new_var2 == 1) {
+            do {
+                if (D_80137840) {
+                }
+                temp_a0_2->unkE = 0x188;
+            } while (0);
+            return;
+        }
+        *temp -= 1;
+        temp_a0_2->unkE = 0x181;
+        return;
+    }
+    temp_a0_2->unk32 = 8;
+}
 
 void func_800F97DC(void) {
     D_8013794C = (s8*)&D_8007EFE4;
@@ -2493,7 +2537,7 @@ void func_800FABEC(s32 context) { D_80137638[context].unk0 = 0; }
 void func_800FAC0C(s32 context) { D_80137638[context].unk0 = 2; }
 
 void func_800FAC30(void) {
-    D_80137844 = 0;
+    D_80137844[0] = 0;
     D_80137848 = 0;
 }
 
