@@ -825,6 +825,7 @@ extern u32 D_8013798C;
 extern s32 D_80137994;
 extern s32 D_80137998;
 extern u32 D_8013799C;
+extern s32 D_801379A0;
 extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
