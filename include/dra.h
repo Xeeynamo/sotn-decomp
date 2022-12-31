@@ -546,7 +546,8 @@ extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;       // player->posX.Data.high
 extern s16 D_800733DE;       // player->posY.Data.high
 extern s32 D_800733E0;       // player->accelerationX
-extern s32 D_800733E8;       // player->accelerationY
+extern s32 D_800733E4;       // player->accelerationY
+extern s32 D_800733E8;       // player->unk10
 extern u16 D_800733EC;       // player->facing
 extern u16 D_800733EE;       // player->palette
 extern s8 D_800733F0;        // player->blendMode

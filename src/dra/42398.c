@@ -2423,8 +2423,6 @@ void func_800F96F4(void) { // !Fake:
         new_var2 = *temp;
         if (new_var2 == 1) {
             do {
-                if (D_80137840) {
-                }
                 temp_a0_2->unkE = 0x188;
             } while (0);
             return;
@@ -4080,7 +4078,25 @@ void func_80113148(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801131C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801139CC);
+void func_801139CC(s32 arg0) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 move = player->facing != 0 ? -3 : 3;
+
+    player->posY.Data.high -= 22;
+    player->posX.Data.high = move + player->posX.Data.high;
+    func_8011AAFC(g_CurrentEntity, 0x10004, 0);
+    player->posY.Data.high = player->posY.Data.high + 22;
+    player->posX.Data.high = player->posX.Data.high - move;
+
+    if (arg0 & 1) {
+        func_80102CD8(3);
+        PlaySfx(NA_SE_SECRET_STAIRS);
+    }
+    if (arg0 & 2) {
+        player->accelerationX = 0;
+        player->accelerationY = 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113AAC);
 
