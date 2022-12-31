@@ -4395,7 +4395,46 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80123788);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801238CC);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80123A60);
+#else
+void func_80123A60(Entity* entity) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (D_80072F2C & 0x01000000) {
+
+#if 1
+        entity->posX.Data.high = player->posX.Data.high; //(u16) D_800733DA;
+        entity->posY.Data.high = player->posY.Data.high; //(u16) D_800733DE;
+#else // This one generates the  first missing move a0, s0 for some reason?
+        entity->posX.Data.high = (u16)D_800733DA;
+        entity->posY.Data.high = (u16)D_800733DE;
+#endif
+        if (entity->step == 0) {
+            func_8011A328(entity, 0xB);
+            entity->unk34 = 0x04060000;
+            entity->step++;
+        }
+        if (player->animationFrame == 5) {
+            entity->hitboxWidth = 12;
+            entity->hitboxHeight = 32;
+            entity->unk10 = 0x1C;
+            entity->unk12 = -0xC;
+            return;
+        }
+        if (player->animationFrame == 6) {
+            entity->hitboxWidth = 10;
+            entity->hitboxHeight = 10;
+            entity->unk10 = 0x1C;
+            entity->unk12 = 0x10;
+            return;
+        }
+        goto block_7;
+    }
+block_7:
+    func_80106590(entity);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80123B40);
 
