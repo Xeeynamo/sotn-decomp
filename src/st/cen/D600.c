@@ -127,41 +127,50 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194394);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019444C);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s32 func_80194564(void) {
-    s16 value = D_8006C3B8->posX.Data.high - D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
 
-    if (value < 0) {
-        value = -value;
+    if (xDistance < 0) {
+        xDistance = -xDistance;
     }
-    return value;
+    return xDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_801945A0(void) {
-    s32 value = D_8006C3B8->posY.Data.high - D_800733DE;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
 
-    if (value < 0) {
-        value = -value;
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return value;
+    return yDistance;
 }
 
 s16 func_801945D4(void) {
-    s16 var_a0 = D_8006C3B8->posX.Data.high > D_800733DA;
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
 
-    if (D_8006C3B8->posY.Data.high > D_800733DE) {
+    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
 }
 
 void func_80194618(void) {
-    D_8006C3B8->posX.value += D_8006C3B8->accelerationX;
-    D_8006C3B8->posY.value += D_8006C3B8->accelerationY;
+    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
 }
 
 void func_80194648(void) {
-    if (D_8006C3B8->accelerationY < FALL_TERMINAL_VELOCITY) {
-        D_8006C3B8->accelerationY += FALL_GRAVITY;
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
     }
 }
 
@@ -191,7 +200,7 @@ void func_80194D08(u16 slope, s16 speed) {
     s32 moveY;
 
     moveX = rcos(slope) * speed;
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
 
     if (moveX < 0) {
         moveX += 15;
@@ -200,7 +209,7 @@ void func_80194D08(u16 slope, s16 speed) {
     entity->accelerationX = moveX >> 4;
 
     moveY = rsin(slope) * speed;
-    entity = D_8006C3B8;
+    entity = g_CurrentEntity;
 
     if (moveY < 0) {
         moveY += 15;
@@ -218,27 +227,25 @@ u16 func_80194DC4(Entity* a, Entity* b) {
 }
 
 u16 func_80194DFC(s32 x, s32 y) {
-    s16 diffX = x - (u16)D_8006C3B8->posX.Data.high;
-    s16 diffY = y - (u16)D_8006C3B8->posY.Data.high;
+    s16 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
     return ratan2(diffY, diffX);
 }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194E44);
 
-void func_80194EA4(u8 initState) {
-    Entity* entity;
+void func_80194EA4(u8 step) {
+    Entity* entity = g_CurrentEntity;
 
-    entity = D_8006C3B8;
-    entity->initState = initState;
+    entity->step = step;
     entity->unk2E = 0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
 }
 
 void func_80194EC4(u8 arg0) {
-    Entity* entity;
+    Entity* entity = g_CurrentEntity;
 
-    entity = D_8006C3B8;
     entity->unk2E = arg0;
     entity->animationFrameIndex = 0;
     entity->animationFrameDuration = 0;
@@ -248,9 +255,9 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194EE0);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194F74);
 
-void func_80195070(Entity* arg0) {
-    if (arg0->initState == 0) {
-        arg0->initState++;
+void func_80195070(Entity* entity) {
+    if (entity->step == 0) {
+        entity->step++;
     }
 }
 

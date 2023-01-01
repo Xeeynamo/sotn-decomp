@@ -784,6 +784,7 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     return ret;
 }
 
+// https://decomp.me/scratch/6dWJG very close (branching)
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E96E8);
 
 s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
@@ -1019,11 +1020,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EB758);
 // clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
     s8* byte;
-    Entity* entity = &D_800733D8[0];
+    Entity* entity = &g_EntityArray[0];
     s32 i;
     u32 j;
 
-    for (i = 0; i < ARRAY_COUNT(D_800733D8); i++) {
+    for (i = 0; i < ARRAY_COUNT(g_EntityArray); i++) {
         byte = (s8*)entity;
         for (j = 0; j < 188; j++) {
             byte[0] = 0;
@@ -1183,10 +1184,7 @@ void func_800EDA94(void) {
     POLY_GT4* poly;
     s32 i;
 
-    i = 0;
-    poly = D_80086FEC;
-
-    for (; i < 1280; i++) {
+    for (i = 0, poly = D_80086FEC; i < 1280; i++) {
         func_800EDA70((s32*)poly);
         poly->code = 0;
         poly++;
@@ -1296,6 +1294,7 @@ loop_1:
 
 void FreePolygons(s32 polygonIndex) {
     POLY_GT4* poly = &D_80086FEC[polygonIndex];
+
     if (poly) {
         do {
             if (poly->code == 7) {
@@ -1316,7 +1315,32 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EFBF8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F0334);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F04A4);
+extern Unkstruct_aSimCBinDemoKey aSimCBinDemoKey;
+
+void func_800F04A4(void) {
+    Unkstruct_aSimCBinDemoKey sp10[10];
+    char pad[12];
+    s32 temp;
+    s32 device;
+
+    sp10[0] = aSimCBinDemoKey;
+
+    device = open((char*)&sp10, 0x200);
+
+    if (device >= 0) {
+        if (write(device, (void*)0x801E8000, 0x2000) < 0) {
+            close(device);
+            return;
+        } else if (close(device) >= 0) {
+            // !FAKE:
+            sp10[0].unk0 = D_800DC4C0;
+            sp10[0].unk4 = (temp = D_800DC4C4);
+            do {
+                func_800E2438((const char*)&sp10);
+            } while (0);
+        }
+    }
+}
 
 void func_800F0578(s32 arg0) {
     D_80137590 = (s32*)0x801E8000;
@@ -1479,7 +1503,23 @@ void func_800F18C4(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1954);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1A3C);
+void func_800F1A3C(s32 arg0) {
+    if (arg0 == 0) {
+        func_800F18C4(0xE, 0x2B);
+        func_800F18C4(0x10, 0x2B);
+        func_800F18C4(0x2B, 0x2A);
+        func_800F18C4(0x2C, 0x2A);
+        func_800F18C4(0x2D, 0x2A);
+        func_800F18C4(0x30, 0x2A);
+    } else {
+        func_800F1954(0xE, 0x2B, 0);
+        func_800F1954(0x10, 0x2B, 1);
+        func_800F1954(0x2B, 0x2A, 2);
+        func_800F1954(0x2C, 0x2A, 2);
+        func_800F1954(0x2D, 0x2A, 2);
+        func_800F1954(0x30, 0x2A, 2);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F1B08);
 
@@ -1511,7 +1551,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F24F4);
 #else
 void func_801042C4(s32);
 void func_80105428();
-extern s16 D_800733DA;
 extern s32 D_80137598;
 
 void func_800F24F4(void) {
@@ -1539,7 +1578,7 @@ void func_800F24F4(void) {
             phi_a0 = 0;
             if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D &&
                 castleY == 0x21) {
-                if (D_800733DA == 0x80) {
+                if (g_EntityArray[PLAYER_CHARACTER].posX.value == 0x80) {
                     D_8003C730 = 1;
                     phi_a0 = 1;
                 } else {
@@ -2420,7 +2459,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA8C4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FA9DC);
 
 void func_800FAB1C(void) {
-    Entity* entity = &D_800736C8;
+    Entity* entity = &g_EntityArray[UNK_ENTITY_4];
     s32 i;
 
     for (i = 4; i < 64; i++) {
@@ -2497,6 +2536,7 @@ void func_800FAE98(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAEC4);
 
+// https://decomp.me/scratch/HEhaF by @pixel-stuck
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAF44);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB004);
@@ -2725,7 +2765,7 @@ void func_800FE914(s32 arg0) {
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
-        func_8011AAFC(D_800733D8, 0x63, 0);
+        func_8011AAFC(g_EntityArray, 0x63, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }
@@ -3153,8 +3193,8 @@ void func_80106590(Entity* entity) {
 void func_801065F4(s16 startIndex) {
     Entity* pItem;
 
-    for (pItem = &D_800733D8[startIndex];
-         pItem < &D_800733D8[TOTAL_ENTITY_COUNT]; pItem++)
+    for (pItem = &g_EntityArray[startIndex];
+         pItem < &g_EntityArray[TOTAL_ENTITY_COUNT]; pItem++)
         func_80106590(pItem);
 }
 
@@ -3330,29 +3370,24 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80108448);
 // https://decomp.me/scratch/QZk8K
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801092E8);
 
-// clang-format off
-
 void func_80109328(void) {
-    s16* new_var;
+    s16* player_unk1E = &g_EntityArray[PLAYER_CHARACTER].unk1E;
 
     D_80072F86 = 0;
-// !FAKE:
-    new_var = &D_800733F6[0];
-    if ((*new_var == 0x800) && (D_80073404 == 8)) {
-// !FAKE:
-do {    D_800733F6[0] = 0;                  } while (0);
-        D_8007342E = 0x9D;
-        D_800733EC = (D_800733EC + 1) & 1;
+    if ((*player_unk1E == 0x800) &&
+        (g_EntityArray[PLAYER_CHARACTER].step == 8)) {
+        g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
+        g_EntityArray[PLAYER_CHARACTER].animationFrame = 0x9D;
+        g_EntityArray[PLAYER_CHARACTER].unk14 =
+            (g_EntityArray[PLAYER_CHARACTER].unk14 + 1) & 1;
     }
 
     if (D_80072F16[0] != 0) {
         D_80072F16[0] = 0;
         func_801092E8(0);
     }
-    D_800733F0 = 0;
+    g_EntityArray[PLAYER_CHARACTER].blendMode = 0;
 }
-
-// clang-format on
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801093C4);
 
@@ -3392,8 +3427,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D010);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 
 void func_8010D584(s16 context) {
-    D_80073404 = context;
-    D_80073406 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->step = context;
+    player->unk2E = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
@@ -3401,15 +3438,15 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D800);
 
 void func_8010DA2C(s32* arg0) {
-    D_8006C3B8->unk4C = arg0;
-    D_8006C3B8->animationFrameDuration = 0;
-    D_8006C3B8->animationFrameIndex = 0;
+    g_CurrentEntity->unk4C = arg0;
+    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
 }
 
 void func_8010DA48(u32 arg0) {
-    D_8006C3B8->unkAC = arg0;
-    D_8006C3B8->animationFrameDuration = 0;
-    D_8006C3B8->animationFrameIndex = 0;
+    g_CurrentEntity->unkAC = arg0;
+    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animationFrameIndex = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DA70);
@@ -3422,26 +3459,59 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DDA0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DF70);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010DFF0);
+void func_8010DFF0(s32 arg0, s32 arg1) {
+    POLY_GT4* poly;
+    s32 i;
 
-void func_8010E0A8(void) { D_80073512 = 0; }
+    if (arg0 != 0) {
+        g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk1 = 1;
+        g_EntityArray[UNK_ENTITY_3].animationFrame = 0;
+        g_EntityArray[UNK_ENTITY_2].animationFrame = 0;
+        g_EntityArray[UNK_ENTITY_1].animationFrame = 0;
+        poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
+
+        for (i = 0; i < 6; i++) {
+            poly->x1 = 0;
+            poly = (POLY_GT4*)poly->tag;
+        }
+    }
+
+    g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk0 = 1;
+    g_EntityArray[UNK_ENTITY_1].unk7E = 10;
+
+    if (arg1 != 0) {
+        if (arg1 < 4) {
+            D_80072F1E = 4;
+        } else {
+            D_80072F1E = arg1;
+        }
+    }
+}
+
+void func_8010E0A8(void) {
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+
+    entity->unk7E = 0;
+}
 
 void func_8010E0B8(void) {
-    D_80073511 = 0;
-    D_80073510 = 0;
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+
+    entity->unk7C.modeU8.unk1 = 0;
+    entity->unk7C.modeU8.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
     Entity* entity;
 
     if (arg0 == 1) {
-        entity = func_8011AAFC(D_800733D8, 0x47002C, 0);
+        entity = func_8011AAFC(g_EntityArray, 0x47002C, 0);
 
         if (entity != NULL) {
             entity->unk34 = entity->unk34 | 0x10000;
         }
 
-        entity = func_8011AAFC(D_800733D8, 0x40002C, 0);
+        entity = func_8011AAFC(g_EntityArray, 0x40002C, 0);
 
         if (entity != NULL) {
             entity->unk34 = entity->unk34 | 0x10000;
@@ -3452,7 +3522,7 @@ void func_8010E0D0(s32 arg0) {
 
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        func_8011AAFC(D_8006C3B8, 0x15002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x15002C, 0);
         if (arg1 >= D_80072F1A[0]) {
             D_80072F1A[0] = arg1;
         }
@@ -3462,28 +3532,28 @@ void func_8010E168(s32 arg0, s16 arg1) {
 }
 
 void func_8010E1EC(s32 speed) {
-    if (D_8006C3B8->accelerationX < 0) {
-        D_8006C3B8->accelerationX += speed;
-        if (D_8006C3B8->accelerationX > 0) {
-            D_8006C3B8->accelerationX = 0;
+    if (g_CurrentEntity->accelerationX < 0) {
+        g_CurrentEntity->accelerationX += speed;
+        if (g_CurrentEntity->accelerationX > 0) {
+            g_CurrentEntity->accelerationX = 0;
         }
     } else {
-        D_8006C3B8->accelerationX -= speed;
-        if (D_8006C3B8->accelerationX < 0)
-            D_8006C3B8->accelerationX = 0;
+        g_CurrentEntity->accelerationX -= speed;
+        if (g_CurrentEntity->accelerationX < 0)
+            g_CurrentEntity->accelerationX = 0;
     }
 }
 
 void func_8010E234(s32 speed) {
-    if (D_8006C3B8->accelerationY < 0) {
-        D_8006C3B8->accelerationY += speed;
-        if (D_8006C3B8->accelerationY > 0) {
-            D_8006C3B8->accelerationY = 0;
+    if (g_CurrentEntity->accelerationY < 0) {
+        g_CurrentEntity->accelerationY += speed;
+        if (g_CurrentEntity->accelerationY > 0) {
+            g_CurrentEntity->accelerationY = 0;
         }
     } else {
-        D_8006C3B8->accelerationY -= speed;
-        if (D_8006C3B8->accelerationY < 0) {
-            D_8006C3B8->accelerationY = 0;
+        g_CurrentEntity->accelerationY -= speed;
+        if (g_CurrentEntity->accelerationY < 0) {
+            g_CurrentEntity->accelerationY = 0;
         }
     }
 }
@@ -3499,7 +3569,7 @@ s32 func_8010E27C(void) {
         return 0;
 
     retValue = 1;
-    tmp = &D_800733EC;
+    tmp = &g_EntityArray->unk14;
     if (*tmp == 1) {
         if (D_80072EE8 & 0x2000) {
             *tmp = 0;
@@ -3526,17 +3596,19 @@ s32 func_8010E27C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E334);
 
 void func_8010E390(s32 arg0) {
-    if (D_8006C3B8->unk14 == 1) {
+    if (g_CurrentEntity->unk14 == 1) {
         arg0 = -arg0;
     }
-    D_8006C3B8->accelerationX = arg0;
+    g_CurrentEntity->accelerationX = arg0;
 }
 
 void func_8010E3B8(s32 arg0) {
-    if (D_8007340A == 1) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->objectRoomIndex == 1) {
         arg0 = -arg0;
     }
-    D_800733E0 = arg0;
+    player->accelerationX = arg0;
 }
 
 void func_8010E3E0(void) {
@@ -3547,8 +3619,10 @@ void func_8010E3E0(void) {
 }
 
 void func_8010E42C(u16 arg0) {
-    D_80073406 = arg0;
-    D_80073404 = 0x12;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unk2E = arg0;
+    player->step = 0x12;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -3563,24 +3637,28 @@ void func_8010E42C(u16 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 #else
 void func_8010E470(s32 arg0, s32 arg1) {
-    D_800733E0 = arg1;
-    D_800733E4 = 0;
-    D_80073404 = 2;
-    D_80073406 = D_800ACF4C[arg0 * 2 + 0];
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationX = arg1;
+    player->accelerationY = 0;
+    player->step = ENTITY_STEP_2;
+    player->unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
 #endif
 
 void func_8010E4D0(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     func_80111CC0();
 
-    D_800733EE = 0x8100;
-    D_800733FC = g_zEntityCenter;
+    player->palette = 0x8100;
+    player->zPriority = g_zEntityCenter;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
-        D_800733E4 = 0;
-        D_800733E0 = 0;
+        player->accelerationY = 0;
+        player->accelerationX = 0;
         func_8010D584(6);
         func_80111CC0();
         PlaySfx(0x6F2);
@@ -3596,14 +3674,16 @@ void func_8010E570(/*?*/ s32);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E6AC);
 
 void func_8010E7AC(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     func_8010D584(3);
 
     if (D_80072F70 != 1) {
         func_8010DA48(0x1C);
     }
 
-    D_800733E4 = 0x20000;
-    D_800733E0 = 0;
+    player->accelerationY = 0x20000;
+    player->accelerationX = 0;
     D_80072F0C = 8;
 
     if (D_80072F24 & 1) {
@@ -3618,12 +3698,14 @@ void func_8010E7AC(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
 
 void func_8010E940(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     D_80072F64[0] |= 0x21;
     func_8010DA48(0x20);
-    D_80073406 = 0;
-    D_800733E4 = -0x44000;
+    player->unk2E = 0;
+    player->accelerationY = -0x44000;
     if (D_80072F92 != 0) {
-        D_800733E4 = 0;
+        player->accelerationY = 0;
     }
 }
 
@@ -3650,17 +3732,12 @@ void func_8010EA54(s32 arg0) {
 #endif
 
 s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity* var_v1;
+    Entity* var_v1 = D_80074C08;
+    s32 i;
     s32 var_a2;
     s32 ret;
-    s32 i;
 
-    i = 0;
-    var_a2 = 0;
-    ret = 0;
-    var_v1 = D_80074C08;
-
-    for (; i < 16; i++) {
+    for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
         if (var_v1[i - 1].objectRoomIndex == 0) {
             ret++;
         }
@@ -3681,14 +3758,17 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
 
+// https://decomp.me/scratch/N8Srk
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0xF);
     func_8010DA48(arg0);
-    func_8011AAFC(D_8006C3B8, 0x14003D, 0);
+    func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
     D_80072F68[0] = 0;
 }
 
@@ -3700,16 +3780,20 @@ void func_8010FAF4(void) {
 }
 
 void func_8010FB24(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x22);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
 
 void func_8010FB68(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x20);
     func_8010E3E0();
     func_8010DA48(0xBA);
@@ -3717,13 +3801,15 @@ void func_8010FB68(void) {
     PlaySfx(0x67D);
     D_80072F16[0] = func_800FDB18(3, 0x400);
     func_801092E8(1);
-    func_8011AAFC(D_8006C3B8, 0x110028, 0);
+    func_8011AAFC(g_CurrentEntity, 0x110028, 0);
     func_80118C28(0xB);
 }
 
 void func_8010FBF4(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x25);
     func_8010E3E0();
     func_8010DA48(0xDA);
@@ -3733,44 +3819,52 @@ void func_8010FBF4(void) {
 }
 
 void func_8010FC50(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x21);
     func_8010E3E0();
-    func_8011AAFC(D_8006C3B8, 0x75, 0);
+    func_8011AAFC(g_CurrentEntity, 0x75, 0);
     func_8010DA48(0xF0);
     PlaySfx(0x6F1);
     D_80072F18 = 4;
 }
 
 void func_8010FCB8(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x23);
     func_8010E3E0();
-    func_8011AAFC(D_8006C3B8, 0x10075, 0);
+    func_8011AAFC(g_CurrentEntity, 0x10075, 0);
     func_8010DA48(0xF1);
     PlaySfx(0x6F1);
     D_80072F18 = 4;
 }
 
 void func_8010FD24(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     func_8010D584(0x27);
     func_8010E3E0();
     func_8010DA48(0xF1);
-    func_8011AAFC(D_8006C3B8, 0x170028, 0);
+    func_8011AAFC(g_CurrentEntity, 0x170028, 0);
     D_80072F18 = 4;
 }
 
 void func_8010FD88(void) {
-    D_80073404 = 0;
-    D_80073406 = 3;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->step = ENTITY_STEP_0;
+    player->unk2E = 3;
     func_8010E390(0xFFFC8000);
-    D_8006C3B8->accelerationY = 0;
+    g_CurrentEntity->accelerationY = 0;
     func_8010DA48(0xDB);
-    func_8011AAFC(D_8006C3B8, 0, 0);
+    func_8011AAFC(g_CurrentEntity, 0, 0);
     D_80072F66 = 0;
     PlaySfx(0x617);
 }
@@ -3803,48 +3897,77 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111830);
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     D_801396EA = 1;
-    D_801396E4 = D_8007342E;
-    D_801396E6.typeShort = D_800733F1;
-    D_801396E8 = D_800733EE;
+    D_801396E4 = player->animationFrame;
+    D_801396E6.typeShort = player->unk19;
+    D_801396E8 = player->palette;
 }
 
 void func_8011197C(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     D_801396EA = 0;
-    D_8007341C = 0;
-    D_8007342E = D_801396E4;
-    D_800733F1 = D_801396E6.typeByte;
-    D_800733EE = D_801396E8;
+    player->unk44 = 0;
+    player->animationFrame = D_801396E4;
+    player->unk19 = D_801396E6.typeByte;
+    player->palette = D_801396E8;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801119C4);
 
 void func_80111CC0(void) {
     if (D_80072F00[1] != 0) {
-        func_8011AAFC(D_8006C3B8, 0x17002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x17002C, 0);
     }
     if (D_80072F00[0] != 0) {
-        func_8011AAFC(D_8006C3B8, 0x16002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x16002C, 0);
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111D24);
+bool func_80111D24(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 sp10[9]; // !FAKE: There's a struct inside the stack.
+    s32 speed = 0xC000;
+    s16 posX = player->posX.Data.high;
+    s16 posY = player->posY.Data.high;
+    s32 hitboxLeftMargin;
+    s32 hitboxRightMargin;
+
+    CheckCollision(posX - 7, posY, (s32*)&sp10, 0);
+    hitboxLeftMargin = sp10[0] & 0x10;
+    CheckCollision(posX + 7, posY, (s32*)&sp10, 0);
+    hitboxRightMargin = sp10[0] & 0x10;
+
+    if (hitboxRightMargin & hitboxLeftMargin) {
+        func_8010E390(speed);
+        return true;
+    } else if (hitboxRightMargin != 0) {
+        player->accelerationX = -speed;
+        return true;
+    } else if (hitboxLeftMargin != 0) {
+        player->accelerationX = speed;
+        return true;
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 
 bool func_8011203C(void) {
-    s32 funcRet = func_80111D24();
+    s32 collision = func_80111D24();
 
-    if ((u16)D_80073FC4.posX.Data.low == 5) {
-        if (funcRet == 0) {
-            func_80106590((Entity*)(&D_80073FC4.posX.Data.low - 0x16));
+    if (g_EntityArray[UNK_ENTITY_10].step == ENTITY_STEP_5) {
+        if (collision == false) {
+            func_80106590(&g_EntityArray[UNK_ENTITY_10]);
             return true;
         }
         return false;
-    } else if ((u16)D_80073FC4.posX.Data.low < 3) {
-        if ((u16)D_80073FC4.posX.Data.low != 0) {
+    } else if (g_EntityArray[UNK_ENTITY_10].step <= ENTITY_STEP_2) {
+        if (g_EntityArray[UNK_ENTITY_10].step != ENTITY_STEP_0) {
             D_80072F66 = 0;
-            D_80073FC4.posX.Data.low = 3;
+            g_EntityArray[UNK_ENTITY_10].step = ENTITY_STEP_3;
         }
     }
     return false;
@@ -3884,12 +4007,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113D7C);
 
 // !FAKE: too many temps
 s16 func_80113E68(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
     s16 rnd = rand();
     s32 temp_v0;
     s32 var_a1;
 
     temp_v0 = rnd;
-    D_80073484 = (rnd % 3) + 0x2E;
+    player->unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -3898,17 +4022,19 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    D_800733F1 &= 0xF3;
-    D_8007342C = 1;
-    D_8007342A = 0;
-    D_80073428.typeShort = 0;
-    D_800733FE = 0;
-    D_800733F0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unk19 &= 0xF3;
+    player->animationSet = 1;
+    player->animationFrameDuration = 0;
+    player->animationFrameIndex = 0;
+    player->objectId = 0;
+    player->blendMode = 0;
     *D_80072F64 = 0;
     D_80072F66 = 0;
-    *D_800733F6 = 0;
-    D_800733FC = g_zEntityCenter;
-    if (D_80073FBE == 0x22) {
+    player->unk1E = 0;
+    player->zPriority = g_zEntityCenter;
+    if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }
 }
@@ -3922,10 +4048,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
 void func_80115BB0(void) {
-    D_800733F1 = 4;
-    D_800733E4 = 0;
-    D_800733E0 = 0;
-    D_8007342A = 4;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unk19 = 4;
+    player->accelerationY = 0;
+    player->accelerationX = 0;
+    player->animationFrameDuration = 4;
 
     if (D_80097420 == 0) {
         if (D_80072F20 & 1) {
@@ -3933,7 +4061,7 @@ void func_80115BB0(void) {
         } else {
             func_8010E7AC();
         }
-        func_8011AAFC(D_8006C3B8, 0x4A0000 | 0x2C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x4A0000 | 0x2C, 0);
         D_80097D37 = 0;
     }
 }
@@ -3948,11 +4076,37 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116208);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116408);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801166A4);
+void func_801166A4(void) {
+    switch (g_EntityArray[PLAYER_CHARACTER].unk2E) {
+    case 0:
+        func_80113EE0();
+        D_80072F60 = 0x8166;
+        D_80072F04 = 6;
+        g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+        g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
+        g_EntityArray[PLAYER_CHARACTER].unkAC = 0x33;
+        func_8011AAFC(g_CurrentEntity, 0, 0);
+        func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
+        g_EntityArray[PLAYER_CHARACTER].unk2E += 1;
+        break;
+
+    case 1:
+        if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+            PlaySfx(0x6F2);
+            func_8010E570(0);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
 
 void func_8011678C(void) {
-    D_800733E4 = 0;
-    D_800733E0 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->accelerationY = 0;
+    player->accelerationX = 0;
     if (D_80072EF6 != 2) {
         func_8010E570(0);
     }
@@ -3960,19 +4114,35 @@ void func_8011678C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80116838);
+bool func_80116838(void) {
+    if ((g_EntityArray->unk2E != 0) &&
+        ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
+        func_8010D584(9);
+        func_8010DA48(0xCA);
+        D_800AFDA6 = 6;
+        g_EntityArray->palette = 0x810D;
+        D_80072F86 = 0;
+        D_80072F88 = 0;
+        func_8011AAFC(g_CurrentEntity, 0x21002C, 0);
+        g_EntityArray->accelerationY = g_EntityArray->accelerationY >> 1;
+        return true;
+    }
+    return false;
+}
 
 void func_8011690C(s16 arg0) {
-    if (D_800733F6[0] < arg0) {
-        D_800733F6[0] += 16;
-        if (arg0 < D_800733F6[0]) {
-            D_800733F6[0] = arg0;
+    s16* player_unk1E = &g_EntityArray[PLAYER_CHARACTER].unk1E;
+
+    if (*player_unk1E < arg0) {
+        *player_unk1E += 16;
+        if (arg0 < *player_unk1E) {
+            *player_unk1E = arg0;
         }
     }
-    if (arg0 < D_800733F6[0]) {
-        D_800733F6[0] -= 16;
-        if (D_800733F6[0] < arg0) {
-            D_800733F6[0] = arg0;
+    if (arg0 < *player_unk1E) {
+        *player_unk1E -= 16;
+        if (*player_unk1E < arg0) {
+            *player_unk1E = arg0;
         }
     }
 }
@@ -3992,35 +4162,42 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80117DEC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801182F8);
 
 void func_80118614(void) {
-    if (D_8007342A < 0) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 void func_80118640(void) {
-    if (D_8007342A < 0) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->animationFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
 
 void func_80118670(void) {
-    if (D_80073428.typeInt == 0x10007) {
-        func_8011AAFC(D_8006C3B8, 0x160028, 0);
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32* animationFrameIndex = (s32*)&player->animationFrameIndex;
+
+    if (*animationFrameIndex == 0x10007) {
+        func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(0x67D);
-        func_8011AAFC(D_8006C3B8, 0x70, 0);
+        func_8011AAFC(g_CurrentEntity, 0x70, 0);
     }
-    if (D_8007342A < 0) {
+    if (player->animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801186EC);
 
-Entity* func_8011879C(s16 arg0, s16 arg1) {
-    Entity* entity = &D_800733D8[arg0];
-    s16 var_a0 = arg0;
+Entity* func_8011879C(s16 entityIndex, s16 arg1) {
+    Entity* entity = &g_EntityArray[entityIndex];
+    s16 var_a0 = entityIndex;
 
-    if (arg0 < arg1) {
+    if (entityIndex < arg1) {
         while (var_a0 < arg1) {
             if (entity->objectId == ENTITY_MIN) {
                 return entity;
@@ -4067,12 +4244,13 @@ void func_80118C28(s32 arg0) {
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
     Entity* entity = func_8011879C(0x38, 0x40);
+    Entity* player = GET_PLAYER(g_EntityArray);
 
     if (entity != NULL) {
         func_80106590(entity);
         entity->objectId = ENTITY_13;
-        entity->posX.value = D_800733D8->posX.value;
-        entity->posY.value = D_800733DC[0];
+        entity->posX.value = player->posX.value;
+        entity->posY.value = player->posY.value;
         entity->unk80.modeS16.unk0 = arg0;
         entity->unk80.modeS16.unk2 = arg1;
         return 0;
@@ -4142,12 +4320,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
 void func_8011B530(Entity* entity) {
-    if (D_80073404 != 0x25) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->step != 0x25) {
         func_80106590(entity);
-    } else if (entity->initState == ENTITY_INITSTATE_0) {
+    } else if (entity->step == ENTITY_STEP_0) {
         entity->unk34 = 0x60000;
         func_8011A328(entity, 5);
-        entity->initState++;
+        entity->step++;
     }
 }
 
@@ -4250,18 +4430,20 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127CC8);
 
 void func_80127EAC(s16 arg0) {
-    D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk80.modeS16.unk0++;
-        D_8006C3B8->unk80.modeS16.unk2++;
+    g_CurrentEntity->unk7C.modeS16 =
+        (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->unk80.modeS16.unk0++;
+        g_CurrentEntity->unk80.modeS16.unk2++;
     }
 }
 
 void func_80127EF0(s16 arg0) {
-    if (D_8006C3B8->unk80.modeS16.unk2 == 0) {
-        D_8006C3B8->unk7C.modeS16 = (arg0 * 2) - D_8006C3B8->unk7C.modeS16;
-        D_8006C3B8->unk80.modeS16.unk0++;
-        D_8006C3B8->unk80.modeS16.unk2++;
+    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->unk7C.modeS16 =
+            (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+        g_CurrentEntity->unk80.modeS16.unk0++;
+        g_CurrentEntity->unk80.modeS16.unk2++;
     }
 }
 
@@ -4316,12 +4498,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C97C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CA64);
 
 void func_8012CB0C(void) {
-    D_80073484 = 0xDE;
-    D_800733E4 = 0;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unkAC = 0xDE;
+    player->accelerationY = 0;
     D_800B0914 = 0;
-    D_80073428.typeShort = 0;
-    D_8007342A = 0;
-    D_80073406 = 7;
+    player->animationFrameIndex = 0;
+    player->animationFrameDuration = 0;
+    player->unk2E = 7;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CB4C);
@@ -4330,18 +4514,41 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CC30);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CCE4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CED4);
+void func_8012CED4(void) {
+    if ((g_EntityArray[PLAYER_CHARACTER].unk2E == 2) &&
+        (D_800B0914 == g_EntityArray[PLAYER_CHARACTER].unk2E)) {
+        func_8010DA48(0xE7);
+        D_800B0914 = 1;
+    } else {
+        func_8010DA48(0xE8);
+        func_8010E390(0x10000);
+        D_800B0914 = 0;
+        if (D_80138438 & 0x40) {
+            g_EntityArray[PLAYER_CHARACTER].animationFrameIndex = 4;
+            g_EntityArray[PLAYER_CHARACTER].accelerationX = 0;
+            g_EntityArray[PLAYER_CHARACTER].animationFrameDuration = 1;
+        }
+    }
+    g_EntityArray[PLAYER_CHARACTER].unk2E = 5;
+    D_80072F0A = 8;
+    g_EntityArray[PLAYER_CHARACTER].accelerationY = 0;
+    D_80138430 -= 0x100;
+}
 
 void func_8012CFA8(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
     func_8010DA48(0xEA);
-    D_80073406 = 6;
+    player->unk2E = 6;
     D_800B0914 = 0;
-    D_800733E0 = 0;
+    player->accelerationX = 0;
     D_80072F0A = 8;
 }
 
 void func_8012CFF0(void) {
-    D_80073406 = 3;
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    player->unk2E = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
 }
@@ -4489,7 +4696,36 @@ void func_801324B4(s8 s_num, s16 arg1, s16 arg2) {
     SsSetSerialVol(s_num, voll, volr);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132500);
+void func_80132500(u8 soundMode) {
+    CdlATV audioVolume;
+
+    switch (soundMode) {
+    case MONO:
+        if (D_801390A8 != 0) { // D_801390A8 fake symbol or part of another
+            func_80021174();
+            audioVolume.val2 = 128; // CD (R) --> SPU (R)
+            audioVolume.val0 = 128; // CD (L) --> SPU (L)
+            audioVolume.val3 = 128; // CD Right sound transferred to left
+            audioVolume.val1 = 128; // CD Left sound transferred to right
+            CdMix(&audioVolume);
+            D_8013AE7C = 108;
+            D_801390A8 = 0;
+        }
+        break;
+    case STEREO:
+        if (D_801390A8 != 1) {
+            func_80021188();
+            audioVolume.val2 = 224; // CD (R) --> SPU (R)
+            audioVolume.val0 = 224; // CD (L) --> SPU (L)
+            audioVolume.val3 = 0;
+            audioVolume.val1 = 0;
+            CdMix(&audioVolume);
+            D_8013AE7C = 127;
+            D_801390A8 = 1;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801325D8);
 
