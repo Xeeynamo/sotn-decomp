@@ -1,5 +1,16 @@
 package iso9660
 
+import "encoding/binary"
+
+type XaMode uint16
+
+type XaExtendedMeta struct {
+	GroupID uint16
+	UserID  uint16
+	Flags   uint16
+	FileNo  byte
+}
+
 type DirectoryEntry struct {
 	DirectoryRecordLength byte
 
@@ -41,7 +52,28 @@ type DirectoryEntry struct {
 	// If set to ONE, then
 	// The field refers to a Directory Identifier, as described below
 	FileIdentifier string
+
+	// For CD-XA disks, additional metadata is found after the file identifier
+	XaExt *XaExtendedMeta
 }
+
+const (
+	isDirectoryFlag = 2
+)
+
+const (
+	// the following flags are used in the CD-XA extension
+	// courtesy of https://problemkaputt.de/psx-spx.htm
+
+	xaIsMode2 = 0x1000
+
+	XaModeNone       = 0
+	XaModeDefault    = XaMode(0x0D55)
+	XaModeXa         = XaMode(0x0555 | xaIsMode2)
+	XaModeStreaming  = XaMode(0x2D55 | xaIsMode2)
+	XaModeAudioTrack = XaMode(0x4555)
+	XaModeDirRecord  = XaMode(0x8D55)
+)
 
 func parseDirectoryEntry(data []byte) DirectoryEntry {
 	de := DirectoryEntry{
@@ -58,7 +90,49 @@ func parseDirectoryEntry(data []byte) DirectoryEntry {
 	}
 	de.FileIdentifier = string(data[33:][:de.FileIdentifierLength])
 
+	xaOff := 33 + de.FileIdentifierLength
+	xaLen := 14
+	if de.DirectoryRecordLength >= xaOff+byte(xaLen) &&
+		data[de.DirectoryRecordLength-8] == 'X' &&
+		data[de.DirectoryRecordLength-7] == 'A' {
+		xaHeader := data[de.DirectoryRecordLength-byte(xaLen):][:xaLen]
+		de.XaExt = &XaExtendedMeta{
+			GroupID: binary.BigEndian.Uint16(xaHeader[0:]),
+			UserID:  binary.BigEndian.Uint16(xaHeader[2:]),
+			Flags:   binary.BigEndian.Uint16(xaHeader[4:]),
+			FileNo:  xaHeader[8],
+		}
+	}
+
 	return de
+}
+
+func serializeDirectoryEntry(de DirectoryEntry) []byte {
+	data := make([]byte, de.DirectoryRecordLength)
+
+	data[0] = de.DirectoryRecordLength
+	data[1] = de.ExtendedAttributeRecordLength
+	copy(data[2:10], serialize32(de.ExtentLocation))
+	copy(data[10:18], serialize32(de.DataLength))
+	copy(data[18:25], serializeTimestamp(de.RecordingDateTime))
+	data[25] = de.FileFlags
+	data[26] = de.FileUnitSize
+	data[27] = de.InterleaveGapSize
+	copy(data[28:32], serialize16(de.VolumeSequenceNumber))
+	data[32] = de.FileIdentifierLength
+	copy(data[33:], []byte(de.FileIdentifier))
+
+	if de.XaExt != nil {
+		xaHeader := data[de.DirectoryRecordLength-14:]
+		binary.BigEndian.PutUint16(xaHeader[0:], de.XaExt.GroupID)
+		binary.BigEndian.PutUint16(xaHeader[2:], de.XaExt.UserID)
+		binary.BigEndian.PutUint16(xaHeader[4:], de.XaExt.Flags)
+		xaHeader[6] = 0x58
+		xaHeader[7] = 0x41
+		xaHeader[8] = de.XaExt.FileNo
+	}
+
+	return data
 }
 
 func (de DirectoryEntry) IsHidden() bool {
@@ -66,7 +140,7 @@ func (de DirectoryEntry) IsHidden() bool {
 }
 
 func (de DirectoryEntry) IsDirectory() bool {
-	return (de.FileFlags & 2) == 2
+	return (de.FileFlags & isDirectoryFlag) == isDirectoryFlag
 }
 
 func (de DirectoryEntry) IsAssociatedFile() bool {
@@ -83,4 +157,16 @@ func (de DirectoryEntry) HasExtendedPermissions() bool {
 
 func (de DirectoryEntry) HasMoreThanOneRecord() bool {
 	return (de.FileFlags & 128) == 128
+}
+
+func (de DirectoryEntry) GetOptionalXaMode() XaMode {
+	if de.XaExt == nil {
+		return XaModeNone
+	}
+
+	return XaMode(de.XaExt.Flags)
+}
+
+func (de DirectoryEntry) IsXaStreaming() bool {
+	return de.XaExt != nil && (de.XaExt.Flags&xaIsMode2) == xaIsMode2
 }
