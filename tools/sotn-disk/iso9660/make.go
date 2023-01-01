@@ -27,6 +27,12 @@ type WritableImage struct {
 	order  []string
 }
 
+type pathTable struct {
+	name   string
+	loc    uint32
+	parent int
+}
+
 func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 	img := &WritableImage{
 		writer: w,
@@ -127,17 +133,20 @@ func (img *WritableImage) FlushChanges() error {
 	writeSector(img.writer, tvdLoc, img.mode, serializeTVD(DefaultTVD))
 
 	// TODO create proper LTables and MTables
+	pathTable := img.getPathTable()
+	pathTableLSB := serializePathTableLSB(pathTable)
+	pathTableMSB := serializePathTableMSB(pathTable)
 	if img.Pvd.PathLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), MakeSector(false))
+		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), pathTableLSB)
 	}
 	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), MakeSector(false))
+		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), pathTableLSB)
 	}
 	if img.Pvd.PathMTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathMTableLocation.LSB), MakeSector(false))
+		img.WriteData(location(img.Pvd.PathMTableLocation.LSB), pathTableMSB)
 	}
-	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), MakeSector(false))
+	if img.Pvd.PathOptionalMTableLocation.LSB > 0 {
+		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.LSB), pathTableMSB)
 	}
 
 	// TODO start to write all the LBA and files based on the pre-calculated table
