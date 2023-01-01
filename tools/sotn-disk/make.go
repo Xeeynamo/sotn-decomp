@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/binary"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -179,8 +178,14 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	if err := patchDRA(path.Join(inputPath, "DRA.BIN"), img); err != nil {
 		return err
 	}
+	if err := patchSEL(path.Join(inputPath, "ST/SEL/SEL.BIN"), img); err != nil {
+		return err
+	}
 
 	if err := img.FlushSingleFile("DRA.BIN;1"); err != nil {
+		return err
+	}
+	if err := img.FlushSingleFile("ST/SEL/SEL.BIN;1"); err != nil {
 		return err
 	}
 
@@ -210,80 +215,6 @@ func writeCue(cuePath string, imgPath string, mode iso9660.TrackMode) error {
 	}
 	w.WriteString("    FLAGS DCP\r\n")
 	w.WriteString("    INDEX 01 00:00:00\r\n")
-
-	return nil
-}
-
-func patchDRA(fileName string, img *iso9660.WritableImage) error {
-	f, err := os.Open(fileName)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	lba := []struct {
-		offset int
-		name   string
-	}{
-		{0xC9D8, "F_TITLE0.BIN"},
-		{0xC9E8, "F_PROLO0.BIN"},
-		{0xCA08, "F_NO0.BIN"},
-		{0xCA18, "SD_ALK.VH"},
-		{0xCA28, "SD_ALK.VB"},
-		{0xCA38, "SD_RIH.VH"},
-		{0xCA48, "SD_RIH.VB"},
-		{0xCA58, "SD_MAR.VH"},
-		{0xCA68, "SD_MAR.VB"},
-		{0xCA78, "SD_J010.VH"},
-		{0xCA88, "SD_J010.VB"},
-		{0xCA98, "SD_J010.VH"},
-		{0xCAA8, "SD_J010.VB"},
-		{0xCAE8, "SD_J010.VH"},
-		{0xCAF8, "SD_J010.VB"},
-		{0xCB08, "WEAPON0.BIN"},
-		{0xCB18, "WEAPON1.BIN"},
-		{0xCB28, "MONSTER.BIN"},
-		{0xCB38, "DEMOKEY.BIN"},
-		{0xCB48, "FT_000.BIN"},
-		{0xCB4C, "FT_001.BIN"},
-		{0xCB50, "FT_002.BIN"},
-		{0xCB54, "FT_003.BIN"},
-		{0xCB58, "FT_004.BIN"},
-		{0xCB5C, "FT_005.BIN"},
-		{0xCB60, "FT_006.BIN"},
-		{0xCB64, "SD_BAT.VH"},
-		{0xCB68, "SD_GHOST.VH"},
-		{0xCB6C, "SD_FAIRY.VH"},
-		{0xCB70, "SD_DEVIL.VH"},
-		{0xCB74, "SD_SWORD.VH"},
-		{0xCB78, "SD_FAIR2.VH"},
-		{0xCB7C, "SD_DEVI2.VH"},
-		{0xCB9C, "SD_BAT.VB"},
-		{0xCBA0, "SD_GHOST.VB"},
-		{0xCBA4, "SD_FAIRY.VB"},
-		{0xCBA8, "SD_DEVIL.VB"},
-		{0xCBAC, "SD_SWORD.VB"},
-		{0xCBB0, "SD_FAIR2.VB"},
-		{0xCBB4, "SD_DEVI2.VB"},
-		{0xCC04, "RIC.BIN"},
-		{0xCC14, "ARC_F.BIN"},
-		{0xCC24, "OPN_WS.STR"},
-		{0xCC44, "F_GO.BIN"},
-		{0xCC54, "F_END.BIN"},
-		{0xCD04, "SEQ_DAI.SEQ"},
-	}
-	for _, entry := range lba {
-		loc, err := img.GetFileLocation(fmt.Sprintf("%s;1", entry.name))
-		if err != nil {
-			return err
-		}
-
-		data := make([]byte, 4)
-		binary.LittleEndian.PutUint32(data, loc)
-		if _, err = f.WriteAt(data, int64(entry.offset)); err != nil {
-			return err
-		}
-	}
 
 	return nil
 }
