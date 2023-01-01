@@ -2,6 +2,7 @@ package iso9660
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"path"
@@ -173,6 +174,24 @@ func (img *WritableImage) AddFile(filePath string, basePath string, ts Timestamp
 	img.addDirEntry(filePath, fullPath, ts, mode)
 	img.order = append(img.order, filePath)
 	return nil
+}
+
+func (img *WritableImage) FlushSingleFile(name string) error {
+	node, found := img.dirMap[name]
+	if !found {
+		return fmt.Errorf("flush failed: '%s' not found", name)
+	}
+
+	return img.writeNode(node)
+}
+
+func (img *WritableImage) GetFileLocation(name string) (uint32, error) {
+	node, found := img.dirMap[name]
+	if !found {
+		return 0, fmt.Errorf("flush failed: '%s' not found", name)
+	}
+
+	return node.dirent.ExtentLocation.LSB, nil
 }
 
 func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp, mode XaMode) {
