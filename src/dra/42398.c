@@ -4924,7 +4924,34 @@ void func_80132500(u8 soundMode) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801325D8);
+/**
+ * Called by entrypoint_sotn, seems to be initializing
+ * various parts of the sound system
+ */
+void func_801325D8(void) {
+    D_8013AEEC = 1;
+    SsInitHot();
+    SsSetTickMode(1);
+    func_80132500(1);
+    SsSetReservedVoice(0x10);
+    SsStart();
+    func_800209B4(&D_80138460, 0x10, 1);
+    func_80021E38(3);
+    SpuClearReverbWorkArea(3);
+    func_80021EEC();
+    func_80132134();
+    D_8013B668 = 0x78;
+    SsSetSerialAttr(0, 0, 1);
+    func_801324B4(0, D_8013B668, D_8013B668);
+    D_80138F24[0] = -0x38; // !FAKE: D_80138F24 part of an array / struct
+    func_80132028(0xE, D_80138F24, 0);
+    func_80132264();
+    func_80131FA4(0xA);
+    func_8002ABF4(0);
+    func_80029FBC(0);
+    CdReadyCallback(NULL);
+    func_80028D3C(0x1010, 0x10000);
+}
 
 s32 func_801326D8(void) {
     if (D_8013901C != 0)
