@@ -18,11 +18,6 @@ jobs:
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
-      - name: Downgrade binutils
-        run: |
-          curl -L -o binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb http://ftp.de.debian.org/debian/pool/main/b/binutils-mipsen/binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
-          sudo dpkg -i binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
-          rm binutils-mipsel-linux-gnu_2.35.2-2cross2_amd64.deb
       - name: Clone main repository
         uses: actions/checkout@v2
         with:
