@@ -124,9 +124,9 @@ func serializeDirectoryEntry(de DirectoryEntry) []byte {
 
 	if de.XaExt != nil {
 		xaHeader := data[de.DirectoryRecordLength-14:]
-		binary.BigEndian.AppendUint16(xaHeader[0:], de.XaExt.GroupID)
-		binary.BigEndian.AppendUint16(xaHeader[2:], de.XaExt.UserID)
-		binary.BigEndian.AppendUint16(xaHeader[4:], de.XaExt.Flags)
+		binary.BigEndian.PutUint16(xaHeader[0:], de.XaExt.GroupID)
+		binary.BigEndian.PutUint16(xaHeader[2:], de.XaExt.UserID)
+		binary.BigEndian.PutUint16(xaHeader[4:], de.XaExt.Flags)
 		xaHeader[6] = 0x58
 		xaHeader[7] = 0x41
 		xaHeader[8] = de.XaExt.FileNo
@@ -165,4 +165,8 @@ func (de DirectoryEntry) GetOptionalXaMode() XaMode {
 	}
 
 	return XaMode(de.XaExt.Flags)
+}
+
+func (de DirectoryEntry) IsXaStreaming() bool {
+	return de.XaExt != nil && (de.XaExt.Flags&xaIsMode2) == xaIsMode2
 }

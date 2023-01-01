@@ -78,7 +78,7 @@ func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 
 	// writes the first reserved 16 sectors
 	for i := location(0); i < 16; i++ {
-		img.WriteSector(i, MakeSector())
+		img.WriteSector(i, MakeSector(false))
 	}
 
 	return img, nil
@@ -128,16 +128,16 @@ func (img *WritableImage) FlushChanges() error {
 
 	// TODO create proper LTables and MTables
 	if img.Pvd.PathLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), MakeSector())
+		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), MakeSector(false))
 	}
 	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), MakeSector())
+		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), MakeSector(false))
 	}
 	if img.Pvd.PathMTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathMTableLocation.LSB), MakeSector())
+		img.WriteData(location(img.Pvd.PathMTableLocation.LSB), MakeSector(false))
 	}
 	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), MakeSector())
+		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), MakeSector(false))
 	}
 
 	// TODO start to write all the LBA and files based on the pre-calculated table
@@ -147,7 +147,7 @@ func (img *WritableImage) FlushChanges() error {
 	return nil
 }
 
-func (img *WritableImage) AddFile(filePath string, basePath string, ts Timestamp) error {
+func (img *WritableImage) AddFile(filePath string, basePath string, ts Timestamp, mode XaMode) error {
 	var fullPath string
 	if isFileName(filePath) {
 		fullPath = path.Join(basePath, removePathVersion(filePath))
@@ -161,12 +161,12 @@ func (img *WritableImage) AddFile(filePath string, basePath string, ts Timestamp
 		return err
 	}
 
-	img.addDirEntry(filePath, fullPath, ts)
+	img.addDirEntry(filePath, fullPath, ts, mode)
 	img.order = append(img.order, filePath)
 	return nil
 }
 
-func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp) {
+func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp, mode XaMode) {
 	parent := &img.root
 	localPath := parent.dirent.FileIdentifier
 	split := strings.Split(name, "/")
@@ -176,7 +176,7 @@ func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp
 			node := &dirTree{
 				name:     name,
 				fullPath: fullPath,
-				dirent:   makeDirectoryEntry(s),
+				dirent:   makeDirectoryEntry(s, mode),
 				children: nil,
 			}
 			node.dirent.RecordingDateTime = ts
@@ -189,7 +189,7 @@ func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp
 				nextParent = &dirTree{
 					name:     localPath,
 					fullPath: fullPath,
-					dirent:   makeDirectoryEntry(s),
+					dirent:   makeDirectoryEntry(s, mode),
 					children: make([]*dirTree, 0),
 				}
 				img.dirMap[localPath] = nextParent
@@ -204,7 +204,9 @@ func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp
 	// is inserted and then 'ST/NO3', then 'ST/NO3' will be created during the
 	// first insert but it will not hold any of the metadata.
 	// This is only appied for directories and not for files.
-	img.dirMap[localPath].dirent.RecordingDateTime = ts
+	de := &img.dirMap[localPath].dirent
+	de.RecordingDateTime = ts
+	de.XaExt = makeXaExt(mode)
 }
 
 func calcSizeDirTree(dt *dirTree) error {
@@ -213,7 +215,12 @@ func calcSizeDirTree(dt *dirTree) error {
 		if err != nil {
 			return err
 		}
-		dt.dirent.DataLength = make32(uint32(info.Size()))
+
+		realSize := info.Size()
+		if dt.dirent.IsXaStreaming() {
+			realSize = (realSize / sectorMode2Size) * sectorSize
+		}
+		dt.dirent.DataLength = make32(uint32(realSize))
 	} else {
 		size := uint32(0)
 		for _, node := range dt.children {
@@ -308,7 +315,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			}
 			size -= toWrite
 
-			sec := MakeSector() // TODO avoid to allocate a new sector every time
+			sec := MakeSector(node.dirent.IsXaStreaming()) // TODO avoid to allocate a new sector every time
 			_, err := r.Read(sec[0:toWrite])
 			if err != nil {
 				return err
@@ -357,7 +364,7 @@ func (img *WritableImage) Write(loc location, r io.Reader, size int64) error {
 		}
 		size -= toWrite
 
-		sec := MakeSector() // TODO avoid to allocate a new sector every time
+		sec := MakeSector(false) // TODO avoid to allocate a new sector every time
 		_, err := r.Read(sec[0:toWrite])
 		if err != nil {
 			return err
@@ -394,7 +401,7 @@ func alignWord(v byte) byte {
 	return ((v + 1) / 2) * 2
 }
 
-func makeDirectoryEntry(name string) DirectoryEntry {
+func makeDirectoryEntry(name string, mode XaMode) DirectoryEntry {
 	fileName := filepath.Base(name)
 	fileNameLen := byte(len(fileName))
 
@@ -416,5 +423,24 @@ func makeDirectoryEntry(name string) DirectoryEntry {
 		VolumeSequenceNumber:          make16(1),
 		FileIdentifierLength:          fileNameLen,
 		FileIdentifier:                fileName,
+		XaExt:                         makeXaExt(mode),
+	}
+}
+
+func makeXaExt(mode XaMode) *XaExtendedMeta {
+	if mode == XaModeNone {
+		return nil
+	}
+
+	fileNo := byte(0)
+	if mode == XaModeStreaming {
+		fileNo = 1
+	}
+
+	return &XaExtendedMeta{
+		GroupID: 0,
+		UserID:  0,
+		Flags:   uint16(mode),
+		FileNo:  fileNo,
 	}
 }

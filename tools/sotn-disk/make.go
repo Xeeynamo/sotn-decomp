@@ -157,7 +157,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	}
 
 	for _, meta := range metas {
-		if err := img.AddFile(meta.name, inputPath, meta.time); err != nil {
+		if err := img.AddFile(meta.name, inputPath, meta.time, meta.xaMode); err != nil {
 			return err
 		}
 	}
@@ -166,7 +166,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	img.WriteData(5, playstationLogo)
 
 	// TODO HACK force the image to have a specific length
-	if err := img.WriteSector(0x37E9B, iso9660.MakeSector()); err != nil {
+	if err := img.WriteSector(0x37E9B, iso9660.MakeSector(false)); err != nil {
 		return err
 	}
 

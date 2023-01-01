@@ -92,7 +92,7 @@ func parsePVD(s sectorData) PrimaryVolumeDescriptor {
 }
 
 func serializePVD(pvd PrimaryVolumeDescriptor) sectorData {
-	data := MakeSector()
+	data := MakeSector(false)
 
 	data[0] = byte(pvd.VolumeDescriptorType)
 	copy(data[1:6], []byte(pvd.StandardIdentifier))
@@ -128,7 +128,7 @@ func serializePVD(pvd PrimaryVolumeDescriptor) sectorData {
 }
 
 func serializeTVD(pvd TerminatorVolumeDescriptor) sectorData {
-	data := MakeSector()
+	data := MakeSector(false)
 
 	data[0] = byte(pvd.VolumeDescriptorType)
 	copy(data[1:6], []byte(pvd.StandardIdentifier))
