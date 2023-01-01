@@ -222,7 +222,7 @@ func calcSizeDirTree(dt *dirTree) error {
 		}
 		dt.dirent.DataLength = make32(uint32(realSize))
 	} else {
-		size := uint32(0)
+		size := uint32(0x30 + 0x30) // assume '.' and '..'
 		for _, node := range dt.children {
 			chNodeLen := uint32(node.dirent.DirectoryRecordLength)
 			if size/sectorSize < (size+chNodeLen)/sectorSize {
@@ -289,8 +289,15 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			FileIdentifier:                "\x01",
 		})...)
 
+		offset := 0x30 + 0x30
 		for _, child := range node.children {
 			data := serializeDirectoryEntry(child.dirent)
+			if offset+len(data) > sectorSize { // avoid sector overlapping
+				padding := sectorSize - offset
+				finalData = append(finalData, make([]byte, padding)...)
+				offset = 0
+			}
+			offset += len(data)
 			finalData = append(finalData, data...)
 		}
 		img.WriteData(loc, finalData)
