@@ -232,7 +232,7 @@ context:
 
 extract_sotn: $(SOTNDISK)
 	$(SOTNDISK) extract iso/sotn.cue iso/
-disk: $(SOTNDISK) $(BUILD_DIR)/sotn.cue
+disk: build $(SOTNDISK) $(BUILD_DIR)/sotn.cue
 $(BUILD_DIR)/sotn.cue:
 	mkdir -p $(DISK_DIR)
 	cp -r iso/* $(DISK_DIR)
