@@ -842,7 +842,7 @@ void Load_Save_Palette(u16* PaletteDestination, s32 SelectedPalette) {
 }
 
 void Load_Save_Icon(u8* IconDestination, s32 SelectedIcon) {
-    s32 i;spla
+    s32 i;
     for (i = 0; i < 0x180; i++) {
         IconDestination[i] = ((u8*)SaveIconTexture[SelectedIcon])[i];
     }
