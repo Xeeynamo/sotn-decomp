@@ -196,15 +196,15 @@ func writeCue(cuePath string, imgPath string, mode iso9660.TrackMode) error {
 	w := bufio.NewWriter(f)
 	defer w.Flush()
 
-	w.WriteString(fmt.Sprintf("FILE \"%s\" BINARY\n", imgPath))
+	w.WriteString(fmt.Sprintf("FILE \"%s\" BINARY\r\n", imgPath))
 	switch mode {
 	case iso9660.TrackMode1_2048:
-		w.WriteString("  TRACK 01 MODE1/2048\n")
+		w.WriteString("  TRACK 01 MODE1/2048\r\n")
 	case iso9660.TrackMode2_2352:
-		w.WriteString("  TRACK 01 MODE2/2352\n")
+		w.WriteString("  TRACK 01 MODE2/2352\r\n")
 	}
-	w.WriteString("    FLAGS DCP\n")
-	w.WriteString("    INDEX 01 00:00:00\n")
+	w.WriteString("    FLAGS DCP\r\n")
+	w.WriteString("    INDEX 01 00:00:00\r\n")
 
 	return nil
 }
