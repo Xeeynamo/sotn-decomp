@@ -4534,7 +4534,50 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80124164);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801243B0);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80124A8C);
+#else
+void func_80124A8C(Entity* entity) {
+    u32* playerStep = &g_EntityArray[PLAYER_CHARACTER].step;
+
+    if (*playerStep == 4) {
+        s32 playerStep_temp = *playerStep; // might be !FAKE:
+
+        switch (entity->step) {
+        case ENTITY_STEP_0:
+            entity->animationSet = 0x11;
+            entity->accelerationY = -0x6000;
+            func_8010E390(0x4000);
+            entity->unk5A = 0x50;
+            entity->palette = 0x819F;
+            entity->unk4C = &D_800AE294;
+            entity->unk34 = 0x100000;
+            entity->facing = 0;
+            entity->posY.Data.high -= 16;
+            playerStep_temp = entity->step;
+            playerStep_temp++;
+            entity->posX.value += entity->accelerationX << 5;
+            entity->step = playerStep_temp;
+            break;
+
+        case ENTITY_STEP_1:
+            entity->posX.value += entity->accelerationX;
+            entity->posY.value += entity->accelerationY;
+
+            if (entity->animationFrameDuration < 0) {
+                goto block_7;
+            }
+            break;
+
+        default:
+            break;
+        }
+    } else {
+    block_7:
+        func_80106590(entity);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80124B88);
 
