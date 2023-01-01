@@ -80,7 +80,7 @@ func read16(data []byte) Data16 {
 func read32(data []byte) Data32 {
 	return Data32{
 		LSB: binary.LittleEndian.Uint32(data[0:]),
-		MSB: binary.BigEndian.Uint32(data[2:]),
+		MSB: binary.BigEndian.Uint32(data[4:]),
 	}
 }
 

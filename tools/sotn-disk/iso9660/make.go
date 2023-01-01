@@ -94,35 +94,40 @@ func (img *WritableImage) FlushChanges() error {
 	const tvdLoc = pvdLoc + 1
 	const pathTableLoc = tvdLoc + 1
 
-	// TODO assumes every Path Table takes exactly one sector
-	loc := uint16(pathTableLoc)
-	img.Pvd.PathLTableLocation.LSB = loc + 0
-	img.Pvd.PathLTableLocation.MSB = 0
-	img.Pvd.PathOptionalLTableLocation.LSB = loc + 1
-	img.Pvd.PathOptionalLTableLocation.MSB = 0
-	img.Pvd.PathMTableLocation.LSB = 0
-	img.Pvd.PathMTableLocation.MSB = loc + 2
-	img.Pvd.PathOptionalMTableLocation.LSB = 0
-	img.Pvd.PathOptionalMTableLocation.MSB = loc + 3
-
-	loc += 4
-
-	// TODO precalculate the final location for all the files
-	img.Pvd.VolumeSpaceSize = make32(248015) // TODO value currently hardcoded
-
+	loc := uint32(pathTableLoc)
 	if err := calcSizeDirTree(&img.root); err != nil {
 		return err
 	}
-	img.calcLocDirTree(uint32(loc + 1))
 	sortDirTree(&img.root)
 
-	img.Pvd.DirectoryRecord.ExtentLocation.LSB = 22 // HACK!
 	pathTable := img.getPathTable()
 	pathTableLSB := serializePathTableLSB(pathTable)
 	pathTableMSB := serializePathTableMSB(pathTable)
 	img.Pvd.PathTableSize.LSB = uint32(len(pathTableLSB))
 	img.Pvd.PathTableSize.MSB = uint32(len(pathTableMSB))
-	img.root.dirent.ExtentLocation = make32(uint32(0x16)) // TODO hack
+	lPathTableNBlock := (img.Pvd.PathTableSize.LSB + sectorSize - 1) / sectorMode2Size
+	mPathTableNBlock := (img.Pvd.PathTableSize.MSB + sectorSize - 1) / sectorMode2Size
+
+	img.Pvd.PathLTableLocation.LSB = uint16(loc)
+	img.Pvd.PathLTableLocation.MSB = 0
+	loc += lPathTableNBlock
+	img.Pvd.PathOptionalLTableLocation.LSB = uint16(loc)
+	img.Pvd.PathOptionalLTableLocation.MSB = 0
+	loc += lPathTableNBlock
+	img.Pvd.PathMTableLocation.LSB = 0
+	img.Pvd.PathMTableLocation.MSB = uint16(loc)
+	loc += mPathTableNBlock
+	img.Pvd.PathOptionalMTableLocation.LSB = 0
+	img.Pvd.PathOptionalMTableLocation.MSB = uint16(loc)
+	loc += mPathTableNBlock
+
+	img.root.dirent.ExtentLocation = make32(loc)
+	img.Pvd.DirectoryRecord.ExtentLocation = img.root.dirent.ExtentLocation
+	pathTable[0].loc = loc
+	pathTableLSB = serializePathTableLSB(pathTable) // HACK serialize twice due to 'loc' recalculated
+	pathTableMSB = serializePathTableMSB(pathTable) // HACK serialize twice due to 'loc' recalculated
+
+	img.calcLocDirTree(loc + 1)
 
 	if err := img.writeTree(); err != nil {
 		return err
@@ -146,8 +151,7 @@ func (img *WritableImage) FlushChanges() error {
 	}
 
 	// TODO start to write all the LBA and files based on the pre-calculated table
-	img.Pvd.VolumeSpaceSize.LSB = 248015   // TODO expected 248015
-	img.Pvd.VolumeSpaceSize.MSB = 50331651 // TODO expected 50331651 WTF?
+	img.Pvd.VolumeSpaceSize = make32(248015)
 
 	return nil
 }
@@ -323,7 +327,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 
 		size := info.Size()
 		for size > 0 {
-			sec := MakeSector(node.dirent.IsXaStreaming()) // TODO avoid to allocate a new sector every time
+			sec := MakeSector(node.dirent.IsXaStreaming())
 			toWrite := int64(len(sec))
 			if toWrite > size {
 				toWrite = size
@@ -369,7 +373,7 @@ func (img *WritableImage) Write(loc location, r io.Reader, size int64) error {
 		}
 		size -= toWrite
 
-		sec := MakeSector(false) // TODO avoid to allocate a new sector every time
+		sec := MakeSector(false)
 		_, err := r.Read(sec[0:toWrite])
 		if err != nil {
 			return err

@@ -170,11 +170,6 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	img.WriteData(4, []byte(usLicense))
 	img.WriteData(5, playstationLogo)
 
-	// TODO HACK force the image to have a specific length
-	if err := img.WriteSector(0x37E9B, iso9660.MakeSector(false)); err != nil {
-		return err
-	}
-
 	if err := img.FlushChanges(); err != nil {
 		return err
 	}

@@ -4,7 +4,7 @@ import "encoding/binary"
 
 func (img *WritableImage) getPathTable() []pathTable {
 	return append([]pathTable{
-		{name: "\x00", loc: img.Pvd.DirectoryRecord.ExtentLocation.LSB, parent: 1},
+		{name: "\x00", parent: 1},
 	}, img.getPathTableNode(&img.root, 1)...)
 }
 
