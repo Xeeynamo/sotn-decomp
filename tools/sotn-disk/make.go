@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -126,7 +127,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 		return err
 	}
 
-	imgPath := strings.Replace(cuePath, ".cue", ".bin", 1)
+	imgPath := strings.Replace(filepath.Base(cuePath), ".cue", ".bin", 1)
 
 	f, err := os.Create(imgPath)
 	if err != nil {
