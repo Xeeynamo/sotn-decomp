@@ -147,7 +147,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	img.Pvd.ApplicationIdentifier = iso9660.ToAString("PLAYSTATION", 128)
 
 	// define root timestamp, if present
-	if len(metas) > 0 && metas[0].name == "" {
+	if len(metas) > 0 && metas[0].name == "\x00" {
 		rootts := metas[0].time
 		img.Pvd.VolumeCreationDateTime.Year = fmt.Sprintf("19%02d", rootts.Year)
 		img.Pvd.VolumeCreationDateTime.Month = fmt.Sprintf("%02d", rootts.Month)
