@@ -63,6 +63,11 @@ func readFileList(fileListPath string) ([]makeFileMeta, error) {
 
 	metaList := make([]makeFileMeta, 0)
 	for _, v := range strings.Split(string(content), "\n") {
+		v := strings.TrimSpace(v)
+		if len(v) == 0 { // ignore empty lines
+			continue
+		}
+
 		tokens := strings.Split(v, ",")
 		meta := makeFileMeta{name: tokens[0]}
 		if len(tokens) > 1 {
