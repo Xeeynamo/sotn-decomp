@@ -51,7 +51,7 @@ func serializePathTableLSB(t []pathTable) []byte {
 func serializePathTableMSB(t []pathTable) []byte {
 	data := make([]byte, 0)
 	for _, p := range t {
-		pdata := make([]byte, 8+(len(p.name)+1)/2)
+		pdata := make([]byte, 8+((len(p.name)+1)/2)*2)
 		pdata[0] = byte(len(p.name))
 		pdata[1] = 0
 		binary.BigEndian.PutUint32(pdata[2:], p.loc)

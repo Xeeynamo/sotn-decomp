@@ -2,7 +2,6 @@ package iso9660
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"os"
 	"path"
@@ -106,10 +105,6 @@ func (img *WritableImage) FlushChanges() error {
 	img.Pvd.PathOptionalMTableLocation.LSB = 0
 	img.Pvd.PathOptionalMTableLocation.MSB = loc + 3
 
-	// TODO I am currently ignoring completely the Path Table
-	img.Pvd.PathTableSize.LSB = 0 // TODO expected 788
-	img.Pvd.PathTableSize.MSB = 0 // always 0
-
 	loc += 4
 
 	// TODO precalculate the final location for all the files
@@ -123,7 +118,13 @@ func (img *WritableImage) FlushChanges() error {
 	}
 	img.calcLocDirTree(uint32(loc))
 	sortDirTree(&img.root)
-	//debugDirTree(&img.root)
+
+	pathTable := img.getPathTable()
+	pathTableLSB := serializePathTableLSB(pathTable)
+	pathTableMSB := serializePathTableMSB(pathTable)
+	img.Pvd.PathTableSize.LSB = uint32(len(pathTableLSB))
+	img.Pvd.PathTableSize.MSB = uint32(len(pathTableMSB))
+
 	if err := img.writeTree(); err != nil {
 		return err
 	}
@@ -132,10 +133,6 @@ func (img *WritableImage) FlushChanges() error {
 	writeSector(img.writer, pvdLoc, img.mode, serializePVD(img.Pvd))
 	writeSector(img.writer, tvdLoc, img.mode, serializeTVD(DefaultTVD))
 
-	// TODO create proper LTables and MTables
-	pathTable := img.getPathTable()
-	pathTableLSB := serializePathTableLSB(pathTable)
-	pathTableMSB := serializePathTableMSB(pathTable)
 	if img.Pvd.PathLTableLocation.LSB > 0 {
 		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), pathTableLSB)
 	}
@@ -343,15 +340,6 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 	}
 
 	return nil
-}
-
-func debugDirTree(dt *dirTree) {
-	if dt.children != nil {
-		for _, node := range dt.children {
-			debugDirTree(node)
-		}
-	}
-	fmt.Printf("%23s %8d, %7d\n", dt.name, dt.dirent.DataLength.LSB, dt.dirent.ExtentLocation.LSB)
 }
 
 func sortDirTree(dt *dirTree) {
