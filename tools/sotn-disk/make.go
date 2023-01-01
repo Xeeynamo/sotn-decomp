@@ -17,8 +17,9 @@ var (
 )
 
 type makeFileMeta struct {
-	name string
-	time iso9660.Timestamp
+	name   string
+	time   iso9660.Timestamp
+	xaMode iso9660.XaMode
 }
 
 func isPathFile(str string) bool {
@@ -36,6 +37,24 @@ func readFileList(fileListPath string) ([]makeFileMeta, error) {
 		v, err := strconv.Atoi(s)
 		return byte(v), err
 	}
+	xaModeStr := func(str string) iso9660.XaMode {
+		switch str {
+		case "_":
+			return iso9660.XaModeNone
+		case "N":
+			return iso9660.XaModeDefault
+		case "X":
+			return iso9660.XaModeXa
+		case "A":
+			return iso9660.XaModeAudioTrack
+		case "S":
+			return iso9660.XaModeStreaming
+		case "D":
+			return iso9660.XaModeDirRecord
+		default:
+			panic(fmt.Sprintf("unrecognized XaMode '%s'", str))
+		}
+	}
 
 	content, err := ioutil.ReadFile(fileListPath)
 	if err != nil {
@@ -47,7 +66,10 @@ func readFileList(fileListPath string) ([]makeFileMeta, error) {
 		tokens := strings.Split(v, ",")
 		meta := makeFileMeta{name: tokens[0]}
 		if len(tokens) > 1 {
-			time := tokens[1]
+			meta.xaMode = xaModeStr(tokens[1])
+		}
+		if len(tokens) > 2 {
+			time := tokens[2]
 			if len(time) != len("19970901-134500-36") {
 				return nil, fmt.Errorf("wrong date time format '%s'", time)
 			}

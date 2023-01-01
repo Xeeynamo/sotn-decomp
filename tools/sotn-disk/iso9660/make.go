@@ -256,7 +256,6 @@ func (img *WritableImage) writeTree() error {
 
 func (img *WritableImage) writeNode(node *dirTree) error {
 	loc := location(node.dirent.ExtentLocation.LSB)
-	fmt.Printf("writeNode %06d '%s'\n", loc, node.dirent.FileIdentifier)
 	if node.children != nil {
 		parentName := filepath.Base(filepath.Dir(node.name))
 		finalData := make([]byte, 0)

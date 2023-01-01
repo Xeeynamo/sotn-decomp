@@ -12,6 +12,7 @@ type fileMeta struct {
 	size      int
 	sector    int
 	timestamp iso9660.Timestamp
+	xaMode    string
 }
 
 func list(f iso9660.File) error {
@@ -25,11 +26,11 @@ func list(f iso9660.File) error {
 	})
 
 	roottime := f.RecordingDateTime
-	fmt.Printf("%s,%04d%02d%02d-%02d%02d%02d-%02d\n", "",
+	fmt.Printf("%s,%s,%04d%02d%02d-%02d%02d%02d-%02d\n", "", "_",
 		1900+int(roottime.Year), roottime.Month, roottime.Day,
 		roottime.Hour, roottime.Minute, roottime.Second, roottime.Offset)
 	for _, v := range meta {
-		fmt.Printf("%s,%04d%02d%02d-%02d%02d%02d-%02d\n", v.path,
+		fmt.Printf("%s,%s,%04d%02d%02d-%02d%02d%02d-%02d\n", v.path, v.xaMode,
 			1900+int(v.timestamp.Year), v.timestamp.Month, v.timestamp.Day,
 			v.timestamp.Hour, v.timestamp.Minute, v.timestamp.Second, v.timestamp.Offset)
 	}
@@ -49,6 +50,7 @@ func dumpFileMeta(f iso9660.File) ([]fileMeta, error) {
 			path:      child.FileIdentifier,
 			size:      int(child.DataLength.LSB),
 			sector:    int(child.ExtentLocation.LSB),
+			xaMode:    strXaMode(child.GetOptionalXaMode()),
 			timestamp: child.RecordingDateTime,
 		})
 
@@ -63,6 +65,7 @@ func dumpFileMeta(f iso9660.File) ([]fileMeta, error) {
 					path:      fmt.Sprintf("%s/%s", child.FileIdentifier, singlemeta.path),
 					size:      singlemeta.size,
 					sector:    singlemeta.sector,
+					xaMode:    singlemeta.xaMode,
 					timestamp: singlemeta.timestamp,
 				})
 			}
@@ -70,4 +73,23 @@ func dumpFileMeta(f iso9660.File) ([]fileMeta, error) {
 	}
 
 	return meta, nil
+}
+
+func strXaMode(xaMode iso9660.XaMode) string {
+	switch xaMode {
+	case iso9660.XaModeNone:
+		return "_"
+	case iso9660.XaModeDefault:
+		return "N"
+	case iso9660.XaModeXa:
+		return "X"
+	case iso9660.XaModeAudioTrack:
+		return "A"
+	case iso9660.XaModeStreaming:
+		return "S"
+	case iso9660.XaModeDirRecord:
+		return "D"
+	default:
+		panic(fmt.Sprintf("unimplemented XaMode %04X", xaMode))
+	}
 }
