@@ -251,7 +251,7 @@ void entrypoint_sotn(void) {
     g_blinkTimer = 0;
     D_8003C99C = 0;
     D_800987B4 = 0;
-    D_8003CB00 = 0;
+    D_8003CB00[0] = 0;
     D_8003CB04 = 0;
     D_8006C37C = &D_8003CB08;
     func_80131ED8(0xB9B6);
@@ -2616,6 +2616,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FBC24);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD39C);
 
+// https://decomp.me/scratch/XEzwM
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD4C0);
 
 s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
