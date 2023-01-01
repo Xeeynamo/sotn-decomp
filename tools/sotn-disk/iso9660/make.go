@@ -280,6 +280,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			VolumeSequenceNumber:          make16(1),
 			FileIdentifierLength:          1,
 			FileIdentifier:                "\x00",
+			XaExt:                         &XaExtendedMeta{GroupID: 0, UserID: 0, Flags: uint16(XaModeDirRecord), FileNo: 0},
 		})...)
 		finalData = append(finalData, serializeDirectoryEntry(DirectoryEntry{
 			DirectoryRecordLength:         0x30,
@@ -291,6 +292,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			VolumeSequenceNumber:          make16(1),
 			FileIdentifierLength:          1,
 			FileIdentifier:                "\x01",
+			XaExt:                         &XaExtendedMeta{GroupID: 0, UserID: 0, Flags: uint16(XaModeDirRecord), FileNo: 0},
 		})...)
 
 		offset := 0x30 + 0x30
