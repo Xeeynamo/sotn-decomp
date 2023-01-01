@@ -3504,10 +3504,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D010);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 
-void func_8010D584(s16 context) {
+void func_8010D584(s16 step) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->step = context;
+    player->step = step;
     player->unk2E = 0;
 }
 
@@ -4628,7 +4628,24 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012BEF8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C600);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C88C);
+bool func_8012C88C(void) {
+    if ((g_EntityArray[PLAYER_CHARACTER].unk2E != 0) &&
+        (g_EntityArray[PLAYER_CHARACTER].unk2E != 8)) {
+        if (((D_8009744C != 0) && (func_800FE3A8(0xE) == 0)) ||
+            (D_80072EEC & 2) || (func_800FEEA4(2, 1) < 0)) {
+            func_8010D584(ENTITY_STEP_19);
+            func_8010DA48(0xCA);
+            D_800AFDA6 = 1;
+            g_EntityArray[PLAYER_CHARACTER].palette = 0x810D;
+            D_80072F86 = 0;
+            D_80072F88 = 0;
+            func_8011AAFC(g_CurrentEntity, 0x24002C, 0);
+            g_EntityArray[PLAYER_CHARACTER].accelerationY >>= 1;
+            return true;
+        }
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C97C);
 
