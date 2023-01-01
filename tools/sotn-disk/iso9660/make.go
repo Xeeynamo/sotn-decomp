@@ -137,11 +137,11 @@ func (img *WritableImage) FlushChanges() error {
 	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
 		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), pathTableLSB)
 	}
-	if img.Pvd.PathMTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathMTableLocation.LSB), pathTableMSB)
+	if img.Pvd.PathMTableLocation.MSB > 0 {
+		img.WriteData(location(img.Pvd.PathMTableLocation.MSB), pathTableMSB)
 	}
-	if img.Pvd.PathOptionalMTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.LSB), pathTableMSB)
+	if img.Pvd.PathOptionalMTableLocation.MSB > 0 {
+		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.MSB), pathTableMSB)
 	}
 
 	// TODO start to write all the LBA and files based on the pre-calculated table
