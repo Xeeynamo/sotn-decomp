@@ -116,6 +116,7 @@ func (img *WritableImage) FlushChanges() error {
 	img.calcLocDirTree(uint32(loc + 1))
 	sortDirTree(&img.root)
 
+	img.Pvd.DirectoryRecord.ExtentLocation.LSB = 22 // HACK!
 	pathTable := img.getPathTable()
 	pathTableLSB := serializePathTableLSB(pathTable)
 	pathTableMSB := serializePathTableMSB(pathTable)
