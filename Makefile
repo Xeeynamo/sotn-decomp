@@ -239,7 +239,7 @@ update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
 	git submodule update $(SPLAT_DIR)
-	pip3 install -r $(SPLAT_DIR)/requirements.txt
+	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 $(ASMDIFFER_APP):
 	git submodule init $(ASMDIFFER_DIR)
 	git submodule update $(ASMDIFFER_DIR)
