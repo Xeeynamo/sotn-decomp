@@ -188,7 +188,7 @@ func (img *WritableImage) FlushSingleFile(name string) error {
 func (img *WritableImage) GetFileLocation(name string) (uint32, error) {
 	node, found := img.dirMap[name]
 	if !found {
-		return 0, fmt.Errorf("flush failed: '%s' not found", name)
+		return 0, fmt.Errorf("get location failed: '%s' not found", name)
 	}
 
 	return node.dirent.ExtentLocation.LSB, nil
