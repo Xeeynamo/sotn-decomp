@@ -22,6 +22,7 @@ ASM_DIR         := asm
 SRC_DIR         := src
 INCLUDE_DIR     := include
 BUILD_DIR       := build
+DISK_DIR        := $(BUILD_DIR)/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
@@ -212,8 +213,6 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract_iso: $(SOTNDISK)
-	$(SOTNDISK) extract iso/sotn.cue iso/
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
@@ -230,6 +229,28 @@ $(CONFIG_DIR)/generated.symbols.%.txt:
 context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
+
+extract_sotn: $(SOTNDISK)
+	$(SOTNDISK) extract iso/sotn.cue iso/
+disk: $(SOTNDISK) $(BUILD_DIR)/sotn.cue
+$(BUILD_DIR)/sotn.cue:
+	mkdir -p $(DISK_DIR)
+	cp -r iso/* $(DISK_DIR)
+	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
+	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
+	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
+	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
+	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
+	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
+	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
+	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
+	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
+	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
+	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
+	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
+	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
+	$(SOTNDISK) make $@ $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
+
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
