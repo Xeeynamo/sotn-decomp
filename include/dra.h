@@ -667,8 +667,8 @@ extern s32 D_80098850;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A04EC;
 extern s32 D_800A0510[];
-extern u16 D_800A0518[][0x10];
-extern s32 D_800A1F18[];
+extern u16 SaveIconPalette[0x10][0x10];
+extern u32 SaveIconTexture[0x10];
 extern s32 D_800A2438;
 extern u8 D_800A2EE8[];
 extern u8 D_800A2EED;
@@ -1037,4 +1037,7 @@ s32 func_80133950(void);
 void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);
+void Load_Save_Palette(u16* PaletteDestination, s32 SelectedPalette);
+void Load_Save_Icon(u8* IconDestination, s32 SelectedIcon);
+
 #endif

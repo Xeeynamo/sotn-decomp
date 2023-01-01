@@ -840,29 +840,17 @@ s32 func_800E9B18(s32 arg0, s32 arg1) {
 
 // https://decomp.me/scratch/kHOQh match with struct
 
-void func_800E9BA4(u16* arg0, s32 arg1) {
+void Load_Save_Palette(u16* PaletteDestination, s32 SelectedPalette) {
     s32 i;
-    u16* var_v1 = D_800A0518[0];
-
-    var_v1 = D_800A0518[arg1];
-
     for (i = 0; i < 16; i++) {
-        *arg0 = *var_v1;
-        var_v1++;
-        arg0++;
+        PaletteDestination[i] = SaveIconPalette[SelectedPalette][i];
     }
 }
 
-void func_800E9BDC(u8* arg0, s32 arg1) {
+void Load_Save_Icon(u8* IconDestination, s32 SelectedIcon) {
     s32 i;
-    u8* var_a1;
-
-    var_a1 = (u8*)D_800A1F18[arg1];
-
-    for (i = 0; i < 384; i++) {
-        *arg0 = *var_a1;
-        var_a1++;
-        arg0++;
+    for (i = 0; i < 0x180; i++) {
+        IconDestination[i] = ((u8*)SaveIconTexture[SelectedIcon])[i];
     }
 }
 

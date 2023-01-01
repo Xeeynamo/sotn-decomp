@@ -175,6 +175,20 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 		return err
 	}
 
+	if err := patchDRA(path.Join(inputPath, "DRA.BIN"), img); err != nil {
+		return err
+	}
+	if err := patchSEL(path.Join(inputPath, "ST/SEL/SEL.BIN"), img); err != nil {
+		return err
+	}
+
+	if err := img.FlushSingleFile("DRA.BIN;1"); err != nil {
+		return err
+	}
+	if err := img.FlushSingleFile("ST/SEL/SEL.BIN;1"); err != nil {
+		return err
+	}
+
 	if err := writeCue(cuePath, imgPath, mode); err != nil {
 		return err
 	}
