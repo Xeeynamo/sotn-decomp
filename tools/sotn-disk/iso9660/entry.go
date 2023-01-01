@@ -64,10 +64,13 @@ const (
 const (
 	// the following flags are used in the CD-XA extension
 	// courtesy of https://problemkaputt.de/psx-spx.htm
+
+	xaIsMode2 = 0x1000
+
 	XaModeNone       = 0
 	XaModeDefault    = XaMode(0x0D55)
-	XaModeXa         = XaMode(0x1555)
-	XaModeStreaming  = XaMode(0x3D55)
+	XaModeXa         = XaMode(0x0555 | xaIsMode2)
+	XaModeStreaming  = XaMode(0x2D55 | xaIsMode2)
 	XaModeAudioTrack = XaMode(0x4555)
 	XaModeDirRecord  = XaMode(0x8D55)
 )

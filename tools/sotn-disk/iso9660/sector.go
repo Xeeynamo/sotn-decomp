@@ -12,6 +12,7 @@ type location uint32
 type sectorData []byte
 
 const sectorSize = 0x800
+const sectorMode2Size = 0x800 + 0x130
 
 var (
 	sync = []byte{
@@ -19,17 +20,25 @@ var (
 		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00}
 )
 
-func readSector(r io.ReaderAt, loc location, mode TrackMode) (sectorData, error) {
+func readSector(r io.ReaderAt, loc location, mode TrackMode, useMode2 bool) (sectorData, error) {
 	var offset int64
+	var secLength int
 	if mode == TrackMode1_2048 {
 		offset = int64(loc) * sectorSize
+		secLength = sectorSize
 	} else if mode == TrackMode2_2352 {
-		offset = 0x18 + int64(loc)*(sectorSize+0x130)
+		if useMode2 {
+			offset = int64(loc) * sectorMode2Size
+			secLength = sectorMode2Size
+		} else {
+			offset = 0x18 + int64(loc)*sectorMode2Size
+			secLength = sectorSize
+		}
 	} else {
 		return []byte{}, ErrUnkTrackMode
 	}
 
-	sec := MakeSector()
+	sec := sectorData(make([]byte, secLength))
 	_, err := r.ReadAt(sec, offset)
 
 	return sec, err
