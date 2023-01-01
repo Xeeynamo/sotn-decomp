@@ -110,13 +110,10 @@ func (img *WritableImage) FlushChanges() error {
 	// TODO precalculate the final location for all the files
 	img.Pvd.VolumeSpaceSize = make32(248015) // TODO value currently hardcoded
 
-	// calculate each node size and location, in order
-	img.root.dirent.ExtentLocation = make32(uint32(loc))
-	loc += 1 //location += uint16(img.root.dirent.DataLength.LSB / sectorSize)
 	if err := calcSizeDirTree(&img.root); err != nil {
 		return err
 	}
-	img.calcLocDirTree(uint32(loc))
+	img.calcLocDirTree(uint32(loc + 1))
 	sortDirTree(&img.root)
 
 	pathTable := img.getPathTable()
@@ -124,6 +121,7 @@ func (img *WritableImage) FlushChanges() error {
 	pathTableMSB := serializePathTableMSB(pathTable)
 	img.Pvd.PathTableSize.LSB = uint32(len(pathTableLSB))
 	img.Pvd.PathTableSize.MSB = uint32(len(pathTableMSB))
+	img.root.dirent.ExtentLocation = make32(uint32(0x16)) // TODO hack
 
 	if err := img.writeTree(); err != nil {
 		return err
