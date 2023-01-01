@@ -8,19 +8,10 @@ import (
 )
 
 type TrackMode int
-type VolumeType byte
 
 const (
 	TrackMode1_2048 = TrackMode(0x800)
 	TrackMode2_2352 = TrackMode(0x930)
-)
-
-const (
-	VolumeTypeBoot = VolumeType(iota)
-	VolumeTypePrimary
-	VolumeTypeSupplementary
-	VolumeTypePartition
-	VolumeTypeTerminator = VolumeType(0xFF)
 )
 
 var (
@@ -40,7 +31,7 @@ type File struct {
 }
 
 func OpenImage(r io.ReaderAt, mode TrackMode) (*Image, error) {
-	pvdSec, err := readSector(r, 16, mode)
+	pvdSec, err := readSector(r, 16, mode, false)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +63,7 @@ func (file File) GetChildren() ([]File, error) {
 	for {
 		// horrible hack as it can read unnecessary bytes, but it works
 		if offset+bufSafe > secSize {
-			sec, err := readSector(file.reader, int64(chloc), file.mode)
+			sec, err := readSector(file.reader, location(chloc), file.mode, false)
 			if err != nil {
 				return nil, err
 			}
@@ -97,10 +88,16 @@ func (file File) GetChildren() ([]File, error) {
 
 func (file File) WriteFile(w io.Writer) error {
 	size := file.DataLength.LSB
-	sector := int64(file.ExtentLocation.LSB)
+	sector := location(file.ExtentLocation.LSB)
+
+	useMode2 := false
+	if file.XaExt != nil && (file.XaExt.Flags&xaIsMode2) == xaIsMode2 {
+		size = (size/sectorSize)*2352 + (size % sectorSize)
+		useMode2 = true
+	}
 
 	for size > 0 {
-		sec, err := readSector(file.reader, sector, file.mode)
+		sec, err := readSector(file.reader, sector, file.mode, useMode2)
 		if err != nil {
 			if err == io.EOF {
 				return nil

@@ -14,7 +14,7 @@ This repo does not include any assets or assembly code necessary for compiling t
 
 | SHA-1 checksum                             | File name  | Progress
 |--------------------------------------------|------------|----------
-| `54828d4e44ea9575f2a0917ff63def42a304abff` | SLUS_000.67 | N/A 
+| `54828d4e44ea9575f2a0917ff63def42a304abff` | SLUS_000.67 | N/A
 | `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN    | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dra.json)
 | `d076912661e67a38afae0a1b5044ab5f10bcfb39` | RIC.BIN    | ![progress RIC.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-ric.json)
 | `42226b6d9ed24448eed61b3c6cd2949e96bebab6` | ST/CEN.BIN | ![progress CEN.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-cen.json)
@@ -28,7 +28,6 @@ This repo does not include any assets or assembly code necessary for compiling t
 | `2ae313f4e394422e4c5f37a2d8e976e92f9e3cda` | ST/WRP.BIN | ![progress WRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-wrp.json)
 | `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json)
 
-
 ## Setup the project
 
 This assumes you have Ubuntu, Debian or WSL in Windows.
@@ -38,12 +37,13 @@ This assumes you have Ubuntu, Debian or WSL in Windows.
 1. Run `make update-dependencies`
 1. Inside the newly created repo, create a new `iso/` folder and put the game disc image in, both BIN and CUE files
 1. Rename the CUE file as `sotn.cue`
-1. Run `make extract_iso`
+1. Run `make extract_sotn`
 
 ## Build
 
 1. Run `make extract` to generate the assembly files for the functions not yet decompiled.
 1. Run `make all` to compile the binaries in the `build/` directory.
+1. Run `make disk` to create a new CUE/BIN pair based on the new compiled binaries.
 
 In case there are any changes in the `config/` folder, you might need to run `make clean` to reset the extraction.
 
@@ -61,23 +61,22 @@ Some non-matching functions are present in the source preprocessed by the macro 
 
 There are a few tricks to make the process more streamlined:
 
-1. Use [decomp.me](https://decomp.me/) with PSY-Q 4.0. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output. 
+1. Use [decomp.me](https://decomp.me/) with PSY-Q 4.0. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output.
 1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/dra/42398.c make context` as mentioned in the how to decompile.
 1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches.
 1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
 1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it.
 
+## Resources
 
-## Resources:
-
-* List of resource for sotn https://github.com/TalicZealot/SotN-Utilities (speedrun oriented, but still very useful). 
+* List of resource for sotn <https://github.com/TalicZealot/SotN-Utilities> (speedrun oriented, but still very useful).
 * PS1’s CPU R3000 instruction [manual](https://cgi.cse.unsw.edu.au/~cs3231/doc/R3000.pdf) and [cheat sheet](https://vhouten.home.xs4all.nl/mipsel/r3000-isa.html)
 * [SOTN map viewer written in C](https://github.com/KernelEquinox/SotN-Editor)
 * [PCSX emulator with debugger](https://www.romhacking.net/utilities/267/)
 * [NO$PSX emulator with debugger](https://problemkaputt.de/psx.htm)
 * Beginner friendly MIPS video lectures [1](https://www.youtube.com/watch?v=PlavjNH_RRU&list=PLylNWPMX1lPlmEeeMdbEFQo20eHAJL8hx), [2](https://www.youtube.com/watch?v=qzSdglU0SBc&list=PLylNWPMX1lPnipZzKdCWRj2-un5xvLLdK)
 
-## To do:
+## To do
 
 The project is very barebone at the moment and there is a massive room of improvement, mostly in the infrastructure:
 
