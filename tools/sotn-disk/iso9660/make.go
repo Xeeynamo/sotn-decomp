@@ -322,13 +322,13 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 
 		size := info.Size()
 		for size > 0 {
-			toWrite := int64(sectorSize)
+			sec := MakeSector(node.dirent.IsXaStreaming()) // TODO avoid to allocate a new sector every time
+			toWrite := int64(len(sec))
 			if toWrite > size {
 				toWrite = size
 			}
 			size -= toWrite
 
-			sec := MakeSector(node.dirent.IsXaStreaming()) // TODO avoid to allocate a new sector every time
 			_, err := r.Read(sec[0:toWrite])
 			if err != nil {
 				return err
