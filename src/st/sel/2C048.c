@@ -928,7 +928,26 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B78BC);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B79D4);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B80F0);
+void func_801B80F0(void) {
+    EnterCriticalSection();
+    D_80073068 = OpenEvent(0xF4000001, 4, 0x2000, NULL);
+    D_8007306C = OpenEvent(0xF4000001, 0x8000, 0x2000, NULL);
+    D_80073070 = OpenEvent(0xF4000001, 0x100, 0x2000, NULL);
+    D_80073078 = OpenEvent(0xF4000001, 0x2000, 0x2000, NULL);
+    D_8007EFD8 = OpenEvent(0xF0000011, 4, 0x2000, NULL);
+    D_8007EFDC = OpenEvent(0xF0000011, 0x8000, 0x2000, NULL);
+    D_8007EFE0 = OpenEvent(0xF0000011, 0x100, 0x2000, NULL);
+    D_80086FE4 = OpenEvent(0xF0000011, 0x2000, 0x2000, NULL);
+    ExitCriticalSection();
+    EnableEvent(D_80073068);
+    EnableEvent(D_8007306C);
+    EnableEvent(D_80073070);
+    EnableEvent(D_80073078);
+    EnableEvent(D_8007EFD8);
+    EnableEvent(D_8007EFDC);
+    EnableEvent(D_8007EFE0);
+    EnableEvent(D_80086FE4);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8298);
 
