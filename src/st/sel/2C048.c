@@ -48,6 +48,7 @@ extern s8 D_801BC36B;
 extern s16 D_801BC390;
 extern s16 D_801BC392;
 extern s32 D_801BC394;
+extern s32 D_801BC3D4[];
 extern s32 D_801BC3D8;
 extern s32 D_801BC3DC;
 extern s32 D_801BC3E0;
@@ -390,15 +391,20 @@ void func_801B1CFC(POLY_GT4* poly, u8 colorIntensity) {
     func_801B1C78(poly, colorIntensity, 3);
 }
 
-void func_801B1D68(POLY_GT4* poly) {
-    func_801B1CFC(poly, 0);
-}
+void func_801B1D68(POLY_GT4* poly) { func_801B1CFC(poly, 0); }
 
 void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1DA8);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1ED0);
+void func_801B1ED0(void) {
+    s32 var_v1 = 0xF;
+    s32* var_v0 = D_801BC3D4;
+
+    do {
+        *var_v0-- = 0;
+    } while (--var_v1 >= 0);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1EF4);
 
