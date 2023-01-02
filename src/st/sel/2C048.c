@@ -69,6 +69,7 @@ void func_801B1ED0();
 void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);
 void func_801B84F0();
+s32 func_801B8A8C(s32, s32);
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
@@ -656,7 +657,18 @@ void func_801B2DE4(void) {}
 
 void func_801B2DEC(void) {}
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2DF4);
+void func_801B2DF4(void) {
+    if (func_801B2DAC() != 0) {
+        D_801BAFDC = func_801B8A8C(D_801BAFE8, 0);
+        if (D_801BAFDC != 0) {
+            D_801BAFE0 = D_801BAFDC;
+        }
+    }
+
+    func_801B2DDC();
+    func_801B2DE4();
+    func_801B2DEC();
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2E5C);
 
