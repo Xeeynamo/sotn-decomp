@@ -8,6 +8,8 @@
 
 #define DISP_W 512
 #define DISP_H 240
+#define DISP_STAGE_W 256
+#define DISP_STAGE_H DISP_H
 
 typedef struct {
     u32 unk0;
@@ -25,6 +27,7 @@ extern RECT D_801825A4;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
 extern const char D_801A7D84[];
+extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
@@ -60,6 +63,8 @@ extern s32 D_801D6B0C;
 extern s32 D_801D6B20;
 
 void func_801B1ED0();
+void func_801B3A54(s32, s32);
+s32 func_801B3A94(s32);
 void func_801B84F0();
 
 void func_801AC048(void) {
@@ -231,11 +236,49 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AECA0);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AED48);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEE74);
+void func_801AEE74(void) {
+    s32 i = 0;
+    s32* var_v0 = D_801BC8E0;
+    s32* var_a1 = var_v0 + 0xEA;
+    s32* var_a0 = var_v0;
+
+    for (; i < 0xF; i++) {
+        if (!((*var_a0 < 0) && (*var_a1 < 0)))
+            break;
+        var_a1++;
+        var_a0++;
+    }
+
+    if (i == 0xF) {
+        D_801BAF10 = 1;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEED8);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B17C8);
+void func_801B17C8(void) {
+    switch (D_800978F8) {
+    case 0:
+        if (D_80097924 == -1 || D_8006C378 == -1) {
+            D_80073060++;
+        } else {
+            D_800978C4 = 0;
+            D_800978F8++;
+        }
+        break;
+    case 1:
+        func_801B3A54(D_80097924, D_8006C378);
+        D_800978F8++;
+        break;
+    case 2:
+        D_800978C4 = 0;
+        if (func_801B3A94(1) != 0) {
+            D_800978C4 = 1;
+            D_80073060++;
+        }
+        break;
+    }
+}
 
 void func_801B18CC(s32 arg0) {
     D_8003C734 = arg0;
@@ -255,9 +298,33 @@ void func_801B1924(void) {
     D_800542FC.buf.draw.b0 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B195C);
+void func_801B195C(s32 arg0) {
+    D_8003CB08.buf.draw.clip.y = 0x14;
+    D_8003CB08.buf.draw.clip.h = 0xCF;
+    if (arg0 == 0) {
+        D_800542FC.buf.draw.clip.y = 0x14;
+    } else {
+        D_800542FC.buf.draw.clip.y = 0x114;
+    }
+    D_800542FC.buf.draw.clip.h = 0xCF;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
+    func_801B1924();
+    D_800542FC.buf.draw.dtd = 0;
+    D_8003CB08.buf.draw.dtd = 0;
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
+}
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B19F4);
+void func_801B19F4(void) {
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+                  DISP_STAGE_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+                  DISP_STAGE_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    func_801B195C(0);
+}
 
 void func_801B1A98(void) {
     SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_W, DISP_H);
@@ -275,7 +342,21 @@ void func_801B1A98(void) {
     D_8003CB08.buf.disp.isrgb24 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1B88);
+void func_801B1B88(void) {
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, 384, DISP_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, 384, DISP_H);
+    D_800542FC.buf.draw.clip.y = 256;
+    D_800542FC.buf.draw.clip.h = DISP_H;
+    D_8003CB08.buf.draw.clip.h = DISP_H;
+    D_8003CB08.buf.draw.clip.y = 0;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
+    func_801B1924();
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
+}
 
 void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
