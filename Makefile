@@ -71,6 +71,7 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
+		-T $(CONFIG_DIR)/symbols.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(1).txt \
 		--no-check-sections \
