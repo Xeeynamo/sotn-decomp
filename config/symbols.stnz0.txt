@@ -1,4 +1,5 @@
 CreateEntity = 0x801BB0C4;
+EntityTransitionDoor = 0x801BBCB4;
 DestroyEntity = 0x801BC8EC;
 Random = 0x801B94D4;
 SpawnExplosionEntity = 0x801BBB4C;
@@ -18,5 +19,6 @@ EntityCandleHeartDrop = 0x801BED20;
 EntityAbsorbOrb = 0x801C2AA8;
 EntityRoomForeground = 0x801C32EC;
 EntityBoneScimitar = 0x801C37E4;
+EntityBloodSkeleton = 0x801C7958;
 EntityAreaTitlePopup = 0x801C8CAC;
 c_GoldPrizes = 0x80181D14;

@@ -25,7 +25,7 @@ void func_801B246C(Entity* arg0) {
         InitializeEntity(D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk14 = temp_s0->unk4.data1.unk0;
+        arg0->facing = temp_s0->unk4.data1.unk0;
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
@@ -73,12 +73,19 @@ void EntityBreakable(Entity* entity) {
 }
 
 // TODO: Probably aspsx or compiler flags
+// nops in between assignments
 // https://decomp.me/scratch/sKMmw
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B2830);
 #else
 
 extern u16 D_80180A60;
+extern s8 D_8003CB25;
+extern s8 D_8003CB26;
+extern s8 D_8003CB27;
+extern s8 D_80054319;
+extern s8 D_8005431A;
+extern s8 D_8005431B;
 
 typedef struct {
     /* 0x00 */ char pad00[0x2C];
@@ -89,21 +96,21 @@ typedef struct {
     /* 0x7E */ s8 unk7E;
 } UnkStruct11; // size = 0x7F
 
-void func_801B2830(Entity* arg0) {
-    switch (arg0->step) {
+void func_801B2830(Entity* entity) {
+    switch (entity->step) {
     case 0:
         InitializeEntity(&D_80180A60);
-        arg0->unk7C.modeU8.unk0 = 0x10;
-        arg0->unk7C.modeU8.unk1 = 8;
-        arg0->unk7E = 0x38;
+        entity->unk7C.modeU8.unk0 = 0x10;
+        entity->unk7C.modeU8.unk1 = 8;
+        entity->unk7E = 0x38;
 
     case 1:
-        D_8003CB25 = arg0->unk7C.modeU8.unk0;
-        D_8003CB26 = arg0->unk7C.modeU8.unk1;
-        D_8003CB27 = arg0->unk7E;
-        D_80054319 = arg0->unk7C.modeU8.unk0;
-        D_8005431A = arg0->unk7C.modeU8.unk1;
-        D_8005431B = arg0->unk7E;
+        D_8003CB25 = entity->unk7C.modeU8.unk0;
+        D_8003CB26 = entity->unk7C.modeU8.unk1;
+        D_8003CB27 = entity->unk7E;
+        D_80054319 = entity->unk7C.modeU8.unk0;
+        D_8005431A = entity->unk7C.modeU8.unk1;
+        D_8005431B = entity->unk7E;
     }
 }
 #endif
@@ -422,7 +429,7 @@ void InitializeEntity(const u16 arg0[]) {
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
     temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
-    g_CurrentEntity->unk3E = temp_v0->unk4;
+    g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
     g_CurrentEntity->unk3C = temp_v0->unkC;

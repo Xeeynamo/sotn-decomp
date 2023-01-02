@@ -93,7 +93,7 @@ typedef struct Entity {
     /* 0x0C */ s32 accelerationY;
     /* 0x10 */ s16 unk10;
     /* 0x12 */ s16 unk12;
-    /* 0x14 */ u16 unk14; // related to accelerationX ?
+    /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ u8 unk19;
@@ -113,7 +113,7 @@ typedef struct Entity {
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 unk3A;
     /* 0x3C */ s16 unk3C;
-    /* 0x3E */ s16 unk3E;
+    /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 unk40;
     /* 0x42 */ s16 unk42;
     /* 0x44 */ u16 unk44;
@@ -294,7 +294,8 @@ typedef enum {
     ENTITY_STEP_4,
     ENTITY_STEP_5,
     ENTITY_STEP_6,
-    ENTITY_STEP_7
+    ENTITY_STEP_7,
+    ENTITY_STEP_19 = 0x19
 } EntitySteps;
 
 typedef enum { MONO, STEREO } SoundMode;
@@ -374,7 +375,7 @@ extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
 extern s32 D_8003CACC;
-extern s32 D_8003CB00;
+extern s32 D_8003CB00[];
 extern s32 D_8003CB04;
 extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
@@ -546,12 +547,13 @@ extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;       // player->posX.Data.high
 extern s16 D_800733DE;       // player->posY.Data.high
 extern s32 D_800733E0;       // player->accelerationX
-extern s32 D_800733E8;       // player->accelerationY
-extern u16 D_800733EC;       // player->unk14
+extern s32 D_800733E4;       // player->accelerationY
+extern s32 D_800733E8;       // player->unk10
+extern u16 D_800733EC;       // player->facing
 extern u16 D_800733EE;       // player->palette
 extern s8 D_800733F0;        // player->blendMode
 extern u8 D_800733F1;        // player->unk19
-extern s16 D_800733F6[];     // player->unk1E
+extern s16 D_800733F6;       // player->unk1E
 extern u16 D_800733FC;       // player->zPriority
 extern s16 D_800733FE;       // player->objectId
 extern u16 D_80073404;       // player->step
@@ -665,8 +667,8 @@ extern s32 D_80098850;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A04EC;
 extern s32 D_800A0510[];
-extern u16 SaveIconPalette[0x10][0x10];
-extern u32 SaveIconTexture[0x10];
+extern u16 D_800A0518[0x10][0x10];
+extern u32 D_800A1F18[0x10];
 extern s32 D_800A2438;
 extern u8 D_800A2EE8[];
 extern u8 D_800A2EED;
@@ -734,6 +736,7 @@ extern RECT D_800ACDF0;
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF60[];
+extern s32* D_800AE294; // might not really be a pointer
 extern s16 D_800AFDA6;
 extern const char* c_strEquip;
 extern const char* c_strSpells;
@@ -796,11 +799,12 @@ extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
                         // 2-byte aligned
 // extern u8 D_80137638[2];
 // extern u8 D_80137639[];
+extern u8 D_80137692;
 extern u8 D_801376B0;
 extern s32 D_8013783C;
 extern s32 D_801377FC[];
 extern s32 D_80137840;
-extern s32 D_80137844;
+extern s32 D_80137844[];
 extern s32 D_80137848;
 extern s32 D_8013784C;
 extern s32 g_someValue;
@@ -825,6 +829,7 @@ extern u32 D_8013798C;
 extern s32 D_80137994;
 extern s32 D_80137998;
 extern u32 D_8013799C;
+extern s32 D_801379A0;
 extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
@@ -836,8 +841,10 @@ extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80138430;
 extern s32 D_80138438;
+extern s32 D_80138460;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
+extern u8 D_80138F24[]; // Confirmed part of an array / struct
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s32 D_80138FB0;
@@ -909,7 +916,13 @@ void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
 s32 CheckCollision(s32, s16, s32*, s32);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
+void func_800209B4(s32*, s32, s32);
+void func_80021E38(s32);
+void func_80021EEC(void);
+void func_80028D3C(s32, s32);
+void func_80029FBC(s32);
 void func_8002A09C(void*);
+void func_8002ABF4(s32);
 void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
@@ -967,7 +980,7 @@ void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
-s32 func_800FD4C0(s32, s32);
+// s32 func_800FD4C0(s32, s32);
 s32 func_800FD664(s32 arg0);
 u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
@@ -1015,6 +1028,7 @@ void func_801321FC(void);
 void func_80132134(void);
 s32 func_80132264(void);
 s32 func_801326D8(void);
+void func_80132028(s32, s8*, s32);
 void func_8013271C(void);
 void func_80132760(void);
 void func_801337B4(void);
@@ -1023,7 +1037,5 @@ s32 func_80133950(void);
 void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);
-void Load_Save_Palette(u16* PaletteDestination, s32 SelectedPalette);
-void Load_Save_Icon(u8* IconDestination, s32 SelectedIcon);
 
 #endif

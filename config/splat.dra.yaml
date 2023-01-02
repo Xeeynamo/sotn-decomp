@@ -25,8 +25,6 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x518, rodata]
-      - [0x1F18, rodata]
       - [0x2BC0, rodata]
       - [0x7730, rodata]
       - [0x8900, rodata]

@@ -133,7 +133,7 @@ void func_80193D7C(Entity* entity) {
     entity->posX.Data.high = entity[-1].posX.Data.high;
     entity->animationFrame = 0;
     entity->posY.Data.high = entity[-1].posY.Data.high;
-    entity->unk14 = entity[-1].unk14;
+    entity->facing = entity[-1].facing;
 
     if (entity[-1].animationFrame == 0x32) {
         entity->animationFrame = 0x3E;
@@ -675,7 +675,7 @@ void InitializeEntity(const u16 arg0[]) {
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
     temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
-    g_CurrentEntity->unk3E = temp_v0->unk4;
+    g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
     g_CurrentEntity->unk3C = temp_v0->unkC;
