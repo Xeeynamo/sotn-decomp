@@ -94,7 +94,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
         poly->pad2 = 0x11;
         poly->pad3 = 8;
         poly->v1 = D_80180108[i];
-        poly = (POLY_GT4* ) poly->tag;
+        poly = (POLY_GT4*)poly->tag;
     }
 }
 #endif
