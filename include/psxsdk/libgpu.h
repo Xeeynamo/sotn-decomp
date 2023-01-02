@@ -243,7 +243,7 @@ extern void SetDumpFnt(int id);
 extern int ClearImage(RECT* rect, u_char r, u_char g, u_char b);
 extern int DrawSync(int mode);
 extern int FntOpen(int x, int y, int w, int h, int isbg, int n);
-extern u_long *FntFlush(int id);
+extern u_long* FntFlush(int id);
 extern int LoadImage(RECT* rect, u_long* p);
 extern int StoreImage(RECT* rect, u_long* p);
 extern int MoveImage(RECT* rect, int x, int y);
