@@ -342,7 +342,21 @@ void func_801B1A98(void) {
     D_8003CB08.buf.disp.isrgb24 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1B88);
+void func_801B1B88(void) {
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, 384, DISP_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, 384, DISP_H);
+    D_800542FC.buf.draw.clip.y = 256;
+    D_800542FC.buf.draw.clip.h = DISP_H;
+    D_8003CB08.buf.draw.clip.h = DISP_H;
+    D_8003CB08.buf.draw.clip.y = 0;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
+    func_801B1924();
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
+}
 
 void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
