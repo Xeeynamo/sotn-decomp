@@ -785,7 +785,18 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B4C68);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B4D78);
+void func_801B4D78(void) {
+    Entity* e = &g_EntityArray[3];
+    if (e->step == 0) {
+        e->animationSet = -0x7FFF;
+        e->animationFrame = 1;
+        e->palette = 0x200;
+        e->unk80.modeS32 = 0x5C0000;
+        e->posY.Data.high = 0xD0;
+        e->zPriority = 0x80;
+        e->step = 1;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B4DE0);
 
