@@ -619,16 +619,26 @@ void func_801B2C70(s32 arg0, s32 x, s32 y, s32 tge) {
     func_801B2B78(arg0 / 10, x - 8, y, tge);
 }
 
-void func_801B2CF8(s32* context) {
+void func_801B2CF8(POLY_GT4* poly) {
+    u32* data = poly;
+    s32 n = sizeof(POLY_GT4) / sizeof(*data);
     s32 i;
-    s32 n;
 
-    for (n = 13, i = 0; i < n; i++) {
-        *context++ = 0;
+    for (i = 0; i < n; i++) {
+        *data++ = 0;
     }
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2D1C);
+void func_801B2D1C(void) {
+    s32 i;
+    POLY_GT4* poly;
+
+    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
+        func_801B2CF8((s32*)poly);
+        poly->code = 0;
+        poly++;
+    }
+}
 
 void func_801B2D6C(void) {
     func_801B84F0();
