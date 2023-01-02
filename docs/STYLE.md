@@ -140,7 +140,7 @@ If you are not sure what something does, it is better to leave it unnamed than n
 
 We use comments for:
 
-- Top of file: a short description of the system. For actors there is already a brief description of our current understanding, but feel free to add to it.
+- Top of file: a short description of the system. For overlays there is already a brief description of our current understanding, but feel free to add to it.
 - For function descriptions, we use multiline comments,
 
   ```c
