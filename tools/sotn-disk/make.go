@@ -127,7 +127,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 		return err
 	}
 
-	imgPath := strings.Replace(filepath.Base(cuePath), ".cue", ".bin", 1)
+	imgPath := strings.Replace(cuePath, ".cue", ".bin", 1)
 
 	f, err := os.Create(imgPath)
 	if err != nil {
@@ -189,7 +189,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 		return err
 	}
 
-	if err := writeCue(cuePath, imgPath, mode); err != nil {
+	if err := writeCue(cuePath, filepath.Base(imgPath), mode); err != nil {
 		return err
 	}
 

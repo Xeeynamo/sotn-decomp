@@ -8,6 +8,7 @@ def add_custom_arguments(parser):
         help="Defines which overlay to use for the diff (main, dra, st/mad, etc.)",
     )
 
+
 def apply(config, args):
     overlay = args.overlay or 'dra'
     isMapOverlay = overlay.startswith("st/")
@@ -22,4 +23,6 @@ def apply(config, args):
     config["arch"] = "mipsel"
     config['myimg'] = 'build/' + (f'{name}.bin').upper()
     config['mapfile'] = f'build/{longname}.map'
-    config['source_directories'] = [f'src/{overlay}', 'include', f'asm/{overlay}']
+    config['source_directories'] = [
+        f'src/{overlay}', 'include', f'asm/{overlay}']
+    config['objdump_executable'] = 'mipsel-linux-gnu-objdump'
