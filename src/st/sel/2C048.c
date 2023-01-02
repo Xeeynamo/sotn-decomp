@@ -49,6 +49,7 @@ extern s8 D_801BC36B;
 extern s16 D_801BC390;
 extern s16 D_801BC392;
 extern s32 D_801BC394;
+extern u32 D_801BC398[];
 extern s32 D_801BC3D4[];
 extern s32 D_801BC3D8;
 extern s32 D_801BC3DC;
@@ -417,6 +418,7 @@ u8 func_801B1EF4(u16 arg0) {
 void func_801B1F34(void) { D_801BAFD0 = &D_80080FE4; }
 
 // TODO accidentially pushed
+void func_801B1F4C(s32);
 #ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1F4C);
 #else
@@ -448,8 +450,13 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1FD8);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2108);
 
-void func_801B248C(s32 arg0, s32 arg1);
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B248C);
+void func_801B248C(s32 arg0, s32 arg1) {
+    if (D_801BC398[arg1] != arg0) {
+        func_801B1F4C(arg1);
+        D_801BC398[arg1] = arg0;
+        func_801B1FD8((u8*)arg0, arg1);
+    }
+}
 
 void func_801B24F8(s32 arg0, s32 arg1);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B24F8);
