@@ -143,10 +143,6 @@ void func_801B18CC(s32 arg0) {
 
 void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
 
-// TODO linker error
-#ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1924);
-#else
 void func_801B1924(void) {
     D_8003CB08.buf.draw.r0 = 0;
     D_8003CB08.buf.draw.g0 = 0;
@@ -155,16 +151,11 @@ void func_801B1924(void) {
     D_800542FC.buf.draw.g0 = 0;
     D_800542FC.buf.draw.b0 = 0;
 }
-#endif
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B195C);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B19F4);
 
-// TODO linker error
-#ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1A98);
-#else
 void func_801B1A98(void) {
     SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_W, DISP_H);
     SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_W, DISP_H);
@@ -180,7 +171,6 @@ void func_801B1A98(void) {
     D_800542FC.buf.disp.isrgb24 = 0;
     D_8003CB08.buf.disp.isrgb24 = 0;
 }
-#endif
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1B88);
 
