@@ -61,6 +61,8 @@ extern s32 D_801D6B0C;
 extern s32 D_801D6B20;
 
 void func_801B1ED0();
+void func_801B3A54(s32, s32);
+s32 func_801B3A94(s32);
 void func_801B84F0();
 
 void func_801AC048(void) {
@@ -252,7 +254,29 @@ void func_801AEE74(void) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEED8);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B17C8);
+void func_801B17C8(void) {
+    switch (D_800978F8) {
+    case 0:
+        if (D_80097924 == -1 || D_8006C378 == -1) {
+            D_80073060++;
+        } else {
+            D_800978C4 = 0;
+            D_800978F8++;
+        }
+        break;
+    case 1:
+        func_801B3A54(D_80097924, D_8006C378);
+        D_800978F8++;
+        break;
+    case 2:
+        D_800978C4 = 0;
+        if (func_801B3A94(1) != 0) {
+            D_800978C4 = 1;
+            D_80073060++;
+        }
+        break;
+    }
+}
 
 void func_801B18CC(s32 arg0) {
     D_8003C734 = arg0;
