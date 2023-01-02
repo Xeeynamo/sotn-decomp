@@ -34,7 +34,7 @@ extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
 extern s32 D_801BAFDC;
 extern s32 D_801BAFE0;
-extern s32 D_801BAFE4;
+extern u32 D_801BAFE4;
 extern s32 D_801BAFE8;
 extern s32 D_801BAFEC;
 extern s32 D_801BAFF0;
@@ -648,7 +648,7 @@ void func_801B2D6C(void) {
     D_801BAFE8 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2DAC);
+s32 func_801B2DAC(void) { return D_801BAFE4 < 2 || D_801BAFE4 == 2; }
 
 void func_801B2DDC(void) {}
 
