@@ -22,6 +22,8 @@ extern u8* D_801803BC;
 extern u8* D_801803C0;
 extern s32 D_80180454[];
 extern u8 D_8018046C[0x20 * 3];
+extern u8 D_80180504[];
+extern u8 D_80180528[];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
 extern s32 D_801A75A0[];
@@ -804,7 +806,37 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B4FFC);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B519C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B5350);
+void func_801B5350(void) {
+    Entity* entity = &g_EntityArray[5];
+    switch (entity->step) {
+    case 0:
+        entity->animationSet = 1;
+        entity->animationFrame = 0x8E;
+        entity->unk80.modeS32 = 0x800000;
+        entity->posY.Data.high = 0x9F;
+        entity->zPriority = 0xC0;
+        entity->unk5A = 0;
+        entity->palette = 0x8100;
+        entity->step = 1;
+        break;
+    case 1:
+        entity->animationFrame = 0x8E;
+        break;
+    case 2:
+        if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
+            func_801B4B9C(entity, 3);
+        }
+        entity->unk80.modeS32 += 0xFFFE8000;
+        break;
+    case 3:
+        AnimateEntity(D_80180504, entity);
+        entity->unk80.modeS32 += 0xFFFE8000;
+        if (entity->unk80.modeS16.unk2 < 0x40) {
+            entity->step = 0xFF;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B54C8);
 
