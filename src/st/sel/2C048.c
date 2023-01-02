@@ -8,6 +8,8 @@
 
 #define DISP_W 512
 #define DISP_H 240
+#define DISP_STAGE_W 256
+#define DISP_STAGE_H DISP_H
 
 typedef struct {
     u32 unk0;
@@ -314,7 +316,15 @@ void func_801B195C(s32 arg0) {
     D_8003CB08.buf.disp.isrgb24 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B19F4);
+void func_801B19F4(void) {
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+                  DISP_STAGE_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+                  DISP_STAGE_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    func_801B195C(0);
+}
 
 void func_801B1A98(void) {
     SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_W, DISP_H);
