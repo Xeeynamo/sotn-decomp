@@ -18,7 +18,7 @@ We always write our enums and structs as `typedef`s. (Usually one can't use an e
 | Enum types           | PascalCase              | `EntitySteps`           |
 | Enum values          | SCREAMING_SNAKE_CASE    | `ENTITY_STEP_0`         |
 | Defines/macros       | SCREAMING_SNAKE_CASE    | `PAD_UP`,`GET_PLAYER(x)`|
-| Functions            | SystemName_FunctionName | `Player_UpdateAccel`    |
+| Functions            | PascalCase              | `UpdateAccel`           |
 | Files                | snake_case              | `include_asm.h`         |
 
 [^1]: including in-function static
