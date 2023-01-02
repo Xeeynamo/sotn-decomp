@@ -2,7 +2,7 @@
 
 ## Types
 
-Use the types from `types.h`, not the standard C types: i.e. `u8`,`s8`,`s16`,`u16`,`s32`,`u32`,`f32` rather than `char`, `short`, `int`, `float` and their `signed`/`unsigned` varieties.
+Use the types from `types.h`, not the standard C types: i.e. `u8`,`s8`,`s16`,`u16`,`s32`,`u32` rather than `char`, `short`, `int`, `float` and their `signed`/`unsigned` varieties.
 
 We always write our enums and structs as `typedef`s. (Usually one can't use an enum typedef as a function argument since enum typedefs are implicitly `s32`.)
 
