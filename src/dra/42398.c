@@ -839,7 +839,7 @@ s32 func_800E9B18(s32 arg0, s32 arg1) {
 }
 
 void GetSavePalette(u16* dst, s32 palIdx) {
-    const ColorCount = 16;
+    const s32 ColorCount = 16;
     s32 i;
     u16* src = g_saveIconPalette[0];
 
@@ -850,7 +850,7 @@ void GetSavePalette(u16* dst, s32 palIdx) {
 }
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
-    const IconSize = 384;
+    const s32 IconSize = 384;
     s32 i;
     u8* src;
 
@@ -4989,7 +4989,16 @@ u16 func_80132E38(void) {
     return D_801396F4;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132E90);
+void func_80132E90(u32 arg0, s8* arg1) {
+    unsigned short new_var2;
+    unsigned short new_var;
+
+    arg1[2] = (s8)((((arg0 % 75) / 10) * 0x10) + ((arg0 % 75) % 10));
+    arg1[1] =
+        (s8)(((((arg0 / 75) % 60) / 10) * 0x10) + (((arg0 / 75) % 60) % 10));
+    new_var = ((arg0 / 75) / 60) % 10;
+    arg1[0] = (s8)((new_var2 = (((arg0 / 75) / 60) / 10) * 0x10) + new_var);
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132F60);
 void func_80132F60();
