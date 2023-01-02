@@ -537,7 +537,21 @@ void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
                    s32 tge, s32 c);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B27A8);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B28D4);
+void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
+    const int w = 12;
+    const int h = 16;
+    u8 ch;
+
+loop_1:
+    ch = *str++;
+    if (ch != 0xFF) {
+        s32 u = (ch & 0xF) * w;
+        s32 v = ch & 0xF0;
+        func_801B27A8(x, y, w, h, u, v, 0x1A1, 6, tge, 0x40);
+        x += w;
+        goto loop_1;
+    }
+}
 
 s32 func_801B2984(u32 arg0) {
     s32 i;
