@@ -853,7 +853,20 @@ void func_801B54C8(void) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B5548);
+void func_801B5548(void) {
+    Entity* e = &g_EntityArray[7];
+    if (e->step == 0) {
+        e->animationSet = -0x7FFE;
+        e->animationFrame = 7;
+        e->unk5A = 0xF;
+        e->unk80.modeS32 = 0x780000;
+        e->posY.Data.high = 0x9E;
+        e->zPriority = 0xC0;
+        e->palette = 0x8210;
+        e->facing = 0;
+        e->step = 1;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B55C8);
 
