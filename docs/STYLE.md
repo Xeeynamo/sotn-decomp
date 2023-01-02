@@ -81,7 +81,7 @@ There are various other conventions that it does not catch, though:
 
 ### Booleans
 
-If a function returns only `0` or `1`, and is used as a boolean `bool` (i.e. in conditionals), replace the returns by `false` and `true`.
+If a function returns only `0` or `1`, and is used as a boolean (i.e. in conditionals), use `bool` type and replace the returns by `false` and `true`.
 
 ## Conditionals/Loops
 
