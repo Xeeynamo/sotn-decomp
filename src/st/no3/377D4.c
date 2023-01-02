@@ -41,7 +41,7 @@ void func_801B77D4(Entity* arg0) {
         InitializeEntity(D_80180B00);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk14 = temp_s0->unk4.data1.unk0;
+        arg0->facing = temp_s0->unk4.data1.unk0;
         arg0->unk5A = temp_s0->unk4.data1.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
@@ -583,7 +583,7 @@ void InitializeEntity(const u16 arg0[]) {
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
     temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
-    g_CurrentEntity->unk3E = temp_v0->unk4;
+    g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
     g_CurrentEntity->unk3C = temp_v0->unkC;

@@ -211,7 +211,7 @@ void EntityDraculaBody(Entity* entity) {
     case 0:
         InitializeEntity(D_801805E0);
         entity->unk3C = 1;
-        entity->unk3E = 0x7FFF;
+        entity->hitPoints = 0x7FFF;
         entity->unk10 = 3;
         entity->unk12 = 0x27;
         entity->hitboxWidth = 12;
@@ -219,7 +219,7 @@ void EntityDraculaBody(Entity* entity) {
         entity->hitboxHeight = 34;
         break;
     case 1:
-        entity->unk14 = entity[-1].unk14;
+        entity->facing = entity[-1].facing;
         entity->posX.Data.high = entity[-1].posX.Data.high;
         entity->posY.Data.high = entity[-1].posY.Data.high;
         entity->unk3C = entity[-1].unk3C & 0xFFFD;
@@ -254,7 +254,7 @@ void EntityDraculaFireball(Entity* entity) {
     case 0:
         InitializeEntity(D_801805EC);
 
-        if (entity->unk14 == 0) {
+        if (entity->facing == 0) {
             entity->accelerationX = -0x20000;
         } else {
             entity->accelerationX = 0x20000;
@@ -320,7 +320,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             speedX = 0xE00;
         }
 
-        if (entity->unk14) {
+        if (entity->facing != 0) {
             entity->accelerationX += speedX;
         } else {
             entity->accelerationX -= speedX;

@@ -1,1 +1,3 @@
 compiler_type = "gcc"
+[decompme.compilers]
+"mipsel-linux-gnu-cpp" = "psyq4.0"
