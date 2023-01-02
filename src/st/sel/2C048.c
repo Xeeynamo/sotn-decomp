@@ -296,7 +296,23 @@ void func_801B1924(void) {
     D_800542FC.buf.draw.b0 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B195C);
+void func_801B195C(s32 arg0) {
+    D_8003CB08.buf.draw.clip.y = 0x14;
+    D_8003CB08.buf.draw.clip.h = 0xCF;
+    if (arg0 == 0) {
+        D_800542FC.buf.draw.clip.y = 0x14;
+    } else {
+        D_800542FC.buf.draw.clip.y = 0x114;
+    }
+    D_800542FC.buf.draw.clip.h = 0xCF;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
+    func_801B1924();
+    D_800542FC.buf.draw.dtd = 0;
+    D_8003CB08.buf.draw.dtd = 0;
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B19F4);
 
