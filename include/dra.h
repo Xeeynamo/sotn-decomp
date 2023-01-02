@@ -667,8 +667,8 @@ extern s32 D_80098850;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A04EC;
 extern s32 D_800A0510[];
-extern u16 D_800A0518[0x10][0x10];
-extern u32 D_800A1F18[0x10];
+extern u16 g_saveIconPalette[0x10][0x10];
+extern u8* g_saveIconTexture[0x10];
 extern s32 D_800A2438;
 extern u8 D_800A2EE8[];
 extern u8 D_800A2EED;

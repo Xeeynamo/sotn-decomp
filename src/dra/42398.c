@@ -838,31 +838,25 @@ s32 func_800E9B18(s32 arg0, s32 arg1) {
     return ret;
 }
 
-// https://decomp.me/scratch/kHOQh match with struct
-
-void func_800E9BA4(u16* arg0, s32 arg1) {
+void GetSavePalette(u16* dst, s32 palIdx) {
+    const ColorCount = 16;
     s32 i;
-    u16* var_v1 = D_800A0518[0];
+    u16* src = g_saveIconPalette[0];
 
-    var_v1 = D_800A0518[arg1];
-
-    for (i = 0; i < 16; i++) {
-        *arg0 = *var_v1;
-        var_v1++;
-        arg0++;
+    src = g_saveIconPalette[palIdx];
+    for (i = 0; i < ColorCount; i++) {
+        *dst++ = *src++;
     }
 }
 
-void func_800E9BDC(u8* arg0, s32 arg1) {
+void GetSaveIcon(u8* dst, s32 iconIdx) {
+    const IconSize = 384;
     s32 i;
-    u8* var_a1;
+    u8* src;
 
-    var_a1 = (u8*)D_800A1F18[arg1];
-
-    for (i = 0; i < 384; i++) {
-        *arg0 = *var_a1;
-        var_a1++;
-        arg0++;
+    src = g_saveIconTexture[iconIdx];
+    for (i = 0; i < IconSize; i++) {
+        *dst++ = *src++;
     }
 }
 
