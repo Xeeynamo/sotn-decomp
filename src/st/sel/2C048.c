@@ -602,9 +602,17 @@ void func_801B2AFC(u8* imgs, s32 x, s32 y, s32 tge) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2B78);
+void func_801B2B78(s32 icon, s32 x, s32 y, s32 tge) {
+    func_801B27A8(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
+}
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2BD4);
+void func_801B2BD4(s32 digit, s32 x, s32 y, s32 tge) {
+    do {
+        func_801B2B78(digit % 10, x, y, tge);
+        digit /= 10;
+        x -= 8;
+    } while (digit != 0);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2C70);
 
