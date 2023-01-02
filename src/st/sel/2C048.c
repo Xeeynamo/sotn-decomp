@@ -614,7 +614,10 @@ void func_801B2BD4(s32 digit, s32 x, s32 y, s32 tge) {
     } while (digit != 0);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B2C70);
+void func_801B2C70(s32 arg0, s32 x, s32 y, s32 tge) {
+    func_801B2B78(arg0 % 10, x, y, tge);
+    func_801B2B78(arg0 / 10, x - 8, y, tge);
+}
 
 void func_801B2CF8(s32* context) {
     s32 i;
