@@ -25,6 +25,7 @@ extern RECT D_801825A4;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
 extern const char D_801A7D84[];
+extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
@@ -231,7 +232,23 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AECA0);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AED48);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEE74);
+void func_801AEE74(void) {
+    s32 i = 0;
+    s32* var_v0 = D_801BC8E0;
+    s32* var_a1 = var_v0 + 0xEA;
+    s32* var_a0 = var_v0;
+
+    for (; i < 0xF; i++) {
+        if (!((*var_a0 < 0) && (*var_a1 < 0)))
+            break;
+        var_a1++;
+        var_a0++;
+    }
+
+    if (i == 0xF) {
+        D_801BAF10 = 1;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEED8);
 
