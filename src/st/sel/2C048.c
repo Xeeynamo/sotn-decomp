@@ -52,6 +52,8 @@ extern s32 D_801BC650;
 extern s32 D_801BC8C8;
 extern s32 D_801BC8E0[];
 extern s32* D_801BC958[];
+extern s32 D_801BCC84;
+extern s32 D_801BD02C;
 extern s32 D_801D6B04;
 extern s32 D_801D6B08;
 extern s32 D_801D6B0C;
@@ -180,7 +182,40 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD78C);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD968);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ADC3C);
+void func_801ADC3C(void) {
+    s32* new_var = &D_801BCC84;
+    if (*new_var >= 0 || D_801BD02C >= 0) {
+        u16* tmp = &D_80097496;
+        if (*tmp & 0x2000) {
+            g_pfnPlaySfx(0x67B);
+            D_801BC3D8 = (D_801BC3D8 + 1) % 6;
+        }
+        if (*tmp & 0x4000) {
+            g_pfnPlaySfx(0x67B);
+            D_801BC3DC = (D_801BC3DC + 4) % 5;
+        }
+        if (*tmp & 0x8000) {
+            g_pfnPlaySfx(0x67B);
+            D_801BC3D8 = (D_801BC3D8 + 5) % 6;
+        }
+        if (*tmp & 0x1000) {
+            g_pfnPlaySfx(0x67B);
+            D_801BC3DC = (D_801BC3DC + 1) % 5;
+        }
+        if (*new_var > 0 && D_801BD02C > 0 && D_80097494 & 0xF) {
+            g_pfnPlaySfx(0x67D);
+            D_801BC3D8 = (D_801BC3D8 + 3) % 6;
+        }
+        if (D_801BCC84 < 0) {
+            D_801BC3D8 = (D_801BC3D8 % 3) + 3;
+        }
+        if (D_801BD02C < 0) {
+            D_801BC3D8 %= 3;
+        }
+        D_801D6B04 =
+            (D_801BC3D8 % 3) + (D_801BC3DC * 3) + ((D_801BC3D8 / 3) * 0xF);
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ADF94);
 
