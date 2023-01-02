@@ -743,7 +743,12 @@ void func_801B4B30(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B4B9C);
+void func_801B4B9C(Entity* entity, s16 step) {
+    entity->step = step;
+    entity->unk2E = 0;
+    entity->animationFrameIndex = 0;
+    entity->animationFrameDuration = 0;
+}
 
 s32 AnimateEntity(const u8 frames[], Entity* entity) {
     s32 flag = 0;
