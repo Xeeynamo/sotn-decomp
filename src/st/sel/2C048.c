@@ -246,7 +246,7 @@ void func_801AEE74(void) {
     s32* var_a0 = var_v0;
 
     for (; i < 0xF; i++) {
-        if (!((*var_a0 < 0) && (*var_a1 < 0)))
+        if (*var_a0 >= 0 || *var_a1 >= 0)
             break;
         var_a1++;
         var_a0++;
