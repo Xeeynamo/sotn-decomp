@@ -3046,7 +3046,7 @@ bool func_8010183C(s32 arg0) {
 }
 void DrawHudRichter(void);
 
-void func_8010189C() {
+void func_8010189C(void) {
     POLY_GT4* poly;
     s32 i;
     u16* new_var;
