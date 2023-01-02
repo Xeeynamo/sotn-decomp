@@ -31,7 +31,7 @@ A lot of formatting is done by clang-format, such as
 
 - indent is 4 spaces, tabs are not used
 - case labels indented
-- 120 column limit
+- 80 column limit
 - brackets go on the same line (`if (1) {`)
 - pointer goes on type (`s32* var;` not `s32 *var;`)
 
