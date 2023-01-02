@@ -143,7 +143,10 @@ void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
     func_801B2AFC(D_8018012C[idx], x, y + row2y, tge);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD1D0);
+void func_801AD1D0(void) {
+    func_801B2AFC(D_801803BC, 52, 196, 1);
+    func_801B2AFC(D_801803C0, 52, 212, 1);
+}
 
 void func_801AD218(void) {
     func_801B2AFC(D_801803C0, 52, 196, 1);
