@@ -135,7 +135,7 @@ void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
     const s32 row1y = 0;
     const s32 row2y = 8;
     const s32 tge = 1;
-    volatile u32 pad; // FAKE
+    volatile u32 pad; // !FAKE:
 
     s32* new_var2 = &D_801BC958[arg0 * 0xEA];
     s32 idx = new_var2[arg1] * 2;

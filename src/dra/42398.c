@@ -4990,14 +4990,13 @@ u16 func_80132E38(void) {
 }
 
 void func_80132E90(u32 arg0, s8* arg1) {
-    unsigned short new_var2;
-    unsigned short new_var;
+    u16 temp;
+    u16 temp2;
 
-    arg1[2] = (s8)((((arg0 % 75) / 10) * 0x10) + ((arg0 % 75) % 10));
-    arg1[1] =
-        (s8)(((((arg0 / 75) % 60) / 10) * 0x10) + (((arg0 / 75) % 60) % 10));
-    new_var = ((arg0 / 75) / 60) % 10;
-    arg1[0] = (s8)((new_var2 = (((arg0 / 75) / 60) / 10) * 0x10) + new_var);
+    arg1[2] = (((arg0 % 75) / 10) * 0x10) + ((arg0 % 75) % 10);
+    arg1[1] = ((((arg0 / 75) % 60) / 10) * 0x10) + (((arg0 / 75) % 60) % 10);
+    temp = ((arg0 / 75) / 60) % 10;
+    arg1[0] = (temp2 = (((arg0 / 75) / 60) / 10) * 0x10) + temp;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132F60);
