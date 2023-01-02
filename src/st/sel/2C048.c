@@ -390,7 +390,9 @@ void func_801B1CFC(POLY_GT4* poly, u8 colorIntensity) {
     func_801B1C78(poly, colorIntensity, 3);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1D68);
+void func_801B1D68(POLY_GT4* poly) {
+    func_801B1CFC(poly, 0);
+}
 
 void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
 
