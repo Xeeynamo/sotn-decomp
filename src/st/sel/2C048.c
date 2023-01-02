@@ -18,6 +18,7 @@ extern u8* D_80180128[];
 extern u8* D_8018012C[];
 extern u8* D_801803BC;
 extern u8* D_801803C0;
+extern s32 D_80180454[];
 extern u8 D_8018046C[0x20 * 3];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
@@ -157,7 +158,21 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD260);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD490);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD590);
+void func_801AD590(void) {
+    if (D_80097494 & 0x6000) {
+        g_pfnPlaySfx(0x67D);
+        if (++D_801D6B0C == 5) {
+            D_801D6B0C = 1;
+        }
+    }
+    if (D_80097494 & 0x9000) {
+        g_pfnPlaySfx(0x67D);
+        if (--D_801D6B0C == 0) {
+            D_801D6B0C = 4;
+        }
+    }
+    func_801B2608(D_80180454[D_801D6B0C], 9);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD66C);
 
