@@ -914,7 +914,15 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B69F8);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B76F0);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B786C);
+#else
+void func_801B786C(s16 arg0) {
+    RECT rect = {0x200, arg0 * 16, 0x80, 0x10};
+
+    ClearImage(&rect, 0, 0, 0);
+}
+#endif
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B78BC);
 
