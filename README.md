@@ -69,6 +69,7 @@ There are a few tricks to make the process more streamlined:
 
 ## Resources
 
+* Project Documentation style: [Style Guide](https://github.com/Xeeynamo/sotn-decomp/docs/STYLE.md)
 * List of resource for sotn <https://github.com/TalicZealot/SotN-Utilities> (speedrun oriented, but still very useful).
 * PS1’s CPU R3000 instruction [manual](https://cgi.cse.unsw.edu.au/~cs3231/doc/R3000.pdf) and [cheat sheet](https://vhouten.home.xs4all.nl/mipsel/r3000-isa.html)
 * [SOTN map viewer written in C](https://github.com/KernelEquinox/SotN-Editor)
