@@ -608,6 +608,7 @@ extern s32 D_8007EFDC;
 extern s32 D_8007EFE0;
 extern s32 D_8007EFE4;
 extern unsigned long D_8007EFD8;
+extern s32 D_80080FE4;
 extern s8 D_80082FE4;
 extern s32 D_80086FE4;
 extern POLY_GT4 D_80086FEC[];
