@@ -82,6 +82,7 @@ s32 func_801B8A8C(s32, s32);
 void func_801BA6F0(s32);
 void func_801BA880();
 void func_801BA910();
+void func_801BA9A8();
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
@@ -1153,7 +1154,7 @@ void func_801BA648(void) { func_801BA880(); }
 
 void func_801BA668(void) { func_801BA910(); }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA688);
+void func_801BA688(void) { func_801BA9A8(); }
 
 void func_801BA6A8(void (*func)()) { DMACallback(0, func); }
 
