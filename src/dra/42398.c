@@ -4397,7 +4397,49 @@ void func_8011A4C8(void) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A4D0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A870);
+void func_8011A870(void) {
+    Entity* entity = g_CurrentEntity = &D_800736C8;
+    u16 objectId;
+    s32 i = 4;
+
+loop_1:
+    objectId = entity->objectId;
+
+    if (objectId != 0) {
+        if (entity->step == ENTITY_STEP_0) {
+            if ((u32)(entity->objectId - 0xD0) < 0x10) {
+                entity->pfnUpdate = D_8016FCC0[objectId];
+            } else {
+                goto label;
+            }
+        }
+
+        if (entity->pfnUpdate != NULL) {
+            entity->pfnUpdate(entity);
+            entity = g_CurrentEntity;
+            if (entity->objectId != 0) {
+                if ((!(entity->unk34 & 0x04000000)) &&
+                    (((u32)((((u16)entity->posX.Data.high) + 0x20) & 0xFFFF) >=
+                      0x141) ||
+                     ((u32)((((u16)entity->posY.Data.high) + 0x10) & 0xFFFF) >=
+                      0x111))) {
+                    func_80106590(entity);
+                    goto block_14;
+                } else if (entity->unk34 & 0x100000) {
+                    func_8010DDA0(0, &D_800ACFB4);
+                }
+            }
+        }
+    }
+label:
+block_14:
+    i++;
+    g_CurrentEntity++;
+    entity++;
+
+    if (i < 8)
+        goto loop_1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A9D8);
 
