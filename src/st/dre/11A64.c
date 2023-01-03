@@ -29,7 +29,6 @@ Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
 extern s16 D_80180D80[];
-extern s32 D_8009740C[];
 extern LayoutObject* D_801A32C4;
 extern LayoutObject* D_801A32C8;
 extern u16 D_8007308E;
@@ -112,7 +111,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_zEntityCenter - 20;
+        entity->zPriority = g_zEntityCenter.typeShort - 20;
         entity->blendMode = g_eBreakableBlendModes[temp_s0];
         entity->hitboxHeight = g_eBreakableHitboxes[temp_s0];
         entity->animationSet = g_eBreakableAnimationSets[temp_s0];
@@ -687,7 +686,7 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
+        g_CurrentEntity->zPriority = g_zEntityCenter.typeShort - 0xC;
     }
 }
 
