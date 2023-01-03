@@ -839,7 +839,7 @@ s32 func_800E9B18(s32 arg0, s32 arg1) {
 }
 
 void GetSavePalette(u16* dst, s32 palIdx) {
-    const ColorCount = 16;
+    const s32 ColorCount = 16;
     s32 i;
     u16* src = g_saveIconPalette[0];
 
@@ -850,7 +850,7 @@ void GetSavePalette(u16* dst, s32 palIdx) {
 }
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
-    const IconSize = 384;
+    const s32 IconSize = 384;
     s32 i;
     u8* src;
 
@@ -1544,7 +1544,48 @@ void func_800F223C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2288);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2404);
+void func_800F2404(s32 arg0) {
+    s32* temp;
+    s32* ptr;
+    s32 count;
+
+    if (arg0 == 0) {
+        D_80097410 = 0;
+        D_800973F8 = 0;
+        D_800973FC = 0;
+    }
+
+    temp = &D_80097400;
+    *temp = 0;
+    D_8003C704 = 0;
+    D_80097418 = 0;
+    D_8009741C = 0;
+    D_8009740C[0] = 0x80;
+
+    if (D_80097410 != 0) {
+        FreePolygons(D_80097414);
+    }
+
+    D_80097410 = 0;
+    D_80097414 = 0;
+    g_zEntityCenter.typeInt = 148;
+    count = 7;
+
+    ptr = &D_80097400[17];
+
+    while (count >= 0) {
+        *ptr = 0;
+        count -= 1;
+        ptr -= 1;
+    }
+
+    D_80097420 = 0;
+    D_80097424 = 0;
+    D_80097448 = 0;
+    D_8009744C = 0;
+    D_80097450 = 0;
+    func_800E346C();
+}
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F24F4);
@@ -3727,7 +3768,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     player->palette = 0x8100;
-    player->zPriority = g_zEntityCenter;
+    player->zPriority = g_zEntityCenter.typeShort;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
@@ -4125,7 +4166,7 @@ void func_80113EE0(void) {
     *D_80072F64 = 0;
     D_80072F66 = 0;
     player->unk1E = 0;
-    player->zPriority = g_zEntityCenter;
+    player->zPriority = g_zEntityCenter.typeShort;
     if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }
@@ -4397,7 +4438,48 @@ void func_8011A4C8(void) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A4D0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A870);
+void func_8011A870(void) {
+    Entity* entity = g_CurrentEntity = &g_EntityArray[UNK_ENTITY_4];
+    u16 objectId;
+    s32 i = 4;
+
+loop_1: // !FAKE: this should be a for loop
+    objectId = entity->objectId;
+
+    if (objectId != 0) {
+        if (entity->step == ENTITY_STEP_0) {
+            if ((u32)(entity->objectId - 0xD0) < 0x10) {
+                entity->pfnUpdate = D_8016FCC0[objectId];
+            } else {
+                goto label;
+            }
+        }
+
+        if (entity->pfnUpdate != NULL) {
+            entity->pfnUpdate(entity);
+            entity = g_CurrentEntity;
+            if (entity->objectId != 0) {
+                if ((!(entity->unk34 & 0x04000000)) &&
+                    (((u32)((((u16)entity->posX.Data.high) + 0x20) & 0xFFFF) >=
+                      0x141) ||
+                     ((u32)((((u16)entity->posY.Data.high) + 0x10) & 0xFFFF) >=
+                      0x111))) {
+                    func_80106590(entity);
+                    goto label;
+                } else if (entity->unk34 & 0x100000) {
+                    func_8010DDA0(0, &D_800ACFB4);
+                }
+            }
+        }
+    }
+label:
+    i++;
+    g_CurrentEntity++;
+    entity++;
+
+    if (i < 8)
+        goto loop_1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A9D8);
 
@@ -4989,7 +5071,15 @@ u16 func_80132E38(void) {
     return D_801396F4;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132E90);
+void func_80132E90(u32 arg0, s8* arg1) {
+    u16 temp;
+    u16 temp2;
+
+    arg1[2] = (((arg0 % 75) / 10) * 0x10) + ((arg0 % 75) % 10);
+    arg1[1] = ((((arg0 / 75) % 60) / 10) * 0x10) + (((arg0 / 75) % 60) % 10);
+    temp = ((arg0 / 75) / 60) % 10;
+    arg1[0] = (temp2 = (((arg0 / 75) / 60) / 10) * 0x10) + temp;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132F60);
 void func_80132F60();

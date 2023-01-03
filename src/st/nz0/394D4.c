@@ -460,7 +460,7 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority = g_zEntityCenter - 0xC;
+        g_CurrentEntity->zPriority = g_zEntityCenter.typeShort - 0xC;
     }
 }
 
