@@ -40,6 +40,7 @@ extern u32 D_801BAFE4;
 extern s32 D_801BAFE8;
 extern s32 D_801BAFEC;
 extern s32 D_801BAFF0;
+extern s32 D_801BC2F8;
 extern s16 D_801BC35A;
 extern u16 D_801BC35C;
 extern s16 D_801BC35E;
@@ -949,7 +950,20 @@ void func_801B80F0(void) {
     EnableEvent(D_80086FE4);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8298);
+s32 func_801B8298(void) {
+    if (TestEvent(D_80073068) == 1) {
+        return 1;
+    } else if (TestEvent(D_8007306C) == 1) {
+        return 2;
+    } else if (TestEvent(D_80073070) == 1) {
+        return 3;
+    } else if (TestEvent(D_80073078) == 1) {
+        return 4;
+    } else if (D_801BC2F8-- < 0) {
+        return 2;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8338);
 
