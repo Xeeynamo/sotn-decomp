@@ -965,7 +965,18 @@ s32 func_801B8298(void) {
     return 0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8338);
+s32 func_801B8338(void) {
+    if (TestEvent(D_80073068) == 1) {
+        return 1;
+    } else if (TestEvent(D_8007306C) == 1) {
+        return 2;
+    } else if (TestEvent(D_80073070) == 1) {
+        return 3;
+    } else if (TestEvent(D_80073078) == 1) {
+        return 4;
+    }
+    return 0;
+}
 
 void func_801B83BC(void) {
     TestEvent(D_80073068);
