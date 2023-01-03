@@ -24,10 +24,12 @@ extern s32 D_80180454[];
 extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
+extern /*?*/ s32 D_801808DC[];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
+extern const char D_801A7D78[];
 extern const char D_801A7D84[];
 extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
@@ -73,6 +75,7 @@ extern s32 D_801D6B20;
 void func_801B1ED0();
 void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);
+s32 func_801B8414();
 void func_801B84F0();
 s32 func_801B8A8C(s32, s32);
 
@@ -1040,14 +1043,36 @@ s32 func_801B8A10(s32 arg0) {
     if (unk != 1) {
         return -3;
     }
-    
+
     D_8006C3AC |= unk << arg0;
     return 1;
 }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8A8C);
 
+s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot);
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8D24);
+#else
+s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot) {
+    s8 cardPath[0x8];
+    s32 var_v1;
+
+    D_8006C3AC &= D_801808DC[cardSlot];
+    sprintf(cardPath, D_801A7D78, cardSlot, cardSubSlot);
+    func_801B8498();
+    format(cardPath);
+
+    var_v1 = func_801B8414();
+    if (var_v1 != 1) {
+        if (var_v1 == 3) {
+            return -1;
+        }
+        return -3;
+    }
+    return var_v1;
+}
+#endif
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8DB0);
 
