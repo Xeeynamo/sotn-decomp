@@ -4398,7 +4398,7 @@ void func_8011A4C8(void) {}
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011A4D0);
 
 void func_8011A870(void) {
-    Entity* entity = g_CurrentEntity = &D_800736C8;
+    Entity* entity = g_CurrentEntity = &g_EntityArray[UNK_ENTITY_4];
     u16 objectId;
     s32 i = 4;
 
