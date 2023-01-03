@@ -80,6 +80,7 @@ s32 func_801B8414();
 void func_801B84F0();
 s32 func_801B8A8C(s32, s32);
 void func_801BA6F0(s32);
+void func_801BA880();
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
@@ -1147,7 +1148,9 @@ u16 func_801BA5C0(u16* arg0) { return *arg0; }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA5CC);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA648);
+void func_801BA648(void) {
+    func_801BA880();
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA668);
 
