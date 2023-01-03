@@ -237,6 +237,7 @@ extern int SetGraphReverse(int mode);
 extern int SetGraphQueue(int mode);
 extern u_long DrawSyncCallback(void (*func)());
 extern void FntLoad(int tx, int ty);
+int FntPrint(const char* fmt, ...);
 extern void SetDispMask(int mask);
 extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
 extern void SetDumpFnt(int id);

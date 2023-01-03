@@ -38,6 +38,8 @@ extern s32* D_8019642C;
 extern s32* D_80196434;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
+extern const char D_801A7AF8[];   // rstep:%d,%d
+extern const char D_801A7B08[];   // retry:%d
 extern const char D_801A7D78[];   // "bu%1d%1d:"
 extern const char D_801A7D84[];   // "bu%1d%1d:%s"
 extern const char D_801A802C[18]; // "BASLUS-00067DRAX00"
@@ -55,6 +57,7 @@ extern u32 D_801BAFE4;
 extern s32 D_801BAFE8;
 extern s32 D_801BAFEC; // rstep
 extern s32 D_801BAFF0; // rstep sub
+extern s32 D_801BAFF8; // g_memRetryCount
 extern s32 D_801BC2F8;
 extern s32 D_801BC2FC;
 extern s32 D_801BC344;
