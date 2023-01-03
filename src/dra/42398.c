@@ -1544,7 +1544,48 @@ void func_800F223C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2288);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F2404);
+void func_800F2404(s32 arg0) {
+    s32* temp;
+    s32* ptr;
+    s32 count;
+
+    if (arg0 == 0) {
+        D_80097410 = 0;
+        D_800973F8 = 0;
+        D_800973FC = 0;
+    }
+
+    temp = &D_80097400;
+    *temp = 0;
+    D_8003C704 = 0;
+    D_80097418 = 0;
+    D_8009741C = 0;
+    D_8009740C[0] = 0x80;
+
+    if (D_80097410 != 0) {
+        FreePolygons(D_80097414);
+    }
+
+    D_80097410 = 0;
+    D_80097414 = 0;
+    g_zEntityCenter.typeInt = 148;
+    count = 7;
+
+    ptr = &D_80097400[17];
+
+    while (count >= 0) {
+        *ptr = 0;
+        count -= 1;
+        ptr -= 1;
+    }
+
+    D_80097420 = 0;
+    D_80097424 = 0;
+    D_80097448 = 0;
+    D_8009744C = 0;
+    D_80097450 = 0;
+    func_800E346C();
+}
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F24F4);
@@ -3727,7 +3768,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     player->palette = 0x8100;
-    player->zPriority = g_zEntityCenter;
+    player->zPriority = g_zEntityCenter.typeShort;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
@@ -4125,7 +4166,7 @@ void func_80113EE0(void) {
     *D_80072F64 = 0;
     D_80072F66 = 0;
     player->unk1E = 0;
-    player->zPriority = g_zEntityCenter;
+    player->zPriority = g_zEntityCenter.typeShort;
     if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }

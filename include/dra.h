@@ -601,7 +601,7 @@ extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007D858[];
-extern u16 g_zEntityCenter;
+extern MultiType g_zEntityCenter;
 extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
 extern s32 D_8007EFDC;
@@ -620,11 +620,19 @@ extern u32 D_80097364;
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
 extern s32 D_800973EC; // flag to check if the menu is shown
+extern s32 D_800973F8;
 extern s32 D_800973FC;
+extern s32 D_80097400[];
+extern s32 D_8009740C[];
 extern s32 D_80097410;
 extern s32 D_80097414;
+extern s32 D_80097418;
+extern s32 D_8009741C;
 extern s32 D_80097420;
+extern s32 D_80097424;
+extern s32 D_80097448;
 extern s32 D_8009744C;
+extern s32 D_80097450;
 extern Pad g_pads[];
 extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern u16 D_80097496;
