@@ -1114,7 +1114,11 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B97BC);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B988C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9924);
+void func_801B9924(void) {
+    volatile u32 pad[4]; // FAKE
+    SetDispMask(0);
+    func_801B18F4();
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B994C);
 
