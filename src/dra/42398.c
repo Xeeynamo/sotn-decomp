@@ -4402,7 +4402,7 @@ void func_8011A870(void) {
     u16 objectId;
     s32 i = 4;
 
-loop_1:
+loop_1: // !FAKE: this should be a for loop
     objectId = entity->objectId;
 
     if (objectId != 0) {
@@ -4424,7 +4424,7 @@ loop_1:
                      ((u32)((((u16)entity->posY.Data.high) + 0x10) & 0xFFFF) >=
                       0x111))) {
                     func_80106590(entity);
-                    goto block_14;
+                    goto label;
                 } else if (entity->unk34 & 0x100000) {
                     func_8010DDA0(0, &D_800ACFB4);
                 }
@@ -4432,7 +4432,6 @@ loop_1:
         }
     }
 label:
-block_14:
     i++;
     g_CurrentEntity++;
     entity++;
