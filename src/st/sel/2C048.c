@@ -30,6 +30,9 @@ extern RECT D_801825A4;
 extern s32* D_801963FC;
 extern s32* D_80196400;
 extern s32* D_80196404;
+extern s32* D_80196408;
+extern s32* D_8019640C;
+extern s32* D_80196410;
 extern s32* D_8019642C;
 extern s32* D_80196434;
 extern s32 D_801A75A0[];
@@ -1175,8 +1178,14 @@ void func_801BA7EC(s32* arg0, u32 arg1) {
     *D_8019642C = *arg0;
     *D_80196404 = 0x01000201;
 }
-
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA880);
+void func_801BA880(s32 arg0, u32 arg1) {
+    func_801BA9A8();
+    *D_80196434 |= 0x88;
+    *D_80196410 = 0;
+    *D_80196408 = arg0;
+    *D_8019640C = ((arg1 >> 5) << 0x10) | 0x20;
+    *D_80196410 = 0x01000200;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA910);
 
