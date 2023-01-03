@@ -1194,7 +1194,7 @@ u16 func_801BA5C0(u16* arg0) { return *arg0; }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA5CC);
 
-void func_801BA648(void) { func_801BA880(); }
+void func_801BA648(s32 arg0, u32 arg1) { func_801BA880(arg0, arg1); }
 
 void func_801BA668(void) { func_801BA910(); }
 
