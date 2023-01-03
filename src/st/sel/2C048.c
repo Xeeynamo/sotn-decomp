@@ -5,6 +5,7 @@
  */
 
 #include "stage.h"
+#include <psxsdk/romio.h>
 
 #define DISP_W 512
 #define DISP_H 240
@@ -37,8 +38,9 @@ extern s32* D_8019642C;
 extern s32* D_80196434;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
-extern const char D_801A7D78[];
-extern const char D_801A7D84[];
+extern const char D_801A7D78[];   // "bu%1d%1d:"
+extern const char D_801A7D84[];   // "bu%1d%1d:%s"
+extern const char D_801A802C[18]; // "BASLUS-00067DRAX00"
 extern const char D_801ABFD8[];
 extern const char D_801AC000[];
 extern const char D_801AC038[];
@@ -51,8 +53,8 @@ extern s32 D_801BAFDC;
 extern s32 D_801BAFE0;
 extern u32 D_801BAFE4;
 extern s32 D_801BAFE8;
-extern s32 D_801BAFEC;
-extern s32 D_801BAFF0;
+extern s32 D_801BAFEC; // rstep
+extern s32 D_801BAFF0; // rstep sub
 extern s32 D_801BC2F8;
 extern s32 D_801BC2FC;
 extern s32 D_801BC344;
@@ -1038,7 +1040,29 @@ u8 func_801B881C(s32 arg0, s32 arg1) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B884C);
+s32 func_801B884C(s32 cardSlot, s32 cardSubSlot, const char* saveFile,
+                  void* saveData, s32 saveLen) {
+    char savePath[32];
+    s32 fd;
+    s32 actualSaveLen;
+
+    sprintf(savePath, D_801A7D84, cardSlot, cardSubSlot, saveFile);
+    if (saveLen == 0) {
+        actualSaveLen = 0x2B8;
+    } else {
+        actualSaveLen = saveLen * 0x2000;
+    }
+    
+    fd = open(savePath, O_RDONLY | O_NOWAIT);
+    if (fd == -1) {
+        return -1;
+    }
+
+    D_801BC2FC = fd;
+    func_801B83BC();
+    read(fd, saveData, actualSaveLen);
+    return 0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B88F4);
 
@@ -1105,7 +1129,16 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8E20);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B94BC);
 
+void func_801B9698(char* dstSaveName, s32 saveSlot);
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9698);
+#else
+void func_801B9698(char* dstSaveName, s32 saveSlot) {
+    strncpy(dstSaveName, D_801A802C, sizeof(D_801A802C));
+    dstSaveName[0x10] += saveSlot / 10;
+    dstSaveName[0x11] += saveSlot % 10;
+}
+#endif
 
 s32 func_801B9744(void) {
     u8 res;
