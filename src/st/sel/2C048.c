@@ -1052,7 +1052,7 @@ s32 func_801B884C(s32 cardSlot, s32 cardSubSlot, const char* saveFile,
     } else {
         actualSaveLen = saveLen * 0x2000;
     }
-    
+
     fd = open(savePath, O_RDONLY | O_NOWAIT);
     if (fd == -1) {
         return -1;
