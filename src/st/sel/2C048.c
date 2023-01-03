@@ -987,7 +987,12 @@ void func_801B83BC(void) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8414);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8498);
+void func_801B8498(void) {
+    TestEvent(D_8007EFD8);
+    TestEvent(D_8007EFDC);
+    TestEvent(D_8007EFE0);
+    TestEvent(D_80086FE4);
+}
 
 void func_801B84F0(void) { D_801D6B20 = 0; }
 
