@@ -58,6 +58,7 @@ extern s32 D_801BC3D8;
 extern s32 D_801BC3DC;
 extern s32 D_801BC3E0;
 extern s32 D_801BC650;
+extern s32 D_801BC654[];
 extern s32 D_801BC8C8;
 extern s32 D_801BC8E0[];
 extern s32* D_801BC958[];
@@ -1003,7 +1004,7 @@ void func_801B8500(void) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8518);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8714);
+s32 func_801B8714(s32 arg0) { return D_801BC654[arg0 * 0x9E]; }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B873C);
 
