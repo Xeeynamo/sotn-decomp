@@ -44,6 +44,7 @@ extern s32 D_801BAFEC;
 extern s32 D_801BAFF0;
 extern s32 D_801BC2F8;
 extern s32 D_801BC2FC;
+extern s32 D_801BC344;
 extern s16 D_801BC35A;
 extern u16 D_801BC35C;
 extern s16 D_801BC35E;
@@ -1076,11 +1077,12 @@ s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8DB0);
 
-void func_801B8DE8(u8* arg0, s32 arg1) {
-    u8* src = (u8*)D_801822E4[arg1];
+void func_801B8DE8(u8* dst, s32 arg1) {
     s32 i;
+    u8* src = (u8*)D_801822E4[arg1];
+
     for (i = 0; i < 0x180; i++) {
-        *arg0++ = *src++;
+        *dst++ = *src++;
     }
 }
 
@@ -1090,7 +1092,23 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B94BC);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9698);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9744);
+s32 func_801B9744(void) {
+    u8 res;
+
+    if (CdSync(1, &res) == 0) {
+        D_801BC344 = 0;
+        return 0;
+    }
+
+    if (func_80019444() - 0x10 < 2U || !(res & 0x10)) {
+        CdControlF(1, NULL);
+        D_801BC344 = 0;
+        return 0;
+    }
+
+    D_801BC344 = 1;
+    return 1;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B97BC);
 
