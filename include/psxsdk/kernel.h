@@ -74,6 +74,9 @@
 #define TcbStUNUSED 0x1000
 #define TcbStACTIVE 0x4000
 
+void EnterCriticalSection(void);
+void ExitCriticalSection(void);
+
 void InitCARD(long val);
 long StartCARD(void);
 
