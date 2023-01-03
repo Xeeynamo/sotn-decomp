@@ -1008,7 +1008,15 @@ s32 func_801B8714(s32 arg0) { return D_801BC654[arg0 * 0x9E]; }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B873C);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B881C);
+#else
+extern volatile u8 D_801BC658[];
+u8 func_801B881C(s32 arg0, s32 arg1) {
+    s32 idx = arg0 * 0x9E * 4;
+    return D_801BC658[idx + arg1];
+}
+#endif
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B884C);
 
