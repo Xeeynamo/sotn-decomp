@@ -41,6 +41,7 @@ extern s32 D_801BAFE8;
 extern s32 D_801BAFEC;
 extern s32 D_801BAFF0;
 extern s32 D_801BC2F8;
+extern s32 D_801BC2FC;
 extern s16 D_801BC35A;
 extern u16 D_801BC35C;
 extern s16 D_801BC35E;
@@ -1028,7 +1029,21 @@ s32 func_801B89C8(s32 memcardSlot, s32 memcardSubSlot, const char* path) {
     return -(erase(buf) == 0);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8A10);
+s32 func_801B8A10(s32 arg0) {
+    s32 unk = func_801B8338();
+
+    if (unk == 0) {
+        return 0;
+    }
+
+    close(D_801BC2FC);
+    if (unk != 1) {
+        return -3;
+    }
+    
+    D_8006C3AC |= unk << arg0;
+    return 1;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8A8C);
 
