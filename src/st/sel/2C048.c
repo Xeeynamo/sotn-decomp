@@ -27,6 +27,11 @@ extern u8 D_80180528[];
 extern /*?*/ s32 D_801808DC[];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
+extern s32* D_801963FC;
+extern s32* D_80196400;
+extern s32* D_80196404;
+extern s32* D_8019642C;
+extern s32* D_80196434;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
 extern const char D_801A7D78[];
@@ -1162,7 +1167,14 @@ void func_801BA6CC(void (*func)()) { DMACallback(1, func); }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA6F0);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA7EC);
+void func_801BA7EC(s32* arg0, u32 arg1) {
+    func_801BA910();
+    *D_80196434 |= 0x88;
+    *D_801963FC = arg0 + 1;
+    *D_80196400 = ((arg1 >> 5) << 0x10) | 0x20;
+    *D_8019642C = *arg0;
+    *D_80196404 = 0x01000201;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA880);
 
