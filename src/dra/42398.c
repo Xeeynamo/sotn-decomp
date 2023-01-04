@@ -3727,6 +3727,7 @@ void func_8010E3B8(s32 accelerationX) {
 }
 
 void func_8010E3E0(void) {
+    // D_80072F68 is part of a struct, the temp isn't needed in that case
     u16* temp = &D_80072F68;
     if (*temp != 0) {
         func_80106590(&D_80073F98);
