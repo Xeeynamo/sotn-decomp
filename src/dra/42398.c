@@ -3228,29 +3228,26 @@ s32 func_80102E04(void) {
     u32 new_var2 = D_80137E68;
     s32 temp_s0 = D_80137E64;
 
-    switch (temp_s0) {
+    switch (D_80137E64) {
     case 0:
         func_800E92E4();
         D_80137E50 = 4;
         D_80137E64++;
-        do { // !FAKE:
-        } while (0);
-        return 0;
-
+        break;
     case 1:
         if (func_800E9B18(new_var2, 0) != temp_s0) {
             D_80137E50 = D_80137E50 - 1;
-            if (D_80137E50 == (-1)) {
+            if (D_80137E50 == -1) {
                 temp_s0 = -1;
                 return temp_s0;
             }
-            return 0;
+        } else {
+            return 1;
         }
-        return 1;
-
-    default:
-        return 0;
+        break;
     }
+
+    return 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102EB8);
