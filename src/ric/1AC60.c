@@ -1,6 +1,7 @@
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
+#include "sfx.h"
 
 s32 func_8015DBB0();
 void func_8015C93C();
@@ -10,7 +11,7 @@ void func_8015CA84();
 s32 func_8015CF08();
 s32 func_8015E380();
 void func_8015CDE0(s32);
-void func_801606BC(Entity*, s32, s32);
+Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 
 extern u16 D_80072F9A; // main.h?
 extern s32 D_801554B0;
@@ -135,7 +136,7 @@ void func_8015B098(void) {
     if ((g_EntityArray[PLAYER_CHARACTER].animationFrame == 0xB5) &&
         (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration == 1)) {
         func_801606BC(g_CurrentEntity, 0x23, 0);
-        g_pfnPlaySfx(0x62F);
+        g_pfnPlaySfx(NA_SE_UNK_62F);
     }
 
     if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
@@ -442,7 +443,28 @@ void func_801603BC(void) {}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801603C4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801606BC);
+Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
+    Entity* entity = func_8015F8F8(8, 0x10);
+
+    if (entity != 0) {
+        func_80156C60(entity);
+        entity->objectId = 1;
+        entity->unk8C.entityPtr = srcEntity;
+        entity->posX.value = srcEntity->posX.value;
+        entity->posY.value = srcEntity->posY.value;
+        entity->facing = srcEntity->facing;
+        entity->zPriority = srcEntity->zPriority;
+        entity->subId = arg1 & 0xFFF;
+        entity->unkA0 = (arg1 >> 8) & 0xFF00;
+
+        if (srcEntity->unk34 & 0x10000) {
+            entity->unk34 = entity->unk34 | 0x10000;
+        }
+    } else {
+        return NULL;
+    }
+    return entity;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160788);
 

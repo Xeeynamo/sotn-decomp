@@ -711,7 +711,7 @@ void func_801C07FC(Entity* entity) {
     switch (entity->step) {
     case ENTITY_STEP_0:
         InitializeEntity(&D_80180C04);
-        entity->unk8C = entity->unk80.entityPtr->objectId;
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
 
     case ENTITY_STEP_1:
         temp_v0 = entity->unk7C.modeU8.unk0++;
@@ -729,7 +729,7 @@ void func_801C07FC(Entity* entity) {
         entity->posX.Data.high = entity->unk80.entityPtr->posX.Data.high;
         entity->posY.Data.high = entity->unk80.entityPtr->posY.Data.high;
 
-        if (entity->unk80.entityPtr->objectId != entity->unk8C) {
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
     }

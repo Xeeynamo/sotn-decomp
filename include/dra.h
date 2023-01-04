@@ -145,7 +145,7 @@ typedef struct Entity {
     /* 0x7F */ u8 unk7F;
     union {
         /* 0x80 */ struct Entity* entityPtr;
-        s32 modeS32;
+        /* 0x80 */ s32 modeS32;
         struct {
             /* 0x80 */ s16 unk0;
             /* 0x82 */ s16 unk2;
@@ -159,15 +159,22 @@ typedef struct Entity {
     /* 0x88 */ s8 unk88;
     /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ u16 unk8C;
-    /* 0x8E */ u16 unk8E;
+    union {
+        /* 0x8C */ struct Entity* entityPtr;
+        /* 0x8C */ s32 modeS32;
+        struct {
+            /* 0x8C */ u16 unk0;
+            /* 0x8E */ u16 unk2;
+        } modeU16;
+    } unk8C; // size = 0x4
     /* 0x90 */ s32 unk90;
     /* 0x94 */ u8 unk94;
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
     /* 0x9C */ s32 unk9C;
-    /* 0xA0 */ s32 unkA0;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 unkAC;
