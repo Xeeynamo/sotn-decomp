@@ -4828,7 +4828,31 @@ void func_8012CFF0(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D024);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D178);
+void func_8012D178(void) {
+    s32 var_v0;
+
+    if (D_80072EEC & 0x40) {
+        func_8012CCE4();
+        return;
+    } else if (!(D_80072F20 & 1)) {
+        func_8012CFA8();
+        return;
+    } else if (D_800733EC != 0) {
+        var_v0 = D_80072EE8 & 0x8000;
+    } else {
+        var_v0 = D_80072EE8 & 0x2000;
+    }
+
+    if (var_v0 != 0) {
+        func_8012CB4C();
+        return;
+    } else if (D_80072F24 & 0x40) {
+        func_8012CA64();
+        return;
+    } else if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {
+        func_8011AAFC(g_CurrentEntity, 0x10045, 0);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D28C);
 
