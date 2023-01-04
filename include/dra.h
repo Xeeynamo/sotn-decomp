@@ -145,7 +145,7 @@ typedef struct Entity {
     /* 0x7F */ u8 unk7F;
     union {
         /* 0x80 */ struct Entity* entityPtr;
-        s32 modeS32;
+        /* 0x80 */ s32 modeS32;
         struct {
             /* 0x80 */ s16 unk0;
             /* 0x82 */ s16 unk2;
@@ -159,15 +159,22 @@ typedef struct Entity {
     /* 0x88 */ s8 unk88;
     /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ u16 unk8C;
-    /* 0x8E */ u16 unk8E;
+    union {
+        /* 0x8C */ struct Entity* entityPtr;
+        /* 0x8C */ s32 modeS32;
+        struct {
+            /* 0x8C */ u16 unk0;
+            /* 0x8E */ u16 unk2;
+        } modeU16;
+    } unk8C; // size = 0x4
     /* 0x90 */ s32 unk90;
     /* 0x94 */ u8 unk94;
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
     /* 0x9C */ s32 unk9C;
-    /* 0xA0 */ s32 unkA0;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 unkAC;
@@ -364,7 +371,7 @@ extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
 extern Unkstruct5* D_8003C808;
 extern void (*D_8003C848)(s32, s32);
-extern s32 D_8003C8C4;
+extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
 extern s32 g_CurrentPlayableCharacter;
@@ -508,18 +515,18 @@ extern s16 D_80072F1E;
 extern s32 D_80072F20;
 extern s32 D_80072F24;
 extern u32 D_80072F2C;
-extern u16 D_80072F70;
-extern u16 D_80072F92;
 
 // Probably part of the same array / struct
 extern u16 D_80072F60;
-extern u16 D_80072F64[];
-extern s16 D_80072F66;
-extern u16 D_80072F68[];
+extern u16 D_80072F64;
+extern u16 D_80072F66;
+extern u16 D_80072F68;
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
-extern s16 D_80072F86;
-extern s16 D_80072F88;
+extern u16 D_80072F70;
+extern u16 D_80072F86;
+extern u16 D_80072F88;
+extern u16 D_80072F92;
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060;
 extern s32 D_80073080;
@@ -846,6 +853,7 @@ extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
 extern s32 D_80137E4C;
+extern s32 D_80137E50;
 extern s32 D_80137E64;
 extern s32 D_80137E68;
 extern s32 D_80137F6C;
@@ -1029,6 +1037,10 @@ void func_80118894(Entity*);
 void func_80118C28(s32 arg0);
 bool func_80111D24(void);
 Entity* func_8011AAFC(Entity* entity, s32, s32);
+void func_8012CA64(void);
+void func_8012CB4C(void);
+void func_8012CCE4(void);
+void func_8012CFA8(void);
 void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);

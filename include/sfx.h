@@ -25,6 +25,9 @@
  * BT = Form of Bat
  */
 
+// This sound plays when MAX UP spawns and during Dracula transformation
+#define NA_SE_UNK_62F 0x62F
+
 #define NA_SE_BREAK_CANDLE 0x634
 #define NA_SE_SECRET_STAIRS 0x644
 #define NA_SE_PL_COLLECT_HEART 0x67A
@@ -39,8 +42,8 @@
 #define NA_SE_PL_BT_FIREBALL 0x680
 #define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
 #define NA_SE_EV_CLOCK_TICK 0x6A1
+#define NA_SE_VO_AL_WHAT 0x6F2
+#define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x6F3
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F4
-#define NA_SE_VO_AL_WHAT 0x704
-#define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x705
 #define NA_SE_VO_WO_BARK 0x706

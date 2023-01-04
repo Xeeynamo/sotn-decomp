@@ -1,18 +1,22 @@
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
+#include "sfx.h"
 
+extern s16 (*D_8003C890)(s16);
 s32 func_8015DBB0();
 void func_8015C93C();
 s32 func_8015C9CC();
-void func_8015CD98();
 void func_8015CA84();
+void func_8015CD98();
+void func_8015CDE0(s32);
 s32 func_8015CF08();
 s32 func_8015E380();
-void func_8015CDE0(s32);
-void func_801606BC(Entity*, s32, s32);
+void func_8015F9F0(Entity* entity);
+Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 
 extern u16 D_80072F9A; // main.h?
+extern s8 D_80154688;
 extern s32 D_801554B0;
 extern s32 D_801553BC;
 extern s32 D_801554C0;
@@ -116,7 +120,7 @@ void func_80159BC8(void) {
 
     player->animationFrameDuration = 0;
     player->animationFrameIndex = 0;
-    D_80072F64[0] = 0;
+    D_80072F64 = 0;
     D_80072F66 = 0;
     player->unk19 &= 0xFB;
 }
@@ -131,7 +135,27 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A9B0);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015AFE0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015B098);
+void func_8015B098(void) {
+    if ((g_EntityArray[PLAYER_CHARACTER].animationFrame == 0xB5) &&
+        (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration == 1)) {
+        func_801606BC(g_CurrentEntity, 0x23, 0);
+        g_pfnPlaySfx(NA_SE_UNK_62F);
+    }
+
+    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+        func_8015CD98(0);
+        D_80072F66 = 0;
+        func_801606BC(g_CurrentEntity, 0x450021, 0);
+        *D_80072F00 = 0x800;
+    }
+
+    if (!(D_80072F20 & 1)) {
+        func_8015CF08();
+        D_80072F66 = 0;
+        func_801606BC(g_CurrentEntity, 0x450021, 0);
+        *D_80072F00 = 0x800;
+    }
+}
 
 void func_8015B18C(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
@@ -288,12 +312,12 @@ void func_8015CCC8(s32 arg0, s32 arg1) {
     }
 }
 
-void func_8015CD98(s32 arg0) {
+void func_8015CD98(s32 accelerationX) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->accelerationX = arg0;
+    player->accelerationX = accelerationX;
     player->accelerationY = 0;
-    D_80072F64[0] = 0;
+    D_80072F64 = 0;
     func_8015C908(0);
     func_8015C920(&D_801553BC);
 }
@@ -306,7 +330,7 @@ void func_8015CE7C(void) {
     if (D_80072F9A != 0) {
         func_8015CDE0(0);
     } else {
-        D_80072F64[0] = 0;
+        D_80072F64 = 0;
         func_8015C908(0x19);
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
@@ -406,7 +430,36 @@ void func_8015FA5C(s32 arg0) {
 }
 #endif
 
+// aspsx
+// https://decomp.me/scratch/bRvg6
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FAB8);
+#else
+void func_8015FAB8(Entity* entity) {
+    u16 var_v0;
+    s32 temp;
+    Unkstruct_8011A290* temp_v1 = (entity->unkB0 * 0x14) + (&D_80154688);
+
+    if ((*D_80072F1A) != NULL) {
+        var_v0 = temp_v1->sp10 * 2;
+    } else {
+        var_v0 = temp_v1->sp10;
+    }
+
+    entity->unk40 = var_v0;
+    entity->unk42 = temp_v1->sp14;
+    entity->unk3C = temp_v1->sp1C;
+    temp = entity->unk40;
+    entity->unk49 = temp_v1->sp17;
+    entity->unk58 = temp_v1->sp18;
+    entity->unk6A = temp_v1->sp1E;
+    entity->objectRoomIndex = temp_v1->sp22;
+    do {
+    } while (0);
+    entity->unk40 = D_8003C890(temp);
+    func_8015F9F0(entity);
+}
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FB84);
 
@@ -422,11 +475,68 @@ void func_801603BC(void) {}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801603C4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801606BC);
+Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
+    /**
+     * arg2 is unused, but needed to match other functions that call
+     * this function, probably part of the code for a debug build
+     */
+    Entity* entity = func_8015F8F8(8, 0x10);
+
+    if (entity != NULL) {
+        func_80156C60(entity);
+        entity->objectId = ENTITY_BREAKABLE;
+        entity->unk8C.entityPtr = srcEntity;
+        entity->posX.value = srcEntity->posX.value;
+        entity->posY.value = srcEntity->posY.value;
+        entity->facing = srcEntity->facing;
+        entity->zPriority = srcEntity->zPriority;
+        entity->subId = arg1 & 0xFFF;
+        entity->unkA0 = (arg1 >> 8) & 0xFF00;
+
+        if (srcEntity->unk34 & 0x10000) {
+            entity->unk34 |= 0x10000;
+        }
+    } else {
+        return NULL;
+    }
+    return entity;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160788);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160C38);
+#else
+void func_80160C38(Entity* entity) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->step == 0x17) {
+        entity->posX.Data.high = player->posX.Data.high;
+        entity->posY.Data.high = player->posY.Data.high;
+        entity->facing = player->facing;
+        if (entity->step == 0) {
+            entity->unk34 = 0x04060000;
+            entity->unk10 = 0x14;
+            entity->unk12 = 0xC;
+            entity->hitboxHeight = 9;
+            entity->hitboxWidth = 9;
+            entity->unkB0 = 0x12;
+            func_8015FAB8(entity);
+            entity->unk7C.modeS16 = entity->unk3C;
+            entity->step += 1;
+        }
+        entity->unk3C = entity->unk7C.modeS16;
+        if (player->animationFrameIndex < 2) {
+            entity->unk3C = 0;
+        }
+        if ((player->animationFrameIndex >= 8)) {
+            func_80156C60(entity);
+        }
+    } else {
+        func_80156C60(entity);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160D2C);
 
