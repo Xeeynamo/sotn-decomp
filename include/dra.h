@@ -513,13 +513,13 @@ extern u16 D_80072F92;
 
 // Probably part of the same array / struct
 extern u16 D_80072F60;
-extern u16 D_80072F64[];
-extern s16 D_80072F66;
+extern u16 D_80072F64;
+extern u16 D_80072F66;
 extern u16 D_80072F68[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
-extern s16 D_80072F86;
-extern s16 D_80072F88;
+extern u16 D_80072F86;
+extern u16 D_80072F88;
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060;
 extern s32 D_80073080;

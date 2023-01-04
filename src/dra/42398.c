@@ -3674,7 +3674,7 @@ void func_8010E234(s32 speed) {
 s32 func_8010E27C(void) {
     u16* facing;
 
-    if (*D_80072F64 & 2) {
+    if (D_80072F64 & 2) {
         return 0;
     }
 
@@ -3807,15 +3807,45 @@ void func_8010E7AC(void) {
         D_80072F0A = 0;
     }
 
-    D_80072F64[0] = 0x10;
+    D_80072F64 = 0x10;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
+void func_8010E83C(s32 arg0) {
+    u16 temp;
+
+    if (D_80072F92 != 0) {
+        func_8010E7AC();
+        return;
+    } else if (func_8010E27C() != 0) {
+        func_8010DA48(0x1A);
+        func_8010E390(0x18000);
+        D_80072F64 = 0;
+    } else {
+        func_8010DA48(0x16);
+        D_800733E0 = 0;
+        D_80072F64 = 4;
+    }
+
+    D_800733E4 = 0xFFFB0000 | 0x2000;
+    func_8010D584(4);
+
+    if (D_80072F70 == 1) {
+        D_80072F64 |= 0x10;
+    }
+
+    if (arg0 != 0) {
+        temp = D_80072F64 & ~1;
+    } else {
+        temp = D_80072F64 | 1;
+    }
+    D_80072F64 = temp;
+}
 
 void func_8010E940(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
+    u16* temp = &D_80072F64;
 
-    D_80072F64[0] |= 0x21;
+    *temp |= 0x21;
     func_8010DA48(0x20);
     player->unk2E = 0;
     player->accelerationY = -0x44000;
@@ -4163,7 +4193,7 @@ void func_80113EE0(void) {
     player->animationFrameIndex = 0;
     player->objectId = 0;
     player->blendMode = 0;
-    *D_80072F64 = 0;
+    D_80072F64 = 0;
     D_80072F66 = 0;
     player->unk1E = 0;
     player->zPriority = g_zEntityCenter.typeShort;

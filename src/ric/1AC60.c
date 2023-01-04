@@ -116,7 +116,7 @@ void func_80159BC8(void) {
 
     player->animationFrameDuration = 0;
     player->animationFrameIndex = 0;
-    D_80072F64[0] = 0;
+    D_80072F64 = 0;
     D_80072F66 = 0;
     player->unk19 &= 0xFB;
 }
@@ -293,7 +293,7 @@ void func_8015CD98(s32 arg0) {
 
     player->accelerationX = arg0;
     player->accelerationY = 0;
-    D_80072F64[0] = 0;
+    D_80072F64 = 0;
     func_8015C908(0);
     func_8015C920(&D_801553BC);
 }
@@ -306,7 +306,7 @@ void func_8015CE7C(void) {
     if (D_80072F9A != 0) {
         func_8015CDE0(0);
     } else {
-        D_80072F64[0] = 0;
+        D_80072F64 = 0;
         func_8015C908(0x19);
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
