@@ -3764,6 +3764,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
 }
 #endif
 
+// This may be the function that turns Alucard into stone
 void func_8010E4D0(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
@@ -3776,7 +3777,7 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         player->accelerationY = 0;
         player->accelerationX = 0;
-        func_8010D584(6);
+        func_8010D584(ENTITY_STEP_6);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
         return;
@@ -5269,13 +5270,13 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134714);
 
-void PlaySfx(s16 sfxId) {
+void PlaySfx(s16 sfxId) { // call 0x6F2
     u16 offset;
 
     if (D_8013AEEC != 0) {
-        offset = (u32)(sfxId - 0x601);
-        if (offset < 0x2E0) {
-            D_801390DC[D_80139000].unk00 = sfxId - 0x600;
+        offset = (u32)(sfxId - 0x601); // offset = 0xF1
+        if (offset < 0x2E0) { // enters
+            D_801390DC[D_80139000].unk00 = sfxId - 0x600; // 0xF2
             D_801390DC[D_80139000].unk02 = 0xFFFF;
             D_801390DC[D_80139000].unk04 = 0;
             D_80139000++;

@@ -131,7 +131,27 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A9B0);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015AFE0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015B098);
+void func_8015B098(void) {
+    if ((g_EntityArray[PLAYER_CHARACTER].animationFrame == 0xB5) &&
+        (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration == 1)) {
+        func_801606BC(g_CurrentEntity, 0x23, 0);
+        g_pfnPlaySfx(0x62F);
+    }
+
+    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+        func_8015CD98(0);
+        D_80072F66 = 0;
+        func_801606BC(g_CurrentEntity, 0x450021, 0);
+        *D_80072F00 = 0x800;
+    }
+
+    if (!(D_80072F20 & 1)) {
+        func_8015CF08();
+        D_80072F66 = 0;
+        func_801606BC(g_CurrentEntity, 0x450021, 0);
+        *D_80072F00 = 0x800;
+    }
+}
 
 void func_8015B18C(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
@@ -288,10 +308,10 @@ void func_8015CCC8(s32 arg0, s32 arg1) {
     }
 }
 
-void func_8015CD98(s32 arg0) {
+void func_8015CD98(s32 accelerationX) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->accelerationX = arg0;
+    player->accelerationX = accelerationX;
     player->accelerationY = 0;
     D_80072F64 = 0;
     func_8015C908(0);
