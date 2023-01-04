@@ -4829,6 +4829,7 @@ void func_8012CFF0(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D024);
 
 void func_8012D178(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
     s32 var_v0;
 
     if (D_80072EEC & 0x40) {
@@ -4837,7 +4838,7 @@ void func_8012D178(void) {
     } else if (!(D_80072F20 & 1)) {
         func_8012CFA8();
         return;
-    } else if (D_800733EC != 0) {
+    } else if (player->facing != 0) {
         var_v0 = D_80072EE8 & 0x8000;
     } else {
         var_v0 = D_80072EE8 & 0x2000;
