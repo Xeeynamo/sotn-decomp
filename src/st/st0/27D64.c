@@ -267,13 +267,13 @@ void EntityDraculaFireball(Entity* entity) {
         if (entity->subId == 2) {
             entity->accelerationY = 0x8000;
         }
-        entity->unk8C = 0x28;
+        entity->unk8C.modeU16.unk0 = 0x28;
 
     case 1:
         AnimateEntity(D_8018097C, entity);
         MoveEntity();
-        temp_v0 = entity->unk8C - 1;
-        entity->unk8C = temp_v0;
+        temp_v0 = entity->unk8C.modeU16.unk0 - 1;
+        entity->unk8C.modeU16.unk0 = temp_v0;
 
         if ((temp_v0 << 0x10) == 0) {
             entity->accelerationY = 0;

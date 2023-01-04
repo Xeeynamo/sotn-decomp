@@ -3224,7 +3224,34 @@ void func_80102DEC(s32 context) {
     D_80137E68 = context;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102E04);
+s32 func_80102E04(void) {
+    u32 new_var2 = D_80137E68;
+    s32 temp_s0 = D_80137E64;
+
+    switch (temp_s0) {
+    case 0:
+        func_800E92E4();
+        D_80137E50 = 4;
+        D_80137E64++;
+        do { // !FAKE:
+        } while (0);
+        return 0;
+
+    case 1:
+        if (func_800E9B18(new_var2, 0) != temp_s0) {
+            D_80137E50 = D_80137E50 - 1;
+            if (D_80137E50 == (-1)) {
+                temp_s0 = -1;
+                return temp_s0;
+            }
+            return 0;
+        }
+        return 1;
+
+    default:
+        return 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102EB8);
 
@@ -3674,7 +3701,7 @@ void func_8010E234(s32 speed) {
 s32 func_8010E27C(void) {
     u16* facing;
 
-    if (*D_80072F64 & 2) {
+    if (D_80072F64 & 2) {
         return 0;
     }
 
@@ -3727,9 +3754,11 @@ void func_8010E3B8(s32 accelerationX) {
 }
 
 void func_8010E3E0(void) {
-    if (D_80072F68[0] != 0) {
+    // D_80072F68 is part of a struct, the temp isn't needed in that case
+    u16* temp = &D_80072F68;
+    if (*temp != 0) {
         func_80106590(&D_80073F98);
-        D_80072F68[0] = 0;
+        *temp = 0;
     }
 }
 
@@ -3762,6 +3791,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
 }
 #endif
 
+// This may be the function that turns Alucard into stone
 void func_8010E4D0(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
@@ -3774,9 +3804,9 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         player->accelerationY = 0;
         player->accelerationX = 0;
-        func_8010D584(6);
+        func_8010D584(ENTITY_STEP_6);
         func_80111CC0();
-        PlaySfx(0x6F2);
+        PlaySfx(NA_SE_VO_AL_WHAT);
         return;
     }
     func_80111CC0();
@@ -3807,15 +3837,45 @@ void func_8010E7AC(void) {
         D_80072F0A = 0;
     }
 
-    D_80072F64[0] = 0x10;
+    D_80072F64 = 0x10;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E83C);
+void func_8010E83C(s32 arg0) {
+    u16 temp;
+
+    if (D_80072F92 != 0) {
+        func_8010E7AC();
+        return;
+    } else if (func_8010E27C() != 0) {
+        func_8010DA48(0x1A);
+        func_8010E390(0x18000);
+        D_80072F64 = 0;
+    } else {
+        func_8010DA48(0x16);
+        D_800733E0 = 0;
+        D_80072F64 = 4;
+    }
+
+    D_800733E4 = 0xFFFB0000 | 0x2000;
+    func_8010D584(4);
+
+    if (D_80072F70 == 1) {
+        D_80072F64 |= 0x10;
+    }
+
+    if (arg0 != 0) {
+        temp = D_80072F64 & ~1;
+    } else {
+        temp = D_80072F64 | 1;
+    }
+    D_80072F64 = temp;
+}
 
 void func_8010E940(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
+    u16* temp = &D_80072F64;
 
-    D_80072F64[0] |= 0x21;
+    *temp |= 0x21;
     func_8010DA48(0x20);
     player->unk2E = 0;
     player->accelerationY = -0x44000;
@@ -3884,7 +3944,7 @@ void func_8010ED54(u8 arg0) {
     func_8010D584(0xF);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
-    D_80072F68[0] = 0;
+    D_80072F68 = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EDB8);
@@ -4163,7 +4223,7 @@ void func_80113EE0(void) {
     player->animationFrameIndex = 0;
     player->objectId = 0;
     player->blendMode = 0;
-    *D_80072F64 = 0;
+    D_80072F64 = 0;
     D_80072F66 = 0;
     player->unk1E = 0;
     player->zPriority = g_zEntityCenter.typeShort;
@@ -4828,7 +4888,32 @@ void func_8012CFF0(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D024);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D178);
+void func_8012D178(void) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+    s32 var_v0;
+
+    if (D_80072EEC & 0x40) {
+        func_8012CCE4();
+        return;
+    } else if (!(D_80072F20 & 1)) {
+        func_8012CFA8();
+        return;
+    } else if (player->facing != 0) {
+        var_v0 = D_80072EE8 & 0x8000;
+    } else {
+        var_v0 = D_80072EE8 & 0x2000;
+    }
+
+    if (var_v0 != 0) {
+        func_8012CB4C();
+        return;
+    } else if (D_80072F24 & 0x40) {
+        func_8012CA64();
+        return;
+    } else if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {
+        func_8011AAFC(g_CurrentEntity, 0x10045, 0);
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D28C);
 
@@ -5212,13 +5297,13 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134714);
 
-void PlaySfx(s16 sfxId) {
+void PlaySfx(s16 sfxId) { // call 0x6F2
     u16 offset;
 
     if (D_8013AEEC != 0) {
-        offset = (u32)(sfxId - 0x601);
-        if (offset < 0x2E0) {
-            D_801390DC[D_80139000].unk00 = sfxId - 0x600;
+        offset = (u32)(sfxId - 0x601);                    // offset = 0xF1
+        if (offset < 0x2E0) {                             // enters
+            D_801390DC[D_80139000].unk00 = sfxId - 0x600; // 0xF2
             D_801390DC[D_80139000].unk02 = 0xFFFF;
             D_801390DC[D_80139000].unk04 = 0;
             D_80139000++;

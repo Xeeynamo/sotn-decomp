@@ -79,7 +79,7 @@ typedef struct Unkstruct_8006C3CC {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct Unkstruct_8011A290 {
-    /* 0x00 */ u16 sp10;
+    /* 0x00 */ s16 sp10;
     /* 0x02 */ char pad2[0x2];
     /* 0x04 */ u16 sp14;
     /* 0x06 */ char pad6[0x1];
@@ -90,7 +90,7 @@ typedef struct Unkstruct_8011A290 {
     /* 0x0E */ u16 sp1E;
     /* 0x10 */ u8 sp20;
     /* 0x11 */ char pad11[0x1];
-    /* 0x12 */ u16 sp22;
+    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
 } Unkstruct_8011A290;
 
 typedef struct {
