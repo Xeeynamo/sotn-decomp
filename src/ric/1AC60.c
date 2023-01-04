@@ -446,9 +446,9 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801603C4);
 Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
     Entity* entity = func_8015F8F8(8, 0x10);
 
-    if (entity != 0) {
+    if (entity != NULL) {
         func_80156C60(entity);
-        entity->objectId = 1;
+        entity->objectId = ENTITY_BREAKABLE;
         entity->unk8C.entityPtr = srcEntity;
         entity->posX.value = srcEntity->posX.value;
         entity->posY.value = srcEntity->posY.value;
@@ -458,7 +458,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
         entity->unkA0 = (arg1 >> 8) & 0xFF00;
 
         if (srcEntity->unk34 & 0x10000) {
-            entity->unk34 = entity->unk34 | 0x10000;
+            entity->unk34 |= 0x10000;
         }
     } else {
         return NULL;
