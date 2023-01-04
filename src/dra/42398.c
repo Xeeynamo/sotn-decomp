@@ -3448,7 +3448,7 @@ void func_80106670(s32 blendMode) {
             entity++;
         }
     }
-    
+
     if (D_8009792C.unk0 < 0x400U) {
         SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
         AddPrim(temp_s7 + var_s8 * 4, sp20);
