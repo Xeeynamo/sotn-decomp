@@ -3224,7 +3224,34 @@ void func_80102DEC(s32 context) {
     D_80137E68 = context;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102E04);
+s32 func_80102E04(void) {
+    u32 new_var2 = D_80137E68;
+    s32 temp_s0 = D_80137E64;
+
+    switch (temp_s0) {
+    case 0:
+        func_800E92E4();
+        D_80137E50 = 4;
+        D_80137E64++;
+        do { // !FAKE:
+        } while (0);
+        return 0;
+
+    case 1:
+        if (func_800E9B18(new_var2, 0) != temp_s0) {
+            D_80137E50 = D_80137E50 - 1;
+            if (D_80137E50 == (-1)) {
+                temp_s0 = -1;
+                return temp_s0;
+            }
+            return 0;
+        }
+        return 1;
+
+    default:
+        return 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102EB8);
 
@@ -5274,8 +5301,8 @@ void PlaySfx(s16 sfxId) { // call 0x6F2
     u16 offset;
 
     if (D_8013AEEC != 0) {
-        offset = (u32)(sfxId - 0x601); // offset = 0xF1
-        if (offset < 0x2E0) { // enters
+        offset = (u32)(sfxId - 0x601);                    // offset = 0xF1
+        if (offset < 0x2E0) {                             // enters
             D_801390DC[D_80139000].unk00 = sfxId - 0x600; // 0xF2
             D_801390DC[D_80139000].unk02 = 0xFFFF;
             D_801390DC[D_80139000].unk04 = 0;

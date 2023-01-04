@@ -846,6 +846,7 @@ extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
 extern s32 D_80137E4C;
+extern s32 D_80137E50;
 extern s32 D_80137E64;
 extern s32 D_80137E68;
 extern s32 D_80137F6C;
