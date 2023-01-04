@@ -444,7 +444,8 @@ void func_801603BC(void) {}
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801603C4);
 
 Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
-    /**arg2 is unused, but needed to match other functions that call
+    /**
+     * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
      */
     Entity* entity = func_8015F8F8(8, 0x10);
