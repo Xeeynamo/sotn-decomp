@@ -3337,7 +3337,125 @@ void func_801065F4(s16 startIndex) {
 
 // Print debug hitboxes
 void func_80106670(s32 blendMode);
+
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106670);
+#else
+extern u32 D_80097944; // tile count?
+
+// https://decomp.me/scratch/iTgjO
+void func_80106670(s32 blendMode) {
+    const int MaxPolyCount = 0x100;
+    int new_var2 = 4;
+    DR_MODE* sp20;
+    GpuBuffer* temp_a0;
+    s32 absX;
+    s32 absX_2;
+    s32 absY;
+    s32 absY_2;
+    s32 polyCount;
+    s8* temp_s7;
+    Entity* entity;
+    TILE* tile;
+    u32* tileCount;
+    u32 var_s8 = 0x1F0;
+    s32 temp_var;
+    polyCount = 0;
+    temp_a0 = D_8006C37C;
+    entity = g_EntityArray;
+    temp_s7 = temp_a0->_unk_0474;
+    tile = &temp_a0->tiles[D_80097944];
+    sp20 = &temp_a0->drawModes[D_8009792C.unk0];
+    while (polyCount < 0x40) {
+        if (entity->unk3C != 0) {
+            s32 var_a0_2;
+            if (D_80097944 >= MaxPolyCount) {
+                break;
+            }
+            absY = (u16)entity->posY.Data.high + (u16)g_backbufferY;
+            absX = (u16)entity->posX.Data.high + (u16)g_backbufferX;
+            if (entity->facing != 0) {
+                var_a0_2 = absX - (u16)entity->unk10;
+            } else {
+                var_a0_2 = (u16)entity->unk10 + absX;
+            }
+            temp_var = absY + (u16)entity->unk12;
+            tile->r0 = 0xFF;
+            tile->g0 = 0xFF;
+            tile->b0 = 0xFF;
+            if (entity->unk3C == 2) {
+                tile->r0 = 0;
+                tile->g0 = 0xFF;
+                tile->b0 = 0;
+            }
+            tile->x0 = var_a0_2 - entity->hitboxWidth;
+            tile->y0 = temp_var - entity->hitboxHeight;
+            tile->w = 2;
+            tile->w = entity->hitboxWidth * tile->w;
+            tile->h = entity->hitboxHeight * 2;
+            SetSemiTrans(tile, 1);
+            AddPrim(temp_s7 + var_s8 * 4, tile);
+            tile++;
+            D_80097944++;
+        }
+        polyCount++;
+        entity++;
+    }
+
+    if (polyCount < MaxPolyCount) {
+        while (polyCount < MaxPolyCount) {
+            if (entity->unk3C != 0) {
+                s32 var_a0_2;
+                if (D_80097944 >= MaxPolyCount) {
+                    break;
+                }
+                absY_2 = (u16)entity->posY.Data.high + (u16)g_backbufferY;
+                absX_2 = (u16)entity->posX.Data.high + (u16)g_backbufferX;
+                if (entity->facing != 0) {
+                    var_a0_2 = absX_2 - (u16)entity->unk10;
+                } else {
+                    var_a0_2 = (u16)entity->unk10 + absX_2;
+                }
+                temp_var = absY_2 + (u16)entity->unk12;
+                tile->r0 = 0xFF;
+                tile->g0 = 0xFF;
+                tile->b0 = 0xFF;
+                if (entity->unk3C == 1) {
+                    tile->r0 = 0xFF;
+                    tile->g0 = 0;
+                    tile->b0 = 0;
+                }
+                if (entity->unk3C == 2) {
+                    tile->r0 = 0;
+                    tile->g0 = 0;
+                    tile->b0 = 0xFF;
+                }
+                if (entity->unk3C == 3) {
+                    tile->r0 = 0xFF;
+                    tile->g0 = 0;
+                    tile->b0 = 0xFF;
+                }
+                tile->x0 = var_a0_2 - entity->hitboxWidth;
+                tile->y0 = temp_var - entity->hitboxHeight;
+                tile->w = entity->hitboxWidth * 2;
+                tile->h = entity->hitboxHeight * 2;
+                SetSemiTrans(tile, 1);
+                AddPrim(temp_s7 + (var_s8 * (new_var2 = 4)), tile);
+                tile++;
+                D_80097944++;
+            }
+            polyCount++;
+            entity++;
+        }
+    }
+    
+    if (D_8009792C.unk0 < 0x400U) {
+        SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
+        AddPrim(temp_s7 + var_s8 * 4, sp20);
+        D_8009792C.unk0++;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106A28);
 
