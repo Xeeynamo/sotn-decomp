@@ -440,7 +440,7 @@ void func_8015FAB8(Entity* entity) {
     s32 temp;
     Unkstruct_8011A290* temp_v1 = (entity->unkB0 * 0x14) + (&D_80154688);
 
-    if ((*D_80072F1A) != 0) {
+    if ((*D_80072F1A) != NULL) {
         var_v0 = temp_v1->sp10 * 2;
     } else {
         var_v0 = temp_v1->sp10;
