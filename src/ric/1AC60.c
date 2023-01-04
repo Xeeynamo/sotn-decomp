@@ -3,17 +3,20 @@
 #include "objects.h"
 #include "sfx.h"
 
+extern s16 (*D_8003C890)(s16);
 s32 func_8015DBB0();
 void func_8015C93C();
 s32 func_8015C9CC();
-void func_8015CD98();
 void func_8015CA84();
+void func_8015CD98();
+void func_8015CDE0(s32);
 s32 func_8015CF08();
 s32 func_8015E380();
-void func_8015CDE0(s32);
+void func_8015F9F0(Entity* entity);
 Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 
 extern u16 D_80072F9A; // main.h?
+extern s8 D_80154688;
 extern s32 D_801554B0;
 extern s32 D_801553BC;
 extern s32 D_801554C0;
@@ -427,7 +430,36 @@ void func_8015FA5C(s32 arg0) {
 }
 #endif
 
+// aspsx
+// https://decomp.me/scratch/bRvg6
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FAB8);
+#else
+void func_8015FAB8(Entity* entity) {
+    u16 var_v0;
+    s32 temp;
+    Unkstruct_8011A290* temp_v1 = (entity->unkB0 * 0x14) + (&D_80154688);
+
+    if ((*D_80072F1A) != 0) {
+        var_v0 = temp_v1->sp10 * 2;
+    } else {
+        var_v0 = temp_v1->sp10;
+    }
+
+    entity->unk40 = var_v0;
+    entity->unk42 = temp_v1->sp14;
+    entity->unk3C = temp_v1->sp1C;
+    temp = entity->unk40;
+    entity->unk49 = temp_v1->sp17;
+    entity->unk58 = temp_v1->sp18;
+    entity->unk6A = temp_v1->sp1E;
+    entity->objectRoomIndex = temp_v1->sp22;
+    do {
+    } while (0);
+    entity->unk40 = D_8003C890(temp);
+    func_8015F9F0(entity);
+}
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015FB84);
 
@@ -472,7 +504,39 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160788);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160C38);
+#else
+void func_80160C38(Entity* entity) {
+    Entity* player = GET_PLAYER(g_EntityArray);
+
+    if (player->step == 0x17) {
+        entity->posX.Data.high = player->posX.Data.high;
+        entity->posY.Data.high = player->posY.Data.high;
+        entity->facing = player->facing;
+        if (entity->step == 0) {
+            entity->unk34 = 0x04060000;
+            entity->unk10 = 0x14;
+            entity->unk12 = 0xC;
+            entity->hitboxHeight = 9;
+            entity->hitboxWidth = 9;
+            entity->unkB0 = 0x12;
+            func_8015FAB8(entity);
+            entity->unk7C.modeS16 = entity->unk3C;
+            entity->step += 1;
+        }
+        entity->unk3C = entity->unk7C.modeS16;
+        if (player->animationFrameIndex < 2) {
+            entity->unk3C = 0;
+        }
+        if ((player->animationFrameIndex >= 8)) {
+            func_80156C60(entity);
+        }
+    } else {
+        func_80156C60(entity);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160D2C);
 
