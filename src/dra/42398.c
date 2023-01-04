@@ -3338,7 +3338,7 @@ void func_801065F4(s16 startIndex) {
 // Print debug hitboxes
 void func_80106670(s32 blendMode);
 
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80106670);
 #else
 extern u32 D_80097944; // tile count?
