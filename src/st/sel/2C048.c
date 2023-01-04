@@ -26,6 +26,7 @@ extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
 extern /*?*/ s32 D_801808DC[];
+extern u16 D_801808E4[];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
 extern s32* D_801963FC;
@@ -1117,7 +1118,15 @@ s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8DB0);
+void func_801B8DB0(u16* arg0, s32 arg1) {
+    s32 i;
+    u16* var_v1;
+
+    var_v1 = &(D_801808E4-1)[arg1 * 0x10]; // FAKE
+    var_v1++;
+    for (i = 0; i < 0x10; i++)
+        *arg0++ = *var_v1++;
+}
 
 void func_801B8DE8(u8* dst, s32 arg1) {
     s32 i;
