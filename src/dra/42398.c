@@ -5274,8 +5274,8 @@ void PlaySfx(s16 sfxId) { // call 0x6F2
     u16 offset;
 
     if (D_8013AEEC != 0) {
-        offset = (u32)(sfxId - 0x601); // offset = 0xF1
-        if (offset < 0x2E0) { // enters
+        offset = (u32)(sfxId - 0x601);                    // offset = 0xF1
+        if (offset < 0x2E0) {                             // enters
             D_801390DC[D_80139000].unk00 = sfxId - 0x600; // 0xF2
             D_801390DC[D_80139000].unk02 = 0xFFFF;
             D_801390DC[D_80139000].unk04 = 0;
