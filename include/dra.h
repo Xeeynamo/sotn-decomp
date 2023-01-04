@@ -112,7 +112,7 @@ typedef struct Entity {
     /* 0x34 */ s32 unk34;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 unk3A;
-    /* 0x3C */ s16 unk3C;
+    /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 unk40;
     /* 0x42 */ s16 unk42;
@@ -659,6 +659,7 @@ extern s32 D_80097924;
 extern s32 D_80097928;
 extern Unkstruct_Entrypoint D_8009792C;
 extern s32 D_80097934;
+extern u32 D_80097944;
 extern u8 D_80097964[];
 extern u8 D_8009796E;
 extern u8 D_8009798A;
