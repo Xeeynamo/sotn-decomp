@@ -3727,9 +3727,10 @@ void func_8010E3B8(s32 accelerationX) {
 }
 
 void func_8010E3E0(void) {
-    if (D_80072F68[0] != 0) {
+    u16* temp = &D_80072F68;
+    if (*temp != 0) {
         func_80106590(&D_80073F98);
-        D_80072F68[0] = 0;
+        *temp = 0;
     }
 }
 
@@ -3914,7 +3915,7 @@ void func_8010ED54(u8 arg0) {
     func_8010D584(0xF);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
-    D_80072F68[0] = 0;
+    D_80072F68 = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EDB8);
