@@ -3778,7 +3778,7 @@ void func_8010E4D0(void) {
         player->accelerationX = 0;
         func_8010D584(6);
         func_80111CC0();
-        PlaySfx(0x6F2);
+        PlaySfx(NA_SE_VO_AL_WHAT);
         return;
     }
     func_80111CC0();
