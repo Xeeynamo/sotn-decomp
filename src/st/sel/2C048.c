@@ -1122,7 +1122,7 @@ void func_801B8DB0(u16* arg0, s32 arg1) {
     s32 i;
     u16* var_v1;
 
-    var_v1 = &(D_801808E4-1)[arg1 * 0x10]; // FAKE
+    var_v1 = &(D_801808E4 - 1)[arg1 * 0x10]; // FAKE
     var_v1++;
     for (i = 0; i < 0x10; i++)
         *arg0++ = *var_v1++;
