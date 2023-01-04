@@ -3316,7 +3316,7 @@ void func_8018A424(s16 arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
 void func_8018A520(s16);
 
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", LoadObjLayout);
 #else
 void LoadObjLayout(s32 objLayoutId) {
