@@ -5015,14 +5015,14 @@ void func_8012B78C(Entity* entity) {
         } else {
             goto label;
         }
-        goto block_12;
+        goto label2;
 
     case ENTITY_STEP_1:
         if (++entity->unk7C.modeS16 > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;
-        goto block_12;
+        goto label2;
 
     case ENTITY_STEP_2:
     label:
@@ -5030,7 +5030,7 @@ void func_8012B78C(Entity* entity) {
         break;
 
     default:
-    block_12:
+    label2:
         poly1 = &D_80086FEC[entity->firstPolygonIndex];
         poly1->r0 = poly1->r1 = poly1->r2 = poly1->r3 = poly1->g0 = poly1->g1 =
             poly1->g2 = poly1->g3 = poly1->b0 = poly1->b1 = poly1->b2 =
