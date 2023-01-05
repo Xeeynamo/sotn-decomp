@@ -5390,7 +5390,7 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note, s16 arg5,
     s16 var_a0;
     s16 var_a1;
     volatile short pad;
-    
+
     if (arg6 == 0) {
         D_80138FB8 = arg5;
         D_80139004 = arg5;
@@ -5401,7 +5401,8 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note, s16 arg5,
 
     if (voice < 0x18U) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
-        SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8, D_80139004);
+        SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8,
+                   D_80139004);
         return;
     }
     switch (voice) {
@@ -5424,7 +5425,8 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note, s16 arg5,
     default:
         return;
     }
-    func_801327B4(var_a0, var_a1, vabId, prog, tone, note, D_80138FB8, D_80139004);
+    func_801327B4(var_a0, var_a1, vabId, prog, tone, note, D_80138FB8,
+                  D_80139004);
 }
 #endif
 
