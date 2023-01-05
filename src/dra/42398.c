@@ -5373,7 +5373,60 @@ void func_80132760(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801327B4);
 
+// https://decomp.me/scratch/0X5YL
+// Only stack
+// decompme output is different, local repo does a better match
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132A04);
+#else
+void func_801327B4(s16, s16, s16, s16, s16, s16, s16, s16);
+extern s16 D_800BD19C[];
+extern s16 D_800BD19E[];
+extern s16 D_80138FB8; // vol_l
+extern s16 D_80139004; // vol_r
+
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note, s16 arg5,
+                   s16 arg6) {
+    s16 var_a0;
+    s16 var_a1;
+    volatile short pad;
+    
+    if (arg6 == 0) {
+        D_80138FB8 = arg5;
+        D_80139004 = arg5;
+    } else {
+        D_80139004 = (arg5 * D_800BD19C[arg6 * 2]) >> 7;
+        D_80138FB8 = (arg5 * D_800BD19E[arg6 * 2]) >> 7;
+    }
+
+    if (voice < 0x18U) {
+        SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
+        SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8, D_80139004);
+        return;
+    }
+    switch (voice) {
+    case 0x1E:
+        var_a0 = 0;
+        var_a1 = 4;
+        break;
+    case 0x1F:
+        var_a0 = 4;
+        var_a1 = 8;
+        break;
+    case 0x20:
+        var_a0 = 8;
+        var_a1 = 0xC;
+        break;
+    case 0x21:
+        var_a0 = 0xE;
+        var_a1 = 0x12;
+        break;
+    default:
+        return;
+    }
+    func_801327B4(var_a0, var_a1, vabId, prog, tone, note, D_80138FB8, D_80139004);
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132C2C);
 
@@ -5635,7 +5688,17 @@ void func_801353A0(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135484);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80135624);
+void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
+    if (arg2 != 0) {
+        D_80138F28 |= (1 << ((arg1 + 6) * 2)) + (1 << (((arg1 + 6) * 2) + 1));
+    }
+    func_80132A04((arg1 * 2) + 12, D_800BF554[arg0 * 7], D_800BF555[arg0 * 7],
+                  D_800BF559[arg0 * 7], D_800BF556[arg0 * 7], arg3, arg4);
+    do { // !FAKE:
+    } while (0);
+    D_8013B650[arg1] = arg0;
+    D_8013AED4[arg1] = D_800BF55A[arg0 * 7];
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013572C);
 
