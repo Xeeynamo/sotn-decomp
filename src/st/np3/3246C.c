@@ -107,10 +107,10 @@ void func_801B2830(Entity* entity) {
     case 1:
         D_8003CB25 = entity->unk7C.modeU8.unk0;
         D_8003CB26 = entity->unk7C.modeU8.unk1;
-        D_8003CB27 = entity->unk7E;
+        D_8003CB27 = entity->unk7E.modeU8.unk0;
         D_80054319 = entity->unk7C.modeU8.unk0;
         D_8005431A = entity->unk7C.modeU8.unk1;
-        D_8005431B = entity->unk7E;
+        D_8005431B = entity->unk7E.modeU8.unk0;
     }
 }
 #endif

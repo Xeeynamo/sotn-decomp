@@ -1208,7 +1208,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB58);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
 #else
-s16 func_800EDC80(u8 arg0, s32 arg1) {
+s32 func_800EDC80(u8 arg0, s32 arg1) {
     s32 phi_s2 = 0;
     POLY_GT4* phi_s1 = D_80086FEC;
     u8* phi_s0 = &D_80086FEC->code;
@@ -3228,12 +3228,13 @@ s32 func_80102E04(void) {
     u32 new_var2 = D_80137E68;
     s32 temp_s0 = D_80137E64;
 
-    switch (D_80137E64) {
+    switch (temp_s0) {
     case 0:
         func_800E92E4();
         D_80137E50 = 4;
         D_80137E64++;
         break;
+
     case 1:
         if (func_800E9B18(new_var2, 0) != temp_s0) {
             D_80137E50 = D_80137E50 - 1;
@@ -3732,7 +3733,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
     }
 
     g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk0 = 1;
-    g_EntityArray[UNK_ENTITY_1].unk7E = 10;
+    g_EntityArray[UNK_ENTITY_1].unk7E.modeU8.unk0 = 10;
 
     if (arg1 != 0) {
         if (arg1 < 4) {
@@ -3746,7 +3747,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 void func_8010E0A8(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
-    entity->unk7E = 0;
+    entity->unk7E.modeU8.unk0 = 0;
 }
 
 void func_8010E0B8(void) {
@@ -4914,7 +4915,61 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012A528);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012A89C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012B78C);
+void func_8012B78C(Entity* entity) {
+    POLY_GT4* poly1;
+    POLY_GT4* poly2;
+    s32 ret;
+
+    switch (entity->step) {
+    case ENTITY_STEP_0:
+        ret = func_800EDC80(4, 1);
+        entity->firstPolygonIndex = ret;
+        if (entity->firstPolygonIndex != -1) {
+            entity->unk34 = 0x04820000;
+            poly2 = poly1 = &D_80086FEC[entity->firstPolygonIndex];
+            poly2->tpage = 0x1C;
+            poly2->clut = 0x19D;
+            poly1->u2 = 0x20;
+            poly2->u0 = 0x20;
+            poly2->u3 = 0x30;
+            poly2->u1 = 0x30;
+            poly1->v1 = 0;
+            poly2->v0 = 0;
+            poly1->v3 = 0x10;
+            poly1->v2 = 0x10;
+            poly1->x0 = poly2->x2 = entity->posX.Data.high - 8;
+            poly1->x1 = poly2->x3 = entity->posX.Data.high + 8;
+            poly2->y0 = poly2->y1 = entity->posY.Data.high - 8;
+            poly2->y2 = poly2->y3 = entity->posY.Data.high + 8;
+            poly1->pad2 = entity->zPriority;
+            poly2->pad3 = 0x115;
+            entity->unk7E.modeU16 = 0x60U;
+            entity->step++;
+        } else {
+            goto label;
+        }
+        goto block_12;
+
+    case ENTITY_STEP_1:
+        if (++entity->unk7C.modeS16 > 5) {
+            entity->step++;
+        }
+        entity->unk7E.modeU16 -= 8;
+        goto block_12;
+
+    case ENTITY_STEP_2:
+    label:
+        func_80106590(entity);
+        break;
+
+    default:
+    block_12:
+        poly1 = &D_80086FEC[entity->firstPolygonIndex];
+        poly1->r0 = poly1->r1 = poly1->r2 = poly1->r3 = poly1->g0 = poly1->g1 =
+            poly1->g2 = poly1->g3 = poly1->b0 = poly1->b1 = poly1->b2 =
+                poly1->b3 = entity->unk7E.modeU8.unk0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012B990);
 

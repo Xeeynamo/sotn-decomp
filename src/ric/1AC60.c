@@ -269,8 +269,8 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CB58);
 void func_8015CC28(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
-    entity->unk7F = 0;
-    entity->unk7E = 0;
+    entity->unk7E.modeU8.unk1 = 0;
+    entity->unk7E.modeU8.unk0 = 0;
     entity->unk7C.modeU8.unk1 = 0;
     entity->unk7C.modeU8.unk0 = 0;
 }
@@ -504,17 +504,18 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160788);
 
+// move a0,s0
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160C38);
 #else
 void func_80160C38(Entity* entity) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    if (player->step == 0x17) {
+    if (player->step == ENTITY_STEP_17) {
         entity->posX.Data.high = player->posX.Data.high;
         entity->posY.Data.high = player->posY.Data.high;
         entity->facing = player->facing;
-        if (entity->step == 0) {
+        if (entity->step == ENTITY_STEP_0) {
             entity->unk34 = 0x04060000;
             entity->unk10 = 0x14;
             entity->unk12 = 0xC;
@@ -523,13 +524,13 @@ void func_80160C38(Entity* entity) {
             entity->unkB0 = 0x12;
             func_8015FAB8(entity);
             entity->unk7C.modeS16 = entity->unk3C;
-            entity->step += 1;
+            entity->step++;
         }
         entity->unk3C = entity->unk7C.modeS16;
         if (player->animationFrameIndex < 2) {
             entity->unk3C = 0;
         }
-        if ((player->animationFrameIndex >= 8)) {
+        if (player->animationFrameIndex >= 8) {
             func_80156C60(entity);
         }
     } else {
@@ -718,7 +719,61 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8017161C);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801719A4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80172AE8);
+void func_80172AE8(Entity* entity) {
+    POLY_GT4* poly1;
+    POLY_GT4* poly2;
+    s32 ret;
+
+    switch (entity->step) {
+    case ENTITY_STEP_0:
+        ret = D_8003C7B8(4, 1);
+        entity->firstPolygonIndex = ret;
+        if (entity->firstPolygonIndex != -1) {
+            entity->unk34 = 0x04820000;
+            poly2 = poly1 = &D_80086FEC[entity->firstPolygonIndex];
+            poly2->tpage = 0x1C;
+            poly2->clut = 0x19D;
+            poly1->u2 = 0x20;
+            poly2->u0 = 0x20;
+            poly2->u3 = 0x30;
+            poly2->u1 = 0x30;
+            poly1->v1 = 0;
+            poly2->v0 = 0;
+            poly1->v3 = 0x10;
+            poly1->v2 = 0x10;
+            poly1->x0 = poly2->x2 = entity->posX.Data.high - 8;
+            poly1->x1 = poly2->x3 = entity->posX.Data.high + 8;
+            poly2->y0 = poly2->y1 = entity->posY.Data.high - 8;
+            poly2->y2 = poly2->y3 = entity->posY.Data.high + 8;
+            poly1->pad2 = entity->zPriority;
+            poly2->pad3 = 0x115;
+            entity->unk7E.modeU16 = 0x60U;
+            entity->step++;
+        } else {
+            goto label;
+        }
+        goto block_12;
+
+    case ENTITY_STEP_1:
+        if (++entity->unk7C.modeS16 > 5) {
+            entity->step++;
+        }
+        entity->unk7E.modeU16 -= 8;
+        goto block_12;
+
+    case ENTITY_STEP_2:
+    label:
+        func_80156C60(entity);
+        break;
+
+    default:
+    block_12:
+        poly1 = &D_80086FEC[entity->firstPolygonIndex];
+        poly1->r0 = poly1->r1 = poly1->r2 = poly1->r3 = poly1->g0 = poly1->g1 =
+            poly1->g2 = poly1->g3 = poly1->b0 = poly1->b1 = poly1->b2 =
+                poly1->b3 = entity->unk7E.modeU8.unk0;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80172D00);
 

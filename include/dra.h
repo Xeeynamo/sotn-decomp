@@ -141,8 +141,15 @@ typedef struct Entity {
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
     /* 0x7C */ unkUnion3 unk7C;
-    /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
+    union {
+        /* 0x7E */ u16 modeU16;
+        struct {
+            /* 0x7E */ u8 unk0;
+            /* 0x7F */ u8 unk1;
+        } modeU8;
+    } unk7E;
+    ///* 0x7E */ u8 unk7E;
+    ///* 0x7F */ u8 unk7F;
     union {
         /* 0x80 */ struct Entity* entityPtr;
         /* 0x80 */ s32 modeS32;
@@ -302,6 +309,7 @@ typedef enum {
     ENTITY_STEP_5,
     ENTITY_STEP_6,
     ENTITY_STEP_7,
+    ENTITY_STEP_17 = 0x17,
     ENTITY_STEP_19 = 0x19
 } EntitySteps;
 
@@ -366,6 +374,7 @@ extern void (*g_pfnLoadObjLayout)(void);
 #endif
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
+extern s16 (*D_8003C7B8)(s32, s32);
 extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
@@ -965,7 +974,7 @@ void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
 void func_800EDA94(void);
 void func_800EDAE4(void);
-s16 func_800EDC80(u8 arg0, s32 arg1);
+s32 func_800EDC80(u8 arg0, s32 arg1);
 s32 func_800EDD9C(u8 arg0, s32 arg1);
 void func_800EFBF8(void);
 void FreePolygons(s32 index);
