@@ -344,10 +344,10 @@ typedef struct PlayerHP {
     s32 max;
 } PlayerHP;
 
-typedef struct PlayerMp {
+typedef struct PlayerMP {
     s32 current;
     s32 max;
-} PlayerMp;
+} PlayerMP;
 
 typedef struct {
     s32 hours;
@@ -682,7 +682,7 @@ extern PlayerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
 extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
-extern PlayerMp g_playerMp;
+extern PlayerMP g_playerMP;
 extern s32 g_playerMpMax;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;

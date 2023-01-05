@@ -2191,9 +2191,9 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuChar(0xF, 0xB0, 0x38, context);
         DrawMenuInt(g_playerHpMax, 0xD0, 0x38, context);
         DrawMenuStr(c_strMP, 0x60, 0x44, context);
-        DrawMenuInt(g_playerMp.current, 0xA8, 0x44, context);
+        DrawMenuInt(g_playerMP.current, 0xA8, 0x44, context);
         DrawMenuChar(0xF, 0xB0, 0x44, context);
-        DrawMenuInt(g_playerMp.max, 0xD0, 0x44, context);
+        DrawMenuInt(g_playerMP.max, 0xD0, 0x44, context);
         DrawMenuStr(c_strHEART, 0x60, 0x50, context);
         DrawMenuInt(g_playerHeart, 0xA8, 0x50, context);
         DrawMenuChar(0xF, 0xB0, 0x50, context);
@@ -2788,10 +2788,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDB18);
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
 
-    if (g_playerMp.current < (s32)temp) {
+    if (g_playerMP.current < (s32)temp) {
         return false;
     } else {
-        g_playerMp.current -= temp;
+        g_playerMP.current -= temp;
         return true;
     }
 }
@@ -2828,9 +2828,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE3C4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE728);
 
 bool func_800FE8B4(s32 arg0, s32 arg1) {
-    if (g_playerMp.current >= arg0) {
+    if (g_playerMP.current >= arg0) {
         if (arg1 != 0) {
-            g_playerMp.current -= arg0;
+            g_playerMP.current -= arg0;
         }
         return false;
     }
@@ -2872,13 +2872,13 @@ void func_800FEE6C(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FEEA4);
 
 s32 func_800FF064(s32 arg0) {
-    s32 playerMp;
+    s32 playerMP;
 
-    playerMp = g_playerMp.current - 4;
+    playerMP = g_playerMP.current - 4;
 
-    if (playerMp > 0) {
+    if (playerMP > 0) {
         if (arg0 != 0) {
-            g_playerMp.current = playerMp;
+            g_playerMP.current = playerMP;
         }
         return 0;
     }
