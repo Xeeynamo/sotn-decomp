@@ -1555,7 +1555,7 @@ void func_800F2404(s32 arg0) {
         D_800973FC = 0;
     }
 
-    temp = &D_80097400;
+    temp = D_80097400;
     *temp = 0;
     D_8003C704 = 0;
     D_80097418 = 0;
@@ -2436,7 +2436,7 @@ void func_800F96F4(void) { // !Fake:
     new_var = &D_80137848;
     poly = &D_80086FEC[D_80137840];
     temp_a2 = D_80137692 == 0;
-    temp = &D_80137844;
+    temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
         (&D_80086FEC[D_80137840])->pad3 = 0x80;
@@ -2450,7 +2450,7 @@ void func_800F96F4(void) { // !Fake:
         poly->pad3 = 8;
     }
 
-    poly2 = poly->tag;
+    poly2 = (unkStruct3*)poly->tag;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
@@ -4625,7 +4625,7 @@ loop_1: // !FAKE: this should be a for loop
     if (objectId != 0) {
         if (entity->step == ENTITY_STEP_0) {
             if ((u32)(entity->objectId - 0xD0) < 0x10) {
-                entity->pfnUpdate = D_8016FCC0[objectId];
+                entity->pfnUpdate = (PfnEntityUpdate)D_8016FCC0[objectId];
             } else {
                 goto label;
             }
