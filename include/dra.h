@@ -148,8 +148,6 @@ typedef struct Entity {
             /* 0x7F */ u8 unk1;
         } modeU8;
     } unk7E;
-    ///* 0x7E */ u8 unk7E;
-    ///* 0x7F */ u8 unk7F;
     union {
         /* 0x80 */ struct Entity* entityPtr;
         /* 0x80 */ s32 modeS32;
@@ -310,7 +308,8 @@ typedef enum {
     ENTITY_STEP_6,
     ENTITY_STEP_7,
     ENTITY_STEP_17 = 0x17,
-    ENTITY_STEP_19 = 0x19
+    ENTITY_STEP_19 = 0x19,
+    ENTITY_STEP_22 = 0x22
 } EntitySteps;
 
 typedef enum { MONO, STEREO } SoundMode;
@@ -533,6 +532,7 @@ extern u16 D_80072F68;
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern u16 D_80072F70;
+extern u16 D_80072F7C;
 extern u16 D_80072F86;
 extern u16 D_80072F88;
 extern u16 D_80072F92;
