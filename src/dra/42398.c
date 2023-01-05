@@ -5584,13 +5584,13 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134714);
 
-void PlaySfx(s16 sfxId) { // call 0x6F2
+void PlaySfx(s16 sfxId) {
     u16 offset;
 
     if (D_8013AEEC != 0) {
-        offset = (u32)(sfxId - 0x601);                    // offset = 0xF1
-        if (offset < 0x2E0) {                             // enters
-            D_801390DC[D_80139000].unk00 = sfxId - 0x600; // 0xF2
+        offset = (u32)(sfxId - 0x601);
+        if (offset < 0x2E0) {
+            D_801390DC[D_80139000].unk00 = sfxId - 0x600;
             D_801390DC[D_80139000].unk02 = 0xFFFF;
             D_801390DC[D_80139000].unk04 = 0;
             D_80139000++;
