@@ -411,7 +411,7 @@ const s8 D_80180530[] = {
     /* 536 */ 0x00,
     /* 537 */ 0x00,
 };
-const s16 D_80180538[] = {
+const u16 D_80180538[] = {
     /* 538 */ 0x0000,
     /* 53A */ 0x0000,
     /* 53C */ 0x0600,
@@ -2525,11 +2525,10 @@ void func_80186FD0(Entity* arg0) {
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
-void func_801870B0(Entity* entity);
 #else
 void func_801870B0(Entity* entity) {
     s32 temp_v0;
-    s32 temp_v1;
+    u16 temp_v0_3;
     u16* temp_v0_2;
     u16 temp_s1;
     u16 phi_v1;
@@ -2538,40 +2537,40 @@ void func_801870B0(Entity* entity) {
     temp_s1 = entity->subId;
     entity->unk6D = 0;
     if (entity->step != 0) {
-        temp_v1 = temp_s1;
-        if (temp_v1 > 3) {
-            if (temp_v1 > 5) {
-                if (temp_v1 != 6) {
-                test_2:
-                    if (g_CurrentRoomX)
-                        return;
-                } else {
-                    if (g_pads->pressed & PAD_TRIANGLE) {
-                        g_CurrentRoomX = 0;
-                        g_CurrentRoomWidth = 1280;
-                        entity->step++;
-                        return;
-                    }
-                }
-            } else {
-                goto test_2;
+        switch (temp_s1) {
+        case 4:
+        case 5:
+            if (g_CurrentRoomX != 0) {
+                return;
             }
+            break;
+        case 6:
+            if (g_pads->pressed & PAD_TRIANGLE) {
+                g_CurrentRoomX = 0;
+                g_CurrentRoomWidth = 1280;
+                do {
+                    entity->step++;
+                } while (0); // FAKE
+                return;
+            }
+            break;
         }
 
         if (entity->unk44 != 0) {
             temp_v0 = func_8018B970();
-            if (entity->unk7C.modeS16 != 0) {
+            phi_v1 = entity->unk7C.modeS16;
+            if (phi_v1 != 0) {
                 phi_v1 = (temp_v0 & 2) * 2;
             } else {
                 phi_v1 = (temp_v0 & 1) * 4;
             }
 
-            unk = phi_v1 + temp_s1 * 8;
-            temp_v0_2 = D_80180538 + unk;
-            g_CurrentRoomX = (s32)*temp_v0_2++;
-            g_CurrentRoomY = (s32)*temp_v0_2++;
-            g_CurrentRoomWidth = (s32)*temp_v0_2++;
-            g_CurrentRoomHeight = (s32)*temp_v0_2++;
+            unk = temp_s1 * 8 + phi_v1;
+            temp_v0_2 = &D_80180538[unk];
+            g_CurrentRoomX = *temp_v0_2++;
+            g_CurrentRoomY = *temp_v0_2++;
+            g_CurrentRoomWidth = *temp_v0_2++;
+            g_CurrentRoomHeight = *temp_v0_2++;
         }
     } else {
         u8 temp_v0_5;
@@ -2589,6 +2588,7 @@ void func_801870B0(Entity* entity) {
 }
 #endif
 
+void func_801870B0(Entity* entity);
 void SpawnExplosionEntity(u16 objectId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
 void EntityBreakable(Entity* entity) {
