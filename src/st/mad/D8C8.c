@@ -15,9 +15,6 @@ void func_80190C78(s16);
 void SpawnExplosionEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void ReplaceBreakableWithItemDrop(Entity*);
-void EntityItemDrop(Entity*);
-void EntityHeartDrop(Entity*);
-void EntityExplosion(Entity*);
 void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2);
 void func_80198BC8(void* const, s32);
 void func_8019344C(void);
@@ -873,14 +870,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityItemDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = EntityInventoryDrop;
     }
 
     entity->subId = var_v1;
@@ -1009,7 +1006,7 @@ Entity* func_801939C4(void) {
     return D_8006C26C;
 }
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityItemDrop);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
@@ -1063,16 +1060,16 @@ void func_80194314(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityHeartDrop);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityInventoryDrop);
 
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityRelicItem);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityRelicOrb);
 
 // v1 -> a0 reg swap
 // https://decomp.me/scratch/h3CVU
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityInventoryItem);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityHeartDrop);
 #else
-void EntityInventoryItem(Entity* entity, u32 arg1) {
+void EntityHeartDrop(Entity* entity, u32 arg1) {
     u16 temp_v0_2;
     u16 temp_v1;
     u16 var_v1;
@@ -1092,9 +1089,9 @@ void EntityInventoryItem(Entity* entity, u32 arg1) {
         var_v1 = D_80180F5C[temp_a0];
 
         if (var_v1 < 0x80) {
-            entity->unkB8.unkFuncB8 = EntityItemDrop;
+            entity->unkB8.unkFuncB8 = EntityPriceDrop;
         } else {
-            entity->unkB8.unkFuncB8 = EntityHeartDrop;
+            entity->unkB8.unkFuncB8 = EntityInventoryDrop;
             var_v1 -= 0x80;
         }
 
