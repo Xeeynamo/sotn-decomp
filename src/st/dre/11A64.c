@@ -8,7 +8,6 @@
 
 void ReplaceBreakableWithItemDrop(Entity* arg0);
 void DestroyEntity(Entity* entity);
-void EntityExplosion(Entity*);
 void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
@@ -16,14 +15,10 @@ void func_801992C8(s16);
 void func_801A046C(u16);
 s32 func_8019AC78(u8, s16);
 void PreventEntityFromRespawning(Entity* entity);
-void EntityCandleDrop(struct Entity*);
-void EntityCandleHeartDrop(struct Entity*);
 void FallEntity(void);
 void func_8019B858(void);
 void SpawnExplosionEntity(u16 objectId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
-void EntityItemDrop(struct Entity*);
-void EntityHeartDrop(struct Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
@@ -717,14 +712,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityItemDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = EntityInventoryDrop;
     }
 
     entity->subId = var_v1;
@@ -839,7 +834,7 @@ void CollectLifeVessel(void) {
 
 void func_8019BDA0(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityItemDrop);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
@@ -905,13 +900,13 @@ void func_8019C738(Entity* entity, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityHeartDrop);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019CDC4);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityRelicItem);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityInventoryItem);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019DC6C);
 

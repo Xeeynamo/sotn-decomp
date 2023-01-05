@@ -303,54 +303,38 @@ const LayoutObject* const D_80180310[] = {
 // *** Layout object definition end ***
 
 // *** Object definition start ***
-void EntityBreakable(Entity*);
-void EntityExplosion(Entity*);
-void EntityItemDrop(Entity*);
-void EntityNumericDamage(Entity*);
-void EntityRedDoor(Entity*);
-void EntityIntenseExplosion(Entity*);
-void EntityAbsorbOrb(Entity*);
-void EntityRoomForeground(Entity*);
-void EntityStageNamePopup(Entity*);
-void EntityHeartDrop(Entity*);
-void EntityRelicItem(Entity*);
-void EntityInventoryItem(Entity*);
-void EntityEnemyBlood(Entity*);
-void EntityUnkId0D(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
 void func_8018F510(Entity*);
 void func_8018F838(Entity*);
 void func_8018F928(Entity*);
-void func_801873A0(Entity*);
-void func_80187F1C(Entity*);
+void EntityWarpRoom(Entity*);
+void EntityWarpSmallRocks(Entity*);
 const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3E0 */ (PfnEntityUpdate)D_80181400,
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
-    /* 3EC */ (PfnEntityUpdate)EntityItemDrop,
+    /* 3EC */ (PfnEntityUpdate)EntityPriceDrop,
     /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
     /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
     /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
     /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
     /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
-    /* 408 */ (PfnEntityUpdate)EntityHeartDrop,
-    /* 40C */ (PfnEntityUpdate)EntityRelicItem,
-    /* 410 */ (PfnEntityUpdate)EntityInventoryItem,
+    /* 408 */ (PfnEntityUpdate)EntityInventoryDrop,
+    /* 40C */ (PfnEntityUpdate)EntityRelicOrb,
+    /* 410 */ (PfnEntityUpdate)EntityHeartDrop,
     /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
-    /* 418 */ (PfnEntityUpdate)EntityUnkId0D,
+    /* 418 */ (PfnEntityUpdate)EntityUnkId0E,
     /* 41C */ (PfnEntityUpdate)EntityDummy,
     /* 420 */ (PfnEntityUpdate)EntityDummy,
-    /* 424 */ (PfnEntityUpdate)func_80186FD0,
-    /* 428 */ (PfnEntityUpdate)func_801870B0,
+    /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
+    /* 428 */ (PfnEntityUpdate)func_801870B0, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)func_8018F510,
     /* 430 */ (PfnEntityUpdate)func_8018F838,
     /* 434 */ (PfnEntityUpdate)func_8018F928,
-    /* 438 */ (PfnEntityUpdate)func_801873A0,
-    /* 43C */ (PfnEntityUpdate)func_80187F1C,
+    /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
+    /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
 };
 
 const u16 g_eBreakableInit[] = {
@@ -568,7 +552,7 @@ const u32 D_80180608[] = {
     /* 644 */ 0x00001E00,
 };
 
-// owned by func_801873A0
+// owned by EntityWarpRoom
 const u32 D_80180648[] = {
     /* 648 */ 0x00000000,
     /* 64C */ 0x00040000,
@@ -2633,7 +2617,7 @@ void EntityBreakable(Entity* entity) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
 extern s16 (*D_8003C7B8)(/*?*/ u32, /*?*/ u32);
@@ -2647,8 +2631,11 @@ extern s32 D_80193AA4;
 extern s32 D_80193AA8;
 extern s32 D_80193AAC;
 
-// Handle warp logic
-void func_801873A0(Entity* arg0) {
+// Handles everything about the warp room.
+// It is responsible to spawn the colourful background, the stones on the
+// ground and it always listen to the UP button. When the UP
+// button is pressed, it brights the screen and teleport the player.
+void EntityWarpRoom(Entity* arg0) {
     POLY_GT4* var_s2;
     POLY_GT4* var_s2_2;
     s16 temp_s4;
@@ -3052,7 +3039,7 @@ void func_801873A0(Entity* arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80187F1C);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpSmallRocks);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -3716,14 +3703,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityItemDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = EntityInventoryDrop;
     }
 
     entity->subId = var_v1;
@@ -3859,7 +3846,7 @@ void CollectLifeVessel(void) {
 
 void func_8018CFF8(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityItemDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     u16 zPriority;
@@ -3920,15 +3907,15 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018E01C);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRelicItem);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityInventoryItem);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0D);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
 

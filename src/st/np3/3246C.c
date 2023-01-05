@@ -9,8 +9,8 @@
 void SpawnExplosionEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 int func_801CD658();
-void EntityItemDrop(Entity* entity);
-void EntityHeartDrop(Entity* entity);
+void EntityPriceDrop(Entity* entity);
+void EntityInventoryDrop(Entity* entity);
 
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
@@ -472,14 +472,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityItemDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = EntityInventoryDrop;
     }
 
     entity->subId = var_v1;
@@ -504,21 +504,21 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BDE7C);
 
 void func_801BDECC(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityItemDrop);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityPriceDrop);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityExplosion);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BE864);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityHeartDrop);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BEEF0);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityRelicItem);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityInventoryItem);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityHeartDrop);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0D);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C02F4);
 

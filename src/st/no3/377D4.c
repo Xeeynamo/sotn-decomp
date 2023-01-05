@@ -8,8 +8,6 @@
 
 void SpawnExplosionEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
-void EntityItemDrop(Entity*);
-void EntityHeartDrop(Entity*);
 
 extern u8* D_80180850;
 extern u16 D_80180B00[];
@@ -626,14 +624,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityItemDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = EntityInventoryDrop;
     }
 
     entity->subId = var_v1;
@@ -679,21 +677,21 @@ void func_801C660C(void) {
 
 void func_801C665C(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityItemDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityPriceDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityExplosion);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6FF4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartDrop);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C7680);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRelicItem);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityInventoryItem);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartDrop);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0D);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8A84);
 
