@@ -4857,7 +4857,107 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012768C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127840);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
+void func_801279FC(Entity* arg0) {
+    int new_var;
+    POLY_GT4* temp_a1;
+    POLY_GT4* temp_a1_2;
+    s16 var_v0;
+    s32 temp_v0;
+    u8 temp_a0;
+    u8 temp_v0_2;
+    int temp_v1_2;
+    u16 temp_v1;
+    if (D_800733EC == 0) {
+        var_v0 = ((u16)D_800733DA) - 0xA;
+    } else {
+        var_v0 = ((u16)D_800733DA) + 0xA;
+    }
+    arg0->posX.Data.high = var_v0;
+    arg0->posY.Data.high = D_800733DE + 2;
+    switch (arg0->step) {
+    case 0:
+        temp_v0 = func_800EDC80(4U, 1);
+        arg0->firstPolygonIndex = temp_v0;
+        if (temp_v0 != (-1)) {
+            arg0->unk7C.modeS16 = 0x16;
+            arg0->unk7E.modeU16 = 0x1AU;
+            temp_a1 = &D_80086FEC[arg0->firstPolygonIndex];
+            temp_a1_2 = temp_a1;
+            temp_a1->u2 = 0x40;
+            temp_a1_2->u3 = 0x7F;
+            new_var = 0x15F;
+            temp_a1->u1 = 0x7F;
+            temp_a1_2->v1 = 0xC0;
+            temp_a1_2->v0 = 0xC0;
+            temp_a1->v3 = 0xFF;
+            temp_a1->v2 = 0xFF;
+            temp_a1->r3 = 0x80;
+            temp_a1_2->r2 = 0x80;
+            temp_a1_2->r1 = 0x80;
+            temp_a1_2->r0 = 0x80;
+            temp_a1->g3 = 0x80;
+            temp_a1_2->g2 = 0x80;
+            temp_a1->g1 = 0x80;
+            temp_a1_2->g0 = 0x80;
+            do {
+                temp_a1->u0 = 0x40;
+                temp_a1_2->b3 = 0x40;
+                temp_a1_2 = temp_a1_2;
+                temp_a1_2->b2 = 0x40;
+                temp_a1_2->b1 = 0x40;
+                temp_a1_2->b0 = 0x40;
+            } while (0);
+            temp_a1_2->tpage = 0x1A;
+            temp_a1->clut = new_var;
+            temp_a1->pad3 = 0x35;
+            temp_a1_2->pad2 = D_800733FC + 1;
+            arg0->unk34 = 0x04840000;
+            arg0->step++;
+            break;
+        }
+        func_80106590(arg0);
+        return;
+
+    case 1:
+        arg0->unk7C.modeS16 += 2;
+        arg0->unk7E.modeU16 = (u16)(arg0->unk7E.modeU16 + 2);
+        if (((s16)arg0->unk7C.modeS16) >= 0x39) {
+            func_80106590(arg0);
+            return;
+        }
+        break;
+
+    default:
+        break;
+    }
+    temp_a1_2 = &D_80086FEC[arg0->firstPolygonIndex];
+    temp_a1_2->x0 = arg0->posX.Data.high - arg0->unk7C.modeS16;
+    temp_a1_2->y0 = arg0->posY.Data.high - arg0->unk7E.modeU16;
+    temp_a1_2->x1 = arg0->posX.Data.high + arg0->unk7C.modeS16;
+    temp_a1_2->y1 = arg0->posY.Data.high - arg0->unk7E.modeU16;
+    temp_a1_2->x2 = arg0->posX.Data.high - arg0->unk7C.modeS16;
+    temp_a1_2->y2 = arg0->posY.Data.high + arg0->unk7E.modeU16;
+    temp_a1_2->x3 = arg0->posX.Data.high + arg0->unk7C.modeS16;
+    temp_a1_2->y3 = arg0->posY.Data.high + arg0->unk7E.modeU16;
+    if (arg0->unk7C.modeS16 >= 0x29) {
+        temp_a1_2->r3 += 0xF4;
+        temp_a1_2->b3 += 0xFA;
+        temp_a1_2->g3 += 0xF4;
+        temp_a0 = temp_a1_2->b3;
+        do {
+            temp_v0_2 = temp_a1_2->r3;
+        } while (0);
+        temp_v1_2 = temp_a1_2->g3;
+        temp_a1_2->b2 = temp_a0;
+        temp_a1_2->b1 = temp_a0;
+        temp_a1_2->b0 = temp_a0;
+        temp_a1_2->r2 = temp_v0_2;
+        temp_a1_2->r1 = temp_v0_2;
+        temp_a1_2->r0 = temp_v0_2;
+        temp_a1_2->g1 = (temp_a1_2->g2 = temp_v1_2);
+        temp_a1_2->g0 = temp_v1_2;
+    }
+}
 
 void func_80127CC8(Entity* entity) {
     Entity* player = GET_PLAYER(g_EntityArray);
