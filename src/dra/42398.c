@@ -2427,14 +2427,14 @@ void func_800F9690(void) {
 
 void func_800F96F4(void) { // !Fake:
     s32 new_var2;
-    POLY_GT4* poly1;
+    POLY_GT4* poly;
     s32 temp_a2;
     unkStruct3* poly2;
     s32* temp;
     s32* new_var;
 
     new_var = &D_80137848;
-    poly1 = &D_80086FEC[D_80137840];
+    poly = &D_80086FEC[D_80137840];
     temp_a2 = D_80137692 == 0;
     temp = &D_80137844;
 
@@ -2447,10 +2447,10 @@ void func_800F96F4(void) { // !Fake:
             (&D_80086FEC[D_80137840])->clut = 0x181;
         }
     } else {
-        poly1->pad3 = 8;
+        poly->pad3 = 8;
     }
 
-    poly2 = poly1->tag;
+    poly2 = poly->tag;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
@@ -2737,12 +2737,12 @@ void func_800FD874(u16 context, s32 arg1) {
     u8* cursorY = func_800FD744(arg1);
     u8* temp_a3 = func_800FD760(arg1);
     u16 temp_a2 = context & 0xFFFF;
-    u8* poly1 = temp_a3 + temp_a2;
-    if (*poly1 < 0x63) {
-        temp_a1 = *poly1;
-        *poly1 = temp_a1 + 1;
-        if (*poly1 == 1) {
-            *poly1 = temp_a1;
+    u8* poly = temp_a3 + temp_a2;
+    if (*poly < 0x63) {
+        temp_a1 = *poly;
+        *poly = temp_a1 + 1;
+        if (*poly == 1) {
+            *poly = temp_a1;
             if (arg1 != 0) {
                 i = *(&D_800A7734 + (temp_a2 << 5));
             }
@@ -3349,7 +3349,7 @@ void func_80106670(s32 blendMode) {
     const int MaxPolyCount = 0x100;
     int new_var2 = 4;
     DR_MODE* sp20;
-    GpuBuffer* poly1;
+    GpuBuffer* poly;
     s32 absX;
     s32 absX_2;
     s32 absY;
@@ -3362,11 +3362,11 @@ void func_80106670(s32 blendMode) {
     u32 var_s8 = 0x1F0;
     s32 temp_var;
     polyCount = 0;
-    poly1 = D_8006C37C;
+    poly = D_8006C37C;
     entity = g_EntityArray;
-    temp_s7 = poly1->_unk_0474;
-    tile = &poly1->tiles[D_80097944];
-    sp20 = &poly1->drawModes[D_8009792C.unk0];
+    temp_s7 = poly->_unk_0474;
+    tile = &poly->tiles[D_80097944];
+    sp20 = &poly->drawModes[D_8009792C.unk0];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
@@ -4541,13 +4541,13 @@ extern u8 D_80138044;
 extern u8 D_80138048;
 
 void func_80118C28(s32 arg0) {
-    s32 poly1;
+    s32 poly;
 
-    poly1 = arg0 * 4;
-    D_8013803C = D_800ACFB4[poly1];
-    D_80138040 = D_800ACFB5[poly1];
-    D_80138044 = D_800ACFB6[poly1];
-    D_80138048 = D_800ACFB7[poly1];
+    poly = arg0 * 4;
+    D_8013803C = D_800ACFB4[poly];
+    D_80138040 = D_800ACFB5[poly];
+    D_80138044 = D_800ACFB6[poly];
+    D_80138048 = D_800ACFB7[poly];
 }
 #endif
 
@@ -4862,7 +4862,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801279FC);
 void func_80127CC8(Entity* entity) {
     Entity* player = GET_PLAYER(g_EntityArray);
     POLY_GT4* poly;
-    u16 pad3;
     s32 ret;
 
     if (player->step != ENTITY_STEP_22) {
@@ -4901,30 +4900,29 @@ void func_80127CC8(Entity* entity) {
         entity->zPriority = 0x1C0;
         poly->pad2 = 0x1C0;
         entity->step++;
-        goto label;
+        break;
 
     case ENTITY_STEP_1:
         if (entity->unk7C.modeS16++ >= 0xE) {
             func_80106590(entity);
-            break;
+            return;
         }
 
     default:
-    label:
-        poly = &D_80086FEC[entity->firstPolygonIndex];
-        poly->x0 = poly->x2 = entity->posX.Data.high - 3;
-        poly->y0 = 0;
-        poly->y1 = 0;
-        poly->x1 = poly->x3 = entity->posX.Data.high + 3;
-        poly->y3 = 0xF0;
-        poly->y2 = 0xF0;
+        break;
+    }
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly->x0 = poly->x2 = entity->posX.Data.high - 3;
+    poly->y0 = 0;
+    poly->y1 = 0;
+    poly->x1 = poly->x3 = entity->posX.Data.high + 3;
+    poly->y3 = 0xF0;
+    poly->y2 = 0xF0;
 
-        if (D_8003C8C4 & 1) {
-            pad3 = poly->pad3 | 8;
-        } else {
-            pad3 = poly->pad3 & 0xFFF7;
-        }
-        poly->pad3 = pad3;
+    if (D_8003C8C4 & 1) {
+        poly->pad3 = poly->pad3 | 8;
+    } else {
+        poly->pad3 = poly->pad3 & 0xFFF7;
     }
 }
 
@@ -4983,8 +4981,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012A528);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012A89C);
 
 void func_8012B78C(Entity* entity) {
-    POLY_GT4* poly1;
-    POLY_GT4* poly2;
+    POLY_GT4* poly;
     s32 ret;
 
     switch (entity->step) {
@@ -4993,49 +4990,49 @@ void func_8012B78C(Entity* entity) {
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->unk34 = 0x04820000;
-            poly2 = poly1 = &D_80086FEC[entity->firstPolygonIndex];
-            poly2->tpage = 0x1C;
-            poly2->clut = 0x19D;
-            poly1->u2 = 0x20;
-            poly2->u0 = 0x20;
-            poly2->u3 = 0x30;
-            poly2->u1 = 0x30;
-            poly1->v1 = 0;
-            poly2->v0 = 0;
-            poly1->v3 = 0x10;
-            poly1->v2 = 0x10;
-            poly1->x0 = poly2->x2 = entity->posX.Data.high - 8;
-            poly1->x1 = poly2->x3 = entity->posX.Data.high + 8;
-            poly2->y0 = poly2->y1 = entity->posY.Data.high - 8;
-            poly2->y2 = poly2->y3 = entity->posY.Data.high + 8;
-            poly1->pad2 = entity->zPriority;
-            poly2->pad3 = 0x115;
+            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly->tpage = 0x1C;
+            poly->clut = 0x19D;
+            poly->u2 = 0x20;
+            poly->u0 = 0x20;
+            poly->u3 = 0x30;
+            poly->u1 = 0x30;
+            poly->v1 = 0;
+            poly->v0 = 0;
+            poly->v3 = 0x10;
+            poly->v2 = 0x10;
+            poly->x0 = poly->x2 = entity->posX.Data.high - 8;
+            poly->x1 = poly->x3 = entity->posX.Data.high + 8;
+            poly->y0 = poly->y1 = entity->posY.Data.high - 8;
+            poly->y2 = poly->y3 = entity->posY.Data.high + 8;
+            poly->pad2 = entity->zPriority;
+            poly->pad3 = 0x115;
             entity->unk7E.modeU16 = 0x60U;
             entity->step++;
         } else {
-            goto label;
+            func_80106590(entity);
+            return;
         }
-        goto label2;
+        break;
 
     case ENTITY_STEP_1:
         if (++entity->unk7C.modeS16 > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;
-        goto label2;
-
-    case ENTITY_STEP_2:
-    label:
-        func_80106590(entity);
         break;
 
+    case ENTITY_STEP_2:
+        func_80106590(entity);
+        return;
+
     default:
-    label2:
-        poly1 = &D_80086FEC[entity->firstPolygonIndex];
-        poly1->r0 = poly1->r1 = poly1->r2 = poly1->r3 = poly1->g0 = poly1->g1 =
-            poly1->g2 = poly1->g3 = poly1->b0 = poly1->b1 = poly1->b2 =
-                poly1->b3 = entity->unk7E.modeU8.unk0;
+        break;
     }
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
+        poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+            entity->unk7E.modeU8.unk0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012B990);
@@ -5177,10 +5174,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012EF2C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012F178);
 
 s32 func_8012F83C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 poly1 = arg0 - arg2;
+    s32 poly = arg0 - arg2;
     s32 temp_a1 = arg1 - arg3;
 
-    return ((SquareRoot12((SQ(poly1) + SQ(temp_a1)) << 12, temp_a1) >> 12) <
+    return ((SquareRoot12((SQ(poly) + SQ(temp_a1)) << 12, temp_a1) >> 12) <
             arg4) ^
            1;
 }
