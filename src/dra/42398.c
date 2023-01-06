@@ -2724,7 +2724,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD7C0);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD874);
 #else
 void func_800FD874(u16 context, s32 arg1) {
-    u8* poly2;
+    u8* temp_a0_2;
     u8* temp_v0;
     u8 temp_a1;
     u8 temp_v1;
@@ -2733,20 +2733,18 @@ void func_800FD874(u16 context, s32 arg1) {
     u16 i;
     s32 phi_a1;
     s32 phi_a1_2;
-
     u8* cursorY = func_800FD744(arg1);
     u8* temp_a3 = func_800FD760(arg1);
     u16 temp_a2 = context & 0xFFFF;
-    u8* poly = temp_a3 + temp_a2;
-    if (*poly < 0x63) {
-        temp_a1 = *poly;
-        *poly = temp_a1 + 1;
-        if (*poly == 1) {
-            *poly = temp_a1;
+    u8* temp_a0 = temp_a3 + temp_a2;
+    if (*temp_a0 < 0x63) {
+        temp_a1 = *temp_a0;
+        *temp_a0 = temp_a1 + 1;
+        if (*temp_a0 == 1) {
+            *temp_a0 = temp_a1;
             if (arg1 != 0) {
                 i = *(&D_800A7734 + (temp_a2 << 5));
             }
-
             phi_a0 = cursorY;
             phi_a1 = 0;
             phi_a1_2 = 0;
@@ -2755,7 +2753,6 @@ void func_800FD874(u16 context, s32 arg1) {
                     break;
                 phi_a1_2 += 1;
             }
-
             phi_a0_2 = cursorY;
         loop_8:
             temp_v1 = *phi_a0_2;
@@ -2771,10 +2768,10 @@ void func_800FD874(u16 context, s32 arg1) {
 
             temp_v0 = temp_a3 + (context & 0xFFFF);
             *temp_v0 += 1;
-            poly2 = &cursorY[phi_a1];
+            temp_a0_2 = &cursorY[phi_a1];
             if (phi_a1 < phi_a1_2) {
-                cursorY[phi_a1_2] = *poly2;
-                *poly2 = context;
+                cursorY[phi_a1_2] = *temp_a0_2;
+                *temp_a0_2 = context;
             }
         }
     }
@@ -4682,6 +4679,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80123788);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801238CC);
 
+// move a0,s0 thing
+// https://decomp.me/scratch/rJCCX
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80123A60);
 #else
