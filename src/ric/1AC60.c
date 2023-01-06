@@ -732,7 +732,24 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016D328);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016D4D8);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016D920);
+void func_8016D920(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x04000000;
+        entity->unkB0 = 0x19;
+        func_8015FAB8(entity);
+        entity->hitboxWidth = 4;
+        entity->hitboxHeight = 4;
+        entity->step++;
+        break;
+
+    case 1:
+        if (++entity->unk7C.modeS16 >= 4) {
+            func_80156C60(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016D9C4);
 
@@ -748,7 +765,24 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016F198);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016F6F0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80170548);
+void func_80170548(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x04000000;
+        entity->unkB0 = 0x1E;
+        func_8015FAB8(entity);
+        entity->hitboxWidth = 8;
+        entity->hitboxHeight = 8;
+        entity->step++;
+        break;
+
+    case 1:
+        if (++entity->unk7C.modeS16 >= 5) {
+            func_80156C60(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801705EC);
 
