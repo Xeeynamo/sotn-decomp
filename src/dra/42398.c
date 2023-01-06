@@ -4296,7 +4296,7 @@ s16 func_80113E68(void) {
     s32 var_a1;
 
     temp_v0 = rnd;
-    player->unkAC = (rnd % 3) + 0x2E;
+    PLAYER.unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -4331,12 +4331,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80114DF4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115394);
 
 void func_80115BB0(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->unk19 = 4;
-    player->accelerationY = 0;
-    player->accelerationX = 0;
-    player->animationFrameDuration = 4;
+    PLAYER.unk19 = 4;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
+    PLAYER.animationFrameDuration = 4;
 
     if (D_80097420 == 0) {
         if (D_80072F20 & 1) {
@@ -4388,8 +4386,8 @@ void func_801166A4(void) {
 void func_8011678C(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     if (D_80072EF6 != 2) {
         func_8010E570(0);
     }
