@@ -248,7 +248,35 @@ void func_8015C984(s32 speed) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C9CC);
+s32 func_8015C9CC(void) {
+    u16* facing;
+
+    if (D_80072F64 & 2) {
+        return 0;
+    }
+
+    facing = &PLAYER.facing;
+    if (*facing == 1) {
+        if (D_80072EE8 & 0x2000) {
+            *facing = 0;
+            D_80072F6C = 1;
+            return -1;
+        } else if (D_80072EE8 & 0x8000) {
+            return 1;
+        }
+    } else {
+        if (!(D_80072EE8 & 0x2000)) {
+            if (D_80072EE8 & 0x8000) {
+                *facing = 1;
+                D_80072F6C = 1;
+                return -1;
+            }
+            return 0;
+        }
+        return 1;
+    }
+    return 0;
+}
 
 void func_8015CA84(s32 speed) {
     s32 speed;
