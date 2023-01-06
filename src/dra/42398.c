@@ -5194,10 +5194,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012EF2C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012F178);
 
 s32 func_8012F83C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 poly = arg0 - arg2;
+    s32 temp_a0 = arg0 - arg2;
     s32 temp_a1 = arg1 - arg3;
 
-    return ((SquareRoot12((SQ(poly) + SQ(temp_a1)) << 12, temp_a1) >> 12) <
+    return ((SquareRoot12((SQ(temp_a0) + SQ(temp_a1)) << 12, temp_a1) >> 12) <
             arg4) ^
            1;
 }
