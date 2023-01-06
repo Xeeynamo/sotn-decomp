@@ -4060,27 +4060,27 @@ void func_8010FB24(void) {
     func_8010E3E0();
 }
 
-void func_8010FB68(void) {
+void func_8010FB68(void) { // Related to Dark Methamorphosis
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
     func_8010D584(0x20);
     func_8010E3E0();
     func_8010DA48(0xBA);
-    PlaySfx(0x6F3);
-    PlaySfx(0x67D);
+    PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
+    PlaySfx(NA_SE_PL_MP_GAUGE);
     D_80072F16[0] = func_800FDB18(3, 0x400);
     func_801092E8(1);
     func_8011AAFC(g_CurrentEntity, 0x110028, 0);
     func_80118C28(0xB);
 }
 
-void func_8010FBF4(void) {
+void func_8010FBF4(void) { // Related to Soul Steal spell
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
     func_8010D584(0x25);
     func_8010E3E0();
     func_8010DA48(0xDA);
-    PlaySfx(0x6F4);
+    PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
     func_80118C28(0xC);
     D_80072F18 = 4;
 }
@@ -4092,7 +4092,7 @@ void func_8010FC50(void) {
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x75, 0);
     func_8010DA48(0xF0);
-    PlaySfx(0x6F1);
+    PlaySfx(NA_SE_VO_AL_PUNCH);
     D_80072F18 = 4;
 }
 
@@ -4103,7 +4103,7 @@ void func_8010FCB8(void) {
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x10075, 0);
     func_8010DA48(0xF1);
-    PlaySfx(0x6F1);
+    PlaySfx(NA_SE_VO_AL_PUNCH);
     D_80072F18 = 4;
 }
 
@@ -4125,7 +4125,7 @@ void func_8010FD88(void) {
     func_8010DA48(0xDB);
     func_8011AAFC(g_CurrentEntity, 0, 0);
     D_80072F66 = 0;
-    PlaySfx(0x617);
+    PlaySfx(NA_SE_AL_BACKSLIDE);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010FDF8);
@@ -4358,7 +4358,7 @@ void func_801166A4(void) {
 
     case 1:
         if (PLAYER.animationFrameDuration < 0) {
-            PlaySfx(0x6F2);
+            PlaySfx(NA_SE_VO_AL_WHAT);
             func_8010E570(0);
         }
         break;
@@ -4442,7 +4442,7 @@ void func_80118670(void) {
 
     if (*animationFrameIndex == 0x10007) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
-        PlaySfx(0x67D);
+        PlaySfx(NA_SE_PL_MP_GAUGE);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
     }
     if (PLAYER.animationFrameDuration < 0) {

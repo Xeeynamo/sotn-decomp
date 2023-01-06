@@ -761,7 +761,7 @@ extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
-extern s16 D_800ACF60[];
+extern s16 D_800ACF60[]; // collection of sounds?
 extern s32 D_800ACFB4;
 extern s32* D_800AE294; // might not really be a pointer
 extern s16 D_800AFDA6;
