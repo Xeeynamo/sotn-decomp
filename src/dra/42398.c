@@ -4124,8 +4124,8 @@ void func_8010FD24(void) {
 void func_8010FD88(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->step = ENTITY_STEP_0;
-    player->unk2E = 3;
+    PLAYER.step = ENTITY_STEP_0;
+    PLAYER.unk2E = 3;
     func_8010E390(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
     func_8010DA48(0xDB);
@@ -4165,19 +4165,19 @@ void func_80111938(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
     D_801396EA = 1;
-    D_801396E4 = player->animationFrame;
-    D_801396E6.typeShort = player->unk19;
-    D_801396E8 = player->palette;
+    D_801396E4 = PLAYER.animationFrame;
+    D_801396E6.typeShort = PLAYER.unk19;
+    D_801396E8 = PLAYER.palette;
 }
 
 void func_8011197C(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
     D_801396EA = 0;
-    player->unk44 = 0;
-    player->animationFrame = D_801396E4;
-    player->unk19 = D_801396E6.typeByte;
-    player->palette = D_801396E8;
+    PLAYER.unk44 = 0;
+    PLAYER.animationFrame = D_801396E4;
+    PLAYER.unk19 = D_801396E6.typeByte;
+    PLAYER.palette = D_801396E8;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801119C4);
@@ -4195,8 +4195,8 @@ bool func_80111D24(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
     s32 sp10[9]; // !FAKE: There's a struct inside the stack.
     s32 speed = 0xC000;
-    s16 posX = player->posX.Data.high;
-    s16 posY = player->posY.Data.high;
+    s16 posX = PLAYER.posX.Data.high;
+    s16 posY = PLAYER.posY.Data.high;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
@@ -4209,10 +4209,10 @@ bool func_80111D24(void) {
         func_8010E390(speed);
         return true;
     } else if (hitboxRightMargin != 0) {
-        player->accelerationX = -speed;
+        PLAYER.accelerationX = -speed;
         return true;
     } else if (hitboxLeftMargin != 0) {
-        player->accelerationX = speed;
+        PLAYER.accelerationX = speed;
         return true;
     }
     return false;
@@ -4266,13 +4266,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801131C4);
 
 void func_801139CC(s32 arg0) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    s32 move = player->facing != 0 ? -3 : 3;
+    s32 move = PLAYER.facing != 0 ? -3 : 3;
 
-    player->posY.Data.high -= 22;
-    player->posX.Data.high = move + player->posX.Data.high;
+    PLAYER.posY.Data.high -= 22;
+    PLAYER.posX.Data.high = move + PLAYER.posX.Data.high;
     func_8011AAFC(g_CurrentEntity, 0x10004, 0);
-    player->posY.Data.high = player->posY.Data.high + 22;
-    player->posX.Data.high = player->posX.Data.high - move;
+    PLAYER.posY.Data.high = PLAYER.posY.Data.high + 22;
+    PLAYER.posX.Data.high = PLAYER.posX.Data.high - move;
 
     if (arg0 & 1) {
         func_80102CD8(3);
