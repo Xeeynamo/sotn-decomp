@@ -110,14 +110,16 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80158FA4);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801590A0);
 
 void func_801595D8(void) {
-    if ((!func_8015DBB0(0x9009)) &&
-        (func_8015C93C(0x1000), (PLAYER.unk2E == 0))) {
-        if ((D_80072F0A != 0) && (D_80072EEC & 0x40)) {
-            func_8015D020();
-            return;
-        }
-        if (func_8015C9CC() != 0) {
-            func_8015CA84(0xC000);
+    if (!func_8015DBB0(0x9009)) {
+        func_8015C93C(0x1000);
+        if (PLAYER.unk2E == 0) {
+            if ((D_80072F0A != 0) && (D_80072EEC & 0x40)) {
+                func_8015D020();
+                return;
+            }
+            if (func_8015C9CC() != 0) {
+                func_8015CA84(0xC000);
+            }
         }
     }
 }
