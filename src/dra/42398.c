@@ -582,7 +582,7 @@ void func_800E4970(void) {
     func_800E493C();
 }
 
-void func_800E4A04(void) { s32 a[3]; }
+void func_800E4A04(void) { s32 pad[3]; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4A14);
 
@@ -3943,8 +3943,6 @@ void func_8010E7AC(void) {
 }
 
 void func_8010E83C(s32 arg0) {
-    u16 temp;
-
     if (D_80072F92 != 0) {
         func_8010E7AC();
         return;

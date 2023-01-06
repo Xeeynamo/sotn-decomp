@@ -2774,9 +2774,10 @@ void EntityWarpRoom(Entity* arg0) {
         *(u32*)D_80180648 = 0;
         arg0->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << arg0->subId);
-        if ((u32)((GET_PLAYER(g_EntityArray)->posX.Data.high +
-                   (s16)D_8007308E) -
-                  0x61) < 0x3F) {
+        // clang-format off
+        if ((u32)((GET_PLAYER(g_EntityArray)->posX.Data.high + (s16)D_8007308E) -
+                0x61) < 0x3F) {
+            // clang-format on
             D_80072EFC = 0x10;
             D_80072EF4 = 0;
             D_8003C8B8 = 0;
