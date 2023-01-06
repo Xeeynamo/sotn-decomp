@@ -401,7 +401,7 @@ const u8 D_80180528[] = {
     /* 52E */ 0x50,
     /* 52F */ 0x20,
 };
-const s8 D_80180530[] = {
+const u8 D_80180530[] = {
     /* 530 */ 0x00,
     /* 531 */ 0x00,
     /* 532 */ 0x00,
@@ -2523,19 +2523,18 @@ void func_80186FD0(Entity* arg0) {
     AnimateEntity(objInit->unk10, arg0);
 }
 
+// nops in between array assignments, could be aspsx
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
 #else
 void func_801870B0(Entity* entity) {
-    s32 temp_v0;
-    u16 temp_v0_3;
+    s32 ret;
     u16* temp_v0_2;
-    u16 temp_s1;
+    u16 temp_s1 = entity->subId;
     u16 phi_v1;
     u16 unk;
-
-    temp_s1 = entity->subId;
     entity->unk6D = 0;
+
     if (entity->step != 0) {
         switch (temp_s1) {
         case 4:
@@ -2544,40 +2543,39 @@ void func_801870B0(Entity* entity) {
                 return;
             }
             break;
+
         case 6:
-            if (g_pads->pressed & PAD_TRIANGLE) {
+            if (g_pads->pressed & 0x0010) {
                 g_CurrentRoomX = 0;
                 g_CurrentRoomWidth = 1280;
                 do {
                     entity->step++;
-                } while (0); // FAKE
+                } while (0);
                 return;
             }
             break;
         }
 
         if (entity->unk44 != 0) {
-            temp_v0 = func_8018B970();
+            ret = func_8018B970();
             phi_v1 = entity->unk7C.modeS16;
             if (phi_v1 != 0) {
-                phi_v1 = (temp_v0 & 2) * 2;
+                phi_v1 = (ret & 2) * 2;
             } else {
-                phi_v1 = (temp_v0 & 1) * 4;
+                phi_v1 = (ret & 1) * 4;
             }
-
-            unk = temp_s1 * 8 + phi_v1;
-            temp_v0_2 = &D_80180538[unk];
-            g_CurrentRoomX = *temp_v0_2++;
-            g_CurrentRoomY = *temp_v0_2++;
-            g_CurrentRoomWidth = *temp_v0_2++;
-            g_CurrentRoomHeight = *temp_v0_2++;
+            unk = 8;
+            temp_s1 = (temp_s1 * unk) + phi_v1;
+            temp_v0_2 = &D_80180538[temp_s1];
+            g_CurrentRoomX = *(temp_v0_2++);
+            g_CurrentRoomY = *(temp_v0_2++);
+            g_CurrentRoomWidth = *(temp_v0_2++);
+            g_CurrentRoomHeight = *(temp_v0_2++);
         }
     } else {
-        u8 temp_v0_5;
         InitializeEntity(D_80180488);
-        temp_v0_5 = D_80180530[temp_s1];
-        entity->unk7C.modeS16 = temp_v0_5;
-        if (temp_v0_5 != 0) {
+        entity->unk7C.modeS16 = D_80180530[temp_s1];
+        if (entity->unk7C.modeS16 != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
         } else {
