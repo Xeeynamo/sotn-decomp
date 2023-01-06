@@ -27,6 +27,7 @@ extern s32 D_801554C0;
 extern s32 D_801554C8;
 extern s32 D_801554D0;
 extern s32 D_80155670;
+extern s32 D_80155750;
 extern /*?*/ s32 D_8015591C;
 extern /*?*/ s32 D_80155950;
 extern u8 D_80174FAC;
@@ -389,7 +390,17 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015D678);
 
 void func_8015D9B4() { func_8015C908(0x16); }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015D9D4);
+void func_8015D9D4(void) {
+    func_8015C9CC();
+    func_8015C908(0x17);
+    func_8015C920(&D_80155750);
+    g_CurrentEntity->accelerationY = 0;
+    func_8015CA84(0x58000);
+    func_8015CC28();
+    func_801606BC(g_CurrentEntity, 0x19, 0);
+    g_pfnPlaySfx(0x707);
+    D_80072F18 = 4;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015DA60);
 
