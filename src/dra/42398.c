@@ -2429,7 +2429,7 @@ void func_800F96F4(void) { // !Fake:
     s32 new_var2;
     POLY_GT4* poly;
     s32 temp_a2;
-    unkStruct3* poly2;
+    unkStruct3* temp_a0_2;
     s32* temp;
     s32* new_var;
 
@@ -2450,23 +2450,23 @@ void func_800F96F4(void) { // !Fake:
         poly->pad3 = 8;
     }
 
-    poly2 = (unkStruct3*)poly->tag;
+    temp_a0_2 = (unkStruct3*)poly->tag;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
-        poly2->unk32 = 0x80;
+        temp_a0_2->unk32 = 0x80;
         new_var2 = *temp;
         if (new_var2 == 1) {
             do {
-                poly2->unkE = 0x188;
+                temp_a0_2->unkE = 0x188;
             } while (0);
             return;
         }
         *temp -= 1;
-        poly2->unkE = 0x181;
+        temp_a0_2->unkE = 0x181;
         return;
     }
-    poly2->unk32 = 8;
+    temp_a0_2->unk32 = 8;
 }
 
 void func_800F97DC(void) {
