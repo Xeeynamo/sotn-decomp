@@ -4279,8 +4279,8 @@ void func_801139CC(s32 arg0) {
         PlaySfx(NA_SE_SECRET_STAIRS);
     }
     if (arg0 & 2) {
-        player->accelerationX = 0;
-        player->accelerationY = 0;
+        PLAYER.accelerationX = 0;
+        PLAYER.accelerationY = 0;
     }
 }
 
@@ -4445,31 +4445,26 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80117DEC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801182F8);
 
 void func_80118614(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    if (player->animationFrameDuration < 0) {
+    if (PLAYER.animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 void func_80118640(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    if (player->animationFrameDuration < 0) {
+    if (PLAYER.animationFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
 
 void func_80118670(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s32* animationFrameIndex = (s32*)&player->animationFrameIndex;
+    s32* animationFrameIndex = (s32*)&PLAYER.animationFrameIndex;
 
     if (*animationFrameIndex == 0x10007) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(0x67D);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
     }
-    if (player->animationFrameDuration < 0) {
+    if (PLAYER.animationFrameDuration < 0) {
         func_8010E570(0);
     }
 }
