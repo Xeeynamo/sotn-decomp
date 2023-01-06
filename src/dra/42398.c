@@ -3349,7 +3349,7 @@ void func_80106670(s32 blendMode) {
     const int MaxPolyCount = 0x100;
     int new_var2 = 4;
     DR_MODE* sp20;
-    GpuBuffer* poly;
+    GpuBuffer* temp_a0;
     s32 absX;
     s32 absX_2;
     s32 absY;
@@ -3362,11 +3362,11 @@ void func_80106670(s32 blendMode) {
     u32 var_s8 = 0x1F0;
     s32 temp_var;
     polyCount = 0;
-    poly = D_8006C37C;
+    temp_a0 = D_8006C37C;
     entity = g_EntityArray;
-    temp_s7 = poly->_unk_0474;
-    tile = &poly->tiles[D_80097944];
-    sp20 = &poly->drawModes[D_8009792C.unk0];
+    temp_s7 = temp_a0->_unk_0474;
+    tile = &temp_a0->tiles[D_80097944];
+    sp20 = &temp_a0->drawModes[D_8009792C.unk0];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
@@ -4541,13 +4541,13 @@ extern u8 D_80138044;
 extern u8 D_80138048;
 
 void func_80118C28(s32 arg0) {
-    s32 poly;
+    s32 temp_a0;
 
-    poly = arg0 * 4;
-    D_8013803C = D_800ACFB4[poly];
-    D_80138040 = D_800ACFB5[poly];
-    D_80138044 = D_800ACFB6[poly];
-    D_80138048 = D_800ACFB7[poly];
+    temp_a0 = arg0 * 4;
+    D_8013803C = D_800ACFB4[temp_a0];
+    D_80138040 = D_800ACFB5[temp_a0];
+    D_80138044 = D_800ACFB6[temp_a0];
+    D_80138048 = D_800ACFB7[temp_a0];
 }
 #endif
 
@@ -4857,72 +4857,61 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012768C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80127840);
 
-void func_801279FC(Entity* arg0) {
-    int new_var;
-    POLY_GT4* temp_a1;
-    POLY_GT4* temp_a1_2;
-    s16 var_v0;
-    s32 temp_v0;
-    u8 temp_a0;
-    u8 temp_v0_2;
-    int temp_v1_2;
-    u16 temp_v1;
-    if (D_800733EC == 0) {
-        var_v0 = ((u16)D_800733DA) - 0xA;
+void func_801279FC(Entity* entity) {
+    POLY_GT4* poly;
+    s32 firstPolygonIndex;
+
+    if (PLAYER.facing == 0) {
+        entity->posX.Data.high = PLAYER.posX.Data.high - 10;
     } else {
-        var_v0 = ((u16)D_800733DA) + 0xA;
+        entity->posX.Data.high = PLAYER.posX.Data.high + 10;
     }
-    arg0->posX.Data.high = var_v0;
-    arg0->posY.Data.high = D_800733DE + 2;
-    switch (arg0->step) {
+    entity->posY.Data.high = PLAYER.posY.Data.high + 2;
+
+    switch (entity->step) {
     case 0:
-        temp_v0 = func_800EDC80(4U, 1);
-        arg0->firstPolygonIndex = temp_v0;
-        if (temp_v0 != (-1)) {
-            arg0->unk7C.modeS16 = 0x16;
-            arg0->unk7E.modeU16 = 0x1AU;
-            temp_a1 = &D_80086FEC[arg0->firstPolygonIndex];
-            temp_a1_2 = temp_a1;
-            temp_a1->u2 = 0x40;
-            temp_a1_2->u3 = 0x7F;
-            new_var = 0x15F;
-            temp_a1->u1 = 0x7F;
-            temp_a1_2->v1 = 0xC0;
-            temp_a1_2->v0 = 0xC0;
-            temp_a1->v3 = 0xFF;
-            temp_a1->v2 = 0xFF;
-            temp_a1->r3 = 0x80;
-            temp_a1_2->r2 = 0x80;
-            temp_a1_2->r1 = 0x80;
-            temp_a1_2->r0 = 0x80;
-            temp_a1->g3 = 0x80;
-            temp_a1_2->g2 = 0x80;
-            temp_a1->g1 = 0x80;
-            temp_a1_2->g0 = 0x80;
-            do {
-                temp_a1->u0 = 0x40;
-                temp_a1_2->b3 = 0x40;
-                temp_a1_2 = temp_a1_2;
-                temp_a1_2->b2 = 0x40;
-                temp_a1_2->b1 = 0x40;
-                temp_a1_2->b0 = 0x40;
-            } while (0);
-            temp_a1_2->tpage = 0x1A;
-            temp_a1->clut = new_var;
-            temp_a1->pad3 = 0x35;
-            temp_a1_2->pad2 = D_800733FC + 1;
-            arg0->unk34 = 0x04840000;
-            arg0->step++;
+        firstPolygonIndex = func_800EDC80(4, 1);
+        entity->firstPolygonIndex = firstPolygonIndex;
+        if (firstPolygonIndex != -1) {
+            entity->unk7C.modeS16 = 0x16;
+            entity->unk7E.modeU16 = 0x1A;
+            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly->u2 = 0x40;
+            poly->u3 = 0x7F;
+            poly->u1 = 0x7F;
+            poly->v1 = 0xC0;
+            poly->v0 = 0xC0;
+            poly->v3 = 0xFF;
+            poly->v2 = 0xFF;
+            poly->r3 = 0x80;
+            poly->r2 = 0x80;
+            poly->r1 = 0x80;
+            poly->r0 = 0x80;
+            poly->g3 = 0x80;
+            poly->g2 = 0x80;
+            poly->g1 = 0x80;
+            poly->g0 = 0x80;
+            poly->u0 = 0x40;
+            poly->b3 = 0x40;
+            poly->b2 = 0x40;
+            poly->b1 = 0x40;
+            poly->b0 = 0x40;
+            poly->tpage = 0x1A;
+            poly->clut = 0x15F;
+            poly->pad2 = PLAYER.zPriority + 1;
+            poly->pad3 = 0x35;
+            entity->unk34 = 0x04840000;
+            entity->step++;
             break;
         }
-        func_80106590(arg0);
+        func_80106590(entity);
         return;
 
     case 1:
-        arg0->unk7C.modeS16 += 2;
-        arg0->unk7E.modeU16 = (u16)(arg0->unk7E.modeU16 + 2);
-        if (((s16)arg0->unk7C.modeS16) >= 0x39) {
-            func_80106590(arg0);
+        entity->unk7C.modeS16 += 2;
+        entity->unk7E.modeU16 += 2;
+        if (entity->unk7C.modeS16 >= 0x39) {
+            func_80106590(entity);
             return;
         }
         break;
@@ -4930,32 +4919,24 @@ void func_801279FC(Entity* arg0) {
     default:
         break;
     }
-    temp_a1_2 = &D_80086FEC[arg0->firstPolygonIndex];
-    temp_a1_2->x0 = arg0->posX.Data.high - arg0->unk7C.modeS16;
-    temp_a1_2->y0 = arg0->posY.Data.high - arg0->unk7E.modeU16;
-    temp_a1_2->x1 = arg0->posX.Data.high + arg0->unk7C.modeS16;
-    temp_a1_2->y1 = arg0->posY.Data.high - arg0->unk7E.modeU16;
-    temp_a1_2->x2 = arg0->posX.Data.high - arg0->unk7C.modeS16;
-    temp_a1_2->y2 = arg0->posY.Data.high + arg0->unk7E.modeU16;
-    temp_a1_2->x3 = arg0->posX.Data.high + arg0->unk7C.modeS16;
-    temp_a1_2->y3 = arg0->posY.Data.high + arg0->unk7E.modeU16;
-    if (arg0->unk7C.modeS16 >= 0x29) {
-        temp_a1_2->r3 += 0xF4;
-        temp_a1_2->b3 += 0xFA;
-        temp_a1_2->g3 += 0xF4;
-        temp_a0 = temp_a1_2->b3;
-        do {
-            temp_v0_2 = temp_a1_2->r3;
-        } while (0);
-        temp_v1_2 = temp_a1_2->g3;
-        temp_a1_2->b2 = temp_a0;
-        temp_a1_2->b1 = temp_a0;
-        temp_a1_2->b0 = temp_a0;
-        temp_a1_2->r2 = temp_v0_2;
-        temp_a1_2->r1 = temp_v0_2;
-        temp_a1_2->r0 = temp_v0_2;
-        temp_a1_2->g1 = (temp_a1_2->g2 = temp_v1_2);
-        temp_a1_2->g0 = temp_v1_2;
+
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly->x0 = entity->posX.Data.high - entity->unk7C.modeS16;
+    poly->y0 = entity->posY.Data.high - entity->unk7E.modeU16;
+    poly->x1 = entity->posX.Data.high + entity->unk7C.modeS16;
+    poly->y1 = entity->posY.Data.high - entity->unk7E.modeU16;
+    poly->x2 = entity->posX.Data.high - entity->unk7C.modeS16;
+    poly->y2 = entity->posY.Data.high + entity->unk7E.modeU16;
+    poly->x3 = entity->posX.Data.high + entity->unk7C.modeS16;
+    poly->y3 = entity->posY.Data.high + entity->unk7E.modeU16;
+
+    if (entity->unk7C.modeS16 >= 0x29) {
+        poly->r3 += 0xF4;
+        poly->g3 += 0xF4;
+        poly->b3 += 0xFA;
+        poly->r0 = poly->r1 = poly->r2 = poly->r3;
+        poly->g0 = poly->g1 = poly->g2 = poly->g3;
+        poly->b0 = poly->b1 = poly->b2 = poly->b3;
     }
 }
 

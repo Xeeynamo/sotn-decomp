@@ -140,14 +140,14 @@ typedef struct Entity {
     /* 0x70 */ s32 unk70;
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
-    /* 0x7C */ unkUnion3 unk7C;
+    /* 0x7C */ unkUnion3 unk7C; // posX
     union {
         /* 0x7E */ u16 modeU16;
         struct {
             /* 0x7E */ u8 unk0;
             /* 0x7F */ u8 unk1;
         } modeU8;
-    } unk7E;
+    } unk7E; // posY
     union {
         /* 0x80 */ struct Entity* entityPtr;
         /* 0x80 */ s32 modeS32;
@@ -1073,7 +1073,8 @@ s32 func_801326D8(void);
 void func_80132028(s32, s8*, s32);
 void func_8013271C(void);
 void func_80132760(void);
-void func_80132A04(s16, s16, s16, s16, u16, s32, s16);
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
+                   s32 volume, s16 distance);
 void func_801337B4(void);
 s32 func_80133940(void);
 s32 func_80133950(void);
