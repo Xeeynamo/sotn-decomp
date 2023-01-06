@@ -392,7 +392,7 @@ Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
 
     if (entityIndex < arg1) {
         while (var_a0 < arg1) {
-            if (entity->objectId == ENTITY_MIN) {
+            if (entity->objectId == ENTITY_UNALLOCATED) {
                 return entity;
             }
             var_a0++;

@@ -14,8 +14,6 @@ s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);
 void func_801BEB80(Entity*);
 void func_801C29B0(s32);
-void EntityCandleDrop(Entity* entity);
-void EntityCandleHeartDrop(Entity* entity);
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
@@ -181,7 +179,7 @@ s32 func_801BBC3C(Unkstruct5* arg0) {
     return diff;
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityTransitionDoor);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -489,14 +487,14 @@ void func_801BDCE4(Entity* entity) {
     subId = entity->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityCandleDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityBreakable;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         subId -= 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityCandleHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
     entity->subId = subId;
@@ -628,7 +626,7 @@ void CollectLifeVessel(void) {
 
 void func_801BE2E4(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityCandleDrop);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBreakable);
 
 void func_801BEB80(Entity* entity) {
     u32 temp_v0;
@@ -692,7 +690,7 @@ void func_801BEC7C(Entity* entity, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityCandleHeartDrop);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityInventoryDrop);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BF308);
 
@@ -1340,8 +1338,8 @@ void func_801C7884(Entity* entity) {
         entity->unk1E += 0x20;
 
         if (entity[-1].step != 1) {
-            entity->objectId = ENTITY_ITEM_DROP;
-            entity->pfnUpdate = EntityCandleDrop;
+            entity->objectId = ENTITY_PRICE_DROP;
+            entity->pfnUpdate = EntityBreakable;
             entity->animationFrameDuration = 0;
             entity->animationFrameIndex = 0;
             entity->step = ENTITY_STEP_0;
@@ -1374,7 +1372,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C7D68);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C8ADC);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityAreaTitlePopup);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityStageNamePopup);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C9930);
 

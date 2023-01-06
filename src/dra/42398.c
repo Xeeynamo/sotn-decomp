@@ -3962,7 +3962,7 @@ void func_8010E83C(s32 arg0) {
         D_80072F64 = 4;
     }
 
-    D_800733E4 = 0xFFFB0000 | 0x2000;
+    GET_PLAYER(g_EntityArray)->accelerationY = 0xFFFB0000 | 0x2000;
     func_8010D584(4);
 
     if (D_80072F70 == 1) {
@@ -4494,7 +4494,7 @@ Entity* func_8011879C(s16 entityIndex, s16 arg1) {
 
     if (entityIndex < arg1) {
         while (var_a0 < arg1) {
-            if (entity->objectId == ENTITY_MIN) {
+            if (entity->objectId == ENTITY_UNALLOCATED) {
                 return entity;
             }
             var_a0++;

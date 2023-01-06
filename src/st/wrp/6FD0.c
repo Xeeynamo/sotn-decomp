@@ -303,54 +303,38 @@ const LayoutObject* const D_80180310[] = {
 // *** Layout object definition end ***
 
 // *** Object definition start ***
-void EntityBreakable(Entity*);
-void EntityExplosion(Entity*);
-void EntityItemDrop(Entity*);
-void EntityNumericDamage(Entity*);
-void EntityRedDoor(Entity*);
-void EntityIntenseExplosion(Entity*);
-void EntityAbsorbOrb(Entity*);
-void EntityRoomForeground(Entity*);
-void EntityStageNamePopup(Entity*);
-void EntityHeartDrop(Entity*);
-void EntityRelicItem(Entity*);
-void EntityInventoryItem(Entity*);
-void EntityEnemyBlood(Entity*);
-void EntityUnkId0D(Entity*);
-void EntityDummy(Entity*);
-void EntityDummy(Entity*);
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
 void func_8018F510(Entity*);
 void func_8018F838(Entity*);
 void func_8018F928(Entity*);
-void func_801873A0(Entity*);
-void func_80187F1C(Entity*);
+void EntityWarpRoom(Entity*);
+void EntityWarpSmallRocks(Entity*);
 const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3E0 */ (PfnEntityUpdate)D_80181400,
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
-    /* 3EC */ (PfnEntityUpdate)EntityItemDrop,
+    /* 3EC */ (PfnEntityUpdate)EntityPriceDrop,
     /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
     /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
     /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
     /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
     /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
-    /* 408 */ (PfnEntityUpdate)EntityHeartDrop,
-    /* 40C */ (PfnEntityUpdate)EntityRelicItem,
-    /* 410 */ (PfnEntityUpdate)EntityInventoryItem,
+    /* 408 */ (PfnEntityUpdate)EntityInventoryDrop,
+    /* 40C */ (PfnEntityUpdate)EntityRelicOrb,
+    /* 410 */ (PfnEntityUpdate)EntityHeartDrop,
     /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
-    /* 418 */ (PfnEntityUpdate)EntityUnkId0D,
+    /* 418 */ (PfnEntityUpdate)EntityUnkId0E,
     /* 41C */ (PfnEntityUpdate)EntityDummy,
     /* 420 */ (PfnEntityUpdate)EntityDummy,
-    /* 424 */ (PfnEntityUpdate)func_80186FD0,
-    /* 428 */ (PfnEntityUpdate)func_801870B0,
+    /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
+    /* 428 */ (PfnEntityUpdate)func_801870B0, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)func_8018F510,
     /* 430 */ (PfnEntityUpdate)func_8018F838,
     /* 434 */ (PfnEntityUpdate)func_8018F928,
-    /* 438 */ (PfnEntityUpdate)func_801873A0,
-    /* 43C */ (PfnEntityUpdate)func_80187F1C,
+    /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
+    /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
 };
 
 const u16 g_eBreakableInit[] = {
@@ -427,7 +411,7 @@ const s8 D_80180530[] = {
     /* 536 */ 0x00,
     /* 537 */ 0x00,
 };
-const s16 D_80180538[] = {
+const u16 D_80180538[] = {
     /* 538 */ 0x0000,
     /* 53A */ 0x0000,
     /* 53C */ 0x0600,
@@ -568,7 +552,7 @@ const u32 D_80180608[] = {
     /* 644 */ 0x00001E00,
 };
 
-// owned by func_801873A0
+// owned by EntityWarpRoom
 const u32 D_80180648[] = {
     /* 648 */ 0x00000000,
     /* 64C */ 0x00040000,
@@ -2541,11 +2525,10 @@ void func_80186FD0(Entity* arg0) {
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
-void func_801870B0(Entity* entity);
 #else
 void func_801870B0(Entity* entity) {
     s32 temp_v0;
-    s32 temp_v1;
+    u16 temp_v0_3;
     u16* temp_v0_2;
     u16 temp_s1;
     u16 phi_v1;
@@ -2554,40 +2537,40 @@ void func_801870B0(Entity* entity) {
     temp_s1 = entity->subId;
     entity->unk6D = 0;
     if (entity->step != 0) {
-        temp_v1 = temp_s1;
-        if (temp_v1 > 3) {
-            if (temp_v1 > 5) {
-                if (temp_v1 != 6) {
-                test_2:
-                    if (g_CurrentRoomX)
-                        return;
-                } else {
-                    if (g_pads->pressed & PAD_TRIANGLE) {
-                        g_CurrentRoomX = 0;
-                        g_CurrentRoomWidth = 1280;
-                        entity->step++;
-                        return;
-                    }
-                }
-            } else {
-                goto test_2;
+        switch (temp_s1) {
+        case 4:
+        case 5:
+            if (g_CurrentRoomX != 0) {
+                return;
             }
+            break;
+        case 6:
+            if (g_pads->pressed & PAD_TRIANGLE) {
+                g_CurrentRoomX = 0;
+                g_CurrentRoomWidth = 1280;
+                do {
+                    entity->step++;
+                } while (0); // FAKE
+                return;
+            }
+            break;
         }
 
         if (entity->unk44 != 0) {
             temp_v0 = func_8018B970();
-            if (entity->unk7C.modeS16 != 0) {
+            phi_v1 = entity->unk7C.modeS16;
+            if (phi_v1 != 0) {
                 phi_v1 = (temp_v0 & 2) * 2;
             } else {
                 phi_v1 = (temp_v0 & 1) * 4;
             }
 
-            unk = phi_v1 + temp_s1 * 8;
-            temp_v0_2 = D_80180538 + unk;
-            g_CurrentRoomX = (s32)*temp_v0_2++;
-            g_CurrentRoomY = (s32)*temp_v0_2++;
-            g_CurrentRoomWidth = (s32)*temp_v0_2++;
-            g_CurrentRoomHeight = (s32)*temp_v0_2++;
+            unk = temp_s1 * 8 + phi_v1;
+            temp_v0_2 = &D_80180538[unk];
+            g_CurrentRoomX = *temp_v0_2++;
+            g_CurrentRoomY = *temp_v0_2++;
+            g_CurrentRoomWidth = *temp_v0_2++;
+            g_CurrentRoomHeight = *temp_v0_2++;
         }
     } else {
         u8 temp_v0_5;
@@ -2605,6 +2588,7 @@ void func_801870B0(Entity* entity) {
 }
 #endif
 
+void func_801870B0(Entity* entity);
 void SpawnExplosionEntity(u16 objectId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
 void EntityBreakable(Entity* entity) {
@@ -2633,7 +2617,7 @@ void EntityBreakable(Entity* entity) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
 extern s16 (*D_8003C7B8)(/*?*/ u32, /*?*/ u32);
@@ -2641,14 +2625,16 @@ extern /*?*/ u32 (*D_8003C7E8)(/*?*/ u32, /*?*/ u32, /*?*/ u32, /*?*/ u32);
 extern s32 D_8003C8B8;
 extern s32 D_80072EF4;
 extern s32 D_80072EFC;
-extern s16 D_800733FC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
 extern s32 D_80193AA8;
 extern s32 D_80193AAC;
 
-// Handle warp logic
-void func_801873A0(Entity* arg0) {
+// Handles everything about the warp room.
+// It is responsible to spawn the colourful background, the stones on the
+// ground and it always listen to the UP button. When the UP
+// button is pressed, it brights the screen and teleport the player.
+void EntityWarpRoom(Entity* arg0) {
     POLY_GT4* var_s2;
     POLY_GT4* var_s2_2;
     s16 temp_s4;
@@ -2697,8 +2683,10 @@ void func_801873A0(Entity* arg0) {
     POLY_GT4* temp_s2_5;
     POLY_GT4* var_s2_3;
     s32 tmpa, tmpb;
+    Entity* player;
 
     FntPrint("step %x\n", arg0->step);
+    player = GET_PLAYER(g_EntityArray);
     switch (arg0->step) {
     case 0:
         // Initialize all the objects in the warp room
@@ -2785,15 +2773,17 @@ void func_801873A0(Entity* arg0) {
         arg0->unk3C = 1;
         arg0->hitboxWidth = 2;
         arg0->hitboxHeight = 0x10;
-        *D_80180648 = 0;
+        *(u32*)D_80180648 = 0;
         arg0->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << arg0->subId);
-        if ((u32)((D_800733DA + (s16)D_8007308E) - 0x61) < 0x3F) {
+        if ((u32)((GET_PLAYER(g_EntityArray)->posX.Data.high +
+                   (s16)D_8007308E) -
+                  0x61) < 0x3F) {
             D_80072EFC = 0x10;
             D_80072EF4 = 0;
             D_8003C8B8 = 0;
             arg0->step = 5;
-            *D_80180648 = 1;
+            *(u32*)D_80180648 = 1;
         }
     case 1:
         // Wait for player to press the UP button
@@ -2801,8 +2791,8 @@ void func_801873A0(Entity* arg0) {
             !(D_80072F2C & 0xC5CF3EF7)) {
             D_80072EF4 = 0;
             D_80072EFC = 0x80;
-            D_800733E0 = 0;
-            D_800733E4 = 0;
+            GET_PLAYER(g_EntityArray)->accelerationX = 0;
+            GET_PLAYER(g_EntityArray)->accelerationY = 0;
             D_8003C8B8 = 0;
             arg0->step++;
         }
@@ -2810,7 +2800,7 @@ void func_801873A0(Entity* arg0) {
     case 2:
         // Move Alucard in the background and fade him to white
         D_80072EFC = 0x80;
-        D_800733FC = 0x5C;
+        GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
         D_80072EF4 = 0;
         g_zEntityCenter.typeShort = 0x5C;
         temp_s2_2 = (POLY_GT4*)arg0->unk84.value;
@@ -2821,7 +2811,7 @@ void func_801873A0(Entity* arg0) {
         temp_s2_2->b0 = temp_v1_9;
         temp_s2_2->g0 = temp_v1_9;
         if (temp_s2_2->r0 >= 0x61) {
-            *D_80180648 = 1;
+            *(u32*)D_80180648 = 1;
             g_pfnPlaySfx(0x636);
             arg0->step++;
         }
@@ -2829,7 +2819,7 @@ void func_801873A0(Entity* arg0) {
     case 3:
         // Fade the entire room into white
         D_80072EFC = 0x80;
-        D_800733FC = 0x5C;
+        GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
         D_80072EF4 = 0;
         g_zEntityCenter.typeShort = 0x5C;
         temp_s2_3 = (POLY_GT4*)arg0->unk84.value;
@@ -2887,8 +2877,8 @@ void func_801873A0(Entity* arg0) {
         FntPrint(D_80186E4C, temp_s0->x, temp_s0->y); // for_x:%x y%x
         FntPrint(D_80186E5C, move_x, move_y);         // move_x:%x y%x
         D_80097C98 = 2;
-        D_800733DA += move_x << 8;
-        D_800733DE += move_y << 8;
+        GET_PLAYER(g_EntityArray)->posX.Data.high += move_x << 8;
+        GET_PLAYER(g_EntityArray)->posY.Data.high += move_y << 8;
         arg0->step = 0x80;
         break;
     case 5:
@@ -2931,7 +2921,7 @@ void func_801873A0(Entity* arg0) {
         }
         var_v0_14 = fadeIn;
         if (var_v0_15 != 0) {
-            *D_80180648 = 0;
+            *(u32*)D_80180648 = 0;
         }
         var_s2_3->r0 = var_v0_14;
         var_s2_3->b0 = var_v0_14;
@@ -3052,7 +3042,7 @@ void func_801873A0(Entity* arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80187F1C);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpSmallRocks);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -3716,14 +3706,14 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->subId = var_v1;
 
     if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_ITEM_DROP;
-        entity->pfnUpdate = EntityItemDrop;
+        entity->objectId = ENTITY_PRICE_DROP;
+        entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_HEART_DROP;
-        entity->pfnUpdate = EntityHeartDrop;
+        entity->objectId = ENTITY_INVENTORY_DROP;
+        entity->pfnUpdate = EntityInventoryDrop;
     }
 
     entity->subId = var_v1;
@@ -3859,7 +3849,7 @@ void CollectLifeVessel(void) {
 
 void func_8018CFF8(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityItemDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     u16 zPriority;
@@ -3920,15 +3910,15 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018E01C);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRelicItem);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityInventoryItem);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0D);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
 
