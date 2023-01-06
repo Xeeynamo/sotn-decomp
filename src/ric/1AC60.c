@@ -149,13 +149,13 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A9B0);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015AFE0);
 
 void func_8015B098(void) {
-    if ((g_EntityArray[PLAYER_CHARACTER].animationFrame == 0xB5) &&
-        (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration == 1)) {
+    if ((PLAYER.animationFrame == 0xB5) &&
+        (PLAYER.animationFrameDuration == 1)) {
         func_801606BC(g_CurrentEntity, 0x23, 0);
         g_pfnPlaySfx(NA_SE_UNK_62F);
     }
 
-    if (g_EntityArray[PLAYER_CHARACTER].animationFrameDuration < 0) {
+    if (PLAYER.animationFrameDuration < 0) {
         func_8015CD98(0);
         D_80072F66 = 0;
         func_801606BC(g_CurrentEntity, 0x450021, 0);

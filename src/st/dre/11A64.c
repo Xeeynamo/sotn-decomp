@@ -137,7 +137,7 @@ void func_80193D7C(Entity* entity) {
         entity->animationFrame = 0x3F;
     }
 
-    entity->zPriority = g_EntityArray[PLAYER_CHARACTER].zPriority + 4;
+    entity->zPriority = PLAYER.zPriority + 4;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193E18);
