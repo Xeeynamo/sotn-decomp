@@ -254,13 +254,13 @@ s32 func_801BB824(Unkstruct5* arg0) {
     Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
-    diff = player->posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.Data.high - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = player->posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.Data.high - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -313,9 +313,9 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
 
 s16 func_801BC844(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

@@ -358,13 +358,13 @@ s32 func_801996F8(Unkstruct5* arg0) {
     Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
-    diff = player->posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.Data.high - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = player->posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.Data.high - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -447,7 +447,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
  */
 s32 func_8019A6A8(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -460,7 +460,7 @@ s32 func_8019A6A8(void) {
  */
 s32 func_8019A6E4(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -470,9 +470,9 @@ s32 func_8019A6E4(void) {
 
 s16 func_8019A718(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

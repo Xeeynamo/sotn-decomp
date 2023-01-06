@@ -558,31 +558,31 @@ extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 
 // Entity* player = GET_PLAYER(g_EntityArray);
-// player->
+// PLAYER.
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;       // player->posX.Data.high
-extern s16 D_800733DE;       // player->posY.Data.high
-extern s32 D_800733E0;       // player->accelerationX
-extern s32 D_800733E4;       // player->accelerationY
-extern s32 D_800733E8;       // player->unk10
-extern u16 D_800733EC;       // player->facing
-extern u16 D_800733EE;       // player->palette
-extern s8 D_800733F0;        // player->blendMode
-extern u8 D_800733F1;        // player->unk19
-extern s16 D_800733F6;       // player->unk1E
-extern u16 D_800733FC;       // player->zPriority
-extern s16 D_800733FE;       // player->objectId
-extern u16 D_80073404;       // player->step
-extern u16 D_80073406;       // player->unk2E
-extern u16 D_8007340A;       // player->objectRoomIndex
-extern u16 D_8007341C;       // player->unk44
-extern s32* D_80073424;      // player->unk4C
-extern MultiType D_80073428; // player->animationFrameIndex
-extern s16 D_8007342A;       // player->animationFrameDuration
-extern s16 D_8007342C;       // player->animationSet
-extern u16 D_8007342E;       // player->animationFrame
-extern u8 D_80073484;        // player->unkAC
+extern s16 D_800733DA;       // PLAYER.posX.Data.high
+extern s16 D_800733DE;       // PLAYER.posY.Data.high
+extern s32 D_800733E0;       // PLAYER.accelerationX
+extern s32 D_800733E4;       // PLAYER.accelerationY
+extern s32 D_800733E8;       // PLAYER.unk10
+extern u16 D_800733EC;       // PLAYER.facing
+extern u16 D_800733EE;       // PLAYER.palette
+extern s8 D_800733F0;        // PLAYER.blendMode
+extern u8 D_800733F1;        // PLAYER.unk19
+extern s16 D_800733F6;       // PLAYER.unk1E
+extern u16 D_800733FC;       // PLAYER.zPriority
+extern s16 D_800733FE;       // PLAYER.objectId
+extern u16 D_80073404;       // PLAYER.step
+extern u16 D_80073406;       // PLAYER.unk2E
+extern u16 D_8007340A;       // PLAYER.objectRoomIndex
+extern u16 D_8007341C;       // PLAYER.unk44
+extern s32* D_80073424;      // PLAYER.unk4C
+extern MultiType D_80073428; // PLAYER.animationFrameIndex
+extern s16 D_8007342A;       // PLAYER.animationFrameDuration
+extern s16 D_8007342C;       // PLAYER.animationSet
+extern u16 D_8007342E;       // PLAYER.animationFrame
+extern u8 D_80073484;        // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
 
 // Beginning of g_EntityArray[1] offset = 0x80073494

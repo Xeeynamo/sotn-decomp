@@ -3683,10 +3683,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D010);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D2C8);
 
 void func_8010D584(s16 step) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->step = step;
-    player->unk2E = 0;
+    PLAYER.step = step;
+    PLAYER.unk2E = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010D59C);
@@ -3861,12 +3859,10 @@ void func_8010E390(s32 accelerationX) {
  * Updates the Player acceleration in the X Axis
  */
 void func_8010E3B8(s32 accelerationX) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    if (player->objectRoomIndex == 1) {
+    if (PLAYER.objectRoomIndex == 1) {
         accelerationX = -accelerationX;
     }
-    player->accelerationX = accelerationX;
+    PLAYER.accelerationX = accelerationX;
 }
 
 void func_8010E3E0(void) {
@@ -3879,10 +3875,8 @@ void func_8010E3E0(void) {
 }
 
 void func_8010E42C(u16 arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->unk2E = arg0;
-    player->step = 0x12;
+    PLAYER.unk2E = arg0;
+    PLAYER.step = 0x12;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -3899,27 +3893,25 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 void func_8010E470(s32 arg0, s32 arg1) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->accelerationX = arg1;
-    player->accelerationY = 0;
-    player->step = ENTITY_STEP_2;
-    player->unk2E = D_800ACF4C[arg0 * 2 + 0];
+    PLAYER.accelerationX = arg1;
+    PLAYER.accelerationY = 0;
+    PLAYER.step = ENTITY_STEP_2;
+    PLAYER.unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
 #endif
 
 // This may be the function that turns Alucard into stone
 void func_8010E4D0(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     func_80111CC0();
 
-    player->palette = 0x8100;
-    player->zPriority = g_zEntityCenter.typeShort;
+    PLAYER.palette = 0x8100;
+    PLAYER.zPriority = g_zEntityCenter.typeShort;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
-        player->accelerationY = 0;
-        player->accelerationX = 0;
+        PLAYER.accelerationY = 0;
+        PLAYER.accelerationX = 0;
         func_8010D584(ENTITY_STEP_6);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
@@ -3935,16 +3927,14 @@ void func_8010E570(/*?*/ s32);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E6AC);
 
 void func_8010E7AC(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     func_8010D584(3);
 
     if (D_80072F70 != 1) {
         func_8010DA48(0x1C);
     }
 
-    player->accelerationY = 0x20000;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0x20000;
+    PLAYER.accelerationX = 0;
     D_80072F0C = 8;
 
     if (D_80072F24 & 1) {
@@ -3968,7 +3958,7 @@ void func_8010E83C(s32 arg0) {
         D_80072F64 = 0;
     } else {
         func_8010DA48(0x16);
-        D_800733E0 = 0;
+        PLAYER.accelerationX = 0;
         D_80072F64 = 4;
     }
 
@@ -3980,23 +3970,21 @@ void func_8010E83C(s32 arg0) {
     }
 
     if (arg0 != 0) {
-        temp = D_80072F64 & ~1;
+        D_80072F64 = D_80072F64 & ~1;
     } else {
-        temp = D_80072F64 | 1;
+        D_80072F64 = D_80072F64 | 1;
     }
-    D_80072F64 = temp;
 }
 
 void func_8010E940(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     u16* temp = &D_80072F64;
 
     *temp |= 0x21;
     func_8010DA48(0x20);
-    player->unk2E = 0;
-    player->accelerationY = -0x44000;
+    PLAYER.unk2E = 0;
+    PLAYER.accelerationY = -0x44000;
     if (D_80072F92 != 0) {
-        player->accelerationY = 0;
+        PLAYER.accelerationY = 0;
     }
 }
 
@@ -4053,10 +4041,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EB5C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0xF);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
