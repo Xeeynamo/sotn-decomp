@@ -2625,7 +2625,6 @@ extern /*?*/ u32 (*D_8003C7E8)(/*?*/ u32, /*?*/ u32, /*?*/ u32, /*?*/ u32);
 extern s32 D_8003C8B8;
 extern s32 D_80072EF4;
 extern s32 D_80072EFC;
-extern s16 D_800733FC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
 extern s32 D_80193AA8;
@@ -2684,8 +2683,10 @@ void EntityWarpRoom(Entity* arg0) {
     POLY_GT4* temp_s2_5;
     POLY_GT4* var_s2_3;
     s32 tmpa, tmpb;
+    Entity* player;
 
     FntPrint("step %x\n", arg0->step);
+    player = GET_PLAYER(g_EntityArray);
     switch (arg0->step) {
     case 0:
         // Initialize all the objects in the warp room
@@ -2772,15 +2773,17 @@ void EntityWarpRoom(Entity* arg0) {
         arg0->unk3C = 1;
         arg0->hitboxWidth = 2;
         arg0->hitboxHeight = 0x10;
-        *D_80180648 = 0;
+        *(u32*)D_80180648 = 0;
         arg0->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << arg0->subId);
-        if ((u32)((D_800733DA + (s16)D_8007308E) - 0x61) < 0x3F) {
+        if ((u32)((GET_PLAYER(g_EntityArray)->posX.Data.high +
+                   (s16)D_8007308E) -
+                  0x61) < 0x3F) {
             D_80072EFC = 0x10;
             D_80072EF4 = 0;
             D_8003C8B8 = 0;
             arg0->step = 5;
-            *D_80180648 = 1;
+            *(u32*)D_80180648 = 1;
         }
     case 1:
         // Wait for player to press the UP button
@@ -2788,8 +2791,8 @@ void EntityWarpRoom(Entity* arg0) {
             !(D_80072F2C & 0xC5CF3EF7)) {
             D_80072EF4 = 0;
             D_80072EFC = 0x80;
-            D_800733E0 = 0;
-            D_800733E4 = 0;
+            GET_PLAYER(g_EntityArray)->accelerationX = 0;
+            GET_PLAYER(g_EntityArray)->accelerationY = 0;
             D_8003C8B8 = 0;
             arg0->step++;
         }
@@ -2797,7 +2800,7 @@ void EntityWarpRoom(Entity* arg0) {
     case 2:
         // Move Alucard in the background and fade him to white
         D_80072EFC = 0x80;
-        D_800733FC = 0x5C;
+        GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
         D_80072EF4 = 0;
         g_zEntityCenter.typeShort = 0x5C;
         temp_s2_2 = (POLY_GT4*)arg0->unk84.value;
@@ -2808,7 +2811,7 @@ void EntityWarpRoom(Entity* arg0) {
         temp_s2_2->b0 = temp_v1_9;
         temp_s2_2->g0 = temp_v1_9;
         if (temp_s2_2->r0 >= 0x61) {
-            *D_80180648 = 1;
+            *(u32*)D_80180648 = 1;
             g_pfnPlaySfx(0x636);
             arg0->step++;
         }
@@ -2816,7 +2819,7 @@ void EntityWarpRoom(Entity* arg0) {
     case 3:
         // Fade the entire room into white
         D_80072EFC = 0x80;
-        D_800733FC = 0x5C;
+        GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
         D_80072EF4 = 0;
         g_zEntityCenter.typeShort = 0x5C;
         temp_s2_3 = (POLY_GT4*)arg0->unk84.value;
@@ -2874,8 +2877,8 @@ void EntityWarpRoom(Entity* arg0) {
         FntPrint(D_80186E4C, temp_s0->x, temp_s0->y); // for_x:%x y%x
         FntPrint(D_80186E5C, move_x, move_y);         // move_x:%x y%x
         D_80097C98 = 2;
-        D_800733DA += move_x << 8;
-        D_800733DE += move_y << 8;
+        GET_PLAYER(g_EntityArray)->posX.Data.high += move_x << 8;
+        GET_PLAYER(g_EntityArray)->posY.Data.high += move_y << 8;
         arg0->step = 0x80;
         break;
     case 5:
@@ -2918,7 +2921,7 @@ void EntityWarpRoom(Entity* arg0) {
         }
         var_v0_14 = fadeIn;
         if (var_v0_15 != 0) {
-            *D_80180648 = 0;
+            *(u32*)D_80180648 = 0;
         }
         var_s2_3->r0 = var_v0_14;
         var_s2_3->b0 = var_v0_14;
