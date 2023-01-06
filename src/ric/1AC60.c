@@ -358,7 +358,6 @@ void func_8015CD98(s32 accelerationX) {
 }
 
 void func_8015CDE0(s32 arg0) {
-
     if ((D_80072F10 != 0) && (D_80072F9A == 0)) {
         func_8015CE7C();
         return;
