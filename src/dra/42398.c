@@ -3891,8 +3891,6 @@ void func_8010E42C(u16 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 #else
 void func_8010E470(s32 arg0, s32 arg1) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
     PLAYER.step = ENTITY_STEP_2;
@@ -3962,7 +3960,7 @@ void func_8010E83C(s32 arg0) {
         D_80072F64 = 4;
     }
 
-    GET_PLAYER(g_EntityArray)->accelerationY = 0xFFFB0000 | 0x2000;
+    PLAYER.accelerationY = 0xFFFB0000 | 0x2000;
     func_8010D584(4);
 
     if (D_80072F70 == 1) {
@@ -4122,8 +4120,6 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     PLAYER.step = ENTITY_STEP_0;
     PLAYER.unk2E = 3;
     func_8010E390(0xFFFC8000);
@@ -4162,8 +4158,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111830);
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     D_801396EA = 1;
     D_801396E4 = PLAYER.animationFrame;
     D_801396E6.typeShort = PLAYER.unk19;
@@ -4171,8 +4165,6 @@ void func_80111938(void) {
 }
 
 void func_8011197C(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     D_801396EA = 0;
     PLAYER.unk44 = 0;
     PLAYER.animationFrame = D_801396E4;
@@ -4192,7 +4184,6 @@ void func_80111CC0(void) {
 }
 
 bool func_80111D24(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s32 sp10[9]; // !FAKE: There's a struct inside the stack.
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.Data.high;
@@ -4265,7 +4256,6 @@ void func_80113148(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801131C4);
 
 void func_801139CC(s32 arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s32 move = PLAYER.facing != 0 ? -3 : 3;
 
     PLAYER.posY.Data.high -= 22;
@@ -4290,7 +4280,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80113D7C);
 
 // !FAKE: too many temps
 s16 func_80113E68(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 rnd = rand();
     s32 temp_v0;
     s32 var_a1;
@@ -4305,18 +4294,16 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->unk19 &= 0xF3;
-    player->animationSet = 1;
-    player->animationFrameDuration = 0;
-    player->animationFrameIndex = 0;
-    player->objectId = 0;
-    player->blendMode = 0;
+    PLAYER.animationSet = 1;
+    PLAYER.unk19 &= 0xF3;
+    PLAYER.animationFrameDuration = 0;
+    PLAYER.animationFrameIndex = 0;
+    PLAYER.objectId = 0;
+    PLAYER.blendMode = 0;
     D_80072F64 = 0;
     D_80072F66 = 0;
-    player->unk1E = 0;
-    player->zPriority = g_zEntityCenter.typeShort;
+    PLAYER.unk1E = 0;
+    PLAYER.zPriority = g_zEntityCenter.typeShort;
     if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }
@@ -4384,8 +4371,6 @@ void func_801166A4(void) {
 }
 
 void func_8011678C(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
     if (D_80072EF6 != 2) {
@@ -4520,7 +4505,6 @@ void func_80118C28(s32 arg0) {
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
     Entity* entity = func_8011879C(0x38, 0x40);
-    Entity* player = GET_PLAYER(g_EntityArray);
 
     if (entity != NULL) {
         func_80106590(entity);
@@ -4637,8 +4621,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
 void func_8011B530(Entity* entity) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     if (PLAYER.step != 0x25) {
         func_80106590(entity);
     } else if (entity->step == ENTITY_STEP_0) {
@@ -4708,8 +4690,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801238CC);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80123A60);
 #else
 void func_80123A60(Entity* entity) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     if (D_80072F2C & 0x01000000) {
 
 #if 1
@@ -4908,7 +4888,6 @@ void func_801279FC(Entity* entity) {
 }
 
 void func_80127CC8(Entity* entity) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     POLY_GT4* poly;
     s32 ret;
 
@@ -5113,8 +5092,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012C97C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CA64);
 
 void func_8012CB0C(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     PLAYER.unkAC = 0xDE;
     PLAYER.accelerationY = 0;
     D_800B0914 = 0;
@@ -5151,8 +5128,6 @@ void func_8012CED4(void) {
 }
 
 void func_8012CFA8(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     func_8010DA48(0xEA);
     PLAYER.unk2E = 6;
     D_800B0914 = 0;
@@ -5161,8 +5136,6 @@ void func_8012CFA8(void) {
 }
 
 void func_8012CFF0(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
     PLAYER.unk2E = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
@@ -5171,7 +5144,6 @@ void func_8012CFF0(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012D024);
 
 void func_8012D178(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s32 var_v0;
 
     if (D_80072EEC & 0x40) {

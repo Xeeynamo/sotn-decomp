@@ -350,7 +350,6 @@ void func_8019967C(u16 objectId, Entity* a, Entity* b) {
 }
 
 s32 func_801996F8(Unkstruct5* arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
     diff = PLAYER.posX.Data.high - arg0->unk2;
@@ -441,7 +440,6 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s32 func_8019A6A8(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
@@ -454,7 +452,6 @@ s32 func_8019A6A8(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_8019A6E4(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
@@ -464,7 +461,6 @@ s32 func_8019A6E4(void) {
 }
 
 s16 func_8019A718(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
     if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {

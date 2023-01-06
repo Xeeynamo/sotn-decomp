@@ -162,7 +162,6 @@ void func_801BBBC0(u16 objectId, Entity* ent1, Entity* ent2) {
 }
 
 s32 func_801BBC3C(Unkstruct5* arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
     diff = PLAYER.posX.Data.high - arg0->unk2;
@@ -222,7 +221,6 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BCAD4);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s32 func_801BCBEC(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
@@ -235,7 +233,6 @@ s32 func_801BCBEC(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_801BCC28(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
@@ -245,7 +242,6 @@ s32 func_801BCC28(void) {
 }
 
 s16 func_801BCC5C(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
     if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
@@ -1351,7 +1347,6 @@ void func_801C7884(Entity* entity) {
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBloodSkeleton);
 
 s32 func_801C7CF0(Unkstruct5* arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
     diff = PLAYER.posX.Data.high - arg0->unk2;
