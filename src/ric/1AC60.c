@@ -16,6 +16,9 @@ void func_8015F9F0(Entity* entity);
 Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 
 extern u16 D_80072F9A; // main.h?
+extern s16 D_801545EA[];
+extern s16 D_80154604;
+extern s16 D_80154606;
 extern s8 D_80154688;
 extern s32 D_801554B0;
 extern s32 D_801553BC;
@@ -355,7 +358,14 @@ void func_8015E420(s32 arg0) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015E484);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015E7B4);
+void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
+    s32 temp = D_80154604;
+
+    arg0->unk14 = temp;
+    arg0->unk1C = temp = D_80154606;
+    arg0->unk18 = D_801545EA[1] - 1;
+    arg0->unk20 = D_801545EA[0] + 1;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015E800);
 

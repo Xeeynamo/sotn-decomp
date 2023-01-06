@@ -2657,24 +2657,24 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD4C0);
 s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     s32 temp;
 
-    if (arg0->arg4 != 5) {
-        if (((u32)arg0->arg4) >= 0x10U) {
+    if (arg0->unk4 != 5) {
+        if (((u32)arg0->unk4) >= 0x10U) {
             temp = g_playerHp.max;
             if (g_playerHp.max < 0) {
                 temp += 7;
             }
-            arg0->arg8 = temp >> 3;
-        } else if (g_playerHp.max >= (arg0->arg8 * 0x14)) {
-            arg0->arg4 = 3;
+            arg0->unk8 = temp >> 3;
+        } else if (g_playerHp.max >= (arg0->unk8 * 0x14)) {
+            arg0->unk4 = 3;
         } else {
-            arg0->arg4 = 2;
+            arg0->unk4 = 2;
         }
     }
-    if (g_playerHp.current <= arg0->arg8) {
+    if (g_playerHp.current <= arg0->unk8) {
         g_playerHp.current = 0;
         return 1;
     } else {
-        g_playerHp.current -= arg0->arg8;
+        g_playerHp.current -= arg0->unk8;
         return 0;
     }
 }
