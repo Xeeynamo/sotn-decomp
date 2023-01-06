@@ -4057,20 +4057,16 @@ void func_8010FAF4(void) {
 }
 
 void func_8010FB24(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0x22);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
 
 void func_8010FB68(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0x20);
     func_8010E3E0();
     func_8010DA48(0xBA);
@@ -4083,10 +4079,8 @@ void func_8010FB68(void) {
 }
 
 void func_8010FBF4(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0x25);
     func_8010E3E0();
     func_8010DA48(0xDA);
@@ -4096,10 +4090,8 @@ void func_8010FBF4(void) {
 }
 
 void func_8010FC50(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0x21);
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x75, 0);
@@ -4109,10 +4101,8 @@ void func_8010FC50(void) {
 }
 
 void func_8010FCB8(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0x23);
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x10075, 0);
@@ -4122,10 +4112,8 @@ void func_8010FCB8(void) {
 }
 
 void func_8010FD24(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-
-    player->accelerationY = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
     func_8010D584(0x27);
     func_8010E3E0();
     func_8010DA48(0xF1);
