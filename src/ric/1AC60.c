@@ -4,16 +4,18 @@
 #include "sfx.h"
 
 extern s16 (*D_8003C890)(s16);
-void func_8015D020();
-bool func_8015DBB0();
-void func_8015C93C();
-s32 func_8015C9CC();
-void func_8015CA84();
-void func_8015CD98();
+void func_8015D020(void);
+bool func_8015DBB0(s32);
+void func_8015C93C(s32 speed);
+s32 func_8015C9CC(void);
+void func_8015CA84(s32 speed);
+void func_8015CD98(s32 accelerationX);
 void func_8015CDE0(s32);
-s32 func_8015CF08();
-s32 func_8015E380();
+void func_8015CE7C(void);
+s32 func_8015CF08(void);
+s32 func_8015E380(s32);
 void func_8015F9F0(Entity* entity);
+void func_8015FAB8(Entity*);
 Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 
 extern u16 D_80072F9A; // main.h?
@@ -21,6 +23,7 @@ extern s16 D_801545EA[];
 extern s16 D_80154604;
 extern s16 D_80154606;
 extern s8 D_80154688;
+extern s32 D_80155488;
 extern s32 D_801554B0;
 extern s32 D_801553BC;
 extern s32 D_801554C0;
@@ -280,16 +283,12 @@ s32 func_8015C9CC(void) {
 }
 
 void func_8015CA84(s32 speed) {
-    s32 speed;
-
     if (g_CurrentEntity->facing == 1)
         speed = -speed;
     g_CurrentEntity->accelerationX = speed;
 }
 
 void func_8015CAAC(s32 speed) {
-    s32 speed;
-
     if (PLAYER.objectRoomIndex == 1)
         speed = -speed;
     PLAYER.accelerationX = speed;
@@ -358,7 +357,22 @@ void func_8015CD98(s32 accelerationX) {
     func_8015C920(&D_801553BC);
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CDE0);
+void func_8015CDE0(s32 arg0) {
+
+    if ((D_80072F10 != 0) && (D_80072F9A == 0)) {
+        func_8015CE7C();
+        return;
+    } else {
+        D_80072F02[0] = 8;
+    }
+    D_80072F10 = 0xC;
+    D_80072F02[0] = 0xC;
+    D_80072F64 = 0;
+    func_8015C908(1);
+    func_8015C920(&D_80155488);
+    func_8015CA84(0x14000);
+    D_800733E4 = 0;
+}
 
 void func_8015CE7C(void) {
     if (D_80072F9A != 0) {
