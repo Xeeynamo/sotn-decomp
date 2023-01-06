@@ -557,8 +557,6 @@ extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 
-// Entity* player = GET_PLAYER(g_EntityArray);
-// PLAYER.
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 extern s16 D_800733DA;       // PLAYER.posX.Data.high
@@ -876,6 +874,7 @@ extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80138430;
 extern s32 D_80138438;
+extern s32 D_80138444;
 extern s32 D_80138460;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
@@ -883,6 +882,7 @@ extern u8 D_80138F24[]; // Confirmed part of an array / struct
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s32 D_80138FB0;
+extern s16 D_80138FC4;
 extern s16 D_80139000;
 extern s16 D_80139008;
 extern s32 D_8013900C;
@@ -1024,6 +1024,7 @@ s32 func_800FD77C(s32 arg0, s32 arg1);
 bool func_800FD7C0(s32, s32);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
+void func_800FDCE0(s32);
 void func_800FDE00(void);
 void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
 s32 func_800FEEA4(s32, s32);

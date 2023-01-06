@@ -2811,7 +2811,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FDE20);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FE044);
 
-s32 func_800FE3A8(s32 arg0) {
+bool func_800FE3A8(s32 arg0) {
     /*
      * also matches without the temp like this:
      * return (D_80097964[arg0] & ~0xfd) != 0;
@@ -3817,7 +3817,7 @@ s32 func_8010E27C(void) {
         return 0;
     }
 
-    facing = &g_EntityArray->facing;
+    facing = &PLAYER.facing;
     if (*facing == 1) {
         if (D_80072EE8 & 0x2000) {
             *facing = 0;
@@ -5099,7 +5099,22 @@ void func_8012CB0C(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CB4C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CC30);
+void func_8012CC30(s32 arg0) {
+    if (arg0 == 0) {
+        D_80138444 = 1;
+        if ((D_80138FC4 == 255) && (func_800FE3A8(6)) && (func_800FDC94(4))) {
+            func_8010E27C();
+            PLAYER.unk2E = 2;
+            D_800B0914 = 4;
+            func_8010E390(0x50000);
+            g_CurrentEntity->accelerationY = 0;
+            func_8010DA48(0xEDU);
+            func_800FDCE0(4);
+        }
+    } else {
+        D_80138444 = 1;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CCE4);
 
