@@ -4525,8 +4525,8 @@ s32 func_80118C84(s16 arg0, s16 arg1) {
     if (entity != NULL) {
         func_80106590(entity);
         entity->objectId = ENTITY_13;
-        entity->posX.value = player->posX.value;
-        entity->posY.value = player->posY.value;
+        entity->posX.value = PLAYER.posX.value;
+        entity->posY.value = PLAYER.posY.value;
         entity->unk80.modeS16.unk0 = arg0;
         entity->unk80.modeS16.unk2 = arg1;
         return 0;
@@ -4639,7 +4639,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 void func_8011B530(Entity* entity) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    if (player->step != 0x25) {
+    if (PLAYER.step != 0x25) {
         func_80106590(entity);
     } else if (entity->step == ENTITY_STEP_0) {
         entity->unk34 = 0x60000;
@@ -4713,8 +4713,8 @@ void func_80123A60(Entity* entity) {
     if (D_80072F2C & 0x01000000) {
 
 #if 1
-        entity->posX.Data.high = player->posX.Data.high; //(u16) D_800733DA;
-        entity->posY.Data.high = player->posY.Data.high; //(u16) D_800733DE;
+        entity->posX.Data.high = PLAYER.posX.Data.high; //(u16) D_800733DA;
+        entity->posY.Data.high = PLAYER.posY.Data.high; //(u16) D_800733DE;
 #else // This one generates the  first missing move a0, s0 for some reason?
         entity->posX.Data.high = (u16)D_800733DA;
         entity->posY.Data.high = (u16)D_800733DE;
@@ -4724,14 +4724,14 @@ void func_80123A60(Entity* entity) {
             entity->unk34 = 0x04060000;
             entity->step++;
         }
-        if (player->animationFrame == 5) {
+        if (PLAYER.animationFrame == 5) {
             entity->hitboxWidth = 12;
             entity->hitboxHeight = 32;
             entity->unk10 = 0x1C;
             entity->unk12 = -0xC;
             return;
         }
-        if (player->animationFrame == 6) {
+        if (PLAYER.animationFrame == 6) {
             entity->hitboxWidth = 10;
             entity->hitboxHeight = 10;
             entity->unk10 = 0x1C;
@@ -4912,12 +4912,12 @@ void func_80127CC8(Entity* entity) {
     POLY_GT4* poly;
     s32 ret;
 
-    if (player->step != ENTITY_STEP_22) {
+    if (PLAYER.step != ENTITY_STEP_22) {
         func_80106590(entity);
         return;
     }
 
-    entity->posX.Data.high = player->posX.Data.high;
+    entity->posX.Data.high = PLAYER.posX.Data.high;
 
     switch (entity->step) {
     case ENTITY_STEP_0:
@@ -5115,12 +5115,12 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CA64);
 void func_8012CB0C(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->unkAC = 0xDE;
-    player->accelerationY = 0;
+    PLAYER.unkAC = 0xDE;
+    PLAYER.accelerationY = 0;
     D_800B0914 = 0;
-    player->animationFrameIndex = 0;
-    player->animationFrameDuration = 0;
-    player->unk2E = 7;
+    PLAYER.animationFrameIndex = 0;
+    PLAYER.animationFrameDuration = 0;
+    PLAYER.unk2E = 7;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8012CB4C);
@@ -5154,16 +5154,16 @@ void func_8012CFA8(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
     func_8010DA48(0xEA);
-    player->unk2E = 6;
+    PLAYER.unk2E = 6;
     D_800B0914 = 0;
-    player->accelerationX = 0;
+    PLAYER.accelerationX = 0;
     D_80072F0A = 8;
 }
 
 void func_8012CFF0(void) {
     Entity* player = GET_PLAYER(g_EntityArray);
 
-    player->unk2E = 3;
+    PLAYER.unk2E = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
 }
@@ -5180,7 +5180,7 @@ void func_8012D178(void) {
     } else if (!(D_80072F20 & 1)) {
         func_8012CFA8();
         return;
-    } else if (player->facing != 0) {
+    } else if (PLAYER.facing != 0) {
         var_v0 = D_80072EE8 & 0x8000;
     } else {
         var_v0 = D_80072EE8 & 0x2000;
