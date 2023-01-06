@@ -252,7 +252,16 @@ void func_8015CAAC(s32 speed) {
     PLAYER.accelerationX = speed;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CAD4);
+void func_8015CAD4(s32 arg0, s16 arg1) {
+    if (arg0 == 0) {
+        func_801606BC(g_CurrentEntity, 0x15002C, 0);
+        if (arg1 >= D_80072F1A[0]) {
+            D_80072F1A[0] = arg1;
+        }
+    } else if (D_80072F1C[0] <= arg1) {
+        D_80072F1C[0] = arg1;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015CB58);
 

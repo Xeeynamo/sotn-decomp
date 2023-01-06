@@ -217,8 +217,8 @@ typedef struct {
 typedef struct unkStruct3 {
     /* 0x00 */ struct unkStruct3* unk0;
     /* 0x04 */ s8 unk4;
-    /* 0x04 */ char pad4[0x1];
-    /* 0x05 */ s8 unk6;
+    /* 0x05 */ char pad5[0x1];
+    /* 0x06 */ s8 unk6;
     /* 0x07 */ s8 unk7;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
