@@ -947,28 +947,26 @@ void func_800EAD7C(void) {
 }
 
 void func_800EAEA4(void) {
-    u16* var_v1 = &D_801374F8;
+    u16* ptr;
     s32 i;
 
-    for (i = 0; i < 32; i++) {
-        *var_v1 = 0xFFFF;
-        var_v1++;
+    for (ptr = &D_801374F8, i = 0; i < 32; i++) {
+        *ptr = 0xFFFF;
+        ptr++;
     }
 
-    var_v1 = &D_80137538;
-
-    for (i = 0; i < 32; i++) {
-        *var_v1 = 0xFFFF;
-        var_v1++;
+    for (ptr = &D_80137538, i = 0; i < 32; i++) {
+        *ptr = 0xFFFF;
+        ptr++;
     }
 }
 
 void func_800EAEEC(void) {
-    unkstruct_80072FA0* var_v1 = &D_80072FA0[0];
+    unkstruct_80072FA0* ptr;
     s32 i;
 
-    for (i = 0; i < 16; i++, var_v1++) {
-        var_v1->unk4 = 0;
+    for (ptr = &D_80072FA0, i = 0; i < 16; i++, ptr++) {
+        ptr->unk4 = 0;
     }
 
     func_800EAEA4();
@@ -990,17 +988,17 @@ void func_800EAFC8(s32 arg0) {
 }
 
 u32 func_800EB03C(void) {
-    u8 temp_v1;
+    u8 ret;
 
     if (D_80137580 != 0) {
         D_80137580 = 0;
-        temp_v1 = *D_80137578;
+        ret = *D_80137578;
         D_80137578++;
-        return (temp_v1 >> 0) & 0xF;
+        return (ret >> 0) & 0xF;
     } else {
         D_80137580 = 1;
-        temp_v1 = *D_80137578;
-        return (temp_v1 >> 4) & 0xF;
+        ret = *D_80137578;
+        return (ret >> 4) & 0xF;
     }
 }
 
