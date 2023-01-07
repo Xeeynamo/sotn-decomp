@@ -544,4 +544,11 @@ if __name__ == "__main__":
             if args.query is None:
                 parser.print_help()
             else:
-                do_query((args.query.split(",")[0],args.query.split(",")[1]))
+                try:
+                    do_query((args.query.split(",")[0],args.query.split(",")[1]))
+                except:
+                    # same as above but considering any func with the name accross all rom, not only one
+                    for rom, function in map_symbols:
+                        if args.query == function:
+                            do_query((rom, function))
+                            break
