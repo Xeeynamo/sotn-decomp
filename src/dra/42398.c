@@ -922,7 +922,29 @@ s32 func_800EAD0C(void) { // the return type is needed for matching
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EAD7C);
+void func_800EAD7C(void) {
+    s32 index = 0;
+    s32 i;
+    s32 j;
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x200; j < 0x300; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0; j < 0x100; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x100; j < 0x200; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+}
 
 void func_800EAEA4(void) {
     u16* var_v1 = &D_801374F8;
