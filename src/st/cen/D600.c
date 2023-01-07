@@ -131,8 +131,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019444C);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s32 func_80194564(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -144,8 +143,7 @@ s32 func_80194564(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_801945A0(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -154,10 +152,9 @@ s32 func_801945A0(void) {
 }
 
 s16 func_801945D4(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

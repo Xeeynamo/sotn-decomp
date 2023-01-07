@@ -8,6 +8,7 @@ typedef enum {
 } EntityTypes;
 
 #define GET_PLAYER(player) (&(player)[PLAYER_CHARACTER])
+#define PLAYER g_EntityArray[PLAYER_CHARACTER]
 
 #define SQ(x) ((x) * (x))
 #define ABS(x) ((x) >= 0 ? (x) : -(x))

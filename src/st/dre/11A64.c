@@ -137,7 +137,7 @@ void func_80193D7C(Entity* entity) {
         entity->animationFrame = 0x3F;
     }
 
-    entity->zPriority = g_EntityArray[PLAYER_CHARACTER].zPriority + 4;
+    entity->zPriority = PLAYER.zPriority + 4;
 }
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_80193E18);
@@ -350,16 +350,15 @@ void func_8019967C(u16 objectId, Entity* a, Entity* b) {
 }
 
 s32 func_801996F8(Unkstruct5* arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
-    diff = player->posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.Data.high - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = player->posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.Data.high - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -441,8 +440,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019A590);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s32 func_8019A6A8(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -454,8 +452,7 @@ s32 func_8019A6A8(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_8019A6E4(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -464,10 +461,9 @@ s32 func_8019A6E4(void) {
 }
 
 s16 func_8019A718(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

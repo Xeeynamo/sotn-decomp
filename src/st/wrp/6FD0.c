@@ -401,7 +401,7 @@ const u8 D_80180528[] = {
     /* 52E */ 0x50,
     /* 52F */ 0x20,
 };
-const s8 D_80180530[] = {
+const u8 D_80180530[] = {
     /* 530 */ 0x00,
     /* 531 */ 0x00,
     /* 532 */ 0x00,
@@ -2523,19 +2523,18 @@ void func_80186FD0(Entity* arg0) {
     AnimateEntity(objInit->unk10, arg0);
 }
 
+// nops in between array assignments, could be aspsx
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
 #else
 void func_801870B0(Entity* entity) {
-    s32 temp_v0;
-    u16 temp_v0_3;
+    s32 ret;
     u16* temp_v0_2;
-    u16 temp_s1;
+    u16 temp_s1 = entity->subId;
     u16 phi_v1;
     u16 unk;
-
-    temp_s1 = entity->subId;
     entity->unk6D = 0;
+
     if (entity->step != 0) {
         switch (temp_s1) {
         case 4:
@@ -2544,40 +2543,39 @@ void func_801870B0(Entity* entity) {
                 return;
             }
             break;
+
         case 6:
             if (g_pads->pressed & PAD_TRIANGLE) {
                 g_CurrentRoomX = 0;
                 g_CurrentRoomWidth = 1280;
                 do {
                     entity->step++;
-                } while (0); // FAKE
+                } while (0);
                 return;
             }
             break;
         }
 
         if (entity->unk44 != 0) {
-            temp_v0 = func_8018B970();
+            ret = func_8018B970();
             phi_v1 = entity->unk7C.modeS16;
             if (phi_v1 != 0) {
-                phi_v1 = (temp_v0 & 2) * 2;
+                phi_v1 = (ret & 2) * 2;
             } else {
-                phi_v1 = (temp_v0 & 1) * 4;
+                phi_v1 = (ret & 1) * 4;
             }
-
-            unk = temp_s1 * 8 + phi_v1;
-            temp_v0_2 = &D_80180538[unk];
-            g_CurrentRoomX = *temp_v0_2++;
-            g_CurrentRoomY = *temp_v0_2++;
-            g_CurrentRoomWidth = *temp_v0_2++;
-            g_CurrentRoomHeight = *temp_v0_2++;
+            unk = 8;
+            temp_s1 = (temp_s1 * unk) + phi_v1;
+            temp_v0_2 = &D_80180538[temp_s1];
+            g_CurrentRoomX = *(temp_v0_2++);
+            g_CurrentRoomY = *(temp_v0_2++);
+            g_CurrentRoomWidth = *(temp_v0_2++);
+            g_CurrentRoomHeight = *(temp_v0_2++);
         }
     } else {
-        u8 temp_v0_5;
         InitializeEntity(D_80180488);
-        temp_v0_5 = D_80180530[temp_s1];
-        entity->unk7C.modeS16 = temp_v0_5;
-        if (temp_v0_5 != 0) {
+        entity->unk7C.modeS16 = D_80180530[temp_s1];
+        if (entity->unk7C.modeS16 != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
         } else {
@@ -2776,9 +2774,7 @@ void EntityWarpRoom(Entity* arg0) {
         *(u32*)D_80180648 = 0;
         arg0->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << arg0->subId);
-        if ((u32)((GET_PLAYER(g_EntityArray)->posX.Data.high +
-                   (s16)D_8007308E) -
-                  0x61) < 0x3F) {
+        if ((u32)((PLAYER.posX.Data.high + (s16)D_8007308E) - 0x61) < 0x3F) {
             D_80072EFC = 0x10;
             D_80072EF4 = 0;
             D_8003C8B8 = 0;
@@ -3394,16 +3390,15 @@ void func_8018A8D4(u16 objectId, Entity* source, Entity* entity) {
 }
 
 s32 func_8018A950(Unkstruct5* arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
-    diff = player->posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.Data.high - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = player->posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.Data.high - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -3454,8 +3449,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018B7E8);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s16 func_8018B900(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -3467,8 +3461,7 @@ s16 func_8018B900(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_8018B93C(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -3477,10 +3470,9 @@ s32 func_8018B93C(void) {
 }
 
 s16 func_8018B970(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;

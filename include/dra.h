@@ -140,9 +140,14 @@ typedef struct Entity {
     /* 0x70 */ s32 unk70;
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
-    /* 0x7C */ unkUnion3 unk7C;
-    /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
+    /* 0x7C */ unkUnion3 unk7C; // posX
+    union {
+        /* 0x7E */ u16 modeU16;
+        struct {
+            /* 0x7E */ u8 unk0;
+            /* 0x7F */ u8 unk1;
+        } modeU8;
+    } unk7E; // posY
     union {
         /* 0x80 */ struct Entity* entityPtr;
         /* 0x80 */ s32 modeS32;
@@ -212,8 +217,8 @@ typedef struct {
 typedef struct unkStruct3 {
     /* 0x00 */ struct unkStruct3* unk0;
     /* 0x04 */ s8 unk4;
-    /* 0x04 */ char pad4[0x1];
-    /* 0x05 */ s8 unk6;
+    /* 0x05 */ char pad5[0x1];
+    /* 0x06 */ s8 unk6;
     /* 0x07 */ s8 unk7;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
@@ -302,7 +307,9 @@ typedef enum {
     ENTITY_STEP_5,
     ENTITY_STEP_6,
     ENTITY_STEP_7,
-    ENTITY_STEP_19 = 0x19
+    ENTITY_STEP_17 = 0x17,
+    ENTITY_STEP_19 = 0x19,
+    ENTITY_STEP_22 = 0x22
 } EntitySteps;
 
 typedef enum { MONO, STEREO } SoundMode;
@@ -337,10 +344,10 @@ typedef struct PlayerHP {
     s32 max;
 } PlayerHP;
 
-typedef struct PlayerMp {
+typedef struct PlayerMP {
     s32 current;
     s32 max;
-} PlayerMp;
+} PlayerMP;
 
 typedef struct {
     s32 hours;
@@ -366,6 +373,7 @@ extern void (*g_pfnLoadObjLayout)(void);
 #endif
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
+extern s16 (*D_8003C7B8)(s32, s32);
 extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
@@ -504,6 +512,8 @@ extern s32 D_80072EF4;
 extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s16 D_80072F00[];
+extern s16 D_80072F02[];
+extern s16 D_80072F10;
 extern s16 D_80072F04;
 extern s16 D_80072F0A;
 extern s16 D_80072F0C;
@@ -515,7 +525,7 @@ extern s16 D_80072F1E;
 extern s32 D_80072F20;
 extern s32 D_80072F24;
 extern u32 D_80072F2C;
-
+extern u16 D_80072F9A;
 // Probably part of the same array / struct
 extern u16 D_80072F60;
 extern u16 D_80072F64;
@@ -524,6 +534,7 @@ extern u16 D_80072F68;
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern u16 D_80072F70;
+extern u16 D_80072F7C;
 extern u16 D_80072F86;
 extern u16 D_80072F88;
 extern u16 D_80072F92;
@@ -548,32 +559,30 @@ extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
 extern s32 g_CurrentRoomHeight;
 
-// Entity* player = GET_PLAYER(g_EntityArray);
-// player->
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;       // player->posX.Data.high
-extern s16 D_800733DE;       // player->posY.Data.high
-extern s32 D_800733E0;       // player->accelerationX
-extern s32 D_800733E4;       // player->accelerationY
-extern s32 D_800733E8;       // player->unk10
-extern u16 D_800733EC;       // player->facing
-extern u16 D_800733EE;       // player->palette
-extern s8 D_800733F0;        // player->blendMode
-extern u8 D_800733F1;        // player->unk19
-extern s16 D_800733F6;       // player->unk1E
-extern u16 D_800733FC;       // player->zPriority
-extern s16 D_800733FE;       // player->objectId
-extern u16 D_80073404;       // player->step
-extern u16 D_80073406;       // player->unk2E
-extern u16 D_8007340A;       // player->objectRoomIndex
-extern u16 D_8007341C;       // player->unk44
-extern s32* D_80073424;      // player->unk4C
-extern MultiType D_80073428; // player->animationFrameIndex
-extern s16 D_8007342A;       // player->animationFrameDuration
-extern s16 D_8007342C;       // player->animationSet
-extern u16 D_8007342E;       // player->animationFrame
-extern u8 D_80073484;        // player->unkAC
+extern s16 D_800733DA;       // PLAYER.posX.Data.high
+extern s16 D_800733DE;       // PLAYER.posY.Data.high
+extern s32 D_800733E0;       // PLAYER.accelerationX
+extern s32 D_800733E4;       // PLAYER.accelerationY
+extern s32 D_800733E8;       // PLAYER.unk10
+extern u16 D_800733EC;       // PLAYER.facing
+extern u16 D_800733EE;       // PLAYER.palette
+extern s8 D_800733F0;        // PLAYER.blendMode
+extern u8 D_800733F1;        // PLAYER.unk19
+extern s16 D_800733F6;       // PLAYER.unk1E
+extern u16 D_800733FC;       // PLAYER.zPriority
+extern s16 D_800733FE;       // PLAYER.objectId
+extern u16 D_80073404;       // PLAYER.step
+extern u16 D_80073406;       // PLAYER.unk2E
+extern u16 D_8007340A;       // PLAYER.objectRoomIndex
+extern u16 D_8007341C;       // PLAYER.unk44
+extern s32* D_80073424;      // PLAYER.unk4C
+extern MultiType D_80073428; // PLAYER.animationFrameIndex
+extern s16 D_8007342A;       // PLAYER.animationFrameDuration
+extern s16 D_8007342C;       // PLAYER.animationSet
+extern u16 D_8007342E;       // PLAYER.animationFrame
+extern u8 D_80073484;        // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
 
 // Beginning of g_EntityArray[1] offset = 0x80073494
@@ -673,7 +682,7 @@ extern PlayerHeart g_playerHeart[];
 extern s32 g_playerHeartMax;
 extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
-extern PlayerMp g_playerMp;
+extern PlayerMP g_playerMP;
 extern s32 g_playerMpMax;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
@@ -754,7 +763,7 @@ extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
-extern s16 D_800ACF60[];
+extern s16 D_800ACF60[]; // collection of sounds?
 extern s32 D_800ACFB4;
 extern s32* D_800AE294; // might not really be a pointer
 extern s16 D_800AFDA6;
@@ -771,6 +780,11 @@ extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
 extern s32 D_800DC4C0;
 extern s8 D_800DC4C4;
+extern u8 D_800BF554[];
+extern u8 D_800BF555[];
+extern u8 D_800BF556[];
+extern u8 D_800BF559[];
+extern u8 D_800BF55A[];
 extern s32 D_801362AC;
 extern s32 D_801362B0;
 extern s32 D_801362B4;
@@ -862,6 +876,7 @@ extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80138430;
 extern s32 D_80138438;
+extern s32 D_80138444;
 extern s32 D_80138460;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
@@ -869,6 +884,7 @@ extern u8 D_80138F24[]; // Confirmed part of an array / struct
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s32 D_80138FB0;
+extern s16 D_80138FC4;
 extern s16 D_80139000;
 extern s16 D_80139008;
 extern s32 D_8013900C;
@@ -965,7 +981,7 @@ void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
 void func_800EDA94(void);
 void func_800EDAE4(void);
-s16 func_800EDC80(u8 arg0, s32 arg1);
+s32 func_800EDC80(u8 arg0, s32 arg1);
 s32 func_800EDD9C(u8 arg0, s32 arg1);
 void func_800EFBF8(void);
 void FreePolygons(s32 index);
@@ -1002,7 +1018,7 @@ void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
-// s32 func_800FD4C0(s32, s32);
+s32 func_800FD4C0(s32, s32);
 s32 func_800FD664(s32 arg0);
 u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
@@ -1010,10 +1026,12 @@ s32 func_800FD77C(s32 arg0, s32 arg1);
 bool func_800FD7C0(s32, s32);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
+void func_800FDCE0(s32);
 void func_800FDE00(void);
 void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
 s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);
+void func_80102CD8(s32);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void func_80106590(Entity*);
@@ -1058,6 +1076,8 @@ s32 func_801326D8(void);
 void func_80132028(s32, s8*, s32);
 void func_8013271C(void);
 void func_80132760(void);
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
+                   s32 volume, s16 distance);
 void func_801337B4(void);
 s32 func_80133940(void);
 s32 func_80133950(void);

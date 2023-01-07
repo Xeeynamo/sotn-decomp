@@ -42,16 +42,14 @@ void func_801A7D64(Entity* arg0) {
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7E2C);
 #else
 bool func_801A7E2C(Entity* entity) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 distance;
 
-    distance = player->posX.Data.high - entity->posX.Data.high;
+    distance = PLAYER.posX.Data.high - entity->posX.Data.high;
     if (distance < 0) {
         distance = -distance;
     }
     if (entity->hitboxWidth >= distance) {
-        if ((s16)(g_EntityArray[PLAYER_CHARACTER].posY.Data.high -
-                  entity->posY.Data.high) < 0) {
+        if ((s16)(PLAYER.posY.Data.high - entity->posY.Data.high) < 0) {
             return true;
         }
     }
@@ -614,16 +612,15 @@ void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
 }
 
 s32 func_801B3C58(Unkstruct5* arg0) {
-    Entity* player = GET_PLAYER(g_EntityArray);
     s16 diff;
 
-    diff = player->posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.Data.high - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = player->posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.Data.high - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -674,8 +671,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4AF0);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s16 func_801B4C08(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 xDistance = g_CurrentEntity->posX.Data.high - player->posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -687,8 +683,7 @@ s16 func_801B4C08(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_801B4C44(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s32 yDistance = g_CurrentEntity->posY.Data.high - player->posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -697,10 +692,9 @@ s32 func_801B4C44(void) {
 }
 
 s16 func_801B4C78(void) {
-    Entity* player = GET_PLAYER(g_EntityArray);
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > player->posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
 
-    if (g_CurrentEntity->posY.Data.high > player->posY.Data.high) {
+    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
         var_a0 |= 2;
     }
     return var_a0;
