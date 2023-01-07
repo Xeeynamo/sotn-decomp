@@ -127,6 +127,9 @@ typedef struct Unkstruct_800ACEC6 {
     /* 0x1C */ s16 unk1C; /* D_800ACEE2 */
 } Unkstruct_800ACEC6;
 
+// Used in:
+// func_8015E7B4
+// func_8010BF64
 typedef struct Unkstruct_8010BF64 {
     /* 0x00 */ char pad0[0x14];
     /* 0x14 */ s32 unk14;
@@ -143,9 +146,9 @@ typedef struct Unkstruct_801390DC {
 } Unkstruct_801390DC;
 
 typedef struct Unkstruct_800FD5BC {
-    /* 0x00 */ s32 arg0;
-    /* 0x04 */ s32 arg4;
-    /* 0x08 */ s32 arg8;
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
 } Unkstruct_800FD5BC;
 
 typedef struct Unkstruct_80128BBC_Sub {

@@ -63,4 +63,20 @@ void SsSetTickMode(long tick_mode // Tick mode
  */
 void SsStart(void);
 
+/**
+ * Keys on the voice specified by the voice number (0-23), the VAB number, the
+ * program number (0-127), and the tone number (0-15) at the specified pitch and
+ * volume, and returns the allocated voice number.
+ */
+short SsUtKeyOnV(
+    short voice, // Voice number (0-23)
+    short vabId, // VAB number (0-31) returned by SsVabOpenHead()
+    short prog,  // Program number (0-127)
+    short tone,  // Tone number (0-15)
+    short note,  // Pitch specification in semitones (note number) (0-127)
+    short fine,  // Detailed pitch specification (100/127 cents) (0-127)
+    short voll,  // Volume, left (0-127)
+    short volr   // Volume, right (0-127)
+);
+
 #endif
