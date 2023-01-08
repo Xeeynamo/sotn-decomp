@@ -1015,7 +1015,19 @@ void func_801B83BC(void) {
     TestEvent(D_80073078);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8414);
+s32 func_801B8414(void) {
+    while (true) {
+        if (TestEvent(D_8007EFD8) == 1) {
+            return 1;
+        } else if (TestEvent((u32)D_8007EFDC) == 1) {
+            return 2;
+        } else if (TestEvent((u32)D_8007EFE0) == 1) {
+            return 3;
+        } else if (TestEvent((u32)D_80086FE4) == 1) {
+            return 4;
+        }
+    }
+}
 
 void func_801B8498(void) {
     TestEvent(D_8007EFD8);
