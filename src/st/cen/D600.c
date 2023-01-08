@@ -99,13 +99,12 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192ED0);
 
 extern LayoutObject* D_8019C768;
 void func_80192FE4(s16 arg0) {
-    while(true)
-    {
-        if ((D_8019C768->posY != 0xFFFE) && ((s32) D_8019C768->posY >= arg0)) {
+    while (true) {
+        if ((D_8019C768->posY != 0xFFFE) && ((s32)D_8019C768->posY >= arg0)) {
             break;
         }
 
-        D_8019C768 ++;
+        D_8019C768++;
     }
 }
 
@@ -208,7 +207,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801948EC);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194AD4);
 
 extern s16 D_80180BBC[];
-s32 func_80194B34(u8 arg0, s16 arg1) {return D_80180BBC[arg0] * arg1;}
+s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
 s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
 
@@ -323,9 +322,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C0C);
 
-void func_80195C5C(void) {
-    func_80194264(g_CurrentEntity);
-}
+void func_80195C5C(void) { func_80194264(g_CurrentEntity); }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C84);
 
