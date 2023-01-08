@@ -206,7 +206,12 @@ u8 func_80194C20(ObjInit2* arg0, ObjInit2* arg1) {
     return func_80194BE8(x, y);
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194C68);
+u16 func_80194C68(s16 x, s16 y) {
+    x -= g_CurrentEntity->posX.Data.high;
+    y -= g_CurrentEntity->posY.Data.high;
+
+    return func_80194BE8(x, y);
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194CB0);
 
