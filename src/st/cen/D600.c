@@ -460,7 +460,13 @@ void func_8019C540(unkStruct3* arg0) {
     arg0->unk0->unk22 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019C620);
+void func_8019C620(unkStruct3* arg0) {
+    func_8019C540(arg0);
+    arg0->unk2B = 8;
+    arg0->unk0->unk2B = 1;
+    arg0->unk0->unk7 = 2;
+    arg0->unk0->unk32 = 0xA;
+}
 
 void func_8019C674(unkStruct3* arg0) {
     arg0->unk2B = 0;
