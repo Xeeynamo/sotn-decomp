@@ -177,9 +177,9 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801948EC);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194AD4);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B34);
-
 extern s16 D_80180BBC[];
+s32 func_80194B34(u8 arg0, s16 arg1) {return D_80180BBC[arg0] * arg1;}
+
 s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B7C);
