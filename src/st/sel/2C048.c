@@ -35,8 +35,10 @@ extern /*?*/ s32 D_801808DC[];
 extern u16 D_801808E4[];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
+extern s32 D_801962F4;
 extern s32 D_801962F8[16];
 extern s32 D_80196338[16];
+extern s32 D_80196378;
 extern s32 D_8019637C[32];
 extern s32* D_801963FC;
 extern s32* D_80196400;
@@ -45,6 +47,7 @@ extern s32* D_80196408;
 extern s32* D_8019640C;
 extern s32* D_80196410;
 extern s32* D_8019642C;
+extern s32* D_80196430;
 extern s32* D_80196434;
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
@@ -53,9 +56,12 @@ extern const char D_801A7B08[];   // retry:%d
 extern const char D_801A7D78[];   // "bu%1d%1d:"
 extern const char D_801A7D84[];   // "bu%1d%1d:%s"
 extern const char D_801A802C[18]; // "BASLUS-00067DRAX00"
-extern const char D_801ABFD8[];
-extern const char D_801AC000[];
-extern const char D_801AC038[];
+extern const char D_801ABF9C[]; // "MDEC_rest:bad option(%d)\n"
+extern const char D_801ABFB8[]; // MDEC_in_sync
+extern const char D_801ABFC8[]; // MDEC_out_sync
+extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
+extern const char D_801AC000[]; // FIFO
+extern const char D_801AC038[]; // "%s timeout:\n"
 extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
 extern u8* D_801BAFD0;
@@ -112,10 +118,11 @@ s32 func_801B3A94(s32);
 s32 func_801B8414();
 void func_801B84F0();
 s32 func_801B8A8C(s32, s32);
-void func_801BA6F0(s32);
+void MDEC_rest(s32 option);
 void func_801BA880();
-void func_801BA910();
-void func_801BA9A8();
+void MDEC_in_sync();
+void MDEC_out_sync();
+void MDEC_print_error(const char *funcName);
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
@@ -1221,12 +1228,12 @@ void func_801B9C18(s32 unused, void (*callback)()) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9C80);
 
-void func_801BA460(s32 arg0) {
-    if (arg0 == 0) {
+void func_801BA460(s32 option) {
+    if (option == 0) {
         ResetCallback();
     }
 
-    func_801BA6F0(arg0);
+    MDEC_rest(option);
 }
 
 s32* func_801BA498(Unkstruct_801BA498* arg0) {
@@ -1288,18 +1295,18 @@ void func_801BA5CC(s32* arg0, s32 arg1) {
 
 void func_801BA648(s32 arg0, u32 arg1) { func_801BA880(arg0, arg1); }
 
-void func_801BA668(void) { func_801BA910(); }
+void func_801BA668(void) { MDEC_in_sync(); }
 
-void func_801BA688(void) { func_801BA9A8(); }
+void func_801BA688(void) { MDEC_out_sync(); }
 
 void func_801BA6A8(void (*func)()) { DMACallback(0, func); }
 
 void func_801BA6CC(void (*func)()) { DMACallback(1, func); }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA6F0);
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", MDEC_rest);
 
 void func_801BA7EC(s32* arg0, u32 arg1) {
-    func_801BA910();
+    MDEC_in_sync();
     *D_80196434 |= 0x88;
     *D_801963FC = arg0 + 1;
     *D_80196400 = ((arg1 >> 5) << 0x10) | 0x20;
@@ -1307,7 +1314,7 @@ void func_801BA7EC(s32* arg0, u32 arg1) {
     *D_80196404 = 0x01000201;
 }
 void func_801BA880(s32 arg0, u32 arg1) {
-    func_801BA9A8();
+    MDEC_out_sync();
     *D_80196434 |= 0x88;
     *D_80196410 = 0;
     *D_80196408 = arg0;
@@ -1315,11 +1322,24 @@ void func_801BA880(s32 arg0, u32 arg1) {
     *D_80196410 = 0x01000200;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA910);
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", MDEC_in_sync);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA9A8);
+#ifndef NON_MATCHING
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", MDEC_out_sync);
+#else
+void MDEC_out_sync(void) {
+    volatile s32 sp10 = 0x100000;
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BAA40);
+    while (*D_80196410 & 0x01000000) {
+        if (--sp10 == -1) {
+            MDEC_print_error(D_801ABFC8);
+            break;
+        }
+    }
+}
+#endif
+
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", MDEC_print_error);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BAB70);
 
