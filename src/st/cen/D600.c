@@ -320,7 +320,11 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195A50);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C0C);
+void func_80195C0C(void) {
+    g_pfnPlaySfx(0x67A);
+    D_8003C848(5, 0x8000);
+    func_80194264(g_CurrentEntity);
+}
 
 void func_80195C5C(void) { func_80194264(g_CurrentEntity); }
 
