@@ -61,7 +61,10 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190A78);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190B64);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190E4C);
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190E7C);
 
