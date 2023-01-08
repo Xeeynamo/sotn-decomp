@@ -59,6 +59,11 @@ extern s32 D_801BAFE8;
 extern s32 D_801BAFEC; // rstep
 extern s32 D_801BAFF0; // rstep sub
 extern s32 D_801BAFF8; // g_memRetryCount
+extern s32 D_801BAFFC;
+extern s32 D_801BB000;
+extern s32 D_801BB004;
+extern s32 D_801BB008;
+extern s32 D_801BB00C;
 extern s32 D_801BC2F8;
 extern s32 D_801BC2FC;
 extern s32 D_801BC344;
@@ -723,7 +728,16 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3694);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B38B4);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3A54);
+void func_801B3A54(s32 arg0, s32 arg1) {
+    char pad[0x20];
+
+    D_801BAFEC = 0;
+    D_801BAFFC = arg0;
+    D_801BB000 = arg1;
+    D_801BB004 = arg0;
+    D_801BB00C = arg1;
+    D_801BB008 = arg1;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3A94);
 
