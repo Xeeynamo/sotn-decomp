@@ -11,6 +11,8 @@
 #include <psxsdk/libsnd.h>
 
 extern s32 D_8003925C;
+extern s32 D_800987C8;
+extern s32 D_80098894;
 
 extern void PadInit(s32 arg0);
 int VSync(s32);
@@ -18,6 +20,7 @@ s32 rcos(s32);
 s32 rsin(s32);
 s32 ratan2(s32, s32);
 void* DMACallback(int dma, void (*func)());
+void func_800192DC(s32 arg0, s32 arg1);
 extern s32 func_8001D290(s32, s32);
 extern s32 func_8001D374(s8, s16, s16);
 extern void func_8001D2E0(s32, s32, s32);

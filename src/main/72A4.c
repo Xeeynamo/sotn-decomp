@@ -177,7 +177,11 @@ INCLUDE_ASM("asm/main/nonmatchings/72A4", func_8001929C);
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", FlushCache);
 
-INCLUDE_ASM("asm/main/nonmatchings/72A4", func_800192DC);
+void func_800192DC(s32 arg0, s32 arg1) {
+    D_800987C8 = arg0;
+    D_80098894 = arg1;
+    StClearRing();
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/main/nonmatchings/72A4", CdInit);
