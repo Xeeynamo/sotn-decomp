@@ -56,12 +56,12 @@ extern const char D_801A7B08[];   // retry:%d
 extern const char D_801A7D78[];   // "bu%1d%1d:"
 extern const char D_801A7D84[];   // "bu%1d%1d:%s"
 extern const char D_801A802C[18]; // "BASLUS-00067DRAX00"
-extern const char D_801ABF9C[]; // "MDEC_rest:bad option(%d)\n"
-extern const char D_801ABFB8[]; // MDEC_in_sync
-extern const char D_801ABFC8[]; // MDEC_out_sync
-extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
-extern const char D_801AC000[]; // FIFO
-extern const char D_801AC038[]; // "%s timeout:\n"
+extern const char D_801ABF9C[];   // "MDEC_rest:bad option(%d)\n"
+extern const char D_801ABFB8[];   // MDEC_in_sync
+extern const char D_801ABFC8[];   // MDEC_out_sync
+extern const char D_801ABFD8[];   // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
+extern const char D_801AC000[];   // FIFO
+extern const char D_801AC038[];   // "%s timeout:\n"
 extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
 extern u8* D_801BAFD0;
@@ -122,7 +122,7 @@ void MDEC_rest(s32 option);
 void func_801BA880();
 void MDEC_in_sync();
 void MDEC_out_sync();
-void MDEC_print_error(const char *funcName);
+void MDEC_print_error(const char* funcName);
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
