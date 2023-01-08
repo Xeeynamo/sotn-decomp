@@ -17,6 +17,12 @@ typedef struct {
     u32 unk4;
 } Unkstruct_801ACBE4;
 
+typedef struct {
+    s32 unk00[16];
+    s32 unk10[16];
+    s32 unk20[32];
+} Unkstruct_801BA498;
+
 extern u8* D_80180128[];
 extern u8* D_8018012C[];
 extern u8* D_801803BC;
@@ -29,6 +35,9 @@ extern /*?*/ s32 D_801808DC[];
 extern u16 D_801808E4[];
 extern u32 D_801822E4[];
 extern RECT D_801825A4;
+extern s32 D_801962F8[16];
+extern s32 D_80196338[16];
+extern s32 D_8019637C[32];
 extern s32* D_801963FC;
 extern s32* D_80196400;
 extern s32* D_80196404;
@@ -1220,7 +1229,32 @@ void func_801BA460(s32 arg0) {
     func_801BA6F0(arg0);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA498);
+s32* func_801BA498(Unkstruct_801BA498* arg0) {
+    s32 i;
+    s32 *src1, *dst1;
+    s32 *src2, *dst2;
+    s32 *src3, *dst3;
+
+    dst1 = &arg0->unk00;
+    src1 = D_801962F8;
+    for (i = 15; i != -1; i--) {
+        *dst1++ = *src1++;
+    }
+
+    dst2 = &arg0->unk10;
+    src2 = D_80196338;
+    for (i = 15; i != -1; i--) {
+        *dst2++ = *src2++;
+    }
+
+    dst3 = &arg0->unk20;
+    src3 = D_8019637C;
+    for (i = 31; i != -1; i--) {
+        *dst3++ = *src3++;
+    }
+
+    return arg0;
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA524);
 
