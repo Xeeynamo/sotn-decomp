@@ -90,6 +90,8 @@ extern s32 D_801BC8E0[];
 extern s32* D_801BC958[];
 extern s32 D_801BCC84;
 extern s32 D_801BD02C;
+extern u32 D_801BD038; // StSetStream mode
+extern s32 D_801BD044[];
 extern s32 D_801D6B04;
 extern s32 D_801D6B08;
 extern s32 D_801D6B0C;
@@ -1187,7 +1189,14 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B99E4);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9B7C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9C18);
+void func_801B9C18(s32 unused, void (*callback)()) {
+    s32* s0 = D_801BD044;
+    func_801BA460(0);
+    *s0 = 0;
+    func_801BA6CC(callback);
+    func_800192DC((s32)(s0 + 2), 0x28);
+    StSetStream(D_801BD038, 1, -1, NULL, NULL);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9C80);
 
