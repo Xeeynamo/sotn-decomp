@@ -81,6 +81,7 @@ extern s32 D_801BB008;
 extern s32 D_801BB00C;
 extern s32 D_801BC2F8;
 extern s32 D_801BC2FC;
+extern s32 D_801BC340;
 extern s32 D_801BC344;
 extern s16 D_801BC35A;
 extern u16 D_801BC35C;
@@ -123,6 +124,7 @@ void func_801BA880();
 void MDEC_in_sync();
 void MDEC_out_sync();
 void MDEC_print_error(const char* funcName);
+void func_801BABA4(s32, s32);
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
@@ -1201,9 +1203,29 @@ s32 func_801B9744(void) {
     return 1;
 }
 
+s32 func_801B97BC(s32*);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B97BC);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B988C);
+void func_801B988C(u32* arg0) {
+    s32 temp_v0;
+    s32 var_s0;
+
+    var_s0 = 4;
+loop_1:
+    temp_v0 = func_801B97BC(arg0);
+    if (temp_v0 == 0) {
+        var_s0 -= 1;
+        if (var_s0 != 0) {
+            goto loop_1;
+        }
+    } else {
+        s32 temp_v0_2 = arg0[2] == 0;
+        arg0[2] = temp_v0_2;
+        D_801BC340++;
+        func_801BABA4(temp_v0, *((temp_v0_2) + arg0));
+        func_8001C550(temp_v0);
+    }
+}
 
 void func_801B9924(void) {
     volatile u32 pad[4]; // FAKE
