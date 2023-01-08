@@ -8,15 +8,4 @@ colorama
 python-Levenshtein
 cxxfilt
 
-# Temporarily commenting this one as spimdiasm 1.9.1 is broken
-# -r n64splat/requirements.txt
-PyYAML
-pylibyaml
-tqdm
-intervaltree
-colorama
-spimdisasm==1.9.0
-rabbitizer>=1.4.0
-pygfxd
-n64img>=0.1.2
-# Remove all of this once 1.9.2 or later fixes the problem
+-r n64splat/requirements.txt
