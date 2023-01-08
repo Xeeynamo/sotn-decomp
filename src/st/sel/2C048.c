@@ -1214,30 +1214,31 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA524);
 
 u16 func_801BA5C0(u16* arg0) { return *arg0; }
 
-#ifndef NON_EQUIVALENT
-// simple reg swap
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA5CC);
-#else
 void func_801BA5CC(s32* arg0, s32 arg1) {
+    s32 new_var2;
     s32 var_v0;
     s32 var_v0_2;
+
     if (arg1 & 1) {
-        var_v0 = *arg0 & 0xF7FFFFFF;
+        var_v0 = (*arg0) & 0xF7FFFFFF;
     } else {
+        new_var2 = 0x08000000;
         var_v0 = 0x08000000;
-        var_v0 = *arg0 | var_v0;
+        var_v0 = (*arg0) | var_v0;
     }
+
     *arg0 = var_v0;
     var_v0 = 0x02000000;
     if (arg1 & 2) {
-        var_v0_2 = *arg0 | var_v0;
+        new_var2 = var_v0;
+        var_v0_2 = (*arg0) | new_var2;
     } else {
-        var_v0_2 = *arg0 & 0xFDFFFFFF;
+        var_v0_2 = (*arg0) & 0xFDFFFFFF;
     }
+
     *arg0 = var_v0_2;
     func_801BA7EC(arg0, *(u16*)arg0);
 }
-#endif
 
 void func_801BA648(s32 arg0, u32 arg1) { func_801BA880(arg0, arg1); }
 
