@@ -49,7 +49,7 @@ extern const char D_801AC000[];
 extern const char D_801AC038[];
 extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
-extern /*?*/ u8* D_801BAFD0;
+extern u8* D_801BAFD0;
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
 extern s32 D_801BAFDC;
@@ -448,33 +448,20 @@ u8 func_801B1EF4(u16 arg0) {
 
 void func_801B1F34(void) { D_801BAFD0 = &D_80080FE4; }
 
-// TODO accidentially pushed
-void func_801B1F4C(s32);
-#ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1F4C);
-#else
-s32 func_801B1EF4(s32, s32); /* extern */
-extern /*?*/ s32 D_801BC398;
-
 void func_801B1F4C(s32 arg0) {
-    s32 temp_a2;
-    s32 var_a1;
-    u8* temp_a0;
-    u8* temp_v0;
+    const s32 count = 0x200;
+    PixPattern* pixPatterns;
+    s32 i;
 
-    *(&D_801BC398 + (arg0 * 4)) = 0;
-    temp_a2 = func_801B1EF4(arg0 & 0xFF, arg0) & 0xFF;
-    var_a1 = 0;
-    temp_a0 = D_801BAFD0;
-    do {
-        temp_v0 = D_801BAFD0;
-        var_a1 += 1;
-        D_801BAFD0 = temp_v0 + 1;
-        *temp_v0 = 0;
-    } while (var_a1 < 0x800);
-    LoadTPage((PixPattern*)temp_a0, 0, 0, 0x180, temp_a2, 0x100, 0x10);
+    D_801BC398[arg0] = 0;
+    arg0 = func_801B1EF4((u8)arg0);
+    pixPatterns = D_801BAFD0;
+    for (i = 0; i < count * (s32)sizeof(PixPattern); i++) {
+        *D_801BAFD0++ = 0;
+    }
+
+    LoadTPage(pixPatterns, 0, 0, 0x180, arg0, 0x100, 0x10);
 }
-#endif
 
 void func_801B1FD8(u8* arg0, s32 arg1);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B1FD8);
