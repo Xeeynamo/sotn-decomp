@@ -25,7 +25,15 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E180);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E238);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E3BC);
+extern s16 D_8019D3B4;
+extern s16 D_8019D3B6;
+extern s32 D_8019D3B8;
+
+void func_8018E3BC(s32 arg0) {
+    D_8019D3B8 = arg0 + 0x100000;
+    D_8019D3B6 = 0;
+    D_8019D3B4 = 1;
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E3E8);
 
