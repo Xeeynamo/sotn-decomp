@@ -97,7 +97,17 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192DD4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192ED0);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192FE4);
+extern LayoutObject* D_8019C768;
+void func_80192FE4(s16 arg0) {
+    while(true)
+    {
+        if ((D_8019C768->posY != 0xFFFE) && ((s32) D_8019C768->posY >= arg0)) {
+            break;
+        }
+
+        D_8019C768 ++;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193030);
 
