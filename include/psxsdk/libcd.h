@@ -62,3 +62,7 @@ int CdRead(int sectors, u_long* buf, int mode);
 int CdReadSync(int mode, u_char* result);
 CdlCB CdReadCallback(CdlCB func);
 int CdRead2(long mode);
+
+void StClearRing(void);
+void StSetStream(u_long mode, u_long start_frame, u_long end_frame,
+                 void (*func1)(), void (*func2)());
