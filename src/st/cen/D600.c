@@ -101,7 +101,16 @@ void func_80192D30(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192D7C);
+void func_80192D7C(s16 arg0) {
+    while ( true )
+    {
+        if (((D_8019C764->posX != 0xFFFF) && ((arg0 >= D_8019C764->posX) || (D_8019C764->posX == 0xFFFE))))
+        {
+            break;
+        }
+        D_8019C764 --;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192DD4);
 
