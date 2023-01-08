@@ -7,6 +7,13 @@
 #include "common.h"
 #include "stage.h"
 
+extern s16 D_80180BBC[];
+extern LayoutObject* D_8019C764;
+extern LayoutObject* D_8019C768;
+extern s16 D_8019D3B4;
+extern s16 D_8019D3B6;
+extern s32 D_8019D3B8;
+
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018D600);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018D6E0);
@@ -24,10 +31,6 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E124);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E180);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E238);
-
-extern s16 D_8019D3B4;
-extern s16 D_8019D3B6;
-extern s32 D_8019D3B8;
 
 void func_8018E3BC(s32 arg0) {
     D_8019D3B8 = arg0 + 0x100000;
@@ -80,7 +83,6 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192B00);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192C18);
 
-extern LayoutObject* D_8019C764;
 void func_80192D30(s16 arg0) {
     while (1) {
         if ((D_8019C764->posX != 0xFFFE) && ((s32)D_8019C764->posX >= arg0)) {
@@ -97,7 +99,6 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192DD4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192ED0);
 
-extern LayoutObject* D_8019C768;
 void func_80192FE4(s16 arg0) {
     while (true) {
         if ((D_8019C768->posY != 0xFFFE) && ((s32)D_8019C768->posY >= arg0)) {
@@ -206,7 +207,6 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801948EC);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194AD4);
 
-extern s16 D_80180BBC[];
 s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
 s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
