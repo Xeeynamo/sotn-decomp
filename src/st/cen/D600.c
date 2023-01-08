@@ -26,7 +26,15 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018DF0C);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018DF60);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E124);
+void func_8018E124(s16 arg0) {
+    RECT rect;
+
+    rect.y = (arg0 * 12) + 384;
+    rect.w = 64;
+    rect.x = 0;
+    rect.h = 12;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E180);
 
