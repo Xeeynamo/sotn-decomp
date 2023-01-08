@@ -281,7 +281,9 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C0C);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C5C);
+void func_80195C5C(void) {
+    func_80194264(g_CurrentEntity);
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C84);
 
