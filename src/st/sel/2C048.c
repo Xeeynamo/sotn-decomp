@@ -1285,7 +1285,28 @@ s32* func_801BA498(Unkstruct_801BA498* arg0) {
     return arg0;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801BA524);
+s32* func_801BA524(Unkstruct_801BA498* arg0) {
+    s32 i;
+    s32 *src1, *dst1;
+    s32 *src2, *dst2;
+
+    dst1 = D_801962F8;
+    src1 = &arg0->unk00;
+    for (i = 15; i != -1; i--) {
+        *dst1++ = *src1++;
+    }
+
+    dst2 = D_80196338;
+    src2 = &arg0->unk10;
+    for (i = 15; i != -1; i--) {
+        *dst2++ = *src2++;
+    }
+
+    func_801BA7EC(&D_801962F4, 0x20);
+    func_801BA7EC(&D_80196378, 0x20);
+
+    return arg0;
+}
 
 u16 func_801BA5C0(u16* arg0) { return *arg0; }
 
