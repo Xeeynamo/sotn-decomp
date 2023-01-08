@@ -18,6 +18,29 @@ typedef struct {
 } Unkstruct_801ACBE4;
 
 typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8; // D_801D6A54
+    s32* unkC;
+    s32 unk10;
+    s32 unk14; // D_801D6A60
+    s16 unk18; // D_801D6A64
+    s16 unk1A; // D_801D6A66
+    s16 unk1C; // D_801D6A68
+    s16 unk1E; // D_801D6A6A
+    s16 unk20;
+    s16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s32 unk28; // D_801D6A74
+    s16 unk2C; // D_801D6A78
+    s16 unk2E; // D_801D6A7A
+    s16 unk30; // D_801D6A7C
+    s16 unk32; // D_801D6A7E
+    s32 unk34; // D_801D6A80
+} Unkstruct_801B9B7C;
+
+typedef struct {
     s32 unk00[16];
     s32 unk10[16];
     s32 unk20[32];
@@ -291,7 +314,25 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEA8C);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEB74);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AECA0);
+void func_801AECA0(void) {
+    s32 i = 0;
+    s32 x;
+    s32 y = 0x100;
+    s32 w = 0x10;
+    s32 h = 0x30;
+    s32 xnext = 0x180;
+    u32* pix = D_801822E4;
+
+    for (; i < 0x10; i++) {
+        s32 tmp = 4;
+        x = xnext;
+        xnext += tmp;
+        LoadTPage((PixPattern*)*pix++, 0, 0, x, y, w, tmp = 0x30);
+        x = xnext;
+    }
+
+    D_8003C7D4(0x8004);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AED48);
 
@@ -1237,6 +1278,8 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B994C);
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B99E4);
 
+// func_801B9B7C(Unkstruct_801B9B7C* arg0, s16 arg1, s16 arg2, s16 arg3, s32
+// arg4);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B9B7C);
 
 void func_801B9C18(s32 unused, void (*callback)()) {

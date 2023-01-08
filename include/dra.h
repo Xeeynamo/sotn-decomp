@@ -375,6 +375,7 @@ extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
 extern s16 (*D_8003C7B8)(s32, s32);
 extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
+extern void (*D_8003C7D4)(s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
 extern Unkstruct5* D_8003C808;
