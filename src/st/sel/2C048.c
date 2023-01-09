@@ -1211,9 +1211,11 @@ void func_801B8DE8(u8* dst, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B8E20);
+void StoreSaveData(SaveData* save, s32 arg1, s32 arg2);
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", StoreSaveData);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B94BC);
+s32 LoadSaveData(SaveData* save); // LoadSaveData
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", LoadSaveData);
 
 void func_801B9698(char* dstSaveName, s32 saveSlot);
 #ifndef NON_MATCHING
