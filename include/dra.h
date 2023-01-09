@@ -533,6 +533,94 @@ typedef struct {
     /* 0x6C8 */ u8 unk[0x11CC - 0x6C8];
 } SaveData; /* size = 0x11CC */
 
+typedef struct {
+    /* 8003C774 */ void (*Update)(void);
+    /* 8003C778 */ void (*TestEntities)(void);
+    /* 8003C77C */ void (*unk08)(void);
+    /* 8003C780 */ void (*LoadObjLayout)(s32 layoutId);
+    /* 8003C784 */ RoomHeader* roomHeaders;
+    /* 8003C788 */ s16** unk14;
+    /* 8003C78C */ void** unk18;
+    /* 8003C790 */ void* unk1C;  // related to object layout
+    /* 8003C794 */ void** unk20; // related to tiles layout
+    /* 8003C798 */ void** unk24;
+    /* 8003C79C */ void (*unk28)(void);
+    /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
+    /* 8003C7A4 */ s32* unk30;
+    /* 8003C7A8 */ s32* unk34;
+    /* 8003C7AC */ s32* unk38;
+    /* 8003C7B0 */ void (*unk3C)();
+} Overlay;
+
+typedef struct {
+    /* 8003C774 */ Overlay o;
+    /* 8003C7B4 */ void (*g_pfnFreePolygons)(s32);
+    /* 8003C7B8 */ s16 (*D_8003C7B8)(s32, s32);
+    /* 8003C7BC */ void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
+    /* 8003C7C0 */ void* unk4C;
+    /* 8003C7C4 */ void* unk50;
+    /* 8003C7C8 */ void* unk54;
+    /* 8003C7CC */ void* unk58;
+    /* 8003C7D0 */ void* unk5C;
+    /* 8003C7D4 */ void (*D_8003C7D4)(s32);
+    /* 8003C7D8 */ void* unk64;
+    /* 8003C7DC */ void (*g_pfnPlaySfx)(s32);
+    /* 8003C7E0 */ void* unk6C;
+    /* 8003C7E4 */ void* unk70;
+    /* 8003C7E8 */ void* unk74;
+    /* 8003C7EC */ void* unk78;
+    /* 8003C7F0 */ void* unk7C;
+    /* 8003C7F4 */ void* unk80;
+    /* 8003C7F8 */ void* unk84;
+    /* 8003C7FC */ void* unk88;
+    /* 8003C800 */ void* unk8C;
+    /* 8003C804 */ void* unk90;
+    /* 8003C808 */ Unkstruct5* D_8003C808;
+    /* 8003C80C */ void* unk98;
+    /* 8003C810 */ void* unk9C;
+    /* 8003C814 */ void* unkA0;
+    /* 8003C818 */ void* unkA4;
+    /* 8003C81C */ void* unkA8;
+    /* 8003C820 */ void* unkAC;
+    /* 8003C824 */ void* unkB0;
+    /* 8003C828 */ void* unkB4;
+    /* 8003C82C */ void* unkB8;
+    /* 8003C830 */ void* unkBC;
+    /* 8003C834 */ void* unkC0;
+    /* 8003C838 */ void* unkC4;
+    /* 8003C83C */ void* unkC8;
+    /* 8003C840 */ void* unkCC;
+    /* 8003C844 */ void* unkD0;
+    /* 8003C848 */ void (*D_8003C848)(s32, s32);
+    /* 8003C84C */ void* unkD8;
+    /* 8003C850 */ void* unkDC;
+    /* 8003C854 */ void* unkE0;
+    /* 8003C858 */ void* unkE4;
+    /* 8003C85C */ void* unkE8;
+    /* 8003C860 */ void* unkEC;
+    /* 8003C864 */ void* unkF0;
+    /* 8003C868 */ void* unkF4;
+    /* 8003C86C */ void* unkF8;
+    /* 8003C870 */ void* unkFC;
+    /* 8003C874 */ void* unk100;
+    /* 8003C878 */ void* unk104;
+    /* 8003C87C */ void* unk108;
+    /* 8003C880 */ void* unk10C;
+    /* 8003C884 */ void* unk110;
+    /* 8003C888 */ void* unk114;
+    /* 8003C88C */ void* unk118;
+    /* 8003C890 */ void* unk11C;
+    /* 8003C894 */ void* unk120;
+    /* 8003C898 */ void* unk124;
+    /* 8003C89C */ void* unk128;
+    /* 8003C8A0 */ void* unk12C;
+    /* 8003C8A4 */ void* unk130;
+    /* 8003C8A8 */ void* unk134;
+    /* 8003C8AC */ void* unk138;
+    /* 8003C8B4 */ void* unk13C;
+    /* 8003C8B4 END*/
+} GameEngine; /* size=0x140 */
+
 // main
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -543,7 +631,7 @@ extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
-extern void (*g_pfnUpdateStageEntities)(void); // TODO to 0x50 array of funcs
+extern GameEngine g_pfnUpdateStageEntities;
 extern void (*g_pfnTestStageEntities)(void);
 #ifndef STAGE_MAD
 extern void (*g_pfnLoadObjLayout)(void);

@@ -248,7 +248,7 @@ void entrypoint_sotn(void) {
     ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
     ClearImage(&D_800ACD88[1], 0, 0, 0);
     for (i = 0; i < 0x50; i++) {
-        (&g_pfnUpdateStageEntities)[i] = (&D_800A0004)[i];
+        ((void**)&g_pfnUpdateStageEntities)[i] = (&D_800A0004)[i];
     }
     g_blinkTimer = 0;
     D_8003C99C = 0;
@@ -720,31 +720,32 @@ s32 func_800E7E08(u32 arg0) {
     case 0:
         pSrc = g_pStOverlay;
         i = 0;
-        pDst = &g_pfnUpdateStageEntities;
+        pDst = &g_pfnUpdateStageEntities.o;
         do {
             i++;
             *pDst++ = *pSrc++;
         } while (i < 0x10);
         break;
     case 19:
-        LoadTPage((PixPattern* )0x80280000, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
-        LoadTPage((PixPattern* )0x80284000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        LoadTPage((PixPattern*)0x80280000, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+        LoadTPage((PixPattern*)0x80284000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         break;
     case 9:
-        LoadTPage((PixPattern* ) &D_8007EFE4, 0, 0, 0x240, 0x100, 0x100, 0x80);
+        LoadTPage((PixPattern*)&D_8007EFE4, 0, 0, 0x240, 0x100, 0x100, 0x80);
         break;
     case 10:
-        LoadTPage((PixPattern* ) &D_80082FE4, 0, 0, 0x240, 0x180, 0x100, 0x80);
+        LoadTPage((PixPattern*)&D_80082FE4, 0, 0, 0x240, 0x180, 0x100, 0x80);
         break;
     case 20:
-        LoadTPage((PixPattern* ) (s32* )0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        LoadTPage((PixPattern*)(s32*)0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
         break;
     case 1:
         LoadStageTileset(0x80180000, 0x100);
         DrawSync(0);
         LoadImage(&rect, &D_800A04CC);
-        LoadImage(&rect + 2, (u32* )0x801C0000);
-        while (DrawSync(1));
+        LoadImage(&rect + 2, (u32*)0x801C0000);
+        while (DrawSync(1))
+            ;
         StoreImage(&D_800ACDA8, &D_8006EBCC);
         break;
     default:
@@ -770,16 +771,19 @@ s32 func_800E7E08(u32 arg0) {
         DrawSync(0);
         break;
     case 4:
-        while (func_800219E0(0) != 1);
-        if (func_80021350(D_8013644C[1], D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
+        while (func_800219E0(0) != 1)
+            ;
+        if (func_80021350(D_8013644C[1], D_800A0248, D_800BD1C8[D_800A0248]) <
+            0) {
             return -1;
         }
         break;
     case 5:
-        if (func_80021880((s32* )0x80280000, D_8013644C[2], D_800A0248) == -1) {
+        if (func_80021880((s32*)0x80280000, D_8013644C[2], D_800A0248) == -1) {
             return -1;
         }
-        while (func_800219E0(0) != 1);
+        while (func_800219E0(0) != 1)
+            ;
         break;
     case 7:
         if (g_mapProgramId == 2) {
@@ -790,23 +794,23 @@ s32 func_800E7E08(u32 arg0) {
         }
         break;
     case 6:
-        LoadImage(&D_800ACDC0, (u32* )0x80180000);
+        LoadImage(&D_800ACDC0, (u32*)0x80180000);
         break;
     case 14:
-        LoadImage(&D_800ACDD0, (u32* )0x80280000);
+        LoadImage(&D_800ACDD0, (u32*)0x80280000);
         break;
     case 21:
-        LoadImage(&D_800ACDE0, (u32* )0x80280000);
+        LoadImage(&D_800ACDE0, (u32*)0x80280000);
         break;
     case 15:
-        LoadImage(&D_800ACDD8, (u32* )0x80280000);
+        LoadImage(&D_800ACDD8, (u32*)0x80280000);
         break;
     case 16:
-        LoadImage(&D_800ACDB8, (u32* )0x80280000);
+        LoadImage(&D_800ACDB8, (u32*)0x80280000);
         StoreImage(&D_800ACDB8, &D_80070BCC);
         break;
     case 17:
-        LoadImage(&D_800ACDA8, (u32* )0x80280000);
+        LoadImage(&D_800ACDA8, (u32*)0x80280000);
         StoreImage(&D_800ACDA8, &D_8006CBCC);
         break;
     }
