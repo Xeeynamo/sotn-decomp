@@ -356,7 +356,6 @@ typedef struct {
     s32 frames;
 } GameTimer;
 
-
 typedef struct {
     /* 0x00 */ u32 unk0;
     /* 0x04 */ u32 unk4;
@@ -516,7 +515,7 @@ typedef struct {
     /* 0x218 */ u32 playTimeMinutes;
     /* 0x21C */ u32 playTimeSeconds;
     /* 0x220 */ u32 unk220;
-    /* 0x224 */ u32 unk224; // D_8003BDE0
+    /* 0x224 */ u32 isTimeAttackUnlocked; // g_IsTimeAttackUnlocked
     /* 0x228 */ s16 stageID;
     /* 0x22A */ u16 exploredRoomCount;
     /* 0x22C */ u16 roomX;
