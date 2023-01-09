@@ -1875,6 +1875,7 @@ nullsub_8 = 0x800E2F34;
 entrypoint_sotn = 0x800E3988;
 ClearBackbuffer = 0x800E44EC;
 nullsub_9 = 0x800E7384;
+LoadStageTileset = 0x800E7D4C;
 InitializePads = 0x800E8DF0;
 ReadPads = 0x800E8E48;
 GetSavePalette = 0x800E9BA4;
