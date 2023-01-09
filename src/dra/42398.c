@@ -2494,7 +2494,7 @@ void func_800F82F4(void) {
     LoadImage(&dstRect, (u_long*)g_imgUnk8013C270->data);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8374);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", DrawSystemMenu);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F84CC);
 
