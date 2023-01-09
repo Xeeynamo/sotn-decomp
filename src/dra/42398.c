@@ -18,6 +18,8 @@
 #define DISP_UNK2_H DISP_ALL_H
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
+extern u16 D_800AC958[];
+
 void func_800E2398(const char* str);
 s32 func_800E3278(void);
 void func_800E385C(u32*);
@@ -656,9 +658,162 @@ void func_800E7D08(void) {
     D_800A04EC = 1;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7D4C);
+#ifndef NON_MATCHING
+void LoadStageTileset(u32* pTilesetData, s16 y);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", LoadStageTileset);
+#else
+void LoadStageTileset(u32* pTilesetData, s16 y) {
+    RECT sp10;
+    s32 i;
+    u16* pVramDstX;
+    u32* pData;
 
+    i = 0;
+    pData = pTilesetData;
+    pVramDstX = D_800AC958;
+    sp10.w = 0x20;
+    sp10.h = 0x80;
+    for (; i < 0x20; i++) {
+        sp10.x = *pVramDstX;
+        if (i & 2) {
+            sp10.y = y + 0x80;
+        } else {
+            sp10.y = y;
+        }
+        LoadImage(&sp10, pData);
+        while (DrawSync(1))
+            ;
+        pVramDstX++;
+        pData += 0x2000;
+    }
+}
+#endif
+
+// Non-matching due to case 2/11
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7E08);
+#else
+void LoadStageTileset(u32* pTilesetData, s16 y);
+extern u32 D_8006CBCC;
+extern u32 D_8006EBCC;
+extern u32 D_80070BCC;
+extern s32 D_800A0248;
+extern u32 D_800A04CC;
+extern RECT D_800ACDA8;
+extern RECT D_800ACDB8;
+extern RECT D_800ACDC0;
+extern RECT D_800ACDD0;
+extern RECT D_800ACDD8;
+extern RECT D_800ACDE0;
+extern s32 D_800BD1C8[];
+extern s32* D_8013644C;
+extern const char aPqes_1[]; // pQES
+extern RECT rect;
+extern s32* g_pStOverlay;
+
+s32 func_800E7E08(u32 arg0) {
+    s32 i;
+    void (**pSrc)();
+    void (**pDst)();
+
+    switch (arg0) {
+    case 0:
+        pSrc = g_pStOverlay;
+        i = 0;
+        pDst = &g_pfnUpdateStageEntities;
+        do {
+            i++;
+            *pDst++ = *pSrc++;
+        } while (i < 0x10);
+        break;
+    case 19:
+        LoadTPage((PixPattern* )0x80280000, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+        LoadTPage((PixPattern* )0x80284000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        break;
+    case 9:
+        LoadTPage((PixPattern* ) &D_8007EFE4, 0, 0, 0x240, 0x100, 0x100, 0x80);
+        break;
+    case 10:
+        LoadTPage((PixPattern* ) &D_80082FE4, 0, 0, 0x240, 0x180, 0x100, 0x80);
+        break;
+    case 20:
+        LoadTPage((PixPattern* ) (s32* )0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        break;
+    case 1:
+        LoadStageTileset(0x80180000, 0x100);
+        DrawSync(0);
+        LoadImage(&rect, &D_800A04CC);
+        LoadImage(&rect + 2, (u32* )0x801C0000);
+        while (DrawSync(1));
+        StoreImage(&D_800ACDA8, &D_8006EBCC);
+        break;
+    default:
+        break;
+    case 2:
+    case 11: // .rodata+0x8,0x2c
+        LoadStageTileset(0x80280000, 0);
+        DrawSync(0);
+        StoreImage(&D_800ACDB8, &D_8006CBCC);
+        if (arg0 == 0xB) {
+            StoreImage(&D_800ACDB8, &D_8006CBCC + 0x4000);
+            DrawSync(0);
+            LoadImage(&D_800ACDB8 - 8, &D_8006CBCC + 0x4000);
+            break;
+        }
+        break;
+    case 12:
+    case 13: // .rodata+0x30,0x34
+        LoadStageTileset(0x80280000, 0x100);
+        if (arg0 == 0xD) {
+            LoadImage(&rect, &D_800A04CC);
+        }
+        DrawSync(0);
+        break;
+    case 4:
+        while (func_800219E0(0) != 1);
+        if (func_80021350(D_8013644C[1], D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
+            return -1;
+        }
+        break;
+    case 5:
+        if (func_80021880((s32* )0x80280000, D_8013644C[2], D_800A0248) == -1) {
+            return -1;
+        }
+        while (func_800219E0(0) != 1);
+        break;
+    case 7:
+        if (g_mapProgramId == 2) {
+            func_80131EBC(&aPqes_1, 0x202);
+        }
+        if (g_mapProgramId == 6) {
+            func_80131EBC(&aPqes_1, 0x204);
+        }
+        break;
+    case 6:
+        LoadImage(&D_800ACDC0, (u32* )0x80180000);
+        break;
+    case 14:
+        LoadImage(&D_800ACDD0, (u32* )0x80280000);
+        break;
+    case 21:
+        LoadImage(&D_800ACDE0, (u32* )0x80280000);
+        break;
+    case 15:
+        LoadImage(&D_800ACDD8, (u32* )0x80280000);
+        break;
+    case 16:
+        LoadImage(&D_800ACDB8, (u32* )0x80280000);
+        StoreImage(&D_800ACDB8, &D_80070BCC);
+        break;
+    case 17:
+        LoadImage(&D_800ACDA8, (u32* )0x80280000);
+        StoreImage(&D_800ACDA8, &D_8006CBCC);
+        break;
+    }
+
+    return 0;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E81FC);
 
