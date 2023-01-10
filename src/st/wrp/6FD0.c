@@ -18,35 +18,35 @@ void LoadObjLayout(s32 objLayoutId);
 void func_801916C4(u16);
 void func_8018CAB0(void);
 
-const PfnOverlayEntry g_pStOverlay[] = {
+PfnOverlayEntry g_pStOverlay[] = {
     (PfnOverlayEntry)UpdateStageEntities,
     (PfnOverlayEntry)func_8018861C,
     (PfnOverlayEntry)func_8018A7AC,
 };
-const PfnLoadObjectLayout g_pfnStLoadObjectLayout =
+PfnLoadObjectLayout g_pfnStLoadObjectLayout =
     (PfnLoadObjectLayout)LoadObjLayout;
 // *** Overlay exports end ***
 
 // *** Layout definition start ***
-extern const RoomHeader g_stRooms[];
-const s16* const* const D_80180040[];
-const void* const D_801800B4[];
-const LayerDef* const D_80180168[];
-const void* const D_801801EC[];
-const u32 D_80181D08[];
-const TileDefinition D_80182D68[];
-const TileDefinition D_80186D78;
-const UnkOvelrayStruct* const D_80186D88[];
+extern RoomHeader g_stRooms[];
+s16* const* D_80180040[];
+void* D_801800B4[];
+LayerDef* D_80180168[];
+void* D_801801EC[];
+u32 D_80181D08[];
+TileDefinition D_80182D68[];
+TileDefinition D_80186D78;
+UnkOvelrayStruct* D_80186D88[];
 void func_80188514(void);
 
-const void* const g_pStUnkRoomDef[] = {
+void* g_pStUnkRoomDef[] = {
     /* 0x10 */ g_stRooms,
     /* 0x14 */ D_80180040,
     /* 0x18 */ D_801800B4,
 };
-const void* const g_pStUnkObjLayouts = NULL;
-const void** const g_pStUnkTilesLayout = (const void** const)D_80180168;
-const void* const g_pStTilesets[] = {
+void* g_pStUnkObjLayouts = NULL;
+void** g_pStUnkTilesLayout = (void** const)D_80180168;
+void* g_pStTilesets[] = {
     /* 0x024 */ D_801801EC,
     /* 0x028 */ func_80188514,
     /* 0x02C */ 0x00000000,
@@ -55,7 +55,7 @@ const void* const g_pStTilesets[] = {
     /* 0x038 */ 0x00000000,
     /* 0x03C */ 0x00000000,
 };
-const s16* const* const D_80180040[] = {
+s16* const* D_80180040[] = {
     /* 0x040 */ 0x00000000,
     /* 0x044 */ D_80186D88,
     /* 0x048 */ 0x00000000,
@@ -81,35 +81,35 @@ const s16* const* const D_80180040[] = {
     /* 0x098 */ 0x00000000,
     /* 0x09C */ 0x00000000,
 };
-const void* const D_801800A0[] = {
+void* D_801800A0[] = {
     /* 0x0A0 */ (void*)0x00000005,
     /* 0x0A4 */ (void*)0x00002000,
     /* 0x0A8 */ (void*)0x00000010,
     /* 0x0AC */ (void*)D_80181D08,
     /* 0x0B0 */ (void*)0xFFFFFFFF,
 };
-const void* const D_801800B4[] = {
+void* D_801800B4[] = {
     /* 0x0B4 */ D_801800A0,
 };
 
-const u16 D_80181D68[];
-const u16 D_80181F68[];
-const u16 D_80182168[];
-const u16 D_80182368[];
-const u16 D_80182568[];
-const u16 D_80182768[];
-const LayerDef D_801800B8 = {0, 0, 0, 0, 0, 0};
-const LayerDef D_801800C8 = {D_80181D68, &D_80186D78, 0x01328328, 0x60, 3, 0};
-const LayerDef D_801800D8 = {D_80181F68, &D_80186D78, 0x01565565, 0x60, 3, 0};
-const LayerDef D_801800E8 = {D_80182168, &D_80186D78, 0x0147B47B, 0x60, 3, 0};
-const LayerDef D_801800F8 = {D_80182368, &D_80186D78, 0x0198F98F, 0x60, 3, 0};
-const LayerDef D_80180108 = {D_80182568, &D_80186D78, 0x01B23B23, 0x60, 3, 0};
-const LayerDef D_80180118 = {D_80182768, &D_80182D68, 0x40B22B22, 0x20, 3, 2};
-const LayerDef D_80180128 = {D_80182768, &D_80182D68, 0x41990990, 0x1F, 3, 2};
-const LayerDef D_80180138 = {D_80182768, &D_80182D68, 0x40564564, 0x1E, 3, 2};
-const LayerDef D_80180148 = {D_80182768, &D_80182D68, 0x4147C47C, 0x1D, 3, 2};
-const LayerDef D_80180158 = {D_80182768, &D_80182D68, 0x40327327, 0x1C, 3, 2};
-const LayerDef* const D_80180168[] = {
+u16 D_80181D68[];
+u16 D_80181F68[];
+u16 D_80182168[];
+u16 D_80182368[];
+u16 D_80182568[];
+u16 D_80182768[];
+LayerDef D_801800B8 = {0, 0, 0, 0, 0, 0};
+LayerDef D_801800C8 = {D_80181D68, &D_80186D78, 0x01328328, 0x60, 3, 0};
+LayerDef D_801800D8 = {D_80181F68, &D_80186D78, 0x01565565, 0x60, 3, 0};
+LayerDef D_801800E8 = {D_80182168, &D_80186D78, 0x0147B47B, 0x60, 3, 0};
+LayerDef D_801800F8 = {D_80182368, &D_80186D78, 0x0198F98F, 0x60, 3, 0};
+LayerDef D_80180108 = {D_80182568, &D_80186D78, 0x01B23B23, 0x60, 3, 0};
+LayerDef D_80180118 = {D_80182768, &D_80182D68, 0x40B22B22, 0x20, 3, 2};
+LayerDef D_80180128 = {D_80182768, &D_80182D68, 0x41990990, 0x1F, 3, 2};
+LayerDef D_80180138 = {D_80182768, &D_80182D68, 0x40564564, 0x1E, 3, 2};
+LayerDef D_80180148 = {D_80182768, &D_80182D68, 0x4147C47C, 0x1D, 3, 2};
+LayerDef D_80180158 = {D_80182768, &D_80182D68, 0x40327327, 0x1C, 3, 2};
+LayerDef* D_80180168[] = {
     /* 0x168 */ &D_801800C8,
     /* 0x16C */ &D_801800B8,
     /* 0x170 */ &D_801800D8,
@@ -132,16 +132,16 @@ const LayerDef* const D_80180168[] = {
     /* 0x1B4 */ &D_801800B8,
 };
 
-const u32 D_80181420[];
-const u32 D_80181764[];
-const void* const D_801801B8[] = {
+u32 D_80181420[];
+u32 D_80181764[];
+void* D_801801B8[] = {
     /* 0x1B8 */ (void*)0x00000000,
     /* 0x1BC */ (void*)0x00000000,
     /* 0x1C0 */ (void*)0x00000000,
     /* 0x1C4 */ (void*)0x00000000,
     /* 0x1C8 */ (void*)0xFFFFFFFF,
 };
-const void* const D_801801CC[] = {
+void* D_801801CC[] = {
     /* 0x1CC */ (void*)0x00000004,
     /* 0x1D0 */ (void*)0x00400100,
     /* 0x1D4 */ (void*)0x00800080,
@@ -151,7 +151,7 @@ const void* const D_801801CC[] = {
     /* 0x1E4 */ (void*)D_80181764,
     /* 0x1E8 */ (void*)0xFFFFFFFF,
 };
-const void* const D_801801EC[] = {
+void* D_801801EC[] = {
     /* 0x1EC */ D_801801B8,
     /* 0x1F0 */ D_801801B8,
     /* 0x1F4 */ D_801801B8,
@@ -176,14 +176,14 @@ const void* const D_801801EC[] = {
 // *** Layout definition end ***
 
 // *** Layout object definition start ***
-const LayoutObject D_80181228[];
-const LayoutObject D_80181250[];
-const LayoutObject D_801812A0[];
-const LayoutObject D_801812C8[];
-const LayoutObject D_80181278[];
-const LayoutObject D_801812F0[];
-const LayoutObject D_80181304[];
-const LayoutObject* const g_pStObjLayout[] = {
+LayoutObject D_80181228[];
+LayoutObject D_80181250[];
+LayoutObject D_801812A0[];
+LayoutObject D_801812C8[];
+LayoutObject D_80181278[];
+LayoutObject D_801812F0[];
+LayoutObject D_80181304[];
+LayoutObject* g_pStObjLayout[] = {
     /* 0x23C */ D_801812F0,
     /* 0x240 */ D_80181228,
     /* 0x244 */ D_80181250,
@@ -239,14 +239,14 @@ const LayoutObject* const g_pStObjLayout[] = {
     /* 0x30C */ D_80181304,
 };
 
-const LayoutObject D_80181324[];
-const LayoutObject D_8018134C[];
-const LayoutObject D_80181374[];
-const LayoutObject D_8018139C[];
-const LayoutObject D_801813C4[];
-const LayoutObject D_801813EC[];
-const LayoutObject D_80181400[];
-const LayoutObject* const D_80180310[] = {
+LayoutObject D_80181324[];
+LayoutObject D_8018134C[];
+LayoutObject D_80181374[];
+LayoutObject D_8018139C[];
+LayoutObject D_801813C4[];
+LayoutObject D_801813EC[];
+LayoutObject D_80181400[];
+LayoutObject* D_80180310[] = {
     /* 310 */ D_801813EC,
     /* 314 */ D_80181324,
     /* 318 */ D_8018134C,
@@ -310,7 +310,7 @@ void func_8018F838(Entity*);
 void func_8018F928(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
-const PfnEntityUpdate PfnEntityUpdates[] = {
+PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3E0 */ (PfnEntityUpdate)D_80181400,
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
@@ -337,43 +337,43 @@ const PfnEntityUpdate PfnEntityUpdates[] = {
     /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
 };
 
-const u16 g_eBreakableInit[] = {
+u16 g_eBreakableInit[] = {
     0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
-const u16 D_8018044C[] = {
+u16 D_8018044C[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
-const u16 D_80180458[] = {
+u16 D_80180458[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000,
 };
-const u16 D_80180470[] = {
+u16 D_80180470[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
 };
-const u16 D_8018047C[] = {
+u16 D_8018047C[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
 };
-const u16 D_80180488[] = {
+u16 D_80180488[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
-const u16 D_80180494[] = {
+u16 D_80180494[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
-const u16 D_801804A0[] = {
+u16 D_801804A0[] = {
     /**/ 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
     /**/ 0x8001, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
     /**/ 0x800B, 0x0001, 0x0048, 0x021A, 0x0061, 0x0000,
 };
-const u16 D_801804C4[] = {
+u16 D_801804C4[] = {
     0x8001, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
 };
 // *** Object definition end ***
 
 // *** Object declaration start ***
 // owned by func_80186FD0
-const u32 D_801804D0[] = {0x00FF0140};
-const u32 D_801804D4[] = {0x26022502, 0x26022702, 0x00000000};
-const ObjInit2 D_801804E0[] = {
+u32 D_801804D0[] = {0x00FF0140};
+u32 D_801804D4[] = {0x26022502, 0x26022702, 0x00000000};
+ObjInit2 D_801804E0[] = {
     {0x0006, 0x01FA, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0x00000000,
      D_801804D0},
     {0x8001, 0x00C0, 0x0000, 0x0000, 0x03, 0x00, 0x30, 0x00, 0x00000000,
@@ -383,7 +383,7 @@ const ObjInit2 D_801804E0[] = {
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
 // There is a loop in EntityRedDoor that forces to write those tiles
 // at every frame based on the door state to create the animation.
-const u16 D_80180508[] = {
+u16 D_80180508[] = {
     /* 508 */ 0x001D, 0x0025, 0x0075, 0x007D,
     /* 510 */ 0x00C6, 0x00C7, 0x00C8, 0x00C9,
     /* 518 */ 0x001F, 0x0027, 0x0077, 0x007F,
@@ -391,7 +391,7 @@ const u16 D_80180508[] = {
 };
 
 // owned by func_801870B0
-const u8 D_80180528[] = {
+u8 D_80180528[] = {
     /* 528 */ 0x20,
     /* 529 */ 0x20,
     /* 52A */ 0x20,
@@ -401,7 +401,7 @@ const u8 D_80180528[] = {
     /* 52E */ 0x50,
     /* 52F */ 0x20,
 };
-const u8 D_80180530[] = {
+u8 D_80180530[] = {
     /* 530 */ 0x00,
     /* 531 */ 0x00,
     /* 532 */ 0x00,
@@ -411,7 +411,7 @@ const u8 D_80180530[] = {
     /* 536 */ 0x00,
     /* 537 */ 0x00,
 };
-const u16 D_80180538[] = {
+u16 D_80180538[] = {
     /* 538 */ 0x0000,
     /* 53A */ 0x0000,
     /* 53C */ 0x0600,
@@ -471,9 +471,9 @@ const u16 D_80180538[] = {
 };
 
 // owned by EntityBreakable
-const u8 D_801805A8[] = {4, 1, 4, 2, 0, 0, 0, 0};
-const u8 D_801805B0[] = {4, 0, 4, 0, 0, 0, 0, 0};
-const u8* const g_eBreakableAnimations[] = {
+u8 D_801805A8[] = {4, 1, 4, 2, 0, 0, 0, 0};
+u8 D_801805B0[] = {4, 0, 4, 0, 0, 0, 0, 0};
+u8* g_eBreakableAnimations[] = {
     /* 5B8 */ D_801805A8,
     /* 5BC */ D_801805B0,
     /* 5C0 */ 0,
@@ -483,7 +483,7 @@ const u8* const g_eBreakableAnimations[] = {
     /* 5D0 */ 0,
     /* 5D4 */ 0,
 };
-const u8 g_eBreakableHitboxes[] = {
+u8 g_eBreakableHitboxes[] = {
     /* 5D8 */ 8,
     /* 5D9 */ 8,
     /* 5DA */ 0,
@@ -493,7 +493,7 @@ const u8 g_eBreakableHitboxes[] = {
     /* 5DE */ 0,
     /* 5DF */ 0,
 };
-const u8 g_eBreakableExplosionTypes[] = {
+u8 g_eBreakableExplosionTypes[] = {
     /* 5E0 */ 0,
     /* 5E1 */ 0,
     /* 5E2 */ 0,
@@ -503,7 +503,7 @@ const u8 g_eBreakableExplosionTypes[] = {
     /* 5E6 */ 0,
     /* 5E7 */ 0,
 };
-const u16 g_eBreakableAnimationSets[] = {
+u16 g_eBreakableAnimationSets[] = {
     /* 5E8 */ 3,
     /* 5EA */ 3,
     /* 5EC */ 0,
@@ -513,7 +513,7 @@ const u16 g_eBreakableAnimationSets[] = {
     /* 5F4 */ 0,
     /* 5F6 */ 0,
 };
-const u8 g_eBreakableBlendModes[] = {
+u8 g_eBreakableBlendModes[] = {
     /* 5F8 */ 0x70,
     /* 5F9 */ 0x30,
     /* 5FA */ 0x00,
@@ -533,7 +533,7 @@ const u8 g_eBreakableBlendModes[] = {
 };
 
 // owned by func_1873A0
-const u32 D_80180608[] = {
+u32 D_80180608[] = {
     /* 608 */ 0x00000000,
     /* 60C */ 0x00000200,
     /* 610 */ 0x00000400,
@@ -553,14 +553,14 @@ const u32 D_80180608[] = {
 };
 
 // owned by EntityWarpRoom
-const u32 D_80180648[] = {
+u32 D_80180648[] = {
     /* 648 */ 0x00000000,
     /* 64C */ 0x00040000,
     /* 650 */ 0x00040000,
     /* 654 */ 0xFFFC0004,
     /* 658 */ 0x0000FFF8,
 };
-const WarpCoord D_8018065C[] = {
+WarpCoord D_8018065C[] = {
     /* 65C */ {0x000F, 0x0026},
     /* 660 */ {0x0023, 0x002C},
     /* 664 */ {0x003B, 0x0011},
@@ -578,7 +578,7 @@ const WarpCoord D_8018065C[] = {
 // *** Object declaration end ***
 
 // *** Unknown stuff start ***
-const u16 D_80180690[] = {
+u16 D_80180690[] = {
     /* 690 */ 0x8163,
     /* 692 */ 0x8164,
     /* 694 */ 0x8166,
@@ -603,7 +603,7 @@ const u16 D_80180690[] = {
     /* 6BA */ 0x8165,
 };
 
-const u16 D_801806BC[] = {
+u16 D_801806BC[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
     0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068, 0x0016, 0x0000,
     0x0000, 0x0000, 0x003E, 0x0000, 0x0023, 0x0050, 0x0000, 0x0000, 0x0000,
@@ -651,14 +651,14 @@ const u16 D_801806BC[] = {
     0x008F, 0x0000, 0x0000, 0x0000,
 };
 
-const u8 D_801809DC[] = {
+u8 D_801809DC[] = {
     /* 9DC */ 0x00,
     /* 9DD */ 0x40,
     /* 9DE */ 0x20,
     /* 9DF */ 0x10,
 };
 
-const u8 D_801809E0[] = {
+u8 D_801809E0[] = {
     /* 9E0 */ 0x80,
     /* 9E1 */ 0x80,
     /* 9E2 */ 0xA0,
@@ -669,7 +669,7 @@ const u8 D_801809E0[] = {
     /* 9E7 */ 0x00,
 };
 
-const u8 D_801809E8[] = {
+u8 D_801809E8[] = {
     /* 9E8 */ 0x60,
     /* 9E9 */ 0x60,
     /* 9EA */ 0x60,
@@ -680,7 +680,7 @@ const u8 D_801809E8[] = {
     /* 9EF */ 0x00,
 };
 
-const u16 D_801809F0[] = {
+u16 D_801809F0[] = {
     /* 9F0 */ 0x8000,
     /* 9F2 */ 0x4000,
     /* 9F4 */ 0x2000,
@@ -693,7 +693,7 @@ const u16 D_801809F0[] = {
     /* A02 */ 0x0040,
 };
 
-const u8 D_80180A04[] = {
+u8 D_80180A04[] = {
     /* A04 */ 0x02,
     /* A05 */ 0x04,
     /* A06 */ 0x03,
@@ -708,7 +708,7 @@ const u8 D_80180A04[] = {
     /* A0F */ 0x00,
 };
 
-const u16 D_80180A10[] = {
+u16 D_80180A10[] = {
     /* A10 */ 0x0003,
     /* A12 */ 0x0000,
     /* A14 */ 0x0002,
@@ -743,7 +743,7 @@ const u16 D_80180A10[] = {
     /* A4E */ 0x00C6,
 };
 
-const u16 D_80180A50[] = {
+u16 D_80180A50[] = {
     /* A50 */ 0x0C00,
     /* A52 */ 0x0168,
     /* A54 */ 0x0F00,
@@ -760,7 +760,7 @@ const u16 D_80180A50[] = {
     /* A6A */ 0x016E,
 };
 
-const u16 D_80180A6C[] = {
+u16 D_80180A6C[] = {
     /* A6C */ 0x01B2,
     /* A6E */ 0x01B3,
     /* A70 */ 0x01B6,
@@ -771,7 +771,7 @@ const u16 D_80180A6C[] = {
     /* A7A */ 0x01B1,
 };
 
-const u8 D_80180A7C[] = {
+u8 D_80180A7C[] = {
     /* A7C */ 0xB1,
     /* A7D */ 0xB7,
     /* A7E */ 0xB1,
@@ -798,7 +798,7 @@ const u8 D_80180A7C[] = {
     /* A93 */ 0x5F,
 };
 
-const s16 D_80180A94[] = {
+s16 D_80180A94[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC, 0x031F,
     0x0381, 0x03E3, 0x0444, 0x04A5, 0x0505, 0x0564, 0x05C2, 0x061F, 0x067C,
     0x06D7, 0x0732, 0x078B, 0x07E3, 0x083A, 0x088F, 0x08E4, 0x0937, 0x0988,
@@ -829,11 +829,11 @@ const s16 D_80180A94[] = {
     0xFAFB, 0xFB5B, 0xFBBC, 0xFC1D, 0xFC7F, 0xFCE1, 0xFD44, 0xFDA7, 0xFE0B,
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
-const s16 D_80180C94[] = {
+s16 D_80180C94[] = {
     /* C94 */ 0x0E01,
     /* C96 */ 0x0000,
 };
-const s16 D_80180C98[] = {
+s16 D_80180C98[] = {
     /* C98 */ 0x0302,
     /* C9A */ 0x0406,
     /* C9C */ 0x0505,
@@ -857,7 +857,7 @@ const s16 D_80180C98[] = {
     /* CC0 */ 0x0D02,
     /* CC2 */ 0x0000,
 };
-const s16 D_80180CC4[] = {
+s16 D_80180CC4[] = {
     /* CC4 */ 0x1404,
     /* CC6 */ 0x1507,
     /* CC8 */ 0x1606,
@@ -867,39 +867,39 @@ const s16 D_80180CC4[] = {
     /* CD0 */ 0x1502,
     /* CD2 */ 0x0000,
 };
-const s16 D_80180CD4[] = {
+s16 D_80180CD4[] = {
     /* CD4 */ 0x1A01,
     /* CD6 */ 0x0000,
 };
-const s16 D_80180CD8[] = {
+s16 D_80180CD8[] = {
     /* CD8 */ 0x1B01,
     /* CDA */ 0x0000,
 };
-const s16 D_80180CDC[] = {
+s16 D_80180CDC[] = {
     /* CDC */ 0x1C01,
     /* CDE */ 0x0000,
 };
-const s16 D_80180CE0[] = {
+s16 D_80180CE0[] = {
     /* CE0 */ 0x1D01,
     /* CE2 */ 0x0000,
 };
-const s16 D_80180CE4[] = {
+s16 D_80180CE4[] = {
     /* CE4 */ 0x1E01,
     /* CE6 */ 0x0000,
 };
-const s16 D_80180CE8[] = {
+s16 D_80180CE8[] = {
     /* CE8 */ 0x1F01,
     /* CEA */ 0x0000,
 };
-const s16 D_80180CEC[] = {
+s16 D_80180CEC[] = {
     /* CEC */ 0x2001,
     /* CEE */ 0x0000,
 };
-const s16 D_80180CF0[] = {
+s16 D_80180CF0[] = {
     /* CF0 */ 0x2101,
     /* CF2 */ 0x0000,
 };
-const s16 D_80180CF4[] = {
+s16 D_80180CF4[] = {
     /* CF4 */ 0x2202,
     /* CF6 */ 0x2302,
     /* CF8 */ 0x2402,
@@ -911,7 +911,7 @@ const s16 D_80180CF4[] = {
     /* D04 */ 0x0000,
     /* D06 */ 0x0000,
 };
-const s16 D_80180D08[] = {
+s16 D_80180D08[] = {
     /* D08 */ 0x0F1A,
     /* D0A */ 0x1006,
     /* D0C */ 0x1104,
@@ -921,11 +921,11 @@ const s16 D_80180D08[] = {
     /* D14 */ 0x0000,
     /* D16 */ 0x0000,
 };
-const s16 D_80180D18[] = {
+s16 D_80180D18[] = {
     /* D18 */ 0x1301,
     /* D1A */ 0x0000,
 };
-const s16 D_80180D1C[] = {
+s16 D_80180D1C[] = {
     /* D1C */ 0x2A05,
     /* D1E */ 0x2B05,
     /* D20 */ 0x2C05,
@@ -937,7 +937,7 @@ const s16 D_80180D1C[] = {
     /* D2C */ 0x0000,
     /* D2E */ 0x0000,
 };
-const s16 D_80180D30[] = {
+s16 D_80180D30[] = {
     /* D30 */ 0x3205,
     /* D32 */ 0x3305,
     /* D34 */ 0x3405,
@@ -949,7 +949,7 @@ const s16 D_80180D30[] = {
     /* D40 */ 0x0000,
     /* D42 */ 0x0000,
 };
-const s16 D_80180D44[] = {
+s16 D_80180D44[] = {
     /* D44 */ 0x3A05,
     /* D46 */ 0x3B05,
     /* D48 */ 0x3C05,
@@ -961,7 +961,7 @@ const s16 D_80180D44[] = {
     /* D54 */ 0x0000,
     /* D56 */ 0x0000,
 };
-const s16 D_80180D58[] = {
+s16 D_80180D58[] = {
     /* D58 */ 0x4205,
     /* D5A */ 0x4305,
     /* D5C */ 0x4405,
@@ -973,7 +973,7 @@ const s16 D_80180D58[] = {
     /* D68 */ 0x0000,
     /* D6A */ 0x0000,
 };
-const s16 D_80180D6C[] = {
+s16 D_80180D6C[] = {
     /* D6C */ 0x4A05,
     /* D6E */ 0x4B05,
     /* D70 */ 0x4C05,
@@ -985,7 +985,7 @@ const s16 D_80180D6C[] = {
     /* D7C */ 0x0000,
     /* D7E */ 0x0000,
 };
-const s16 D_80180D80[] = {
+s16 D_80180D80[] = {
     /* D80 */ 0x5205,
     /* D82 */ 0x5305,
     /* D84 */ 0x5405,
@@ -997,7 +997,7 @@ const s16 D_80180D80[] = {
     /* D90 */ 0x0000,
     /* D92 */ 0x0000,
 };
-const s16 D_80180D94[] = {
+s16 D_80180D94[] = {
     /* D94 */ 0x5A05,
     /* D96 */ 0x5B05,
     /* D98 */ 0x5C05,
@@ -1009,7 +1009,7 @@ const s16 D_80180D94[] = {
     /* DA4 */ 0x0000,
     /* DA6 */ 0x0000,
 };
-const s16 D_80180DA8[] = {
+s16 D_80180DA8[] = {
     /* DA8 */ 0x6205,
     /* DAA */ 0x6305,
     /* DAC */ 0x6405,
@@ -1021,14 +1021,14 @@ const s16 D_80180DA8[] = {
     /* DB8 */ 0x0000,
     /* DBA */ 0x0000,
 };
-const s16 D_80180DBC[] = {
+s16 D_80180DBC[] = {
     /* DBC */ 0x6A05,
     /* DBE */ 0x6B05,
     /* DC0 */ 0x6C05,
     /* DC2 */ 0x6D05,
 };
 
-const u16 D_80180DC4[] = {
+u16 D_80180DC4[] = {
     /* DC4 */ 0x6E05,
     /* DC6 */ 0x6F05,
     /* DC8 */ 0x7005,
@@ -1036,7 +1036,7 @@ const u16 D_80180DC4[] = {
     /* DCC */ 0x0000,
     /* DCE */ 0x0000,
 };
-const s16 D_80180DD0[] = {
+s16 D_80180DD0[] = {
     /* DD0 */ 0x8F01,
     /* DD2 */ 0x0000,
     /* DD4 */ 0xFCFC,
@@ -1057,7 +1057,7 @@ const s16 D_80180DD0[] = {
     /* DF2 */ 0x0000,
 };
 
-const u16 D_80180DF4[] = {
+u16 D_80180DF4[] = {
     /* DF4 */ 0x0000,
     /* DF6 */ 0x000E,
     /* DF8 */ 0x000F,
@@ -1070,17 +1070,17 @@ const u16 D_80180DF4[] = {
     /* E06 */ 0x0016,
 };
 
-extern const u8 D_80186EC0[];
-extern const u8 D_80186EC8[];
-extern const u8 D_80186ED0[];
-extern const u8 D_80186ED8[];
-extern const u8 D_80186EE0[];
-extern const u8 D_80186EE8[];
-extern const u8 D_80186EF0[];
-extern const u8 D_80186EF8[];
-extern const u8 D_80186F00[];
-extern const u8 D_80186F08[];
-const u8* const D_80180E08[] = {
+extern u8 D_80186EC0[];
+extern u8 D_80186EC8[];
+extern u8 D_80186ED0[];
+extern u8 D_80186ED8[];
+extern u8 D_80186EE0[];
+extern u8 D_80186EE8[];
+extern u8 D_80186EF0[];
+extern u8 D_80186EF8[];
+extern u8 D_80186F00[];
+extern u8 D_80186F08[];
+u8* D_80180E08[] = {
     // u8 is an assumption
     /* E08 */ D_80186F08,
     /* E0C */ D_80186F00,
@@ -1094,11 +1094,11 @@ const u8* const D_80180E08[] = {
     /* E2C */ D_80186EC0,
 };
 
-const s32 c_GoldPrizes[] = {
+s32 c_GoldPrizes[] = {
     1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000,
 };
 
-const s16* const D_80180E58[] = {
+s16* D_80180E58[] = {
     /* E58 */ D_80180C94,
     /* E5C */ D_80180C98,
     /* E60 */ D_80180CC4,
@@ -1125,14 +1125,14 @@ const s16* const D_80180E58[] = {
     /* EB4 */ D_80180DD0,
 };
 
-const u32 D_80180EB8[] = {
+u32 D_80180EB8[] = {
     /* EB8 */ 0x0004FFFA,
     /* EBC */ 0xFFF80000,
 };
 
-const s8 c_HeartPrizes[] = {1, 5};
+s8 c_HeartPrizes[] = {1, 5};
 
-const s32 D_80180EC4[] = {
+s32 D_80180EC4[] = {
     /* EC4 */ 0xFFFF0000,
     /* EC8 */ 0xFFFE8000,
     /* ECC */ 0xFFFE8000,
@@ -1140,47 +1140,47 @@ const s32 D_80180EC4[] = {
     /* ED4 */ 0xFFFD0000,
 };
 
-const u8 D_80180ED8[] = {
+u8 D_80180ED8[] = {
     0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
     0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x00, 0x00, 0x00, 0x00,
 };
-const u8 D_80180EEC[] = {
+u8 D_80180EEC[] = {
     0x01, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D,
     0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x12,
     0x03, 0x13, 0x04, 0x14, 0x00, 0x00, 0x00, 0x00,
 };
-const u8 D_80180F08[] = {
+u8 D_80180F08[] = {
     0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A,
     0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20,
     0x02, 0x21, 0x02, 0x22, 0x02, 0x23, 0x02, 0x24, 0x02, 0x25, 0x02, 0x26,
     0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x2A, 0x00, 0x00, 0x00, 0x00,
 };
-const u8 D_80180F38[] = {
+u8 D_80180F38[] = {
     0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x02, 0x2E, 0x02, 0x2F, 0x02,
     0x30, 0x02, 0x31, 0x02, 0x32, 0x02, 0x33, 0x02, 0x34, 0x02, 0x35,
     0x02, 0x36, 0x02, 0x37, 0x02, 0x38, 0x02, 0x39, 0x02, 0x3A, 0x02,
     0x3B, 0x02, 0x3C, 0x02, 0x3D, 0x02, 0x3E, 0x02, 0x3F, 0x02, 0x40,
     0x02, 0x41, 0x02, 0x42, 0x00, 0x00, 0x00, 0x00,
 };
-const u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
+u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
-const u8* const D_80180F70[] = {
+u8* D_80180F70[] = {
     D_80180ED8, D_80180EEC, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-extern const char D_80186F48[];
-const char* const D_80180F84[] = {
+extern char D_80186F48[];
+char* D_80180F84[] = {
     D_80186F48,
 };
 
-const s16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
-const s16 D_80180F98[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-const s16 D_80180FA8[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-const s16 D_80180FB8[] = {32, 26, 20, 13, 7, 1, -5, -12};
-const s16 D_80180FC8[] = {-8, 4, -2, 8, 0, 4, -4, 2};
-const s16 D_80180FD8[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+s16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
+s16 D_80180F98[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+s16 D_80180FA8[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+s16 D_80180FB8[] = {32, 26, 20, 13, 7, 1, -5, -12};
+s16 D_80180FC8[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+s16 D_80180FD8[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 
-const u16 D_80180FE8[] = {
+u16 D_80180FE8[] = {
     /* FE8 */ 0x0010,
     /* FEA */ 0x0020,
     /* FEC */ 0x0030,
@@ -1191,7 +1191,7 @@ const u16 D_80180FE8[] = {
     /* FF6 */ 0x0000,
 };
 
-const u16 D_80180FF8[] = {
+u16 D_80180FF8[] = {
     /* FF8 */ 0x0030,
     /* FFA */ 0x0050,
     /* FFC */ 0x0080,
@@ -1202,7 +1202,7 @@ const u16 D_80180FF8[] = {
     /* 1006 */ 0x0000,
 };
 
-const s32 D_80181008[] = {
+s32 D_80181008[] = {
     /* 1008 */ 0x00000400,
     /* 100C */ 0x00002400,
     /* 1010 */ 0x00003C00,
@@ -1211,7 +1211,7 @@ const s32 D_80181008[] = {
     /* 101C */ 0x0000C000,
 };
 
-const s32 D_80181020[] = {
+s32 D_80181020[] = {
     /* 1020 */ 0x00000800,
     /* 1024 */ 0x00002800,
     /* 1028 */ 0x00004800,
@@ -1220,32 +1220,32 @@ const s32 D_80181020[] = {
     /* 1034 */ 0x00012000,
 };
 
-const u8 D_80181038[] = {
+u8 D_80181038[] = {
     /* 1038 */ 0x01,
     /* 1039 */ 0x09,
     /* 103A */ 0x15,
     /* 103B */ 0x2B,
 };
 
-const u16 D_8018103C[] = {
+u16 D_8018103C[] = {
     /* 103C */ 0x0010,
     /* 103E */ 0x0018,
     /* 1040 */ 0x002A,
     /* 1042 */ 0x002F,
 };
 
-const u32 D_80181044[] = {
+u32 D_80181044[] = {
     /* 1044 */ 0x00000000,
     /* 1048 */ 0x000000FF,
 };
 
-const u8 D_8018104C[] = {
+u8 D_8018104C[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
 };
-const u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
-const u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
+u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
+u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
 
-const u16 D_801810A0[] = {
+u16 D_801810A0[] = {
     /* 10A0 */ 0x0820,
     /* 10A2 */ 0x0840,
     /* 10A4 */ 0x0860,
@@ -1256,7 +1256,7 @@ const u16 D_801810A0[] = {
     /* 10AE */ 0x0A00,
 };
 
-const u16 D_801810B0[] = {
+u16 D_801810B0[] = {
     0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
     0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
     0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
@@ -1265,19 +1265,19 @@ const u16 D_801810B0[] = {
     0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
 };
 
-const u32 D_80181110[] = {
+u32 D_80181110[] = {
     /* 1110 */ 0x03030204,
     /* 1114 */ 0x05030403,
     /* 1118 */ 0x03030603,
     /* 111C */ 0x00000000,
 };
-const u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
-const u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
-const u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
-const u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
-const u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
+u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
+u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
+u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
+u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
+u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
 
-const ObjInit2 D_80181134[] = {
+ObjInit2 D_80181134[] = {
     {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181120},
     {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181128},
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
@@ -1286,7 +1286,7 @@ const ObjInit2 D_80181134[] = {
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
 };
 
-const RoomHeader g_stRooms[] = {
+RoomHeader g_stRooms[] = {
     {40, 12, 40, 12, {0, 0, 0, 1}},   {37, 21, 37, 21, {1, 0, 0, 2}},
     {59, 17, 59, 17, {2, 0, 0, 3}},   {15, 38, 15, 38, {3, 0, 0, 4}},
     {35, 44, 35, 44, {4, 0, 0, 5}},   {34, 44, 34, 44, {5, 0, 0, 48}},
@@ -1296,101 +1296,101 @@ const RoomHeader g_stRooms[] = {
     {35, 21, 35, 21, {30, -1, 0, 0}}, {17, 38, 17, 38, {31, -1, 0, 0}},
     {33, 44, 33, 44, {32, -1, 0, 0}},
 };
-const u8 g_stRoomsEndSignature[] = {64, 0, 0, 0};
+u8 g_stRoomsEndSignature[] = {64, 0, 0, 0};
 
-const LayoutObject D_80181228[] = {
+LayoutObject D_80181228[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 3},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_80181250[] = {
+LayoutObject D_80181250[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 4},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_80181278[] = {
+LayoutObject D_80181278[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 1},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_801812A0[] = {
+LayoutObject D_801812A0[] = {
     {-2, -2, 0, 0, 0},
     {128, 144, 22, 16, 2},
     {248, 97, 5, 144, 256},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_801812C8[] = {
+LayoutObject D_801812C8[] = {
     {-2, -2, 0, 0, 0},
     {128, 144, 22, 16, 0},
     {248, 97, 5, 144, 256},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_801812F0[] = {
+LayoutObject D_801812F0[] = {
     {-2, -2, 0, 0, 0},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_80181304[] = {
+LayoutObject D_80181304[] = {
     {-2, -2, 0, 0, 0},
     {0, 56, 8, 128, 0},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_80181324[] = {
+LayoutObject D_80181324[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 3},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_8018134C[] = {
+LayoutObject D_8018134C[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 4},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_80181374[] = {
+LayoutObject D_80181374[] = {
     {-2, -2, 0, 0, 0},
     {8, 97, 5, 144, 0},
     {128, 144, 22, 16, 1},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_8018139C[] = {
+LayoutObject D_8018139C[] = {
     {-2, -2, 0, 0, 0},
     {248, 97, 5, 144, 256},
     {128, 144, 22, 16, 2},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_801813C4[] = {
+LayoutObject D_801813C4[] = {
     {-2, -2, 0, 0, 0},
     {248, 97, 5, 144, 256},
     {128, 144, 22, 16, 0},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_801813EC[] = {
+LayoutObject D_801813EC[] = {
     {-2, -2, 0, 0, 0},
     {-1, -1, 0, 0, 0},
 };
 
-const LayoutObject D_80181400[] = {
+LayoutObject D_80181400[] = {
     {-2, -2, 0, 0, 0},
     {0, 56, 8, 128, 0},
     {-1, -1, 0, 0, 0},
 };
 
-const u32 D_80181420[] = {
+u32 D_80181420[] = {
     0x65616020, 0x15126463, 0x4AFFF00F, 0xF5C31F68, 0x0343848E, 0x7742007C,
     0x30405913, 0xF2E1F237, 0x65F465C4, 0xA49F74FE, 0x2CB0E302, 0x931898C5,
     0x5C9F73F9, 0xF402EC13, 0xB25E642C, 0x28F42854, 0x24BD84FD, 0xE2C2D1BF,
@@ -1428,7 +1428,7 @@ const u32 D_80181420[] = {
     0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF, 0x0FFFF00F, 0x00F0FFF0,
 };
 
-const u32 D_80181764[] = {
+u32 D_80181764[] = {
     0x1260202F, 0x13156117, 0x819BD40A, 0xB8471540, 0xEA4438B0, 0xC44F0D44,
     0x16B84869, 0xA6D84765, 0x711A4C41, 0xFD4A38A0, 0x931E2F44, 0xA8259E95,
     0x64B6FE4D, 0x4262EB7F, 0x4D204AFE, 0x3F8403FC, 0xFD7365E4, 0x14FE4C25,
@@ -1492,14 +1492,14 @@ const u32 D_80181764[] = {
     0x00F005F0,
 };
 
-const u32 D_80181D08[] = {
+u32 D_80181D08[] = {
     0x04240000, 0x2DF60932, 0x01804B1F, 0x2B3A0280, 0x14A50421, 0x318C2108,
     0x56B53DEF, 0x7FFF6B5A, 0x04210000, 0x29D4152B, 0x04A63A99, 0x05B3052E,
     0x14A5483F, 0x296D18E9, 0x4A953A11, 0x7BDE5B39, 0x04210000, 0x1CEB1889,
     0x04A6214F, 0x05B3052E, 0xBD03483F, 0xD5E9C926, 0xF34FE68C, 0xFFFFFFF2,
 };
 
-const u16 D_80181D68[] = {
+u16 D_80181D68[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
     0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
@@ -1531,7 +1531,7 @@ const u16 D_80181D68[] = {
     0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-const u16 D_80181F68[] = {
+u16 D_80181F68[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
     0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
@@ -1563,7 +1563,7 @@ const u16 D_80181F68[] = {
     0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-const u16 D_80182168[] = {
+u16 D_80182168[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
     0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
@@ -1595,7 +1595,7 @@ const u16 D_80182168[] = {
     0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-const u16 D_80182368[] = {
+u16 D_80182368[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
     0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
@@ -1627,7 +1627,7 @@ const u16 D_80182368[] = {
     0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-const u16 D_80182568[] = {
+u16 D_80182568[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
     0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
@@ -1659,7 +1659,7 @@ const u16 D_80182568[] = {
     0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-const u16 D_80182768[] = {
+u16 D_80182768[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -1691,7 +1691,7 @@ const u16 D_80182768[] = {
     0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-const u32 D_80182968[] = {
+u32 D_80182968[] = {
     0x17170000, 0x17171717, 0x17171717, 0x00000017, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -1705,7 +1705,7 @@ const u32 D_80182968[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const u32 D_80182A68[] = {
+u32 D_80182A68[] = {
     0x79780000, 0x7A7A7A7B, 0x7B7C7C7C, 0x0000007B, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -1719,7 +1719,7 @@ const u32 D_80182A68[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const u32 D_80182B68[] = {
+u32 D_80182B68[] = {
     0xFFFF0000, 0xFEFDFCFD, 0xFEFEFDFC, 0x000000FC, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -1733,7 +1733,7 @@ const u32 D_80182B68[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const u32 D_80182C68[] = {
+u32 D_80182C68[] = {
     0x03030300, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -1747,10 +1747,9 @@ const u32 D_80182C68[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const TileDefinition D_80182D68[] = {D_80182968, D_80182A68, D_80182B68,
-                                     D_80182C68};
+TileDefinition D_80182D68[] = {D_80182968, D_80182A68, D_80182B68, D_80182C68};
 
-const u32 D_80182D78[] = {
+u32 D_80182D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -1924,7 +1923,7 @@ const u32 D_80182D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const u32 D_80183D78[] = {
+u32 D_80183D78[] = {
     0x03020100, 0x07060504, 0x13121110, 0x17161514, 0x23222120, 0x27262524,
     0x33323130, 0x37363534, 0x43424140, 0x47464544, 0x53525150, 0x57565554,
     0x63626160, 0x67666564, 0x73727170, 0x77767574, 0x0B0A0908, 0xC90E0D0C,
@@ -2098,7 +2097,7 @@ const u32 D_80183D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const u32 D_80184D78[] = {
+u32 D_80184D78[] = {
     0x05050000, 0x05050505, 0x05050505, 0x05050501, 0x01010101, 0x05050501,
     0x01010101, 0x04040401, 0x01010101, 0x04040401, 0x03010101, 0x05050503,
     0x05050105, 0x01010101, 0x05050501, 0x01010101, 0x05050501, 0x01010101,
@@ -2272,7 +2271,7 @@ const u32 D_80184D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const u32 D_80185D78[] = {
+u32 D_80185D78[] = {
     0x03030300, 0x03030303, 0x03030303, 0x03030300, 0x00000000, 0x03030300,
     0x00000000, 0x03000300, 0x00000000, 0x03000300, 0x00000000, 0x03030300,
     0x03030003, 0x00000000, 0x03030300, 0x00000000, 0x03030300, 0x00000000,
@@ -2446,15 +2445,14 @@ const u32 D_80185D78[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 
-const TileDefinition D_80186D78 = {D_80182D78, D_80183D78, D_80184D78,
-                                   D_80185D78};
+TileDefinition D_80186D78 = {D_80182D78, D_80183D78, D_80184D78, D_80185D78};
 
-const UnkOvelrayStruct D_80186DA4;
-const UnkOvelrayStruct D_80186DC0;
-const UnkOvelrayStruct D_80186DDC;
-const UnkOvelrayStruct D_80186DF8;
-const UnkOvelrayStruct D_80186E14;
-const UnkOvelrayStruct* const D_80186D88[] = {
+UnkOvelrayStruct D_80186DA4;
+UnkOvelrayStruct D_80186DC0;
+UnkOvelrayStruct D_80186DDC;
+UnkOvelrayStruct D_80186DF8;
+UnkOvelrayStruct D_80186E14;
+UnkOvelrayStruct* D_80186D88[] = {
     /* 6D88 */ 0x00000000,
     /* 6D8C */ &D_80186DA4,
     /* 6D90 */ &D_80186DC0,
@@ -2464,32 +2462,35 @@ const UnkOvelrayStruct* const D_80186D88[] = {
     /* 6DA0 */ 0x00000000,
 };
 
-const UnkOvelrayStruct D_80186DA4 = {
+UnkOvelrayStruct D_80186DA4 = {
     1, 0, -4, -4, 8, 8, 6, 60, 128, 128, 136, 136, 0, 0,
 };
 
-const UnkOvelrayStruct D_80186DC0 = {
+UnkOvelrayStruct D_80186DC0 = {
     1, 0, -4, -4, 8, 8, 6, 60, 128, 136, 136, 144, 0, 0,
 };
 
-const UnkOvelrayStruct D_80186DDC = {
+UnkOvelrayStruct D_80186DDC = {
     1, 0, -4, -8, 8, 16, 6, 60, 128, 144, 136, 160, 0, 0,
 };
 
-const UnkOvelrayStruct D_80186DF8 = {
+UnkOvelrayStruct D_80186DF8 = {
     1, 0, -8, -8, 16, 16, 6, 60, 136, 128, 152, 144, 0, 0,
 };
 
-const UnkOvelrayStruct D_80186E14 = {
+UnkOvelrayStruct D_80186E14 = {
     1, 0, -8, -8, 16, 16, 6, 60, 136, 144, 152, 160, 0, 0,
 };
+// *** Unknown stuff end ***
 
+// *** rodata section start ***
 const char D_80186E30[] = "step %x\n";
 const char D_80186E3C[] = "move_room%x\n";
 const char D_80186E4C[] = "for_x:%x y%x\n";
 // gives some padding to align it to the next section
 const char D_80186E5C[] = "move_x:%x y%x\n\0\0\0\0\0";
-// *** Unknown stuff end ***
+// TODO import missing RODATA
+// *** rodata section end ***
 
 // *** bss? section start ***
 extern LayoutObject* D_80193AB0;
