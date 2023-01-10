@@ -1186,6 +1186,7 @@ extern s16 D_8013B698;
 extern s16 D_8013AEE0;
 extern u8 D_8013AEEC;
 extern s32 D_8013B158;
+extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
 extern s16 D_8013B3E8[];
 extern s32 D_8013B5E8;

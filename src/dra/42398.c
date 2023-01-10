@@ -922,7 +922,7 @@ s32 func_800E9508(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9530);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9610);
+u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
 s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
                   s32 fd) {
