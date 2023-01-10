@@ -486,6 +486,7 @@ extern u8 D_80174FB4;
 extern u8 D_80174FB8;
 
 void func_8015FA5C(s32 arg0) {
+
     D_80174FAC = D_80154674[arg0];
     D_80174FB0 = D_80154675[arg0];
     D_80174FB4 = D_80154676[arg0];
