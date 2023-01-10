@@ -233,8 +233,7 @@ context:
 
 extract_sotn: $(SOTNDISK)
 	$(SOTNDISK) extract iso/sotn.cue iso/
-disk: build $(SOTNDISK) $(BUILD_DIR)/sotn.cue
-$(BUILD_DIR)/sotn.cue:
+disk: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r iso/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
@@ -250,7 +249,7 @@ $(BUILD_DIR)/sotn.cue:
 	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
-	$(SOTNDISK) make $@ $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
+	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
 
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
