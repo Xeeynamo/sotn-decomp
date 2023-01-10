@@ -913,7 +913,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8014);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8108);
 
-bool func_801B8338(Unkstruct6* unk) {
+bool _peek_event(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
