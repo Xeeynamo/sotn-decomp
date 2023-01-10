@@ -1,6 +1,6 @@
 #include "main.h"
 
-/* Unkstruct section:
+/** Unkstruct section:
  * These are to be merged later on
  */
 

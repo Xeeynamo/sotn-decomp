@@ -220,6 +220,13 @@ extern u_short LoadTPage(PixPattern* pix,  // Pointer to texture pattern start a
 
 // clang-format on
 
+/**
+ * Calculates and returns the texture CLUT ID.
+ * The CLUT address is limited to multiples of 16 in the x direction
+ */
+u_short GetClut(int x, // Horizontal frame buffer address of CLUT
+                int y  // Vertical frame buffer address of CLUT
+);
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetLineG2(LINE_G2* p);
