@@ -1,3 +1,9 @@
+/*
+ * File: 1AC60.c
+ * Overlay: RIC
+ * Description: Overlay for the character Richter.
+ */
+
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
