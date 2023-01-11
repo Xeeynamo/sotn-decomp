@@ -4632,7 +4632,7 @@ void func_801186EC(void) {
             PLAYER.unk2E += 1;
         }
     } else if (--D_80138008 == 0) {
-        D_800733EE = 0x8100;
+        PLAYER.palette = 0x8100;
         func_8010E570(0);
     }
 }
