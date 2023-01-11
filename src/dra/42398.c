@@ -4806,7 +4806,19 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B5A4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011BBE0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011BD48);
+bool func_8011BD48(Entity* entity) {
+    s32 i = 0x10;
+    s16 objId = entity->objectId;
+    s16 subId = entity->subId;
+    Entity* e = &g_EntityArray[i];
+    for (; i < 0x40; i++, e++) {
+        if (objId == e->objectId && subId == e->subId && e != entity) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011BDA4);
 
