@@ -1,7 +1,7 @@
 /*
  * File: 42398.c
- * Overlay: RIC
- * Description: Overlay for the character Richter.
+ * Overlay: DRA
+ * Description: Game engine.
  */
 
 #include "common.h"
