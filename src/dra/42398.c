@@ -4626,7 +4626,7 @@ void func_80118670(void) {
 
 void func_801186EC(void) {
     if (PLAYER.unk2E == 0) {
-        if (D_80073FBE == 0) {
+        if (g_EntityArray[UNK_ENTITY_10].objectId == 0) {
             D_80138008 = 0x10;
             func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
             PLAYER.unk2E += 1;
