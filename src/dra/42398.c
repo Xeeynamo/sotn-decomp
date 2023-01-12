@@ -1761,7 +1761,7 @@ void func_800F2404(s32 arg0) {
 
     D_80097410 = 0;
     D_80097414 = 0;
-    g_zEntityCenter.typeInt = 148;
+    g_zEntityCenter.unk = 148;
     count = 7;
 
     ptr = &D_80097400[17];
@@ -4112,7 +4112,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     PLAYER.palette = 0x8100;
-    PLAYER.zPriority = g_zEntityCenter.typeShort;
+    PLAYER.zPriority = g_zEntityCenter.S16.unk0;
 
     if ((u32)(D_80072F92 - 1) < 2U) {
         func_8010DA48(0xC7);
@@ -4366,7 +4366,7 @@ void func_80111928(void) { D_801396EA = 0; }
 void func_80111938(void) {
     D_801396EA = 1;
     D_801396E4 = PLAYER.animationFrame;
-    D_801396E6.typeShort = PLAYER.unk19;
+    D_801396E6.S16.unk0 = PLAYER.unk19;
     D_801396E8 = PLAYER.palette;
 }
 
@@ -4374,7 +4374,7 @@ void func_8011197C(void) {
     D_801396EA = 0;
     PLAYER.unk44 = 0;
     PLAYER.animationFrame = D_801396E4;
-    PLAYER.unk19 = D_801396E6.typeByte;
+    PLAYER.unk19 = D_801396E6.S8.unk0;
     PLAYER.palette = D_801396E8;
 }
 
@@ -4509,7 +4509,7 @@ void func_80113EE0(void) {
     D_80072F64 = 0;
     D_80072F66 = 0;
     PLAYER.unk1E = 0;
-    PLAYER.zPriority = g_zEntityCenter.typeShort;
+    PLAYER.zPriority = g_zEntityCenter.S16.unk0;
     if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }

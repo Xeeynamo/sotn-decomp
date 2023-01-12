@@ -2608,7 +2608,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_zEntityCenter.typeShort - 0x14;
+        entity->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
         entity->blendMode = g_eBreakableBlendModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animationSet = g_eBreakableAnimationSets[breakableType];
@@ -2799,7 +2799,7 @@ void EntityWarpRoom(Entity* arg0) {
         D_80072EFC = 0x80;
         GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
         D_80072EF4 = 0;
-        g_zEntityCenter.typeShort = 0x5C;
+        g_zEntityCenter.S16.unk0 = 0x5C;
         temp_s2_2 = (POLY_GT4*)arg0->unk84.value;
         D_8003C8B8 = 0;
         temp_v1_9 = temp_s2_2->r0 + 2;
@@ -2818,7 +2818,7 @@ void EntityWarpRoom(Entity* arg0) {
         D_80072EFC = 0x80;
         GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
         D_80072EF4 = 0;
-        g_zEntityCenter.typeShort = 0x5C;
+        g_zEntityCenter.S16.unk0 = 0x5C;
         temp_s2_3 = (POLY_GT4*)arg0->unk84.value;
         D_8003C8B8 = 0;
         temp_s2_3->pad3 = 0x31;
@@ -3668,7 +3668,7 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority = g_zEntityCenter.typeShort - 0xC;
+        g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
     }
 }
 

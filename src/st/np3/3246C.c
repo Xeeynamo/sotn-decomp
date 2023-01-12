@@ -65,7 +65,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_zEntityCenter.typeShort - 0x14;
+        entity->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
         entity->blendMode = g_eBreakableBlendModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animationSet = g_eBreakableAnimationSets[breakableType];
@@ -439,7 +439,7 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority = g_zEntityCenter.typeShort - 0xC;
+        g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
     }
 }
 
