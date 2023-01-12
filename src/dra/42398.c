@@ -2622,7 +2622,6 @@ void func_800F96F4(void) { // !Fake:
     s32 new_var2;
     POLY_GT4* poly;
     s32 temp_a2;
-    unkStruct3* temp_a0_2;
     s32* temp;
     s32* new_var;
 
@@ -2643,23 +2642,23 @@ void func_800F96F4(void) { // !Fake:
         poly->pad3 = 8;
     }
 
-    temp_a0_2 = (unkStruct3*)poly->tag;
+    poly = poly->tag;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
-        temp_a0_2->unk32 = 0x80;
+        poly->pad3 = 0x80;
         new_var2 = *temp;
         if (new_var2 == 1) {
             do {
-                temp_a0_2->unkE = 0x188;
+                poly->clut = 0x188;
             } while (0);
             return;
         }
         *temp -= 1;
-        temp_a0_2->unkE = 0x181;
+        poly->clut = 0x181;
         return;
     }
-    temp_a0_2->unk32 = 8;
+    poly->pad3 = 8;
 }
 
 void func_800F97DC(void) {
@@ -3464,7 +3463,7 @@ s32 func_80102E04(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102EB8);
 
-void func_801030B4(s32 arg0, unkStruct3* unkstruct3, s32 arg2) {
+void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
     s32 var_v1;
 
     if (arg2 == arg0) {
@@ -3474,23 +3473,23 @@ void func_801030B4(s32 arg0, unkStruct3* unkstruct3, s32 arg2) {
             var_v1 = 0x7F - (g_blinkTimer & 0x1F);
         }
 
-        unkstruct3->unk4 = unkstruct3->unk10.data1.unk0 = var_v1 - 0x10;
-        unkstruct3->unk1C.data1.unk0 = unkstruct3->unk28 = var_v1 + 0x10;
-        unkstruct3->unk2A = 0;
-        unkstruct3->unk1E.data1.unk0 = 0;
-        unkstruct3->unk12.data1.unk0 = 0;
-        unkstruct3->unk6 = 0;
-        unkstruct3->unk32 = 0x404;
+        poly->r0 = poly->r1 = var_v1 - 0x10;
+        poly->r2 = poly->r3 = var_v1 + 0x10;
+        poly->b3 = 0;
+        poly->b2 = 0;
+        poly->b1 = 0;
+        poly->b0 = 0;
+        poly->pad3 = 0x404;
     } else {
-        unkstruct3->unk12.data1.unk0 = 0x60;
-        unkstruct3->unk6 = 0x60;
-        unkstruct3->unk2A = 0x80;
-        unkstruct3->unk1E.data1.unk0 = 0x80;
-        unkstruct3->unk28 = 0;
-        unkstruct3->unk1C.data1.unk0 = 0;
-        unkstruct3->unk10.data1.unk0 = 0;
-        unkstruct3->unk4 = 0;
-        unkstruct3->unk32 = 0x415;
+        poly->b1 = 0x60;
+        poly->b0 = 0x60;
+        poly->b3 = 0x80;
+        poly->b2 = 0x80;
+        poly->r3 = 0;
+        poly->r2 = 0;
+        poly->r1 = 0;
+        poly->r0 = 0;
+        poly->pad3 = 0x415;
     }
 }
 
