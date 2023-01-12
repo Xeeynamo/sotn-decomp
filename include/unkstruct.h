@@ -10,6 +10,12 @@ typedef struct unkstruct_80072FA0 {
     /* 0x08 */ char pad8[0x6];
 } unkstruct_80072FA0; // size = 0xC
 
+typedef struct Unkstruct_800A2D98 {
+    /* 0x0 */ s32 unk0;
+    /* 0x4 */ s32 unk4;
+    /* 0x8 */ s32 unk8;
+} Unkstruct_800A2D98;
+
 typedef struct unkStruct_800A872C {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ char unk4[0xC];

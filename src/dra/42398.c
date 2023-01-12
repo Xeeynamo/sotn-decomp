@@ -2815,12 +2815,21 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAF44);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB004);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB0FC);
+void func_800FB0FC(void) {
+    Unkstruct_800A2D98* new_var3 = &D_800A2D98[*g_menuRelicsCursorIndex];
+    s32 temp_a1 = new_var3->unk4;
+    s32 new_var2 = new_var3->unk8;
+
+    D_801375CC[0] = new_var3->unk0;
+    D_801375CC[2] = temp_a1;
+    func_800FAF44(new_var2, temp_a1);
+    func_800FB004();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB160);
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC == 0) {
+    if (D_801375CC[0] == 0) {
         if (arg0 == 0) {
             return true;
         }
