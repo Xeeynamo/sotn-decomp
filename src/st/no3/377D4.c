@@ -397,13 +397,13 @@ s32 func_801C3FB4(Unkstruct5* arg0) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - arg0->unk2;
-    diff = ABS_ALT(diff);
+    diff = ABS(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
         diff = PLAYER.posY.i.hi - arg0->unk6;
-        diff = ABS_ALT(diff);
+        diff = ABS(diff);
         diff = diff < 33;
     }
 
