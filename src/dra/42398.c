@@ -1380,7 +1380,20 @@ void func_800EDAE4(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB08);
+s32* func_800EDB08(Unkstruct_800EDB08* arg0) {
+    Unkstruct_800EDB08* ptr = &D_800974AC;
+    s32 i;
+
+    for (i = 0; i < 16; i++, ptr++) {
+        if (ptr->unk0 == 0) {
+            ptr->unk0 = 1;
+            arg0->unk7 = 7;
+            arg0->unk10 = ptr;
+            return ptr;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB58);
 
