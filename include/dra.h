@@ -112,7 +112,7 @@ typedef struct Entity {
     /* 0x70 */ s32 unk70;
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
-    /* 0x7C */ unkUnion3 unk7C; // posX
+    /* 0x7C */ Multi16 unk7C; // posX
     union {
         /* 0x7E */ u16 modeU16;
         struct {
@@ -132,7 +132,7 @@ typedef struct Entity {
             /* 0x81 */ u8 unk1;
         } modeS8;
     } unk80; // size = 0x4
-    /* 0x84 */ UnkUnion1 unk84;
+    /* 0x84 */ Multi unk84;
     /* 0x88 */ s8 unk88;
     /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 unk8A;
@@ -176,7 +176,7 @@ typedef struct Entity {
 typedef struct {
     /* 0x00 */ u16 animationSet;
     /* 0x02 */ u16 zPriority;
-    /* 0x04 */ UnkUnion2 unk4;
+    /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 unk8;
     /* 0x09 */ u8 unk9;
@@ -743,8 +743,8 @@ extern u8 D_80073484;   // PLAYER.unkAC
 
 extern s16 D_800734EA; // entity->animationFrame
 extern s32 D_800734F8; // entity->firstPolygonIndex
-extern s8 D_80073510;  // entity->unk7C.modeU8.unk0
-extern s8 D_80073511;  // entity->unk7C.modeU8.unk1
+extern s8 D_80073510;  // entity->unk7C.U8.unk0
+extern s8 D_80073511;  // entity->unk7C.U8.unk1
 extern s8 D_80073512;  // entity->unk7E
 extern s8 D_80073513;  // entity->unk7F
 

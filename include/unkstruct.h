@@ -21,35 +21,16 @@ typedef union {
     } U16;
 } Multi;
 
-typedef union { // Big assumption here...
-    s32 value;  // size = 0x4
-    struct {
-        s16 low;
-        s16 high;
-    } Data; // size = 0x4
-    struct {
-        u8 unk0;
-        u8 unk1;
-        s16 unk2;
-    } Data1; // size = 0x4
-
-} UnkUnion1; // side = 0x4
-
 typedef union {
-    s16 data;
+    s16 s;
+    u16 u;
     struct {
-        u8 unk0;
-        u8 unk1;
-    } data1;
-} UnkUnion2; // size = 0x2
-
-typedef union {
-    s16 modeS16;
+        s8 unk0, unk1;
+    } S8;
     struct {
-        u8 unk0;
-        u8 unk1;
-    } modeU8;
-} unkUnion3;
+        u8 unk0, unk1;
+    } U8;
+} Multi16;
 
 typedef struct {
     /* 0x0 */ char pad0[0xA];

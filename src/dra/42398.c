@@ -3926,7 +3926,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
     s32 i;
 
     if (arg0 != 0) {
-        g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk1 = 1;
+        g_EntityArray[UNK_ENTITY_1].unk7C.U8.unk1 = 1;
         g_EntityArray[UNK_ENTITY_3].animationFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animationFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animationFrame = 0;
@@ -3938,7 +3938,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    g_EntityArray[UNK_ENTITY_1].unk7C.modeU8.unk0 = 1;
+    g_EntityArray[UNK_ENTITY_1].unk7C.U8.unk0 = 1;
     g_EntityArray[UNK_ENTITY_1].unk7E.modeU8.unk0 = 10;
 
     if (arg1 != 0) {
@@ -3959,8 +3959,8 @@ void func_8010E0A8(void) {
 void func_8010E0B8(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
-    entity->unk7C.modeU8.unk1 = 0;
-    entity->unk7C.modeU8.unk0 = 0;
+    entity->unk7C.U8.unk1 = 0;
+    entity->unk7C.U8.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
@@ -5051,7 +5051,7 @@ void func_801279FC(Entity* entity) {
         firstPolygonIndex = func_800EDC80(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
-            entity->unk7C.modeS16 = 0x16;
+            entity->unk7C.s = 0x16;
             entity->unk7E.modeU16 = 0x1A;
             poly = &D_80086FEC[entity->firstPolygonIndex];
             poly->u2 = 0x40;
@@ -5086,9 +5086,9 @@ void func_801279FC(Entity* entity) {
         return;
 
     case 1:
-        entity->unk7C.modeS16 += 2;
+        entity->unk7C.s += 2;
         entity->unk7E.modeU16 += 2;
-        if (entity->unk7C.modeS16 >= 0x39) {
+        if (entity->unk7C.s >= 0x39) {
             func_80106590(entity);
             return;
         }
@@ -5099,16 +5099,16 @@ void func_801279FC(Entity* entity) {
     }
 
     poly = &D_80086FEC[entity->firstPolygonIndex];
-    poly->x0 = entity->posX.i.hi - entity->unk7C.modeS16;
+    poly->x0 = entity->posX.i.hi - entity->unk7C.s;
     poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
-    poly->x1 = entity->posX.i.hi + entity->unk7C.modeS16;
+    poly->x1 = entity->posX.i.hi + entity->unk7C.s;
     poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
-    poly->x2 = entity->posX.i.hi - entity->unk7C.modeS16;
+    poly->x2 = entity->posX.i.hi - entity->unk7C.s;
     poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
-    poly->x3 = entity->posX.i.hi + entity->unk7C.modeS16;
+    poly->x3 = entity->posX.i.hi + entity->unk7C.s;
     poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
 
-    if (entity->unk7C.modeS16 >= 0x29) {
+    if (entity->unk7C.s >= 0x29) {
         poly->r3 += 0xF4;
         poly->g3 += 0xF4;
         poly->b3 += 0xFA;
@@ -5161,7 +5161,7 @@ void func_80127CC8(Entity* entity) {
         break;
 
     case ENTITY_STEP_1:
-        if (entity->unk7C.modeS16++ >= 0xE) {
+        if (entity->unk7C.s++ >= 0xE) {
             func_80106590(entity);
             return;
         }
@@ -5185,8 +5185,7 @@ void func_80127CC8(Entity* entity) {
 }
 
 void func_80127EAC(s16 arg0) {
-    g_CurrentEntity->unk7C.modeS16 =
-        (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+    g_CurrentEntity->unk7C.s = (arg0 * 2) - g_CurrentEntity->unk7C.s;
     if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->unk80.modeS16.unk0++;
         g_CurrentEntity->unk80.modeS16.unk2++;
@@ -5195,8 +5194,7 @@ void func_80127EAC(s16 arg0) {
 
 void func_80127EF0(s16 arg0) {
     if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->unk7C.modeS16 =
-            (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+        g_CurrentEntity->unk7C.s = (arg0 * 2) - g_CurrentEntity->unk7C.s;
         g_CurrentEntity->unk80.modeS16.unk0++;
         g_CurrentEntity->unk80.modeS16.unk2++;
     }
@@ -5274,7 +5272,7 @@ void func_8012B78C(Entity* entity) {
         break;
 
     case ENTITY_STEP_1:
-        if (++entity->unk7C.modeS16 > 5) {
+        if (++entity->unk7C.s > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;

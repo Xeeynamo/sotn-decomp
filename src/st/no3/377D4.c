@@ -39,8 +39,8 @@ void func_801B77D4(Entity* arg0) {
         InitializeEntity(D_80180B00);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->facing = temp_s0->unk4.data1.unk0;
-        arg0->unk5A = temp_s0->unk4.data1.unk1;
+        arg0->facing = temp_s0->unk4.U8.unk0;
+        arg0->unk5A = temp_s0->unk4.U8.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
         arg0->blendMode = temp_s0->blendMode;
@@ -787,7 +787,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF438);
 
 void func_801CF58C(Entity* arg0) {
     arg0->accelerationX = 0;
-    arg0->unk84.Data.high = 0x100;
+    arg0->unk84.S16.unk2 = 0x100;
     func_801C58A4(6);
     g_pfnPlaySfx(0x783);
     arg0->unk80.modeS16.unk0 = 0x20;
