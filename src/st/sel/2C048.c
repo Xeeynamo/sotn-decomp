@@ -1007,7 +1007,7 @@ void func_801B4D78(void) {
         e->animationFrame = 1;
         e->palette = 0x200;
         e->unk80.modeS32 = 0x5C0000;
-        e->posY.Data.high = 0xD0;
+        e->posY.i.hi = 0xD0;
         e->zPriority = 0x80;
         e->step = 1;
     }
@@ -1026,7 +1026,7 @@ void func_801B5350(void) {
         entity->animationSet = 1;
         entity->animationFrame = 0x8E;
         entity->unk80.modeS32 = 0x800000;
-        entity->posY.Data.high = 0x9F;
+        entity->posY.i.hi = 0x9F;
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
         entity->palette = 0x8100;
@@ -1059,7 +1059,7 @@ void func_801B54C8(void) {
         e->facing = 1;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
-        e->posY.Data.high = 0x9E;
+        e->posY.i.hi = 0x9E;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->step = 1;
@@ -1073,7 +1073,7 @@ void func_801B5548(void) {
         e->animationFrame = 7;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
-        e->posY.Data.high = 0x9E;
+        e->posY.i.hi = 0x9E;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->facing = 0;

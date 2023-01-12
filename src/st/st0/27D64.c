@@ -44,12 +44,12 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7E2C);
 bool func_801A7E2C(Entity* entity) {
     s16 distance;
 
-    distance = PLAYER.posX.Data.high - entity->posX.Data.high;
+    distance = PLAYER.posX.i.hi - entity->posX.i.hi;
     if (distance < 0) {
         distance = -distance;
     }
     if (entity->hitboxWidth >= distance) {
-        if ((s16)(PLAYER.posY.Data.high - entity->posY.Data.high) < 0) {
+        if ((s16)(PLAYER.posY.i.hi - entity->posY.i.hi) < 0) {
             return true;
         }
     }
@@ -176,8 +176,8 @@ void EntitySecretStairsEmitter(Entity* entity) {
         }
         break;
     case 2:
-        entity->posY.value -= 0x4000;
-        if (entity->posY.Data.high < -16) {
+        entity->posY.val -= 0x4000;
+        if (entity->posY.i.hi < -16) {
             entity->step++;
         }
         break;
@@ -218,8 +218,8 @@ void EntityDraculaBody(Entity* entity) {
         break;
     case 1:
         entity->facing = entity[-1].facing;
-        entity->posX.Data.high = entity[-1].posX.Data.high;
-        entity->posY.Data.high = entity[-1].posY.Data.high;
+        entity->posX.i.hi = entity[-1].posX.i.hi;
+        entity->posY.i.hi = entity[-1].posY.i.hi;
         entity->unk3C = entity[-1].unk3C & 0xFFFD;
         break;
     case 2:
@@ -331,10 +331,10 @@ void EntityDraculaMeteorball(Entity* entity) {
                 func_801B3BDC(0x1E, entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
                 randomPosXYIndex = (Random() & 3) * 2;
-                newEntity->posX.Data.high =
-                    newEntity->posX.Data.high + D_80180A60[randomPosXYIndex];
-                newEntity->posY.Data.high =
-                    newEntity->posY.Data.high + D_80180A62[randomPosXYIndex];
+                newEntity->posX.i.hi =
+                    newEntity->posX.i.hi + D_80180A60[randomPosXYIndex];
+                newEntity->posY.i.hi =
+                    newEntity->posY.i.hi + D_80180A62[randomPosXYIndex];
             }
         }
         break;
@@ -387,9 +387,9 @@ void EntityDraculaGlass(Entity* entity) {
         MoveEntity();
         entity->unk1E += 0x20;
         entity->accelerationY += 0x2000;
-        if (entity->posY.Data.high >= 205) {
+        if (entity->posY.i.hi >= 205) {
             g_pfnPlaySfx(NA_SE_BREAK_GLASS);
-            entity->posY.Data.high = 204;
+            entity->posY.i.hi = 204;
             func_801B5794(2);
         }
         break;
@@ -411,7 +411,7 @@ void EntityDraculaGlass(Entity* entity) {
     case 3:
         MoveEntity();
         entity->accelerationY += 0x2000;
-        if (entity->posY.Data.high >= 205) {
+        if (entity->posY.i.hi >= 205) {
             DestroyEntity(entity);
         }
         break;
@@ -421,10 +421,10 @@ void EntityDraculaGlass(Entity* entity) {
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
     Entity* entity = g_CurrentEntity;
-    s16 temp_v1 = entity->posY.Data.high + arg0;
+    s16 temp_v1 = entity->posY.i.hi + arg0;
 
     if (temp_v1 >= unk) {
-        entity->posY.Data.high = unk - temp_v1 + entity->posY.Data.high;
+        entity->posY.i.hi = unk - temp_v1 + entity->posY.i.hi;
         return true;
     } else {
         return false;
@@ -512,8 +512,8 @@ void UpdateStageEntities(void) {
         if (entity->step) {
             s32 unk34 = entity->unk34;
             if (unk34 < 0) {
-                u16 posX = entity->posX.Data.high;
-                u16 posY = entity->posY.Data.high;
+                u16 posX = entity->posX.i.hi;
+                u16 posY = entity->posY.i.hi;
                 if (unk34 & 0x40000000) {
                     if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
                         DestroyEntity(entity);
@@ -528,7 +528,7 @@ void UpdateStageEntities(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.Data.high + D_80073092;
+                s16 posY = entity->posY.i.hi + D_80073092;
                 s16 test = (g_CurrentRoomVSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
@@ -547,8 +547,8 @@ void UpdateStageEntities(void) {
             }
 
             if (!(unk34 & 0x20000000) || (unk34 & 0x10000000) ||
-                ((u16)(entity->posX.Data.high + 64) <= 384) &&
-                    ((u16)(entity->posY.Data.high + 64) <= 352)) {
+                ((u16)(entity->posX.i.hi + 64) <= 384) &&
+                    ((u16)(entity->posY.i.hi + 64) <= 352)) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
                         (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
@@ -607,20 +607,20 @@ void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
-    entity->posX.Data.high = source->posX.Data.high;
-    entity->posY.Data.high = source->posY.Data.high;
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
 }
 
 s32 func_801B3C58(Unkstruct5* arg0) {
     s16 diff;
 
-    diff = PLAYER.posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.i.hi - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.i.hi - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -671,7 +671,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4AF0);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s16 func_801B4C08(void) {
-    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -683,7 +683,7 @@ s16 func_801B4C08(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_801B4C44(void) {
-    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -692,17 +692,17 @@ s32 func_801B4C44(void) {
 }
 
 s16 func_801B4C78(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
-    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
+    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
         var_a0 |= 2;
     }
     return var_a0;
 }
 
 void MoveEntity(void) {
-    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
-    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 }
 
 void FallEntity(void) {
@@ -765,14 +765,14 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5600);
 u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
 
 u16 func_801B56BC(Entity* a, Entity* b) {
-    s32 diffX = b->posX.Data.high - a->posX.Data.high;
-    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    s32 diffX = b->posX.i.hi - a->posX.i.hi;
+    s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
 u16 func_801B56F4(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
+    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
@@ -883,9 +883,9 @@ void func_801B6B60(Entity* entity) {
         entity->subId = entity->subId & 0xF;
         entity->accelerationY = D_80181D7C[entity->subId];
     } else {
-        s32 posY = entity->posY.value;
+        s32 posY = entity->posY.val;
         posY += entity->accelerationY;
-        entity->posY.value = posY;
+        entity->posY.val = posY;
         if (!AnimateEntity(D_80181E28 + entity->subId, entity)) {
             DestroyEntity(entity);
         }
@@ -917,17 +917,17 @@ bool _peek_event(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
-    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
-    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 
     if (g_CurrentEntity->accelerationY >= 0) {
-        s16 posX = g_CurrentEntity->posX.Data.high;
-        s16 posY = g_CurrentEntity->posY.Data.high;
+        s16 posX = g_CurrentEntity->posX.i.hi;
+        s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
-            g_CurrentEntity->posY.Data.high += a.sp28;
+            g_CurrentEntity->posY.i.hi += a.sp28;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
@@ -1017,7 +1017,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
             entity->blendMode = 0x30;
         }
     case 1:
-        entity->posY.value -= 0x10000;
+        entity->posY.val -= 0x10000;
         if (AnimateEntity(D_801824CC, entity) == 0) {
             DestroyEntity(entity);
         }

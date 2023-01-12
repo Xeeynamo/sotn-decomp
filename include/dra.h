@@ -8,6 +8,14 @@ struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 typedef void (*UnkFunctionUpdate1)(struct Entity*, u32, struct Entity*);
 
+typedef union {
+    s32 val;
+    struct {
+        s16 lo;
+        s16 hi;
+    } i;
+} f32;
+
 typedef struct {
     unsigned char width;
     unsigned char height;
@@ -50,45 +58,9 @@ typedef struct {
     /* 0x6 */ s16 repeat;
 } Pad; // size = 0x8
 
-typedef union { // Big assumption here...
-    s32 value;  // size = 0x4
-    struct {
-        s16 low;
-        s16 high;
-    } Data; // size = 0x4
-    struct {
-        u8 unk0;
-        u8 unk1;
-        s16 unk2;
-    } Data1; // size = 0x4
-
-} UnkUnion1; // side = 0x4
-
-typedef union {
-    s16 data;
-    struct {
-        u8 unk0;
-        u8 unk1;
-    } data1;
-} UnkUnion2; // size = 0x2
-
-typedef union {
-    s16 modeS16;
-    struct {
-        u8 unk0;
-        u8 unk1;
-    } modeU8;
-} unkUnion3;
-
-typedef union {
-    byte typeByte;
-    short typeShort;
-    int typeInt;
-} MultiType;
-
 typedef struct Entity {
-    /* 0x00 */ UnkUnion1 posX;
-    /* 0x04 */ UnkUnion1 posY;
+    /* 0x00 */ f32 posX;
+    /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
     /* 0x10 */ s16 unk10;
@@ -213,90 +185,6 @@ typedef struct {
     /* 0x0C */ u32 unkC;
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
-
-typedef struct unkStruct3 {
-    /* 0x00 */ struct unkStruct3* unk0;
-    /* 0x04 */ s8 unk4;
-    /* 0x05 */ char pad5[0x1];
-    /* 0x06 */ s8 unk6;
-    /* 0x07 */ s8 unk7;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ s16 unkA;
-    /* 0x0C */ s16 unkC;
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ UnkUnion2 unk10;
-    /* 0x12 */ UnkUnion2 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ UnkUnion2 unk1C;
-    /* 0x1E */ UnkUnion2 unk1E;
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ s16 unk22;
-    /* 0x24 */ s8 unk24;
-    /* 0x25 */ s8 unk25;
-    /* 0x26 */ char pad26[0x2];
-    /* 0x28 */ s8 unk28;
-    /* 0x29 */ char pad[0x1];
-    /* 0x2A */ u8 unk2A;
-    /* 0x2B */ u8 unk2B;
-    /* 0x2C */ u16 unk2C;
-    /* 0x2E */ char pad2E[4];
-    /* 0x32 */ u16 unk32;
-} unkStruct3;
-
-typedef struct {
-    /* 0x0 */ char pad0[0xA];
-    /* 0xA */ s16 unkA;
-    /* 0xC */ s16 unkC;
-    /* 0xE */ s16 unkE;
-} Unkstruct4; // size = 0x10
-
-typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2; // compared to Entity posX
-    /* 0x04 */ u16 unk4;
-    /* 0x06 */ u16 unk6; // compared to Entity posY
-    /* 0x08 */ u16 unk8;
-    /* 0x0A */ s16 unkA;
-    /* 0x0C */ u16 unkC;
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ u8 hitboxWidth;
-    /* 0x23 */ u8 hitboxHeight;
-    /* 0x24 */ s32 unk24;
-} Unkstruct5; // size = 0x28
-
-typedef struct {
-    /* 0x0 */ s16 x;
-    /* 0x2 */ s16 y;
-} Unkstruct6; // size = 0x4
-
-typedef struct {
-    /* 0x0 */ void* addr1;
-    /* 0x4 */ void* addr2;
-    /* 0x8 */ u16 unk8;
-    /* 0xA */ u16 unkA;
-    /* 0xC */ u16 unkC;
-    /* 0xE */ u16 unkE;
-} Unkstruct8; // size = 0x10
-
-typedef struct {
-    /* 0x0 */ u16 programId;
-    /* 0x2 */ u16 unk2;
-    /* 0x4 */ u16 unk4;
-    /* 0x6 */ u16 unk6;
-    /* 0x8 */ u16 unk8;
-} Unkstruct10; // size = 0xA
 
 typedef enum {
     ENTITY_STEP_0,
@@ -827,8 +715,8 @@ extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;       // PLAYER.posX.Data.high
-extern s16 D_800733DE;       // PLAYER.posY.Data.high
+extern s16 D_800733DA;       // PLAYER.posX.i.hi
+extern s16 D_800733DE;       // PLAYER.posY.i.hi
 extern s32 D_800733E0;       // PLAYER.accelerationX
 extern s32 D_800733E4;       // PLAYER.accelerationY
 extern s32 D_800733E8;       // PLAYER.unk10

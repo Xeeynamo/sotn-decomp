@@ -556,8 +556,8 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
         func_80156C60(entity);
         entity->objectId = ENTITY_BREAKABLE;
         entity->unk8C.entityPtr = srcEntity;
-        entity->posX.value = srcEntity->posX.value;
-        entity->posY.value = srcEntity->posY.value;
+        entity->posX.val = srcEntity->posX.val;
+        entity->posY.val = srcEntity->posY.val;
         entity->facing = srcEntity->facing;
         entity->zPriority = srcEntity->zPriority;
         entity->subId = arg1 & 0xFFF;
@@ -580,8 +580,8 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160C38);
 #else
 void func_80160C38(Entity* entity) {
     if (PLAYER.step == ENTITY_STEP_17) {
-        entity->posX.Data.high = PLAYER.posX.Data.high;
-        entity->posY.Data.high = PLAYER.posY.Data.high;
+        entity->posX.i.hi = PLAYER.posX.i.hi;
+        entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->facing = PLAYER.facing;
         if (entity->step == ENTITY_STEP_0) {
             entity->unk34 = 0x04060000;
@@ -838,10 +838,10 @@ void func_80172AE8(Entity* entity) {
             poly->v0 = 0;
             poly->v3 = 0x10;
             poly->v2 = 0x10;
-            poly->x0 = poly->x2 = entity->posX.Data.high - 8;
-            poly->x1 = poly->x3 = entity->posX.Data.high + 8;
-            poly->y0 = poly->y1 = entity->posY.Data.high - 8;
-            poly->y2 = poly->y3 = entity->posY.Data.high + 8;
+            poly->x0 = poly->x2 = entity->posX.i.hi - 8;
+            poly->x1 = poly->x3 = entity->posX.i.hi + 8;
+            poly->y0 = poly->y1 = entity->posY.i.hi - 8;
+            poly->y2 = poly->y3 = entity->posY.i.hi + 8;
             poly->pad2 = entity->zPriority;
             poly->pad3 = 0x115;
             entity->unk7E.modeU16 = 0x60U;

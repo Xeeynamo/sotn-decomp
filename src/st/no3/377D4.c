@@ -233,8 +233,8 @@ void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    entity->posX.Data.high = initDesc->posX - D_8007308E;
-    entity->posY.Data.high = initDesc->posY - D_80073092;
+    entity->posX.i.hi = initDesc->posX - D_8007308E;
+    entity->posY.i.hi = initDesc->posY - D_80073092;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
@@ -381,28 +381,28 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
-    entity->posX.Data.high = g_CurrentEntity->posX.Data.high;
-    entity->posY.Data.high = g_CurrentEntity->posY.Data.high;
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
 void func_801C3F38(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
-    entity->posX.Data.high = source->posX.Data.high;
-    entity->posY.Data.high = source->posY.Data.high;
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
 }
 
 s32 func_801C3FB4(Unkstruct5* arg0) {
     s16 diff;
 
-    diff = PLAYER.posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.i.hi - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.i.hi - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -453,7 +453,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C4E4C);
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s16 func_801C4F64(void) {
-    s16 xDistance = g_CurrentEntity->posX.Data.high - PLAYER.posX.Data.high;
+    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -465,7 +465,7 @@ s16 func_801C4F64(void) {
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_801C4FA0(void) {
-    s32 yDistance = g_CurrentEntity->posY.Data.high - PLAYER.posY.Data.high;
+    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -474,17 +474,17 @@ s32 func_801C4FA0(void) {
 }
 
 s16 func_801C4FD4(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
-    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
+    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
         var_a0 |= 2;
     }
     return var_a0;
 }
 
 void MoveEntity(void) {
-    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
-    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 }
 
 void FallEntity(void) {
@@ -521,14 +521,14 @@ u8 func_801C55E8(s16 arg0, s16 arg1) {
 }
 
 u8 func_801C5620(Entity* arg0, Entity* arg1) {
-    s16 a = arg1->posX.Data.high - arg0->posX.Data.high;
-    s16 b = arg1->posY.Data.high - arg0->posY.Data.high;
+    s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
+    s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
     return func_801C55E8(a, b);
 }
 
 u8 func_801C5668(s32 arg0, s32 arg1) {
-    s16 a = (arg0 - (u16)g_CurrentEntity->posX.Data.high);
-    s16 b = (arg1 - (u16)g_CurrentEntity->posY.Data.high);
+    s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
+    s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
     return func_801C55E8(a, b);
 }
 
@@ -540,8 +540,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
 u16 func_801C5794(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 u16 func_801C57C4(Entity* a, Entity* b) {
-    s32 diffX = b->posX.Data.high - a->posX.Data.high;
-    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    s32 diffX = b->posX.i.hi - a->posX.i.hi;
+    s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
@@ -707,17 +707,17 @@ bool func_801C92B0(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
-    g_CurrentEntity->posX.value += g_CurrentEntity->accelerationX;
-    g_CurrentEntity->posY.value += g_CurrentEntity->accelerationY;
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 
     if (g_CurrentEntity->accelerationY >= 0) {
-        s16 posX = g_CurrentEntity->posX.Data.high;
-        s16 posY = g_CurrentEntity->posY.Data.high;
+        s16 posX = g_CurrentEntity->posX.i.hi;
+        s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
         D_8003C7BC(posX, posY, &a, 0);
         if (a.sp10 & 1) {
-            g_CurrentEntity->posY.Data.high += a.sp28;
+            g_CurrentEntity->posY.i.hi += a.sp28;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
