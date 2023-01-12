@@ -1380,7 +1380,21 @@ void func_800EDAE4(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB08);
+struct Unk* func_800EDB08(POLY_GT4* poly) {
+    DR_ENV* ptr = &D_800974AC;
+    s32 i = 0;
+
+    for (; i < 0x10; i++, ptr++) {
+        if (ptr->tag == 0) {
+            ptr->tag = 1;
+            poly->code = 7;
+            *(u32*)&poly->r1 = ptr; // similar issue as FreePolygons
+            return ptr;
+        }
+    }
+
+    return NULL;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB58);
 
