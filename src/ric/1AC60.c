@@ -318,8 +318,8 @@ void func_8015CC28(void) {
 
     entity->unk7E.modeU8.unk1 = 0;
     entity->unk7E.modeU8.unk0 = 0;
-    entity->unk7C.modeU8.unk1 = 0;
-    entity->unk7C.modeU8.unk0 = 0;
+    entity->unk7C.U8.unk1 = 0;
+    entity->unk7C.U8.unk0 = 0;
 }
 
 void func_8015CC50() { func_8015C908(0xF0); }
@@ -591,10 +591,10 @@ void func_80160C38(Entity* entity) {
             entity->hitboxWidth = 9;
             entity->unkB0 = 0x12;
             func_8015FAB8(entity);
-            entity->unk7C.modeS16 = entity->unk3C;
+            entity->unk7C.s = entity->unk3C;
             entity->step++;
         }
-        entity->unk3C = entity->unk7C.modeS16;
+        entity->unk3C = entity->unk7C.s;
         if (PLAYER.animationFrameIndex < 2) {
             entity->unk3C = 0;
         }
@@ -702,8 +702,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016A974);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    g_CurrentEntity->unk7C.modeS16 =
-        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->unk7C.modeS16;
+    g_CurrentEntity->unk7C.s = (arg0 << 0x10 >> 0xF) - g_CurrentEntity->unk7C.s;
     if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->unk80.modeS16.unk0++;
         g_CurrentEntity->unk80.modeS16.unk2++;
@@ -712,8 +711,7 @@ void func_8016B8E8(s32 arg0) {
 
 void func_8016B92C(s16 arg0) {
     if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->unk7C.modeS16 =
-            (arg0 * 2) - g_CurrentEntity->unk7C.modeS16;
+        g_CurrentEntity->unk7C.s = (arg0 * 2) - g_CurrentEntity->unk7C.s;
         g_CurrentEntity->unk80.modeS16.unk0++;
         g_CurrentEntity->unk80.modeS16.unk2++;
     }
@@ -763,7 +761,7 @@ void func_8016D920(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.modeS16 >= 4) {
+        if (++entity->unk7C.s >= 4) {
             func_80156C60(entity);
         }
         break;
@@ -796,7 +794,7 @@ void func_80170548(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.modeS16 >= 5) {
+        if (++entity->unk7C.s >= 5) {
             func_80156C60(entity);
         }
         break;
@@ -853,7 +851,7 @@ void func_80172AE8(Entity* entity) {
         break;
 
     case ENTITY_STEP_1:
-        if (++entity->unk7C.modeS16 > 5) {
+        if (++entity->unk7C.s > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;

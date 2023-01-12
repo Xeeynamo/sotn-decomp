@@ -25,8 +25,8 @@ void func_801B246C(Entity* arg0) {
         InitializeEntity(D_80180A90);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->facing = temp_s0->unk4.data1.unk0;
-        arg0->unk5A = temp_s0->unk4.data1.unk1;
+        arg0->facing = temp_s0->unk4.U8.unk0;
+        arg0->unk5A = temp_s0->unk4.U8.unk1;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
         arg0->blendMode = temp_s0->blendMode;
@@ -100,16 +100,16 @@ void func_801B2830(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_80180A60);
-        entity->unk7C.modeU8.unk0 = 0x10;
-        entity->unk7C.modeU8.unk1 = 8;
+        entity->unk7C.U8.unk0 = 0x10;
+        entity->unk7C.U8.unk1 = 8;
         entity->unk7E = 0x38;
 
     case 1:
-        D_8003CB25 = entity->unk7C.modeU8.unk0;
-        D_8003CB26 = entity->unk7C.modeU8.unk1;
+        D_8003CB25 = entity->unk7C.U8.unk0;
+        D_8003CB26 = entity->unk7C.U8.unk1;
         D_8003CB27 = entity->unk7E.modeU8.unk0;
-        D_80054319 = entity->unk7C.modeU8.unk0;
-        D_8005431A = entity->unk7C.modeU8.unk1;
+        D_80054319 = entity->unk7C.U8.unk0;
+        D_8005431A = entity->unk7C.U8.unk1;
         D_8005431B = entity->unk7E.modeU8.unk0;
     }
 }
@@ -569,7 +569,7 @@ void EntityRoomForeground(Entity* entity) {
         InitializeEntity(D_80180A90);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.data;
+        entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;

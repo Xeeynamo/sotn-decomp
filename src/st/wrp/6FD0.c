@@ -2506,7 +2506,7 @@ void func_80186FD0(Entity* arg0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
         arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4.data;
+        arg0->unk5A = objInit->unk4.s;
         arg0->palette = objInit->palette;
         arg0->unk19 = objInit->unk8;
         arg0->blendMode = objInit->blendMode;
@@ -2559,7 +2559,7 @@ void func_801870B0(Entity* entity) {
 
         if (entity->unk44 != 0) {
             ret = func_8018B970();
-            phi_v1 = entity->unk7C.modeS16;
+            phi_v1 = entity->unk7C.s;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;
             } else {
@@ -2575,8 +2575,8 @@ void func_801870B0(Entity* entity) {
         }
     } else {
         InitializeEntity(D_80180488);
-        entity->unk7C.modeS16 = D_80180530[temp_s1];
-        if (entity->unk7C.modeS16 != 0) {
+        entity->unk7C.s = D_80180530[temp_s1];
+        if (entity->unk7C.s != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
         } else {
@@ -2700,7 +2700,7 @@ void EntityWarpRoom(Entity* arg0) {
         temp_s5 = arg0->posY.i.hi; // must not be lhu but lh
         temp_s4 = arg0->posX.i.hi; // must not be lhu but lh
         arg0->firstPolygonIndex = temp_v0;
-        arg0->unk7C.modeS16 = var_s2;
+        arg0->unk7C.s = var_s2;
         temp_s7 = temp_s4;
         temp_s6 = temp_s5;
         arg0->unk34 |= 0x800000;
@@ -2945,7 +2945,7 @@ void EntityWarpRoom(Entity* arg0) {
     if (D_80193AAC >= 0x100) {
         D_80193AAC = 0xFF;
     }
-    var_s2_2 = arg0->unk7C.modeS16;
+    var_s2_2 = arg0->unk7C.s;
     D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
     for (i3 = 0; i3 < 0x10; i3++) {
         var_v0_2 = i3;
@@ -4114,9 +4114,9 @@ void func_8019055C(void) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
         if (entity != NULL) {
             func_8018A8D4(ENTITY_EXPLOSION, g_CurrentEntity, entity);
-            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
-            entity->unk84.Data1.unk0 = temp_s4;
+            entity->unk84.U8.unk0 = temp_s4;
         }
     }
 }
@@ -4146,7 +4146,7 @@ void EntityRoomForeground(Entity* entity) {
         InitializeEntity(D_80180494);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.data;
+        entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;

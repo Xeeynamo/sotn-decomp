@@ -708,7 +708,7 @@ void func_801C07FC(Entity* entity) {
         entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
 
     case ENTITY_STEP_1:
-        temp_v0 = entity->unk7C.modeU8.unk0++;
+        temp_v0 = entity->unk7C.U8.unk0++;
         if (temp_v0 >= 5) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -717,7 +717,7 @@ void func_801C07FC(Entity* entity) {
                 newEntity->pfnUpdate = func_801BEB80;
                 newEntity->subId = entity->subId;
             }
-            entity->unk7C.modeU8.unk0 = 0;
+            entity->unk7C.U8.unk0 = 0;
         }
 
         entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
@@ -911,9 +911,9 @@ void func_801C1848(void) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             func_801BBBC0(2, g_CurrentEntity, entity);
-            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
-            entity->unk84.Data1.unk0 = temp_s4;
+            entity->unk84.U8.unk0 = temp_s4;
         }
     }
 }
@@ -939,7 +939,7 @@ void EntityRoomForeground(Entity* entity) {
         InitializeEntity(D_80180C1C);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.data;
+        entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
@@ -970,15 +970,14 @@ void func_801C3708(void) {
         return;
     }
 
-    if (g_CurrentEntity->unk7C.modeU8.unk0 == 0) {
+    if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
         if (func_801BCBEC() < 0x40) {
             if (g_CurrentEntity->facing != (func_801BCC5C() & 1)) {
                 func_801BD52C(4);
             }
         }
     } else {
-        g_CurrentEntity->unk7C.modeU8.unk0 =
-            (s8)g_CurrentEntity->unk7C.modeU8.unk0 - 1;
+        g_CurrentEntity->unk7C.U8.unk0 = (s8)g_CurrentEntity->unk7C.U8.unk0 - 1;
     }
 }
 
@@ -1065,7 +1064,7 @@ void func_801C4D18(Entity* entity) {
             entity->accelerationX = var_v0;
         }
 
-        entity->unk7C.modeS16 = -0x40;
+        entity->unk7C.s = -0x40;
 
         if (entity->subId == 2) {
             entity->step++;
@@ -1075,7 +1074,7 @@ void func_801C4D18(Entity* entity) {
 
     case ENTITY_STEP_1:
         func_801C4CC0();
-        if ((u16)entity->unk7C.modeS16 < 0x20) {
+        if ((u16)entity->unk7C.s < 0x20) {
             if (entity->facing != 0) {
                 var_v0 = entity->accelerationX - 0x2000;
             } else {
@@ -1084,7 +1083,7 @@ void func_801C4D18(Entity* entity) {
             entity->accelerationX = var_v0;
         }
 
-        entity->unk7C.modeS16 += 1;
+        entity->unk7C.s += 1;
         MoveEntity();
         break;
 
@@ -1110,7 +1109,7 @@ void func_801C5F2C(Entity* arg0) {
     }
 
     if (!(func_801BD720(&D_801824C0, 3) & 2)) {
-        if ((--arg0->unk7C.modeU8.unk0) == 0) {
+        if ((--arg0->unk7C.U8.unk0) == 0) {
             func_801BD52C(4);
         }
     } else {
@@ -1222,8 +1221,8 @@ void func_801C7538(Entity* entity) {
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 4;
         entity->animationFrame = entity->subId;
-        entity->palette += entity->unk84.Data.high;
-        entity->accelerationX = entity->unk84.Data.low << 12;
+        entity->palette += entity->unk84.S16.unk2;
+        entity->accelerationX = entity->unk84.S16.unk0 << 12;
         entity->accelerationX += 0x8000 - (Random() << 8);
         entity->accelerationY -= (Random() & 0x1F) << 12;
         break;

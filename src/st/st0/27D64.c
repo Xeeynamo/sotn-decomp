@@ -26,7 +26,7 @@ void func_801A7D64(Entity* arg0) {
         InitializeEntity(D_801805BC);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk5A = temp_s0->unk4.data;
+        arg0->unk5A = temp_s0->unk4.s;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
         arg0->blendMode = temp_s0->blendMode;
@@ -969,7 +969,7 @@ void EntityRoomForeground(Entity* entity) {
         InitializeEntity(D_801805BC);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.data;
+        entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;

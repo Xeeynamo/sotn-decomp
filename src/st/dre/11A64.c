@@ -63,7 +63,7 @@ void func_80191A64(Entity* entity) {
         InitializeEntity(&D_801804AC);
         entity->animationSet = obj->animationSet;
         entity->zPriority = obj->zPriority;
-        entity->unk5A = obj->unk4.data;
+        entity->unk5A = obj->unk4.s;
         entity->palette = obj->palette;
         entity->unk19 = obj->unk8;
         entity->blendMode = obj->blendMode;
@@ -1105,9 +1105,9 @@ void func_8019F304(void) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             func_8019967C(2, g_CurrentEntity, entity);
-            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
-            entity->unk84.Data1.unk0 = temp_s4;
+            entity->unk84.U8.unk0 = temp_s4;
         }
     }
 }
@@ -1138,7 +1138,7 @@ void EntityRoomForeground(Entity* entity) {
         InitializeEntity(D_801804AC);
         entity->animationSet = objInit->animationSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.data;
+        entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;

@@ -187,7 +187,7 @@ void func_8018E5AC(Entity* arg0) {
         InitializeEntity(D_80180544);
         arg0->animationSet = temp_s0->animationSet;
         arg0->zPriority = temp_s0->zPriority;
-        arg0->unk5A = temp_s0->unk4.data;
+        arg0->unk5A = temp_s0->unk4.s;
         arg0->palette = temp_s0->palette;
         arg0->unk19 = temp_s0->unk8;
         arg0->blendMode = temp_s0->blendMode;
@@ -1048,7 +1048,7 @@ void func_80194314(Entity* entity) {
     }
 
     InitializeEntity(g_eBreakableInit);
-    entity->animationFrame = entity->unk7C.modeU8.unk0;
+    entity->animationFrame = entity->unk7C.U8.unk0;
     entity->accelerationX = D_80180ED8[entity->unk80.modeS8.unk0 * 2];
     entity->accelerationY = D_80180EDA[entity->unk80.modeS8.unk0 * 2];
 
@@ -1298,9 +1298,9 @@ void func_80196934(void) {
         entity = AllocEntity(D_8007D308, &D_8007D308[MaxEntityCount]);
         if (entity != NULL) {
             func_8019102C(2, D_8006C26C, entity);
-            entity->unk84.Data1.unk1 = 6 - i;
+            entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
-            entity->unk84.Data1.unk0 = temp_s4;
+            entity->unk84.U8.unk0 = temp_s4;
         }
     }
 }
@@ -1327,7 +1327,7 @@ void EntityRoomForeground(Entity* entity) {
         InitializeEntity(D_80180544);
         entity->animationSet = obj->animationSet;
         entity->zPriority = obj->zPriority;
-        entity->unk5A = obj->unk4.data;
+        entity->unk5A = obj->unk4.s;
         entity->palette = obj->palette;
         entity->unk19 = obj->unk8;
         entity->blendMode = obj->blendMode;
