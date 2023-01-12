@@ -4645,7 +4645,18 @@ void func_80118670(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801186EC);
+void func_801186EC(void) {
+    if (PLAYER.unk2E == 0) {
+        if (g_EntityArray[UNK_ENTITY_10].objectId == 0) {
+            D_80138008 = 0x10;
+            func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
+            PLAYER.unk2E++;
+        }
+    } else if (--D_80138008 == 0) {
+        PLAYER.palette = 0x8100;
+        func_8010E570(0);
+    }
+}
 
 Entity* func_8011879C(s16 entityIndex, s16 arg1) {
     Entity* entity = &g_EntityArray[entityIndex];
