@@ -268,8 +268,8 @@ void UpdateStageEntities(void) {
         if (entity->step) {
             s32 unk34 = entity->unk34;
             if (unk34 < 0) {
-                u16 posX = entity->posX.Data.high;
-                u16 posY = entity->posY.Data.high;
+                u16 posX = entity->posX.i.hi;
+                u16 posY = entity->posY.i.hi;
                 if (unk34 & 0x40000000) {
                     if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
                         DestroyEntity(entity);
@@ -284,7 +284,7 @@ void UpdateStageEntities(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.Data.high + D_80072B42;
+                s16 posY = entity->posY.i.hi + D_80072B42;
                 s16 test = (D_80072B58 * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
@@ -303,8 +303,8 @@ void UpdateStageEntities(void) {
             }
 
             if (!(unk34 & 0x20000000) || (unk34 & 0x10000000) ||
-                ((u16)(entity->posX.Data.high + 64) <= 384) &&
-                    ((u16)(entity->posY.Data.high + 64) <= 352)) {
+                ((u16)(entity->posX.i.hi + 64) <= 384) &&
+                    ((u16)(entity->posY.i.hi + 64) <= 352)) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_80096EAC || unk34 & 0x2100 ||
                         (unk34 & 0x200 && !(g_pfnLoadObjLayout & 3))) {
@@ -337,8 +337,8 @@ void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     do { //! FAKE https://decomp.me/scratch/zysYC
         entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     } while (0);
-    entity->posX.Data.high = initDesc->posX - D_80072B3E;
-    entity->posY.Data.high = initDesc->posY - D_80072B42;
+    entity->posX.i.hi = initDesc->posX - D_80072B3E;
+    entity->posY.i.hi = initDesc->posY - D_80072B42;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
@@ -532,16 +532,16 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
-    entity->posX.Data.high = D_8006C26C->posX.Data.high;
-    entity->posY.Data.high = D_8006C26C->posY.Data.high;
+    entity->posX.i.hi = D_8006C26C->posX.i.hi;
+    entity->posY.i.hi = D_8006C26C->posY.i.hi;
 }
 
 void func_8019102C(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->objectId = objectId;
     ent2->pfnUpdate = PfnEntityUpdates[objectId];
-    ent2->posX.Data.high = (s16)ent1->posX.Data.high;
-    ent2->posY.Data.high = (s16)ent1->posY.Data.high;
+    ent2->posX.i.hi = (s16)ent1->posX.i.hi;
+    ent2->posY.i.hi = (s16)ent1->posY.i.hi;
 }
 
 s32 func_801910A8(Unkstruct5* arg0) {
@@ -601,7 +601,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80191F24);
 
 s32 func_8019203C(void) {
-    s16 value = D_8006C26C->posX.Data.high - D_80072E8A;
+    s16 value = D_8006C26C->posX.i.hi - D_80072E8A;
 
     if (value < 0) {
         value = -value;
@@ -610,7 +610,7 @@ s32 func_8019203C(void) {
 }
 
 s32 func_80192078(void) {
-    s32 value = D_8006C26C->posY.Data.high - D_80072E8E;
+    s32 value = D_8006C26C->posY.i.hi - D_80072E8E;
 
     if (value < 0) {
         value = -value;
@@ -619,17 +619,17 @@ s32 func_80192078(void) {
 }
 
 s16 func_801920AC(void) {
-    s16 var_a0 = D_8006C26C->posX.Data.high > D_80072E8A;
+    s16 var_a0 = D_8006C26C->posX.i.hi > D_80072E8A;
 
-    if (D_8006C26C->posY.Data.high > D_80072E8E) {
+    if (D_8006C26C->posY.i.hi > D_80072E8E) {
         var_a0 |= 2;
     }
     return var_a0;
 }
 
 void MoveEntity(void) {
-    D_8006C26C->posX.value += D_8006C26C->accelerationX;
-    D_8006C26C->posY.value += D_8006C26C->accelerationY;
+    D_8006C26C->posX.val += D_8006C26C->accelerationX;
+    D_8006C26C->posY.val += D_8006C26C->accelerationY;
 }
 
 void FallEntity(void) {
@@ -686,14 +686,14 @@ void func_801928A8(s32 arg0, s16 arg1) {
 u8 func_80192914(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
 u8 func_8019294C(Entity* a, Entity* b) {
-    s32 diffX = (u16)b->posX.Data.high - (u16)a->posX.Data.high;
-    s32 diffY = (u16)b->posY.Data.high - (u16)a->posY.Data.high;
+    s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
+    s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
     return func_80192914(diffX, diffY);
 }
 
 u8 func_80192994(s32 x, s32 y) {
-    s32 diffX = x - (u16)D_8006C26C->posX.Data.high;
-    s32 diffY = y - (u16)D_8006C26C->posY.Data.high;
+    s32 diffX = x - (u16)D_8006C26C->posX.i.hi;
+    s32 diffY = y - (u16)D_8006C26C->posY.i.hi;
     return func_80192914(diffX, diffY);
 }
 
@@ -747,14 +747,14 @@ void func_80192A34(u16 slope, s16 speed) {
 u16 func_80192AC0(s16 x, s16 y) { return ratan2(y, x); }
 
 u16 func_80192AF0(Entity* a, Entity* b) {
-    s32 diffX = b->posX.Data.high - a->posX.Data.high;
-    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    s32 diffX = b->posX.i.hi - a->posX.i.hi;
+    s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
 u16 func_80192B28(s32 x, s32 y) {
-    s16 diffX = x - (u16)D_8006C26C->posX.Data.high;
-    s16 diffY = y - (u16)D_8006C26C->posY.Data.high;
+    s16 diffX = x - (u16)D_8006C26C->posX.i.hi;
+    s16 diffY = y - (u16)D_8006C26C->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
@@ -915,15 +915,13 @@ void func_801934D0(u16 arg0) {
     Unkstruct7 sp10;
 
     if (D_8006C26C->accelerationX < 0) {
-        D_8003C6B8(D_8006C26C->posX.Data.high, D_8006C26C->posY.Data.high - 7,
-                   &sp10, 0);
+        D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi - 7, &sp10, 0);
         if (sp10.sp10 & 5) {
             D_8006C26C->accelerationY = 0;
         }
     }
 
-    D_8003C6B8(D_8006C26C->posX.Data.high, D_8006C26C->posY.Data.high + 7,
-               &sp10, 0);
+    D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi + 7, &sp10, 0);
 
     if (arg0) {
         if (!(sp10.sp10 & 5)) {
@@ -936,12 +934,11 @@ void func_801934D0(u16 arg0) {
         D_8006C26C->accelerationY = 0;
 
         if (sp10.sp10 & 4) {
-            D_8006C26C->posY.value += 0x2000;
+            D_8006C26C->posY.val += 0x2000;
             return;
         }
 
-        D_8006C26C->posY.Data.high =
-            (u16)D_8006C26C->posY.Data.high + (u16)sp10.sp28;
+        D_8006C26C->posY.i.hi = (u16)D_8006C26C->posY.i.hi + (u16)sp10.sp28;
         return;
     }
 
@@ -1033,7 +1030,7 @@ void EntityExplosion(Entity* entity) {
         return;
     }
 
-    entity->posY.value += entity->accelerationY;
+    entity->posY.val += entity->accelerationY;
     if (!AnimateEntity((const u8*)D_80180EC4[entity->subId], entity)) {
         DestroyEntity(entity);
     }
@@ -1041,7 +1038,7 @@ void EntityExplosion(Entity* entity) {
 
 void func_80194314(Entity* entity) {
     if (entity->step != 0) {
-        if (entity->posY.Data.high >= 0xF1) {
+        if (entity->posY.i.hi >= 0xF1) {
             DestroyEntity(entity);
             return;
         }
@@ -1136,7 +1133,7 @@ void func_80195A54(Entity* entity) {
     }
 
     entity->animationFrameDuration++;
-    entity->posY.value -= entity->accelerationY;
+    entity->posY.val -= entity->accelerationY;
 
     if (!(entity->animationFrameDuration & 1)) {
         entity->animationFrame++;
@@ -1166,7 +1163,7 @@ void func_80195B44(Entity* entity) {
     }
 
     entity->animationFrameDuration++;
-    entity->posY.value -= entity->accelerationY;
+    entity->posY.val -= entity->accelerationY;
 
     if (!(entity->animationFrameDuration & 1)) {
         entity->animationFrame++;
@@ -1183,17 +1180,17 @@ bool func_80195E68(Unkstruct6* unk) {
     Unkstruct7 a;
 
     FallEntity();
-    D_8006C26C->posX.value += D_8006C26C->accelerationX;
-    D_8006C26C->posY.value += D_8006C26C->accelerationY;
+    D_8006C26C->posX.val += D_8006C26C->accelerationX;
+    D_8006C26C->posY.val += D_8006C26C->accelerationY;
 
     if (D_8006C26C->accelerationY >= 0) {
-        s16 posX = D_8006C26C->posX.Data.high;
-        s16 posY = D_8006C26C->posY.Data.high;
+        s16 posX = D_8006C26C->posX.i.hi;
+        s16 posY = D_8006C26C->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
         D_8003C6B8(posX, posY, &a, 0);
         if (a.sp10 & 1) {
-            D_8006C26C->posY.Data.high += a.sp28;
+            D_8006C26C->posY.i.hi += a.sp28;
             D_8006C26C->accelerationY = -D_8006C26C->accelerationY / 2;
             if (D_8006C26C->accelerationY > -0x10000) {
                 return true;
@@ -1227,7 +1224,7 @@ void EntityIntenseExplosion(Entity* entity) {
         return;
     } else {
         entity->animationFrameDuration++;
-        entity->posY.value -= 0x4000;
+        entity->posY.val -= 0x4000;
 
         if ((entity->animationFrameDuration & 1) == 0) {
             entity->animationFrame++;
@@ -1272,8 +1269,8 @@ void func_8019686C(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->objectId = objectId;
     ent2->pfnUpdate = PfnEntityUpdates[objectId];
-    ent2->posX.Data.high = ent1->posX.Data.high;
-    ent2->posY.Data.high = ent1->posY.Data.high;
+    ent2->posX.i.hi = ent1->posX.i.hi;
+    ent2->posY.i.hi = ent1->posY.i.hi;
     ent2->unk5A = ent1->unk5A;
     ent2->zPriority = ent1->zPriority;
     ent2->animationSet = ent1->animationSet;

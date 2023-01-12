@@ -1812,7 +1812,7 @@ void func_800F24F4(void) {
             phi_a0 = 0;
             if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D &&
                 castleY == 0x21) {
-                if (PLAYER.posX.value == 0x80) {
+                if (PLAYER.posX.val == 0x80) {
                     D_8003C730 = 1;
                     phi_a0 = 1;
                 } else {
@@ -3584,8 +3584,8 @@ void func_80106670(s32 blendMode) {
             if (D_80097944 >= MaxPolyCount) {
                 break;
             }
-            absY = (u16)entity->posY.Data.high + (u16)g_backbufferY;
-            absX = (u16)entity->posX.Data.high + (u16)g_backbufferX;
+            absY = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+            absX = (u16)entity->posX.i.hi + (u16)g_backbufferX;
             if (entity->facing != 0) {
                 var_a0_2 = absX - (u16)entity->unk10;
             } else {
@@ -3621,8 +3621,8 @@ void func_80106670(s32 blendMode) {
                 if (D_80097944 >= MaxPolyCount) {
                     break;
                 }
-                absY_2 = (u16)entity->posY.Data.high + (u16)g_backbufferY;
-                absX_2 = (u16)entity->posX.Data.high + (u16)g_backbufferX;
+                absY_2 = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+                absX_2 = (u16)entity->posX.i.hi + (u16)g_backbufferX;
                 if (entity->facing != 0) {
                     var_a0_2 = absX_2 - (u16)entity->unk10;
                 } else {
@@ -4226,8 +4226,8 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
             ret++;
         }
 
-        if (var_v1[i].posX.Data.low != 0) {
-            if (var_v1[i].posX.Data.low == arg0) {
+        if (var_v1[i].posX.i.lo != 0) {
+            if (var_v1[i].posX.i.lo == arg0) {
                 var_a2++;
             }
         }
@@ -4393,8 +4393,8 @@ void func_80111CC0(void) {
 bool func_80111D24(void) {
     s32 sp10[9]; // !FAKE: There's a struct inside the stack.
     s32 speed = 0xC000;
-    s16 posX = PLAYER.posX.Data.high;
-    s16 posY = PLAYER.posY.Data.high;
+    s16 posX = PLAYER.posX.i.hi;
+    s16 posY = PLAYER.posY.i.hi;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
@@ -4465,11 +4465,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801131C4);
 void func_801139CC(s32 arg0) {
     s32 move = PLAYER.facing != 0 ? -3 : 3;
 
-    PLAYER.posY.Data.high -= 22;
-    PLAYER.posX.Data.high = move + PLAYER.posX.Data.high;
+    PLAYER.posY.i.hi -= 22;
+    PLAYER.posX.i.hi = move + PLAYER.posX.i.hi;
     func_8011AAFC(g_CurrentEntity, 0x10004, 0);
-    PLAYER.posY.Data.high = PLAYER.posY.Data.high + 22;
-    PLAYER.posX.Data.high = PLAYER.posX.Data.high - move;
+    PLAYER.posY.i.hi = PLAYER.posY.i.hi + 22;
+    PLAYER.posX.i.hi = PLAYER.posX.i.hi - move;
 
     if (arg0 & 1) {
         func_80102CD8(3);
@@ -4727,8 +4727,8 @@ s32 func_80118C84(s16 arg0, s16 arg1) {
     if (entity != NULL) {
         func_80106590(entity);
         entity->objectId = ENTITY_13;
-        entity->posX.value = PLAYER.posX.value;
-        entity->posY.value = PLAYER.posY.value;
+        entity->posX.val = PLAYER.posX.val;
+        entity->posY.val = PLAYER.posY.val;
         entity->unk80.modeS16.unk0 = arg0;
         entity->unk80.modeS16.unk2 = arg1;
         return 0;
@@ -4805,9 +4805,9 @@ loop_1: // !FAKE: this should be a for loop
             entity = g_CurrentEntity;
             if (entity->objectId != 0) {
                 if ((!(entity->unk34 & 0x04000000)) &&
-                    (((u32)((((u16)entity->posX.Data.high) + 0x20) & 0xFFFF) >=
+                    (((u32)((((u16)entity->posX.i.hi) + 0x20) & 0xFFFF) >=
                       0x141) ||
-                     ((u32)((((u16)entity->posY.Data.high) + 0x10) & 0xFFFF) >=
+                     ((u32)((((u16)entity->posY.i.hi) + 0x10) & 0xFFFF) >=
                       0x111))) {
                     func_80106590(entity);
                     goto label;
@@ -4925,11 +4925,11 @@ void func_80123A60(Entity* entity) {
     if (D_80072F2C & 0x01000000) {
 
 #if 1
-        entity->posX.Data.high = PLAYER.posX.Data.high; //(u16) D_800733DA;
-        entity->posY.Data.high = PLAYER.posY.Data.high; //(u16) D_800733DE;
+        entity->posX.i.hi = PLAYER.posX.i.hi; //(u16) D_800733DA;
+        entity->posY.i.hi = PLAYER.posY.i.hi; //(u16) D_800733DE;
 #else // This one generates the  first missing move a0, s0 for some reason?
-        entity->posX.Data.high = (u16)D_800733DA;
-        entity->posY.Data.high = (u16)D_800733DE;
+        entity->posX.i.hi = (u16)D_800733DA;
+        entity->posY.i.hi = (u16)D_800733DE;
 #endif
         if (entity->step == 0) {
             func_8011A328(entity, 0xB);
@@ -4984,16 +4984,16 @@ void func_80124A8C(Entity* entity) {
             entity->unk4C = &D_800AE294;
             entity->unk34 = 0x100000;
             entity->facing = 0;
-            entity->posY.Data.high -= 16;
+            entity->posY.i.hi -= 16;
             playerStep_temp = entity->step;
             playerStep_temp++;
-            entity->posX.value += entity->accelerationX << 5;
+            entity->posX.val += entity->accelerationX << 5;
             entity->step = playerStep_temp;
             break;
 
         case ENTITY_STEP_1:
-            entity->posX.value += entity->accelerationX;
-            entity->posY.value += entity->accelerationY;
+            entity->posX.val += entity->accelerationX;
+            entity->posY.val += entity->accelerationY;
 
             if (entity->animationFrameDuration < 0) {
                 goto block_7;
@@ -5041,11 +5041,11 @@ void func_801279FC(Entity* entity) {
     s32 firstPolygonIndex;
 
     if (PLAYER.facing == 0) {
-        entity->posX.Data.high = PLAYER.posX.Data.high - 10;
+        entity->posX.i.hi = PLAYER.posX.i.hi - 10;
     } else {
-        entity->posX.Data.high = PLAYER.posX.Data.high + 10;
+        entity->posX.i.hi = PLAYER.posX.i.hi + 10;
     }
-    entity->posY.Data.high = PLAYER.posY.Data.high + 2;
+    entity->posY.i.hi = PLAYER.posY.i.hi + 2;
 
     switch (entity->step) {
     case 0:
@@ -5100,14 +5100,14 @@ void func_801279FC(Entity* entity) {
     }
 
     poly = &D_80086FEC[entity->firstPolygonIndex];
-    poly->x0 = entity->posX.Data.high - entity->unk7C.modeS16;
-    poly->y0 = entity->posY.Data.high - entity->unk7E.modeU16;
-    poly->x1 = entity->posX.Data.high + entity->unk7C.modeS16;
-    poly->y1 = entity->posY.Data.high - entity->unk7E.modeU16;
-    poly->x2 = entity->posX.Data.high - entity->unk7C.modeS16;
-    poly->y2 = entity->posY.Data.high + entity->unk7E.modeU16;
-    poly->x3 = entity->posX.Data.high + entity->unk7C.modeS16;
-    poly->y3 = entity->posY.Data.high + entity->unk7E.modeU16;
+    poly->x0 = entity->posX.i.hi - entity->unk7C.modeS16;
+    poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
+    poly->x1 = entity->posX.i.hi + entity->unk7C.modeS16;
+    poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
+    poly->x2 = entity->posX.i.hi - entity->unk7C.modeS16;
+    poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
+    poly->x3 = entity->posX.i.hi + entity->unk7C.modeS16;
+    poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
 
     if (entity->unk7C.modeS16 >= 0x29) {
         poly->r3 += 0xF4;
@@ -5128,7 +5128,7 @@ void func_80127CC8(Entity* entity) {
         return;
     }
 
-    entity->posX.Data.high = PLAYER.posX.Data.high;
+    entity->posX.i.hi = PLAYER.posX.i.hi;
 
     switch (entity->step) {
     case ENTITY_STEP_0:
@@ -5171,10 +5171,10 @@ void func_80127CC8(Entity* entity) {
         break;
     }
     poly = &D_80086FEC[entity->firstPolygonIndex];
-    poly->x0 = poly->x2 = entity->posX.Data.high - 3;
+    poly->x0 = poly->x2 = entity->posX.i.hi - 3;
     poly->y0 = 0;
     poly->y1 = 0;
-    poly->x1 = poly->x3 = entity->posX.Data.high + 3;
+    poly->x1 = poly->x3 = entity->posX.i.hi + 3;
     poly->y3 = 0xF0;
     poly->y2 = 0xF0;
 
@@ -5260,10 +5260,10 @@ void func_8012B78C(Entity* entity) {
             poly->v0 = 0;
             poly->v3 = 0x10;
             poly->v2 = 0x10;
-            poly->x0 = poly->x2 = entity->posX.Data.high - 8;
-            poly->x1 = poly->x3 = entity->posX.Data.high + 8;
-            poly->y0 = poly->y1 = entity->posY.Data.high - 8;
-            poly->y2 = poly->y3 = entity->posY.Data.high + 8;
+            poly->x0 = poly->x2 = entity->posX.i.hi - 8;
+            poly->x1 = poly->x3 = entity->posX.i.hi + 8;
+            poly->y0 = poly->y1 = entity->posY.i.hi - 8;
+            poly->y2 = poly->y3 = entity->posY.i.hi + 8;
             poly->pad2 = entity->zPriority;
             poly->pad3 = 0x115;
             entity->unk7E.modeU16 = 0x60U;

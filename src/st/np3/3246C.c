@@ -202,8 +202,8 @@ void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    entity->posX.Data.high = initDesc->posX - D_8007308E;
-    entity->posY.Data.high = initDesc->posY - D_80073092;
+    entity->posX.i.hi = initDesc->posX - D_8007308E;
+    entity->posY.i.hi = initDesc->posY - D_80073092;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
@@ -238,28 +238,28 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
-    entity->posX.Data.high = g_CurrentEntity->posX.Data.high;
-    entity->posY.Data.high = g_CurrentEntity->posY.Data.high;
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
 void func_801BB7A8(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
-    entity->posX.Data.high = source->posX.Data.high;
-    entity->posY.Data.high = source->posY.Data.high;
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
 }
 
 s32 func_801BB824(Unkstruct5* arg0) {
     s16 diff;
 
-    diff = PLAYER.posX.Data.high - arg0->unk2;
+    diff = PLAYER.posX.i.hi - arg0->unk2;
     diff = ABS_ALT(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.Data.high - arg0->unk6;
+        diff = PLAYER.posY.i.hi - arg0->unk6;
         diff = ABS_ALT(diff);
         diff = diff < 33;
     }
@@ -311,9 +311,9 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC7D4);
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
 
 s16 func_801BC844(void) {
-    s16 var_a0 = g_CurrentEntity->posX.Data.high > PLAYER.posX.Data.high;
+    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
-    if (g_CurrentEntity->posY.Data.high > PLAYER.posY.Data.high) {
+    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
         var_a0 |= 2;
     }
     return var_a0;
@@ -352,14 +352,14 @@ void func_801BCDEC(s32 arg0, s16 arg1) {
 u8 func_801BCE58(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
 u8 func_801BCE90(Entity* a, Entity* b) {
-    s32 diffX = (u16)b->posX.Data.high - (u16)a->posX.Data.high;
-    s32 diffY = (u16)b->posY.Data.high - (u16)a->posY.Data.high;
+    s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
+    s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
     return func_801BCE58(diffX, diffY);
 }
 
 u8 func_801BCED8(s32 x, s32 y) {
-    s32 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
-    s32 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
+    s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
+    s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return func_801BCE58(diffX, diffY);
 }
 
@@ -388,14 +388,14 @@ void func_801BCF78(u16 slope, s16 speed) {
 u16 func_801BD004(s16 x, s16 y) { return ratan2(y, x); }
 
 u16 func_801BD034(Entity* a, Entity* b) {
-    s32 diffX = b->posX.Data.high - a->posX.Data.high;
-    s32 diffY = b->posY.Data.high - a->posY.Data.high;
+    s32 diffX = b->posX.i.hi - a->posX.i.hi;
+    s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
 u16 func_801BD06C(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.Data.high;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.Data.high;
+    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
