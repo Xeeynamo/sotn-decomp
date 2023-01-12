@@ -921,7 +921,7 @@ extern u16 D_80097496;
 extern u16 D_8009749C[];
 extern s32 g_mapProgramId;
 extern s32 D_800974A4;
-extern s32 D_800974AC;
+extern Unkstruct_800974AC D_800974AC;
 extern s32 D_800978AC;
 extern s32 D_800978C4;
 extern u32 D_800978F8;

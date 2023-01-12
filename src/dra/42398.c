@@ -1372,21 +1372,20 @@ void func_800EDA94(void) {
 
 void func_800EDAE4(void) {
     s32 i;
-    s32* phi_v1 = &D_800974AC;
+    Unkstruct_800974AC* ptr = &D_800974AC;
 
-    for (i = 0; i < 16; i++) {
-        *phi_v1 = 0;
-        phi_v1 += 0x10;
+    for (i = 0; i < 16; i++, ptr++) {
+        ptr->unk0 = false;
     }
 }
 
-s32* func_800EDB08(Unkstruct_800EDB08* arg0) {
-    Unkstruct_800EDB08* ptr = &D_800974AC;
+Unkstruct_800974AC* func_800EDB08(Unkstruct_800974AC* arg0) {
+    Unkstruct_800974AC* ptr = &D_800974AC;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
-        if (ptr->unk0 == 0) {
-            ptr->unk0 = 1;
+        if (!ptr->unk0) {
+            ptr->unk0 = true;
             arg0->unk7 = 7;
             arg0->unk10 = ptr;
             return ptr;
@@ -4825,7 +4824,8 @@ bool func_8011BD48(Entity* entity) {
     s16 subId = entity->subId;
     Entity* e = &g_EntityArray[i];
     for (; i < 0x40; i++, e++) {
-        if (objId == e->objectId && subId == e->subId && e != entity) {
+        if ((objId == (s32)e->objectId) && (subId == (s32)e->subId) &&
+            (e != entity)) {
             return 1;
         }
     }
