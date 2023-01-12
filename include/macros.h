@@ -7,7 +7,6 @@ typedef enum {
     UNK_ENTITY_10 = 0x10
 } EntityTypes;
 
-#define GET_PLAYER(player) (&(player)[PLAYER_CHARACTER])
 #define PLAYER g_EntityArray[PLAYER_CHARACTER]
 
 #define SQ(x) ((x) * (x))

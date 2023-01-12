@@ -2788,8 +2788,8 @@ void EntityWarpRoom(Entity* arg0) {
             !(D_80072F2C & 0xC5CF3EF7)) {
             D_80072EF4 = 0;
             D_80072EFC = 0x80;
-            GET_PLAYER(g_EntityArray)->accelerationX = 0;
-            GET_PLAYER(g_EntityArray)->accelerationY = 0;
+            PLAYER.accelerationX = 0;
+            PLAYER.accelerationY = 0;
             D_8003C8B8 = 0;
             arg0->step++;
         }
@@ -2797,7 +2797,7 @@ void EntityWarpRoom(Entity* arg0) {
     case 2:
         // Move Alucard in the background and fade him to white
         D_80072EFC = 0x80;
-        GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
+        PLAYER.zPriority = 0x5C;
         D_80072EF4 = 0;
         g_zEntityCenter.S16.unk0 = 0x5C;
         temp_s2_2 = (POLY_GT4*)arg0->unk84.value;
@@ -2816,7 +2816,7 @@ void EntityWarpRoom(Entity* arg0) {
     case 3:
         // Fade the entire room into white
         D_80072EFC = 0x80;
-        GET_PLAYER(g_EntityArray)->zPriority = 0x5C;
+        PLAYER.zPriority = 0x5C;
         D_80072EF4 = 0;
         g_zEntityCenter.S16.unk0 = 0x5C;
         temp_s2_3 = (POLY_GT4*)arg0->unk84.value;
@@ -2874,8 +2874,8 @@ void EntityWarpRoom(Entity* arg0) {
         FntPrint(D_80186E4C, temp_s0->x, temp_s0->y); // for_x:%x y%x
         FntPrint(D_80186E5C, move_x, move_y);         // move_x:%x y%x
         D_80097C98 = 2;
-        GET_PLAYER(g_EntityArray)->posX.i.hi += move_x << 8;
-        GET_PLAYER(g_EntityArray)->posY.i.hi += move_y << 8;
+        PLAYER.posX.i.hi += move_x << 8;
+        PLAYER.posY.i.hi += move_y << 8;
         arg0->step = 0x80;
         break;
     case 5:
