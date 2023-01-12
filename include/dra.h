@@ -1099,13 +1099,15 @@ extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
                         // 2-byte aligned
 // extern u8 D_80137638[2];
 // extern u8 D_80137639[];
+extern s16 D_8013767C;
+extern s16 D_80137688;
 extern u8 D_80137692;
 extern u8 D_801376B0;
 extern s32 D_8013783C;
 extern s32 D_801377FC[];
 extern s32 D_80137840;
 extern s32 D_80137844[];
-extern s32 D_80137848;
+extern s32 D_80137848[];
 extern s32 D_8013784C;
 extern s32 g_someValue;
 extern s32 D_80137930;
