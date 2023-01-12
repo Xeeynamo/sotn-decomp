@@ -2764,7 +2764,7 @@ void func_800FAC0C(s32 context) { D_80137638[context].unk0 = 2; }
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
-    D_80137848 = 0;
+    D_80137848[0] = 0;
 }
 
 void func_800FAC48(void) {
@@ -2815,7 +2815,28 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAEC4);
 // https://decomp.me/scratch/HEhaF by @pixel-stuck
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAF44);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB004);
+void func_800FB004(void) {
+    s32 temp_a1;
+    s32 temp_v0;
+    temp_a1 = func_800FD6C4(D_801375CC);
+    if (((-D_80137688) / 12) != 0) {
+        if (*D_80137844 == 0) {
+            *D_80137844 = 1;
+        }
+    } else {
+        *D_80137844 = 0;
+    }
+
+    temp_v0 = -D_80137688 + D_8013767C;
+
+    if ((temp_v0 / 12) < (temp_a1 / 2)) {
+        if (D_80137848[0] == 0) {
+            D_80137848[0] = 1;
+        }
+    } else {
+        D_80137848[0] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB0FC);
 
