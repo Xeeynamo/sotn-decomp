@@ -1415,44 +1415,44 @@ POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
     return poly;
 }
 
-void func_801C9F9C(unkStruct3* arg0) {
-    arg0->unk12.data1.unk1 = 0;
-    arg0->unk1E.data1.unk1 = 0;
-    arg0->unk2B = 0;
-    arg0->unk0->unk14 = 0;
-    arg0->unk0->unk16 = 0;
-    arg0->unk0->unkA = 0;
-    arg0->unk0->unk8 = 0;
-    arg0->unk0->unkE = 0;
-    arg0->unk0->unkC = 0;
-    arg0->unk0->unk12.data = 0;
-    arg0->unk0->unk10.data = 0;
-    arg0->unk0->unk18 = 0;
-    arg0->unk0->unk1A = 0;
-    arg0->unk0->unk1C.data = 0;
-    arg0->unk0->unk1E.data = 0;
-    arg0->unk0->unk24 = 0;
-    arg0->unk0->unk25 = 0;
-    arg0->unk0->unk28 = 0;
-    arg0->unk0->unk2A = 0;
-    arg0->unk0->unk20 = 0;
-    arg0->unk0->unk22 = 0;
+void func_801C9F9C(POLY_GT4* poly) {
+    poly->p1 = 0;
+    poly->p2 = 0;
+    poly->p3 = 0;
+    ((POLY_GT4*)poly->tag)->x1 = 0;
+    ((POLY_GT4*)poly->tag)->y1 = 0;
+    ((POLY_GT4*)poly->tag)->y0 = 0;
+    ((POLY_GT4*)poly->tag)->x0 = 0;
+    ((POLY_GT4*)poly->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->u1 = 0;
+    ((POLY_GT4*)poly->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->b2 = 0;
+    ((POLY_GT4*)poly->tag)->u2 = 0;
+    ((POLY_GT4*)poly->tag)->v2 = 0;
+    ((POLY_GT4*)poly->tag)->r3 = 0;
+    ((POLY_GT4*)poly->tag)->b3 = 0;
+    ((POLY_GT4*)poly->tag)->x2 = 0;
+    ((POLY_GT4*)poly->tag)->y2 = 0;
 }
 
-void func_801CA07C(unkStruct3* arg0) {
-    func_801C9F9C(arg0);
-    arg0->unk2B = 8;
-    arg0->unk0->unk2B = 1;
-    arg0->unk0->unk7 = 2;
-    arg0->unk0->unk32 = 0xA;
+void func_801CA07C(POLY_GT4* poly) {
+    func_801C9F9C(poly);
+    poly->p3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 1;
+    ((POLY_GT4*)poly->tag)->code = 2;
+    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
 }
 
-void func_801CA0D0(unkStruct3* arg0) {
-    arg0->unk2B = 0;
-    arg0->unk32 = 8;
-    arg0->unk0->unk2B = 0;
-    arg0->unk0->unk7 = 4;
-    arg0->unk0->unk32 = 8;
+void func_801CA0D0(POLY_GT4* poly) {
+    poly->p3 = 0;
+    poly->pad3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 0;
+    ((POLY_GT4*)poly->tag)->code = 4;
+    ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
 //! FAKE

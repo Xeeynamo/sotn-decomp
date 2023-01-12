@@ -1176,7 +1176,40 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2580);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A25FC);
 #else
-unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
+
+typedef struct Unkstruct_801A25FC {
+    /* 0x00 */ struct Unkstruct_801A25FC* unk0;
+    /* 0x04 */ s8 unk4;
+    /* 0x05 */ char pad5[0x1];
+    /* 0x06 */ s8 unk6;
+    /* 0x07 */ s8 unk7;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ UnkUnion2 unk10;
+    /* 0x12 */ UnkUnion2 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ UnkUnion2 unk1C;
+    /* 0x1E */ UnkUnion2 unk1E;
+    /* 0x20 */ s16 unk20;
+    /* 0x22 */ s16 unk22;
+    /* 0x24 */ s8 unk24;
+    /* 0x25 */ s8 unk25;
+    /* 0x26 */ char pad26[0x2];
+    /* 0x28 */ s8 unk28;
+    /* 0x29 */ char pad[0x1];
+    /* 0x2A */ u8 unk2A;
+    /* 0x2B */ u8 unk2B;
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ char pad2E[4];
+    /* 0x32 */ u16 unk32;
+} Unkstruct_801A25FC; // This might be POLY_GT4
+
+Unkstruct_801A25FC* func_801A25FC(Unkstruct_801A25FC* arg0, s32 arg1) {
     s32 i;
     s8 var_a2;
 
@@ -1205,44 +1238,44 @@ unkStruct3* func_801A25FC(unkStruct3* arg0, s32 arg1) {
 }
 #endif
 
-void func_801A2684(unkStruct3* arg0) {
-    arg0->unk12.data1.unk1 = 0;
-    arg0->unk1E.data1.unk1 = 0;
-    arg0->unk2B = 0;
-    arg0->unk0->unk14 = 0;
-    arg0->unk0->unk16 = 0;
-    arg0->unk0->unkA = 0;
-    arg0->unk0->unk8 = 0;
-    arg0->unk0->unkE = 0;
-    arg0->unk0->unkC = 0;
-    arg0->unk0->unk12.data = 0;
-    arg0->unk0->unk10.data = 0;
-    arg0->unk0->unk18 = 0;
-    arg0->unk0->unk1A = 0;
-    arg0->unk0->unk1C.data = 0;
-    arg0->unk0->unk1E.data = 0;
-    arg0->unk0->unk24 = 0;
-    arg0->unk0->unk25 = 0;
-    arg0->unk0->unk28 = 0;
-    arg0->unk0->unk2A = 0;
-    arg0->unk0->unk20 = 0;
-    arg0->unk0->unk22 = 0;
+void func_801A2684(POLY_GT4* poly) {
+    poly->p1 = 0;
+    poly->p2 = 0;
+    poly->p3 = 0;
+    ((POLY_GT4*)poly->tag)->x1 = 0;
+    ((POLY_GT4*)poly->tag)->y1 = 0;
+    ((POLY_GT4*)poly->tag)->y0 = 0;
+    ((POLY_GT4*)poly->tag)->x0 = 0;
+    ((POLY_GT4*)poly->tag)->clut = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->u0 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->b1 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->r1 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->u1 = 0;
+    ((POLY_GT4*)poly->tag)->tpage = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->r2 = 0;
+    *(u16*)&((POLY_GT4*)poly->tag)->b2 = 0;
+    ((POLY_GT4*)poly->tag)->u2 = 0;
+    ((POLY_GT4*)poly->tag)->v2 = 0;
+    ((POLY_GT4*)poly->tag)->r3 = 0;
+    ((POLY_GT4*)poly->tag)->b3 = 0;
+    ((POLY_GT4*)poly->tag)->x2 = 0;
+    ((POLY_GT4*)poly->tag)->y2 = 0;
 }
 
-void func_801A2764(unkStruct3* arg0) {
-    func_801A2684(arg0);
-    arg0->unk2B = 8;
-    arg0->unk0->unk2B = 1;
-    arg0->unk0->unk7 = 2;
-    arg0->unk0->unk32 = 0xA;
+void func_801A2764(POLY_GT4* poly) {
+    func_801A2684(poly);
+    poly->p3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 1;
+    ((POLY_GT4*)poly->tag)->code = 2;
+    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
 }
 
-void func_801A27B8(unkStruct3* arg0) {
-    arg0->unk2B = 0;
-    arg0->unk32 = 8;
-    arg0->unk0->unk2B = 0;
-    arg0->unk0->unk7 = 4;
-    arg0->unk0->unk32 = 8;
+void func_801A27B8(POLY_GT4* poly) {
+    poly->p3 = 0;
+    poly->pad3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 0;
+    ((POLY_GT4*)poly->tag)->code = 4;
+    ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
 s32 func_801A27E4(s32 arg0, u8 arg1) {
