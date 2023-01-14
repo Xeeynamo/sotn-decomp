@@ -1121,10 +1121,10 @@ void func_800EAEA4(void) {
 }
 
 void func_800EAEEC(void) {
-    unkstruct_80072FA0* ptr;
+    unkstruct_80072FA0* ptr = D_80072FA0;
     s32 i;
 
-    for (ptr = &D_80072FA0, i = 0; i < 16; i++, ptr++) {
+    for (i = 0; i < 16; i++, ptr++) {
         ptr->unk4 = 0;
     }
 
@@ -1185,7 +1185,7 @@ bool func_800EB720(void) {
     unkstruct_80072FA0* temp = D_80072FA0;
     s32 i;
 
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < 16; i++) {
         if (temp[i].unk4 != 0) {
             return true;
         }
@@ -1372,15 +1372,14 @@ void func_800EDA94(void) {
 
 void func_800EDAE4(void) {
     s32 i;
-    s32* phi_v1 = &D_800974AC;
+    DR_ENV* ptr = &D_800974AC;
 
-    for (i = 0; i < 16; i++) {
-        *phi_v1 = 0;
-        phi_v1 += 0x10;
+    for (i = 0; i < 16; i++, ptr++) {
+        ptr->tag = 0;
     }
 }
 
-struct Unk* func_800EDB08(POLY_GT4* poly) {
+DR_ENV* func_800EDB08(POLY_GT4* poly) {
     DR_ENV* ptr = &D_800974AC;
     s32 i = 0;
 
@@ -1388,7 +1387,7 @@ struct Unk* func_800EDB08(POLY_GT4* poly) {
         if (ptr->tag == 0) {
             ptr->tag = 1;
             poly->code = 7;
-            *(u32*)&poly->r1 = ptr; // similar issue as FreePolygons
+            *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePolygons
             return ptr;
         }
     }
@@ -2625,7 +2624,7 @@ void func_800F96F4(void) { // !Fake:
     s32* temp;
     s32* new_var;
 
-    new_var = &D_80137848;
+    new_var = D_80137848;
     poly = &D_80086FEC[D_80137840];
     temp_a2 = D_80137692 == 0;
     temp = D_80137844;
@@ -2642,7 +2641,7 @@ void func_800F96F4(void) { // !Fake:
         poly->pad3 = 8;
     }
 
-    poly = poly->tag;
+    poly = (POLY_GT4*)poly->tag;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
@@ -2817,7 +2816,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FAF44);
 void func_800FB004(void) {
     s32 temp_a1;
     s32 temp_v0;
-    temp_a1 = func_800FD6C4(D_801375CC);
+    temp_a1 = func_800FD6C4(D_801375CC.unk0);
     if (((-D_80137688) / 12) != 0) {
         if (*D_80137844 == 0) {
             *D_80137844 = 1;
@@ -2837,12 +2836,21 @@ void func_800FB004(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB0FC);
+void func_800FB0FC(void) {
+    Unkstruct_800A2D98* temp = &D_800A2D98[*g_menuRelicsCursorIndex];
+    s32 temp_a1 = temp->unk4;
+    s32 new_var2 = temp->unk8;
+
+    D_801375CC.unk0 = temp->unk0;
+    D_801375CC.unk8 = temp_a1;
+    func_800FAF44(new_var2, temp_a1);
+    func_800FB004();
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FB160);
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC == 0) {
+    if (D_801375CC.unk0 == 0) {
         if (arg0 == 0) {
             return true;
         }
@@ -4857,7 +4865,8 @@ bool func_8011BD48(Entity* entity) {
     s16 subId = entity->subId;
     Entity* e = &g_EntityArray[i];
     for (; i < 0x40; i++, e++) {
-        if (objId == e->objectId && subId == e->subId && e != entity) {
+        if (objId == (s32)e->objectId && subId == (s32)e->subId &&
+            e != entity) {
             return 1;
         }
     }
