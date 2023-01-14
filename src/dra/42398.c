@@ -2189,29 +2189,28 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
                  0xB, r, 0, 0);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F66BC);
-void func_800F66BC(const char* str, s32 x, s32 y, MenuContext* context,
-                   bool disableTexShade);
-#else
 void func_800F66BC(const char* str, s32 x, s32 y, MenuContext* context,
                    bool disableTexShade) {
+    u16 temp;
     const int ChWidth = 12;
     const int ChHeight = 16;
     u8 ch;
-    u8 unk;
-
+    s32 unk;
 loop_1:
-    ch = *str++;
-    if (ch == 0xFF)
+    ch = *(str++);
+
+    if (ch == 0xFF) {
         return;
-    unk = ((u16)(ch & 0x10)) != 0;
+    }
+    unk = (u16)(ch & 0x10);
+    unk = unk != 0;
+    temp = ch;
+    temp = temp >> 5;
     func_800F5904(context, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
-                  (ch >> 5) * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
+                  temp * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
     x += ChWidth;
     goto loop_1;
 }
-#endif
 
 void DrawMenuChar(char ch, int x, int y, MenuContext* context) {
     func_800F5904(context, x, y, 8, 8, (ch & 0xF) * 8, (u32)(ch & 0xF0) >> 1,
