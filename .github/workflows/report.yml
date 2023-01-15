@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - dups
     paths:
       - 'src/*.c'
       - 'src/**/*.c'
