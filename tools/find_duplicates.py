@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# tool to detect if a function has duplicates, adapted from https://github.com/pmret/papermario
+# tool to detect if a function has duplicates, inspired by https://github.com/pmret/papermario and adapted for sotn decomp
 
 import argparse
 from collections import Counter, OrderedDict
@@ -9,48 +9,51 @@ from Levenshtein import ratio
 import os
 import re
 import sys
+import glob
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-root_dir = script_dir + "/../"
-asm_dir = root_dir + "asm"
-build_dir = root_dir + "build/"
+root_directory = script_dir + "/../"
+asm_directory = root_directory + "asm"
+build_dir = root_directory + "build/"
 
 
 def read_roms():
-    bins = dict()
-    bins["MAIN"] = open(root_dir + "iso/SLUS_000.67", "rb").read()
-    bins["DRA"] = open(root_dir + "iso/DRA.BIN", "rb").read()
-    bins["RIC"] = open(root_dir + "iso/BIN/RIC.BIN", "rb").read()
-    bins["CEN"] = open(root_dir + "iso/ST/CEN/CEN.BIN", "rb").read()
-    bins["DRE"] = open(root_dir + "iso/ST/DRE/DRE.BIN", "rb").read()
-    bins["MAD"] = open(root_dir + "iso/ST/MAD/MAD.BIN", "rb").read()
-    bins["NO3"] = open(root_dir + "iso/ST/NO3/NO3.BIN", "rb").read()
-    bins["NP3"] = open(root_dir + "iso/ST/NP3/NP3.BIN", "rb").read()
-    bins["NZ0"] = open(root_dir + "iso/ST/NZ0/NZ0.BIN", "rb").read()
-    bins["ST0"] = open(root_dir + "iso/ST/ST0/ST0.BIN", "rb").read()
-    bins["WRP"] = open(root_dir + "iso/ST/WRP/WRP.BIN", "rb").read()
-    bins["RWRP"] = open(root_dir + "iso/ST/RWRP/RWRP.BIN", "rb").read()
-    return bins
+    roms = dict()
+    roms["MAIN"] = open(root_directory + "iso/SLUS_000.67", "rb").read()
+    roms["DRA"] = open(root_directory + "iso/DRA.BIN", "rb").read()
+    roms["RIC"] = open(root_directory + "iso/BIN/RIC.BIN", "rb").read()
+    roms["CEN"] = open(root_directory + "iso/ST/CEN/CEN.BIN", "rb").read()
+    roms["DRE"] = open(root_directory + "iso/ST/DRE/DRE.BIN", "rb").read()
+    roms["MAD"] = open(root_directory + "iso/ST/MAD/MAD.BIN", "rb").read()
+    roms["NO3"] = open(root_directory + "iso/ST/NO3/NO3.BIN", "rb").read()
+    roms["NP3"] = open(root_directory + "iso/ST/NP3/NP3.BIN", "rb").read()
+    roms["NZ0"] = open(root_directory + "iso/ST/NZ0/NZ0.BIN", "rb").read()
+    roms["ST0"] = open(root_directory + "iso/ST/ST0/ST0.BIN", "rb").read()
+    roms["WRP"] = open(root_directory + "iso/ST/WRP/WRP.BIN", "rb").read()
+    roms["RWRP"] = open(root_directory + "iso/ST/RWRP/RWRP.BIN", "rb").read()
+    return roms
 
 
-def find_dir(query):
-    for root, dirs, files in os.walk(asm_dir):
-        for d in dirs:
-            if d == query:
-                return os.path.join(root, d)
+def find_directory(query):
+    for root, directories, files in os.walk(asm_directory):
+        for directory in directories:
+            if directory == query:
+                return os.path.join(root, directory)
     return None
 
 
 # build a list of all non matching functions .s files names
 def get_all_s_files():
-    ret = set()
-    for root, dirs, files in os.walk(asm_dir):
-        for f in files:
-            if "data." in f or "nonmatchings" not in os.path.join(root, f):
+    s_files = set()
+    for root, directories, files in os.walk(asm_directory):
+        for file in files:
+            if "data." in file or "nonmatchings" not in os.path.join(root, file):
                 continue
-            elif f.endswith(".s") and not f.endswith("data.s"):    
-                ret.add(f[:-2])
-    return ret
+            elif file.endswith(".s") and not file.endswith("data.s"):
+                overlay = root.split("/")[-3].upper()
+                if overlay in roms_bytes.keys(): 
+                    s_files.add((overlay,file[:-2]))
+    return s_files
 
 
 def get_symbol_length(sym_name):
@@ -60,40 +63,38 @@ def get_symbol_length(sym_name):
     return 0
 
 
-# read instructions ? returns tuple of 1 out of 4 utf8 decoded bytes, raw bits
-def get_symbol_bytes(offsets, func):
-    if func not in offsets or "start" not in offsets[func] or "end" not in offsets[func]:
+# read instructions, returns tuple of 1 out of 4 utf8 decoded bytes, raw bits
+def get_symbol_bytes(offsets, function):
+    if function not in offsets or "start" not in offsets[function] or "end" not in offsets[function]:
         return None
-    bin = offsets[func]["bin"]
-    start = offsets[func]["start"]
-    end = offsets[func]["end"]
-    data_type = offsets[func]["data_type"]
+    bin = offsets[function]["bin"]
+    start = offsets[function]["start"]
+    end = offsets[function]["end"]
+    data_type = offsets[function]["data_type"]
 
-    bs = list(roms_bytes[bin][start:end])
+    bytes_data = list(roms_bytes[bin][start:end])
 
-    while len(bs) > 0 and bs[-1] == 0: # removing zeros at the end
-        bs.pop()
+    while len(bytes_data) > 0 and bytes_data[-1] == 0: # removing zeros at the end
+        bytes_data.pop()
 
-    insns = bs[0::4] # read one in 4 byte, why ?
+    instructions = bytes_data[3::4] # read one in 4 byte to only consider the mips opcode and immediates and regalloc https://student.cs.uwaterloo.ca/~isg/res/mips/opcodes
 
-    ret = []
-    for ins in insns:
-        ret.append(ins >> 2) ## why ?
+    result = []
+    for instruction in instructions:
+        result.append(instruction >> 2) #we alread read only 1 byte in 4 but in this byte, we need the 6 first bits only, discarding the 2 we dont want with this >> 2
 
-    result = bytes(ret).decode('utf-8'), bs, data_type
-    return result
+    return bytes(result).decode('utf-8'), bytes_data, data_type
 
-
-def parse_map(map_files): # returns list of syms[fn] = (bin, rom, cur_file, prev_sym, ram, data_type)
+def parse_map(map_files): # returns list of syms[key,fn] = (bin, rom, cur_file, prev_sym, ram, data_type)
     ram_offset = None
-    cur_file = "<no file>"
-    syms = {}
-    prev_sym = None
-    prev_line = ""
+    current_file = "<no file>"
+    symbols = {}
+    previous_symbol = None
+    previous_line = ""
     for key in map_files:
-        with open(map_files[key]) as f:
+        with open(map_files[key]) as file:
             data_type = "unknown"
-            for line in f:
+            for line in file:
                 if ".text" in line:
                     data_type = "text"
                 elif ".bss" in line:
@@ -104,14 +105,14 @@ def parse_map(map_files): # returns list of syms[fn] = (bin, rom, cur_file, prev
                     data_type = "data"
 
                 if "load address" in line:
-                    if "noload" in line or "noload" in prev_line:
+                    if "noload" in line or "noload" in previous_line:
                         ram_offset = None
                         continue
                     ram = int(line[16 : 16 + 18], 0)
                     rom = int(line[59 : 59 + 18], 0)
                     ram_offset = ram - rom
                     continue
-                prev_line = line
+                previous_line = line
 
                 if (
                     ram_offset is None
@@ -126,33 +127,33 @@ def parse_map(map_files): # returns list of syms[fn] = (bin, rom, cur_file, prev
                 if "0x" in fn:
                     ram_offset = None
                 elif "/" in fn:
-                    cur_file = fn
+                    current_file = fn
                 else:
-                    syms[fn] = (key, rom, cur_file, prev_sym, ram, data_type)
-                    prev_sym = fn
-    return syms
+                    symbols[key,fn] = (key, rom, current_file, previous_symbol, ram, data_type)
+                    previous_symbol = (key,fn)
+    return symbols
 
 
-def get_map_offsets(syms):
+def get_map_offsets(symbols):
     offsets = {}
-    for sym in syms:
-        if sym == "header": 
-            a = 0
-        prev_sym = syms[sym][3]
-        if sym not in offsets:
-            offsets[sym] = {}
-        if prev_sym not in offsets:
-            offsets[prev_sym] = {}
-        offsets[sym]["bin"] = syms[sym][0]
-        offsets[sym]["start"] = syms[sym][1]
-        offsets[prev_sym]["end"] = syms[sym][1]
-        offsets[sym]["data_type"] = syms[sym][5]
+    for symbol in symbols:
+        if symbol[1] == "header": 
+            a = 0 #TODO delete ??
+        previous_symbol = symbols[symbol][3]
+        if symbol not in offsets:
+            offsets[symbol] = {}
+        if previous_symbol not in offsets:
+            offsets[previous_symbol] = {}
+        offsets[symbol]["bin"] = symbols[symbol][0]
+        offsets[symbol]["start"] = symbols[symbol][1]
+        offsets[previous_symbol]["end"] = symbols[symbol][1]
+        offsets[symbol]["data_type"] = symbols[symbol][5]
     return offsets
 
 
-def is_zeros(vals):
-    for val in vals:
-        if val != 0:
+def is_zeros(values):
+    for value in values:
+        if value != 0:
             return False
     return True
 
@@ -177,6 +178,7 @@ def diff_syms(qb, tb):
     return r
 
 
+#TODO clarify b
 def get_pair_score(query_bytes, b):
     b_bytes = get_symbol_bytes(map_offsets, b)
 
@@ -190,272 +192,303 @@ def get_matches(query):
     if query_bytes is None:
         sys.exit("Symbol '" + query + "' not found")
 
-    ret = {}
+    result = {}
     for symbol in map_offsets:
         if symbol is not None and query != symbol:
             score = get_pair_score(query_bytes, symbol)
             if score >= args.threshold:
-                ret[symbol] = score
-    return OrderedDict(sorted(ret.items(), key=lambda kv: kv[1], reverse=True))
+                result[symbol] = score
+    return OrderedDict(sorted(result.items(), key=lambda kv: kv[1], reverse=True))
 
 
 def do_query(query):
     matches = get_matches(query)
-    num_matches = len(matches)
+    number_matches = len(matches)
 
-    if num_matches == 0:
+    if number_matches == 0:
         print(query + " - found no matches")
         return
 
-    i = 0
-    more_str = ":"
-    if args.num_out < num_matches:
-        more_str = " (showing only " + str(args.num_out) + "):"
+    more_message = ":"
+    if args.num_out < number_matches:
+        more_message = " (showing only " + str(args.num_out) + "):"
 
-    print(query + " - found " + str(num_matches) + " matches total" + more_str)
+    print(query[0] + " - " + query[1]  + " - found " + str(number_matches) + " matches total" + more_message)
+    
+    counter = 0
     for match in matches:
-        if i == args.num_out:
+        if counter == args.num_out:
             break
         match_str = "{:.3f} - {}".format(matches[match], match)
         if match not in s_files:
-           match_str += " (decompiled)"
+           match_str += " - (decompiled)"
         print(match_str)
-        i += 1
+        counter += 1
     print()
 
-# this does the same as def all_matches but comment the actual C files instead of outputing a .txt file
-def all_matches_comment(all_funcs_flag):
-    match_dict = dict()
-    to_match_files = list(s_files.copy())
-    c_files_list = list()
-    for root, dirs, files in os.walk(root_dir + "src"):
-                for f in files:
-                    if f.endswith(".c"):
-                        c_files_list.append(os.path.join(root, f))
-
-
-    # the following comment was already present in the papermario version, not sure to understand it...
-
-    # assumption that after half the functions have been matched, nothing of significance is left
-    # since duplicates that already have been discovered are removed from tp_match_files
-    if all_funcs_flag:
-        iter_limit = 0
-    else:
-        iter_limit = len(s_files) / 2
-
-    num_decomped_dupes = 0
-    num_undecomped_dupes = 0
-    num_perfect_dupes = 0
-
-    i = 0
-    while len(to_match_files) > iter_limit:
-        file = to_match_files[0]
-
-        i += 1
-        print("File matching progress: {:%}".format(i / (len(s_files) - iter_limit)), end='\r')
-
-        if get_symbol_length(file) < 16:
-            to_match_files.remove(file)
-            continue
-
-        matches = get_matches(file)
-        num_matches = len(matches)
-        if num_matches == 0:
-            to_match_files.remove(file)
-            continue
-
-        num_undecomped_dupes += 1
-
-        match_list = []
-        for match in matches:
-            if match in to_match_files:
-                i += 1
-                to_match_files.remove(match)
-
-            match_str = "{:.2f} - {}".format(matches[match], match)
-            if matches[match] >= 0.995:
-                num_perfect_dupes += 1
-
-            if match not in s_files:
-                num_decomped_dupes += 1
-                match_str += " (decompiled)"
-            else:
-                num_undecomped_dupes += 1
-
-            match_list.append(match_str)
-
-        match_dict.update({file: (num_matches, match_list)})
-        to_match_files.remove(file)
-
-    sorted_dict = OrderedDict(sorted(match_dict.items(), key=lambda item: item[1][0], reverse=True))
+def all_matches_comment():
+    c_files = list()
+    for root, directories, files in os.walk(root_directory + "src"):
+                for file in files:
+                    if file.endswith(".c"):
+                        c_files.append(os.path.join(root, file))
 
     print("Starting to scan .c files to comment the definitions", end='\n')
-    for file_name, matches in sorted_dict.items():
-        whole_matches = matches[1]
-        whole_matches.append("ref. - " + file_name)
-        for match in whole_matches:
-            for c_file in c_files_list:
+    for duplicatesFunctionGroups in parseTxt():
+        comment0 = "//(script generated comment, do not edit)Found duplicates:"
+        comment1 = ""
+        for duplicatesFunctionGroup in duplicatesFunctionGroups:
+            score = duplicatesFunctionGroup[0].strip('\n').strip(' ')
+            rom = duplicatesFunctionGroup[1].strip('\n').strip(' ')
+            function = duplicatesFunctionGroup[2].strip('\n').strip(' ')
+
+            if len(duplicatesFunctionGroup) > 3:
+                isDecompiled = duplicatesFunctionGroup[3].strip('\n').strip(' ')
+            else: isDecompiled = ""
+            comment1 += ", " + score + " - " + rom + " - " + function + " - " + isDecompiled
+        comment1 += '\n'
+
+        for duplicatesFunctionGroup in duplicatesFunctionGroups:
+            score = duplicatesFunctionGroup[0].strip('\n').strip(' ')
+            rom = duplicatesFunctionGroup[1].strip('\n').strip(' ')
+            function = duplicatesFunctionGroup[2].strip('\n').strip(' ')
+
+            for c_file in c_files:
                 dirty = False
                 with open(c_file, 'r') as c_file_content:
-                    copy = c_file_content.readlines()
+                    file_copy = c_file_content.readlines()
                     counter = 0
-                    for line in copy:
-                        if match[7:] in line:
-                            # ASM include
+                    for line in file_copy:
+                        if function in line and c_file.split('/')[-2].upper() == rom:
+                            # detecting ASM include
                             if line.startswith("INCLUDE_ASM"):
                                 dirty = True
                                 # detecting already present genereted comment and update it
-                                if copy[counter - 2].startswith("//Found duplicates"):
-                                        copy[counter - 1] = "//" + ',' + ','.join(whole_matches) + "\n"
+                                if file_copy[counter - 1].startswith("//(script generated comment"):
+                                        file_copy[counter - 1] = comment0 + comment1
                                 # no generated comment detected
                                 else :
-                                    copy[counter] = "//Found duplicates (script generated comment, do not edit):\n" + "//" + ','.join(whole_matches) + "\n" + line
-                            # C definition
+                                    file_copy[counter] = comment0 + comment1 + line
+                            # detecting C definition
                             elif (not line.startswith(" ") and not line.startswith("  ") and not line.startswith("/")) and not line.endswith(";\n"):
                                 dirty = True
                                 # detecting already present genereted comment and update it
-                                if copy[counter - 2].startswith("//Found duplicates"):
-                                    copy[counter - 1] = "//" + ','.join(whole_matches) + "\n"
+                                if file_copy[counter - 1].startswith("//(script generated comment"):
+                                    file_copy[counter - 1] = comment0 + comment1
                                 # no generated comment detected
                                 else :
-                                    copy[counter] = "//Found duplicates (script generated comment, do not edit):\n" + "//" + ','.join(whole_matches) + "\n" + line
-                            # C definition
+                                    file_copy[counter] = comment0 + comment1 + line
                             
                         counter += 1
+                        if dirty: break # we only want to comment what comes first the ASM include or the C definition, not both
 
                 if dirty :
                     with open(c_file, 'w') as c_file_content:
-                        c_file_content.writelines(copy)
+                        c_file_content.writelines(file_copy)
 
-            print(match + "\n")
+                print(function + "\n")
 
+def all_matches_uncomment():
+    c_files = list()
+    for root, directories, files in os.walk(root_directory + "src"):
+                for file in files:
+                    if file.endswith(".c"):
+                        c_files.append(os.path.join(root, file))
 
-def all_matches(all_funcs_flag):
+    print("Starting to scan .c files to uncomment the definitions", end='\n')
+    for c_file in c_files:
+        dirty = False
+        with open(c_file, 'r') as c_file_content:
+            file_copy = c_file_content.readlines()
+            counter = 0
+            for line in file_copy:
+                if line.startswith("//(script generated comment"):
+                        dirty = True
+                        file_copy[counter] = ""
+                counter += 1
+
+        if dirty :
+            with open(c_file, 'w') as c_file_content:
+                c_file_content.writelines(file_copy)
+
+def all_matches(all_functions_flag):
     match_dict = dict()
     to_match_files = list(s_files.copy())
 
-    # the following comment was already present in the papermario version, not sure to understand it...
-
     # assumption that after half the functions have been matched, nothing of significance is left
     # since duplicates that already have been discovered are removed from tp_match_files
-    if all_funcs_flag:
-        iter_limit = 0
+    if all_functions_flag:
+        iteration_limit = 0
     else:
-        iter_limit = len(s_files) / 2
+        iteration_limit = len(s_files) / 2
 
-    num_decomped_dupes = 0
-    num_undecomped_dupes = 0
-    num_perfect_dupes = 0
+    number_decompiled_duplicates = 0
+    number_undecompiled_duplicates = 0
+    number_perfect_duplicates = 0
 
-    i = 0
-    while len(to_match_files) > iter_limit:
+    counter = 0
+    while len(to_match_files) > iteration_limit:
         file = to_match_files[0]
 
-        i += 1
-        print("File matching progress: {:%}".format(i / (len(s_files) - iter_limit)), end='\r')
+        counter += 1
+        print("File matching progress: {:%}".format(counter / (len(s_files) - iteration_limit)), end='\r')
 
         if get_symbol_length(file) < 16:
             to_match_files.remove(file)
             continue
 
         matches = get_matches(file)
-        num_matches = len(matches)
-        if num_matches == 0:
+        number_matches = len(matches)
+        if number_matches == 0:
             to_match_files.remove(file)
             continue
 
-        num_undecomped_dupes += 1
+        number_undecompiled_duplicates += 1
 
         match_list = []
         for match in matches:
             if match in to_match_files:
-                i += 1
+                counter += 1
                 to_match_files.remove(match)
 
-            match_str = "{:.2f} - {}".format(matches[match], match)
+            four_letter_string = match[0] # aligning string for output
+            if len(four_letter_string) == 3:
+                four_letter_string += " "
+            match_string = "{:.2f} - {} - {}".format(matches[match], four_letter_string, match [1]) # 0-1 float, overlay, function name
             if matches[match] >= 0.995:
-                num_perfect_dupes += 1
+                number_perfect_duplicates += 1
 
             if match not in s_files:
-                num_decomped_dupes += 1
-                match_str += " (decompiled)"
+                number_decompiled_duplicates += 1
+                match_string += " - (decompiled)"
             else:
-                num_undecomped_dupes += 1
+                number_undecompiled_duplicates += 1
 
-            match_list.append(match_str)
+            match_list.append(match_string)
 
-        match_dict.update({file: (num_matches, match_list)})
+        match_dict.update({file: (number_matches, match_list)})
         to_match_files.remove(file)
 
-    output_match_dict(match_dict, num_decomped_dupes, num_undecomped_dupes, num_perfect_dupes, i)
+    output_match_dict(match_dict, number_decompiled_duplicates, number_undecompiled_duplicates, number_perfect_duplicates, counter)
 
 
-def output_match_dict(match_dict, num_decomped_dupes, num_undecomped_dupes, num_perfect_dupes, num_checked_files):
+def output_match_dict(match_dict, number_decompiled_duplicates, number_undecompiled_duplicates, number_perfect_duplicates, number_checked_files):
     out_file = open(datetime.today().strftime('%Y-%m-%d-%H-%M-%S') + "_all_matches.txt", "w+")
 
     out_file.write("Number of s-files: " + str(len(s_files)) + "\n"
-                   "Number of checked s-files: " + str(round(num_checked_files)) + "\n"
-                   "Number of decompiled duplicates found: " + str(num_decomped_dupes) + "\n"
-                   "Number of undecompiled duplicates found: " + str(num_undecomped_dupes) + "\n"
-                   "Number of overall exact duplicates found: " + str(num_perfect_dupes) + "\n\n")
+                   "Number of checked s-files: " + str(round(number_checked_files)) + "\n"
+                   "Number of decompiled duplicates found: " + str(number_decompiled_duplicates) + "\n"
+                   "Number of undecompiled duplicates found: " + str(number_undecompiled_duplicates) + "\n"
+                   "Number of overall exact duplicates found: " + str(number_perfect_duplicates) + "\n\n")
 
     sorted_dict = OrderedDict(sorted(match_dict.items(), key=lambda item: item[1][0], reverse=True))
 
     print("Creating output file: " + out_file.name, end='\n')
     for file_name, matches in sorted_dict.items():
-        out_file.write(file_name + " - found " + str(matches[0]) + " matches total:\n")
+        four_letter_string = file_name[0] # aligning string for output
+        if len(four_letter_string) == 3:
+            four_letter_string += " "
+        out_file.write("ref. - " + four_letter_string + " - " + file_name[1] + " - found " + str(matches[0]) + " matches total:\n")
         for match in matches[1]:
             out_file.write(match + "\n")
         out_file.write("\n")
 
     out_file.close()
 
-def is_decompiled(sym):
-    return sym not in s_files
+def is_decompiled(symbol):
+    return symbol not in s_files
 
 def do_cross_query():
-    ccount = Counter()
+    countable_dict = Counter()
     clusters = []
 
-    sym_bytes = {}
-    for sym_name in map_syms:
-        if not sym_name.startswith("D_") and \
-           not sym_name.startswith("_binary") and \
-           not sym_name.startswith("jtbl_") and \
-           not re.match(r"L[0-9A-F]{8}", sym_name):
-            if get_symbol_length(sym_name) > 16:
-                sym_bytes[sym_name] = get_symbol_bytes(map_offsets, sym_name)
+    symbol_bytes = {}
+    for symbol_name in map_symbols:
+        if not symbol_name[1].startswith("D_") and \
+           not symbol_name[1].startswith("_binary") and \
+           not symbol_name[1].startswith("jtbl_") and \
+           not re.match(r"L[0-9A-F]{8}", symbol_name[1]):
+            if get_symbol_length(symbol_name) > 16:
+                symbol_bytes[symbol_name] = get_symbol_bytes(map_offsets, symbol_name)
 
-    for sym_name, query_bytes in sym_bytes.items():
+    for symbol_name, query_bytes in symbol_bytes.items():
         cluster_match = False
         for cluster in clusters:
             cluster_first = cluster[0]
-            cluster_score = diff_syms(query_bytes, sym_bytes[cluster_first])
+            cluster_score = diff_syms(query_bytes, symbol_bytes[cluster_first])
             if cluster_score >= args.threshold:
                 cluster_match = True
-                if is_decompiled(sym_name) and not is_decompiled(cluster_first):
-                    ccount[sym_name] = ccount[cluster_first]
-                    del ccount[cluster_first]
-                    cluster_first = sym_name
+                if is_decompiled(symbol_name) and not is_decompiled(cluster_first):
+                    countable_dict[symbol_name] = countable_dict[cluster_first]
+                    del countable_dict[cluster_first]
+                    cluster_first = symbol_name
                     cluster.insert(0, cluster_first)
                 else:
-                    cluster.append(sym_name)
+                    cluster.append(symbol_name)
 
                 if not is_decompiled(cluster_first):
-                    ccount[cluster_first] += len(sym_bytes[cluster_first][0])
+                    countable_dict[cluster_first] += len(symbol_bytes[cluster_first][0])
 
                 if len(cluster) % 10 == 0 and len(cluster) >= 10:
-                    print(f"Cluster {cluster_first} grew to size {len(cluster)} - {sym_name}: {str(cluster_score)}")
+                    print(f"Cluster {cluster_first} grew to size {len(cluster)} - {symbol_name}: {str(cluster_score)}")
                 break
         if not cluster_match:
-            clusters.append([sym_name])
-    print(ccount.most_common(100))
+            clusters.append([symbol_name])
+    print(countable_dict.most_common(100))
+
+def parseTxt(file = "" ):
+    #get latest .txt
+    if file == "":
+        folder_path = root_directory
+        file_type = '*all_matches.txt'
+        files = glob.glob(folder_path + file_type)
+        if len(files) == 0:
+            sys.exit("no file of type *all_matches.txt available, aborting \n")
+        # redid the parsing of the date since "file = max(files, key=os.path.getctime)" was sometimes wrong if 2 .txt were created the same day ??
+        elif len (files) > 1:
+            fileDated = OrderedDict()
+            recent_file = None
+            recent_file_date = datetime(1, 1, 1, 0, 0, 0)
+            for file in files:
+                files_name = file.split('/')[-1]
+                file_year = int(files_name.split('-')[0])
+                file_month = int(files_name.split('-')[1])
+                file_day = int(files_name.split('-')[2])
+                file_hour = int(files_name.split('-')[3])
+                file_min = int(files_name.split('-')[4])
+                file_sec = int(files_name.split('-')[5][0:1])
+                date = datetime(file_year, file_month, file_day, file_hour, file_min, file_sec)
+                if date > recent_file_date:
+                    recent_file = file
+
+        print("latest file is" + recent_file)
+
+    # rebuild the list of function based on the choosen txt
+    duplicates_group_list = []
+    group_list = []
+    with open(recent_file, 'r') as file:
+        line_counter = 0
+        for line in file:
+            if line_counter < 6: # skipping the first few lines
+                line_counter += 1
+                continue
+            elif len(line) < 3: #if line only contains /n
+                duplicates_group_list.append(group_list)
+                group_list = []
+            else:
+                line_split = line.split(" - ")
+                if len(line_split) < 4:
+                    group_list.append((line.split(" - ")[0],line.split(" - ")[1], line.split(" - ")[2]))
+                else :
+                    group_list.append((line.split(" - ")[0],line.split(" - ")[1], line.split(" - ")[2], line.split(" - ")[3]))
+    return duplicates_group_list
 
 
 parser = argparse.ArgumentParser(description="Tool to find duplicates for a specific function or to find all duplicates across the codebase.")
 group = parser.add_mutually_exclusive_group()
 group.add_argument("-a", "--all", help="find ALL duplicates and output them into a file", action='store_true', required=False)
-group.add_argument("-ac", "--allcomment", help="same as --all but comment the .c files instead of outputing a txt file", action='store_true', required=False)
+group.add_argument("-ac", "--allcomment", help="take the output txt file of --all and comment the .c files", action='store_true', required=False)
+group.add_argument("-auc", "--alluncomment", help="undo --allcomment", action='store_true', required=False)
 group.add_argument("-c", "--cross", help="do a cross query over the codebase", action='store_true', required=False)
 group.add_argument("-s", "--short", help="find MOST duplicates besides some very small duplicates. Cuts the runtime in half with minimal loss", action='store_true', required=False)
 parser.add_argument("query", help="function or file", nargs='?', default=None)
@@ -470,17 +503,18 @@ if __name__ == "__main__":
     map_files = dict()
     for key in roms_bytes :
         for root, dirs, files in os.walk(build_dir):
-                for f in files:
-                    if key.lower() + ".map" == f or "st"+ key.lower() + ".map" == f:
-                        map_files[key] = os.path.join(root, f)
+                for file in files:
+                    if key.lower() + ".map" == file or "st"+ key.lower() + ".map" == file:
+                        map_files[key] = os.path.join(root, file)
     
-    map_syms = parse_map(map_files)
-    map_offsets = get_map_offsets(map_syms)
+    map_symbols = parse_map(map_files)
+    map_offsets = get_map_offsets(map_symbols)
 
     s_files = get_all_s_files()
 
     # directory of a file or function
-    query_dir = find_dir(args.query)
+    # TODO: directory feature currently broken, not sure the effort to fix is worth atm
+    query_dir = find_directory(args.query)
 
     if query_dir is not None:
         files = os.listdir(query_dir)
@@ -497,10 +531,11 @@ if __name__ == "__main__":
             answer = input("This will comment and saves 2 lines before duplicated functions in all .c files, \nare you sure you want to continue ? (y/n) \n")
             if answer.lower() in ["y","yes"]:
                 args.threshold = 0.985
-                all_matches_comment(True)
+                all_matches_comment()
             else:
                 print ("aborted \n")
-
+        elif args.alluncomment:
+            all_matches_uncomment()
             
         elif args.short:
             args.threshold = 0.985
@@ -509,4 +544,11 @@ if __name__ == "__main__":
             if args.query is None:
                 parser.print_help()
             else:
-                do_query(args.query)
+                try:
+                    do_query((args.query.split(" ")[0],args.query.split(" ")[1]))
+                except:
+                    # same as above but considering any func with the name accross all rom, not only one
+                    for rom, function in map_symbols:
+                        if args.query == function:
+                            do_query((rom, function))
+                            break
