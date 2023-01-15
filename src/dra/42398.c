@@ -2581,12 +2581,9 @@ void func_800F8754(MenuContext* context, s32 x, s32 y) {
     DrawMenuStr(c_strSystem, curX, y + 52, context);
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F8858);
-#else
 void func_800F8858(MenuContext* context) {
     s32 i = 0;
-    const char** pStrEquipTypes = c_strSSword;
+    const char** pStrEquipTypes = &c_strSSword;
     s32 phi_s2 = 8;
     s32* phi_s1 = &D_8003CACC;
 
@@ -2600,7 +2597,6 @@ void func_800F8858(MenuContext* context) {
     func_800F5E68(context, D_80137618, (s16)context->cursorX + 2,
                   (s16)context->cursorY + 4, 0x48, 0x10, 0, 1);
 }
-#endif
 
 void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
     func_800F5904(context, x, y, 16, 16, (index & 7) * 16,
