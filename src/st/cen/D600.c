@@ -239,12 +239,12 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B7C);
 
 u8 func_80194BE8(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-u8 func_80194C20(ObjInit2* arg0, ObjInit2* arg1) {
+u8 func_80194C20(Entity* arg0, Entity* arg1) {
     u16 x;
     u16 y;
 
-    x = arg1->zPriority - arg0->zPriority;
-    y = arg1->palette - arg0->palette;
+    x = arg1->posX.Data.high - arg0->posX.Data.high;
+    y = arg1->posY.Data.high - arg0->posY.Data.high;
 
     return func_80194BE8(x, y);
 }
