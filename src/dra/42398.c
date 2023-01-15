@@ -4584,7 +4584,20 @@ void func_8011678C(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801167D0);
+void func_801167D0(void) {
+    s32* accelerationX = &PLAYER.accelerationX;
+    PLAYER.accelerationY = 0;
+    *accelerationX = 0;
+    if (D_80072EF6 != 2) {
+        PLAYER.step = 0x28;
+        PLAYER.unk2E = 0;
+        PLAYER.accelerationY = 0;
+        *accelerationX = 0;
+        PLAYER.unkAC = 0xCF;
+        PLAYER.animationFrameIndex = 0;
+        PLAYER.animationFrameDuration = 0;
+    }
+}
 
 bool func_80116838(void) {
     if ((g_EntityArray->unk2E != 0) &&
