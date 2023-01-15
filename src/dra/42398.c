@@ -894,7 +894,19 @@ void func_800E91B0(void) {
     TestEvent(D_80073078);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9208);
+s32 func_800E9208(void) {
+    while (true) {
+        if (TestEvent(D_8007EFD8) == 1) {
+            return 1;
+        } else if (TestEvent(D_8007EFDC) == 1) {
+            return 2;
+        } else if (TestEvent(D_8007EFE0) == 1) {
+            return 3;
+        } else if (TestEvent(D_80086FE4) == 1) {
+            return 4;
+        }
+    }
+}
 
 void func_800E928C(void) {
     TestEvent(D_8007EFD8);
