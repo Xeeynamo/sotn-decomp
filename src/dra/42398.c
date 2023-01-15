@@ -885,7 +885,18 @@ s32 func_800E908C(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E912C);
+s32 func_800E912C(void) {
+    if (TestEvent(D_80073068) == 1) {
+        return 1;
+    } else if (TestEvent(D_8007306C) == 1) {
+        return 2;
+    } else if (TestEvent(D_80073070) == 1) {
+        return 3;
+    } else if (TestEvent(D_80073078) == 1) {
+        return 4;
+    }
+    return 0;
+}
 
 void func_800E91B0(void) {
     TestEvent(D_80073068);
