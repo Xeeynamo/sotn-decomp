@@ -2757,7 +2757,7 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-// https://decomp.me/scratch/6BXwg 95.81%
+// https://decomp.me/scratch/VmuNt 99.46%
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9E18);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9F40);
