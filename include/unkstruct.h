@@ -246,25 +246,25 @@ typedef struct Unkstruct_80128BBC {
 } Unkstruct_80128BBC;
 
 typedef struct {
-    u32 unk0;
-    u32 unk4;
-    u32 unk8;
-    u32 unkC;
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
-    u32 unk1C;
-    u32 unk20;
+    /* 0x00 */ u32 unk0;
+    /* 0x04 */ u32 unk4;
+    /* 0x08 */ u32 unk8;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u32 unk10;
+    /* 0x14 */ u32 unk14;
+    /* 0x18 */ u32 unk18;
+    /* 0x1C */ u32 unk1C;
+    /* 0x20 */ u32 unk20;
 } Unkstruct_Entrypoint;
 
 typedef struct Unkstruct_aSimCBinDemoKey {
-    s32 unk0;
-    s8 unk4;
-    char pad5[0x3];
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-    s32 unk14;
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s8 unk4;
+    /* 0x05 */ char pad5[0x3];
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
 } Unkstruct_aSimCBinDemoKey;
 
 typedef struct Unkstruct_800A2D98 {
