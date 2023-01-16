@@ -6,6 +6,10 @@
 
 #include "stage.h"
 
+extern const char* D_801A7984;
+extern const char* D_801A7990;
+extern const char* D_801A799C;
+
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
@@ -122,11 +126,6 @@ void EntityLockCamera(Entity* entity) {
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A805C);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8328);
-
-// INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8620);
-extern s8 D_801A7984;
-extern s8 D_801A7990;
-extern s8 D_801A799C;
 
 void func_801A8620(Entity* entity) {
     s16 dist;
