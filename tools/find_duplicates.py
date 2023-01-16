@@ -116,14 +116,18 @@ def parse_map(map_files): # returns list of syms[key,fn] = (bin, rom, cur_file, 
 
                 if (
                     ram_offset is None
-                    or "=" in line
                     or "*fill*" in line
                     or " 0x" not in line
                 ):
                     continue
+
                 ram = int(line[16 : 16 + 18], 0)
                 rom = ram - ram_offset
-                fn = line.split()[-1]
+                if ("=" in line):
+                    fn = line.split()[-3]
+                else:
+                    fn = line.split()[-1]
+
                 if "0x" in fn:
                     ram_offset = None
                 elif "/" in fn:
