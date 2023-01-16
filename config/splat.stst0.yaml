@@ -14,9 +14,10 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".sbss"
 segments:
   - name: stst0
     type: code
@@ -24,14 +25,15 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x580, rodata]
-      - [0x770, rodata]
-      - [0x990, rodata]
-      - [0xAB0, rodata]
-      - [0x279AC, rodata]
+      - [0x0, data]
+      - [0x580, data]
+      - [0x770, data]
+      - [0x990, data]
+      - [0xAB0, data]
+      - [0x279AC, .rodata, 27D64]
+      - [0x279E8, rodata]
       - [0x27ACC, rodata]
       - [0x27BFC, rodata]
       - [0x27D64, c]
-      - [0x3EB00, data]
+      - [0x3EB00, sbss]
   - [0x425C4]
