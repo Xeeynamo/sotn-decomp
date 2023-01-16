@@ -2757,7 +2757,7 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-// https://decomp.me/scratch/6BXwg 95.81%
+// https://decomp.me/scratch/VmuNt 99.46%
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9E18);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F9F40);
@@ -4590,7 +4590,41 @@ void func_80115BB0(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115C50);
+void func_80115C50(void) {
+    s32 dist;
+
+    if (g_mapProgramId == PROGRAM_TOP) {
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x1F40) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x1F40) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+
+    if (g_mapProgramId == 0x2B) {
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x20C0) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x20C0) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115DA0);
 
@@ -4604,14 +4638,14 @@ void func_801166A4(void) {
     switch (PLAYER.unk2E) {
     case 0:
         func_80113EE0();
-        D_80072F60 = 0x8166;
+        D_80072F60[0] = 0x8166;
         D_80072F04 = 6;
         PLAYER.accelerationX = 0;
         PLAYER.accelerationY = 0;
         PLAYER.unkAC = 0x33;
         func_8011AAFC(g_CurrentEntity, 0, 0);
         func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
-        PLAYER.unk2E += 1;
+        PLAYER.unk2E++;
         break;
 
     case 1:
@@ -4896,7 +4930,39 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011AC3C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B190);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
+void func_8011B334(Entity* entity) {
+    Unkstruct_8011B334 temp;
+
+    if (PLAYER.unk2E != 0x70) {
+        func_80106590(entity);
+        return;
+    }
+
+    entity->unk34 = 0x60000;
+    entity->facing = PLAYER.facing;
+    entity->posY.i.hi = PLAYER.posY.i.hi;
+    entity->posX.i.hi = PLAYER.posX.i.hi;
+    D_80072F60[2] &= 0xFF7F;
+
+    if (entity->step == 0) {
+        func_800FE728(0, &temp, 0);
+        entity->unk40 = temp.unk8;
+        entity->unk42 = temp.unkC;
+        entity->unk3C = temp.unk28;
+        entity->unk49 = temp.unk1A;
+        entity->unk58 = temp.unk26;
+        entity->unk6A = temp.unk2A;
+        entity->objectRoomIndex = temp.unk30;
+        func_80118894(entity);
+        entity->unk10 = 9;
+        entity->unk12 = 0x15;
+        entity->hitboxWidth = 4;
+        entity->hitboxHeight = 5;
+        entity->step++;
+    } else if (entity->unk48 == 1) {
+        D_80072F60[2] |= 0x80;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
