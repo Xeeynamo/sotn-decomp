@@ -30,7 +30,7 @@ segments:
       - [0x770, data]
       - [0x990, data]
       - [0xAB0, data]
-      - [0x279AC, .rodata, 27D64]
+      - [0x27984, .rodata, 27D64]
       - [0x279E8, rodata]
       - [0x27ACC, rodata]
       - [0x27BFC, rodata]

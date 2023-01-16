@@ -131,9 +131,9 @@ void func_801A8620(Entity* entity) {
     s16 dist;
     s32 subId = (s16)entity->subId;
 
-    FntPrint(&D_801A7984, subId);
-    FntPrint(&D_801A7990, g_CurrentRoom.left);
-    FntPrint(&D_801A799C, g_CurrentRoom.right);
+    FntPrint("set:%04x\n", subId);
+    FntPrint("sx:%04x\n", g_CurrentRoom.left);
+    FntPrint("ex:%04x\n", g_CurrentRoom.right);
 
     switch (entity->step) {
     case 0:
