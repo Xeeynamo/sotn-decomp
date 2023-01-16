@@ -130,11 +130,11 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8328);
 void func_801A8620(Entity* entity) {
     s16 dist;
     s32 subId = (s16)entity->subId;
-    
+
     FntPrint(&D_801A7984, subId);
     FntPrint(&D_801A7990, g_CurrentRoom.left);
     FntPrint(&D_801A799C, g_CurrentRoom.right);
-    
+
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_801805BC);
@@ -142,7 +142,7 @@ void func_801A8620(Entity* entity) {
         entity->animationFrame = 1;
         entity->zPriority = 0xB0;
         break;
-        
+
     case 1:
         dist = entity->posY.i.hi - PLAYER.posY.i.hi;
         dist = ABS(dist);
@@ -156,7 +156,7 @@ void func_801A8620(Entity* entity) {
                     entity->step++;
                 }
                 break;
-                
+
             case 1:
                 if (playerX < 0x180) {
                     g_CurrentRoom.x = 0x180;
@@ -164,7 +164,7 @@ void func_801A8620(Entity* entity) {
                     entity->step++;
                 }
                 break;
-                
+
             case 3:
                 if (playerX < 0x100) {
                     g_CurrentRoom.x = 0x100;
@@ -172,42 +172,42 @@ void func_801A8620(Entity* entity) {
                     entity->step++;
                 }
                 break;
-                
+
             case 5:
                 if (playerX < 0x80) {
                     g_CurrentRoom.x = 0x80;
                     entity->step++;
                 }
                 break;
-                
+
             case 6:
                 if (playerX > 0x480) {
                     g_CurrentRoom.width = 0x480;
                     entity->step++;
                 }
                 break;
-                
+
             case 7:
                 if (playerX > 0x480) {
                     g_CurrentRoom.width = 0x480;
                     entity->step++;
                 }
                 break;
-                
+
             case 8:
                 if (playerX < 0x80) {
                     g_CurrentRoom.x = 0x80;
                     entity->step++;
                 }
                 break;
-                
+
             case 9:
                 if (playerX > 0x280) {
                     g_CurrentRoom.width = 0x280;
                     entity->step++;
                 }
                 break;
-                
+
             case 10:
                 if (playerX < 0x180) {
                     g_CurrentRoom.x = 0x180;
@@ -215,7 +215,7 @@ void func_801A8620(Entity* entity) {
                     entity->step++;
                 }
                 break;
-                
+
             case 11:
                 if (playerX > 0x280) {
                     g_CurrentRoom.width = 0x280;
@@ -223,7 +223,7 @@ void func_801A8620(Entity* entity) {
                     entity->step++;
                 }
                 break;
-                
+
             case 12:
                 if (playerX < 0x180) {
                     g_CurrentRoom.x = 0x180;
@@ -231,7 +231,7 @@ void func_801A8620(Entity* entity) {
                     entity->step++;
                 }
                 break;
-                
+
             case 2:
             case 4:
             case 13:
