@@ -440,6 +440,20 @@ typedef struct {
     /* 8003C7B0 */ void (*unk3C)();
 } Overlay;
 
+typedef struct RoomDimensions {
+    /* 0x00 */ s32 hSize;
+    /* 0x04 */ s32 vSize;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 left;
+    /* 0x0F */ s32 top;
+    /* 0x12 */ s32 right;
+    /* 0x16 */ s32 bottom;
+    /* 0x1A */ s32 x;
+    /* 0x1E */ s32 y;
+    /* 0x22 */ s32 width;
+    /* 0x26 */ s32 height;
+} RoomDimensions;
+
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*g_pfnFreePolygons)(s32);
@@ -701,8 +715,9 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern u16 D_80073092;
-extern u16 g_CurrentRoomHSize;
-extern u16 g_CurrentRoomVSize;
+extern RoomDimensions g_CurrentRoom;
+extern s32 g_CurrentRoomHSize;
+extern s32 g_CurrentRoomVSize;
 extern s32 D_800730AC;
 extern s32 g_CurrentRoomLeft;
 extern s32 g_CurrentRoomTop;

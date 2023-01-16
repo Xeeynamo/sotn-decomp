@@ -4590,7 +4590,41 @@ void func_80115BB0(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115C50);
+void func_80115C50(void) {
+    s32 dist;
+
+    if (g_mapProgramId == PROGRAM_TOP) {
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x1F40) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x1F40) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+
+    if (g_mapProgramId == 0x2B) {
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x20C0) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = ABS(dist);
+
+        if ((dist - 0x20C0) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80115DA0);
 
