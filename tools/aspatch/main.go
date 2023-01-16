@@ -65,7 +65,7 @@ func patchLine(w *bufio.Writer, line string) error {
 			w.WriteString(line)
 		case 9: // variant with pointer
 			if tokens[3] != "," || tokens[5] != "(" || tokens[8] != ")" {
-				return fmt.Errorf("unable to parse '%s'", line)
+				return fmt.Errorf("unable to parse '%s': token keys not recognised", line)
 			}
 
 			op := tokens[0]
@@ -84,8 +84,10 @@ func patchLine(w *bufio.Writer, line string) error {
 				// fallback
 				w.WriteString(line)
 			}
+		case 10: // variant with label
+			w.WriteString(line)
 		default:
-			return fmt.Errorf("unable to parse '%s'", line)
+			return fmt.Errorf("unable to parse '%s': len(tokens)=%d", line, len(tokens))
 		}
 	default:
 		w.WriteString(line)
