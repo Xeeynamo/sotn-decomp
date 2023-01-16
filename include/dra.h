@@ -445,13 +445,13 @@ typedef struct RoomDimensions {
     /* 0x04 */ s32 vSize;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 left;
-    /* 0x0F */ s32 top;
-    /* 0x12 */ s32 right;
-    /* 0x16 */ s32 bottom;
-    /* 0x1A */ s32 x;
-    /* 0x1E */ s32 y;
-    /* 0x22 */ s32 width;
-    /* 0x26 */ s32 height;
+    /* 0x10 */ s32 top;
+    /* 0x14 */ s32 right;
+    /* 0x18 */ s32 bottom;
+    /* 0x1C */ s32 x;
+    /* 0x20 */ s32 y;
+    /* 0x24 */ s32 width;
+    /* 0x28 */ s32 height;
 } RoomDimensions;
 
 typedef struct {
