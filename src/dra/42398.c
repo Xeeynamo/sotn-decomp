@@ -4440,17 +4440,17 @@ void func_80111CC0(void) {
 }
 
 bool func_80111D24(void) {
-    s32 sp10[9]; // !FAKE: There's a struct inside the stack.
+    CollisionResult collisionResult;
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.i.hi;
     s16 posY = PLAYER.posY.i.hi;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
-    CheckCollision(posX - 7, posY, (s32*)&sp10, 0);
-    hitboxLeftMargin = sp10[0] & 0x10;
-    CheckCollision(posX + 7, posY, (s32*)&sp10, 0);
-    hitboxRightMargin = sp10[0] & 0x10;
+    CheckCollision(posX - 7, posY, &collisionResult, 0);
+    hitboxLeftMargin = collisionResult.unk0 & 0x10;
+    CheckCollision(posX + 7, posY, &collisionResult, 0);
+    hitboxRightMargin = collisionResult.unk0 & 0x10;
 
     if (hitboxRightMargin & hitboxLeftMargin) {
         func_8010E390(speed);
@@ -5079,7 +5079,30 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80125330);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80125A30);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80125B6C);
+s32 func_80125B6C(s16 arg0, s16 arg1) {
+    CollisionResult collisionResult;
+    s16 var_a1;
+
+    if (g_CurrentEntity->accelerationX == 0) {
+        return 0;
+    }
+
+    CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
+                   g_CurrentEntity->posY.i.hi + arg0, &collisionResult, 0);
+    if (g_CurrentEntity->accelerationX > 0) {
+        var_a1 = collisionResult.unk14;
+    } else {
+        var_a1 = collisionResult.unk1C;
+    }
+
+    if (collisionResult.unk0 & 2) {
+        g_CurrentEntity->posX.i.lo = 0;
+        g_CurrentEntity->posX.i.hi += var_a1;
+        return 2;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80125C2C);
 
