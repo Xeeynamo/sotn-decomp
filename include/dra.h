@@ -523,6 +523,15 @@ typedef struct {
     /* 8003C8B4 END*/
 } GameEngine; /* size=0x140 */
 
+typedef struct CollisionResult {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ u8 pad0[16];
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u8 pad1[6];
+    /* 0x1C */ u16 unk1C;
+    /* 0x20 */ u8 pad2[4];
+} CollisionResult; /* size=0x24 */
+
 // main
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -1125,7 +1134,7 @@ void ReadPads(void);
 void ClearBackbuffer(void);
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
-s32 CheckCollision(s32, s16, s32*, s32);
+s32 CheckCollision(s32, s32, CollisionResult*, s32);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);
