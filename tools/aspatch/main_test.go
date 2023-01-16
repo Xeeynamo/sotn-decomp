@@ -19,6 +19,7 @@ func TestIgnorePatch(t *testing.T) {
 		"#comment\n",
 		"\tlh\t$2,65535($4)\n",
 		"\tlh\t$2,D_801809EC\n",
+		"\tlw\t$2,$L37($2)\n",
 	} {
 		t.Run(tcase, func(t *testing.T) {
 			assertPatch(t, tcase, tcase)
