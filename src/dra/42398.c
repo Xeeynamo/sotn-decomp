@@ -4645,7 +4645,7 @@ void func_801166A4(void) {
         PLAYER.unkAC = 0x33;
         func_8011AAFC(g_CurrentEntity, 0, 0);
         func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
-        PLAYER.unk2E += 1;
+        PLAYER.unk2E++;
         break;
 
     case 1:
