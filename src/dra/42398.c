@@ -4604,7 +4604,7 @@ void func_801166A4(void) {
     switch (PLAYER.unk2E) {
     case 0:
         func_80113EE0();
-        D_80072F60 = 0x8166;
+        D_80072F60[0] = 0x8166;
         D_80072F04 = 6;
         PLAYER.accelerationX = 0;
         PLAYER.accelerationY = 0;
@@ -4896,7 +4896,39 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011AC3C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B190);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B334);
+void func_8011B334(Entity* entity) {
+    Unkstruct_8011B334 temp;
+
+    if (PLAYER.unk2E != 0x70) {
+        func_80106590(entity);
+        return;
+    }
+
+    entity->unk34 = 0x60000;
+    entity->facing = PLAYER.facing;
+    entity->posY.i.hi = PLAYER.posY.i.hi;
+    entity->posX.i.hi = PLAYER.posX.i.hi;
+    D_80072F60[2] &= 0xFF7F;
+
+    if (entity->step == 0) {
+        func_800FE728(0, &temp, 0);
+        entity->unk40 = temp.unk8;
+        entity->unk42 = temp.unkC;
+        entity->unk3C = temp.unk28;
+        entity->unk49 = temp.unk1A;
+        entity->unk58 = temp.unk26;
+        entity->unk6A = temp.unk2A;
+        entity->objectRoomIndex = temp.unk30;
+        func_80118894(entity);
+        entity->unk10 = 9;
+        entity->unk12 = 0x15;
+        entity->hitboxWidth = 4;
+        entity->hitboxHeight = 5;
+        entity->step++;
+    } else if (entity->unk48 == 1) {
+        D_80072F60[2] |= 0x80;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 
