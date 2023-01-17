@@ -1,0 +1,141 @@
+name: Update progress
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+      - '**/*.md'
+  pull_request_target:
+    paths-ignore:
+      - '.github/workflows/**'
+      - '*.md'
+      - '**/*.md'
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
+      - name: Clone main repository
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+      - name: Clone game data repository
+        uses: actions/checkout@v2
+        with:
+          repository: xeeynamo/sotn-decomp-private
+          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          path: 'data'
+      - name: Copy game data
+        run: |
+          mkdir -p iso
+          cp -r data/psx_us10/* ./iso
+      - name: Split game data
+        run: make -j extract
+      - name: Build binaries
+        run: make -j build
+      - name: Check if they match
+        run: make check
+      - name: Remove clutter from build folder
+        run: rm -rf build/asm build/src
+      - name: Export build folder
+        if: github.ref == 'push' && github.ref_name == 'master'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+  update-progress:
+    if: github.ref == 'push' && github.ref_name == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repository
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+      - name: Clone asset repository
+        uses: actions/checkout@v2
+        with:
+          ref: 'gh-report'
+          path: 'gh-report'
+      - name: Set-up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Generate progress report
+        run: |
+            mkdir -p gh-report/assets
+            python tools/report_progress.py DRA.BIN 630 src/dra > gh-report/assets/progress-dra.json
+            python tools/report_progress.py RIC.BIN 155 src/ric > gh-report/assets/progress-ric.json
+            python tools/report_progress.py CEN.BIN 128 src/st/cen > gh-report/assets/progress-cen.json
+            python tools/report_progress.py DRE.BIN 136 src/st/dre > gh-report/assets/progress-dre.json
+            python tools/report_progress.py MAD.BIN 116 src/st/mad > gh-report/assets/progress-mad.json
+            python tools/report_progress.py NO3.BIN 210 src/st/no3 > gh-report/assets/progress-no3.json
+            python tools/report_progress.py NP3.BIN 214 src/st/np3 > gh-report/assets/progress-np3.json
+            python tools/report_progress.py NZ0.BIN 135 src/st/nz0 > gh-report/assets/progress-nz0.json
+            python tools/report_progress.py SEL.BIN 164 src/st/sel > gh-report/assets/progress-sel.json
+            python tools/report_progress.py ST0.BIN 160 src/st/st0 > gh-report/assets/progress-st0.json
+            python tools/report_progress.py WRP.BIN 110 src/st/wrp > gh-report/assets/progress-wrp.json
+            python tools/report_progress.py RWRP.BIN 110 src/st/rwrp > gh-report/assets/progress-rwrp.json
+      - name: Commit report
+        run: |
+            git config --global user.name 'GitHub Action' 
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git commit -m 'Update progress' || true
+            git push
+        working-directory: gh-report
+  generate-duplicates-report:
+    if: github.ref == 'push' && github.ref_name == 'master'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
+      - name: Clone main repository
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+      - name: Clone game data repository
+        uses: actions/checkout@v2
+        with:
+          repository: xeeynamo/sotn-decomp-private
+          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          path: 'data'
+      - name: Copy game data
+        run: |
+          mkdir -p iso
+          cp -r data/psx_us10/* ./iso
+      - name: Split game data
+        run: make -j extract
+      - name: Obtain built binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+      - name: Clone asset repository
+        uses: actions/checkout@v2
+        with:
+          ref: 'gh-duplicates'
+          path: 'gh-duplicates'
+      - name: Set-up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install secondary pre-requirements
+        run: pip3 install -r tools/requirements-python.txt
+      - name: Generate duplicates report
+        run: python3 tools/find_duplicates.py -a
+      - name: Rename output file into something more meaningful
+        run: mv *_all_matches.txt gh-duplicates/duplicates.txt
+      - name: Commit all reports
+        run: |
+            git config --global user.name 'GitHub Action' 
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git commit -m 'Update duplicates' || true
+            git push
+        working-directory: gh-duplicates
