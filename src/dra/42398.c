@@ -1074,6 +1074,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9C14);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA2B0);
 
 // This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
+// probably aspsx
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA48C);
 #else
