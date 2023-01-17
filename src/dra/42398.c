@@ -991,7 +991,7 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
 
     new_var = arg4 << 0xD;
     device = open(savePath, 0x8002);
-    
+
     if (device == (-1)) {
         return -1;
     } else {
