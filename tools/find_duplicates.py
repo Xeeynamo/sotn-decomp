@@ -17,20 +17,20 @@ build_dir = root_dir + "build/"
 
 
 def read_roms():
-    bins = dict()
-    bins["MAIN"] = open(root_dir + "iso/SLUS_000.67", "rb").read()
-    bins["DRA"] = open(root_dir + "iso/DRA.BIN", "rb").read()
-    bins["RIC"] = open(root_dir + "iso/BIN/RIC.BIN", "rb").read()
-    bins["CEN"] = open(root_dir + "iso/ST/CEN/CEN.BIN", "rb").read()
-    bins["DRE"] = open(root_dir + "iso/ST/DRE/DRE.BIN", "rb").read()
-    bins["MAD"] = open(root_dir + "iso/ST/MAD/MAD.BIN", "rb").read()
-    bins["NO3"] = open(root_dir + "iso/ST/NO3/NO3.BIN", "rb").read()
-    bins["NP3"] = open(root_dir + "iso/ST/NP3/NP3.BIN", "rb").read()
-    bins["NZ0"] = open(root_dir + "iso/ST/NZ0/NZ0.BIN", "rb").read()
-    bins["ST0"] = open(root_dir + "iso/ST/ST0/ST0.BIN", "rb").read()
-    bins["WRP"] = open(root_dir + "iso/ST/WRP/WRP.BIN", "rb").read()
-    bins["RWRP"] = open(root_dir + "iso/ST/RWRP/RWRP.BIN", "rb").read()
-    return bins
+    roms = dict()
+    roms["MAIN"] = open(root_directory + "build/main.exe", "rb").read()
+    roms["DRA"] = open(root_directory + "build/DRA.BIN", "rb").read()
+    roms["RIC"] = open(root_directory + "build/RIC.BIN", "rb").read()
+    roms["CEN"] = open(root_directory + "build/CEN.BIN", "rb").read()
+    roms["DRE"] = open(root_directory + "build/DRE.BIN", "rb").read()
+    roms["MAD"] = open(root_directory + "build/MAD.BIN", "rb").read()
+    roms["NO3"] = open(root_directory + "build/NO3.BIN", "rb").read()
+    roms["NP3"] = open(root_directory + "build/NP3.BIN", "rb").read()
+    roms["NZ0"] = open(root_directory + "build/NZ0.BIN", "rb").read()
+    roms["ST0"] = open(root_directory + "build/ST0.BIN", "rb").read()
+    roms["WRP"] = open(root_directory + "build//WRP.BIN", "rb").read()
+    roms["RWRP"] = open(root_directory + "build/RWRP.BIN", "rb").read()
+    return roms
 
 
 def find_dir(query):
