@@ -1079,8 +1079,7 @@ typedef struct {
     u8 data[19];
 } Block;
 
-void func_800EA48C(char* dstSaveName, s32 saveSlot)
-{
+void func_800EA48C(char* dstSaveName, s32 saveSlot) {
     *(Block*)dstSaveName = *(Block*)aBaslus00067dra;
     dstSaveName[0x10] += saveSlot / 10;
     dstSaveName[0x11] += saveSlot % 10;
