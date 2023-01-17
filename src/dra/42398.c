@@ -977,7 +977,9 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     s8 savePath[32];
     s32 new_var;
     s32 device;
+
     sprintf(savePath, &g_strMemcardSavePath, arg0, arg1, arg2);
+
     if (arg5 == 1) {
         device = open(savePath, (arg4 << 0x10) | 0x200);
         if (device == (-1)) {
@@ -986,8 +988,10 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
             close(device);
         }
     }
+
     new_var = arg4 << 0xD;
     device = open(savePath, 0x8002);
+    
     if (device == (-1)) {
         return -1;
     } else {
