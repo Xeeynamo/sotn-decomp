@@ -1069,7 +1069,23 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E9C14);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA2B0);
 
+// This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EA48C);
+#else
+extern const char aBaslus00067dra[];
+
+typedef struct {
+    u8 data[19];
+} Block;
+
+void func_800EA48C(char* dstSaveName, s32 saveSlot)
+{
+    *(Block*)dstSaveName = *(Block*)aBaslus00067dra;
+    dstSaveName[0x10] += saveSlot / 10;
+    dstSaveName[0x11] += saveSlot % 10;
+}
+#endif
 
 extern Unkstruct_8006C3CC D_8006C3CC[];
 
