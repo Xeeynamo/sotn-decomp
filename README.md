@@ -67,6 +67,10 @@ There are a few tricks to make the process more streamlined:
 1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
 1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it.
 
+## Duplicate functions
+
+Due to how the game is structured, a lot of duplicate code can be found across the different overlays. We [track a live list of possible duplicate functions](https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates/duplicates.txt) that is useful to avoid trying to decompile functions that have been already decompiled elsewhere.
+
 ## Resources
 
 * Project Documentation [Style Guide](https://github.com/Xeeynamo/sotn-decomp/blob/master/docs/STYLE.md)
