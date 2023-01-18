@@ -5627,7 +5627,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801309B4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80130E94);
 
-// https://decomp.me/scratch/d9hfG
+// https://decomp.me/scratch/d9hfG TODO: jumptable splat
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013136C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801315F8);
