@@ -5677,7 +5677,35 @@ void func_80131FCC(void) {
     D_8013B680 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132028);
+u8 func_80132028(u_char com, u_char* param, u_char* result) {
+    s32 ret = CdSync(1, D_80138F2C);
+
+    D_801396F0 = ret;
+
+    if (com == 0x10) {
+        if (ret == 2) {
+            goto block_9;
+        } else {
+            goto block_6;
+        }
+    } else if ((*D_80138F2C & 0x10) || (*D_80138F2C & 4)) {
+    block_6:
+        CdControl(1, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if (ret == 2) {
+    block_9:
+        if (CdControl(com, param, result)) {
+            D_8013B680 = 0;
+            return D_8013B680;
+        }
+        goto block_12;
+    }
+block_12:
+    D_8013B680 = 1;
+
+    return D_8013B680;
+}
 
 void func_80132134(void) {
     g_volumeL = 127;

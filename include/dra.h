@@ -1063,6 +1063,7 @@ extern s32 D_80138460;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern u8 D_80138F24[]; // Confirmed part of an array / struct
+extern u8 D_80138F2C[];
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s32 D_80138FB0;
@@ -1081,6 +1082,7 @@ extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
+extern s32 D_801396F0;
 extern u16 D_801396F4;
 extern s32 D_801397FC;
 extern s16 D_80139804;
@@ -1259,7 +1261,7 @@ void func_801321FC(void);
 void func_80132134(void);
 s32 func_80132264(void);
 s32 func_801326D8(void);
-void func_80132028(s32, s8*, s32);
+u8 func_80132028(u_char com, u_char* param, u_char* result);
 void func_8013271C(void);
 void func_80132760(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
