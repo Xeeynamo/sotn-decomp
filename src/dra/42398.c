@@ -5838,9 +5838,8 @@ void func_80132760(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801327B4);
 
 // https://decomp.me/scratch/0X5YL
-// Only stack
-// decompme output is different, local repo does a better match
-#ifndef NON_EQUIVALENT
+// Matches with gcc 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132A04);
 #else
 void func_801327B4(s16, s16, s16, s16, s16, s16, s16, s16);
