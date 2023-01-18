@@ -790,6 +790,7 @@ extern Entity D_800736C8; // g_EntityArray[4]
 extern Entity D_80073F98; // g_EntityArray[16]
 extern u16 D_80073FBE;    // g_EntityArray[16].objectId
 extern Entity D_80073FC4; // g_EntityArray[16].step
+extern Entity D_800741CC; // g_EntityArray[19]
 extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
