@@ -5976,8 +5976,57 @@ void func_8013415C(void) {
     func_801321FC();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801341B4);
-void func_801341B4();
+void func_801341B4(void) {
+    s32 temp;
+
+    switch (D_8013AE80) {
+    case 0:
+        D_801390A0 = 1;
+        D_80139A78 = 0;
+        D_8013AE80++;
+        break;
+
+    case 1:
+        D_80139A78++;
+        if (g_volumeL > 0) {
+            temp = g_volumeR * D_80139A6C * D_80139A78;
+            if (temp < 0) {
+                temp += 0x1FF;
+            }
+            g_volumeL = g_volumeR - (temp >> 9);
+            if (g_volumeL >> 0x10) {
+                g_volumeL = 0;
+            }
+        } else {
+            g_volumeL = 0;
+        }
+        SsSetMVol(g_volumeL, g_volumeL);
+        if (g_volumeL == 0) {
+            D_8013AE80++;
+        }
+        break;
+
+    case 2:
+        func_80131FA4(0);
+        func_801337B4();
+        func_80132C2C(3);
+        D_800BD1C4 = 3;
+        D_8013AE80++;
+        break;
+
+    case 3:
+        D_800BD1C4--;
+        if (D_800BD1C4 == 0) {
+            func_8013415C();
+        default:
+            D_8013AE80 = 0;
+            D_801390A0 = D_8013AE80;
+            D_8013B61C = 0;
+            func_80132E38();
+        }
+        break;
+    }
+}
 
 void func_80134388(void) {
     s32 temp;
@@ -6020,8 +6069,6 @@ void func_80134388(void) {
         break;
     }
 }
-
-void func_80134388();
 
 extern Unkstruct_80138FB4* D_801390C8;
 

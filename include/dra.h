@@ -958,6 +958,7 @@ extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
+extern s32 D_800BD1C4;
 extern s32 D_800DC4C0;
 extern s8 D_800DC4C4;
 extern u8 D_800BF554[];
