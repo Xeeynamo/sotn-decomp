@@ -5682,7 +5682,7 @@ u8 func_80132028(u_char com, u_char* param, u_char* result) {
 
     D_801396F0 = ret;
 
-    if (com == 0x10) {
+    if (com == CdlGetlocL) {
         if (ret == 2) {
             goto block_9;
         } else {
@@ -5690,7 +5690,7 @@ u8 func_80132028(u_char com, u_char* param, u_char* result) {
         }
     } else if ((*D_80138F2C & 0x10) || (*D_80138F2C & 4)) {
     block_6:
-        CdControl(1, 0, 0);
+        CdControl(CdlNop, 0, 0);
         D_8013B680 = 2;
         return D_8013B680;
     } else if (ret == 2) {
