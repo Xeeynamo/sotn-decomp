@@ -592,7 +592,7 @@ void func_800E5358(void) {
     POLY_GT4* poly = &D_80086FEC[D_8013640C];
     s32 i;
 
-    for (i = -3; i < 0x100; i++, poly = (POLY_GT4*)poly->tag) {
+    for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {
         if ((i >= 0) && (poly->y0 <= 256)) {
             if (poly->p1 != 0) {
                 poly->p1--;
