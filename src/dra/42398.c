@@ -3535,7 +3535,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801027C4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801028AC);
 
 // https://decomp.me/scratch/8D47k
-// That's either a compiler flag, wrong compiler, or aspsx issue
+// Matches in gcc 2.6.0, aspsx
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102CD8);
 #else
