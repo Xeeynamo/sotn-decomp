@@ -18,18 +18,18 @@ build_dir = root_dir + "build/"
 
 def read_roms():
     roms = dict()
-    roms["MAIN"] = open(root_directory + "build/main.exe", "rb").read()
-    roms["DRA"] = open(root_directory + "build/DRA.BIN", "rb").read()
-    roms["RIC"] = open(root_directory + "build/RIC.BIN", "rb").read()
-    roms["CEN"] = open(root_directory + "build/CEN.BIN", "rb").read()
-    roms["DRE"] = open(root_directory + "build/DRE.BIN", "rb").read()
-    roms["MAD"] = open(root_directory + "build/MAD.BIN", "rb").read()
-    roms["NO3"] = open(root_directory + "build/NO3.BIN", "rb").read()
-    roms["NP3"] = open(root_directory + "build/NP3.BIN", "rb").read()
-    roms["NZ0"] = open(root_directory + "build/NZ0.BIN", "rb").read()
-    roms["ST0"] = open(root_directory + "build/ST0.BIN", "rb").read()
-    roms["WRP"] = open(root_directory + "build//WRP.BIN", "rb").read()
-    roms["RWRP"] = open(root_directory + "build/RWRP.BIN", "rb").read()
+    roms["MAIN"] = open(root_dir + "build/main.exe", "rb").read()
+    roms["DRA"] = open(root_dir + "build/DRA.BIN", "rb").read()
+    roms["RIC"] = open(root_dir + "build/RIC.BIN", "rb").read()
+    roms["CEN"] = open(root_dir + "build/CEN.BIN", "rb").read()
+    roms["DRE"] = open(root_dir + "build/DRE.BIN", "rb").read()
+    roms["MAD"] = open(root_dir + "build/MAD.BIN", "rb").read()
+    roms["NO3"] = open(root_dir + "build/NO3.BIN", "rb").read()
+    roms["NP3"] = open(root_dir + "build/NP3.BIN", "rb").read()
+    roms["NZ0"] = open(root_dir + "build/NZ0.BIN", "rb").read()
+    roms["ST0"] = open(root_dir + "build/ST0.BIN", "rb").read()
+    roms["WRP"] = open(root_dir + "build//WRP.BIN", "rb").read()
+    roms["RWRP"] = open(root_dir + "build/RWRP.BIN", "rb").read()
     return roms
 
 
@@ -54,6 +54,8 @@ def get_all_s_files():
 
 
 def get_symbol_length(sym_name):
+    if not sym_name in map_offsets:
+        return 0
     offset = map_offsets[sym_name]
     if "end" in offset and "start" in offset:
         return map_offsets[sym_name]["end"] - map_offsets[sym_name]["start"]

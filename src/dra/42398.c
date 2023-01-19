@@ -588,7 +588,31 @@ void func_800E4A04(void) { s32 pad[3]; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4A14);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5358);
+void func_800E5358(void) {
+    POLY_GT4* poly = &D_80086FEC[D_8013640C];
+    s32 i;
+
+    for (i = -3; i < 0x100; i++, poly = (POLY_GT4*)poly->tag) {
+        if ((i >= 0) && (poly->y0 <= 256)) {
+            if (poly->p1 != 0) {
+                poly->p1--;
+            } else {
+                if ((poly->p2 < 10) && (rand() & 1)) {
+                    poly->p2++;
+                } else {
+                    if (!(rand() & 3)) {
+                        poly->y0++;
+                        poly->y1++;
+                    }
+                    poly->y0++;
+                    poly->y1++;
+                }
+                poly->y2++;
+                poly->y3++;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5498);
 
