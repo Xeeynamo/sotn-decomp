@@ -3502,7 +3502,7 @@ void func_80102628(s32 arg0) {
 
 void func_801026BC(s32 arg0) {
     POLY_GT4* poly = &D_80086FEC[D_801379A0];
-    
+
     if (arg0 == 0) {
         poly->pad3 = 8;
         return;
