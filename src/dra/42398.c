@@ -3502,12 +3502,11 @@ void func_80102628(s32 arg0) {
 
 void func_801026BC(s32 arg0) {
     POLY_GT4* poly = &D_80086FEC[D_801379A0];
-    
+
     if (arg0 == 0) {
         poly->pad3 = 8;
         return;
-    }
-    if (!(g_mapProgramId & 0x20)) {
+    } else if (!(g_mapProgramId & 0x20)) {
         SetPolyRect(poly, 0, 1, 255, 255);
     } else {
         poly->x2 = 255;
@@ -3519,12 +3518,14 @@ void func_801026BC(s32 arg0) {
         poly->y3 = -15;
         poly->y2 = -15;
     }
+
     func_80107250(poly, arg0 * 2);
+
     if (arg0 == 0x40) {
         poly->pad3 = 0;
-        return;
+    } else {
+        poly->pad3 = 0x35;
     }
-    poly->pad3 = 0x35;
 }
 
 void func_801027A4(void) { func_801026BC(0); }
