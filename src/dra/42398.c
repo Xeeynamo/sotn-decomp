@@ -614,7 +614,26 @@ void func_800E5358(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5498);
+void func_800E5498(void) {
+    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    GpuBuffer* buffer = D_8006C37C;
+
+    poly->code = (poly->code | 2) & 254;
+    SetPolyRect(poly, 0, 0, 256, 256);
+    poly->u0 = 16;
+    poly->v0 = 16;
+    poly->u1 = 24;
+    poly->v1 = 16;
+    poly->u2 = 16;
+    poly->v2 = 24;
+    poly->u3 = 24;
+    poly->v3 = 24;
+    func_801072BC(poly);
+    poly->tpage = 0x5A;
+    poly->clut = D_8003C3C2[0];
+    AddPrim(&buffer->_unk_0474[0x1FF], poly);
+    D_80097930[0]++;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5584);
 

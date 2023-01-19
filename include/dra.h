@@ -536,6 +536,7 @@ typedef struct CollisionResult {
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern u16 D_8003C104[];
+extern u16 D_8003C3C2[]; // confirmed array
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
@@ -846,6 +847,7 @@ extern s32 D_80097914;
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern Unkstruct_Entrypoint D_8009792C;
+extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;
 extern u8 D_80097964[];
