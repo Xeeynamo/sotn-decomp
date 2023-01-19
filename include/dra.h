@@ -186,20 +186,6 @@ typedef struct {
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
-typedef enum {
-    ENTITY_STEP_0,
-    ENTITY_STEP_1,
-    ENTITY_STEP_2,
-    ENTITY_STEP_3,
-    ENTITY_STEP_4,
-    ENTITY_STEP_5,
-    ENTITY_STEP_6,
-    ENTITY_STEP_7,
-    ENTITY_STEP_17 = 0x17,
-    ENTITY_STEP_19 = 0x19,
-    ENTITY_STEP_22 = 0x22
-} EntitySteps;
-
 typedef enum { MONO, STEREO } SoundMode;
 
 typedef struct {

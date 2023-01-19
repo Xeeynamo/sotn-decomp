@@ -4229,7 +4229,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
-    PLAYER.step = ENTITY_STEP_2;
+    PLAYER.step = 2;
     PLAYER.unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
@@ -4246,7 +4246,7 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         PLAYER.accelerationY = 0;
         PLAYER.accelerationX = 0;
-        func_8010D584(ENTITY_STEP_6);
+        func_8010D584(6);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
         return;
@@ -4454,7 +4454,7 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    PLAYER.step = ENTITY_STEP_0;
+    PLAYER.step = 0;
     PLAYER.unk2E = 3;
     func_8010E390(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
@@ -4548,16 +4548,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
 
-    if (g_EntityArray[UNK_ENTITY_10].step == ENTITY_STEP_5) {
+    if (g_EntityArray[UNK_ENTITY_10].step == 5) {
         if (collision == false) {
             func_80106590(&g_EntityArray[UNK_ENTITY_10]);
             return true;
         }
         return false;
-    } else if (g_EntityArray[UNK_ENTITY_10].step <= ENTITY_STEP_2) {
-        if (g_EntityArray[UNK_ENTITY_10].step != ENTITY_STEP_0) {
+    } else if (g_EntityArray[UNK_ENTITY_10].step <= 2) {
+        if (g_EntityArray[UNK_ENTITY_10].step != 0) {
             D_80072F66 = 0;
-            g_EntityArray[UNK_ENTITY_10].step = ENTITY_STEP_3;
+            g_EntityArray[UNK_ENTITY_10].step = 3;
         }
     }
     return false;
@@ -4941,13 +4941,13 @@ void func_8011A328(Entity* entity, s32 arg1) {
     Unkstruct_8011A328 sp10;
 
     func_800FD9D4(&sp10, arg1);
-    entity->unk40 = sp10.sp28;
-    entity->unk42 = sp10.sp26;
-    entity->unk3C = sp10.sp20;
-    entity->unk49 = sp10.sp1D;
-    entity->unk58 = sp10.sp1E;
-    entity->unk6A = sp10.sp22;
-    entity->objectRoomIndex = sp10.sp24;
+    entity->unk40 = sp10.unk18;
+    entity->unk42 = sp10.unk16;
+    entity->unk3C = sp10.unk10;
+    entity->unk49 = sp10.unk0D;
+    entity->unk58 = sp10.unk0E;
+    entity->unk6A = sp10.unk12;
+    entity->objectRoomIndex = sp10.unk14;
     func_80118894(entity);
 }
 
@@ -4966,7 +4966,7 @@ loop_1: // !FAKE: this should be a for loop
     objectId = entity->objectId;
 
     if (objectId != 0) {
-        if (entity->step == ENTITY_STEP_0) {
+        if (entity->step == 0) {
             if ((u32)(entity->objectId - 0xD0) < 0x10) {
                 entity->pfnUpdate = (PfnEntityUpdate)D_8016FCC0[objectId];
             } else {
@@ -5047,7 +5047,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         func_80106590(entity);
-    } else if (entity->step == ENTITY_STEP_0) {
+    } else if (entity->step == 0) {
         entity->unk34 = 0x60000;
         func_8011A328(entity, 5);
         entity->step++;
@@ -5182,7 +5182,7 @@ void func_80124A8C(Entity* entity) {
         s32 playerStep_temp = *playerStep; // might be !FAKE:
 
         switch (entity->step) {
-        case ENTITY_STEP_0:
+        case 0:
             entity->animationSet = 0x11;
             entity->accelerationY = -0x6000;
             func_8010E390(0x4000);
@@ -5198,7 +5198,7 @@ void func_80124A8C(Entity* entity) {
             entity->step = playerStep_temp;
             break;
 
-        case ENTITY_STEP_1:
+        case 1:
             entity->posX.val += entity->accelerationX;
             entity->posY.val += entity->accelerationY;
 
@@ -5353,7 +5353,7 @@ void func_80127CC8(Entity* entity) {
     POLY_GT4* poly;
     s32 ret;
 
-    if (PLAYER.step != ENTITY_STEP_22) {
+    if (PLAYER.step != 34) {
         func_80106590(entity);
         return;
     }
@@ -5361,7 +5361,7 @@ void func_80127CC8(Entity* entity) {
     entity->posX.i.hi = PLAYER.posX.i.hi;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         ret = func_800EDC80(3, 1);
         entity->firstPolygonIndex = ret;
 
@@ -5391,7 +5391,7 @@ void func_80127CC8(Entity* entity) {
         entity->step++;
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         if (entity->unk7C.s++ >= 0xE) {
             func_80106590(entity);
             return;
@@ -5472,7 +5472,7 @@ void func_8012B78C(Entity* entity) {
     s32 ret;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         ret = func_800EDC80(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
@@ -5502,14 +5502,14 @@ void func_8012B78C(Entity* entity) {
         }
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         if (++entity->unk7C.s > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;
         break;
 
-    case ENTITY_STEP_2:
+    case 2:
         func_80106590(entity);
         return;
 
@@ -5532,7 +5532,7 @@ bool func_8012C88C(void) {
     if ((PLAYER.unk2E != 0) && (PLAYER.unk2E != 8)) {
         if (((D_8009744C != 0) && (func_800FE3A8(0xE) == 0)) ||
             (D_80072EEC & 2) || (func_800FEEA4(2, 1) < 0)) {
-            func_8010D584(ENTITY_STEP_19);
+            func_8010D584(25);
             func_8010DA48(0xCA);
             D_800AFDA6 = 1;
             PLAYER.palette = 0x810D;
