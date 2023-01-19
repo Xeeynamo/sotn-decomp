@@ -3502,12 +3502,10 @@ void func_80102628(s32 arg0) {
 
 void func_801026BC(s32 arg0) {
     POLY_GT4* poly;
-    u16 pad3;
 
     poly = &D_80086FEC[D_801379A0];
     if (arg0 == 0) {
-        pad3 = 8;
-        poly->pad3 = pad3;
+        poly->pad3 = 8;
         return;
     }
     if (!(g_mapProgramId & 0x20)) {
@@ -3527,8 +3525,7 @@ void func_801026BC(s32 arg0) {
         poly->pad3 = 0;
         return;
     }
-    pad3 = 0x35;
-    poly->pad3 = pad3;
+    poly->pad3 = 0x35;
 }
 
 void func_801027A4(void) { func_801026BC(0); }
