@@ -296,7 +296,7 @@ $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 SHELL = /bin/bash -e -o pipefail
 
 .PHONY: all, clean, format, check, expected
-.PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
+.PHONY: main, dra, ric, dre, lib, mad, no3, np3, st0, wrp, rwrp
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: require-tools,update-dependencies
