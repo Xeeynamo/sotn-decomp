@@ -6183,7 +6183,14 @@ void PlaySfx(s16 sfxId) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013493C);
+void func_8013493C(s16 arg0, s16 arg1) {
+    D_8013AE84[arg1] = D_8013B678[arg0];
+    D_8013B620[arg1] = D_801390AC[arg0];
+    D_8013B614[arg1] = D_80139058[arg0];
+    D_8013B66C[arg1] = D_80139814[arg0];
+    D_8013B5EC[arg1] = D_80139018[arg0];
+    D_8013B628[arg1] = D_801390B4[arg0];
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801349F4);
 
