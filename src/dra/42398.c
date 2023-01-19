@@ -3084,7 +3084,7 @@ void func_800FD874(u16 context, s32 arg1) {
         if (*temp_a0 == 1) {
             *temp_a0 = temp_a1;
             if (arg1 != 0) {
-                i = *(&D_800A7734 + (temp_a2 << 5));
+                i = D_800A7734[temp_a2 << 5];
             }
             phi_a0 = cursorY;
             phi_a1 = 0;
@@ -3103,7 +3103,7 @@ void func_800FD874(u16 context, s32 arg1) {
                 phi_a1 += 1;
                 goto loop_8;
             }
-            if ((arg1 != 0) && (i != *(&D_800A7734 + (temp_v1 << 5)))) {
+            if ((arg1 != 0) && (i != D_800A7734[temp_v1 << 5])) {
                 goto block_12;
             }
 
