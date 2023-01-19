@@ -3507,7 +3507,8 @@ void func_801026BC(s32 arg0) {
     poly = &D_80086FEC[D_801379A0];
     if (arg0 == 0) {
         pad3 = 8;
-        goto block_7;
+        poly->pad3 = pad3;
+        return;
     }
     if (!(g_mapProgramId & 0x20)) {
         SetPolyRect(poly, 0, 1, 255, 255);
@@ -3527,7 +3528,6 @@ void func_801026BC(s32 arg0) {
         return;
     }
     pad3 = 0x35;
-block_7:
     poly->pad3 = pad3;
 }
 
