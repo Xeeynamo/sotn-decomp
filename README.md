@@ -19,6 +19,7 @@ This repo does not include any assets or assembly code necessary for compiling t
 | `d076912661e67a38afae0a1b5044ab5f10bcfb39` | RIC.BIN    | ![progress RIC.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-ric.json)
 | `42226b6d9ed24448eed61b3c6cd2949e96bebab6` | ST/CEN.BIN | ![progress CEN.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-cen.json)
 | `e42976f45b47d1c4912a198ae486b77ee6d77c9c` | ST/DRE.BIN | ![progress DRE.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dre.json)
+| `ddd108c3a9ec564d34063e5008685a9a41f8eabd` | ST/LIB.BIN | ![progress LIB.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-lib.json)
 | `adb3303e1ea707c63dfa978511a88cab4f61970a` | ST/MAD.BIN | ![progress MAD.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-mad.json)
 | `5d06216b895ab5ff892c88b0d9eff67ff16e2bd1` | ST/NO3.BIN | ![progress NO3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-no3.json)
 | `7c78a2bec6a26acfb62456e7f517915fe0c0e3f5` | ST/NP3.BIN | ![progress NP3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-np3.json)

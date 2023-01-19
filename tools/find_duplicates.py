@@ -23,6 +23,7 @@ def read_roms():
     roms["RIC"] = open(root_directory + "build/RIC.BIN", "rb").read()
     roms["CEN"] = open(root_directory + "build/CEN.BIN", "rb").read()
     roms["DRE"] = open(root_directory + "build/DRE.BIN", "rb").read()
+    roms["LIB"] = open(root_directory + "build/LIB.BIN", "rb").read()
     roms["MAD"] = open(root_directory + "build/MAD.BIN", "rb").read()
     roms["NO3"] = open(root_directory + "build/NO3.BIN", "rb").read()
     roms["NP3"] = open(root_directory + "build/NP3.BIN", "rb").read()

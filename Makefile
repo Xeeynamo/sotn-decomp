@@ -80,7 +80,7 @@ define link
 endef
 
 all: build check
-build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp
+build: main dra ric cen dre lib mad no3 np3 nz0 sel st0 wrp rwrp
 clean:
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
@@ -127,6 +127,10 @@ $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
 
 dre: stdre_dirs $(BUILD_DIR)/DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
+	$(OBJCOPY) -O binary $< $@
+
+lib: stlib_dirs $(BUILD_DIR)/LIB.BIN
+$(BUILD_DIR)/LIB.BIN: $(BUILD_DIR)/stlib.elf
 	$(OBJCOPY) -O binary $< $@
 
 mad: stmad_dirs $(BUILD_DIR)/MAD.BIN
@@ -214,7 +218,7 @@ st%_dirs:
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp
+extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stlib extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools
@@ -241,6 +245,7 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
 	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
 	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
+	cp $(BUILD_DIR)/LIB.BIN $(DISK_DIR)/ST/LIB/LIB.BIN
 	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
 	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
 	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
