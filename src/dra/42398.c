@@ -647,18 +647,10 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0) {
-            // Probably commented/ifdef'd out code
-        }
-        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0) {
-            // Probably commented/ifdef'd out code
-        }
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0) {
-            // Probably commented/ifdef'd out code
-        }
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0) {
-            // Probably commented/ifdef'd out code
-        }
+        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0);
+        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0);
+        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0);
+        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0);
     }
 }
 
@@ -3550,6 +3542,7 @@ void func_80102CD8(s32 arg0) {
 }
 #endif
 
+// https://decomp.me/scratch/NNXbc
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102D08);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102D70);
