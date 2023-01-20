@@ -15,13 +15,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  dump_contexts_to_log:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
   build-and-test:
+    # build-and-test cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the game's data repository
+    if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
       - name: Install requirements
@@ -49,13 +46,13 @@ jobs:
       - name: Remove clutter from build folder
         run: rm -rf build/asm build/src
       - name: Export build folder
-        if: github.ref == 'push' && github.ref_name == 'master'
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         uses: actions/upload-artifact@v3
         with:
           name: build
           path: build
   update-progress:
-    if: github.ref == 'push' && github.ref_name == 'master'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository
@@ -95,7 +92,7 @@ jobs:
             git push
         working-directory: gh-report
   generate-duplicates-report:
-    if: github.ref == 'push' && github.ref_name == 'master'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
