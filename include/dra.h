@@ -849,7 +849,7 @@ extern s32 D_80097934;
 extern u32 D_80097944;
 extern u8 D_80097964[];
 extern u8 D_8009796E;
-extern u8 D_8009798A;
+extern s8 D_8009798A[];
 extern u8 D_80097A8D;
 extern u32 D_80097BE4;
 extern s32 g_playerLevel;
@@ -935,6 +935,7 @@ extern const char* c_strTime;
 extern const char* c_strALUCART;
 extern const char* c_strSSword;
 extern s32 D_800A4B04;
+extern Unkstruct_800A4B12 D_800A4B1D[];
 extern s32 D_800A7718;
 extern u16 D_800A7734[];
 extern s8 D_800A841C[];  // related to player MP
