@@ -647,10 +647,14 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0);
-        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0);
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0);
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0);
+        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0)
+            ;
+        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0)
+            ;
+        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0)
+            ;
+        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0)
+            ;
     }
 }
 
