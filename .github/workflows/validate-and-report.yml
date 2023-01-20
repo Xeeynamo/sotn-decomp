@@ -16,16 +16,19 @@ on:
 
 jobs:
   build-and-test:
+    # build-and-test cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the game's data repository
+    if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
       - name: Clone game data repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: xeeynamo/sotn-decomp-private
           token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
@@ -43,26 +46,26 @@ jobs:
       - name: Remove clutter from build folder
         run: rm -rf build/asm build/src
       - name: Export build folder
-        if: github.ref == 'push' && github.ref_name == 'master'
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         uses: actions/upload-artifact@v3
         with:
           name: build
           path: build
   update-progress:
-    if: github.ref == 'push' && github.ref_name == 'master'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
       - name: Clone asset repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: 'gh-report'
           path: 'gh-report'
       - name: Set-up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Generate progress report
@@ -89,18 +92,18 @@ jobs:
             git push
         working-directory: gh-report
   generate-duplicates-report:
-    if: github.ref == 'push' && github.ref_name == 'master'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
       - name: Clone game data repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: xeeynamo/sotn-decomp-private
           token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
@@ -117,12 +120,12 @@ jobs:
           name: build
           path: build
       - name: Clone asset repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: 'gh-duplicates'
           path: 'gh-duplicates'
       - name: Set-up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements

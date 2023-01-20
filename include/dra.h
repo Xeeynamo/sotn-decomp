@@ -186,20 +186,6 @@ typedef struct {
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
-typedef enum {
-    ENTITY_STEP_0,
-    ENTITY_STEP_1,
-    ENTITY_STEP_2,
-    ENTITY_STEP_3,
-    ENTITY_STEP_4,
-    ENTITY_STEP_5,
-    ENTITY_STEP_6,
-    ENTITY_STEP_7,
-    ENTITY_STEP_17 = 0x17,
-    ENTITY_STEP_19 = 0x19,
-    ENTITY_STEP_22 = 0x22
-} EntitySteps;
-
 typedef enum { MONO, STEREO } SoundMode;
 
 typedef struct {
@@ -536,6 +522,7 @@ typedef struct CollisionResult {
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern u16 D_8003C104[];
+extern u16 D_8003C3C2[]; // confirmed array
 extern Unkstruct5* D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C730;
@@ -790,6 +777,7 @@ extern Entity D_800736C8; // g_EntityArray[4]
 extern Entity D_80073F98; // g_EntityArray[16]
 extern u16 D_80073FBE;    // g_EntityArray[16].objectId
 extern Entity D_80073FC4; // g_EntityArray[16].step
+extern Entity D_800741CC; // g_EntityArray[19]
 extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
@@ -845,11 +833,12 @@ extern s32 D_80097914;
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern Unkstruct_Entrypoint D_8009792C;
+extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;
 extern u8 D_80097964[];
 extern u8 D_8009796E;
-extern u8 D_8009798A;
+extern s8 D_8009798A[];
 extern u8 D_80097A8D;
 extern u32 D_80097BE4;
 extern s32 g_playerLevel;
@@ -862,6 +851,8 @@ extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
 extern PlayerMP g_playerMP;
 extern s32 g_playerMpMax;
+extern s32 D_80097C14;
+extern s32 D_80097C18;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
@@ -871,7 +862,10 @@ extern s8 D_80097D37;
 extern s32 D_800987B4;
 extern s32 D_80098850;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
+extern u32 D_800A0158;
+extern s32 D_800A015C;
 extern s32 D_800A04EC;
+extern s32 D_800A04F8;
 extern s32 D_800A0510[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
@@ -891,8 +885,11 @@ extern u16 D_800A2F48[];
 extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
+extern u32 player_equip_head[];
+extern u32 player_equip_body;
+extern s32 player_equip_cloak;
+extern s32 player_equip_ring1;
 extern s32 player_equip_ring2;
-extern s32 player_equip_head[];
 extern Unkstruct10 D_800A2464[];
 extern const char* c_strALUCARD;
 extern const char* c_strSTR;
@@ -932,6 +929,7 @@ extern const char* c_strTime;
 extern const char* c_strALUCART;
 extern const char* c_strSSword;
 extern s32 D_800A4B04;
+extern Unkstruct_800A4B12 D_800A4B1D[];
 extern s32 D_800A7718;
 extern u16 D_800A7734[];
 extern s8 D_800A841C[];  // related to player MP
@@ -957,6 +955,7 @@ extern RECT c_backbufferClear;
 extern s32 D_800B0914;
 extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
+extern s32 D_800BD1C4;
 extern s32 D_800DC4C0;
 extern s8 D_800DC4C4;
 extern u8 D_800BF554[];
@@ -985,6 +984,7 @@ extern s32 D_801362F4;
 extern s32 D_801362F8;
 extern s32 D_801362FC;
 extern s32 g_softResetTimer;
+extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
@@ -1063,16 +1063,22 @@ extern s32 D_80138460;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern u8 D_80138F24[]; // Confirmed part of an array / struct
+extern u8 D_80138F2C[];
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s32 D_80138FB0;
 extern s16 D_80138FC4;
 extern s16 D_80139000;
 extern s16 D_80139008;
+extern s8 D_80139018[];
 extern s32 D_8013900C;
 extern s16 D_8013901C;
 extern u8 D_80139020;
+extern s8 D_80139058[];
+extern u8 D_801390A0;
 extern u8 D_801390A8;
+extern s16 D_801390AC[];
+extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
@@ -1081,23 +1087,30 @@ extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
+extern s32 D_801396F0;
 extern u16 D_801396F4;
 extern s32 D_801397FC;
 extern s16 D_80139804;
 extern s32 D_8013980C;
 extern u8 D_80139810;
+extern s16 D_80139814[];
+extern s16 D_80139820;
 extern s32 D_80139828[];
 extern s32 D_80139834[];
+extern s16 D_80139A6C;
 extern s16 D_80139A70;
+extern s16 D_80139A78;
 extern s16 D_8013AE7C;
-extern s16 D_8013AE8C;
+extern volatile unsigned char D_8013AE80;
 extern s16 D_8013AE84[];
+extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
 extern s16 D_8013AE94;
 extern s32 D_8013AE9C;
 extern s16 D_8013AED4[];
 extern s16 g_volumeL;
 extern s16 g_volumeR;
+extern s16 D_8013B678[];
 extern s16 D_8013B698;
 extern s16 D_8013AEE0;
 extern u8 D_8013AEEC;
@@ -1208,7 +1221,7 @@ s32 func_800FD6C4(s32);
 u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
 s32 func_800FD77C(s32 arg0, s32 arg1);
-bool func_800FD7C0(s32, s32);
+u32 func_800FD7C0(u32 itemNum, u32 compareType);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
@@ -1258,8 +1271,9 @@ void func_8013216C(void);
 void func_801321FC(void);
 void func_80132134(void);
 s32 func_80132264(void);
+void func_80132C2C(s16);
 s32 func_801326D8(void);
-void func_80132028(s32, s8*, s32);
+u8 func_80132028(u_char com, u_char* param, u_char* result);
 void func_8013271C(void);
 void func_80132760(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,

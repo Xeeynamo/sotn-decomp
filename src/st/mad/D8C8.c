@@ -1072,7 +1072,7 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
     u16 var_v1;
     u32 temp_a0;
 
-    if (entity->step == ENTITY_STEP_0) {
+    if (entity->step == 0) {
         temp_v0_2 = entity->subId;
         temp_a0 = temp_v0_2 & 0xFFFF;
         var_v1 = temp_v0_2;
