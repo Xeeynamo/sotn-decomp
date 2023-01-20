@@ -48,21 +48,24 @@ typedef struct {
 } LayoutObject; // size = 0xA
 
 typedef struct {
-    /* 00 */ s16 unk0;
-    /* 02 */ s16 unk2;
-    /* 04 */ s16 unk4;
-    /* 06 */ s16 unk6;
-    /* 08 */ s16 unk8;
-    /* 0A */ s16 unkA;
-    /* 0C */ s16 unkC;
-    /* 0E */ s16 unkE;
-    /* 10 */ s16 unk10;
-    /* 12 */ s16 unk12;
-    /* 14 */ s16 unk14;
-    /* 16 */ s16 unk16;
-    /* 18 */ s16 unk18;
-    /* 1A */ s16 unk1A;
-} UnkOvelrayStruct; // size = 0xC
+    /* 00 */ s16 flags;
+    /* 02 */ s16 offsetx;
+    /* 04 */ s16 offsety;
+    /* 06 */ s16 width;
+    /* 08 */ s16 height;
+    /* 0A */ s16 clut;
+    /* 0C */ s16 tileset;
+    /* 0E */ s16 left;
+    /* 10 */ s16 top;
+    /* 12 */ s16 right;
+    /* 14 */ s16 bottom;
+    /* 16 */ s16 padding;
+} SpritePart;
+
+typedef struct {
+    /* 00 */ u16 count;
+    /* 02 */ SpritePart parts[0];
+} SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 typedef void (*PfnOverlayEntry)(void);
 typedef void (*PfnLoadObjectLayout)(s32 layoutId);

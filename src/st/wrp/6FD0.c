@@ -36,7 +36,7 @@ void* D_801801EC[];
 u32 D_80181D08[];
 TileDefinition D_80182D68[];
 TileDefinition D_80186D78;
-UnkOvelrayStruct* D_80186D88[];
+SpriteParts* D_80186D88[];
 void func_80188514(void);
 
 void* g_pStUnkRoomDef[] = {
@@ -2446,13 +2446,14 @@ u32 D_80185D78[] = {
 };
 
 TileDefinition D_80186D78 = {D_80182D78, D_80183D78, D_80184D78, D_80185D78};
+// *** Unknown stuff end ***
 
-UnkOvelrayStruct D_80186DA4;
-UnkOvelrayStruct D_80186DC0;
-UnkOvelrayStruct D_80186DDC;
-UnkOvelrayStruct D_80186DF8;
-UnkOvelrayStruct D_80186E14;
-UnkOvelrayStruct* D_80186D88[] = {
+SpriteParts D_80186DA4;
+SpriteParts D_80186DC0;
+SpriteParts D_80186DDC;
+SpriteParts D_80186DF8;
+SpriteParts D_80186E14;
+SpriteParts* D_80186D88[] = {
     /* 6D88 */ 0x00000000,
     /* 6D8C */ &D_80186DA4,
     /* 6D90 */ &D_80186DC0,
@@ -2462,26 +2463,30 @@ UnkOvelrayStruct* D_80186D88[] = {
     /* 6DA0 */ 0x00000000,
 };
 
-UnkOvelrayStruct D_80186DA4 = {
-    1, 0, -4, -4, 8, 8, 6, 60, 128, 128, 136, 136, 0, 0,
+SpriteParts D_80186DA4 = {
+    1,
+    {0, -4, -4, 8, 8, 6, 60, 128, 128, 136, 136},
 };
 
-UnkOvelrayStruct D_80186DC0 = {
-    1, 0, -4, -4, 8, 8, 6, 60, 128, 136, 136, 144, 0, 0,
+SpriteParts D_80186DC0 = {
+    1,
+    {0, -4, -4, 8, 8, 6, 60, 128, 136, 136, 144},
 };
 
-UnkOvelrayStruct D_80186DDC = {
-    1, 0, -4, -8, 8, 16, 6, 60, 128, 144, 136, 160, 0, 0,
+SpriteParts D_80186DDC = {
+    1,
+    {0, -4, -8, 8, 16, 6, 60, 128, 144, 136, 160},
 };
 
-UnkOvelrayStruct D_80186DF8 = {
-    1, 0, -8, -8, 16, 16, 6, 60, 136, 128, 152, 144, 0, 0,
+SpriteParts D_80186DF8 = {
+    1,
+    {0, -8, -8, 16, 16, 6, 60, 136, 128, 152, 144},
 };
 
-UnkOvelrayStruct D_80186E14 = {
-    1, 0, -8, -8, 16, 16, 6, 60, 136, 144, 152, 160, 0, 0,
+SpriteParts D_80186E14 = {
+    1,
+    {0, -8, -8, 16, 16, 6, 60, 136, 144, 152, 160},
 };
-// *** Unknown stuff end ***
 
 // *** rodata section start ***
 const char D_80186E30[] = "step %x\n";
