@@ -133,7 +133,7 @@ typedef struct Entity {
         } modeS8;
     } unk80; // size = 0x4
     /* 0x84 */ Multi unk84;
-    /* 0x88 */ s8 unk88;
+    /* 0x88 */ s8 unk88; // this is a Multi: refer to EntityWarpSmallRocks
     /* 0x89 */ s8 unk89;
     /* 0x8A */ s16 unk8A;
     union {
@@ -710,7 +710,7 @@ extern u32 D_80073068; // ev0
 extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
-extern u16 D_80073092;
+extern s16 D_80073092;
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomHSize;
 extern s32 g_CurrentRoomVSize;

@@ -3044,7 +3044,101 @@ void EntityWarpRoom(Entity* arg0) {
 }
 #endif
 
+// TODO this is matching, but EntityWarpRoom needs to match first due to the
+// jump table.
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpSmallRocks);
+#else
+
+void EntityWarpSmallRocks(Entity* entity) {
+    s32 x;
+    s32 y;
+    s16* y_unk;
+    s32 distance;
+    s16 radians;
+    u32* unk;
+
+    switch (entity->step) {
+    case 0:
+        unk = D_80180648;
+        InitializeEntity(D_801804C4);
+        entity->unk19 = 4;
+        entity->unk1E = Random() * 0x10;
+        entity->animationFrame = (Random() % 5) + 1;
+        if (*unk != 0) {
+            entity->posY.i.hi = (Random() & 0x1F) + 0x90;
+            entity->step = 4;
+        }
+        break;
+
+    case 1:
+        if (*D_80180648 != 0) {
+            *(u32*)(&entity->unk88) = Random() & 0x3F;
+            entity->accelerationY = -0x40000;
+            entity->step++;
+        }
+        break;
+
+    case 2:
+        if (*(u32*)&entity->unk88 != 0) {
+            *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
+        } else {
+            MoveEntity();
+            entity->accelerationY += 0x4000;
+            if (entity->accelerationY > ((s32)0xFFFF0000)) {
+                entity->unk19 = 3;
+                entity->unk1C = 0x100;
+                distance = 0x100;
+                entity->unk1A = distance;
+                entity->step++;
+            }
+        }
+        break;
+
+    case 3:
+        x = 0x80 - entity->posX.i.hi;
+        y = 0x80 - entity->posY.i.hi;
+        radians = ratan2(y, x);
+        entity->accelerationX = rcos(radians) << 5;
+        entity->accelerationY = rsin(radians) << 5;
+        MoveEntity();
+        distance = SquareRoot0(x * x + y * y) * 2;
+        if (distance >= 0x101) {
+            distance = 0x100;
+        }
+        entity->unk1A = entity->unk1C = distance;
+        if (distance < 8) {
+            DestroyEntity(entity);
+        }
+        break;
+
+    case 4:
+        unk = D_80180648;
+        entity->unk1E += 0x20;
+        entity->accelerationY = rsin(entity->unk1E) * 4;
+        if (*unk == 0) {
+            *(u32*)&entity->unk88 = 0x10;
+            entity->step++;
+        }
+        break;
+
+    case 5:
+        y_unk = &D_80073092;
+        *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
+        if (*(u32*)&entity->unk88 == 0) {
+            func_801916C4(0x644);
+        }
+        MoveEntity();
+        entity->accelerationY += 0x3000;
+        y = entity->posY.i.hi + *y_unk + 5;
+        if (y >= 209) {
+            entity->posY.i.hi = 203 - (*y_unk);
+            entity->step = 1;
+        }
+        break;
+    }
+}
+#endif
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;

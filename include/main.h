@@ -18,6 +18,7 @@ void PadInit(s32 arg0);
 int VSync(s32);
 s32 rcos(s32);
 s32 rsin(s32);
+s32 SquareRoot0(s32);
 s32 ratan2(s32, s32);
 void* DMACallback(int dma, void (*func)());
 void func_800192DC(s32 arg0, s32 arg1);
