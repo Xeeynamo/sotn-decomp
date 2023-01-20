@@ -193,13 +193,13 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ char pad0[0xD];
-    /* 0x0D */ s8 sp1D;
-    /* 0x0E */ s16 sp1E;
-    /* 0x10 */ s16 sp20;
-    /* 0x12 */ s16 sp22;
-    /* 0x14 */ s16 sp24;
-    /* 0x16 */ s16 sp26;
-    /* 0x18 */ s16 sp28;
+    /* 0x0D */ s8 unk0D;
+    /* 0x0E */ s16 unk0E;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
 } Unkstruct_8011A328;
 
 typedef struct {

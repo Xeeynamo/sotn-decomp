@@ -703,11 +703,11 @@ void func_801C07FC(Entity* entity) {
     u8 temp_v0;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         InitializeEntity(&D_80180C04);
         entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
 
-    case ENTITY_STEP_1:
+    case 1:
         temp_v0 = entity->unk7C.U8.unk0++;
         if (temp_v0 >= 5) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -856,7 +856,7 @@ void func_801C15B4(Entity* entity) {
 }
 
 void func_801C16B4(Entity* entity) {
-    if (entity->step == ENTITY_STEP_0) {
+    if (entity->step == 0) {
         InitializeEntity(D_80180BE0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
@@ -1052,7 +1052,7 @@ void func_801C4D18(Entity* entity) {
     }
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         InitializeEntity(&D_80180C70);
         entity->unk19 = 4;
         entity->accelerationY = D_801822C8[entity->subId];
@@ -1072,7 +1072,7 @@ void func_801C4D18(Entity* entity) {
         }
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         func_801C4CC0();
         if ((u16)entity->unk7C.s < 0x20) {
             if (entity->facing != 0) {
@@ -1087,7 +1087,7 @@ void func_801C4D18(Entity* entity) {
         MoveEntity();
         break;
 
-    case ENTITY_STEP_2:
+    case 2:
         func_801C4CC0();
         entity->accelerationY += 0x2000;
         MoveEntity();
@@ -1132,7 +1132,7 @@ void func_801C6494(Entity* entity) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
         entity->subId = 0;
-        entity->step = ENTITY_STEP_0;
+        entity->step = 0;
         return;
     }
 
@@ -1217,7 +1217,7 @@ void func_801C7538(Entity* entity) {
     s16 var_v0;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 4;
         entity->animationFrame = entity->subId;
@@ -1227,7 +1227,7 @@ void func_801C7538(Entity* entity) {
         entity->accelerationY -= (Random() & 0x1F) << 12;
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         MoveEntity();
         entity->accelerationY += 0x2000;
 
@@ -1253,7 +1253,7 @@ void func_801C7654(Entity* entity) {
     Unkstruct7 sp10;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         InitializeEntity(&D_80180BE0);
         entity->animationSet = 2;
         entity->palette = 0x816D;
@@ -1262,7 +1262,7 @@ void func_801C7654(Entity* entity) {
         entity->accelerationY = rsin(entity->unk1E) * 0x10;
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         AnimateEntity(&D_801825F0, entity);
         MoveEntity();
         entity->accelerationY += 0x2000;
@@ -1278,7 +1278,7 @@ void func_801C7654(Entity* entity) {
         }
         break;
 
-    case ENTITY_STEP_2:
+    case 2:
         MoveEntity();
         entity->unk1C -= 8;
         if (!(entity->unk1C << 0x10)) {
@@ -1292,7 +1292,7 @@ void func_801C77B8(Entity* entity) {
     s16 temp_v1_2;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 3;
         entity->unk1C = 0x100;
@@ -1302,7 +1302,7 @@ void func_801C77B8(Entity* entity) {
         entity->accelerationY = D_80182600[entity->subId];
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         MoveEntity();
         temp_v1_2 = entity->unk1C - 8;
         entity->accelerationY -= 0x400;
@@ -1320,11 +1320,11 @@ void func_801C7884(Entity* entity) {
     u16 subId = entity->subId;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         InitializeEntity(&D_80180BD4);
         entity->unk3C = 0;
 
-    case ENTITY_STEP_1:
+    case 1:
         MoveEntity();
         AnimateEntity(D_80181D3C[subId], entity);
 
@@ -1336,7 +1336,7 @@ void func_801C7884(Entity* entity) {
             entity->pfnUpdate = EntityBreakable;
             entity->animationFrameDuration = 0;
             entity->animationFrameIndex = 0;
-            entity->step = ENTITY_STEP_0;
+            entity->step = 0;
             entity->unk3C = 1;
         }
     }

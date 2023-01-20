@@ -600,9 +600,52 @@ void func_800E4A04(void) { s32 pad[3]; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4A14);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5358);
+void func_800E5358(void) {
+    POLY_GT4* poly = &D_80086FEC[D_8013640C];
+    s32 i;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5498);
+    for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {
+        if ((i >= 0) && (poly->y0 <= 256)) {
+            if (poly->p1 != 0) {
+                poly->p1--;
+            } else {
+                if ((poly->p2 < 10) && (rand() & 1)) {
+                    poly->p2++;
+                } else {
+                    if (!(rand() & 3)) {
+                        poly->y0++;
+                        poly->y1++;
+                    }
+                    poly->y0++;
+                    poly->y1++;
+                }
+                poly->y2++;
+                poly->y3++;
+            }
+        }
+    }
+}
+
+void func_800E5498(void) {
+    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    GpuBuffer* buffer = D_8006C37C;
+
+    poly->code = (poly->code | 2) & 254;
+    SetPolyRect(poly, 0, 0, 256, 256);
+    poly->u0 = 16;
+    poly->v0 = 16;
+    poly->u1 = 24;
+    poly->v1 = 16;
+    poly->u2 = 16;
+    poly->v2 = 24;
+    poly->u3 = 24;
+    poly->v3 = 24;
+    func_801072BC(poly);
+    poly->tpage = 0x5A;
+    poly->clut = D_8003C3C2[0];
+    AddPrim(&buffer->_unk_0474[0x1FF], poly);
+    D_80097930[0]++;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5584);
 
@@ -614,7 +657,18 @@ void func_800E6218(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6250);
+void func_800E6250(void) {
+    if (D_8006CBC4 != 0) {
+        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0)
+            ;
+        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0)
+            ;
+        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0)
+            ;
+        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0)
+            ;
+    }
+}
 
 extern unkStruct_800A872C D_800A872C[];
 
@@ -3038,7 +3092,7 @@ void func_800FD874(u16 context, s32 arg1) {
         if (*temp_a0 == 1) {
             *temp_a0 = temp_a1;
             if (arg1 != 0) {
-                i = *(&D_800A7734 + (temp_a2 << 5));
+                i = D_800A7734[temp_a2 << 5];
             }
             phi_a0 = cursorY;
             phi_a1 = 0;
@@ -3057,7 +3111,7 @@ void func_800FD874(u16 context, s32 arg1) {
                 phi_a1 += 1;
                 goto loop_8;
             }
-            if ((arg1 != 0) && (i != *(&D_800A7734 + (temp_v1 << 5)))) {
+            if ((arg1 != 0) && (i != D_800A7734[temp_v1 << 5])) {
                 goto block_12;
             }
 
@@ -3474,15 +3528,12 @@ void func_80102628(s32 arg0) {
 }
 
 void func_801026BC(s32 arg0) {
-    POLY_GT4* poly;
-    u16 pad3;
+    POLY_GT4* poly = &D_80086FEC[D_801379A0];
 
-    poly = &D_80086FEC[D_801379A0];
     if (arg0 == 0) {
-        pad3 = 8;
-        goto block_7;
-    }
-    if (!(g_mapProgramId & 0x20)) {
+        poly->pad3 = 8;
+        return;
+    } else if (!(g_mapProgramId & 0x20)) {
         SetPolyRect(poly, 0, 1, 255, 255);
     } else {
         poly->x2 = 255;
@@ -3494,14 +3545,14 @@ void func_801026BC(s32 arg0) {
         poly->y3 = -15;
         poly->y2 = -15;
     }
+
     func_80107250(poly, arg0 * 2);
+
     if (arg0 == 0x40) {
         poly->pad3 = 0;
-        return;
+    } else {
+        poly->pad3 = 0x35;
     }
-    pad3 = 0x35;
-block_7:
-    poly->pad3 = pad3;
 }
 
 void func_801027A4(void) { func_801026BC(0); }
@@ -3511,7 +3562,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801027C4);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801028AC);
 
 // https://decomp.me/scratch/8D47k
-// That's either a compiler flag, wrong compiler, or aspsx issue
+// Matches in gcc 2.6.0, aspsx
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102CD8);
 #else
@@ -3526,6 +3577,7 @@ void func_80102CD8(s32 arg0) {
 }
 #endif
 
+// https://decomp.me/scratch/NNXbc
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102D08);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80102D70);
@@ -4202,7 +4254,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8010E470);
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
-    PLAYER.step = ENTITY_STEP_2;
+    PLAYER.step = 2;
     PLAYER.unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
@@ -4219,7 +4271,7 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         PLAYER.accelerationY = 0;
         PLAYER.accelerationX = 0;
-        func_8010D584(ENTITY_STEP_6);
+        func_8010D584(6);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
         return;
@@ -4427,7 +4479,7 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    PLAYER.step = ENTITY_STEP_0;
+    PLAYER.step = 0;
     PLAYER.unk2E = 3;
     func_8010E390(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
@@ -4521,16 +4573,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80111DE8);
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
 
-    if (g_EntityArray[UNK_ENTITY_10].step == ENTITY_STEP_5) {
+    if (g_EntityArray[UNK_ENTITY_10].step == 5) {
         if (collision == false) {
             func_80106590(&g_EntityArray[UNK_ENTITY_10]);
             return true;
         }
         return false;
-    } else if (g_EntityArray[UNK_ENTITY_10].step <= ENTITY_STEP_2) {
-        if (g_EntityArray[UNK_ENTITY_10].step != ENTITY_STEP_0) {
+    } else if (g_EntityArray[UNK_ENTITY_10].step <= 2) {
+        if (g_EntityArray[UNK_ENTITY_10].step != 0) {
             D_80072F66 = 0;
-            g_EntityArray[UNK_ENTITY_10].step = ENTITY_STEP_3;
+            g_EntityArray[UNK_ENTITY_10].step = 3;
         }
     }
     return false;
@@ -4914,13 +4966,13 @@ void func_8011A328(Entity* entity, s32 arg1) {
     Unkstruct_8011A328 sp10;
 
     func_800FD9D4(&sp10, arg1);
-    entity->unk40 = sp10.sp28;
-    entity->unk42 = sp10.sp26;
-    entity->unk3C = sp10.sp20;
-    entity->unk49 = sp10.sp1D;
-    entity->unk58 = sp10.sp1E;
-    entity->unk6A = sp10.sp22;
-    entity->objectRoomIndex = sp10.sp24;
+    entity->unk40 = sp10.unk18;
+    entity->unk42 = sp10.unk16;
+    entity->unk3C = sp10.unk10;
+    entity->unk49 = sp10.unk0D;
+    entity->unk58 = sp10.unk0E;
+    entity->unk6A = sp10.unk12;
+    entity->objectRoomIndex = sp10.unk14;
     func_80118894(entity);
 }
 
@@ -4939,7 +4991,7 @@ loop_1: // !FAKE: this should be a for loop
     objectId = entity->objectId;
 
     if (objectId != 0) {
-        if (entity->step == ENTITY_STEP_0) {
+        if (entity->step == 0) {
             if ((u32)(entity->objectId - 0xD0) < 0x10) {
                 entity->pfnUpdate = (PfnEntityUpdate)D_8016FCC0[objectId];
             } else {
@@ -5020,7 +5072,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8011B480);
 void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         func_80106590(entity);
-    } else if (entity->step == ENTITY_STEP_0) {
+    } else if (entity->step == 0) {
         entity->unk34 = 0x60000;
         func_8011A328(entity, 5);
         entity->step++;
@@ -5155,7 +5207,7 @@ void func_80124A8C(Entity* entity) {
         s32 playerStep_temp = *playerStep; // might be !FAKE:
 
         switch (entity->step) {
-        case ENTITY_STEP_0:
+        case 0:
             entity->animationSet = 0x11;
             entity->accelerationY = -0x6000;
             func_8010E390(0x4000);
@@ -5171,7 +5223,7 @@ void func_80124A8C(Entity* entity) {
             entity->step = playerStep_temp;
             break;
 
-        case ENTITY_STEP_1:
+        case 1:
             entity->posX.val += entity->accelerationX;
             entity->posY.val += entity->accelerationY;
 
@@ -5326,7 +5378,7 @@ void func_80127CC8(Entity* entity) {
     POLY_GT4* poly;
     s32 ret;
 
-    if (PLAYER.step != ENTITY_STEP_22) {
+    if (PLAYER.step != 34) {
         func_80106590(entity);
         return;
     }
@@ -5334,7 +5386,7 @@ void func_80127CC8(Entity* entity) {
     entity->posX.i.hi = PLAYER.posX.i.hi;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         ret = func_800EDC80(3, 1);
         entity->firstPolygonIndex = ret;
 
@@ -5364,7 +5416,7 @@ void func_80127CC8(Entity* entity) {
         entity->step++;
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         if (entity->unk7C.s++ >= 0xE) {
             func_80106590(entity);
             return;
@@ -5445,7 +5497,7 @@ void func_8012B78C(Entity* entity) {
     s32 ret;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         ret = func_800EDC80(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
@@ -5475,14 +5527,14 @@ void func_8012B78C(Entity* entity) {
         }
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         if (++entity->unk7C.s > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;
         break;
 
-    case ENTITY_STEP_2:
+    case 2:
         func_80106590(entity);
         return;
 
@@ -5505,7 +5557,7 @@ bool func_8012C88C(void) {
     if ((PLAYER.unk2E != 0) && (PLAYER.unk2E != 8)) {
         if (((D_8009744C != 0) && (func_800FE3A8(0xE) == 0)) ||
             (D_80072EEC & 2) || (func_800FEEA4(2, 1) < 0)) {
-            func_8010D584(ENTITY_STEP_19);
+            func_8010D584(25);
             func_8010DA48(0xCA);
             D_800AFDA6 = 1;
             PLAYER.palette = 0x810D;
@@ -5658,6 +5710,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801309B4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80130E94);
 
+// https://decomp.me/scratch/d9hfG TODO: jumptable splat
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013136C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801315F8);
@@ -5708,7 +5761,35 @@ void func_80131FCC(void) {
     D_8013B680 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132028);
+u8 func_80132028(u_char com, u_char* param, u_char* result) {
+    s32 ret = CdSync(1, D_80138F2C);
+
+    D_801396F0 = ret;
+
+    if (com == CdlGetlocL) {
+        if (ret == 2) {
+            goto block_9;
+        } else {
+            goto block_6;
+        }
+    } else if ((*D_80138F2C & 0x10) || (*D_80138F2C & 4)) {
+    block_6:
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if (ret == 2) {
+    block_9:
+        if (CdControl(com, param, result)) {
+            D_8013B680 = 0;
+            return D_8013B680;
+        }
+        goto block_12;
+    }
+block_12:
+    D_8013B680 = 1;
+
+    return D_8013B680;
+}
 
 void func_80132134(void) {
     g_volumeL = 127;
@@ -5840,9 +5921,8 @@ void func_80132760(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801327B4);
 
 // https://decomp.me/scratch/0X5YL
-// Only stack
-// decompme output is different, local repo does a better match
-#ifndef NON_EQUIVALENT
+// Matches with gcc 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80132A04);
 #else
 void func_801327B4(s16, s16, s16, s16, s16, s16, s16, s16);
@@ -5979,11 +6059,99 @@ void func_8013415C(void) {
     func_801321FC();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801341B4);
-void func_801341B4();
+void func_801341B4(void) {
+    s32 temp;
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_80134388);
-void func_80134388();
+    switch (D_8013AE80) {
+    case 0:
+        D_801390A0 = 1;
+        D_80139A78 = 0;
+        D_8013AE80++;
+        break;
+
+    case 1:
+        D_80139A78++;
+        if (g_volumeL > 0) {
+            temp = g_volumeR * D_80139A6C * D_80139A78;
+            if (temp < 0) {
+                temp += 0x1FF;
+            }
+            g_volumeL = g_volumeR - (temp >> 9);
+            if (g_volumeL >> 0x10) {
+                g_volumeL = 0;
+            }
+        } else {
+            g_volumeL = 0;
+        }
+        SsSetMVol(g_volumeL, g_volumeL);
+        if (g_volumeL == 0) {
+            D_8013AE80++;
+        }
+        break;
+
+    case 2:
+        func_80131FA4(0);
+        func_801337B4();
+        func_80132C2C(3);
+        D_800BD1C4 = 3;
+        D_8013AE80++;
+        break;
+
+    case 3:
+        D_800BD1C4--;
+        if (D_800BD1C4 == 0) {
+            func_8013415C();
+        default:
+            D_8013AE80 = 0;
+            D_801390A0 = D_8013AE80;
+            D_8013B61C = 0;
+            func_80132E38();
+        }
+        break;
+    }
+}
+
+void func_80134388(void) {
+    s32 temp;
+
+    switch (D_8013AE80) {
+    case 0:
+        D_8013AE80++;
+        D_801390A0 = 1;
+        D_80139A78 = 0;
+        break;
+
+    case 1:
+        D_80139A78++;
+        if (D_8013B668 > 0) {
+            temp = D_80139820 * D_80139A6C * D_80139A78;
+            if (temp < 0) {
+                temp += 0x1FF;
+            }
+            D_8013B668 = D_80139820 - (temp >> 9);
+            if (D_8013B668 >> 0x10) {
+                D_8013B668 = 0;
+            }
+        } else {
+            D_8013B668 = 0;
+        }
+        func_801324B4(0, D_8013B668, D_8013B668);
+        if (D_8013B668 == 0) {
+            D_8013AE80++;
+        }
+        break;
+
+    case 2:
+        func_80132C2C(2);
+
+    default:
+        D_8013AE80 = 0;
+        D_801390A0 = D_8013AE80;
+        D_8013B61C = 0;
+        func_80132E38();
+        break;
+    }
+}
 
 extern Unkstruct_80138FB4* D_801390C8;
 
@@ -6098,7 +6266,14 @@ void PlaySfx(s16 sfxId) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_8013493C);
+void func_8013493C(s16 arg0, s16 arg1) {
+    D_8013AE84[arg1] = D_8013B678[arg0];
+    D_8013B620[arg1] = D_801390AC[arg0];
+    D_8013B614[arg1] = D_80139058[arg0];
+    D_8013B66C[arg1] = D_80139814[arg0];
+    D_8013B5EC[arg1] = D_80139018[arg0];
+    D_8013B628[arg1] = D_801390B4[arg0];
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_801349F4);
 

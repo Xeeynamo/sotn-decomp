@@ -579,11 +579,11 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160788);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80160C38);
 #else
 void func_80160C38(Entity* entity) {
-    if (PLAYER.step == ENTITY_STEP_17) {
+    if (PLAYER.step == 17) {
         entity->posX.i.hi = PLAYER.posX.i.hi;
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->facing = PLAYER.facing;
-        if (entity->step == ENTITY_STEP_0) {
+        if (entity->step == 0) {
             entity->unk34 = 0x04060000;
             entity->unk10 = 0x14;
             entity->unk12 = 0xC;
@@ -820,7 +820,7 @@ void func_80172AE8(Entity* entity) {
     s32 ret;
 
     switch (entity->step) {
-    case ENTITY_STEP_0:
+    case 0:
         ret = D_8003C7B8(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
@@ -850,14 +850,14 @@ void func_80172AE8(Entity* entity) {
         }
         break;
 
-    case ENTITY_STEP_1:
+    case 1:
         if (++entity->unk7C.s > 5) {
             entity->step++;
         }
         entity->unk7E.modeU16 -= 8;
         break;
 
-    case ENTITY_STEP_2:
+    case 2:
         func_80156C60(entity);
         return;
 
