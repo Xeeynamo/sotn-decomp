@@ -39,7 +39,7 @@ segments:
       - [0x3B7A0, rodata]
       - [0x3BF10, rodata]
       - [0x3C160, rodata]
-      - [0x3CBC4, rodata]
+      - [0x3CBC4, .rodata, 5D7C0]
       - [0x3CBDC, rodata]
       - [0x3CC80, rodata]
       - [0x3CD00, rodata]
