@@ -871,7 +871,10 @@ extern s8 D_80097D37;
 extern s32 D_800987B4;
 extern s32 D_80098850;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
+extern u32 D_800A0158;
+extern s32 D_800A015C;
 extern s32 D_800A04EC;
+extern s32 D_800A04F8;
 extern s32 D_800A0510[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
@@ -985,6 +988,7 @@ extern s32 D_801362F4;
 extern s32 D_801362F8;
 extern s32 D_801362FC;
 extern s32 g_softResetTimer;
+extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
