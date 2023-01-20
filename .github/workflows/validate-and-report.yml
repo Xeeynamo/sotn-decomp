@@ -15,17 +15,23 @@ on:
   workflow_dispatch:
 
 jobs:
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
   build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
       - name: Clone game data repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: xeeynamo/sotn-decomp-private
           token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
@@ -53,16 +59,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
       - name: Clone asset repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: 'gh-report'
           path: 'gh-report'
       - name: Set-up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Generate progress report
@@ -96,11 +102,11 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: false
       - name: Clone game data repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: xeeynamo/sotn-decomp-private
           token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
@@ -117,12 +123,12 @@ jobs:
           name: build
           path: build
       - name: Clone asset repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: 'gh-duplicates'
           path: 'gh-duplicates'
       - name: Set-up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
