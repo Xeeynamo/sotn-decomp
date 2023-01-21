@@ -3603,7 +3603,74 @@ void FallEntity(void) {
     }
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018BA10);
+#else
+s32 func_8018BA10(u16* arg0) {
+    s16 new_var;
+    s32 new_var4;
+    CollisionResult res;
+    CollisionResult resBack;
+    s16 i;
+    s16 x;
+    s16 y;
+    s32 var_v0;
+
+    MoveEntity();
+    FallEntity();
+    if (g_CurrentEntity->accelerationY >= 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            x += *(arg0++);
+            y += *(arg0++);
+            g_pfnCheckCollision(x, y, &res, 0);
+            new_var4 = res.unk0;
+            if (new_var4 & 0x8000) {
+                var_v0 = new_var4 & 5;
+                if (i == 1) {
+                    if (new_var4 & 1) {
+                        g_pfnCheckCollision(x, y - 8, &resBack, 0);
+                        if (!(resBack.unk0 & 1)) {
+                            new_var = res.unk18;
+                            g_CurrentEntity->accelerationX = 0;
+                            g_CurrentEntity->accelerationY = 0;
+                            g_CurrentEntity->posY.i.hi =
+                                (((u16)g_CurrentEntity->posY.i.hi) + 4) +
+                                new_var;
+                            g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                            return 1;
+                        }
+                    }
+                    continue;
+                }
+            } else {
+                var_v0 = new_var4 & 5;
+            }
+            if (new_var4 & 5) {
+                if (i != 1) {
+                    if (new_var4 & 4) {
+                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        return 4;
+                    }
+                    g_pfnCheckCollision(x, y - 8, &resBack, 0);
+                    if (!(resBack.unk0 & 1)) {
+                        x = ((u16)g_CurrentEntity->posY.i.hi) + res.unk18;
+                        new_var = x;
+                        g_CurrentEntity->accelerationX = 0;
+                        g_CurrentEntity->accelerationY = 0;
+                        g_CurrentEntity->posY.i.hi = new_var;
+                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    g_CurrentEntity->unk34 |= 0x10000000;
+    return 0;
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018BC88);
 
@@ -3932,7 +3999,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 #else
 void func_8018CDEC(u16 arg0) {
     u16 temp_v0;
-    u16 arg0;
+    u16 var_a0;
     Entity* player;
 
     g_pfnPlaySfx(NA_SE_PL_IT_PICKUP);
@@ -3940,14 +4007,14 @@ void func_8018CDEC(u16 arg0) {
     temp_v0 = D_80180DC4[arg0];
     // player_equip_left_hand = temp_v0;
     if (player_equip_left_hand == temp_v0) {
-        arg0 = 1;
+        var_a0 = 1;
         g_CurrentEntity->unk6D = 0x10;
     } else {
-        arg0 = D_80180DF4[player_equip_left_hand];
+        var_a0 = D_80180DF4[player_equip_left_hand];
         g_CurrentEntity->unk6D = 0x60;
     }
-    if (arg0 != 0) {
-        g_CurrentEntity->subId = arg0;
+    if (var_a0 != 0) {
+        g_CurrentEntity->subId = var_a0;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
         func_8018C240(7);
         g_CurrentEntity->accelerationY = -0x28000;
