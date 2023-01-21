@@ -440,11 +440,21 @@ typedef struct RoomDimensions {
     /* 0x28 */ s32 height;
 } RoomDimensions;
 
+typedef struct CollisionResult {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ u8 pad0[16];
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u8 pad1[6];
+    /* 0x1C */ u16 unk1C;
+    /* 0x20 */ u8 pad2[4];
+} CollisionResult; /* size=0x24 */
+
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*g_pfnFreePolygons)(s32);
     /* 8003C7B8 */ s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
-    /* 8003C7BC */ void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
+    /* 8003C7BC */ void (*g_pfnCheckCollision)(s32 x, s32 y,
+                                               CollisionResult* res, s32 unk);
     /* 8003C7C0 */ void* unk4C;
     /* 8003C7C4 */ void* unk50;
     /* 8003C7C8 */ void* unk54;
@@ -509,15 +519,6 @@ typedef struct {
     /* 8003C8B4 END*/
 } GameEngine; /* size=0x140 */
 
-typedef struct CollisionResult {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ u8 pad0[16];
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ u8 pad1[6];
-    /* 0x1C */ u16 unk1C;
-    /* 0x20 */ u8 pad2[4];
-} CollisionResult; /* size=0x24 */
-
 // main
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -537,7 +538,7 @@ extern void (*g_pfnLoadObjLayout)(void);
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
 extern s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
-extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
+extern void (*g_pfnCheckCollision)(s32 x, s32 y, Unkstruct7* res, s32 unk);
 extern void (*D_8003C7D4)(s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);
@@ -1148,7 +1149,7 @@ void ReadPads(void);
 void ClearBackbuffer(void);
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
-s32 CheckCollision(s32, s32, CollisionResult*, s32);
+void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);

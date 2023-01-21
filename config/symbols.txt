@@ -570,6 +570,7 @@ D_8003C7A4 = 0x8003C7A4;
 D_8003C7B0 = 0x8003C7B0;
 g_pfnFreePolygons = 0x8003C7B4;
 g_pfnAllocPolygons = 0x8003C7B8;
+g_pfnCheckCollision = 0x8003C7BC;
 g_pfnPlaySfx = 0x8003C7DC;
 D_8003C7E0 = 0x8003C7E0;
 D_8003C8B8 = 0x8003C8B8;

@@ -1059,7 +1059,7 @@ bool _peek_event(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        D_8003C7BC(posX, posY, &a, 0);
+        g_pfnCheckCollision(posX, posY, &a, 0);
         if (a.sp10 & 1) {
             g_CurrentEntity->posY.i.hi += a.sp28;
             g_CurrentEntity->accelerationY =

@@ -753,15 +753,15 @@ void func_8019B8DC(u16 arg0) {
     Unkstruct7 sp10;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        D_8003C7BC(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi - 7,
-                   &sp10, 0);
+        g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
+                            g_CurrentEntity->posY.i.hi - 7, &sp10, 0);
         if (sp10.sp10 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    D_8003C7BC(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi + 7,
-               &sp10, 0);
+    g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
+                        g_CurrentEntity->posY.i.hi + 7, &sp10, 0);
 
     if (arg0) {
         if (!(sp10.sp10 & 5)) {
@@ -992,7 +992,7 @@ bool func_8019E9F4(Unkstruct6* arg0) {
         posX += arg0->x;
         posY += arg0->y;
 
-        D_8003C7BC(posX, posY, &sp10, 0);
+        g_pfnCheckCollision(posX, posY, &sp10, 0);
 
         if (sp10.sp10 & 1) {
             g_CurrentEntity->posY.i.hi += sp10.sp28;
