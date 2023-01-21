@@ -443,7 +443,7 @@ typedef struct RoomDimensions {
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*g_pfnFreePolygons)(s32);
-    /* 8003C7B8 */ s16 (*D_8003C7B8)(s32, s32);
+    /* 8003C7B8 */ s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
     /* 8003C7BC */ void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
     /* 8003C7C0 */ void* unk4C;
     /* 8003C7C4 */ void* unk50;
@@ -536,7 +536,7 @@ extern void (*g_pfnLoadObjLayout)(void);
 #endif
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
-extern s16 (*D_8003C7B8)(s32, s32);
+extern s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
 extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
 extern void (*D_8003C7D4)(s32);
 extern void (*g_pfnPlaySfx)(s32);
@@ -793,7 +793,7 @@ extern s32 D_80086FE4;           // ev13 NEW CARD
 extern s32* D_8007EFE4;          // 'struct SaveData'?
 extern s32 D_80080FE4;           // maybe PixPattern[]?
 extern s8 D_80082FE4;
-extern POLY_GT4 D_80086FEC[];
+extern POLY_GT4 D_80086FEC[]; // entity polygons
 extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
@@ -1177,7 +1177,7 @@ void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
 void func_800EDA94(void);
 void func_800EDAE4(void);
-s32 func_800EDC80(u8 arg0, s32 arg1);
+s32 AllocPolygons(u8 primitives, s32 count);
 s32 func_800EDD9C(u8 arg0, s32 arg1);
 void func_800EFBF8(void);
 void FreePolygons(s32 index);
