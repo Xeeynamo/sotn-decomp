@@ -2733,7 +2733,7 @@ void EntityWarpRoom(Entity* entity) {
         }
 
         entity->unk84.unk = poly; // store next polygon?
-        poly->code = 1;
+        setcode(poly, 1);
         poly->u0 = 0x40;
         poly->v0 = 0x50;
         poly->y0 = 0x70;
@@ -3424,7 +3424,7 @@ void LoadObjLayout(s32 objLayoutId) {
     s16 var_a1_2;
     u16* pObjLayoutStart;
     s16* layout;
-    s32 var_a0;
+    s32 arg0;
     s16 var_a1;
     u16* temp_v1;
 
@@ -3435,13 +3435,13 @@ void LoadObjLayout(s32 objLayoutId) {
 
     if (*pObjLayoutStart != 0xFFFE) {
         D_80193AB0 = pObjLayoutStart + 1;
-        var_a0 = Random() & 0xFF;
+        arg0 = Random() & 0xFF;
         for (var_a1 = 0;; var_a1++) {
             s32 temp_v0;
             temp_v1 = D_80193AB0;
             D_80193AB0 = ((u16*)D_80193AB0) + 1;
-            temp_v0 = var_a0 - temp_v1[0];
-            var_a0 = temp_v0;
+            temp_v0 = arg0 - temp_v1[0];
+            arg0 = temp_v0;
             if (((s16)temp_v0) < 0) {
                 break;
             }
@@ -3584,12 +3584,12 @@ s32 func_8018B93C(void) {
 }
 
 s16 func_8018B970(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+    s16 arg0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+        arg0 |= 2;
     }
-    return var_a0;
+    return arg0;
 }
 
 void MoveEntity(void) {
@@ -3932,7 +3932,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
 #else
 void func_8018CDEC(u16 arg0) {
     u16 temp_v0;
-    u16 var_a0;
+    u16 arg0;
     Entity* player;
 
     g_pfnPlaySfx(NA_SE_PL_IT_PICKUP);
@@ -3940,14 +3940,14 @@ void func_8018CDEC(u16 arg0) {
     temp_v0 = D_80180DC4[arg0];
     // player_equip_left_hand = temp_v0;
     if (player_equip_left_hand == temp_v0) {
-        var_a0 = 1;
+        arg0 = 1;
         g_CurrentEntity->unk6D = 0x10;
     } else {
-        var_a0 = D_80180DF4[player_equip_left_hand];
+        arg0 = D_80180DF4[player_equip_left_hand];
         g_CurrentEntity->unk6D = 0x60;
     }
-    if (var_a0 != 0) {
-        g_CurrentEntity->subId = var_a0;
+    if (arg0 != 0) {
+        g_CurrentEntity->subId = arg0;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
         func_8018C240(7);
         g_CurrentEntity->accelerationY = -0x28000;
@@ -4380,11 +4380,9 @@ void func_80192F40(u8* arg0, u8 arg1) {
     s32 i;
     u8 temp_v1_2;
     u8 var_v1;
-    u8* var_a0;
     u8* var_a1;
     u8* var_a1_2;
     u8* var_a1_3;
-    var_a0 = arg0;
     var_a1 = &sp10;
     var_s0 = 0;
     polyCount = 0;
@@ -4394,9 +4392,9 @@ void func_80192F40(u8* arg0, u8 arg1) {
 
     var_a1_2 = &sp10;
     while (1) {
-        var_v1 = *var_a0++;
+        var_v1 = *arg0++;
         if (var_v1 == 0xFF) {
-            var_v1 = *var_a0++;
+            var_v1 = *arg0++;
             if (var_v1 == 0) {
                 break;
             }
@@ -4416,7 +4414,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
         return;
     }
     poly = &D_80086FEC[firstPolyIndex];
-    poly->code = 3;
+    setcode(poly, 3);
     poly->r3 = 0;
     poly->r2 = 0;
     poly->r1 = 0;
@@ -4481,7 +4479,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
     poly = poly->tag;
-    poly->code = 4;
+    setcode(poly, 4);
     poly->y1 = 0xCD;
     poly->y0 = 0xCD;
     poly->y3 = 0xE1;

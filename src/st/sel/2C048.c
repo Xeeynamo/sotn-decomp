@@ -749,7 +749,7 @@ void func_801B2D1C(void) {
 
     for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
         func_801B2CF8((s32*)poly);
-        poly->code = 0;
+        setcode(poly, 0);
         poly++;
     }
 }

@@ -630,16 +630,10 @@ void func_800E5498(void) {
     POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
     GpuBuffer* buffer = D_8006C37C;
 
-    poly->code = (poly->code | 2) & 254;
+    setSemiTrans(poly, true);
+    setShadeTex(poly, false);
     SetPolyRect(poly, 0, 0, 256, 256);
-    poly->u0 = 16;
-    poly->v0 = 16;
-    poly->u1 = 24;
-    poly->v1 = 16;
-    poly->u2 = 16;
-    poly->v2 = 24;
-    poly->u3 = 24;
-    poly->v3 = 24;
+    setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
     func_801072BC(poly);
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
@@ -1497,7 +1491,7 @@ void func_800EDA94(void) {
 
     for (i = 0, poly = D_80086FEC; i < 1280; i++) {
         func_800EDA70((s32*)poly);
-        poly->code = 0;
+        setcode(poly, 0);
         poly++;
     }
 }
@@ -1518,7 +1512,7 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     for (; i < 0x10; i++, ptr++) {
         if (ptr->tag == 0) {
             ptr->tag = 1;
-            poly->code = 7;
+            setcode(poly, 7);
             *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePolygons
             return ptr;
         }
@@ -1610,9 +1604,9 @@ void FreePolygons(s32 polygonIndex) {
         do {
             if (poly->code == 7) {
                 *(*(s32**)&poly->r1) = 0; // does not make any sense?!
-                poly->code = 0;
+                setcode(poly, 0);
             } else
-                poly->code = 0;
+                setcode(poly, 0);
             poly = (POLY_GT4*)poly->tag;
         } while (poly);
     }
