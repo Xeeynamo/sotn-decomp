@@ -3827,7 +3827,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->step = temp_a0;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
 #else
 void func_8018CAB0(void) {
@@ -3836,11 +3836,11 @@ void func_8018CAB0(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84.value;
-        entity->unk84.value = temp_v1;
+        temp_v1 = *(s16*)&entity->unk88 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88 = -entity->unk88;
+            *(s16*)&entity->unk88 = -*(s16*)&entity->unk88;
         }
         entity = g_CurrentEntity;
     }
@@ -3929,7 +3929,42 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
+#else
+void func_8018CDEC(u16 arg0) {
+    u16 temp_v0;
+    u16 var_a0;
+    Entity* player;
+
+    g_pfnPlaySfx(NA_SE_PL_IT_PICKUP);
+    player = &PLAYER;
+    temp_v0 = D_80180DC4[arg0];
+    // player_equip_left_hand = temp_v0;
+    if (player_equip_left_hand == temp_v0) {
+        var_a0 = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        var_a0 = D_80180DF4[player_equip_left_hand];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+    if (var_a0 != 0) {
+        g_CurrentEntity->subId = var_a0;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
+        func_8018C240(7);
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animationFrame = 0;
+        g_CurrentEntity->unk8A = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+        } else {
+            g_CurrentEntity->accelerationX = 0x20000;
+        }
+    } else {
+        DestroyEntity(g_CurrentEntity);
+    }
+}
+#endif
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
