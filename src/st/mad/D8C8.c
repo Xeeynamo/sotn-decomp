@@ -21,7 +21,7 @@ void func_8019344C(void);
 
 // OFFSET FIXED
 extern void (*D_8003C6B0)(s32);
-extern void (*D_8003C6B8)(s32, s32, Unkstruct7*, s32);
+extern void (*D_8003C6B8)(s32 x, s32 y, CollisionResult*, s32);
 extern void (*D_8003C6D8)(s32);
 extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
 extern Entity* D_8006C26C;
@@ -912,19 +912,19 @@ void func_8019344C(void) {
 #endif
 
 void func_801934D0(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (D_8006C26C->accelerationX < 0) {
-        D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi - 7, &sp10, 0);
-        if (sp10.sp10 & 5) {
+        D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             D_8006C26C->accelerationY = 0;
         }
     }
 
-    D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi + 7, &sp10, 0);
+    D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -933,16 +933,16 @@ void func_801934D0(u16 arg0) {
         D_8006C26C->accelerationX = 0;
         D_8006C26C->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             D_8006C26C->posY.val += 0x2000;
             return;
         }
 
-        D_8006C26C->posY.i.hi = (u16)D_8006C26C->posY.i.hi + (u16)sp10.sp28;
+        D_8006C26C->posY.i.hi = (u16)D_8006C26C->posY.i.hi + (u16)res.unk18;
         return;
     }
 
-    if (!(sp10.sp10 & 5)) {
+    if (!(res.unk0 & 5)) {
         MoveEntity();
         func_8019344C();
     }
@@ -1177,7 +1177,7 @@ void func_80195B44(Entity* entity) {
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195C38);
 
 bool func_80195E68(Unkstruct6* unk) {
-    Unkstruct7 a;
+    CollisionResult res;
 
     FallEntity();
     D_8006C26C->posX.val += D_8006C26C->accelerationX;
@@ -1188,9 +1188,9 @@ bool func_80195E68(Unkstruct6* unk) {
         s16 posY = D_8006C26C->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        D_8003C6B8(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            D_8006C26C->posY.i.hi += a.sp28;
+        D_8003C6B8(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            D_8006C26C->posY.i.hi += res.unk18;
             D_8006C26C->accelerationY = -D_8006C26C->accelerationY / 2;
             if (D_8006C26C->accelerationY > -0x10000) {
                 return true;

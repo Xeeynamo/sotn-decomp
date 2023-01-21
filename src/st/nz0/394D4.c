@@ -520,21 +520,21 @@ void func_801BDD9C(void) {
 #endif
 
 void func_801BDE20(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                            g_CurrentEntity->posY.i.hi - 7, &sp10, 0);
-        if (sp10.sp10 & 5) {
+                            g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
     g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                        g_CurrentEntity->posY.i.hi + 7, &sp10, 0);
+                        g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -543,19 +543,16 @@ void func_801BDE20(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             g_CurrentEntity->posY.val += 0x2000;
-            return;
+        } else {
+            g_CurrentEntity->posY.i.hi += res.unk18;
         }
-
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + (u16)sp10.sp28;
-        return;
-    }
-
-    if (!(sp10.sp10 & 5)) {
-        MoveEntity();
-        func_801BDD9C();
+    } else {
+        if (!(res.unk0 & 5)) {
+            MoveEntity();
+            func_801BDD9C();
+        }
     }
 }
 
@@ -793,7 +790,7 @@ void func_801C0C14(Entity* entity) {
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C0D08);
 
 bool func_801C0F38(Unkstruct6* unk) {
-    Unkstruct7 a;
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -804,9 +801,9 @@ bool func_801C0F38(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_pfnCheckCollision(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += a.sp28;
+        g_pfnCheckCollision(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
@@ -1250,7 +1247,7 @@ void func_801C7538(Entity* entity) {
 }
 
 void func_801C7654(Entity* entity) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     switch (entity->step) {
     case 0:
@@ -1267,10 +1264,10 @@ void func_801C7654(Entity* entity) {
         MoveEntity();
         entity->accelerationY += 0x2000;
 
-        g_pfnCheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8,
-                            &sp10.sp10, 0);
+        g_pfnCheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8, &res.unk0,
+                            0);
 
-        if (sp10.sp10 & 1) {
+        if (res.unk0 & 1) {
             entity->unk19 = 2;
             entity->unk1C = 0x100;
             entity->accelerationY = 0x4000;
