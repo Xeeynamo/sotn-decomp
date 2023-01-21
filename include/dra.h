@@ -455,7 +455,7 @@ typedef struct {
     /* 8003C7DC */ void (*g_pfnPlaySfx)(s32);
     /* 8003C7E0 */ void* unk6C;
     /* 8003C7E4 */ void* unk70;
-    /* 8003C7E8 */ void* unk74;
+    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* unk78;
     /* 8003C7F0 */ void* unk7C;
     /* 8003C7F4 */ void* unk80;
