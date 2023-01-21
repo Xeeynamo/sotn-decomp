@@ -16,9 +16,10 @@ void func_8018861C(void);
 void func_80189FB4(LayoutObject*);
 void func_8018A520(s16);
 void func_8018A7AC(void);
+void func_8018CAB0(void);
 void LoadObjLayout(s32 objLayoutId);
 void func_801916C4(u16);
-void func_8018CAB0(void);
+void func_80192F40(u8*, u8);
 
 PfnOverlayEntry g_pStOverlay[] = {
     (PfnOverlayEntry)UpdateStageEntities,
@@ -3904,8 +3905,6 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_80192F40(const u8*, s32);
-
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
@@ -4363,7 +4362,174 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192F40);
+#else
+void func_80192F40(u8* arg0, u8 arg1) {
+    u8 sp10[0x40];
+    POLY_GT4* poly;
+    s16 temp_t2;
+    s16 temp_t3;
+    s32 firstPolyIndex;
+    s16 temp_v0_2;
+    s16 var_t5_2;
+    s16 var_t5_3;
+    short temp_v1;
+    s32 var_s0;
+    u16 polyCount;
+    s32 i;
+    u8 temp_v1_2;
+    u8 var_v1;
+    u8* var_a0;
+    u8* var_a1;
+    u8* var_a1_2;
+    u8* var_a1_3;
+    var_a0 = arg0;
+    var_a1 = &sp10;
+    var_s0 = 0;
+    polyCount = 0;
+    for (i = sizeof(sp10) - 1; i >= 0; i--) {
+        *(var_a1++) = 0;
+    }
+
+    var_a1_2 = &sp10;
+    while (1) {
+        var_v1 = *var_a0++;
+        if (var_v1 == 0xFF) {
+            var_v1 = *var_a0++;
+            if (var_v1 == 0) {
+                break;
+            }
+        }
+        *(var_a1_2++) = var_v1;
+        if (var_v1 != 0) {
+            polyCount++;
+            var_s0 = var_s0 + 8;
+        } else {
+            var_s0 += 4;
+        }
+    }
+
+    firstPolyIndex = g_pfnAllocPolygons(6, polyCount + 4);
+    D_80097414 = firstPolyIndex;
+    if (firstPolyIndex == (-1)) {
+        return;
+    }
+    poly = &D_80086FEC[firstPolyIndex];
+    poly->code = 3;
+    poly->r3 = 0;
+    poly->r2 = 0;
+    poly->r1 = 0;
+    poly->r0 = 0;
+    poly->g3 = 0;
+    poly->g2 = 0;
+    poly->g1 = 0;
+    poly->g0 = 0;
+    poly->b3 = 0;
+    poly->b2 = 0;
+    poly->b1 = 0;
+    poly->b0 = 0;
+    if (arg1) {
+        poly->b1 = 0xAF;
+        poly->b0 = 0xAF;
+    } else {
+        poly->g1 = 0x5F;
+        poly->g0 = 0x5F;
+    }
+    var_t5_2 = 7;
+    if (arg1) {
+        var_s0 += 4;
+    } else {
+        var_t5_2 = 0xD4 - var_s0;
+    }
+    temp_v1 = var_t5_2 + var_s0;
+    temp_v0_2 = temp_v1 + 0x20;
+    temp_t2 = var_t5_2 + 0xA;
+    temp_t3 = temp_v1 + 0x18;
+    poly->x3 = temp_v0_2;
+    poly->x1 = temp_v0_2;
+    poly->y1 = 0xD0;
+    poly->y0 = 0xD0;
+    poly->y3 = 0xDF ^ 0;
+    poly->y2 = 0xDF;
+    poly->pad2 = 0x1EE;
+    poly->pad3 = 0x11;
+    poly->x2 = var_t5_2;
+    poly->x0 = var_t5_2;
+    var_t5_3 = var_t5_2 + 0x10;
+    poly = poly->tag;
+    poly->tpage = 0x1F;
+    poly->clut = 0x197;
+    poly->x0 = var_t5_2 - 6;
+    poly->y0 = 0xCB;
+    poly->u0 = 0x80;
+    poly->v0 = 0;
+    poly->u1 = 0x10;
+    poly->v1 = 0x18;
+    poly->pad2 = 0x1EF;
+    poly->pad3 = 0;
+    poly = poly->tag;
+    poly->tpage = 0x1F;
+    poly->clut = 0x197;
+    poly->x0 = temp_v1 + 0x16;
+    poly->y0 = 0xCB;
+    poly->u0 = 0xA8;
+    poly->v0 = 0;
+    poly = poly;
+    poly->u1 = 0x10;
+    poly->v1 = 0x18;
+    poly->pad2 = 0x1EF;
+    poly->pad3 = 0;
+    poly = poly->tag;
+    poly->code = 4;
+    poly->y1 = 0xCD;
+    poly->y0 = 0xCD;
+    poly->y3 = 0xE1;
+    poly->y2 = 0xE1;
+    do {
+        poly->u2 = 0x98;
+        poly->u0 = 0x98;
+        poly->u3 = 0x9C;
+        poly->u1 = 0x9C;
+        poly->v1 = 2;
+        poly->v0 = 2;
+        poly->tpage = 0x1F;
+        poly->clut = 0x197;
+        poly->x2 = temp_t2;
+        poly->x0 = temp_t2;
+        poly->x3 = temp_t3;
+        poly->x1 = temp_t3;
+        poly->v3 = 0x16;
+    } while (0);
+    poly->v2 = 0x16;
+    poly->pad2 = 0x1EF;
+    poly->pad3 = 0;
+    poly = poly->tag;
+    var_a1_3 = &sp10;
+    while (poly != 0) {
+        var_v1 = *var_a1_3++;
+        temp_v1_2 = var_v1;
+        if (temp_v1_2 != 0) {
+            poly->x0 = var_t5_3;
+            poly->u0 = (temp_v1_2 & 0xF) * 8;
+            poly->tpage = 0x1E;
+            poly->clut = 0x196;
+            poly->v0 = (temp_v1_2 & 0xF0) / 2;
+            poly->v1 = 8;
+            poly->u1 = 8;
+            poly->pad2 = 0x1F0;
+            poly->pad3 = 0;
+            poly->y0 = 0xD4;
+            poly = poly->tag;
+            var_t5_3 += 8;
+        } else {
+            var_t5_3 += 4;
+        }
+    }
+
+    D_80097410 = 0x130;
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193270);
 
