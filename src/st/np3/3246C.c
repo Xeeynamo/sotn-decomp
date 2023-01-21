@@ -12,6 +12,7 @@ int func_801CD658();
 void EntityPriceDrop(Entity* entity);
 void EntityInventoryDrop(Entity* entity);
 
+extern u16 D_80180A78[];
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
 extern PfnEntityUpdate PfnEntityUpdates[];
@@ -518,7 +519,31 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C02F4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C03E4);
+void func_801C03E4(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180A78);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_801BB7A8(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C04F4);
 

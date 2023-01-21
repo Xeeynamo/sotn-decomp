@@ -10,6 +10,7 @@ void SpawnExplosionEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 
 extern u8* D_80180850;
+extern u16 D_80180AE8[];
 extern u16 D_80180B00[];
 extern ObjInit2 D_80180BFC[];
 extern s16 D_801820C4[];
@@ -689,7 +690,31 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8A84);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8B74);
+void func_801C8B74(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180AE8);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_801C3F38(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8C84);
 

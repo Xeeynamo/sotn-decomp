@@ -1112,9 +1112,31 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019563C);
 
-// https://decomp.me/scratch/CrGOA MATCHED but we need to figure out
-// the correct member for the Entity struct yet
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019572C);
+void func_8019572C(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_8018052C);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D308, &D_8007D308[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_8019102C(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019583C);
 
