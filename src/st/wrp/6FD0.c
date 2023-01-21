@@ -13,6 +13,8 @@ typedef struct {
 // *** Overlay exports start ***
 void UpdateStageEntities(void);
 void func_8018861C(void);
+void func_80189FB4(LayoutObject*);
+void func_8018A520(s16);
 void func_8018A7AC(void);
 void LoadObjLayout(s32 objLayoutId);
 void func_801916C4(u16);
@@ -2501,7 +2503,7 @@ const char D_80186E5C[] = "move_x:%x y%x\n\0\0\0\0\0";
 extern LayoutObject* D_80193AB0;
 extern u16* D_80193AB4;
 extern s8 D_80193AB8;
-extern s8 D_80193ABC;
+extern u8 D_80193ABC;
 extern u16 D_80194728[];
 // *** bss? section end ***
 
@@ -3364,7 +3366,6 @@ void func_8018A3CC(s16 arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A424);
 void func_8018A424(s16 arg0);
 #else
-void func_80189FB4(LayoutObject*);
 void func_8018A424(s16 arg0) {
     if (D_80193ABC) {
         func_8018A380(arg0 - D_8009790C);
@@ -3385,10 +3386,36 @@ void func_8018A424(s16 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
-void func_8018A520(s16);
-
 #ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
+void func_8018A424(s16 arg0);
+#else
+void func_8018A520(s16 arg0) {
+    s32 var_v0;
+    u32 new_var;
+    u8 flag;
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+    var_v0 = arg0 << 0x10;
+    if (D_80193ABC == 0) {
+        func_8018A3CC(arg0 - D_8009790C);
+        D_80193ABC = 1;
+    }
+loop_5:
+    if ((D_80193AB4[1] != 0xFFFE) && ((var_v0 >> 0x10) <= D_80193AB4[1])) {
+        flag = (D_80193AB4[3] >> 8) + 0xFF;
+        new_var = g_entityDestroyed[flag >> 5];
+        if ((flag == 0xFF) || (((1 << (flag & 0x1F)) & new_var) == 0)) {
+            func_80189FB4(D_80193AB4);
+        }
+        D_80193AB4 -= 0xA;
+        goto loop_5;
+    }
+}
+#endif
+
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", LoadObjLayout);
 #else
 void LoadObjLayout(s32 objLayoutId) {
