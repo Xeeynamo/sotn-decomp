@@ -885,6 +885,7 @@ extern u16 D_800A2F48[];
 extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
+extern u16 player_equip_left_hand;
 extern u32 player_equip_head[];
 extern u32 player_equip_body;
 extern s32 player_equip_cloak;
