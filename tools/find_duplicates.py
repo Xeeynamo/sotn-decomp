@@ -54,7 +54,7 @@ def get_all_s_files():
                 overlay = root.split("/")[-3].upper()
                 if overlay in roms_bytes.keys():
                     s_files.add((overlay, file[:-2]))
-    return s_files
+    return sorted(s_files)
 
 
 def get_symbol_length(sym_name):
@@ -144,7 +144,7 @@ def parse_map(map_files):
                     symbols[key, fn] = (
                         key, rom, current_file, previous_symbol, ram, data_type)
                     previous_symbol = (key, fn)
-    return symbols
+    return OrderedDict(symbols)
 
 
 def get_map_offsets(symbols):
@@ -161,7 +161,7 @@ def get_map_offsets(symbols):
         offsets[symbol]["start"] = symbols[symbol][1]
         offsets[previous_symbol]["end"] = symbols[symbol][1]
         offsets[symbol]["data_type"] = symbols[symbol][5]
-    return offsets
+    return OrderedDict(offsets)
 
 
 def is_zeros(values):
