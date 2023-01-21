@@ -195,20 +195,18 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B94F0);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityNumericDamage);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", CreateEntity);
-#else
 void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    do {
+        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    } while (0);
     entity->posX.i.hi = initDesc->posX - D_8007308E;
     entity->posY.i.hi = initDesc->posY - D_80073092;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
-    entity->unk68 = initDesc->objectId >> 0xA & 7;
+    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
-#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BAD70);
 
