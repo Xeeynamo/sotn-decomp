@@ -1178,7 +1178,7 @@ void func_800EDA70(s32* arg0);
 void func_800EDA94(void);
 void func_800EDAE4(void);
 s32 AllocPolygons(u8 primitives, s32 count);
-s32 func_800EDD9C(u8 arg0, s32 arg1);
+s32 func_800EDD9C(u8 primitives, s32 count);
 void func_800EFBF8(void);
 void FreePolygons(s32 index);
 void func_800F0334(s32);
