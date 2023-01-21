@@ -76,7 +76,7 @@ void func_8018F890(s16 arg0) {
         room->height = arg0;
     }
 
-    //g_CurrentRoomDimensions.height = (s32) var_v0;
+    // g_CurrentRoomDimensions.height = (s32) var_v0;
 }
 #endif
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F8EC);
