@@ -2,6 +2,103 @@
 #define LIBGPU_H
 #include <types.h>
 
+/*
+ *	Set Primitive Attributes
+ */
+#define setTPage(p, tp, abr, x, y) ((p)->tpage = getTPage(tp, abr, x, y))
+
+#define setClut(p, x, y) ((p)->clut = getClut(x, y))
+
+/*
+ * Set Primitive Colors
+ */
+#define setRGB0(p, _r0, _g0, _b0) (p)->r0 = _r0, (p)->g0 = _g0, (p)->b0 = _b0
+
+#define setRGB1(p, _r1, _g1, _b1) (p)->r1 = _r1, (p)->g1 = _g1, (p)->b1 = _b1
+
+#define setRGB2(p, _r2, _g2, _b2) (p)->r2 = _r2, (p)->g2 = _g2, (p)->b2 = _b2
+
+#define setRGB3(p, _r3, _g3, _b3) (p)->r3 = _r3, (p)->g3 = _g3, (p)->b3 = _b3
+
+/*
+ * Set Primitive Screen Points
+ */
+#define setXY0(p, _x0, _y0) (p)->x0 = (_x0), (p)->y0 = (_y0)
+
+#define setXY2(p, _x0, _y0, _x1, _y1)                                          \
+    (p)->x0 = (_x0), (p)->y0 = (_y0), (p)->x1 = (_x1), (p)->y1 = (_y1)
+
+#define setXY3(p, _x0, _y0, _x1, _y1, _x2, _y2)                                \
+    (p)->x0 = (_x0), (p)->y0 = (_y0), (p)->x1 = (_x1), (p)->y1 = (_y1),        \
+    (p)->x2 = (_x2), (p)->y2 = (_y2)
+
+#define setXY4(p, _x0, _y0, _x1, _y1, _x2, _y2, _x3, _y3)                      \
+    (p)->x0 = (_x0), (p)->y0 = (_y0), (p)->x1 = (_x1), (p)->y1 = (_y1),        \
+    (p)->x2 = (_x2), (p)->y2 = (_y2), (p)->x3 = (_x3), (p)->y3 = (_y3)
+
+#define setXYWH(p, _x0, _y0, _w, _h)                                           \
+    (p)->x0 = (_x0), (p)->y0 = (_y0), (p)->x1 = (_x0) + (_w), (p)->y1 = (_y0), \
+    (p)->x2 = (_x0), (p)->y2 = (_y0) + (_h), (p)->x3 = (_x0) + (_w),           \
+    (p)->y3 = (_y0) + (_h)
+
+/*
+ * Set Primitive Width/Height
+ */
+#define setWH(p, _w, _h) (p)->w = _w, (p)->h = _h
+
+/*
+ * Set Primitive Texture Points
+ */
+#define setUV0(p, _u0, _v0) (p)->u0 = (_u0), (p)->v0 = (_v0)
+
+#define setUV3(p, _u0, _v0, _u1, _v1, _u2, _v2)                                \
+    (p)->u0 = (_u0), (p)->v0 = (_v0), (p)->u1 = (_u1), (p)->v1 = (_v1),        \
+    (p)->u2 = (_u2), (p)->v2 = (_v2)
+
+#define setUV4(p, _u0, _v0, _u1, _v1, _u2, _v2, _u3, _v3)                      \
+    (p)->u0 = (_u0), (p)->v0 = (_v0), (p)->u1 = (_u1), (p)->v1 = (_v1),        \
+    (p)->u2 = (_u2), (p)->v2 = (_v2), (p)->u3 = (_u3), (p)->v3 = (_v3)
+
+#define setUVWH(p, _u0, _v0, _w, _h)                                           \
+    (p)->u0 = (_u0), (p)->v0 = (_v0), (p)->u1 = (_u0) + (_w), (p)->v1 = (_v0), \
+    (p)->u2 = (_u0), (p)->v2 = (_v0) + (_h), (p)->u3 = (_u0) + (_w),           \
+    (p)->v3 = (_v0) + (_h)
+
+/*
+ * Primitive Handling Macros
+ */
+#define setlen(p, _len) (((P_TAG*)(p))->len = (u_char)(_len))
+#define setaddr(p, _addr) (((P_TAG*)(p))->addr = (u_long)(_addr))
+#define setcode(p, _code) (((P_TAG*)(p))->code = (u_char)(_code))
+
+#define getlen(p) (u_char)(((P_TAG*)(p))->len)
+#define getcode(p) (u_char)(((P_TAG*)(p))->code)
+#define getaddr(p) (u_long)(((P_TAG*)(p))->addr)
+
+#define nextPrim(p) (void*)((((P_TAG*)(p))->addr) | 0x80000000)
+#define isendprim(p) ((((P_TAG*)(p))->addr) == 0xffffff)
+
+#define addPrim(ot, p) setaddr(p, getaddr(ot)), setaddr(ot, p)
+#define addPrims(ot, p0, p1) setaddr(p1, getaddr(ot)), setaddr(ot, p0)
+
+#define catPrim(p0, p1) setaddr(p0, p1)
+#define termPrim(p) setaddr(p, 0xffffffff)
+
+#define setSemiTrans(p, abe)                                                   \
+    ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
+
+#define setShadeTex(p, tge)                                                    \
+    ((tge) ? setcode(p, getcode(p) | 0x01) : setcode(p, getcode(p) & ~0x01))
+
+#define getTPage(tp, abr, x, y)                                                \
+    ((GetGraphType() == 1 || GetGraphType() == 2)                              \
+         ? ((((tp)&0x3) << 9) | (((abr)&0x3) << 7) | (((y)&0x300) >> 3) |      \
+            (((x)&0x3ff) >> 6))                                                \
+         : ((((tp)&0x3) << 7) | (((abr)&0x3) << 5) | (((y)&0x100) >> 4) |      \
+            (((x)&0x3ff) >> 6) | (((y)&0x200) << 2)))
+
+#define getClut(x, y) ((y << 6) | ((x >> 4) & 0x3f))
+
 typedef struct {
     /* 0x0 */ short x;
     /* 0x2 */ short y; /* offset point on VRAM */
@@ -13,6 +110,16 @@ typedef struct {
     /* 0x0 */ u_long tag;
     /* 0x4 */ u_long code[15];
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
+
+typedef struct {
+    unsigned addr : 24;
+    unsigned len : 8;
+    u_char r0, g0, b0, code;
+} P_TAG;
+
+typedef struct {
+    u_char r0, g0, b0, code;
+} P_CODE;
 
 typedef struct {
     /* 0x00 */ u_long tag;
