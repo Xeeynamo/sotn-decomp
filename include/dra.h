@@ -444,7 +444,9 @@ typedef struct CollisionResult {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ u8 pad0[16];
     /* 0x14 */ s16 unk14;
-    /* 0x16 */ u8 pad1[6];
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 unk1A;
     /* 0x1C */ u16 unk1C;
     /* 0x20 */ u8 pad2[4];
 } CollisionResult; /* size=0x24 */
@@ -538,7 +540,7 @@ extern void (*g_pfnLoadObjLayout)(void);
 extern RoomHeader* D_8003C784;
 extern void (*D_8003C7B0)();
 extern s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
-extern void (*g_pfnCheckCollision)(s32 x, s32 y, Unkstruct7* res, s32 unk);
+extern void (*g_pfnCheckCollision)(s32 x, s32 y, CollisionResult* res, s32 unk);
 extern void (*D_8003C7D4)(s32);
 extern void (*g_pfnPlaySfx)(s32);
 extern void (*g_pfnFreePolygons)(s32);

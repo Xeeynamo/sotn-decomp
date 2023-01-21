@@ -3852,21 +3852,21 @@ void func_8018CAB0(void) {
 #endif
 
 void func_8018CB34(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                            g_CurrentEntity->posY.i.hi - 7, &sp10, 0);
-        if (sp10.sp10 & 5) {
+                            g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
     g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                        g_CurrentEntity->posY.i.hi + 7, &sp10, 0);
+                        g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -3875,17 +3875,16 @@ void func_8018CB34(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             g_CurrentEntity->posY.val += 0x2000;
             return;
         }
 
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + (u16)sp10.sp28;
+        g_CurrentEntity->posY.i.hi += (u16)res.unk18;
         return;
     }
 
-    if (!(sp10.sp10 & 5)) {
+    if (!(res.unk0 & 5)) {
         MoveEntity();
         func_8018CAB0();
     }
@@ -4149,7 +4148,7 @@ void func_8018F928(Entity* arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FA1C);
 
 bool func_8018FC4C(Unkstruct6* unk) {
-    Unkstruct7 a;
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -4160,9 +4159,9 @@ bool func_8018FC4C(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_pfnCheckCollision(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += a.sp28;
+        g_pfnCheckCollision(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {

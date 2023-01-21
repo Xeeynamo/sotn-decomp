@@ -750,21 +750,21 @@ void func_8019B858(void) {
 #endif
 
 void func_8019B8DC(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                            g_CurrentEntity->posY.i.hi - 7, &sp10, 0);
-        if (sp10.sp10 & 5) {
+                            g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
     g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                        g_CurrentEntity->posY.i.hi + 7, &sp10, 0);
+                        g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -773,17 +773,16 @@ void func_8019B8DC(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             g_CurrentEntity->posY.val += 0x2000;
             return;
         }
 
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + (u16)sp10.sp28;
+        g_CurrentEntity->posY.i.hi += res.unk18;
         return;
     }
 
-    if (!(sp10.sp10 & 5)) {
+    if (!(res.unk0 & 5)) {
         MoveEntity();
         func_8019B858();
     }
@@ -980,7 +979,7 @@ void func_8019E6D0(Entity* entity) {
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E7C4);
 
 bool func_8019E9F4(Unkstruct6* arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -992,10 +991,10 @@ bool func_8019E9F4(Unkstruct6* arg0) {
         posX += arg0->x;
         posY += arg0->y;
 
-        g_pfnCheckCollision(posX, posY, &sp10, 0);
+        g_pfnCheckCollision(posX, posY, &res, 0);
 
-        if (sp10.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += sp10.sp28;
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
 

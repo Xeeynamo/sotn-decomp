@@ -702,7 +702,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C8F8C);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C9080);
 
 bool func_801C92B0(Unkstruct6* unk) {
-    Unkstruct7 a;
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -713,9 +713,9 @@ bool func_801C92B0(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_pfnCheckCollision(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += a.sp28;
+        g_pfnCheckCollision(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
