@@ -821,7 +821,7 @@ void func_80172AE8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = D_8003C7B8(4, 1);
+        ret = g_pfnAllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->unk34 = 0x04820000;

@@ -2238,7 +2238,7 @@ void func_801279FC(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = func_800EDC80(4, 1);
+        firstPolygonIndex = AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->unk7C.s = 0x16;
@@ -2321,7 +2321,7 @@ void func_80127CC8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = func_800EDC80(3, 1);
+        ret = AllocPolygons(3, 1);
         entity->firstPolygonIndex = ret;
 
         if (ret == -1) {
@@ -2432,7 +2432,7 @@ void func_8012B78C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = func_800EDC80(4, 1);
+        ret = AllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->unk34 = 0x04820000;

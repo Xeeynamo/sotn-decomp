@@ -1529,52 +1529,42 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB58);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
-#else
-s32 func_800EDC80(u8 arg0, s32 arg1) {
-    s32 phi_s2 = 0;
-    POLY_GT4* phi_s1 = D_80086FEC;
-    u8* phi_s0 = &D_80086FEC->code;
+s32 AllocPolygons(u8 primitives, s32 count) {
+    s32 polyIndex = 0;
+    POLY_GT4* poly = D_80086FEC;
+    u8* polyCode = &D_80086FEC->code;
     s16 index;
-    s32 phi_v0;
 
-loop_1:
-    if (*phi_s0 == 0) {
-        func_800EDA70(phi_s1);
-        if (arg1 == 1) {
-            *phi_s0 = arg0;
-            phi_s1->tag = NULL;
-            if (D_800A2438 < phi_s2) {
-                D_800A2438 = phi_s2;
-                phi_v0 = phi_s2 << 0x10;
+    while (polyIndex < 0x400) {
+        if (*polyCode == 0) {
+            func_800EDA70(poly);
+            if (count == 1) {
+                *polyCode = primitives;
+                poly->tag = 0;
+                if (D_800A2438 < polyIndex) {
+                    D_800A2438 = polyIndex;
+                }
             } else {
-                goto block_8;
+                *polyCode = primitives;
+                index = AllocPolygons(primitives, count - 1);
+                if (index == -1) {
+                    *polyCode = 0;
+                    return -1;
+                }
+                poly->tag = &D_80086FEC[index];
             }
-            goto block_9;
+            return (s16)polyIndex;
         }
-        *phi_s0 = arg0;
-        index = func_800EDC80(arg0 & 0xFF, arg1 - 1);
-        if (index == -1) {
-            *phi_s0 = 0;
+
+        polyIndex++;
+        polyCode += sizeof(POLY_GT4);
+        poly++;
+        if (polyIndex >= 0x400) {
             return -1;
         }
-        phi_s1->tag = (s32)&D_80086FEC[index];
-    block_8:
-        phi_v0 = phi_s2 << 0x10;
-    block_9:
-        return (s16)(phi_v0 >> 0x10);
     }
-
-    phi_s2 = phi_s2 + 1;
-    phi_s0 += sizeof(POLY_GT4);
-    phi_s1++;
-    if (phi_s2 >= 0x400) {
-        return -1;
-    }
-    goto loop_1;
+    return -1;
 }
-#endif
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDD9C);

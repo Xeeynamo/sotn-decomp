@@ -2624,7 +2624,7 @@ void EntityBreakable(Entity* entity) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
-extern s16 (*D_8003C7B8)(/*?*/ u32, /*?*/ u32);
+extern s16 (*g_pfnAllocPolygons)(/*?*/ u32, /*?*/ u32);
 extern /*?*/ u32 (*D_8003C7E8)(/*?*/ u32, /*?*/ u32, /*?*/ u32, /*?*/ u32);
 extern s32 D_8003C8B8;
 extern s32 D_80072EF4;
@@ -2695,7 +2695,7 @@ void EntityWarpRoom(Entity* arg0) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        temp_v0 = D_8003C7B8(4, 0x18);
+        temp_v0 = g_pfnAllocPolygons(4, 0x18);
         if (temp_v0 == -1) {
             arg0->step = 0;
             return;
