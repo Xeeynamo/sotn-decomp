@@ -20,6 +20,7 @@ void func_80198BC8(void* const, s32);
 void func_8019344C(void);
 
 // OFFSET FIXED
+extern u8 D_8003BEE8[];
 extern void (*D_8003C6B0)(s32);
 extern void (*D_8003C6B8)(s32 x, s32 y, CollisionResult*, s32);
 extern void (*D_8003C6D8)(s32);
@@ -37,18 +38,18 @@ extern void* D_8007EA88;
 extern u16 D_80096EB8;
 extern s32 D_80096EC0;
 extern s32 D_80096EC4;
+extern s32 D_80096ED8[];
 extern u32 D_80097364;
+extern POLY_GT4 D_800973B8[];
 extern u8 D_8009741A;
 extern Entity D_80075D88[];
 extern s32 D_80096EAC;
 
 // TODO FIX
-extern s32 D_80096ED8[];
 extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
 
 // ST/MAD
-extern u8 D_8003BEE8[];
+extern u16 D_8018052C[];
 extern u16 D_80180F5C[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
@@ -507,24 +508,24 @@ void LoadObjLayout(s32 objLayoutId) {
 #endif
 
 void func_80190F04(void) {
-    Unkstruct4* s0 = &D_80072B34;
+    Unkstruct8* currentRoomTileLayout = &D_80072B34;
     s32 temp_v0_2;
 
     if (D_800973B4 != 0) {
-        s16 temp_a0 = D_80072B3E;
+        s16 tmp = D_80072B3E;
         if (D_800973B4 > 0)
-            func_801908DC(temp_a0 + 0x140);
+            func_801908DC(tmp + 0x140);
         else
-            func_801909D8(temp_a0 - 0x40);
+            func_801909D8(tmp - 0x40);
     }
 
-    temp_v0_2 = D_800973B8[0].tag;
+    temp_v0_2 = D_800973B8[0].tag; // wrong type, look at func_8018A7AC
     if (temp_v0_2 != 0) {
-        s16 temp_a0_2 = s0->unkE;
+        s16 tmp = currentRoomTileLayout->unkE;
         if (temp_v0_2 > 0)
-            func_80190B7C(temp_a0_2 + 0x120);
+            func_80190B7C(tmp + 0x120);
         else
-            func_80190C78(temp_a0_2 - 0x40);
+            func_80190C78(tmp - 0x40);
     }
 }
 
