@@ -23,6 +23,7 @@ void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern u16 D_80180494[];
 extern s16 D_80180D80[];
 extern LayoutObject* D_801A32C4;
 extern LayoutObject* D_801A32C8;
@@ -341,12 +342,12 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_8019967C(u16 objectId, Entity* a, Entity* b) {
-    DestroyEntity(b);
-    b->objectId = objectId;
-    b->pfnUpdate = D_801803C4[objectId];
-    b->posX.i.hi = a->posX.i.hi;
-    b->posY.i.hi = a->posY.i.hi;
+void func_8019967C(u16 objectId, Entity* source, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_801803C4[objectId];
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
 }
 
 s32 func_801996F8(Unkstruct5* arg0) {
@@ -907,8 +908,31 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019DC6C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E1C8);
 
-// https://decomp.me/scratch/LpjYl 92.57%
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E2B8);
+void func_8019E2B8(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180494);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_8019967C(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 // https://decomp.me/scratch/lcx4I
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);

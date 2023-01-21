@@ -12,7 +12,7 @@ void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);
-void func_801BEB80(Entity*);
+void EntityExplosion(Entity*);
 void func_801C29B0(s32);
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
@@ -55,7 +55,7 @@ extern const u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern const u16* D_80180C58;
 extern s16 D_801820E4[];
-extern const u16 D_80180C04;
+extern const u16 D_80180C04[];
 extern u8 D_801825F0;
 extern s32 D_80180C70;
 extern u32 D_801822BC[];
@@ -423,7 +423,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
     }
 
     g_CurrentEntity->objectId = ENTITY_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     g_CurrentEntity->subId = arg0;
     g_CurrentEntity->animationFrame = 0;
     g_CurrentEntity->unk19 = 0;
@@ -621,7 +621,7 @@ void func_801BE2E4(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", EntityBreakable);
 
-void func_801BEB80(Entity* entity) {
+void EntityExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
@@ -696,33 +696,28 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C01B0);
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C070C);
 
 void func_801C07FC(Entity* entity) {
-    Entity* newEntity;
-    u8 temp_v0;
-
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180C04);
+        InitializeEntity(D_80180C04);
         entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
-
     case 1:
-        temp_v0 = entity->unk7C.U8.unk0++;
-        if (temp_v0 >= 5) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_801BBBC0(2, entity, newEntity);
+                func_801BBBC0(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
-                newEntity->pfnUpdate = func_801BEB80;
+                newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }
             entity->unk7C.U8.unk0 = 0;
         }
-
         entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
-
         if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
+        break;
     }
 }
 
@@ -995,7 +990,7 @@ void func_801C3E94(Entity* entity) {
             return;
         }
         entity->objectId = ENTITY_EXPLOSION;
-        entity->pfnUpdate = func_801BEB80;
+        entity->pfnUpdate = EntityExplosion;
         entity->subId = 0;
         entity->step = 0;
         return;
@@ -1127,7 +1122,7 @@ void func_801C6494(Entity* entity) {
         }
 
         entity->objectId = ENTITY_EXPLOSION;
-        entity->pfnUpdate = (PfnEntityUpdate)func_801BEB80;
+        entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         entity->subId = 0;
         entity->step = 0;
         return;

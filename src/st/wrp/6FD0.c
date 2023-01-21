@@ -4059,9 +4059,65 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0E);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
+#else
+u8 func_8018F420(s16* arg0, s32 facing) {
+    s16* var_s0_2;
+    s32 facing_;
+    CollisionResult res;
+    s16 x;
+    s16* var_s0;
+    u16 var_s1;
+    s32 new_var;
+    var_s0 = arg0;
+    facing_ = facing;
+    var_s1 = 0;
+    while (*var_s0 != 0xFF) {
+        var_s1 *= 2;
+        if (facing_ != 0) {
+            x = g_CurrentEntity->posX.i.hi + *var_s0++;
+        } else {
+            x = g_CurrentEntity->posX.i.hi - *var_s0++;
+        }
+        g_pfnCheckCollision(x, (s16)(g_CurrentEntity->posY.i.hi + *var_s0++),
+                            &res, 0);
+        if (res.unk0 & 1) {
+            var_s1 |= 1;
+            new_var = 0xFF;
+        }
+        new_var = 0xFF;
+    }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F510);
+    return var_s1;
+}
+#endif
+
+void func_8018F510(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_8018047C);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_8018A8D4(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 
@@ -4403,20 +4459,20 @@ void func_801938DC(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->y2 = 0;
 }
 
-void func_801939BC(POLY_GT4* arg0) {
-    func_801938DC(arg0);
-    arg0->p3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 1;
-    ((POLY_GT4*)arg0->tag)->code = 2;
-    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
+void func_801939BC(POLY_GT4* poly) {
+    func_801938DC(poly);
+    poly->p3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 1;
+    ((POLY_GT4*)poly->tag)->code = 2;
+    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
 }
 
-void func_80193A10(POLY_GT4* arg0) {
-    arg0->p3 = 0;
-    arg0->pad3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 0;
-    ((POLY_GT4*)arg0->tag)->code = 4;
-    ((POLY_GT4*)arg0->tag)->pad3 = 8;
+void func_80193A10(POLY_GT4* poly) {
+    poly->p3 = 0;
+    poly->pad3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 0;
+    ((POLY_GT4*)poly->tag)->code = 4;
+    ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
 s32 func_80193A3C(u8* arg0, u8 value) {

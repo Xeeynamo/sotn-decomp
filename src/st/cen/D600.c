@@ -170,13 +170,14 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193410);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801934C4);
 
+void func_8018A8D4(u16 objectId, Entity* source, Entity* entity);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193538);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801935B4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019362C);
 
-void func_80194264(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -254,7 +255,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194674);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801948EC);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194AD4);
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", AllocEntity);
 
 s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
@@ -268,15 +269,15 @@ u8 func_80194C20(Entity* arg0, Entity* arg1) {
     u16 x;
     u16 y;
 
-    x = arg1->posX.Data.high - arg0->posX.Data.high;
-    y = arg1->posY.Data.high - arg0->posY.Data.high;
+    x = arg1->posX.i.hi - arg0->posX.i.hi;
+    y = arg1->posY.i.hi - arg0->posY.i.hi;
 
     return func_80194BE8(x, y);
 }
 
 u16 func_80194C68(s16 x, s16 y) {
-    x -= g_CurrentEntity->posX.Data.high;
-    y -= g_CurrentEntity->posY.Data.high;
+    x -= g_CurrentEntity->posX.i.hi;
+    y -= g_CurrentEntity->posY.i.hi;
 
     return func_80194BE8(x, y);
 }
@@ -342,7 +343,7 @@ void func_80194EC4(u8 arg0) {
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194EE0);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194F74);
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", InitializeEntity);
 
 void func_80195070(Entity* entity) {
     if (entity->step == 0) {
@@ -373,14 +374,14 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 void func_80195C0C(void) {
     g_pfnPlaySfx(0x67A);
     D_8003C848(5, 0x8000);
-    func_80194264(g_CurrentEntity);
+    DestroyEntity(g_CurrentEntity);
 }
 
-void func_80195C5C(void) { func_80194264(g_CurrentEntity); }
+void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C84);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801964F8);
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", EntityExplosion);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801965F4);
 
@@ -396,7 +397,32 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80197B28);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80198084);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80198174);
+extern u16 D_80180440[];
+void func_80198174(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180440);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_80193538(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80198284);
 
@@ -510,12 +536,12 @@ void func_8019C540(POLY_GT4* poly) {
     ((POLY_GT4*)poly->tag)->y2 = 0;
 }
 
-void func_8019C620(unkStruct3* arg0) {
-    func_8019C540(arg0);
-    arg0->unk2B = 8;
-    arg0->unk0->unk2B = 1;
-    arg0->unk0->unk7 = 2;
-    arg0->unk0->unk32 = 0xA;
+void func_8019C620(POLY_GT4* poly) {
+    func_8019C540(poly);
+    poly->p3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 1;
+    ((POLY_GT4*)poly->tag)->code = 2;
+    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
 }
 
 void func_8019C674(POLY_GT4* poly) {
