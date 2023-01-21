@@ -1566,45 +1566,42 @@ s32 AllocPolygons(u8 primitives, s32 count) {
     return -1;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDD9C);
-#else
-s32 func_800EDD9C(u8 arg0, s32 arg1) {
+s32 func_800EDD9C(u8 primitives, s32 count) {
     u8* pCode;
     u8 temp_v0;
-    u8* phi_s0;
-    POLY_GT4* phi_s1;
-    s16 phi_s2;
-    s16 polyIndex;
+    u8* polyCode;
+    POLY_GT4* poly;
+    s32 polyIndex;
+    s16 foundPolyIndex;
+    poly = D_800973B8;
+    polyIndex = 0x4FF;
+    polyCode = &D_800973B8->code;
 
-    phi_s1 = D_800973B8;
-    phi_s2 = 0x4FF;
-    phi_s0 = &D_800973B8->code;
-loop_1:
-    pCode = &phi_s1->code;
-    temp_v0 = *phi_s0;
-    if (temp_v0 == 0) {
-        func_800EDA70(phi_s1);
-        if (arg1 == 1) {
-            *phi_s0 = arg0;
-            phi_s1->tag = 0;
-        } else {
-            *phi_s0 = arg0;
-            polyIndex = func_800EDD9C(arg0, arg1 - 1);
-            phi_s1->tag = &D_80086FEC[polyIndex];
+    while (polyIndex >= 0) {
+        pCode = &poly->code;
+        temp_v0 = *polyCode;
+        if (temp_v0 == 0) {
+            func_800EDA70(poly);
+            if (count == 1) {
+                *polyCode = primitives;
+                poly->tag = 0;
+            } else {
+                *polyCode = primitives;
+                foundPolyIndex = func_800EDD9C(primitives, count - 1);
+                poly->tag = &D_80086FEC[foundPolyIndex];
+            }
+            foundPolyIndex = polyIndex;
+            return foundPolyIndex;
         }
-        return phi_s2;
+        polyIndex--;
+        polyCode -= sizeof(POLY_GT4);
+        poly--;
+        if (polyIndex < 0) {
+            return (s16)temp_v0;
+        }
     }
-
-    phi_s0--;
-    phi_s1--;
-    phi_s2--;
-    if (phi_s2 < 0) {
-        return (s16)temp_v0;
-    }
-    goto loop_1;
+    return (s16)temp_v0;
 }
-#endif
 
 void FreePolygons(s32 polygonIndex) {
     POLY_GT4* poly = &D_80086FEC[polygonIndex];
