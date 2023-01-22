@@ -361,7 +361,7 @@ void func_801AECA0(void) {
         x = xnext;
     }
 
-    g_api.D_8003C7D4(0x8004);
+    g_api.func_800EA5E4(0x8004);
 }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AED48);

@@ -442,7 +442,7 @@ void InitializeEntity(u16 arg0[]) {
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
     temp_v0 =
-        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_8003C808);
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -607,14 +607,14 @@ void CollectHeartVessel(void) {
         }
     } else {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        g_api.D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_api.D_8003C848(5, 0x8000);
+    g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 

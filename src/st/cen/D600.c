@@ -373,7 +373,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 
 void func_80195C0C(void) {
     g_api.PlaySfx(0x67A);
-    g_api.D_8003C848(5, 0x8000);
+    g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 

@@ -459,68 +459,67 @@ typedef struct {
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
                                           s32 unk);
-    /* 8003C7C0 */ void* unk4C;             // func_80102CD8
-    /* 8003C7C4 */ void* unk50;             // func_8010DDA0
-    /* 8003C7C8 */ void* unk54;             // func_8010E390
-    /* 8003C7CC */ void* unk58;             // func_8011879C
-    /* 8003C7D0 */ void* unk5C;             // func_800FE728
-    /* 8003C7D4 */ void (*D_8003C7D4)(s32); // func_800EA5E4
-    /* 8003C7D8 */ void* unk64;             // func_800EAF28
+    /* 8003C7C0 */ void* func_80102CD8;
+    /* 8003C7C4 */ void* func_8010DDA0;
+    /* 8003C7C8 */ void (*AccelerateX)(s32 value);
+    /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
+    /* 8003C7D0 */ void* func_800FE728;
+    /* 8003C7D4 */ void (*func_800EA5E4)(s32);
+    /* 8003C7D8 */ void* func_800EAF28;
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
-    /* 8003C7E0 */ void* unk6C; // func_800EDB58
-    /* 8003C7E4 */ void* unk70; // func_800EA538
+    /* 8003C7E0 */ void* func_800EDB58;
+    /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-    /* 8003C7EC */ void* unk78;            // func_801027C4
-    /* 8003C7F0 */ void* unk7C;            // func_800EB758
-    /* 8003C7F4 */ void* unk80;            // func_8011AAFC
-    /* 8003C7F8 */ void* unk84;            // func_80131F68
-    /* 8003C7FC */ void* unk88;            // func_800EDB08
-    /* 8003C800 */ void* unk8C;            // func_80106A28
-    /* 8003C804 */ void* unk90;            // func_80118894
-    /* 8003C808 */ Unkstruct5* D_8003C808; // D_800A8900
-    /* 8003C80C */ void* unk98;            // func_80118970
-    /* 8003C810 */ void* unk9C;            // func_80118B18
-    /* 8003C814 */ void* unkA0;            // func_8010DB38
-    /* 8003C818 */ void* unkA4;            // func_8010DBFC
-    /* 8003C81C */ void* unkA8;            // func_80118C28
-    /* 8003C820 */ void* unkAC;            // func_8010E168
-    /* 8003C824 */ void* unkB0;            // func_8010DFF0
-    /* 8003C828 */ void* unkB4;            // func_800FF128
-    /* 8003C82C */ void (*g_pfn_800EB534)(u16 arg0, u16 arg1, s32 arg2);
-    /* 8003C830 */ void* unkBC;                  // D_800A4B04
-    /* 8003C834 */ void* unkC0;                  // D_800A7718
-    /* 8003C838 */ void* unkC4;                  // func_800FE914
-    /* 8003C83C */ void* unkC8;                  // func_8010715C
-    /* 8003C840 */ void* unkCC;                  // func_800FD4C0
-    /* 8003C844 */ void* unkD0;                  // func_8010E0A8
-    /* 8003C848 */ void (*D_8003C848)(s32, s32); // func_800FE044
-    /* 8003C84C */ void (*g_pfn_800FD874)(u16 context, s32 arg1);
-    /* 8003C850 */ void* unkDC;  // D_800A8720
-    /* 8003C854 */ void* unkE0;  // func_800FF7B8
-    /* 8003C858 */ void* unkE4;  // func_80134714
-    /* 8003C85C */ void* unkE8;  // func_80134678
-    /* 8003C860 */ void* unkEC;  // func_800F53A4
-    /* 8003C864 */ void* unkF0;  // func_800FD7C0
-    /* 8003C868 */ void* unkF4;  // func_8010BF64
-    /* 8003C86C */ void* unkF8;  // func_800F1FC4
-    /* 8003C870 */ void* unkFC;  // func_800F2288
-    /* 8003C874 */ void* unk100; // func_8011A3AC
-    /* 8003C878 */ void* unk104; // func_800FF460
-    /* 8003C87C */ void* unk108; // func_800FF494
-    /* 8003C880 */ void* unk10C; // func_80133940
-    /* 8003C884 */ void* unk110; // func_80133950
-    /* 8003C888 */ void* unk114; // func_800F27F4
-    /* 8003C88C */ void* unk118; // func_800FF110
-    /* 8003C890 */ void* unk11C; // func_800FD664
-    /* 8003C894 */ void* unk120; // func_800FD5BC
-    /* 8003C898 */ void* unk124; // func_800FDCE0
-    /* 8003C89C */ void* unk128; // func_800E2438
-    /* 8003C8A0 */ void* unk12C;
-    /* 8003C8A4 */ void* unk130;
-    /* 8003C8A8 */ void* unk134;
-    /* 8003C8AC */ void* unk138;
-    /* 8003C8B4 */ void* unk13C;
-    /* 8003C8B4 END*/
+    /* 8003C7EC */ void* func_801027C4;
+    /* 8003C7F0 */ void* func_800EB758;
+    /* 8003C7F4 */ void* func_8011AAFC;
+    /* 8003C7F8 */ bool (*func_80131F68)(void);
+    /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
+    /* 8003C800 */ void* func_80106A28;
+    /* 8003C804 */ void* func_80118894;
+    /* 8003C808 */ Unkstruct5* D_800A8900;
+    /* 8003C80C */ void* func_80118970;
+    /* 8003C810 */ void* func_80118B18;
+    /* 8003C814 */ void* func_8010DB38;
+    /* 8003C818 */ void* func_8010DBFC;
+    /* 8003C81C */ void* func_80118C28;
+    /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
+    /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
+    /* 8003C828 */ void* func_800FF128;
+    /* 8003C82C */ void (*func_800EB534)(u16 arg0, u16 arg1, s32 arg2);
+    /* 8003C830 */ s32 D_800A4B04;
+    /* 8003C834 */ s32 D_800A7718;
+    /* 8003C838 */ void (*AddHearts)(s32 value);
+    /* 8003C83C */ void* func_8010715C;
+    /* 8003C840 */ void* func_800FD4C0;
+    /* 8003C844 */ void* func_8010E0A8;
+    /* 8003C848 */ void (*func_800FE044)(s32, s32);
+    /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
+    /* 8003C850 */ void* D_800A8720;
+    /* 8003C854 */ void* func_800FF7B8;
+    /* 8003C858 */ void* func_80134714;
+    /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
+    /* 8003C860 */ void (*func_800F53A4)(void);
+    /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
+    /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
+    /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
+    /* 8003C870 */ void* func_800F2288;
+    /* 8003C874 */ void* func_8011A3AC;
+    /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
+    /* 8003C87C */ void* func_800FF494;
+    /* 8003C880 */ bool (*func_80133940)(void);
+    /* 8003C884 */ bool (*func_80133950)(void);
+    /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
+    /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
+    /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
+    /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+    /* 8003C898 */ void* func_800FDCE0;
+    /* 8003C89C */ void (*func_800E2438)(const char* str);
+    /* 8003C8A0 */ void* unused12C;
+    /* 8003C8A4 */ void* unused130;
+    /* 8003C8A8 */ void* unused134;
+    /* 8003C8AC */ void* unused138;
+    /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
 // main
@@ -1217,7 +1216,7 @@ s32 func_800FD6C4(s32);
 u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
 s32 func_800FD77C(s32 arg0, s32 arg1);
-u32 func_800FD7C0(u32 itemNum, u32 compareType);
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
@@ -1275,8 +1274,8 @@ void func_80132760(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
                    s32 volume, s16 distance);
 void func_801337B4(void);
-s32 func_80133940(void);
-s32 func_80133950(void);
+bool func_80133940(void);
+bool func_80133950(void);
 void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);
