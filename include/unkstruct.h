@@ -155,9 +155,31 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ u16 unk0;
-    /* 0x02 */ char pad2[0x6];
-    /* 0x8 */ u16 unk8;
-    /* 0xA */ char padA[0x36];
+    /* 0x02 */ u16 unk2;
+    /* 0x04 */ u16 unk4;
+    /* 0x06 */ u16 unk6;
+    /* 0x08 */ u16 unk8;
+    /* 0x0A */ u16 unkA;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ u16 unkE;
+    /* 0x10 */ u16 unk10;
+    /* 0x12 */ u16 unk12;
+    /* 0x14 */ u16 unk14;
+    /* 0x16 */ u16 unk16;
+    /* 0x18 */ u16 unk18;
+    /* 0x1A */ u16 unk1A;
+    /* 0x1C */ u16 unk1C;
+    /* 0x2E */ u16 unk1E;
+    /* 0x20 */ u16 unk20;
+    /* 0x22 */ u16 unk22;
+    /* 0x24 */ u16 unk24;
+    /* 0x26 */ u16 unk26;
+    /* 0x28 */ u16 unk28;
+    /* 0x2A */ u16 unk2A;
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ u8 unk2E;
+    /* 0x2F */ u8 unk2F;
+    /* 0x30 */ char padA[0x10];
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
@@ -271,3 +293,10 @@ typedef struct Unkstruct_8011B334 {
     /* 0x2C */ char pad2C[0x4];
     /* 0x30 */ u16 unk30; // assigned to entity->objectRoomIndex
 } Unkstruct_8011B334;
+
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+} Unkstruct_800EA5E4;
