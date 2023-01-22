@@ -736,18 +736,17 @@ void func_801C0B24(Entity* entity) {
         entity->animationFrame = D_80181F1C[entity->subId];
         entity->blendMode = 0x10;
         entity->step++;
-        return;
-    }
+    } else {
+        entity->animationFrameDuration++;
+        entity->posY.val -= entity->accelerationY;
 
-    entity->animationFrameDuration++;
-    entity->posY.val -= entity->accelerationY;
+        if (!(entity->animationFrameDuration & 1)) {
+            entity->animationFrame++;
+        }
 
-    if (!(entity->animationFrameDuration & 1)) {
-        entity->animationFrame++;
-    }
-
-    if (D_80181F20[entity->subId] < (s32)entity->animationFrameDuration) {
-        DestroyEntity(entity);
+        if (D_80181F20[entity->subId] < (s32)entity->animationFrameDuration) {
+            DestroyEntity(entity);
+        }
     }
 }
 
