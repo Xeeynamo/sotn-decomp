@@ -420,7 +420,7 @@ typedef struct {
     /* 8003C798 */ void** unk24;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
-    /* 8003C7A4 */ s32* unk30;
+    /* 8003C7A4 */ RoomHeader* unk30;
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)();
@@ -441,85 +441,89 @@ typedef struct RoomDimensions {
 } RoomDimensions;
 
 typedef struct CollisionResult {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ u8 pad0[16];
-    /* 0x14 */ s16 unk14;
+    /* 0x00 */ s32 unk0; // if not 0 it collides
+    /* 0x04 */ u32 unk4;
+    /* 0x08 */ u32 unk8;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u32 unk10;
+    /* 0x14 */ s16 unk14; // rightRepel
     /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
+    /* 0x18 */ s16 unk18; // bottomRepel
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ u16 unk1C;
-    /* 0x20 */ u8 pad2[4];
+    /* 0x1E */ u16 unk1E;
+    /* 0x20 */ u8 pad2[2];
 } CollisionResult; /* size=0x24 */
 
 typedef struct {
     /* 8003C774 */ Overlay o;
-    /* 8003C7B4 */ void (*g_pfnFreePolygons)(s32);
-    /* 8003C7B8 */ s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
-    /* 8003C7BC */ void (*g_pfnCheckCollision)(s32 x, s32 y,
-                                               CollisionResult* res, s32 unk);
-    /* 8003C7C0 */ void* unk4C;
-    /* 8003C7C4 */ void* unk50;
-    /* 8003C7C8 */ void* unk54;
-    /* 8003C7CC */ void* unk58;
-    /* 8003C7D0 */ void* unk5C;
-    /* 8003C7D4 */ void (*D_8003C7D4)(s32);
-    /* 8003C7D8 */ void* unk64;
-    /* 8003C7DC */ void (*g_pfnPlaySfx)(s32);
-    /* 8003C7E0 */ void* unk6C;
-    /* 8003C7E4 */ void* unk70;
+    /* 8003C7B4 */ void (*FreePolygons)(s32);
+    /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
+    /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
+                                          s32 unk);
+    /* 8003C7C0 */ void* unk4C;             // func_80102CD8
+    /* 8003C7C4 */ void* unk50;             // func_8010DDA0
+    /* 8003C7C8 */ void* unk54;             // func_8010E390
+    /* 8003C7CC */ void* unk58;             // func_8011879C
+    /* 8003C7D0 */ void* unk5C;             // func_800FE728
+    /* 8003C7D4 */ void (*D_8003C7D4)(s32); // func_800EA5E4
+    /* 8003C7D8 */ void* unk64;             // func_800EAF28
+    /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
+    /* 8003C7E0 */ void* unk6C; // func_800EDB58
+    /* 8003C7E4 */ void* unk70; // func_800EA538
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-    /* 8003C7EC */ void* unk78;
-    /* 8003C7F0 */ void* unk7C;
-    /* 8003C7F4 */ void* unk80;
-    /* 8003C7F8 */ void* unk84;
-    /* 8003C7FC */ void* unk88;
-    /* 8003C800 */ void* unk8C;
-    /* 8003C804 */ void* unk90;
-    /* 8003C808 */ Unkstruct5* D_8003C808;
-    /* 8003C80C */ void* unk98;
-    /* 8003C810 */ void* unk9C;
-    /* 8003C814 */ void* unkA0;
-    /* 8003C818 */ void* unkA4;
-    /* 8003C81C */ void* unkA8;
-    /* 8003C820 */ void* unkAC;
-    /* 8003C824 */ void* unkB0;
-    /* 8003C828 */ void* unkB4;
-    /* 8003C82C */ void* unkB8;
-    /* 8003C830 */ void* unkBC;
-    /* 8003C834 */ void* unkC0;
-    /* 8003C838 */ void* unkC4;
-    /* 8003C83C */ void* unkC8;
-    /* 8003C840 */ void* unkCC;
-    /* 8003C844 */ void* unkD0;
-    /* 8003C848 */ void (*D_8003C848)(s32, s32);
-    /* 8003C84C */ void* unkD8;
-    /* 8003C850 */ void* unkDC;
-    /* 8003C854 */ void* unkE0;
-    /* 8003C858 */ void* unkE4;
-    /* 8003C85C */ void* unkE8;
-    /* 8003C860 */ void* unkEC;
-    /* 8003C864 */ void* unkF0;
-    /* 8003C868 */ void* unkF4;
-    /* 8003C86C */ void* unkF8;
-    /* 8003C870 */ void* unkFC;
-    /* 8003C874 */ void* unk100;
-    /* 8003C878 */ void* unk104;
-    /* 8003C87C */ void* unk108;
-    /* 8003C880 */ void* unk10C;
-    /* 8003C884 */ void* unk110;
-    /* 8003C888 */ void* unk114;
-    /* 8003C88C */ void* unk118;
-    /* 8003C890 */ void* unk11C;
-    /* 8003C894 */ void* unk120;
-    /* 8003C898 */ void* unk124;
-    /* 8003C89C */ void* unk128;
+    /* 8003C7EC */ void* unk78;            // func_801027C4
+    /* 8003C7F0 */ void* unk7C;            // func_800EB758
+    /* 8003C7F4 */ void* unk80;            // func_8011AAFC
+    /* 8003C7F8 */ void* unk84;            // func_80131F68
+    /* 8003C7FC */ void* unk88;            // func_800EDB08
+    /* 8003C800 */ void* unk8C;            // func_80106A28
+    /* 8003C804 */ void* unk90;            // func_80118894
+    /* 8003C808 */ Unkstruct5* D_8003C808; // D_800A8900
+    /* 8003C80C */ void* unk98;            // func_80118970
+    /* 8003C810 */ void* unk9C;            // func_80118B18
+    /* 8003C814 */ void* unkA0;            // func_8010DB38
+    /* 8003C818 */ void* unkA4;            // func_8010DBFC
+    /* 8003C81C */ void* unkA8;            // func_80118C28
+    /* 8003C820 */ void* unkAC;            // func_8010E168
+    /* 8003C824 */ void* unkB0;            // func_8010DFF0
+    /* 8003C828 */ void* unkB4;            // func_800FF128
+    /* 8003C82C */ void (*g_pfn_800EB534)(u16 arg0, u16 arg1, s32 arg2);
+    /* 8003C830 */ void* unkBC;                  // D_800A4B04
+    /* 8003C834 */ void* unkC0;                  // D_800A7718
+    /* 8003C838 */ void* unkC4;                  // func_800FE914
+    /* 8003C83C */ void* unkC8;                  // func_8010715C
+    /* 8003C840 */ void* unkCC;                  // func_800FD4C0
+    /* 8003C844 */ void* unkD0;                  // func_8010E0A8
+    /* 8003C848 */ void (*D_8003C848)(s32, s32); // func_800FE044
+    /* 8003C84C */ void (*g_pfn_800FD874)(u16 context, s32 arg1);
+    /* 8003C850 */ void* unkDC;  // D_800A8720
+    /* 8003C854 */ void* unkE0;  // func_800FF7B8
+    /* 8003C858 */ void* unkE4;  // func_80134714
+    /* 8003C85C */ void* unkE8;  // func_80134678
+    /* 8003C860 */ void* unkEC;  // func_800F53A4
+    /* 8003C864 */ void* unkF0;  // func_800FD7C0
+    /* 8003C868 */ void* unkF4;  // func_8010BF64
+    /* 8003C86C */ void* unkF8;  // func_800F1FC4
+    /* 8003C870 */ void* unkFC;  // func_800F2288
+    /* 8003C874 */ void* unk100; // func_8011A3AC
+    /* 8003C878 */ void* unk104; // func_800FF460
+    /* 8003C87C */ void* unk108; // func_800FF494
+    /* 8003C880 */ void* unk10C; // func_80133940
+    /* 8003C884 */ void* unk110; // func_80133950
+    /* 8003C888 */ void* unk114; // func_800F27F4
+    /* 8003C88C */ void* unk118; // func_800FF110
+    /* 8003C890 */ void* unk11C; // func_800FD664
+    /* 8003C894 */ void* unk120; // func_800FD5BC
+    /* 8003C898 */ void* unk124; // func_800FDCE0
+    /* 8003C89C */ void* unk128; // func_800E2438
     /* 8003C8A0 */ void* unk12C;
     /* 8003C8A4 */ void* unk130;
     /* 8003C8A8 */ void* unk134;
     /* 8003C8AC */ void* unk138;
     /* 8003C8B4 */ void* unk13C;
     /* 8003C8B4 END*/
-} GameEngine; /* size=0x140 */
+} GameApi; /* size=0x140 */
 
 // main
 extern s32 D_8003C0EC[4];
@@ -532,25 +536,15 @@ extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
-extern GameEngine g_pfnUpdateStageEntities;
-extern void (*g_pfnTestStageEntities)(void);
+extern GameApi g_api;
 #ifndef STAGE_MAD
 extern void (*g_pfnLoadObjLayout)(void);
 #endif
-extern RoomHeader* D_8003C784;
-extern void (*D_8003C7B0)();
-extern s16 (*g_pfnAllocPolygons)(s32 primitives, s32 count);
-extern void (*g_pfnCheckCollision)(s32 x, s32 y, CollisionResult* res, s32 unk);
-extern void (*D_8003C7D4)(s32);
-extern void (*g_pfnPlaySfx)(s32);
-extern void (*g_pfnFreePolygons)(s32);
-extern Unkstruct5* D_8003C808;
-extern void (*D_8003C848)(s32, s32);
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
 extern s32 g_CurrentPlayableCharacter;
-extern s32 D_8003C9A4;
+extern s32 D_8003C9A4; // related to when player change stages?
 extern s32 g_blinkTimer;
 extern s32 g_menuMainCursorIndex;
 extern s32 g_menuRelicsCursorIndex[];
@@ -706,7 +700,7 @@ extern u16 D_80072F86;
 extern u16 D_80072F88;
 extern u16 D_80072F92;
 extern unkstruct_80072FA0 D_80072FA0[];
-extern u32 D_80073060;
+extern u32 D_80073060; // set to 4 to reload stage from disk
 extern s32 D_80073080;
 extern u16 D_8007308E;
 extern u32 D_80073068; // ev0
@@ -1012,8 +1006,8 @@ extern s32 D_801375FC;
 extern s32 D_80137608;
 extern s32 D_80137614;
 extern s32 D_80137618;
-extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
-                        // 2-byte aligned
+extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as
+                        // it's 2-byte aligned
 // extern u8 D_80137638[2];
 // extern u8 D_80137639[];
 extern s16 D_8013767C;

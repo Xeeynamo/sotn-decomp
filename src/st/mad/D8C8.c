@@ -969,7 +969,7 @@ void func_801936E0(u16 goldSize) { // CollectGold
 
     unk = &D_80096EC0;
     if (*unk) {
-        D_8003C6B0(D_80096EC4); // g_pfnFreePolygons
+        D_8003C6B0(D_80096EC4); // g_api.FreePolygons
         *unk = 0;
     }
 

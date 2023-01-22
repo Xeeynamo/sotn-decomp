@@ -97,7 +97,7 @@ void EntityBreakable(Entity* entity) {
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
-            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
                 SpawnExplosionEntity(2, temp_v0);
@@ -375,7 +375,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -665,7 +665,8 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 =
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_8003C808);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -754,15 +755,15 @@ void func_8019B8DC(u16 arg0) {
     CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                            g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
         if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                        g_CurrentEntity->posY.i.hi + 7, &res, 0);
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
         if (!(res.unk0 & 5)) {
@@ -792,7 +793,7 @@ void func_8019B8DC(u16 arg0) {
 void func_8019BA38(u16 arg0) {
     s32* hearts;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[arg0];
 
@@ -809,22 +810,22 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-    D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
@@ -1015,7 +1016,7 @@ bool func_8019E9F4(Unkstruct6* arg0) {
         posX += arg0->x;
         posY += arg0->y;
 
-        g_pfnCheckCollision(posX, posY, &res, 0);
+        g_api.CheckCollision(posX, posY, &res, 0);
 
         if (res.unk0 & 1) {
             g_CurrentEntity->posY.i.hi += res.unk18;

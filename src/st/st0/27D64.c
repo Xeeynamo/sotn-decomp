@@ -296,7 +296,7 @@ void EntitySecretStairsEmitter(Entity* entity) {
         break;
     case 1:
         if (g_isSecretStairsButtonPressed) {
-            g_pfnPlaySfx(NA_SE_SECRET_STAIRS);
+            g_api.PlaySfx(NA_SE_SECRET_STAIRS);
             entity->step++;
         }
         break;
@@ -513,7 +513,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->unk1E += 0x20;
         entity->accelerationY += 0x2000;
         if (entity->posY.i.hi >= 205) {
-            g_pfnPlaySfx(NA_SE_BREAK_GLASS);
+            g_api.PlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.i.hi = 204;
             func_801B5794(2);
         }
@@ -772,7 +772,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -1085,7 +1085,7 @@ bool func_801B8338(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_pfnCheckCollision(posX, posY, &res, 0);
+        g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
             g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
