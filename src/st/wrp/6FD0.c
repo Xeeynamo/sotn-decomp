@@ -4202,30 +4202,28 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F838);
-#else
 void func_8018F838(Entity* entity) {
     if (entity->step == 0) {
+        entity->accelerationY = D_80181020[entity->unk94];
+        entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
         entity->animationSet = 2;
-        entity->unk34 = 0x0C002000;
-        entity->accelerationY = D_80181020[entity->unk94];
-        entity->blendMode = 16;
-        entity->step = entity->step + 1;
         entity->animationFrame = D_80181038[entity->subId];
+        entity->blendMode = 0x10;
+        entity->step++;
     } else {
         entity->animationFrameDuration++;
-        entity->posY.val = entity->posY.val - entity->accelerationY;
-        if ((entity->animationFrameDuration & 1) == 0) {
+        entity->posY.val -= entity->accelerationY;
+
+        if (!(entity->animationFrameDuration & 1)) {
             entity->animationFrame++;
         }
-        if (D_8018103C[entity->subId] < entity->animationFrameDuration) {
+
+        if (D_8018103C[entity->subId] < (s32)entity->animationFrameDuration) {
             DestroyEntity(entity);
         }
     }
 }
-#endif
 
 void func_8018F928(Entity* arg0) {
     u16 temp_v0;
