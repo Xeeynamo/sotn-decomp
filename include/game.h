@@ -114,6 +114,8 @@ typedef union {
     } i;
 } f32;
 
+#include "unkstruct.h"
+
 typedef struct {
     unsigned char width;
     unsigned char height;
@@ -619,8 +621,6 @@ typedef struct {
     /* 8003C8AC */ void* unused138;
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
-
-#include "unkstruct.h"
 
 extern s32 D_8003925C;
 extern s32 D_8003C0EC[4];
