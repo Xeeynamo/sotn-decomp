@@ -717,7 +717,7 @@ extern s8 D_801824F0[]; // c_HeartPrizes
 void func_801C62F4(u16 arg0) {
     s32* hearts;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart;
     *hearts += D_801824F0[arg0];
 
