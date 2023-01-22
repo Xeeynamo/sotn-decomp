@@ -424,7 +424,7 @@ u8 func_80132028(u_char com, u_char* param, u_char* result);
 void func_8013271C(void);
 void func_80132760(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
-                   s32 volume, s16 distance);
+                   s16 volume, s16 distance);
 void func_801337B4(void);
 bool func_80133940(void);
 bool func_80133950(void);
