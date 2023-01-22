@@ -126,10 +126,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE3C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE728);
 
-bool func_800FE8B4(s32 arg0, s32 arg1) {
-    if (g_playerMP.current >= arg0) {
-        if (arg1 != 0) {
-            g_playerMP.current -= arg0;
+bool HasEnoughMp(s32 mpCount, bool subtractMp) {
+    if (g_playerMP.current >= mpCount) {
+        if (subtractMp != 0) {
+            g_playerMP.current -= mpCount;
         }
         return false;
     }
