@@ -11,7 +11,7 @@
     },
     "files.associations": {
         "main.h": "c",
-        "dra.h": "c",
+        "game.h": "c",
         "stage.h": "c",
         "common.h": "c",
         "types.h": "c",
