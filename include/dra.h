@@ -133,9 +133,7 @@ typedef struct Entity {
         } modeS8;
     } unk80; // size = 0x4
     /* 0x84 */ Multi unk84;
-    /* 0x88 */ s8 unk88; // this is a Multi: refer to EntityWarpSmallRocks
-    /* 0x89 */ s8 unk89;
-    /* 0x8A */ s16 unk8A;
+    /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
         /* 0x8C */ struct Entity* entityPtr;
         /* 0x8C */ s32 modeS32;

@@ -1113,8 +1113,8 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801C5FC4); // Unique
 
 void func_801C6494(Entity* entity) {
     if (entity->step) {
-        entity->unk88--;
-        if (entity->unk88 & 0xFF) {
+        entity->unk88.S8.unk0--;
+        if (entity->unk88.S8.unk0 & 0xFF) {
             entity->unk1E += D_80182424[entity->subId];
             FallEntity();
             MoveEntity();

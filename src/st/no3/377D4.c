@@ -179,8 +179,15 @@ void func_801BE544(void) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE598);
 
-// https://decomp.me/scratch/ErGo1
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE75C);
+void func_801BE75C(s16 yOffset) {
+    RECT rect;
+
+    rect.x = 384;
+    rect.y = (yOffset * 12) + 256;
+    rect.w = 64;
+    rect.h = 12;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BE7BC);
 
@@ -513,7 +520,10 @@ s32 func_801C5534(u8 arg0, s16 arg1) { return D_801820C4[arg0] * arg1; }
 
 s16 func_801C5560(u8 arg0) { return D_801820C4[arg0]; }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C557C);
+void func_801C557C(s32 arg0, s16 arg1) {
+    g_CurrentEntity->accelerationX = func_801C5534(arg0, arg1);
+    g_CurrentEntity->accelerationY = func_801C5534(arg0 - 0x40, arg1);
+}
 
 u8 func_801C55E8(s16 arg0, s16 arg1) {
     return ((ratan2(arg1, arg0) >> 4) + 0x40);
@@ -531,8 +541,28 @@ u8 func_801C5668(s32 arg0, s32 arg1) {
     return func_801C55E8(a, b);
 }
 
-// https://decomp.me/scratch/0GgS4
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C56B0);
+u8 func_801C56B0(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
 
@@ -544,11 +574,35 @@ u16 func_801C57C4(Entity* a, Entity* b) {
     return ratan2(diffY, diffX);
 }
 
-// https://decomp.me/scratch/ghlVg
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C57FC);
+u16 func_801C57FC(s32 x, s32 y) {
+    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
+    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
+    return ratan2(diffY, diffX);
+}
 
-// https://decomp.me/scratch/FkEAs
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5844);
+u16 func_801C5844(u16 arg0, u16 arg1, u16 arg2) {
+    u16 var_v0 = arg1;
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0_2;
+
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_801C58A4(u8 state) {
     g_CurrentEntity->step = state;
@@ -638,14 +692,16 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6114);
 #else
+// matches with gcc 2.6.0 + aspsx 2.34
 void func_801C6114(void) {
+    s32 temp_v1;
+
     if (g_CurrentEntity->accelerationY >= 0) {
-        g_CurrentEntity->unk84.value =
-            g_CurrentEntity->unk88 + g_CurrentEntity->unk84.value;
-        g_CurrentEntity->accelerationX = g_CurrentEntity->unk84.value;
-        if ((g_CurrentEntity->accelerationX == 0x10000) ||
-            (g_CurrentEntity->accelerationX == -0x10000)) {
-            g_CurrentEntity->unk88 = -g_CurrentEntity->unk88;
+        temp_v1 = g_CurrentEntity->unk88.S16.unk0 + g_CurrentEntity->unk84.unk;
+        g_CurrentEntity->unk84.unk = temp_v1;
+        g_CurrentEntity->accelerationX = temp_v1;
+        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
+            g_CurrentEntity->unk88.S16.unk0 = -g_CurrentEntity->unk88.S16.unk0;
         }
     }
     if (g_CurrentEntity->accelerationY < 0x4000) {
@@ -656,7 +712,20 @@ void func_801C6114(void) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6198);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C62F4);
+extern s8 D_801824F0[]; // c_HeartPrizes
+void func_801C62F4(u16 arg0) {
+    s32* hearts;
+
+    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+    hearts = &g_playerHeart;
+    *hearts += D_801824F0[arg0];
+
+    if (g_playerHeart->max < *hearts) {
+        *hearts = g_playerHeart->max;
+    }
+
+    DestroyEntity(g_CurrentEntity);
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6374);
 
@@ -787,8 +856,26 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC6F8);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC820);
 
-// https://decomp.me/scratch/AzIEr
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC90C);
+void func_801CC90C(Entity* arg0) {
+    s16 temp_v0_2;
+    s16 temp_v1;
+    s16 temp_v0;
+
+    temp_v0 = func_801C4F64();
+    temp_v1 = arg0->unk84.S16.unk2;
+    if (temp_v1 != 0) {
+
+        if ((u32)(temp_v0) < 0x60) {
+            temp_v0_2 = temp_v1 - 2;
+            arg0->unk84.S16.unk2 = temp_v0_2;
+            if (temp_v0_2 < 0) {
+                arg0->unk84.S16.unk2 = 0;
+            }
+        } else {
+            arg0->unk84.S16.unk2 = (temp_v1 - 1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CC974);
 
@@ -818,8 +905,27 @@ void func_801CF58C(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF5E0);
 
-// https://decomp.me/scratch/ljfBh
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801CF6D8);
+// duplicate of func_801CC90C in this file
+void func_801CF6D8(Entity* arg0) {
+    s16 temp_v0_2;
+    s16 temp_v1;
+    s16 temp_v0;
+
+    temp_v0 = func_801C4F64();
+    temp_v1 = arg0->unk84.S16.unk2;
+    if (temp_v1 != 0) {
+
+        if ((u32)(temp_v0) < 0x60) {
+            temp_v0_2 = temp_v1 - 2;
+            arg0->unk84.S16.unk2 = temp_v0_2;
+            if (temp_v0_2 < 0) {
+                arg0->unk84.S16.unk2 = 0;
+            }
+        } else {
+            arg0->unk84.S16.unk2 = (temp_v1 - 1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityWarg);
 
@@ -885,10 +991,43 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6880);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6C68);
 
-// https://decomp.me/scratch/DHpdc
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6DB8);
+POLY_GT4* func_801D6DB8(POLY_GT4* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = (POLY_GT4*)poly->tag;
+        } else {
+            return poly;
+        }
+    }
+    return NULL;
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D6DE8);
+POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
+    if (poly) {
+        s32 index_ = index;
+    loop_2:
+        if (poly->p3 == 0) {
+            POLY_GT4* var_v0 = NULL;
+            POLY_GT4* firstPoly = poly;
+            s32 i = 1;
+            if (i < index_) {
+                do {
+                    poly = (POLY_GT4*)poly->tag;
+                    if (!poly)
+                        return NULL;
+                } while (poly->p3 == 0 && ++i < index);
+            }
+            var_v0 = firstPoly;
+            if (i == index_)
+                return var_v0;
+        }
+        poly = (POLY_GT4*)poly->tag;
+        if (poly) {
+            goto loop_2;
+        }
+    }
+    return NULL;
+}
 
 POLY_GT4* func_801D6E64(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
