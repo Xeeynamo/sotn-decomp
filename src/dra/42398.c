@@ -260,7 +260,7 @@ void entrypoint_sotn(void) {
     ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
     ClearImage(&D_800ACD88[1], 0, 0, 0);
     for (i = 0; i < 0x50; i++) {
-        ((void**)&g_pfnUpdateStageEntities)[i] = (&D_800A0004)[i];
+        ((void**)&g_api)[i] = (&D_800A0004)[i];
     }
     g_blinkTimer = 0;
     D_8003C99C = 0;
@@ -561,7 +561,7 @@ void func_800E451C(void) {
         break;
     case 0x6:
         if (D_8003C734 == 1) {
-            g_pfnTestStageEntities();
+            g_api.o.TestEntities();
         } else {
             g_pfnLoadObjLayout();
         }
@@ -696,7 +696,7 @@ void func_800E738C(void) {
             return;
         }
     }
-    D_8003C7B0();
+    g_api.o.unk3C();
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7458);
@@ -780,7 +780,7 @@ s32 func_800E7E08(u32 arg0) {
     case 0:
         pSrc = g_pStOverlay;
         i = 0;
-        pDst = &g_pfnUpdateStageEntities.o;
+        pDst = &g_api.o;
         do {
             i++;
             *pDst++ = *pSrc++;
@@ -1712,7 +1712,7 @@ bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     if (func_800F087C(chunkX, chunkY))
         return false;
 
-    pRoom = D_8003C784;
+    pRoom = g_api.o.unk30;
 loop_3:
     while (pRoom->left != 0x40) {
         if (chunkX >= pRoom->left && chunkY >= pRoom->top &&

@@ -279,13 +279,13 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AD490);
 
 void func_801AD590(void) {
     if (D_80097494 & 0x6000) {
-        g_pfnPlaySfx(0x67D);
+        g_api.PlaySfx(0x67D);
         if (++D_801D6B0C == 5) {
             D_801D6B0C = 1;
         }
     }
     if (D_80097494 & 0x9000) {
-        g_pfnPlaySfx(0x67D);
+        g_api.PlaySfx(0x67D);
         if (--D_801D6B0C == 0) {
             D_801D6B0C = 4;
         }
@@ -304,23 +304,23 @@ void func_801ADC3C(void) {
     if (*new_var >= 0 || D_801BD02C >= 0) {
         u16* tmp = &D_80097496;
         if (*tmp & 0x2000) {
-            g_pfnPlaySfx(0x67B);
+            g_api.PlaySfx(0x67B);
             D_801BC3D8 = (D_801BC3D8 + 1) % 6;
         }
         if (*tmp & 0x4000) {
-            g_pfnPlaySfx(0x67B);
+            g_api.PlaySfx(0x67B);
             D_801BC3DC = (D_801BC3DC + 4) % 5;
         }
         if (*tmp & 0x8000) {
-            g_pfnPlaySfx(0x67B);
+            g_api.PlaySfx(0x67B);
             D_801BC3D8 = (D_801BC3D8 + 5) % 6;
         }
         if (*tmp & 0x1000) {
-            g_pfnPlaySfx(0x67B);
+            g_api.PlaySfx(0x67B);
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
         if (*new_var > 0 && D_801BD02C > 0 && D_80097494 & 0xF) {
-            g_pfnPlaySfx(0x67D);
+            g_api.PlaySfx(0x67D);
             D_801BC3D8 = (D_801BC3D8 + 3) % 6;
         }
         if (D_801BCC84 < 0) {
@@ -361,7 +361,7 @@ void func_801AECA0(void) {
         x = xnext;
     }
 
-    D_8003C7D4(0x8004);
+    g_api.D_8003C7D4(0x8004);
 }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AED48);
@@ -949,7 +949,7 @@ void func_801B4B30(Entity* entity) {
     u32* ptr;
 
     if (entity->unk34 & 0x800000) {
-        g_pfnFreePolygons(entity->firstPolygonIndex);
+        g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;

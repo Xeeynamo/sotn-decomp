@@ -183,7 +183,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->unk34 & 0x800000) {
-        g_pfnFreePolygons(entity->firstPolygonIndex);
+        g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -372,8 +372,8 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195A50);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 
 void func_80195C0C(void) {
-    g_pfnPlaySfx(0x67A);
-    D_8003C848(5, 0x8000);
+    g_api.PlaySfx(0x67A);
+    g_api.D_8003C848(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 

@@ -68,7 +68,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -417,7 +417,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -575,7 +575,8 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 =
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_8003C808);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -665,8 +666,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6450);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6568);
 
 void func_801C660C(void) {
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-    D_8003C848(5, 0x8000);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.D_8003C848(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
@@ -738,7 +739,7 @@ bool func_801C92B0(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_pfnCheckCollision(posX, posY, &res, 0);
+        g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
             g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
@@ -812,7 +813,7 @@ void func_801CF58C(Entity* arg0) {
     arg0->accelerationX = 0;
     arg0->unk84.S16.unk2 = 0x100;
     func_801C58A4(6);
-    g_pfnPlaySfx(0x783);
+    g_api.PlaySfx(0x783);
     arg0->unk80.modeS16.unk0 = 0x20;
 }
 

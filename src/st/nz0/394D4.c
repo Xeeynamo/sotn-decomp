@@ -186,7 +186,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -441,7 +441,8 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 =
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_8003C808);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -523,15 +524,15 @@ void func_801BDE20(u16 arg0) {
     CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                            g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
         if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    g_pfnCheckCollision(g_CurrentEntity->posX.i.hi,
-                        g_CurrentEntity->posY.i.hi + 7, &res, 0);
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
         if (!(res.unk0 & 5)) {
@@ -559,7 +560,7 @@ void func_801BDE20(u16 arg0) {
 void CollectHeart(u16 heartSize) {
     s32* hearts;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = (s32*)&g_playerHeart;
     *hearts += c_HeartPrizes[heartSize];
 
@@ -574,7 +575,7 @@ void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_GOLD);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
     gold = &g_playerGold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
@@ -584,7 +585,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        g_pfnFreePolygons(D_80097414);
+        g_api.FreePolygons(D_80097414);
         *unk = 0;
     }
 
@@ -598,22 +599,22 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/394D4", func_801BE0D8);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-    D_8003C848(5, 0x8000);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.D_8003C848(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
@@ -796,7 +797,7 @@ bool func_801C0F38(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_pfnCheckCollision(posX, posY, &res, 0);
+        g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
             g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
@@ -1259,8 +1260,8 @@ void func_801C7654(Entity* entity) {
         MoveEntity();
         entity->accelerationY += 0x2000;
 
-        g_pfnCheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8, &res.unk0,
-                            0);
+        g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8,
+                             &res.unk0, 0);
 
         if (res.unk0 & 1) {
             entity->unk19 = 2;
