@@ -2861,18 +2861,18 @@ extern s16 D_800BD19E[];
 extern s16 D_80138FB8; // vol_l
 extern s16 D_80139004; // vol_r
 
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note, s16 arg5,
-                   s16 arg6) {
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
+                   s16 volume, s16 distance) {
     s16 var_a0;
     s16 var_a1;
     volatile short pad;
 
-    if (arg6 == 0) {
-        D_80138FB8 = arg5;
-        D_80139004 = arg5;
+    if (distance == 0) {
+        D_80138FB8 = volume;
+        D_80139004 = volume;
     } else {
-        D_80139004 = (arg5 * D_800BD19C[arg6 * 2]) >> 7;
-        D_80138FB8 = (arg5 * D_800BD19E[arg6 * 2]) >> 7;
+        D_80139004 = (volume * D_800BD19C[distance * 2]) >> 7;
+        D_80138FB8 = (volume * D_800BD19E[distance * 2]) >> 7;
     }
 
     if (voice < 0x18U) {
