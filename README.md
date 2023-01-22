@@ -2,12 +2,6 @@
 
 A work-in-progress decompilation of Castlevania Symphony of the Night for PlayStation 1. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation. Currently it only supports the US version of the game `SLUS-00067`.
 
-The game is divided into three modules:
-
-* `SLUS_000.67` the main executable. It contains all the hardware API (eg. gamepad, CD, memory card, GPU renderer) of the PlayStation 1 console. It does not contain any game logic.
-* `DRA` the game engine. It contains the business logic (eg. gameloop, API to draw maps, entities, load levels, handle entities, animations and collisions) and some data such as Alucard's sprites or the loading/save rooms.
-* `ST/` the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map specific events, cutscenes, enemy AI, collisions and more. It also contains the rooms and entities layout. Each overlay can be considered as its own mini-game. The title screen `SEL.BIN` is an example of how a stage overlay can act very differently.
-
 This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.
 
 ## Bins decomp progress
@@ -27,6 +21,16 @@ This repo does not include any assets or assembly code necessary for compiling t
 | `bc2fabbe5ef0d1288490b6f1ddbf11092a2c0c57` | ST/ST0.BIN | ![progress ST0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-st0.json)
 | `2ae313f4e394422e4c5f37a2d8e976e92f9e3cda` | ST/WRP.BIN | ![progress WRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-wrp.json)
 | `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json)
+
+## Game internals
+
+The game is divided into three modules:
+
+* `SLUS_000.67` the main executable. It contains all the hardware API (eg. gamepad, CD, memory card, GPU renderer) of the PlayStation 1 console. It does not contain any game logic.
+* `DRA` the game engine. It contains the business logic (eg. gameloop, API to draw maps, entities, load levels, handle entities, animations and collisions) and some data such as Alucard's sprites or the loading/save rooms.
+* `ST/` the overlays for each area. An area (eg. Castle's entrance, Alchemy Laboratory, etc.) contains all the unique logic to handle map specific events, cutscenes, enemy AI, collisions and more. It also contains the rooms and entities layout. Each overlay can be considered as its own mini-game. The title screen `SEL.BIN` is an example of how a stage overlay can act very differently.
+
+Even if different overlays are loaded at the same time in memory, like `DRA` and stages, they never communicate each other directly. Instead they share the same memory area where `SLUS_000.67` is located. Each overlay exposes their API as function pointers in the shared memory area, effectively allowing overlays to communicate without directly coupling them. One prime example is `struct GameApi`, which exposes `DRA` APIs to the stages and stage APIs to `DRA`. All the shared area is defined in `game.h`.
 
 ## Setup the project
 

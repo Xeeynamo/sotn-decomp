@@ -1,12 +1,110 @@
-#ifndef DRA_H
-#define DRA_H
-#include "main.h"
-#include "unkstruct.h"
+#ifndef GAME_H
+#define GAME_H
+#include <psxsdk/kernel.h>
+#include <psxsdk/libapi.h>
+#include <psxsdk/libc.h>
+#include <psxsdk/libcd.h>
+#include <psxsdk/libetc.h>
+#include <psxsdk/libgpu.h>
+#include <psxsdk/libgs.h>
+#include <psxsdk/libgte.h>
+#include <psxsdk/libsnd.h>
+
+#define PAD_COUNT 2
+#define PAD_L2 0x0001
+#define PAD_R2 0x0002
+#define PAD_L1 0x0004
+#define PAD_R1 0x0008
+#define PAD_TRIANGLE 0x0010
+#define PAD_CIRCLE 0x0020
+#define PAD_CROSS 0x0040
+#define PAD_SQUARE 0x0080
+#define PAD_SELECT 0x0100
+#define PAD_L3 0x0200
+#define PAD_R3 0x0400
+#define PAD_START 0x0800
+#define PAD_UP 0x1000
+#define PAD_RIGHT 0x2000
+#define PAD_DOWN 0x4000
+#define PAD_LEFT 0x8000
+
+#define RENDERFLAGS_NOSHADOW 2
+#define PLAYER_ALUCARD 0
+#define PLAYER_RICHTER 1
+#define MAX_GOLD 999999
+#define HEART_VESSEL_INCREASE 5
+#define HEART_VESSEL_RICHTER 30
+#define LIFE_VESSEL_INCREASE 5
+#define FALL_GRAVITY 0x4000
+#define FALL_TERMINAL_VELOCITY 0x60000
+
+#define TOTAL_ENTITY_COUNT 256
+#define MaxEntityCount 32
+
+#define PROGRAM_NO0 0x00
+#define PROGRAM_NO1 0x01
+#define PROGRAM_LIB 0x02
+#define PROGRAM_CAT 0x03
+#define PROGRAM_NO2 0x04
+#define PROGRAM_CHI 0x05
+#define PROGRAM_DAI 0x06
+#define PROGRAM_NP3 0x07
+#define PROGRAM_CEN 0x08
+#define PROGRAM_NO4 0x09
+#define PROGRAM_ARE 0x0A
+#define PROGRAM_TOP 0x0B
+#define PROGRAM_NZ0 0x0C
+#define PROGRAM_NZ1 0x0D
+#define PROGRAM_WRP 0x0E
+#define PROGRAM_NO1_ALT 0x0F
+#define PROGRAM_NO0_ALT 0x10
+#define PROGRAM_DRE 0x12
+#define PROGRAM_BO7 0x16
+#define PROGRAM_MAR 0x17
+#define PROGRAM_BO6 0x18
+#define PROGRAM_BO5 0x19
+#define PROGRAM_BO4 0x1A
+#define PROGRAM_BO3 0x1B
+#define PROGRAM_BO2 0x1C
+#define PROGRAM_BO1 0x1D
+#define PROGRAM_BO0 0x1E
+#define PROGRAM_ST0 0x1F
+#define PROGRAM_MAD 0x40
+#define PROGRAM_NO3 0x41
+#define PROGRAM_IWA_LOAD 0x42
+#define PROGRAM_IGA_LOAD 0x43
+#define PROGRAM_HAGI_LOAD 0x44
+#define PROGRAM_TE1 0x46
+#define PROGRAM_TE2 0x47
+#define PROGRAM_TE3 0x48
+#define PROGRAM_TE4 0x49
+#define PROGRAM_TE5 0x4A
+#define PROGRAM_TOP_ALT 0x4B
+#define PROGRAM_INVERTEDCASTLE_FLAG 0x20
+#define PROGRAM_ENDING 0xFE
+#define PROGRAM_MEMORYCARD 0xFF
+
+#define LBA_BIN_F_GAME 0x61CE
+#define LBA_BIN_F_GAME2 0x6252
+#define LBA_STAGE_MAD_ART 0x7D6F
+#define LBA_STAGE_MAD_VH 0x7DEF
+#define LBA_STAGE_MAD_BIN 0x7E28
+#define LBA_STAGE_NO0_ART 0x7E5D
+#define LBA_STAGE_NO0_VH 0x7EDD
+#define LBA_STAGE_NO0_BIN 0x7F16
+#define LBA_STAGE_NO3_ART 0x8297
+#define LBA_STAGE_NO3_VH 0x8317
+#define LBA_STAGE_NO3_BIN 0x834F
+#define LBA_STAGE_ST0_ART 0x9044
+#define LBA_STAGE_ST0_VH 0x90C4
+#define LBA_STAGE_ST0_BIN 0x90F9
+#define LBA_STAGE_NP3_ART 0x917F
+#define LBA_STAGE_NP3_VH 0x91FF
+#define LBA_STAGE_NP3_BIN 0x9235
 
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
-typedef void (*UnkFunctionUpdate1)(struct Entity*, u32, struct Entity*);
 
 typedef union {
     s32 val;
@@ -15,6 +113,8 @@ typedef union {
         s16 hi;
     } i;
 } f32;
+
+#include "unkstruct.h"
 
 typedef struct {
     unsigned char width;
@@ -161,7 +261,7 @@ typedef struct Entity {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
-        /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+        /* 0xB8 */ void (*unkFuncB8)(struct Entity*, u32, struct Entity*);
         struct {
             /* 0xB8 */ u8 unk0;
             /* 0xB9 */ u8 unk1;
@@ -459,7 +559,7 @@ typedef struct {
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
                                           s32 unk);
-    /* 8003C7C0 */ void* func_80102CD8;
+    /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void* func_8010DDA0;
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
@@ -522,7 +622,7 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
-// main
+extern s32 D_8003925C;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern u16 D_8003C104[];
@@ -554,100 +654,6 @@ extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
-
-// dra
-#define PAD_COUNT 2
-#define PAD_L2 0x0001
-#define PAD_R2 0x0002
-#define PAD_L1 0x0004
-#define PAD_R1 0x0008
-#define PAD_TRIANGLE 0x0010
-#define PAD_CIRCLE 0x0020
-#define PAD_CROSS 0x0040
-#define PAD_SQUARE 0x0080
-#define PAD_SELECT 0x0100
-#define PAD_L3 0x0200
-#define PAD_R3 0x0400
-#define PAD_START 0x0800
-#define PAD_UP 0x1000
-#define PAD_RIGHT 0x2000
-#define PAD_DOWN 0x4000
-#define PAD_LEFT 0x8000
-
-#define RENDERFLAGS_NOSHADOW 2
-#define PLAYER_ALUCARD 0
-#define PLAYER_RICHTER 1
-#define MAX_GOLD 999999
-#define HEART_VESSEL_INCREASE 5
-#define HEART_VESSEL_RICHTER 30
-#define LIFE_VESSEL_INCREASE 5
-#define FALL_GRAVITY 0x4000
-#define FALL_TERMINAL_VELOCITY 0x60000
-
-#define TOTAL_ENTITY_COUNT 256
-#define MaxEntityCount 32
-
-#define PROGRAM_NO0 0x00
-#define PROGRAM_NO1 0x01
-#define PROGRAM_LIB 0x02
-#define PROGRAM_CAT 0x03
-#define PROGRAM_NO2 0x04
-#define PROGRAM_CHI 0x05
-#define PROGRAM_DAI 0x06
-#define PROGRAM_NP3 0x07
-#define PROGRAM_CEN 0x08
-#define PROGRAM_NO4 0x09
-#define PROGRAM_ARE 0x0A
-#define PROGRAM_TOP 0x0B
-#define PROGRAM_NZ0 0x0C
-#define PROGRAM_NZ1 0x0D
-#define PROGRAM_WRP 0x0E
-#define PROGRAM_NO1_ALT 0x0F
-#define PROGRAM_NO0_ALT 0x10
-#define PROGRAM_DRE 0x12
-#define PROGRAM_BO7 0x16
-#define PROGRAM_MAR 0x17
-#define PROGRAM_BO6 0x18
-#define PROGRAM_BO5 0x19
-#define PROGRAM_BO4 0x1A
-#define PROGRAM_BO3 0x1B
-#define PROGRAM_BO2 0x1C
-#define PROGRAM_BO1 0x1D
-#define PROGRAM_BO0 0x1E
-#define PROGRAM_ST0 0x1F
-#define PROGRAM_MAD 0x40
-#define PROGRAM_NO3 0x41
-#define PROGRAM_IWA_LOAD 0x42
-#define PROGRAM_IGA_LOAD 0x43
-#define PROGRAM_HAGI_LOAD 0x44
-#define PROGRAM_TE1 0x46
-#define PROGRAM_TE2 0x47
-#define PROGRAM_TE3 0x48
-#define PROGRAM_TE4 0x49
-#define PROGRAM_TE5 0x4A
-#define PROGRAM_TOP_ALT 0x4B
-#define PROGRAM_INVERTEDCASTLE_FLAG 0x20
-#define PROGRAM_ENDING 0xFE
-#define PROGRAM_MEMORYCARD 0xFF
-
-#define LBA_BIN_F_GAME 0x61CE
-#define LBA_BIN_F_GAME2 0x6252
-#define LBA_STAGE_MAD_ART 0x7D6F
-#define LBA_STAGE_MAD_VH 0x7DEF
-#define LBA_STAGE_MAD_BIN 0x7E28
-#define LBA_STAGE_NO0_ART 0x7E5D
-#define LBA_STAGE_NO0_VH 0x7EDD
-#define LBA_STAGE_NO0_BIN 0x7F16
-#define LBA_STAGE_NO3_ART 0x8297
-#define LBA_STAGE_NO3_VH 0x8317
-#define LBA_STAGE_NO3_BIN 0x834F
-#define LBA_STAGE_ST0_ART 0x9044
-#define LBA_STAGE_ST0_VH 0x90C4
-#define LBA_STAGE_ST0_BIN 0x90F9
-#define LBA_STAGE_NP3_ART 0x917F
-#define LBA_STAGE_NP3_VH 0x91FF
-#define LBA_STAGE_NP3_BIN 0x9235
-
 extern const char g_strMemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
@@ -845,8 +851,6 @@ extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
 extern PlayerMP g_playerMP;
 extern s32 g_playerMpMax;
-extern s32 D_80097C14;
-extern s32 D_80097C18;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
@@ -854,430 +858,30 @@ extern GameTimer g_GameTimer;
 extern s32 D_80097C98;
 extern s8 D_80097D37;
 extern s32 D_800987B4;
+extern s32 D_800987C8;
 extern s32 D_80098850;
-extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
-extern u32 D_800A0158;
-extern s32 D_800A015C;
-extern s32 D_800A04EC;
-extern s32 D_800A04F8;
-extern s32 D_800A0510[];
-extern u16 g_saveIconPalette[0x10][0x10];
-extern u8* g_saveIconTexture[0x10];
-extern s32 D_800A2438;
-Unkstruct_800A2D98 D_800A2D98[];
-extern u8 D_800A2EE8[];
-extern u8 D_800A2EED;
-extern u8 D_800A2EF8[];
-extern u8 D_800A2EFD;
-extern u8 D_800A2F08[];
-extern u8 D_800A2F18[];
-extern u8 D_800A2F28[];
-extern u8 D_800A2F2D;
-extern u8 D_800A2F38[];
-extern u8 D_800A2F3D;
-extern u16 D_800A2F48[];
-extern u16 D_800A2F64[];
-extern s32 D_800A2FBC[];
-extern s32 D_800A2FC0[];
-extern u16 player_equip_left_hand;
-extern u32 player_equip_head[];
-extern u32 player_equip_body;
-extern s32 player_equip_cloak;
-extern s32 player_equip_ring1;
-extern s32 player_equip_ring2;
-extern Unkstruct10 D_800A2464[];
-extern const char* c_strALUCARD;
-extern const char* c_strSTR;
-extern const char* c_strCON;
-extern const char* c_strINT;
-extern const char* c_strLCK;
-extern const char* c_strEXP;
-extern const char* c_strNEXT;
-extern const char* c_strGOLD;
-extern const char* c_strLEVEL;
-extern const char* c_strTIME;
-extern const char* c_strROOMS;
-extern const char* c_strKILLS;
-extern const char* c_strHP;
-extern const char* c_strMP;
-extern const char* c_strHEART;
-extern const char* c_strSTATUS;
-extern const char* c_strButton;
-extern const char* c_strCloak;
-extern const char* c_strCloak2;
-extern const char* c_strExterior;
-extern const char* c_strLining;
-extern const char* c_strButtonRightHand;
-extern const char* c_strButtonLeftHand;
-extern const char* c_strButtonJump;
-extern const char* c_strButtonSpecial;
-extern const char* c_strButtonWolf;
-extern const char* c_strButtonMist;
-extern const char* c_strButtonBat;
-extern const char* c_strNormal;
-extern const char* c_strReversal;
-extern const char* c_strSound;
-extern const char* c_strStereo;
-extern const char* c_strMono;
-extern const char* c_strWindow;
-extern const char* c_strTime;
-extern const char* c_strALUCART;
-extern const char* c_strSSword;
-extern s32 D_800A4B04;
-extern Unkstruct_800A4B12 D_800A4B1D[];
-extern s32 D_800A7718;
-extern u16 D_800A7734[];
-extern s8 D_800A841C[];  // related to player MP
-extern s32 D_800ACC64[]; // probably a struct
-extern RECT D_800ACD80;
-extern RECT D_800ACD88[2];
-extern RECT D_800ACD90;
-extern RECT D_800ACDF0;
-extern Unkstruct_800ACEC6 D_800ACEC6;
-extern u8 D_800ACF4C[];
-extern s16 D_800ACF60[]; // collection of sounds?
-extern s32 D_800ACFB4;
-extern s32* D_800AE294; // might not really be a pointer
-extern s16 D_800AFDA6;
-extern const char* c_strEquip;
-extern const char* c_strSpells;
-extern const char* c_strRelics;
-extern const char* c_strSystem;
-extern const char* c_strFamiliars;
-extern const char* c_strFamiliar;
-extern const char* c_strSpecial2;
-extern RECT c_backbufferClear;
-extern s32 D_800B0914;
-extern s16 D_800BD07C[];
-extern s32 D_800BD1C0;
-extern s32 D_800BD1C4;
-extern s32 D_800DC4C0;
-extern s8 D_800DC4C4;
-extern u8 D_800BF554[];
-extern u8 D_800BF555[];
-extern u8 D_800BF556[];
-extern u8 D_800BF559[];
-extern u8 D_800BF55A[];
-extern s32 D_801362AC;
-extern s32 D_801362B0;
-extern s32 D_801362B4;
-extern s32 D_801362B8;
-extern s32 D_801362BC;
-extern s32 D_801362C0;
-extern s32 D_801362C4;
-extern s32 D_801362C8;
-extern u32* D_801362CC;
-extern s32 D_801362D4;
-extern s32 D_801362D8;
-extern Unkstruct_Entrypoint D_801362DC;
-extern s32 D_801362E0;
-extern s32 D_801362E4;
-extern s32 D_801362E8;
-extern s32 D_801362EC;
-extern s32 D_801362F0;
-extern s32 D_801362F4;
-extern s32 D_801362F8;
-extern s32 D_801362FC;
-extern s32 g_softResetTimer;
-extern s16 D_80136308[];
-extern s32 D_8013640C;
-extern s16 D_80136460[];
-extern s16 D_80136C60[];
-extern u8 D_80137460;
-extern s32 D_80137470;
-extern s32 D_80137474;
-extern u16 D_80137478[];
-extern u16 D_801374B8[];
-extern s16 D_801374F8;
-extern u8* D_80137578;
-extern u8* D_8013757C;
-extern s32 D_80137580;
-extern s32 D_80137584;
-extern s32* D_80137590;
-extern RoomLoadDef* D_801375BC;
-extern s16 D_80137538;
-extern s32 D_801375C8;
-extern Unkstruct_800A2D98 D_801375CC;
-extern s32 D_801375DC;
-extern s32 D_801375FC;
-extern s32 D_80137608;
-extern s32 D_80137614;
-extern s32 D_80137618;
-extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as
-                        // it's 2-byte aligned
-// extern u8 D_80137638[2];
-// extern u8 D_80137639[];
-extern s16 D_8013767C;
-extern s16 D_80137688;
-extern u8 D_80137692;
-extern u8 D_801376B0;
-extern s32 D_8013783C;
-extern s32 D_801377FC[];
-extern s32 D_80137840;
-extern s32 D_80137844[];
-extern s32 D_80137848[];
-extern s32 D_8013784C;
-extern s32 g_someValue;
-extern s32 D_80137930;
-extern s32 D_80137934;
-extern s32 D_80137938[];
-extern s8* D_8013794C; // Pointer to texture pattern
-extern s32 D_80137950;
-extern s32 D_80137954;
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern s32 D_8013796C;
-extern s32 D_80137970;
-extern s32 D_80137974;
-extern u32 D_80137978;
-extern u32 D_8013797C;
-extern s32 D_80137980;
-extern s32 D_80137984;
-extern u32 D_80137988;
-extern u32 D_8013798C;
-extern s32 D_80137994;
-extern s32 D_80137998;
-extern u32 D_8013799C;
-extern s32 D_801379A0;
-extern s32 D_80137E40;
-extern s32 D_80137E44;
-extern s32 D_80137E48;
-extern s32 D_80137E4C;
-extern s32 D_80137E50;
-extern s32 D_80137E64;
-extern s32 D_80137E68;
-extern s32 D_80137F6C;
-extern void* D_80137F7C;
-extern s32 D_80137F9C;
-extern s32 D_80138008;
-extern s32 D_80138430;
-extern s32 D_80138438;
-extern s32 D_80138444;
-extern s32 D_80138460;
-extern const char* D_80138784[487];
-extern s32 D_80138F20;
-extern u8 D_80138F24[]; // Confirmed part of an array / struct
-extern u8 D_80138F2C[];
-extern s32 D_80138F28;
-extern s32 D_80138F7C;
-extern s32 D_80138FB0;
-extern s16 D_80138FC4;
-extern s16 D_80139000;
-extern s16 D_80139008;
-extern s8 D_80139018[];
-extern s32 D_8013900C;
-extern s16 D_8013901C;
-extern u8 D_80139020;
-extern s8 D_80139058[];
-extern u8 D_801390A0;
-extern u8 D_801390A8;
-extern s16 D_801390AC[];
-extern s32 D_801390B4[];
-extern s8 D_801390C4;
-extern GpuBuffer* D_801390D4;
-extern u8 D_801390D8;
-extern Unkstruct_801390DC D_801390DC[];
-extern u16 D_801396E4;
-extern Multi D_801396E6;
-extern u16 D_801396E8;
-extern s16 D_801396EA;
-extern s32 D_801396F0;
-extern u16 D_801396F4;
-extern s32 D_801397FC;
-extern s16 D_80139804;
-extern s32 D_8013980C;
-extern u8 D_80139810;
-extern s16 D_80139814[];
-extern s16 D_80139820;
-extern s32 D_80139828[];
-extern s32 D_80139834[];
-extern s16 D_80139A6C;
-extern s16 D_80139A70;
-extern s16 D_80139A78;
-extern s16 D_8013AE7C;
-extern volatile unsigned char D_8013AE80;
-extern s16 D_8013AE84[];
-extern s16 D_8013AE8C;
-extern s16 D_8013AEA0[];
-extern s16 D_8013AE94;
-extern s32 D_8013AE9C;
-extern s16 D_8013AED4[];
-extern s16 g_volumeL;
-extern s16 g_volumeR;
-extern s16 D_8013B678[];
-extern s16 D_8013B698;
-extern s16 D_8013AEE0;
-extern u8 D_8013AEEC;
-extern s32 D_8013B158;
-extern Unkstruct_8013B160 D_8013B160[];
-extern s32 D_8013B3D0;
-extern s16 D_8013B3E8[];
-extern s32 D_8013B5E8;
-extern s8 D_8013B5EC[];
-extern s8 D_8013B614[];
-extern s32 D_8013B61C;
-extern s16 D_8013B620[];
-extern s32 D_8013B628[];
-extern s16 D_8013B648[];
-extern s16 D_8013B650[];
-extern s16 D_8013B658;
-extern s32 D_8013B660;
-extern s16 D_8013B664;
-extern s16 D_8013B668;
-extern s16 D_8013B66C[];
-extern u8 D_8013B680;
-extern s8 D_8013B684;
-extern s8 D_8013B690;
-extern s32 D_8013B694;
-extern s32 D_8016FCC0[];
-extern void (*D_8013C00C)(void);
-extern void (*D_80170000)(void);
-extern ImgSrc* g_imgUnk8013C200;
-extern ImgSrc* g_imgUnk8013C270;
-extern s32 D_801EC000[];
+extern s32 D_80098894;
 
-void InitializePads(void);
-void ReadPads(void);
-void ClearBackbuffer(void);
-void SetRoomForegroundLayer(s32 /* ? */);
-void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
-void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
-void PlaySfx(s16 sfxId);
-s32 func_80019444(void);
-void func_800209B4(s32*, s32, s32);
-void func_80021E38(s32);
-void func_80021EEC(void);
-void func_80028D3C(s32, s32);
-void func_80029FBC(s32);
-void func_8002A09C(void*);
-void func_8002ABF4(s32);
-void func_800E346C(void);
-void func_800E34A4(s8 arg0);
-void func_800E34DC(s32 arg0);
-void func_800E4124(s32 arg0);
-void func_800E8D24(void);
-void func_800E8DF0(void);
-s32 func_800E912C(void);
-s32 func_800E9208(void);
-void func_800E928C(void);
-void func_800E92E4(void);
-void func_800E92F4(void);
-void func_800EA5E4(s32);
-void func_800EA538(s32);
-void func_800EAD7C(void);
-void func_800EAEEC(void);
-void func_800EB534(u16, u16, s32);
-void func_800ECE2C(void);
-void func_800EDA70(s32* arg0);
-void func_800EDA94(void);
-void func_800EDAE4(void);
-s32 AllocPolygons(u8 primitives, s32 count);
-s32 func_800EDD9C(u8 primitives, s32 count);
-void func_800EFBF8(void);
-void FreePolygons(s32 index);
-void func_800F0334(s32);
-s32 func_800F087C(u32, u32);
-bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
-void func_800F180C(s32, s32, void*);
-void func_800F1868(s32, s32, void*);
-void func_800F18C4(s32, s32);
-void func_800F1954(s32, s32, s32);
-void func_800F1EB0(s32, s32, s32);
-void func_800F2120(void);
-void func_800F223C(void);
-void func_800F4994(void);
-s32 func_800F4D38(s32, s32);
-void func_800F4F48(void);
-void func_800F4FD0(void);
-bool IsAlucart(void);
-s32 SquareRoot12(s32, s32);
-void func_800F53A4(void);
-bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
-void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
-                   s32 unk2, bool disableTexShade, s32 unk4);
-s32 func_800F62E8(s32 arg0);
-void func_800F98AC(s32 arg0, s32 arg1);
-void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
-void DrawMenuChar(char ch, int x, int y, MenuContext* context);
-void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
-void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
-void DrawSettingsReverseCloak(MenuContext* context);
-void DrawSettingsSound(MenuContext* context);
-void DrawPauseMenu(s32 arg0);
-void func_800F82F4(void);
-void func_800F8858(MenuContext* context);
-void func_800FABEC(s32 arg0);
-void func_800FAC30(void);
-void func_800FAF44(s32, s32);
-s32 func_800FD4C0(s32, s32);
-s32 func_800FD664(s32 arg0);
-s32 func_800FD6C4(s32);
-u8* func_800FD744(s32 arg0);
-u8* func_800FD760(s32 arg0);
-s32 func_800FD77C(s32 arg0, s32 arg1);
-u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_800FD874(u16 arg0, s32 arg1);
-s16 func_800FDB18(s32, s32);
-void func_800FDCE0(s32);
-void func_800FDE00(void);
-void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
-void func_800FE728(s32, Unkstruct_8011B334*, s32);
-s32 func_800FEEA4(s32, s32);
-void func_800FF0A0(s32 arg0);
-void func_80102CD8(s32);
-void func_80102DEC(s32 arg0);
-void func_80103EAC(void);
-void func_80106590(Entity*);
-void func_801065F4(s16 startIndex);
-void func_801071CC(POLY_GT4* poly, u8, s32);
-void func_80107250(POLY_GT4* poly, s32 arg1);
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
-                   s32 v);
-void func_801073C0(void);
-void func_801092E8(s32);
-void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
-void func_8010D584(s16 arg0);
-void func_8010DDA0(s32, s32*);
-void func_8010DFF0(s32, s32);
-void func_8010E0A8(void);
-void func_8010E0B8(void);
-void func_8010E470(s32, s32);
-void func_8010E83C(s32 arg0);
-void func_80111928(void);
-void func_80111CC0(void);
-void func_80118894(Entity*);
-void func_80118C28(s32 arg0);
-bool func_80111D24(void);
-Entity* func_8011AAFC(Entity* entity, s32, s32);
-void func_8012CA64(void);
-void func_8012CB4C(void);
-void func_8012CCE4(void);
-void func_8012CFA8(void);
-void func_80131EBC(const char* str, s16 arg1);
-void func_80131ED8(s32 value);
-void func_80131EE8(void);
-void func_80131F04(void);
-s32 func_80131F28(void);
-u16 func_80131F38(void);
-bool func_80131F68(void);
-s16 func_80131F94(void);
-void func_8013216C(void);
-void func_801321FC(void);
-void func_80132134(void);
-s32 func_80132264(void);
-void func_80132C2C(s16);
-s32 func_801326D8(void);
-u8 func_80132028(u_char com, u_char* param, u_char* result);
-void func_8013271C(void);
-void func_80132760(void);
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
-                   s32 volume, s16 distance);
-void func_801337B4(void);
-bool func_80133940(void);
-bool func_80133950(void);
-void func_80133FCC(void);
-void func_8013415C(void);
-void func_801361F8(void);
+void PadInit(s32 arg0);
+int VSync(s32);
+s32 rcos(s32);
+s32 rsin(s32);
+s32 SquareRoot0(s32);
+s32 ratan2(s32, s32);
+void* DMACallback(int dma, void (*func)());
+void func_800192DC(s32 arg0, s32 arg1);
+void func_8001C550(s32);
+s32 func_8001D290(s32, s32);
+s32 func_8001D374(s8, s16, s16);
+void func_8001D2E0(s32, s32, s32);
+void func_800202E0(s16);
+void func_80020F44(s16);
+void func_80021174(void);
+void func_80021188(void);
+s32 func_80021350(const char* str, s32, s32);
+s32 func_80021880(s32*, s32, s32);
+s32 func_800219E0(s32);
+void func_80021F6C(s16, s16);
+void func_8002A024(s32, s32);
 
 #endif

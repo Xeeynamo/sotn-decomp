@@ -2,7 +2,7 @@
 #define STAGE_H
 
 #include "common.h"
-#include "dra.h"
+#include "game.h"
 #include "objects.h"
 #include "sfx.h"
 

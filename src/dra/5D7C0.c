@@ -7,16 +7,15 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     if (equipType < 5) {
         switch (equipType) {
         case 0:
-            return (player_equip_head[0] == itemId) +
-                   (player_equip_body == itemId);
+            return (g_playerEquip[0] == itemId) + (g_playerEquip[1] == itemId);
         case 1:
-            return player_equip_cloak == itemId;
+            return g_playerEquip[2] == itemId;
         case 2:
-            return player_equip_ring1 == itemId;
+            return g_playerEquip[3] == itemId;
         case 3:
-            return player_equip_ring2 == itemId;
+            return g_playerEquip[4] == itemId;
         case 4:
-            return (D_80097C14 == itemId) + (D_80097C18 == itemId);
+            return (g_playerEquip[5] == itemId) + (g_playerEquip[6] == itemId);
         }
     }
     // seems to require missing return
