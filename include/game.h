@@ -512,7 +512,7 @@ typedef struct {
     /* 8003C780 */ void (*LoadObjLayout)(s32 layoutId);
     /* 8003C784 */ RoomHeader* roomHeaders;
     /* 8003C788 */ s16** unk14;
-    /* 8003C78C */ void** unk18;
+    /* 8003C78C */ s32** unk18;
     /* 8003C790 */ void* unk1C;  // related to object layout
     /* 8003C794 */ void** unk20; // related to tiles layout
     /* 8003C798 */ void** unk24;
@@ -663,11 +663,11 @@ extern s32 D_8006C378;
 extern GpuBuffer* D_8006C37C;
 extern s32 D_8006C398;
 extern s32 D_8006C3AC;
-extern u16 D_8006C3C4;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 D_8006C3B0;
 extern Entity* g_CurrentEntity;
+extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
