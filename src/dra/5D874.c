@@ -84,13 +84,13 @@ bool func_800FDD44(s32 equipHeadIndex) {
     u8 temp_s1;
     u8 temp_v0;
 
-    equippedItem = player_equip_head[equipHeadIndex];
-    temp_s1 = D_800A4B1D[player_equip_head[equipHeadIndex]].unk0;
+    equippedItem = g_playerEquip[equipHeadIndex];
+    temp_s1 = D_800A4B1D[g_playerEquip[equipHeadIndex]].unk0;
     if (!CheckEquipmentItemCount(0x54, 4)) {
         if (temp_s1 != 0) {
             temp_v0 = D_8009798A[equippedItem];
             if (temp_v0 == 0) {
-                player_equip_head[equipHeadIndex] = 0;
+                g_playerEquip[equipHeadIndex] = 0;
                 func_800F53A4();
                 return true;
             }
@@ -217,7 +217,7 @@ void func_800FF60C(void) {
 
     i = 0;
     while (1) {
-        if (player_equip_ring2 == D_800A2FBC[i]) {
+        if (g_playerEquip[4] == D_800A2FBC[i]) {
             break;
         }
 
@@ -228,11 +228,11 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if ((player_equip_ring2 == 0x32) && (g_SettingsCloakMode != 0)) {
+    if ((g_playerEquip[4] == 0x32) && (g_SettingsCloakMode != 0)) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
-    if (player_equip_ring2 == 0x38) {
+    if (g_playerEquip[4] == 0x38) {
         func_800EA5E4(0x415);
     }
 }

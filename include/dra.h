@@ -459,7 +459,7 @@ typedef struct {
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
                                           s32 unk);
-    /* 8003C7C0 */ void* func_80102CD8;
+    /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void* func_8010DDA0;
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
@@ -845,8 +845,6 @@ extern PlayerHP g_playerHp;
 extern s32 g_playerHpMax;
 extern PlayerMP g_playerMP;
 extern s32 g_playerMpMax;
-extern s32 D_80097C14;
-extern s32 D_80097C18;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
@@ -880,11 +878,15 @@ extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
 extern u16 player_equip_left_hand;
-extern u32 player_equip_head[];
-extern u32 player_equip_body;
-extern s32 player_equip_cloak;
-extern s32 player_equip_ring1;
-extern s32 player_equip_ring2;
+
+extern u32 g_playerEquip[];
+// D_80097C00 = g_playerEquip[0]
+// D_80097C04 = g_playerEquip[1]
+// D_80097C08 = g_playerEquip[2]
+// D_80097C0C = g_playerEquip[3]
+// D_80097C10 = g_playerEquip[4]
+// D_80097C14 = g_playerEquip[5]
+
 extern Unkstruct10 D_800A2464[];
 extern const char* c_strALUCARD;
 extern const char* c_strSTR;
