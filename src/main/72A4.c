@@ -1,5 +1,5 @@
 #include "common.h"
-#include <main.h>
+#include <game.h>
 
 INCLUDE_ASM("asm/main/nonmatchings/72A4", GsInitVcount);
 
