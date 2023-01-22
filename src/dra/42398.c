@@ -1980,8 +1980,8 @@ void func_800F4F48(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
-        player_equip_head[i + 7] =
-            func_800F4D38(player_equip_head[i], player_equip_head[1 - i]);
+        g_playerEquip[i + 7] =
+            func_800F4D38(g_playerEquip[i], g_playerEquip[1 - i]);
     }
 }
 
@@ -3013,7 +3013,7 @@ s32 func_800FD664(s32 arg0) { return g_mapProgramId & 0x20 ? arg0 << 1 : arg0; }
 
 extern Unkstruct_800A4B12 D_800A4B12[];
 
-u8 func_800FD688(s32 arg0) { return D_800A4B12[player_equip_head[arg0]].unk0; }
+u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800FD6C4);
 
