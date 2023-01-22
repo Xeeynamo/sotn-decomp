@@ -431,7 +431,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
     g_CurrentEntity->unk2E = 0;
 }
 
-void InitializeEntity(const u16 arg0[]) {
+void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 

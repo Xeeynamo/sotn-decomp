@@ -21,44 +21,39 @@ void LoadObjLayout(s32 objLayoutId);
 void func_801916C4(u16);
 void func_80192F40(u8*, u8);
 
-PfnOverlayEntry g_pStOverlay[] = {
-    (PfnOverlayEntry)UpdateStageEntities,
-    (PfnOverlayEntry)func_8018861C,
-    (PfnOverlayEntry)func_8018A7AC,
-};
-PfnLoadObjectLayout g_pfnStLoadObjectLayout =
-    (PfnLoadObjectLayout)LoadObjLayout;
-// *** Overlay exports end ***
-
-// *** Layout definition start ***
-extern RoomHeader g_stRooms[];
-s16* const* D_80180040[];
+RoomHeader g_stRooms[];
+s16** D_80180040[];
 void* D_801800B4[];
 LayerDef* D_80180168[];
 void* D_801801EC[];
+void func_80188514(void);
+
+Overlay g_StageOverlay = {
+    /* 0x00 */ UpdateStageEntities,
+    /* 0x04 */ func_8018861C,
+    /* 0x08 */ func_8018A7AC,
+    /* 0x0C */ LoadObjLayout,
+    /* 0x10 */ g_stRooms,
+    /* 0x14 */ D_80180040,
+    /* 0x18 */ D_801800B4,
+    /* 0x1C */ NULL,
+    /* 0x20 */ D_80180168,
+    /* 0x24 */ D_801801EC,
+    /* 0x28 */ func_80188514,
+    /* 0x2C */ 0x00000000,
+    /* 0x30 */ 0x00000000,
+    /* 0x34 */ 0x00000000,
+    /* 0x38 */ 0x00000000,
+    /* 0x3C */ 0x00000000,
+};
+
+// *** Sprites and layout definition start ***
 u32 D_80181D08[];
 TileDefinition D_80182D68[];
 TileDefinition D_80186D78;
 SpriteParts* D_80186D88[];
-void func_80188514(void);
 
-void* g_pStUnkRoomDef[] = {
-    /* 0x10 */ g_stRooms,
-    /* 0x14 */ D_80180040,
-    /* 0x18 */ D_801800B4,
-};
-void* g_pStUnkObjLayouts = NULL;
-void** g_pStUnkTilesLayout = (void** const)D_80180168;
-void* g_pStTilesets[] = {
-    /* 0x024 */ D_801801EC,
-    /* 0x028 */ func_80188514,
-    /* 0x02C */ 0x00000000,
-    /* 0x030 */ 0x00000000,
-    /* 0x034 */ 0x00000000,
-    /* 0x038 */ 0x00000000,
-    /* 0x03C */ 0x00000000,
-};
-s16* const* D_80180040[] = {
+s16** D_80180040[] = {
     /* 0x040 */ 0x00000000,
     /* 0x044 */ D_80186D88,
     /* 0x048 */ 0x00000000,
@@ -2511,7 +2506,7 @@ extern u16 D_80194728[];
 // *** bss? section end ***
 
 void func_80186FD0(Entity* arg0) {
-    const ObjInit2* objInit = &D_801804E0[arg0->subId];
+    ObjInit2* objInit = &D_801804E0[arg0->subId];
     if (arg0->step == 0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
@@ -3827,7 +3822,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     g_CurrentEntity->unk2E = 0;
 }
 
-void InitializeEntity(const u16 arg0[]) {
+void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -4413,7 +4408,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityAbsorbOrb);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
-    const ObjInit2* objInit = &D_80181134[entity->subId];
+    ObjInit2* objInit = &D_80181134[entity->subId];
     if (entity->step == 0) {
         InitializeEntity(D_80180494);
         entity->animationSet = objInit->animationSet;
