@@ -564,7 +564,30 @@ u8 func_801C56B0(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C5708);
+// Duplicate
+void func_801C5708(u16 slope, s16 speed) {
+    Entity* entity;
+    s32 moveX;
+    s32 moveY;
+
+    moveX = rcos(slope) * speed;
+    entity = g_CurrentEntity;
+
+    if (moveX < 0) {
+        moveX += 15;
+    }
+
+    entity->accelerationX = moveX >> 4;
+
+    moveY = rsin(slope) * speed;
+    entity = g_CurrentEntity;
+
+    if (moveY < 0) {
+        moveY += 15;
+    }
+
+    entity->accelerationY = moveY >> 4;
+}
 
 u16 func_801C5794(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
@@ -972,7 +995,23 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityMerman);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D56D8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D583C);
+extern u16 D_80180B60;
+extern u8 D_80183B04;
+
+void func_801D583C(Entity* arg0) {
+    if (arg0->step == 0) {
+        InitializeEntity(&D_80180B60);
+        arg0->animationFrame = 0;
+        arg0->unk3C = 0;
+        arg0->zPriority += 4;
+        arg0->unk34 |= 0x2000;
+    }
+    MoveEntity();
+    arg0->accelerationY += 0x2800;
+    if (AnimateEntity(&D_80183B04, arg0) == 0) {
+        DestroyEntity(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D58D4);
 
