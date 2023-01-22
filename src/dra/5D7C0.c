@@ -3,20 +3,20 @@
 #include "objects.h"
 #include "sfx.h"
 
-u32 func_800FD7C0(u32 itemNum, u32 compareType) {
-    if (compareType < 5) {
-        switch (compareType) {
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
+    if (equipType < 5) {
+        switch (equipType) {
         case 0:
-            return (player_equip_head[0] == itemNum) +
-                   (player_equip_body == itemNum);
+            return (player_equip_head[0] == itemId) +
+                   (player_equip_body == itemId);
         case 1:
-            return player_equip_cloak == itemNum;
+            return player_equip_cloak == itemId;
         case 2:
-            return player_equip_ring1 == itemNum;
+            return player_equip_ring1 == itemId;
         case 3:
-            return player_equip_ring2 == itemNum;
+            return player_equip_ring2 == itemId;
         case 4:
-            return (D_80097C14 == itemNum) + (D_80097C18 == itemNum);
+            return (D_80097C14 == itemId) + (D_80097C18 == itemId);
         }
     }
     // seems to require missing return

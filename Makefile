@@ -168,9 +168,9 @@ MAD_PATCHES = \
 	-e "s/D_8003C6B0/g_api.FreePolygons/g" -e "s/0x8003C6B0/0x8003C7B4/g" \
 	-e "s/D_8003C6B8/g_api.CheckCollision/g" -e "s/0x8003C6B8/0x8003C7BC/g" \
 	-e "s/D_8003C6D8/g_api.PlaySfx/g" -e "s/0x8003C6D8/0x8003c7dc/g" \
-	-e "s/D_8003C704/D_8003C808/g" -e "s/0x8003C704/0x8003C808/g" \
+	-e "s/D_8003C704/D_800A8900/g" -e "s/0x8003C704/0x8003C808/g" \
 	-e "s/D_8003C724/D_8003C828/g" -e "s/0x8003C724/0x8003C828/g" \
-	-e "s/D_8003C744/D_8003C848/g" -e "s/0x8003C744/0x8003C848/g" \
+	-e "s/D_8003C744/func_800FE044/g" -e "s/0x8003C744/0x8003C848/g" \
 	-e "s/g_pfnLoadObjLayout/D_8003C8C4/g" -e "s/0x8003c780/0x8003C8C4/g" \
 	-e "s/D_8006C26C/g_CurrentEntity/g" -e "s/0x8006C26C/0x8006C3B8/g" \
 	-e "s/D_80072B34/g_CurrentRoomTileLayout/g" -e "s/0x80072B34/0x80073084/g" \

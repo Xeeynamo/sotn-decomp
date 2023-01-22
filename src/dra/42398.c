@@ -38,7 +38,7 @@ void func_801026BC(s32);
 void func_80106670(s32 blendMode);
 void func_80108448(void);
 s32 func_8010E27C(void);
-void func_8010E390(s32);
+void AccelerateX(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
 void func_801325D8(void);
 void func_801353A0(void);
@@ -1966,8 +1966,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F298C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F483C);
 
 bool IsAlucart(void) {
-    if (func_800FD7C0(0xA8, 0) && func_800FD7C0(0xA7, 0) &&
-        func_800FD7C0(0x59, 2))
+    if (CheckEquipmentItemCount(0xA8, 0) && CheckEquipmentItemCount(0xA7, 0) &&
+        CheckEquipmentItemCount(0x59, 2))
         return true;
     return false;
 }
@@ -3009,14 +3009,7 @@ s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
 }
 
-s32 func_800FD664(s32 context) {
-    s32 phi_a0 = context;
-
-    if (g_mapProgramId & 0x20) {
-        phi_a0 <<= 1;
-    }
-    return phi_a0;
-}
+s32 func_800FD664(s32 arg0) { return g_mapProgramId & 0x20 ? arg0 << 1 : arg0; }
 
 extern Unkstruct_800A4B12 D_800A4B12[];
 
