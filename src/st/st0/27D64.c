@@ -18,10 +18,12 @@ void func_801B3BDC(u16 objectId, Entity* source, Entity* entity);
 s16 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
-void func_801B6B60(Entity*);
+void EntityExplosion(Entity*);
 
+extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern ObjInit2 D_80180638[];
+
 void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180638[arg0->subId];
@@ -294,7 +296,7 @@ void EntitySecretStairsEmitter(Entity* entity) {
         break;
     case 1:
         if (g_isSecretStairsButtonPressed) {
-            g_pfnPlaySfx(NA_SE_SECRET_STAIRS);
+            g_api.PlaySfx(NA_SE_SECRET_STAIRS);
             entity->step++;
         }
         break;
@@ -365,7 +367,7 @@ void EntityDraculaFireball(Entity* entity) {
     }
 
     if (entity->unk34 & 0x100) {
-        entity->pfnUpdate = (PfnEntityUpdate)func_801B6B60;
+        entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         entity->step = 0;
         entity->subId = 2;
         return;
@@ -413,7 +415,7 @@ void EntityDraculaMeteorball(Entity* entity) {
 
     if (g_isDraculaFirstFormDefeated) {
         entity->objectId = ENTITY_EXPLOSION;
-        entity->pfnUpdate = func_801B6B60;
+        entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
         entity->unk2E = 0;
         entity->subId = 1;
@@ -511,7 +513,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->unk1E += 0x20;
         entity->accelerationY += 0x2000;
         if (entity->posY.i.hi >= 205) {
-            g_pfnPlaySfx(NA_SE_BREAK_GLASS);
+            g_api.PlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.i.hi = 204;
             func_801B5794(2);
         }
@@ -698,7 +700,18 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1CA0);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityNumericDamage);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", CreateEntity);
+void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+    DestroyEntity(entity);
+    entity->objectId = initDesc->objectId & 0x3FF;
+    do {
+        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    } while (0);
+    entity->posX.i.hi = initDesc->posX - D_8007308E;
+    entity->posY.i.hi = initDesc->posY - D_80073092;
+    entity->subId = initDesc->subId;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B31A4);
 
@@ -759,7 +772,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -976,14 +989,14 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B633C);
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6358);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6B60);
-void func_801B6B60(Entity* entity);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityExplosion);
+void EntityExplosion(Entity* entity);
 #else
 extern u16 D_8018058C[];
 extern u32 D_80181D7C[];
 extern u16 D_80181E28[][2];
 
-void func_801B6B60(Entity* entity) {
+void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
         u32 zPriority;
 
@@ -1024,7 +1037,31 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7308);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7B0C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7BFC);
+void func_801B7BFC(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_801805A4);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_801B3BDC(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7D0C);
 
@@ -1036,8 +1073,8 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8014);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8108);
 
-bool _peek_event(Unkstruct6* unk) {
-    Unkstruct7 a;
+bool func_801B8338(Unkstruct6* unk) {
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -1048,9 +1085,9 @@ bool _peek_event(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        D_8003C7BC(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += a.sp28;
+        g_api.CheckCollision(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {

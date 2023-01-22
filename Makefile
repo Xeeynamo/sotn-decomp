@@ -163,15 +163,17 @@ $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 
 mad_fix: stmad_dirs mad_patch $(BUILD_DIR)/MAD.BIN
 MAD_PATCHES = \
+	-e "s/D_8003BEE8/D_8003BEEC/g" -e "s/0x8003BEE8/0x8003BEEC/g" \
 	-e "s/D_8003BF08/D_8003BF7C/g" -e "s/0x8003BF08/0x8003BF7C/g" \
-	-e "s/D_8003C6B0/g_pfnFreePolygons/g" -e "s/0x8003C6B0/0x8003C7B4/g" \
-	-e "s/D_8003C6B8/D_8003C7BC/g" -e "s/0x8003C6B8/0x8003C7BC/g" \
-	-e "s/D_8003C6D8/g_pfnPlaySfx/g" -e "s/0x8003C6D8/0x8003c7dc/g" \
-	-e "s/D_8003C704/D_8003C808/g" -e "s/0x8003C704/0x8003C808/g" \
+	-e "s/D_8003C6B0/g_api.FreePolygons/g" -e "s/0x8003C6B0/0x8003C7B4/g" \
+	-e "s/D_8003C6B8/g_api.CheckCollision/g" -e "s/0x8003C6B8/0x8003C7BC/g" \
+	-e "s/D_8003C6D8/g_api.PlaySfx/g" -e "s/0x8003C6D8/0x8003c7dc/g" \
+	-e "s/D_8003C704/D_800A8900/g" -e "s/0x8003C704/0x8003C808/g" \
 	-e "s/D_8003C724/D_8003C828/g" -e "s/0x8003C724/0x8003C828/g" \
-	-e "s/D_8003C744/D_8003C848/g" -e "s/0x8003C744/0x8003C848/g" \
+	-e "s/D_8003C744/func_800FE044/g" -e "s/0x8003C744/0x8003C848/g" \
 	-e "s/g_pfnLoadObjLayout/D_8003C8C4/g" -e "s/0x8003c780/0x8003C8C4/g" \
 	-e "s/D_8006C26C/g_CurrentEntity/g" -e "s/0x8006C26C/0x8006C3B8/g" \
+	-e "s/D_80072B34/g_CurrentRoomTileLayout/g" -e "s/0x80072B34/0x80073084/g" \
 	-e "s/D_80072E8A/D_800733DA/g" -e "s/0x80072E8A/0x800733DA/g" \
 	-e "s/D_80072E8E/D_800733DE/g" -e "s/0x80072E8E/0x800733DE/g" \
 	-e "s/D_80072E88/D_800733D8/g" -e "s/0x80072E88/0x800733D8/g" \
@@ -191,6 +193,7 @@ MAD_PATCHES = \
 	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
 	-e "s/D_80096ED8/g_entityDestroyed/g" \ -e "s/D_8009769C/g_playerGold/g" \
 	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
+	-e "s/D_800973B8/D_8009790C/g" -e "s/0x800973B8/0x8009790C/g" \
 	-e "s/D_8009741B/D_8009796F/g" -e "s/0x8009741B/0x8009796F/g" \
 	-e "s/D_8009741F/D_80097973/g" -e "s/0x8009741F/0x80097973/g" \
 	-e "s/D_80072B3E/D_8007308E/g" -e "s/0x80072B3E/0x8007308E/g" \

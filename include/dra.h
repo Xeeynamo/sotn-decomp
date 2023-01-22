@@ -133,9 +133,7 @@ typedef struct Entity {
         } modeS8;
     } unk80; // size = 0x4
     /* 0x84 */ Multi unk84;
-    /* 0x88 */ s8 unk88;
-    /* 0x89 */ s8 unk89;
-    /* 0x8A */ s16 unk8A;
+    /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
         /* 0x8C */ struct Entity* entityPtr;
         /* 0x8C */ s32 modeS32;
@@ -420,7 +418,7 @@ typedef struct {
     /* 8003C798 */ void** unk24;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
-    /* 8003C7A4 */ s32* unk30;
+    /* 8003C7A4 */ RoomHeader* unk30;
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)();
@@ -440,83 +438,89 @@ typedef struct RoomDimensions {
     /* 0x28 */ s32 height;
 } RoomDimensions;
 
+typedef struct CollisionResult {
+    /* 0x00 */ s32 unk0; // if not 0 it collides
+    /* 0x04 */ u32 unk4;
+    /* 0x08 */ u32 unk8;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u32 unk10;
+    /* 0x14 */ s16 unk14; // rightRepel
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18; // bottomRepel
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ u16 unk1C;
+    /* 0x1E */ u16 unk1E;
+    /* 0x20 */ u8 pad2[2];
+} CollisionResult; /* size=0x24 */
+
 typedef struct {
     /* 8003C774 */ Overlay o;
-    /* 8003C7B4 */ void (*g_pfnFreePolygons)(s32);
-    /* 8003C7B8 */ s16 (*D_8003C7B8)(s32, s32);
-    /* 8003C7BC */ void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
-    /* 8003C7C0 */ void* unk4C;
-    /* 8003C7C4 */ void* unk50;
-    /* 8003C7C8 */ void* unk54;
-    /* 8003C7CC */ void* unk58;
-    /* 8003C7D0 */ void* unk5C;
-    /* 8003C7D4 */ void (*D_8003C7D4)(s32);
-    /* 8003C7D8 */ void* unk64;
-    /* 8003C7DC */ void (*g_pfnPlaySfx)(s32);
-    /* 8003C7E0 */ void* unk6C;
-    /* 8003C7E4 */ void* unk70;
-    /* 8003C7E8 */ void* unk74;
-    /* 8003C7EC */ void* unk78;
-    /* 8003C7F0 */ void* unk7C;
-    /* 8003C7F4 */ void* unk80;
-    /* 8003C7F8 */ void* unk84;
-    /* 8003C7FC */ void* unk88;
-    /* 8003C800 */ void* unk8C;
-    /* 8003C804 */ void* unk90;
-    /* 8003C808 */ Unkstruct5* D_8003C808;
-    /* 8003C80C */ void* unk98;
-    /* 8003C810 */ void* unk9C;
-    /* 8003C814 */ void* unkA0;
-    /* 8003C818 */ void* unkA4;
-    /* 8003C81C */ void* unkA8;
-    /* 8003C820 */ void* unkAC;
-    /* 8003C824 */ void* unkB0;
-    /* 8003C828 */ void* unkB4;
-    /* 8003C82C */ void* unkB8;
-    /* 8003C830 */ void* unkBC;
-    /* 8003C834 */ void* unkC0;
-    /* 8003C838 */ void* unkC4;
-    /* 8003C83C */ void* unkC8;
-    /* 8003C840 */ void* unkCC;
-    /* 8003C844 */ void* unkD0;
-    /* 8003C848 */ void (*D_8003C848)(s32, s32);
-    /* 8003C84C */ void* unkD8;
-    /* 8003C850 */ void* unkDC;
-    /* 8003C854 */ void* unkE0;
-    /* 8003C858 */ void* unkE4;
-    /* 8003C85C */ void* unkE8;
-    /* 8003C860 */ void* unkEC;
-    /* 8003C864 */ void* unkF0;
-    /* 8003C868 */ void* unkF4;
-    /* 8003C86C */ void* unkF8;
-    /* 8003C870 */ void* unkFC;
-    /* 8003C874 */ void* unk100;
-    /* 8003C878 */ void* unk104;
-    /* 8003C87C */ void* unk108;
-    /* 8003C880 */ void* unk10C;
-    /* 8003C884 */ void* unk110;
-    /* 8003C888 */ void* unk114;
-    /* 8003C88C */ void* unk118;
-    /* 8003C890 */ void* unk11C;
-    /* 8003C894 */ void* unk120;
-    /* 8003C898 */ void* unk124;
-    /* 8003C89C */ void* unk128;
-    /* 8003C8A0 */ void* unk12C;
-    /* 8003C8A4 */ void* unk130;
-    /* 8003C8A8 */ void* unk134;
-    /* 8003C8AC */ void* unk138;
-    /* 8003C8B4 */ void* unk13C;
-    /* 8003C8B4 END*/
-} GameEngine; /* size=0x140 */
-
-typedef struct CollisionResult {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ u8 pad0[16];
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ u8 pad1[6];
-    /* 0x1C */ u16 unk1C;
-    /* 0x20 */ u8 pad2[4];
-} CollisionResult; /* size=0x24 */
+    /* 8003C7B4 */ void (*FreePolygons)(s32);
+    /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
+    /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
+                                          s32 unk);
+    /* 8003C7C0 */ void* func_80102CD8;
+    /* 8003C7C4 */ void* func_8010DDA0;
+    /* 8003C7C8 */ void (*AccelerateX)(s32 value);
+    /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
+    /* 8003C7D0 */ void* func_800FE728;
+    /* 8003C7D4 */ void (*func_800EA5E4)(s32);
+    /* 8003C7D8 */ void* func_800EAF28;
+    /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
+    /* 8003C7E0 */ void* func_800EDB58;
+    /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
+    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+    /* 8003C7EC */ void* func_801027C4;
+    /* 8003C7F0 */ void* func_800EB758;
+    /* 8003C7F4 */ void* func_8011AAFC;
+    /* 8003C7F8 */ bool (*func_80131F68)(void);
+    /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
+    /* 8003C800 */ void* func_80106A28;
+    /* 8003C804 */ void* func_80118894;
+    /* 8003C808 */ Unkstruct5* D_800A8900;
+    /* 8003C80C */ void* func_80118970;
+    /* 8003C810 */ void* func_80118B18;
+    /* 8003C814 */ void* func_8010DB38;
+    /* 8003C818 */ void* func_8010DBFC;
+    /* 8003C81C */ void* func_80118C28;
+    /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
+    /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
+    /* 8003C828 */ void* func_800FF128;
+    /* 8003C82C */ void (*func_800EB534)(u16 arg0, u16 arg1, s32 arg2);
+    /* 8003C830 */ s32 D_800A4B04;
+    /* 8003C834 */ s32 D_800A7718;
+    /* 8003C838 */ void (*AddHearts)(s32 value);
+    /* 8003C83C */ void* func_8010715C;
+    /* 8003C840 */ void* func_800FD4C0;
+    /* 8003C844 */ void* func_8010E0A8;
+    /* 8003C848 */ void (*func_800FE044)(s32, s32);
+    /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
+    /* 8003C850 */ void* D_800A8720;
+    /* 8003C854 */ void* func_800FF7B8;
+    /* 8003C858 */ void* func_80134714;
+    /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
+    /* 8003C860 */ void (*func_800F53A4)(void);
+    /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
+    /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
+    /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
+    /* 8003C870 */ void* func_800F2288;
+    /* 8003C874 */ void* func_8011A3AC;
+    /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
+    /* 8003C87C */ void* func_800FF494;
+    /* 8003C880 */ bool (*func_80133940)(void);
+    /* 8003C884 */ bool (*func_80133950)(void);
+    /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
+    /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
+    /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
+    /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+    /* 8003C898 */ void* func_800FDCE0;
+    /* 8003C89C */ void (*func_800E2438)(const char* str);
+    /* 8003C8A0 */ void* unused12C;
+    /* 8003C8A4 */ void* unused130;
+    /* 8003C8A8 */ void* unused134;
+    /* 8003C8AC */ void* unused138;
+    /* 8003C8B4 */ void* unused13C;
+} GameApi; /* size=0x140 */
 
 // main
 extern s32 D_8003C0EC[4];
@@ -529,25 +533,15 @@ extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
-extern GameEngine g_pfnUpdateStageEntities;
-extern void (*g_pfnTestStageEntities)(void);
+extern GameApi g_api;
 #ifndef STAGE_MAD
 extern void (*g_pfnLoadObjLayout)(void);
 #endif
-extern RoomHeader* D_8003C784;
-extern void (*D_8003C7B0)();
-extern s16 (*D_8003C7B8)(s32, s32);
-extern void (*D_8003C7BC)(s32 posX, s32 posY, Unkstruct7*, s32);
-extern void (*D_8003C7D4)(s32);
-extern void (*g_pfnPlaySfx)(s32);
-extern void (*g_pfnFreePolygons)(s32);
-extern Unkstruct5* D_8003C808;
-extern void (*D_8003C848)(s32, s32);
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
 extern s32 g_CurrentPlayableCharacter;
-extern s32 D_8003C9A4;
+extern s32 D_8003C9A4; // related to when player change stages?
 extern s32 g_blinkTimer;
 extern s32 g_menuMainCursorIndex;
 extern s32 g_menuRelicsCursorIndex[];
@@ -703,14 +697,14 @@ extern u16 D_80072F86;
 extern u16 D_80072F88;
 extern u16 D_80072F92;
 extern unkstruct_80072FA0 D_80072FA0[];
-extern u32 D_80073060;
+extern u32 D_80073060; // set to 4 to reload stage from disk
 extern s32 D_80073080;
 extern u16 D_8007308E;
 extern u32 D_80073068; // ev0
 extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
-extern u16 D_80073092;
+extern s16 D_80073092;
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomHSize;
 extern s32 g_CurrentRoomVSize;
@@ -793,7 +787,7 @@ extern s32 D_80086FE4;           // ev13 NEW CARD
 extern s32* D_8007EFE4;          // 'struct SaveData'?
 extern s32 D_80080FE4;           // maybe PixPattern[]?
 extern s8 D_80082FE4;
-extern POLY_GT4 D_80086FEC[];
+extern POLY_GT4 D_80086FEC[]; // entity polygons
 extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
@@ -885,6 +879,7 @@ extern u16 D_800A2F48[];
 extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
+extern u16 player_equip_left_hand;
 extern u32 player_equip_head[];
 extern u32 player_equip_body;
 extern s32 player_equip_cloak;
@@ -1008,8 +1003,8 @@ extern s32 D_801375FC;
 extern s32 D_80137608;
 extern s32 D_80137614;
 extern s32 D_80137618;
-extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as it's
-                        // 2-byte aligned
+extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as
+                        // it's 2-byte aligned
 // extern u8 D_80137638[2];
 // extern u8 D_80137639[];
 extern s16 D_8013767C;
@@ -1147,7 +1142,7 @@ void ReadPads(void);
 void ClearBackbuffer(void);
 void SetRoomForegroundLayer(s32 /* ? */);
 void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
-s32 CheckCollision(s32, s32, CollisionResult*, s32);
+void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);
@@ -1177,8 +1172,8 @@ void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
 void func_800EDA94(void);
 void func_800EDAE4(void);
-s32 func_800EDC80(u8 arg0, s32 arg1);
-s32 func_800EDD9C(u8 arg0, s32 arg1);
+s32 AllocPolygons(u8 primitives, s32 count);
+s32 func_800EDD9C(u8 primitives, s32 count);
 void func_800EFBF8(void);
 void FreePolygons(s32 index);
 void func_800F0334(s32);
@@ -1221,7 +1216,7 @@ s32 func_800FD6C4(s32);
 u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
 s32 func_800FD77C(s32 arg0, s32 arg1);
-u32 func_800FD7C0(u32 itemNum, u32 compareType);
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
@@ -1279,8 +1274,8 @@ void func_80132760(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
                    s32 volume, s16 distance);
 void func_801337B4(void);
-s32 func_80133940(void);
-s32 func_80133950(void);
+bool func_80133940(void);
+bool func_80133950(void);
 void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);

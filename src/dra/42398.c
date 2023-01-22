@@ -38,7 +38,7 @@ void func_801026BC(s32);
 void func_80106670(s32 blendMode);
 void func_80108448(void);
 s32 func_8010E27C(void);
-void func_8010E390(s32);
+void AccelerateX(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
 void func_801325D8(void);
 void func_801353A0(void);
@@ -260,7 +260,7 @@ void entrypoint_sotn(void) {
     ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
     ClearImage(&D_800ACD88[1], 0, 0, 0);
     for (i = 0; i < 0x50; i++) {
-        ((void**)&g_pfnUpdateStageEntities)[i] = (&D_800A0004)[i];
+        ((void**)&g_api)[i] = (&D_800A0004)[i];
     }
     g_blinkTimer = 0;
     D_8003C99C = 0;
@@ -561,7 +561,7 @@ void func_800E451C(void) {
         break;
     case 0x6:
         if (D_8003C734 == 1) {
-            g_pfnTestStageEntities();
+            g_api.o.TestEntities();
         } else {
             g_pfnLoadObjLayout();
         }
@@ -630,16 +630,10 @@ void func_800E5498(void) {
     POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
     GpuBuffer* buffer = D_8006C37C;
 
-    poly->code = (poly->code | 2) & 254;
+    setSemiTrans(poly, true);
+    setShadeTex(poly, false);
     SetPolyRect(poly, 0, 0, 256, 256);
-    poly->u0 = 16;
-    poly->v0 = 16;
-    poly->u1 = 24;
-    poly->v1 = 16;
-    poly->u2 = 16;
-    poly->v2 = 24;
-    poly->u3 = 24;
-    poly->v3 = 24;
+    setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
     func_801072BC(poly);
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
@@ -702,7 +696,7 @@ void func_800E738C(void) {
             return;
         }
     }
-    D_8003C7B0();
+    g_api.o.unk3C();
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E7458);
@@ -775,7 +769,7 @@ extern s32 D_800BD1C8[];
 extern s32* D_8013644C;
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
-extern s32* g_pStOverlay;
+extern s32* g_StageOverlay;
 
 s32 func_800E7E08(u32 arg0) {
     s32 i;
@@ -784,9 +778,9 @@ s32 func_800E7E08(u32 arg0) {
 
     switch (arg0) {
     case 0:
-        pSrc = g_pStOverlay;
+        pSrc = g_StageOverlay;
         i = 0;
-        pDst = &g_pfnUpdateStageEntities.o;
+        pDst = &g_api.o;
         do {
             i++;
             *pDst++ = *pSrc++;
@@ -1497,7 +1491,7 @@ void func_800EDA94(void) {
 
     for (i = 0, poly = D_80086FEC; i < 1280; i++) {
         func_800EDA70((s32*)poly);
-        poly->code = 0;
+        setcode(poly, 0);
         poly++;
     }
 }
@@ -1518,7 +1512,7 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     for (; i < 0x10; i++, ptr++) {
         if (ptr->tag == 0) {
             ptr->tag = 1;
-            poly->code = 7;
+            setcode(poly, 7);
             *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePolygons
             return ptr;
         }
@@ -1529,92 +1523,79 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDB58);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDC80);
-#else
-s32 func_800EDC80(u8 arg0, s32 arg1) {
-    s32 phi_s2 = 0;
-    POLY_GT4* phi_s1 = D_80086FEC;
-    u8* phi_s0 = &D_80086FEC->code;
+s32 AllocPolygons(u8 primitives, s32 count) {
+    s32 polyIndex = 0;
+    POLY_GT4* poly = D_80086FEC;
+    u8* polyCode = &D_80086FEC->code;
     s16 index;
-    s32 phi_v0;
 
-loop_1:
-    if (*phi_s0 == 0) {
-        func_800EDA70(phi_s1);
-        if (arg1 == 1) {
-            *phi_s0 = arg0;
-            phi_s1->tag = NULL;
-            if (D_800A2438 < phi_s2) {
-                D_800A2438 = phi_s2;
-                phi_v0 = phi_s2 << 0x10;
+    while (polyIndex < 0x400) {
+        if (*polyCode == 0) {
+            func_800EDA70(poly);
+            if (count == 1) {
+                *polyCode = primitives;
+                poly->tag = 0;
+                if (D_800A2438 < polyIndex) {
+                    D_800A2438 = polyIndex;
+                }
             } else {
-                goto block_8;
+                *polyCode = primitives;
+                index = AllocPolygons(primitives, count - 1);
+                if (index == -1) {
+                    *polyCode = 0;
+                    return -1;
+                }
+                poly->tag = &D_80086FEC[index];
             }
-            goto block_9;
+            return (s16)polyIndex;
         }
-        *phi_s0 = arg0;
-        index = func_800EDC80(arg0 & 0xFF, arg1 - 1);
-        if (index == -1) {
-            *phi_s0 = 0;
+
+        polyIndex++;
+        polyCode += sizeof(POLY_GT4);
+        poly++;
+        if (polyIndex >= 0x400) {
             return -1;
         }
-        phi_s1->tag = (s32)&D_80086FEC[index];
-    block_8:
-        phi_v0 = phi_s2 << 0x10;
-    block_9:
-        return (s16)(phi_v0 >> 0x10);
     }
-
-    phi_s2 = phi_s2 + 1;
-    phi_s0 += sizeof(POLY_GT4);
-    phi_s1++;
-    if (phi_s2 >= 0x400) {
-        return -1;
-    }
-    goto loop_1;
+    return -1;
 }
-#endif
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800EDD9C);
-#else
-s32 func_800EDD9C(u8 arg0, s32 arg1) {
+s32 func_800EDD9C(u8 primitives, s32 count) {
     u8* pCode;
     u8 temp_v0;
-    u8* phi_s0;
-    POLY_GT4* phi_s1;
-    s16 phi_s2;
-    s16 polyIndex;
+    u8* polyCode;
+    POLY_GT4* poly;
+    s32 polyIndex;
+    s16 foundPolyIndex;
+    poly = D_800973B8;
+    polyIndex = 0x4FF;
+    polyCode = &D_800973B8->code;
 
-    phi_s1 = D_800973B8;
-    phi_s2 = 0x4FF;
-    phi_s0 = &D_800973B8->code;
-loop_1:
-    pCode = &phi_s1->code;
-    temp_v0 = *phi_s0;
-    if (temp_v0 == 0) {
-        func_800EDA70(phi_s1);
-        if (arg1 == 1) {
-            *phi_s0 = arg0;
-            phi_s1->tag = 0;
-        } else {
-            *phi_s0 = arg0;
-            polyIndex = func_800EDD9C(arg0, arg1 - 1);
-            phi_s1->tag = &D_80086FEC[polyIndex];
+    while (polyIndex >= 0) {
+        pCode = &poly->code;
+        temp_v0 = *polyCode;
+        if (temp_v0 == 0) {
+            func_800EDA70(poly);
+            if (count == 1) {
+                *polyCode = primitives;
+                poly->tag = 0;
+            } else {
+                *polyCode = primitives;
+                foundPolyIndex = func_800EDD9C(primitives, count - 1);
+                poly->tag = &D_80086FEC[foundPolyIndex];
+            }
+            foundPolyIndex = polyIndex;
+            return foundPolyIndex;
         }
-        return phi_s2;
+        polyIndex--;
+        polyCode -= sizeof(POLY_GT4);
+        poly--;
+        if (polyIndex < 0) {
+            return (s16)temp_v0;
+        }
     }
-
-    phi_s0--;
-    phi_s1--;
-    phi_s2--;
-    if (phi_s2 < 0) {
-        return (s16)temp_v0;
-    }
-    goto loop_1;
+    return (s16)temp_v0;
 }
-#endif
 
 void FreePolygons(s32 polygonIndex) {
     POLY_GT4* poly = &D_80086FEC[polygonIndex];
@@ -1623,9 +1604,9 @@ void FreePolygons(s32 polygonIndex) {
         do {
             if (poly->code == 7) {
                 *(*(s32**)&poly->r1) = 0; // does not make any sense?!
-                poly->code = 0;
+                setcode(poly, 0);
             } else
-                poly->code = 0;
+                setcode(poly, 0);
             poly = (POLY_GT4*)poly->tag;
         } while (poly);
     }
@@ -1731,7 +1712,7 @@ bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     if (func_800F087C(chunkX, chunkY))
         return false;
 
-    pRoom = D_8003C784;
+    pRoom = g_api.o.unk30;
 loop_3:
     while (pRoom->left != 0x40) {
         if (chunkX >= pRoom->left && chunkY >= pRoom->top &&
@@ -1985,8 +1966,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F298C);
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800F483C);
 
 bool IsAlucart(void) {
-    if (func_800FD7C0(0xA8, 0) && func_800FD7C0(0xA7, 0) &&
-        func_800FD7C0(0x59, 2))
+    if (CheckEquipmentItemCount(0xA8, 0) && CheckEquipmentItemCount(0xA7, 0) &&
+        CheckEquipmentItemCount(0x59, 2))
         return true;
     return false;
 }
@@ -3028,14 +3009,7 @@ s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
 }
 
-s32 func_800FD664(s32 context) {
-    s32 phi_a0 = context;
-
-    if (g_mapProgramId & 0x20) {
-        phi_a0 <<= 1;
-    }
-    return phi_a0;
-}
+s32 func_800FD664(s32 arg0) { return g_mapProgramId & 0x20 ? arg0 << 1 : arg0; }
 
 extern Unkstruct_800A4B12 D_800A4B12[];
 

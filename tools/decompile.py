@@ -8,7 +8,7 @@ import tempfile
 from contextlib import redirect_stdout
 from enum import Enum
 import m2ctx
-import m2c.src.main as m2c
+import m2c.m2c.main as m2c
 
 
 # gets the root directory of the project

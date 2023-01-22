@@ -86,7 +86,7 @@ bool func_800FDD44(s32 equipHeadIndex) {
 
     equippedItem = player_equip_head[equipHeadIndex];
     temp_s1 = D_800A4B1D[player_equip_head[equipHeadIndex]].unk0;
-    if (!func_800FD7C0(0x54, 4)) {
+    if (!CheckEquipmentItemCount(0x54, 4)) {
         if (temp_s1 != 0) {
             temp_v0 = D_8009798A[equippedItem];
             if (temp_v0 == 0) {
@@ -142,13 +142,13 @@ void func_800FE8F0(void) {
     }
 }
 
-void func_800FE914(s32 arg0) {
+void AddHearts(s32 value) {
     if (g_playerHeart->current < g_playerHeart->max) {
-        g_playerHeart->current = arg0 + g_playerHeart->current;
+        g_playerHeart->current += value;
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
-        func_8011AAFC(g_EntityArray, 0x63, 0);
+        func_8011AAFC(g_EntityArray, 99, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }
@@ -1143,7 +1143,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E334);
 /*
  * Updates the Entity acceleration in the X Axis
  */
-void func_8010E390(s32 accelerationX) {
+void AccelerateX(s32 accelerationX) {
     if (g_CurrentEntity->facing == 1) {
         accelerationX = -accelerationX;
     }
@@ -1245,7 +1245,7 @@ void func_8010E83C(s32 arg0) {
         return;
     } else if (func_8010E27C() != 0) {
         func_8010DA48(0x1A);
-        func_8010E390(0x18000);
+        AccelerateX(0x18000);
         D_80072F64 = 0;
     } else {
         func_8010DA48(0x16);
@@ -1415,7 +1415,7 @@ void func_8010FD24(void) {
 void func_8010FD88(void) {
     PLAYER.step = 0;
     PLAYER.unk2E = 3;
-    func_8010E390(0xFFFC8000);
+    AccelerateX(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
     func_8010DA48(0xDB);
     func_8011AAFC(g_CurrentEntity, 0, 0);
@@ -1490,7 +1490,7 @@ bool func_80111D24(void) {
     hitboxRightMargin = collisionResult.unk0 & 0x10;
 
     if (hitboxRightMargin & hitboxLeftMargin) {
-        func_8010E390(speed);
+        AccelerateX(speed);
         return true;
     } else if (hitboxRightMargin != 0) {
         PLAYER.accelerationX = -speed;
@@ -1526,7 +1526,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801120B4);
 
 void func_80112B64(void) {
     if (func_8010FDF8(0x4301C) == 0) {
-        func_8010E390(0x18000);
+        AccelerateX(0x18000);
         if (func_8010E27C() == 0) {
             func_8010E570(0);
         }
@@ -1541,7 +1541,7 @@ void func_80113148(void) {
     } else if (func_8010FDF8(0x9029) == 0) {
         func_8010E1EC(0x1000);
         if (func_8010E27C() != 0) {
-            func_8010E390(0xC000);
+            AccelerateX(0xC000);
         }
     }
 }
@@ -1805,17 +1805,13 @@ void func_801186EC(void) {
     }
 }
 
-Entity* func_8011879C(s16 entityIndex, s16 arg1) {
-    Entity* entity = &g_EntityArray[entityIndex];
-    s16 var_a0 = entityIndex;
+Entity* GetFreeDraEntity(s16 start, s16 end) {
+    Entity* entity = &g_EntityArray[start];
+    s16 i;
 
-    if (entityIndex < arg1) {
-        while (var_a0 < arg1) {
-            if (entity->objectId == ENTITY_UNALLOCATED) {
-                return entity;
-            }
-            var_a0++;
-            entity++;
+    for (i = start; i < end; i++, entity++) {
+        if (entity->objectId == ENTITY_UNALLOCATED) {
+            return entity;
         }
     }
     return NULL;
@@ -1855,7 +1851,7 @@ void func_80118C28(s32 arg0) {
 #endif
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
-    Entity* entity = func_8011879C(0x38, 0x40);
+    Entity* entity = GetFreeDraEntity(0x38, 0x40);
 
     if (entity != NULL) {
         func_80106590(entity);
@@ -2144,7 +2140,7 @@ void func_80124A8C(Entity* entity) {
         case 0:
             entity->animationSet = 0x11;
             entity->accelerationY = -0x6000;
-            func_8010E390(0x4000);
+            AccelerateX(0x4000);
             entity->unk5A = 0x50;
             entity->palette = 0x819F;
             entity->unk4C = &D_800AE294;
@@ -2238,7 +2234,7 @@ void func_801279FC(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = func_800EDC80(4, 1);
+        firstPolygonIndex = AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->unk7C.s = 0x16;
@@ -2321,7 +2317,7 @@ void func_80127CC8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = func_800EDC80(3, 1);
+        ret = AllocPolygons(3, 1);
         entity->firstPolygonIndex = ret;
 
         if (ret == -1) {
@@ -2432,7 +2428,7 @@ void func_8012B78C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = func_800EDC80(4, 1);
+        ret = AllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->unk34 = 0x04820000;
@@ -2527,7 +2523,7 @@ void func_8012CC30(s32 arg0) {
             func_8010E27C();
             PLAYER.unk2E = 2;
             D_800B0914 = 4;
-            func_8010E390(0x50000);
+            AccelerateX(0x50000);
             g_CurrentEntity->accelerationY = 0;
             func_8010DA48(0xEDU);
             func_800FDCE0(4);
@@ -2545,7 +2541,7 @@ void func_8012CED4(void) {
         D_800B0914 = 1;
     } else {
         func_8010DA48(0xE8);
-        func_8010E390(0x10000);
+        AccelerateX(0x10000);
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
             PLAYER.animationFrameIndex = 4;
@@ -2961,9 +2957,9 @@ void func_801337B4(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80133810);
 
-s32 func_80133940(void) { return D_801396F4 == 0; }
+bool func_80133940(void) { return D_801396F4 == 0; }
 
-s32 func_80133950(void) { return D_8013980C == 0; }
+bool func_80133950(void) { return D_8013980C == 0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80133960);
 void func_80133960();
@@ -3135,7 +3131,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
         ret = 0;
         temp = arg1 + 8;
 
-        if ((temp) >= 0x11) {
+        if (temp >= 0x11) {
             arg1 = 0;
             ret = -1;
         }

@@ -12,6 +12,7 @@ int func_801CD658();
 void EntityPriceDrop(Entity* entity);
 void EntityInventoryDrop(Entity* entity);
 
+extern u16 D_80180A78[];
 extern u16 D_80180A90[];
 extern ObjInit2 D_80180C10[];
 extern PfnEntityUpdate PfnEntityUpdates[];
@@ -53,7 +54,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -195,20 +196,18 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B94F0);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityNumericDamage);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", CreateEntity);
-#else
 void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    do {
+        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    } while (0);
     entity->posX.i.hi = initDesc->posX - D_8007308E;
     entity->posY.i.hi = initDesc->posY - D_80073092;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
-    entity->unk68 = initDesc->objectId >> 0xA & 7;
+    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
-#endif
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BAD70);
 
@@ -275,7 +274,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -416,7 +415,7 @@ void func_801BD134(u8 arg0) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD150);
 
-void InitializeEntity(const u16 arg0[]) {
+void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -426,7 +425,8 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 =
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -520,7 +520,31 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId0E);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C02F4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C03E4);
+void func_801C03E4(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180A78);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_801BB7A8(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C04F4);
 

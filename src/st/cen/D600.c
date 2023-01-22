@@ -7,6 +7,13 @@
 #include "common.h"
 #include "stage.h"
 
+extern s16 D_80180BBC[];
+extern LayoutObject* D_8019C764;
+extern LayoutObject* D_8019C768;
+extern s16 D_8019D3B4;
+extern s16 D_8019D3B6;
+extern s32 D_8019D3B8;
+
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018D600);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018D6E0);
@@ -19,13 +26,25 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018DF0C);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018DF60);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E124);
+void func_8018E124(s16 arg0) {
+    RECT rect;
+
+    rect.y = (arg0 * 12) + 384;
+    rect.w = 64;
+    rect.x = 0;
+    rect.h = 12;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E180);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E238);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E3BC);
+void func_8018E3BC(s32 arg0) {
+    D_8019D3B8 = arg0 + 0x100000;
+    D_8019D3B6 = 0;
+    D_8019D3B4 = 1;
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E3E8);
 
@@ -33,8 +52,33 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E6C4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E7C8);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F890);
+#else
+typedef struct RoomDimensions {
+    s32 height;
+} RoomDimensions;
 
+extern RoomDimensions g_CurrentRoomDimensions;
+
+void func_8018F890(s16 arg0) {
+    s16 temp_v0;
+    s16 var_v0;
+    RoomDimensions* room;
+
+    temp_v0 = arg0 - g_CurrentRoomDimensions.height;
+
+    if (temp_v0 >= 2) {
+        room->height++;
+    } else if (temp_v0 < -1) {
+        room->height--;
+    } else {
+        room->height = arg0;
+    }
+
+    // g_CurrentRoomDimensions.height = (s32) var_v0;
+}
+#endif
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F8EC);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F95C);
@@ -53,7 +97,10 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190A78);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190B64);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190E4C);
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80190E7C);
 
@@ -69,17 +116,49 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192B00);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192C18);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192D30);
+void func_80192D30(s16 arg0) {
+    while (1) {
+        if ((D_8019C764->posX != 0xFFFE) && ((s32)D_8019C764->posX >= arg0)) {
+            break;
+        }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192D7C);
+        D_8019C764++;
+    }
+}
+
+void func_80192D7C(s16 arg0) {
+    while (true) {
+        if (((D_8019C764->posX != 0xFFFF) &&
+             ((arg0 >= D_8019C764->posX) || (D_8019C764->posX == 0xFFFE)))) {
+            break;
+        }
+        D_8019C764--;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192DD4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192ED0);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80192FE4);
+void func_80192FE4(s16 arg0) {
+    while (true) {
+        if ((D_8019C768->posY != 0xFFFE) && ((s32)D_8019C768->posY >= arg0)) {
+            break;
+        }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193030);
+        D_8019C768++;
+    }
+}
+
+void func_80193030(s16 arg0) {
+    while (true) {
+        if (((D_8019C768->posY != 0xFFFF) &&
+             ((arg0 >= D_8019C768->posY) || (!(D_8019C768->posY != 0xFFFE))))) {
+            break;
+        }
+        D_8019C768--;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193088);
 
@@ -91,19 +170,20 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193410);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801934C4);
 
+void func_8018A8D4(u16 objectId, Entity* source, Entity* entity);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193538);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801935B4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019362C);
 
-void func_80194264(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
 
     if (entity->unk34 & 0x800000) {
-        g_pfnFreePolygons(entity->firstPolygonIndex);
+        g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -175,19 +255,32 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194674);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801948EC);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194AD4);
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", AllocEntity);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B34);
+s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B60);
+s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B7C);
 
 u8 func_80194BE8(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194C20);
+u8 func_80194C20(Entity* arg0, Entity* arg1) {
+    u16 x;
+    u16 y;
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194C68);
+    x = arg1->posX.i.hi - arg0->posX.i.hi;
+    y = arg1->posY.i.hi - arg0->posY.i.hi;
+
+    return func_80194BE8(x, y);
+}
+
+u16 func_80194C68(s16 x, s16 y) {
+    x -= g_CurrentEntity->posX.i.hi;
+    y -= g_CurrentEntity->posY.i.hi;
+
+    return func_80194BE8(x, y);
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194CB0);
 
@@ -250,7 +343,7 @@ void func_80194EC4(u8 arg0) {
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194EE0);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194F74);
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", InitializeEntity);
 
 void func_80195070(Entity* entity) {
     if (entity->step == 0) {
@@ -278,13 +371,17 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195A50);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195B68);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C0C);
+void func_80195C0C(void) {
+    g_api.PlaySfx(0x67A);
+    g_api.func_800FE044(5, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C5C);
+void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195C84);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801964F8);
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", EntityExplosion);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801965F4);
 
@@ -300,7 +397,32 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80197B28);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80198084);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80198174);
+extern u16 D_80180440[];
+void func_80198174(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180440);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_80193538(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80198284);
 
@@ -414,7 +536,13 @@ void func_8019C540(POLY_GT4* poly) {
     ((POLY_GT4*)poly->tag)->y2 = 0;
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019C620);
+void func_8019C620(POLY_GT4* poly) {
+    func_8019C540(poly);
+    poly->p3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 1;
+    ((POLY_GT4*)poly->tag)->code = 2;
+    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
+}
 
 void func_8019C674(POLY_GT4* poly) {
     poly->p3 = 0;

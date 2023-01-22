@@ -55,7 +55,7 @@ void func_80156C60(Entity* entity) {
     u32* ptr;
 
     if (entity->unk34 & 0x800000) {
-        g_pfnFreePolygons(entity->firstPolygonIndex);
+        g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -158,7 +158,7 @@ void func_8015B098(void) {
     if ((PLAYER.animationFrame == 0xB5) &&
         (PLAYER.animationFrameDuration == 1)) {
         func_801606BC(g_CurrentEntity, 0x23, 0);
-        g_pfnPlaySfx(NA_SE_UNK_62F);
+        g_api.PlaySfx(NA_SE_UNK_62F);
     }
 
     if (PLAYER.animationFrameDuration < 0) {
@@ -417,7 +417,7 @@ void func_8015D9D4(void) {
     func_8015CA84(0x58000);
     func_8015CC28();
     func_801606BC(g_CurrentEntity, 0x19, 0);
-    g_pfnPlaySfx(0x707);
+    g_api.PlaySfx(0x707);
     D_80072F18 = 4;
 }
 
@@ -821,7 +821,7 @@ void func_80172AE8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = D_8003C7B8(4, 1);
+        ret = g_api.AllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->unk34 = 0x04820000;

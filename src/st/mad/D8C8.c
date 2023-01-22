@@ -20,8 +20,9 @@ void func_80198BC8(void* const, s32);
 void func_8019344C(void);
 
 // OFFSET FIXED
+extern u8 D_8003BEE8[];
 extern void (*D_8003C6B0)(s32);
-extern void (*D_8003C6B8)(s32, s32, Unkstruct7*, s32);
+extern void (*D_8003C6B8)(s32 x, s32 y, CollisionResult*, s32);
 extern void (*D_8003C6D8)(s32);
 extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
 extern Entity* D_8006C26C;
@@ -37,18 +38,18 @@ extern void* D_8007EA88;
 extern u16 D_80096EB8;
 extern s32 D_80096EC0;
 extern s32 D_80096EC4;
+extern s32 D_80096ED8[];
 extern u32 D_80097364;
+extern POLY_GT4 D_800973B8[];
 extern u8 D_8009741A;
 extern Entity D_80075D88[];
 extern s32 D_80096EAC;
 
 // TODO FIX
-extern s32 D_80096ED8[];
 extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
 
 // ST/MAD
-extern u8 D_8003BEE8[];
+extern u16 D_8018052C[];
 extern u16 D_80180F5C[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
@@ -507,24 +508,24 @@ void LoadObjLayout(s32 objLayoutId) {
 #endif
 
 void func_80190F04(void) {
-    Unkstruct4* s0 = &D_80072B34;
+    Unkstruct8* currentRoomTileLayout = &D_80072B34;
     s32 temp_v0_2;
 
     if (D_800973B4 != 0) {
-        s16 temp_a0 = D_80072B3E;
+        s16 tmp = D_80072B3E;
         if (D_800973B4 > 0)
-            func_801908DC(temp_a0 + 0x140);
+            func_801908DC(tmp + 0x140);
         else
-            func_801909D8(temp_a0 - 0x40);
+            func_801909D8(tmp - 0x40);
     }
 
-    temp_v0_2 = D_800973B8[0].tag;
+    temp_v0_2 = D_800973B8[0].tag; // wrong type, look at func_8018A7AC
     if (temp_v0_2 != 0) {
-        s16 temp_a0_2 = s0->unkE;
+        s16 tmp = currentRoomTileLayout->unkE;
         if (temp_v0_2 > 0)
-            func_80190B7C(temp_a0_2 + 0x120);
+            func_80190B7C(tmp + 0x120);
         else
-            func_80190C78(temp_a0_2 - 0x40);
+            func_80190C78(tmp - 0x40);
     }
 }
 
@@ -816,7 +817,7 @@ void func_80192C0C(u16 arg0, u16 arg1) {
     D_8006C26C->unk2E = 0;
 }
 
-void InitializeEntity(const u16 arg0[]) {
+void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -912,19 +913,19 @@ void func_8019344C(void) {
 #endif
 
 void func_801934D0(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (D_8006C26C->accelerationX < 0) {
-        D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi - 7, &sp10, 0);
-        if (sp10.sp10 & 5) {
+        D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             D_8006C26C->accelerationY = 0;
         }
     }
 
-    D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi + 7, &sp10, 0);
+    D_8003C6B8(D_8006C26C->posX.i.hi, D_8006C26C->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -933,16 +934,16 @@ void func_801934D0(u16 arg0) {
         D_8006C26C->accelerationX = 0;
         D_8006C26C->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             D_8006C26C->posY.val += 0x2000;
             return;
         }
 
-        D_8006C26C->posY.i.hi = (u16)D_8006C26C->posY.i.hi + (u16)sp10.sp28;
+        D_8006C26C->posY.i.hi = (u16)D_8006C26C->posY.i.hi + (u16)res.unk18;
         return;
     }
 
-    if (!(sp10.sp10 & 5)) {
+    if (!(res.unk0 & 5)) {
         MoveEntity();
         func_8019344C();
     }
@@ -968,7 +969,7 @@ void func_801936E0(u16 goldSize) { // CollectGold
 
     unk = &D_80096EC0;
     if (*unk) {
-        D_8003C6B0(D_80096EC4); // g_pfnFreePolygons
+        D_8003C6B0(D_80096EC4); // g_api.FreePolygons
         *unk = 0;
     }
 
@@ -1111,9 +1112,31 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019563C);
 
-// https://decomp.me/scratch/CrGOA MATCHED but we need to figure out
-// the correct member for the Entity struct yet
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019572C);
+void func_8019572C(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_8018052C);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D308, &D_8007D308[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_8019102C(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8019583C);
 
@@ -1177,7 +1200,7 @@ void func_80195B44(Entity* entity) {
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195C38);
 
 bool func_80195E68(Unkstruct6* unk) {
-    Unkstruct7 a;
+    CollisionResult res;
 
     FallEntity();
     D_8006C26C->posX.val += D_8006C26C->accelerationX;
@@ -1188,9 +1211,9 @@ bool func_80195E68(Unkstruct6* unk) {
         s16 posY = D_8006C26C->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        D_8003C6B8(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            D_8006C26C->posY.i.hi += a.sp28;
+        D_8003C6B8(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            D_8006C26C->posY.i.hi += res.unk18;
             D_8006C26C->accelerationY = -D_8006C26C->accelerationY / 2;
             if (D_8006C26C->accelerationY > -0x10000) {
                 return true;

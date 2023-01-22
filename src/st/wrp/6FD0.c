@@ -13,49 +13,47 @@ typedef struct {
 // *** Overlay exports start ***
 void UpdateStageEntities(void);
 void func_8018861C(void);
+void func_80189FB4(LayoutObject*);
+void func_8018A520(s16);
 void func_8018A7AC(void);
+void func_8018CAB0(void);
 void LoadObjLayout(s32 objLayoutId);
 void func_801916C4(u16);
-void func_8018CAB0(void);
+void func_80192F40(u8*, u8);
 
-PfnOverlayEntry g_pStOverlay[] = {
-    (PfnOverlayEntry)UpdateStageEntities,
-    (PfnOverlayEntry)func_8018861C,
-    (PfnOverlayEntry)func_8018A7AC,
-};
-PfnLoadObjectLayout g_pfnStLoadObjectLayout =
-    (PfnLoadObjectLayout)LoadObjLayout;
-// *** Overlay exports end ***
-
-// *** Layout definition start ***
-extern RoomHeader g_stRooms[];
-s16* const* D_80180040[];
+RoomHeader g_stRooms[];
+s16** D_80180040[];
 void* D_801800B4[];
 LayerDef* D_80180168[];
 void* D_801801EC[];
-u32 D_80181D08[];
-TileDefinition D_80182D68[];
-TileDefinition D_80186D78;
-UnkOvelrayStruct* D_80186D88[];
 void func_80188514(void);
 
-void* g_pStUnkRoomDef[] = {
+Overlay g_StageOverlay = {
+    /* 0x00 */ UpdateStageEntities,
+    /* 0x04 */ func_8018861C,
+    /* 0x08 */ func_8018A7AC,
+    /* 0x0C */ LoadObjLayout,
     /* 0x10 */ g_stRooms,
     /* 0x14 */ D_80180040,
     /* 0x18 */ D_801800B4,
+    /* 0x1C */ NULL,
+    /* 0x20 */ D_80180168,
+    /* 0x24 */ D_801801EC,
+    /* 0x28 */ func_80188514,
+    /* 0x2C */ 0x00000000,
+    /* 0x30 */ 0x00000000,
+    /* 0x34 */ 0x00000000,
+    /* 0x38 */ 0x00000000,
+    /* 0x3C */ 0x00000000,
 };
-void* g_pStUnkObjLayouts = NULL;
-void** g_pStUnkTilesLayout = (void** const)D_80180168;
-void* g_pStTilesets[] = {
-    /* 0x024 */ D_801801EC,
-    /* 0x028 */ func_80188514,
-    /* 0x02C */ 0x00000000,
-    /* 0x030 */ 0x00000000,
-    /* 0x034 */ 0x00000000,
-    /* 0x038 */ 0x00000000,
-    /* 0x03C */ 0x00000000,
-};
-s16* const* D_80180040[] = {
+
+// *** Sprites and layout definition start ***
+u32 D_80181D08[];
+TileDefinition D_80182D68[];
+TileDefinition D_80186D78;
+SpriteParts* D_80186D88[];
+
+s16** D_80180040[] = {
     /* 0x040 */ 0x00000000,
     /* 0x044 */ D_80186D88,
     /* 0x048 */ 0x00000000,
@@ -1125,9 +1123,11 @@ s16* D_80180E58[] = {
     /* EB4 */ D_80180DD0,
 };
 
-u32 D_80180EB8[] = {
-    /* EB8 */ 0x0004FFFA,
-    /* EBC */ 0xFFF80000,
+u16 D_80180EB8[] = {
+    0xFFFA,
+    0x0004,
+    0x0000,
+    0xFFF8,
 };
 
 s8 c_HeartPrizes[] = {1, 5};
@@ -2446,13 +2446,14 @@ u32 D_80185D78[] = {
 };
 
 TileDefinition D_80186D78 = {D_80182D78, D_80183D78, D_80184D78, D_80185D78};
+// *** Unknown stuff end ***
 
-UnkOvelrayStruct D_80186DA4;
-UnkOvelrayStruct D_80186DC0;
-UnkOvelrayStruct D_80186DDC;
-UnkOvelrayStruct D_80186DF8;
-UnkOvelrayStruct D_80186E14;
-UnkOvelrayStruct* D_80186D88[] = {
+SpriteParts D_80186DA4;
+SpriteParts D_80186DC0;
+SpriteParts D_80186DDC;
+SpriteParts D_80186DF8;
+SpriteParts D_80186E14;
+SpriteParts* D_80186D88[] = {
     /* 6D88 */ 0x00000000,
     /* 6D8C */ &D_80186DA4,
     /* 6D90 */ &D_80186DC0,
@@ -2462,26 +2463,30 @@ UnkOvelrayStruct* D_80186D88[] = {
     /* 6DA0 */ 0x00000000,
 };
 
-UnkOvelrayStruct D_80186DA4 = {
-    1, 0, -4, -4, 8, 8, 6, 60, 128, 128, 136, 136, 0, 0,
+SpriteParts D_80186DA4 = {
+    1,
+    {0, -4, -4, 8, 8, 6, 60, 128, 128, 136, 136},
 };
 
-UnkOvelrayStruct D_80186DC0 = {
-    1, 0, -4, -4, 8, 8, 6, 60, 128, 136, 136, 144, 0, 0,
+SpriteParts D_80186DC0 = {
+    1,
+    {0, -4, -4, 8, 8, 6, 60, 128, 136, 136, 144},
 };
 
-UnkOvelrayStruct D_80186DDC = {
-    1, 0, -4, -8, 8, 16, 6, 60, 128, 144, 136, 160, 0, 0,
+SpriteParts D_80186DDC = {
+    1,
+    {0, -4, -8, 8, 16, 6, 60, 128, 144, 136, 160},
 };
 
-UnkOvelrayStruct D_80186DF8 = {
-    1, 0, -8, -8, 16, 16, 6, 60, 136, 128, 152, 144, 0, 0,
+SpriteParts D_80186DF8 = {
+    1,
+    {0, -8, -8, 16, 16, 6, 60, 136, 128, 152, 144},
 };
 
-UnkOvelrayStruct D_80186E14 = {
-    1, 0, -8, -8, 16, 16, 6, 60, 136, 144, 152, 160, 0, 0,
+SpriteParts D_80186E14 = {
+    1,
+    {0, -8, -8, 16, 16, 6, 60, 136, 144, 152, 160},
 };
-// *** Unknown stuff end ***
 
 // *** rodata section start ***
 const char D_80186E30[] = "step %x\n";
@@ -2496,12 +2501,12 @@ const char D_80186E5C[] = "move_x:%x y%x\n\0\0\0\0\0";
 extern LayoutObject* D_80193AB0;
 extern u16* D_80193AB4;
 extern s8 D_80193AB8;
-extern s8 D_80193ABC;
+extern u8 D_80193ABC;
 extern u16 D_80194728[];
 // *** bss? section end ***
 
 void func_80186FD0(Entity* arg0) {
-    const ObjInit2* objInit = &D_801804E0[arg0->subId];
+    ObjInit2* objInit = &D_801804E0[arg0->subId];
     if (arg0->step == 0) {
         InitializeEntity(D_80180494);
         arg0->animationSet = objInit->animationSet;
@@ -2596,7 +2601,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
@@ -2619,8 +2624,7 @@ void EntityBreakable(Entity* entity) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
-extern s16 (*D_8003C7B8)(/*?*/ u32, /*?*/ u32);
-extern /*?*/ u32 (*D_8003C7E8)(/*?*/ u32, /*?*/ u32, /*?*/ u32, /*?*/ u32);
+extern void (*D_8003C7E8)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern s32 D_8003C8B8;
 extern s32 D_80072EF4;
 extern s32 D_80072EFC;
@@ -2633,116 +2637,110 @@ extern s32 D_80193AAC;
 // It is responsible to spawn the colourful background, the stones on the
 // ground and it always listen to the UP button. When the UP
 // button is pressed, it brights the screen and teleport the player.
-void EntityWarpRoom(Entity* arg0) {
-    POLY_GT4* var_s2;
-    POLY_GT4* var_s2_2;
+void EntityWarpRoom(Entity* entity) {
+    POLY_GT4* poly;
     s16 temp_s4;
     s16 temp_s5;
-    s16 move_y;
+    s32 move_y;
+    s32 move_x;
     s16 temp_s6;
     s16 temp_s7;
-    s16 temp_v0;
+    s16 firstPolyIndex;
     s32 temp_s1_2;
     POLY_GT4* temp_s2_2;
     POLY_GT4* temp_s2_3;
     POLY_GT4* temp_s2_4;
-    s32 temp_v1_4;
-    s32 temp_v1_5;
     s32 temp_v1_6;
-    s32 temp_v1_7;
     u16 move_room;
     s32 var_s0;
     s32 i;
     s32 i3;
-    s32 i2;
     s32 var_s1;
     s32 var_v0_10;
-    s32 var_v0_11;
+    s32 bgColorG1;
     s32 var_v0_12;
-    s32 var_v0_13;
+    s32 bgColorB1;
     s32 var_v0_15;
     s32 var_v0_2;
-    s32 var_v0_3;
+    s32 bgColorR0;
     s32 var_v0_4;
-    s32 var_v0_5;
+    s32 bgColorG0;
     s32 var_v0_6;
-    s32 var_v0_7;
+    s32 bgColorB0;
     s32 var_v0_8;
-    s32 var_v0_9;
+    s32 bgColorR1;
     s8 fadeIn;
     s8 var_v0_14;
-    u16 move_x;
-    s32 temp_s4_3, temp_s5_3;
+    s32 temp_s4_3;
+    s32 temp_s5_3;
     u32* temp_v1_8;
     POLY_GT4* temp_s2;
     u32 temp_v0_5;
-    u8 temp_v0_4;
+    u8 tintColor;
     u8 temp_v1_9;
-    WarpCoord* temp_s0;
+    WarpCoord* warpCoord;
     POLY_GT4* temp_s2_5;
     POLY_GT4* var_s2_3;
-    s32 tmpa, tmpb;
-    Entity* player;
-
-    FntPrint("step %x\n", arg0->step);
-    player = GET_PLAYER(g_EntityArray);
-    switch (arg0->step) {
+    s32 tmpa;
+    s32 tmpb;
+    FntPrint("step %x\n", entity->step);
+    switch (entity->step) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        temp_v0 = D_8003C7B8(4, 0x18);
-        if (temp_v0 == -1) {
-            arg0->step = 0;
+        firstPolyIndex = g_api.AllocPolygons(4, 0x18);
+        if (firstPolyIndex == -1) {
+            entity->step = 0;
             return;
         }
-        var_s2 = &D_80086FEC[temp_v0];
+        poly = &D_80086FEC[firstPolyIndex];
         var_s0 = 0;
-        temp_s5 = arg0->posY.i.hi; // must not be lhu but lh
-        temp_s4 = arg0->posX.i.hi; // must not be lhu but lh
-        arg0->firstPolygonIndex = temp_v0;
-        arg0->unk7C.s = var_s2;
+        temp_s5 = entity->posY.i.hi; // must not be lhu but lh
+        temp_s4 = entity->posX.i.hi; // must not be lhu but lh
+        entity->firstPolygonIndex = firstPolyIndex;
+        *(u32*)&entity->unk7C.s = poly;
         temp_s7 = temp_s4;
         temp_s6 = temp_s5;
-        arg0->unk34 |= 0x800000;
-        var_s1 = var_s0 << 8;
-        while (var_s0 < 0x10) { // this 0x10 is compiled as 0x1000???
-            var_s2->x0 = temp_s4 + ((rcos(var_s1) * 4) >> 8);
-            var_s2->y0 = temp_s5 - ((rsin(var_s1) * 4) >> 8);
-            var_s2->u0 = (((rcos(var_s1) >> 4) * 30) >> 8) + 0x20;
+        entity->unk34 |= 0x800000;
+        while (var_s0 < 0x10) {
+            var_s1 = var_s0 << 8;
             var_s0++;
-            var_s2->v0 = -0x20 - (((rsin(var_s1) >> 4) * 30) >> 8);
-            var_s2->x1 = temp_s4 + ((rcos(var_s0 << 8) * 4) >> 8);
-            var_s2->y1 = temp_s5 - ((rsin(var_s0 << 8) * 4) >> 8);
-            var_s2->u1 = (((rcos(var_s0 << 8) >> 4) * 30) >> 8) + 0x20;
-            var_s2->v1 = -0x20 - (((rsin(var_s0 << 8) >> 4) * 30) >> 8);
-            ;
-            var_s2->u3 = 0x20;
-            var_s2->u2 = 0x20;
-            var_s2->v3 = 0xE0;
-            var_s2->v2 = 0xE0;
-            var_s2->tpage = 0x1A;
-            var_s2->clut = 0x15F;
-            var_s2->pad2 = 0x40;
-            var_s2->pad3 = 0x406;
-            var_s2->y3 = temp_s6;
-            var_s2->y2 = temp_s6;
-            var_s2->x3 = temp_s7;
-            var_s2->x2 = temp_s7;
-            var_s2 = (POLY_GT4*)var_s2->tag;
+            poly->x0 = temp_s4 + ((rcos(var_s1) * 4) >> 8);
+            poly->y0 = temp_s5 - ((rsin(var_s1) * 4) >> 8);
+            poly->u0 = (((rcos(var_s1) >> 4) * 30) >> 8) + 0x20;
+            poly->v0 = (-0x20) - (((rsin(var_s1) >> 4) * 30) >> 8);
+            poly->x1 = temp_s4 + ((rcos(var_s0 << 8) * 4) >> 8);
+            poly->y1 = temp_s5 - ((rsin(var_s0 << 8) * 4) >> 8);
+            poly->u1 = (((rcos(var_s0 << 8) >> 4) * 30) >> 8) + 0x20;
+            poly->v1 = (-0x20) - (((rsin(var_s0 << 8) >> 4) * 30) >> 8);
+            poly->u3 = 0x20;
+            poly->u2 = 0x20;
+            poly->v3 = 0xE0;
+            poly->v2 = 0xE0;
+            poly->tpage = 0x1A;
+            poly->clut = 0x15F;
+            poly->pad2 = 0x40;
+            poly->pad3 = 0x406;
+            poly->y3 = temp_s6;
+            poly->y2 = temp_s6;
+            poly->x3 = temp_s7;
+            poly->x2 = temp_s7;
+            poly = (POLY_GT4*)poly->tag;
             var_s1 = var_s0 << 8;
         }
-        arg0->unk84.value = var_s2; // store next polygon?
-        var_s2->code = 1;
-        var_s2->u0 = 0x40;
-        var_s2->v0 = 0x50;
-        var_s2->y0 = 0x70;
-        var_s2->x0 = 0x60;
-        var_s2->b0 = 0;
-        var_s2->g0 = 0;
-        var_s2->r0 = 0;
-        var_s2->pad2 = 0x60;
-        var_s2->pad3 = 0xA;
-        temp_s2 = var_s2->tag;
+
+        entity->unk84.unk = poly; // store next polygon?
+        setcode(poly, 1);
+        poly->u0 = 0x40;
+        poly->v0 = 0x50;
+        poly->y0 = 0x70;
+        poly->x0 = 0x60;
+        poly->b0 = 0;
+        poly->g0 = 0;
+        poly->r0 = 0;
+        poly->pad2 = 0x60;
+        poly->pad3 = 0xA;
+        temp_s2 = poly->tag;
         temp_s2->code = 3;
         temp_s2->b0 = 0;
         temp_s2->g0 = 0;
@@ -2757,69 +2755,74 @@ void EntityWarpRoom(Entity* arg0) {
         temp_s2->pad3 = 8;
         temp_s2->x2 = 0;
         temp_s2->x0 = 0;
-        *(s32*)&temp_s2->r1 = *(s32*)&temp_s2->r0;
-        *(s32*)&temp_s2->r2 = *(s32*)&temp_s2->r0;
-        *(s32*)&temp_s2->r3 = *(s32*)&temp_s2->r0;
+        *((s32*)(&temp_s2->r1)) = *((s32*)(&temp_s2->r0));
+        *((s32*)(&temp_s2->r2)) = *((s32*)(&temp_s2->r0));
+        *((s32*)(&temp_s2->r3)) = *((s32*)(&temp_s2->r0));
         D_80193AA4 = 0x100;
+        var_v0_14 = 0x4680;
         for (i = 0; i < 0x20; i++) {
-            Entity* newEntity = AllocEntity(D_8007A958, D_8007A958 + 0x4680);
+            Entity* newEntity = AllocEntity(D_8007A958, D_8007A958 + var_v0_14);
             if (newEntity) {
                 SpawnExplosionEntity(0x17, newEntity);
                 newEntity->posY.i.hi = 0xCC - D_80073092;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
-        arg0->unk3C = 1;
-        arg0->hitboxWidth = 2;
-        arg0->hitboxHeight = 0x10;
-        *(u32*)D_80180648 = 0;
-        arg0->unk12 += 0x10;
-        D_8003BEBC |= 1 | (1 << arg0->subId);
-        if ((u32)((PLAYER.posX.i.hi + (s16)D_8007308E) - 0x61) < 0x3F) {
+
+        entity->unk3C = 1;
+        entity->hitboxWidth = 2;
+        entity->hitboxHeight = 0x10;
+        *((u32*)D_80180648) = 0;
+        entity->unk12 += 0x10;
+        D_8003BEBC |= 1 | (1 << entity->subId);
+        if (((u32)((PLAYER.posX.i.hi + ((s16)D_8007308E)) - 0x61)) < 0x3F) {
             D_80072EFC = 0x10;
             D_80072EF4 = 0;
             D_8003C8B8 = 0;
-            arg0->step = 5;
-            *(u32*)D_80180648 = 1;
+            entity->step = 5;
+            *((u32*)D_80180648) = 1;
         }
+
     case 1:
         // Wait for player to press the UP button
-        if ((arg0->unk48 != 0) && (g_pads->pressed & PAD_UP) &&
-            !(D_80072F2C & 0xC5CF3EF7)) {
+        if (((entity->unk48 != 0) && (g_pads->pressed & 0x1000)) &&
+            (!(D_80072F2C & 0xC5CF3EF7))) {
             D_80072EF4 = 0;
             D_80072EFC = 0x80;
             PLAYER.accelerationX = 0;
             PLAYER.accelerationY = 0;
             D_8003C8B8 = 0;
-            arg0->step++;
+            entity->step++;
         }
         break;
+
     case 2:
         // Move Alucard in the background and fade him to white
         D_80072EFC = 0x80;
         PLAYER.zPriority = 0x5C;
         D_80072EF4 = 0;
-        g_zEntityCenter.S16.unk0 = 0x5C;
-        temp_s2_2 = (POLY_GT4*)arg0->unk84.value;
+        g_zEntityCenter.unk = 0x5C;
+        temp_s2_2 = (POLY_GT4*)(*&entity->unk84.unk);
         D_8003C8B8 = 0;
         temp_v1_9 = temp_s2_2->r0 + 2;
         temp_s2_2->r0 = temp_v1_9;
-        temp_s2_2->pad3 = 0x31;
         temp_s2_2->b0 = temp_v1_9;
         temp_s2_2->g0 = temp_v1_9;
-        if (temp_s2_2->r0 >= 0x61) {
-            *(u32*)D_80180648 = 1;
-            g_pfnPlaySfx(0x636);
-            arg0->step++;
+        temp_s2_2->pad3 = 0x31;
+        if (temp_s2_2->r0 >= 97) {
+            *((u32*)D_80180648) = 1;
+            g_api.PlaySfx(0x636);
+            entity->step++;
         }
         break;
+
     case 3:
         // Fade the entire room into white
         D_80072EFC = 0x80;
         PLAYER.zPriority = 0x5C;
         D_80072EF4 = 0;
-        g_zEntityCenter.S16.unk0 = 0x5C;
-        temp_s2_3 = (POLY_GT4*)arg0->unk84.value;
+        g_zEntityCenter.unk = 0x5C;
+        temp_s2_3 = (POLY_GT4*)(*&entity->unk84.unk);
         D_8003C8B8 = 0;
         temp_s2_3->pad3 = 0x31;
         if (temp_s2_3->r0 < 0xF0) {
@@ -2836,54 +2839,45 @@ void EntityWarpRoom(Entity* arg0) {
             var_s2_3->b0 = var_v0_14;
             var_s2_3->g0 = var_v0_14;
         } else {
-            arg0->step++;
+            entity->step++;
         }
-        *(s32*)&var_s2_3->r1 = *(s32*)&var_s2_3->r0;
-        *(s32*)&var_s2_3->r2 = *(s32*)&var_s2_3->r0;
-        *(s32*)&var_s2_3->r3 = *(s32*)&var_s2_3->r0;
+        *((s32*)(&var_s2_3->r1)) = *((s32*)(&var_s2_3->r0));
+        *((s32*)(&var_s2_3->r2)) = *((s32*)(&var_s2_3->r0));
+        *((s32*)(&var_s2_3->r3)) = *((s32*)(&var_s2_3->r0));
         break;
+
     case 4:
         // .rodata+0x1c
         // Perform the actual warp
-        move_room = arg0->subId + 1;
-        // for (i2 = 0; i2 < 5; i2++, move_room++){
-        //     if (move_room >= 5) {
-        //         move_room = 0;
-        //     }
-        //     if ((D_8003BEBC >> move_room) & 1)
-        //         break;
-        // }
-        i2 = 0;
-    loop_25:
-        if (move_room >= 5) {
-            move_room = 0;
-        }
-        i2++;
-        if (!((D_8003BEBC >> move_room) & 1)) {
-            move_room++;
-            if (i2 < 5) {
-                goto loop_25;
+        move_room = entity->subId + 1;
+        for (i = 0; i < 5; i++) {
+            if (move_room >= 5) {
+                move_room = 0;
             }
+            if ((D_8003BEBC >> move_room) & 1)
+                break;
+            move_room++;
         }
 
-        temp_s0 = &D_8018065C[move_room];
+        warpCoord = &D_8018065C[move_room];
         D_80193AA0 = move_room;
-        move_x = temp_s0->x - g_CurrentRoomLeft;
-        move_y = temp_s0->y - g_CurrentRoomTop;
-        FntPrint(D_80186E3C, move_room);              // move_room%x
-        FntPrint(D_80186E4C, temp_s0->x, temp_s0->y); // for_x:%x y%x
-        FntPrint(D_80186E5C, move_x, move_y);         // move_x:%x y%x
+        move_x = warpCoord->x - g_CurrentRoomLeft;
+        move_y = warpCoord->y - g_CurrentRoomTop;
+        FntPrint(D_80186E3C, move_room);
+        FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
+        FntPrint(D_80186E5C, move_x, move_y);
         D_80097C98 = 2;
         PLAYER.posX.i.hi += move_x << 8;
         PLAYER.posY.i.hi += move_y << 8;
-        arg0->step = 0x80;
+        entity->step = 0x80;
         break;
+
     case 5:
         // .rodata+0x20
         D_80072EF4 = 0;
         D_80072EFC = 0x10;
         D_8003C8B8 = 0;
-        temp_s2_4 = (POLY_GT4*)arg0->unk84.value;
+        temp_s2_4 = (POLY_GT4*)entity->unk84.unk;
         temp_s2_4->pad3 = 8;
         temp_s2_4->r0 = 0;
         temp_s2_4->b0 = 0;
@@ -2893,11 +2887,11 @@ void EntityWarpRoom(Entity* arg0) {
         temp_s2_5->r0 = 0xF8;
         temp_s2_5->r0 = 0xF8;
         temp_s2_5->pad3 = 0x31;
-        *(s32*)&temp_s2_5->r1 = *(s32*)&temp_s2_5->r0;
-        *(s32*)&temp_s2_5->r2 = *(s32*)&temp_s2_5->r0;
-        *(s32*)&temp_s2_5->r3 = *(s32*)&temp_s2_5->r0;
+        *((s32*)(&temp_s2_5->r1)) = *((s32*)(&temp_s2_5->r0));
+        *((s32*)(&temp_s2_5->r2)) = *((s32*)(&temp_s2_5->r0));
+        *((s32*)(&temp_s2_5->r3)) = *((s32*)(&temp_s2_5->r0));
         D_8003C7E8(0, 0, 0, 0);
-        arg0->step++;
+        entity->step++;
         /* fallthrough */
     case 6:
         // Finalize warp by fading in from white
@@ -2905,7 +2899,7 @@ void EntityWarpRoom(Entity* arg0) {
         D_80072EF4 = 0;
         D_80072EFC = 0x10;
         D_8003C8B8 = 0;
-        var_s2_3 = ((POLY_GT4*)arg0->unk84.value)->tag;
+        var_s2_3 = ((POLY_GT4*)(*&entity->unk84.unk))->tag;
         fadeIn = var_s2_3->r0 - 4;
         var_v0_15 = fadeIn < 0x28;
         if (fadeIn < 0) {
@@ -2913,26 +2907,27 @@ void EntityWarpRoom(Entity* arg0) {
             fadeIn = 0;
             var_s2_3->pad3 = 8;
             D_8003C8B8 = 1;
-            arg0->step = 1;
+            entity->step = 1;
             var_v0_15 = 0 < 0x28;
         }
         var_v0_14 = fadeIn;
         if (var_v0_15 != 0) {
-            *(u32*)D_80180648 = 0;
+            *((u32*)D_80180648) = 0;
         }
         var_s2_3->r0 = var_v0_14;
         var_s2_3->b0 = var_v0_14;
         var_s2_3->g0 = var_v0_14;
-        *(s32*)&var_s2_3->r1 = *(s32*)&var_s2_3->r0;
-        *(s32*)&var_s2_3->r2 = *(s32*)&var_s2_3->r0;
-        *(s32*)&var_s2_3->r3 = *(s32*)&var_s2_3->r0;
+        *((s32*)(&var_s2_3->r1)) = *((s32*)(&var_s2_3->r0));
+        *((s32*)(&var_s2_3->r2)) = *((s32*)(&var_s2_3->r0));
+        *((s32*)(&var_s2_3->r3)) = *((s32*)(&var_s2_3->r0));
         break;
+
     default:
-        temp_s0 = &D_8018065C[D_80193AA0];
-        temp_s4_3 = temp_s0->x - g_CurrentRoomLeft;
-        temp_s5_3 = temp_s0->y - g_CurrentRoomTop;
+        warpCoord = &D_8018065C[D_80193AA0];
+        temp_s4_3 = warpCoord->x - g_CurrentRoomLeft;
+        temp_s5_3 = warpCoord->y - g_CurrentRoomTop;
         FntPrint(D_80186E3C, D_80193AA0);
-        FntPrint(D_80186E4C, temp_s0->x, temp_s0->y);
+        FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
         FntPrint(D_80186E5C, temp_s4_3, temp_s5_3);
         break;
     }
@@ -2945,101 +2940,193 @@ void EntityWarpRoom(Entity* arg0) {
     if (D_80193AAC >= 0x100) {
         D_80193AAC = 0xFF;
     }
-    var_s2_2 = arg0->unk7C.s;
+    poly = (POLY_GT4*)&entity->unk7C.s;
     D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
-    for (i3 = 0; i3 < 0x10; i3++) {
+    for (i3 = 0; i3 <= 0x10; i3++) {
         var_v0_2 = i3;
         if (i3 < 0) {
-            var_v0_2 = i3 + 0xF;
+            var_v0_2 = i3 + 15;
         }
-        var_v0_3 =
+        bgColorR0 =
             ((rsin(D_80180608[i3 - ((var_v0_2 >> 4) * 0x10)]) + 0x1000) >> 6) *
             D_80193AA4;
-        temp_v1_4 = i3 + 5;
-        if (var_v0_3 < 0) {
-            var_v0_3 += 0xFF;
+        if (bgColorR0 < 0) {
+            bgColorR0 += 255;
         }
-        var_s2_2->r0 = (u8)(var_v0_3 >> 8);
-        var_v0_4 = temp_v1_4;
-        if (temp_v1_4 < 0) {
-            var_v0_4 = i3 + 0x14;
+        poly->r0 = (bgColorR0 >> 8);
+        temp_v1_6 = i3 + 5;
+        var_v0_4 = temp_v1_6;
+        if (var_v0_4 < 0) {
+            var_v0_4 = i3 + 20;
         }
-        var_v0_5 = ((rsin(D_80180608[temp_v1_4 - ((var_v0_4 >> 4) * 0x10)]) +
-                     0x1000) >>
-                    6) *
-                   D_80193AA4;
-        temp_v1_5 = i3 + 0xA;
-        if (var_v0_5 < 0) {
-            var_v0_5 += 0xFF;
+        bgColorG0 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_4 >> 4) * 0x10)]) +
+                      0x1000) >>
+                     6) *
+                    D_80193AA4;
+        if (bgColorG0 < 0) {
+            bgColorG0 += 255;
         }
-        var_s2_2->g0 = (u8)(var_v0_5 >> 8);
-        var_v0_6 = temp_v1_5;
-        if (temp_v1_5 < 0) {
-            var_v0_6 = i3 + 0x19;
+        poly->g0 = bgColorG0 >> 8;
+        temp_v1_6 = i3 + 10;
+        var_v0_6 = temp_v1_6;
+        if (var_v0_6 < 0) {
+            var_v0_6 = i3 + 25;
         }
-        var_v0_7 = ((rsin(D_80180608[temp_v1_5 - ((var_v0_6 >> 4) * 0x10)]) +
-                     0x1000) >>
-                    6) *
-                   D_80193AA4;
+        bgColorB0 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_6 >> 4) * 0x10)]) +
+                      0x1000) >>
+                     6) *
+                    D_80193AA4;
+        if (bgColorB0 < 0) {
+            bgColorB0 += 255;
+        }
+        poly->b0 = (bgColorB0 >> 8);
         temp_s1_2 = i3 + 1;
-        if (var_v0_7 < 0) {
-            var_v0_7 += 0xFF;
-        }
-        var_s2_2->b0 = (u8)(var_v0_7 >> 8);
         var_v0_8 = temp_s1_2;
-        if (temp_s1_2 < 0) {
-            var_v0_8 = i3 + 0x10;
+        if (var_v0_8 < 0) {
+            var_v0_8 = i3 + 16;
         }
-        var_v0_9 = ((rsin(D_80180608[temp_s1_2 - ((var_v0_8 >> 4) * 0x10)]) +
-                     0x1000) >>
-                    6) *
-                   D_80193AA4;
+        bgColorR1 = ((rsin(D_80180608[temp_s1_2 - ((var_v0_8 >> 4) * 0x10)]) +
+                      0x1000) >>
+                     6) *
+                    D_80193AA4;
+        if (bgColorR1 < 0) {
+            bgColorR1 += 255;
+        }
+        poly->r1 = (bgColorR1 >> 8);
         temp_v1_6 = i3 + 6;
-        if (var_v0_9 < 0) {
-            var_v0_9 += 0xFF;
-        }
-        var_s2_2->r1 = (u8)(var_v0_9 >> 8);
         var_v0_10 = temp_v1_6;
-        if (temp_v1_6 < 0) {
+        if (var_v0_10 < 0) {
             var_v0_10 = i3 + 0x15;
         }
-        var_v0_11 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_10 >> 4) * 0x10)]) +
+        bgColorG1 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_10 >> 4) * 0x10)]) +
                       0x1000) >>
                      6) *
                     D_80193AA4;
-        temp_v1_7 = i3 + 0xB;
-        if (var_v0_11 < 0) {
-            var_v0_11 += 0xFF;
+        if (bgColorG1 < 0) {
+            bgColorG1 += 255;
         }
-        var_s2_2->g1 = (u8)(var_v0_11 >> 8);
-        var_v0_12 = temp_v1_7;
-        if (temp_v1_7 < 0) {
-            var_v0_12 = i3 + 0x1A;
+        poly->g1 = (bgColorG1 >> 8);
+        temp_v1_6 = i3 + 11;
+        var_v0_12 = temp_v1_6;
+        if (temp_v1_6 < 0) {
+            var_v0_12 = i3 + 26;
         }
-        var_v0_13 = ((rsin(D_80180608[temp_v1_7 - ((var_v0_12 >> 4) * 0x10)]) +
+        bgColorB1 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_12 >> 4) * 0x10)]) +
                       0x1000) >>
                      6) *
                     D_80193AA4;
-        if (var_v0_13 < 0) {
-            var_v0_13 += 0xFF;
+        if (bgColorB1 < 0) {
+            bgColorB1 += 255;
         }
-        var_s2_2->b1 = (u8)(var_v0_13 >> 8);
-        temp_v0_4 = (u8)D_80193AAC;
-        temp_v1_8 = &D_80180608[i3];
-        var_s2_2->b3 = temp_v0_4;
-        var_s2_2->g3 = temp_v0_4;
-        var_s2_2->r3 = temp_v0_4;
-        var_s2_2->b2 = temp_v0_4;
-        var_s2_2->g2 = temp_v0_4;
-        var_s2_2->r2 = temp_v0_4;
-        temp_v0_5 = *temp_v1_8;
-        *temp_v1_8 = temp_v0_5 + 0x20;
-        var_s2_2 = (POLY_GT4*)var_s2_2->tag;
+        poly->b1 = (bgColorB1 >> 8);
+        tintColor = (u8)D_80193AAC;
+        poly->b3 = tintColor;
+        poly->g3 = tintColor;
+        poly->r3 = tintColor;
+        poly->b2 = tintColor;
+        poly->g2 = tintColor;
+        poly->r2 = tintColor;
+        D_80180608[i3] += 0x20;
+        poly = (POLY_GT4*)poly->tag;
     }
 }
 #endif
 
+// TODO this is matching, but EntityWarpRoom needs to match first due to the
+// jump table.
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityWarpSmallRocks);
+#else
+
+void EntityWarpSmallRocks(Entity* entity) {
+    s32 x;
+    s32 y;
+    s16* y_unk;
+    s32 distance;
+    s16 radians;
+    u32* unk;
+
+    switch (entity->step) {
+    case 0:
+        unk = D_80180648;
+        InitializeEntity(D_801804C4);
+        entity->unk19 = 4;
+        entity->unk1E = Random() * 0x10;
+        entity->animationFrame = (Random() % 5) + 1;
+        if (*unk != 0) {
+            entity->posY.i.hi = (Random() & 0x1F) + 0x90;
+            entity->step = 4;
+        }
+        break;
+
+    case 1:
+        if (*D_80180648 != 0) {
+            *(u32*)(&entity->unk88) = Random() & 0x3F;
+            entity->accelerationY = -0x40000;
+            entity->step++;
+        }
+        break;
+
+    case 2:
+        if (*(u32*)&entity->unk88 != 0) {
+            *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
+        } else {
+            MoveEntity();
+            entity->accelerationY += 0x4000;
+            if (entity->accelerationY > ((s32)0xFFFF0000)) {
+                entity->unk19 = 3;
+                entity->unk1C = 0x100;
+                distance = 0x100;
+                entity->unk1A = distance;
+                entity->step++;
+            }
+        }
+        break;
+
+    case 3:
+        x = 0x80 - entity->posX.i.hi;
+        y = 0x80 - entity->posY.i.hi;
+        radians = ratan2(y, x);
+        entity->accelerationX = rcos(radians) << 5;
+        entity->accelerationY = rsin(radians) << 5;
+        MoveEntity();
+        distance = SquareRoot0(x * x + y * y) * 2;
+        if (distance >= 0x101) {
+            distance = 0x100;
+        }
+        entity->unk1A = entity->unk1C = distance;
+        if (distance < 8) {
+            DestroyEntity(entity);
+        }
+        break;
+
+    case 4:
+        unk = D_80180648;
+        entity->unk1E += 0x20;
+        entity->accelerationY = rsin(entity->unk1E) * 4;
+        if (*unk == 0) {
+            *(u32*)&entity->unk88 = 0x10;
+            entity->step++;
+        }
+        break;
+
+    case 5:
+        y_unk = &D_80073092;
+        *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
+        if (*(u32*)&entity->unk88 == 0) {
+            func_801916C4(0x644);
+        }
+        MoveEntity();
+        entity->accelerationY += 0x3000;
+        y = entity->posY.i.hi + *y_unk + 5;
+        if (y >= 209) {
+            entity->posY.i.hi = 203 - (*y_unk);
+            entity->step = 1;
+        }
+        break;
+    }
+}
+#endif
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -3063,7 +3150,7 @@ void UpdateStageEntities(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_pfnFreePolygons(D_80097414);
+            g_api.FreePolygons(D_80097414);
         }
     }
 
@@ -3170,20 +3257,18 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018861C);
 // https://decomp.me/scratch/m0PKE
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", CreateEntity);
-#else
 void CreateEntity(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    do {
+        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    } while (0);
     entity->posX.i.hi = initDesc->posX - D_8007308E;
     entity->posY.i.hi = initDesc->posY - D_80073092;
     entity->subId = initDesc->subId;
-    entity->objectRoomIndex = initDesc->objectRoomIndex;
-    entity->unk68 = initDesc->objectId >> 0xA & 7;
+    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
+    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80189E9C);
@@ -3279,7 +3364,6 @@ void func_8018A3CC(s16 arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A424);
 void func_8018A424(s16 arg0);
 #else
-void func_80189FB4(LayoutObject*);
 void func_8018A424(s16 arg0) {
     if (D_80193ABC) {
         func_8018A380(arg0 - D_8009790C);
@@ -3300,10 +3384,36 @@ void func_8018A424(s16 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
-void func_8018A520(s16);
-
 #ifndef NON_MATCHING
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018A520);
+void func_8018A424(s16 arg0);
+#else
+void func_8018A520(s16 arg0) {
+    s32 var_v0;
+    u32 new_var;
+    u8 flag;
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+    var_v0 = arg0 << 0x10;
+    if (D_80193ABC == 0) {
+        func_8018A3CC(arg0 - D_8009790C);
+        D_80193ABC = 1;
+    }
+loop_5:
+    if ((D_80193AB4[1] != 0xFFFE) && ((var_v0 >> 0x10) <= D_80193AB4[1])) {
+        flag = (D_80193AB4[3] >> 8) + 0xFF;
+        new_var = g_entityDestroyed[flag >> 5];
+        if ((flag == 0xFF) || (((1 << (flag & 0x1F)) & new_var) == 0)) {
+            func_80189FB4(D_80193AB4);
+        }
+        D_80193AB4 -= 0xA;
+        goto loop_5;
+    }
+}
+#endif
+
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", LoadObjLayout);
 #else
 void LoadObjLayout(s32 objLayoutId) {
@@ -3311,7 +3421,7 @@ void LoadObjLayout(s32 objLayoutId) {
     s16 var_a1_2;
     u16* pObjLayoutStart;
     s16* layout;
-    s32 var_a0;
+    s32 arg0;
     s16 var_a1;
     u16* temp_v1;
 
@@ -3322,13 +3432,13 @@ void LoadObjLayout(s32 objLayoutId) {
 
     if (*pObjLayoutStart != 0xFFFE) {
         D_80193AB0 = pObjLayoutStart + 1;
-        var_a0 = Random() & 0xFF;
+        arg0 = Random() & 0xFF;
         for (var_a1 = 0;; var_a1++) {
             s32 temp_v0;
             temp_v1 = D_80193AB0;
             D_80193AB0 = ((u16*)D_80193AB0) + 1;
-            temp_v0 = var_a0 - temp_v1[0];
-            var_a0 = temp_v0;
+            temp_v0 = arg0 - temp_v1[0];
+            arg0 = temp_v0;
             if (((s16)temp_v0) < 0) {
                 break;
             }
@@ -3415,7 +3525,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -3471,12 +3581,12 @@ s32 func_8018B93C(void) {
 }
 
 s16 func_8018B970(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+    s16 arg0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+        arg0 |= 2;
     }
-    return var_a0;
+    return arg0;
 }
 
 void MoveEntity(void) {
@@ -3490,7 +3600,74 @@ void FallEntity(void) {
     }
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018BA10);
+#else
+s32 func_8018BA10(u16* arg0) {
+    s16 new_var;
+    s32 new_var4;
+    CollisionResult res;
+    CollisionResult resBack;
+    s16 i;
+    s16 x;
+    s16 y;
+    s32 var_v0;
+
+    MoveEntity();
+    FallEntity();
+    if (g_CurrentEntity->accelerationY >= 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            x += *(arg0++);
+            y += *(arg0++);
+            g_api.CheckCollision(x, y, &res, 0);
+            new_var4 = res.unk0;
+            if (new_var4 & 0x8000) {
+                var_v0 = new_var4 & 5;
+                if (i == 1) {
+                    if (new_var4 & 1) {
+                        g_api.CheckCollision(x, y - 8, &resBack, 0);
+                        if (!(resBack.unk0 & 1)) {
+                            new_var = res.unk18;
+                            g_CurrentEntity->accelerationX = 0;
+                            g_CurrentEntity->accelerationY = 0;
+                            g_CurrentEntity->posY.i.hi =
+                                (((u16)g_CurrentEntity->posY.i.hi) + 4) +
+                                new_var;
+                            g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                            return 1;
+                        }
+                    }
+                    continue;
+                }
+            } else {
+                var_v0 = new_var4 & 5;
+            }
+            if (new_var4 & 5) {
+                if (i != 1) {
+                    if (new_var4 & 4) {
+                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        return 4;
+                    }
+                    g_api.CheckCollision(x, y - 8, &resBack, 0);
+                    if (!(resBack.unk0 & 1)) {
+                        x = ((u16)g_CurrentEntity->posY.i.hi) + res.unk18;
+                        new_var = x;
+                        g_CurrentEntity->accelerationX = 0;
+                        g_CurrentEntity->accelerationY = 0;
+                        g_CurrentEntity->posY.i.hi = new_var;
+                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    g_CurrentEntity->unk34 |= 0x10000000;
+    return 0;
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018BC88);
 
@@ -3645,7 +3822,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     g_CurrentEntity->unk2E = 0;
 }
 
-void InitializeEntity(const u16 arg0[]) {
+void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -3655,7 +3832,8 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 =
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -3680,6 +3858,7 @@ void EntityDummy(Entity* arg0) {
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C434);
 
+void func_8018C55C(u16* arg0, s16 arg1);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C55C);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C6B4);
@@ -3715,7 +3894,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->step = temp_a0;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
 #else
 void func_8018CAB0(void) {
@@ -3724,11 +3903,11 @@ void func_8018CAB0(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84.value;
-        entity->unk84.value = temp_v1;
+        temp_v1 = *(s16*)&entity->unk88 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88 = -entity->unk88;
+            *(s16*)&entity->unk88 = -*(s16*)&entity->unk88;
         }
         entity = g_CurrentEntity;
     }
@@ -3740,21 +3919,21 @@ void func_8018CAB0(void) {
 #endif
 
 void func_8018CB34(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        D_8003C7BC(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi - 7,
-                   &sp10, 0);
-        if (sp10.sp10 & 5) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    D_8003C7BC(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi + 7,
-               &sp10, 0);
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -3763,17 +3942,16 @@ void func_8018CB34(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             g_CurrentEntity->posY.val += 0x2000;
             return;
         }
 
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + (u16)sp10.sp28;
+        g_CurrentEntity->posY.i.hi += (u16)res.unk18;
         return;
     }
 
-    if (!(sp10.sp10 & 5)) {
+    if (!(res.unk0 & 5)) {
         MoveEntity();
         func_8018CAB0();
     }
@@ -3782,7 +3960,7 @@ void func_8018CB34(u16 arg0) {
 void CollectHeart(u16 heartSize) {
     s32* hearts;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart->current;
     *hearts += c_HeartPrizes[heartSize];
 
@@ -3793,13 +3971,11 @@ void CollectHeart(u16 heartSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_80192F40(const u8*, s32);
-
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_GOLD);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
     gold = &g_playerGold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
@@ -3809,7 +3985,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        g_pfnFreePolygons(D_80097414);
+        g_api.FreePolygons(D_80097414);
         *unk = 0;
     }
 
@@ -3817,26 +3993,61 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CDEC);
+#else
+void func_8018CDEC(u16 arg0) {
+    u16 temp_v0;
+    u16 var_a0;
+    Entity* player;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    player = &PLAYER;
+    temp_v0 = D_80180DC4[arg0];
+    // player_equip_left_hand = temp_v0;
+    if (player_equip_left_hand == temp_v0) {
+        var_a0 = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        var_a0 = D_80180DF4[player_equip_left_hand];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+    if (var_a0 != 0) {
+        g_CurrentEntity->subId = var_a0;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
+        func_8018C240(7);
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animationFrame = 0;
+        g_CurrentEntity->unk8A = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+        } else {
+            g_CurrentEntity->accelerationX = 0x20000;
+        }
+    } else {
+        DestroyEntity(g_CurrentEntity);
+    }
+}
+#endif
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-    D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
@@ -3913,9 +4124,65 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0E);
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
+#else
+u8 func_8018F420(s16* arg0, s32 facing) {
+    s16* var_s0_2;
+    s32 facing_;
+    CollisionResult res;
+    s16 x;
+    s16* var_s0;
+    u16 var_s1;
+    s32 new_var;
+    var_s0 = arg0;
+    facing_ = facing;
+    var_s1 = 0;
+    while (*var_s0 != 0xFF) {
+        var_s1 *= 2;
+        if (facing_ != 0) {
+            x = g_CurrentEntity->posX.i.hi + *var_s0++;
+        } else {
+            x = g_CurrentEntity->posX.i.hi - *var_s0++;
+        }
+        g_api.CheckCollision(x, (s16)(g_CurrentEntity->posY.i.hi + *var_s0++),
+                             &res, 0);
+        if (res.unk0 & 1) {
+            var_s1 |= 1;
+            new_var = 0xFF;
+        }
+        new_var = 0xFF;
+    }
 
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F510);
+    return var_s1;
+}
+#endif
+
+void func_8018F510(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_8018047C);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_8018A8D4(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F620);
 
@@ -4002,7 +4269,7 @@ void func_8018F928(Entity* arg0) {
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018FA1C);
 
 bool func_8018FC4C(Unkstruct6* unk) {
-    Unkstruct7 a;
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -4013,9 +4280,9 @@ bool func_8018FC4C(Unkstruct6* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        D_8003C7BC(posX, posY, &a, 0);
-        if (a.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += a.sp28;
+        g_api.CheckCollision(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
@@ -4141,7 +4408,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityAbsorbOrb);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
-    const ObjInit2* objInit = &D_80181134[entity->subId];
+    ObjInit2* objInit = &D_80181134[entity->subId];
     if (entity->step == 0) {
         InitializeEntity(D_80180494);
         entity->animationSet = objInit->animationSet;
@@ -4161,7 +4428,172 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80192F40);
+#else
+void func_80192F40(u8* arg0, u8 arg1) {
+    u8 sp10[0x40];
+    POLY_GT4* poly;
+    s16 temp_t2;
+    s16 temp_t3;
+    s32 firstPolyIndex;
+    s16 temp_v0_2;
+    s16 var_t5_2;
+    s16 var_t5_3;
+    short temp_v1;
+    s32 var_s0;
+    u16 polyCount;
+    s32 i;
+    u8 temp_v1_2;
+    u8 var_v1;
+    u8* var_a1;
+    u8* var_a1_2;
+    u8* var_a1_3;
+    var_a1 = &sp10;
+    var_s0 = 0;
+    polyCount = 0;
+    for (i = sizeof(sp10) - 1; i >= 0; i--) {
+        *(var_a1++) = 0;
+    }
+
+    var_a1_2 = &sp10;
+    while (1) {
+        var_v1 = *arg0++;
+        if (var_v1 == 0xFF) {
+            var_v1 = *arg0++;
+            if (var_v1 == 0) {
+                break;
+            }
+        }
+        *(var_a1_2++) = var_v1;
+        if (var_v1 != 0) {
+            polyCount++;
+            var_s0 = var_s0 + 8;
+        } else {
+            var_s0 += 4;
+        }
+    }
+
+    firstPolyIndex = g_api.AllocPolygons(6, polyCount + 4);
+    D_80097414 = firstPolyIndex;
+    if (firstPolyIndex == (-1)) {
+        return;
+    }
+    poly = &D_80086FEC[firstPolyIndex];
+    setcode(poly, 3);
+    poly->r3 = 0;
+    poly->r2 = 0;
+    poly->r1 = 0;
+    poly->r0 = 0;
+    poly->g3 = 0;
+    poly->g2 = 0;
+    poly->g1 = 0;
+    poly->g0 = 0;
+    poly->b3 = 0;
+    poly->b2 = 0;
+    poly->b1 = 0;
+    poly->b0 = 0;
+    if (arg1) {
+        poly->b1 = 0xAF;
+        poly->b0 = 0xAF;
+    } else {
+        poly->g1 = 0x5F;
+        poly->g0 = 0x5F;
+    }
+    var_t5_2 = 7;
+    if (arg1) {
+        var_s0 += 4;
+    } else {
+        var_t5_2 = 0xD4 - var_s0;
+    }
+    temp_v1 = var_t5_2 + var_s0;
+    temp_v0_2 = temp_v1 + 0x20;
+    temp_t2 = var_t5_2 + 0xA;
+    temp_t3 = temp_v1 + 0x18;
+    poly->x3 = temp_v0_2;
+    poly->x1 = temp_v0_2;
+    poly->y1 = 0xD0;
+    poly->y0 = 0xD0;
+    poly->y3 = 0xDF ^ 0;
+    poly->y2 = 0xDF;
+    poly->pad2 = 0x1EE;
+    poly->pad3 = 0x11;
+    poly->x2 = var_t5_2;
+    poly->x0 = var_t5_2;
+    var_t5_3 = var_t5_2 + 0x10;
+    poly = poly->tag;
+    poly->tpage = 0x1F;
+    poly->clut = 0x197;
+    poly->x0 = var_t5_2 - 6;
+    poly->y0 = 0xCB;
+    poly->u0 = 0x80;
+    poly->v0 = 0;
+    poly->u1 = 0x10;
+    poly->v1 = 0x18;
+    poly->pad2 = 0x1EF;
+    poly->pad3 = 0;
+    poly = poly->tag;
+    poly->tpage = 0x1F;
+    poly->clut = 0x197;
+    poly->x0 = temp_v1 + 0x16;
+    poly->y0 = 0xCB;
+    poly->u0 = 0xA8;
+    poly->v0 = 0;
+    poly = poly;
+    poly->u1 = 0x10;
+    poly->v1 = 0x18;
+    poly->pad2 = 0x1EF;
+    poly->pad3 = 0;
+    poly = poly->tag;
+    setcode(poly, 4);
+    poly->y1 = 0xCD;
+    poly->y0 = 0xCD;
+    poly->y3 = 0xE1;
+    poly->y2 = 0xE1;
+    do {
+        poly->u2 = 0x98;
+        poly->u0 = 0x98;
+        poly->u3 = 0x9C;
+        poly->u1 = 0x9C;
+        poly->v1 = 2;
+        poly->v0 = 2;
+        poly->tpage = 0x1F;
+        poly->clut = 0x197;
+        poly->x2 = temp_t2;
+        poly->x0 = temp_t2;
+        poly->x3 = temp_t3;
+        poly->x1 = temp_t3;
+        poly->v3 = 0x16;
+    } while (0);
+    poly->v2 = 0x16;
+    poly->pad2 = 0x1EF;
+    poly->pad3 = 0;
+    poly = poly->tag;
+    var_a1_3 = &sp10;
+    while (poly != 0) {
+        var_v1 = *var_a1_3++;
+        temp_v1_2 = var_v1;
+        if (temp_v1_2 != 0) {
+            poly->x0 = var_t5_3;
+            poly->u0 = (temp_v1_2 & 0xF) * 8;
+            poly->tpage = 0x1E;
+            poly->clut = 0x196;
+            poly->v0 = (temp_v1_2 & 0xF0) / 2;
+            poly->v1 = 8;
+            poly->u1 = 8;
+            poly->pad2 = 0x1F0;
+            poly->pad3 = 0;
+            poly->y0 = 0xD4;
+            poly = poly->tag;
+            var_t5_3 += 8;
+        } else {
+            var_t5_3 += 4;
+        }
+    }
+
+    D_80097410 = 0x130;
+}
+#endif
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_80193270);
 
@@ -4257,20 +4689,20 @@ void func_801938DC(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->y2 = 0;
 }
 
-void func_801939BC(POLY_GT4* arg0) {
-    func_801938DC(arg0);
-    arg0->p3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 1;
-    ((POLY_GT4*)arg0->tag)->code = 2;
-    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
+void func_801939BC(POLY_GT4* poly) {
+    func_801938DC(poly);
+    poly->p3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 1;
+    ((POLY_GT4*)poly->tag)->code = 2;
+    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
 }
 
-void func_80193A10(POLY_GT4* arg0) {
-    arg0->p3 = 0;
-    arg0->pad3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 0;
-    ((POLY_GT4*)arg0->tag)->code = 4;
-    ((POLY_GT4*)arg0->tag)->pad3 = 8;
+void func_80193A10(POLY_GT4* poly) {
+    poly->p3 = 0;
+    poly->pad3 = 8;
+    ((POLY_GT4*)poly->tag)->p3 = 0;
+    ((POLY_GT4*)poly->tag)->code = 4;
+    ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
 s32 func_80193A3C(u8* arg0, u8 value) {

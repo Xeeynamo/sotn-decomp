@@ -23,6 +23,7 @@ void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern u16 D_80180494[];
 extern s16 D_80180D80[];
 extern LayoutObject* D_801A32C4;
 extern LayoutObject* D_801A32C8;
@@ -96,7 +97,7 @@ void EntityBreakable(Entity* entity) {
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
-            g_pfnPlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
                 SpawnExplosionEntity(2, temp_v0);
@@ -341,12 +342,12 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_8019967C(u16 objectId, Entity* a, Entity* b) {
-    DestroyEntity(b);
-    b->objectId = objectId;
-    b->pfnUpdate = D_801803C4[objectId];
-    b->posX.i.hi = a->posX.i.hi;
-    b->posY.i.hi = a->posY.i.hi;
+void func_8019967C(u16 objectId, Entity* source, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_801803C4[objectId];
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
 }
 
 s32 func_801996F8(Unkstruct5* arg0) {
@@ -374,7 +375,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->unk34 & 0x800000) {
-        g_pfnFreePolygons(item->firstPolygonIndex);
+        g_api.FreePolygons(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -654,7 +655,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     g_CurrentEntity->unk2E = 0;
 }
 
-void InitializeEntity(const u16 arg0[]) {
+void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
@@ -664,7 +665,8 @@ void InitializeEntity(const u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)D_8003C808);
+    temp_v0 =
+        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -750,21 +752,21 @@ void func_8019B858(void) {
 #endif
 
 void func_8019B8DC(u16 arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     if (g_CurrentEntity->accelerationX < 0) {
-        D_8003C7BC(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi - 7,
-                   &sp10, 0);
-        if (sp10.sp10 & 5) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
-    D_8003C7BC(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi + 7,
-               &sp10, 0);
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(sp10.sp10 & 5)) {
+        if (!(res.unk0 & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -773,17 +775,16 @@ void func_8019B8DC(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (sp10.sp10 & 4) {
+        if (res.unk0 & 4) {
             g_CurrentEntity->posY.val += 0x2000;
             return;
         }
 
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + (u16)sp10.sp28;
+        g_CurrentEntity->posY.i.hi += res.unk18;
         return;
     }
 
-    if (!(sp10.sp10 & 5)) {
+    if (!(res.unk0 & 5)) {
         MoveEntity();
         func_8019B858();
     }
@@ -792,7 +793,7 @@ void func_8019B8DC(u16 arg0) {
 void func_8019BA38(u16 arg0) {
     s32* hearts;
 
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_playerHeart;
     *hearts += c_HeartPrizes[arg0];
 
@@ -809,22 +810,22 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019BB94);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
         g_playerHeart->current += HEART_VESSEL_RICHTER;
 
         if (g_playerHeart->max < g_playerHeart->current) {
             g_playerHeart->current = g_playerHeart->max;
         }
     } else {
-        g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_8003C848(HEART_VESSEL_INCREASE, 0x4000);
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
-    g_pfnPlaySfx(NA_SE_PL_COLLECT_HEART);
-    D_8003C848(LIFE_VESSEL_INCREASE, 0x8000);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
@@ -908,8 +909,31 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019DC6C);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E1C8);
 
-// https://decomp.me/scratch/LpjYl 92.57%
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E2B8);
+void func_8019E2B8(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180494);
+        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+    case 1:
+        if (entity->unk7C.U8.unk0++ >= 5) {
+            Entity* newEntity =
+                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                func_8019967C(ENTITY_EXPLOSION, entity, newEntity);
+                newEntity->objectId = ENTITY_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->subId = entity->subId;
+            }
+            entity->unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
+        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 // https://decomp.me/scratch/lcx4I
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E3C8);
@@ -980,7 +1004,7 @@ void func_8019E6D0(Entity* entity) {
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_8019E7C4);
 
 bool func_8019E9F4(Unkstruct6* arg0) {
-    Unkstruct7 sp10;
+    CollisionResult res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -992,10 +1016,10 @@ bool func_8019E9F4(Unkstruct6* arg0) {
         posX += arg0->x;
         posY += arg0->y;
 
-        D_8003C7BC(posX, posY, &sp10, 0);
+        g_api.CheckCollision(posX, posY, &res, 0);
 
-        if (sp10.sp10 & 1) {
-            g_CurrentEntity->posY.i.hi += sp10.sp28;
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
 
