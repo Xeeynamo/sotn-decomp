@@ -769,7 +769,7 @@ extern s32 D_800BD1C8[];
 extern s32* D_8013644C;
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
-extern s32* g_pStOverlay;
+extern s32* g_StageOverlay;
 
 s32 func_800E7E08(u32 arg0) {
     s32 i;
@@ -778,7 +778,7 @@ s32 func_800E7E08(u32 arg0) {
 
     switch (arg0) {
     case 0:
-        pSrc = g_pStOverlay;
+        pSrc = g_StageOverlay;
         i = 0;
         pDst = &g_api.o;
         do {

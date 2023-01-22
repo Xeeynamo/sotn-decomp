@@ -67,9 +67,6 @@ typedef struct {
     /* 02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
-typedef void (*PfnOverlayEntry)(void);
-typedef void (*PfnLoadObjectLayout)(s32 layoutId);
-
 s32 Random();
 void UpdateStageEntities(void);
 void CreateEntity(Entity* entity, LayoutObject* initDesc);
@@ -79,6 +76,6 @@ s32 AnimateEntity(const u8 frames[], Entity* entity);
 void MoveEntity(void);
 void FallEntity(void);
 Entity* AllocEntity(Entity* start, Entity* end);
-void InitializeEntity(const u16 arg0[]);
+void InitializeEntity(u16 arg0[]);
 
 #endif
