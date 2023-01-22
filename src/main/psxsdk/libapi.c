@@ -1,5 +1,5 @@
 #include "common.h"
-#include "main.h"
+#include <game.h>
 
 extern u8 CD_status;
 extern u8 CD_mode;

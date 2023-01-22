@@ -1,12 +1,110 @@
-#ifndef DRA_H
-#define DRA_H
-#include "main.h"
-#include "unkstruct.h"
+#ifndef GAME_H
+#define GAME_H
+#include <psxsdk/kernel.h>
+#include <psxsdk/libapi.h>
+#include <psxsdk/libc.h>
+#include <psxsdk/libcd.h>
+#include <psxsdk/libetc.h>
+#include <psxsdk/libgpu.h>
+#include <psxsdk/libgs.h>
+#include <psxsdk/libgte.h>
+#include <psxsdk/libsnd.h>
+
+#define PAD_COUNT 2
+#define PAD_L2 0x0001
+#define PAD_R2 0x0002
+#define PAD_L1 0x0004
+#define PAD_R1 0x0008
+#define PAD_TRIANGLE 0x0010
+#define PAD_CIRCLE 0x0020
+#define PAD_CROSS 0x0040
+#define PAD_SQUARE 0x0080
+#define PAD_SELECT 0x0100
+#define PAD_L3 0x0200
+#define PAD_R3 0x0400
+#define PAD_START 0x0800
+#define PAD_UP 0x1000
+#define PAD_RIGHT 0x2000
+#define PAD_DOWN 0x4000
+#define PAD_LEFT 0x8000
+
+#define RENDERFLAGS_NOSHADOW 2
+#define PLAYER_ALUCARD 0
+#define PLAYER_RICHTER 1
+#define MAX_GOLD 999999
+#define HEART_VESSEL_INCREASE 5
+#define HEART_VESSEL_RICHTER 30
+#define LIFE_VESSEL_INCREASE 5
+#define FALL_GRAVITY 0x4000
+#define FALL_TERMINAL_VELOCITY 0x60000
+
+#define TOTAL_ENTITY_COUNT 256
+#define MaxEntityCount 32
+
+#define PROGRAM_NO0 0x00
+#define PROGRAM_NO1 0x01
+#define PROGRAM_LIB 0x02
+#define PROGRAM_CAT 0x03
+#define PROGRAM_NO2 0x04
+#define PROGRAM_CHI 0x05
+#define PROGRAM_DAI 0x06
+#define PROGRAM_NP3 0x07
+#define PROGRAM_CEN 0x08
+#define PROGRAM_NO4 0x09
+#define PROGRAM_ARE 0x0A
+#define PROGRAM_TOP 0x0B
+#define PROGRAM_NZ0 0x0C
+#define PROGRAM_NZ1 0x0D
+#define PROGRAM_WRP 0x0E
+#define PROGRAM_NO1_ALT 0x0F
+#define PROGRAM_NO0_ALT 0x10
+#define PROGRAM_DRE 0x12
+#define PROGRAM_BO7 0x16
+#define PROGRAM_MAR 0x17
+#define PROGRAM_BO6 0x18
+#define PROGRAM_BO5 0x19
+#define PROGRAM_BO4 0x1A
+#define PROGRAM_BO3 0x1B
+#define PROGRAM_BO2 0x1C
+#define PROGRAM_BO1 0x1D
+#define PROGRAM_BO0 0x1E
+#define PROGRAM_ST0 0x1F
+#define PROGRAM_MAD 0x40
+#define PROGRAM_NO3 0x41
+#define PROGRAM_IWA_LOAD 0x42
+#define PROGRAM_IGA_LOAD 0x43
+#define PROGRAM_HAGI_LOAD 0x44
+#define PROGRAM_TE1 0x46
+#define PROGRAM_TE2 0x47
+#define PROGRAM_TE3 0x48
+#define PROGRAM_TE4 0x49
+#define PROGRAM_TE5 0x4A
+#define PROGRAM_TOP_ALT 0x4B
+#define PROGRAM_INVERTEDCASTLE_FLAG 0x20
+#define PROGRAM_ENDING 0xFE
+#define PROGRAM_MEMORYCARD 0xFF
+
+#define LBA_BIN_F_GAME 0x61CE
+#define LBA_BIN_F_GAME2 0x6252
+#define LBA_STAGE_MAD_ART 0x7D6F
+#define LBA_STAGE_MAD_VH 0x7DEF
+#define LBA_STAGE_MAD_BIN 0x7E28
+#define LBA_STAGE_NO0_ART 0x7E5D
+#define LBA_STAGE_NO0_VH 0x7EDD
+#define LBA_STAGE_NO0_BIN 0x7F16
+#define LBA_STAGE_NO3_ART 0x8297
+#define LBA_STAGE_NO3_VH 0x8317
+#define LBA_STAGE_NO3_BIN 0x834F
+#define LBA_STAGE_ST0_ART 0x9044
+#define LBA_STAGE_ST0_VH 0x90C4
+#define LBA_STAGE_ST0_BIN 0x90F9
+#define LBA_STAGE_NP3_ART 0x917F
+#define LBA_STAGE_NP3_VH 0x91FF
+#define LBA_STAGE_NP3_BIN 0x9235
 
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
-typedef void (*UnkFunctionUpdate1)(struct Entity*, u32, struct Entity*);
 
 typedef union {
     s32 val;
@@ -161,7 +259,7 @@ typedef struct Entity {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
-        /* 0xB8 */ UnkFunctionUpdate1 unkFuncB8;
+        /* 0xB8 */ void (*unkFuncB8)(struct Entity*, u32, struct Entity*);
         struct {
             /* 0xB8 */ u8 unk0;
             /* 0xB9 */ u8 unk1;
@@ -522,7 +620,9 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
-// main
+#include "unkstruct.h"
+
+extern s32 D_8003925C;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern u16 D_8003C104[];
@@ -554,100 +654,6 @@ extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
-
-// dra
-#define PAD_COUNT 2
-#define PAD_L2 0x0001
-#define PAD_R2 0x0002
-#define PAD_L1 0x0004
-#define PAD_R1 0x0008
-#define PAD_TRIANGLE 0x0010
-#define PAD_CIRCLE 0x0020
-#define PAD_CROSS 0x0040
-#define PAD_SQUARE 0x0080
-#define PAD_SELECT 0x0100
-#define PAD_L3 0x0200
-#define PAD_R3 0x0400
-#define PAD_START 0x0800
-#define PAD_UP 0x1000
-#define PAD_RIGHT 0x2000
-#define PAD_DOWN 0x4000
-#define PAD_LEFT 0x8000
-
-#define RENDERFLAGS_NOSHADOW 2
-#define PLAYER_ALUCARD 0
-#define PLAYER_RICHTER 1
-#define MAX_GOLD 999999
-#define HEART_VESSEL_INCREASE 5
-#define HEART_VESSEL_RICHTER 30
-#define LIFE_VESSEL_INCREASE 5
-#define FALL_GRAVITY 0x4000
-#define FALL_TERMINAL_VELOCITY 0x60000
-
-#define TOTAL_ENTITY_COUNT 256
-#define MaxEntityCount 32
-
-#define PROGRAM_NO0 0x00
-#define PROGRAM_NO1 0x01
-#define PROGRAM_LIB 0x02
-#define PROGRAM_CAT 0x03
-#define PROGRAM_NO2 0x04
-#define PROGRAM_CHI 0x05
-#define PROGRAM_DAI 0x06
-#define PROGRAM_NP3 0x07
-#define PROGRAM_CEN 0x08
-#define PROGRAM_NO4 0x09
-#define PROGRAM_ARE 0x0A
-#define PROGRAM_TOP 0x0B
-#define PROGRAM_NZ0 0x0C
-#define PROGRAM_NZ1 0x0D
-#define PROGRAM_WRP 0x0E
-#define PROGRAM_NO1_ALT 0x0F
-#define PROGRAM_NO0_ALT 0x10
-#define PROGRAM_DRE 0x12
-#define PROGRAM_BO7 0x16
-#define PROGRAM_MAR 0x17
-#define PROGRAM_BO6 0x18
-#define PROGRAM_BO5 0x19
-#define PROGRAM_BO4 0x1A
-#define PROGRAM_BO3 0x1B
-#define PROGRAM_BO2 0x1C
-#define PROGRAM_BO1 0x1D
-#define PROGRAM_BO0 0x1E
-#define PROGRAM_ST0 0x1F
-#define PROGRAM_MAD 0x40
-#define PROGRAM_NO3 0x41
-#define PROGRAM_IWA_LOAD 0x42
-#define PROGRAM_IGA_LOAD 0x43
-#define PROGRAM_HAGI_LOAD 0x44
-#define PROGRAM_TE1 0x46
-#define PROGRAM_TE2 0x47
-#define PROGRAM_TE3 0x48
-#define PROGRAM_TE4 0x49
-#define PROGRAM_TE5 0x4A
-#define PROGRAM_TOP_ALT 0x4B
-#define PROGRAM_INVERTEDCASTLE_FLAG 0x20
-#define PROGRAM_ENDING 0xFE
-#define PROGRAM_MEMORYCARD 0xFF
-
-#define LBA_BIN_F_GAME 0x61CE
-#define LBA_BIN_F_GAME2 0x6252
-#define LBA_STAGE_MAD_ART 0x7D6F
-#define LBA_STAGE_MAD_VH 0x7DEF
-#define LBA_STAGE_MAD_BIN 0x7E28
-#define LBA_STAGE_NO0_ART 0x7E5D
-#define LBA_STAGE_NO0_VH 0x7EDD
-#define LBA_STAGE_NO0_BIN 0x7F16
-#define LBA_STAGE_NO3_ART 0x8297
-#define LBA_STAGE_NO3_VH 0x8317
-#define LBA_STAGE_NO3_BIN 0x834F
-#define LBA_STAGE_ST0_ART 0x9044
-#define LBA_STAGE_ST0_VH 0x90C4
-#define LBA_STAGE_ST0_BIN 0x90F9
-#define LBA_STAGE_NP3_ART 0x917F
-#define LBA_STAGE_NP3_VH 0x91FF
-#define LBA_STAGE_NP3_BIN 0x9235
-
 extern const char g_strMemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
@@ -852,6 +858,30 @@ extern GameTimer g_GameTimer;
 extern s32 D_80097C98;
 extern s8 D_80097D37;
 extern s32 D_800987B4;
+extern s32 D_800987C8;
 extern s32 D_80098850;
+extern s32 D_80098894;
+
+void PadInit(s32 arg0);
+int VSync(s32);
+s32 rcos(s32);
+s32 rsin(s32);
+s32 SquareRoot0(s32);
+s32 ratan2(s32, s32);
+void* DMACallback(int dma, void (*func)());
+void func_800192DC(s32 arg0, s32 arg1);
+void func_8001C550(s32);
+s32 func_8001D290(s32, s32);
+s32 func_8001D374(s8, s16, s16);
+void func_8001D2E0(s32, s32, s32);
+void func_800202E0(s16);
+void func_80020F44(s16);
+void func_80021174(void);
+void func_80021188(void);
+s32 func_80021350(const char* str, s32, s32);
+s32 func_80021880(s32*, s32, s32);
+s32 func_800219E0(s32);
+void func_80021F6C(s16, s16);
+void func_8002A024(s32, s32);
 
 #endif
