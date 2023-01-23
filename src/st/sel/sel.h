@@ -12,6 +12,11 @@ s16** g_SpriteBanks[]; // g_SpriteBanks
 void* D_8018C404;      // unknown type
 void Update(void);
 void TestCollisions(void);
+void func_801ACBE4(s32 arg0, u16 arg1);
+void func_801AD1D0(void);
+void func_801AD218(void);
+void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
+void func_801B2AFC(u8* imgs, s32 x, s32 y, s32 tge);
 void func_801B9C80(void);
 void InitRoomEntities(s32 objLayoutId);
 void func_801B60D4(void);
@@ -84,6 +89,7 @@ extern u8* D_80180128[];
 extern u8* D_8018012C[];
 extern u8* D_801803BC;
 extern u8* D_801803C0;
+extern u8* D_801803C4; // images
 extern s32 D_80180454[];
 extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
@@ -122,6 +128,7 @@ extern const char D_801AC000[];   // FIFO
 extern const char D_801AC038[];   // "%s timeout:\n"
 extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
+extern s32 D_801BAF48;
 extern u8* D_801BAFD0;
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
