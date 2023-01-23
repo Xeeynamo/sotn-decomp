@@ -761,59 +761,10 @@ extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // D_800739B8 g_EntityArray[8]
 // D_80073F98 g_EntityArray[16]
 // D_800741CC g_EntityArray[19]
+
 // *** ENTITY DIRECT ACCESS PROPERTIES START ***
-extern s16 D_800733DA;  // PLAYER.posX.i.hi
-extern s16 D_800733DE;  // PLAYER.posY.i.hi
-extern s32 D_800733E0;  // PLAYER.accelerationX
-extern s32 D_800733E4;  // PLAYER.accelerationY
-extern s32 D_800733E8;  // PLAYER.unk10
-extern u16 D_800733EC;  // PLAYER.facing
-extern u16 D_800733EE;  // PLAYER.palette
-extern s8 D_800733F0;   // PLAYER.blendMode
-extern u8 D_800733F1;   // PLAYER.unk19
-extern s16 D_800733F6;  // PLAYER.unk1E
-extern u16 D_800733FC;  // PLAYER.zPriority
-extern s16 D_800733FE;  // PLAYER.objectId
-extern u16 D_80073404;  // PLAYER.step
-extern u16 D_80073406;  // PLAYER.unk2E
-extern u16 D_8007340A;  // PLAYER.objectRoomIndex
-extern u16 D_8007341C;  // PLAYER.unk44
-extern s32* D_80073424; // PLAYER.unk4C
-extern s16 D_80073428;  // PLAYER.animationFrameIndex
-extern s16 D_8007342A;  // PLAYER.animationFrameDuration
-extern s16 D_8007342C;  // PLAYER.animationSet
-extern u16 D_8007342E;  // PLAYER.animationFrame
-extern u8 D_80073484;   // PLAYER.unkAC
-// End of Player Character offset = 0x80073494
-
-// Beginning of g_EntityArray[1] offset = 0x80073494
-
-extern s16 D_800734EA; // entity->animationFrame
-extern s32 D_800734F8; // entity->firstPolygonIndex
-extern s8 D_80073510;  // entity->unk7C.U8.unk0
-extern s8 D_80073511;  // entity->unk7C.U8.unk1
-extern s8 D_80073512;  // entity->unk7E
-extern s8 D_80073513;  // entity->unk7F
-
-// End of g_EntityArray[1] offset = 0x80073550
-
-// Beginning of g_EntityArray[2] offset = 0x80073550
-
-extern s16 D_800735A6; // entity->animationFrame
-
-// End of g_EntityArray[2] offset = 0x8007360C
-
-// Beginning of g_EntityArray[3] offset = 0x8007360C
-
-extern s16 D_80073662; // entity->animationFrame
 
 // End of g_EntityArray[3] offset = 0x800736C8
-
-extern Entity D_800736C8; // g_EntityArray[4]
-extern Entity D_80073F98; // g_EntityArray[16]
-extern u16 D_80073FBE;    // g_EntityArray[16].objectId
-extern Entity D_80073FC4; // g_EntityArray[16].step
-extern Entity D_800741CC; // g_EntityArray[19]
 extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 

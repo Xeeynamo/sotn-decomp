@@ -1164,7 +1164,7 @@ void func_8010E3E0(void) {
     // D_80072F68 is part of a struct, the temp isn't needed in that case
     u16* temp = &D_80072F68;
     if (*temp != 0) {
-        func_80106590(&D_80073F98);
+        func_80106590(&g_EntityArray[16]);
         *temp = 0;
     }
 }
@@ -1343,7 +1343,7 @@ void func_8010ED54(u8 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EDB8);
 
 void func_8010FAF4(void) {
-    func_80106590(&D_80073F98);
+    func_80106590(&g_EntityArray[16]);
     D_80072F66 = 0;
 }
 
