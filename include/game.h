@@ -518,7 +518,7 @@ typedef struct {
     /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
-    /* 8003C7A4 */ RoomHeader* unk30;
+    /* 8003C7A4 */ void* unk30;
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)();

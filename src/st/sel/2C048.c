@@ -12,6 +12,36 @@
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
 
+void* g_Cluts[];
+void* g_EntityGfxs[];
+s16** g_SpriteBanks[]; // g_SpriteBanks
+void* D_8018C404;      // unknown type
+void Update(void);
+void TestCollisions(void);
+void func_801B9C80(void);
+void InitRoomEntities(s32 objLayoutId);
+void func_801B60D4(void);
+void func_801B17C8(void);
+
+Overlay g_StageOverlay = {
+    /* 0x00 */ Update,
+    /* 0x04 */ TestCollisions,
+    /* 0x08 */ func_801B9C80,
+    /* 0x0C */ InitRoomEntities,
+    /* 0x10 */ NULL,
+    /* 0x14 */ g_SpriteBanks,
+    /* 0x18 */ g_Cluts,
+    /* 0x1C */ 0x00000000,
+    /* 0x20 */ 0x00000000,
+    /* 0x24 */ g_EntityGfxs,
+    /* 0x28 */ func_801B60D4,
+    /* 0x2C */ 0x00000000,
+    /* 0x30 */ &D_8018C404,
+    /* 0x34 */ 0x00000000,
+    /* 0x38 */ 0x00000000,
+    /* 0x3C */ func_801B17C8,
+};
+
 typedef struct {
     u32 unk0;
     u32 unk4;
@@ -384,7 +414,7 @@ void func_801AEE74(void) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AEED8);
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", Update);
 
 void func_801B17C8(void) {
     switch (D_800978F8) {
@@ -939,9 +969,9 @@ void func_801B3F7C(s32 arg0) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3F94);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B4048);
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", InitRoomEntities);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B410C);
+INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", TestCollisions);
 
 void func_801B4B30(Entity* entity) {
     s32 i;
