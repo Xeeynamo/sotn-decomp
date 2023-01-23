@@ -4124,39 +4124,27 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityUnkId0E);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F420);
-#else
-u8 func_8018F420(s16* arg0, s32 facing) {
-    s16* var_s0_2;
-    s32 facing_;
+u8 func_8018F420(s16* arg0, u8 facing) {
+    u8 ret = 0;
     CollisionResult res;
-    s16 x;
-    s16* var_s0;
-    u16 var_s1;
-    s32 new_var;
-    var_s0 = arg0;
-    facing_ = facing;
-    var_s1 = 0;
-    while (*var_s0 != 0xFF) {
-        var_s1 *= 2;
-        if (facing_ != 0) {
-            x = g_CurrentEntity->posX.i.hi + *var_s0++;
-        } else {
-            x = g_CurrentEntity->posX.i.hi - *var_s0++;
-        }
-        g_api.CheckCollision(x, (s16)(g_CurrentEntity->posY.i.hi + *var_s0++),
-                             &res, 0);
+    s16 posX, posY;
+
+    while (*arg0 != 0xFF) {
+        ret <<= 1;
+
+        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
+                      : (g_CurrentEntity->posX.i.hi - *arg0++);
+        posY = g_CurrentEntity->posY.i.hi + *arg0++;
+
+        g_api.CheckCollision(posX, posY, &res, 0);
+
         if (res.unk0 & 1) {
-            var_s1 |= 1;
-            new_var = 0xFF;
+            ret |= 1;
         }
-        new_var = 0xFF;
     }
 
-    return var_s1;
+    return ret;
 }
-#endif
 
 void func_8018F510(Entity* entity) {
     switch (entity->step) {
@@ -4214,30 +4202,28 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018F838);
-#else
 void func_8018F838(Entity* entity) {
     if (entity->step == 0) {
+        entity->accelerationY = D_80181020[entity->unk94];
+        entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
         entity->animationSet = 2;
-        entity->unk34 = 0x0C002000;
-        entity->accelerationY = D_80181020[entity->unk94];
-        entity->blendMode = 16;
-        entity->step = entity->step + 1;
         entity->animationFrame = D_80181038[entity->subId];
+        entity->blendMode = 0x10;
+        entity->step++;
     } else {
         entity->animationFrameDuration++;
-        entity->posY.val = entity->posY.val - entity->accelerationY;
-        if ((entity->animationFrameDuration & 1) == 0) {
+        entity->posY.val -= entity->accelerationY;
+
+        if (!(entity->animationFrameDuration & 1)) {
             entity->animationFrame++;
         }
-        if (D_8018103C[entity->subId] < entity->animationFrameDuration) {
+
+        if (D_8018103C[entity->subId] < (s32)entity->animationFrameDuration) {
             DestroyEntity(entity);
         }
     }
 }
-#endif
 
 void func_8018F928(Entity* arg0) {
     u16 temp_v0;
