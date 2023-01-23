@@ -1302,18 +1302,18 @@ void func_8010EA54(s32 arg0) {
 #endif
 
 s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity* var_v1 = D_80074C08;
+    Entity* entity = &g_EntityArray[0x20];
     s32 i;
     s32 var_a2;
     s32 ret;
 
     for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
-        if (var_v1[i - 1].objectRoomIndex == 0) {
+        if (entity->objectId == 0) {
             ret++;
         }
 
-        if (var_v1[i].posX.i.lo != 0) {
-            if (var_v1[i].posX.i.lo == arg0) {
+        if (entity->unkB0 != 0) {
+            if (entity->unkB0 == arg0) {
                 var_a2++;
             }
         }
@@ -1321,6 +1321,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
         if (var_a2 >= arg1) {
             return -1;
         }
+        entity++;
     }
 
     return (ret == 0) ? -1 : 0;
