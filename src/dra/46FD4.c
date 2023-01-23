@@ -43,7 +43,7 @@ void func_800E6FD4(void) {
 
         case 2:
             poly = &D_80086FEC[D_8013640C];
-            temp_s0 = (poly->r0 + 1) & 0xFF;
+            temp_s0 = poly->r0 + 1;
             func_80107250(poly, temp_s0);
             if (temp_s0 == 0x60) {
                 ((POLY_GT4*)poly->tag)->pad3 = 8;
@@ -64,7 +64,7 @@ void func_800E6FD4(void) {
 
         case 4:
             poly = &D_80086FEC[D_8013640C];
-            temp_s0 = (poly->r0 - 1) & 0xFF;
+            temp_s0 = poly->r0 - 1;
             func_80107250(poly, temp_s0);
             if (temp_s0 == 0x40) {
 
