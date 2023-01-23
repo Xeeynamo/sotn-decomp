@@ -1,3 +1,4 @@
+g_SpriteBanks = 0x80180040;
 g_pStObjLayout = 0x8018077C;
 PfnEntityUpdates = 0x80180920;
 g_eBreakableInit = 0x80180AAC;
@@ -9,10 +10,10 @@ g_eBreakableBlendModes = 0x80180E90;
 g_stRooms = 0x80183CC4;
 EntityBreakable = 0x801B7A64;
 Random = 0x801C184C;
-UpdateStageEntities = 0x801C187C;
+Update = 0x801C187C;
 EntityNumericDamage = 0x801C2D98;
 CreateEntity = 0x801C343C;
-LoadObjLayout = 0x801C3C98;
+InitRoomEntities = 0x801C3C98;
 SpawnExplosionEntity = 0x801C3EC4;
 EntityRedDoor = 0x801C402C;
 DestroyEntity = 0x801C4C64;

@@ -188,7 +188,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B8E94);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B90BC);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", UpdateStageEntities);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", Update);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B93E8);
 
@@ -229,7 +229,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB2F8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB3F4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", LoadObjLayout);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", InitRoomEntities);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB680);
 

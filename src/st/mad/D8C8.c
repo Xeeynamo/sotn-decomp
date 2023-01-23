@@ -24,7 +24,7 @@ extern u8 D_8003BEE8[];
 extern void (*D_8003C6B0)(s32);
 extern void (*D_8003C6B8)(s32 x, s32 y, CollisionResult*, s32);
 extern void (*D_8003C6D8)(s32);
-extern s32 g_pfnLoadObjLayout; // It's 8003C8C4!
+extern s32 g_pfnInitRoomEntities; // It's 8003C8C4!
 extern Entity* D_8006C26C;
 extern u16 D_80072B3E;
 extern s16 D_80072B42;
@@ -239,12 +239,12 @@ s32 Random(void) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", UpdateStageEntities);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", Update);
 #else
 extern s16 D_801806B4[];
 extern u16 D_80199E54[];
 
-void UpdateStageEntities(void) {
+void Update(void) {
     s16 i;
     Entity* entity;
     s32* unk;
@@ -308,7 +308,7 @@ void UpdateStageEntities(void) {
                     ((u16)(entity->posY.i.hi + 64) <= 352)) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_80096EAC || unk34 & 0x2100 ||
-                        (unk34 & 0x200 && !(g_pfnLoadObjLayout & 3))) {
+                        (unk34 & 0x200 && !(g_pfnInitRoomEntities & 3))) {
                         D_8006C26C = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
@@ -457,9 +457,9 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B7C);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190C78);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", LoadObjLayout);
+INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", InitRoomEntities);
 #else
-void LoadObjLayout(s32 objLayoutId) {
+void InitRoomEntities(s32 objLayoutId) {
     s16 temp_s0;
     u16* pObjLayoutStart;
     LayoutObject* temp_v1;

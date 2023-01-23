@@ -1,3 +1,4 @@
+g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x801804B8;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;
@@ -18,7 +19,7 @@ EntityDraculaFinalForm = 0x801ADD60;
 EntityDraculaMegaFireball = 0x801AEFD8;
 EntityDraculaRainAttack = 0x801AF154;
 Random = 0x801B186C;
-UpdateStageEntities = 0x801B189C;
+Update = 0x801B189C;
 EntityNumericDamage = 0x801B2A3C;
 CreateEntity = 0x801B30E0;
 EntityRedDoor = 0x801B3CD0;

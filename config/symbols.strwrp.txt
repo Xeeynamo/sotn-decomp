@@ -1,2 +1,3 @@
-UpdateStageEntities = 0x8018A198;
+g_SpriteBanks = 0x80180040;
+Update = 0x8018A198;
 func_801951F0 = 0x801951F0;

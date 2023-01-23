@@ -561,9 +561,9 @@ void func_800E451C(void) {
         break;
     case 0x6:
         if (D_8003C734 == 1) {
-            g_api.o.TestEntities();
+            g_api.o.TestCollisions();
         } else {
-            g_pfnLoadObjLayout();
+            g_pfnInitRoomEntities();
         }
         break;
     }

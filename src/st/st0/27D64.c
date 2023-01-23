@@ -607,12 +607,12 @@ s32 Random(void) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", UpdateStageEntities);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", Update);
 #else
 extern s16 D_801815EC[];
 extern u16 D_801C2584[];
 
-void UpdateStageEntities(void) {
+void Update(void) {
     s16 i;
     Entity* entity;
     s32* unk;
