@@ -1,3 +1,4 @@
+g_SpriteBanks = 0x80180040;
 c_GoldPrizes = 0x80181D14;
 c_HeartPrizes = 0x80181DA4;
 Random = 0x801B94D4;

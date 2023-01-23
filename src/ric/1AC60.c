@@ -376,7 +376,7 @@ void func_8015CDE0(s32 arg0) {
     func_8015C908(1);
     func_8015C920(&D_80155488);
     func_8015CA84(0x14000);
-    D_800733E4 = 0;
+    PLAYER.accelerationY = 0;
 }
 
 void func_8015CE7C(void) {

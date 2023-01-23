@@ -4,6 +4,10 @@ typedef enum {
     UNK_ENTITY_2,
     UNK_ENTITY_3,
     UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
     UNK_ENTITY_10 = 0x10
 } EntityTypes;
 

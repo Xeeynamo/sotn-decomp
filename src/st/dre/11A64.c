@@ -233,7 +233,7 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", UpdateStageEntities);
+INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", Update);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801972BC);
 

@@ -507,18 +507,18 @@ typedef struct {
 
 typedef struct {
     /* 8003C774 */ void (*Update)(void);
-    /* 8003C778 */ void (*TestEntities)(void);
+    /* 8003C778 */ void (*TestCollisions)(void);
     /* 8003C77C */ void (*unk08)(void);
-    /* 8003C780 */ void (*LoadObjLayout)(s32 layoutId);
-    /* 8003C784 */ RoomHeader* roomHeaders;
-    /* 8003C788 */ s16** unk14;
-    /* 8003C78C */ s32** unk18;
-    /* 8003C790 */ void* unk1C;  // related to object layout
-    /* 8003C794 */ void** unk20; // related to tiles layout
-    /* 8003C798 */ void** unk24;
+    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
+    /* 8003C784 */ RoomHeader* rooms;
+    /* 8003C788 */ s16** spriteBanks;
+    /* 8003C78C */ s32** cluts;
+    /* 8003C790 */ void* unk1C;       // related to object layout
+    /* 8003C794 */ void** tileLayers; // related to tiles layout
+    /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
-    /* 8003C7A4 */ RoomHeader* unk30;
+    /* 8003C7A4 */ void* unk30;
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)();
@@ -565,7 +565,7 @@ typedef struct {
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void* func_800FE728;
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
-    /* 8003C7D8 */ void* func_800EAF28;
+    /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ void* func_800EDB58;
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
@@ -624,6 +624,7 @@ typedef struct {
 
 extern s32 g_IsTimeAttackUnlocked;
 extern s32 D_8003925C;
+extern s32 g_IsTimeAttackUnlocked;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
@@ -638,7 +639,7 @@ extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
 extern GameApi g_api;
 #ifndef STAGE_MAD
-extern void (*g_pfnLoadObjLayout)(void);
+extern void (*g_pfnInitRoomEntities)(void);
 #endif
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
@@ -729,59 +730,44 @@ extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
-extern s16 D_800733DA;  // PLAYER.posX.i.hi
-extern s16 D_800733DE;  // PLAYER.posY.i.hi
-extern s32 D_800733E0;  // PLAYER.accelerationX
-extern s32 D_800733E4;  // PLAYER.accelerationY
-extern s32 D_800733E8;  // PLAYER.unk10
-extern u16 D_800733EC;  // PLAYER.facing
-extern u16 D_800733EE;  // PLAYER.palette
-extern s8 D_800733F0;   // PLAYER.blendMode
-extern u8 D_800733F1;   // PLAYER.unk19
-extern s16 D_800733F6;  // PLAYER.unk1E
-extern u16 D_800733FC;  // PLAYER.zPriority
-extern s16 D_800733FE;  // PLAYER.objectId
-extern u16 D_80073404;  // PLAYER.step
-extern u16 D_80073406;  // PLAYER.unk2E
-extern u16 D_8007340A;  // PLAYER.objectRoomIndex
-extern u16 D_8007341C;  // PLAYER.unk44
-extern s32* D_80073424; // PLAYER.unk4C
-extern s16 D_80073428;  // PLAYER.animationFrameIndex
-extern s16 D_8007342A;  // PLAYER.animationFrameDuration
-extern s16 D_8007342C;  // PLAYER.animationSet
-extern u16 D_8007342E;  // PLAYER.animationFrame
-extern u8 D_80073484;   // PLAYER.unkAC
-// End of Player Character offset = 0x80073494
+// dictionary of direct accesses
+// g_EntityArray PLAYER
+// D_800733DA PLAYER.posX.i.hi
+// D_800733DE PLAYER.posY.i.hi
+// D_800733E0 PLAYER.accelerationX
+// D_800733E4 PLAYER.accelerationY
+// D_800733E8 PLAYER.unk10
+// D_800733EC PLAYER.facing
+// D_800733EE PLAYER.palette
+// D_800733F0 PLAYER.blendMode
+// D_800733F1 PLAYER.unk19
+// D_800733F6 PLAYER.unk1E
+// D_800733FC PLAYER.zPriority
+// D_800733FE PLAYER.objectId
+// D_80073404 PLAYER.step
+// D_80073406 PLAYER.unk2E
+// D_8007340A PLAYER.objectRoomIndex
+// D_8007341C PLAYER.unk44
+// D_80073424 PLAYER.unk4C
+// D_80073428 PLAYER.animationFrameIndex
+// D_8007342A PLAYER.animationFrameDuration
+// D_8007342C PLAYER.animationSet
+// D_8007342E PLAYER.animationFrame
+// D_80073484 PLAYER.unkAC
+// D_80073494 g_EntityArray[1]
+// D_80073550 g_EntityArray[2]
+// D_8007360C g_EntityArray[3]
+// D_800736C8 g_EntityArray[4]
+// D_80073784 g_EntityArray[5]
+// D_800739B8 g_EntityArray[8]
+// D_80073F98 g_EntityArray[16]
+// D_800741CC g_EntityArray[19]
+// D_80074C08 g_EntityArray[20]
 
-// Beginning of g_EntityArray[1] offset = 0x80073494
-
-extern s16 D_800734EA; // entity->animationFrame
-extern s32 D_800734F8; // entity->firstPolygonIndex
-extern s8 D_80073510;  // entity->unk7C.U8.unk0
-extern s8 D_80073511;  // entity->unk7C.U8.unk1
-extern s8 D_80073512;  // entity->unk7E
-extern s8 D_80073513;  // entity->unk7F
-
-// End of g_EntityArray[1] offset = 0x80073550
-
-// Beginning of g_EntityArray[2] offset = 0x80073550
-
-extern s16 D_800735A6; // entity->animationFrame
-
-// End of g_EntityArray[2] offset = 0x8007360C
-
-// Beginning of g_EntityArray[3] offset = 0x8007360C
-
-extern s16 D_80073662; // entity->animationFrame
-
-// End of g_EntityArray[3] offset = 0x800736C8
-
-extern Entity D_800736C8; // g_EntityArray[4]
-extern Entity D_80073F98; // g_EntityArray[16]
-extern u16 D_80073FBE;    // g_EntityArray[16].objectId
-extern Entity D_80073FC4; // g_EntityArray[16].step
-extern Entity D_800741CC; // g_EntityArray[19]
+// *** ENTITY DIRECT ACCESS PROPERTIES START ***
 extern Entity D_80074C08[];
+// *** ENTITY DIRECT ACCESS PROPERTIES END ***
+
 extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
@@ -826,6 +812,7 @@ extern s32 g_mapProgramId;
 extern s32 D_800974A4;
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
+extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 D_800978F8;
 extern s32 D_80097904;

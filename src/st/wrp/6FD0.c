@@ -11,34 +11,34 @@ typedef struct {
 } WarpCoord;
 
 // *** Overlay exports start ***
-void UpdateStageEntities(void);
-void func_8018861C(void);
+void Update(void);
+void TestCollisions(void);
 void func_80189FB4(LayoutObject*);
 void func_8018A520(s16);
 void func_8018A7AC(void);
 void func_8018CAB0(void);
-void LoadObjLayout(s32 objLayoutId);
+void InitRoomEntities(s32 objLayoutId);
 void func_801916C4(u16);
 void func_80192F40(u8*, u8);
 
-RoomHeader g_stRooms[];
-s16** D_80180040[];
-void* D_801800B4[];
-LayerDef* D_80180168[];
-void* D_801801EC[];
+RoomHeader g_Rooms[];
+s16** g_SpriteBanks[];
+void* g_Cluts[];
+LayerDef* g_TileLayers[];
+void* g_EntityGfxs[];
 void func_80188514(void);
 
 Overlay g_StageOverlay = {
-    /* 0x00 */ UpdateStageEntities,
-    /* 0x04 */ func_8018861C,
+    /* 0x00 */ Update,
+    /* 0x04 */ TestCollisions,
     /* 0x08 */ func_8018A7AC,
-    /* 0x0C */ LoadObjLayout,
-    /* 0x10 */ g_stRooms,
-    /* 0x14 */ D_80180040,
-    /* 0x18 */ D_801800B4,
+    /* 0x0C */ InitRoomEntities,
+    /* 0x10 */ g_Rooms,
+    /* 0x14 */ g_SpriteBanks,
+    /* 0x18 */ g_Cluts,
     /* 0x1C */ NULL,
-    /* 0x20 */ D_80180168,
-    /* 0x24 */ D_801801EC,
+    /* 0x20 */ g_TileLayers,
+    /* 0x24 */ g_EntityGfxs,
     /* 0x28 */ func_80188514,
     /* 0x2C */ 0x00000000,
     /* 0x30 */ 0x00000000,
@@ -53,7 +53,7 @@ TileDefinition D_80182D68[];
 TileDefinition D_80186D78;
 SpriteParts* D_80186D88[];
 
-s16** D_80180040[] = {
+s16** g_SpriteBanks[] = {
     /* 0x040 */ 0x00000000,
     /* 0x044 */ D_80186D88,
     /* 0x048 */ 0x00000000,
@@ -86,7 +86,7 @@ void* D_801800A0[] = {
     /* 0x0AC */ (void*)D_80181D08,
     /* 0x0B0 */ (void*)0xFFFFFFFF,
 };
-void* D_801800B4[] = {
+void* g_Cluts[] = {
     /* 0x0B4 */ D_801800A0,
 };
 
@@ -107,7 +107,7 @@ LayerDef D_80180128 = {D_80182768, &D_80182D68, 0x41990990, 0x1F, 3, 2};
 LayerDef D_80180138 = {D_80182768, &D_80182D68, 0x40564564, 0x1E, 3, 2};
 LayerDef D_80180148 = {D_80182768, &D_80182D68, 0x4147C47C, 0x1D, 3, 2};
 LayerDef D_80180158 = {D_80182768, &D_80182D68, 0x40327327, 0x1C, 3, 2};
-LayerDef* D_80180168[] = {
+LayerDef* g_TileLayers[] = {
     /* 0x168 */ &D_801800C8,
     /* 0x16C */ &D_801800B8,
     /* 0x170 */ &D_801800D8,
@@ -149,7 +149,7 @@ void* D_801801CC[] = {
     /* 0x1E4 */ (void*)D_80181764,
     /* 0x1E8 */ (void*)0xFFFFFFFF,
 };
-void* D_801801EC[] = {
+void* g_EntityGfxs[] = {
     /* 0x1EC */ D_801801B8,
     /* 0x1F0 */ D_801801B8,
     /* 0x1F4 */ D_801801B8,
@@ -1286,7 +1286,7 @@ ObjInit2 D_80181134[] = {
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
 };
 
-RoomHeader g_stRooms[] = {
+RoomHeader g_Rooms[] = {
     {40, 12, 40, 12, {0, 0, 0, 1}},   {37, 21, 37, 21, {1, 0, 0, 2}},
     {59, 17, 59, 17, {2, 0, 0, 3}},   {15, 38, 15, 38, {3, 0, 0, 4}},
     {35, 44, 35, 44, {4, 0, 0, 5}},   {34, 44, 34, 44, {5, 0, 0, 48}},
@@ -1296,7 +1296,7 @@ RoomHeader g_stRooms[] = {
     {35, 21, 35, 21, {30, -1, 0, 0}}, {17, 38, 17, 38, {31, -1, 0, 0}},
     {33, 44, 33, 44, {32, -1, 0, 0}},
 };
-u8 g_stRoomsEndSignature[] = {64, 0, 0, 0};
+u8 g_RoomsEndSignature[] = {64, 0, 0, 0};
 
 LayoutObject D_80181228[] = {
     {-2, -2, 0, 0, 0},
@@ -3134,9 +3134,9 @@ s32 Random(void) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", UpdateStageEntities);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", Update);
 #else
-void UpdateStageEntities(void) {
+void Update(void) {
     s16 i;
     Entity* entity;
     s32* unk;
@@ -3252,7 +3252,7 @@ void func_80188514(void) {
 #endif
 
 // https://decomp.me/scratch/Nq66t
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018861C);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", TestCollisions);
 
 // https://decomp.me/scratch/m0PKE
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
@@ -3414,9 +3414,9 @@ loop_5:
 #endif
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", LoadObjLayout);
+INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", InitRoomEntities);
 #else
-void LoadObjLayout(s32 objLayoutId) {
+void InitRoomEntities(s32 objLayoutId) {
     s16 temp_s0;
     s16 var_a1_2;
     u16* pObjLayoutStart;
