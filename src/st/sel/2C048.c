@@ -969,7 +969,30 @@ void func_801B3F7C(s32 arg0) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801B3F94);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", InitRoomEntities);
+void InitRoomEntities(s32 objLayoutId) {
+    s32 temp_s0 = D_8003C9A4;
+
+    switch (temp_s0) {
+    case 0:
+        if (D_8006C3B0 == 0) {
+            g_IsTimeAttackUnlocked = 1;
+            D_8003C728 = 1;
+            D_8003C100 = 0;
+            D_8003C9A4 = 1;
+        }
+        break;
+    case 1:
+        func_801B9C80();
+        if (D_8003C728 == 0) {
+            g_IsTimeAttackUnlocked = 0;
+            D_8003C100 = 0;
+            func_801B18F4();
+            D_8003C734 = temp_s0;
+            D_8003C9A4 = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", TestCollisions);
 
