@@ -18,7 +18,7 @@ INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_80189E9C);
 
 INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018A168);
 
-INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", UpdateStageEntities);
+INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", Update);
 
 INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018A494);
 

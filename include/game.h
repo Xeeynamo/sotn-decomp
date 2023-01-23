@@ -507,15 +507,15 @@ typedef struct {
 
 typedef struct {
     /* 8003C774 */ void (*Update)(void);
-    /* 8003C778 */ void (*TestEntities)(void);
+    /* 8003C778 */ void (*TestCollisions)(void);
     /* 8003C77C */ void (*unk08)(void);
-    /* 8003C780 */ void (*LoadObjLayout)(s32 layoutId);
-    /* 8003C784 */ RoomHeader* roomHeaders;
-    /* 8003C788 */ s16** unk14;
-    /* 8003C78C */ s32** unk18;
-    /* 8003C790 */ void* unk1C;  // related to object layout
-    /* 8003C794 */ void** unk20; // related to tiles layout
-    /* 8003C798 */ void** unk24;
+    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
+    /* 8003C784 */ RoomHeader* rooms;
+    /* 8003C788 */ s16** spriteBanks;
+    /* 8003C78C */ s32** cluts;
+    /* 8003C790 */ void* unk1C;       // related to object layout
+    /* 8003C794 */ void** tileLayers; // related to tiles layout
+    /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
     /* 8003C7A4 */ RoomHeader* unk30;
@@ -635,7 +635,7 @@ extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
 extern GameApi g_api;
 #ifndef STAGE_MAD
-extern void (*g_pfnLoadObjLayout)(void);
+extern void (*g_pfnInitRoomEntities)(void);
 #endif
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;

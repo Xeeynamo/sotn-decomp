@@ -68,7 +68,7 @@ typedef struct {
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 s32 Random();
-void UpdateStageEntities(void);
+void Update(void);
 void CreateEntity(Entity* entity, LayoutObject* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntityFromIndex(s16 index);

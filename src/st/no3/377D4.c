@@ -226,7 +226,7 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", UpdateStageEntities);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", Update);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1B78);
 
@@ -301,9 +301,9 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3A88);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C3B84);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", LoadObjLayout);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", InitRoomEntities);
 #else
-void LoadObjLayout(s32 objLayoutId) {
+void InitRoomEntities(s32 objLayoutId) {
     s16 temp_s0;
     s16 var_a1_2;
     u16 temp_v1_2;
