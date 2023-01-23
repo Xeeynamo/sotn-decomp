@@ -565,7 +565,7 @@ typedef struct {
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void* func_800FE728;
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
-    /* 8003C7D8 */ void* func_800EAF28;
+    /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ void* func_800EDB58;
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
@@ -729,6 +729,39 @@ extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
+// dictionary of direct accesses
+// g_EntityArray PLAYER
+// D_800733DA PLAYER.posX.i.hi
+// D_800733DE PLAYER.posY.i.hi
+// D_800733E0 PLAYER.accelerationX
+// D_800733E4 PLAYER.accelerationY
+// D_800733E8 PLAYER.unk10
+// D_800733EC PLAYER.facing
+// D_800733EE PLAYER.palette
+// D_800733F0 PLAYER.blendMode
+// D_800733F1 PLAYER.unk19
+// D_800733F6 PLAYER.unk1E
+// D_800733FC PLAYER.zPriority
+// D_800733FE PLAYER.objectId
+// D_80073404 PLAYER.step
+// D_80073406 PLAYER.unk2E
+// D_8007340A PLAYER.objectRoomIndex
+// D_8007341C PLAYER.unk44
+// D_80073424 PLAYER.unk4C
+// D_80073428 PLAYER.animationFrameIndex
+// D_8007342A PLAYER.animationFrameDuration
+// D_8007342C PLAYER.animationSet
+// D_8007342E PLAYER.animationFrame
+// D_80073484 PLAYER.unkAC
+// D_80073494 g_EntityArray[1]
+// D_80073550 g_EntityArray[2]
+// D_8007360C g_EntityArray[3]
+// D_800736C8 g_EntityArray[4]
+// D_80073784 g_EntityArray[5]
+// D_800739B8 g_EntityArray[8]
+// D_80073F98 g_EntityArray[16]
+// D_800741CC g_EntityArray[19]
+// *** ENTITY DIRECT ACCESS PROPERTIES START ***
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
 extern s16 D_800733DE;  // PLAYER.posY.i.hi
 extern s32 D_800733E0;  // PLAYER.accelerationX
@@ -782,6 +815,8 @@ extern u16 D_80073FBE;    // g_EntityArray[16].objectId
 extern Entity D_80073FC4; // g_EntityArray[16].step
 extern Entity D_800741CC; // g_EntityArray[19]
 extern Entity D_80074C08[];
+// *** ENTITY DIRECT ACCESS PROPERTIES END ***
+
 extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
@@ -826,6 +861,7 @@ extern s32 g_mapProgramId;
 extern s32 D_800974A4;
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
+extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 D_800978F8;
 extern s32 D_80097904;
