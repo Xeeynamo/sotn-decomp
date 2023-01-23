@@ -761,10 +761,9 @@ extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // D_800739B8 g_EntityArray[8]
 // D_80073F98 g_EntityArray[16]
 // D_800741CC g_EntityArray[19]
+// D_80074C08 g_EntityArray[20]
 
 // *** ENTITY DIRECT ACCESS PROPERTIES START ***
-
-// End of g_EntityArray[3] offset = 0x800736C8
 extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
