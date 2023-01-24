@@ -6,6 +6,8 @@
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
 
+extern u8* D_801803B0;
+extern u8* D_801803B4;
 void* g_Cluts[];
 void* g_EntityGfxs[];
 s16** g_SpriteBanks[]; // g_SpriteBanks
