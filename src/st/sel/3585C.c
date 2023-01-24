@@ -8,34 +8,31 @@ extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
 
 void func_801B585C(u16 arg0) {
-    int new_var;
-    Entity* e = &g_EntityArray[5];
-    Entity* new_var2;
-    u16 var_v0;
-    switch (D_800737B0) {
+    Entity* e = &g_EntityArray[UNK_ENTITY_5];
+
+    switch (g_EntityArray[UNK_ENTITY_5].step) {
     case 0:
         e->animationSet = 1;
         e->posY.i.hi = 0x9F;
         e->zPriority = 0xC0;
         e->animationFrame = 0;
         e->unk5A = 0;
-        (*e).unk80.entityPtr = 0;
+        e->unk80.entityPtr = 0;
         e->palette = 0x8100;
-        var_v0 = (e->step = e->step + 1);
+        e->step++;
         break;
 
     case 1:
         AnimateEntity(D_80180504, e);
         if (D_801BC3E8 & 4) {
-            var_v0 = e->step + 1;
-            e->step = var_v0;
+            e->step++;
             break;
         }
         break;
 
     case 2:
         AnimateEntity(D_80180504, e);
-        *((s32*)(&e->unk80.modeS32)) += 0x18000;
+        e->unk80.modeS32 += 0x18000;
         if (e->unk80.modeS16.unk2 >= 0x49) {
             func_801B4B9C(e, 3);
         }
@@ -55,20 +52,18 @@ void func_801B585C(u16 arg0) {
         break;
 
     case 5:
-        new_var2 = e;
         e->facing = 1;
-        if (!(AnimateEntity(D_80180528, new_var2) & 0xFF)) {
+        if (!(AnimateEntity(D_80180528, e) & 0xFF)) {
             func_801B4B9C(e, 6);
         }
-        new_var = 0xFFFE8000;
-        *((s32*)(&e->unk80.modeS32)) += new_var;
+        e->unk80.modeS32 += 0xFFFE8000;
         return;
 
     case 6:
         AnimateEntity(D_80180504, e);
-        *((s32*)(&e->unk80.modeS32)) += 0xFFFE8000;
-        if (arg0 && e->unk80.modeS16.unk2 < 0x20 ||
-            !arg0 && e->unk80.modeS16.unk2 < -0x10) {
+        e->unk80.modeS32 += 0xFFFE8000;
+        if ((arg0 && (e->unk80.modeS16.unk2 < 0x20)) ||
+            (!(arg0) && (e->unk80.modeS16.unk2 < -0x10))) {
             e->step = 0xFF;
         }
         break;

@@ -1227,6 +1227,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80195F64);
 
 void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
+
     if (entity->step == 0) {
         InitializeEntity(&D_80180508);
         entity->palette = 0x8170;
@@ -1249,7 +1250,7 @@ void EntityIntenseExplosion(Entity* entity) {
         entity->animationFrameDuration++;
         entity->posY.val -= 0x4000;
 
-        if ((entity->animationFrameDuration & 1) == 0) {
+        if (!(entity->animationFrameDuration & 1)) {
             entity->animationFrame++;
         }
 
@@ -1346,6 +1347,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* obj = &D_801810F4[entity->subId];
+
     if (entity->step == 0) {
         InitializeEntity(D_80180544);
         entity->animationSet = obj->animationSet;

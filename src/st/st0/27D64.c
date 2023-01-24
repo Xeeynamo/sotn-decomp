@@ -1125,6 +1125,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
 extern ObjInit2 D_80181FE8[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181FE8[entity->subId];
+    
     if (entity->step == 0) {
         InitializeEntity(D_801805BC);
         entity->animationSet = objInit->animationSet;
