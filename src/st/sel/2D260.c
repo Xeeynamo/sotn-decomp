@@ -86,11 +86,11 @@ void func_801AD490(void) {
     DrawString16x16("destiny", 232, 64, 1);
 
     for (i = 0; i < 5; i++) {
-        POLY_GT4* temp_v0 = &D_80086FEC[D_801BAF18[i + 1].unk0];
+        POLY_GT4* poly = &D_80086FEC[D_801BAF18[i + 1].unk0];
         if (i == D_801D6B0C) {
-            temp_v0->clut = 0x203;
+            poly->clut = 0x203;
         } else {
-            temp_v0->clut = 0x200;
+            poly->clut = 0x200;
         }
     }
 }
