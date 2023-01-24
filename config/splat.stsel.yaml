@@ -27,8 +27,7 @@ segments:
       - [0x0, .data, 2C048]
       - [0x40, data]
       - [0x176C0, rodata]
-      - [0x276C0, .rodata, func_801AD260]
-      - [0x276D8, .rodata, 2D490]
+      - [0x276C0, .rodata, 2D260]
       - [0x276F0, rodata]
       - [0x27AD0, rodata] # Update function
       - [0x27AE4, rodata] # func_801B2E5C, func_801B3164, func_801B3A94
@@ -43,8 +42,7 @@ segments:
       - [0x27D90, rodata] # func_801B8A8C
       - [0x27DD4, rodata]
       - [0x2C048, c, 2C048]
-      - [0x2D260, c, func_801AD260]
-      - [0x2D490, c, 2D490]
+      - [0x2D260, c, 2D260]
       - [0x3585C, c, 3585C]
       - [0x360D4, c, func_801B60D4]
       - [0x3642C, c, 3642C]
