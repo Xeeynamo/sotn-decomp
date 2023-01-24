@@ -49,6 +49,9 @@ func main() {
 		inPath := os.Args[3]
 		fileListPath := os.Args[4]
 		err = makeDisc(cuePath, inPath, fileListPath)
+	default:
+		fmt.Printf("Invalid command: %s\n\n", cmd)
+		printHelp()
 	}
 
 	if err != nil {
