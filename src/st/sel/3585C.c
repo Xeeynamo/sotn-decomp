@@ -10,7 +10,7 @@ extern s32 D_801BC3E8;
 void func_801B585C(u16 arg0) {
     Entity* e = &g_EntityArray[UNK_ENTITY_5];
 
-    switch (g_EntityArray[UNK_ENTITY_5].step) {
+    switch (e->step) {
     case 0:
         e->animationSet = 1;
         e->posY.i.hi = 0x9F;
