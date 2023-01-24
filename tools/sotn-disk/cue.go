@@ -103,6 +103,10 @@ func parseTracks(cuePath string) ([]cueTrack, error) {
 		}
 	}
 
+	if track != nil {
+		tracks = append(tracks, *track)
+	}
+
 	return tracks, nil
 }
 
