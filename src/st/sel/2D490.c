@@ -830,7 +830,3 @@ void func_801B5548(void) {
 }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D490", func_801B55C8);
-
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D490", func_801B585C);
-
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D490", func_801B5A7C);

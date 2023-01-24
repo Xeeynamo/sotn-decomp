@@ -1,5 +1,7 @@
 #include "sel.h"
 
+void func_801B5A7C(void);
+
 void func_801B60D4(void) {
     Entity* ent;
     Entity* ent4;
