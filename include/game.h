@@ -771,6 +771,7 @@ extern Entity D_80074C08[];
 extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
+extern Entity D_8007C0D8[];
 extern Entity D_8007D858[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
