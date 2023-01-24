@@ -26,6 +26,7 @@ AllocEntity = 0x801C54D4;
 InitializeEntity = 0x801C5974;
 EntityDummy = 0x801C5A70;
 ReplaceBreakableWithItemDrop = 0x801C605C;
+CollectHeartVessel = 0x801C6568;
 EntityPriceDrop = 0x801C6684;
 EntityExplosion = 0x801C6EF8;
 EntityInventoryDrop = 0x801C7098;
