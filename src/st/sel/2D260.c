@@ -778,7 +778,7 @@ void InitRoomEntities(s32 objLayoutId) {
             D_8003C9A4 = 0;
         }
         break;
-    
+
     default:
         break;
     }
