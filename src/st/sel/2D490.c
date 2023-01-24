@@ -1,6 +1,30 @@
 #include "sel.h"
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D490", func_801AD490);
+extern const char D_801A76D8[];
+extern const char D_801A76E0[];
+extern const char D_801A76E8[];
+
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D490", func_801AD490);
+// #else
+void func_801AD490(void) {
+    s32 i;
+    func_801AD260(4);
+    func_801B2AFC(D_801803A8, 0x34, 0xBC, 1);
+    func_801B2AFC(D_801803AC, 0x34, 0xCC, 1);
+    func_801B29C0(D_801A76D8, 0xF0, 0x20, 1);
+    func_801B29C0(D_801A76E0, 0x100, 0x30, 1);
+    func_801B29C0(D_801A76E8, 0xE8, 0x40, 1);
+    for (i = 0; i < 5; i++) {
+        POLY_GT4* temp_v0 = &D_80086FEC[D_801BAF18[i + 1].unk0];
+        if (i == D_801D6B0C) {
+            temp_v0->clut = 0x203;
+        } else {
+            temp_v0->clut = 0x200;
+        }
+    }
+}
+// #endif
 
 void func_801AD590(void) {
     if (D_80097494 & 0x6000) {
