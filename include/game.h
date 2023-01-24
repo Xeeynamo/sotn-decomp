@@ -597,7 +597,7 @@ typedef struct {
     /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
     /* 8003C850 */ void* D_800A8720;
     /* 8003C854 */ void* func_800FF7B8;
-    /* 8003C858 */ void* func_80134714;
+    /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
