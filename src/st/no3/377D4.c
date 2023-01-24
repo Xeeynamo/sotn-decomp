@@ -1272,7 +1272,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80182764[entity->subId];
-    
+
     if (entity->step == 0) {
         InitializeEntity(D_80180B00);
         entity->animationSet = objInit->animationSet;
