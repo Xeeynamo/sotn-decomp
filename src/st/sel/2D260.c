@@ -767,6 +767,7 @@ void InitRoomEntities(s32 objLayoutId) {
             D_8003C9A4 = 1;
         }
         break;
+
     case 1:
         func_801B9C80();
         if (D_8003C728 == 0) {
@@ -776,6 +777,9 @@ void InitRoomEntities(s32 objLayoutId) {
             D_8003C734 = temp_s0;
             D_8003C9A4 = 0;
         }
+        break;
+    
+    default:
         break;
     }
 }
@@ -840,13 +844,14 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801B4C68);
 
 void func_801B4D78(void) {
-    Entity* e = &g_EntityArray[3];
+    Entity* e = &g_EntityArray[UNK_ENTITY_3];
+
     if (e->step == 0) {
         e->animationSet = -0x7FFF;
         e->animationFrame = 1;
         e->palette = 0x200;
         e->unk80.modeS32 = 0x5C0000;
-        e->posY.i.hi = 0xD0;
+        e->posY.i.hi = 208;
         e->zPriority = 0x80;
         e->step = 1;
     }
@@ -859,7 +864,8 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801B4FFC);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801B519C);
 
 void func_801B5350(void) {
-    Entity* entity = &g_EntityArray[5];
+    Entity* entity = &g_EntityArray[UNK_ENTITY_5];
+
     switch (entity->step) {
     case 0:
         entity->animationSet = 1;
@@ -871,27 +877,33 @@ void func_801B5350(void) {
         entity->palette = 0x8100;
         entity->step = 1;
         break;
+
     case 1:
         entity->animationFrame = 0x8E;
         break;
+
     case 2:
         if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
             func_801B4B9C(entity, 3);
         }
         entity->unk80.modeS32 += 0xFFFE8000;
         break;
+
     case 3:
         AnimateEntity(D_80180504, entity);
         entity->unk80.modeS32 += 0xFFFE8000;
         if (entity->unk80.modeS16.unk2 < 0x40) {
-            entity->step = 0xFF;
+            entity->step = 255;
         }
+        break;
+    default:
         break;
     }
 }
 
 void func_801B54C8(void) {
-    Entity* e = &g_EntityArray[7];
+    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+
     if (e->step == 0) {
         e->animationSet = -0x7FFE;
         e->animationFrame = 0x26;
@@ -906,7 +918,8 @@ void func_801B54C8(void) {
 }
 
 void func_801B5548(void) {
-    Entity* e = &g_EntityArray[7];
+    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+
     if (e->step == 0) {
         e->animationSet = -0x7FFE;
         e->animationFrame = 7;
