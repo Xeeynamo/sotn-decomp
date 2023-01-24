@@ -166,10 +166,10 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AEB74);
 void func_801AECA0(void) {
     s32 i = 0;
     s32 x;
-    s32 y = 0x100;
-    s32 w = 0x10;
-    s32 h = 0x30;
-    s32 xnext = 0x180;
+    s32 y = 256;
+    s32 w = 16;
+    s32 h = 48;
+    s32 xnext = 384;
     u32* pix = D_801822E4;
 
     for (; i < 0x10; i++) {
