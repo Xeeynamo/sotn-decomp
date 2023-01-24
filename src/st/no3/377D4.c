@@ -13,7 +13,7 @@ extern u8* D_80180850;
 extern u16 D_80180AC4[];
 extern u16 D_80180AE8[];
 extern u16 D_80180B00[];
-extern u16 D_80180B18;
+extern u16 D_80180B18[];
 extern ObjInit2 D_80180BFC[];
 extern u16 D_8018139C[];
 extern u16 D_8018139E[];
@@ -182,12 +182,11 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BB548);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BBB8C);
 
-extern u16 D_80180B18;
 extern u8 D_80181390;
 
 void func_801BBDC0(Entity* arg0) {
     if (arg0->step == 0) {
-        InitializeEntity(&D_80180B18);
+        InitializeEntity(D_80180B18);
         arg0->zPriority = 0x2A;
         arg0->unk34 &= 0xF7FFFFFF;
         arg0->facing = Random() & 1;
@@ -198,22 +197,19 @@ void func_801BBDC0(Entity* arg0) {
     }
 }
 
-void func_801BBE70(Entity* arg0) {
-    u16 temp_v0;
-
-    if (arg0->step == 0) {
-        InitializeEntity(&D_80180B18);
-        arg0->zPriority = 0x29;
-        arg0->unk34 &= 0xF7FFFFFF;
-        arg0->animationFrame = arg0->subId + 0x22;
-        arg0->posX.i.hi = D_8018139C[arg0->subId << 1];
-        arg0->posY.i.hi = D_8018139E[arg0->subId << 1];
-        arg0->unk80.modeS16.unk0 = 5;
+void func_801BBE70(Entity* entity) {
+    if (entity->step == 0) {
+        InitializeEntity(D_80180B18);
+        entity->zPriority = 0x29;
+        entity->unk34 &= 0xF7FFFFFF;
+        entity->animationFrame = entity->subId + 0x22;
+        entity->posX.i.hi = D_8018139C[entity->subId << 1];
+        entity->posY.i.hi = D_8018139E[entity->subId << 1];
+        entity->unk80.modeS16.unk0 = 5;
     }
-    temp_v0 = arg0->unk80.modeS16.unk0 - 1;
-    arg0->unk80.modeS16.unk0 = temp_v0;
-    if ((temp_v0 << 0x10) == 0) {
-        DestroyEntity(arg0);
+    entity->unk80.modeS16.unk0--;
+    if ((entity->unk80.modeS16.unk0 << 0x10) == 0) {
+        DestroyEntity(entity);
     }
 }
 
