@@ -62,8 +62,8 @@ void func_801B585C(u16 arg0) {
     case 6:
         AnimateEntity(D_80180504, e);
         e->unk80.modeS32 += 0xFFFE8000;
-        if ((arg0 && (e->unk80.modeS16.unk2 < 0x20)) ||
-            (!(arg0) && (e->unk80.modeS16.unk2 < -0x10))) {
+        if (arg0 && e->unk80.modeS16.unk2 < 0x20 ||
+            !arg0 && e->unk80.modeS16.unk2 < -0x10) {
             e->step = 0xFF;
         }
         break;
