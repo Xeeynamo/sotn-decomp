@@ -135,7 +135,21 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BB548);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BBB8C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BBDC0);
+extern u16 D_80180B18;
+extern u8 D_80181390;
+
+void func_801BBDC0(Entity* arg0) {
+    if (arg0->step == 0) {
+        InitializeEntity(&D_80180B18);
+        arg0->zPriority = 0x2A;
+        arg0->unk34 &= 0xF7FFFFFF;
+        arg0->facing = Random() & 1;
+        g_api.func_80134714(0x665, 0x40, (arg0->posX.i.hi >> 0x4) - 8);
+    }
+    if (AnimateEntity(&D_80181390, arg0) == 0) {
+        DestroyEntity(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BBE70);
 
@@ -640,7 +654,28 @@ void func_801C58C4(u8 state) {
     g_CurrentEntity->animationFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C58E0);
+s32 func_801CAD28(s32);
+
+void func_801C58E0(u16 arg0, u16 arg1) {
+    Entity* entity;
+
+    if (arg1 != 0) {
+        func_801CAD28(arg1);
+    }
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+
+    entity = g_CurrentEntity;
+    entity->unk19 = 0;
+    entity->objectId = 2;
+    entity->pfnUpdate = EntityExplosion;
+    entity->subId = arg0;
+    entity->animationFrame = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->unk2E = 0;
+}
 
 void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
@@ -755,7 +790,20 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6374);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6450);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6568);
+void CollectHeartVessel(void) {
+    if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_playerHeart->current += HEART_VESSEL_RICHTER;
+
+        if (g_playerHeart->max < g_playerHeart->current) {
+            g_playerHeart->current = g_playerHeart->max;
+        }
+    } else {
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 void func_801C660C(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -769,7 +817,36 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityPriceDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityExplosion);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C6FF4);
+void func_801C6FF4(Entity* entity, s32 renderFlags) {
+    POLY_GT4* poly;
+    s16 left, top, right, bottom;
+
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+
+    left = entity->posX.i.hi - 7;
+    right = entity->posX.i.hi + 7;
+    poly->x2 = left;
+    poly->x0 = left;
+    poly->x3 = right;
+    poly->x1 = right;
+
+    top = entity->posY.i.hi - 7;
+    bottom = entity->posY.i.hi + 7;
+    poly->y1 = top;
+    poly->y0 = top;
+    poly->y3 = bottom;
+    poly->y2 = bottom;
+
+    if (renderFlags & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityInventoryDrop);
 
@@ -983,7 +1060,23 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D4168);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D423C);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D4668);
+extern u16 D_80180B48;
+extern u8 D_801839A8;
+
+void func_801D4668(Entity* arg0) {
+    if (arg0->step == 0) {
+        InitializeEntity(&D_80180B48);
+        arg0->animationFrame = 0;
+        arg0->unk3C = 0;
+        arg0->unk34 |= 0x2000;
+        arg0->zPriority += 4;
+    }
+    MoveEntity();
+    arg0->accelerationY += 0x2800;
+    if (AnimateEntity(&D_801839A8, arg0) == 0) {
+        DestroyEntity(arg0);
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D4700);
 
