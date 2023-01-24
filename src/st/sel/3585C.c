@@ -17,7 +17,7 @@ void func_801B585C(u16 arg0) {
         e->zPriority = 0xC0;
         e->animationFrame = 0;
         e->unk5A = 0;
-        e->unk80.entityPtr = 0;
+        e->unk80.entityPtr = NULL;
         e->palette = 0x8100;
         e->step++;
         break;
