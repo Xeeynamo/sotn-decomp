@@ -119,6 +119,7 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AD968);
 
 void func_801ADC3C(void) {
     s32* new_var = &D_801BCC84;
+    
     if (*new_var >= 0 || D_801BD02C >= 0) {
         u16* tmp = &D_80097496;
         if (*tmp & 0x2000) {
