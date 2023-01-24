@@ -7,10 +7,6 @@ extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
 
-// almost matching but there is an inverted condition
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/3585C", func_801B585C);
-#else
 void func_801B585C(u16 arg0) {
     int new_var;
     Entity* e = &g_EntityArray[5];
@@ -71,20 +67,13 @@ void func_801B585C(u16 arg0) {
     case 6:
         AnimateEntity(D_80180504, e);
         *((s32*)(&e->unk80.modeS32)) += 0xFFFE8000;
-        if (arg0) {
-            new_var = e->unk80.modeS16.unk2 < 0x20;
-            if (new_var) {
-                e->step = 0xFF;
-            }
-        } else {
-            if (e->unk80.modeS16.unk2 < (-0x10)) {
-                e->step = 0xFF;
-            }
+        if (arg0 && e->unk80.modeS16.unk2 < 0x20 ||
+            !arg0 && e->unk80.modeS16.unk2 < -0x10) {
+            e->step = 0xFF;
         }
         break;
     }
 }
-#endif
 
 void func_801B5350(void);
 void func_801B54C8(void);
