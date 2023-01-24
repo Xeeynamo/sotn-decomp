@@ -18,37 +18,37 @@ void DrawNavigationTips(NavigationTips mode) {
     poly = &D_80086FEC[D_801BAF48];
     switch (mode) {
     case Tips_Generic:
-        func_801B2670(poly, 0x20, 0xB0, 0x10, 0x10);
+        func_801B2670(poly, 32, 176, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC0, 0x10, 0x10);
+        func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xD0, 0x10, 0x10);
+        func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_Input:
-        func_801B2670(poly, 0x120, 0x20, 0x10, 0x10);
+        func_801B2670(poly, 288, 32, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x120, 0x30, 0x10, 0x10);
+        func_801B2670(poly, 288, 48, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x120, 0x40, 0x10, 0x10);
+        func_801B2670(poly, 288, 64, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x120, 0x50, 0x10, 0x10);
+        func_801B2670(poly, 288, 80, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_YesNo:
     case Tips_NoYes:
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC0, 0x10, 0x10);
+        func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xD0, 0x10, 0x10);
+        func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         if (mode == Tips_YesNo) {
             func_801AD1D0();
@@ -59,16 +59,16 @@ void DrawNavigationTips(NavigationTips mode) {
 
     case Tips_Confirm:
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC0, 0x10, 0x10);
+        func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        DrawImages8x8(*imgs, 0x34, 0xC4, 1);
+        DrawImages8x8(*imgs, 52, 196, 1);
         break;
 
     case Tips_MenuNavigation:
-        func_801B2670(poly, 0x20, 0xB8, 0x10, 0x10);
+        func_801B2670(poly, 32, 184, 16, 16);
         poly->pad3 = 0;
-        poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC8, 0x10, 0x10);
+        poly = (POLY_GT4*)poly->tag;
+        func_801B2670(poly, 32, 200, 16, 16);
         poly->pad3 = 0;
         break;
     }
