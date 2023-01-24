@@ -16,7 +16,8 @@ void func_801ACBE4(s32 arg0, u16 arg1);
 void func_801AD1D0(void);
 void func_801AD218(void);
 void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
-void func_801B2AFC(u8* imgs, s32 x, s32 y, s32 tge);
+void DrawString16x16(const char* str, s32 x, s32 y, s32 tga);
+void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge);
 void func_801B9C80(void);
 void InitRoomEntities(s32 objLayoutId);
 void func_801B60D4(void);
@@ -94,6 +95,8 @@ typedef struct {
 
 extern u8* D_80180128[];
 extern u8* D_8018012C[];
+extern u8* D_801803A8;
+extern u8* D_801803AC;
 extern u8* D_801803BC;
 extern u8* D_801803C0;
 extern u8* D_801803C4; // images

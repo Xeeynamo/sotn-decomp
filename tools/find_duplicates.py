@@ -405,10 +405,7 @@ def output_match_dict(match_dict, number_decompiled_duplicates, number_undecompi
     out_file = open(datetime.today().strftime(
         '%Y-%m-%d-%H-%M-%S') + "_all_matches.txt", "w+")
 
-    out_file.write("Number of s-files: " + str(len(s_files)) + "\n"
-                   "Number of checked s-files: " +
-                   str(round(number_checked_files)) + "\n"
-                   "Number of decompiled duplicates found: " +
+    out_file.write("Number of decompiled duplicates found: " +
                    str(number_decompiled_duplicates) + "\n"
                    "Number of undecompiled duplicates found: " +
                    str(number_undecompiled_duplicates) + "\n"
