@@ -105,16 +105,16 @@ void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
 
     s32* new_var2 = &D_801BC958[arg0 * 0xEA];
     s32 idx = new_var2[arg1] * 2;
-    func_801B2AFC(D_80180128[idx], x, y + row1y, tge);
-    func_801B2AFC(D_8018012C[idx], x, y + row2y, tge);
+    DrawImages8x8(D_80180128[idx], x, y + row1y, tge);
+    DrawImages8x8(D_8018012C[idx], x, y + row2y, tge);
 }
 
 void func_801AD1D0(void) {
-    func_801B2AFC(D_801803BC, 52, 196, 1);
-    func_801B2AFC(D_801803C0, 52, 212, 1);
+    DrawImages8x8(D_801803BC, 52, 196, 1);
+    DrawImages8x8(D_801803C0, 52, 212, 1);
 }
 
 void func_801AD218(void) {
-    func_801B2AFC(D_801803C0, 52, 196, 1);
-    func_801B2AFC(D_801803BC, 52, 212, 1);
+    DrawImages8x8(D_801803C0, 52, 196, 1);
+    DrawImages8x8(D_801803BC, 52, 212, 1);
 }
