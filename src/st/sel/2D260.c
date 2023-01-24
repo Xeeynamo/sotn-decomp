@@ -16,7 +16,7 @@ void DrawNavigationTips(NavigationTips mode) {
     func_801ACBE4(6, 8);
     imgs = &D_801803C4;
     poly = &D_80086FEC[D_801BAF48];
-    
+
     switch (mode) {
     case Tips_Generic:
         func_801B2670(poly, 32, 176, 16, 16);
@@ -79,11 +79,12 @@ void func_801AD490(void) {
     s32 i;
 
     DrawNavigationTips(Tips_MenuNavigation);
-    DrawImages8x8(D_801803A8 /* "select" */, 0x34, 0xBC, 1);
-    DrawImages8x8(D_801803AC /* "start" */, 0x34, 0xCC, 1);
-    DrawString16x16("select", 0xF0, 0x20, 1);
-    DrawString16x16("your", 0x100, 0x30, 1);
-    DrawString16x16("destiny", 0xE8, 0x40, 1);
+    DrawImages8x8(D_801803A8 /* "select" */, 52, 188, 1);
+    DrawImages8x8(D_801803AC /* "start" */, 52, 204, 1);
+    DrawString16x16("select", 240, 32, 1);
+    DrawString16x16("your", 256, 48, 1);
+    DrawString16x16("destiny", 232, 64, 1);
+
     for (i = 0; i < 5; i++) {
         POLY_GT4* temp_v0 = &D_80086FEC[D_801BAF18[i + 1].unk0];
         if (i == D_801D6B0C) {
