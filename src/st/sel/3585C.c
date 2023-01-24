@@ -26,7 +26,6 @@ void func_801B585C(u16 arg0) {
         AnimateEntity(D_80180504, e);
         if (D_801BC3E8 & 4) {
             e->step++;
-            break;
         }
         break;
 
