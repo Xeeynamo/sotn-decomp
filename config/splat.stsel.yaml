@@ -35,8 +35,7 @@ segments:
       - [0x27B4C, rodata] # func_801B3A94, TestCollision
       - [0x27B98, rodata] # TestCollision
       - [0x27BD8, rodata] # func_801B55C8
-      - [0x27BF8, rodata] # func_801B585C
-      - [0x27C18, .rodata, 3585C]
+      - [0x27BF8, .rodata, 3585C]
       - [0x27CD4, rodata] # func_801B675C
       - [0x27CF4, rodata] # func_801B69F8
       - [0x27D78, rodata] # func_801B8518, func_801B88F4
