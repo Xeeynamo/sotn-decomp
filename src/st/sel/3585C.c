@@ -57,7 +57,7 @@ void func_801B585C(u16 arg0) {
             func_801B4B9C(e, 6);
         }
         e->unk80.modeS32 += 0xFFFE8000;
-        return;
+        break;
 
     case 6:
         AnimateEntity(D_80180504, e);
