@@ -16,7 +16,7 @@ void DrawNavigationTips(NavigationTips mode) {
     func_801ACBE4(6, 8);
     imgs = &D_801803C4;
     poly = &D_80086FEC[D_801BAF48];
-    
+
     switch (mode) {
     case Tips_Generic:
         func_801B2670(poly, 32, 176, 16, 16);
