@@ -1272,7 +1272,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80182764[entity->subId];
-    
+
     if (entity->step == 0) {
         InitializeEntity(D_80180B00);
         entity->animationSet = objInit->animationSet;
@@ -1471,7 +1471,7 @@ void func_801D59D0(void) {
             }
         }
     } else {
-        g_CurrentEntity->unk7C.U8.unk0 = (s8)g_CurrentEntity->unk7C.U8.unk0 - 1;
+        g_CurrentEntity->unk7C.U8.unk0--;
     }
 }
 

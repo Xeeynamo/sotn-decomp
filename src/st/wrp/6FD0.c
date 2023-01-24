@@ -4331,7 +4331,7 @@ void func_801903C8(Entity* entity) {
         entity->step++;
     } else {
         MoveEntity();
-        if (AnimateEntity(D_8018104C, entity) == 0) {
+        if (!AnimateEntity(D_8018104C, entity)) {
             DestroyEntity(entity);
         }
     }
