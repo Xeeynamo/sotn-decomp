@@ -77,6 +77,9 @@
 void EnterCriticalSection(void);
 void ExitCriticalSection(void);
 
+long _card_info(long chan);
+long _card_clear(long chan);
+long _card_load(long chan);
 void InitCARD(long val);
 long StartCARD(void);
 
