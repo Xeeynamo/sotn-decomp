@@ -46,13 +46,16 @@ segments:
       - [0x27CD4, rodata]
       - [0x27CF4, rodata]
       - [0x27D14, rodata]
-      - [0x27D90, rodata]
-      - [0x27DA8, rodata]
-      - [0x27DC0, rodata]
+      - [0x27D90, rodata] # func_801B8A8C
+      - [0x27DA8, rodata] # func_801B8A8C
+      - [0x27DC0, rodata] # func_801B8A8C
+      - [0x27DD4, rodata]
       - [0x2C048, c, 2C048]
       - [0x2D260, c, func_801AD260]
       - [0x2D490, c, 2D490]
       - [0x360D4, c, func_801B60D4]
       - [0x3642C, c, 3642C]
+      - [0x38A8C, c, func_801B8A8C]
+      - [0x38D24, c, 38D24]
       - [0x3AEE4, sbss]
   - [0x56B28]

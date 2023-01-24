@@ -54,7 +54,7 @@ typedef struct {
     s32 unk00[16];
     s32 unk10[16];
     s32 unk20[32];
-} Unkstruct_801BA498;
+} Unkstruct_801BA498; /* size=0x100 */
 
 typedef struct {
     /* 0x000 */ s32 unk0;
@@ -84,6 +84,13 @@ typedef struct {
     /* 0x2D0 */ char name[8];
     char pad2D8[0x3A8 - 0x2D8];
 } SaveSummary; /* size=0x3A8 */
+
+typedef struct {
+    /* 0x000 */ u8 pad0[0x258];
+    /* 0x258 */ u32 unk258;
+    /* 0x25C */ u32 unk25C;
+    /* 0x260 */ u8 pad260[0x18];
+} Unkstruct_801B8A8C; /* size=0x278 */
 
 extern u8* D_80180128[];
 extern u8* D_8018012C[];
@@ -165,6 +172,7 @@ extern s32 D_801BC3D8;
 extern s32 D_801BC3DC;
 extern s32 D_801BC3E0;
 extern s32 D_801BC3E4;
+extern Unkstruct_801B8A8C D_801BC3F0[];
 extern s32 D_801BC650;
 extern s32 D_801BC654[];
 extern s32 D_801BC8C8;
