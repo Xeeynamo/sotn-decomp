@@ -2437,7 +2437,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD39C);
 // https://decomp.me/scratch/XEzwM
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD4C0);
 
-s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
+bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     s32 temp;
 
     if (arg0->unk4 != 5) {
@@ -2455,10 +2455,10 @@ s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
     if (g_playerHp.current <= arg0->unk8) {
         g_playerHp.current = 0;
-        return 1;
+        return true;
     } else {
         g_playerHp.current -= arg0->unk8;
-        return 0;
+        return false;
     }
 }
 
