@@ -856,9 +856,9 @@ void func_801B5350(void) {
     switch (entity->step) {
     case 0:
         entity->animationSet = 1;
-        entity->animationFrame = 0x8E;
+        entity->animationFrame = 142;
         entity->unk80.modeS32 = 0x800000;
-        entity->posY.i.hi = 0x9F;
+        entity->posY.i.hi = 159;
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
         entity->palette = 0x8100;
@@ -866,7 +866,7 @@ void func_801B5350(void) {
         break;
 
     case 1:
-        entity->animationFrame = 0x8E;
+        entity->animationFrame = 142;
         break;
 
     case 2:
