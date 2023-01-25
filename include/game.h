@@ -622,9 +622,8 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
-extern s32 g_IsTimeAttackUnlocked;
 extern s32 D_8003925C;
-extern s32 g_IsTimeAttackUnlocked;
+extern bool g_IsTimeAttackUnlocked;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
