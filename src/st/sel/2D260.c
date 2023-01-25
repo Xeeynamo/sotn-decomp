@@ -310,24 +310,16 @@ void func_801B1B88(void) {
 void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
-        poly->b0 = colorIntensity;
-        poly->g0 = colorIntensity;
-        poly->r0 = colorIntensity;
+        poly->r0 = poly->g0 = poly->b0 = colorIntensity;
         break;
     case 1:
-        poly->b1 = colorIntensity;
-        poly->g1 = colorIntensity;
-        poly->r1 = colorIntensity;
+        poly->r1 = poly->g1 = poly->b1 = colorIntensity;
         break;
     case 2:
-        poly->b2 = colorIntensity;
-        poly->g2 = colorIntensity;
-        poly->r2 = colorIntensity;
+        poly->r2 = poly->g2 = poly->b2 = colorIntensity;
         break;
     case 3:
-        poly->b3 = colorIntensity;
-        poly->g3 = colorIntensity;
-        poly->r3 = colorIntensity;
+        poly->r3 = poly->g3 = poly->b3 = colorIntensity;
         break;
     }
 }
