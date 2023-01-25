@@ -1692,9 +1692,6 @@ void func_801166A4(void) {
             func_8010E570(0);
         }
         break;
-
-    default:
-        break;
     }
 }
 
@@ -2279,9 +2276,6 @@ void func_801279FC(Entity* entity) {
             func_80106590(entity);
             return;
         }
-        break;
-
-    default:
         break;
     }
 
