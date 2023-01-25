@@ -78,7 +78,7 @@ extern const char* c_strSSword;
 extern s32 D_800A4B04;
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern s32 D_800A7718;
-extern u16 D_800A7734[];
+extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
@@ -150,6 +150,8 @@ extern RoomLoadDef* D_801375BC;
 extern s16 D_80137538;
 extern s32 D_801375C8;
 extern Unkstruct_800A2D98 D_801375CC;
+extern s32 D_801375D4;
+extern s32* D_801375D8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
 extern s32 D_80137608;
@@ -161,6 +163,7 @@ extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as
 // extern u8 D_80137639[];
 extern s16 D_8013767C;
 extern s16 D_80137688;
+extern u16 D_8013768C;
 extern u8 D_80137692;
 extern u8 D_801376B0;
 extern s32 D_8013783C;
@@ -361,7 +364,7 @@ void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
-void func_800FAF44(s32, s32);
+void func_800FAF44(s32);
 s32 func_800FD4C0(s32, s32);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32);

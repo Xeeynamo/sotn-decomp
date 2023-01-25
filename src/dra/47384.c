@@ -2305,7 +2305,36 @@ INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAEC4);
 
 // https://decomp.me/scratch/HEhaF by @pixel-stuck
 // matches with 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAF44);
+#else
+void func_800FAF44(s32 arg0) {
+    s32 var_a0;
+    s32 i;
+    s32 j;
+    s32* var_a1;
+    
+    D_801375D8 = &D_80084FE4;
+    var_a1 = &D_80084FE4;
+    if (arg0 == 0) {
+        for (i = 0; i < 0xA9; i++) {
+            *var_a1 = i;
+            var_a1++;
+        }
+
+        D_80137688 = D_8013768C = D_8003C9C8;
+        return;
+    }
+    D_80137688 = D_8013768C = D_8003C9CC[D_801375D4];
+
+    for (i = 0; i < 90; i++) { 
+        if (D_800A7734[i].unk00 == D_801375D4) {
+            *var_a1 = i;
+            var_a1++;
+        }
+    }
+}
+#endif
 
 void func_800FB004(void) {
     s32 temp_a1;
@@ -2337,7 +2366,7 @@ void func_800FB0FC(void) {
 
     D_801375CC.unk0 = temp->unk0;
     D_801375CC.unk8 = temp_a1;
-    func_800FAF44(new_var2, temp_a1);
+    func_800FAF44(new_var2);
     func_800FB004();
 }
 
