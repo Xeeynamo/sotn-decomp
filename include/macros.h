@@ -8,7 +8,8 @@ typedef enum {
     UNK_ENTITY_6,
     UNK_ENTITY_7,
     UNK_ENTITY_8,
-    UNK_ENTITY_10 = 0x10
+    UNK_ENTITY_10 = 0x10,
+    UNK_ENTITY_13 = 0x13
 } EntityTypes;
 
 #define PLAYER g_EntityArray[PLAYER_CHARACTER]
