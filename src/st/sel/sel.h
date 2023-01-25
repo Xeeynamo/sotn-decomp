@@ -6,15 +6,6 @@
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
 
-typedef enum {
-    Tips_Generic,
-    Tips_Input,
-    Tips_YesNo,
-    Tips_Confirm,
-    Tips_MenuNavigation,
-    Tips_NoYes,
-} NavigationTips;
-
 void* g_Cluts[];
 void* g_EntityGfxs[];
 s16** g_SpriteBanks[]; // g_SpriteBanks
