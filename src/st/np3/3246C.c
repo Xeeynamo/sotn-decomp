@@ -589,6 +589,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityEnemyBlood);
 extern ObjInit2 D_801820F0[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_801820F0[entity->subId];
+
     if (entity->step == 0) {
         InitializeEntity(D_80180A90);
         entity->animationSet = objInit->animationSet;
