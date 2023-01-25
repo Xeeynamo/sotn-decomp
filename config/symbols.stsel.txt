@@ -1686,3 +1686,4 @@ func_801BABA4 = 0x801BABA4;
 g_memCardRStep = 0x801BAFEC;
 g_memCardRStepSub = 0x801BAFF0;
 g_memCardRetryCount = 0x801BAFF8;
+g_InputSaveName = 0x801D6B14;

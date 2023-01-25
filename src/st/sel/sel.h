@@ -12,6 +12,8 @@ void* g_Cluts[];
 void* g_EntityGfxs[];
 s16** g_SpriteBanks[]; // g_SpriteBanks
 void* D_8018C404;      // unknown type
+extern s8 g_InputSaveName[9];
+
 void Update(void);
 void TestCollisions(void);
 void func_801ACBE4(s32 arg0, u16 arg1);
