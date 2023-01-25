@@ -1555,8 +1555,8 @@ void func_800F5A90(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F5AE4);
 
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                   s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 colorIntensity,
-                   s32 argB) {
+                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
+                    s32 colorIntensity, s32 argB) {
     u32* temp_s5 = D_8006C37C->_unk_0474;
     POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
     s32 var_s2 = context->unk18 + 2;
