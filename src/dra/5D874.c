@@ -1692,6 +1692,9 @@ void func_801166A4(void) {
             func_8010E570(0);
         }
         break;
+
+    default:
+        break;
     }
 }
 
@@ -2277,6 +2280,9 @@ void func_801279FC(Entity* entity) {
             return;
         }
         break;
+
+    default:
+        break;
     }
 
     poly = &D_80086FEC[entity->firstPolygonIndex];
@@ -2635,7 +2641,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801309B4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80130E94);
 
-// https://decomp.me/scratch/cu30D TODO: branching is wrong
+// https://decomp.me/scratch/cu30D 
+// TODO: branching is wrong jpt_ needs a file split
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8013136C);
 #else
@@ -2693,7 +2700,8 @@ void func_8013136C(Entity* entity) {
         break;
 
     case 2:
-        switch (D_800B0914) {
+        switch (D_800B0914)
+        {
         case 1:
             break;
 
@@ -2718,6 +2726,7 @@ void func_8013136C(Entity* entity) {
             break;
         }
         break;
+
     }
     entity->palette = PLAYER.palette;
     func_8012C600();
