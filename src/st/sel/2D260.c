@@ -113,7 +113,38 @@ void func_801AD590(void) {
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AD66C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AD78C);
+/* DATA */
+extern u8* D_801803B0;
+extern u8* D_801803B4;
+/* RODATA */
+extern const char* D_801A7760[]; // "a b c d e f g h"
+extern const char* D_801A7770[]; // "i j k l m n o p"
+extern const char* D_801A7780[]; // "q r s t u v w x"
+extern const char* D_801A7790[]; // "y z & ! - . '  "
+/* BSS */
+extern s32 D_801BAF58;
+extern s32 D_801BAF68;
+
+void func_801AD78C(void) {
+    DrawImages8x8(D_801803A8, 0x134, 0x24, 1);
+    DrawImages8x8(D_801803B4, 0x134, 0x34, 1);
+    DrawImages8x8(D_801803B0, 0x134, 0x44, 1);
+    DrawImages8x8(D_801803AC, 0x134, 0x54, 1);
+    DrawString16x16(D_801A7760, 0x48, 0x70, 1);
+    DrawString16x16(D_801A7770, 0x48, 0x88, 1);
+    DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
+    DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
+    func_801B26A0(&D_80086FEC[D_801BAF58], (D_801D6B08 * 0x10) + 0x80, 0x48,
+                  0x0F, 0x0F, 0xF0, 0xF0);
+    func_801B26A0(&D_80086FEC[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
+                  (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
+    if (g_blinkTimer & 8) {
+        func_801ACBE4(8, 0);
+    } else {
+        func_801ACBE4(8, 8);
+    }
+    DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
+}
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AD968);
 
