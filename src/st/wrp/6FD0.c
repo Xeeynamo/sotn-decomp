@@ -4243,7 +4243,7 @@ void func_8018F928(Entity* arg0) {
     } else {
         arg0->animationFrameDuration++;
         arg0->posY.val -= arg0->accelerationY;
-        if ((arg0->animationFrameDuration & 1) == 0) {
+        if (!(arg0->animationFrameDuration & 1)) {
             arg0->animationFrame++;
         }
         if (arg0->animationFrameDuration >= 37) {
