@@ -1587,7 +1587,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             func_801071CC(poly, polyColorIntensity, 1);
         }
         if (argB == 2) {
-            temp_polyx0 = poly->x0; // TODO: !FAKE
+            temp_polyx0 = poly->x0;
             poly->x0 = poly->x2 = poly->x1;
             poly->x1 = poly->x3 = temp_polyx0;
         }
