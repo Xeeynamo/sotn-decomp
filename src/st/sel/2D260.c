@@ -892,6 +892,7 @@ void func_801B5350(void) {
             entity->step = 255;
         }
         break;
+
     default:
         break;
     }
@@ -902,11 +903,11 @@ void func_801B54C8(void) {
 
     if (e->step == 0) {
         e->animationSet = -0x7FFE;
-        e->animationFrame = 0x26;
+        e->animationFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 0x9E;
+        e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->step = 1;
@@ -921,7 +922,7 @@ void func_801B5548(void) {
         e->animationFrame = 7;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 0x9E;
+        e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->facing = 0;
