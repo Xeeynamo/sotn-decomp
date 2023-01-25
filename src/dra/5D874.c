@@ -560,18 +560,18 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
             var_v1 = 0x7F - (g_blinkTimer & 0x1F);
         }
 
-        poly->r0 = poly->r1 = var_v1 - 0x10;
-        poly->r2 = poly->r3 = var_v1 + 0x10;
+        poly->r0 = poly->r1 = var_v1 - 16;
+        poly->r2 = poly->r3 = var_v1 + 16;
         poly->b3 = 0;
         poly->b2 = 0;
         poly->b1 = 0;
         poly->b0 = 0;
         poly->pad3 = 0x404;
     } else {
-        poly->b1 = 0x60;
-        poly->b0 = 0x60;
-        poly->b3 = 0x80;
-        poly->b2 = 0x80;
+        poly->b1 = 96;
+        poly->b0 = 96;
+        poly->b3 = 128;
+        poly->b2 = 128;
         poly->r3 = 0;
         poly->r2 = 0;
         poly->r1 = 0;
@@ -759,7 +759,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80106A28);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010715C);
 
-void func_801071CC(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
+void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         poly->b0 = colorIntensity;
@@ -784,11 +784,11 @@ void func_801071CC(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(POLY_GT4* poly, s32 arg1) {
-    func_801071CC(poly, arg1, 0);
-    func_801071CC(poly, arg1, 1);
-    func_801071CC(poly, arg1, 2);
-    func_801071CC(poly, arg1, 3);
+void func_80107250(POLY_GT4* poly, s32 colorIntensity) {
+    func_801071CC(poly, (u8)colorIntensity, 0);
+    func_801071CC(poly, (u8)colorIntensity, 1);
+    func_801071CC(poly, (u8)colorIntensity, 2);
+    func_801071CC(poly, (u8)colorIntensity, 3);
 }
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
@@ -1344,7 +1344,7 @@ void func_8010ED54(u8 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EDB8);
 
 void func_8010FAF4(void) {
-    func_80106590(&g_EntityArray[16]);
+    func_80106590(&g_EntityArray[UNK_ENTITY_10]);
     D_80072F66 = 0;
 }
 
@@ -2159,15 +2159,11 @@ void func_80124A8C(Entity* entity) {
             entity->posY.val += entity->accelerationY;
 
             if (entity->animationFrameDuration < 0) {
-                goto block_7;
+                func_80106590(entity);
             }
-            break;
-
-        default:
             break;
         }
     } else {
-    block_7:
         func_80106590(entity);
     }
 }
@@ -2238,29 +2234,29 @@ void func_801279FC(Entity* entity) {
         firstPolygonIndex = AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
-            entity->unk7C.s = 0x16;
-            entity->unk7E.modeU16 = 0x1A;
+            entity->unk7C.s = 22;
+            entity->unk7E.modeU16 = 26;
             poly = &D_80086FEC[entity->firstPolygonIndex];
-            poly->u2 = 0x40;
-            poly->u3 = 0x7F;
-            poly->u1 = 0x7F;
-            poly->v1 = 0xC0;
-            poly->v0 = 0xC0;
-            poly->v3 = 0xFF;
-            poly->v2 = 0xFF;
-            poly->r3 = 0x80;
-            poly->r2 = 0x80;
-            poly->r1 = 0x80;
-            poly->r0 = 0x80;
-            poly->g3 = 0x80;
-            poly->g2 = 0x80;
-            poly->g1 = 0x80;
-            poly->g0 = 0x80;
-            poly->u0 = 0x40;
-            poly->b3 = 0x40;
-            poly->b2 = 0x40;
-            poly->b1 = 0x40;
-            poly->b0 = 0x40;
+            poly->u2 = 64;
+            poly->u3 = 127;
+            poly->u1 = 127;
+            poly->v1 = 192;
+            poly->v0 = 192;
+            poly->v3 = 255;
+            poly->v2 = 255;
+            poly->r3 = 128;
+            poly->r2 = 128;
+            poly->r1 = 128;
+            poly->r0 = 128;
+            poly->g3 = 128;
+            poly->g2 = 128;
+            poly->g1 = 128;
+            poly->g0 = 128;
+            poly->u0 = 64;
+            poly->b3 = 64;
+            poly->b2 = 64;
+            poly->b1 = 64;
+            poly->b0 = 64;
             poly->tpage = 0x1A;
             poly->clut = 0x15F;
             poly->pad2 = PLAYER.zPriority + 1;
@@ -2296,9 +2292,9 @@ void func_801279FC(Entity* entity) {
     poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
 
     if (entity->unk7C.s >= 0x29) {
-        poly->r3 += 0xF4;
-        poly->g3 += 0xF4;
-        poly->b3 += 0xFA;
+        poly->r3 += 244;
+        poly->g3 += 244;
+        poly->b3 += 250;
         poly->r0 = poly->r1 = poly->r2 = poly->r3;
         poly->g0 = poly->g1 = poly->g2 = poly->g3;
         poly->b0 = poly->b1 = poly->b2 = poly->b3;
@@ -2329,18 +2325,18 @@ void func_80127CC8(Entity* entity) {
 
         entity->unk34 = 0x04860000;
         poly = &D_80086FEC[entity->firstPolygonIndex];
-        poly->r3 = 0xC0;
-        poly->r2 = 0xC0;
-        poly->r1 = 0xC0;
-        poly->r0 = 0xC0;
-        poly->g3 = 0x40;
-        poly->g2 = 0x40;
-        poly->g1 = 0x40;
-        poly->g0 = 0x40;
-        poly->b3 = 0x40;
-        poly->b2 = 0x40;
-        poly->b1 = 0x40;
-        poly->b0 = 0x40;
+        poly->r3 = 192;
+        poly->r2 = 192;
+        poly->r1 = 192;
+        poly->r0 = 192;
+        poly->g3 = 64;
+        poly->g2 = 64;
+        poly->g1 = 64;
+        poly->g0 = 64;
+        poly->b3 = 64;
+        poly->b2 = 64;
+        poly->b1 = 64;
+        poly->b0 = 64;
         poly->pad3 = 0x315;
         entity->zPriority = 0x1C0;
         poly->pad2 = 0x1C0;
@@ -2361,8 +2357,8 @@ void func_80127CC8(Entity* entity) {
     poly->y0 = 0;
     poly->y1 = 0;
     poly->x1 = poly->x3 = entity->posX.i.hi + 3;
-    poly->y3 = 0xF0;
-    poly->y2 = 0xF0;
+    poly->y3 = 240;
+    poly->y2 = 240;
 
     if (D_8003C8C4 & 1) {
         poly->pad3 = poly->pad3 | 8;
@@ -2436,21 +2432,21 @@ void func_8012B78C(Entity* entity) {
             poly = &D_80086FEC[entity->firstPolygonIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
-            poly->u2 = 0x20;
-            poly->u0 = 0x20;
-            poly->u3 = 0x30;
-            poly->u1 = 0x30;
+            poly->u2 = 32;
+            poly->u0 = 32;
+            poly->u3 = 48;
+            poly->u1 = 48;
             poly->v1 = 0;
             poly->v0 = 0;
-            poly->v3 = 0x10;
-            poly->v2 = 0x10;
+            poly->v3 = 16;
+            poly->v2 = 16;
             poly->x0 = poly->x2 = entity->posX.i.hi - 8;
             poly->x1 = poly->x3 = entity->posX.i.hi + 8;
             poly->y0 = poly->y1 = entity->posY.i.hi - 8;
             poly->y2 = poly->y3 = entity->posY.i.hi + 8;
             poly->pad2 = entity->zPriority;
             poly->pad3 = 0x115;
-            entity->unk7E.modeU16 = 0x60U;
+            entity->unk7E.modeU16 = 96;
             entity->step++;
         } else {
             func_80106590(entity);
@@ -2665,10 +2661,10 @@ void func_8013136C(Entity* entity) {
         entity->unk20 = -8;
         entity->step++;
     }
-    entity->animationFrame = 0x50;
+    entity->animationFrame = 80;
     entity->facing = PLAYER.facing;
-    entity->posX.val = g_EntityArray[19].posX.val; // D_800741CC
-    entity->posY.val = g_EntityArray[19].posY.val; // D_800741D0
+    entity->posX.val = g_EntityArray[UNK_ENTITY_13].posX.val; // D_800741CC
+    entity->posY.val = g_EntityArray[UNK_ENTITY_13].posY.val; // D_800741D0
     if (PLAYER.facing == 0) {
         entity->zPriority = PLAYER.zPriority - 5;
         entity->posX.i.hi += 8;
@@ -2677,7 +2673,7 @@ void func_8013136C(Entity* entity) {
         entity->posX.i.hi -= 8;
     }
     entity->posY.i.hi += 3;
-    entity->unk1E = g_EntityArray[19].unk1E;
+    entity->unk1E = g_EntityArray[UNK_ENTITY_13].unk1E;
     switch (PLAYER.unk2E - 1) {
     case 1:
     case 3:
@@ -2963,7 +2959,7 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
         D_80138FB8 = (volume * D_800BD19E[distance * 2]) >> 7;
     }
 
-    if (voice < 0x18U) {
+    if (voice < 0x18) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
         SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8,
                    D_80139004);
