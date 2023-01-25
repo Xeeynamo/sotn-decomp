@@ -122,7 +122,6 @@ extern const char* D_801A7790[]; // "y z & ! - . '  "
 /* BSS */
 extern s32 D_801BAF58;
 extern s32 D_801BAF68;
-extern char D_801D6B14[12];
 
 void func_801AD78C(void) {
     DrawImages8x8(D_801803A8, 0x134, 0x24, 1);
@@ -142,7 +141,7 @@ void func_801AD78C(void) {
     } else {
         func_801ACBE4(8, 8);
     }
-    DrawString16x16(&D_801D6B14, 0x80, 0x48, 1);
+    DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
 }
 
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AD968);
