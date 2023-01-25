@@ -510,7 +510,7 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[2] = arg3;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EA5E4);
 #else
 extern s32 D_8003C78C;
@@ -533,7 +533,7 @@ void func_800EA5E4(s32 arg0) {
     temp_v0 = arg0 & 0xFF00;
     temp_a0 = arg0 & 0xFF;
     if (temp_v0 & 0x8000) {
-        var_a0 = g_api.o.unk18[temp_a0];
+        var_a0 = g_api.o.cluts[temp_a0];
     } else {
         var_a0 = D_800A3BB8[temp_a0];
     }
@@ -624,12 +624,12 @@ void func_800EAEA4(void) {
     s32 i;
 
     for (ptr = &D_801374F8, i = 0; i < 32; i++) {
-        *ptr = 0xFFFF;
+        *ptr = ~0;
         ptr++;
     }
 
     for (ptr = &D_80137538, i = 0; i < 32; i++) {
-        *ptr = 0xFFFF;
+        *ptr = ~0;
         ptr++;
     }
 }
@@ -730,7 +730,7 @@ void func_800EBB70(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EBBAC);
 
 // The loop at the end is weird, the rest is matching
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800ECBF8);
 #else
 typedef struct {
@@ -818,19 +818,15 @@ void func_800ECBF8(void) {
     }
 
     var_v1 = &D_80097D1C;
-    i = 0;
     var_a0 = &D_800A21B8;
+    i = 0;
     var_a2 = &D_800A21B8;
-    do {
+    for (; i < 16; var_a2++, i++, var_a0++, var_v1++) {
         var_v1->unk00 = var_a2->unk0;
         var_v1->unk02 = var_a0->unk4 & 0x1FF;
         var_v1->unk23 = (var_a0->unk4 >> 8) & ~1;
         var_v1->unk1F = (var_v1->unk00 >> 6) + 0x10;
-        var_a2++;
-        i++;
-        var_a0++;
-        var_v1++;
-    } while (i < 0x10);
+    }
 }
 #endif
 
@@ -917,7 +913,7 @@ s32 AllocPolygons(u8 primitives, s32 count) {
     u8* polyCode = &D_80086FEC->code;
     s16 index;
 
-    while (polyIndex < 0x400) {
+    while (polyIndex < 1024) {
         if (*polyCode == 0) {
             func_800EDA70(poly);
             if (count == 1) {
@@ -1558,10 +1554,48 @@ void func_800F5A90(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F5AE4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuSprite);
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 argA,
-                    s32 argB);
+                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
+                    s32 colorIntensity, s32 argB) {
+    u32* temp_s5 = D_8006C37C->_unk_0474;
+    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    s32 var_s2 = context->unk18 + 2;
+    u32 polyColorIntensity;
+    s32 temp_polyx0;
+
+    if (context == &D_8013763A) {
+        var_s2--;
+    }
+
+    poly->code &= 0xFD;
+
+    if (arg9 != 0) {
+        poly->code |= 1;
+    } else {
+        poly->code &= 0xFC;
+    }
+
+    func_80107360(poly, x, y, width, height, u, v);
+
+    if (ScissorPolyGT4(poly, context) == false) {
+        poly->tpage = tpage;
+        poly->clut = D_8003C104[clut];
+        func_80107250(poly, colorIntensity);
+        if (argB == 1) {
+            polyColorIntensity = (poly->y2 - poly->y0) * 4;
+            func_801071CC(poly, polyColorIntensity, 0);
+            func_801071CC(poly, polyColorIntensity, 1);
+        }
+        if (argB == 2) {
+            temp_polyx0 = poly->x0;
+            poly->x0 = poly->x2 = poly->x1;
+            poly->x1 = poly->x3 = temp_polyx0;
+        }
+        AddPrim(&temp_s5[var_s2], poly);
+        D_80097930[0]++;
+        func_800F53D4(tpage, var_s2);
+    }
+}
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuRect);
@@ -2106,10 +2140,10 @@ void func_800F9690(void) {
     if (D_80137608 != 0) {
         poly->pad3 = 0x80;
     } else {
-        poly->pad3 = 8;
+        poly->pad3 = 0x8;
     }
     if (D_801376B0 != 0) {
-        poly->pad3 = 8;
+        poly->pad3 = 0x8;
     }
 }
 
@@ -2134,7 +2168,7 @@ void func_800F96F4(void) { // !Fake:
             (&D_80086FEC[D_80137840])->clut = 0x181;
         }
     } else {
-        poly->pad3 = 8;
+        poly->pad3 = 0x8;
     }
 
     poly = (POLY_GT4*)poly->tag;
@@ -2308,12 +2342,43 @@ void func_800FAE98(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAEC4);
 
 // https://decomp.me/scratch/HEhaF by @pixel-stuck
+// matches with gcc 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAF44);
+#else
+void func_800FAF44(s32 arg0) {
+    s32 var_a0;
+    s32 i;
+    s32 j;
+    s32* var_a1;
+
+    D_801375D8 = &D_80084FE4;
+    var_a1 = &D_80084FE4;
+
+    if (arg0 == 0) {
+        for (i = 0; i < 169; i++) {
+            *var_a1 = i;
+            var_a1++;
+        }
+
+        D_80137688 = D_8013768C = D_8003C9C8;
+        return;
+    }
+    D_80137688 = D_8013768C = D_8003C9CC[D_801375D4];
+
+    for (i = 0; i < 90; i++) {
+        if (D_800A7734[i].unk00 == D_801375D4) {
+            *var_a1 = i;
+            var_a1++;
+        }
+    }
+}
+#endif
 
 void func_800FB004(void) {
-    s32 temp_a1;
+    s32 temp_a1 = func_800FD6C4(D_801375CC.unk0);
     s32 temp_v0;
-    temp_a1 = func_800FD6C4(D_801375CC.unk0);
+
     if (((-D_80137688) / 12) != 0) {
         if (*D_80137844 == 0) {
             *D_80137844 = 1;
@@ -2340,7 +2405,7 @@ void func_800FB0FC(void) {
 
     D_801375CC.unk0 = temp->unk0;
     D_801375CC.unk8 = temp_a1;
-    func_800FAF44(new_var2, temp_a1);
+    func_800FAF44(new_var2);
     func_800FB004();
 }
 
@@ -2372,7 +2437,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD39C);
 // https://decomp.me/scratch/XEzwM
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD4C0);
 
-s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
+bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     s32 temp;
 
     if (arg0->unk4 != 5) {
@@ -2390,10 +2455,10 @@ s32 func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
     if (g_playerHp.current <= arg0->unk8) {
         g_playerHp.current = 0;
-        return 1;
+        return true;
     } else {
         g_playerHp.current -= arg0->unk8;
-        return 0;
+        return false;
     }
 }
 

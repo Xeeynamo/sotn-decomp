@@ -622,9 +622,8 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
-extern s32 g_IsTimeAttackUnlocked;
 extern s32 D_8003925C;
-extern s32 g_IsTimeAttackUnlocked;
+extern bool g_IsTimeAttackUnlocked;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
@@ -644,6 +643,8 @@ extern void (*g_pfnInitRoomEntities)(void);
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
+extern u16 D_8003C9C8;
+extern s32 D_8003C9CC[];
 extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003C9A4; // related to when player change stages?
 extern s32 g_blinkTimer;
@@ -779,9 +780,10 @@ extern Entity D_8007EF1C;
 extern unsigned long D_8007EFD8; // ev10 IOE
 extern s32 D_8007EFDC;           // ev11 ERROR
 extern s32 D_8007EFE0;           // ev12 TIMEOUT
-extern s32 D_80086FE4;           // ev13 NEW CARD
-extern s32* D_8007EFE4;          // 'struct SaveData'?
-extern s32 D_80080FE4;           // maybe PixPattern[]?
+extern s32 D_80084FE4[];
+extern s32 D_80086FE4;  // ev13 NEW CARD
+extern s32* D_8007EFE4; // 'struct SaveData'?
+extern s32 D_80080FE4;  // maybe PixPattern[]?
 extern s8 D_80082FE4;
 extern POLY_GT4 D_80086FEC[]; // entity polygons
 extern s32 playerX;

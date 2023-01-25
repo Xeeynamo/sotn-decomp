@@ -788,7 +788,7 @@ void InitRoomEntities(s32 objLayoutId) {
     switch (temp_s0) {
     case 0:
         if (D_8006C3B0 == 0) {
-            g_IsTimeAttackUnlocked = 1;
+            g_IsTimeAttackUnlocked = true;
             D_8003C728 = 1;
             D_8003C100 = 0;
             D_8003C9A4 = 1;
@@ -798,7 +798,7 @@ void InitRoomEntities(s32 objLayoutId) {
     case 1:
         func_801B9C80();
         if (D_8003C728 == 0) {
-            g_IsTimeAttackUnlocked = 0;
+            g_IsTimeAttackUnlocked = false;
             D_8003C100 = 0;
             func_801B18F4();
             D_8003C734 = temp_s0;

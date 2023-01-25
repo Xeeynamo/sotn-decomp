@@ -277,7 +277,7 @@ void entrypoint_sotn(void) {
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
     func_800E4124(0);
-    D_801362DC.unk0 = 0U;
+    D_801362DC.unk0 = 0;
     D_801362E0 = 0;
     D_801362E4 = 0;
     D_801362E8 = 0;
@@ -333,14 +333,14 @@ loop_5:
         D_801362CC = temp_v1_2->_unk_0474;
         ClearOTag(temp_v1_2->_unk_0474, 0x200);
         D_8009792C.unk0 = 0;
-        D_8009792C.unk20 = 0U;
-        D_8009792C.unk4 = 0U;
-        D_8009792C.unk8 = 0U;
-        D_8009792C.unkC = 0U;
-        D_8009792C.unk10 = 0U;
-        D_8009792C.unk14 = 0U;
-        D_8009792C.unk18 = 0U;
-        D_8009792C.unk1C = 0U;
+        D_8009792C.unk20 = 0;
+        D_8009792C.unk4 = 0;
+        D_8009792C.unk8 = 0;
+        D_8009792C.unkC = 0;
+        D_8009792C.unk10 = 0;
+        D_8009792C.unk14 = 0;
+        D_8009792C.unk18 = 0;
+        D_8009792C.unk1C = 0;
         if (nullsub_8() != 0) {
             func_800E7AEC();
         }
