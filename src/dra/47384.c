@@ -2313,7 +2313,7 @@ void func_800FAF44(s32 arg0) {
     s32 i;
     s32 j;
     s32* var_a1;
-    
+
     D_801375D8 = &D_80084FE4;
     var_a1 = &D_80084FE4;
     if (arg0 == 0) {
@@ -2327,7 +2327,7 @@ void func_800FAF44(s32 arg0) {
     }
     D_80137688 = D_8013768C = D_8003C9CC[D_801375D4];
 
-    for (i = 0; i < 90; i++) { 
+    for (i = 0; i < 90; i++) {
         if (D_800A7734[i].unk00 == D_801375D4) {
             *var_a1 = i;
             var_a1++;
