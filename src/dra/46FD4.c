@@ -5,7 +5,7 @@
 
 void func_800E6FD4(void) {
     POLY_GT4* poly;
-    u8 temp_s0;
+    u8 temp;
 
     if ((!(D_80097494 & 0x800)) || (g_IsTimeAttackUnlocked == 0)) {
         switch (D_80073060) {
@@ -18,13 +18,13 @@ void func_800E6FD4(void) {
                 func_800E3618(0x140);
                 D_8013640C = AllocPolygons(4, 2);
                 poly = &D_80086FEC[D_8013640C];
-                func_80107360(poly, 0x2C, 0x60, 0xE8, 0x20, 0, 0);
+                func_80107360(poly, 44, 96, 232, 32, 0, 0);
                 func_801072BC(poly);
                 poly->tpage = 0x1C;
                 poly->pad3 = 4;
                 poly->p1 = 0x40;
                 poly = (POLY_G4*)poly->tag;
-                func_80107360(poly, 0x3C, 0xD0, 0xC0, 0x10, 0, 0x20);
+                func_80107360(poly, 60, 208, 192, 16, 0, 32);
                 func_801072DC(poly);
                 poly->tpage = 0x1C;
                 poly->pad3 = 8;
@@ -43,13 +43,13 @@ void func_800E6FD4(void) {
 
         case 2:
             poly = &D_80086FEC[D_8013640C];
-            temp_s0 = poly->r0 + 1;
-            func_80107250(poly, temp_s0);
-            if (temp_s0 == 0x60) {
+            temp = poly->r0 + 1;
+            func_80107250(poly, temp);
+            if (temp == 96) {
                 ((POLY_GT4*)poly->tag)->pad3 = 8;
             }
-            if (temp_s0 == 0x80) {
-                poly->p1 = 0x80;
+            if (temp == 128) {
+                poly->p1 = 128;
                 D_80073060++;
             }
             break;
@@ -64,13 +64,13 @@ void func_800E6FD4(void) {
 
         case 4:
             poly = &D_80086FEC[D_8013640C];
-            temp_s0 = poly->r0 - 1;
-            func_80107250(poly, temp_s0);
-            if (temp_s0 == 0x40) {
+            temp = poly->r0 - 1;
+            func_80107250(poly, temp);
+            if (temp == 64) {
 
                 ((POLY_GT4*)poly->tag)->pad3 = 8;
             }
-            if (temp_s0 == 0) {
+            if (temp == 0) {
                 FreePolygons(D_8013640C);
                 D_80073060++;
             }
