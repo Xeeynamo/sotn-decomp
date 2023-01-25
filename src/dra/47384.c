@@ -1602,7 +1602,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
 INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuRect);
 #else
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
-                   s32 height, s32 r, s32 g, s32 b) {
+                  s32 height, s32 r, s32 g, s32 b) {
     u32* temp_s1 = D_8006C37C->_unk_0474;
     POLY_G4* poly = &D_8006C37C->polyG4[D_80097930[1]];
     s32 temp_s2 = context->unk18 + 1;
@@ -1691,8 +1691,8 @@ void func_800F6568(MenuContext* arg0) {
         r = 0x5F - (g_blinkTimer & 0x1F);
     }
     DrawMenuRect(arg0, arg0->cursorX,
-                  arg0->cursorY + (height * g_menuMainCursorIndex), arg0->unk4,
-                  height, r, 0, 0);
+                 arg0->cursorY + (height * g_menuMainCursorIndex), arg0->unk4,
+                 height, r, 0, 0);
 }
 
 // Draw equip menu cursor
@@ -1710,7 +1710,7 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
         }
     }
     DrawMenuRect(context, 0x70, (*g_menuRelicsCursorIndex * 0xD) + 0x1C, 0x71,
-                  0xB, r, 0, 0);
+                 0xB, r, 0, 0);
 }
 
 void func_800F66BC(const char* str, s32 x, s32 y, MenuContext* context,
