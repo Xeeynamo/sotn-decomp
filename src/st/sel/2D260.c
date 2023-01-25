@@ -349,8 +349,9 @@ void func_801B1ED0(void) {
 u8 func_801B1EF4(u16 arg0) {
     if (arg0 & 0x80) {
         return func_801B1EF4((arg0 & 0x7F) + 3);
+    } else {
+        return (arg0 * 0x10) & 0xF0;
     }
-    return (arg0 * 0x10) & 0xF0;
 }
 
 void func_801B1F34(void) { D_801BAFD0 = &D_80080FE4; }
