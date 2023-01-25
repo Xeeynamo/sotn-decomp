@@ -157,10 +157,13 @@ extern s32 D_801375FC;
 extern s32 D_80137608;
 extern s32 D_80137614;
 extern s32 D_80137618;
-extern u8 D_8013761C[]; // can't use `extern MenuContext D_8013761C[];` as
-                        // it's 2-byte aligned
-// extern u8 D_80137638[2];
-// extern u8 D_80137639[];
+
+/**
+ * can't use "extern MenuContext D_8013761C[]";
+ * as it's 2-byte aligned
+ */
+extern u8 D_8013761C[];
+extern s32* D_8013763A; // type MenuContext ?
 extern s16 D_8013767C;
 extern s16 D_80137688;
 extern u16 D_8013768C;
@@ -351,6 +354,9 @@ void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
+void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
+                   s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 colorIntensity,
+                   s32 argB);
 s32 func_800F62E8(s32 arg0);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
@@ -385,8 +391,8 @@ void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void func_80106590(Entity*);
 void func_801065F4(s16 startIndex);
-void func_801071CC(POLY_GT4* poly, u8, s32);
-void func_80107250(POLY_GT4* poly, s32 arg1);
+void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
+void func_80107250(POLY_GT4* poly, s32 colorIntensity);
 void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
                    s32 v);
 void func_801073C0(void);

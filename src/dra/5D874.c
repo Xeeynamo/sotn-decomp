@@ -759,7 +759,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80106A28);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010715C);
 
-void func_801071CC(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
+void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         poly->b0 = colorIntensity;
@@ -784,11 +784,11 @@ void func_801071CC(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(POLY_GT4* poly, s32 arg1) {
-    func_801071CC(poly, arg1, 0);
-    func_801071CC(poly, arg1, 1);
-    func_801071CC(poly, arg1, 2);
-    func_801071CC(poly, arg1, 3);
+void func_80107250(POLY_GT4* poly, s32 colorIntensity) {
+    func_801071CC(poly, (u8)colorIntensity, 0);
+    func_801071CC(poly, (u8)colorIntensity, 1);
+    func_801071CC(poly, (u8)colorIntensity, 2);
+    func_801071CC(poly, (u8)colorIntensity, 3);
 }
 
 void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }

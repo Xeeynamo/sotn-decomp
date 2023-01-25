@@ -1554,10 +1554,48 @@ void func_800F5A90(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F5AE4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuSprite);
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 argA,
-                    s32 argB);
+                   s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 colorIntensity,
+                   s32 argB) {
+    u32* temp_s5 = D_8006C37C->_unk_0474;
+    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    s32 var_s2 = context->unk18 + 2;
+    u32 polyColorIntensity;
+    s32 temp_polyx0;
+
+    if (context == &D_8013763A) {
+        var_s2--;
+    }
+
+    poly->code &= 0xFD;
+
+    if (arg9 != 0) {
+        poly->code |= 1;
+    } else {
+        poly->code &= 0xFC;
+    }
+
+    func_80107360(poly, x, y, width, height, u, v);
+
+    if (ScissorPolyGT4(poly, context) == false) {
+        poly->tpage = tpage;
+        poly->clut = D_8003C104[clut];
+        func_80107250(poly, colorIntensity);
+        if (argB == 1) {
+            polyColorIntensity = (poly->y2 - poly->y0) * 4;
+            func_801071CC(poly, polyColorIntensity, 0);
+            func_801071CC(poly, polyColorIntensity, 1);
+        }
+        if (argB == 2) {
+            temp_polyx0 = poly->x0; // TODO: !FAKE
+            poly->x0 = poly->x2 = poly->x1;
+            poly->x1 = poly->x3 = temp_polyx0;
+        }
+        AddPrim(&temp_s5[var_s2], poly);
+        D_80097930[0]++;
+        func_800F53D4(tpage, var_s2);
+    }
+}
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuRect);
