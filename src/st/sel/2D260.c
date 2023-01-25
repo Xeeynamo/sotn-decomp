@@ -774,9 +774,6 @@ void InitRoomEntities(s32 objLayoutId) {
             D_8003C9A4 = 0;
         }
         break;
-
-    default:
-        break;
     }
 }
 
@@ -891,9 +888,6 @@ void func_801B5350(void) {
         if (entity->unk80.modeS16.unk2 < 0x40) {
             entity->step = 255;
         }
-        break;
-
-    default:
         break;
     }
 }
