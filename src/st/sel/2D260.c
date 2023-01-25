@@ -248,14 +248,14 @@ void func_801B1924(void) {
 }
 
 void func_801B195C(s32 arg0) {
-    D_8003CB08.buf.draw.clip.y = 0x14;
-    D_8003CB08.buf.draw.clip.h = 0xCF;
+    D_8003CB08.buf.draw.clip.y = 20;
+    D_8003CB08.buf.draw.clip.h = 207;
     if (arg0 == 0) {
-        D_800542FC.buf.draw.clip.y = 0x14;
+        D_800542FC.buf.draw.clip.y = 20;
     } else {
-        D_800542FC.buf.draw.clip.y = 0x114;
+        D_800542FC.buf.draw.clip.y = 276;
     }
-    D_800542FC.buf.draw.clip.h = 0xCF;
+    D_800542FC.buf.draw.clip.h = 207;
     D_800542FC.buf.draw.isbg = 1;
     D_8003CB08.buf.draw.isbg = 1;
     func_801B1924();
