@@ -114,19 +114,19 @@ void func_801ADC3C(void) {
     if (*new_var >= 0 || D_801BD02C >= 0) {
         u16* tmp = &D_80097496;
         if (*tmp & 0x2000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 1) % 6;
         }
         if (*tmp & 0x4000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 4) % 5;
         }
         if (*tmp & 0x8000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 5) % 6;
         }
         if (*tmp & 0x1000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
         if (*new_var > 0 && D_801BD02C > 0 && D_80097494 & 0xF) {
