@@ -782,9 +782,9 @@ extern unsigned long D_8007EFD8; // ev10 IOE
 extern s32 D_8007EFDC;           // ev11 ERROR
 extern s32 D_8007EFE0;           // ev12 TIMEOUT
 extern s32 D_80084FE4[];
-extern s32 D_80086FE4;           // ev13 NEW CARD
-extern s32* D_8007EFE4;          // 'struct SaveData'?
-extern s32 D_80080FE4;           // maybe PixPattern[]?
+extern s32 D_80086FE4;  // ev13 NEW CARD
+extern s32* D_8007EFE4; // 'struct SaveData'?
+extern s32 D_80080FE4;  // maybe PixPattern[]?
 extern s8 D_80082FE4;
 extern POLY_GT4 D_80086FEC[]; // entity polygons
 extern s32 playerX;
