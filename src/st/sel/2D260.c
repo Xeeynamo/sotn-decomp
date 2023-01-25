@@ -88,13 +88,13 @@ void func_801AD490(void) {
 
 void func_801AD590(void) {
     if (D_80097494 & 0x6000) {
-        g_api.PlaySfx(0x67D);
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (++D_801D6B0C == 5) {
             D_801D6B0C = 1;
         }
     }
     if (D_80097494 & 0x9000) {
-        g_api.PlaySfx(0x67D);
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (--D_801D6B0C == 0) {
             D_801D6B0C = 4;
         }
