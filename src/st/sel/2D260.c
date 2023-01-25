@@ -1,14 +1,5 @@
 #include "sel.h"
 
-typedef enum {
-    Tips_Generic,
-    Tips_Input,
-    Tips_YesNo,
-    Tips_Confirm,
-    Tips_MenuNavigation,
-    Tips_NoYes,
-} NavigationTips;
-
 void DrawNavigationTips(NavigationTips mode) {
     u8** imgs;
     POLY_GT4* poly;
