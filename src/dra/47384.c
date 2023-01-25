@@ -1601,6 +1601,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuRect);
 #else
+// NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
     u32* temp_s1 = D_8006C37C->_unk_0474;
