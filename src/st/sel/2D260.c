@@ -130,7 +130,7 @@ void func_801ADC3C(void) {
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
         if (*new_var > 0 && D_801BD02C > 0 && D_80097494 & 0xF) {
-            g_api.PlaySfx(0x67D);
+            g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
             D_801BC3D8 = (D_801BC3D8 + 3) % 6;
         }
         if (D_801BCC84 < 0) {
