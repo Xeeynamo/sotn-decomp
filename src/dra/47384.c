@@ -2343,7 +2343,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAEC4);
 
 // https://decomp.me/scratch/HEhaF by @pixel-stuck
 // matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAF44);
 #else
 void func_800FAF44(s32 arg0) {
@@ -2354,6 +2354,7 @@ void func_800FAF44(s32 arg0) {
 
     D_801375D8 = &D_80084FE4;
     var_a1 = &D_80084FE4;
+    
     if (arg0 == 0) {
         for (i = 0; i < 169; i++) {
             *var_a1 = i;
