@@ -16,39 +16,40 @@ void DrawNavigationTips(NavigationTips mode) {
     func_801ACBE4(6, 8);
     imgs = &D_801803C4;
     poly = &D_80086FEC[D_801BAF48];
+
     switch (mode) {
     case Tips_Generic:
-        func_801B2670(poly, 0x20, 0xB0, 0x10, 0x10);
+        func_801B2670(poly, 32, 176, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC0, 0x10, 0x10);
+        func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xD0, 0x10, 0x10);
+        func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_Input:
-        func_801B2670(poly, 0x120, 0x20, 0x10, 0x10);
+        func_801B2670(poly, 288, 32, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x120, 0x30, 0x10, 0x10);
+        func_801B2670(poly, 288, 48, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x120, 0x40, 0x10, 0x10);
+        func_801B2670(poly, 288, 64, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 0x120, 0x50, 0x10, 0x10);
+        func_801B2670(poly, 288, 80, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_YesNo:
     case Tips_NoYes:
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC0, 0x10, 0x10);
+        func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xD0, 0x10, 0x10);
+        poly = (POLY_GT4*)poly->tag;
+        func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         if (mode == Tips_YesNo) {
             func_801AD1D0();
@@ -59,16 +60,16 @@ void DrawNavigationTips(NavigationTips mode) {
 
     case Tips_Confirm:
         poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC0, 0x10, 0x10);
+        func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        DrawImages8x8(*imgs, 0x34, 0xC4, 1);
+        DrawImages8x8(*imgs, 52, 196, 1);
         break;
 
     case Tips_MenuNavigation:
-        func_801B2670(poly, 0x20, 0xB8, 0x10, 0x10);
+        func_801B2670(poly, 32, 184, 16, 16);
         poly->pad3 = 0;
-        poly = poly->tag;
-        func_801B2670(poly, 0x20, 0xC8, 0x10, 0x10);
+        poly = (POLY_GT4*)poly->tag;
+        func_801B2670(poly, 32, 200, 16, 16);
         poly->pad3 = 0;
         break;
     }
@@ -78,30 +79,31 @@ void func_801AD490(void) {
     s32 i;
 
     DrawNavigationTips(Tips_MenuNavigation);
-    DrawImages8x8(D_801803A8 /* "select" */, 0x34, 0xBC, 1);
-    DrawImages8x8(D_801803AC /* "start" */, 0x34, 0xCC, 1);
-    DrawString16x16("select", 0xF0, 0x20, 1);
-    DrawString16x16("your", 0x100, 0x30, 1);
-    DrawString16x16("destiny", 0xE8, 0x40, 1);
+    DrawImages8x8(D_801803A8 /* "select" */, 52, 188, 1);
+    DrawImages8x8(D_801803AC /* "start" */, 52, 204, 1);
+    DrawString16x16("select", 240, 32, 1);
+    DrawString16x16("your", 256, 48, 1);
+    DrawString16x16("destiny", 232, 64, 1);
+
     for (i = 0; i < 5; i++) {
-        POLY_GT4* temp_v0 = &D_80086FEC[D_801BAF18[i + 1].unk0];
+        POLY_GT4* poly = &D_80086FEC[D_801BAF18[i + 1].unk0];
         if (i == D_801D6B0C) {
-            temp_v0->clut = 0x203;
+            poly->clut = 0x203;
         } else {
-            temp_v0->clut = 0x200;
+            poly->clut = 0x200;
         }
     }
 }
 
 void func_801AD590(void) {
     if (D_80097494 & 0x6000) {
-        g_api.PlaySfx(0x67D);
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (++D_801D6B0C == 5) {
             D_801D6B0C = 1;
         }
     }
     if (D_80097494 & 0x9000) {
-        g_api.PlaySfx(0x67D);
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (--D_801D6B0C == 0) {
             D_801D6B0C = 4;
         }
@@ -148,26 +150,27 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AD968);
 
 void func_801ADC3C(void) {
     s32* new_var = &D_801BCC84;
+
     if (*new_var >= 0 || D_801BD02C >= 0) {
         u16* tmp = &D_80097496;
         if (*tmp & 0x2000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 1) % 6;
         }
         if (*tmp & 0x4000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 4) % 5;
         }
         if (*tmp & 0x8000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 5) % 6;
         }
         if (*tmp & 0x1000) {
-            g_api.PlaySfx(0x67B);
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
         if (*new_var > 0 && D_801BD02C > 0 && D_80097494 & 0xF) {
-            g_api.PlaySfx(0x67D);
+            g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
             D_801BC3D8 = (D_801BC3D8 + 3) % 6;
         }
         if (D_801BCC84 < 0) {
@@ -194,10 +197,10 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801AEB74);
 void func_801AECA0(void) {
     s32 i = 0;
     s32 x;
-    s32 y = 0x100;
-    s32 w = 0x10;
-    s32 h = 0x30;
-    s32 xnext = 0x180;
+    s32 y = 256;
+    s32 w = 16;
+    s32 h = 48;
+    s32 xnext = 384;
     u32* pix = D_801822E4;
 
     for (; i < 0x10; i++) {
@@ -276,14 +279,14 @@ void func_801B1924(void) {
 }
 
 void func_801B195C(s32 arg0) {
-    D_8003CB08.buf.draw.clip.y = 0x14;
-    D_8003CB08.buf.draw.clip.h = 0xCF;
+    D_8003CB08.buf.draw.clip.y = 20;
+    D_8003CB08.buf.draw.clip.h = 207;
     if (arg0 == 0) {
-        D_800542FC.buf.draw.clip.y = 0x14;
+        D_800542FC.buf.draw.clip.y = 20;
     } else {
-        D_800542FC.buf.draw.clip.y = 0x114;
+        D_800542FC.buf.draw.clip.y = 276;
     }
-    D_800542FC.buf.draw.clip.h = 0xCF;
+    D_800542FC.buf.draw.clip.h = 207;
     D_800542FC.buf.draw.isbg = 1;
     D_8003CB08.buf.draw.isbg = 1;
     func_801B1924();
@@ -338,24 +341,16 @@ void func_801B1B88(void) {
 void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
-        poly->b0 = colorIntensity;
-        poly->g0 = colorIntensity;
-        poly->r0 = colorIntensity;
+        poly->r0 = poly->g0 = poly->b0 = colorIntensity;
         break;
     case 1:
-        poly->b1 = colorIntensity;
-        poly->g1 = colorIntensity;
-        poly->r1 = colorIntensity;
+        poly->r1 = poly->g1 = poly->b1 = colorIntensity;
         break;
     case 2:
-        poly->b2 = colorIntensity;
-        poly->g2 = colorIntensity;
-        poly->r2 = colorIntensity;
+        poly->r2 = poly->g2 = poly->b2 = colorIntensity;
         break;
     case 3:
-        poly->b3 = colorIntensity;
-        poly->g3 = colorIntensity;
-        poly->r3 = colorIntensity;
+        poly->r3 = poly->g3 = poly->b3 = colorIntensity;
         break;
     }
 }
@@ -385,8 +380,9 @@ void func_801B1ED0(void) {
 u8 func_801B1EF4(u16 arg0) {
     if (arg0 & 0x80) {
         return func_801B1EF4((arg0 & 0x7F) + 3);
+    } else {
+        return (arg0 * 0x10) & 0xF0;
     }
-    return (arg0 * 0x10) & 0xF0;
 }
 
 void func_801B1F34(void) { D_801BAFD0 = &D_80080FE4; }
@@ -798,6 +794,7 @@ void InitRoomEntities(s32 objLayoutId) {
             D_8003C9A4 = 1;
         }
         break;
+
     case 1:
         func_801B9C80();
         if (D_8003C728 == 0) {
@@ -871,13 +868,14 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801B4C68);
 
 void func_801B4D78(void) {
-    Entity* e = &g_EntityArray[3];
+    Entity* e = &g_EntityArray[UNK_ENTITY_3];
+
     if (e->step == 0) {
         e->animationSet = -0x7FFF;
         e->animationFrame = 1;
         e->palette = 0x200;
         e->unk80.modeS32 = 0x5C0000;
-        e->posY.i.hi = 0xD0;
+        e->posY.i.hi = 208;
         e->zPriority = 0x80;
         e->step = 1;
     }
@@ -890,46 +888,51 @@ INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801B4FFC);
 INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2D260", func_801B519C);
 
 void func_801B5350(void) {
-    Entity* entity = &g_EntityArray[5];
+    Entity* entity = &g_EntityArray[UNK_ENTITY_5];
+
     switch (entity->step) {
     case 0:
         entity->animationSet = 1;
-        entity->animationFrame = 0x8E;
+        entity->animationFrame = 142;
         entity->unk80.modeS32 = 0x800000;
-        entity->posY.i.hi = 0x9F;
+        entity->posY.i.hi = 159;
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
         entity->palette = 0x8100;
         entity->step = 1;
         break;
+
     case 1:
-        entity->animationFrame = 0x8E;
+        entity->animationFrame = 142;
         break;
+
     case 2:
         if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
             func_801B4B9C(entity, 3);
         }
         entity->unk80.modeS32 += 0xFFFE8000;
         break;
+
     case 3:
         AnimateEntity(D_80180504, entity);
         entity->unk80.modeS32 += 0xFFFE8000;
         if (entity->unk80.modeS16.unk2 < 0x40) {
-            entity->step = 0xFF;
+            entity->step = 255;
         }
         break;
     }
 }
 
 void func_801B54C8(void) {
-    Entity* e = &g_EntityArray[7];
+    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+
     if (e->step == 0) {
         e->animationSet = -0x7FFE;
-        e->animationFrame = 0x26;
+        e->animationFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 0x9E;
+        e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->step = 1;
@@ -937,13 +940,14 @@ void func_801B54C8(void) {
 }
 
 void func_801B5548(void) {
-    Entity* e = &g_EntityArray[7];
+    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+
     if (e->step == 0) {
         e->animationSet = -0x7FFE;
         e->animationFrame = 7;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
-        e->posY.i.hi = 0x9E;
+        e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
         e->facing = 0;
