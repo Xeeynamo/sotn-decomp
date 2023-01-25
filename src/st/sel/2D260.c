@@ -39,7 +39,7 @@ void DrawNavigationTips(NavigationTips mode) {
         poly = poly->tag;
         func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        poly = poly->tag;
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         if (mode == Tips_YesNo) {
