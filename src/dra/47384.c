@@ -2378,7 +2378,7 @@ void func_800FAF44(s32 arg0) {
 void func_800FB004(void) {
     s32 temp_a1 = func_800FD6C4(D_801375CC.unk0);
     s32 temp_v0;
-    
+
     if (((-D_80137688) / 12) != 0) {
         if (*D_80137844 == 0) {
             *D_80137844 = 1;
