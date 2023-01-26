@@ -44,6 +44,7 @@ void func_801325D8(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
+// matching in gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
 #else
