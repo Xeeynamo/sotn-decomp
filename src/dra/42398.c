@@ -105,6 +105,8 @@ void func_800E31C0(void) {
 }
 #endif
 
+// TODO: fix branching
+// https://decomp.me/scratch/y3otf
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E3278);
 #else
@@ -124,43 +126,45 @@ extern const char* aPqes;
 extern const char* aPqes_0;
 extern const char* aPqes_1;
 void SsVabClose(short vab_id);
-s32 func_800E3278() {
+s32 func_800E3278(void) {
     SsVabClose(0);
     while (func_800219E0(0) != 1)
         ;
-    if ((func_80021350(&aPbav, 0, D_800BD1C8) < 0) &&
-        (func_80021880(&D_8013B6A0, 0x41CB0, 0) < 0))
-        return -1;
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(1);
-    while (func_800219E0(0) != 1)
-        ;
-    if ((func_80021350(&aPbav_0, 1, D_800BD1CC) < 0) &&
-        (func_80021880(&D_8017D350, 0xE190, 1) < 0))
-        return -1;
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(2);
-    while (func_800219E0(0) != 1)
-        ;
-    if ((func_80021350(&aPbav_1, 2, D_800BD1D0) < 0) &&
-        (func_80021880(&D_801A9C80, 0xFBF0, 2) < 0))
-        return -1;
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(3);
-    while (func_800219E0(0) != 1)
-        ;
-    if ((func_80021350(&aPbav_2, 3, D_800BD1D4) < 0) ||
-        (func_80021880(&D_8018B4E0, 0x1A610, 3) < 0))
-        return -1;
-    while (func_800219E0(0) != 1)
-        ;
-    func_80131EBC((s32)&aPqes, 0x618);
-    func_80131EBC((s32)&aPqes_0, 0x201);
-    func_80131EBC((s32)&aPqes_1, 0x205);
-    return 0;
+
+    if ((func_80021350(&aPbav, 0, D_800BD1C8) >= 0) &&
+        (func_80021880(&D_8013B6A0, 0x41CB0, 0) >= 0)) {
+        while (func_800219E0(0) != 1)
+            ;
+        SsVabClose(1);
+        while (func_800219E0(0) != 1)
+            ;
+        if ((func_80021350(&aPbav_0, 1, D_800BD1CC) >= 0) &&
+            (func_80021880(&D_8017D350, 0xE190, 1) >= 0)) {
+            while (func_800219E0(0) != 1)
+                ;
+            SsVabClose(2);
+            while (func_800219E0(0) != 1)
+                ;
+            if ((func_80021350(&aPbav_1, 2, D_800BD1D0) >= 0) &&
+                (func_80021880(&D_801A9C80, 0xFBF0, 2) >= 0)) {
+                while (func_800219E0(0) != 1)
+                    ;
+                SsVabClose(3);
+                while (func_800219E0(0) != 1)
+                    ;
+                if ((func_80021350(&aPbav_2, 3, D_800BD1D4) < 0) ||
+                    (func_80021880(&D_8018B4E0, 0x1A610, 3) < 0)) {
+                    return -1;
+                }
+                while (func_800219E0(0) != 1)
+                    ;
+                func_80131EBC(&aPqes, 0x618);
+                func_80131EBC(&aPqes_0, 0x201);
+                func_80131EBC(&aPqes_1, 0x205);
+                return 0;
+            }
+        }
+    }
 }
 #endif
 
