@@ -958,7 +958,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A3F0);
 #else
 void func_8010A3F0(void) {
     s32 temp = 0x38;
-    
+
     if ((D_8017A018() == temp) && (D_8017D018() == temp)) {
         if (D_80072F16[0] == 0) {
             func_801092E8(1);
