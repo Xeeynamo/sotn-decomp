@@ -950,7 +950,28 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109A44);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A234);
 
+// Matching in gcc 2.6.0 + aspsx 2.3.4
+// Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
+// https://decomp.me/scratch/oKHMJ
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A3F0);
+#else
+void func_8010A3F0(void) {
+    s32 temp = 0x38;
+    
+    if ((D_8017A018() == temp) && (D_8017D018() == temp)) {
+        if (D_80072F16[0] == 0) {
+            func_801092E8(1);
+        }
+        D_80072F16[0] = 0x20;
+        temp = D_80072F30 != 0;
+        if (temp && (D_80097C40[0] < -1)) {
+            D_80097C40[0]++;
+        }
+    }
+    D_80072F30 = 0;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A4A4);
 

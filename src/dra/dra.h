@@ -293,6 +293,8 @@ extern s32 D_8013B694;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
 extern void (*D_80170000)(void);
+extern s32 (*D_8017A018)();
+extern s32 (*D_8017D018)();
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
