@@ -85,7 +85,24 @@ s32 nullsub_8(void) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2F3C);
 
+// one nop
+// matching in gcc 2.6.0 + aspsx 2.3.4
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E31C0);
+#else
+void func_800E31C0(void) {
+    if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
+        if (g_blinkTimer & 1) {
+            FntPrint(D_800DB524, D_801362D0[1]);
+            FntPrint(D_800DB524, D_801362D0[0]);
+        } else {
+            FntPrint(D_800DB524, D_801362D0[0]);
+            FntPrint(D_800DB524, D_801362D0[1]);
+        }
+        D_801362D0[0] = D_801362D0[1];
+    }
+}
+#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E3278);

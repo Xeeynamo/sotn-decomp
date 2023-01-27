@@ -1597,45 +1597,36 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
     }
 }
 
-#ifndef NON_EQUIVALENT
+// Matches with gcc 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuRect);
-void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
-                  s32 height, s32 r, s32 g, s32 b);
 #else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    POLY_G4* prim;
-    s32 temp_s2;
-    s32 temp_t1;
+    u32* temp_s1 = D_8006C37C->_unk_0474;
+    POLY_G4* poly = &D_8006C37C->polyG4[D_80097930[1]];
+    s32 temp_s2 = context->unk18 + 1;
+    u32 temp;
 
-    temp_t1 = D_8006C37C;
-    prim = &D_8006C37C->unk_D874[D_80097934]; // get next available primitive?
-    prim->x0 = posX;
-    prim->y0 = posY;
-    prim->x1 = posX + width;
-    prim->y1 = posY;
-    prim->x2 = posX;
-    prim->x3 = posX + width;
-    temp_s2 = context->unk18 + 1;
-    prim->y2 = posY + height;
-    prim->y3 = posY + height;
-    prim->code &= 0xFC;
-    if (ScissorPolyG4(prim, context) == 0) { // check prim boundaries?
-        prim->r0 = r;
-        prim->r1 = r;
-        prim->r2 = r;
-        prim->r3 = r;
-        prim->g0 = g;
-        prim->g1 = g;
-        prim->g2 = g;
-        prim->g3 = g;
-        prim->b0 = b;
-        prim->b1 = b;
-        prim->b2 = b;
-        prim->b3 = b;
-        AddPrim(&D_8006C37C->unk_0474[temp_s2], (void*)prim);
-        D_80097934 += 1;
+    poly->x0 = posX;
+    poly->y0 = posY;
+
+    temp = (poly->x1 = posX + width);
+    poly->y1 = posY;
+    poly->x2 = posX;
+    poly->x3 = temp;
+
+    temp = (poly->y2 = posY + height);
+    poly->y3 = temp;
+
+    poly->code &= 0xFC;
+    if (!ScissorPolyG4(poly, context)) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
+        poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
+        AddPrim(&temp_s1[temp_s2], poly);
+        D_80097930[1]++;
         func_800F53D4(0, temp_s2);
     }
 }
