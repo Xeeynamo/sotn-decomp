@@ -1583,7 +1583,7 @@ void func_801D59D0(void) {
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityBoneScimitar);
 
 // debris that rotates and falls down
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingRotatingDebris);
+INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingDebris);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityBat);
 
