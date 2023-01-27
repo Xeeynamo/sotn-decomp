@@ -3864,34 +3864,31 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C55C);
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
 void ReplaceBreakableWithItemDrop(Entity* entity) {
-    u16 temp_a0;
-    u16 var_v1;
+    u16 subId;
 
     PreventEntityFromRespawning(entity);
+
     if (!(D_8009796E & 2)) {
         DestroyEntity(entity);
         return;
     }
 
-    temp_a0 = entity->subId & 0xFFF;
-    var_v1 = temp_a0;
-    entity->subId = var_v1;
+    subId = entity->subId &= 0xFFF;
 
-    if (var_v1 < 0x80) {
+    if (subId < 0x80) {
         entity->objectId = ENTITY_PRICE_DROP;
         entity->pfnUpdate = EntityPriceDrop;
         entity->animationFrameDuration = 0;
         entity->animationFrameIndex = 0;
     } else {
-        var_v1 = temp_a0 - 0x80;
+        subId -= 0x80;
         entity->objectId = ENTITY_INVENTORY_DROP;
-        entity->pfnUpdate = EntityInventoryDrop;
+        entity->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
-    entity->subId = var_v1;
-    temp_a0 = 0;
+    entity->subId = subId;
     entity->unk6D = 0x10;
-    entity->step = temp_a0;
+    entity->step = 0;
 }
 
 #ifndef NON_EQUIVALENT

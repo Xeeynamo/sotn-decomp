@@ -78,7 +78,7 @@ jobs:
             python tools/report_progress.py MAD.BIN 116 src/st/mad > gh-report/assets/progress-mad.json
             python tools/report_progress.py NO3.BIN 210 src/st/no3 > gh-report/assets/progress-no3.json
             python tools/report_progress.py NP3.BIN 214 src/st/np3 > gh-report/assets/progress-np3.json
-            python tools/report_progress.py NZ0.BIN 135 src/st/nz0 > gh-report/assets/progress-nz0.json
+            python tools/report_progress.py NZ0.BIN 184 src/st/nz0 > gh-report/assets/progress-nz0.json
             python tools/report_progress.py SEL.BIN 164 src/st/sel > gh-report/assets/progress-sel.json
             python tools/report_progress.py ST0.BIN 160 src/st/st0 > gh-report/assets/progress-st0.json
             python tools/report_progress.py WRP.BIN 110 src/st/wrp > gh-report/assets/progress-wrp.json
