@@ -93,10 +93,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2F3C);
 =======
 // https://decomp.me/scratch/NgIDx
 #ifndef NON_MATCHING
->>>>>>> d2da978403d2a93449474e5499f110333cdc5b5c
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E31C0);
+    >>>>>>> d2da978403d2a93449474e5499f110333cdc5b5c INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E31C0);
 #else
-void func_800E31C0(void) {
+    void
+    func_800E31C0(void) {
     if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
         if (g_blinkTimer & 1) {
             FntPrint(D_800DB524, D_801362D0[1]);
