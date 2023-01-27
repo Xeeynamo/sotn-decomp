@@ -88,12 +88,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2F3C);
 
 // one nop
 // matching in gcc 2.6.0 + aspsx 2.3.4
-<<<<<<< HEAD
-#ifdef NON_MATCHING
-=======
 // https://decomp.me/scratch/NgIDx
 #ifndef NON_MATCHING
-    >>>>>>> d2da978403d2a93449474e5499f110333cdc5b5c INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E31C0);
+INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E31C0);
 #else
     void
     func_800E31C0(void) {
