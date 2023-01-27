@@ -193,7 +193,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingRock2);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId5C);
 
-// falling rock with puff of smoke when it disappears. I think part of the 
+// falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingRock);
 
@@ -1428,7 +1428,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->unk6C = 0x60;
         temp_v0 = entity->subId & 0xFF00;
         if (temp_v0 != 0) {
-            entity->zPriority = (u16) (temp_v0 >> 8);
+            entity->zPriority = (u16)(temp_v0 >> 8);
         }
         entity->accelerationY += 0xFFFF0000;
         return;
@@ -1438,7 +1438,6 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801D06FC);
 
