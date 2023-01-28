@@ -306,6 +306,18 @@ typedef struct {
     /* 0x14FF4 */ SPRT sprite[0x200];
 } GpuBuffer; /* size = 0x177F4 */
 
+typedef struct {
+    /* 0x00 */ u32 drawModes;
+    /* 0x04 */ u32 gt4;
+    /* 0x08 */ u32 g4;
+    /* 0x0C */ u32 gt3;
+    /* 0x10 */ u32 line;
+    /* 0x14 */ u32 sp16;
+    /* 0x18 */ u32 tile;
+    /* 0x1C */ u32 sp;
+    /* 0x20 */ u32 env;
+} GpuUsage;
+
 typedef struct PlayerHeart {
     s32 current;
     s32 max;
@@ -832,7 +844,7 @@ extern s32 D_80097910;
 extern s32 D_80097914;
 extern s32 D_80097924;
 extern s32 D_80097928;
-extern Unkstruct_Entrypoint D_8009792C;
+extern GpuUsage g_GpuUsage;
 extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;

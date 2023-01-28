@@ -1382,11 +1382,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F53D4);
 void func_800F53D4(s32 tpage, s32 arg1);
 #else
 void func_800F53D4(s32 tpage, s32 arg1) {
-    DR_MODE* drawMode = &D_8006C37C->drawModes[D_8009792C];
+    DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage];
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
         AddPrim(&D_8006C37C->unk_0474[arg1], drawMode);
-        D_8009792C += 1;
+        g_GpuUsage += 1;
     }
 }
 #endif

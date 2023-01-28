@@ -117,15 +117,15 @@ void func_800E2F3C(void) {
         return;
 
     if (D_80097498 & 0x100) {
-        FntPrint("dr  :%03x\n", D_801362DC.unk0);
-        FntPrint("gt4 :%03x\n", D_801362E0);
-        FntPrint("g4  :%03x\n", D_801362E4);
-        FntPrint("gt3 :%03x\n", D_801362E8);
-        FntPrint("line:%03x\n", D_801362EC);
-        FntPrint("sp16:%03x\n", D_801362F0);
-        FntPrint("sp  :%03x\n", D_801362F8);
-        FntPrint("tile:%03x\n", D_801362F4);
-        FntPrint("env :%03x\n", D_801362FC);
+        FntPrint("dr  :%03x\n", g_GpuMaxUsage.drawModes);
+        FntPrint("gt4 :%03x\n", g_GpuMaxUsage.gt4);
+        FntPrint("g4  :%03x\n", g_GpuMaxUsage.g4);
+        FntPrint("gt3 :%03x\n", g_GpuMaxUsage.gt3);
+        FntPrint("line:%03x\n", g_GpuMaxUsage.line);
+        FntPrint("sp16:%03x\n", g_GpuMaxUsage.sp16);
+        FntPrint("sp  :%03x\n", g_GpuMaxUsage.sp);
+        FntPrint("tile:%03x\n", g_GpuMaxUsage.tile);
+        FntPrint("env :%03x\n", g_GpuMaxUsage.env);
         FntPrint("eff :%03x\n", D_800A2438);
     }
 
@@ -376,15 +376,16 @@ void entrypoint_sotn(void) {
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
     func_800E4124(0);
-    D_801362DC.unk0 = 0;
-    D_801362E0 = 0;
-    D_801362E4 = 0;
-    D_801362E8 = 0;
-    D_801362EC = 0;
-    D_801362F0 = 0;
-    D_801362F4 = 0;
-    D_801362F8 = 0;
-    D_801362FC = 0;
+
+    g_GpuMaxUsage.drawModes = 0;
+    g_GpuMaxUsage.gt4 = 0;
+    g_GpuMaxUsage.g4 = 0;
+    g_GpuMaxUsage.gt3 = 0;
+    g_GpuMaxUsage.line = 0;
+    g_GpuMaxUsage.sp16 = 0;
+    g_GpuMaxUsage.tile = 0;
+    g_GpuMaxUsage.sp = 0;
+    g_GpuMaxUsage.env = 0;
     D_80098850 = 0;
 loop_5:
     D_8003C73C = 0;
@@ -431,15 +432,15 @@ loop_5:
         D_8006C37C = temp_v1_2;
         D_801362CC = temp_v1_2->_unk_0474;
         ClearOTag(temp_v1_2->_unk_0474, 0x200);
-        D_8009792C.unk0 = 0;
-        D_8009792C.unk20 = 0;
-        D_8009792C.unk4 = 0;
-        D_8009792C.unk8 = 0;
-        D_8009792C.unkC = 0;
-        D_8009792C.unk10 = 0;
-        D_8009792C.unk14 = 0;
-        D_8009792C.unk18 = 0;
-        D_8009792C.unk1C = 0;
+        g_GpuUsage.drawModes = 0;
+        g_GpuUsage.env = 0;
+        g_GpuUsage.gt4 = 0;
+        g_GpuUsage.g4 = 0;
+        g_GpuUsage.gt3 = 0;
+        g_GpuUsage.line = 0;
+        g_GpuUsage.sp16 = 0;
+        g_GpuUsage.tile = 0;
+        g_GpuUsage.sp = 0;
         if (nullsub_8() != 0) {
             func_800E7AEC();
         }
@@ -495,32 +496,32 @@ loop_5:
             func_80132760();
         }
 
-        if (D_801362DC.unk0 < D_8009792C.unk0) {
-            D_801362DC.unk0 = D_8009792C.unk0;
+        if (g_GpuMaxUsage.drawModes < g_GpuUsage.drawModes) {
+            g_GpuMaxUsage.drawModes = g_GpuUsage.drawModes;
         }
-        if (D_801362DC.unk4 < D_8009792C.unk4) {
-            D_801362DC.unk4 = D_8009792C.unk4;
+        if (g_GpuMaxUsage.gt4 < g_GpuUsage.gt4) {
+            g_GpuMaxUsage.gt4 = g_GpuUsage.gt4;
         }
-        if (D_801362DC.unk8 < D_8009792C.unk8) {
-            D_801362DC.unk8 = D_8009792C.unk8;
+        if (g_GpuMaxUsage.g4 < g_GpuUsage.g4) {
+            g_GpuMaxUsage.g4 = g_GpuUsage.g4;
         }
-        if (D_801362DC.unkC < D_8009792C.unkC) {
-            D_801362DC.unkC = D_8009792C.unkC;
+        if (g_GpuMaxUsage.gt3 < g_GpuUsage.gt3) {
+            g_GpuMaxUsage.gt3 = g_GpuUsage.gt3;
         }
-        if (D_801362DC.unk10 < D_8009792C.unk10) {
-            D_801362DC.unk10 = D_8009792C.unk10;
+        if (g_GpuMaxUsage.line < g_GpuUsage.line) {
+            g_GpuMaxUsage.line = g_GpuUsage.line;
         }
-        if (D_801362DC.unk14 < D_8009792C.unk14) {
-            D_801362DC.unk14 = D_8009792C.unk14;
+        if (g_GpuMaxUsage.sp16 < g_GpuUsage.sp16) {
+            g_GpuMaxUsage.sp16 = g_GpuUsage.sp16;
         }
-        if (D_801362DC.unk18 < D_8009792C.unk18) {
-            D_801362DC.unk18 = D_8009792C.unk18;
+        if (g_GpuMaxUsage.tile < g_GpuUsage.tile) {
+            g_GpuMaxUsage.tile = g_GpuUsage.tile;
         }
-        if (D_801362DC.unk1C < D_8009792C.unk1C) {
-            D_801362DC.unk1C = D_8009792C.unk1C;
+        if (g_GpuMaxUsage.sp < g_GpuUsage.sp) {
+            g_GpuMaxUsage.sp = g_GpuUsage.sp;
         }
-        if (D_801362DC.unk20 < D_8009792C.unk20) {
-            D_801362DC.unk20 = D_8009792C.unk20;
+        if (g_GpuMaxUsage.env < g_GpuUsage.env) {
+            g_GpuMaxUsage.env = g_GpuUsage.env;
         }
 
         // Update game timer
