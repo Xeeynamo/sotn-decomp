@@ -74,6 +74,7 @@
 #define PROGRAM_IWA_LOAD 0x42
 #define PROGRAM_IGA_LOAD 0x43
 #define PROGRAM_HAGI_LOAD 0x44
+#define PROGRAM_UNKNOWN 0x45
 #define PROGRAM_TE1 0x46
 #define PROGRAM_TE2 0x47
 #define PROGRAM_TE3 0x48
@@ -305,6 +306,18 @@ typedef struct {
     /* 0x13FF4 */ TILE tiles[0x100];
     /* 0x14FF4 */ SPRT sprite[0x200];
 } GpuBuffer; /* size = 0x177F4 */
+
+typedef struct {
+    /* 0x00 */ u32 drawModes;
+    /* 0x04 */ u32 gt4;
+    /* 0x08 */ u32 g4;
+    /* 0x0C */ u32 gt3;
+    /* 0x10 */ u32 line;
+    /* 0x14 */ u32 sp16;
+    /* 0x18 */ u32 tile;
+    /* 0x1C */ u32 sp;
+    /* 0x20 */ u32 env;
+} GpuUsage;
 
 typedef struct PlayerHeart {
     s32 current;
@@ -670,6 +683,10 @@ extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;
 extern s32 D_8006C390;
+extern s32 D_8006C384;
+extern s32 D_8006C388;
+extern s32 D_8006C38C;
+extern s32 D_8006C390;
 extern s32 D_8006C398;
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
@@ -678,7 +695,7 @@ extern s32 D_8006C3B0;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
-extern u16 D_8006CBCC;
+extern u16 g_Clut[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
@@ -832,7 +849,7 @@ extern s32 D_80097910;
 extern s32 D_80097914;
 extern s32 D_80097924;
 extern s32 D_80097928;
-extern Unkstruct_Entrypoint D_8009792C;
+extern GpuUsage g_GpuUsage;
 extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;

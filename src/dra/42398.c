@@ -9,6 +9,8 @@
 #include "objects.h"
 #include "sfx.h"
 
+#define COLORS_PER_PAL 16
+
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_ALL_H
@@ -80,58 +82,83 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2824);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2B00);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2E98);
+void func_800E2E98(s32 colorAdd) {
+    s32 newColorChannel;
+    s32 otherColorChannels;
+    u16 firstColor;
+    u16* palette;
+
+    palette = g_Clut + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
+    firstColor = palette[0];
+    switch (D_801362C4) {
+    case 0:
+        otherColorChannels = firstColor & 0xFFE0;
+        newColorChannel = (firstColor + colorAdd) & 0x1F;
+        break;
+    case 1:
+        otherColorChannels = firstColor & 0xFC1F;
+        newColorChannel = (firstColor + (colorAdd << 5)) & 0x3E0;
+        break;
+    case 2:
+        otherColorChannels = firstColor & 0x83FF;
+        newColorChannel = (firstColor + (colorAdd << 10)) & 0x7C00;
+        break;
+    default:
+        return;
+    }
+    *palette = otherColorChannels |= newColorChannel;
+}
 
 s32 nullsub_8(void) {}
 
 // TODO: Replace symbols with corresponding strings when able to import rodata.
 void func_800E2F3C(void) {
-    if (D_800BD1C0 != 0) {
-        if (D_80097498 & 0x100) {
-            FntPrint(&aDr03x, D_801362DC.unk0); // "dr  :%03x\n"
-            FntPrint(&aGt403x, D_801362E0);     // "gt4 :%03x\n"
-            FntPrint(&aG403x, D_801362E4);      // "g4  :%03x\n"
-            FntPrint(&aGt303x, D_801362E8);     // "gt3 :%03x\n"
-            FntPrint(&aLine03x, D_801362EC);    // "line:%03x\n"
-            FntPrint(&aSp1603x, D_801362F0);    // "sp16:%03x\n"
-            FntPrint(&aSp03x, D_801362F8);      // "sp  :%03x\n"
-            FntPrint(&aTile03x, D_801362F4);    // "tile:%03x\n"
-            FntPrint(&aEnv03x, D_801362FC);     // "env :%03x\n"
-            FntPrint(&aEff03x, D_800A2438);     // "eff :%03x\n"
+    if (D_800BD1C0 == 0)
+        return;
+
+    if (D_80097498 & 0x100) {
+        FntPrint("dr  :%03x\n", g_GpuMaxUsage.drawModes);
+        FntPrint("gt4 :%03x\n", g_GpuMaxUsage.gt4);
+        FntPrint("g4  :%03x\n", g_GpuMaxUsage.g4);
+        FntPrint("gt3 :%03x\n", g_GpuMaxUsage.gt3);
+        FntPrint("line:%03x\n", g_GpuMaxUsage.line);
+        FntPrint("sp16:%03x\n", g_GpuMaxUsage.sp16);
+        FntPrint("sp  :%03x\n", g_GpuMaxUsage.sp);
+        FntPrint("tile:%03x\n", g_GpuMaxUsage.tile);
+        FntPrint("env :%03x\n", g_GpuMaxUsage.env);
+        FntPrint("eff :%03x\n", D_800A2438);
+    }
+
+    if (D_80138FB0 == 3) {
+        u16 r, g, b;
+
+        switch (D_801362C4) {
+        case 0:
+            FntPrint("red");
+            break;
+
+        case 1:
+            FntPrint("green");
+            break;
+
+        case 2:
+            FntPrint("blue");
+            break;
         }
-        
-        if (D_80138FB0 == 3) {
-            switch (D_801362C4) {
-            case 0:
-                FntPrint(&aRed); // "red"
-                break;
 
-            case 1:
-                FntPrint(&aGreen); // "green"
-                break;
-
-            case 2:
-                FntPrint(&aBlue); // "blue"
-                break;
-            }
-
-            if (*((&D_8006CBCC) + ((D_8013900C * 0x10) + D_801362C0)) &
-                0x8000) {
-                FntPrint(&aHalfOn); // "  half on\n"
-            } else {
-                FntPrint(&aHalfOff); // "  half off\n"
-            };
-            
-            FntPrint(
-                &aRgb02x02x02x, // "rgb:%02X,%02X,%02X\n"
-                *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) & 0x1F,
-                *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) >> 5 & 0x1F,
-                *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) >> 0xA &
-                    0x1F);
+        if (g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
+            FntPrint("  half on\n");
         } else {
-            FntPrint(&a0104x04x, D_8006C384, D_8006C388); // "01:%04x,%04x\n"
-            FntPrint(&a2304x04x, D_8006C38C, D_8006C390); // "23:%04x,%04x\n"
-        }
+            FntPrint("  half off\n");
+        };
+
+        r = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
+        g = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
+        b = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
+        FntPrint("rgb:%02X,%02X,%02X\n", r, g, b);
+    } else {
+        FntPrint("01:%04x,%04x\n", D_8006C384, D_8006C388);
+        FntPrint("23:%04x,%04x\n", D_8006C38C, D_8006C390);
     }
 }
 
@@ -349,15 +376,16 @@ void entrypoint_sotn(void) {
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
     func_800E4124(0);
-    D_801362DC.unk0 = 0;
-    D_801362E0 = 0;
-    D_801362E4 = 0;
-    D_801362E8 = 0;
-    D_801362EC = 0;
-    D_801362F0 = 0;
-    D_801362F4 = 0;
-    D_801362F8 = 0;
-    D_801362FC = 0;
+
+    g_GpuMaxUsage.drawModes = 0;
+    g_GpuMaxUsage.gt4 = 0;
+    g_GpuMaxUsage.g4 = 0;
+    g_GpuMaxUsage.gt3 = 0;
+    g_GpuMaxUsage.line = 0;
+    g_GpuMaxUsage.sp16 = 0;
+    g_GpuMaxUsage.tile = 0;
+    g_GpuMaxUsage.sp = 0;
+    g_GpuMaxUsage.env = 0;
     D_80098850 = 0;
 loop_5:
     D_8003C73C = 0;
@@ -371,14 +399,14 @@ loop_5:
     func_800EA538(0);
     func_800EAEEC();
     D_801362B4 = 0x20;
-    D_8013900C = 0x200;
+    g_DebugCurPal = 0x200;
     D_800BD1C0 = 0;
     D_801362B0 = 0;
     D_801362B8 = 0;
     D_801362BC = 0;
     D_80138FB0 = 0;
     D_801362AC = 0;
-    D_801362C0 = 0;
+    g_DebugPalIdx = 0;
     D_801362C4 = 0;
     D_801362C8 = 0;
     D_801362D8 = 0;
@@ -404,15 +432,15 @@ loop_5:
         D_8006C37C = temp_v1_2;
         D_801362CC = temp_v1_2->_unk_0474;
         ClearOTag(temp_v1_2->_unk_0474, 0x200);
-        D_8009792C.unk0 = 0;
-        D_8009792C.unk20 = 0;
-        D_8009792C.unk4 = 0;
-        D_8009792C.unk8 = 0;
-        D_8009792C.unkC = 0;
-        D_8009792C.unk10 = 0;
-        D_8009792C.unk14 = 0;
-        D_8009792C.unk18 = 0;
-        D_8009792C.unk1C = 0;
+        g_GpuUsage.drawModes = 0;
+        g_GpuUsage.env = 0;
+        g_GpuUsage.gt4 = 0;
+        g_GpuUsage.g4 = 0;
+        g_GpuUsage.gt3 = 0;
+        g_GpuUsage.line = 0;
+        g_GpuUsage.sp16 = 0;
+        g_GpuUsage.tile = 0;
+        g_GpuUsage.sp = 0;
         if (nullsub_8() != 0) {
             func_800E7AEC();
         }
@@ -468,32 +496,32 @@ loop_5:
             func_80132760();
         }
 
-        if (D_801362DC.unk0 < D_8009792C.unk0) {
-            D_801362DC.unk0 = D_8009792C.unk0;
+        if (g_GpuMaxUsage.drawModes < g_GpuUsage.drawModes) {
+            g_GpuMaxUsage.drawModes = g_GpuUsage.drawModes;
         }
-        if (D_801362DC.unk4 < D_8009792C.unk4) {
-            D_801362DC.unk4 = D_8009792C.unk4;
+        if (g_GpuMaxUsage.gt4 < g_GpuUsage.gt4) {
+            g_GpuMaxUsage.gt4 = g_GpuUsage.gt4;
         }
-        if (D_801362DC.unk8 < D_8009792C.unk8) {
-            D_801362DC.unk8 = D_8009792C.unk8;
+        if (g_GpuMaxUsage.g4 < g_GpuUsage.g4) {
+            g_GpuMaxUsage.g4 = g_GpuUsage.g4;
         }
-        if (D_801362DC.unkC < D_8009792C.unkC) {
-            D_801362DC.unkC = D_8009792C.unkC;
+        if (g_GpuMaxUsage.gt3 < g_GpuUsage.gt3) {
+            g_GpuMaxUsage.gt3 = g_GpuUsage.gt3;
         }
-        if (D_801362DC.unk10 < D_8009792C.unk10) {
-            D_801362DC.unk10 = D_8009792C.unk10;
+        if (g_GpuMaxUsage.line < g_GpuUsage.line) {
+            g_GpuMaxUsage.line = g_GpuUsage.line;
         }
-        if (D_801362DC.unk14 < D_8009792C.unk14) {
-            D_801362DC.unk14 = D_8009792C.unk14;
+        if (g_GpuMaxUsage.sp16 < g_GpuUsage.sp16) {
+            g_GpuMaxUsage.sp16 = g_GpuUsage.sp16;
         }
-        if (D_801362DC.unk18 < D_8009792C.unk18) {
-            D_801362DC.unk18 = D_8009792C.unk18;
+        if (g_GpuMaxUsage.tile < g_GpuUsage.tile) {
+            g_GpuMaxUsage.tile = g_GpuUsage.tile;
         }
-        if (D_801362DC.unk1C < D_8009792C.unk1C) {
-            D_801362DC.unk1C = D_8009792C.unk1C;
+        if (g_GpuMaxUsage.sp < g_GpuUsage.sp) {
+            g_GpuMaxUsage.sp = g_GpuUsage.sp;
         }
-        if (D_801362DC.unk20 < D_8009792C.unk20) {
-            D_801362DC.unk20 = D_8009792C.unk20;
+        if (g_GpuMaxUsage.env < g_GpuUsage.env) {
+            g_GpuMaxUsage.env = g_GpuUsage.env;
         }
 
         // Update game timer

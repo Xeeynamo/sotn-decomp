@@ -663,7 +663,7 @@ void func_80106670(s32 blendMode) {
     entity = g_EntityArray;
     temp_s7 = temp_a0->_unk_0474;
     tile = &temp_a0->tiles[D_80097944];
-    sp20 = &temp_a0->drawModes[D_8009792C.unk0];
+    sp20 = &temp_a0->drawModes[g_GpuUsage.unk0];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
@@ -747,10 +747,10 @@ void func_80106670(s32 blendMode) {
         }
     }
 
-    if (D_8009792C.unk0 < 0x400U) {
+    if (g_GpuUsage.unk0 < 0x400U) {
         SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
         AddPrim(temp_s7 + var_s8 * 4, sp20);
-        D_8009792C.unk0++;
+        g_GpuUsage.unk0++;
     }
 }
 #endif
