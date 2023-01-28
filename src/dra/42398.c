@@ -117,16 +117,16 @@ void func_800E2F3C(void) {
         return;
 
     if (D_80097498 & 0x100) {
-        FntPrint(&aDr03x, D_801362DC.unk0); // "dr  :%03x\n"
-        FntPrint(&aGt403x, D_801362E0);     // "gt4 :%03x\n"
-        FntPrint(&aG403x, D_801362E4);      // "g4  :%03x\n"
-        FntPrint(&aGt303x, D_801362E8);     // "gt3 :%03x\n"
-        FntPrint(&aLine03x, D_801362EC);    // "line:%03x\n"
-        FntPrint(&aSp1603x, D_801362F0);    // "sp16:%03x\n"
-        FntPrint(&aSp03x, D_801362F8);      // "sp  :%03x\n"
-        FntPrint(&aTile03x, D_801362F4);    // "tile:%03x\n"
-        FntPrint(&aEnv03x, D_801362FC);     // "env :%03x\n"
-        FntPrint(&aEff03x, D_800A2438);     // "eff :%03x\n"
+        FntPrint("dr  :%03x\n", D_801362DC.unk0);
+        FntPrint("gt4 :%03x\n", D_801362E0);
+        FntPrint("g4  :%03x\n", D_801362E4);
+        FntPrint("gt3 :%03x\n", D_801362E8);
+        FntPrint("line:%03x\n", D_801362EC);
+        FntPrint("sp16:%03x\n", D_801362F0);
+        FntPrint("sp  :%03x\n", D_801362F8);
+        FntPrint("tile:%03x\n", D_801362F4);
+        FntPrint("env :%03x\n", D_801362FC);
+        FntPrint("eff :%03x\n", D_800A2438);
     }
 
     if (D_80138FB0 == 3) {
@@ -134,31 +134,31 @@ void func_800E2F3C(void) {
 
         switch (D_801362C4) {
         case 0:
-            FntPrint(&aRed); // "red"
+            FntPrint("red");
             break;
 
         case 1:
-            FntPrint(&aGreen); // "green"
+            FntPrint("green");
             break;
 
         case 2:
-            FntPrint(&aBlue); // "blue"
+            FntPrint("blue");
             break;
         }
 
         if (g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
-            FntPrint(&aHalfOn); // "  half on\n"
+            FntPrint("  half on\n");
         } else {
-            FntPrint(&aHalfOff); // "  half off\n"
+            FntPrint("  half off\n");
         };
 
         r = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
         g = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
         b = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
-        FntPrint(&aRgb02x02x02x, r, g, b);
+        FntPrint("rgb:%02X,%02X,%02X\n", r, g, b);
     } else {
-        FntPrint(&a0104x04x, D_8006C384, D_8006C388); // "01:%04x,%04x\n"
-        FntPrint(&a2304x04x, D_8006C38C, D_8006C390); // "23:%04x,%04x\n"
+        FntPrint("01:%04x,%04x\n", D_8006C384, D_8006C388);
+        FntPrint("23:%04x,%04x\n", D_8006C38C, D_8006C390);
     }
 }
 
