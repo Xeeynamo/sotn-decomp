@@ -2145,7 +2145,108 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80123B40);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80123F78);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80124164);
+void func_80124164(Unkstruct_80124164* arg0, s32 arg1, s32 arg2, s32 arg3,
+                   s32 arg4) {
+    s16 temp = arg2 - arg3;
+    s16 temp2 = arg2 + arg3;
+    s32 temp3;
+
+    arg0->unk16 = temp;
+    arg0->unkA = temp;
+
+    arg0->unk2E = temp2;
+    arg0->unk22 = temp2;
+
+    if (arg0->unkA < 0) {
+        arg0->unk16 = 0;
+        arg0->unkA = 0;
+    }
+
+    if (arg0->unkA > 240) {
+        arg0->unk2E = 240;
+        arg0->unk22 = 240;
+    }
+
+    if (arg4 == 0) {
+        temp3 = arg1 * D_800AE270[0];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk28 = (u32)temp3 >> 8;
+        arg0->unk10 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[1];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk29 = (u32)temp3 >> 8;
+        arg0->unk11 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[2];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk2A = (u32)temp3 >> 8;
+        arg0->unk12 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[3];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk1C = (u32)temp3 >> 8;
+        arg0->unk4 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[4];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk1D = (u32)temp3 >> 8;
+        arg0->unk5 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[5];
+    } else {
+        temp3 = arg1 * D_800AE270[0];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk28 = (u32)temp3 >> 8;
+        arg0->unk10 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[1];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk29 = (u32)temp3 >> 8;
+        arg0->unk11 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[2];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk2A = (u32)temp3 >> 8;
+        arg0->unk12 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[6];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk1C = (u32)temp3 >> 8;
+        arg0->unk4 = (u32)temp3 >> 8;
+
+        temp3 = arg1 * D_800AE270[7];
+        if (temp3 < 0) {
+            temp3 += 255;
+        }
+        arg0->unk1D = (u32)temp3 >> 8;
+        arg0->unk5 = (u32)temp3 >> 8;
+        temp3 = arg1 * D_800AE270[8];
+    }
+    if (temp3 < 0) {
+        temp3 += 255;
+    }
+    arg0->unk1E = (u32)temp3 >> 8;
+    arg0->unk6 = (u32)temp3 >> 8;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801243B0);
 

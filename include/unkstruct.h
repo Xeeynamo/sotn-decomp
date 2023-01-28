@@ -293,3 +293,30 @@ typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ char unk02[0x1E];
 } Unkstruct_800A7734; // size = 0x20
+
+typedef struct Unkstruct_80124164 {
+    /* 0x00 */ char pad0[0x4];
+    /* 0x04 */ s8 unk4;
+    /* 0x05 */ s8 unk5;
+    /* 0x06 */ s8 unk6;
+    /* 0x07 */ char pad7[0x3];
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ char padC[0x4];
+    /* 0x10 */ s8 unk10;
+    /* 0x11 */ s8 unk11;
+    /* 0x12 */ s8 unk12;
+    /* 0x13 */ char pad13[0x3];
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ char pad18[0x4];
+    /* 0x1C */ s8 unk1C;
+    /* 0x1D */ s8 unk1D;
+    /* 0x1E */ s8 unk1E;
+    /* 0x1F */ char pad1F[0x3];
+    /* 0x22 */ s16 unk22;
+    /* 0x24 */ char pad24[0x4];
+    /* 0x28 */ s8 unk28;
+    /* 0x29 */ s8 unk29;
+    /* 0x2A */ s8 unk2A;
+    /* 0x2B */ char pad2B[0x3];
+    /* 0x2E */ s16 unk2E;
+} Unkstruct_80124164;
