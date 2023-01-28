@@ -103,6 +103,7 @@ extern s32 D_800B0914;
 extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
+extern const char D_800DB524[];
 extern s32 D_800DC4C0;
 extern s8 D_800DC4C4;
 extern u8 D_800BF554[];
@@ -119,6 +120,7 @@ extern s32 D_801362C0;
 extern s32 D_801362C4;
 extern s32 D_801362C8;
 extern u32* D_801362CC;
+extern s32 D_801362D0[];
 extern s32 D_801362D4;
 extern s32 D_801362D8;
 extern Unkstruct_Entrypoint D_801362DC;
@@ -291,6 +293,8 @@ extern s32 D_8013B694;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
 extern void (*D_80170000)(void);
+extern s32 (*D_8017A018)();
+extern s32 (*D_8017D018)();
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
@@ -355,8 +359,10 @@ bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                   s32 u, s32 v, s32 clut, s32 tpage, s32 arg9, s32 colorIntensity,
-                   s32 argB);
+                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
+                    s32 colorIntensity, s32 argB);
+void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
+                  s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);

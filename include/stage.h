@@ -69,7 +69,7 @@ typedef struct {
 
 s32 Random();
 void Update(void);
-void CreateEntity(Entity* entity, LayoutObject* initDesc);
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntityFromIndex(s16 index);
 s32 AnimateEntity(const u8 frames[], Entity* entity);
