@@ -1377,19 +1377,16 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F53D4);
-void func_800F53D4(s32 tpage, s32 arg1);
-#else
-void func_800F53D4(s32 tpage, s32 arg1) {
-    DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage];
+void func_800F53D4(s32 tpage, s32 unkPrimIdx) {
+    u32* unkPrim = D_8006C37C->_unk_0474;
+    DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
-        AddPrim(&D_8006C37C->unk_0474[arg1], drawMode);
-        g_GpuUsage += 1;
+        AddPrim(&unkPrim[unkPrimIdx], drawMode);
+        g_GpuUsage.drawModes++;
     }
 }
-#endif
 
 u8 func_800F548C(u8 arg0) {
     u16 temp = arg0;
