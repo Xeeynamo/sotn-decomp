@@ -17,7 +17,7 @@ s32 func_8019AC78(u8, s16);
 void PreventEntityFromRespawning(Entity* entity);
 void FallEntity(void);
 void func_8019B858(void);
-void SpawnExplosionEntity(u16 objectId, Entity* entity);
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
@@ -100,7 +100,7 @@ void EntityBreakable(Entity* entity) {
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
-                SpawnExplosionEntity(2, temp_v0);
+                CreateEntityFromCurrentEntity(2, temp_v0);
                 temp_v0->subId = g_eBreakableExplosionTypes[temp_s0];
             }
             ReplaceBreakableWithItemDrop(entity);
@@ -241,7 +241,7 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801973C4);
 
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", EntityNumericDamage);
 
-void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
@@ -334,7 +334,7 @@ void func_80199554(void) {
     }
 }
 
-void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = D_801803C4[objectId];
@@ -342,7 +342,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_8019967C(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = D_801803C4[objectId];
@@ -919,7 +919,7 @@ void func_8019E2B8(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_8019967C(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
@@ -1128,7 +1128,7 @@ void func_8019F304(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            func_8019967C(2, g_CurrentEntity, entity);
+            CreateEntityFromEntity(2, g_CurrentEntity, entity);
             entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.U8.unk0 = temp_s4;
