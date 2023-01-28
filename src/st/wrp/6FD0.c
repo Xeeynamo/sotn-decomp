@@ -2593,7 +2593,7 @@ void func_801870B0(Entity* entity) {
 #endif
 
 void func_801870B0(Entity* entity);
-void SpawnExplosionEntity(u16 objectId, Entity* entity);
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
@@ -2605,7 +2605,7 @@ void EntityBreakable(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
+                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId =
                     g_eBreakableExplosionTypes[breakableType];
             }
@@ -2763,7 +2763,7 @@ void EntityWarpRoom(Entity* entity) {
         for (i = 0; i < 0x20; i++) {
             Entity* newEntity = AllocEntity(D_8007A958, D_8007A958 + var_v0_14);
             if (newEntity) {
-                SpawnExplosionEntity(0x17, newEntity);
+                CreateEntityFromCurrentEntity(0x17, newEntity);
                 newEntity->posY.i.hi = 0xCC - D_80073092;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
@@ -3257,7 +3257,7 @@ INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", TestCollisions);
 // https://decomp.me/scratch/m0PKE
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
 
-void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do {
@@ -3294,12 +3294,12 @@ void func_80189E9C(LayoutObject* layoutObj) {
         case 0x0:
             entity = &D_800762D8[layoutObj->objectRoomIndex];
             if (entity->objectId == 0) {
-                CreateEntity(entity, layoutObj);
+                CreateEntityFromLayout(entity, layoutObj);
             }
             break;
         case 0xA000:
             entity = &D_800762D8[layoutObj->objectRoomIndex];
-            CreateEntity(entity, layoutObj);
+            CreateEntityFromLayout(entity, layoutObj);
             break;
         }
     }
@@ -3484,7 +3484,7 @@ void func_8018A7AC(void) {
     }
 }
 
-void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -3492,7 +3492,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_8018A8D4(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -4153,7 +4153,7 @@ void func_8018F510(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_8018A8D4(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
@@ -4363,7 +4363,7 @@ void func_8019055C(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
         if (entity != NULL) {
-            func_8018A8D4(ENTITY_EXPLOSION, g_CurrentEntity, entity);
+            CreateEntityFromEntity(ENTITY_EXPLOSION, g_CurrentEntity, entity);
             entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.U8.unk0 = temp_s4;

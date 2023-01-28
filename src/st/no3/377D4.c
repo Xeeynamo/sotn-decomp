@@ -6,7 +6,7 @@
 
 #include "stage.h"
 
-void SpawnExplosionEntity(u16, Entity*);
+void CreateEntityFromCurrentEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 
 extern u8* D_80180850;
@@ -90,7 +90,7 @@ void EntityBreakable(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
+                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId =
                     g_eBreakableExplosionTypes[breakableType];
             }
@@ -266,12 +266,12 @@ void EntityBackgroundCastleWall(Entity* entity) {
 
     newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
     if (newEntity != NULL) {
-        SpawnExplosionEntity(0x11U, newEntity);
+        CreateEntityFromCurrentEntity(0x11U, newEntity);
         newEntity->subId = 0xC;
         newEntity->unk68 = 0x80;
         newEntity = AllocEntity(newEntity, &D_8007C0D8[64]);
         if (newEntity != NULL) {
-            SpawnExplosionEntity(0x11U, newEntity);
+            CreateEntityFromCurrentEntity(0x11U, newEntity);
             newEntity->subId = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;
@@ -352,7 +352,7 @@ void func_801C13F8() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
-            func_801C3F38(0x62, g_CurrentEntity, entity);
+            CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
             entity->subId = 2;
             entity->unk88.S8.unk1 = 6 - i;
             entity->unk84.S16.unk0 = temp_s3;
@@ -377,7 +377,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801C1C80);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityNumericDamage);
 
-void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do {
@@ -519,7 +519,7 @@ void func_801C3E10(void) {
     }
 }
 
-void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -527,7 +527,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_801C3F38(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -1095,7 +1095,7 @@ void EntityUnkId13(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_801C3F38(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
@@ -1277,7 +1277,7 @@ void func_801C9BC0(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
-            func_801C3F38(2, g_CurrentEntity, entity);
+            CreateEntityFromEntity(2, g_CurrentEntity, entity);
             entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.U8.unk0 = temp_s4;
@@ -1491,7 +1491,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     if (entity->unk34 & 0x100) {
         temp_v0 = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (temp_v0 != NULL) {
-            func_801C3F38(2, entity, temp_v0);
+            CreateEntityFromEntity(2, entity, temp_v0);
             temp_v0->subId = 0;
         }
         DestroyEntity(entity);
