@@ -174,7 +174,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", TestCollisions);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityNumericDamage);
 
-void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do { //! FAKE https://decomp.me/scratch/zysYC
@@ -243,7 +243,7 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801BB920);
 // https://decomp.me/scratch/cJ3CF
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801BBA98);
 
-void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = D_80180A90[objectId];
@@ -251,7 +251,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_801BBBC0(u16 objectId, Entity* ent1, Entity* ent2) {
+void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->objectId = objectId;
     ent2->pfnUpdate = D_80180A90[objectId];
@@ -804,7 +804,7 @@ void func_801C07FC(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_801BBBC0(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
@@ -1000,7 +1000,7 @@ void func_801C1848(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            func_801BBBC0(2, g_CurrentEntity, entity);
+            CreateEntityFromEntity(2, g_CurrentEntity, entity);
             entity->unk84.U8.unk1 = 6 - i;
             entity->unk80.modeS16.unk0 = temp_s3;
             entity->unk84.U8.unk0 = temp_s4;

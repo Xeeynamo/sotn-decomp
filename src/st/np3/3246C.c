@@ -6,7 +6,7 @@
 
 #include "stage.h"
 
-void SpawnExplosionEntity(u16, Entity*);
+void CreateEntityFromCurrentEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 int func_801CD658();
 void EntityPriceDrop(Entity* entity);
@@ -58,7 +58,7 @@ void EntityBreakable(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                SpawnExplosionEntity(ENTITY_EXPLOSION, entityDropItem);
+                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, entityDropItem);
                 entityDropItem->subId =
                     g_eBreakableExplosionTypes[breakableType];
             }
@@ -196,7 +196,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B94F0);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityNumericDamage);
 
-void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do {
@@ -233,7 +233,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", InitRoomEntities);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BB680);
 
-void SpawnExplosionEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -241,7 +241,7 @@ void SpawnExplosionEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void func_801BB7A8(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -530,7 +530,7 @@ void func_801C03E4(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_801BB7A8(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;

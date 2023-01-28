@@ -14,7 +14,7 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
-void func_801B3BDC(u16 objectId, Entity* source, Entity* entity);
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 s16 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
@@ -453,7 +453,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
-                func_801B3BDC(0x1E, entity, newEntity);
+                CreateEntityFromEntity(0x1E, entity, newEntity);
                 newEntity->zPriority = entity->zPriority + 1;
                 randomPosXYIndex = (Random() & 3) * 2;
                 newEntity->posX.i.hi =
@@ -526,7 +526,7 @@ void EntityDraculaGlass(Entity* entity) {
                 Entity* glassShardEntity =
                     AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
                 if (glassShardEntity != 0) {
-                    func_801B3BDC(31, entity, glassShardEntity);
+                    CreateEntityFromEntity(31, entity, glassShardEntity);
                     glassShardEntity->subId = 1;
                 }
             }
@@ -700,7 +700,7 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1CA0);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityNumericDamage);
 
-void CreateEntity(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     do {
@@ -737,9 +737,9 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B393C);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3AB4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3B68);
+INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", CreateEntityFromCurrentEntity);
 
-void func_801B3BDC(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -1047,7 +1047,7 @@ void func_801B7BFC(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_801B3BDC(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;

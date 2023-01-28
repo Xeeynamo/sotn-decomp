@@ -170,7 +170,7 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193410);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801934C4);
 
-void func_8018A8D4(u16 objectId, Entity* source, Entity* entity);
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193538);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801935B4);
