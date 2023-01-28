@@ -76,7 +76,7 @@ void LoadStageTileset(u32* pTilesetData, s16 y) {
 INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E7E08);
 #else
 void LoadStageTileset(u32* pTilesetData, s16 y);
-extern u32 D_8006CBCC;
+extern u32 g_Clut;
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
 extern s32 D_800A0248;
@@ -136,11 +136,11 @@ s32 func_800E7E08(u32 arg0) {
     case 11: // .rodata+0x8,0x2c
         LoadStageTileset(0x80280000, 0);
         DrawSync(0);
-        StoreImage(&D_800ACDB8, &D_8006CBCC);
+        StoreImage(&D_800ACDB8, &g_Clut);
         if (arg0 == 0xB) {
-            StoreImage(&D_800ACDB8, &D_8006CBCC + 0x4000);
+            StoreImage(&D_800ACDB8, &g_Clut + 0x4000);
             DrawSync(0);
-            LoadImage(&D_800ACDB8 - 8, &D_8006CBCC + 0x4000);
+            LoadImage(&D_800ACDB8 - 8, &g_Clut + 0x4000);
             break;
         }
         break;
@@ -193,7 +193,7 @@ s32 func_800E7E08(u32 arg0) {
         break;
     case 17:
         LoadImage(&D_800ACDA8, (u32*)0x80280000);
-        StoreImage(&D_800ACDA8, &D_8006CBCC);
+        StoreImage(&D_800ACDA8, &g_Clut);
         break;
     }
 
