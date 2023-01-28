@@ -754,6 +754,8 @@ extern s32 g_CurrentRoomHeight;
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
+// dictionary of direct accesses
+// g_EntityArray PLAYER
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
 extern s16 D_800733DE;  // PLAYER.posY.i.hi
 extern s32 D_800733E0;  // PLAYER.accelerationX
