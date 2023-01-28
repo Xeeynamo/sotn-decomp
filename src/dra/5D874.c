@@ -3519,7 +3519,7 @@ void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
     }
     func_80132A04((arg1 * 2) + 12, D_800BF554[arg0 * 7], D_800BF555[arg0 * 7],
                   D_800BF559[arg0 * 7], D_800BF556[arg0 * 7], arg3, arg4);
-    do { // !FAKE:
+    do { // TODO: !FAKE
     } while (0);
     D_8013B650[arg1] = arg0;
     D_8013AED4[arg1] = D_800BF55A[arg0 * 7];
