@@ -86,52 +86,52 @@ s32 nullsub_8(void) {}
 
 // TODO: Replace symbols with corresponding strings when able to import rodata.
 void func_800E2F3C(void) {
-    if (D_800BD1C0 != 0) {
-        if (D_80097498 & 0x100) {
-            FntPrint(&aDr03x, D_801362DC.unk0); // "dr  :%03x\n"
-            FntPrint(&aGt403x, D_801362E0);     // "gt4 :%03x\n"
-            FntPrint(&aG403x, D_801362E4);      // "g4  :%03x\n"
-            FntPrint(&aGt303x, D_801362E8);     // "gt3 :%03x\n"
-            FntPrint(&aLine03x, D_801362EC);    // "line:%03x\n"
-            FntPrint(&aSp1603x, D_801362F0);    // "sp16:%03x\n"
-            FntPrint(&aSp03x, D_801362F8);      // "sp  :%03x\n"
-            FntPrint(&aTile03x, D_801362F4);    // "tile:%03x\n"
-            FntPrint(&aEnv03x, D_801362FC);     // "env :%03x\n"
-            FntPrint(&aEff03x, D_800A2438);     // "eff :%03x\n"
+    if (D_800BD1C0 == 0)
+        return;
+
+    if (D_80097498 & 0x100) {
+        FntPrint(&aDr03x, D_801362DC.unk0); // "dr  :%03x\n"
+        FntPrint(&aGt403x, D_801362E0);     // "gt4 :%03x\n"
+        FntPrint(&aG403x, D_801362E4);      // "g4  :%03x\n"
+        FntPrint(&aGt303x, D_801362E8);     // "gt3 :%03x\n"
+        FntPrint(&aLine03x, D_801362EC);    // "line:%03x\n"
+        FntPrint(&aSp1603x, D_801362F0);    // "sp16:%03x\n"
+        FntPrint(&aSp03x, D_801362F8);      // "sp  :%03x\n"
+        FntPrint(&aTile03x, D_801362F4);    // "tile:%03x\n"
+        FntPrint(&aEnv03x, D_801362FC);     // "env :%03x\n"
+        FntPrint(&aEff03x, D_800A2438);     // "eff :%03x\n"
+    }
+
+    if (D_80138FB0 == 3) {
+        u16 r, g, b;
+
+        switch (D_801362C4) {
+        case 0:
+            FntPrint(&aRed); // "red"
+            break;
+
+        case 1:
+            FntPrint(&aGreen); // "green"
+            break;
+
+        case 2:
+            FntPrint(&aBlue); // "blue"
+            break;
         }
 
-        if (D_80138FB0 == 3) {
-            switch (D_801362C4) {
-            case 0:
-                FntPrint(&aRed); // "red"
-                break;
-
-            case 1:
-                FntPrint(&aGreen); // "green"
-                break;
-
-            case 2:
-                FntPrint(&aBlue); // "blue"
-                break;
-            }
-
-            if (*((&D_8006CBCC) + ((D_8013900C * 0x10) + D_801362C0)) &
-                0x8000) {
-                FntPrint(&aHalfOn); // "  half on\n"
-            } else {
-                FntPrint(&aHalfOff); // "  half off\n"
-            };
-
-            FntPrint(
-                &aRgb02x02x02x, // "rgb:%02X,%02X,%02X\n"
-                *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) & 0x1F,
-                *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) >> 5 & 0x1F,
-                *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) >> 0xA &
-                    0x1F);
+        if (D_8006CBCC[D_8013900C * 0x10 + D_801362C0] & 0x8000) {
+            FntPrint(&aHalfOn); // "  half on\n"
         } else {
-            FntPrint(&a0104x04x, D_8006C384, D_8006C388); // "01:%04x,%04x\n"
-            FntPrint(&a2304x04x, D_8006C38C, D_8006C390); // "23:%04x,%04x\n"
-        }
+            FntPrint(&aHalfOff); // "  half off\n"
+        };
+
+        r = D_8006CBCC[D_8013900C * 0x10 + D_801362C0] & 0x1F;
+        g = D_8006CBCC[D_8013900C * 0x10 + D_801362C0] >> 5 & 0x1F;
+        b = D_8006CBCC[D_8013900C * 0x10 + D_801362C0] >> 0xA & 0x1F;
+        FntPrint(&aRgb02x02x02x, r, g, b);
+    } else {
+        FntPrint(&a0104x04x, D_8006C384, D_8006C388); // "01:%04x,%04x\n"
+        FntPrint(&a2304x04x, D_8006C38C, D_8006C390); // "23:%04x,%04x\n"
     }
 }
 

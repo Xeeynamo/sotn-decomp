@@ -35,6 +35,6 @@ Avoid using names such as `zone`, `level`, `area` or `map`.
 
 ## Room
 
-Each stage contains a series of rooms. A room is where the player can roam around and it is confined within the camera borders. When the player reaches the border of the screen, the room is changes with a different layout and set of entities.
+Each stage contains a series of rooms. A room is where the player can roam around and it is confined within the camera borders. When the player reaches the border of the screen, the room is changed with a different layout and set of entities.
 
 Avoid using names such as `area` or `map`.
