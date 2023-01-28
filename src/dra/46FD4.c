@@ -97,4 +97,86 @@ void func_800E6FD4(void) {
     }
 }
 
-const u32 rodataPadding_800DB804 = 0;
+extern s32 g_mapTilesetId;
+s32 func_800E81FC(s32, s32);
+void func_800E4970(void);
+
+void nullsub_9(void) {}
+
+void func_800E738C(void) {
+    if (D_80073060 == 1) {
+        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
+            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 &&
+             func_800E81FC(7, 0) >= 0)) {
+            if (func_80131F68() != 0) {
+                PlaySfx(0x80);
+            }
+            func_800E346C();
+            D_80073060++;
+            return;
+        }
+    }
+    g_api.o.unk3C();
+}
+
+void func_800E7458(void) {
+    s32 pad[0x40];
+
+    switch (D_80073060) {
+    case 0:
+        g_mapProgramId = PROGRAM_UNKNOWN;
+        if (D_800978AC != 0) {
+            D_8006C398 = 1;
+            D_8006BAFC = 3;
+            g_mapTilesetId = PROGRAM_UNKNOWN;
+        }
+        D_80073060++;
+        break;
+    case 1:
+        if (D_800978AC != 0 && D_8006C3B0 != 0)
+            break;
+
+        if (D_800978AC != 0 || func_800E81FC(12, 0) >= 0) {
+            D_80073060++;
+        }
+        break;
+    case 2:
+        if (D_800978AC != 0) {
+            D_8006C398 = 1;
+            D_8006BAFC = 0xD;
+        }
+        D_80073060++;
+        break;
+    case 3:
+        if (D_800978AC != 0 && D_8006C3B0 != 0)
+            break;
+
+        if (D_800978AC != 0 ||
+            func_800E81FC(0, 2) >= 0 && func_800E81FC(0, 3) >= 0) {
+            D_80073060++;
+        }
+        break;
+    case 4:
+        if (D_800978AC != 0) {
+            D_8006C398 = 1;
+            D_8006BAFC = 0x100;
+        }
+        D_80073060++;
+        break;
+    case 5:
+        if (D_800978AC != 0 && D_8006C3B0 != 0)
+            break;
+
+        if (D_800978AC != 0 || func_800E81FC(0, 1) >= 0) {
+            D_8003C9A4 = 0;
+            D_80073060++;
+        }
+        break;
+    case 6:
+        g_api.o.Update();
+        break;
+    case 7:
+        func_800E4970();
+        break;
+    }
+}
