@@ -7,7 +7,7 @@ options:
   asset_path:   assets/dra
   src_path:     src/dra
   compiler:     GCC
-  symbol_addrs_path:    config/symbols.txt
+  symbol_addrs_path:    config/generated.symbols.dra.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.dra.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.dra.txt
   find_file_boundaries: yes

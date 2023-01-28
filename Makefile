@@ -71,7 +71,7 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
-		-T $(CONFIG_DIR)/symbols.txt \
+		-T $(CONFIG_DIR)/generated.symbols.$(1).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(1).txt \
 		--no-check-sections \
@@ -104,6 +104,7 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(MAIN).ld \
+	-T $(CONFIG_DIR)/symbols.txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(MAIN).txt \
 	--no-check-sections \
 	-nostdlib \
@@ -221,6 +222,7 @@ extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extrac
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools
+	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.dra.txt > $(CONFIG_DIR)/generated.symbols.dra.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(DRA).yaml
 extract_ric: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
