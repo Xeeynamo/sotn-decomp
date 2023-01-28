@@ -84,33 +84,6 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2E98);
 
 s32 nullsub_8(void) {}
 
-// INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2F3C);
-
-extern s32 D_8006C384;
-extern s32 D_8006C388;
-extern s32 D_8006C38C;
-extern s32 D_8006C390;
-extern u16 D_8006CBCC;
-extern u16 D_80097498;
-extern const char a0104x04x;
-extern const char a2304x04x;
-extern const char aBlue;
-extern const char aDr03x;
-extern const char aEff03x;
-extern const char aEnv03x;
-extern const char aG403x;
-extern const char aGreen;
-extern const char aGt303x;
-extern const char aGt403x;
-extern const char aHalfOff;
-extern const char aHalfOn;
-extern const char aLine03x;
-extern const char aRed;
-extern const char aRgb02x02x02x;
-extern const char aSp03x;
-extern const char aSp1603x;
-extern const char aTile03x;
-
 // TODO: Replace symbols with corresponding strings when able to import rodata.
 void func_800E2F3C(void) {
     if (D_800BD1C0 != 0) {
@@ -126,6 +99,7 @@ void func_800E2F3C(void) {
             FntPrint(&aEnv03x, D_801362FC);     // "env :%03x\n"
             FntPrint(&aEff03x, D_800A2438);     // "eff :%03x\n"
         }
+        
         if (D_80138FB0 == 3) {
             switch (D_801362C4) {
             case 0:
@@ -147,6 +121,7 @@ void func_800E2F3C(void) {
             } else {
                 FntPrint(&aHalfOff); // "  half off\n"
             };
+            
             FntPrint(
                 &aRgb02x02x02x, // "rgb:%02X,%02X,%02X\n"
                 *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) & 0x1F,
