@@ -117,7 +117,7 @@ extern s32 D_801362B4;
 extern s32 D_801362B8;
 extern s32 D_801362BC;
 extern s32 D_801362C0;
-extern s32 D_801362C4;
+extern u32 D_801362C4;
 extern s32 D_801362C8;
 extern u32* D_801362CC;
 extern s32 D_801362D0[];
