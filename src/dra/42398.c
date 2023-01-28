@@ -9,6 +9,8 @@
 #include "objects.h"
 #include "sfx.h"
 
+#define COLORS_PER_PAL 16
+
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_ALL_H
@@ -80,7 +82,32 @@ INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2824);
 
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2B00);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2E98);
+void func_800E2E98(s32 colorAdd) {
+    s32 newColorChannel;
+    s32 otherColorChannels;
+    u16 firstColor;
+    u16* palette;
+
+    palette = g_Clut + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
+    firstColor = palette[0];
+    switch (D_801362C4) {
+    case 0:
+        otherColorChannels = firstColor & 0xFFE0;
+        newColorChannel = (firstColor + colorAdd) & 0x1F;
+        break;
+    case 1:
+        otherColorChannels = firstColor & 0xFC1F;
+        newColorChannel = (firstColor + (colorAdd << 5)) & 0x3E0;
+        break;
+    case 2:
+        otherColorChannels = firstColor & 0x83FF;
+        newColorChannel = (firstColor + (colorAdd << 10)) & 0x7C00;
+        break;
+    default:
+        return;
+    }
+    *palette = otherColorChannels |= newColorChannel;
+}
 
 s32 nullsub_8(void) {}
 
@@ -119,15 +146,15 @@ void func_800E2F3C(void) {
             break;
         }
 
-        if (D_8006CBCC[D_8013900C * 0x10 + D_801362C0] & 0x8000) {
+        if (g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
             FntPrint(&aHalfOn); // "  half on\n"
         } else {
             FntPrint(&aHalfOff); // "  half off\n"
         };
 
-        r = D_8006CBCC[D_8013900C * 0x10 + D_801362C0] & 0x1F;
-        g = D_8006CBCC[D_8013900C * 0x10 + D_801362C0] >> 5 & 0x1F;
-        b = D_8006CBCC[D_8013900C * 0x10 + D_801362C0] >> 0xA & 0x1F;
+        r = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
+        g = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
+        b = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
         FntPrint(&aRgb02x02x02x, r, g, b);
     } else {
         FntPrint(&a0104x04x, D_8006C384, D_8006C388); // "01:%04x,%04x\n"
@@ -371,14 +398,14 @@ loop_5:
     func_800EA538(0);
     func_800EAEEC();
     D_801362B4 = 0x20;
-    D_8013900C = 0x200;
+    g_DebugCurPal = 0x200;
     D_800BD1C0 = 0;
     D_801362B0 = 0;
     D_801362B8 = 0;
     D_801362BC = 0;
     D_80138FB0 = 0;
     D_801362AC = 0;
-    D_801362C0 = 0;
+    g_DebugPalIdx = 0;
     D_801362C4 = 0;
     D_801362C8 = 0;
     D_801362D8 = 0;
