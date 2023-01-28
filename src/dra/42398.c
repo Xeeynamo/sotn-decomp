@@ -99,7 +99,7 @@ void func_800E2F3C(void) {
             FntPrint(&aEnv03x, D_801362FC);     // "env :%03x\n"
             FntPrint(&aEff03x, D_800A2438);     // "eff :%03x\n"
         }
-        
+
         if (D_80138FB0 == 3) {
             switch (D_801362C4) {
             case 0:
@@ -121,7 +121,7 @@ void func_800E2F3C(void) {
             } else {
                 FntPrint(&aHalfOff); // "  half off\n"
             };
-            
+
             FntPrint(
                 &aRgb02x02x02x, // "rgb:%02X,%02X,%02X\n"
                 *(((D_8013900C * 0x10) + D_801362C0) + &D_8006CBCC) & 0x1F,
