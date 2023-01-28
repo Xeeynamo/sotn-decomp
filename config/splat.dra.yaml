@@ -7,7 +7,7 @@ options:
   asset_path:   assets/dra
   src_path:     src/dra
   compiler:     GCC
-  symbol_addrs_path:    config/symbols.txt
+  symbol_addrs_path:    config/generated.symbols.dra.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.dra.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.dra.txt
   find_file_boundaries: yes
@@ -33,12 +33,13 @@ segments:
       - [0xCEB0, rodata]
       - [0xD670, rodata]
       - [0x3B3F0, rodata]
-      - [0x3B530, rodata]
+      - [0x3B44C, .rodata, 42398]
+      - [0x3B524, rodata]
       - [0x3B560, rodata]
       - [0x3B790, rodata]
       - [0x3B7A0, rodata]
       - [0x3B7E8, .rodata, 46FD4]
-      - [0x3B808, rodata]
+      - [0x3B828, rodata]
       - [0x3BF10, rodata]
       - [0x3C160, rodata]
       - [0x3CBC4, .rodata, 5D7C0]
@@ -60,7 +61,7 @@ segments:
       - [0x42000, rodata]
       - [0x42398, c, 42398]
       - [0x46FD4, c, 46FD4]
-      - [0x47384, c, 47384]
+      - [0x4768C, c, 4768C]
       - [0x5D7C0, c, 5D7C0]
       - [0x5D874, c, 5D874]
       - [0x962AC, data]

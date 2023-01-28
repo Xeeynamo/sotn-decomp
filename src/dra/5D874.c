@@ -663,7 +663,7 @@ void func_80106670(s32 blendMode) {
     entity = g_EntityArray;
     temp_s7 = temp_a0->_unk_0474;
     tile = &temp_a0->tiles[D_80097944];
-    sp20 = &temp_a0->drawModes[D_8009792C.unk0];
+    sp20 = &temp_a0->drawModes[g_GpuUsage.unk0];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
@@ -747,10 +747,10 @@ void func_80106670(s32 blendMode) {
         }
     }
 
-    if (D_8009792C.unk0 < 0x400U) {
+    if (g_GpuUsage.unk0 < 0x400U) {
         SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
         AddPrim(temp_s7 + var_s8 * 4, sp20);
-        D_8009792C.unk0++;
+        g_GpuUsage.unk0++;
     }
 }
 #endif
@@ -950,7 +950,28 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109A44);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A234);
 
+// Matching in gcc 2.6.0 + aspsx 2.3.4
+// Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
+// https://decomp.me/scratch/oKHMJ
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A3F0);
+#else
+void func_8010A3F0(void) {
+    s32 temp = 0x38;
+
+    if ((D_8017A018() == temp) && (D_8017D018() == temp)) {
+        if (D_80072F16[0] == 0) {
+            func_801092E8(1);
+        }
+        D_80072F16[0] = 0x20;
+        temp = D_80072F30 != 0;
+        if (temp && (D_80097C40[0] < -1)) {
+            D_80097C40[0]++;
+        }
+    }
+    D_80072F30 = 0;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A4A4);
 
@@ -2216,7 +2237,53 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801274DC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8012768C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80127840);
+void func_80127840(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        if (entity->subId != 0) {
+            PlaySfx(0x683);
+        }
+
+        entity->unk34 = 0x08100000;
+
+        if (entity->subId != 0) {
+            entity->posY.i.hi = entity->posY.i.hi + 16;
+        } else {
+            entity->posY.i.hi = entity->posY.i.hi - 4;
+        }
+
+        entity->animationSet = 9;
+        entity->unk1E = 0;
+        entity->unk4C = &D_800B07C8;
+        entity->unk19 |= 4;
+        entity->zPriority = PLAYER.zPriority + 2;
+        entity->facing = (PLAYER.facing + 1) & 1;
+        AccelerateX(-0x10);
+        func_8011A328(entity, 2);
+        entity->hitboxWidth = 8;
+        entity->hitboxHeight = 8;
+        entity->step++;
+        break;
+
+    case 1:
+        if (entity->animationFrameIndex >= 23) {
+            if (!(D_8003C8C4 & 3)) {
+                entity->unk1E += 0x400;
+            }
+            if (entity->accelerationX < 0) {
+                entity->accelerationX -= 0x1800;
+            } else {
+                entity->accelerationX += 0x1800;
+            }
+            if (!(D_8003C8C4 & 1) && (rand() & 1)) {
+                func_8011AAFC(entity, 0x10024, 0);
+            }
+            entity->posX.val += entity->accelerationX;
+            entity->posY.val += entity->accelerationY;
+        }
+        break;
+    }
+}
 
 void func_801279FC(Entity* entity) {
     POLY_GT4* poly;

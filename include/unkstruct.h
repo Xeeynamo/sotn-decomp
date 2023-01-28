@@ -251,18 +251,6 @@ typedef struct Unkstruct_80128BBC {
     /* 0x04 */ Unkstruct_80128BBC_Sub unk04[4];
 } Unkstruct_80128BBC;
 
-typedef struct {
-    /* 0x00 */ u32 unk0;
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
-    /* 0x10 */ u32 unk10;
-    /* 0x14 */ u32 unk14;
-    /* 0x18 */ u32 unk18;
-    /* 0x1C */ u32 unk1C;
-    /* 0x20 */ u32 unk20;
-} Unkstruct_Entrypoint;
-
 typedef struct Unkstruct_aSimCBinDemoKey {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s8 unk4;

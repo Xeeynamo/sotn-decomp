@@ -74,6 +74,7 @@
 #define PROGRAM_IWA_LOAD 0x42
 #define PROGRAM_IGA_LOAD 0x43
 #define PROGRAM_HAGI_LOAD 0x44
+#define PROGRAM_UNKNOWN 0x45
 #define PROGRAM_TE1 0x46
 #define PROGRAM_TE2 0x47
 #define PROGRAM_TE3 0x48
@@ -305,6 +306,18 @@ typedef struct {
     /* 0x13FF4 */ TILE tiles[0x100];
     /* 0x14FF4 */ SPRT sprite[0x200];
 } GpuBuffer; /* size = 0x177F4 */
+
+typedef struct {
+    /* 0x00 */ u32 drawModes;
+    /* 0x04 */ u32 gt4;
+    /* 0x08 */ u32 g4;
+    /* 0x0C */ u32 gt3;
+    /* 0x10 */ u32 line;
+    /* 0x14 */ u32 sp16;
+    /* 0x18 */ u32 tile;
+    /* 0x1C */ u32 sp;
+    /* 0x20 */ u32 env;
+} GpuUsage;
 
 typedef struct PlayerHeart {
     s32 current;
@@ -666,6 +679,14 @@ extern s32 D_8006BB00;
 extern s32 D_8006C374;
 extern s32 D_8006C378;
 extern GpuBuffer* D_8006C37C;
+extern s32 D_8006C384;
+extern s32 D_8006C388;
+extern s32 D_8006C38C;
+extern s32 D_8006C390;
+extern s32 D_8006C384;
+extern s32 D_8006C388;
+extern s32 D_8006C38C;
+extern s32 D_8006C390;
 extern s32 D_8006C398;
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
@@ -674,6 +695,7 @@ extern s32 D_8006C3B0;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
+extern u16 g_Clut[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
@@ -682,11 +704,11 @@ extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s16 D_80072F00[];
 extern s16 D_80072F02[];
-extern s16 D_80072F10;
 extern s16 D_80072F04;
 extern s16 D_80072F0A;
 extern s16 D_80072F0C;
-extern s16 D_80072F16[2];
+extern s16 D_80072F10;
+extern s16 D_80072F16[];
 extern s16 D_80072F18;
 extern s16 D_80072F1A[];
 extern s16 D_80072F1C[];
@@ -694,6 +716,7 @@ extern s16 D_80072F1E;
 extern s32 D_80072F20;
 extern s32 D_80072F24;
 extern u32 D_80072F2C;
+extern s32 D_80072F30;
 extern u16 D_80072F9A;
 // Probably part of the same array / struct
 extern u16 D_80072F60[];
@@ -733,28 +756,30 @@ extern s32 g_CurrentRoomHeight;
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
 // g_EntityArray PLAYER
-// D_800733DA PLAYER.posX.i.hi
-// D_800733DE PLAYER.posY.i.hi
-// D_800733E0 PLAYER.accelerationX
-// D_800733E4 PLAYER.accelerationY
-// D_800733E8 PLAYER.unk10
-// D_800733EC PLAYER.facing
-// D_800733EE PLAYER.palette
-// D_800733F0 PLAYER.blendMode
-// D_800733F1 PLAYER.unk19
-// D_800733F6 PLAYER.unk1E
-// D_800733FC PLAYER.zPriority
-// D_800733FE PLAYER.objectId
-// D_80073404 PLAYER.step
-// D_80073406 PLAYER.unk2E
-// D_8007340A PLAYER.objectRoomIndex
-// D_8007341C PLAYER.unk44
-// D_80073424 PLAYER.unk4C
-// D_80073428 PLAYER.animationFrameIndex
-// D_8007342A PLAYER.animationFrameDuration
-// D_8007342C PLAYER.animationSet
-// D_8007342E PLAYER.animationFrame
-// D_80073484 PLAYER.unkAC
+extern s16 D_800733DA;  // PLAYER.posX.i.hi
+extern s16 D_800733DE;  // PLAYER.posY.i.hi
+extern s32 D_800733E0;  // PLAYER.accelerationX
+extern s32 D_800733E4;  // PLAYER.accelerationY
+extern s32 D_800733E8;  // PLAYER.unk10
+extern u16 D_800733EC;  // PLAYER.facing
+extern u16 D_800733EE;  // PLAYER.palette
+extern s8 D_800733F0;   // PLAYER.blendMode
+extern u8 D_800733F1;   // PLAYER.unk19
+extern s16 D_800733F6;  // PLAYER.unk1E
+extern u16 D_800733FC;  // PLAYER.zPriority
+extern s16 D_800733FE;  // PLAYER.objectId
+extern u16 D_80073404;  // PLAYER.step
+extern u16 D_80073406;  // PLAYER.unk2E
+extern u16 D_8007340A;  // PLAYER.objectRoomIndex
+extern u16 D_8007341C;  // PLAYER.unk44
+extern s32* D_80073424; // PLAYER.unk4C
+extern s16 D_80073428;  // PLAYER.animationFrameIndex
+extern s16 D_8007342A;  // PLAYER.animationFrameDuration
+extern s16 D_8007342C;  // PLAYER.animationSet
+extern u16 D_8007342E;  // PLAYER.animationFrame
+extern u8 D_80073484;   // PLAYER.unkAC
+// End of Player Character offset = 0x80073494
+
 // D_80073494 g_EntityArray[1]
 // D_80073550 g_EntityArray[2]
 // D_8007360C g_EntityArray[3]
@@ -810,6 +835,7 @@ extern s32 D_80097450;
 extern Pad g_pads[];
 extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern u16 D_80097496;
+extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern s32 g_mapProgramId;
 extern s32 D_800974A4;
@@ -825,7 +851,7 @@ extern s32 D_80097910;
 extern s32 D_80097914;
 extern s32 D_80097924;
 extern s32 D_80097928;
-extern Unkstruct_Entrypoint D_8009792C;
+extern GpuUsage g_GpuUsage;
 extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;
@@ -848,6 +874,7 @@ extern s32 g_playerMpMax;
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
+extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;
 extern s32 D_80097C98;
 extern s8 D_80097D37;

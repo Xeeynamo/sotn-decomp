@@ -3,31 +3,11 @@
 #include "objects.h"
 #include "sfx.h"
 
-void nullsub_9(void) {}
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E768C);
 
-void func_800E738C(void) {
-    if (D_80073060 == 1) {
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 &&
-             func_800E81FC(7, 0) >= 0)) {
-            if (func_80131F68() != 0) {
-                PlaySfx(0x80);
-            }
-            func_800E346C();
-            D_80073060++;
-            return;
-        }
-    }
-    g_api.o.unk3C();
-}
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E7AEC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E7458);
-
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E768C);
-
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E7AEC);
-
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E7BB8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E7BB8);
 
 void func_800E7D08(void) {
     s32 i;
@@ -42,7 +22,7 @@ void func_800E7D08(void) {
 
 #ifndef NON_MATCHING
 void LoadStageTileset(u32* pTilesetData, s16 y);
-INCLUDE_ASM("asm/dra/nonmatchings/47384", LoadStageTileset);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", LoadStageTileset);
 #else
 void LoadStageTileset(u32* pTilesetData, s16 y) {
     RECT sp10;
@@ -73,10 +53,10 @@ void LoadStageTileset(u32* pTilesetData, s16 y) {
 
 // Non-matching due to case 2/11
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E7E08);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E7E08);
 #else
 void LoadStageTileset(u32* pTilesetData, s16 y);
-extern u32 D_8006CBCC;
+extern u32 g_Clut;
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
 extern s32 D_800A0248;
@@ -136,11 +116,11 @@ s32 func_800E7E08(u32 arg0) {
     case 11: // .rodata+0x8,0x2c
         LoadStageTileset(0x80280000, 0);
         DrawSync(0);
-        StoreImage(&D_800ACDB8, &D_8006CBCC);
+        StoreImage(&D_800ACDB8, &g_Clut);
         if (arg0 == 0xB) {
-            StoreImage(&D_800ACDB8, &D_8006CBCC + 0x4000);
+            StoreImage(&D_800ACDB8, &g_Clut + 0x4000);
             DrawSync(0);
-            LoadImage(&D_800ACDB8 - 8, &D_8006CBCC + 0x4000);
+            LoadImage(&D_800ACDB8 - 8, &g_Clut + 0x4000);
             break;
         }
         break;
@@ -193,7 +173,7 @@ s32 func_800E7E08(u32 arg0) {
         break;
     case 17:
         LoadImage(&D_800ACDA8, (u32*)0x80280000);
-        StoreImage(&D_800ACDA8, &D_8006CBCC);
+        StoreImage(&D_800ACDA8, &g_Clut);
         break;
     }
 
@@ -201,7 +181,7 @@ s32 func_800E7E08(u32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E81FC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E81FC);
 
 void func_800E8D24(void) {
     s8* ptr;
@@ -217,7 +197,7 @@ void func_800E8D24(void) {
 }
 
 // https://decomp.me/scratch/YhofM
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E8D54);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E8D54);
 void func_800E8D54(void);
 
 void InitializePads(void) {
@@ -250,7 +230,7 @@ void ReadPads(void) {
     func_800E8D54();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E8EE4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E8EE4);
 
 s32 func_800E908C(void) {
     if (TestEvent(D_80073068) == 1) {
@@ -315,7 +295,7 @@ void func_800E92F4(void) {
     D_8013B3D0 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E930C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E930C);
 
 extern Unkstruct_8013B15C D_8013B15C[];
 
@@ -325,7 +305,7 @@ s32 func_800E9508(s32 arg0) {
     return temp;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E9530);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
@@ -407,7 +387,7 @@ s32 func_800E9804(s32 arg0) {
     return ret;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E9880);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E9880);
 
 s32 func_800E9B18(s32 arg0, s32 arg1) {
     char buffer[0x8];
@@ -451,14 +431,14 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800E9C14);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E9C14);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EA2B0);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EA2B0);
 
 // This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
 // probably aspsx
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EA48C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EA48C);
 #else
 extern const char aBaslus00067dra[];
 
@@ -511,7 +491,7 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EA5E4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EA5E4);
 #else
 extern s32 D_8003C78C;
 extern s32* D_800A3BB8[];
@@ -578,9 +558,9 @@ void func_800EA5E4(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EA720);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EA720);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EA7CC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EA7CC);
 
 s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(4);
@@ -645,7 +625,7 @@ void func_800EAEEC(void) {
     func_800EAEA4();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EAF28);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EAF28);
 
 void func_800EAFC8(s32 arg0) {
     u8 temp = arg0;
@@ -675,15 +655,15 @@ u32 func_800EB03C(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EB098);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EB098);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EB314);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EB314);
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EB534);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EB534);
 
 void func_800EB6B4(void) {
     s32 i;
@@ -708,7 +688,7 @@ bool func_800EB720(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EB758);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EB758);
 
 // clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
@@ -727,11 +707,11 @@ void func_800EBB70(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EBBAC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EBBAC);
 
 // The loop at the end is weird, the rest is matching
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800ECBF8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800ECBF8);
 #else
 typedef struct {
     s16 unk00, unk02;
@@ -841,11 +821,11 @@ void func_800ECE2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800ECE58);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800ECE58);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", SetRoomForegroundLayer);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", SetRoomForegroundLayer);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", SetRoomBackgroundLayer);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", SetRoomBackgroundLayer);
 
 extern Unkstruct_8003C794* D_8003C794;
 
@@ -905,7 +885,7 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EDB58);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EDB58);
 
 s32 AllocPolygons(u8 primitives, s32 count) {
     s32 polyIndex = 0;
@@ -996,13 +976,13 @@ void FreePolygons(s32 polygonIndex) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EDEDC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EDEDC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", CheckCollision);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", CheckCollision);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800EFBF8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800EFBF8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F0334);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0334);
 
 extern Unkstruct_aSimCBinDemoKey aSimCBinDemoKey;
 
@@ -1052,7 +1032,7 @@ void func_800F0578(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F0608);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0608);
 
 typedef struct {
     s32 foo[5];
@@ -1081,10 +1061,10 @@ loop_1:
     goto loop_1;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F0940);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0940);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", SetNextRoomToLoad);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", SetNextRoomToLoad);
 #else
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     RoomLoadDef* pRoomLoad;
@@ -1117,7 +1097,7 @@ loop_3:
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F0CD8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0CD8);
 
 void func_800F1424(void) {
     if (D_8009749C[0] & 8) {
@@ -1131,7 +1111,7 @@ void func_800F1424(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F14CC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F14CC);
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
@@ -1171,9 +1151,9 @@ u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F180C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F180C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F1868);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1868);
 
 void func_800F18C4(s32 arg0, s32 arg1) {
     s8 sp10[20];
@@ -1190,7 +1170,7 @@ void func_800F18C4(s32 arg0, s32 arg1) {
     func_800F1868(arg0, arg1, &sp10);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F1954);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1954);
 
 void func_800F1A3C(s32 arg0) {
     if (arg0 == 0) {
@@ -1210,20 +1190,20 @@ void func_800F1A3C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F1B08);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1B08);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F1D54);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1D54);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F1EB0);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1EB0);
 
 void func_800F1FC4(s32 arg0) {
     func_800F1EB0((playerX >> 8) + g_CurrentRoomLeft,
                   (playerY >> 8) + g_CurrentRoomTop, arg0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F2014);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2014);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F2120);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2120);
 
 void func_800F223C(void) {
     g_mapProgramId ^= 0x20;
@@ -1231,7 +1211,7 @@ void func_800F223C(void) {
     g_mapProgramId ^= 0x20;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F2288);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2288);
 
 void func_800F2404(s32 arg0) {
     s32* temp;
@@ -1277,7 +1257,7 @@ void func_800F2404(s32 arg0) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F24F4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F24F4);
 #else
 void func_801042C4(s32);
 void func_80105428();
@@ -1330,7 +1310,7 @@ block_18:
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F2658);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2658);
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
@@ -1343,11 +1323,11 @@ bool func_800F27F4(s32 arg0) {
     D_801375C8 = 8;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F2860);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2860);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F298C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F298C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F483C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F483C);
 
 bool IsAlucart(void) {
     if (CheckEquipmentItemCount(0xA8, 0) && CheckEquipmentItemCount(0xA7, 0) &&
@@ -1356,9 +1336,9 @@ bool IsAlucart(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F4994);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F4994);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F4D38);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F4D38);
 
 void func_800F4F48(void) {
     s32 i;
@@ -1369,7 +1349,7 @@ void func_800F4F48(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F4FD0);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F4FD0);
 
 void func_800F53A4(void) {
     func_800F4994();
@@ -1377,19 +1357,16 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F53D4);
-void func_800F53D4(s32 tpage, s32 arg1);
-#else
-void func_800F53D4(s32 tpage, s32 arg1) {
-    DR_MODE* drawMode = &D_8006C37C->drawModes[D_8009792C];
+void func_800F53D4(s32 tpage, s32 unkPrimIdx) {
+    u32* unkPrim = D_8006C37C->_unk_0474;
+    DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
-        AddPrim(&D_8006C37C->unk_0474[arg1], drawMode);
-        D_8009792C += 1;
+        AddPrim(&unkPrim[unkPrimIdx], drawMode);
+        g_GpuUsage.drawModes++;
     }
 }
-#endif
 
 u8 func_800F548C(u8 arg0) {
     u16 temp = arg0;
@@ -1415,7 +1392,7 @@ bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47384", ScissorPolyG4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", ScissorPolyG4);
 bool ScissorPolyG4(POLY_G4* arg0, MenuContext* context);
 #else
 bool ScissorPolyG4(POLY_G4* poly, MenuContext* context) {
@@ -1500,7 +1477,7 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47384", ScissorSprite);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", ScissorSprite);
 #else
 bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     s16 scissorx0;
@@ -1546,13 +1523,13 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F5904);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F5904);
 
 void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F5AE4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F5AE4);
 
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
@@ -1597,45 +1574,36 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
     }
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuRect);
-void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
-                  s32 height, s32 r, s32 g, s32 b);
+// Matches with gcc 2.6.0 + aspsx 2.3.4
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawMenuRect);
 #else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    POLY_G4* prim;
-    s32 temp_s2;
-    s32 temp_t1;
+    u32* temp_s1 = D_8006C37C->_unk_0474;
+    POLY_G4* poly = &D_8006C37C->polyG4[D_80097930[1]];
+    s32 temp_s2 = context->unk18 + 1;
+    u32 temp;
 
-    temp_t1 = D_8006C37C;
-    prim = &D_8006C37C->unk_D874[D_80097934]; // get next available primitive?
-    prim->x0 = posX;
-    prim->y0 = posY;
-    prim->x1 = posX + width;
-    prim->y1 = posY;
-    prim->x2 = posX;
-    prim->x3 = posX + width;
-    temp_s2 = context->unk18 + 1;
-    prim->y2 = posY + height;
-    prim->y3 = posY + height;
-    prim->code &= 0xFC;
-    if (ScissorPolyG4(prim, context) == 0) { // check prim boundaries?
-        prim->r0 = r;
-        prim->r1 = r;
-        prim->r2 = r;
-        prim->r3 = r;
-        prim->g0 = g;
-        prim->g1 = g;
-        prim->g2 = g;
-        prim->g3 = g;
-        prim->b0 = b;
-        prim->b1 = b;
-        prim->b2 = b;
-        prim->b3 = b;
-        AddPrim(&D_8006C37C->unk_0474[temp_s2], (void*)prim);
-        D_80097934 += 1;
+    poly->x0 = posX;
+    poly->y0 = posY;
+
+    temp = (poly->x1 = posX + width);
+    poly->y1 = posY;
+    poly->x2 = posX;
+    poly->x3 = temp;
+
+    temp = (poly->y2 = posY + height);
+    poly->y3 = temp;
+
+    poly->code &= 0xFC;
+    if (!ScissorPolyG4(poly, context)) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
+        poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
+        AddPrim(&temp_s1[temp_s2], poly);
+        D_80097930[1]++;
         func_800F53D4(0, temp_s2);
     }
 }
@@ -1657,7 +1625,7 @@ void func_800F5E68(MenuContext* context, s32 iOption, s32 x, s32 y, s32 w,
     DrawMenuRect(context, x, y + (iOption * (h + yGap)), w, h, r, 0, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawRelicsMenu);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawRelicsMenu);
 
 void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x24, 0x40, 0x40, 0, 0x80, 0x150, 0x9C, 1, 0, 0);
@@ -1671,7 +1639,7 @@ s32 func_800F62E8(s32 context) {
 }
 
 // Apply cloak palette
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F6304);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6304);
 
 void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
@@ -1751,7 +1719,7 @@ void DrawMenuChar(char ch, int x, int y, MenuContext* context) {
                   0x196, 0x1E, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawMenuStr);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawMenuStr);
 // https://decomp.me/scratch/S4Dzb
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
@@ -1762,23 +1730,23 @@ void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     } while (digit != 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F6998);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6998);
 
 void func_800F6A48(void) {
     func_800EA538(6);
     func_800EA5E4(0x411);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F6A70);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6A70);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F6BEC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6BEC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F6CC0);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6CC0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F6DC8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6DC8);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawSettingsButton);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawSettingsButton);
 #else
 extern s32 g_menuButtonSettingsCursorPos;
 extern s32 g_menuButtonSettingsConfig[];
@@ -1855,10 +1823,10 @@ void func_800F7244(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F72BC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F72BC);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawPauseMenu);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawPauseMenu);
 #else
 void func_800F622C(MenuContext* context);
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
@@ -2046,9 +2014,9 @@ void DrawPauseMenu(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawSpellMenu);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawSpellMenu);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F7F64);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F7F64);
 
 void func_800F82F4(void) {
     RECT dstRect;
@@ -2065,9 +2033,9 @@ void func_800F82F4(void) {
     LoadImage(&dstRect, (u_long*)g_imgUnk8013C270->data);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", DrawSystemMenu);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawSystemMenu);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F84CC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F84CC);
 
 void func_800F86E4(void) {
     s32 i;
@@ -2126,13 +2094,13 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F8990); // Draw menu inventory
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990); // Draw menu inventory
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F8C98);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8C98);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F8E18);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8E18);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F8F28);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8F28);
 
 void func_800F9690(void) {
     POLY_GT4* poly = &D_80086FEC[D_8013783C];
@@ -2212,9 +2180,9 @@ void func_800F9808(u32 arg0) {
     LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F98AC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F98AC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F99B8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F99B8);
 
 void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
@@ -2247,21 +2215,21 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
 }
 
 // https://decomp.me/scratch/VmuNt 99.46%
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F9E18);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F9E18);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800F9F40);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F9F40);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FA034);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA034);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FA3C4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA3C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FA60C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA60C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FA7E8);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA7E8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FA8C4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA8C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FA9DC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA9DC);
 
 void func_800FAB1C(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_4];
@@ -2332,19 +2300,19 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 arg2, u16 arg3) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FADC0);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FADC0);
 
 void func_800FAE98(void) {
     func_800FADC0();
     D_800978F8 = 0x40;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAEC4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FAEC4);
 
 // https://decomp.me/scratch/HEhaF by @pixel-stuck
 // matches with gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FAF44);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FAF44);
 #else
 void func_800FAF44(s32 arg0) {
     s32 var_a0;
@@ -2409,7 +2377,7 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FB160);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FB160);
 
 bool func_800FB1EC(s32 arg0) {
     if (D_801375CC.unk0 == 0) {
@@ -2424,18 +2392,18 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FB23C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FB23C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FB9BC);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FB9BC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FBAC4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FBAC4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FBC24);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FBC24);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD39C);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD39C);
 
 // https://decomp.me/scratch/XEzwM
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD4C0);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD4C0);
 
 bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     s32 temp;
@@ -2468,7 +2436,7 @@ extern Unkstruct_800A4B12 D_800A4B12[];
 
 u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47384", func_800FD6C4);
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD6C4);
 
 u8* func_800FD744(s32 context) {
     u8* phi_v0 = &D_80097A8D;

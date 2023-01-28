@@ -35,6 +35,6 @@ segments:
       - [0x2840, rodata]
       - [0x2850, rodata]
       - [0x30790, rodata]
-      - [0x394D4, c]
+      - [0x30958, c]
       - [0x4AA10, data]
   - [0x4B780]
