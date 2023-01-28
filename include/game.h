@@ -683,6 +683,10 @@ extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;
 extern s32 D_8006C390;
+extern s32 D_8006C384;
+extern s32 D_8006C388;
+extern s32 D_8006C38C;
+extern s32 D_8006C390;
 extern s32 D_8006C398;
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
@@ -752,28 +756,30 @@ extern s32 g_CurrentRoomHeight;
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
 // g_EntityArray PLAYER
-// D_800733DA PLAYER.posX.i.hi
-// D_800733DE PLAYER.posY.i.hi
-// D_800733E0 PLAYER.accelerationX
-// D_800733E4 PLAYER.accelerationY
-// D_800733E8 PLAYER.unk10
-// D_800733EC PLAYER.facing
-// D_800733EE PLAYER.palette
-// D_800733F0 PLAYER.blendMode
-// D_800733F1 PLAYER.unk19
-// D_800733F6 PLAYER.unk1E
-// D_800733FC PLAYER.zPriority
-// D_800733FE PLAYER.objectId
-// D_80073404 PLAYER.step
-// D_80073406 PLAYER.unk2E
-// D_8007340A PLAYER.objectRoomIndex
-// D_8007341C PLAYER.unk44
-// D_80073424 PLAYER.unk4C
-// D_80073428 PLAYER.animationFrameIndex
-// D_8007342A PLAYER.animationFrameDuration
-// D_8007342C PLAYER.animationSet
-// D_8007342E PLAYER.animationFrame
-// D_80073484 PLAYER.unkAC
+extern s16 D_800733DA;  // PLAYER.posX.i.hi
+extern s16 D_800733DE;  // PLAYER.posY.i.hi
+extern s32 D_800733E0;  // PLAYER.accelerationX
+extern s32 D_800733E4;  // PLAYER.accelerationY
+extern s32 D_800733E8;  // PLAYER.unk10
+extern u16 D_800733EC;  // PLAYER.facing
+extern u16 D_800733EE;  // PLAYER.palette
+extern s8 D_800733F0;   // PLAYER.blendMode
+extern u8 D_800733F1;   // PLAYER.unk19
+extern s16 D_800733F6;  // PLAYER.unk1E
+extern u16 D_800733FC;  // PLAYER.zPriority
+extern s16 D_800733FE;  // PLAYER.objectId
+extern u16 D_80073404;  // PLAYER.step
+extern u16 D_80073406;  // PLAYER.unk2E
+extern u16 D_8007340A;  // PLAYER.objectRoomIndex
+extern u16 D_8007341C;  // PLAYER.unk44
+extern s32* D_80073424; // PLAYER.unk4C
+extern s16 D_80073428;  // PLAYER.animationFrameIndex
+extern s16 D_8007342A;  // PLAYER.animationFrameDuration
+extern s16 D_8007342C;  // PLAYER.animationSet
+extern u16 D_8007342E;  // PLAYER.animationFrame
+extern u8 D_80073484;   // PLAYER.unkAC
+// End of Player Character offset = 0x80073494
+
 // D_80073494 g_EntityArray[1]
 // D_80073550 g_EntityArray[2]
 // D_8007360C g_EntityArray[3]

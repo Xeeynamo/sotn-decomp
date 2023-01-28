@@ -2237,7 +2237,53 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801274DC);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8012768C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80127840);
+void func_80127840(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        if (entity->subId != 0) {
+            PlaySfx(0x683);
+        }
+
+        entity->unk34 = 0x08100000;
+
+        if (entity->subId != 0) {
+            entity->posY.i.hi = entity->posY.i.hi + 16;
+        } else {
+            entity->posY.i.hi = entity->posY.i.hi - 4;
+        }
+
+        entity->animationSet = 9;
+        entity->unk1E = 0;
+        entity->unk4C = &D_800B07C8;
+        entity->unk19 |= 4;
+        entity->zPriority = PLAYER.zPriority + 2;
+        entity->facing = (PLAYER.facing + 1) & 1;
+        AccelerateX(-0x10);
+        func_8011A328(entity, 2);
+        entity->hitboxWidth = 8;
+        entity->hitboxHeight = 8;
+        entity->step++;
+        break;
+
+    case 1:
+        if (entity->animationFrameIndex >= 23) {
+            if (!(D_8003C8C4 & 3)) {
+                entity->unk1E += 0x400;
+            }
+            if (entity->accelerationX < 0) {
+                entity->accelerationX -= 0x1800;
+            } else {
+                entity->accelerationX += 0x1800;
+            }
+            if (!(D_8003C8C4 & 1) && (rand() & 1)) {
+                func_8011AAFC(entity, 0x10024, 0);
+            }
+            entity->posX.val += entity->accelerationX;
+            entity->posY.val += entity->accelerationY;
+        }
+        break;
+    }
+}
 
 void func_801279FC(Entity* entity) {
     POLY_GT4* poly;
