@@ -2251,7 +2251,7 @@ void func_80127840(Entity* entity) {
         } else {
             entity->posY.i.hi = entity->posY.i.hi - 4;
         }
-        
+
         entity->animationSet = 9;
         entity->unk1E = 0;
         entity->unk4C = &D_800B07C8;
