@@ -2313,7 +2313,7 @@ void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801243B0);
 
 // move a0,s0 thing
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80124A8C);
 #else
 void func_80124A8C(Entity* entity) {
