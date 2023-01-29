@@ -350,6 +350,7 @@ s32 func_800EDD9C(u8 primitives, s32 count);
 void func_800EFBF8(void);
 void FreePolygons(s32 index);
 void func_800F0334(s32);
+void func_800F0578(s32 arg0);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
 void func_800F180C(s32, s32, void*);
