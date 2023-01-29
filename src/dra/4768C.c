@@ -2086,7 +2086,7 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
 
 // Draw inventory in equip menu
 // does not match due to stack bigger than expected
-#ifndef NON_MATCHING
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990);
 #else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
@@ -2127,7 +2127,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         myX = 40 + x + (itemIndex & 1) * Width;
         myY =
             4 + y + ((s32)(itemIndex + ((u32)itemIndex >> 0x1F)) >> 1) * Height;
-        if (!g_IsSelectingEquipment && itemIndex == g_EquipmentCursor) {
+        if (g_IsSelectingEquipment && itemIndex == g_EquipmentCursor) {
             curX = myX + 1;
             curY = myY - 2;
         }
@@ -2161,7 +2161,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         }
     }
 
-    if (!g_IsSelectingEquipment) {
+    if (g_IsSelectingEquipment) {
         func_800F6508(ctx, curX, curY);
     }
 }
