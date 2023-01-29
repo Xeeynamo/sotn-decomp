@@ -2414,14 +2414,14 @@ void func_80125C2C(Entity* entity) {
 
         temp = func_80125A30(0, 0);
         entity->posX.val += entity->accelerationX;
-        
+
         if (entity->accelerationX < 0) {
             temp3 = -4;
         } else {
             temp3 = 4;
         }
         temp |= func_80125B6C(-7, temp3);
-        
+
         if (temp & 2) {
             temp = 1;
         } else {
