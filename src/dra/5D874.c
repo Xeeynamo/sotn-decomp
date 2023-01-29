@@ -2143,9 +2143,172 @@ block_7:
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80123B40);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80123F78);
+void func_80123F78(Entity* entity) {
+    if (D_800973FC == 0) {
+        D_80097F3F = 0;
+        func_80106590(entity);
+        return;
+    }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80124164);
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x0C030000;
+        if (PLAYER.animationSet != 1) {
+            func_80106590(entity);
+            break;
+        }
+        entity->animationSet = 1;
+        entity->animationFrame = PLAYER.animationFrame;
+        entity->unk5A = 0xD;
+        entity->unk19 = PLAYER.unk19;
+        entity->blendMode = 0x30;
+        entity->palette = 0x815F;
+        entity->zPriority = PLAYER.zPriority - 2;
+        entity->facing = PLAYER.facing;
+        do { // TODO: !FAKE
+        } while (0);
+        D_80097F4A = 0x80;
+        D_80097F46 = 0x80;
+        D_80097F42 = 0x80;
+        D_80097F3E = 0x80;
+        D_80097F49 = 0x80;
+        D_80097F45 = 0x80;
+        D_80097F41 = 0x80;
+        D_80097F3D = 0x80;
+        D_80097F48 = 0x80;
+        D_80097F44 = 0x80;
+        D_80097F40 = 0x80;
+        D_80097F3C = 0x80;
+        D_80097F3F = 1;
+        do { // TODO: !FAKE
+        } while (0);
+        entity->step++;
+        break;
+
+    case 1:
+        D_80097F4A += 255;
+        if (D_80097F4A < 4) {
+            D_80097F3F = 0;
+            func_80106590(entity);
+            break;
+        }
+        D_80097F46 = D_80097F4A;
+        D_80097F42 = D_80097F4A;
+        D_80097F3E = D_80097F4A;
+        D_80097F49 = D_80097F4A;
+        D_80097F45 = D_80097F4A;
+        D_80097F41 = D_80097F4A;
+        D_80097F3D = D_80097F4A;
+        D_80097F48 = D_80097F4A;
+        D_80097F44 = D_80097F4A;
+        D_80097F40 = D_80097F4A;
+        D_80097F3C = D_80097F4A;
+        break;
+    }
+}
+
+void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
+                   bool arg4) {
+    s16 top = y - radius;
+    s16 bottom = y + radius;
+    s32 colorChannel;
+
+    poly->y1 = top;
+    poly->y0 = top;
+
+    poly->y3 = bottom;
+    poly->y2 = bottom;
+
+    if (poly->y0 < 0) {
+        poly->y1 = 0;
+        poly->y0 = 0;
+    }
+
+    if (poly->y0 > 240) {
+        poly->y3 = 240;
+        poly->y2 = 240;
+    }
+
+    if (arg4 == 0) {
+        colorChannel = colorIntensity * D_800AE270[0];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r3 = (u32)colorChannel >> 8;
+        poly->r1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[1];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g3 = (u32)colorChannel >> 8;
+        poly->g1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[2];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->b3 = (u32)colorChannel >> 8;
+        poly->b1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[3];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r2 = (u32)colorChannel >> 8;
+        poly->r0 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[4];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g2 = (u32)colorChannel >> 8;
+        poly->g0 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[5];
+    } else {
+        colorChannel = colorIntensity * D_800AE270[0];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r3 = (u32)colorChannel >> 8;
+        poly->r1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[1];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g3 = (u32)colorChannel >> 8;
+        poly->g1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[2];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->b3 = (u32)colorChannel >> 8;
+        poly->b1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[6];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r2 = (u32)colorChannel >> 8;
+        poly->r0 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_800AE270[7];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g2 = (u32)colorChannel >> 8;
+        poly->g0 = (u32)colorChannel >> 8;
+        colorChannel = colorIntensity * D_800AE270[8];
+    }
+    if (colorChannel < 0) {
+        colorChannel += 255;
+    }
+    poly->b2 = (u32)colorChannel >> 8;
+    poly->b0 = (u32)colorChannel >> 8;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801243B0);
 
@@ -3418,7 +3581,7 @@ void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
     }
     func_80132A04((arg1 * 2) + 12, D_800BF554[arg0 * 7], D_800BF555[arg0 * 7],
                   D_800BF559[arg0 * 7], D_800BF556[arg0 * 7], arg3, arg4);
-    do { // !FAKE:
+    do { // TODO: !FAKE
     } while (0);
     D_8013B650[arg1] = arg0;
     D_8013AED4[arg1] = D_800BF55A[arg0 * 7];
