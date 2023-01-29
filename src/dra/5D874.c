@@ -1930,7 +1930,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011A3AC);
 
-void func_8011A4C8(void) {}
+void func_8011A4C8(Entity* entity) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011A4D0);
 
@@ -2054,7 +2054,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011BDA4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011D9F8);
 
-void func_8011E0E4(void) {}
+void func_8011E0E4(Entity* entity) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011E0EC);
 
@@ -2062,7 +2062,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011E390);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011E4BC);
 
-void func_8011EDA0(void) {}
+void func_8011EDA0(Entity* entity) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011EDA8);
 
