@@ -2209,12 +2209,12 @@ void func_80123F78(Entity* entity) {
 
 void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
                    bool arg4) {
-    s16 temp = y - radius;
+    s16 top = y - radius;
     s16 bottom = y + radius;
     s32 colorChannel;
 
-    poly->y1 = temp;
-    poly->y0 = temp;
+    poly->y1 = top;
+    poly->y0 = top;
 
     poly->y3 = bottom;
     poly->y2 = bottom;
