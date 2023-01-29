@@ -1391,46 +1391,42 @@ bool IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context) {
     return true;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/4768C", ScissorPolyG4);
-bool ScissorPolyG4(POLY_G4* arg0, MenuContext* context);
-#else
 bool ScissorPolyG4(POLY_G4* poly, MenuContext* context) {
     s32 scissorX;
     s32 scissorY;
+    s32 diff;
 
     if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, context))
         return true;
 
     if (poly->x0 < context->unk1.x) {
-        s32 diff = context->unk1.x - poly->x0;
+        diff = context->unk1.x - poly->x0;
         poly->x0 += diff;
         poly->x2 += diff;
     }
 
     if (poly->y0 < context->unk1.y) {
-        s32 diff = context->unk1.y - poly->y0;
+        diff = context->unk1.y - poly->y0;
         poly->y0 += diff;
         poly->y1 += diff;
     }
 
     scissorX = context->unk1.x + context->unk1.w;
     if (scissorX < poly->x1) {
-        s32 diff = poly->x1 - scissorX;
+        diff = poly->x1 - scissorX;
         poly->x1 -= diff;
         poly->x3 -= diff;
     }
 
     scissorY = context->unk1.y + context->unk1.h;
     if (scissorY < poly->y2) {
-        s32 diff = poly->y2 - scissorY;
+        diff = poly->y2 - scissorY;
         poly->y2 -= diff;
         poly->y3 -= diff;
     }
 
     return false;
 }
-#endif
 
 bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
     s32 scissorX;
@@ -1476,52 +1472,46 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
     return false;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/4768C", ScissorSprite);
-#else
 bool ScissorSprite(SPRT* sprite, MenuContext* context) {
-    s16 scissorx0;
-    s16 scissory0;
-    s32 scissory1;
-    s32 scissorx1;
-    s32 spritex1;
-    s32 spritey1;
+    s32 scissorY;
+    s32 scissorX;
+    s32 spriteX;
+    s32 spriteY;
 
     if (IsOutsideDrawArea(sprite->x0, sprite->x0 + sprite->w, sprite->y0,
                           sprite->y0 + sprite->h, context))
         return true;
 
-    scissorx0 = context->unk1.x;
-    if (sprite->x0 < scissorx0) {
-        s32 diffx = scissorx0 - sprite->x0;
-        sprite->x0 += diffx;
-        sprite->u0 = sprite->u0 + diffx;
-        sprite->w = sprite->w - diffx;
+    if (sprite->x0 < context->unk1.x) {
+        scissorX = context->unk1.x - sprite->x0;
+        sprite->x0 += scissorX;
+        sprite->u0 = sprite->u0 + scissorX;
+        sprite->w = sprite->w - scissorX;
     }
 
-    scissory0 = context->unk1.y;
     if (sprite->y0 < context->unk1.y) {
-        s32 diffy = scissory0 - sprite->y0;
-        sprite->y0 = sprite->y0 + diffy;
-        sprite->v0 = sprite->v0 + diffy;
-        sprite->h = sprite->h - diffy;
+        scissorY = context->unk1.y - sprite->y0;
+        sprite->y0 = sprite->y0 + scissorY;
+        sprite->v0 = sprite->v0 + scissorY;
+        sprite->h = sprite->h - scissorY;
     }
 
-    scissorx1 = context->unk1.x + context->unk1.w;
-    spritex1 = sprite->x0 + sprite->w;
-    if (scissorx1 < spritex1) {
-        sprite->w = sprite->w - (spritex1 - scissorx1);
+    scissorX = context->unk1.x + context->unk1.w;
+    spriteX = sprite->x0 + sprite->w;
+    if (scissorX < spriteX) {
+        scissorY = spriteX - scissorX;
+        sprite->w = sprite->w - scissorY;
     }
 
-    scissory1 = context->unk1.y + context->unk1.h;
-    spritey1 = sprite->y0 + sprite->h;
-    if (scissory1 < spritey1) {
-        sprite->h = sprite->h - (spritey1 - scissory1);
+    scissorY = context->unk1.y + context->unk1.h;
+    spriteY = sprite->y0 + sprite->h;
+    if (scissorY < spriteY) {
+        scissorX = spriteY - scissorY;
+        sprite->h = sprite->h - scissorX;
     }
 
     return false;
 }
-#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F5904);
 
@@ -2225,6 +2215,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA3C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA60C);
 
+// https://decomp.me/scratch/JL0hI
+// has some logic related to the weapon struct
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA7E8);
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FA8C4);
