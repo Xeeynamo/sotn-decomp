@@ -219,6 +219,8 @@ extern s32* D_801375D8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
 extern s32 D_80137608;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 D_80137618;
 

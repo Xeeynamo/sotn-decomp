@@ -2084,7 +2084,88 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990); // Draw menu inventory
+// Draw inventory in equip menu
+// does not match due to stack bigger than expected
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990);
+#else
+void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
+    const s32 Cols = 2;
+    const s32 Width = 168;
+    const s32 Height = 12;
+
+    u8* sp20;
+    s32 itemsPerPage;
+    s32 totalItemCount;
+    s32 curX;
+    s32 curY;
+    s32 myX;
+    s32 myY;
+    s32 itemIndex;
+    s32* equipFilter;
+    s32 i;
+    s8* strEquipName;
+    u16 icon;
+    u16 palette;
+    u8 equipId;
+    u8* equipsAmount;
+    s32 idx;
+
+    equipFilter = &D_801375CC.equipTypeFilter;
+    sp20 = func_800FD744(*equipFilter);
+    equipsAmount = func_800FD760(*equipFilter);
+    totalItemCount = func_800FD6C4(*equipFilter);
+    curX = 0;
+    curY = 0;
+    itemsPerPage = Cols + ctx->unk6 / Height * Cols;
+    for (i = 0; i < itemsPerPage; i++) {
+        itemIndex = i + -ctx->h / Height * Cols;
+        if (itemIndex >= totalItemCount) {
+            continue;
+        }
+
+        myX = 40 + x + (itemIndex & 1) * Width;
+        myY =
+            4 + y + ((s32)(itemIndex + ((u32)itemIndex >> 0x1F)) >> 1) * Height;
+        if (!g_IsSelectingEquipment && itemIndex == g_EquipmentCursor) {
+            curX = myX + 1;
+            curY = myY - 2;
+        }
+
+        equipId = sp20[D_801375D8[itemIndex]];
+        if (equipsAmount[equipId] == 0)
+            continue;
+
+        strEquipName = GetEquipmentName(*equipFilter, equipId);
+        if (D_801375CC.equipTypeFilter == 0) {
+            icon = D_800A4B04[equipId].icon;
+            palette = D_800A4B04[equipId].palette;
+        } else {
+            icon = D_800A7718[equipId].icon;
+            palette = D_800A7718[equipId].palette;
+        }
+
+        func_800EB534(icon, palette, i);
+        func_800F892C(i, myX - 16, myY - 4, ctx);
+        DrawMenuStr(strEquipName, myX, myY, ctx);
+
+        if (D_801375CC.equipTypeFilter == 0) {
+            if (equipId == 0) {
+            } else {
+                goto block_18;
+            }
+        } else if (equipId != 0x1A && equipId != 0 && equipId != 0x30 &&
+                   equipId != 0x39) {
+        block_18:
+            DrawMenuInt(equipsAmount[equipId], myX + 128, myY, ctx);
+        }
+    }
+
+    if (!g_IsSelectingEquipment) {
+        func_800F6508(ctx, curX, curY);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8C98);
 
