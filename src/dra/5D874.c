@@ -2207,9 +2207,9 @@ void func_80123F78(Entity* entity) {
     }
 }
 
-void func_80124164(POLY_GT4* poly, s32 arg1, s32 y, s32 arg3, bool arg4) {
-    s16 temp = y - arg3;
-    s16 bottom = y + arg3;
+void func_80124164(POLY_GT4* poly, s32 arg1, s32 y, s32 radius, bool arg4) {
+    s16 temp = y - radius;
+    s16 bottom = y + radius;
     s32 colorChannel;
 
     poly->y1 = temp;
