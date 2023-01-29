@@ -2420,7 +2420,7 @@ void func_801274DC(Entity* entity) {
     case 1:
         if (entity->unk48 == 0) {
             entity->unk7C.s--;
-            if ((entity->unk7C.s << 0x10) == 0) {
+            if ((entity->unk7C.s) == 0) {
                 entity->step++;
             }
             entity->posX.val += entity->accelerationX;

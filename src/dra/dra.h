@@ -100,7 +100,7 @@ extern const char* c_strFamiliars;
 extern const char* c_strFamiliar;
 extern const char* c_strSpecial2;
 extern RECT c_backbufferClear;
-extern s32 D_800B0798;
+extern s32 D_800B0798[];
 extern s32 D_800B07C8;
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
