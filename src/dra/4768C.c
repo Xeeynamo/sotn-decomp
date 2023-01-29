@@ -2086,7 +2086,7 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
 
 // Draw inventory in equip menu
 // does not match due to stack bigger than expected
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990);
 #else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
@@ -2102,7 +2102,6 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     s32 myX;
     s32 myY;
     s32 itemIndex;
-    s32* equipFilter;
     s32 i;
     s8* strEquipName;
     u16 icon;
@@ -2111,10 +2110,9 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     u8* equipsAmount;
     s32 idx;
 
-    equipFilter = &D_801375CC.equipTypeFilter;
-    sp20 = func_800FD744(*equipFilter);
-    equipsAmount = func_800FD760(*equipFilter);
-    totalItemCount = func_800FD6C4(*equipFilter);
+    sp20 = func_800FD744(D_801375CC.equipTypeFilter);
+    equipsAmount = func_800FD760(D_801375CC.equipTypeFilter);
+    totalItemCount = func_800FD6C4(D_801375CC.equipTypeFilter);
     curX = 0;
     curY = 0;
     itemsPerPage = Cols + ctx->unk6 / Height * Cols;
@@ -2136,7 +2134,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         if (equipsAmount[equipId] == 0)
             continue;
 
-        strEquipName = GetEquipmentName(*equipFilter, equipId);
+        strEquipName = GetEquipmentName(D_801375CC.equipTypeFilter, equipId);
         if (D_801375CC.equipTypeFilter == 0) {
             icon = D_800A4B04[equipId].icon;
             palette = D_800A4B04[equipId].palette;
