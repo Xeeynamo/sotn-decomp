@@ -111,7 +111,6 @@ void func_800E2E98(s32 colorAdd) {
 
 s32 nullsub_8(void) {}
 
-// TODO: Replace symbols with corresponding strings when able to import rodata.
 void func_800E2F3C(void) {
     if (D_800BD1C0 == 0)
         return;
