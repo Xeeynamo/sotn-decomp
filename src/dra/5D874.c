@@ -2445,7 +2445,7 @@ void func_80125C2C(Entity* entity) {
             D_8013841C++;
         }
         entity->unk7C.s--;
-        if ((entity->unk7C.s) == 0) {
+        if (entity->unk7C.s == 0) {
             entity->unk7C.s = 4;
             entity->step++;
         }
