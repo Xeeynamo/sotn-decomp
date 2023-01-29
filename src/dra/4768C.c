@@ -2281,14 +2281,14 @@ bool func_800FACB8(void) {
     return false;
 }
 
-void func_800FAD34(s32 arg0, u8 arg1, u16 arg2, u16 arg3) {
+void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     D_80137608 = 0;
     func_800F9808(2);
 
     if (arg1) {
         D_80137608 = 1;
         func_800F99B8(arg0, 2, 0);
-        func_800EB534(arg2, arg3, 0x1F);
+        func_800EB534(equipIcon, palette, 0x1F);
     }
 }
 
@@ -2336,7 +2336,7 @@ void func_800FAF44(s32 arg0) {
 #endif
 
 void func_800FB004(void) {
-    s32 temp_a1 = func_800FD6C4(D_801375CC.unk0);
+    s32 temp_a1 = func_800FD6C4(D_801375CC.equipTypeFilter);
     s32 temp_v0;
 
     if (((-D_80137688) / 12) != 0) {
@@ -2363,7 +2363,7 @@ void func_800FB0FC(void) {
     s32 temp_a1 = temp->unk4;
     s32 new_var2 = temp->unk8;
 
-    D_801375CC.unk0 = temp->unk0;
+    D_801375CC.equipTypeFilter = temp->equipTypeFilter;
     D_801375CC.unk8 = temp_a1;
     func_800FAF44(new_var2);
     func_800FB004();
@@ -2372,7 +2372,7 @@ void func_800FB0FC(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FB160);
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC.unk0 == 0) {
+    if (D_801375CC.equipTypeFilter == 0) {
         if (arg0 == 0) {
             return true;
         }
@@ -2430,26 +2430,26 @@ u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD6C4);
 
-u8* func_800FD744(s32 context) {
+u8* func_800FD744(s32 equipTypeFilter) {
     u8* phi_v0 = &D_80097A8D;
-    if (context != 0) {
+    if (equipTypeFilter != 0) {
         phi_v0 += 0xA9;
     }
     return phi_v0;
 }
 
-u8* func_800FD760(s32 context) {
+u8* func_800FD760(s32 equipTypeFilter) {
     s8* phi_v0 = &D_8009798A;
-    if (context != 0) {
+    if (equipTypeFilter != 0) {
         phi_v0 += 0xA9;
     }
     return phi_v0;
 }
 
-const char* GetEquipmentName(bool arg0, s32 equipId) {
-    if (!arg0) {
+const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
+    if (!equipTypeFilter) {
         return D_800A4B04[equipId].name;
     } else {
-        return *(&D_800A7718 + (equipId << 3));
+        return D_800A7718[equipId].name;
     }
 }
