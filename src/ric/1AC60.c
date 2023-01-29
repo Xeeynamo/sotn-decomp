@@ -9,7 +9,8 @@
 #include "objects.h"
 #include "sfx.h"
 
-extern s16 (*D_8003C890)(s16);
+extern s32 D_80155368[];
+
 void func_8015D020(void);
 bool func_8015DBB0(s32);
 void func_8015C93C(s32 speed);
@@ -526,7 +527,7 @@ void func_8015FAB8(Entity* entity) {
     entity->objectRoomIndex = temp_v1->sp22;
     do {
     } while (0);
-    entity->unk40 = D_8003C890(temp);
+    entity->unk40 = g_api.func_800FD664(temp);
     func_8015F9F0(entity);
 }
 #endif
@@ -645,7 +646,108 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80164DF8);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801656B0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80165DD8);
+void func_80165DD8(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
+                   bool arg4) {
+    s16 top = y - radius;
+    s16 bottom = y + radius;
+    s32 colorChannel;
+
+    poly->y1 = top;
+    poly->y0 = top;
+
+    poly->y3 = bottom;
+    poly->y2 = bottom;
+
+    if (poly->y0 < 0) {
+        poly->y1 = 0;
+        poly->y0 = 0;
+    }
+
+    if (poly->y0 > 240) {
+        poly->y3 = 240;
+        poly->y2 = 240;
+    }
+
+    if (arg4 == 0) {
+        colorChannel = colorIntensity * D_80155368[0];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r3 = (u32)colorChannel >> 8;
+        poly->r1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[1];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g3 = (u32)colorChannel >> 8;
+        poly->g1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[2];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->b3 = (u32)colorChannel >> 8;
+        poly->b1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[3];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r2 = (u32)colorChannel >> 8;
+        poly->r0 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[4];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g2 = (u32)colorChannel >> 8;
+        poly->g0 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[5];
+    } else {
+        colorChannel = colorIntensity * D_80155368[0];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r3 = (u32)colorChannel >> 8;
+        poly->r1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[1];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g3 = (u32)colorChannel >> 8;
+        poly->g1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[2];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->b3 = (u32)colorChannel >> 8;
+        poly->b1 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[6];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->r2 = (u32)colorChannel >> 8;
+        poly->r0 = (u32)colorChannel >> 8;
+
+        colorChannel = colorIntensity * D_80155368[7];
+        if (colorChannel < 0) {
+            colorChannel += 255;
+        }
+        poly->g2 = (u32)colorChannel >> 8;
+        poly->g0 = (u32)colorChannel >> 8;
+        colorChannel = colorIntensity * D_80155368[8];
+    }
+    if (colorChannel < 0) {
+        colorChannel += 255;
+    }
+    poly->b2 = (u32)colorChannel >> 8;
+    poly->b0 = (u32)colorChannel >> 8;
+}
 
 void func_80166024() {
     PLAYER.palette = 0x815E;
