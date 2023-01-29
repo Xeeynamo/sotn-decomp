@@ -887,6 +887,7 @@ DrawPauseMenu = 0x800F74B4;
 DrawSpellMenu = 0x800F7B60;
 DrawSystemMenu = 0x800F8374;
 func_800FD7C0 = 0x800FD7C0;
+GetEquipmentName = 0x800FD77C;
 HasEnoughMp = 0x800FE8B4;
 AddHearts = 0x800FE914;
 DrawHudRichter = 0x80100750;
