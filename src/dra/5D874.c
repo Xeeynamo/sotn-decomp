@@ -2385,7 +2385,80 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     return 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80125C2C);
+void func_80125C2C(Entity* entity) {
+    s16 temp3;
+    s32 temp;
+    s32 temp2;
+
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x08000000;
+        entity->animationSet = 9;
+        entity->animationFrame = 0x1D;
+        entity->zPriority = D_800733FC - 2;
+        entity->posY.i.hi += 8;
+        AccelerateX(0x14000);
+        entity->accelerationY = -0x32000;
+        func_8011A290(entity);
+        entity->hitboxHeight = 4;
+        entity->hitboxWidth = 4;
+        D_80072F14[0] = 4;
+        entity->step++;
+        break;
+
+    case 1:
+        entity->posY.val += entity->accelerationY;
+        if (entity->accelerationY <= 0x3FFFF) {
+            entity->accelerationY += 0x3800;
+        }
+
+        temp = func_80125A30(0, 0);
+        entity->posX.val += entity->accelerationX;
+
+        if (entity->accelerationX < 0) {
+            temp3 = -4;
+        } else {
+            temp3 = 4;
+        }
+        temp |= func_80125B6C(-7, temp3);
+
+        if (temp & 2) {
+            temp = 1;
+        } else {
+            temp2 = 1;
+        }
+
+        temp2 = temp & 1;
+        if (temp2 != 0) {
+            PlaySfx(0x69A);
+            func_8011AAFC(entity, 0x3B, 0);
+            entity->unk7C.s = 0x10;
+            entity->animationSet = 0;
+            entity->step = 2;
+        }
+        break;
+
+    case 2:
+        if (!(entity->unk7C.s & 3)) {
+            func_8011AAFC(entity, (D_8013841C << 0x10) | 0x1C,
+                          entity->unkB2 << 9);
+            D_8013841C++;
+        }
+        entity->unk7C.s--;
+        if ((entity->unk7C.s) == 0) {
+            entity->unk7C.s = 4;
+            entity->step++;
+        }
+        break;
+
+    case 3:
+        entity->unk7C.s--;
+        if ((entity->unk7C.s) == 0) {
+            func_80106590(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80125E68);
 
