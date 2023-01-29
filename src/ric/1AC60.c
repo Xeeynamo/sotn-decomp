@@ -11,7 +11,6 @@
 
 extern s32 D_80155368[];
 
-extern s16 (*D_8003C890)(s16);
 void func_8015D020(void);
 bool func_8015DBB0(s32);
 void func_8015C93C(s32 speed);
@@ -528,7 +527,7 @@ void func_8015FAB8(Entity* entity) {
     entity->objectRoomIndex = temp_v1->sp22;
     do {
     } while (0);
-    entity->unk40 = D_8003C890(temp);
+    entity->unk40 = g_api.func_800FD664(temp);
     func_8015F9F0(entity);
 }
 #endif
