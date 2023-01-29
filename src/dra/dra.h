@@ -1,7 +1,39 @@
-#ifndef DRA2_H
-#define DRA2_H
+#ifndef DRA_H
+#define DRA_H
 
 #include "game.h"
+
+// D_800A4B04 it is assumed the equip data starts from here
+// https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
+typedef struct {
+    /* 800a4b38 */ const char* name;
+    /* 800a4b3C */ const char* description;
+    /* 800a4b40 */ u16 attack;
+    /* 800a4b42 */ u16 defense;
+    /* 800a4b44 */ u16 element;
+    /* 800a4b46 */ u8 unk0E;
+    /* 800a4b46 */ u8 entId;
+    /* 800a4b48 */ u16 unk10;
+    /* 800a4b4A */ u16 unk12;
+    /* 800a4b4C */ u16 unk14;
+    /* 800a4b4E */ u16 unk16;
+    /* 800a4b50 */ u8 unk18;
+    /* 800a4b51 */ u8 isConsumable;
+    /* 800a4b52 */ u16 unk1A;
+    /* 800a4b54 */ u16 unk1C;
+    /* 800a4b56 */ u16 unk1E;
+    /* 800a4b58 */ u16 unk20;
+    /* 800a4b5A */ u16 unk22;
+    /* 800a4b5C */ u16 mpUsage;
+    /* 800a4b5E */ u16 unk26;
+    /* 800a4b60 */ u8 unk28; // somewhat range-related
+    /* 800a4b61 */ u8 unk29;
+    /* 800a4b62 */ u16 unk2A;
+    /* 800a4b64 */ u16 icon;
+    /* 800a4b66 */ u16 palette;
+    /* 800a4b68 */ u16 unk30;
+    /* 800a4b6A */ u16 unk32;
+} Equipment;
 
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
@@ -75,7 +107,7 @@ extern const char* c_strWindow;
 extern const char* c_strTime;
 extern const char* c_strALUCART;
 extern const char* c_strSSword;
-extern s32 D_800A4B04;
+extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern s32 D_800A7718;
 extern Unkstruct_800A7734 D_800A7734[];
@@ -398,7 +430,7 @@ s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32);
 u8* func_800FD744(s32 arg0);
 u8* func_800FD760(s32 arg0);
-s32 func_800FD77C(s32 arg0, s32 arg1);
+const char* GetEquipmentName(bool arg0, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);
