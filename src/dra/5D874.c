@@ -2210,7 +2210,7 @@ void func_80123F78(Entity* entity) {
 void func_80124164(POLY_GT4* poly, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s16 temp = arg2 - arg3;
     s16 temp2 = arg2 + arg3;
-    s32 temp3;
+    s32 colorChannel;
 
     poly->y1 = temp;
     poly->y0 = temp;
@@ -2229,84 +2229,84 @@ void func_80124164(POLY_GT4* poly, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     }
 
     if (arg4 == 0) {
-        temp3 = arg1 * D_800AE270[0];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[0];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->r3 = (u32)temp3 >> 8;
-        poly->r1 = (u32)temp3 >> 8;
+        poly->r3 = (u32)colorChannel >> 8;
+        poly->r1 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[1];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[1];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->g3 = (u32)temp3 >> 8;
-        poly->g1 = (u32)temp3 >> 8;
+        poly->g3 = (u32)colorChannel >> 8;
+        poly->g1 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[2];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[2];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->b3 = (u32)temp3 >> 8;
-        poly->b1 = (u32)temp3 >> 8;
+        poly->b3 = (u32)colorChannel >> 8;
+        poly->b1 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[3];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[3];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->r2 = (u32)temp3 >> 8;
-        poly->r0 = (u32)temp3 >> 8;
+        poly->r2 = (u32)colorChannel >> 8;
+        poly->r0 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[4];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[4];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->g2 = (u32)temp3 >> 8;
-        poly->g0 = (u32)temp3 >> 8;
+        poly->g2 = (u32)colorChannel >> 8;
+        poly->g0 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[5];
+        colorChannel = arg1 * D_800AE270[5];
     } else {
-        temp3 = arg1 * D_800AE270[0];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[0];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->r3 = (u32)temp3 >> 8;
-        poly->r1 = (u32)temp3 >> 8;
+        poly->r3 = (u32)colorChannel >> 8;
+        poly->r1 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[1];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[1];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->g3 = (u32)temp3 >> 8;
-        poly->g1 = (u32)temp3 >> 8;
+        poly->g3 = (u32)colorChannel >> 8;
+        poly->g1 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[2];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[2];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->b3 = (u32)temp3 >> 8;
-        poly->b1 = (u32)temp3 >> 8;
+        poly->b3 = (u32)colorChannel >> 8;
+        poly->b1 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[6];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[6];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->r2 = (u32)temp3 >> 8;
-        poly->r0 = (u32)temp3 >> 8;
+        poly->r2 = (u32)colorChannel >> 8;
+        poly->r0 = (u32)colorChannel >> 8;
 
-        temp3 = arg1 * D_800AE270[7];
-        if (temp3 < 0) {
-            temp3 += 255;
+        colorChannel = arg1 * D_800AE270[7];
+        if (colorChannel < 0) {
+            colorChannel += 255;
         }
-        poly->g2 = (u32)temp3 >> 8;
-        poly->g0 = (u32)temp3 >> 8;
-        temp3 = arg1 * D_800AE270[8];
+        poly->g2 = (u32)colorChannel >> 8;
+        poly->g0 = (u32)colorChannel >> 8;
+        colorChannel = arg1 * D_800AE270[8];
     }
-    if (temp3 < 0) {
-        temp3 += 255;
+    if (colorChannel < 0) {
+        colorChannel += 255;
     }
-    poly->b2 = (u32)temp3 >> 8;
-    poly->b0 = (u32)temp3 >> 8;
+    poly->b2 = (u32)colorChannel >> 8;
+    poly->b0 = (u32)colorChannel >> 8;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801243B0);
