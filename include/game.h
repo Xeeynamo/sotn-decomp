@@ -130,7 +130,8 @@ typedef struct {
     /* 0x04 */ s16 unk4;
     /* 0x06 */ s16 unk6;
     /* 0x08 */ RECT unk1;
-    /* 0x10 */ int w;
+    /* 0x10 */ s16 w;
+    /* 0x10 */ s16 h;
     /* 0x14 */ int unk14;
     /* 0x18 */ s16 unk18;
     /* 0x1A */ s16 unk1A;
@@ -599,7 +600,7 @@ typedef struct {
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
     /* 8003C828 */ void* func_800FF128;
-    /* 8003C82C */ void (*func_800EB534)(u16 arg0, u16 arg1, s32 arg2);
+    /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ s32 D_800A4B04;
     /* 8003C834 */ s32 D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);

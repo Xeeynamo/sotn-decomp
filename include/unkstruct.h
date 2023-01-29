@@ -262,7 +262,7 @@ typedef struct Unkstruct_aSimCBinDemoKey {
 } Unkstruct_aSimCBinDemoKey;
 
 typedef struct Unkstruct_800A2D98 {
-    /* 0x0 */ s32 unk0;
+    /* 0x0 */ s32 equipTypeFilter;
     /* 0x4 */ s32 unk4;
     /* 0x8 */ s32 unk8;
 } Unkstruct_800A2D98;
