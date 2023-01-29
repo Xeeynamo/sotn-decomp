@@ -2446,10 +2446,10 @@ u8* func_800FD760(s32 context) {
     return phi_v0;
 }
 
-s32 func_800FD77C(s32 context, s32 arg1) {
-    if (context == 0) {
-        return *(&D_800A4B04 + (arg1 * 13));
+const char* GetEquipmentName(bool arg0, s32 equipId) {
+    if (!arg0) {
+        return D_800A4B04[equipId].name;
+    } else {
+        return *(&D_800A7718 + (equipId << 3));
     }
-
-    return *(&D_800A7718 + (arg1 << 3));
 }
