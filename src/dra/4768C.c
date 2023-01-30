@@ -2086,6 +2086,7 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
 
 // Draw inventory in equip menu
 // does not match due to stack bigger than expected
+// matches in gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990);
 #else

@@ -1891,7 +1891,44 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80118D0C);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80119588);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80119D3C);
+void func_80119D3C(Entity* entity) {
+    s32 temp;
+    s32 cos;
+
+    switch (entity->step) {
+    case 0:
+        entity->posY.i.hi -= 16;
+        entity->zPriority = PLAYER.zPriority - 2;
+        entity->unk7C.s = 0;
+        entity->step++;
+        entity->accelerationY = -0x8000;
+        entity->unk7E.modeU16 = 0x40;
+        entity->animationFrame = 0xE;
+        entity->animationSet = 3;
+        entity->unk80.modeS16.unk0 = 0x80;
+        entity->unk34 = 0x08000000;
+        break;
+
+    case 1:
+        if (entity->unk80.modeS16.unk0 < 32) {
+            entity->unk19 = 128;
+        }
+        entity->posY.val += entity->accelerationY;
+        cos = rcos(entity->unk7C.s);
+        entity->unk7C.s = entity->unk7C.s + entity->unk7E.modeU16;
+        temp = cos * 8;
+
+        if (!(D_8003C8C4 & 3)) {
+            entity->unk7E.modeU16--;
+        }
+        entity->posX.val += temp;
+        entity->unk80.modeS16.unk0--;
+        if (entity->unk80.modeS16.unk0 == 0) {
+            func_80106590(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80119E78);
 
@@ -2445,7 +2482,7 @@ void func_80125C2C(Entity* entity) {
             D_8013841C++;
         }
         entity->unk7C.s--;
-        if ((entity->unk7C.s) == 0) {
+        if (entity->unk7C.s == 0) {
             entity->unk7C.s = 4;
             entity->step++;
         }
@@ -2453,7 +2490,7 @@ void func_80125C2C(Entity* entity) {
 
     case 3:
         entity->unk7C.s--;
-        if ((entity->unk7C.s) == 0) {
+        if (entity->unk7C.s == 0) {
             func_80106590(entity);
         }
         break;
