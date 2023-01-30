@@ -1845,7 +1845,54 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80118894);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80118970);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80118B18);
+s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
+    s16 var_a1;
+    s16 posX;
+    s16 posY;
+    u16 temp;
+
+    if (ent2 != NULL) {
+        posX = ent2->posX.i.hi;
+        posY = ent2->posY.i.hi;
+    } else {
+        posY = 0x70;
+        if ((arg2 << 0x10) != 0) {
+            posX = -32;
+        } else {
+            posX = 288;
+        }
+    }
+
+    posX = posX - ent1->posX.i.hi;
+    temp = ratan2((-(s16)(posY - ent1->posY.i.hi)), posX) & 0xFFF;
+
+    var_a1 = 0;
+    if (ent2 != NULL) {
+        var_a1 = (ent2->objectId == 0) << 0xC;
+        if (ent2->unk3C == 0) {
+            var_a1 = 0x2000;
+        }
+        if (ent2->unk34 & 0x200000) {
+            var_a1 = 0x3000;
+        }
+    }
+    if (ent1->posX.i.hi > 288) {
+        var_a1 = 0x4000;
+    }
+
+    if (ent1->posX.i.hi < -32) {
+        var_a1 = 0x5000;
+    }
+    if (ent1->posY.i.hi > 240) {
+        var_a1 = 0x6000;
+    }
+
+    if (ent1->posY.i.hi < 0) {
+        var_a1 = 0x7000;
+    }
+    posX = temp - var_a1;
+    return posX;
+}
 
 // https://decomp.me/scratch/LmXYY
 // nops between assignments probably aspsx
