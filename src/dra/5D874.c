@@ -1597,7 +1597,7 @@ s32 func_80113D7C(s16 arg0) {
     s32 temp_s0 = func_800FE97C(&sp10[0], 2, arg0 / 2, 1);
     s16 step;
     u16 temp_s1;
-    
+
     func_80118C84(sp10[2], 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
