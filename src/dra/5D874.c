@@ -1864,7 +1864,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     }
 
     posX = posX - ent1->posX.i.hi;
-    temp = ratan2((-(s16)(posY - ent1->posY.i.hi)), posX) & 0xFFF;
+    temp = ratan2(-(s16)(posY - ent1->posY.i.hi), posX) & 0xFFF;
 
     var_a1 = 0;
     if (ent2 != NULL) {
