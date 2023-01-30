@@ -776,7 +776,7 @@ extern u16 D_80073406;  // PLAYER.unk2E
 extern u16 D_8007340A;  // PLAYER.objectRoomIndex
 extern u16 D_8007341C;  // PLAYER.unk44
 extern s32* D_80073424; // PLAYER.unk4C
-extern s16 D_80073428;  // PLAYER.animationFrameIndex
+extern s32 D_80073428;  // PLAYER.animationFrameIndex
 extern s16 D_8007342A;  // PLAYER.animationFrameDuration
 extern s16 D_8007342C;  // PLAYER.animationSet
 extern u16 D_8007342E;  // PLAYER.animationFrame

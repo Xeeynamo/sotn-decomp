@@ -1597,7 +1597,7 @@ s32 func_80113D7C(s16 arg0) {
     s32 temp_s0 = func_800FE97C(&sp10[0], 2, arg0 / 2, 1);
     s16 step;
     u16 temp_s1;
-    
+
     func_80118C84(sp10[2], 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
@@ -1749,7 +1749,71 @@ void func_80115C50(void) {
     }
 }
 
+#if 1 // Matching but needs a file split
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80115DA0);
+#else
+Entity* func_8011AAFC(Entity* entity, s32, s32);
+void func_8010E570(s32);
+void func_80115C50(void);
+extern s32 D_80072F3C;
+
+void func_80115DA0(void) {
+    /**
+     * TODO:
+     * symbol D_80073428 is PLAYER.animationFrameIndex
+     * but this function needs the type to be s32
+    */
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX = 0;
+    D_80072EF4 = 0;
+    D_80072EFC = 4;
+
+    switch (PLAYER.unk2E) {
+    case 0:
+        if ((D_80073428 == 0x10008) &&
+            (func_8011AAFC(g_CurrentEntity, 0x79, 0) == NULL)) {
+            PLAYER.animationFrameDuration = 2;
+        }
+        if (PLAYER.animationFrameDuration < 0) {
+            func_8010E570(0);
+        }
+        break;
+
+    case 2:
+        func_80115C50();
+        if ((D_80073428 == 0x10008) &&
+            (func_8011AAFC(g_CurrentEntity, 0x20079, 0) == NULL)) {
+            PLAYER.animationFrameDuration = 2;
+        }
+        if (PLAYER.animationFrameDuration < 0) {
+            func_8010E570(0);
+        }
+        break;
+
+    case 4:
+        func_80115C50();
+        if ((D_80073428 == 0x10008) &&
+            (func_8011AAFC(g_CurrentEntity, 0x40079, 0) == NULL)) {
+            PLAYER.animationFrameDuration = 2;
+        }
+        if (PLAYER.animationFrameDuration < 0) {
+            func_8010E570(0);
+        }
+        break;
+
+    case 1:
+    case 3:
+    case 5:
+        if (PLAYER.animationFrameDuration < 0) {
+            func_8010E570(0);
+        }
+        if (D_80072F3C != 0) {
+            func_8010E570(0);
+        }
+        break;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80115F54);
 
