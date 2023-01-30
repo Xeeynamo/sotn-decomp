@@ -3,6 +3,8 @@
 
 #include "game.h"
 
+// Defines the equipment that can be set on left and right hand
+// This includes weapons, throw weapons, consumable and restoration items.
 // D_800A4B04 it is assumed the equip data starts from here
 // https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
 typedef struct {
@@ -34,6 +36,19 @@ typedef struct {
     /* 800a4b68 */ u16 unk30;
     /* 800a4b6A */ u16 unk32;
 } Equipment;
+
+// Defines armor, cloak and rings
+typedef struct {
+    /* 00 */ const char* name;
+    /* 04 */ const char* description;
+    /* 08 */ u32 unk08;
+    /* 0C */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u16 icon;
+    /* 1A */ u16 palette;
+    /* 1C */ u32 unk1C;
+} Accessory;
 
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
@@ -109,7 +124,7 @@ extern const char* c_strALUCART;
 extern const char* c_strSSword;
 extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
-extern s32 D_800A7718;
+extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[];  // related to player MP
 extern s32 D_800ACC64[]; // probably a struct
@@ -204,6 +219,8 @@ extern s32* D_801375D8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
 extern s32 D_80137608;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 D_80137618;
 
@@ -377,7 +394,7 @@ void func_800EA5E4(s32);
 void func_800EA538(s32);
 void func_800EAD7C(void);
 void func_800EAEEC(void);
-void func_800EB534(u16, u16, s32);
+void func_800EB534(s32 equipIcon, s32 palette, s32 index);
 void func_800ECE2C(void);
 void func_800EDA70(s32* arg0);
 void func_800EDA94(void);
@@ -428,10 +445,10 @@ void func_800FAC30(void);
 void func_800FAF44(s32);
 s32 func_800FD4C0(s32, s32);
 s32 func_800FD664(s32 arg0);
-s32 func_800FD6C4(s32);
-u8* func_800FD744(s32 arg0);
-u8* func_800FD760(s32 arg0);
-const char* GetEquipmentName(bool arg0, s32 equipId);
+s32 func_800FD6C4(s32 equipTypeFilter);
+u8* func_800FD744(s32 equipTypeFilter);
+u8* func_800FD760(s32 equipTypeFilter);
+const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800FD874(u16 arg0, s32 arg1);
 s16 func_800FDB18(s32, s32);

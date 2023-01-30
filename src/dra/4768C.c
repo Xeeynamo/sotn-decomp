@@ -2084,7 +2084,82 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990); // Draw menu inventory
+// Draw inventory in equip menu
+// does not match due to stack bigger than expected
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990);
+#else
+void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
+    const s32 Cols = 2;
+    const s32 Width = 168;
+    const s32 Height = 12;
+
+    u8* sp20;
+    s32 itemsPerPage;
+    s32* new_var;
+    s32 totalItemCount;
+    s32 curX;
+    s32 curY;
+    s32 myX;
+    s32 myY;
+    s32 itemIndex;
+    s32 i;
+    s8* strEquipName;
+    u16 icon;
+    u16 palette;
+    u8 equipId;
+    u8* equipsAmount;
+    s32 idx;
+
+    new_var = &D_801375CC.equipTypeFilter;
+    sp20 = func_800FD744(*new_var);
+    equipsAmount = func_800FD760(*new_var);
+    totalItemCount = func_800FD6C4(*new_var);
+    curX = 0;
+    curY = 0;
+    itemsPerPage = Cols + ctx->unk6 / Height * Cols;
+    for (i = 0; i < itemsPerPage; i++) {
+        itemIndex = i + -ctx->h / Height * Cols;
+        if (itemIndex >= totalItemCount) {
+            break;
+        }
+
+        myX = 40 + x + (itemIndex & 1) * Width;
+        myY = 4 + y + itemIndex / 2 * Height;
+        if (g_IsSelectingEquipment && itemIndex == g_EquipmentCursor) {
+            curX = myX + 1;
+            curY = myY - 2;
+        }
+
+        equipId = sp20[D_801375D8[itemIndex]];
+        if (equipsAmount[equipId] == 0)
+            continue;
+
+        strEquipName = GetEquipmentName(*new_var, equipId);
+        if (D_801375CC.equipTypeFilter == 0) {
+            icon = D_800A4B04[equipId].icon;
+            palette = D_800A4B04[equipId].palette;
+        } else {
+            icon = D_800A7718[equipId].icon;
+            palette = D_800A7718[equipId].palette;
+        }
+
+        func_800EB534(icon, palette, i);
+        func_800F892C(i, myX - 16, myY - 4, ctx);
+        DrawMenuStr(strEquipName, myX, myY, ctx);
+
+        if (D_801375CC.equipTypeFilter == 0 && equipId != 0 ||
+            D_801375CC.equipTypeFilter != 0 && equipId != 0x1A &&
+                equipId != 0 && equipId != 0x30 && equipId != 0x39) {
+            DrawMenuInt(equipsAmount[equipId], myX + 128, myY, ctx);
+        }
+    }
+
+    if (g_IsSelectingEquipment) {
+        func_800F6508(ctx, curX, curY);
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8C98);
 
@@ -2281,14 +2356,14 @@ bool func_800FACB8(void) {
     return false;
 }
 
-void func_800FAD34(s32 arg0, u8 arg1, u16 arg2, u16 arg3) {
+void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     D_80137608 = 0;
     func_800F9808(2);
 
     if (arg1) {
         D_80137608 = 1;
         func_800F99B8(arg0, 2, 0);
-        func_800EB534(arg2, arg3, 0x1F);
+        func_800EB534(equipIcon, palette, 0x1F);
     }
 }
 
@@ -2336,7 +2411,7 @@ void func_800FAF44(s32 arg0) {
 #endif
 
 void func_800FB004(void) {
-    s32 temp_a1 = func_800FD6C4(D_801375CC.unk0);
+    s32 temp_a1 = func_800FD6C4(D_801375CC.equipTypeFilter);
     s32 temp_v0;
 
     if (((-D_80137688) / 12) != 0) {
@@ -2363,7 +2438,7 @@ void func_800FB0FC(void) {
     s32 temp_a1 = temp->unk4;
     s32 new_var2 = temp->unk8;
 
-    D_801375CC.unk0 = temp->unk0;
+    D_801375CC.equipTypeFilter = temp->equipTypeFilter;
     D_801375CC.unk8 = temp_a1;
     func_800FAF44(new_var2);
     func_800FB004();
@@ -2372,7 +2447,7 @@ void func_800FB0FC(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FB160);
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC.unk0 == 0) {
+    if (D_801375CC.equipTypeFilter == 0) {
         if (arg0 == 0) {
             return true;
         }
@@ -2430,26 +2505,26 @@ u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD6C4);
 
-u8* func_800FD744(s32 context) {
+u8* func_800FD744(s32 equipTypeFilter) {
     u8* phi_v0 = &D_80097A8D;
-    if (context != 0) {
+    if (equipTypeFilter != 0) {
         phi_v0 += 0xA9;
     }
     return phi_v0;
 }
 
-u8* func_800FD760(s32 context) {
+u8* func_800FD760(s32 equipTypeFilter) {
     s8* phi_v0 = &D_8009798A;
-    if (context != 0) {
+    if (equipTypeFilter != 0) {
         phi_v0 += 0xA9;
     }
     return phi_v0;
 }
 
-const char* GetEquipmentName(bool arg0, s32 equipId) {
-    if (!arg0) {
+const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
+    if (!equipTypeFilter) {
         return D_800A4B04[equipId].name;
     } else {
-        return *(&D_800A7718 + (equipId << 3));
+        return D_800A7718[equipId].name;
     }
 }
