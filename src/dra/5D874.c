@@ -1624,7 +1624,46 @@ void func_80113EE0(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80113F7C);
+void func_80113F7C(void) {
+    Entity* entity = PLAYER.unkB8.entityPtr;
+    s16 posX;
+    s32 var_a0;
+    s32 var_a2;
+
+    if (entity->facing != 0) {
+        var_a2 = -entity->unk10;
+    } else {
+        var_a2 = entity->unk10;
+    }
+
+    if (PLAYER.facing != 0) {
+        var_a0 = -PLAYER.unk10;
+    } else {
+        var_a0 = PLAYER.unk10;
+    }
+
+    posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
+
+    if (ABS(posX) < 16) {
+        if (entity->accelerationX != 0) {
+            if (entity->accelerationX >= 0) {
+                PLAYER.objectRoomIndex = 1;
+                return;
+            }
+            goto block_14;
+        }
+        goto block_13;
+    }
+
+block_13:
+    if (posX < 0) {
+    block_14:
+        PLAYER.objectRoomIndex = 0;
+        return;
+    }
+
+    PLAYER.objectRoomIndex = 1;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011405C);
 

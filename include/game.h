@@ -165,7 +165,7 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ s16 unk10;
+    /* 0x10 */ u16 unk10;
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
@@ -264,6 +264,7 @@ typedef struct Entity {
     /* 0xB6 */ s16 unkB6;
     union {
         /* 0xB8 */ void (*unkFuncB8)(struct Entity*, u32, struct Entity*);
+        /* 0xB8 */ struct Entity* entityPtr;
         struct {
             /* 0xB8 */ u8 unk0;
             /* 0xB9 */ u8 unk1;
