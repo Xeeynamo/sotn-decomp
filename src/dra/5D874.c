@@ -1855,7 +1855,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
         posX = ent2->posX.i.hi;
         posY = ent2->posY.i.hi;
     } else {
-        posY = 0x70;
+        posY = 112;
         if ((arg2 << 0x10) != 0) {
             posX = -32;
         } else {
