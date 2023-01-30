@@ -3,11 +3,6 @@
 #include "objects.h"
 #include "sfx.h"
 
-Entity* func_8011AAFC(Entity* entity, s32, s32);
-void func_8010E570(s32);
-void func_80115C50(void);
-extern s32 D_80072F3C;
-
 void func_80115DA0(void) {
     /**
      * TODO:

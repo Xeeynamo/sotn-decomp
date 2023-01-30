@@ -720,6 +720,7 @@ extern s32 D_80072F20;
 extern s32 D_80072F24;
 extern u32 D_80072F2C;
 extern s32 D_80072F30;
+extern s32 D_80072F3C;
 extern u16 D_80072F9A;
 // Probably part of the same array / struct
 extern u16 D_80072F60[];
