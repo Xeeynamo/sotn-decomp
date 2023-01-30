@@ -1750,7 +1750,7 @@ void func_80115C50(void) {
 }
 
 #if 1 // Matching but needs a file split
-//INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80115DA0);
+// INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80115DA0);
 #else
 Entity* func_8011AAFC(Entity* entity, s32, s32);
 void func_8010E570(s32);
@@ -1814,5 +1814,3 @@ void func_80115DA0(void) {
     }
 }
 #endif
-
-
