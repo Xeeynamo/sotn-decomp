@@ -1654,7 +1654,7 @@ void func_80113F7C(void) {
         }
         goto block_13;
     }
-
+    // TODO: labels are !FAKE
 block_13:
     if (posX < 0) {
     block_14:
