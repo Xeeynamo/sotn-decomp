@@ -2096,6 +2096,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
     u8* sp20;
     s32 itemsPerPage;
+    s32* new_var;
     s32 totalItemCount;
     s32 curX;
     s32 curY;
@@ -2110,21 +2111,21 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     u8* equipsAmount;
     s32 idx;
 
-    sp20 = func_800FD744(D_801375CC.equipTypeFilter);
-    equipsAmount = func_800FD760(D_801375CC.equipTypeFilter);
-    totalItemCount = func_800FD6C4(D_801375CC.equipTypeFilter);
+    new_var = &D_801375CC.equipTypeFilter;
+    sp20 = func_800FD744(*new_var);
+    equipsAmount = func_800FD760(*new_var);
+    totalItemCount = func_800FD6C4(*new_var);
     curX = 0;
     curY = 0;
     itemsPerPage = Cols + ctx->unk6 / Height * Cols;
     for (i = 0; i < itemsPerPage; i++) {
         itemIndex = i + -ctx->h / Height * Cols;
         if (itemIndex >= totalItemCount) {
-            continue;
+            break;
         }
 
         myX = 40 + x + (itemIndex & 1) * Width;
-        myY =
-            4 + y + ((s32)(itemIndex + ((u32)itemIndex >> 0x1F)) >> 1) * Height;
+        myY = 4 + y + itemIndex / 2 * Height;
         if (g_IsSelectingEquipment && itemIndex == g_EquipmentCursor) {
             curX = myX + 1;
             curY = myY - 2;
@@ -2134,7 +2135,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         if (equipsAmount[equipId] == 0)
             continue;
 
-        strEquipName = GetEquipmentName(D_801375CC.equipTypeFilter, equipId);
+        strEquipName = GetEquipmentName(*new_var, equipId);
         if (D_801375CC.equipTypeFilter == 0) {
             icon = D_800A4B04[equipId].icon;
             palette = D_800A4B04[equipId].palette;
@@ -2147,14 +2148,9 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F892C(i, myX - 16, myY - 4, ctx);
         DrawMenuStr(strEquipName, myX, myY, ctx);
 
-        if (D_801375CC.equipTypeFilter == 0) {
-            if (equipId == 0) {
-            } else {
-                goto block_18;
-            }
-        } else if (equipId != 0x1A && equipId != 0 && equipId != 0x30 &&
-                   equipId != 0x39) {
-        block_18:
+        if (D_801375CC.equipTypeFilter == 0 && equipId != 0 ||
+            D_801375CC.equipTypeFilter != 0 && equipId != 0x1A &&
+                equipId != 0 && equipId != 0x30 && equipId != 0x39) {
             DrawMenuInt(equipsAmount[equipId], myX + 128, myY, ctx);
         }
     }
