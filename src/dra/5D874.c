@@ -1762,7 +1762,7 @@ void func_80115DA0(void) {
      * TODO:
      * symbol D_80073428 is PLAYER.animationFrameIndex
      * but this function needs the type to be s32
-    */
+     */
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
     D_80072EF4 = 0;
