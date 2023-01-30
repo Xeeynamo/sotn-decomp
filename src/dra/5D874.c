@@ -1591,7 +1591,32 @@ void func_801139CC(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80113AAC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80113D7C);
+s32 func_80113D7C(s16 arg0) {
+    s32 sp10[3];
+    s32 sfx;
+    s32 temp_s0 = func_800FE97C(&sp10[0], 2, arg0 / 2, 1);
+    s16 step;
+    u16 temp_s1;
+    
+    func_80118C84(sp10[2], 0);
+    func_800FE8F0();
+    if (temp_s0 != 4) {
+        D_80072F04 = 4;
+        *D_80072F60 = 0x8166;
+        sfx = D_800ACF8A[(rand() & 1)];
+        PlaySfx(sfx);
+        if (step && step) // TODO: !FAKE
+            ;
+        return 0;
+    }
+    step = PLAYER.step;
+    temp_s1 = PLAYER.unk2E;
+    sp10[0] = 0;
+    sp10[1] = 0;
+    func_8010D584(0x10);
+    func_80115394(&sp10[0], step, temp_s1);
+    return -1;
+}
 
 // !FAKE: too many temps
 s16 func_80113E68(void) {

@@ -134,6 +134,7 @@ extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern s32 D_800ACFB4;
 extern s32 D_800AE270[];
@@ -456,6 +457,7 @@ void func_800FDCE0(s32);
 void func_800FDE00(void);
 void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
 void func_800FE728(s32, Unkstruct_8011B334*, s32);
+s32 func_800FE97C(s32*, s32, s32, s32);
 s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);
 void func_80102CD8(s32);
@@ -480,6 +482,7 @@ void func_8010E83C(s32 arg0);
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
+void func_80115394(s32*, s16, s16);
 void func_80118894(Entity*);
 void func_80118C28(s32 arg0);
 void func_80118D0C(Entity* entity);
