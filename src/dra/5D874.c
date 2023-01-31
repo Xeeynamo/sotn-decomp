@@ -1590,7 +1590,7 @@ void func_801139CC(s32 arg0) {
 }
 
 #if 1 // matching but needs a file split
-//INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80113AAC);
+// INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80113AAC);
 #else
 extern u16 D_80072F6A[];
 extern s16 D_800733F8;
@@ -1676,5 +1676,3 @@ void func_80113AAC(void) {
     }
 }
 #endif
-
-
