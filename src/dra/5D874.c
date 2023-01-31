@@ -1300,7 +1300,25 @@ void func_8010E940(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E9A4);
+void func_8010E9A4(void) {
+    if (func_8010E27C() != 0) {
+        AccelerateX(0x30000);
+    } else {
+        PLAYER.accelerationX = 0;
+    }
+
+    if (PLAYER.step == 4) {
+        D_80072F60[2] |= 1;
+    } else {
+        D_80072F60[2] = 0;
+    }
+    
+    func_8011AAFC(g_CurrentEntity, 2, 0);
+    func_8010D584(8);
+    PLAYER.accelerationY = -0xC0000;
+    func_8010DA48(0x21);
+    D_80072F6A[0] = 0;
+}
 
 // https://decomp.me/scratch/9jKqU
 // matching in decomp.me, probably aspsx
@@ -1474,7 +1492,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011151C);
  * and this is just an attempt of it.
  * The patched asm can be found here:
  * https://discord.com/channels/710646040331681844/815529862604390411/1069793275810156636
-*/
+ */
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80111830);
 #else
