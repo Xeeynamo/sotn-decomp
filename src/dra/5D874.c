@@ -1202,6 +1202,7 @@ void func_8010E42C(u16 arg0) {
 }
 
 // https://decomp.me/scratch/wgVVw // nop in between array assignments
+// matches in gcc 2.6.0 + aspsx 2.3.4
 // aspsx
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E470);
@@ -1312,7 +1313,7 @@ void func_8010E9A4(void) {
     } else {
         D_80072F60[2] = 0;
     }
-    
+
     func_8011AAFC(g_CurrentEntity, 2, 0);
     func_8010D584(8);
     PLAYER.accelerationY = -0xC0000;
