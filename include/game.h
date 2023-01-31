@@ -752,7 +752,7 @@ extern s32 g_CurrentRoomBottom;
 extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
-extern s32 g_CurrentRoomHeight;
+extern s32 g_CurrentRoomHeight[];
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
