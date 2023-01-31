@@ -1312,7 +1312,7 @@ void func_8010E9A4(void) {
     } else {
         D_80072F60[2] = 0;
     }
-    
+
     func_8011AAFC(g_CurrentEntity, 2, 0);
     func_8010D584(8);
     PLAYER.accelerationY = -0xC0000;
