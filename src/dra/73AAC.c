@@ -3,14 +3,9 @@
 #include "objects.h"
 #include "sfx.h"
 
-extern s16 D_80072F6A[];
-extern s16 D_800733F8;
-extern u16 D_800733FA;
-
 void func_80113AAC(void) {
-    s32 temp_v1;
     s32 var_s1;
-    int new_var;
+    s32 temp;
     var_s1 = 0;
     D_80072F6A[0]++;
     if (func_8010FDF8(2) == 0) {
@@ -49,9 +44,9 @@ void func_80113AAC(void) {
             break;
 
         case 2:
-            D_800733F8 = 0;
-            D_800733FA = 2;
-            PLAYER.unk19 |= 4;
+            D_800733F8 = 0;    // TODO: !FAKE: symbol should be PLAYER.unk20
+            D_800733FA = 2;    // TODO: !FAKE: symbol should be PLAYER.unk22
+            PLAYER.unk19 |= 4; // But it doesn't match with them for some reason
             if (D_80072F6A[0] >= 0x39) {
                 func_8010DA48(0x2D);
                 PLAYER.unk1E = 0;
@@ -62,7 +57,7 @@ void func_80113AAC(void) {
             break;
 
         case 3:
-            if (((s16)D_80072F6A[0]) >= 0x15) {
+            if (D_80072F6A[0] > 20) {
                 var_s1 = 1;
             }
             break;
@@ -76,8 +71,8 @@ void func_80113AAC(void) {
         }
 
         if (var_s1 != 0) {
-            new_var = 0;
-            if ((var_s1 - 1) != new_var) {
+            temp = 0; // TODO: !FAKE
+            if ((var_s1 - 1) != temp) {
                 func_8010DA48(0x1C);
             }
             PLAYER.palette = 0x8100;
