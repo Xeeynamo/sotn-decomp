@@ -770,6 +770,8 @@ extern u16 D_800733EE;  // PLAYER.palette
 extern s8 D_800733F0;   // PLAYER.blendMode
 extern u8 D_800733F1;   // PLAYER.unk19
 extern s16 D_800733F6;  // PLAYER.unk1E
+extern s16 D_800733F8;  // PLAYER.unk20
+extern u16 D_800733FA;  // PLAYER.unk22
 extern u16 D_800733FC;  // PLAYER.zPriority
 extern s16 D_800733FE;  // PLAYER.objectId
 extern u16 D_80073404;  // PLAYER.step
