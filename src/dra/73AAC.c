@@ -6,7 +6,7 @@
 void func_80113AAC(void) {
     s32 var_s1 = 0;
     s32 temp;
-    
+
     D_80072F6A[0]++;
     if (func_8010FDF8(2) == 0) {
         switch (PLAYER.unk2E) {
