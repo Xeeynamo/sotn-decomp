@@ -1474,7 +1474,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011151C);
  * and this is just an attempt of it.
  * The patched asm can be found here:
  * https://discord.com/channels/710646040331681844/815529862604390411/1069793275810156636
-*/
+ */
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80111830);
 #else
