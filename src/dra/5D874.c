@@ -1239,7 +1239,35 @@ void func_8010E4D0(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E570);
 void func_8010E570(/*?*/ s32);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E6AC);
+void func_8010E6AC(s32 arg0) {
+    bool condition = false;
+
+    condition = ((D_80072F20 & 0x20) != condition);
+    AccelerateX(0x18000);
+    PLAYER.accelerationY = 0;
+    func_8010D584(1);
+
+    if (arg0 != 0) {
+        if (PLAYER.unkAC != 0xD) {
+            func_8010DA48(0xD);
+        }
+    } else {
+        func_8010DA48(7);
+        func_8011AAFC(g_CurrentEntity, 0x50001, 0);
+    }
+
+    if (D_80072F6C != 0) {
+        PLAYER.unkAC = 9;
+    }
+
+    if ((PLAYER.unkAC == 7) && (condition)) {
+        PLAYER.animationFrameIndex = 1;
+    }
+
+    if (D_80072F70 == 2) {
+        PLAYER.animationFrameIndex = 4;
+    }
+}
 
 void func_8010E7AC(void) {
     func_8010D584(3);
