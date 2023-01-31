@@ -267,7 +267,28 @@ u16 func_80194C68(s16 x, s16 y) {
     return func_80194BE8(x, y);
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194CB0);
+u8 func_80194CB0(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_80194D08(u16 slope, s16 speed) {
     Entity* entity;
