@@ -11,7 +11,7 @@ void func_80113AAC(void) {
     if (func_8010FDF8(2) != 0) {
         return;
     }
-    
+
     switch (PLAYER.unk2E) {
     case 0:
         if (D_80072F20 & 2) {
