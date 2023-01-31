@@ -636,7 +636,7 @@ void func_801065F4(s16 startIndex) {
 // Print debug hitboxes
 void func_80106670(s32 blendMode);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80106670);
 #else
 extern u32 D_80097944; // tile count?
@@ -663,7 +663,7 @@ void func_80106670(s32 blendMode) {
     entity = g_EntityArray;
     temp_s7 = temp_a0->_unk_0474;
     tile = &temp_a0->tiles[D_80097944];
-    sp20 = &temp_a0->drawModes[g_GpuUsage.unk0];
+    sp20 = &temp_a0->drawModes[g_GpuUsage.drawModes];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
@@ -747,10 +747,10 @@ void func_80106670(s32 blendMode) {
         }
     }
 
-    if (g_GpuUsage.unk0 < 0x400U) {
+    if (g_GpuUsage.drawModes < 0x400U) {
         SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
         AddPrim(temp_s7 + var_s8 * 4, sp20);
-        g_GpuUsage.unk0++;
+        g_GpuUsage.drawModes++;
     }
 }
 #endif

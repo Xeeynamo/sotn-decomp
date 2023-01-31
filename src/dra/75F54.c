@@ -212,6 +212,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
 
 // https://decomp.me/scratch/LmXYY
 // nops between assignments probably aspsx
+// matching in gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80118C28);
 #else
