@@ -1538,7 +1538,7 @@ void func_80111830(void) {
     s32 var_v0;
     s32 i;
 
-    for (i = 16, var_v0 = 0; ((i >= 0) && (var_v0 == 0)); i++) {
+    for (i = 16, var_v0 = 0; ((i >= 0) && (var_v0 == 0)); i--) {
         switch (i) {
         case 0:
             var_v0 = func_801104D0();
