@@ -293,3 +293,9 @@ typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ char unk02[0x1E];
 } Unkstruct_800A7734; // size = 0x20
+
+typedef struct Unkstruct_800FF494 {
+    char pad0[0x1E];
+    u16 unk1E;
+    u16 unk20;
+} Unkstruct_800FF494;

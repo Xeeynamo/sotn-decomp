@@ -450,6 +450,7 @@ s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
 u8* func_800FD744(s32 equipTypeFilter);
 u8* func_800FD760(s32 equipTypeFilter);
+s32 func_800FD7C0(s32, s32);
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800FD874(u16 arg0, s32 arg1);

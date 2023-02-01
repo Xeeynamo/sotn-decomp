@@ -204,10 +204,42 @@ s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
         return 0;
     }
-    return arg0 + ((arg0 * D_80097BE4) >> 7);
+    return arg0 + ((u32)(arg0 * D_80097BE4[0]) >> 7);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FF494);
+s32 func_800FF494(Unkstruct_800FF494* arg0) {
+    s32 temp_s2 = func_800FD7C0(0x4B, 4);
+    s32 rnd = rand() & 0xFF;
+
+    rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
+
+    if (temp_s2 != 0) {
+        rnd -= arg0->unk1E * temp_s2;
+    }
+
+    if (rnd < arg0->unk1E) {
+        return 0x40;
+    } else {
+        rnd -= arg0->unk1E;
+        if (temp_s2 != 0) {
+            rnd -= arg0->unk20 * temp_s2;
+        }
+        rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
+
+        if (rnd >= arg0->unk20) {
+            rnd = rand() % 28;
+            if (arg0->unk1E == 0) {
+                rnd++;
+            }
+            if (arg0->unk20 == 0) {
+                rnd++;
+            }
+            return rnd + temp_s2;
+        } else {
+            return 0x20;
+        }
+    }
+}
 
 void func_800FF60C(void) {
     s32 var_a0_2;
