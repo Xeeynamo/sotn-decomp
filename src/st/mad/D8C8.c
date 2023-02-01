@@ -1067,8 +1067,10 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityInventoryDrop);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityRelicOrb);
 
 // v1 -> a0 reg swap
+// branching
+// signature conflict
 // https://decomp.me/scratch/h3CVU
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityHeartDrop);
 #else
 void EntityHeartDrop(Entity* entity, u32 arg1) {
