@@ -246,7 +246,18 @@ void func_800FF6C4(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FF708);
+void func_800FF708(s32 arg0, s32 arg1) {
+    s32 rnd;
+
+    do {
+    loop_1:
+        rnd = rand() % 90;
+        if (rnd == 0x19) {
+            goto loop_1;
+        }
+    } while (D_800A7734[rnd].unk00 != arg0);
+    g_playerEquip[arg1 + 2] = rnd;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FF7B8);
 
