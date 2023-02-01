@@ -80,7 +80,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018DC28);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018DF0C);
 #else
 void func_8018DF0C(s32 arg0, s32 arg1) {
