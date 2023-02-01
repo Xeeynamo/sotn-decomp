@@ -460,7 +460,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B7C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190C78);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", InitRoomEntities);
 #else
 void InitRoomEntities(s32 objLayoutId) {
