@@ -348,7 +348,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
 /**
  * Note: This function got too old to even compile
  * rework is needed to get it in compiling state
-*/
+ */
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190608);
 #else
