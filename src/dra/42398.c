@@ -563,7 +563,7 @@ void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 
 // TODO aspatch jump points to the wrong instruction,
 // otherwise this is fully decompiled
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
 #else
 

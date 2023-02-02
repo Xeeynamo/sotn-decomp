@@ -3891,7 +3891,10 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->step = 0;
 }
 
-#ifndef NON_EQUIVALENT
+// matches in gcc 2.6.0 + aspsx 2.3.4
+// matches in gcc 2.7.2 + aspsx
+// most likely aspsx
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_8018CAB0);
 #else
 void func_8018CAB0(void) {

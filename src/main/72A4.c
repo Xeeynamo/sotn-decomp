@@ -183,7 +183,7 @@ void func_800192DC(s32 arg0, s32 arg1) {
     StClearRing();
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/main/nonmatchings/72A4", CdInit);
 #else
 int CdInit() {

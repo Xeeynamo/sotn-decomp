@@ -52,33 +52,18 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E6C4);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E7C8);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F890);
-#else
-typedef struct RoomDimensions {
-    s32 height;
-} RoomDimensions;
-
-extern RoomDimensions g_CurrentRoomDimensions;
-
 void func_8018F890(s16 arg0) {
-    s16 temp_v0;
-    s16 var_v0;
-    RoomDimensions* room;
+    s16 temp_v0 = arg0 - *(s16*)g_CurrentRoomHeight;
 
-    temp_v0 = arg0 - g_CurrentRoomDimensions.height;
-
-    if (temp_v0 >= 2) {
-        room->height++;
+    if (temp_v0 > 1) {
+        g_CurrentRoomHeight[0]++;
     } else if (temp_v0 < -1) {
-        room->height--;
+        g_CurrentRoomHeight[0]--;
     } else {
-        room->height = arg0;
+        g_CurrentRoomHeight[0] = arg0;
     }
-
-    // g_CurrentRoomDimensions.height = (s32) var_v0;
 }
-#endif
+
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F8EC);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F95C);
