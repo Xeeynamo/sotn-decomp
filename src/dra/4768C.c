@@ -20,7 +20,7 @@ void func_800E7D08(void) {
     D_800A04EC = 1;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 void LoadStageTileset(u32* pTilesetData, s16 y);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", LoadStageTileset);
 #else
@@ -51,8 +51,8 @@ void LoadStageTileset(u32* pTilesetData, s16 y) {
 }
 #endif
 
-// Non-matching due to case 2/11
-#ifndef NON_MATCHING
+// Not matching due to case 2/11
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800E7E08);
 #else
 void LoadStageTileset(u32* pTilesetData, s16 y);
@@ -2086,6 +2086,7 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
 
 // Draw inventory in equip menu
 // does not match due to stack bigger than expected
+// matches in gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F8990);
 #else

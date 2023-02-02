@@ -80,7 +80,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018DC28);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_8018DF0C);
 #else
 void func_8018DF0C(s32 arg0, s32 arg1) {
@@ -345,7 +345,11 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 
-#ifndef NON_MATCHING
+/**
+ * Note: This function got too old to even compile
+ * rework is needed to get it in compiling state
+ */
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190608);
 #else
 void func_80190608(LayoutObject* initDesc) {
@@ -456,7 +460,7 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190B7C);
 
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", func_80190C78);
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", InitRoomEntities);
 #else
 void InitRoomEntities(s32 objLayoutId) {
@@ -1063,8 +1067,10 @@ INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityInventoryDrop);
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityRelicOrb);
 
 // v1 -> a0 reg swap
+// branching
+// signature conflict
 // https://decomp.me/scratch/h3CVU
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/mad/nonmatchings/D8C8", EntityHeartDrop);
 #else
 void EntityHeartDrop(Entity* entity, u32 arg1) {

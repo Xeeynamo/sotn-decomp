@@ -525,8 +525,6 @@ void func_8015FAB8(Entity* entity) {
     entity->unk58 = temp_v1->sp18;
     entity->unk6A = temp_v1->sp1E;
     entity->objectRoomIndex = temp_v1->sp22;
-    do {
-    } while (0);
     entity->unk40 = g_api.func_800FD664(temp);
     func_8015F9F0(entity);
 }

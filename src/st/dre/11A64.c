@@ -1201,65 +1201,32 @@ INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A2580);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/dre/nonmatchings/11A64", func_801A25FC);
 #else
-
-typedef struct Unkstruct_801A25FC {
-    /* 0x00 */ struct Unkstruct_801A25FC* unk0;
-    /* 0x04 */ s8 unk4;
-    /* 0x05 */ char pad5[0x1];
-    /* 0x06 */ s8 unk6;
-    /* 0x07 */ s8 unk7;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ s16 unkA;
-    /* 0x0C */ s16 unkC;
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ UnkUnion2 unk10;
-    /* 0x12 */ UnkUnion2 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ UnkUnion2 unk1C;
-    /* 0x1E */ UnkUnion2 unk1E;
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ s16 unk22;
-    /* 0x24 */ s8 unk24;
-    /* 0x25 */ s8 unk25;
-    /* 0x26 */ char pad26[0x2];
-    /* 0x28 */ s8 unk28;
-    /* 0x29 */ char pad[0x1];
-    /* 0x2A */ u8 unk2A;
-    /* 0x2B */ u8 unk2B;
-    /* 0x2C */ u16 unk2C;
-    /* 0x2E */ char pad2E[4];
-    /* 0x32 */ u16 unk32;
-} Unkstruct_801A25FC; // This might be POLY_GT4
-
-Unkstruct_801A25FC* func_801A25FC(Unkstruct_801A25FC* arg0, s32 arg1) {
+POLY_GT4* func_801A25FC(POLY_GT4* poly, s32 arg1) {
     s32 i;
     s8 var_a2;
 
-    if (arg0->unk2B != 0) {
-        arg0->unk2B = 0;
+    if (poly->p3 != 0) {
+        poly->p3 = 0;
     } else {
-        arg0->unk2B = 1;
+        poly->p3 = 1;
     }
 
     for (i = 0; i < arg1; i++) {
-        if (arg0->unk2B != 0) {
+        if (poly->p3 != 0) {
             var_a2 = 0;
-            arg0->unk32 &= 0xFFF7;
+            poly->pad3 &= ~8;
         } else {
             var_a2 = 1;
-            arg0->unk32 |= 8;
+            poly->pad3 |= 8;
         }
 
-        if (arg0->unk0 != NULL) {
-            arg0->unk2B = var_a2;
+        if (poly->tag != NULL) {
+            poly->p3 = var_a2;
         } else {
             return NULL;
         }
     }
-    return arg0;
+    return poly;
 }
 #endif
 

@@ -165,7 +165,7 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ s16 unk10;
+    /* 0x10 */ u16 unk10;
     /* 0x12 */ s16 unk12;
     /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
@@ -264,6 +264,7 @@ typedef struct Entity {
     /* 0xB6 */ s16 unkB6;
     union {
         /* 0xB8 */ void (*unkFuncB8)(struct Entity*, u32, struct Entity*);
+        /* 0xB8 */ struct Entity* entityPtr;
         struct {
             /* 0xB8 */ u8 unk0;
             /* 0xB9 */ u8 unk1;
@@ -719,12 +720,14 @@ extern s32 D_80072F20;
 extern s32 D_80072F24;
 extern u32 D_80072F2C;
 extern s32 D_80072F30;
+extern s32 D_80072F3C;
 extern u16 D_80072F9A;
 // Probably part of the same array / struct
 extern u16 D_80072F60[];
 extern u16 D_80072F64;
 extern u16 D_80072F66;
 extern u16 D_80072F68;
+extern s16 D_80072F6A[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern u16 D_80072F70;
@@ -752,7 +755,7 @@ extern s32 g_CurrentRoomBottom;
 extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
 extern s32 g_CurrentRoomWidth;
-extern s32 g_CurrentRoomHeight;
+extern s32 g_CurrentRoomHeight[];
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
@@ -768,6 +771,8 @@ extern u16 D_800733EE;  // PLAYER.palette
 extern s8 D_800733F0;   // PLAYER.blendMode
 extern u8 D_800733F1;   // PLAYER.unk19
 extern s16 D_800733F6;  // PLAYER.unk1E
+extern s16 D_800733F8;  // PLAYER.unk20
+extern u16 D_800733FA;  // PLAYER.unk22
 extern u16 D_800733FC;  // PLAYER.zPriority
 extern s16 D_800733FE;  // PLAYER.objectId
 extern u16 D_80073404;  // PLAYER.step
@@ -775,7 +780,7 @@ extern u16 D_80073406;  // PLAYER.unk2E
 extern u16 D_8007340A;  // PLAYER.objectRoomIndex
 extern u16 D_8007341C;  // PLAYER.unk44
 extern s32* D_80073424; // PLAYER.unk4C
-extern s16 D_80073428;  // PLAYER.animationFrameIndex
+extern s32 D_80073428;  // PLAYER.animationFrameIndex
 extern s16 D_8007342A;  // PLAYER.animationFrameDuration
 extern s16 D_8007342C;  // PLAYER.animationSet
 extern u16 D_8007342E;  // PLAYER.animationFrame
@@ -861,7 +866,7 @@ extern u8 D_80097964[];
 extern u8 D_8009796E;
 extern s8 D_8009798A[];
 extern u8 D_80097A8D;
-extern u32 D_80097BE4;
+extern s32 D_80097BE4[];
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
@@ -903,7 +908,7 @@ int VSync(s32);
 s32 rcos(s32);
 s32 rsin(s32);
 s32 SquareRoot0(s32);
-s32 ratan2(s32, s32);
+long ratan2(long x, long y);
 void* DMACallback(int dma, void (*func)());
 void func_800192DC(s32 arg0, s32 arg1);
 void func_8001C550(s32);
