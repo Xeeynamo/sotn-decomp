@@ -321,20 +321,19 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
-typedef struct PlayerHeart {
-    s32 current;
-    s32 max;
-} PlayerHeart;
-
-typedef struct PlayerHP {
-    s32 current;
-    s32 max;
-} PlayerHP;
-
-typedef struct PlayerMP {
-    s32 current;
-    s32 max;
-} PlayerMP;
+typedef struct {
+    u32 unk0;
+    s32 hp;
+    s32 hpMax;
+    s32 hearts;
+    s32 heartsMax;
+    s32 mp;
+    s32 mpMax;
+    s32 statStr;
+    s32 statCon;
+    s32 statInt;
+    s32 statLck;
+} PlayerStats;
 
 typedef struct {
     s32 hours;
@@ -872,12 +871,13 @@ extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
 extern u8 g_SaveName[12];
-extern PlayerHP g_playerHp;
-extern s32 g_playerHpMax;
-extern PlayerHeart g_playerHeart[];
-extern s32 g_playerHeartMax;
-extern PlayerMP g_playerMP;
-extern s32 g_playerMpMax;
+extern PlayerStats D_80097B9C;
+extern s32 g_playerHp; // D_80097B9C.hp
+extern s32 g_playerHpMax; // D_80097B9C.hpMax
+extern s32 g_playerHeart; // D_80097B9C.hearts
+extern s32 g_playerHeartMax; // D_80097B9C.heartsMax
+extern s32 g_playerMP; // D_80097B9C.mp
+extern s32 g_playerMpMax; // D_80097B9C.mpMax
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
