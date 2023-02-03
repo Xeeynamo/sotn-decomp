@@ -34,13 +34,17 @@ Even if different overlays are loaded at the same time in memory, like `DRA` and
 
 ## Setup the project
 
-This assumes you have Ubuntu, Debian or WSL in Windows.
+This assumes you have Ubuntu, Debian or WSL in Windows:
 
-1. Inside the folder of your choice `git clone https://github.com/Xeeynamo/sotn-decomp.git`
-1. Run `sudo apt-get install -y $(cat tools/requirements-debian.txt)`
-1. Run `make update-dependencies`
-1. Inside the newly created repo, create a new `iso/` folder and put the game disc image in, both BIN and CUE files
-1. Rename the CUE file as `sotn.cue`
+```
+git clone https://github.com/Xeeynamo/sotn-decomp.git
+cd sotn-decomp
+sudo apt-get update
+sudo apt-get install -y $(cat tools/requirements-debian.txt)
+make update-dependencies
+```
+1. Create a new `iso/` folder and put the game disc image in, both BIN and CUE files
+1. Run `mv iso/*.cue iso/sotn.cue`
 1. Run `make extract_sotn`
 
 ## Build
