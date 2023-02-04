@@ -872,12 +872,12 @@ extern s32 g_playerGold;
 extern s32 g_killCount;
 extern u8 g_SaveName[12];
 extern PlayerStats D_80097B9C;
-extern s32 g_playerHp; // D_80097B9C.hp
-extern s32 g_playerHpMax; // D_80097B9C.hpMax
-extern s32 g_playerHeart; // D_80097B9C.hearts
+extern s32 g_playerHp;       // D_80097B9C.hp
+extern s32 g_playerHpMax;    // D_80097B9C.hpMax
+extern s32 g_playerHeart;    // D_80097B9C.hearts
 extern s32 g_playerHeartMax; // D_80097B9C.heartsMax
-extern s32 g_playerMP; // D_80097B9C.mp
-extern s32 g_playerMpMax; // D_80097B9C.mpMax
+extern s32 g_playerMP;       // D_80097B9C.mp
+extern s32 g_playerMpMax;    // D_80097B9C.mpMax
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
