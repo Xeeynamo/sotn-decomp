@@ -100,10 +100,10 @@ void EntityLockCamera(Entity* entity) {
 
     if (entity->subId & 0x100) {
         temp_v1_2 = &D_80180664[(((temp_s1 & 0xFFFF) * 4) & 0xFFFF)];
-        g_CurrentRoomX = *temp_v1_2++;
-        g_CurrentRoomY = *temp_v1_2++;
-        g_CurrentRoomWidth = *temp_v1_2++;
-        g_CurrentRoomHeight = *temp_v1_2++;
+        g_CurrentRoom.x = *temp_v1_2++;
+        g_CurrentRoom.y = *temp_v1_2++;
+        g_CurrentRoom.width = *temp_v1_2++;
+        g_CurrentRoom.height = *temp_v1_2++;
         DestroyEntity(entity);
         return;
     }
@@ -117,10 +117,10 @@ void EntityLockCamera(Entity* entity) {
         }
 
         temp_v1_5 = &D_80180664[(phi_v1 + temp_s1 * 8) & 0xFFFF];
-        g_CurrentRoomX = *temp_v1_5++;
-        g_CurrentRoomY = *temp_v1_5++;
-        g_CurrentRoomWidth = *temp_v1_5++;
-        g_CurrentRoomHeight = *temp_v1_5++;
+        g_CurrentRoom.x = *temp_v1_5++;
+        g_CurrentRoom.y = *temp_v1_5++;
+        g_CurrentRoom.width = *temp_v1_5++;
+        g_CurrentRoom.height = *temp_v1_5++;
     }
 }
 #endif
@@ -654,7 +654,7 @@ void Update(void) {
 
             if ((unk34 & 0x02000000)) {
                 s16 posY = entity->posY.i.hi + D_80073092;
-                s16 test = (g_CurrentRoomVSize * 256) + 128;
+                s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
                     continue;

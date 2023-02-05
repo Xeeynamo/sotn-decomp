@@ -53,14 +53,14 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E6C4);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018E7C8);
 
 void func_8018F890(s16 arg0) {
-    s16 temp_v0 = arg0 - *(s16*)g_CurrentRoomHeight;
+    s16 temp_v0 = arg0 - *(s16*)&g_CurrentRoom.height;
 
     if (temp_v0 > 1) {
-        g_CurrentRoomHeight[0]++;
+        g_CurrentRoom.height++;
     } else if (temp_v0 < -1) {
-        g_CurrentRoomHeight[0]--;
+        g_CurrentRoom.height--;
     } else {
-        g_CurrentRoomHeight[0] = arg0;
+        g_CurrentRoom.height = arg0;
     }
 }
 

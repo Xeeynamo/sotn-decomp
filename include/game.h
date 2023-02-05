@@ -744,17 +744,16 @@ extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s16 D_80073092;
 extern RoomDimensions g_CurrentRoom;
-extern s32 g_CurrentRoomHSize;
-extern s32 g_CurrentRoomVSize;
-extern s32 D_800730AC;
-extern s32 g_CurrentRoomLeft;
-extern s32 g_CurrentRoomTop;
-extern s32 g_CurrentRoomRight;
-extern s32 g_CurrentRoomBottom;
-extern s32 g_CurrentRoomX;
-extern s32 g_CurrentRoomY;
-extern s32 g_CurrentRoomWidth;
-extern s32 g_CurrentRoomHeight[];
+extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
+extern s32 D_800730AC;          // g_CurrentRoom.unk8
+extern s32 g_CurrentRoomLeft;   // g_CurrentRoom.left
+extern s32 g_CurrentRoomTop;    // g_CurrentRoom.top
+extern s32 g_CurrentRoomRight;  // g_CurrentRoom.right
+extern s32 g_CurrentRoomBottom; // g_CurrentRoom.bottom
+extern s32 g_CurrentRoomX;      // g_CurrentRoom.x
+extern s32 g_CurrentRoomY;      // g_CurrentRoom.y
+extern s32 g_CurrentRoomWidth;  // g_CurrentRoom.width
+extern s32 g_CurrentRoomHeight; // g_CurrentRoom.height
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
