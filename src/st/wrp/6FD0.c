@@ -2784,7 +2784,7 @@ s32 func_8018B93C(void) {
     return yDistance;
 }
 
-s16 func_8018B970(void) {
+s32 func_8018B970(void) {
     s16 arg0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
