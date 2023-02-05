@@ -1735,40 +1735,40 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6CC0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6DC8);
 
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawSettingsButton);
 #else
 extern s32 g_menuButtonSettingsCursorPos;
 extern s32 g_menuButtonSettingsConfig[];
-extern const u8 c_chPlaystationButtons[];
-extern const u8 c_chShoulderButtons[];
-void DrawSettingsButton(MenuContext* context) {
-    const int ActionCount = 7;
-    const char** strAction;
-    s32 curX;
-    s32 curY;
-    s32 buttonId;
+extern u8 c_chPlaystationButtons[];
+extern u8 c_chShoulderButtons[];
+
+void DrawSettingsButton(MenuContext* ctx) {
+    s32 cursorX;
     s32 i;
+    s32 x;
+    s32 y;
+    s32 buttonId;
+    s32 btn1_x;
+    s32 btn2_x;
 
+    cursorX = 0x98;
     i = 0;
-    strAction = &c_strButtonRightHand;
-    curY = 48;
-    for (; i < ActionCount; i++) {
-        DrawMenuStr(*strAction, 0x98, curY, context);
+    x = 0xC0;
+    y = 0x30;
+    for (; i < 7; i++) {
+        DrawMenuStr(c_strButtonRightHand[i], cursorX, y, ctx);
         buttonId = g_menuButtonSettingsConfig[i];
-        curX = buttonId * 0xC;
-        DrawMenuChar(c_chPlaystationButtons[buttonId], curX + 0x30 + 0xC0, curY,
-                     context);
-        strAction++;
+        btn1_x = (buttonId * 12) + 0x30;
+        DrawMenuChar(c_chPlaystationButtons[buttonId], x + btn1_x, y, ctx);
         if (buttonId >= 4) {
-            DrawMenuChar(c_chShoulderButtons[buttonId], curX + 0x38 + 0xC0,
-                         curY, context);
+            btn2_x = btn1_x + 8;
+            DrawMenuChar(c_chShoulderButtons[buttonId], x + btn2_x, y, ctx);
         }
-
-        curY += 16;
+        y += 16;
     }
 
-    func_800F5E68(context, g_menuButtonSettingsCursorPos, 0x96, 0x2E, 0x54, 0xC,
+    func_800F5E68(ctx, g_menuButtonSettingsCursorPos, cursorX - 2, 46, 84, 12,
                   4, 1);
 }
 #endif
@@ -1820,6 +1820,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawPauseMenu);
 #else
 void func_800F622C(MenuContext* context);
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
+extern s32 g_menuButtonSettingsCursorPos;
+extern s32 g_menuButtonSettingsConfig[];
+extern const u8 c_chPlaystationButtons[];
+extern const u8 c_chShoulderButtons[];
 extern s32 D_8003C9FC;
 extern s32 D_80097C1C;
 extern s32 D_800A2D68;

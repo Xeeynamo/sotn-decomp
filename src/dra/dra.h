@@ -106,7 +106,7 @@ extern const char* c_strCloak;
 extern const char* c_strCloak2;
 extern const char* c_strExterior;
 extern const char* c_strLining;
-extern const char* c_strButtonRightHand;
+extern const char* c_strButtonRightHand[];
 extern const char* c_strButtonLeftHand;
 extern const char* c_strButtonJump;
 extern const char* c_strButtonSpecial;
