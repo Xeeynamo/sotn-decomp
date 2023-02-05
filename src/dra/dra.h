@@ -92,7 +92,7 @@ extern const char* c_strINT;
 extern const char* c_strLCK;
 extern const char* c_strEXP;
 extern const char* c_strNEXT;
-extern const char* c_strGOLD;
+extern const char* c_strGOLD[];
 extern const char* c_strLEVEL;
 extern const char* c_strTIME;
 extern const char* c_strROOMS;
