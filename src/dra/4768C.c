@@ -1197,8 +1197,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1D54);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1EB0);
 
 void func_800F1FC4(s32 arg0) {
-    func_800F1EB0((playerX >> 8) + g_CurrentRoomLeft,
-                  (playerY >> 8) + g_CurrentRoomTop, arg0);
+    func_800F1EB0((playerX >> 8) + g_CurrentRoom.left,
+                  (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2014);
@@ -1269,8 +1269,8 @@ void func_800F24F4(void) {
     s32 phi_v1;
     s32 phi_a0;
 
-    castleX = ((s32)playerX >> 8) + g_CurrentRoomLeft;
-    castleY = ((s32)playerY >> 8) + g_CurrentRoomTop;
+    castleX = ((s32)playerX >> 8) + g_CurrentRoom.left;
+    castleY = ((s32)playerY >> 8) + g_CurrentRoom.top;
     if (D_8003C708 & 0x20) {
         phi_v1 = g_mapProgramId;
         if (phi_v1 == (PROGRAM_NO0 | PROGRAM_INVERTEDCASTLE_FLAG)) {

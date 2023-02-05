@@ -1733,7 +1733,7 @@ void func_80186FD0(Entity* arg0) {
     AnimateEntity(objInit->unk10, arg0);
 }
 
-// nops in between array assignments, could be aspsx
+// nops in between array assignments, matches with PSY-Q 3.6 and 4.0
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801870B0);
 #else
@@ -1749,15 +1749,15 @@ void func_801870B0(Entity* entity) {
         switch (temp_s1) {
         case 4:
         case 5:
-            if (g_CurrentRoomX != 0) {
+            if (g_CurrentRoom.x != 0) {
                 return;
             }
             break;
 
         case 6:
             if (g_pads->pressed & PAD_TRIANGLE) {
-                g_CurrentRoomX = 0;
-                g_CurrentRoomWidth = 1280;
+                g_CurrentRoom.x = 0;
+                g_CurrentRoom.width = 1280;
                 do {
                     entity->step++;
                 } while (0);
@@ -1777,10 +1777,10 @@ void func_801870B0(Entity* entity) {
             unk = 8;
             temp_s1 = (temp_s1 * unk) + phi_v1;
             temp_v0_2 = &D_80180538[temp_s1];
-            g_CurrentRoomX = *(temp_v0_2++);
-            g_CurrentRoomY = *(temp_v0_2++);
-            g_CurrentRoomWidth = *(temp_v0_2++);
-            g_CurrentRoomHeight = *(temp_v0_2++);
+            g_CurrentRoom.x = *(temp_v0_2++);
+            g_CurrentRoom.y = *(temp_v0_2++);
+            g_CurrentRoom.width = *(temp_v0_2++);
+            g_CurrentRoom.height = *(temp_v0_2++);
         }
     } else {
         InitializeEntity(D_80180488);
@@ -2065,8 +2065,8 @@ void EntityWarpRoom(Entity* entity) {
 
         warpCoord = &D_8018065C[move_room];
         D_80193AA0 = move_room;
-        move_x = warpCoord->x - g_CurrentRoomLeft;
-        move_y = warpCoord->y - g_CurrentRoomTop;
+        move_x = warpCoord->x - g_CurrentRoom.left;
+        move_y = warpCoord->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, move_room);
         FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
         FntPrint(D_80186E5C, move_x, move_y);
@@ -2128,8 +2128,8 @@ void EntityWarpRoom(Entity* entity) {
 
     default:
         warpCoord = &D_8018065C[D_80193AA0];
-        temp_s4_3 = warpCoord->x - g_CurrentRoomLeft;
-        temp_s5_3 = warpCoord->y - g_CurrentRoomTop;
+        temp_s4_3 = warpCoord->x - g_CurrentRoom.left;
+        temp_s5_3 = warpCoord->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, D_80193AA0);
         FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
         FntPrint(D_80186E5C, temp_s4_3, temp_s5_3);
@@ -2382,7 +2382,7 @@ void Update(void) {
 
             if ((unk34 & 0x02000000)) {
                 s16 posY = entity->posY.i.hi + D_80073092;
-                s16 test = (g_CurrentRoomVSize * 256) + 128;
+                s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
                     continue;
