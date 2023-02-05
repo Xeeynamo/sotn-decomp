@@ -26,7 +26,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 6FD0]
-      - [0x0, .rodata, 6FD0]
+      - [0x2968, .data, tiledef1]
+      - [0x2D78, .data, tiledef2]
+      - [0x6D88, .data, spriteparts]
+      - [0x6E30, .rodata, 6FD0]
       - [0x6E70, rodata] # EntityWarpRoom
       - [0x6E90, rodata] # EntityWarpSmallRocks
       - [0x6EA8, rodata] # EntityRedDoor
