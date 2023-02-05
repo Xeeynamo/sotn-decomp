@@ -1815,7 +1815,7 @@ void func_800F7244(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F72BC);
 
-#ifdef NON_EQUIVALENT
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawPauseMenu);
 #else
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);

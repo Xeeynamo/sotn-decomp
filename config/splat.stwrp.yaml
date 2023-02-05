@@ -27,16 +27,15 @@ segments:
     subsegments:
       - [0x0, .data, 6FD0]
       - [0x0, .rodata, 6FD0]
-      - [0x6E70, rodata] # jtbl
-      - [0x6E90, rodata] # jtbl
-      - [0x6EA8, rodata] # jtbl
-      - [0x6F10, rodata] # jtbl
-      - [0x6F30, rodata] # jtbl
-      - [0x6F58, rodata] # jtbl
-      - [0x6F80, rodata] # jtbl
-      - [0x6F94, rodata] # string
-      - [0x6FA4, rodata] # string
-      - [0x6FB4, rodata] # jtbl
+      - [0x6E70, rodata] # EntityWarpRoom
+      - [0x6E90, rodata] # EntityWarpSmallRocks
+      - [0x6EA8, rodata] # EntityRedDoor
+      - [0x6EC0, rodata] # CollectGold
+      - [0x6F10, rodata] # EntityPriceDrop
+      - [0x6F30, rodata] # EntityInventoryDrop
+      - [0x6F48, rodata] # EntityRelicOrb
+      - [0x6F80, rodata] # EntityUnkId0E
+      - [0x6F94, rodata] # EntityStageNamePopup
       - [0x6FD0, c]
       - [0x13AA0, sbss] # bss?
   - [0x14768]
