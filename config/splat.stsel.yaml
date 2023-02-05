@@ -26,6 +26,8 @@ segments:
     subsegments:
       - [0x0, .data, 2C048]
       - [0x40, data]
+      - [0xD5D4, .data, D5D4]
+      - [0xDBD4, data]
       - [0x176C0, rodata]
       - [0x276C0, .rodata, 2D260]
       - [0x276F0, rodata]
