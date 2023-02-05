@@ -208,7 +208,7 @@ s32 func_800FF460(s32 arg0) {
 }
 
 s32 func_800FF494(Unkstruct_800FF494* arg0) {
-    s32 temp_s2 = func_800FD7C0(0x4B, 4);
+    s32 temp_s2 = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
