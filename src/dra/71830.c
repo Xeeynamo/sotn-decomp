@@ -5,10 +5,10 @@
 
 void func_80111830(void) {
     s32 var_v0;
-    s32 var_s0;
+    s32 i;
 
-    for (var_s0 = 0; var_s0 < 16; var_s0++) {
-        switch (var_s0) {
+    for (i = 0; i < 16; i++) {
+        switch (i) {
         case 0:
             var_v0 = func_801104D0();
             break;
