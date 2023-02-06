@@ -3,16 +3,6 @@
 #include "objects.h"
 #include "sfx.h"
 
-s32 func_801104D0();
-s32 func_801106A4();
-s32 func_8011081C();
-s32 func_80110968();
-s32 func_80110BC8();
-s32 func_80110DF8();
-s32 func_80111018();
-s32 func_801112AC();
-s32 func_8011151C();
-
 void func_80111830(void) {
     s32 var_v0;
     s32 var_s0;
