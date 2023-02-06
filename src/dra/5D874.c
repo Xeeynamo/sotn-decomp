@@ -68,10 +68,10 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FDB18);
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
 
-    if (g_playerMP.current < (s32)temp) {
+    if (D_80097B9C.mp < (s32)temp) {
         return false;
     } else {
-        g_playerMP.current -= temp;
+        D_80097B9C.mp -= temp;
         return true;
     }
 }
@@ -127,9 +127,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE3C4);
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE728);
 
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
-    if (g_playerMP.current >= mpCount) {
+    if (D_80097B9C.mp >= mpCount) {
         if (subtractMp != 0) {
-            g_playerMP.current -= mpCount;
+            D_80097B9C.mp -= mpCount;
         }
         return false;
     }
@@ -143,10 +143,10 @@ void func_800FE8F0(void) {
 }
 
 void AddHearts(s32 value) {
-    if (g_playerHeart->current < g_playerHeart->max) {
-        g_playerHeart->current += value;
-        if (g_playerHeart->max < g_playerHeart->current) {
-            g_playerHeart->current = g_playerHeart->max;
+    if (D_80097B9C.hearts < D_80097B9C.heartsMax) {
+        D_80097B9C.hearts += value;
+        if (D_80097B9C.heartsMax < D_80097B9C.hearts) {
+            D_80097B9C.hearts = D_80097B9C.heartsMax;
         }
         func_8011AAFC(g_EntityArray, 99, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -173,11 +173,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FEEA4);
 s32 func_800FF064(s32 arg0) {
     s32 playerMP;
 
-    playerMP = g_playerMP.current - 4;
+    playerMP = D_80097B9C.mp - 4;
 
     if (playerMP > 0) {
         if (arg0 != 0) {
-            g_playerMP.current = playerMP;
+            D_80097B9C.mp = playerMP;
         }
         return 0;
     }
@@ -208,7 +208,7 @@ s32 func_800FF460(s32 arg0) {
 }
 
 s32 func_800FF494(Unkstruct_800FF494* arg0) {
-    s32 temp_s2 = func_800FD7C0(0x4B, 4);
+    s32 temp_s2 = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
@@ -430,7 +430,7 @@ void func_8010189C(void) {
 
     D_8013B5E8 = 0;
     D_80137998 = 0;
-    D_8013796C = g_playerHp.current;
+    D_8013796C = D_80097B9C.hp;
 
     if ((g_mapProgramId == PROGRAM_ST0) ||
         (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {

@@ -1197,8 +1197,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1D54);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F1EB0);
 
 void func_800F1FC4(s32 arg0) {
-    func_800F1EB0((playerX >> 8) + g_CurrentRoomLeft,
-                  (playerY >> 8) + g_CurrentRoomTop, arg0);
+    func_800F1EB0((playerX >> 8) + g_CurrentRoom.left,
+                  (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2014);
@@ -1269,8 +1269,8 @@ void func_800F24F4(void) {
     s32 phi_v1;
     s32 phi_a0;
 
-    castleX = ((s32)playerX >> 8) + g_CurrentRoomLeft;
-    castleY = ((s32)playerY >> 8) + g_CurrentRoomTop;
+    castleX = ((s32)playerX >> 8) + g_CurrentRoom.left;
+    castleY = ((s32)playerY >> 8) + g_CurrentRoom.top;
     if (D_8003C708 & 0x20) {
         phi_v1 = g_mapProgramId;
         if (phi_v1 == (PROGRAM_NO0 | PROGRAM_INVERTEDCASTLE_FLAG)) {
@@ -1735,40 +1735,40 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6CC0);
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F6DC8);
 
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawSettingsButton);
 #else
 extern s32 g_menuButtonSettingsCursorPos;
 extern s32 g_menuButtonSettingsConfig[];
-extern const u8 c_chPlaystationButtons[];
-extern const u8 c_chShoulderButtons[];
-void DrawSettingsButton(MenuContext* context) {
-    const int ActionCount = 7;
-    const char** strAction;
-    s32 curX;
-    s32 curY;
-    s32 buttonId;
+extern u8 c_chPlaystationButtons[];
+extern u8 c_chShoulderButtons[];
+
+void DrawSettingsButton(MenuContext* ctx) {
+    s32 cursorX;
     s32 i;
+    s32 x;
+    s32 y;
+    s32 buttonId;
+    s32 btn1_x;
+    s32 btn2_x;
 
+    cursorX = 0x98;
     i = 0;
-    strAction = &c_strButtonRightHand;
-    curY = 48;
-    for (; i < ActionCount; i++) {
-        DrawMenuStr(*strAction, 0x98, curY, context);
+    x = 0xC0;
+    y = 0x30;
+    for (; i < 7; i++) {
+        DrawMenuStr(c_strButtonRightHand[i], cursorX, y, ctx);
         buttonId = g_menuButtonSettingsConfig[i];
-        curX = buttonId * 0xC;
-        DrawMenuChar(c_chPlaystationButtons[buttonId], curX + 0x30 + 0xC0, curY,
-                     context);
-        strAction++;
+        btn1_x = (buttonId * 12) + 0x30;
+        DrawMenuChar(c_chPlaystationButtons[buttonId], x + btn1_x, y, ctx);
         if (buttonId >= 4) {
-            DrawMenuChar(c_chShoulderButtons[buttonId], curX + 0x38 + 0xC0,
-                         curY, context);
+            btn2_x = btn1_x + 8;
+            DrawMenuChar(c_chShoulderButtons[buttonId], x + btn2_x, y, ctx);
         }
-
-        curY += 16;
+        y += 16;
     }
 
-    func_800F5E68(context, g_menuButtonSettingsCursorPos, 0x96, 0x2E, 0x54, 0xC,
+    func_800F5E68(ctx, g_menuButtonSettingsCursorPos, cursorX - 2, 46, 84, 12,
                   4, 1);
 }
 #endif
@@ -1818,16 +1818,16 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F72BC);
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", DrawPauseMenu);
 #else
-void func_800F622C(MenuContext* context);
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
+extern s32 g_menuButtonSettingsCursorPos;
+extern s32 g_menuButtonSettingsConfig[];
+extern const u8 c_chPlaystationButtons[];
+extern const u8 c_chShoulderButtons[];
 extern s32 D_8003C9FC;
-extern s32 D_80097C1C;
 extern s32 D_800A2D68;
 extern s32 D_800A2D6C;
 extern const char* D_800A83AC[];
 extern s32 c_arrExpNext[];
-extern s16 D_8013761C;
-extern s32 /*?*/ D_8013763A;
 extern s32 player_stat_str;
 
 void DrawPauseMenu(s32 arg0) {
@@ -1836,7 +1836,6 @@ void DrawPauseMenu(s32 arg0) {
     s32 temp_s0_2;
     s32 temp_s1;
     s32 temp_s1_2;
-    s32 temp_s4;
     s32 temp_v0;
     s32 playerLevel;
     s32 temp_v1_2;
@@ -1850,19 +1849,18 @@ void DrawPauseMenu(s32 arg0) {
     s32 phi_a0_4;
     s32 phi_a1_2;
     s32 phi_a2;
-    s32 phi_s4_2;
+    s32 i;
     s32 phi_s3_2;
     s32 phi_s0;
-    s32* phi_s5_2;
     s32* phi_s1;
     s32 phi_a0_5;
     s32 phi_a1_3;
     s32 phi_s5_3;
 
-    context = &D_8013761C + (arg0 * 15);
+    context = D_8013761C[arg0 * 15];
     func_800F53A4();
     if (arg0 == 1) {
-        func_800F622C(context);
+        DrawMenuAlucardPortrait(context);
 
         if (IsAlucart()) {
             strPlayerName = c_strALUCART;
@@ -1871,17 +1869,17 @@ void DrawPauseMenu(s32 arg0) {
         }
         DrawMenuStr(strPlayerName, 0x80, 0x28, context);
         DrawMenuStr(c_strHP, 0x60, 0x38, context);
-        DrawMenuInt(g_playerHp, 0xA8, 0x38, context);
+        DrawMenuInt(D_80097B9C.hp, 0xA8, 0x38, context);
         DrawMenuChar(0xF, 0xB0, 0x38, context);
-        DrawMenuInt(g_playerHpMax, 0xD0, 0x38, context);
+        DrawMenuInt(D_80097B9C.hpMax, 0xD0, 0x38, context);
         DrawMenuStr(c_strMP, 0x60, 0x44, context);
-        DrawMenuInt(g_playerMP.current, 0xA8, 0x44, context);
+        DrawMenuInt(D_80097B9C.mp, 0xA8, 0x44, context);
         DrawMenuChar(0xF, 0xB0, 0x44, context);
-        DrawMenuInt(g_playerMP.max, 0xD0, 0x44, context);
+        DrawMenuInt(D_80097B9C.mpMax, 0xD0, 0x44, context);
         DrawMenuStr(c_strHEART, 0x60, 0x50, context);
-        DrawMenuInt(g_playerHeart, 0xA8, 0x50, context);
+        DrawMenuInt(D_80097B9C.hearts, 0xA8, 0x50, context);
         DrawMenuChar(0xF, 0xB0, 0x50, context);
-        DrawMenuInt(g_playerHeart->max, 0xD0, 0x50, context);
+        DrawMenuInt(D_80097B9C.heartsMax, 0xD0, 0x50, context);
         DrawMenuStr(c_strEXP, 0x20, 0xB0, context);
         DrawMenuInt(g_playerExp, 0x90, 0xB0, context);
         DrawMenuStr(c_strNEXT, 0x20, 0xBC, context);
@@ -1892,7 +1890,7 @@ void DrawPauseMenu(s32 arg0) {
             expNext = 0;
         }
         DrawMenuInt(expNext, 0x90, 0xBC, context);
-        DrawMenuStr(c_strGOLD, 0x20, 0xC8, context);
+        DrawMenuStr(c_strGOLD[0], 0x20, 0xC8, context);
         DrawMenuInt(g_playerGold, 0x90, 0xC8, context);
         DrawMenuStr(c_strLEVEL, 0xF8, 0x28, context);
         DrawMenuInt(g_playerLevel, 0x130, 0x28, context);
@@ -1912,8 +1910,7 @@ void DrawPauseMenu(s32 arg0) {
         if (IsAlucart()) {
             phi_s4 = 0x2D;
         }
-        DrawMenuStr((&c_strGOLD)[phi_s4], 0x104, 0x44,
-                    context); // TODO probably wrong
+        DrawMenuStr(c_strGOLD[phi_s4], 0x104, 0x44, context);
         DrawMenuStr(c_strROOMS, 0xF0, 0x96, context);
         DrawMenuInt(g_roomCount, 0x148, 0x96, context);
         DrawMenuStr(c_strKILLS, 0xF0, 0xA4, context);
@@ -1935,7 +1932,7 @@ void DrawPauseMenu(s32 arg0) {
     }
     func_800F66BC(D_800A2D68, phi_s3, phi_s5, context, 1);
 
-    temp_s1 = g_menuButtonSettingsConfig;
+    temp_s1 = g_menuButtonSettingsConfig[0];
     phi_a1 = phi_s3 + 0x2C;
     if (temp_s1 < 4) {
         phi_a0_3 = (s32)c_chPlaystationButtons[temp_s1];
@@ -1946,7 +1943,7 @@ void DrawPauseMenu(s32 arg0) {
         phi_a1 = phi_s3 + 0x30;
     }
     DrawMenuChar(phi_a0_3, phi_a1, phi_s5, context);
-    DrawMenuInt(D_80097C1C, phi_s3 + 0x4C, phi_s5, context);
+    DrawMenuInt(*D_80097C1C, phi_s3 + 0x4C, phi_s5, context);
 
     temp_s1_2 = D_8003C9FC;
     phi_a1_2 = phi_s3 + 0x2C;
@@ -1971,17 +1968,16 @@ void DrawPauseMenu(s32 arg0) {
         phi_s3_2 = 0x20;
         phi_s5_3 = 0x78;
     } else {
-        DrawMenuStr(D_800A83AC[g_menuRelicsCursorIndex], 8, 0x28, context);
+        DrawMenuStr(D_800A83AC[*g_menuRelicsCursorIndex], 8, 0x28, context);
         phi_s3_2 = 0xC;
         phi_s5_3 = 0x46;
     }
-    phi_s4_2 = 0;
+    i = 0;
     phi_s0 = phi_s5_3;
-    phi_s5_2 = &player_stat_str;
     phi_s1 = &player_stat_str + 0x10;
-    do {
-        DrawMenuStr(*(&c_strSTR + (phi_s4_2 * 4)), phi_s3_2, phi_s0, context);
-        DrawMenuInt(*phi_s5_2, phi_s3_2 + 0x2C, phi_s0, context);
+    while (i < 4) {
+        DrawMenuStr((&c_strSTR)[i], phi_s5_3, phi_s5_3, context);
+        DrawMenuInt((&player_stat_str)[i], phi_s3_2 + 0x2C, phi_s0, context);
         temp_v0 = *phi_s1;
         if (temp_v0 != 0) {
             if (temp_v0 > 0) {
@@ -1989,18 +1985,16 @@ void DrawPauseMenu(s32 arg0) {
                 phi_a0_5 = *phi_s1;
                 phi_a1_3 = phi_s3_2 + 0x44;
             } else {
-                DrawMenuChar(0xD, phi_s3_2 + 0x34, phi_s0, context);
-                phi_a0_5 = -(s32)*phi_s1;
-                phi_a1_3 = phi_s3_2 + 0x44;
+                DrawMenuChar(0xD, phi_s5_3 + 0x34, phi_s0, context);
+                phi_a0_5 = -((s32)(*phi_s1));
+                phi_a1_3 = phi_s5_3 + 0x44;
             }
             DrawMenuInt(phi_a0_5, phi_a1_3, phi_s0, context);
         }
-        temp_s4 = phi_s4_2 + 1;
-        phi_s4_2 = temp_s4;
         phi_s0 += 0xC;
-        phi_s5_2 += 4;
-        phi_s1 += 4;
-    } while (temp_s4 < 4);
+        i++;
+        phi_s1++;
+    }
 }
 #endif
 
@@ -2478,22 +2472,22 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 
     if (arg0->unk4 != 5) {
         if (((u32)arg0->unk4) >= 0x10U) {
-            temp = g_playerHp.max;
-            if (g_playerHp.max < 0) {
+            temp = D_80097B9C.hpMax;
+            if (D_80097B9C.hpMax < 0) {
                 temp += 7;
             }
             arg0->unk8 = temp >> 3;
-        } else if (g_playerHp.max >= (arg0->unk8 * 0x14)) {
+        } else if (D_80097B9C.hpMax >= (arg0->unk8 * 0x14)) {
             arg0->unk4 = 3;
         } else {
             arg0->unk4 = 2;
         }
     }
-    if (g_playerHp.current <= arg0->unk8) {
-        g_playerHp.current = 0;
+    if (D_80097B9C.hp <= arg0->unk8) {
+        D_80097B9C.hp = 0;
         return true;
     } else {
-        g_playerHp.current -= arg0->unk8;
+        D_80097B9C.hp -= arg0->unk8;
         return false;
     }
 }

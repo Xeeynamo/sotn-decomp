@@ -20,6 +20,7 @@ CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx 
 # Directories
 ASM_DIR         := asm
 SRC_DIR         := src
+ASSETS_DIR      := assets
 INCLUDE_DIR     := include
 BUILD_DIR       := build
 DISK_DIR        := $(BUILD_DIR)/disk
@@ -61,6 +62,7 @@ define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.s))
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
 	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**.bin))
 endef
 
 define list_o_files
@@ -71,7 +73,7 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
-		-T $(CONFIG_DIR)/generated.symbols.$(1).txt \
+		-T $(CONFIG_DIR)/symbols.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(1).txt \
 		--no-check-sections \
@@ -211,9 +213,9 @@ mad_patch:
 	find src/st/mad -type f -name "*.c" -print0 | xargs -0 sed -i $(MAD_PATCHES)
 
 st%_dirs:
-	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
-	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
@@ -289,7 +291,7 @@ $(SOTNDISK): $(GO)
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.bin.o: %.bin
-	$(LD) -r -b binary -o -Map %.map $@ $<
+	$(LD) -r -b binary -Map %.map -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
