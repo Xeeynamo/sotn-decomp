@@ -7,7 +7,7 @@ void func_80111830(void) {
     s32 var_v0;
     s32 var_s0;
 
-    for ( var_s0 = 0; var_s0 < 16; var_s0++) {
+    for (var_s0 = 0; var_s0 < 16; var_s0++) {
         switch (var_s0) {
         case 0:
             var_v0 = func_801104D0();
@@ -48,11 +48,10 @@ void func_80111830(void) {
             break;
         }
         if (var_v0 != 0) {
-            return;   
+            return;
         }
     }
 }
-
 
 void func_80111928(void) { D_801396EA = 0; }
 
