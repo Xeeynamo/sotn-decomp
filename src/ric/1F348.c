@@ -75,7 +75,7 @@ void func_8015B348(void) {
         PLAYER.unk19 = 2;
         D_801545AA += 64;
         PLAYER.unk1C = (rsin(D_801545AA) >> 0xA) + 256;
-        
+
         if (D_801545AC != 0) {
             D_801545AC--;
             if ((D_801545AC) == 0) {
