@@ -636,6 +636,7 @@ void func_80162C84(Entity* entity) {
         entity->unk7E.modeU16 = 0;
         entity->step++;
         break;
+
     case 1:
         if (*(s32*)&entity->animationFrameIndex == 0x10000) {
             g_api.PlaySfx(0x882);
@@ -663,6 +664,7 @@ void func_80162C84(Entity* entity) {
             entity->step++;
         }
         break;
+
     case 3:
         entity->unk7C.s--;
         if ((entity->unk7C.s) == 0) {
@@ -670,7 +672,9 @@ void func_80162C84(Entity* entity) {
             entity->step++;
         }
         break;
+
     case 4:
+    
     default:
         return;
     }
