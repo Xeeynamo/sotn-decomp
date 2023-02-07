@@ -608,7 +608,78 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162870);
 
 void func_80162C7C(void) {}
 
+/**
+ * TODO:
+ * Aspatch jumps to the wrong instruction
+ * This function matches with GCC 2.6.0 + ASPSX 2.3.4,
+ * It also has a jumptable which makes it impossible for it
+ * to be included in a NON_MATCHING state.
+ * CAUTION: rodata yet to be confirmed matching
+ */
+#if 0
+extern s32 D_80154ED4;
+extern s32 D_80154EF8;
+
+void func_80162C84(Entity* entity) {
+    Entity* player = &g_EntityArray[0];
+    s32 temp;
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x0C110000;
+        entity->facing = 1;
+        entity->unk5A = 0x66;
+        entity->zPriority = PLAYER.zPriority - 8;
+        entity->palette = 0x8149;
+        entity->animationSet = -0x7FED;
+        func_8015C920(&D_80154ED4);
+        entity->accelerationX = -0x1C000;
+        entity->posY.i.hi = 0xBB;
+        entity->posX.i.hi = 0x148;
+        entity->unk7E.modeU16 = 0;
+        entity->step++;
+        break;
+    case 1:
+        if (*(s32*)&entity->animationFrameIndex == 0x10000) {
+            g_api.PlaySfx(0x882);
+        }
+        if (*(s32*)&entity->animationFrameIndex == 0x10004) {
+            g_api.PlaySfx(0x883);
+        }
+
+        entity->posX.val += entity->accelerationX;
+        if (((s16)entity->unk7E.modeU16 == 0) && (entity->posX.i.hi < 0x100)) {
+            g_api.PlaySfx(0x87D);
+            entity->unk7E.modeU16++;
+        }
+        if (entity->posX.i.hi < 0xE0) {
+            func_8015C920(&D_80154EF8);
+            entity->accelerationX = 0;
+            entity->step++;
+            func_801606BC(entity, 0x40000, 0);
+            return;
+        }
+    case 2:
+        if (entity->animationFrameIndex == 0x10) {
+            g_api.PlaySfx(0x87E);
+            entity->unk7C.s = 0x80;
+            entity->step++;
+        }
+        break;
+    case 3:
+        entity->unk7C.s--;
+        if ((entity->unk7C.s) == 0) {
+            func_801606BC(entity, 0x1E, 0);
+            entity->step++;
+        }
+        break;
+    case 4:
+    default:
+        return;
+    }
+}
+#else
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162C84);
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162E9C);
 
