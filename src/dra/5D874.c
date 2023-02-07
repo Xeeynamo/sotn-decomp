@@ -630,18 +630,21 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     poly1->y1 = arg1->y0 - 1;
     poly1->pad3 = 0;
     poly1 = (POLY_GT4*)poly1->tag;
+
     poly1->x0 = arg1->x0 - 1;
     poly1->y0 = arg1->y0 - 1;
     poly1->x1 = arg1->x0 - 1;
     poly1->y1 = arg1->y2;
     poly1->pad3 = 0;
     poly1 = (POLY_GT4*)poly1->tag;
+
     poly1->x0 = arg1->x0 - 1;
     poly1->y0 = arg1->y2;
     poly1->x1 = arg1->x1;
     poly1->y1 = arg1->y2;
     poly1->pad3 = 0;
     poly1 = (POLY_GT4*)poly1->tag;
+    
     poly1->x0 = arg1->x1;
     poly1->y0 = arg1->y0 - 1;
     poly1->x1 = arg1->x1;
