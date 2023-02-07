@@ -75,14 +75,6 @@ typedef struct {
 } Unkstruct8; // size = 0x10
 
 typedef struct {
-    /* 0x0 */ u16 programId;
-    /* 0x2 */ u16 unk2;
-    /* 0x4 */ u16 unk4;
-    /* 0x6 */ u16 unk6;
-    /* 0x8 */ u16 unk8;
-} Unkstruct10; // size = 0xA
-
-typedef struct {
     /* 0x00 */ char pad0[0x4];
     /* 0x04 */ u16 unk4;
     /* 0x08 */ char pad8[0x6];

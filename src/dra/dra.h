@@ -84,7 +84,8 @@ extern u32 g_playerEquip[];
 // D_80097C10 = g_playerEquip[4]
 // D_80097C14 = g_playerEquip[5]
 
-extern Unkstruct10 D_800A2464[];
+extern RoomTeleport D_800A245C[];
+extern s32 D_800A2464[]; // D_800A245C[0].stageId
 extern const char* c_strALUCARD;
 extern const char* c_strSTR;
 extern const char* c_strCON;
