@@ -623,7 +623,35 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80103148);
+POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
+    poly1->x0 = arg1->x0 - 1;
+    poly1->y0 = arg1->y0 - 1;
+    poly1->x1 = arg1->x1;
+    poly1->y1 = arg1->y0 - 1;
+    poly1->pad3 = 0;
+    poly1 = (POLY_GT4*)poly1->tag;
+
+    poly1->x0 = arg1->x0 - 1;
+    poly1->y0 = arg1->y0 - 1;
+    poly1->x1 = arg1->x0 - 1;
+    poly1->y1 = arg1->y2;
+    poly1->pad3 = 0;
+    poly1 = (POLY_GT4*)poly1->tag;
+
+    poly1->x0 = arg1->x0 - 1;
+    poly1->y0 = arg1->y2;
+    poly1->x1 = arg1->x1;
+    poly1->y1 = arg1->y2;
+    poly1->pad3 = 0;
+    poly1 = (POLY_GT4*)poly1->tag;
+
+    poly1->x0 = arg1->x1;
+    poly1->y0 = arg1->y0 - 1;
+    poly1->x1 = arg1->x1;
+    poly1->y1 = arg1->y2;
+    poly1->pad3 = 0;
+    return (POLY_GT4*)poly1->tag;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80103238);
 
@@ -1285,7 +1313,7 @@ void func_8010E570(/*?*/ s32);
 void func_8010E6AC(s32 arg0) {
     bool condition = false;
 
-    condition = ((D_80072F20 & 0x20) != condition);
+    condition = ((D_80072F20[0] & 0x20) != condition);
     AccelerateX(0x18000);
     PLAYER.accelerationY = 0;
     func_8010D584(1);
