@@ -9,8 +9,8 @@
 #include "objects.h"
 #include "sfx.h"
 
-extern s32 D_80155368[];
-
+void func_8015C908(s32 step);
+void func_8015C920(s32* unk0);
 void func_8015D020(void);
 bool func_8015DBB0(s32);
 void func_8015C93C(s32 speed);
@@ -30,12 +30,14 @@ extern s16 D_801545EA[];
 extern s16 D_80154604;
 extern s16 D_80154606;
 extern s8 D_80154688;
+extern s32 D_80155368[];
 extern s32 D_80155488;
 extern s32 D_801554B0;
 extern s32 D_801553BC;
 extern s32 D_801554C0;
 extern s32 D_801554C8;
 extern s32 D_801554D0;
+extern s32 D_80155528;
 extern s32 D_80155670;
 extern s32 D_80155750;
 extern /*?*/ s32 D_8015591C;
@@ -153,7 +155,23 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A7D0);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A9B0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015AFE0);
+void func_8015AFE0(void) {
+    if (PLAYER.unk2E == 0) {
+        PLAYER.accelerationY += 0x3800;
+        if (PLAYER.accelerationY > 0) {
+            PLAYER.accelerationY = 0;
+            PLAYER.unk2E = 1;
+        }
+    } else if (D_80072F6E != 0) {
+        D_80072F66 = 0;
+        func_8015C908(4);
+        func_8015C920(&D_80155528);
+        D_80072F64 = 0;
+    }
+    if (D_80072F92 != 0) {
+        PLAYER.accelerationY = 0;
+    }
+}
 
 void func_8015B098(void) {
     if ((PLAYER.animationFrame == 0xB5) &&
@@ -221,8 +239,8 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C4AC);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015C6D4);
 
-void func_8015C908(s32 unk0) {
-    PLAYER.step = unk0;
+void func_8015C908(s32 step) {
+    PLAYER.step = step;
     PLAYER.unk2E = 0;
 }
 
@@ -871,4 +889,3 @@ void func_8016D920(Entity* entity) {
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016D9C4);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016DF74);
-
