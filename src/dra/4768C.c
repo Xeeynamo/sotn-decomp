@@ -1067,30 +1067,31 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0940);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", SetNextRoomToLoad);
 #else
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
-    RoomLoadDef* pRoomLoad;
-    RoomHeader* pRoom;
+    s32 res;
+    RoomHeader* room;
 
-    if (D_80072F2C & 0x40000)
+    if (D_80072F2C & 0x40000) {
         return false;
+    }
 
-    if (func_800F087C(chunkX, chunkY))
-        return false;
+    res = func_800F087C(chunkX, chunkY);
+    if (res) {
+        return res;
+    }
 
-    pRoom = g_api.o.unk30;
+    room = g_api.o.unk30;
 loop_3:
-    while (pRoom->left != 0x40) {
-        if (chunkX >= pRoom->left && chunkY >= pRoom->top &&
-            pRoom->right >= chunkX && pRoom->bottom >= chunkY) {
-            pRoomLoad = &pRoom->load;
-            if (pRoom->load.tilesetId == 0xFF) {
-                if (D_800A2464[pRoom->load.tileLayoutId].programId == 0x1F) {
-                    return false;
-                }
+    while (room->left != 0x40) {
+        if (chunkX >= room->left && chunkY >= room->top &&
+            room->right >= chunkX && room->bottom >= chunkY) {
+            if (room->load.tilesetId == 0xFF &&
+                D_800A245C[room->load.tileLayoutId].stageId == PROGRAM_ST0) {
+                return false;
             }
-            D_801375BC = pRoomLoad;
+            D_801375BC = &room->load;
             return true;
         }
-        pRoom++;
+        room++;
         goto loop_3;
     }
     return false;
@@ -1123,7 +1124,7 @@ s32 func_800F16D0(void) {
     else if (D_80097C98 == 6)
         return PROGRAM_LIB;
     else {
-        s32 programId = D_800A2464[D_8006C374].programId;
+        s32 programId = D_800A245C[D_8006C374].stageId;
         if (g_mapProgramId & PROGRAM_INVERTEDCASTLE_FLAG) {
             programId ^= PROGRAM_INVERTEDCASTLE_FLAG;
         }

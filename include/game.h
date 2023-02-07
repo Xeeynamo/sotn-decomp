@@ -154,6 +154,14 @@ typedef struct {
 } RoomHeader; // size = 0x8
 
 typedef struct {
+    /* 0x0 */ u16 x;
+    /* 0x2 */ u16 y;
+    /* 0x4 */ u16 roomId;
+    /* 0x6 */ u16 unk6;
+    /* 0x8 */ u16 stageId;
+} RoomTeleport; // size = 0xA
+
+typedef struct {
     /* 0x0 */ s16 pressed;
     /* 0x2 */ s16 previous;
     /* 0x4 */ s16 tapped;
