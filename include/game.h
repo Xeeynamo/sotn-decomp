@@ -832,7 +832,7 @@ extern s32 D_80097410;
 extern s32 D_80097414;
 extern s32 D_80097418;
 extern s32 D_8009741C;
-extern s32 D_80097420;
+extern s32 D_80097420[];
 extern s32 D_80097424;
 extern s32 D_80097448;
 extern s32 D_8009744C;

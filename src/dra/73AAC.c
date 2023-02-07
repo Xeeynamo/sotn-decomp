@@ -195,7 +195,7 @@ void func_80115BB0(void) {
     PLAYER.accelerationX = 0;
     PLAYER.animationFrameDuration = 4;
 
-    if (D_80097420 == 0) {
+    if (D_80097420[0] == 0) {
         if (D_80072F20 & 1) {
             func_8010E570(0);
         } else {
