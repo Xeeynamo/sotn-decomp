@@ -1313,7 +1313,7 @@ void func_8010E570(/*?*/ s32);
 void func_8010E6AC(s32 arg0) {
     bool condition = false;
 
-    condition = ((D_80072F20 & 0x20) != condition);
+    condition = ((D_80072F20[0] & 0x20) != condition);
     AccelerateX(0x18000);
     PLAYER.accelerationY = 0;
     func_8010D584(1);
