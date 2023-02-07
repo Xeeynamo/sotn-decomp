@@ -42,6 +42,7 @@ extern s32 D_80155670;
 extern s32 D_80155750;
 extern /*?*/ s32 D_8015591C;
 extern /*?*/ s32 D_80155950;
+extern s32 D_80174F74;
 extern u8 D_80174FAC;
 extern u8 D_80174FB0;
 extern u8 D_80174FB4;
@@ -219,7 +220,32 @@ void func_8015B1E8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015B244);
+void func_8015B244(void) {
+    if (PLAYER.unk2E == 0) {
+        D_80174F74 = 0x200;
+        PLAYER.unk2E++;
+    } else {
+        func_8015C9CC();
+        D_80174F74--;
+        if (D_80174F74 == 0) {
+            D_80072F66 = 0;
+            func_8015CD98(0);
+            D_80072F6E = 1;
+        }
+    }
+    if (D_80072EEC & 0x40) {
+        func_8015D020();
+        D_80072F66 = 0;
+        D_80072F6E = 1;
+        D_80174F74 = 0;
+    }
+    if (!(D_80072F20 & 1)) {
+        func_8015CF08();
+        D_80072F66 = 0;
+        D_80072F6E = 1;
+        D_80174F74 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015B348);
 
