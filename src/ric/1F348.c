@@ -453,6 +453,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015F96C);
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015F9F0);
 
 // This function matches with GCC 2.7.2 using -01 Compilation flags
+// Matches with GCC 2.6.0 + aspsx 2.3.4
 // https://decomp.me/scratch/VaPMV
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015FA5C);
