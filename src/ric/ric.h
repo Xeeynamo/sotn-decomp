@@ -31,6 +31,7 @@ extern s32 D_801553BC;
 extern s32 D_801554C0;
 extern s32 D_801554C8;
 extern s32 D_801554D0;
+extern s32 D_80155528;
 extern s32 D_80155670;
 extern s32 D_80155750;
 extern /*?*/ s32 D_8015591C;
