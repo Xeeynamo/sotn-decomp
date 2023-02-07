@@ -621,8 +621,6 @@ extern s32 D_80154ED4;
 extern s32 D_80154EF8;
 
 void func_80162C84(Entity* entity) {
-    Entity* player = &g_EntityArray[0];
-    s32 temp;
     switch (entity->step) {
     case 0:
         entity->unk34 = 0x0C110000;
