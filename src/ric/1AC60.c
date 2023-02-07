@@ -873,5 +873,3 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016D9C4);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016DF74);
 
 // INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8016E324);
-
-
