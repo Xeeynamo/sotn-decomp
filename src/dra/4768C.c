@@ -148,10 +148,10 @@ s32 func_800E7E08(u32 arg0) {
             ;
         break;
     case 7:
-        if (g_mapProgramId == 2) {
+        if (g_StageId == 2) {
             func_80131EBC(&aPqes_1, 0x202);
         }
-        if (g_mapProgramId == 6) {
+        if (g_StageId == 6) {
             func_80131EBC(&aPqes_1, 0x204);
         }
         break;
@@ -570,7 +570,7 @@ s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(8);
 
     if ((g_CurrentPlayableCharacter == PLAYER_ALUCARD) &&
-        (g_mapProgramId != PROGRAM_ST0)) {
+        (g_StageId != STAGE_ST0)) {
         func_800EA5E4(0x17);
     }
 }
@@ -1051,7 +1051,7 @@ loop_1:
         return 0;
 
     if (phi_s1->foo[0] == chunkX && phi_s0->foo[-3] == chunkY &&
-        phi_s0->foo[-2] == g_mapProgramId) {
+        phi_s0->foo[-2] == g_StageId) {
         if (phi_s0->foo[-1] == 0xFF || func_800FD4C0(phi_s0->foo[-1], 0) == 0)
             return phi_s0->foo[0] + 2;
     }
@@ -1085,7 +1085,7 @@ loop_3:
         if (chunkX >= room->left && chunkY >= room->top &&
             room->right >= chunkX && room->bottom >= chunkY) {
             if (room->load.tilesetId == 0xFF &&
-                D_800A245C[room->load.tileLayoutId].stageId == PROGRAM_ST0) {
+                D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
                 return false;
             }
             D_801375BC = &room->load;
@@ -1116,19 +1116,19 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F14CC);
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
-        return g_mapProgramId;
+        return g_StageId;
     else if (D_80097C98 == 4)
-        return PROGRAM_TOP | PROGRAM_INVERTEDCASTLE_FLAG;
+        return STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG;
     else if (D_80097C98 == 5)
-        return PROGRAM_TOP;
+        return STAGE_TOP;
     else if (D_80097C98 == 6)
-        return PROGRAM_LIB;
+        return STAGE_LIB;
     else {
-        s32 programId = D_800A245C[D_8006C374].stageId;
-        if (g_mapProgramId & PROGRAM_INVERTEDCASTLE_FLAG) {
-            programId ^= PROGRAM_INVERTEDCASTLE_FLAG;
+        s32 stageId = D_800A245C[D_8006C374].stageId;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            stageId ^= STAGE_INVERTEDCASTLE_FLAG;
         }
-        return programId;
+        return stageId;
     }
 }
 
@@ -1207,9 +1207,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2014);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2120);
 
 void func_800F223C(void) {
-    g_mapProgramId ^= 0x20;
+    g_StageId ^= 0x20;
     func_800F2120();
-    g_mapProgramId ^= 0x20;
+    g_StageId ^= 0x20;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2288);
@@ -1273,22 +1273,21 @@ void func_800F24F4(void) {
     castleX = ((s32)playerX >> 8) + g_CurrentRoom.left;
     castleY = ((s32)playerY >> 8) + g_CurrentRoom.top;
     if (D_8003C708 & 0x20) {
-        phi_v1 = g_mapProgramId;
-        if (phi_v1 == (PROGRAM_NO0 | PROGRAM_INVERTEDCASTLE_FLAG)) {
+        phi_v1 = g_StageId;
+        if (phi_v1 == (STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG)) {
             if ((castleX == phi_v1) && (castleY == 0x24)) {
                 if (func_800FD4C0(22, 0) == 0) {
                     func_800FD4C0(22, 1);
                 }
-                phi_v1 = g_mapProgramId;
+                phi_v1 = g_StageId;
             }
         }
 
-        if (phi_v1 == (PROGRAM_NO4 | PROGRAM_INVERTEDCASTLE_FLAG) &&
+        if (phi_v1 == (STAGE_NO4 | STAGE_INVERTEDCASTLE_FLAG) &&
             castleX == 0x12 && castleY == 0x1E) {
         } else {
             phi_a0 = 0;
-            if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D &&
-                castleY == 0x21) {
+            if (g_StageId == STAGE_NO4 && castleX == 0x2D && castleY == 0x21) {
                 if (PLAYER.posX.val == 0x80) {
                     D_8003C730 = 1;
                     phi_a0 = 1;
@@ -2493,7 +2492,7 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
 }
 
-s32 func_800FD664(s32 arg0) { return g_mapProgramId & 0x20 ? arg0 << 1 : arg0; }
+s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 
 extern Unkstruct_800A4B12 D_800A4B12[];
 

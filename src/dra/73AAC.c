@@ -209,7 +209,7 @@ void func_80115BB0(void) {
 void func_80115C50(void) {
     s32 dist;
 
-    if (g_mapProgramId == PROGRAM_TOP) {
+    if (g_StageId == STAGE_TOP) {
         dist = (g_CurrentRoom.left << 8) + playerX;
         dist = ABS(dist);
 
@@ -225,7 +225,7 @@ void func_80115C50(void) {
         }
     }
 
-    if (g_mapProgramId == 0x2B) {
+    if (g_StageId == 0x2B) {
         dist = (g_CurrentRoom.left << 8) + playerX;
         dist = ABS(dist);
 

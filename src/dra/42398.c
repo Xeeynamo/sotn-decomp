@@ -581,7 +581,7 @@ void func_800E451C(void) {
         func_800EA538(0);
         func_800EAEEC();
         func_800E3574();
-        g_mapProgramId = 0x45;
+        g_StageId = 0x45;
         if (D_800978AC != 0) {
             if (D_8006C3B0 == 0) {
                 D_8006C398 = 1;
@@ -620,7 +620,7 @@ void func_800E451C(void) {
         if (D_8013640C == 0 || --D_8013640C == 0) {
             ClearImage(&D_800ACDF0, 0, 0, 0);
             func_800E3574();
-            g_mapProgramId = 0x45;
+            g_StageId = 0x45;
             if (D_800978AC != 0) {
                 if (D_8006C3B0 != 0) {
                     break;

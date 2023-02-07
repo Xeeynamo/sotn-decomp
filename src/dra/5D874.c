@@ -272,8 +272,7 @@ void func_800FF60C(void) {
 void func_800FF60C();
 
 void func_800FF6C4(void) {
-    if ((g_mapProgramId != 0x1F) &&
-        (g_CurrentPlayableCharacter == PLAYER_ALUCARD)) {
+    if ((g_StageId != 0x1F) && (g_CurrentPlayableCharacter == PLAYER_ALUCARD)) {
         func_800FF60C();
     }
 }
@@ -432,7 +431,7 @@ void func_8010189C(void) {
     D_80137998 = 0;
     D_8013796C = D_80097B9C.hp;
 
-    if ((g_mapProgramId == PROGRAM_ST0) ||
+    if ((g_StageId == STAGE_ST0) ||
         (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
         DrawHudRichter();
         return;
@@ -510,7 +509,7 @@ void func_801026BC(s32 arg0) {
     if (arg0 == 0) {
         poly->pad3 = 8;
         return;
-    } else if (!(g_mapProgramId & 0x20)) {
+    } else if (!(g_StageId & 0x20)) {
         SetPolyRect(poly, 0, 1, 255, 255);
     } else {
         poly->x2 = 255;
