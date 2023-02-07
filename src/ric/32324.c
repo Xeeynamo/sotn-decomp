@@ -66,7 +66,53 @@ void func_80170548(Entity* entity) {
     }
 }
 
+/**
+ * TODO:
+ * Aspatch jumps to the wrong instruction
+ * This function matches with GCC 2.6.0 + ASPSX 2.3.4,
+ * It also has a jumptable which makes it impossible for it
+ * to be included in a NON_MATCHING state.
+ */
+#if 0
+void func_80156C60(Entity* entity);
+
+void func_801705EC(Entity* entity) {
+    u16 temp;
+
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x04000000;
+        entity->unk7E.modeU16 = 0;
+        entity->step++;
+
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+        temp = entity->unk7E.modeU16 + 1;
+        entity->unk7E.modeU16 = temp;
+        func_801606BC(entity, (temp << 0x10) | 0x3F, 0);
+        entity->unk7C.s = 0;
+        entity->step++;
+        break;
+
+    case 2:
+    case 4:
+    case 6:
+        entity->unk7C.s++;
+        if (entity->unk7C.s >= 16) {
+            entity->step++;
+        }
+        break;
+        
+    case 8:
+        func_80156C60(entity);
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801705EC);
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801706C0);
 
