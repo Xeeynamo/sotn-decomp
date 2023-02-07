@@ -1,7 +1,4 @@
-#include "common.h"
-#include "game.h"
-#include "objects.h"
-#include "sfx.h"
+#include "ric.h"
 
 void func_8015C908(s32 step);
 void func_8015C920(s32* unk0);
