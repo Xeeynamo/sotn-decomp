@@ -1197,7 +1197,7 @@ void func_80167964(Entity* entity) {
     /**
      * 0x5E was originally 0xBC in mips2c output
      * suggesting the size of the Entity struct
-    */
+     */
     if (D_80072F66 != 0) {
         if (entity->step == 0) {
             entity->unk34 = 0x04070000;
