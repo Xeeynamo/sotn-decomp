@@ -198,6 +198,7 @@ void DestroyEntity(Entity* entity) {
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E78);
 
+u16 D_80171094[];
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173EB0);
 
 s32 func_80173F30(Entity* entity, s16 arg1, s16 arg2);
