@@ -32,6 +32,7 @@ def read_roms():
     roms["ST0"] = open(root_directory + "build/ST0.BIN", "rb").read()
     roms["WRP"] = open(root_directory + "build/WRP.BIN", "rb").read()
     roms["RWRP"] = open(root_directory + "build/RWRP.BIN", "rb").read()
+    roms["TT_000"] = open(root_directory + "build/TT_000.BIN", "rb").read()
     return roms
 
 
@@ -596,7 +597,7 @@ if __name__ == "__main__":
             else:
                 try:
                     do_query((args.query.split(" ")[
-                            0], args.query.split(" ")[1]))
+                        0], args.query.split(" ")[1]))
                 except:
                     # same as above but considering any func with the name accross all rom, not only one
                     for rom, function in map_symbols:

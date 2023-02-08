@@ -1,0 +1,30 @@
+options:
+  platform:     psx
+  basename:     tt_000
+  base_path:    ..
+  target_path:  iso/SERVANT/TT_000.BIN
+  asm_path:     asm/servant/tt_000
+  asset_path:   assets/servant/tt_000
+  src_path:     src/servant/tt_000
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.tt_000.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.tt_000.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.tt_000.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  section_order:
+    - ".rodata"
+    - ".text"
+    - ".data"
+segments:
+  - name: tt_000
+    type: code
+    start: 0x00000000
+    vram:  0x80170000
+    subalign: 2
+    subsegments:
+      - [0x0, rodata]
+      - [0x10E8, c]
+      - [0x48D8, data]
+  - [0xA000]
