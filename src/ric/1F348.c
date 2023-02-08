@@ -884,7 +884,7 @@ void func_80169C10(Entity* entity) {
         func_80156C60(entity);
         return;
     }
-    
+
     entity->posY.val += entity->accelerationY;
     poly = &D_80086FEC[entity->firstPolygonIndex];
     if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
