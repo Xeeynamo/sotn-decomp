@@ -82,7 +82,7 @@ define link
 endef
 
 all: build check
-build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp
+build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
@@ -164,6 +164,10 @@ rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
 
+tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
+$(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
+	$(OBJCOPY) -O binary $< $@
+
 mad_fix: stmad_dirs mad_patch $(BUILD_DIR)/MAD.BIN
 MAD_PATCHES = \
 	-e "s/D_8003BEE8/D_8003BEEC/g" -e "s/0x8003BEE8/0x8003BEEC/g" \
@@ -212,15 +216,19 @@ mad_patch:
 	find asm/st/mad -type f -name "*.s" -print0 | xargs -0 sed -i $(MAD_PATCHES)
 	find src/st/mad -type f -name "*.c" -print0 | xargs -0 sed -i $(MAD_PATCHES)
 
+tt_%_dirs:
+	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
+$(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
+	$(call link,tt_$*,$@)
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp
+extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_main: require-tools
 	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
 extract_dra: require-tools
@@ -232,6 +240,9 @@ extract_ric: require-tools
 extract_st%: require-tools
 	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
+extract_tt_%: require-tools
+	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.tt_$*.txt > $(CONFIG_DIR)/generated.symbols.tt_$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.tt_$*.yaml
 $(CONFIG_DIR)/generated.symbols.%.txt:
 
 context:
@@ -256,6 +267,7 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
+	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
 
 
@@ -298,7 +310,7 @@ $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 SHELL = /bin/bash -e -o pipefail
 
 .PHONY: all, clean, format, check, expected
-.PHONY: main, dra, ric, dre, mad, no3, np3, st0, wrp, rwrp
+.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: require-tools,update-dependencies

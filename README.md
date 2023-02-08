@@ -6,21 +6,22 @@ This repo does not include any assets or assembly code necessary for compiling t
 
 ## Bins decomp progress
 
-| SHA-1 checksum                             | File name  | Progress
-|--------------------------------------------|------------|----------
-| `54828d4e44ea9575f2a0917ff63def42a304abff` | SLUS_000.67 | N/A
-| `2eac5f7162e77416166c2511c787995488f01c37` | DRA.BIN    | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dra.json)
-| `d076912661e67a38afae0a1b5044ab5f10bcfb39` | RIC.BIN    | ![progress RIC.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-ric.json)
-| `42226b6d9ed24448eed61b3c6cd2949e96bebab6` | ST/CEN.BIN | ![progress CEN.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-cen.json)
-| `e42976f45b47d1c4912a198ae486b77ee6d77c9c` | ST/DRE.BIN | ![progress DRE.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dre.json)
-| `adb3303e1ea707c63dfa978511a88cab4f61970a` | ST/MAD.BIN | ![progress MAD.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-mad.json)
-| `5d06216b895ab5ff892c88b0d9eff67ff16e2bd1` | ST/NO3.BIN | ![progress NO3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-no3.json)
-| `7c78a2bec6a26acfb62456e7f517915fe0c0e3f5` | ST/NP3.BIN | ![progress NP3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-np3.json)
-| `b10b9c2be721cf9cbed3aa94be468ba9e23bc68b` | ST/NZ0.BIN | ![progress NZ0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-nz0.json)
-| `a919a53a760107972049bfdeadde33376428eace` | ST/SEL.BIN | ![progress SEL.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-sel.json)
-| `bc2fabbe5ef0d1288490b6f1ddbf11092a2c0c57` | ST/ST0.BIN | ![progress ST0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-st0.json)
-| `2ae313f4e394422e4c5f37a2d8e976e92f9e3cda` | ST/WRP.BIN | ![progress WRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-wrp.json)
-| `3bbdd3b73f8f86cf5f6c88652e9e6452a7fb5992` | ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json)
+| File name  | Progress
+|------------|----------
+| SLUS_000.67 | N/A
+| DRA.BIN    | ![progress DRA.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dra.json)
+| RIC.BIN    | ![progress RIC.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-ric.json)
+| ST/CEN.BIN | ![progress CEN.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-cen.json)
+| ST/DRE.BIN | ![progress DRE.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-dre.json)
+| ST/MAD.BIN | ![progress MAD.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-mad.json)
+| ST/NO3.BIN | ![progress NO3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-no3.json)
+| ST/NP3.BIN | ![progress NP3.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-np3.json)
+| ST/NZ0.BIN | ![progress NZ0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-nz0.json)
+| ST/SEL.BIN | ![progress SEL.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-sel.json)
+| ST/ST0.BIN | ![progress ST0.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-st0.json)
+| ST/WRP.BIN | ![progress WRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-wrp.json)
+| ST/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json)
+| SERVANT/TT_000.BIN | ![progress TT_000.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-tt_000.json)
 
 ## Game internals
 
@@ -43,6 +44,7 @@ sudo apt-get update
 sudo apt-get install -y $(cat tools/requirements-debian.txt)
 make update-dependencies
 ```
+
 1. Create a new `iso/` folder and put the game disc image in, both BIN and CUE files
 1. Run `mv iso/*.cue iso/sotn.cue`
 1. Run `make extract_sotn`
