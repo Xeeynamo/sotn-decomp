@@ -616,7 +616,9 @@ void func_80162C7C(void) {}
  * to be included in a NON_MATCHING state.
  * CAUTION: rodata yet to be confirmed matching
  */
-#if 0
+#ifndef NON_MATCHING_PENDING
+INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162C84);
+#else
 extern s32 D_80154ED4;
 extern s32 D_80154EF8;
 
@@ -679,8 +681,6 @@ void func_80162C84(Entity* entity) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162C84);
 #endif
 
 bool func_80162E9C(Entity* entity) {
