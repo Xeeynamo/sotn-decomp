@@ -59,6 +59,7 @@ INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171ED4);
 
+void func_80172120(Entity* entity);
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172120);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172C30);
@@ -236,9 +237,41 @@ void func_80174038(Entity* entity) {
 // TODO func_80174210
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174210);
 
+void func_801745E4(Entity* entityParent, u16 objectId, u16 subId);
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801745E4);
 
+// PSY-Q 3.5 match as in GCC a jump skips a 'nop'
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801746A0);
+#else
+s32 func_801746A0(s32 arg0) {
+    if (D_800733E4 < 0 && !(*D_80072F20 & 1))
+        return 1;
+
+    if (D_800733E4 > 0 && !(*D_80072F20 & 2))
+        return 1;
+
+    if (D_800733E0 < 0 && !(*D_80072F20 & 8))
+        return 1;
+
+    if (D_800733E0 > 0 && !(*D_80072F20 & 4))
+        return 1;
+
+    if (arg0 == 0)
+        return 0;
+
+    if (D_80072F70 != D_80073404)
+        return 1;
+
+    if (D_80072F70 != 0)
+        return 1;
+
+    if (D_80072F72 != D_80073406)
+        return 1;
+
+    return D_80072F72 != 0 && D_80072F72 != 4;
+}
+#endif
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801747B8);
 
