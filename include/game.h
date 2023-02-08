@@ -251,6 +251,10 @@ typedef struct Entity {
             /* 0x8C */ u16 unk0;
             /* 0x8E */ u16 unk2;
         } modeU16;
+        struct {
+            /* 0x8C */ s16 unk0;
+            /* 0x8E */ s16 unk2;
+        } modeS16;
     } unk8C; // size = 0x4
     /* 0x90 */ s32 unk90;
     /* 0x94 */ u8 unk94;

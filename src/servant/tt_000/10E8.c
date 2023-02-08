@@ -114,7 +114,29 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     poly->pad3 = 0x102;
 }
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801718A0);
+void func_801718A0(Entity* entity) {
+    POLY_GT4* poly;
+    s32 frame;
+    s32 y;
+    s32 x;
+
+    frame = 2;
+    if (entity->facing != 0) {
+        x = entity->posX.i.hi + 2;
+    } else {
+        x = entity->posX.i.hi - 16;
+    }
+    y = entity->posY.i.hi - 16;
+
+    x += (rsin(entity->unk8C.modeS16.unk0 << 7) * 8) >> 12;
+    y -= entity->unk8C.modeS16.unk0 / 2;
+
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly->x0 = poly->x2 = x - D_80170608[frame].x;
+    poly->y0 = poly->y1 = y - D_80170608[frame].y;
+    poly->x1 = poly->x3 = poly->x0 + D_80170608[frame].width;
+    poly->y2 = poly->y3 = poly->y0 + D_80170608[frame].height;
+}
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
