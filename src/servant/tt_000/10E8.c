@@ -1,6 +1,7 @@
 #include "servant.h"
 
 u16 D_80170448[];
+Sprite D_80170608[];
 s32 D_80171090;
 
 void func_80171ED4(s32 arg0);
@@ -75,7 +76,43 @@ INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171568);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017160C);
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017170C);
+void func_8017170C(Entity* entity, s32 frameIndex) {
+    POLY_GT4* poly;
+    s32 tpage;
+    s32 x;
+    s32 y;
+    s32 index;
+
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    if (frameIndex == 0) {
+        poly->pad3 = 8;
+        return;
+    }
+    index = frameIndex - 1;
+    if (entity->facing != 0) {
+        x = entity->posX.i.hi + 2;
+    } else {
+        x = entity->posX.i.hi - 16;
+    }
+    y = entity->posY.i.hi - 16;
+
+    poly->x0 = poly->x2 = x - D_80170608[index].x;
+    poly->y0 = poly->y1 = y - D_80170608[index].y;
+    poly->x1 = poly->x3 = poly->x0 + D_80170608[index].width;
+    poly->y2 = poly->y3 = poly->y0 + D_80170608[index].height;
+    poly->clut = D_80170608[index].clut;
+    tpage = D_80170608[index].tpage;
+    if (tpage < 0) {
+        tpage += 3;
+    }
+    poly->tpage = tpage >> 2;
+    poly->u0 = poly->u2 = D_80170608[index].texLeft;
+    poly->v0 = poly->v1 = D_80170608[index].texTop;
+    poly->u1 = poly->u3 = D_80170608[index].texRight;
+    poly->v2 = poly->v3 = D_80170608[index].texBottom;
+    poly->pad2 = entity->zPriority + 1;
+    poly->pad3 = 0x102;
+}
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801718A0);
 
