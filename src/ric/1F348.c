@@ -514,7 +514,50 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015FDB0);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015FEA8);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_801601DC);
+void func_801601DC(Entity* entity) {
+    s16 posX;
+    s16 posY;
+
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x08120000;
+        entity->unk5A = 0x79;
+        entity->animationSet = 0xE;
+        entity->zPriority = PLAYER.zPriority + 2;
+        entity->palette = 0x819F;
+
+        if (D_80174FFC & 1) {
+            entity->blendMode = 0x70;
+        } else {
+            entity->blendMode = 0x10;
+        }
+        entity->unk1C = 0x40;
+        entity->unk1A = 0x40;
+        entity->unk4C = &D_80154924;
+        D_80174FFC += 1;
+        entity->unk6C = 0xFF;
+        entity->unk19 = 0x33;
+        posX = 10;
+        posY = 15;
+        entity->posY.i.hi = (u16)entity->posY.i.hi - posY + (rand() % 35);
+        entity->posX.i.hi = (u16)entity->posX.i.hi - posX + (rand() % 20);
+        entity->accelerationY = -0x6000 - (rand() & 0x3FFF);
+        entity->step++;
+        break;
+
+    case 1:
+        if (entity->unk6C >= 17) {
+            entity->unk6C += 248;
+        }
+        entity->posY.val += entity->accelerationY;
+        entity->unk1A += 8;
+        entity->unk1C += 8;
+        if (entity->animationFrameDuration < 0) {
+            func_80156C60(entity);
+        }
+        break;
+    }
+}
 
 void func_801603B4(void) {}
 
