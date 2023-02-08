@@ -1111,7 +1111,30 @@ void func_8016779C(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80167964);
+/**
+ * TODO: !FAKE
+ * Needs to be refactored
+ */
+void func_80167964(Entity* entity) {
+    if (D_80072F66 != 0) {
+        if (entity->step == 0) {
+            entity->unk34 = 0x04070000;
+        }
+        if (!(entity->subId & 0xFF00)) {
+            *(&PLAYER.palette +
+              (*(&D_80155D30 + (entity->animationFrameDuration)) * 0x5E)) =
+                0x8140;
+        }
+        *(&PLAYER.unkA4 +
+          (*(&D_80155D30 + (entity->animationFrameDuration)) * 0x5E)) = 4;
+        entity->animationFrameDuration++;
+        if (entity->animationFrameDuration == 0xF) {
+            func_80156C60();
+        }
+    } else {
+        func_80156C60();
+    }
+}
 
 void func_80167A58(void) {}
 

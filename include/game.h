@@ -252,7 +252,8 @@ typedef struct Entity {
     /* 0x9C */ s32 unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s32 unkA4;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 unkAC;
     /* 0xAD */ s8 unkAD;
@@ -783,6 +784,7 @@ extern s32 D_80073428;  // PLAYER.animationFrameIndex
 extern s16 D_8007342A;  // PLAYER.animationFrameDuration
 extern s16 D_8007342C;  // PLAYER.animationSet
 extern u16 D_8007342E;  // PLAYER.animationFrame
+extern s16 D_8007347C;  // PLAYER.unkA4
 extern u8 D_80073484;   // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
 
