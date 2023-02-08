@@ -1319,7 +1319,7 @@ void func_80169D74(Entity* entity) {
         goto label;
 
     case 1:
-        entity->unk1E = ((u16)entity->unk1E) - 0x80;
+        entity->unk1E -= 0x80;
         if (entity->unk8C.entityPtr->step == 7) {
             entity->step++;
             entity->unk7C.s = (entity->subId + 1) * 4;
