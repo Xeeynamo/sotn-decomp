@@ -698,7 +698,6 @@ bool func_80162E9C(Entity* entity) {
     return false;
 }
 
-
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162EF8);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_801641A0);
