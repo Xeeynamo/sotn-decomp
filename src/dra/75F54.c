@@ -444,11 +444,11 @@ bool func_8011BD48(Entity* entity) {
     for (; i < 0x40; i++, e++) {
         if (objId == (s32)e->objectId && subId == (s32)e->subId &&
             e != entity) {
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011BDA4);
