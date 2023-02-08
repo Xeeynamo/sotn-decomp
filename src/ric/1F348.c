@@ -643,7 +643,66 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80161EF8);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80161FF0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_801623E0);
+void func_801623E0(Entity* entity) {
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+
+    entity->posX.val = g_EntityArray->posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    switch (entity->step) {
+    case 0:
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        entity->firstPolygonIndex = firstPolygonIndex;
+        if (firstPolygonIndex != -1) {
+            entity->unk7E.modeU16 = 0x20;
+            entity->unk7C.s = 0x20;
+            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly->u2 = 0x40;
+            poly->u0 = 0x40;
+            poly->v1 = 0xC0;
+            poly->v0 = 0xC0;
+            poly->u3 = 0x7F;
+            poly->u1 = 0x7F;
+            poly->v3 = 0xFF;
+            poly->v2 = 0xFF;
+            poly->tpage = 0x1A;
+            poly->clut = 0x13E;
+            poly->pad2 = PLAYER.zPriority + 8;
+            poly->pad3 = 0;
+            entity->unk34 = 0x04850000;
+            entity->step++;
+            goto def;
+        } else {
+            goto def2;
+        }
+
+    case 1:
+        entity->unk7C.s++;
+        entity->unk7E.modeU16++;
+        if (entity->unk7C.s >= 45) {
+        def2:
+            func_80156C60(entity);
+
+        } else {
+            goto def;
+        }
+        break;
+
+    default:
+    def:
+        poly = &D_80086FEC[entity->firstPolygonIndex];
+        poly->x0 = entity->posX.i.hi - entity->unk7C.s;
+        poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
+        poly->x1 = entity->posX.i.hi + entity->unk7C.s;
+        poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
+        poly->x2 = entity->posX.i.hi - entity->unk7C.s;
+        poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
+        poly->x3 = entity->posX.i.hi + entity->unk7C.s;
+        poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
+        poly->clut = (*(s16*)&g_blinkTimer & 1) + 0x13E;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162604);
 
