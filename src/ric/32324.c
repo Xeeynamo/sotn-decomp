@@ -73,7 +73,9 @@ void func_80170548(Entity* entity) {
  * It also has a jumptable which makes it impossible for it
  * to be included in a NON_MATCHING state.
  */
-#if 0
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801705EC);
+#else
 void func_80156C60(Entity* entity);
 
 void func_801705EC(Entity* entity) {
@@ -104,14 +106,12 @@ void func_801705EC(Entity* entity) {
             entity->step++;
         }
         break;
-        
+
     case 8:
         func_80156C60(entity);
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801705EC);
 #endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801706C0);

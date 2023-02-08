@@ -252,7 +252,8 @@ typedef struct Entity {
     /* 0x9C */ s32 unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s32 unkA4;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 unkAC;
     /* 0xAD */ s8 unkAD;
@@ -760,6 +761,7 @@ extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
 // g_EntityArray PLAYER
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
+extern s16 D_800733DC;  // PLAYER.posY.val
 extern s16 D_800733DE;  // PLAYER.posY.i.hi
 extern s32 D_800733E0;  // PLAYER.accelerationX
 extern s32 D_800733E4;  // PLAYER.accelerationY
@@ -782,12 +784,23 @@ extern s32 D_80073428;  // PLAYER.animationFrameIndex
 extern s16 D_8007342A;  // PLAYER.animationFrameDuration
 extern s16 D_8007342C;  // PLAYER.animationSet
 extern u16 D_8007342E;  // PLAYER.animationFrame
+extern s16 D_8007347C;  // PLAYER.unkA4
 extern u8 D_80073484;   // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
 
 // D_80073494 g_EntityArray[1]
+extern s32 D_800734F8; // g_EntityArray[1].firstPolygonIndex
+extern s16 D_800734EA; // g_EntityArray[1].animationFrame
+extern s8 D_80073510;  // g_EntityArray[1].unk7C.S8.unk0
+extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
+extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
+
 // D_80073550 g_EntityArray[2]
+extern s16 D_800735A6; // g_EntityArray[2].animationFrame
+
 // D_8007360C g_EntityArray[3]
+extern s16 D_80073662; // g_EntityArray[3].animationFrame
+
 // D_800736C8 g_EntityArray[4]
 // D_80073784 g_EntityArray[5]
 // D_800739B8 g_EntityArray[8]
