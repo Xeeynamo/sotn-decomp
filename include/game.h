@@ -646,6 +646,19 @@ typedef struct {
 } GameApi; /* size=0x140 */
 
 typedef struct {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ s16 width;
+    /* 0x06 */ s16 height;
+    /* 0x08 */ s16 clut;
+    /* 0x0A */ s16 tpage;
+    /* 0x0C */ u8 texLeft, dummyLeft;
+    /* 0x0E */ u8 texTop, dummyTop;
+    /* 0x10 */ u8 texRight, dummyRight;
+    /* 0x12 */ u8 texBottom, dummyBottom;
+} Sprite; /* size=0x14 */
+
+typedef struct {
     /* 00 */ s16 flags;
     /* 02 */ s16 offsetx;
     /* 04 */ s16 offsety;
@@ -658,7 +671,7 @@ typedef struct {
     /* 12 */ s16 right;
     /* 14 */ s16 bottom;
     /* 16 */ s16 padding;
-} SpritePart;
+} SpritePart; /* size=0x18 */
 
 typedef struct {
     /* 00 */ u16 count;
