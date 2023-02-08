@@ -41,49 +41,49 @@
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
 
-#define PROGRAM_NO0 0x00
-#define PROGRAM_NO1 0x01
-#define PROGRAM_LIB 0x02
-#define PROGRAM_CAT 0x03
-#define PROGRAM_NO2 0x04
-#define PROGRAM_CHI 0x05
-#define PROGRAM_DAI 0x06
-#define PROGRAM_NP3 0x07
-#define PROGRAM_CEN 0x08
-#define PROGRAM_NO4 0x09
-#define PROGRAM_ARE 0x0A
-#define PROGRAM_TOP 0x0B
-#define PROGRAM_NZ0 0x0C
-#define PROGRAM_NZ1 0x0D
-#define PROGRAM_WRP 0x0E
-#define PROGRAM_NO1_ALT 0x0F
-#define PROGRAM_NO0_ALT 0x10
-#define PROGRAM_DRE 0x12
-#define PROGRAM_BO7 0x16
-#define PROGRAM_MAR 0x17
-#define PROGRAM_BO6 0x18
-#define PROGRAM_BO5 0x19
-#define PROGRAM_BO4 0x1A
-#define PROGRAM_BO3 0x1B
-#define PROGRAM_BO2 0x1C
-#define PROGRAM_BO1 0x1D
-#define PROGRAM_BO0 0x1E
-#define PROGRAM_ST0 0x1F
-#define PROGRAM_MAD 0x40
-#define PROGRAM_NO3 0x41
-#define PROGRAM_IWA_LOAD 0x42
-#define PROGRAM_IGA_LOAD 0x43
-#define PROGRAM_HAGI_LOAD 0x44
-#define PROGRAM_UNKNOWN 0x45
-#define PROGRAM_TE1 0x46
-#define PROGRAM_TE2 0x47
-#define PROGRAM_TE3 0x48
-#define PROGRAM_TE4 0x49
-#define PROGRAM_TE5 0x4A
-#define PROGRAM_TOP_ALT 0x4B
-#define PROGRAM_INVERTEDCASTLE_FLAG 0x20
-#define PROGRAM_ENDING 0xFE
-#define PROGRAM_MEMORYCARD 0xFF
+#define STAGE_NO0 0x00
+#define STAGE_NO1 0x01
+#define STAGE_LIB 0x02
+#define STAGE_CAT 0x03
+#define STAGE_NO2 0x04
+#define STAGE_CHI 0x05
+#define STAGE_DAI 0x06
+#define STAGE_NP3 0x07
+#define STAGE_CEN 0x08
+#define STAGE_NO4 0x09
+#define STAGE_ARE 0x0A
+#define STAGE_TOP 0x0B
+#define STAGE_NZ0 0x0C
+#define STAGE_NZ1 0x0D
+#define STAGE_WRP 0x0E
+#define STAGE_NO1_ALT 0x0F
+#define STAGE_NO0_ALT 0x10
+#define STAGE_DRE 0x12
+#define STAGE_BO7 0x16
+#define STAGE_MAR 0x17
+#define STAGE_BO6 0x18
+#define STAGE_BO5 0x19
+#define STAGE_BO4 0x1A
+#define STAGE_BO3 0x1B
+#define STAGE_BO2 0x1C
+#define STAGE_BO1 0x1D
+#define STAGE_BO0 0x1E
+#define STAGE_ST0 0x1F
+#define STAGE_MAD 0x40
+#define STAGE_NO3 0x41
+#define STAGE_IWA_LOAD 0x42
+#define STAGE_IGA_LOAD 0x43
+#define STAGE_HAGI_LOAD 0x44
+#define STAGE_UNKNOWN 0x45
+#define STAGE_TE1 0x46
+#define STAGE_TE2 0x47
+#define STAGE_TE3 0x48
+#define STAGE_TE4 0x49
+#define STAGE_TE5 0x4A
+#define STAGE_TOP_ALT 0x4B
+#define STAGE_INVERTEDCASTLE_FLAG 0x20
+#define STAGE_ENDING 0xFE
+#define STAGE_MEMORYCARD 0xFF
 
 #define LBA_BIN_F_GAME 0x61CE
 #define LBA_BIN_F_GAME2 0x6252
@@ -152,6 +152,14 @@ typedef struct {
     /* 0x3 */ u8 bottom;
     /* 0x4 */ RoomLoadDef load;
 } RoomHeader; // size = 0x8
+
+typedef struct {
+    /* 0x0 */ u16 x;
+    /* 0x2 */ u16 y;
+    /* 0x4 */ u16 roomId;
+    /* 0x6 */ u16 unk6;
+    /* 0x8 */ u16 stageId;
+} RoomTeleport; // size = 0xA
 
 typedef struct {
     /* 0x0 */ s16 pressed;
@@ -252,7 +260,8 @@ typedef struct Entity {
     /* 0x9C */ s32 unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s32 unkA4;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 unkAC;
     /* 0xAD */ s8 unkAD;
@@ -760,6 +769,7 @@ extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
 // g_EntityArray PLAYER
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
+extern s16 D_800733DC;  // PLAYER.posY.val
 extern s16 D_800733DE;  // PLAYER.posY.i.hi
 extern s32 D_800733E0;  // PLAYER.accelerationX
 extern s32 D_800733E4;  // PLAYER.accelerationY
@@ -782,12 +792,23 @@ extern s32 D_80073428;  // PLAYER.animationFrameIndex
 extern s16 D_8007342A;  // PLAYER.animationFrameDuration
 extern s16 D_8007342C;  // PLAYER.animationSet
 extern u16 D_8007342E;  // PLAYER.animationFrame
+extern s16 D_8007347C;  // PLAYER.unkA4
 extern u8 D_80073484;   // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
 
 // D_80073494 g_EntityArray[1]
+extern s32 D_800734F8; // g_EntityArray[1].firstPolygonIndex
+extern s16 D_800734EA; // g_EntityArray[1].animationFrame
+extern s8 D_80073510;  // g_EntityArray[1].unk7C.S8.unk0
+extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
+extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
+
 // D_80073550 g_EntityArray[2]
+extern s16 D_800735A6; // g_EntityArray[2].animationFrame
+
 // D_8007360C g_EntityArray[3]
+extern s16 D_80073662; // g_EntityArray[3].animationFrame
+
 // D_800736C8 g_EntityArray[4]
 // D_80073784 g_EntityArray[5]
 // D_800739B8 g_EntityArray[8]
@@ -842,7 +863,7 @@ extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern u16 D_80097496;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
-extern s32 g_mapProgramId;
+extern s32 g_StageId;
 extern s32 D_800974A4;
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;

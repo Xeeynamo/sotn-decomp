@@ -148,10 +148,10 @@ s32 func_800E7E08(u32 arg0) {
             ;
         break;
     case 7:
-        if (g_mapProgramId == 2) {
+        if (g_StageId == 2) {
             func_80131EBC(&aPqes_1, 0x202);
         }
-        if (g_mapProgramId == 6) {
+        if (g_StageId == 6) {
             func_80131EBC(&aPqes_1, 0x204);
         }
         break;
@@ -570,7 +570,7 @@ s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(8);
 
     if ((g_CurrentPlayableCharacter == PLAYER_ALUCARD) &&
-        (g_mapProgramId != PROGRAM_ST0)) {
+        (g_StageId != STAGE_ST0)) {
         func_800EA5E4(0x17);
     }
 }
@@ -1051,7 +1051,7 @@ loop_1:
         return 0;
 
     if (phi_s1->foo[0] == chunkX && phi_s0->foo[-3] == chunkY &&
-        phi_s0->foo[-2] == g_mapProgramId) {
+        phi_s0->foo[-2] == g_StageId) {
         if (phi_s0->foo[-1] == 0xFF || func_800FD4C0(phi_s0->foo[-1], 0) == 0)
             return phi_s0->foo[0] + 2;
     }
@@ -1067,37 +1067,192 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0940);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", SetNextRoomToLoad);
 #else
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
-    RoomLoadDef* pRoomLoad;
-    RoomHeader* pRoom;
+    s32 res;
+    RoomHeader* room;
 
-    if (D_80072F2C & 0x40000)
+    if (D_80072F2C & 0x40000) {
         return false;
+    }
 
-    if (func_800F087C(chunkX, chunkY))
-        return false;
+    res = func_800F087C(chunkX, chunkY);
+    if (res) {
+        return res;
+    }
 
-    pRoom = g_api.o.unk30;
+    room = g_api.o.unk30;
 loop_3:
-    while (pRoom->left != 0x40) {
-        if (chunkX >= pRoom->left && chunkY >= pRoom->top &&
-            pRoom->right >= chunkX && pRoom->bottom >= chunkY) {
-            pRoomLoad = &pRoom->load;
-            if (pRoom->load.tilesetId == 0xFF) {
-                if (D_800A2464[pRoom->load.tileLayoutId].programId == 0x1F) {
-                    return false;
-                }
+    while (room->left != 0x40) {
+        if (chunkX >= room->left && chunkY >= room->top &&
+            room->right >= chunkX && room->bottom >= chunkY) {
+            if (room->load.tilesetId == 0xFF &&
+                D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
+                return false;
             }
-            D_801375BC = pRoomLoad;
+            D_801375BC = &room->load;
             return true;
         }
-        pRoom++;
+        room++;
         goto loop_3;
     }
     return false;
 }
 #endif
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0CD8);
+#else
+extern s16 D_80072F98;
+extern s32 D_801375A4;
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+
+s32 func_800F0CD8(s32 arg0) {
+    s32 temp_a1;
+    s32 temp_a1_2;
+    s32 temp_v0;
+    s32 new_var2;
+    s32 var_s0;
+    s32 var_v0;
+
+    if (D_80097418 == 0) {
+        if (D_80097C98 == 2) {
+            var_v0 = SetNextRoomToLoad(
+                (g_EntityArray[0].posX.i.hi >> 8) + g_CurrentRoom.left,
+                (g_EntityArray[0].posY.i.hi >> 8) + g_CurrentRoom.top);
+            D_801375C0 = (u8)g_EntityArray[0].posX.i.hi;
+            D_801375C4 = (u8)g_EntityArray[0].posY.i.hi;
+            return var_v0;
+        }
+        if (arg0 == 0) {
+            goto block_25;
+        }
+        if (playerX < g_CurrentRoom.x) {
+            var_v0 = SetNextRoomToLoad(g_CurrentRoom.left - 1,
+                                       (playerY >> 8) + g_CurrentRoom.top);
+            if (var_v0) {
+                D_80072F98 = 1;
+                D_801375C0 = g_EntityArray[0].posX.i.hi + 0x100;
+                D_801375C4 = g_EntityArray[0].posY.i.hi;
+                return var_v0;
+            }
+            g_EntityArray[0].posX.i.hi = 0;
+            playerX = g_CurrentRoom.x;
+        }
+        if (playerX >= g_CurrentRoom.width) {
+            var_v0 = SetNextRoomToLoad(g_CurrentRoom.right + 1,
+                                       (playerY >> 8) + g_CurrentRoom.top);
+            if (var_v0) {
+                D_80072F98 = 1;
+                D_801375C0 = g_EntityArray[0].posX.i.hi - 0x100;
+                D_801375C4 = g_EntityArray[0].posY.i.hi;
+                return var_v0;
+            }
+            g_EntityArray[0].posX.i.hi = 0xFF;
+            playerX = g_CurrentRoom.width - 1;
+        }
+    }
+    if (D_80097424 == 0) {
+        if (playerY < g_CurrentRoom.y + 4) {
+            temp_v0 = SetNextRoomToLoad((playerX >> 8) + g_CurrentRoom.left,
+                                        g_CurrentRoom.top - 1);
+            if (temp_v0 != false) {
+                D_80072F98 = 2;
+                D_801375C0 = g_EntityArray[0].posX.i.hi;
+                D_801375C4 = g_EntityArray[0].posY.i.hi + 0xD0;
+                playerY -= 0x80;
+                return temp_v0;
+            }
+            g_EntityArray[0].posY.i.hi = 0;
+            playerY = g_CurrentRoom.y + 4;
+        }
+        var_s0 = 0x30;
+        if ((!(*D_80072F20 & 1)) && !(D_80072F2C & 3)) {
+            var_s0 = 0x18;
+        }
+        if (playerY >= ((g_CurrentRoom.height - var_s0) + 0x14)) {
+            temp_v0 = SetNextRoomToLoad((playerX >> 8) + g_CurrentRoom.left,
+                                        g_CurrentRoom.bottom + 1);
+            if (temp_v0 != false) {
+                D_80072F98 = 2;
+                D_801375C0 = g_EntityArray[0].posX.i.hi;
+                D_801375C4 = g_EntityArray[0].posY.i.hi - 0x100;
+                D_801375C4 = D_801375C4 + var_s0;
+                playerY += 0x80;
+                return temp_v0;
+            }
+            g_EntityArray[0].posY.i.hi = 0x10F - var_s0;
+            playerY = g_CurrentRoom.height - var_s0 + 0x13;
+        }
+    }
+block_25:
+    temp_a1 = g_CurrentRoom.x + *D_8009740C;
+
+    if (playerX < temp_a1) {
+        if (arg0 != 0 && g_CurrentRoom.hSize != 1 &&
+            temp_a1 < playerX + D_801375A4) {
+            g_EntityArray[0].posX.i.hi =
+                (u16)g_EntityArray[0].posX.i.hi +
+                (playerX + D_801375A4 - (g_CurrentRoom.x + *D_8009740C));
+        }
+        D_8007308E = g_CurrentRoom.x;
+    } else {
+        temp_a1_2 = g_CurrentRoom.width + *D_8009740C - 0x100;
+        if (temp_a1_2 < playerX) {
+            if (arg0 != 0 && g_CurrentRoom.hSize != 1 &&
+                playerX + D_801375A4 < temp_a1_2) {
+                g_EntityArray[0].posX.i.hi =
+                    ((u16)g_EntityArray[0].posX.i.hi) +
+                    (((playerX + D_801375A4) + 0x100) -
+                     (g_CurrentRoom.width + (*D_8009740C)));
+            }
+            D_8007308E = g_CurrentRoom.width - 0x100;
+        } else {
+            D_8007308E = playerX - (*D_8009740C);
+            g_EntityArray[0].posX.i.hi = *D_8009740C;
+        }
+    }
+    if (D_8009741C != 0) {
+        if (playerY < g_CurrentRoom.y + 0x8C) {
+            D_80073092 = g_CurrentRoom.y + 4;
+            g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+        } else if (g_CurrentRoom.height - 0x74 < playerY) {
+            D_80073092 = g_CurrentRoom.height - 0xFC;
+            g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+        } else {
+            g_EntityArray[0].posY.i.hi = 0x88;
+            D_80073092 = playerY - 0x88;
+        }
+    } else {
+        new_var2 = 0x88;
+        if (playerY < g_CurrentRoom.y + 0x8C) {
+            if (D_80073092 + new_var2 - playerY >= 4 &&
+                g_CurrentRoom.y + 8 < D_80073092) {
+                D_80073092 -= 4;
+                g_EntityArray[0].posY.i.hi += 4;
+            } else if (D_80073092 < g_CurrentRoom.y && g_CurrentRoom.y != 0) {
+                D_80073092 += 4;
+                g_EntityArray[0].posY.i.hi -= 4;
+            } else {
+                D_80073092 = g_CurrentRoom.y + 4;
+                g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+            }
+        } else {
+            g_EntityArray[0].posY.i.hi = D_80073092;
+            if (g_CurrentRoom.height - 0x74 < playerY) {
+                D_80073092 = g_CurrentRoom.height - 0xFC;
+                g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+            } else if (D_80073092 + new_var2 - playerY >= 4) {
+                D_80073092 -= 4;
+                g_EntityArray[0].posY.i.hi += 4;
+            } else {
+                g_EntityArray[0].posY.i.hi = 0x88;
+                D_80073092 = playerY - 0x88;
+            }
+        }
+    }
+    return false;
+}
+#endif
 
 void func_800F1424(void) {
     if (D_8009749C[0] & 8) {
@@ -1115,19 +1270,19 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F14CC);
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
-        return g_mapProgramId;
+        return g_StageId;
     else if (D_80097C98 == 4)
-        return PROGRAM_TOP | PROGRAM_INVERTEDCASTLE_FLAG;
+        return STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG;
     else if (D_80097C98 == 5)
-        return PROGRAM_TOP;
+        return STAGE_TOP;
     else if (D_80097C98 == 6)
-        return PROGRAM_LIB;
+        return STAGE_LIB;
     else {
-        s32 programId = D_800A2464[D_8006C374].programId;
-        if (g_mapProgramId & PROGRAM_INVERTEDCASTLE_FLAG) {
-            programId ^= PROGRAM_INVERTEDCASTLE_FLAG;
+        s32 stageId = D_800A245C[D_8006C374].stageId;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            stageId ^= STAGE_INVERTEDCASTLE_FLAG;
         }
-        return programId;
+        return stageId;
     }
 }
 
@@ -1206,9 +1361,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2014);
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2120);
 
 void func_800F223C(void) {
-    g_mapProgramId ^= 0x20;
+    g_StageId ^= 0x20;
     func_800F2120();
-    g_mapProgramId ^= 0x20;
+    g_StageId ^= 0x20;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2288);
@@ -1272,22 +1427,21 @@ void func_800F24F4(void) {
     castleX = ((s32)playerX >> 8) + g_CurrentRoom.left;
     castleY = ((s32)playerY >> 8) + g_CurrentRoom.top;
     if (D_8003C708 & 0x20) {
-        phi_v1 = g_mapProgramId;
-        if (phi_v1 == (PROGRAM_NO0 | PROGRAM_INVERTEDCASTLE_FLAG)) {
+        phi_v1 = g_StageId;
+        if (phi_v1 == (STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG)) {
             if ((castleX == phi_v1) && (castleY == 0x24)) {
                 if (func_800FD4C0(22, 0) == 0) {
                     func_800FD4C0(22, 1);
                 }
-                phi_v1 = g_mapProgramId;
+                phi_v1 = g_StageId;
             }
         }
 
-        if (phi_v1 == (PROGRAM_NO4 | PROGRAM_INVERTEDCASTLE_FLAG) &&
+        if (phi_v1 == (STAGE_NO4 | STAGE_INVERTEDCASTLE_FLAG) &&
             castleX == 0x12 && castleY == 0x1E) {
         } else {
             phi_a0 = 0;
-            if (g_mapProgramId == PROGRAM_NO4 && castleX == 0x2D &&
-                castleY == 0x21) {
+            if (g_StageId == STAGE_NO4 && castleX == 0x2D && castleY == 0x21) {
                 if (PLAYER.posX.val == 0x80) {
                     D_8003C730 = 1;
                     phi_a0 = 1;
@@ -2492,7 +2646,7 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
 }
 
-s32 func_800FD664(s32 arg0) { return g_mapProgramId & 0x20 ? arg0 << 1 : arg0; }
+s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 
 extern Unkstruct_800A4B12 D_800A4B12[];
 
