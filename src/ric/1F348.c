@@ -872,7 +872,7 @@ void func_80162C7C(void) {}
  * to be included in a NON_MATCHING state.
  * CAUTION: rodata yet to be confirmed matching
  */
-#ifndef NON_MATCHING_PENDING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162C84);
 #else
 extern s32 D_80154ED4;

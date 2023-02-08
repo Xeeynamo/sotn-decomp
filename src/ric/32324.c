@@ -73,7 +73,7 @@ void func_80170548(Entity* entity) {
  * It also has a jumptable which makes it impossible for it
  * to be included in a NON_MATCHING state.
  */
-#ifndef NON_MATCHING_PENDING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801705EC);
 #else
 void func_80156C60(Entity* entity);
