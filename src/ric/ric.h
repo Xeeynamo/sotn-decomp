@@ -17,9 +17,10 @@ extern bool func_8015DBB0(s32);
 extern s32 func_8015E380(s32);
 extern void func_8015F9F0(Entity* entity);
 extern void func_8015FAB8(Entity*);
-extern s32 func_8015FDB0(POLY_GT4*, s16, s16);
+extern s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY);
 extern Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 extern void func_80169C10(Entity* entity);
+extern void func_80169D74(Entity* entity);
 
 extern s16 D_801545A8;
 extern s16 D_801545AA;
