@@ -1316,7 +1316,7 @@ void func_80169D74(Entity* entity) {
         entity->unk19 = 4;
         entity->unk1E = 0xC00;
         entity->step++;
-        goto label;
+        break;
 
     case 1:
         entity->unk1E -= 0x80;
@@ -1324,24 +1324,22 @@ void func_80169D74(Entity* entity) {
             entity->step++;
             entity->unk7C.s = (entity->subId + 1) * 4;
         }
-        goto label;
+        break;
 
     case 2:
         entity->unk1E -= 0x80;
         entity->unk7C.s--;
         if (entity->unk7C.s == 0) {
             func_80156C60(entity);
-            break;
+            return;
         }
-
-    default:
-    label:
-        temp = entity->unk84;
-        ptr = temp.unk + ((u16)entity->unk80.modeS16.unk0 * 4);
-        entity->posX.i.hi = ptr[0] - D_8007308E;
-        entity->posY.i.hi = ptr[1] - D_80073092;
-        entity->unk80.modeS16.unk0 = (entity->unk80.modeS16.unk0 + 1) & 0x3F;
+        break;
     }
+    temp = entity->unk84;
+    ptr = temp.unk + ((u16)entity->unk80.modeS16.unk0 * 4);
+    entity->posX.i.hi = ptr[0] - D_8007308E;
+    entity->posY.i.hi = ptr[1] - D_80073092;
+    entity->unk80.modeS16.unk0 = (entity->unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169F04);
