@@ -1,6 +1,13 @@
 #include "common.h"
+#include "game.h"
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801710E8);
+void func_801710E8(Entity* entity, s32* arg1) {
+    if (entity->unk4C != arg1) {
+        entity->unk4C = arg1;
+        entity->animationFrameIndex = 0;
+        entity->animationFrameDuration = 0;
+    }
+}
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017110C);
 
