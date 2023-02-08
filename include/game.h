@@ -645,6 +645,26 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
+typedef struct {
+    /* 00 */ s16 flags;
+    /* 02 */ s16 offsetx;
+    /* 04 */ s16 offsety;
+    /* 06 */ s16 width;
+    /* 08 */ s16 height;
+    /* 0A */ s16 clut;
+    /* 0C */ s16 tileset;
+    /* 0E */ s16 left;
+    /* 10 */ s16 top;
+    /* 12 */ s16 right;
+    /* 14 */ s16 bottom;
+    /* 16 */ s16 padding;
+} SpritePart;
+
+typedef struct {
+    /* 00 */ u16 count;
+    /* 02 */ SpritePart parts[0];
+} SpriteParts; // size = 4 + count*sizeof(SpritePart)
+
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
 extern s32 D_8003C0EC[4];
