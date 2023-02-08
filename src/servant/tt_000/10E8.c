@@ -87,11 +87,17 @@ INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E78);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173EB0);
 
+s32 func_80173F30(Entity* entity, s16 arg1, s16 arg2);
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F30);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F74);
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173FE8);
+s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
+    s32 diffX = x - entity->posX.i.hi;
+    s32 diffY = y - entity->posY.i.hi;
+
+    return SquareRoot12((diffX * diffX + diffY * diffY) << 12, diffX) >> 12;
+}
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174038);
 
