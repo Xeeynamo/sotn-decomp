@@ -230,22 +230,20 @@ void func_8015C178(void) {
     if (D_8007342A < 0) {
         D_80072F66 = 0;
         func_8015CD98(0);
-        return;
-    }
-    if ((*(u16*)&PLAYER.animationFrameIndex >= 0x12) && !(D_80072F20[0] & 1)) {
+    } else if ((*(u16*)&PLAYER.animationFrameIndex >= 0x12) &&
+               !(D_80072F20[0] & 1)) {
         D_80072F66 = 0;
         func_8015CF08();
-        return;
-    }
+    } else {
+        if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animationFrameIndex < 0x12U) &&
+            (D_80072F20[0] & 1)) {
+            func_801606BC(g_CurrentEntity, 0x20018, 0);
+        }
 
-    if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animationFrameIndex < 0x12U) &&
-        (D_80072F20[0] & 1)) {
-        func_801606BC(g_CurrentEntity, 0x20018, 0);
-    }
-
-    if ((*(s32*)&PLAYER.animationFrameIndex == 0x10012) &&
-        (D_80072F20[0] & 1)) {
-        func_801606BC(g_CurrentEntity, 0, 0);
+        if ((*(s32*)&PLAYER.animationFrameIndex == 0x10012) &&
+            (D_80072F20[0] & 1)) {
+            func_801606BC(g_CurrentEntity, 0, 0);
+        }
     }
 }
 
@@ -735,7 +733,6 @@ void func_801623E0(Entity* entity) {
             func_80156C60(entity);
             return;
         }
-
         entity->unk7E.modeU16 = 32;
         entity->unk7C.s = 32;
         poly = &D_80086FEC[entity->firstPolygonIndex];
