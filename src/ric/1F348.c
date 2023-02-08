@@ -963,8 +963,8 @@ void func_801641A0(Entity* entity) {
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
-            entity->unk7C.s = 0x10;
-            entity->unk7E.modeU16 = 0xC;
+            entity->unk7C.s = 16;
+            entity->unk7E.modeU16 = 12;
             poly = &D_80086FEC[entity->firstPolygonIndex];
             poly->u2 = 64;
             poly->u0 = 64;
