@@ -6,6 +6,7 @@
 
 extern void func_80156C60(entity);
 extern void func_8015BB80(void);
+extern void func_8015C178(void);
 extern void func_8015C93C(s32 speed);
 extern s32 func_8015C9CC(void);
 extern void func_8015CA84(s32 speed);
