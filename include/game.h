@@ -739,6 +739,7 @@ extern s16 D_80072F6A[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern u16 D_80072F70;
+extern u16 D_80072F72;
 extern u16 D_80072F7C;
 extern u16 D_80072F86;
 extern u16 D_80072F88;
