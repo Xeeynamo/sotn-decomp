@@ -731,54 +731,50 @@ void func_801623E0(Entity* entity) {
     case 0:
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
-            entity->unk7E.modeU16 = 32;
-            entity->unk7C.s = 32;
-            poly = &D_80086FEC[entity->firstPolygonIndex];
-            poly->u2 = 64;
-            poly->u0 = 64;
-            poly->v1 = 192;
-            poly->v0 = 192;
-            poly->u3 = 127;
-            poly->u1 = 127;
-            poly->v3 = 255;
-            poly->v2 = 255;
-            poly->tpage = 0x1A;
-            poly->clut = 0x13E;
-            poly->pad2 = PLAYER.zPriority + 8;
-            poly->pad3 = 0;
-            entity->unk34 = 0x04850000;
-            entity->step++;
-            goto def;
-        } else {
+        if (firstPolygonIndex == -1) {
             func_80156C60(entity);
-            break;
+            return;
         }
+
+        entity->unk7E.modeU16 = 32;
+        entity->unk7C.s = 32;
+        poly = &D_80086FEC[entity->firstPolygonIndex];
+        poly->u2 = 64;
+        poly->u0 = 64;
+        poly->v1 = 192;
+        poly->v0 = 192;
+        poly->u3 = 127;
+        poly->u1 = 127;
+        poly->v3 = 255;
+        poly->v2 = 255;
+        poly->tpage = 0x1A;
+        poly->clut = 0x13E;
+        poly->pad2 = PLAYER.zPriority + 8;
+        poly->pad3 = 0;
+        entity->unk34 = 0x04850000;
+        entity->step++;
+        break;
 
     case 1:
         entity->unk7C.s++;
         entity->unk7E.modeU16++;
         if (entity->unk7C.s >= 45) {
             func_80156C60(entity);
-        } else {
-            goto def;
+            return;
         }
         break;
-
-    def:
-    default:
-        poly = &D_80086FEC[entity->firstPolygonIndex];
-        poly->x0 = entity->posX.i.hi - entity->unk7C.s;
-        poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
-        poly->x1 = entity->posX.i.hi + entity->unk7C.s;
-        poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
-        poly->x2 = entity->posX.i.hi - entity->unk7C.s;
-        poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
-        poly->x3 = entity->posX.i.hi + entity->unk7C.s;
-        poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
-        poly->clut = (*(s16*)&g_blinkTimer & 1) + 0x13E;
-        break;
     }
+
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly->x0 = entity->posX.i.hi - entity->unk7C.s;
+    poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
+    poly->x1 = entity->posX.i.hi + entity->unk7C.s;
+    poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
+    poly->x2 = entity->posX.i.hi - entity->unk7C.s;
+    poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
+    poly->x3 = entity->posX.i.hi + entity->unk7C.s;
+    poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
+    poly->clut = (*(s16*)&g_blinkTimer & 1) + 0x13E;
 }
 
 /**
