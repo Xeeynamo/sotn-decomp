@@ -1265,7 +1265,8 @@ void func_80169C10(Entity* entity) {
     s32 PosX = 8;
     s32 PosY = 4;
 
-    if (entity->step == 0) {
+    switch (entity->step) {
+    case 0:
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
@@ -1285,16 +1286,18 @@ void func_80169C10(Entity* entity) {
             poly->pad3 = 0x31;
             func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
-            return;
+        } else {
+            func_80156C60(entity);
         }
-        func_80156C60(entity);
-        return;
-    }
+        break;
 
-    entity->posY.val += entity->accelerationY;
-    poly = &D_80086FEC[entity->firstPolygonIndex];
-    if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
-        func_80156C60(entity);
+    default:
+        entity->posY.val += entity->accelerationY;
+        poly = &D_80086FEC[entity->firstPolygonIndex];
+        if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
+            func_80156C60(entity);
+        }
+        break;
     }
 }
 
