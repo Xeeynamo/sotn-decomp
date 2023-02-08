@@ -997,7 +997,42 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80166060);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80166784);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8016779C);
+void func_8016779C(Entity* entity) {
+    if (D_80072F66 == 0) {
+        func_80156C60();
+        return;
+    }
+
+    entity->facing = PLAYER.facing;
+    if (entity->step == 0) {
+        entity->unk34 = 0x04070000;
+        entity->animationSet = -0x7FEE;
+        entity->unk5A = 0x46;
+        entity->palette = 0x8120;
+        entity->zPriority = PLAYER.zPriority + 2;
+    }
+
+    if (PLAYER.step == 2) {
+        if (PLAYER.facing != 0) {
+            entity->animationFrame = D_80155CCC[D_80175080];
+        } else {
+            entity->animationFrame = D_80155CB8[D_80175080];
+        }
+    } else if (PLAYER.step == 0) {
+        if (PLAYER.facing != 0) {
+            entity->animationFrame = D_80155CF4[D_80175080];
+        } else {
+            entity->animationFrame = D_80155CE0[D_80175080];
+        }
+    } else if (PLAYER.facing != 0) {
+        entity->animationFrame = D_80155D1C[D_80175080];
+    } else {
+        entity->animationFrame = D_80155D08[D_80175080];
+    }
+
+    entity->posX.val = g_EntityArray->posX.val;
+    entity->posY.val = PLAYER.posY.val;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80167964);
 
