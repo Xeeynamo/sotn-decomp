@@ -687,8 +687,8 @@ void func_801623E0(Entity* entity) {
         }
         break;
 
-    default:
     def:
+    default:
         poly = &D_80086FEC[entity->firstPolygonIndex];
         poly->x0 = entity->posX.i.hi - entity->unk7C.s;
         poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
@@ -703,7 +703,84 @@ void func_801623E0(Entity* entity) {
     }
 }
 
+/**
+ * This function matches with GCC 2.6.0 + ASPSX 2.3.4
+ * Aspatch jumps to the wrong instruction
+ */
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162604);
+#else
+void func_80162604(Entity* entity) {
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+
+    entity->posX.val = g_EntityArray->posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    switch (entity->step) {
+    case 0:
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        entity->firstPolygonIndex = firstPolygonIndex;
+        if (firstPolygonIndex != (-1)) {
+            entity->unk7E.modeU16 = 0;
+            entity->unk7C.s = 0;
+            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly->v1 = 192;
+            poly->v0 = 192;
+            poly->u3 = 63;
+            poly->u1 = 63;
+            poly->v3 = 255;
+            poly->v2 = 255;
+            poly->tpage = 0x1A;
+            poly->u2 = 0;
+            poly->u0 = 0;
+            poly->clut = 0x162;
+            poly->pad2 = PLAYER.zPriority - 4;
+            poly->pad3 = 0;
+            entity->unk34 = 0x04850000;
+            entity->step++;
+            goto def;
+        } else {
+            func_80156C60(entity);
+            break;
+        }
+
+    case 1:
+        entity->unk7C.s += 8;
+        entity->unk7E.modeU16 += 8;
+        if (entity->unk7C.s < 0x20) {
+            goto def;
+        }
+
+    case 2:
+        entity->step++;
+        goto def;
+
+    case 3:
+        entity->unk7C.s -= 8;
+        entity->unk7E.modeU16 -= 8;
+        if (entity->unk7C.s >= 5) {
+            goto def;
+        } else {
+
+            func_80156C60(entity);
+        }
+        break;
+
+    def:
+    default:
+        poly = &D_80086FEC[entity->firstPolygonIndex];
+        poly->x0 = entity->posX.i.hi - entity->unk7C.s;
+        poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
+        poly->x1 = entity->posX.i.hi + entity->unk7C.s;
+        poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
+        poly->x2 = entity->posX.i.hi - entity->unk7C.s;
+        poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
+        poly->x3 = entity->posX.i.hi + entity->unk7C.s;
+        poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
+        break;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162870);
 
