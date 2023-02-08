@@ -539,8 +539,8 @@ void func_801601DC(Entity* entity) {
         entity->unk19 = 0x33;
         posX = 10;
         posY = 15;
-        entity->posY.i.hi = (u16)entity->posY.i.hi - posY + (rand() % 35);
-        entity->posX.i.hi = (u16)entity->posX.i.hi - posX + (rand() % 20);
+        entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
+        entity->posX.i.hi = entity->posX.i.hi - posX + (rand() % 20);
         entity->accelerationY = -0x6000 - (rand() & 0x3FFF);
         entity->step++;
         break;
