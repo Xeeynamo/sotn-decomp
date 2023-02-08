@@ -436,6 +436,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011B5A4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011BBE0);
 
+// same as RIC/func_80162E9C
 bool func_8011BD48(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;
@@ -467,6 +468,7 @@ void func_8011EDA0(Entity* entity) {}
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011EDA8);
 
+// same as RIC/func_801601DC
 void func_8011F074(Entity* entity) {
     s16 posX;
     s16 posY;

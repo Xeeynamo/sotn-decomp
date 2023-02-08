@@ -131,37 +131,38 @@ void func_8015B348(void) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015B898);
 
+// same as DRA/func_80115C50
 void func_8015BB80(void) {
-    s32 diffX;
+    s32 dist;
 
-    if (g_StageId == 0x0B) {
-        diffX = (g_CurrentRoom.left * 256) + playerX;
-        diffX = ABS(diffX);
+    if (g_StageId == STAGE_TOP) {
+        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = ABS(dist);
 
-        if ((diffX - 8000) > 0) {
+        if (dist - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        diffX = (g_CurrentRoom.left * 256) + playerX;
-        diffX = ABS(diffX);
+        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = ABS(dist);
 
-        if ((diffX - 8000) < 0) {
+        if (dist - 8000 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
 
-    if (g_StageId == 0x2B) {
-        diffX = (g_CurrentRoom.left * 256) + playerX;
-        diffX = ABS(diffX);
+    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = ABS(dist);
 
-        if ((diffX - 8384) > 0) {
+        if (dist - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        diffX = (g_CurrentRoom.left * 256) + playerX;
-        diffX = ABS(diffX);
+        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = ABS(dist);
 
-        if ((diffX - 8384) < 0) {
+        if (dist - 8384 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
@@ -590,6 +591,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015FDB0);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015FEA8);
 
+// same as DRA/func_8011F074
 void func_801601DC(Entity* entity) {
     s16 posX;
     s16 posY;
@@ -932,6 +934,7 @@ void func_80162C84(Entity* entity) {
 }
 #endif
 
+// same as DRA/func_8011BD48
 bool func_80162E9C(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;

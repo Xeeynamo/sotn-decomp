@@ -206,37 +206,38 @@ void func_80115BB0(void) {
     }
 }
 
+// same as RIC/func_8015BB80
 void func_80115C50(void) {
     s32 dist;
 
     if (g_StageId == STAGE_TOP) {
-        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = (g_CurrentRoom.left * 256) + playerX;
         dist = ABS(dist);
 
-        if ((dist - 0x1F40) > 0) {
+        if (dist - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = (g_CurrentRoom.left * 256) + playerX;
         dist = ABS(dist);
 
-        if ((dist - 0x1F40) < 0) {
+        if (dist - 8000 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
 
-    if (g_StageId == 0x2B) {
-        dist = (g_CurrentRoom.left << 8) + playerX;
+    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        dist = (g_CurrentRoom.left * 256) + playerX;
         dist = ABS(dist);
 
-        if ((dist - 0x20C0) > 0) {
+        if (dist - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = (g_CurrentRoom.left << 8) + playerX;
+        dist = (g_CurrentRoom.left * 256) + playerX;
         dist = ABS(dist);
 
-        if ((dist - 0x20C0) < 0) {
+        if (dist - 8384 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
