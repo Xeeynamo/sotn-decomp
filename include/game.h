@@ -789,8 +789,18 @@ extern u8 D_80073484;   // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
 
 // D_80073494 g_EntityArray[1]
+extern s32 D_800734F8; // g_EntityArray[1].firstPolygonIndex
+extern s16 D_800734EA; // g_EntityArray[1].animationFrame
+extern s8 D_80073510;  // g_EntityArray[1].unk7C.S8.unk0
+extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
+extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
+
 // D_80073550 g_EntityArray[2]
+extern s16 D_800735A6; // g_EntityArray[2].animationFrame
+
 // D_8007360C g_EntityArray[3]
+extern s16 D_80073662; // g_EntityArray[3].animationFrame
+
 // D_800736C8 g_EntityArray[4]
 // D_80073784 g_EntityArray[5]
 // D_800739B8 g_EntityArray[8]
