@@ -674,7 +674,7 @@ void func_80162C84(Entity* entity) {
         break;
 
     case 4:
-    
+
     default:
         return;
     }
@@ -683,7 +683,21 @@ void func_80162C84(Entity* entity) {
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162C84);
 #endif
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162E9C);
+bool func_80162E9C(Entity* entity) {
+    s32 i = 0x10;
+    s16 objId = entity->objectId;
+    s16 subId = entity->subId;
+    Entity* e = &g_EntityArray[i];
+    for (; i < 0x40; i++, e++) {
+        if (objId == (s32)e->objectId && subId == (s32)e->subId &&
+            e != entity) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162EF8);
 
