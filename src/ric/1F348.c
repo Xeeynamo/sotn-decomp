@@ -654,17 +654,17 @@ void func_801623E0(Entity* entity) {
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
-            entity->unk7E.modeU16 = 0x20;
-            entity->unk7C.s = 0x20;
+            entity->unk7E.modeU16 = 32;
+            entity->unk7C.s = 32;
             poly = &D_80086FEC[entity->firstPolygonIndex];
-            poly->u2 = 0x40;
-            poly->u0 = 0x40;
-            poly->v1 = 0xC0;
-            poly->v0 = 0xC0;
-            poly->u3 = 0x7F;
-            poly->u1 = 0x7F;
-            poly->v3 = 0xFF;
-            poly->v2 = 0xFF;
+            poly->u2 = 64;
+            poly->u0 = 64;
+            poly->v1 = 192;
+            poly->v0 = 192;
+            poly->u3 = 127;
+            poly->u1 = 127;
+            poly->v3 = 255;
+            poly->v2 = 255;
             poly->tpage = 0x1A;
             poly->clut = 0x13E;
             poly->pad2 = PLAYER.zPriority + 8;
@@ -682,7 +682,6 @@ void func_801623E0(Entity* entity) {
         if (entity->unk7C.s >= 45) {
         def2:
             func_80156C60(entity);
-
         } else {
             goto def;
         }
