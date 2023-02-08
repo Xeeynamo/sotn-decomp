@@ -61,7 +61,20 @@ INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173C2C);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173C64);
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E0C);
+void func_80173E0C(Entity* entity) {
+    s32 i;
+    s32 length;
+    u32* ptr;
+
+    if (entity->unk34 & 0x800000) {
+        g_api.FreePolygons(entity->firstPolygonIndex);
+    }
+
+    ptr = (u32*)entity;
+    length = sizeof(Entity) / sizeof(u32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E78);
 
