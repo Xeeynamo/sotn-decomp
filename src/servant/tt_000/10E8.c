@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game.h"
 
+extern s32 D_80171090;
+
 void func_801710E8(Entity* entity, s32* arg1) {
     if (entity->unk4C != arg1) {
         entity->unk4C = arg1;
@@ -63,12 +65,12 @@ void func_80173C2C(Entity* entity) {
     if (entity->subId == 0xF) {
         D_80174D3C = 1;
     }
-    func_80173E0C(entity);
+    DestroyEntity(entity);
 }
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173C64);
 
-void func_80173E0C(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -99,7 +101,78 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     return SquareRoot12((diffX * diffX + diffY * diffY) << 12, diffX) >> 12;
 }
 
+// PSY-Q 3.5 match as in GCC a jump skips a 'nop'
+#ifndef NON_MATCHING
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174038);
+#else
+void func_80174038(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x04020000;
+        if (D_8003C704 == 0) {
+            if (g_api.func_80133940() != 0) {
+                g_api.PlaySfx(16);
+                entity->step++;
+            }
+        }
+        break;
+
+    case 1:
+        if (g_api.func_80133950() != 0) {
+            entity->step++;
+        }
+        break;
+    case 2:
+        g_api.PlaySfx(entity->subId);
+        entity->step++;
+        break;
+
+    case 3:
+        if (g_api.func_80131F68() != 0) {
+            entity->step++;
+        }
+        break;
+
+    case 4:
+        if (g_api.func_80131F68() == 0) {
+            entity->step++;
+        }
+        break;
+
+    case 5:
+        if (((D_8003C708 >> 16) & 0x60) != 0) {
+            D_80171090 = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        if (g_api.func_80133940() != 0) {
+            g_api.PlaySfx(17);
+            entity->step++;
+        }
+        break;
+
+    case 6:
+        if (g_api.func_80133950() != 0) {
+            D_80171090 = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        break;
+
+    case 7:
+        g_api.PlaySfx(10);
+        entity->step = 4;
+        break;
+
+    case 8:
+        D_80171090 = 99;
+        DestroyEntity(entity);
+        return;
+    }
+
+    D_80171090 = (s32)entity->step;
+}
+#endif
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174210);
 
