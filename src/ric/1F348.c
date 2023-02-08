@@ -134,7 +134,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015B898);
 void func_8015BB80(void) {
     s32 diffX;
 
-    if (g_mapProgramId == PROGRAM_TOP) {
+    if (g_mapProgramId == 0x0B) {
         diffX = (g_CurrentRoom.left * 256) + playerX;
         diffX = ABS(diffX);
 
@@ -150,7 +150,7 @@ void func_8015BB80(void) {
         }
     }
 
-    if (g_mapProgramId == 0x2B) { // TODO: figure out ProgramId MACRO
+    if (g_mapProgramId == 0x2B) {
         diffX = (g_CurrentRoom.left * 256) + playerX;
         diffX = ABS(diffX);
 
