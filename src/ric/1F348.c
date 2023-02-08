@@ -534,7 +534,7 @@ void func_801601DC(Entity* entity) {
         entity->unk1C = 0x40;
         entity->unk1A = 0x40;
         entity->unk4C = &D_80154924;
-        D_80174FFC += 1;
+        D_80174FFC++;
         entity->unk6C = 0xFF;
         entity->unk19 = 0x33;
         posX = 10;
