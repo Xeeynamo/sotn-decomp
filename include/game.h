@@ -653,7 +653,7 @@ extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern Unkstruct5* D_8003C704;
-extern u32 D_8003C708;
+extern u16 D_8003C708;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
@@ -863,7 +863,7 @@ extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern u16 D_80097496;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
-extern s32 g_StageId;
+extern u32 g_StageId;
 extern s32 D_800974A4;
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
