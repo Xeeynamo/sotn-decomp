@@ -20,4 +20,9 @@ typedef struct {
     void (*Unk3C)(Entity* self);
 } ServantDesc;
 
+typedef struct {
+    u16 start, end;
+} EntitySearch;
+EntitySearch D_80171094[];
+
 ServantDesc g_ServantDesc;
