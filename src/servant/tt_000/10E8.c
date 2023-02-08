@@ -57,7 +57,14 @@ void func_80173C1C(void) {}
 
 void func_80173C24(void) {}
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173C2C);
+extern s32 D_80174D3C;
+
+void func_80173C2C(Entity* entity) {
+    if (entity->subId == 0xF) {
+        D_80174D3C = 1;
+    }
+    func_80173E0C(entity);
+}
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173C64);
 
