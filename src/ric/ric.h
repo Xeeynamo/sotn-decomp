@@ -46,6 +46,7 @@ extern s32 D_801558D4;
 extern s32 D_801558DC;
 extern /*?*/ s32 D_8015591C;
 extern /*?*/ s32 D_80155950;
+extern s16 D_80155E68[];
 extern s32 D_80174F74;
 extern s32 D_80174F78;
 extern u8 D_80174FAC;

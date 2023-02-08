@@ -892,7 +892,51 @@ void func_80169C10(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169D74);
+void func_80169D74(Entity* entity) {
+    Multi temp;
+    s16* ptr;
+
+    switch (entity->step) {
+    case 0:
+        entity->unk34 = 0x0C000000;
+        entity->unk84.unk = entity->unk8C.entityPtr->unk84.unk;
+        entity->animationSet = -0x7FEF;
+        entity->animationFrame = D_80155E68[entity->subId];
+        entity->unk5A = 0x66;
+        entity->palette = 0x81B0;
+        entity->blendMode = 0x10;
+        entity->facing = PLAYER.facing;
+        entity->zPriority = PLAYER.zPriority;
+        entity->unk19 = 4;
+        entity->unk1E = 0xC00;
+        entity->step++;
+        goto label;
+
+    case 1:
+        entity->unk1E = ((u16)entity->unk1E) - 0x80;
+        if (entity->unk8C.entityPtr->step == 7) {
+            entity->step++;
+            entity->unk7C.s = (entity->subId + 1) * 4;
+        }
+        goto label;
+
+    case 2:
+        entity->unk1E -= 0x80;
+        entity->unk7C.s--;
+        if (entity->unk7C.s == 0) {
+            func_80156C60(entity);
+            break;
+        }
+
+    default:
+    label:
+        temp = entity->unk84;
+        ptr = temp.unk + ((u16)entity->unk80.modeS16.unk0 * 4);
+        entity->posX.i.hi = ptr[0] - D_8007308E;
+        entity->posY.i.hi = ptr[1] - D_80073092;
+        entity->unk80.modeS16.unk0 = (entity->unk80.modeS16.unk0 + 1) & 0x3F;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169F04);
 
