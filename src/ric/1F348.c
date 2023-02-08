@@ -131,7 +131,41 @@ void func_8015B348(void) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015B898);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015BB80);
+void func_8015BB80(void) {
+    s32 diffX;
+
+    if (g_mapProgramId == PROGRAM_TOP) {
+        diffX = (g_CurrentRoom.left * 256) + playerX;
+        diffX = ABS(diffX);
+
+        if ((diffX - 8000) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        diffX = (g_CurrentRoom.left * 256) + playerX;
+        diffX = ABS(diffX);
+
+        if ((diffX - 8000) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+
+    if (g_mapProgramId == 0x2B) { // TODO: figure out ProgramId MACRO
+        diffX = (g_CurrentRoom.left * 256) + playerX;
+        diffX = ABS(diffX);
+
+        if ((diffX - 8384) > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        diffX = (g_CurrentRoom.left * 256) + playerX;
+        diffX = ABS(diffX);
+
+        if ((diffX - 8384) < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015BCD0);
 

@@ -5,9 +5,11 @@
 #include "sfx.h"
 
 extern void func_80156C60(entity);
+extern void func_8015BB80(void);
 extern void func_8015C93C(s32 speed);
 extern s32 func_8015C9CC(void);
 extern void func_8015CA84(s32 speed);
+extern void func_8015CCC8(s32 arg0, s32 arg1);
 extern void func_8015CD98(s32 accelerationX);
 extern void func_8015CDE0(s32);
 extern void func_8015CE7C(void);
