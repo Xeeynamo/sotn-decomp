@@ -190,6 +190,7 @@ def show_asm_differ_command(func: NonMatchingFunc):
     isStage = True
     if func.overlay_name == "dra" or \
        func.overlay_name == "ric" or \
+       func.overlay_name.startswith("tt_") or \
        func.overlay_name == "main":
         isStage = False
 
