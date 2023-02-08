@@ -25,6 +25,8 @@ segments:
     subalign: 2
     subsegments:
       - [0x0, rodata]
+      #- [0x10C4, .rodata, 10E8]
+      - [0x10C4, rodata]
       - [0x10E8, c]
       - [0x48D8, data]
   - [0xA000]

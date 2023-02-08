@@ -653,7 +653,7 @@ extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern Unkstruct5* D_8003C704;
-extern u16 D_8003C708;
+extern u32 D_8003C708;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C734;

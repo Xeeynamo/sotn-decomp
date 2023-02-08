@@ -1,0 +1,1 @@
+DestroyEntity = 0x80173E0C;
