@@ -3,6 +3,7 @@
 u16 D_80170448[];
 Sprite D_80170608[];
 s32 D_80171090;
+EntitySearch D_80171094[];
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -198,8 +199,24 @@ void DestroyEntity(Entity* entity) {
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E78);
 
-u16 D_80171094[];
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173EB0);
+Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
+    volatile u32 pad; // fake?
+    Entity* entity;
+    s16 start;
+    s16 end;
+    s32 i;
+    start = D_80171094[rangeIndex].start;
+    end = D_80171094[rangeIndex].end;
+    entity = &g_EntityArray[start];
+
+    for (i = start; end >= i; i++, entity++) {
+        if (entity->objectId == objectId) {
+            return entity;
+        }
+    }
+
+    return 0;
+}
 
 s32 func_80173F30(Entity* entity, s16 arg1, s16 arg2);
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F30);
