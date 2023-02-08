@@ -1048,7 +1048,28 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80167EC4);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_801682B4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8016840C);
+s32 func_8016840C(s16 x, s16 y) {
+    CollisionResult sp10;
+    u16 temp;
+
+    if (g_CurrentEntity->accelerationX != 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
+                             g_CurrentEntity->posY.i.hi + x, &sp10, 0);
+        if (g_CurrentEntity->accelerationX > 0) {
+            temp = sp10.unk14;
+        } else {
+            temp = sp10.unk1C;
+        }
+        if (!(sp10.unk0 & 2)) {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+    g_CurrentEntity->posX.i.lo = 0;
+    g_CurrentEntity->posX.i.hi += temp;
+    return 2;
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_801684D8);
 
