@@ -1,7 +1,31 @@
-#include "common.h"
-#include "game.h"
+#include "servant.h"
 
-extern s32 D_80171090;
+u16 D_80170448[];
+s32 D_80171090;
+
+void func_80171ED4(s32 arg0);
+void func_80172120(Entity* self);
+void func_80172C30(Entity* self);
+void func_8017339C(void);
+void func_801733A4(void);
+void func_801733AC(void);
+void func_801733B4(void);
+void func_801733BC(void);
+void func_801733C4(void);
+void func_801733CC(void);
+void func_801733D4(Entity* self);
+void func_80173C0C(void);
+void func_80173C14(void);
+void func_80173C1C(void);
+void func_80173C24(void);
+void func_80173C2C(Entity* self);
+
+ServantDesc g_ServantDesc = {
+    func_80171ED4, func_80172120, func_80172C30, func_8017339C,
+    func_801733A4, func_801733AC, func_801733B4, func_801733BC,
+    func_801733C4, func_801733CC, func_801733D4, func_80173C0C,
+    func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
+};
 
 void func_80174210(s32 arg0, s32 arg1);
 s32 func_80174864(void);
@@ -59,7 +83,6 @@ INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171ED4);
 
-void func_80172120(Entity* entity);
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172120);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172C30);
