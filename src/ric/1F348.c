@@ -698,7 +698,6 @@ bool func_80162E9C(Entity* entity) {
     return false;
 }
 
-
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80162EF8);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_801641A0);
@@ -854,7 +853,46 @@ INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169470);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169704);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169C10);
+void func_80169C10(Entity* entity) {
+    int new_var;
+    int new_var3;
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+    int new_var2;
+
+    if (entity->step == 0) {
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        entity->firstPolygonIndex = firstPolygonIndex;
+        if (firstPolygonIndex != -1) {
+            new_var = 4;
+            new_var3 = 8;
+            entity->unk34 = 0x08800000;
+            entity->accelerationY = 0x8000;
+            new_var2 = ((u16)entity->posX.i.hi - new_var3) + (rand() & 0xF);
+            entity->posX.i.hi = new_var2;
+            entity->posY.i.hi =
+                ((u16)entity->posY.i.hi - new_var) + (rand() & 0xF);
+            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly->clut = 0x1B0;
+            poly->tpage = 0x1A;
+            poly->b0 = 0;
+            poly->b1 = 0;
+            poly->pad2 = entity->zPriority;
+            poly->pad2 = poly->pad2 + new_var;
+            poly->pad3 = 0x31;
+            func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi);
+            entity->step++;
+            return;
+        }
+        func_80156C60(entity);
+        return;
+    }
+    entity->posY.val += entity->accelerationY;
+    poly = &D_80086FEC[entity->firstPolygonIndex];
+    if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
+        func_80156C60(entity);
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_80169D74);
 

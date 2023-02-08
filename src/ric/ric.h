@@ -4,6 +4,7 @@
 #include "objects.h"
 #include "sfx.h"
 
+extern void func_80156C60(entity);
 extern void func_8015C93C(s32 speed);
 extern s32 func_8015C9CC(void);
 extern void func_8015CA84(s32 speed);
@@ -16,6 +17,7 @@ extern bool func_8015DBB0(s32);
 extern s32 func_8015E380(s32);
 extern void func_8015F9F0(Entity* entity);
 extern void func_8015FAB8(Entity*);
+extern s32 func_8015FDB0(POLY_GT4*, s16, s16);
 extern Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
 
 extern s16 D_801545A8;
