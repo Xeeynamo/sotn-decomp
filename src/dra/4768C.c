@@ -1468,7 +1468,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F2658);
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (D_800973FC != 0 || D_8006BB00 != 0 || ((D_8003C708 >> 16) & 0x60)) {
+        if (D_800973FC != 0 || D_8006BB00 != 0 || D_8003C708 & 0x60) {
             return false;
         }
         D_801375C8 = 1;

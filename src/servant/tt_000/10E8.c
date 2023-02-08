@@ -3,6 +3,9 @@
 
 extern s32 D_80171090;
 
+void func_80174210(s32 arg0, s32 arg1);
+s32 func_80174864(void);
+
 void func_801710E8(Entity* entity, s32* arg1) {
     if (entity->unk4C != arg1) {
         entity->unk4C = arg1;
@@ -196,7 +199,7 @@ void func_80174038(Entity* entity) {
         break;
 
     case 5:
-        if (((D_8003C708 >> 16) & 0x60) != 0) {
+        if ((D_8003C708 & 0x60) != 0) {
             D_80171090 = 99;
             DestroyEntity(entity);
             return;
@@ -230,6 +233,7 @@ void func_80174038(Entity* entity) {
 }
 #endif
 
+// TODO func_80174210
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174210);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801745E4);
@@ -238,4 +242,22 @@ INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801746A0);
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801747B8);
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174864);
+s32 func_80174864(void) {
+    int tmp;
+
+    if (g_StageId - 0x20 < 0x15) {
+        if (D_8003C708 == 0x22) {
+            return 1;
+        }
+
+        tmp = (D_8003C708 != 0x20) * 2;
+        return tmp;
+    }
+
+    if (D_8003C708 == 0x22) {
+        return 0;
+    }
+
+    tmp = 0x20;
+    return D_8003C708 != tmp ? 2 : 1;
+}
