@@ -106,7 +106,7 @@ void func_801705EC(Entity* entity) {
             entity->step++;
         }
         break;
-        
+
     case 8:
         func_80156C60(entity);
         break;
