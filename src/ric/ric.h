@@ -62,7 +62,6 @@ extern s16 D_80155D08[];
 extern s16 D_80155D1C[];
 extern s16 D_80155D30;
 extern s16 D_80155E68[];
-extern s8 D_80156800;
 extern s32 D_80174F74;
 extern s32 D_80174F78;
 extern u8 D_80174FAC;

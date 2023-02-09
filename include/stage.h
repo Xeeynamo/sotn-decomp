@@ -47,26 +47,6 @@ typedef struct {
     /* 0x8 */ u16 subId;
 } LayoutObject; // size = 0xA
 
-typedef struct {
-    /* 00 */ s16 flags;
-    /* 02 */ s16 offsetx;
-    /* 04 */ s16 offsety;
-    /* 06 */ s16 width;
-    /* 08 */ s16 height;
-    /* 0A */ s16 clut;
-    /* 0C */ s16 tileset;
-    /* 0E */ s16 left;
-    /* 10 */ s16 top;
-    /* 12 */ s16 right;
-    /* 14 */ s16 bottom;
-    /* 16 */ s16 padding;
-} SpritePart;
-
-typedef struct {
-    /* 00 */ u16 count;
-    /* 02 */ SpritePart parts[0];
-} SpriteParts; // size = 4 + count*sizeof(SpritePart)
-
 s32 Random();
 void Update(void);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc);

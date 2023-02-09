@@ -251,6 +251,10 @@ typedef struct Entity {
             /* 0x8C */ u16 unk0;
             /* 0x8E */ u16 unk2;
         } modeU16;
+        struct {
+            /* 0x8C */ s16 unk0;
+            /* 0x8E */ s16 unk2;
+        } modeS16;
     } unk8C; // size = 0x4
     /* 0x90 */ s32 unk90;
     /* 0x94 */ u8 unk94;
@@ -645,6 +649,39 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
+typedef struct {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ s16 width;
+    /* 0x06 */ s16 height;
+    /* 0x08 */ s16 clut;
+    /* 0x0A */ s16 tpage;
+    /* 0x0C */ u8 texLeft, dummyLeft;
+    /* 0x0E */ u8 texTop, dummyTop;
+    /* 0x10 */ u8 texRight, dummyRight;
+    /* 0x12 */ u8 texBottom, dummyBottom;
+} Sprite; /* size=0x14 */
+
+typedef struct {
+    /* 00 */ s16 flags;
+    /* 02 */ s16 offsetx;
+    /* 04 */ s16 offsety;
+    /* 06 */ s16 width;
+    /* 08 */ s16 height;
+    /* 0A */ s16 clut;
+    /* 0C */ s16 tileset;
+    /* 0E */ s16 left;
+    /* 10 */ s16 top;
+    /* 12 */ s16 right;
+    /* 14 */ s16 bottom;
+    /* 16 */ s16 padding;
+} SpritePart; /* size=0x18 */
+
+typedef struct {
+    /* 00 */ u16 count;
+    /* 02 */ SpritePart parts[0];
+} SpriteParts; // size = 4 + count*sizeof(SpritePart)
+
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
 extern s32 D_8003C0EC[4];
@@ -739,6 +776,7 @@ extern s16 D_80072F6A[];
 extern u16 D_80072F6C;
 extern u16 D_80072F6E;
 extern u16 D_80072F70;
+extern u16 D_80072F72;
 extern u16 D_80072F7C;
 extern u16 D_80072F86;
 extern u16 D_80072F88;
@@ -863,7 +901,7 @@ extern u16 D_80097494; // related to g_menuRelicsCursorIndex
 extern u16 D_80097496;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
-extern s32 g_StageId;
+extern u32 g_StageId;
 extern s32 D_800974A4;
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
@@ -928,6 +966,7 @@ int VSync(s32);
 s32 rcos(s32);
 s32 rsin(s32);
 s32 SquareRoot0(s32);
+s32 SquareRoot12(s32, s32);
 long ratan2(long x, long y);
 void* DMACallback(int dma, void (*func)());
 void func_800192DC(s32 arg0, s32 arg1);

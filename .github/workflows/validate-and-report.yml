@@ -83,6 +83,7 @@ jobs:
             python tools/report_progress.py ST0.BIN 160 src/st/st0 > gh-report/assets/progress-st0.json
             python tools/report_progress.py WRP.BIN 110 src/st/wrp > gh-report/assets/progress-wrp.json
             python tools/report_progress.py RWRP.BIN 110 src/st/rwrp > gh-report/assets/progress-rwrp.json
+            python tools/report_progress.py TT_000.BIN 27 src/servant/tt_000 > gh-report/assets/progress-tt_000.json
       - name: Commit report
         run: |
             git config --global user.name 'GitHub Action' 
