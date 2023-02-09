@@ -1018,7 +1018,54 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109990);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109A44);
 
+// regalloc
+// https://decomp.me/scratch/rdeqb
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A234);
+#else
+void func_8010A234(s32 arg0) {
+    s32 temp;
+    g_CurrentEntity = g_EntityArray;
+    temp = D_8017A018();
+
+    do { // !FAKE
+        if ((temp == 0x2D) && (CheckEquipmentItemCount(0x19, 2) != 0)) {
+            if (!(*(s32*)&D_80072F2C & 0x01000000)) {
+                PlaySfx(NA_SE_VO_AL_WHAT);
+                D_80072EF4 = 0;
+                D_80072EFC = 0x20;
+                func_8010FAF4();
+                D_8017A000();
+                *(s32*)&D_80072F2C |= 0x01000000;
+                func_8010DFF0(1, 10);
+                func_80109328();
+                if (arg0 != 0) {
+                    func_8010DBFC(&D_800B0130, &D_800B01B8);
+                }
+            }
+        } else if (*(s32*)&D_80072F2C & 0x01000000) {
+            g_EntityArray[PLAYER_CHARACTER].palette = 0x8100;
+            g_EntityArray[PLAYER_CHARACTER].animationSet = 1;
+            g_EntityArray[PLAYER_CHARACTER].unk5A = 0;
+            g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
+            g_EntityArray[PLAYER_CHARACTER].unk19 &= 0xF3;
+            func_8010FAF4();
+            g_EntityArray[PLAYER_CHARACTER].unk22 = 0;
+            g_EntityArray[PLAYER_CHARACTER].unk20 = 0;
+            if (D_80072F20[0] & 1) {
+                func_8010E570(0);
+            } else {
+                func_8010E7AC();
+            }
+            *(s32*)&D_80072F2C &= 0xFEFF0000 | 0xFFFF;
+            func_80111CC0();
+            if (arg0 != 0) {
+                func_8010DBFC(&D_800B0130, &D_800B01B8);
+            }
+        }
+    } while (0);
+}
+#endif
 
 // Matching in gcc 2.6.0 + aspsx 2.3.4
 // Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
