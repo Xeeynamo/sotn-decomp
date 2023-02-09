@@ -165,7 +165,7 @@ typedef struct {
     /* 0x00 */ s32 x;
     /* 0x04 */ s32 y;
     /* 0x08 */ s32 stageId;
-    /* 0x0C */ s32 unkC;
+    /* 0x0C */ s32 bossId;
     /* 0x10 */ s32 unk10;
 } RoomBossTeleport; /* size=0x14 */
 
@@ -626,7 +626,7 @@ typedef struct {
     /* 8003C834 */ s32 D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
-    /* 8003C840 */ void* func_800FD4C0;
+    /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
     /* 8003C844 */ void* func_8010E0A8;
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
@@ -720,6 +720,7 @@ extern s32 g_menuMainCursorIndex;
 extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;
 extern s32 g_SettingsSoundMode;
+extern s32 D_8003CA28[]; // time attack checkpoints, also holds boss fought flag
 extern s32 D_8003CACC;
 extern s32 D_8003CB00[];
 extern s32 D_8003CB04;
