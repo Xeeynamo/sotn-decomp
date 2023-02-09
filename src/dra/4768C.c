@@ -1034,31 +1034,21 @@ void func_800F0578(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0608);
 
-typedef struct {
-    s32 foo[5];
-} Unkstruct_800F087C;
-
-extern Unkstruct_800F087C D_800A297C;
-
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
-    Unkstruct_800F087C* phi_s1;
-    Unkstruct_800F087C* phi_s0;
+    RoomBossTeleport* phi_s1;
+    s32 res;
 
-    phi_s1 = &D_800A297C;
-    phi_s0 = (Unkstruct_800F087C*)((u32*)&D_800A297C + 4);
-loop_1:
-    if (phi_s1->foo[0] == 0x80)
-        return 0;
+    for (phi_s1 = D_800A297C; true; phi_s1++) {
+        if (phi_s1->x == 0x80) {
+            return 0;
+        }
 
-    if (phi_s1->foo[0] == chunkX && phi_s0->foo[-3] == chunkY &&
-        phi_s0->foo[-2] == g_StageId) {
-        if (phi_s0->foo[-1] == 0xFF || func_800FD4C0(phi_s0->foo[-1], 0) == 0)
-            return phi_s0->foo[0] + 2;
+        res = phi_s1->x == chunkX;
+        if (res && phi_s1->y == chunkY && phi_s1->stageId == g_StageId &&
+            (phi_s1->unkC == 0xFF || func_800FD4C0(phi_s1->unkC, 0) == 0)) {
+            return phi_s1->unk10 + 2;
+        }
     }
-
-    phi_s0++;
-    phi_s1++;
-    goto loop_1;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0940);

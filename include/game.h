@@ -162,6 +162,14 @@ typedef struct {
 } RoomTeleport; // size = 0xA
 
 typedef struct {
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ s32 stageId;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+} RoomBossTeleport; /* size=0x14 */
+
+typedef struct {
     /* 0x0 */ s16 pressed;
     /* 0x2 */ s16 previous;
     /* 0x4 */ s16 tapped;
