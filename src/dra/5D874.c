@@ -1019,6 +1019,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109990);
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109A44);
 
 // regalloc
+// https://decomp.me/scratch/rdeqb
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A234);
 #else
