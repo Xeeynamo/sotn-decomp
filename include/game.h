@@ -830,6 +830,7 @@ extern s32 D_80073428;  // PLAYER.animationFrameIndex
 extern s16 D_8007342A;  // PLAYER.animationFrameDuration
 extern s16 D_8007342C;  // PLAYER.animationSet
 extern u16 D_8007342E;  // PLAYER.animationFrame
+extern s16 D_80073432;  // PLAYER.unk5A
 extern s16 D_8007347C;  // PLAYER.unkA4
 extern u8 D_80073484;   // PLAYER.unkAC
 // End of Player Character offset = 0x80073494
