@@ -193,7 +193,21 @@ INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015CF08);
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D020);
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D120);
+void func_8015D120(void) {
+    func_8015C908(8);
+    PLAYER.accelerationX = 0;
+    func_8015CA84(0x14000);
+    PLAYER.accelerationY = -0x78000;
+    D_80072F62 = 0;
+    func_8015C920(&D_8015579C);
+    func_8015CC28();
+    func_801606BC(g_CurrentEntity, 0x2DU, 0);
+    g_api.PlaySfx(0x6FB);
+    D_80072F18 = 4;
+    if (D_80072F92 != 0) {
+        PLAYER.accelerationY = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D1D0);
 
