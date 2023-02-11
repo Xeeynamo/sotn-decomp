@@ -4,6 +4,7 @@ u16 D_80170448[];
 Sprite D_80170608[];
 s32 D_80171090;
 EntitySearch D_80171094[];
+CollisionResult D_80174AD8;
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -69,13 +70,101 @@ s32 func_801713C8(Entity* entity) {
 }
 #endif
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171434);
+#else
+s32 func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
+    s32 curY;
+
+    g_api.CheckCollision(x, y, &D_80174AD8, 0);
+    if (D_80174AD8.unk0 & 1) {
+        return 0;
+    }
+    *outX = x;
+    *outY = curY + D_80174AD8.unk10;
+    curY = y;
+    do {
+        curY -= 16;
+        if (curY <= 0) {
+            return 0;
+        }
+        g_api.CheckCollision(x, curY, &D_80174AD8, 0);
+    } while ((D_80174AD8.unk0 & 0x801) == 0);
+
+    if ((D_80174AD8.unk0 & 0x801) == 1) {
+        *outX = x;
+        *outY = curY + D_80174AD8.unk10;
+        return 1;
+    }
+    return 0;
+}
+#endif
 
 void func_80171560(void) {}
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171568);
+#else
+extern Entity D_80073784;
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017160C);
+void func_80171568(Entity* self) {
+    Entity* entity;
+    s32 var_a0;
+
+    var_a0 = 5;
+    entity = &D_80073784;
+    while (1) {
+        if (entity->objectId == 0) {
+            DestroyEntity(entity);
+            entity->objectId = 0xDA;
+            entity->zPriority = self->zPriority;
+            entity->facing = self->facing;
+            entity->unk34 = 0x04000000;
+            entity->posX.val = self->posX.val;
+            entity->posY.val = self->posY.val;
+            entity->unk8C.entityPtr = self;
+            break;
+        }
+
+        var_a0++;
+        if (var_a0 >= 8) {
+            break;
+        }
+        entity++;
+    }
+}
+#endif
+
+void func_8017160C(s32 amount, s32 objectId) {
+    s32 i;
+    Entity* entity;
+    s16* camera;
+    s16 facing;
+
+    if (amount > 3) {
+        amount = 3;
+    }
+
+    for (i = 0; i < amount; i++) {
+        entity = &g_EntityArray[5 + i];
+        camera = &D_8007308E;
+        if (entity->objectId == objectId) {
+            entity->step = 0;
+        } else {
+            DestroyEntity(entity);
+            entity->unk5A = 0x6C;
+            entity->palette = 0x140;
+            entity->objectId = objectId;
+            entity->animationSet = 0x8014;
+            entity->zPriority = g_EntityArray[0].zPriority - 2;
+            facing = (g_EntityArray[0].facing + 1) & 1;
+            entity->subId = i + 1;
+            entity->facing = facing;
+        }
+        *((s16*)(&entity->unkAC)) = camera[0];
+        *((s16*)(&entity->unkAE)) = camera[2];
+    }
+}
 
 void func_8017170C(Entity* entity, s32 frameIndex) {
     POLY_GT4* poly;

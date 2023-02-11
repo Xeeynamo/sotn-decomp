@@ -578,7 +578,8 @@ typedef struct CollisionResult {
     /* 0x04 */ u32 unk4;
     /* 0x08 */ u32 unk8;
     /* 0x0C */ u32 unkC;
-    /* 0x10 */ u32 unk10;
+    /* 0x10 */ u16 unk10;
+    /* 0x10 */ u16 unk12;
     /* 0x14 */ s16 unk14; // rightRepel
     /* 0x16 */ s16 unk16;
     /* 0x18 */ s16 unk18; // bottomRepel
@@ -793,13 +794,13 @@ extern u16 D_80072F88;
 extern u16 D_80072F92;
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060; // set to 4 to reload stage from disk
-extern s32 D_80073080;
-extern u16 D_8007308E;
 extern u32 D_80073068; // ev0
 extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
-extern s16 D_80073092;
+extern s32 D_80073080;
+extern u16 D_8007308E; // camera X
+extern s16 D_80073092; // camera Y
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
 extern s32 D_800730AC;          // g_CurrentRoom.unk8
