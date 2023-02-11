@@ -1034,31 +1034,21 @@ void func_800F0578(s32 arg0) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0608);
 
-typedef struct {
-    s32 foo[5];
-} Unkstruct_800F087C;
-
-extern Unkstruct_800F087C D_800A297C;
-
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
-    Unkstruct_800F087C* phi_s1;
-    Unkstruct_800F087C* phi_s0;
+    RoomBossTeleport* phi_s1;
+    s32 res;
 
-    phi_s1 = &D_800A297C;
-    phi_s0 = (Unkstruct_800F087C*)((u32*)&D_800A297C + 4);
-loop_1:
-    if (phi_s1->foo[0] == 0x80)
-        return 0;
+    for (phi_s1 = D_800A297C; true; phi_s1++) {
+        if (phi_s1->x == 0x80) {
+            return 0;
+        }
 
-    if (phi_s1->foo[0] == chunkX && phi_s0->foo[-3] == chunkY &&
-        phi_s0->foo[-2] == g_StageId) {
-        if (phi_s0->foo[-1] == 0xFF || func_800FD4C0(phi_s0->foo[-1], 0) == 0)
-            return phi_s0->foo[0] + 2;
+        res = phi_s1->x == chunkX;
+        if (res && phi_s1->y == chunkY && phi_s1->stageId == g_StageId &&
+            (phi_s1->bossId == 0xFF || func_800FD4C0(phi_s1->bossId, 0) == 0)) {
+            return phi_s1->unk10 + 2;
+        }
     }
-
-    phi_s0++;
-    phi_s1++;
-    goto loop_1;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800F0940);
@@ -2618,8 +2608,39 @@ INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FBC24);
 
 INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD39C);
 
-// https://decomp.me/scratch/XEzwM
-INCLUDE_ASM("asm/dra/nonmatchings/4768C", func_800FD4C0);
+s32 func_800FD4C0(s32 bossId, s32 action) {
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 seconds;
+    s32 timer;
+
+    switch (action) {
+    // get the time attack for a specific defeated boss. this is also
+    // responsible to check if the player should teleport into a boss room
+    case 0:
+        return D_8003CA28[bossId];
+
+    // set new time attack record if the boss was not previously defeated
+    case 1:
+        timer = D_8003CA28[bossId];
+        if (timer = timer != 0) {
+            return D_8003CA28[bossId];
+        }
+
+        seconds = g_GameTimer.seconds;
+        D_8003CA28[bossId] = seconds;
+        temp_v1 = (g_GameTimer.minutes * 100) + seconds;
+        D_8003CA28[bossId] = temp_v1;
+        temp_v0 = (g_GameTimer.hours * 10000) + temp_v1;
+        D_8003CA28[bossId] = temp_v0;
+        return temp_v0;
+
+    // set boss visited
+    // not exactly sure yet why this flag is needed
+    case 2:
+        *D_8003CB00 |= 1 << bossId;
+    }
+}
 
 bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     s32 temp;
