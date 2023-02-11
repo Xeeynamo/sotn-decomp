@@ -1096,13 +1096,13 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", UpdateEntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
-        arg0->unk14 = D_800ACEC6.unk1A - ((D_80072F2C >> 1) & 2);
-        arg0->unk1C = D_800ACEC6.unk1C + ((D_80072F2C >> 1) & 2);
+        arg0->unk14 = D_800ACEC6.unk1A - ((D_80072F2C / 2) & 2);
+        arg0->unk1C = D_800ACEC6.unk1C + ((D_80072F2C / 2) & 2);
         arg0->unk18 = D_800ACEC6.unk10 - 1;
         arg0->unk20 = D_800ACEC6.unk0 + 1;
-        return;
+    } else {
+        D_8013C00C();
     }
-    D_8013C00C();
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010BFFC);
@@ -1195,13 +1195,13 @@ void func_8010E0D0(s32 arg0) {
         entity = func_8011AAFC(g_EntityArray, 0x47002C, 0);
 
         if (entity != NULL) {
-            entity->unk34 = entity->unk34 | 0x10000;
+            entity->unk34 |= 0x10000;
         }
 
         entity = func_8011AAFC(g_EntityArray, 0x40002C, 0);
 
         if (entity != NULL) {
-            entity->unk34 = entity->unk34 | 0x10000;
+            entity->unk34 |= 0x10000;
         }
     }
     func_8010DFF0(1, 1);

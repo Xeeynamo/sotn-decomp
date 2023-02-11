@@ -54,7 +54,31 @@ void func_80158814(void) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015885C);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80158B04);
+void func_80158B04(s32 arg0) {
+    s32 var_s0;
+
+    if (PLAYER.facing != 0) {
+        var_s0 = -3;
+    } else {
+        var_s0 = 3;
+    }
+
+    PLAYER.posY.i.hi -= 16;
+    PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+    func_801606BC(g_CurrentEntity, 0x10004, 0);
+    PLAYER.posY.i.hi += 16;
+    PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
+
+    if (arg0 & 1) {
+        g_api.func_80102CD8(3);
+        g_api.PlaySfx(NA_SE_SECRET_STAIRS);
+    }
+
+    if (arg0 & 2) {
+        PLAYER.accelerationX = 0;
+        PLAYER.accelerationY = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80158BFC);
 
