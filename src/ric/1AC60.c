@@ -68,12 +68,12 @@ void func_80158B04(s32 arg0) {
     func_801606BC(g_CurrentEntity, 0x10004, 0);
     PLAYER.posY.i.hi += 16;
     PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
-    
+
     if (arg0 & 1) {
         g_api.func_80102CD8(3);
         g_api.PlaySfx(NA_SE_SECRET_STAIRS);
     }
-    
+
     if (arg0 & 2) {
         PLAYER.accelerationX = 0;
         PLAYER.accelerationY = 0;
