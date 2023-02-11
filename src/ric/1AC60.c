@@ -68,19 +68,110 @@ void func_80158B04(s32 arg0) {
     func_801606BC(g_CurrentEntity, 0x10004, 0);
     PLAYER.posY.i.hi += 16;
     PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
-    
+
     if (arg0 & 1) {
         g_api.func_80102CD8(3);
         g_api.PlaySfx(NA_SE_SECRET_STAIRS);
     }
-    
+
     if (arg0 & 2) {
         PLAYER.accelerationX = 0;
         PLAYER.accelerationY = 0;
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80158BFC);
+void func_80158BFC(void) {
+    s32 var_s0;
+
+    if (PLAYER.step < 64) {
+        if (D_8015459C != 0) {
+            D_8015459C--;
+        } else if (D_80097448 >= 49) {
+            if (PLAYER.facing != 0) {
+                var_s0 = -4;
+            } else {
+                var_s0 = 4;
+            }
+            PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+            PLAYER.posY.i.hi -= 16;
+            func_801606BC(g_CurrentEntity, 0x80004, 0);
+            D_8015459C = 0x60;
+            PLAYER.posY.i.hi += 16;
+            PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
+        }
+    }
+
+    if (func_8015DBB0(0x40000 | 0x305C) == false) {
+        func_8015C93C(0x2000);
+        switch (PLAYER.unk2E) {
+        case 0:
+            if (func_8015C9CC() == 0) {
+                if (D_80072EE8 & 0x1000) {
+                    func_8015C920(&D_80155394);
+                    PLAYER.unk2E = 1;
+                    break;
+                }
+            } else {
+                func_8015CDE0(0);
+            }
+            break;
+
+        case 1:
+            if (func_8015C9CC() != 0) {
+                func_8015CDE0(0);
+                break;
+            } else if (D_80072EE8 & 0x1000) {
+                break;
+            } else {
+                func_8015CD98(0);
+                break;
+            }
+
+        case 64:
+            func_8015CB58(1, 1);
+            if (PLAYER.animationFrameIndex < 3) {
+                func_8015C9CC();
+                if (D_80072EE8 & 0x4000) {
+                    PLAYER.step = 2;
+                    PLAYER.unk4C = &D_801555A8;
+                    break;
+                }
+            }
+
+            if (PLAYER.animationFrameDuration < 0) {
+                if (D_80072EE8 & 0x80) {
+                    D_80072F66 = 2;
+                    PLAYER.unk2E++;
+                    func_8015C920(&D_80155730);
+                    func_801606BC(g_CurrentEntity, 0x11, 0);
+                    break;
+                }
+                D_80072F66 = 0;
+                func_8015CD98(0);
+            }
+            break;
+
+        case 65:
+            func_8015CB58(1, 1);
+            if (D_80072EE8 & 0x80) {
+                break;
+            }
+            D_80072F66 = 0;
+            func_8015CD98(0);
+            break;
+
+        case 66:
+            func_8015CB58(1, 1);
+            if (PLAYER.animationFrameIndex < 3) {
+                func_8015C9CC();
+            }
+            if (PLAYER.animationFrameDuration < 0) {
+                D_80072F66 = 0;
+                func_8015CD98(0);
+            }
+        }
+    }
+}
 
 void func_80158F38(void) {
     if (func_8015DBB0(0x305C) == 0) {
