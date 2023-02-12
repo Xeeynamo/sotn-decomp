@@ -543,7 +543,31 @@ s32 func_801746A0(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801747B8);
+s32 func_801747B8(void) {
+    Entity* entity;
+    s32 i;
+
+    entity = &D_800762D8;
+    for (i = 0; i < 0x80; i++, entity++) {
+        if (entity->objectId == 0)
+            continue;
+        if (entity->unk3C == 0)
+            continue;
+        if (entity->unk34 & 0x200000)
+            continue;
+        if (entity->posX.i.hi < -16)
+            continue;
+        if (entity->posX.i.hi > 272)
+            continue;
+        if (entity->posY.i.hi > 240)
+            continue;
+        if (entity->posY.i.hi < 0)
+            continue;
+        if (entity->hitPoints < 0x7000)
+            return 1;
+    }
+    return 0;
+}
 
 s32 func_80174864(void) {
     int tmp;
