@@ -91,7 +91,7 @@ void func_8015B348(void) {
 
     case 5:
         if (D_801545A8 == 5) {
-            PLAYER.animationFrameIndex = 6;
+            PLAYER.animFrameIdx = 6;
             PLAYER.palette = 0x8120;
             func_801606BC(g_CurrentEntity, 0x1C, 0);
         }
@@ -110,14 +110,14 @@ void func_8015B348(void) {
         break;
 
     case 6:
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             func_8015C920(&D_801558DC);
             PLAYER.unk2E++;
         }
         break;
 
     case 7:
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             g_CurrentEntity->unk34 &= 0xFFFEFFFF;
             D_80097420[0] = 0;
             func_8015CF08();
@@ -231,18 +231,16 @@ void func_8015C178(void) {
     if (D_8007342A < 0) {
         D_80072F66 = 0;
         func_8015CD98(0);
-    } else if ((*(u16*)&PLAYER.animationFrameIndex >= 0x12) &&
-               !(D_80072F20[0] & 1)) {
+    } else if ((*(u16*)&PLAYER.animFrameIdx >= 0x12) && !(D_80072F20[0] & 1)) {
         D_80072F66 = 0;
         func_8015CF08();
     } else {
-        if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animationFrameIndex < 0x12U) &&
+        if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animFrameIdx < 0x12U) &&
             (D_80072F20[0] & 1)) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }
 
-        if ((*(s32*)&PLAYER.animationFrameIndex == 0x10012) &&
-            (D_80072F20[0] & 1)) {
+        if ((*(s32*)&PLAYER.animFrameIdx == 0x10012) && (D_80072F20[0] & 1)) {
             func_801606BC(g_CurrentEntity, 0, 0);
         }
     }

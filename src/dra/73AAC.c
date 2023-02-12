@@ -127,10 +127,10 @@ s16 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    PLAYER.animationSet = 1;
+    PLAYER.animSet = 1;
     PLAYER.unk19 &= 0xF3;
-    PLAYER.animationFrameDuration = 0;
-    PLAYER.animationFrameIndex = 0;
+    PLAYER.animFrameDuration = 0;
+    PLAYER.animFrameIdx = 0;
     PLAYER.objectId = 0;
     PLAYER.blendMode = 0;
     D_80072F64 = 0;
@@ -193,7 +193,7 @@ void func_80115BB0(void) {
     PLAYER.unk19 = 4;
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    PLAYER.animationFrameDuration = 4;
+    PLAYER.animFrameDuration = 4;
 
     if (D_80097420[0] == 0) {
         if (D_80072F20[0] & 1) {

@@ -999,7 +999,7 @@ void func_80109328(void) {
     D_80072F86 = 0;
     if ((*player_unk1E == 0x800) && (PLAYER.step == 8)) {
         PLAYER.unk1E = 0;
-        PLAYER.animationFrame = 0x9D;
+        PLAYER.animCurFrame = 0x9D;
         PLAYER.facing = (PLAYER.facing + 1) & 1;
     }
 
@@ -1045,7 +1045,7 @@ void func_8010A234(s32 arg0) {
             }
         } else if (*(s32*)&D_80072F2C & 0x01000000) {
             g_EntityArray[PLAYER_CHARACTER].palette = 0x8100;
-            g_EntityArray[PLAYER_CHARACTER].animationSet = 1;
+            g_EntityArray[PLAYER_CHARACTER].animSet = 1;
             g_EntityArray[PLAYER_CHARACTER].unk5A = 0;
             g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
             g_EntityArray[PLAYER_CHARACTER].unk19 &= 0xF3;
@@ -1126,14 +1126,14 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D800);
 
 void func_8010DA2C(s32* arg0) {
     g_CurrentEntity->unk4C = arg0;
-    g_CurrentEntity->animationFrameDuration = 0;
-    g_CurrentEntity->animationFrameIndex = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
 }
 
 void func_8010DA48(u32 arg0) {
     g_CurrentEntity->unkAC = arg0;
-    g_CurrentEntity->animationFrameDuration = 0;
-    g_CurrentEntity->animationFrameIndex = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DA70);
@@ -1142,7 +1142,57 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DB38);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DBFC);
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DDA0);
+#else
+void func_8010DDA0(FrameProperty* frameProps, s32* arg1) {
+    AnimationFrame* animFrame;
+    s8* frameProp;
+    if (g_CurrentEntity->animFrameDuration == -1) {
+    } else if (g_CurrentEntity->animFrameDuration == 0) {
+        g_CurrentEntity->animFrameDuration =
+            g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+    } else if (--g_CurrentEntity->animFrameDuration == 0) {
+        g_CurrentEntity->animFrameIdx++;
+        animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
+        switch ((u32)animFrame->duration) {
+        case 0:
+            g_CurrentEntity->animFrameIdx = animFrame->unk2;
+            g_CurrentEntity->animFrameDuration =
+                g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+            break;
+
+        case 0xFFFF:
+            g_CurrentEntity->animFrameIdx =
+                g_CurrentEntity->animFrameIdx + 1 + animFrame->duration;
+            g_CurrentEntity->animFrameDuration = -1;
+            break;
+
+        case 0xFFFE:
+            g_CurrentEntity->unk4C = (s32*)arg1[animFrame->unk2];
+            g_CurrentEntity->animFrameIdx = 0;
+            g_CurrentEntity->animFrameDuration =
+                g_CurrentEntity->unk4C[0].duration;
+            break;
+
+        default:
+            g_CurrentEntity->animFrameDuration = animFrame->duration;
+            break;
+        }
+    }
+    if (frameProps != 0) {
+        frameProp =
+            frameProps +
+            (g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 >> 9);
+        g_CurrentEntity->unk10 = *(frameProp++);
+        g_CurrentEntity->unk12 = *(frameProp++);
+        g_CurrentEntity->hitboxWidth = frameProp[0];
+        g_CurrentEntity->hitboxHeight = frameProp[1];
+    }
+    g_CurrentEntity->animCurFrame =
+        g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DF70);
 
@@ -1152,9 +1202,9 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 
     if (arg0 != 0) {
         g_EntityArray[UNK_ENTITY_1].unk7C.U8.unk1 = 1;
-        g_EntityArray[UNK_ENTITY_3].animationFrame = 0;
-        g_EntityArray[UNK_ENTITY_2].animationFrame = 0;
-        g_EntityArray[UNK_ENTITY_1].animationFrame = 0;
+        g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
+        g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
+        g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
         poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
 
         for (i = 0; i < 6; i++) {
@@ -1378,11 +1428,11 @@ void func_8010E6AC(s32 arg0) {
     }
 
     if ((PLAYER.unkAC == 7) && (condition)) {
-        PLAYER.animationFrameIndex = 1;
+        PLAYER.animFrameIdx = 1;
     }
 
     if (D_80072F70 == 2) {
-        PLAYER.animationFrameIndex = 4;
+        PLAYER.animFrameIdx = 4;
     }
 }
 

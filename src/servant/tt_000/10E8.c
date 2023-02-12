@@ -37,8 +37,8 @@ s32 func_80174864(void);
 void func_801710E8(Entity* entity, s32* arg1) {
     if (entity->unk4C != arg1) {
         entity->unk4C = arg1;
-        entity->animationFrameIndex = 0;
-        entity->animationFrameDuration = 0;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
     }
 }
 
@@ -156,7 +156,7 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
             entity->objectId = objectId;
-            entity->animationSet = 0x8014;
+            entity->animSet = 0x8014;
             entity->zPriority = g_EntityArray[0].zPriority - 2;
             facing = (g_EntityArray[0].facing + 1) & 1;
             entity->subId = i + 1;
@@ -231,7 +231,7 @@ void func_801718A0(Entity* entity) {
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
-#ifdef NON_EQUIVALENT
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171ED4);
 #else
 extern void* D_8003C788;
@@ -270,7 +270,7 @@ void func_80171ED4(s32 arg0) {
     DestroyEntity(&g_EntityArray[4]);
     g_EntityArray[4].unk5A = 0x6C;
     g_EntityArray[4].palette = 0x140;
-    g_EntityArray[4].animationSet = 0x8014;
+    g_EntityArray[4].animSet = 0x8014;
     g_EntityArray[4].subId = 0;
     g_EntityArray[4].zPriority = PLAYER.zPriority - 2;
     g_EntityArray[4].facing = (PLAYER.facing + 1) & 1;

@@ -24,7 +24,7 @@ void func_801166A4(void) {
         break;
 
     case 1:
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             PlaySfx(NA_SE_VO_AL_WHAT);
             func_8010E570(0);
         }
@@ -53,8 +53,8 @@ void func_801167D0(void) {
         PLAYER.accelerationY = 0;
         *accelerationX = 0;
         PLAYER.unkAC = 0xCF;
-        PLAYER.animationFrameIndex = 0;
-        PLAYER.animationFrameDuration = 0;
+        PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = 0;
     }
 }
 
@@ -106,26 +106,26 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80117DEC);
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801182F8);
 
 void func_80118614(void) {
-    if (PLAYER.animationFrameDuration < 0) {
+    if (PLAYER.animFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
 void func_80118640(void) {
-    if (PLAYER.animationFrameDuration < 0) {
+    if (PLAYER.animFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
 
 void func_80118670(void) {
-    s32* animationFrameIndex = (s32*)&PLAYER.animationFrameIndex;
+    s32* animFrameIdx = (s32*)&PLAYER.animFrameIdx;
 
-    if (*animationFrameIndex == 0x10007) {
+    if (*animFrameIdx == 0x10007) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(NA_SE_PL_MP_GAUGE);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
     }
-    if (PLAYER.animationFrameDuration < 0) {
+    if (PLAYER.animFrameDuration < 0) {
         func_8010E570(0);
     }
 }
@@ -267,8 +267,8 @@ void func_80119D3C(Entity* entity) {
         entity->step++;
         entity->accelerationY = -0x8000;
         entity->unk7E.modeU16 = 0x40;
-        entity->animationFrame = 0xE;
-        entity->animationSet = 3;
+        entity->animCurFrame = 0xE;
+        entity->animSet = 3;
         entity->unk80.modeS16.unk0 = 0x80;
         entity->unk34 = 0x08000000;
         break;
@@ -364,7 +364,7 @@ loop_1: // !FAKE: this should be a for loop
                     func_80106590(entity);
                     goto label;
                 } else if (entity->unk34 & 0x100000) {
-                    func_8010DDA0(0, &D_800ACFB4);
+                    func_8010DDA0(NULL, &D_800ACFB4);
                 }
             }
         }
@@ -477,7 +477,7 @@ void func_8011F074(Entity* entity) {
     case 0:
         entity->unk34 = 0x08120000;
         entity->unk5A = 0x79;
-        entity->animationSet = 0xE;
+        entity->animSet = 0xE;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->palette = 0x819F;
 
@@ -507,7 +507,7 @@ void func_8011F074(Entity* entity) {
         entity->posY.val += entity->accelerationY;
         entity->unk1A += 8;
         entity->unk1C += 8;
-        if (entity->animationFrameDuration < 0) {
+        if (entity->animFrameDuration < 0) {
             func_80106590(entity);
         }
         break;
@@ -566,14 +566,14 @@ void func_80123A60(Entity* entity) {
             entity->unk34 = 0x04060000;
             entity->step++;
         }
-        if (PLAYER.animationFrame == 5) {
+        if (PLAYER.animCurFrame == 5) {
             entity->hitboxWidth = 12;
             entity->hitboxHeight = 32;
             entity->unk10 = 0x1C;
             entity->unk12 = -0xC;
             return;
         }
-        if (PLAYER.animationFrame == 6) {
+        if (PLAYER.animCurFrame == 6) {
             entity->hitboxWidth = 10;
             entity->hitboxHeight = 10;
             entity->unk10 = 0x1C;
@@ -599,12 +599,12 @@ void func_80123F78(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->unk34 = 0x0C030000;
-        if (PLAYER.animationSet != 1) {
+        if (PLAYER.animSet != 1) {
             func_80106590(entity);
             break;
         }
-        entity->animationSet = 1;
-        entity->animationFrame = PLAYER.animationFrame;
+        entity->animSet = 1;
+        entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
         entity->unk19 = PLAYER.unk19;
         entity->blendMode = 0x30;
@@ -770,7 +770,7 @@ void func_80124A8C(Entity* entity) {
 
         switch (entity->step) {
         case 0:
-            entity->animationSet = 0x11;
+            entity->animSet = 0x11;
             entity->accelerationY = -0x6000;
             AccelerateX(0x4000);
             entity->unk5A = 0x50;
@@ -789,7 +789,7 @@ void func_80124A8C(Entity* entity) {
             entity->posX.val += entity->accelerationX;
             entity->posY.val += entity->accelerationY;
 
-            if (entity->animationFrameDuration < 0) {
+            if (entity->animFrameDuration < 0) {
                 func_80106590(entity);
             }
             break;
@@ -839,8 +839,8 @@ void func_80125C2C(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->unk34 = 0x08000000;
-        entity->animationSet = 9;
-        entity->animationFrame = 0x1D;
+        entity->animSet = 9;
+        entity->animCurFrame = 0x1D;
         entity->zPriority = D_800733FC - 2;
         entity->posY.i.hi += 8;
         AccelerateX(0x14000);
@@ -879,7 +879,7 @@ void func_80125C2C(Entity* entity) {
             PlaySfx(0x69A);
             func_8011AAFC(entity, 0x3B, 0);
             entity->unk7C.s = 0x10;
-            entity->animationSet = 0;
+            entity->animSet = 0;
             entity->step = 2;
         }
         break;
@@ -923,7 +923,7 @@ void func_801274DC(Entity* entity) {
             PlaySfx(0x660);
         }
         entity->unk34 = 0x08100000;
-        entity->animationSet = 9;
+        entity->animSet = 9;
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facing = (PLAYER.facing + 1) & 1;
@@ -976,7 +976,7 @@ void func_80127840(Entity* entity) {
             entity->posY.i.hi = entity->posY.i.hi - 4;
         }
 
-        entity->animationSet = 9;
+        entity->animSet = 9;
         entity->unk1E = 0;
         entity->unk4C = &D_800B07C8;
         entity->unk19 |= 4;
@@ -990,7 +990,7 @@ void func_80127840(Entity* entity) {
         break;
 
     case 1:
-        if (entity->animationFrameIndex >= 23) {
+        if (entity->animFrameIdx >= 23) {
             if (!(D_8003C8C4 & 3)) {
                 entity->unk1E += 0x400;
             }
@@ -1297,8 +1297,8 @@ void func_8012CB0C(void) {
     PLAYER.unkAC = 0xDE;
     PLAYER.accelerationY = 0;
     D_800B0914 = 0;
-    PLAYER.animationFrameIndex = 0;
-    PLAYER.animationFrameDuration = 0;
+    PLAYER.animFrameIdx = 0;
+    PLAYER.animFrameDuration = 0;
     PLAYER.unk2E = 7;
 }
 
@@ -1332,9 +1332,9 @@ void func_8012CED4(void) {
         AccelerateX(0x10000);
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
-            PLAYER.animationFrameIndex = 4;
+            PLAYER.animFrameIdx = 4;
             PLAYER.accelerationX = 0;
-            PLAYER.animationFrameDuration = 1;
+            PLAYER.animFrameDuration = 1;
         }
     }
     PLAYER.unk2E = 5;
@@ -1444,7 +1444,7 @@ void func_8013136C(Entity* entity) {
         return;
     }
     if (entity->step == 0) {
-        entity->animationSet = 0xF;
+        entity->animSet = 0xF;
         entity->unk5A = 0x7E;
         entity->palette = PLAYER.palette;
         entity->unk34 = 0x04060000;
@@ -1452,7 +1452,7 @@ void func_8013136C(Entity* entity) {
         entity->unk20 = -8;
         entity->step++;
     }
-    entity->animationFrame = 80;
+    entity->animCurFrame = 80;
     entity->facing = PLAYER.facing;
     entity->posX.val = g_EntityArray[UNK_ENTITY_13].posX.val; // D_800741CC
     entity->posY.val = g_EntityArray[UNK_ENTITY_13].posY.val; // D_800741D0
@@ -1492,21 +1492,21 @@ void func_8013136C(Entity* entity) {
             break;
 
         case 0:
-            if (PLAYER.animationFrame == 33) {
-                entity->animationFrame = 81;
+            if (PLAYER.animCurFrame == 33) {
+                entity->animCurFrame = 81;
                 if (PLAYER.facing == 0) {
                     entity->posX.i.hi += 3;
                 } else {
                     entity->posX.i.hi += 6;
                 }
             }
-            if (PLAYER.animationFrame == 34) {
+            if (PLAYER.animCurFrame == 34) {
                 if (PLAYER.facing == 0) {
                     entity->posX.i.hi += 3;
                 } else {
                     entity->posX.i.hi += 13;
                 }
-                entity->animationFrame = 82;
+                entity->animCurFrame = 82;
             }
         case 2:
             break;

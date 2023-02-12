@@ -30,7 +30,7 @@ void func_801A7D64(Entity* arg0) {
 
     if (arg0->step == 0) {
         InitializeEntity(D_801805BC);
-        arg0->animationSet = temp_s0->animationSet;
+        arg0->animSet = temp_s0->animSet;
         arg0->zPriority = temp_s0->zPriority;
         arg0->unk5A = temp_s0->unk4.s;
         arg0->palette = temp_s0->palette;
@@ -140,8 +140,8 @@ void func_801A8620(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_801805BC);
-        entity->animationSet = 2;
-        entity->animationFrame = 1;
+        entity->animSet = 2;
+        entity->animCurFrame = 1;
         entity->zPriority = 0xB0;
         break;
 
@@ -287,10 +287,10 @@ void EntitySecretStairsEmitter(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180628);
-        entity->animationFrame = 3;
+        entity->animCurFrame = 3;
         entity->zPriority += 2;
         if (g_isSecretStairsButtonPressed) {
-            entity->animationFrame = 0;
+            entity->animCurFrame = 0;
             entity->step = 3;
         }
         break;
@@ -307,7 +307,7 @@ void EntitySecretStairsEmitter(Entity* entity) {
         }
         break;
     case 3:
-        entity->animationFrame = 0;
+        entity->animCurFrame = 0;
         break;
     }
 }
@@ -338,7 +338,7 @@ void EntityDraculaBody(Entity* entity) {
         entity->unk10 = 3;
         entity->unk12 = 0x27;
         entity->hitboxWidth = 12;
-        entity->animationFrame = 0;
+        entity->animCurFrame = 0;
         entity->hitboxHeight = 34;
         break;
     case 1:
@@ -476,7 +476,7 @@ void func_801AD838(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_801805EC);
-        entity->animationFrame = 0;
+        entity->animCurFrame = 0;
         entity->unk3C = 0;
         entity->accelerationY = -0x10000;
     }
@@ -493,7 +493,7 @@ void EntityDraculaGlass(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_801805EC);
-        entity->animationFrame = 0x59;
+        entity->animCurFrame = 0x59;
         entity->unk19 = 4;
         entity->unk3C = 0;
         entity->accelerationX = -0x10000;
@@ -501,7 +501,7 @@ void EntityDraculaGlass(Entity* entity) {
         if (entity->subId) {
             s16 radians;
             s32 speed;
-            entity->animationFrame = 0x5C;
+            entity->animCurFrame = 0x5C;
             speed = (Random() & 0x1F) + 0x10;
             radians = (Random() * 6) + 0x900;
             entity->accelerationX = speed * rcos(radians);
@@ -944,14 +944,14 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 void func_801B5794(u8 state) {
     g_CurrentEntity->step = state;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->animationFrameIndex = 0;
-    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801B57B4(u8 arg0) {
     g_CurrentEntity->unk2E = arg0;
-    g_CurrentEntity->animationFrameIndex = 0;
-    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
@@ -1001,9 +1001,9 @@ void EntityExplosion(Entity* entity) {
         u32 zPriority;
 
         InitializeEntity(D_8018058C);
-        entity->animationSet = 2;
-        entity->animationFrameIndex = 0;
-        entity->animationFrameDuration = 0;
+        entity->animSet = 2;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
 
         if (entity->subId & 0xF0) {
@@ -1128,7 +1128,7 @@ void EntityRoomForeground(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_801805BC);
-        entity->animationSet = objInit->animationSet;
+        entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
@@ -1163,7 +1163,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_801805D4);
-        entity->animationSet = 0x8007;
+        entity->animSet = 0x8007;
         entity->unk5A = 0x57;
         entity->palette = 0x8285;
         entity->unk19 = 8;

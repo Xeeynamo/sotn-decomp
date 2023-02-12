@@ -24,7 +24,7 @@ void func_801B246C(Entity* arg0) {
 
     if (arg0->step == 0) {
         InitializeEntity(D_80180A90);
-        arg0->animationSet = temp_s0->animationSet;
+        arg0->animSet = temp_s0->animSet;
         arg0->zPriority = temp_s0->zPriority;
         arg0->facing = temp_s0->unk4.U8.unk0;
         arg0->unk5A = temp_s0->unk4.U8.unk1;
@@ -46,7 +46,7 @@ extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
-extern u16 g_eBreakableAnimationSets[];
+extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
@@ -69,7 +69,7 @@ void EntityBreakable(Entity* entity) {
         entity->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
         entity->blendMode = g_eBreakableBlendModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        entity->animationSet = g_eBreakableAnimationSets[breakableType];
+        entity->animSet = g_eBreakableanimSets[breakableType];
     }
 }
 
@@ -403,14 +403,14 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD0B4);
 void func_801BD114(u8 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->animationFrameIndex = 0;
-    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801BD134(u8 arg0) {
     g_CurrentEntity->unk2E = arg0;
-    g_CurrentEntity->animationFrameIndex = 0;
-    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BD150);
@@ -419,8 +419,8 @@ void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
-    g_CurrentEntity->animationSet = *arg0++;
-    g_CurrentEntity->animationFrame = *arg0++;
+    g_CurrentEntity->animSet = *arg0++;
+    g_CurrentEntity->animCurFrame = *arg0++;
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
@@ -472,8 +472,8 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     if (var_v1 < 0x80) {
         entity->objectId = ENTITY_PRICE_DROP;
         entity->pfnUpdate = EntityPriceDrop;
-        entity->animationFrameDuration = 0;
-        entity->animationFrameIndex = 0;
+        entity->animFrameDuration = 0;
+        entity->animFrameIdx = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
         entity->objectId = ENTITY_INVENTORY_DROP;
@@ -592,7 +592,7 @@ void EntityRoomForeground(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_80180A90);
-        entity->animationSet = objInit->animationSet;
+        entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
