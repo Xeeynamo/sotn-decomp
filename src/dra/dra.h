@@ -508,7 +508,7 @@ void func_80119588(Entity* entity);
 void func_80119D3C(Entity* entity);
 void func_80119F70(Entity* entity);
 void func_8011A4C8(Entity* entity);
-Entity* func_8011AAFC(Entity* entity, s32, s32);
+Entity* func_8011AAFC(Entity* entity, u32, s32);
 void func_8011AC3C(Entity* entity);
 void func_8011B190(Entity* entity);
 void func_8011B334(Entity* entity);
