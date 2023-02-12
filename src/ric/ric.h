@@ -8,7 +8,7 @@ extern void func_80159C04(void);
 extern void func_80156C60(Entity* entity);
 extern void func_8015BB80(void);
 extern void func_8015C178(void);
-extern void func_8015C920(s32* unk0);
+void func_8015C920(AnimationFrame* unk0);
 extern void func_8015C93C(s32 speed);
 extern s32 func_8015C9CC(void);
 extern void func_8015CA84(s32 speed);
@@ -30,6 +30,7 @@ extern s32 func_8016840C(s16 x, s16 y);
 extern void func_80169C10(Entity* entity);
 extern void func_80169D74(Entity* entity);
 
+extern AnimationFrame* D_8015539C;
 extern s32 D_8015459C;
 extern s16 D_801545A8;
 extern s16 D_801545AA;

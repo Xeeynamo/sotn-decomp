@@ -189,7 +189,31 @@ void func_80158F38(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80158FA4);
+void func_80158FA4(void) {
+    if (D_80072F9A != 0) {
+        func_8015CDE0(0);
+        return;
+    }
+    D_80072F10 = 8;
+    *D_80072F02 = 8;
+
+    if (!func_8015DBB0(0x305C)) {
+        func_8015C93C(0x2000);
+        if (func_8015C9CC() == 0) {
+            func_8015CD98(0);
+            if (*D_80072F16 == 0) {
+                if (!(D_80072F20[0] & 0xC)) {
+                    func_8015C920(&D_8015539C);
+                    func_801606BC(g_CurrentEntity, 0, 0);
+                }
+            } else {
+                PLAYER.accelerationX = 0;
+            }
+        } else if (PLAYER.unk2E == 0) {
+            func_8015CA84(0x24000);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801590A0);
 

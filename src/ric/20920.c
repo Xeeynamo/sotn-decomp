@@ -1,6 +1,6 @@
 #include "ric.h"
 
-void func_8015C920(s32* unk0) {
+void func_8015C920(AnimationFrame* unk0) {
     g_CurrentEntity->unk4C = unk0;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
