@@ -1143,9 +1143,9 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DB38);
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DBFC);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DDA0);
+INCLUDE_ASM("asm/dra/nonmatchings/5D874", UpdateAnim);
 #else
-void func_8010DDA0(FrameProperty* frameProps, s32* arg1) {
+void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
     AnimationFrame* animFrame;
     s8* frameProp;
     if (g_CurrentEntity->animFrameDuration == -1) {

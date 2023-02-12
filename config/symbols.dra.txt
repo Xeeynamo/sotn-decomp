@@ -894,6 +894,7 @@ DrawHudRichter = 0x80100750;
 SetPolyRect = 0x80107330;
 CopyMapOverlayCallback = 0x801074BC;
 UpdateEntityAlucard = 0x8010A5BC;
+UpdateAnim = 0x8010DDA0;
 AccelerateX = 0x8010E390;
 GetFreeDraEntity = 0x8011879C;
 func_801315F8 = 0x801315F8;

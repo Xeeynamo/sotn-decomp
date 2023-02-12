@@ -364,7 +364,7 @@ loop_1: // !FAKE: this should be a for loop
                     func_80106590(entity);
                     goto label;
                 } else if (entity->unk34 & 0x100000) {
-                    func_8010DDA0(NULL, &D_800ACFB4);
+                    UpdateAnim(NULL, D_800ACFB4);
                 }
             }
         }
