@@ -44,32 +44,21 @@ void func_801710E8(Entity* entity, s32* arg1) {
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017110C);
 
-s32 func_801713C8(Entity* entity);
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801713C8);
-#else
 s32 func_801713C8(Entity* entity) {
-    s32 ret;
-
-    ret = 0;
-    if (entity->unk3C != 0) {
-        ret = 0;
-
-        if (entity->posX.i.hi < -0x10)
-            return 0;
-        if (entity->posX.i.hi > 0x110)
-            return 0;
-
-        ret = 0;
-        if (entity->posY.i.hi > 0xF0 ||
-            entity->posY.i.hi >= 0 &&
-                (ret = entity->hitPoints > 0, !(entity->hitPoints < 0x7000))) {
-            ret = 0;
-        }
-    }
-    return ret;
+    if (entity->unk3C == 0)
+        return 0;
+    if (entity->posX.i.hi < -16)
+        return 0;
+    if (entity->posX.i.hi > 272)
+        return 0;
+    if (entity->posY.i.hi > 240)
+        return 0;
+    if (entity->posY.i.hi < 0)
+        return 0;
+    if (entity->hitPoints >= 0x7000)
+        return 0;
+    return entity->hitPoints > 0;
 }
-#endif
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171434);
