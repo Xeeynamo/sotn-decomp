@@ -220,7 +220,44 @@ void func_80159BC8(void) {
     PLAYER.unk19 &= 0xFB;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159C04);
+void func_80159C04(void) {
+    Entity* entity = PLAYER.unkB8.entityPtr;
+    s16 temp_v0;
+    s32 var_a0;
+    s32 var_a2;
+
+    if (entity->facing != 0) {
+        var_a2 = -entity->unk10;
+    } else {
+        var_a2 = entity->unk10;
+    }
+
+    if (PLAYER.facing != 0) {
+        var_a0 = -PLAYER.unk10;
+    } else {
+        var_a0 = PLAYER.unk10;
+    }
+
+    temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
+
+    if (ABS(temp_v0) < 16) {
+        if (entity->accelerationX != 0) {
+            if (entity->accelerationX < 0) {
+                PLAYER.objectRoomIndex = 0;
+                return;
+            } else {
+                PLAYER.objectRoomIndex = 1;
+                return;
+            }
+        }
+    }
+
+    if (temp_v0 < 0) {
+        PLAYER.objectRoomIndex = 0;
+    } else {
+        PLAYER.objectRoomIndex = 1;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159CE4);
 

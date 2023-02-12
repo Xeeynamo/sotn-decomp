@@ -5,6 +5,7 @@
 #include "sfx.h"
 
 extern void func_80156C60(entity);
+extern void void func_80159C04(void);
 extern void func_8015BB80(void);
 extern void func_8015C178(void);
 extern void func_8015C920(s32* unk0);
