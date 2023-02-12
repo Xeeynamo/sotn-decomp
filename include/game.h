@@ -276,7 +276,8 @@ typedef struct Entity {
             /* 0x8E */ s16 unk2;
         } modeS16;
     } unk8C; // size = 0x4
-    /* 0x90 */ s32 unk90;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
     /* 0x94 */ u8 unk94;
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
@@ -286,7 +287,8 @@ typedef struct Entity {
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s32 unkA8;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 unkAA;
     /* 0xAC */ u8 unkAC;
     /* 0xAD */ s8 unkAD;
     /* 0xAE */ s8 unkAE;
@@ -608,7 +610,7 @@ typedef struct {
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
                                           s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
-    /* 8003C7C4 */ void* func_8010DDA0;
+    /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void* func_800FE728;
@@ -620,7 +622,7 @@ typedef struct {
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* func_801027C4;
     /* 8003C7F0 */ void* func_800EB758;
-    /* 8003C7F4 */ void* func_8011AAFC;
+    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
@@ -652,7 +654,7 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void* func_800F2288;
-    /* 8003C874 */ void* func_8011A3AC;
+    /* 8003C874 */ void* func_8011A3AC; // TODO
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ void* func_800FF494;
     /* 8003C880 */ bool (*func_80133940)(void);

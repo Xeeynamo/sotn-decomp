@@ -114,7 +114,7 @@ bool func_8011203C(void) {
 
     if (g_EntityArray[UNK_ENTITY_10].step == 5) {
         if (collision == false) {
-            func_80106590(&g_EntityArray[UNK_ENTITY_10]);
+            DestroyEntity(&g_EntityArray[UNK_ENTITY_10]);
             return true;
         }
         return false;
