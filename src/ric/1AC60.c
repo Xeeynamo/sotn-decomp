@@ -33,8 +33,6 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80157894);
 
 // https://decomp.me/scratch/hk5zb
 // Almost matched, just a jump issue
-// https://decomp.me/scratch/hk5zb
-// Almost matched, just a jump issue
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80157A50);
 
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", UpdateEntityRichter);
