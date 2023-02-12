@@ -347,7 +347,21 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E78);
+s32 func_80173E78(s32 arg0, s32 arg1) {
+    if (arg0 < 0) {
+        arg0 += arg1;
+        if (arg0 > 0) {
+            arg0 = 0;
+        }
+    } else {
+        arg0 -= arg1;
+        if (arg0 < 0) {
+            arg0 = 0;
+        }
+    }
+
+    return arg0;
+}
 
 Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
