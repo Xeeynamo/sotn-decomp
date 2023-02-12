@@ -60,35 +60,29 @@ s32 func_801713C8(Entity* entity) {
     return entity->hitPoints > 0;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171434);
-#else
-s32 func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
+bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
     g_api.CheckCollision(x, y, &D_80174AD8, 0);
     if (D_80174AD8.unk0 & 1) {
         return 0;
     }
-    *outX = x;
-    *outY = curY + D_80174AD8.unk10;
-    curY = y;
-    do {
-        curY -= 16;
-        if (curY <= 0) {
+
+    for (curY = y - 16; curY > 0; curY -= 16) {
+        g_api.CheckCollision(x, curY, &D_80174AD8, 0);
+        switch (D_80174AD8.unk0 & 0x801) {
+        case 0:
+            break;
+        case 1:
+            *outX = x;
+            *outY = curY + D_80174AD8.unk10;
+            return 1;
+        default:
             return 0;
         }
-        g_api.CheckCollision(x, curY, &D_80174AD8, 0);
-    } while ((D_80174AD8.unk0 & 0x801) == 0);
-
-    if ((D_80174AD8.unk0 & 0x801) == 1) {
-        *outX = x;
-        *outY = curY + D_80174AD8.unk10;
-        return 1;
     }
     return 0;
 }
-#endif
 
 void func_80171560(void) {}
 
@@ -283,8 +277,6 @@ void func_80171ED4(s32 arg0) {
 #endif
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172120);
-
-s32 func_801746A0(s32 arg0); /* extern */
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172C30);
 
