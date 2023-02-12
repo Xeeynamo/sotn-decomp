@@ -380,7 +380,49 @@ label:
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011A9D8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011AAFC);
+Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
+    Entity* entity;
+    s16 temp = arg2;
+
+    entity = GetFreeDraEntity(8, 16);
+    if (entity == NULL) {
+        return NULL;
+    }
+
+    DestroyEntity(entity);
+    entity->objectId = 1;
+    entity->unk8C.entityPtr = self;
+    entity->posX.val = self->posX.val;
+    entity->posY.val = self->posY.val;
+    entity->facing = self->facing;
+    entity->zPriority = self->zPriority;
+    entity->subId = flags & 0xFFF;
+    if (flags & 0x5000) {
+        entity->unkA8 = 0xE0;
+    }
+    if (flags & 0xA000) {
+        entity->unkA8 = 0xF0;
+    }
+    entity->unkA0 = (flags >> 8) & 0xFF00;
+    entity->unk92 = temp;
+    if (self->unk34 & 0x10000) {
+        entity->unk34 |= 0x10000;
+    }
+    if (flags & 0x1000) {
+        entity->objectId = 0xEF;
+    }
+    if (flags & 0x2000) {
+        entity->objectId = 0xFF;
+    }
+    if (flags & 0x4000) {
+        entity->objectId = 0xED;
+    }
+    if (flags & 0x8000) {
+        entity->objectId = 0xFD;
+    }
+
+    return entity;
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011AC3C);
 
