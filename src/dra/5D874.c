@@ -680,7 +680,7 @@ void func_80105408(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80105428);
 
-void func_80106590(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -700,7 +700,7 @@ void func_801065F4(s16 startIndex) {
 
     for (pItem = &g_EntityArray[startIndex];
          pItem < &g_EntityArray[TOTAL_ENTITY_COUNT]; pItem++)
-        func_80106590(pItem);
+        DestroyEntity(pItem);
 }
 
 // Print debug hitboxes
@@ -1352,7 +1352,7 @@ void func_8010E3E0(void) {
     // D_80072F68 is part of a struct, the temp isn't needed in that case
     u16* temp = &D_80072F68;
     if (*temp != 0) {
-        func_80106590(&g_EntityArray[16]);
+        DestroyEntity(&g_EntityArray[16]);
         *temp = 0;
     }
 }
@@ -1579,7 +1579,7 @@ void func_8010ED54(u8 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EDB8);
 
 void func_8010FAF4(void) {
-    func_80106590(&g_EntityArray[UNK_ENTITY_10]);
+    DestroyEntity(&g_EntityArray[UNK_ENTITY_10]);
     D_80072F66 = 0;
 }
 

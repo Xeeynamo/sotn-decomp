@@ -890,6 +890,7 @@ GetEquipmentName = 0x800FD77C;
 CheckEquipmentItemCount = 0x800FD7C0;
 HasEnoughMp = 0x800FE8B4;
 AddHearts = 0x800FE914;
+DestroyEntity = 0x80106590;
 DrawHudRichter = 0x80100750;
 SetPolyRect = 0x80107330;
 CopyMapOverlayCallback = 0x801074BC;
