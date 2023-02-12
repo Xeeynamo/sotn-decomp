@@ -329,7 +329,23 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_80118894(entity);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011A3AC);
+void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
+    Unkstruct_8011A328 sp10;
+
+    *arg3 = D_80097C38[D_8006CBC4];
+    if (arg2 != 0) {
+        func_800FD9D4(&sp10, arg1);
+        arg0->unk40 = sp10.unk18;
+        arg0->unk42 = sp10.unk16;
+        arg0->unk3C = sp10.unk10;
+        arg0->unk49 = sp10.unk0D;
+        arg0->unk58 = sp10.unk0E;
+        arg0->unk6A = sp10.unk12;
+        arg0->objectRoomIndex = sp10.unk14;
+        arg0->unk40 = sp10.unk18 * ((arg3->unk0 * 4 / 95) + 1);
+        func_80118894(arg0);
+    }
+}
 
 void func_8011A4C8(Entity* entity) {}
 

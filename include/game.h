@@ -654,7 +654,8 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void* func_800F2288;
-    /* 8003C874 */ void* func_8011A3AC; // TODO
+    /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
+                                         Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ void* func_800FF494;
     /* 8003C880 */ bool (*func_80133940)(void);
@@ -965,6 +966,7 @@ extern s32 g_playerMpMax;    // D_80097B9C.mpMax
 extern s32 D_80097C1C[];
 extern s32 D_80097C20;
 extern s32 D_80097C24;
+extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;
 extern s32 D_80097C98;
