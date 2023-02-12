@@ -291,3 +291,9 @@ typedef struct Unkstruct_800FF494 {
     u16 unk1E;
     u16 unk20;
 } Unkstruct_800FF494;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Unkstruct_8011A3AC;
