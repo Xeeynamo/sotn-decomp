@@ -470,7 +470,7 @@ void func_800FF0A0(s32 arg0);
 void func_80102CD8(s32);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
-void func_80106590(Entity*);
+void DestroyEntity(Entity*);
 void func_801065F4(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(POLY_GT4* poly, s32 colorIntensity);

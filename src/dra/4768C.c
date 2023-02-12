@@ -2443,7 +2443,7 @@ void func_800FAB1C(void) {
 
     for (i = 4; i < 64; i++) {
         if ((u32)((entity->objectId + 0xFF30) & 0xFFFF) < 16) {
-            func_80106590(entity);
+            DestroyEntity(entity);
         }
         entity++;
     }
