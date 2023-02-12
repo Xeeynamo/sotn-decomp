@@ -57,7 +57,7 @@ void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
     D_801396EA = 1;
-    D_801396E4 = PLAYER.animationFrame;
+    D_801396E4 = PLAYER.animCurFrame;
     D_801396E6.S16.unk0 = PLAYER.unk19;
     D_801396E8 = PLAYER.palette;
 }
@@ -65,7 +65,7 @@ void func_80111938(void) {
 void func_8011197C(void) {
     D_801396EA = 0;
     PLAYER.unk44 = 0;
-    PLAYER.animationFrame = D_801396E4;
+    PLAYER.animCurFrame = D_801396E4;
     PLAYER.unk19 = D_801396E6.S8.unk0;
     PLAYER.palette = D_801396E8;
 }

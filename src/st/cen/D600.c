@@ -314,16 +314,16 @@ void func_80194EA4(u8 step) {
 
     entity->step = step;
     entity->unk2E = 0;
-    entity->animationFrameIndex = 0;
-    entity->animationFrameDuration = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 void func_80194EC4(u8 arg0) {
     Entity* entity = g_CurrentEntity;
 
     entity->unk2E = arg0;
-    entity->animationFrameIndex = 0;
-    entity->animationFrameDuration = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194EE0);

@@ -501,7 +501,7 @@ u8 g_eBreakableExplosionTypes[] = {
     /* 5E6 */ 0,
     /* 5E7 */ 0,
 };
-u16 g_eBreakableAnimationSets[] = {
+u16 g_eBreakableanimSets[] = {
     /* 5E8 */ 3,
     /* 5EA */ 3,
     /* 5EC */ 0,
@@ -1713,7 +1713,7 @@ void func_80186FD0(Entity* arg0) {
     ObjInit2* objInit = &D_801804E0[arg0->subId];
     if (arg0->step == 0) {
         InitializeEntity(D_80180494);
-        arg0->animationSet = objInit->animationSet;
+        arg0->animSet = objInit->animSet;
         arg0->zPriority = objInit->zPriority;
         arg0->unk5A = objInit->unk4.s;
         arg0->palette = objInit->palette;
@@ -1820,7 +1820,7 @@ void EntityBreakable(Entity* entity) {
         entity->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
         entity->blendMode = g_eBreakableBlendModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        entity->animationSet = g_eBreakableAnimationSets[breakableType];
+        entity->animSet = g_eBreakableanimSets[breakableType];
     }
 }
 
@@ -2256,7 +2256,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         InitializeEntity(D_801804C4);
         entity->unk19 = 4;
         entity->unk1E = Random() * 0x10;
-        entity->animationFrame = (Random() % 5) + 1;
+        entity->animCurFrame = (Random() % 5) + 1;
         if (*unk != 0) {
             entity->posY.i.hi = (Random() & 0x1F) + 0x90;
             entity->step = 4;
@@ -2995,14 +2995,14 @@ u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
 void func_8018C240(u8 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->unk2E = 0;
-    g_CurrentEntity->animationFrameIndex = 0;
-    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_8018C260(u8 arg0) {
     g_CurrentEntity->unk2E = arg0;
-    g_CurrentEntity->animationFrameIndex = 0;
-    g_CurrentEntity->animationFrameDuration = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_8018C27C(u16 arg0, u16 arg1) {
@@ -3021,7 +3021,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity->objectId = ENTITY_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->subId = arg0;
-    entity->animationFrame = 0;
+    entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->unk2E = 0;
 }
@@ -3030,8 +3030,8 @@ void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
-    g_CurrentEntity->animationSet = *arg0++;
-    g_CurrentEntity->animationFrame = *arg0++;
+    g_CurrentEntity->animSet = *arg0++;
+    g_CurrentEntity->animCurFrame = *arg0++;
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
@@ -3082,8 +3082,8 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     if (subId < 0x80) {
         entity->objectId = ENTITY_PRICE_DROP;
         entity->pfnUpdate = EntityPriceDrop;
-        entity->animationFrameDuration = 0;
-        entity->animationFrameIndex = 0;
+        entity->animFrameDuration = 0;
+        entity->animFrameIdx = 0;
     } else {
         subId -= 0x80;
         entity->objectId = ENTITY_INVENTORY_DROP;
@@ -3221,7 +3221,7 @@ void func_8018CDEC(u16 arg0) {
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
         func_8018C240(7);
         g_CurrentEntity->accelerationY = -0x28000;
-        g_CurrentEntity->animationFrame = 0;
+        g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->unk8A = 5;
         if (player->facing != 1) {
             g_CurrentEntity->accelerationX = -0x20000;
@@ -3264,9 +3264,9 @@ void EntityExplosion(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_80180458);
-        entity->animationSet = 2;
-        entity->animationFrameIndex = 0;
-        entity->animationFrameDuration = 0;
+        entity->animSet = 2;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
         if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
@@ -3411,19 +3411,19 @@ void func_8018F838(Entity* entity) {
         entity->accelerationY = D_80181020[entity->unk94];
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
-        entity->animationSet = 2;
-        entity->animationFrame = D_80181038[entity->subId];
+        entity->animSet = 2;
+        entity->animCurFrame = D_80181038[entity->subId];
         entity->blendMode = 0x10;
         entity->step++;
     } else {
-        entity->animationFrameDuration++;
+        entity->animFrameDuration++;
         entity->posY.val -= entity->accelerationY;
 
-        if (!(entity->animationFrameDuration & 1)) {
-            entity->animationFrame++;
+        if (!(entity->animFrameDuration & 1)) {
+            entity->animCurFrame++;
         }
 
-        if (D_8018103C[entity->subId] < (s32)entity->animationFrameDuration) {
+        if (D_8018103C[entity->subId] < (s32)entity->animFrameDuration) {
             DestroyEntity(entity);
         }
     }
@@ -3435,8 +3435,8 @@ void func_8018F928(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->unk34 = 0x0C002000;
         arg0->palette = 0x8195;
-        arg0->animationSet = 5;
-        arg0->animationFrame = 1U;
+        arg0->animSet = 5;
+        arg0->animCurFrame = 1U;
         arg0->blendMode = 0x10;
         arg0->unk19 = 3;
         temp_v0 = D_80180FF8[arg0->subId];
@@ -3445,12 +3445,12 @@ void func_8018F928(Entity* arg0) {
         arg0->accelerationY = D_80181008[arg0->subId];
         arg0->step++;
     } else {
-        arg0->animationFrameDuration++;
+        arg0->animFrameDuration++;
         arg0->posY.val -= arg0->accelerationY;
-        if (!(arg0->animationFrameDuration & 1)) {
-            arg0->animationFrame++;
+        if (!(arg0->animFrameDuration & 1)) {
+            arg0->animCurFrame++;
         }
-        if (arg0->animationFrameDuration >= 37) {
+        if (arg0->animFrameDuration >= 37) {
             DestroyEntity(arg0);
         }
     }
@@ -3490,8 +3490,8 @@ void EntityIntenseExplosion(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180458);
         entity->palette = 0x8170;
-        entity->animationSet = 5;
-        entity->animationFrame = 1;
+        entity->animSet = 5;
+        entity->animCurFrame = 1;
         entity->blendMode = 0x30;
         if (entity->subId & 0xF0) {
             entity->palette = 0x8195;
@@ -3504,14 +3504,14 @@ void EntityIntenseExplosion(Entity* entity) {
         }
         entity->zPriority += 8;
     } else {
-        entity->animationFrameDuration++;
+        entity->animFrameDuration++;
         entity->posY.val -= 0x4000;
 
-        if ((entity->animationFrameDuration & 1) == 0) {
-            entity->animationFrame++;
+        if ((entity->animFrameDuration & 1) == 0) {
+            entity->animCurFrame++;
         }
 
-        if (entity->animationFrameDuration >= 37) {
+        if (entity->animFrameDuration >= 37) {
             DestroyEntity(entity);
         }
     }
@@ -3523,8 +3523,8 @@ void func_801903C8(Entity* entity) {
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
         entity->unk1C = 0x01A0;
-        entity->animationSet = 8;
-        entity->animationFrame = 1;
+        entity->animSet = 8;
+        entity->animCurFrame = 1;
         entity->zPriority += 16;
         if (entity->subId) {
             entity->palette = entity->subId;
@@ -3551,7 +3551,7 @@ void func_80190494(u16 objectId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
     entity->unk5A = source->unk5A;
     entity->zPriority = source->zPriority;
-    entity->animationSet = source->animationSet;
+    entity->animSet = source->animSet;
     entity->unk34 = 0xCD002000;
 
     palette = source->palette;
@@ -3601,7 +3601,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->subId];
     if (entity->step == 0) {
         InitializeEntity(D_80180494);
-        entity->animationSet = objInit->animationSet;
+        entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;

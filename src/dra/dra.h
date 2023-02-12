@@ -480,7 +480,7 @@ void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
-void func_8010DDA0(s32, s32*);
+void func_8010DDA0(FrameProperty* frameProps, s32*);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);

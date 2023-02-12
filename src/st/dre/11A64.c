@@ -62,7 +62,7 @@ void func_80191A64(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(&D_801804AC);
-        entity->animationSet = obj->animationSet;
+        entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
         entity->unk5A = obj->unk4.s;
         entity->palette = obj->palette;
@@ -88,7 +88,7 @@ extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
-extern u16 g_eBreakableAnimationSets[];
+extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
     Entity* temp_v0;
@@ -110,7 +110,7 @@ void EntityBreakable(Entity* entity) {
         entity->zPriority = g_zEntityCenter.S16.unk0 - 20;
         entity->blendMode = g_eBreakableBlendModes[temp_s0];
         entity->hitboxHeight = g_eBreakableHitboxes[temp_s0];
-        entity->animationSet = g_eBreakableAnimationSets[temp_s0];
+        entity->animSet = g_eBreakableanimSets[temp_s0];
     }
 }
 
@@ -126,16 +126,16 @@ void func_80193D7C(Entity* entity) {
     }
 
     entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->animationFrame = 0;
+    entity->animCurFrame = 0;
     entity->posY.i.hi = entity[-1].posY.i.hi;
     entity->facing = entity[-1].facing;
 
-    if (entity[-1].animationFrame == 0x32) {
-        entity->animationFrame = 0x3E;
+    if (entity[-1].animCurFrame == 0x32) {
+        entity->animCurFrame = 0x3E;
     }
 
-    if (entity[-1].animationFrame == 0x33) {
-        entity->animationFrame = 0x3F;
+    if (entity[-1].animCurFrame == 0x33) {
+        entity->animCurFrame = 0x3F;
     }
 
     entity->zPriority = PLAYER.zPriority + 4;
@@ -151,13 +151,13 @@ void func_801946C4(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_8018050C);
-        entity->animationFrame = 0;
+        entity->animCurFrame = 0;
         entity->unk19 = 4;
         entity->unk3C = 0;
     case 1:
-        if (entity[-1].animationFrame != 0) {
+        if (entity[-1].animCurFrame != 0) {
             entity->unk3C = 1;
-            entity->animationFrame = 0x56;
+            entity->animCurFrame = 0x56;
         }
         if (entity->unk48 != 0) {
             D_80180668 = 1;
@@ -404,32 +404,32 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 s32 AnimateEntity(const u8 frames[], Entity* entity) {
     s32 flag = 0;
-    u16 currentFrameIndex = entity->animationFrameIndex * 2;
+    u16 currentFrameIndex = entity->animFrameIdx * 2;
     u8* currentFrame = frames + currentFrameIndex;
 
-    if (entity->animationFrameDuration == 0) {
+    if (entity->animFrameDuration == 0) {
         if (currentFrame[0] > 0) {
             flag = 0x80;
             if (currentFrame[0] == 0xFF) {
                 return false;
             }
 
-            entity->animationFrameDuration = *currentFrame++;
-            entity->animationFrame = *currentFrame++;
-            entity->animationFrameIndex++;
+            entity->animFrameDuration = *currentFrame++;
+            entity->animCurFrame = *currentFrame++;
+            entity->animFrameIdx++;
         } else {
             currentFrame = frames;
-            entity->animationFrameIndex = 0;
-            entity->animationFrameDuration = 0;
-            entity->animationFrameDuration = *currentFrame++;
-            entity->animationFrame = *currentFrame++;
-            entity->animationFrameIndex++;
+            entity->animFrameIdx = 0;
+            entity->animFrameDuration = 0;
+            entity->animFrameDuration = *currentFrame++;
+            entity->animCurFrame = *currentFrame++;
+            entity->animFrameIdx++;
             return false;
         }
     }
 
-    entity->animationFrameDuration = entity->animationFrameDuration - 1;
-    entity->animationFrame = currentFrame[-1];
+    entity->animFrameDuration = entity->animFrameDuration - 1;
+    entity->animCurFrame = currentFrame[-1];
     flag |= true;
 
     return (u8)flag;
@@ -620,8 +620,8 @@ void func_8019AFE8(u8 step) {
     entity = g_CurrentEntity;
     entity->step = step;
     entity->unk2E = 0;
-    entity->animationFrameIndex = 0;
-    entity->animationFrameDuration = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 void func_8019B008(u8 arg0) {
@@ -629,8 +629,8 @@ void func_8019B008(u8 arg0) {
 
     entity = g_CurrentEntity;
     entity->unk2E = arg0;
-    entity->animationFrameIndex = 0;
-    entity->animationFrameDuration = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 void func_8019B024(u16 arg0, u16 arg1) {
@@ -650,7 +650,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     entity->objectId = ENTITY_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->subId = arg0;
-    entity->animationFrame = 0;
+    entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->unk2E = 0;
 }
@@ -659,8 +659,8 @@ void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
     Unkstruct5* temp_v0;
 
-    g_CurrentEntity->animationSet = *arg0++;
-    g_CurrentEntity->animationFrame = *arg0++;
+    g_CurrentEntity->animSet = *arg0++;
+    g_CurrentEntity->animCurFrame = *arg0++;
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
@@ -712,8 +712,8 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     if (var_v1 < 0x80) {
         entity->objectId = ENTITY_PRICE_DROP;
         entity->pfnUpdate = EntityPriceDrop;
-        entity->animationFrameDuration = 0;
-        entity->animationFrameIndex = 0;
+        entity->animFrameDuration = 0;
+        entity->animFrameIdx = 0;
     } else {
         var_v1 = temp_a0 - 0x80;
         entity->objectId = ENTITY_INVENTORY_DROP;
@@ -839,9 +839,9 @@ void EntityExplosion(Entity* entity) {
 
     if (!entity->step) {
         InitializeEntity(&D_80180470);
-        entity->animationSet = 2;
-        entity->animationFrameIndex = 0;
-        entity->animationFrameDuration = 0;
+        entity->animSet = 2;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
 
         if (entity->subId & 0xF0) {
@@ -948,23 +948,23 @@ void func_8019E5E0(Entity* entity) {
         new_var = D_8018130C[entity->unk94];
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
-        entity->animationSet = 2;
+        entity->animSet = 2;
         entity->accelerationY = new_var;
         new_var2 = D_80181324[entity->subId];
         entity->blendMode = 0x10;
         entity->step++;
-        entity->animationFrame = new_var2;
+        entity->animCurFrame = new_var2;
         return;
     }
 
-    entity->animationFrameDuration++;
+    entity->animFrameDuration++;
     entity->posY.val -= entity->accelerationY;
 
-    if (!(entity->animationFrameDuration & 1)) {
-        entity->animationFrame++;
+    if (!(entity->animFrameDuration & 1)) {
+        entity->animCurFrame++;
     }
 
-    if (D_80181328[entity->subId] < entity->animationFrameDuration) {
+    if (D_80181328[entity->subId] < entity->animFrameDuration) {
         DestroyEntity(entity);
     }
 }
@@ -976,8 +976,8 @@ void func_8019E6D0(Entity* entity) {
     if (!entity->step) {
         entity->unk34 = 0x0C002000;
         entity->palette = 0x8195;
-        entity->animationSet = 5;
-        entity->animationFrame = 1;
+        entity->animSet = 5;
+        entity->animCurFrame = 1;
         entity->blendMode = 0x10;
         entity->unk19 = 3;
         temp_v0 = D_801812E4[entity->subId];
@@ -989,14 +989,14 @@ void func_8019E6D0(Entity* entity) {
         return;
     }
 
-    entity->animationFrameDuration++;
+    entity->animFrameDuration++;
     entity->posY.val -= entity->accelerationY;
 
-    if (!(entity->animationFrameDuration & 1)) {
-        entity->animationFrame++;
+    if (!(entity->animFrameDuration & 1)) {
+        entity->animCurFrame++;
     }
 
-    if (entity->animationFrameDuration >= 0x25) {
+    if (entity->animFrameDuration >= 0x25) {
         DestroyEntity(entity);
     }
 }
@@ -1040,8 +1040,8 @@ void EntityIntenseExplosion(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180470);
         entity->palette = 0x8170;
-        entity->animationSet = 5;
-        entity->animationFrame = 1;
+        entity->animSet = 5;
+        entity->animCurFrame = 1;
         entity->blendMode = 0x30;
 
         if (entity->subId & 0xF0) {
@@ -1058,14 +1058,14 @@ void EntityIntenseExplosion(Entity* entity) {
         return;
     }
 
-    entity->animationFrameDuration++;
+    entity->animFrameDuration++;
     entity->posY.val -= 0x4000;
 
-    if (!(entity->animationFrameDuration & 1)) {
-        entity->animationFrame++;
+    if (!(entity->animFrameDuration & 1)) {
+        entity->animCurFrame++;
     }
 
-    if (entity->animationFrameDuration >= 0x25) {
+    if (entity->animFrameDuration >= 0x25) {
         DestroyEntity(entity);
     }
 }
@@ -1076,8 +1076,8 @@ void func_8019F170(Entity* entity) {
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
-        entity->animationSet = 8;
-        entity->animationFrame = 1;
+        entity->animSet = 8;
+        entity->animCurFrame = 1;
         entity->zPriority += 0x10;
 
         if (entity->subId != 0) {
@@ -1108,7 +1108,7 @@ void func_8019F23C(u16 arg0, Entity* ent1, Entity* ent2) {
     ent2->posY.i.hi = ent1->posY.i.hi;
     ent2->unk5A = ent1->unk5A;
     ent2->zPriority = ent1->zPriority;
-    ent2->animationSet = ent1->animationSet;
+    ent2->animSet = ent1->animSet;
     ent2->unk34 = -0x32FFE000;
     palette = ent1->palette;
 
@@ -1161,7 +1161,7 @@ void EntityRoomForeground(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_801804AC);
-        entity->animationSet = objInit->animationSet;
+        entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
