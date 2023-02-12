@@ -368,8 +368,10 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     return 0;
 }
 
-s32 func_80173F30(Entity* entity, s16 arg1, s16 arg2);
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F30);
+s32 func_80173F30(Entity* entity, s16 x, s16 y) {
+    s16 diffx = x - entity->posX.i.hi;
+    return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
+}
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F74);
