@@ -138,7 +138,7 @@ extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
-extern s32 D_800ACFB4;
+extern s32 D_800ACFB4[];
 extern s32 D_800ADC44;
 extern s32 D_800AE270[];
 extern s32* D_800AE294; // might not really be a pointer
@@ -480,7 +480,7 @@ void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void func_8010D584(s16 arg0);
-void func_8010DDA0(FrameProperty* frameProps, s32*);
+void UpdateAnim(FrameProperty* frameProps, s32*);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
