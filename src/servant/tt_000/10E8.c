@@ -31,7 +31,7 @@ ServantDesc g_ServantDesc = {
     func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
 };
 
-void func_80174210(s32 arg0, s32 arg1);
+void func_80174210(Entity* self, s32 arg1);
 s32 func_80174864(void);
 
 void func_801710E8(Entity* entity, s32* arg1) {
@@ -305,6 +305,8 @@ void func_80171ED4(s32 arg0) {
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172120);
 
+s32 func_801746A0(s32 arg0); /* extern */
+
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172C30);
 
 void func_8017339C(void) {}
@@ -495,8 +497,29 @@ void func_80174038(Entity* entity) {
 // TODO func_80174210
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174210);
 
-void func_801745E4(Entity* entityParent, u16 objectId, u16 subId);
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801745E4);
+void func_801745E4(Entity* entityParent, u16 objectId, u16 subId) {
+    Entity* entity;
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        entity = &g_EntityArray[5 + i];
+        if (entity->objectId == 0) {
+            goto init_entity;
+        }
+    }
+    return;
+
+init_entity:
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->zPriority = entityParent->zPriority;
+    entity->facing = entityParent->facing;
+    entity->unk34 = 0x04000000;
+    entity->posX.val = entityParent->posX.val;
+    entity->posY.val = entityParent->posY.val;
+    entity->unk8C.entityPtr = entityParent;
+    entity->subId = subId;
+}
 
 // PSY-Q 3.5 match as in GCC a jump skips a 'nop'
 #ifndef NON_MATCHING
