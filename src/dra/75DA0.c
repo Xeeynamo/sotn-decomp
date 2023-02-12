@@ -6,7 +6,7 @@
 void func_80115DA0(void) {
     /**
      * TODO:
-     * symbol D_80073428 is PLAYER.animationFrameIndex
+     * symbol D_80073428 is PLAYER.animFrameIdx
      * but this function needs the type to be s32
      */
     PLAYER.accelerationY = 0;
@@ -18,9 +18,9 @@ void func_80115DA0(void) {
     case 0:
         if ((D_80073428 == 0x10008) &&
             (func_8011AAFC(g_CurrentEntity, 0x79, 0) == NULL)) {
-            PLAYER.animationFrameDuration = 2;
+            PLAYER.animFrameDuration = 2;
         }
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         break;
@@ -29,9 +29,9 @@ void func_80115DA0(void) {
         func_80115C50();
         if ((D_80073428 == 0x10008) &&
             (func_8011AAFC(g_CurrentEntity, 0x20079, 0) == NULL)) {
-            PLAYER.animationFrameDuration = 2;
+            PLAYER.animFrameDuration = 2;
         }
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         break;
@@ -40,9 +40,9 @@ void func_80115DA0(void) {
         func_80115C50();
         if ((D_80073428 == 0x10008) &&
             (func_8011AAFC(g_CurrentEntity, 0x40079, 0) == NULL)) {
-            PLAYER.animationFrameDuration = 2;
+            PLAYER.animFrameDuration = 2;
         }
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         break;
@@ -50,7 +50,7 @@ void func_80115DA0(void) {
     case 1:
     case 3:
     case 5:
-        if (PLAYER.animationFrameDuration < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         if (D_80072F3C != 0) {

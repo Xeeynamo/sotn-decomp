@@ -176,6 +176,18 @@ typedef struct {
     /* 0x6 */ s16 repeat;
 } Pad; // size = 0x8
 
+typedef struct {
+    u16 duration;
+    u16 unk2;
+} AnimationFrame;
+
+typedef struct {
+    s8 unk0; // Entity::unk10
+    s8 unk2; // Entity::unk12
+    s8 hitboxWidth;
+    s8 hitboxHeight;
+} FrameProperty;
+
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
@@ -212,11 +224,11 @@ typedef struct Entity {
     /* 0x48 */ u8 unk48;
     /* 0x49 */ u8 unk49;
     /* 0x4A */ s16 unk4A;
-    /* 0x4C */ s32* unk4C;
-    /* 0x50 */ u16 animationFrameIndex;
-    /* 0x52 */ s16 animationFrameDuration;
-    /* 0x54 */ s16 animationSet;
-    /* 0x56 */ s16 animationFrame;
+    /* 0x4C */ AnimationFrame* unk4C;
+    /* 0x50 */ u16 animFrameIdx;
+    /* 0x52 */ s16 animFrameDuration;
+    /* 0x54 */ s16 animSet;
+    /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 unk58;
     /* 0x5A */ s16 unk5A;
     /* 0x5C */ s32 unk5C;
@@ -296,7 +308,7 @@ typedef struct Entity {
 } Entity; // size = 0xBC
 
 typedef struct {
-    /* 0x00 */ u16 animationSet;
+    /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
@@ -578,7 +590,8 @@ typedef struct CollisionResult {
     /* 0x04 */ u32 unk4;
     /* 0x08 */ u32 unk8;
     /* 0x0C */ u32 unkC;
-    /* 0x10 */ u32 unk10;
+    /* 0x10 */ u16 unk10;
+    /* 0x10 */ u16 unk12;
     /* 0x14 */ s16 unk14; // rightRepel
     /* 0x16 */ s16 unk16;
     /* 0x18 */ s16 unk18; // bottomRepel
@@ -793,13 +806,13 @@ extern u16 D_80072F88;
 extern u16 D_80072F92;
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060; // set to 4 to reload stage from disk
-extern s32 D_80073080;
-extern u16 D_8007308E;
 extern u32 D_80073068; // ev0
 extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
-extern s16 D_80073092;
+extern s32 D_80073080;
+extern u16 D_8007308E; // camera X
+extern s16 D_80073092; // camera Y
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
 extern s32 D_800730AC;          // g_CurrentRoom.unk8
@@ -836,10 +849,10 @@ extern u16 D_80073406;  // PLAYER.unk2E
 extern u16 D_8007340A;  // PLAYER.objectRoomIndex
 extern u16 D_8007341C;  // PLAYER.unk44
 extern s32* D_80073424; // PLAYER.unk4C
-extern s32 D_80073428;  // PLAYER.animationFrameIndex
-extern s16 D_8007342A;  // PLAYER.animationFrameDuration
-extern s16 D_8007342C;  // PLAYER.animationSet
-extern u16 D_8007342E;  // PLAYER.animationFrame
+extern s32 D_80073428;  // PLAYER.animFrameIdx
+extern s16 D_8007342A;  // PLAYER.animFrameDuration
+extern s16 D_8007342C;  // PLAYER.animSet
+extern u16 D_8007342E;  // PLAYER.animCurFrame
 extern s16 D_80073432;  // PLAYER.unk5A
 extern s16 D_8007347C;  // PLAYER.unkA4
 extern u8 D_80073484;   // PLAYER.unkAC
@@ -847,16 +860,16 @@ extern u8 D_80073484;   // PLAYER.unkAC
 
 // D_80073494 g_EntityArray[1]
 extern s32 D_800734F8; // g_EntityArray[1].firstPolygonIndex
-extern s16 D_800734EA; // g_EntityArray[1].animationFrame
+extern s16 D_800734EA; // g_EntityArray[1].animCurFrame
 extern s8 D_80073510;  // g_EntityArray[1].unk7C.S8.unk0
 extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
 extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
 
 // D_80073550 g_EntityArray[2]
-extern s16 D_800735A6; // g_EntityArray[2].animationFrame
+extern s16 D_800735A6; // g_EntityArray[2].animCurFrame
 
 // D_8007360C g_EntityArray[3]
-extern s16 D_80073662; // g_EntityArray[3].animationFrame
+extern s16 D_80073662; // g_EntityArray[3].animCurFrame
 
 // D_800736C8 g_EntityArray[4]
 // D_80073784 g_EntityArray[5]

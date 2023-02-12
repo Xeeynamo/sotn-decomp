@@ -828,38 +828,38 @@ void func_801B4B30(Entity* entity) {
 void func_801B4B9C(Entity* entity, s16 step) {
     entity->step = step;
     entity->unk2E = 0;
-    entity->animationFrameIndex = 0;
-    entity->animationFrameDuration = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 s32 AnimateEntity(const u8 frames[], Entity* entity) {
     s32 flag = 0;
-    u16 currentFrameIndex = entity->animationFrameIndex * 2;
+    u16 currentFrameIndex = entity->animFrameIdx * 2;
     u8* currentFrame = frames + currentFrameIndex;
 
-    if (entity->animationFrameDuration == 0) {
+    if (entity->animFrameDuration == 0) {
         if (currentFrame[0] > 0) {
             flag = 0x80;
             if (currentFrame[0] == 0xFF) {
                 return false;
             }
 
-            entity->animationFrameDuration = *currentFrame++;
-            entity->animationFrame = *currentFrame++;
-            entity->animationFrameIndex++;
+            entity->animFrameDuration = *currentFrame++;
+            entity->animCurFrame = *currentFrame++;
+            entity->animFrameIdx++;
         } else {
             currentFrame = frames;
-            entity->animationFrameIndex = 0;
-            entity->animationFrameDuration = 0;
-            entity->animationFrameDuration = *currentFrame++;
-            entity->animationFrame = *currentFrame++;
-            entity->animationFrameIndex++;
+            entity->animFrameIdx = 0;
+            entity->animFrameDuration = 0;
+            entity->animFrameDuration = *currentFrame++;
+            entity->animCurFrame = *currentFrame++;
+            entity->animFrameIdx++;
             return false;
         }
     }
 
-    entity->animationFrameDuration = entity->animationFrameDuration - 1;
-    entity->animationFrame = currentFrame[-1];
+    entity->animFrameDuration = entity->animFrameDuration - 1;
+    entity->animCurFrame = currentFrame[-1];
     flag |= true;
 
     return (u8)flag;
@@ -871,8 +871,8 @@ void func_801B4D78(void) {
     Entity* e = &g_EntityArray[UNK_ENTITY_3];
 
     if (e->step == 0) {
-        e->animationSet = -0x7FFF;
-        e->animationFrame = 1;
+        e->animSet = -0x7FFF;
+        e->animCurFrame = 1;
         e->palette = 0x200;
         e->unk80.modeS32 = 0x5C0000;
         e->posY.i.hi = 208;
@@ -892,8 +892,8 @@ void func_801B5350(void) {
 
     switch (entity->step) {
     case 0:
-        entity->animationSet = 1;
-        entity->animationFrame = 142;
+        entity->animSet = 1;
+        entity->animCurFrame = 142;
         entity->unk80.modeS32 = 0x800000;
         entity->posY.i.hi = 159;
         entity->zPriority = 0xC0;
@@ -903,7 +903,7 @@ void func_801B5350(void) {
         break;
 
     case 1:
-        entity->animationFrame = 142;
+        entity->animCurFrame = 142;
         break;
 
     case 2:
@@ -927,8 +927,8 @@ void func_801B54C8(void) {
     Entity* e = &g_EntityArray[UNK_ENTITY_7];
 
     if (e->step == 0) {
-        e->animationSet = -0x7FFE;
-        e->animationFrame = 38;
+        e->animSet = -0x7FFE;
+        e->animCurFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
@@ -943,8 +943,8 @@ void func_801B5548(void) {
     Entity* e = &g_EntityArray[UNK_ENTITY_7];
 
     if (e->step == 0) {
-        e->animationSet = -0x7FFE;
-        e->animationFrame = 7;
+        e->animSet = -0x7FFE;
+        e->animCurFrame = 7;
         e->unk5A = 0xF;
         e->unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;

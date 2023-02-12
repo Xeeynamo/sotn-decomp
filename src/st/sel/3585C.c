@@ -2,7 +2,7 @@
 
 void func_801B4B9C(Entity* entity, s16 step);
 extern u16 D_800737B0;  // g_EntityArray[5].step
-extern u16 D_800737D4;  // g_EntityArray[5].animationFrameIndex
+extern u16 D_800737D4;  // g_EntityArray[5].animFrameIdx
 extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
@@ -12,10 +12,10 @@ void func_801B585C(u16 arg0) {
 
     switch (e->step) {
     case 0:
-        e->animationSet = 1;
+        e->animSet = 1;
         e->posY.i.hi = 159;
         e->zPriority = 0xC0;
-        e->animationFrame = 0;
+        e->animCurFrame = 0;
         e->unk5A = 0;
         e->unk80.entityPtr = NULL;
         e->palette = 0x8100;
@@ -112,7 +112,7 @@ void func_801B5A7C(void) {
                 D_800737B0 = 2;
                 D_800737D4 = 0;
             } while (0);
-            g_EntityArray[5].animationFrameDuration = 0;
+            g_EntityArray[5].animFrameDuration = 0;
             g_EntityArray[5].facing = 1;
             e->step++;
             break;
