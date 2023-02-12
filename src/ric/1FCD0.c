@@ -115,7 +115,7 @@ void func_8015C178(void) {
         D_80072F66 = 0;
         func_8015CF08();
     } else {
-        if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animFrameIdx < 0x12U) &&
+        if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animFrameIdx < 0x12) &&
             (D_80072F20[0] & 1)) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }
