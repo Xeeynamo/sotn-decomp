@@ -905,7 +905,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80166784);
 
 void func_8016779C(Entity* entity) {
     if (D_80072F66 == 0) {
-        func_80156C60();
+        func_80156C60(entity);
         return;
     }
 
@@ -961,10 +961,10 @@ void func_80167964(Entity* entity) {
           (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
-            func_80156C60();
+            func_80156C60(entity);
         }
     } else {
-        func_80156C60();
+        func_80156C60(entity);
     }
 }
 
