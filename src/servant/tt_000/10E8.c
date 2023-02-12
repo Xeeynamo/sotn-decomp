@@ -103,38 +103,28 @@ s32 func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 
 void func_80171560(void) {}
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171568);
-#else
-extern Entity D_80073784;
-
 void func_80171568(Entity* self) {
     Entity* entity;
     s32 i;
 
-    i = 5;
-    entity = &D_80073784;
-    while (1) {
+    for (i = 0; i < 3; i++) {
+        entity = &g_EntityArray[5 + i];
         if (entity->objectId == 0) {
-            DestroyEntity(entity);
-            entity->objectId = 0xDA;
-            entity->zPriority = self->zPriority;
-            entity->facing = self->facing;
-            entity->unk34 = 0x04000000;
-            entity->posX.val = self->posX.val;
-            entity->posY.val = self->posY.val;
-            entity->unk8C.entityPtr = self;
-            break;
+            goto init_entity;
         }
-
-        i++;
-        if (i >= 8) {
-            break;
-        }
-        entity++;
     }
+    return;
+
+init_entity:
+    DestroyEntity(entity);
+    entity->objectId = 0xDA;
+    entity->zPriority = self->zPriority;
+    entity->facing = self->facing;
+    entity->unk34 = 0x04000000;
+    entity->posX.val = self->posX.val;
+    entity->posY.val = self->posY.val;
+    entity->unk8C.entityPtr = self;
 }
-#endif
 
 void func_8017160C(s32 amount, s32 objectId) {
     s32 i;
