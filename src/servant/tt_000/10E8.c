@@ -387,38 +387,32 @@ s32 func_80173F30(Entity* entity, s16 x, s16 y) {
     return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F74);
-#else
-s32 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 new_var2;
-    s16 new_var;
-    s16 var_v0_2;
-    s16 var_v0;
+s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
+    s32 diffTmp;
+    s16 res;
+    s16 diff;
 
-    new_var2 = arg1 - arg0;
-    var_v0_2 = new_var2;
-    if (new_var2 < 0) {
-        var_v0_2 = -var_v0_2;
+    diffTmp = arg1 - arg0;
+    diff = ABS(diffTmp);
+    if (arg2 > diff) {
+        arg2 = diff;
     }
-    new_var = var_v0_2;
-    if (new_var < arg2) {
-        arg2 = var_v0_2;
-    }
+
     if (arg1 < arg0) {
-        var_v0 = arg2 + arg1;
-        if (arg0 >= 0x800) {
-            var_v0 = arg1 - arg2;
+        if (diff < 0x800) {
+            res = arg1 + arg2;
+        } else {
+            res = arg1 - arg2;
         }
     } else {
-        var_v0 = arg2 + arg1;
-        if (arg0 < 0x800) {
-            var_v0 = arg1 - arg2;
+        if (diff < 0x800) {
+            res = arg1 - arg2;
+        } else {
+            res = arg1 + arg2;
         }
     }
-    return var_v0 & 0xFFF;
+    return res & 0xFFF;
 }
-#endif
 
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     s32 diffX = x - entity->posX.i.hi;
