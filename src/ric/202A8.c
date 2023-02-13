@@ -33,7 +33,7 @@ void func_8015C2A8(void) {
             PLAYER.accelerationY = -0x60000;
         }
         break;
-        
+
     case 1:
         if (D_80072F20.pl_vram_flag & 2) {
             PLAYER.unk2E = 2;
