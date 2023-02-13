@@ -1,7 +1,7 @@
 #include "ric.h"
 
 void func_8015B348(void) {
-    switch (PLAYER.pl_step_s) {
+    switch (PLAYER.unk2E) {
     case 0:
         g_CurrentEntity->unk34 |= 0x10000;
         D_80097420[0] = 4;
@@ -13,7 +13,7 @@ void func_8015B348(void) {
             func_801606BC(g_CurrentEntity, 0x1D, 0);
             func_801606BC(g_CurrentEntity, 0x90021, 0);
             D_801545AC = 0;
-            PLAYER.pl_step_s++;
+            PLAYER.unk2E++;
         }
         break;
 
@@ -29,7 +29,7 @@ void func_8015B348(void) {
                 PLAYER.unk1C = 0x100;
                 func_801606BC(g_CurrentEntity, 0x17, 0);
                 D_801545A8 = 0x90;
-                PLAYER.pl_step_s++;
+                PLAYER.unk2E++;
             }
         }
         break;
@@ -44,7 +44,7 @@ void func_8015B348(void) {
             D_801545A8 = 0x30;
             g_api.PlaySfx(0x6E2);
             D_80174F78 = 0xA0;
-            PLAYER.pl_step_s++;
+            PLAYER.unk2E++;
         }
         break;
 
@@ -59,7 +59,7 @@ void func_8015B348(void) {
             func_801606BC(g_CurrentEntity, 0x40027, 0);
             PLAYER.palette = 0x813D;
             *D_80072F1A = 0;
-            PLAYER.pl_step_s++;
+            PLAYER.unk2E++;
         }
 
         if (D_80097B9C.hp < D_80097B9C.hpMax) {
@@ -76,7 +76,7 @@ void func_8015B348(void) {
         D_801545A8--;
         if ((D_801545A8 << 0x10) == 0) {
             D_801545A8 = 0x10;
-            PLAYER.pl_step_s++;
+            PLAYER.unk2E++;
         }
 
         if (D_80097B9C.hp < D_80097B9C.hpMax) {
@@ -100,7 +100,7 @@ void func_8015B348(void) {
             func_8015C920(&D_801558D4);
             g_api.PlaySfx(NA_SE_UNK_62F);
             func_801606BC(g_CurrentEntity, 0x1B, 0);
-            PLAYER.pl_step_s++;
+            PLAYER.unk2E++;
             break;
         }
 
@@ -112,7 +112,7 @@ void func_8015B348(void) {
     case 6:
         if (PLAYER.animFrameDuration < 0) {
             func_8015C920(&D_801558DC);
-            PLAYER.pl_step_s++;
+            PLAYER.unk2E++;
         }
         break;
 

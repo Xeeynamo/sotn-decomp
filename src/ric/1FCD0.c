@@ -5,7 +5,7 @@ void func_8015BCD0(void) {
     PLAYER.accelerationX = 0;
     D_80072EF4 = 0;
     D_80072EFC = 4;
-    switch (PLAYER.pl_step_s) {
+    switch (PLAYER.unk2E) {
     case 0:
         if ((*(s32*)&PLAYER.animFrameIdx == 0x10005) &&
             (func_801606BC(g_CurrentEntity, 0x4D, 0) == NULL)) {
@@ -59,7 +59,7 @@ void func_8015BE84(void) {
         if (D_80072F92 == 0) {
             PLAYER.accelerationY = -0x48000;
         }
-        PLAYER.pl_step_s = 2;
+        PLAYER.unk2E = 2;
         D_80072F64 = (D_80072F64 | 0xA) & 0xFFFB;
         return;
     }
@@ -87,7 +87,7 @@ void func_8015BE84(void) {
             PLAYER.facing = (PLAYER.facing + 1) & 1;
             func_8015C920(&D_80155788);
             D_80072F64 = 0xA;
-            PLAYER.pl_step_s = 2;
+            PLAYER.unk2E = 2;
             PLAYER.step = 4;
         }
     }
@@ -101,7 +101,7 @@ void func_8015BE84(void) {
             PLAYER.facing = (PLAYER.facing + 1) & 1;
             func_8015C920(&D_80155788);
             D_80072F64 = 0xA;
-            PLAYER.pl_step_s = 2;
+            PLAYER.unk2E = 2;
             PLAYER.step = 4;
         }
     }

@@ -121,7 +121,7 @@ void func_8015CC28(void) {
 void func_8015CC50() { func_8015C908(0xF0); }
 
 void func_8015CC70(s16 arg0) {
-    PLAYER.pl_step_s = arg0;
+    PLAYER.unk2E = arg0;
     PLAYER.step = 0x0020;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
@@ -139,15 +139,15 @@ void func_8015CCC8(s32 arg0, s32 arg1) {
     PLAYER.accelerationY = 0;
     if (arg0 == 1) {
         PLAYER.unk4C = &D_801554B0;
-        PLAYER.pl_step_s = 4;
+        PLAYER.unk2E = 4;
     }
     if (arg0 == 2) {
         PLAYER.unk4C = &D_801554D0;
-        PLAYER.pl_step_s = 1;
+        PLAYER.unk2E = 1;
     }
     if (arg0 == 3) {
         PLAYER.unk4C = &D_801554C8;
-        PLAYER.pl_step_s = 4;
+        PLAYER.unk2E = 4;
     }
 }
 

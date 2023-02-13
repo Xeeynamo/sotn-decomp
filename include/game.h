@@ -208,7 +208,7 @@ typedef struct Entity {
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
-    /* 0x2E */ u16 pl_step_s;
+    /* 0x2E */ u16 unk2E;
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
@@ -848,7 +848,7 @@ extern u16 D_800733FA;  // PLAYER.unk22
 extern u16 D_800733FC;  // PLAYER.zPriority
 extern s16 D_800733FE;  // PLAYER.objectId
 extern u16 D_80073404;  // PLAYER.step
-extern u16 D_80073406;  // PLAYER.pl_step_s
+extern u16 D_80073406;  // PLAYER.unk2E
 extern u16 D_8007340A;  // PLAYER.objectRoomIndex
 extern u16 D_8007341C;  // PLAYER.unk44
 extern s32* D_80073424; // PLAYER.unk4C

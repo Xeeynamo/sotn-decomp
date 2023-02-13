@@ -1117,7 +1117,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D2C8);
 
 void func_8010D584(s16 step) {
     PLAYER.step = step;
-    PLAYER.pl_step_s = 0;
+    PLAYER.unk2E = 0;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D59C);
@@ -1358,7 +1358,7 @@ void func_8010E3E0(void) {
 }
 
 void func_8010E42C(u16 arg0) {
-    PLAYER.pl_step_s = arg0;
+    PLAYER.unk2E = arg0;
     PLAYER.step = 0x12;
 
     if (!(arg0 & 1)) {
@@ -1378,7 +1378,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
     PLAYER.step = 2;
-    PLAYER.pl_step_s = D_800ACF4C[arg0 * 2 + 0];
+    PLAYER.unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
 #endif
@@ -1489,7 +1489,7 @@ void func_8010E940(void) {
 
     *temp |= 0x21;
     func_8010DA48(0x20);
-    PLAYER.pl_step_s = 0;
+    PLAYER.unk2E = 0;
     PLAYER.accelerationY = -0x44000;
     if (D_80072F92 != 0) {
         PLAYER.accelerationY = 0;
@@ -1650,7 +1650,7 @@ void func_8010FD24(void) {
 
 void func_8010FD88(void) {
     PLAYER.step = 0;
-    PLAYER.pl_step_s = 3;
+    PLAYER.unk2E = 3;
     AccelerateX(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
     func_8010DA48(0xDB);

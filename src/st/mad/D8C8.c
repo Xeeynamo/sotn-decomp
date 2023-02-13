@@ -789,13 +789,13 @@ u16 func_80192B70(u16 arg0, u16 arg1, u16 arg2) {
 
 void func_80192BD0(s32 arg0) {
     D_8006C26C->step = (s16)(arg0 & 0xFF);
-    D_8006C26C->pl_step_s = 0;
+    D_8006C26C->unk2E = 0;
     D_8006C26C->animFrameIdx = 0;
     D_8006C26C->animFrameDuration = 0;
 }
 
 void func_80192BF0(s32 arg0) {
-    D_8006C26C->pl_step_s = (s16)(arg0 & 0xFF);
+    D_8006C26C->unk2E = (s16)(arg0 & 0xFF);
     D_8006C26C->animFrameIdx = 0;
     D_8006C26C->animFrameDuration = 0;
 }
@@ -818,7 +818,7 @@ void func_80192C0C(u16 arg0, u16 arg1) {
     entity->subId = arg0;
     entity->animCurFrame = 0;
     D_8006C26C->step = 0;
-    D_8006C26C->pl_step_s = 0;
+    D_8006C26C->unk2E = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -841,7 +841,7 @@ void InitializeEntity(u16 arg0[]) {
     D_8006C26C->unk34 = temp_v0->unk24;
     D_8006C26C->unk10 = 0;
     D_8006C26C->unk12 = 0;
-    D_8006C26C->pl_step_s = 0;
+    D_8006C26C->unk2E = 0;
     D_8006C26C->step++;
     if (D_8006C26C->zPriority == 0) {
         D_8006C26C->zPriority = D_80096EB8 - 0xC;

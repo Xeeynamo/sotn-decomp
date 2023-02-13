@@ -14,7 +14,7 @@ void func_80115DA0(void) {
     D_80072EF4 = 0;
     D_80072EFC = 4;
 
-    switch (PLAYER.pl_step_s) {
+    switch (PLAYER.unk2E) {
     case 0:
         if ((D_80073428 == 0x10008) &&
             (func_8011AAFC(g_CurrentEntity, 0x79, 0) == NULL)) {

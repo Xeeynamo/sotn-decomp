@@ -2994,13 +2994,13 @@ u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
 
 void func_8018C240(u8 step) {
     g_CurrentEntity->step = step;
-    g_CurrentEntity->pl_step_s = 0;
+    g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_8018C260(u8 arg0) {
-    g_CurrentEntity->pl_step_s = arg0;
+    g_CurrentEntity->unk2E = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -3023,7 +3023,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity->subId = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
-    g_CurrentEntity->pl_step_s = 0;
+    g_CurrentEntity->unk2E = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -3047,7 +3047,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk34 = temp_v0->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->pl_step_s = 0;
+    g_CurrentEntity->unk2E = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
