@@ -1423,7 +1423,7 @@ void func_8012D178(void) {
     if (D_80072EEC & 0x40) {
         func_8012CCE4();
         return;
-    } else if (!(D_80072F20[0] & 1)) {
+    } else if (!(D_80072F20.pl_vram_flag & 1)) {
         func_8012CFA8();
         return;
     } else if (PLAYER.facing != 0) {

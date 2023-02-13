@@ -74,6 +74,13 @@ typedef struct {
     /* 0xE */ u16 unkE;
 } Unkstruct8; // size = 0x10
 
+typedef struct Unkstruct_80072F20 {
+    /* 0x00 */ s32 pl_vram_flag;
+    /* 0x04 */ char pad4[0x3E];
+    /* 0x42 */ u16 pl_high_jump_timer;
+    /* 0x44 */ char pad1[0x3E];
+    /* 0x86 */ u16 unk86;
+} Unkstruct_80072F20;
 typedef struct {
     /* 0x00 */ char pad0[0x4];
     /* 0x04 */ u16 unk4;
