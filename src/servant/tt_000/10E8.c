@@ -31,7 +31,7 @@ ServantDesc g_ServantDesc = {
     func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
 };
 
-void func_80174210(s32 arg0, s32 arg1);
+void func_80174210(Entity* self, s32 arg1);
 s32 func_80174864(void);
 
 void func_801710E8(Entity* entity, s32* arg1) {
@@ -44,97 +44,70 @@ void func_801710E8(Entity* entity, s32* arg1) {
 
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017110C);
 
-s32 func_801713C8(Entity* entity);
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801713C8);
-#else
 s32 func_801713C8(Entity* entity) {
-    s32 ret;
-
-    ret = 0;
-    if (entity->unk3C != 0) {
-        ret = 0;
-
-        if (entity->posX.i.hi < -0x10)
-            return 0;
-        if (entity->posX.i.hi > 0x110)
-            return 0;
-
-        ret = 0;
-        if (entity->posY.i.hi > 0xF0 ||
-            entity->posY.i.hi >= 0 &&
-                (ret = entity->hitPoints > 0, !(entity->hitPoints < 0x7000))) {
-            ret = 0;
-        }
-    }
-    return ret;
+    if (entity->unk3C == 0)
+        return 0;
+    if (entity->posX.i.hi < -16)
+        return 0;
+    if (entity->posX.i.hi > 272)
+        return 0;
+    if (entity->posY.i.hi > 240)
+        return 0;
+    if (entity->posY.i.hi < 0)
+        return 0;
+    if (entity->hitPoints >= 0x7000)
+        return 0;
+    return entity->hitPoints > 0;
 }
-#endif
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171434);
-#else
-s32 func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
+bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
     g_api.CheckCollision(x, y, &D_80174AD8, 0);
     if (D_80174AD8.unk0 & 1) {
         return 0;
     }
-    *outX = x;
-    *outY = curY + D_80174AD8.unk10;
-    curY = y;
-    do {
-        curY -= 16;
-        if (curY <= 0) {
+
+    for (curY = y - 16; curY > 0; curY -= 16) {
+        g_api.CheckCollision(x, curY, &D_80174AD8, 0);
+        switch (D_80174AD8.unk0 & 0x801) {
+        case 0:
+            break;
+        case 1:
+            *outX = x;
+            *outY = curY + D_80174AD8.unk10;
+            return 1;
+        default:
             return 0;
         }
-        g_api.CheckCollision(x, curY, &D_80174AD8, 0);
-    } while ((D_80174AD8.unk0 & 0x801) == 0);
-
-    if ((D_80174AD8.unk0 & 0x801) == 1) {
-        *outX = x;
-        *outY = curY + D_80174AD8.unk10;
-        return 1;
     }
     return 0;
 }
-#endif
 
 void func_80171560(void) {}
-
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171568);
-#else
-extern Entity D_80073784;
 
 void func_80171568(Entity* self) {
     Entity* entity;
     s32 i;
 
-    i = 5;
-    entity = &D_80073784;
-    while (1) {
+    for (i = 0; i < 3; i++) {
+        entity = &g_EntityArray[5 + i];
         if (entity->objectId == 0) {
-            DestroyEntity(entity);
-            entity->objectId = 0xDA;
-            entity->zPriority = self->zPriority;
-            entity->facing = self->facing;
-            entity->unk34 = 0x04000000;
-            entity->posX.val = self->posX.val;
-            entity->posY.val = self->posY.val;
-            entity->unk8C.entityPtr = self;
-            break;
+            goto init_entity;
         }
-
-        i++;
-        if (i >= 8) {
-            break;
-        }
-        entity++;
     }
+    return;
+
+init_entity:
+    DestroyEntity(entity);
+    entity->objectId = 0xDA;
+    entity->zPriority = self->zPriority;
+    entity->facing = self->facing;
+    entity->unk34 = 0x04000000;
+    entity->posX.val = self->posX.val;
+    entity->posY.val = self->posY.val;
+    entity->unk8C.entityPtr = self;
 }
-#endif
 
 void func_8017160C(s32 amount, s32 objectId) {
     s32 i;
@@ -355,7 +328,21 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173E78);
+s32 func_80173E78(s32 arg0, s32 arg1) {
+    if (arg0 < 0) {
+        arg0 += arg1;
+        if (arg0 > 0) {
+            arg0 = 0;
+        }
+    } else {
+        arg0 -= arg1;
+        if (arg0 < 0) {
+            arg0 = 0;
+        }
+    }
+
+    return arg0;
+}
 
 Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
@@ -376,41 +363,37 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     return 0;
 }
 
-s32 func_80173F30(Entity* entity, s16 arg1, s16 arg2);
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F30);
+s32 func_80173F30(Entity* entity, s16 x, s16 y) {
+    s16 diffx = x - entity->posX.i.hi;
+    return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
+}
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173F74);
-#else
-s32 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 new_var2;
-    s16 new_var;
-    s16 var_v0_2;
-    s16 var_v0;
+s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
+    s32 diffTmp;
+    s16 res;
+    s16 diff;
 
-    new_var2 = arg1 - arg0;
-    var_v0_2 = new_var2;
-    if (new_var2 < 0) {
-        var_v0_2 = -var_v0_2;
+    diffTmp = arg1 - arg0;
+    diff = ABS(diffTmp);
+    if (arg2 > diff) {
+        arg2 = diff;
     }
-    new_var = var_v0_2;
-    if (new_var < arg2) {
-        arg2 = var_v0_2;
-    }
+
     if (arg1 < arg0) {
-        var_v0 = arg2 + arg1;
-        if (arg0 >= 0x800) {
-            var_v0 = arg1 - arg2;
+        if (diff < 0x800) {
+            res = arg1 + arg2;
+        } else {
+            res = arg1 - arg2;
         }
     } else {
-        var_v0 = arg2 + arg1;
-        if (arg0 < 0x800) {
-            var_v0 = arg1 - arg2;
+        if (diff < 0x800) {
+            res = arg1 - arg2;
+        } else {
+            res = arg1 + arg2;
         }
     }
-    return var_v0 & 0xFFF;
+    return res & 0xFFF;
 }
-#endif
 
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     s32 diffX = x - entity->posX.i.hi;
@@ -495,8 +478,29 @@ void func_80174038(Entity* entity) {
 // TODO func_80174210
 INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174210);
 
-void func_801745E4(Entity* entityParent, u16 objectId, u16 subId);
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801745E4);
+void func_801745E4(Entity* entityParent, u16 objectId, u16 subId) {
+    Entity* entity;
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        entity = &g_EntityArray[5 + i];
+        if (entity->objectId == 0) {
+            goto init_entity;
+        }
+    }
+    return;
+
+init_entity:
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->zPriority = entityParent->zPriority;
+    entity->facing = entityParent->facing;
+    entity->unk34 = 0x04000000;
+    entity->posX.val = entityParent->posX.val;
+    entity->posY.val = entityParent->posY.val;
+    entity->unk8C.entityPtr = entityParent;
+    entity->subId = subId;
+}
 
 // PSY-Q 3.5 match as in GCC a jump skips a 'nop'
 #ifndef NON_MATCHING
@@ -531,7 +535,31 @@ s32 func_801746A0(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801747B8);
+s32 func_801747B8(void) {
+    Entity* entity;
+    s32 i;
+
+    entity = &D_800762D8;
+    for (i = 0; i < 0x80; i++, entity++) {
+        if (entity->objectId == 0)
+            continue;
+        if (entity->unk3C == 0)
+            continue;
+        if (entity->unk34 & 0x200000)
+            continue;
+        if (entity->posX.i.hi < -16)
+            continue;
+        if (entity->posX.i.hi > 272)
+            continue;
+        if (entity->posY.i.hi > 240)
+            continue;
+        if (entity->posY.i.hi < 0)
+            continue;
+        if (entity->hitPoints < 0x7000)
+            return 1;
+    }
+    return 0;
+}
 
 s32 func_80174864(void) {
     int tmp;
