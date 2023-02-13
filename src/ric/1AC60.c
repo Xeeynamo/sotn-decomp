@@ -190,7 +190,7 @@ void func_80158F38(void) {
 }
 
 void func_80158FA4(void) {
-    if (D_80072F9A != 0) {
+    if (D_80072F20.unk7A != 0) {
         func_8015CDE0(0);
         return;
     }

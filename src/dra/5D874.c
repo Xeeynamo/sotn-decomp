@@ -996,7 +996,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801092E8);
 void func_80109328(void) {
     s16* player_unk1E = &PLAYER.unk1E;
 
-    D_80072F86 = 0;
+    D_80072F20.unk66 = 0;
     if ((*player_unk1E == 0x800) && (PLAYER.step == 8)) {
         PLAYER.unk1E = 0;
         PLAYER.animCurFrame = 0x9D;
@@ -1447,7 +1447,7 @@ void func_8010E7AC(void) {
     PLAYER.accelerationX = 0;
     D_80072F0C = 8;
 
-    if (D_80072F20.unk4 & 1) {
+    if (D_80072F20.unk04 & 1) {
         D_80072F0A = 8;
     } else {
         D_80072F0A = 0;

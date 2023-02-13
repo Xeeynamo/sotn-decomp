@@ -76,12 +76,32 @@ typedef struct {
 
 typedef struct Unkstruct_80072F20 {
     /* 0x00 */ s32 pl_vram_flag;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ char pad4[0x3A];
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ char pad08[0x4];
+    /* 0x0C */ s32 unk0C;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ char pad14[0x4];
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ char pad1C[0x24];
+    /* 0x40 */ s16 unk40;
     /* 0x42 */ u16 pl_high_jump_timer;
     /* 0x44 */ u16 unk44;
-    /* 0x44 */ char pad1[0x3C];
-    /* 0x86 */ u16 unk86;
+    /* 0x46 */ u16 unk46;
+    /* 0x48 */ u16 unk48;
+    /* 0x4A */ u16 unk4A;
+    /* 0x4C */ u16 unk4C;
+    /* 0x4E */ u16 unk4E;
+    /* 0x50 */ u16 unk50;
+    /* 0x52 */ u16 unk52;
+    /* 0x54 */ char pad54[0x8];
+    /* 0x5C */ u16 unk5C;
+    /* 0x62 */ char pad62[0x8];
+    /* 0x66 */ u16 unk66;
+    /* 0x68 */ u16 unk68;
+    /* 0x70 */ char pad70[0x8];
+    /* 0x72 */ u16 unk72;
+    /* 0x78 */char pad78[0x6];
+    /* 0x7A */ u16 unk7A;
 } Unkstruct_80072F20;
 
 typedef struct {

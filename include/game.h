@@ -787,26 +787,25 @@ extern s16 D_80072F1A[];
 extern s16 D_80072F1C[];
 extern s16 D_80072F1E;
 extern Unkstruct_80072F20 D_80072F20;
-extern s32 D_80072F24; // D_80072F20.unk4
-extern u32 D_80072F2C;
-extern s32 D_80072F30;
-extern s32 D_80072F3C;
-extern u16 D_80072F9A;
-// Probably part of the same array / struct
-extern u16 D_80072F60[];
-extern u16 D_80072F62; // D_80072F20.pl_high_jump_timer
-extern u16 D_80072F64;
-extern u16 D_80072F66;
-extern u16 D_80072F68;
-extern s16 D_80072F6A[];
-extern u16 D_80072F6C;
-extern u16 D_80072F6E;
-extern u16 D_80072F70;
-extern u16 D_80072F72;
-extern u16 D_80072F7C;
-extern u16 D_80072F86;
-extern u16 D_80072F88;
-extern u16 D_80072F92;
+extern s32 D_80072F24;   // D_80072F20.unk04
+extern u32 D_80072F2C;   // D_80072F20.unk0C
+extern s32 D_80072F30;   // D_80072F20.unk10
+extern s32 D_80072F3C;   // D_80072F20.unk18
+extern u16 D_80072F60[]; // D_80072F20.unk40
+extern u16 D_80072F62;   // D_80072F20.pl_high_jump_timer
+extern u16 D_80072F64;   // D_80072F20.unk44
+extern u16 D_80072F66;   // D_80072F20.unk46
+extern u16 D_80072F68;   // D_80072F20.unk48
+extern s16 D_80072F6A[]; // D_80072F20.unk4A
+extern u16 D_80072F6C;   // D_80072F20.unk4C
+extern u16 D_80072F6E;   // D_80072F20.unk4E
+extern u16 D_80072F70;   // D_80072F20.unk50
+extern u16 D_80072F72;   // D_80072F20.unk52
+extern u16 D_80072F7C;   // D_80072F20.unk5C
+extern u16 D_80072F86;   // D_80072F20.unk66
+extern u16 D_80072F88;   // D_80072F20.unk68
+extern u16 D_80072F92;   // D_80072F20.unk72
+extern u16 D_80072F9A;   // D_80072F20.unk7A
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060; // set to 4 to reload stage from disk
 extern u32 D_80073068; // ev0
