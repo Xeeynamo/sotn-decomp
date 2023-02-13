@@ -190,7 +190,7 @@ void func_80158F38(void) {
 }
 
 void func_80158FA4(void) {
-    if (D_80072F9A != 0) {
+    if (D_80072F20.unk7A != 0) {
         func_8015CDE0(0);
         return;
     }
@@ -202,7 +202,7 @@ void func_80158FA4(void) {
         if (func_8015C9CC() == 0) {
             func_8015CD98(0);
             if (*D_80072F16 == 0) {
-                if (!(D_80072F20[0] & 0xC)) {
+                if (!(D_80072F20.pl_vram_flag & 0xC)) {
                     func_8015C920(&D_8015539C);
                     func_801606BC(g_CurrentEntity, 0, 0);
                 }
@@ -318,7 +318,7 @@ void func_8015B098(void) {
         *D_80072F00 = 0x800;
     }
 
-    if (!(D_80072F20[0] & 1)) {
+    if (!(D_80072F20.pl_vram_flag & 1)) {
         func_8015CF08();
         D_80072F66 = 0;
         func_801606BC(g_CurrentEntity, 0x450021, 0);
@@ -332,7 +332,7 @@ void func_8015B18C(void) {
         D_80072F66 = 0;
     }
 
-    if ((D_80072F20[0] & 1) == 0) {
+    if ((D_80072F20.pl_vram_flag & 1) == 0) {
         func_8015CF08();
         D_80072F66 = 0;
     }
@@ -344,7 +344,7 @@ void func_8015B1E8(void) {
         D_80072F66 = 0;
     }
 
-    if ((D_80072F20[0] & 1) == 0) {
+    if ((D_80072F20.pl_vram_flag & 1) == 0) {
         func_8015CF08();
         D_80072F66 = 0;
     }
@@ -369,7 +369,7 @@ void func_8015B244(void) {
         D_80072F6E = 1;
         D_80174F74 = 0;
     }
-    if (!(D_80072F20[0] & 1)) {
+    if (!(D_80072F20.pl_vram_flag & 1)) {
         func_8015CF08();
         D_80072F66 = 0;
         D_80072F6E = 1;

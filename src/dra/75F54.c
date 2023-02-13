@@ -1168,7 +1168,7 @@ void func_80127CC8(Entity* entity) {
 
         if (ret == -1) {
             DestroyEntity(entity);
-            D_80072F7C = 0xFFFF;
+            D_80072F20.unk5C = 0xFFFF;
             return;
         }
 
@@ -1423,7 +1423,7 @@ void func_8012D178(void) {
     if (D_80072EEC & 0x40) {
         func_8012CCE4();
         return;
-    } else if (!(D_80072F20[0] & 1)) {
+    } else if (!(D_80072F20.pl_vram_flag & 1)) {
         func_8012CFA8();
         return;
     } else if (PLAYER.facing != 0) {
@@ -1435,7 +1435,7 @@ void func_8012D178(void) {
     if (var_v0 != 0) {
         func_8012CB4C();
         return;
-    } else if (D_80072F24 & 0x40) {
+    } else if (D_80072F20.unk04 & 0x40) {
         func_8012CA64();
         return;
     } else if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {

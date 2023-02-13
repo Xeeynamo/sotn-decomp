@@ -30,7 +30,6 @@ extern s32 func_8016840C(s16 x, s16 y);
 extern void func_80169C10(Entity* entity);
 extern void func_80169D74(Entity* entity);
 
-extern AnimationFrame* D_8015539C;
 extern s32 D_8015459C;
 extern s16 D_801545A8;
 extern s16 D_801545AA;
@@ -42,6 +41,8 @@ extern s8 D_80154688;
 extern s32 D_80154924;
 extern s32 D_80155368[];
 extern s32 D_80155394;
+extern AnimationFrame* D_8015539C;
+extern AnimationFrame* D_80155534;
 extern s32 D_801553BC;
 extern s32 D_80155488;
 extern s32 D_801554B0;

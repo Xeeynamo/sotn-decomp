@@ -996,7 +996,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801092E8);
 void func_80109328(void) {
     s16* player_unk1E = &PLAYER.unk1E;
 
-    D_80072F86 = 0;
+    D_80072F20.unk66 = 0;
     if ((*player_unk1E == 0x800) && (PLAYER.step == 8)) {
         PLAYER.unk1E = 0;
         PLAYER.animCurFrame = 0x9D;
@@ -1052,7 +1052,7 @@ void func_8010A234(s32 arg0) {
             func_8010FAF4();
             g_EntityArray[PLAYER_CHARACTER].unk22 = 0;
             g_EntityArray[PLAYER_CHARACTER].unk20 = 0;
-            if (D_80072F20[0] & 1) {
+            if (D_80072F20.pl_vram_flag & 1) {
                 func_8010E570(0);
             } else {
                 func_8010E7AC();
@@ -1409,7 +1409,7 @@ void func_8010E570(/*?*/ s32);
 void func_8010E6AC(s32 arg0) {
     bool condition = false;
 
-    condition = ((D_80072F20[0] & 0x20) != condition);
+    condition = ((D_80072F20.pl_vram_flag & 0x20) != condition);
     AccelerateX(0x18000);
     PLAYER.accelerationY = 0;
     func_8010D584(1);
@@ -1447,7 +1447,7 @@ void func_8010E7AC(void) {
     PLAYER.accelerationX = 0;
     D_80072F0C = 8;
 
-    if (D_80072F24 & 1) {
+    if (D_80072F20.unk04 & 1) {
         D_80072F0A = 8;
     } else {
         D_80072F0A = 0;
