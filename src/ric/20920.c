@@ -132,10 +132,10 @@ void func_8015CC70(s16 arg0) {
     }
 }
 
-void func_8015CCC8(s32 arg0, s32 arg1) {
+void func_8015CCC8(s32 arg0, s32 accelerationX) {
     func_8015C908(2);
     func_8015C920(&D_801554C0);
-    PLAYER.accelerationX = arg1;
+    PLAYER.accelerationX = accelerationX;
     PLAYER.accelerationY = 0;
     if (arg0 == 1) {
         PLAYER.unk4C = &D_801554B0;
@@ -1151,7 +1151,50 @@ INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8016C734);
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8016CC74);
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8016D328);
+void func_8016D328(Entity* entity) {
+    s16 firstPolygonIndex;
+    s32 acceleration;
+
+    switch (entity->step) {
+    case 0:
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        entity->firstPolygonIndex = firstPolygonIndex;
+        if (firstPolygonIndex != -1) {
+            entity->unk34 = 0x08800000;
+            entity->posX.val = entity->unk8C.entityPtr->unk84.unk;
+            entity->posY.val = entity->unk8C.entityPtr->unk88.unk;
+            entity->facing = entity->unk8C.entityPtr->unk8C.modeU16.unk0;
+            entity->unkB0 = 0x18;
+            func_8015FAB8(entity);
+            entity->unk5A = 0x79;
+            entity->animSet = 0xE;
+            entity->palette = 0x819E;
+            entity->unk4C = &D_80155EA8;
+            entity->blendMode = 0x30;
+            entity->unk19 = 8;
+            entity->unk6C = 0x60;
+            entity->hitboxWidth = 8;
+            entity->hitboxHeight = 8;
+            entity->unk34 |= 0x100000;
+            acceleration = (rand() % 512) + 0x300;
+            entity->accelerationX = rcos(acceleration) * 32;
+            entity->accelerationY = -(rsin(acceleration) * 32);
+            entity->step++;
+        } else {
+            func_80156C60(entity);
+        }
+        break;
+
+    case 1:
+        if (++entity->unk7C.s >= 39) {
+            func_80156C60(entity);
+        } else {
+            entity->posX.val += entity->accelerationX;
+            entity->posY.val += entity->accelerationY;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8016D4D8);
 
