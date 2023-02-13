@@ -132,10 +132,10 @@ void func_8015CC70(s16 arg0) {
     }
 }
 
-void func_8015CCC8(s32 arg0, s32 arg1) {
+void func_8015CCC8(s32 arg0, s32 accelerationX) {
     func_8015C908(2);
     func_8015C920(&D_801554C0);
-    PLAYER.accelerationX = arg1;
+    PLAYER.accelerationX = accelerationX;
     PLAYER.accelerationY = 0;
     if (arg0 == 1) {
         PLAYER.unk4C = &D_801554B0;
