@@ -100,7 +100,7 @@ typedef struct Unkstruct_80072F20 {
     /* 0x68 */ u16 unk68;
     /* 0x70 */ char pad70[0x8];
     /* 0x72 */ u16 unk72;
-    /* 0x78 */char pad78[0x6];
+    /* 0x78 */ char pad78[0x6];
     /* 0x7A */ u16 unk7A;
 } Unkstruct_80072F20;
 
