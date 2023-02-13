@@ -81,7 +81,8 @@ void func_8015BE84(void) {
         if (D_80072EE8 & 0x2000) {
             func_8015C93C(0x2000);
         }
-        if ((PLAYER.accelerationX > (s32)0xFFFD0000) || (D_80072F20.pl_vram_flag & 8)) {
+        if ((PLAYER.accelerationX > (s32)0xFFFD0000) ||
+            (D_80072F20.pl_vram_flag & 8)) {
             PLAYER.accelerationX /= 2;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
             func_8015C920(&D_80155788);
@@ -94,7 +95,8 @@ void func_8015BE84(void) {
         if (D_80072EE8 & 0x8000) {
             func_8015C93C(0x2000);
         }
-        if ((PLAYER.accelerationX <= 0x2FFFF) || (D_80072F20.pl_vram_flag & 4)) {
+        if ((PLAYER.accelerationX <= 0x2FFFF) ||
+            (D_80072F20.pl_vram_flag & 4)) {
             PLAYER.accelerationX /= 2;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
             func_8015C920(&D_80155788);
@@ -111,7 +113,8 @@ void func_8015C178(void) {
     if (D_8007342A < 0) {
         D_80072F66 = 0;
         func_8015CD98(0);
-    } else if ((*(u16*)&PLAYER.animFrameIdx >= 0x12) && !(D_80072F20.pl_vram_flag & 1)) {
+    } else if ((*(u16*)&PLAYER.animFrameIdx >= 0x12) &&
+               !(D_80072F20.pl_vram_flag & 1)) {
         D_80072F66 = 0;
         func_8015CF08();
     } else {
@@ -120,9 +123,9 @@ void func_8015C178(void) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }
 
-        if ((*(s32*)&PLAYER.animFrameIdx == 0x10012) && (D_80072F20.pl_vram_flag & 1)) {
+        if ((*(s32*)&PLAYER.animFrameIdx == 0x10012) &&
+            (D_80072F20.pl_vram_flag & 1)) {
             func_801606BC(g_CurrentEntity, 0, 0);
         }
     }
 }
-
