@@ -78,7 +78,8 @@ typedef struct Unkstruct_80072F20 {
     /* 0x00 */ s32 pl_vram_flag;
     /* 0x04 */ char pad4[0x3E];
     /* 0x42 */ u16 pl_high_jump_timer;
-    /* 0x44 */ char pad1[0x3E];
+    /* 0x44 */ u16 unk44;
+    /* 0x44 */ char pad1[0x3C];
     /* 0x86 */ u16 unk86;
 } Unkstruct_80072F20;
 typedef struct {

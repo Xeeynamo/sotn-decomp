@@ -1,8 +1,6 @@
 
 #include "ric.h"
 
-extern AnimationFrame* D_80155534;
-
 void func_8015C2A8(void) {
     bool loadAnim = 0;
     s32 temp;
@@ -15,7 +13,6 @@ void func_8015C2A8(void) {
     switch (PLAYER.unk2E) {                         
     case 0:
         if (D_80072EE8 & 0xA000) {
-            
             if (PLAYER.facing == 0) {
                 temp = D_80072EE8 & 0x2000;
             }else {
@@ -29,9 +26,9 @@ void func_8015C2A8(void) {
         }
         if (D_80072F20.pl_vram_flag & 2) {
             func_80158B04(3);
-            D_80072F62 = 0;
+            D_80072F20.pl_high_jump_timer = 0;
             PLAYER.unk2E = 2;
-        } else if (D_80072F62 >= 0x1D) {
+        } else if (D_80072F20.pl_high_jump_timer >= 0x1D) {
             PLAYER.unk2E = 1;
             PLAYER.accelerationY = -0x60000;
         }
@@ -55,15 +52,16 @@ void func_8015C2A8(void) {
         }
         break;
     }
+
     if (loadAnim) {
         func_8015C920(&D_80155534);
         func_8015C908(4);
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1FCD0", func_8015C4AC);
+INCLUDE_ASM("asm/ric/nonmatchings/202A8", func_8015C4AC);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1FCD0", func_8015C6D4);
+INCLUDE_ASM("asm/ric/nonmatchings/202A8", func_8015C6D4);
 
 void func_8015C908(s32 step) {
     PLAYER.step = step;

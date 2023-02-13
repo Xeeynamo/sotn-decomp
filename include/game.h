@@ -794,7 +794,7 @@ extern s32 D_80072F3C;
 extern u16 D_80072F9A;
 // Probably part of the same array / struct
 extern u16 D_80072F60[];
-extern u16 D_80072F62;
+extern u16 D_80072F62; // D_80072F20.pl_high_jump_timer
 extern u16 D_80072F64;
 extern u16 D_80072F66;
 extern u16 D_80072F68;
