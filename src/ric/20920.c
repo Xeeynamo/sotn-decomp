@@ -1186,8 +1186,7 @@ void func_8016D328(Entity* entity) {
         break;
 
     case 1:
-        entity->unk7C.s++;
-        if (entity->unk7C.s >= 0x27) {
+        if (++entity->unk7C.s >= 0x27) {
             func_80156C60(entity);
             break;
         } else {
