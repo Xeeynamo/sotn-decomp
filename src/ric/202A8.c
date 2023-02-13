@@ -24,6 +24,7 @@ void func_8015C2A8(void) {
         } else {
             func_8015C93C(0x1000);
         }
+        
         if (D_80072F20.pl_vram_flag & 2) {
             func_80158B04(3);
             D_80072F20.pl_high_jump_timer = 0;
@@ -49,7 +50,7 @@ void func_8015C2A8(void) {
 
     case 2:
         if (D_80072F20.pl_high_jump_timer >= 5) {
-            loadAnim = 1;
+            loadAnim = true;
         }
         break;
     }
