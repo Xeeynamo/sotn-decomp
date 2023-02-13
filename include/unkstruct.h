@@ -82,6 +82,7 @@ typedef struct Unkstruct_80072F20 {
     /* 0x44 */ char pad1[0x3C];
     /* 0x86 */ u16 unk86;
 } Unkstruct_80072F20;
+
 typedef struct {
     /* 0x00 */ char pad0[0x4];
     /* 0x04 */ u16 unk4;
