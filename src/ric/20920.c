@@ -1186,7 +1186,7 @@ void func_8016D328(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.s >= 0x27) {
+        if (++entity->unk7C.s >= 39) {
             func_80156C60(entity);
         } else {
             entity->posX.val += entity->accelerationX;
