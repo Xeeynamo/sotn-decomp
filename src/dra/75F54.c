@@ -1435,7 +1435,7 @@ void func_8012D178(void) {
     if (var_v0 != 0) {
         func_8012CB4C();
         return;
-    } else if (D_80072F24 & 0x40) {
+    } else if (D_80072F20.unk4 & 0x40) {
         func_8012CA64();
         return;
     } else if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {

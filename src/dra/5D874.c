@@ -1447,7 +1447,7 @@ void func_8010E7AC(void) {
     PLAYER.accelerationX = 0;
     D_80072F0C = 8;
 
-    if (D_80072F24 & 1) {
+    if (D_80072F20.unk4 & 1) {
         D_80072F0A = 8;
     } else {
         D_80072F0A = 0;

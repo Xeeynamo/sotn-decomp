@@ -787,7 +787,7 @@ extern s16 D_80072F1A[];
 extern s16 D_80072F1C[];
 extern s16 D_80072F1E;
 extern Unkstruct_80072F20 D_80072F20;
-extern s32 D_80072F24;
+extern s32 D_80072F24; // D_80072F20.unk4
 extern u32 D_80072F2C;
 extern s32 D_80072F30;
 extern s32 D_80072F3C;
