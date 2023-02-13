@@ -496,7 +496,7 @@ void func_801BD52C(u8 step) {
 
     entity = g_CurrentEntity;
     entity->step = step;
-    entity->unk2E = 0;
+    entity->pl_step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -505,7 +505,7 @@ void func_801BD54C(u8 arg0) {
     Entity* entity;
 
     entity = g_CurrentEntity;
-    entity->unk2E = arg0;
+    entity->pl_step_s = arg0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -526,7 +526,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
     g_CurrentEntity->animCurFrame = 0;
     g_CurrentEntity->unk19 = 0;
     g_CurrentEntity->step = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->pl_step_s = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -550,7 +550,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk34 = temp_v0->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->pl_step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;

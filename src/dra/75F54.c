@@ -10,7 +10,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80116208);
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80116408);
 
 void func_801166A4(void) {
-    switch (PLAYER.unk2E) {
+    switch (PLAYER.pl_step_s) {
     case 0:
         func_80113EE0();
         D_80072F60[0] = 0x8166;
@@ -20,7 +20,7 @@ void func_801166A4(void) {
         PLAYER.unkAC = 0x33;
         func_8011AAFC(g_CurrentEntity, 0, 0);
         func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
-        PLAYER.unk2E++;
+        PLAYER.pl_step_s++;
         break;
 
     case 1:
@@ -49,7 +49,7 @@ void func_801167D0(void) {
     *accelerationX = 0;
     if (D_80072EF6 != 2) {
         PLAYER.step = 0x28;
-        PLAYER.unk2E = 0;
+        PLAYER.pl_step_s = 0;
         PLAYER.accelerationY = 0;
         *accelerationX = 0;
         PLAYER.unkAC = 0xCF;
@@ -59,7 +59,7 @@ void func_801167D0(void) {
 }
 
 bool func_80116838(void) {
-    if ((g_EntityArray->unk2E != 0) &&
+    if ((g_EntityArray->pl_step_s != 0) &&
         ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
@@ -131,11 +131,11 @@ void func_80118670(void) {
 }
 
 void func_801186EC(void) {
-    if (PLAYER.unk2E == 0) {
+    if (PLAYER.pl_step_s == 0) {
         if (g_EntityArray[UNK_ENTITY_10].objectId == 0) {
             D_80138008 = 0x10;
             func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
-            PLAYER.unk2E++;
+            PLAYER.pl_step_s++;
         }
     } else if (--D_80138008 == 0) {
         PLAYER.palette = 0x8100;
@@ -447,7 +447,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011B190);
 void func_8011B334(Entity* entity) {
     Unkstruct_8011B334 temp;
 
-    if (PLAYER.unk2E != 0x70) {
+    if (PLAYER.pl_step_s != 0x70) {
         DestroyEntity(entity);
         return;
     }
@@ -1330,7 +1330,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012BEF8);
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012C600);
 
 bool func_8012C88C(void) {
-    if ((PLAYER.unk2E != 0) && (PLAYER.unk2E != 8)) {
+    if ((PLAYER.pl_step_s != 0) && (PLAYER.pl_step_s != 8)) {
         if (((D_8009744C != 0) && (func_800FE3A8(0xE) == 0)) ||
             (D_80072EEC & 2) || (func_800FEEA4(2, 1) < 0)) {
             func_8010D584(25);
@@ -1357,7 +1357,7 @@ void func_8012CB0C(void) {
     D_800B0914 = 0;
     PLAYER.animFrameIdx = 0;
     PLAYER.animFrameDuration = 0;
-    PLAYER.unk2E = 7;
+    PLAYER.pl_step_s = 7;
 }
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012CB4C);
@@ -1367,7 +1367,7 @@ void func_8012CC30(s32 arg0) {
         D_80138444 = 1;
         if ((D_80138FC4 == 255) && (func_800FE3A8(6)) && (func_800FDC94(4))) {
             func_8010E27C();
-            PLAYER.unk2E = 2;
+            PLAYER.pl_step_s = 2;
             D_800B0914 = 4;
             AccelerateX(0x50000);
             g_CurrentEntity->accelerationY = 0;
@@ -1382,7 +1382,7 @@ void func_8012CC30(s32 arg0) {
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012CCE4);
 
 void func_8012CED4(void) {
-    if ((PLAYER.unk2E == 2) && (D_800B0914 == PLAYER.unk2E)) {
+    if ((PLAYER.pl_step_s == 2) && (D_800B0914 == PLAYER.pl_step_s)) {
         func_8010DA48(0xE7);
         D_800B0914 = 1;
     } else {
@@ -1395,7 +1395,7 @@ void func_8012CED4(void) {
             PLAYER.animFrameDuration = 1;
         }
     }
-    PLAYER.unk2E = 5;
+    PLAYER.pl_step_s = 5;
     D_80072F0A = 8;
     PLAYER.accelerationY = 0;
     D_80138430 -= 0x100;
@@ -1403,14 +1403,14 @@ void func_8012CED4(void) {
 
 void func_8012CFA8(void) {
     func_8010DA48(0xEA);
-    PLAYER.unk2E = 6;
+    PLAYER.pl_step_s = 6;
     D_800B0914 = 0;
     PLAYER.accelerationX = 0;
     D_80072F0A = 8;
 }
 
 void func_8012CFF0(void) {
-    PLAYER.unk2E = 3;
+    PLAYER.pl_step_s = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
 }
@@ -1523,7 +1523,7 @@ void func_8013136C(Entity* entity) {
     }
     entity->posY.i.hi += 3;
     entity->unk1E = g_EntityArray[UNK_ENTITY_13].unk1E;
-    switch (PLAYER.unk2E - 1) {
+    switch (PLAYER.pl_step_s - 1) {
     case 1:
     case 3:
     case 4:

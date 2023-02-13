@@ -105,12 +105,12 @@ void func_80158BFC(void) {
 
     if (func_8015DBB0(0x40000 | 0x305C) == false) {
         func_8015C93C(0x2000);
-        switch (PLAYER.unk2E) {
+        switch (PLAYER.pl_step_s) {
         case 0:
             if (func_8015C9CC() == 0) {
                 if (D_80072EE8 & 0x1000) {
                     func_8015C920(&D_80155394);
-                    PLAYER.unk2E = 1;
+                    PLAYER.pl_step_s = 1;
                     break;
                 }
             } else {
@@ -143,7 +143,7 @@ void func_80158BFC(void) {
             if (PLAYER.animFrameDuration < 0) {
                 if (D_80072EE8 & 0x80) {
                     D_80072F66 = 2;
-                    PLAYER.unk2E++;
+                    PLAYER.pl_step_s++;
                     func_8015C920(&D_80155730);
                     func_801606BC(g_CurrentEntity, 0x11, 0);
                     break;
@@ -183,7 +183,7 @@ void func_80158F38(void) {
             return;
         }
 
-        if (PLAYER.unk2E == 0) {
+        if (PLAYER.pl_step_s == 0) {
             func_8015CA84(0x14000);
         }
     }
@@ -209,7 +209,7 @@ void func_80158FA4(void) {
             } else {
                 PLAYER.accelerationX = 0;
             }
-        } else if (PLAYER.unk2E == 0) {
+        } else if (PLAYER.pl_step_s == 0) {
             func_8015CA84(0x24000);
         }
     }
@@ -220,7 +220,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801590A0);
 void func_801595D8(void) {
     if (!func_8015DBB0(0x9009)) {
         func_8015C93C(0x1000);
-        if (PLAYER.unk2E == 0) {
+        if (PLAYER.pl_step_s == 0) {
             if ((D_80072F0A != 0) && (D_80072EEC & 0x40)) {
                 func_8015D020();
                 return;
@@ -288,11 +288,11 @@ INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A7D0);
 INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A9B0);
 
 void func_8015AFE0(void) {
-    if (PLAYER.unk2E == 0) {
+    if (PLAYER.pl_step_s == 0) {
         PLAYER.accelerationY += 0x3800;
         if (PLAYER.accelerationY > 0) {
             PLAYER.accelerationY = 0;
-            PLAYER.unk2E = 1;
+            PLAYER.pl_step_s = 1;
         }
     } else if (D_80072F6E != 0) {
         D_80072F66 = 0;
@@ -351,9 +351,9 @@ void func_8015B1E8(void) {
 }
 
 void func_8015B244(void) {
-    if (PLAYER.unk2E == 0) {
+    if (PLAYER.pl_step_s == 0) {
         D_80174F74 = 0x200;
-        PLAYER.unk2E++;
+        PLAYER.pl_step_s++;
     } else {
         func_8015C9CC();
         D_80174F74--;
