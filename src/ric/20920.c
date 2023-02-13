@@ -1180,11 +1180,10 @@ void func_8016D328(Entity* entity) {
             entity->accelerationX = rcos(acceleration) * 32;
             entity->accelerationY = -(rsin(acceleration) * 32);
             entity->step++;
-            break;
         } else {
             func_80156C60(entity);
-            break;
         }
+        break;
 
     case 1:
         if (++entity->unk7C.s >= 0x27) {
