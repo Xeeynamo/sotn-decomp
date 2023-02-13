@@ -14,7 +14,7 @@ void func_80113AAC(void) {
 
     switch (PLAYER.unk2E) {
     case 0:
-        if (D_80072F20[0] & 2) {
+        if (D_80072F20.pl_vram_flag & 2) {
             func_801139CC(3);
             if ((D_80072F6A[0]) >= 5) {
                 PLAYER.unk2E = 2;
@@ -35,7 +35,7 @@ void func_80113AAC(void) {
         break;
 
     case 1:
-        if (D_80072F20[0] & 2) {
+        if (D_80072F20.pl_vram_flag & 2) {
             PLAYER.unk2E = 2;
             func_801139CC(3);
         } else {
@@ -196,7 +196,7 @@ void func_80115BB0(void) {
     PLAYER.animFrameDuration = 4;
 
     if (D_80097420[0] == 0) {
-        if (D_80072F20[0] & 1) {
+        if (D_80072F20.pl_vram_flag & 1) {
             func_8010E570(0);
         } else {
             func_8010E7AC();

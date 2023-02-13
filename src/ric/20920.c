@@ -198,7 +198,7 @@ void func_8015D120(void) {
     PLAYER.accelerationX = 0;
     func_8015CA84(0x14000);
     PLAYER.accelerationY = -0x78000;
-    D_80072F62 = 0;
+    D_80072F20.pl_high_jump_timer = 0;
     func_8015C920(&D_8015579C);
     func_8015CC28();
     func_801606BC(g_CurrentEntity, 0x2DU, 0);
