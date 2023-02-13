@@ -4,18 +4,18 @@
 void func_8015C2A8(void) {
     bool loadAnim = 0;
     s32 temp;
-    
+
     FntPrint("pl_vram_flag:%04x\n", D_80072F20.pl_vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", D_80072F20.pl_high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.unk2E);
     D_80072F20.pl_high_jump_timer++;
 
-    switch (PLAYER.unk2E) {                         
+    switch (PLAYER.unk2E) {
     case 0:
         if (D_80072EE8 & 0xA000) {
             if (PLAYER.facing == 0) {
                 temp = D_80072EE8 & 0x2000;
-            }else {
+            } else {
                 temp = D_80072EE8 & 0x8000;
             }
             if (temp == 0) {
@@ -45,7 +45,7 @@ void func_8015C2A8(void) {
             }
         }
         break;
-        
+
     case 2:
         if (D_80072F20.pl_high_jump_timer >= 5) {
             loadAnim = 1;
