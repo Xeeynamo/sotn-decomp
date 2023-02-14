@@ -4,19 +4,7 @@
  * Description: Castle Entrance (After entering Alchemy Laboratory)
  */
 
-#include "stage.h"
-
-void CreateEntityFromCurrentEntity(u16, Entity*);
-void ReplaceBreakableWithItemDrop(Entity*);
-int func_801CD658();
-void EntityPriceDrop(Entity* entity);
-void EntityInventoryDrop(Entity* entity);
-
-extern u16 D_80180A78[];
-extern u16 D_80180A90[];
-extern ObjInit2 D_80180C10[];
-extern PfnEntityUpdate PfnEntityUpdates[];
-extern s16 D_80181A50[];
+#include "np3.h"
 
 void func_801B246C(Entity* arg0) {
     s32 temp_v0;
@@ -130,7 +118,44 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B39CC);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B3D24);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B3E84);
+void EntityCavernDoorLever(Entity* entity) {
+    s32 posX;
+    s32 posY;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180AA8);
+        entity->animCurFrame = 18;
+        entity->unk1E = -0x200;
+        entity->unk19 |= 4;
+        CreateEntityFromEntity(0x1E, entity, &entity[1]);
+        if (*D_8003BE1C != 0) {
+            entity->unk1E = 0;
+        }
+
+    case 1:
+        if (entity[1].unk84.S8.unk0 != 0) {
+            entity->unk1E += 4;
+            if (entity->unk1E > 0) {
+                entity->unk1E = 0;
+                if (*D_8003BE1C == 0) {
+                    g_api.PlaySfx(0x675);
+                }
+                *D_8003BE1C = 1;
+            } else if (!(g_blinkTimer & 0xF)) {
+                g_api.PlaySfx(0x675);
+            }
+        }
+        break;
+    }
+
+    posX = entity->posX.val;
+    posY = entity->posY.val;
+    posX += rcos(entity->unk1E) * 0x280;
+    posY += rsin(entity->unk1E) * 0x280;
+    entity[1].posX.val = posX;
+    entity[1].posY.val = posY;
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4004);
 
@@ -138,7 +163,36 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B40F8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B44B4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4558);
+// switch that clicks when you step on it
+void EntityClickSwitch(Entity* entity) {
+    s32 temp_a0 = func_801BD588(entity, 8, 4, 4);
+    Entity* player = &PLAYER;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180AA8);
+        entity->animCurFrame = 9;
+        entity->zPriority = 0x5E;
+        if (*D_8003BE1D != 0) {
+            entity->step = 2;
+            entity->posY.i.hi += 4;
+        }
+        break;
+
+    case 1:
+        if (temp_a0 != 0) {
+            player->posY.i.hi++;
+            entity->posY.val += 0xC000;
+            if ((D_80073092 + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - D_80073092;
+                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                *D_8003BE1D = 1;
+                entity->step++;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4680);
 
@@ -656,208 +710,3 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C90E8);
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityBoneScimitar);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C9874);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityBat);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityZombie);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C9E28);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C9F98);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CA498);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CA654);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CAE0C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CB018);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CBF18);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CC2E0);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD540);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD620);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD658);
-
-void func_801CD734() {
-    while (PadRead(0))
-        func_801CD658();
-    while (!PadRead(0))
-        func_801CD658();
-}
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD78C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD83C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CD91C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDA14);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDA6C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDAC8);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDC80);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDD00);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDD80);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDE10);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDE88);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDF1C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CDFD8);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE04C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE120);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE1E8);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE228);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE258);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE2CC);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE3FC);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE4CC);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CE69C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CF254);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CF5B8);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CF778);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CF7A0);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801CF94C);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D0730);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D0A00);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D0B40);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D0B78);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D0D40);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D1BB8);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D1F38);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2320);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D2470);
-
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801D24A0);
-
-POLY_GT4* func_801D251C(POLY_GT4* startPoly, s32 count) {
-    POLY_GT4* poly;
-    s8 unk;
-    s32 i;
-
-    if (startPoly->p3) {
-        startPoly->p3 = 0;
-    } else {
-        startPoly->p3 = 1;
-    }
-
-    poly = startPoly;
-    for (i = 0; i < count; i++) {
-        if (poly->p3) {
-            poly->pad3 &= ~8;
-            unk = 0;
-        } else {
-            poly->pad3 |= 8;
-            unk = 1;
-        }
-
-        poly = (POLY_GT4*)poly->tag;
-        if (poly == 0)
-            return 0;
-        poly->p3 = unk;
-    }
-
-    return poly;
-}
-
-void func_801D25A4(POLY_GT4* arg0) {
-    arg0->p1 = 0;
-    arg0->p2 = 0;
-    arg0->p3 = 0;
-    ((POLY_GT4*)arg0->tag)->x1 = 0;
-    ((POLY_GT4*)arg0->tag)->y1 = 0;
-    ((POLY_GT4*)arg0->tag)->y0 = 0;
-    ((POLY_GT4*)arg0->tag)->x0 = 0;
-    ((POLY_GT4*)arg0->tag)->clut = 0;
-    *(u16*)&((POLY_GT4*)arg0->tag)->u0 = 0;
-    *(u16*)&((POLY_GT4*)arg0->tag)->b1 = 0;
-    *(u16*)&((POLY_GT4*)arg0->tag)->r1 = 0;
-    *(u16*)&((POLY_GT4*)arg0->tag)->u1 = 0;
-    ((POLY_GT4*)arg0->tag)->tpage = 0;
-    *(u16*)&((POLY_GT4*)arg0->tag)->r2 = 0;
-    *(u16*)&((POLY_GT4*)arg0->tag)->b2 = 0;
-    ((POLY_GT4*)arg0->tag)->u2 = 0;
-    ((POLY_GT4*)arg0->tag)->v2 = 0;
-    ((POLY_GT4*)arg0->tag)->r3 = 0;
-    ((POLY_GT4*)arg0->tag)->b3 = 0;
-    ((POLY_GT4*)arg0->tag)->x2 = 0;
-    ((POLY_GT4*)arg0->tag)->y2 = 0;
-}
-
-void func_801D2684(POLY_GT4* arg0) {
-    func_801D25A4(arg0);
-    arg0->p3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 1;
-    ((POLY_GT4*)arg0->tag)->code = 2;
-    ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
-}
-
-void func_801D26D8(POLY_GT4* arg0) {
-    arg0->p3 = 0;
-    arg0->pad3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 0;
-    ((POLY_GT4*)arg0->tag)->code = 4;
-    ((POLY_GT4*)arg0->tag)->pad3 = 8;
-}
-
-s32 func_801D2704(s32 arg0, u8 arg1) {
-    s32 var_v0;
-    s32 ret = 0;
-    u8* var_a0 = arg0 + 4;
-    u8* var_v1;
-    s32 i;
-
-    for (i = 0; i < 4; i++) {
-        var_v1 = var_a0;
-        do {
-            var_v0 = *var_v1 - arg1;
-
-            if (var_v0 < 0) {
-                var_v0 = 0;
-            } else {
-                ret |= 1;
-            }
-
-            *var_v1 = var_v0;
-            var_v1++;
-        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
-
-        var_a0 += 0xC;
-    }
-
-    return ret;
-}
