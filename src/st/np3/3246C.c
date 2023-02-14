@@ -167,7 +167,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B44B4);
 void EntityClickSwitch(Entity* entity) {
     s32 temp_a0 = func_801BD588(entity, 8, 4, 4);
     Entity* player = &PLAYER;
-    
+
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_80180AA8);
