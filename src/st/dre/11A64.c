@@ -27,7 +27,6 @@ extern u16 D_80180494[];
 extern s16 D_80180D80[];
 extern LayoutObject* D_801A32C4;
 extern LayoutObject* D_801A32C8;
-extern u16 D_8007308E;
 extern u16 D_801804AC[];
 extern u16 D_80180470[];
 extern s32 D_801811B0[];

@@ -813,7 +813,7 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
-extern u16 D_8007308E; // camera X
+extern s16 D_8007308E; // camera X
 extern s16 D_80073092; // camera Y
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize

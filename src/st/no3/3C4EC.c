@@ -74,13 +74,58 @@ void EntityPushAlucard(Entity* entity) {
         } else {
             *D_80072EF4 = 0x2040;
         }
-        g_api.func_8010E0A8(roomLayout);
+        g_api.func_8010E0A8();
         D_80072EFC = 1;
         player->posX.val += 0x48000;
     }
 }
 
+// Instruction reorder, only matches in PSY-Q 4.0
+// Probably ASPSX
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId53);
+#else
+void EntityUnkId53(Entity* entity) {
+    s32 temp_v0;
+    Entity* player = &PLAYER;
+
+    switch (entity->step) {
+    case 0:
+        if (*D_8003BE20 != 0) {
+            DestroyEntity(entity);
+            return;
+        }
+        InitializeEntity(&D_80180AD0);
+        g_EntityArray[1].unk7C.S8.unk0 = 1;
+        *D_80072EF4 = 0x2000;
+        D_80072EFC = 0xFF;
+        player->posX.i.hi = 8;
+        *(s32*)&entity->unk7C.s = 0x28000;
+        break;
+
+    case 1:
+        player->posX.val += *(s32*)&entity->unk7C.s;
+        D_80072EFC = 1;
+        if ((player->posX.i.hi + (s16)D_8007308E) > 120) {
+            *D_80072EF4 = 0;
+            entity->step++;
+        }
+        break;
+
+    case 2:
+        if (*(s32*)&entity->unk7C.s != 0) {
+            *(s32*)&entity->unk7C.s -= 0x2800;
+            func_801C8C84(&PLAYER, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
+        } else {
+            D_8003C8B8 = 1;
+            entity->step++;
+        }
+        player->posX.val += *(s32*)&entity->unk7C.s;
+        D_80072EFC = 1;
+        break;
+    }
+}
+#endif
 
 // large foreground tree during intro
 INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityForegroundTree);
