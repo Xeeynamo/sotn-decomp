@@ -224,14 +224,14 @@ void EntityTrapDoor(Entity* entity) {
             g_CurrentRoomTileLayout.addr1->unkA90 = 0x6C9;
             entity->step = 128;
         }
-            
+
     case 1:
         if (entity->unk48 != 0) {
             D_8018123C = 1;
             entity->step++;
         }
         break;
-        
+
     case 2:
         AnimateEntity(&D_80181240, entity);
     }
@@ -452,7 +452,41 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId5A);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId5B);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId5E);
+void EntityUnkId5E(Entity* entity) {
+    s16 animCurFrame;
+
+    switch (entity->step) {
+    case 0:
+        animCurFrame = entity->animCurFrame;
+        InitializeEntity(&D_80180B00);
+        entity->animCurFrame = animCurFrame;
+        entity->animSet = -0x7FF8;
+        entity->palette = 0x2D6;
+        entity->unk5A = 0x44;
+        if (entity->subId != 0) {
+            entity->unk19 = 8;
+            entity->unk84.U16.unk0 = 0x40;
+        } else {
+            entity->unk19 = 0xC;
+            entity->unk84.U16.unk0 = 0x20;
+        }
+        entity->unk6C = 0x40;
+        entity->blendMode = 0x30;
+        break;
+
+    case 1:
+        if (!(--entity->unk84.U16.unk0)) {
+            DestroyEntity(entity);
+            break;
+        }
+        if (entity->subId != 0) {
+            entity->unk6C = (s8)entity->unk6C - 1;
+        } else {
+            entity->unk6C += -2;
+        }
+        break;
+    }
+}
 
 void func_801C13F8() {
     Entity* entity;
