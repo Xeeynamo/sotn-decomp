@@ -333,18 +333,18 @@ void EntityUnkId49(Entity* entity) {
                 InitializeEntity(&D_80180ADC);
                 return;
             case 1:
-                g_CurrentRoomTileLayout.addr1->unkC =
-                    g_CurrentRoomTileLayout.addr1->unk12;
-                g_CurrentRoomTileLayout.addr1->unkE =
-                    g_CurrentRoomTileLayout.addr1->unk14;
-                g_CurrentRoomTileLayout.addr1->unk6C =
-                    g_CurrentRoomTileLayout.addr1->unk72;
-                g_CurrentRoomTileLayout.addr1->unk6E =
-                    g_CurrentRoomTileLayout.addr1->unk74;
-                g_CurrentRoomTileLayout.addr1->unkCC =
-                    g_CurrentRoomTileLayout.addr1->unkD2;
-                g_CurrentRoomTileLayout.addr1->unkCE =
-                    g_CurrentRoomTileLayout.addr1->unkD4;
+                g_CurrentRoomTileLayout.addr1->unk00C =
+                    g_CurrentRoomTileLayout.addr1->unk012;
+                g_CurrentRoomTileLayout.addr1->unk00E =
+                    g_CurrentRoomTileLayout.addr1->unk014;
+                g_CurrentRoomTileLayout.addr1->unk06C =
+                    g_CurrentRoomTileLayout.addr1->unk072;
+                g_CurrentRoomTileLayout.addr1->unk06E =
+                    g_CurrentRoomTileLayout.addr1->unk074;
+                g_CurrentRoomTileLayout.addr1->unk0CC =
+                    g_CurrentRoomTileLayout.addr1->unk0D2;
+                g_CurrentRoomTileLayout.addr1->unk0CE =
+                    g_CurrentRoomTileLayout.addr1->unk0D4;
                 entity->step++;
                 break;
             }

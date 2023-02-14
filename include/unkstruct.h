@@ -66,27 +66,27 @@ typedef struct {
 } Unkstruct6; // size = 0x4
 
 typedef struct Unkstruct8_ADDR {
-    char pad0[0xC];
-    u16 unkC;
-    u16 unkE;
-    char pad10[0x2];
-    u16 unk12;
-    u16 unk14;
-    char pad16[0x56];
-    u16 unk6C;
-    u16 unk6E;
-    char pad70[0x2];
-    u16 unk72;
-    u16 unk74;
-    char pad76[0x56];
-    u16 unkCC;
-    u16 unkCE;
-    char padD0[0x2];
-    u16 unkD2;
-    u16 unkD4;
-    char pad[0x9B8];
-    s16 unkA8E;
-    s16 unkA90;
+    /* 0x000 */ char pad000[0xC];
+    /* 0x00C */ u16 unk00C;
+    /* 0x00E */ u16 unk00E;
+    /* 0x010 */ char pad010[0x2];
+    /* 0x012 */ u16 unk012;
+    /* 0x014 */ u16 unk014;
+    /* 0x016 */ char pad016[0x56];
+    /* 0x06C */ u16 unk06C;
+    /* 0x06E */ u16 unk06E;
+    /* 0x070 */ char pad070[0x2];
+    /* 0x072 */ u16 unk072;
+    /* 0x074 */ u16 unk074;
+    /* 0x076 */ char pad076[0x56];
+    /* 0x0CC */ u16 unk0CC;
+    /* 0x0CE */ u16 unk0CE;
+    /* 0x0D0 */ char pad0D0[0x2];
+    /* 0x0D2 */ u16 unk0D2;
+    /* 0x0D4 */ u16 unk0D4;
+    /* 0x0D6 */ char pad0D6[0x9B8];
+    /* 0xA8E */ s16 unkA8E;
+    /* 0xA90 */ s16 unkA90;
 } Unkstruct8_ADDR;
 
 typedef struct {
