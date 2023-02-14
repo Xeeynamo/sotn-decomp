@@ -642,7 +642,7 @@ typedef struct {
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
     /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
-    /* 8003C844 */ void* (*func_8010E0A8)();
+    /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
     /* 8003C850 */ void* D_800A8720;
