@@ -256,7 +256,6 @@ void EntityUnkId2A(Entity* entity) {
 }
 
 // switch that goes downwards when you stand on it
-// INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntitySwitch);
 extern u8 D_8003BE1E[];
 void EntitySwitch(Entity* entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
