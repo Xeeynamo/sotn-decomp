@@ -1,0 +1,47 @@
+#include "stage.h"
+
+void CreateEntityFromCurrentEntity(u16, Entity*);
+void ReplaceBreakableWithItemDrop(Entity*);
+
+extern u8* D_80180850;
+extern u16 D_80180AC4[];
+extern u16 D_80180AE8[];
+extern u16 D_80180B00[];
+extern u16 D_80180B18[];
+extern u16* D_80180B90;
+extern ObjInit2 D_80180BFC[];
+extern u16 D_8018139C[];
+extern u16 D_8018139E[];
+extern s16 D_801820C4[];
+u8* D_80182438[];
+extern s32 D_801824F4[];
+extern u8* D_801825A0[];
+extern u16 D_80182628[];
+extern s32 D_80182650[];
+extern u8 D_80182668[];
+extern u16 D_8018266C[];
+extern s32 D_80182638[];
+extern u8 D_8018267C[];
+extern ObjInit2 D_80182764[];
+extern s32 c_GoldPrizes[];
+extern s32 D_80183C30;
+extern s32 D_80183C38;
+extern u16* D_80183C44;
+extern u16* D_80183C60;
+extern LayoutObject* D_801D7110;
+extern LayoutObject* D_801D7114;
+extern s8 D_801D7118;
+extern s8 D_801D711C;
+extern s16 D_801D7D30;
+extern s16 D_801D7D32;
+extern s16 D_801D7D36;
+extern s16 D_801D7D60;
+extern s16 D_801D7D62;
+extern s32 D_801D7D64;
+extern s16 D_801D7D2A;
+extern u16 D_801D7D2C;
+extern s16 D_801D7D2E;
+extern s8 D_801D7D3A;
+extern s8 D_801D7D3B;
+extern LayoutObject* g_pStObjLayout[];
+extern PfnEntityUpdate PfnEntityUpdates[];
