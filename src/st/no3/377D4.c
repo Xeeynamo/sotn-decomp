@@ -162,7 +162,35 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCavernDoor);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B9C44);
 
 // switch that clicks when you step on it
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityClickSwitch);
+void EntityClickSwitch(Entity* entity) {
+    s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B18);
+        entity->animCurFrame = 9;
+        entity->zPriority = 0x5E;
+        if (*D_8003BE1D != 0) {
+            entity->step = 2;
+            entity->posY.i.hi += 4;
+        }
+        break;
+
+    case 1:
+        if (temp_a0 != 0) {
+            // TODO: !FAKE
+            D_800733DE++; // should be PLAYER.posY.i.hi but it doesn't match
+            entity->posY.val += 0xC000;
+            if ((D_80073092 + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - D_80073092;
+                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                *D_8003BE1D = 1;
+                entity->step++;
+            }
+        }
+        break;
+    }
+}
 
 // smaller weight blocking path near cube of zoe
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityZoeSmallWeight);

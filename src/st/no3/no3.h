@@ -2,8 +2,10 @@
 
 void CreateEntityFromCurrentEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
+s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 
 extern u8 D_8003BE1C[]; // probably part of a struct
+extern u8 D_8003BE1D[]; // probably part of a struct
 extern u8* D_80180850;
 extern u16 D_80180AC4[];
 extern u16 D_80180AE8[];
