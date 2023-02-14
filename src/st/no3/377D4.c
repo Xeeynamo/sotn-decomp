@@ -224,14 +224,14 @@ void EntityTrapDoor(Entity* entity) {
             g_CurrentRoomTileLayout.addr1->unkA90 = 0x6C9;
             entity->step = 128;
         }
-            
+
     case 1:
         if (entity->unk48 != 0) {
             D_8018123C = 1;
             entity->step++;
         }
         break;
-        
+
     case 2:
         AnimateEntity(&D_80181240, entity);
     }
