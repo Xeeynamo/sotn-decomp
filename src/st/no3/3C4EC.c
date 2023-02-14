@@ -19,12 +19,9 @@ void EntityPushAlucard(Entity* entity) {
 
     case 1:
         player->posX.val += 0x60000;
-        if ((s16)roomLayout->unkA > 0x800) {
+        if (roomLayout->unkA > 0x800) {
             g_EntityArray[UNK_ENTITY_1].unk7C.S8.unk0 = 0;
             *D_80072EF4 = 0x2000;
-            do {
-
-            } while (0);
             entity->step++;
         }
         player->animCurFrame = 0;
@@ -35,7 +32,7 @@ void EntityPushAlucard(Entity* entity) {
     case 2:
         player->posX.val += 0x88000;
         *D_8009740C += 4;
-        if (*D_8009740C == 0xC0) {
+        if (*D_8009740C == 192) {
             entity->unk80.modeS32 = 0x48000;
             entity->step++;
         }
@@ -60,7 +57,7 @@ void EntityPushAlucard(Entity* entity) {
 
     case 4:
         player->posX.val += 0x48000;
-        if ((s16)roomLayout->unkA > 0xF80) {
+        if (roomLayout->unkA > 0xF80) {
             g_api.PlaySfx(0x6EF);
             *D_80072EF4 = 0x2040;
             entity->unk7C.S8.unk0 = 0;

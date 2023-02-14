@@ -93,7 +93,7 @@ typedef struct {
     /* 0x0 */ Unkstruct8_ADDR* addr1;
     /* 0x4 */ void* addr2;
     /* 0x8 */ u16 unk8;
-    /* 0xA */ u16 unkA;
+    /* 0xA */ s16 unkA;
     /* 0xC */ u16 unkC;
     /* 0xE */ u16 unkE;
 } Unkstruct8; // size = 0x10
