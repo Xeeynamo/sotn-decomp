@@ -198,7 +198,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4680);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4940);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4BE8);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityTrapDoor);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4D60);
 
@@ -216,11 +216,11 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B5DE8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B5E98);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B5F60);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntitySwitch);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B6084);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B644C);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityUnkId49);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B653C);
 
