@@ -73,7 +73,7 @@ void EntityBat(Entity* entity) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/4997C", EntityZombie);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/4997C", func_801C9E28);
+INCLUDE_ASM("asm/st/np3/nonmatchings/4997C", EntityUnkId4D);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/4997C", func_801C9F98);
 
