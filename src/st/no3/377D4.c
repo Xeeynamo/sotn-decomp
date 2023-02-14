@@ -211,17 +211,17 @@ void EntityTrapDoor(Entity* entity) {
         entity->unk3C = 1;
         if (D_8018123C == 0) {
             if (PLAYER.posY.val < entity->posY.val) {
-                g_CurrentRoomTileLayout.addr1->unkA8E = 0x129;
-                g_CurrentRoomTileLayout.addr1->unkA90 = 0x132;
+                g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x129;
+                g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x132;
                 DestroyEntity(entity);
                 break;
             }
-            g_CurrentRoomTileLayout.addr1->unkA8E = 0x6C8;
-            g_CurrentRoomTileLayout.addr1->unkA90 = 0x6C9;
+            g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
+            g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
         } else {
             entity->animCurFrame = 0x1E;
-            g_CurrentRoomTileLayout.addr1->unkA8E = 0x6C8;
-            g_CurrentRoomTileLayout.addr1->unkA90 = 0x6C9;
+            g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
+            g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
             entity->step = 128;
         }
 
@@ -333,18 +333,18 @@ void EntityUnkId49(Entity* entity) {
                 InitializeEntity(&D_80180ADC);
                 return;
             case 1:
-                g_CurrentRoomTileLayout.addr1->unk00C =
-                    g_CurrentRoomTileLayout.addr1->unk012;
-                g_CurrentRoomTileLayout.addr1->unk00E =
-                    g_CurrentRoomTileLayout.addr1->unk014;
-                g_CurrentRoomTileLayout.addr1->unk06C =
-                    g_CurrentRoomTileLayout.addr1->unk072;
-                g_CurrentRoomTileLayout.addr1->unk06E =
-                    g_CurrentRoomTileLayout.addr1->unk074;
-                g_CurrentRoomTileLayout.addr1->unk0CC =
-                    g_CurrentRoomTileLayout.addr1->unk0D2;
-                g_CurrentRoomTileLayout.addr1->unk0CE =
-                    g_CurrentRoomTileLayout.addr1->unk0D4;
+                g_CurrentRoomTileLayout.fg[6] =
+                    g_CurrentRoomTileLayout.fg[9];
+                g_CurrentRoomTileLayout.fg[7] =
+                    g_CurrentRoomTileLayout.fg[10];
+                g_CurrentRoomTileLayout.fg[0x36] =
+                    g_CurrentRoomTileLayout.fg[0x39];
+                g_CurrentRoomTileLayout.fg[0x37] =
+                    g_CurrentRoomTileLayout.fg[0x3A];
+                g_CurrentRoomTileLayout.fg[0x66] =
+                    g_CurrentRoomTileLayout.fg[0x69];
+                g_CurrentRoomTileLayout.fg[0x67] =
+                    g_CurrentRoomTileLayout.fg[0x6A];
                 entity->step++;
                 break;
             }
