@@ -166,7 +166,8 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B44B4);
 // switch that clicks when you step on it
 void EntityClickSwitch(Entity* entity) {
     s32 temp_a0 = func_801BD588(entity, 8, 4, 4);
-
+    Entity* player = &PLAYER;
+    
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_80180AA8);
@@ -180,8 +181,7 @@ void EntityClickSwitch(Entity* entity) {
 
     case 1:
         if (temp_a0 != 0) {
-            // TODO: !FAKE
-            D_800733DE++; // should be PLAYER.posY.i.hi but it doesn't match
+            player->posY.i.hi++;
             entity->posY.val += 0xC000;
             if ((D_80073092 + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - D_80073092;

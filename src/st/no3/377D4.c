@@ -164,6 +164,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B9C44);
 // switch that clicks when you step on it
 void EntityClickSwitch(Entity* entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
+    Entity* player = &PLAYER;
 
     switch (entity->step) {
     case 0:
@@ -178,8 +179,7 @@ void EntityClickSwitch(Entity* entity) {
 
     case 1:
         if (temp_a0 != 0) {
-            // TODO: !FAKE
-            D_800733DE++; // should be PLAYER.posY.i.hi but it doesn't match
+            player->posY.i.hi++;
             entity->posY.val += 0xC000;
             if ((D_80073092 + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - D_80073092;
@@ -256,7 +256,37 @@ void EntityUnkId2A(Entity* entity) {
 }
 
 // switch that goes downwards when you stand on it
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntitySwitch);
+// INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntitySwitch);
+extern u8 D_8003BE1E[];
+void EntitySwitch(Entity* entity) {
+    s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
+    Entity* player = &PLAYER;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B18);
+        entity->animCurFrame = 9;
+        entity->zPriority = 0x5E;
+        if (*D_8003BE1E != 0) {
+            entity->step = 2;
+            entity->posY.i.hi += 4;
+        }
+        break;
+
+    case 1:
+        if (temp_a0 != 0) {
+            player->posY.i.hi++;
+            entity->posY.val += 0x4000;
+            if ((D_80073092 + entity->posY.i.hi) > 193) {
+                entity->posY.i.hi = 193 - D_80073092;
+                *D_8003BE1E = 1;
+                g_api.PlaySfx(0x608);
+                entity->step++;
+            }
+        }
+        break;
+    }
+}
 
 // door preventing access to warp room / heart
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
