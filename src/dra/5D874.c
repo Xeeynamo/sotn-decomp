@@ -674,7 +674,7 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80104790);
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80105078);
 
 void func_80105408(void) {
-    D_80072EF4 = 0x1000;
+    *D_80072EF4 = 0x1000;
     D_80072EFC = 1;
 }
 
@@ -1032,7 +1032,7 @@ void func_8010A234(s32 arg0) {
         if ((temp == 0x2D) && (CheckEquipmentItemCount(0x19, 2) != 0)) {
             if (!(*(s32*)&D_80072F2C & 0x01000000)) {
                 PlaySfx(NA_SE_VO_AL_WHAT);
-                D_80072EF4 = 0;
+                *D_80072EF4 = 0;
                 D_80072EFC = 0x20;
                 func_8010FAF4();
                 D_8017A000();

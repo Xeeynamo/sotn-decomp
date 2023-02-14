@@ -65,11 +65,35 @@ typedef struct {
     /* 0x2 */ s16 y;
 } Unkstruct6; // size = 0x4
 
+typedef struct Unkstruct8_ADDR {
+    /* 0x000 */ char pad000[0xC];
+    /* 0x00C */ u16 unk00C;
+    /* 0x00E */ u16 unk00E;
+    /* 0x010 */ char pad010[0x2];
+    /* 0x012 */ u16 unk012;
+    /* 0x014 */ u16 unk014;
+    /* 0x016 */ char pad016[0x56];
+    /* 0x06C */ u16 unk06C;
+    /* 0x06E */ u16 unk06E;
+    /* 0x070 */ char pad070[0x2];
+    /* 0x072 */ u16 unk072;
+    /* 0x074 */ u16 unk074;
+    /* 0x076 */ char pad076[0x56];
+    /* 0x0CC */ u16 unk0CC;
+    /* 0x0CE */ u16 unk0CE;
+    /* 0x0D0 */ char pad0D0[0x2];
+    /* 0x0D2 */ u16 unk0D2;
+    /* 0x0D4 */ u16 unk0D4;
+    /* 0x0D6 */ char pad0D6[0x9B8];
+    /* 0xA8E */ s16 unkA8E;
+    /* 0xA90 */ s16 unkA90;
+} Unkstruct8_ADDR;
+
 typedef struct {
-    /* 0x0 */ void* addr1;
+    /* 0x0 */ Unkstruct8_ADDR* addr1;
     /* 0x4 */ void* addr2;
     /* 0x8 */ u16 unk8;
-    /* 0xA */ u16 unkA;
+    /* 0xA */ s16 unkA;
     /* 0xC */ u16 unkC;
     /* 0xE */ u16 unkE;
 } Unkstruct8; // size = 0x10

@@ -251,8 +251,8 @@ typedef struct Entity {
         } modeU8;
     } unk7E; // posY
     union {
-        /* 0x80 */ struct Entity* entityPtr;
         /* 0x80 */ s32 modeS32;
+        /* 0x80 */ struct Entity* entityPtr;
         struct {
             /* 0x80 */ s16 unk0;
             /* 0x82 */ s16 unk2;
@@ -642,7 +642,7 @@ typedef struct {
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
     /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
-    /* 8003C844 */ void* func_8010E0A8;
+    /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
     /* 8003C850 */ void* D_800A8720;
@@ -771,7 +771,7 @@ extern u16 g_Clut[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
-extern s32 D_80072EF4;
+extern s32 D_80072EF4[];
 extern u16 D_80072EF6;
 extern s32 D_80072EFC;
 extern s16 D_80072F00[];
@@ -813,7 +813,7 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
-extern u16 D_8007308E; // camera X
+extern s16 D_8007308E; // camera X
 extern s16 D_80073092; // camera Y
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
