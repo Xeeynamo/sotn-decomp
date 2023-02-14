@@ -15,4 +15,5 @@ extern s16 D_80181A50[];
 extern u16* D_80182554;
 extern u16* D_80182570;
 extern u8 D_8003BE1C[]; // probably part of a struct
+extern u8 D_8003BE1D[]; // probably part of a struct
 extern PfnEntityUpdate PfnEntityUpdates[];

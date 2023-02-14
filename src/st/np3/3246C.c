@@ -163,7 +163,36 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B40F8);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B44B4);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4558);
+// switch that clicks when you step on it
+void EntityClickSwitch(Entity* entity) {
+    s32 temp_a0 = func_801BD588(entity, 8, 4, 4);
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180AA8);
+        entity->animCurFrame = 9;
+        entity->zPriority = 0x5E;
+        if (*D_8003BE1D != 0) {
+            entity->step = 2;
+            entity->posY.i.hi += 4;
+        }
+        break;
+
+    case 1:
+        if (temp_a0 != 0) {
+            // TODO: !FAKE
+            D_800733DE++; // should be PLAYER.posY.i.hi but it doesn't match
+            entity->posY.val += 0xC000;
+            if ((D_80073092 + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - D_80073092;
+                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                *D_8003BE1D = 1;
+                entity->step++;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801B4680);
 
