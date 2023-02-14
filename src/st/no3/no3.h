@@ -3,6 +3,7 @@
 void CreateEntityFromCurrentEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 
+extern u8 D_8003BE1C[]; // probably part of a struct
 extern u8* D_80180850;
 extern u16 D_80180AC4[];
 extern u16 D_80180AE8[];

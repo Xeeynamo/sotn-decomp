@@ -114,7 +114,44 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityTransparentWater);
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B94F0);
 
 // lever and platform to open caverns door
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCavernDoorLever);
+void EntityCavernDoorLever(Entity* entity) {
+    s32 posX;
+    s32 posY;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B18);
+        entity->animCurFrame = 18;
+        entity->unk1E = -0x200;
+        entity->unk19 |= 4;
+        CreateEntityFromEntity(0x1E, entity, &entity[1]);
+        if (*D_8003BE1C != 0) {
+            entity->unk1E = 0;
+        }
+
+    case 1:
+        if (entity[1].unk84.S8.unk0 != 0) {
+            entity->unk1E += 4;
+            if (entity->unk1E > 0) {
+                entity->unk1E = 0;
+                if (*D_8003BE1C == 0) {
+                    g_api.PlaySfx(0x675);
+                }
+                *D_8003BE1C = 1;
+            } else if (!(g_blinkTimer & 0xF)) {
+                g_api.PlaySfx(0x675);
+            }
+        }
+        break;
+    }
+
+    posX = entity->posX.val;
+    posY = entity->posY.val;
+    posX += rcos(entity->unk1E) * 0x280;
+    posY += rsin(entity->unk1E) * 0x280;
+    entity[1].posX.val = posX;
+    entity[1].posY.val = posY;
+}
 
 // platform attached to lever at cavern door
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCavernDoorPlatform);
