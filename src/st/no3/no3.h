@@ -8,6 +8,7 @@ extern u8 D_8003BE1C[]; // probably part of a struct
 extern u8 D_8003BE1D[]; // probably part of a struct
 extern u8* D_80180850;
 extern u16 D_80180AC4[];
+extern u16 D_80180ADC[];
 extern u16 D_80180AE8[];
 extern u16 D_80180B00[];
 extern u16 D_80180B18[];

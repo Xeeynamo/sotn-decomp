@@ -325,7 +325,32 @@ void EntitySwitch(Entity* entity) {
 // door preventing access to warp room / heart
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId49);
+void EntityUnkId49(Entity* entity) {
+    do {
+        do {
+            switch (entity->step) {
+            case 0:
+                InitializeEntity(&D_80180ADC);
+                return;
+            case 1:
+                g_CurrentRoomTileLayout.addr1->unkC =
+                    g_CurrentRoomTileLayout.addr1->unk12;
+                g_CurrentRoomTileLayout.addr1->unkE =
+                    g_CurrentRoomTileLayout.addr1->unk14;
+                g_CurrentRoomTileLayout.addr1->unk6C =
+                    g_CurrentRoomTileLayout.addr1->unk72;
+                g_CurrentRoomTileLayout.addr1->unk6E =
+                    g_CurrentRoomTileLayout.addr1->unk74;
+                g_CurrentRoomTileLayout.addr1->unkCC =
+                    g_CurrentRoomTileLayout.addr1->unkD2;
+                g_CurrentRoomTileLayout.addr1->unkCE =
+                    g_CurrentRoomTileLayout.addr1->unkD4;
+                entity->step++;
+                break;
+            }
+        } while (0);
+    } while (0);
+}
 
 // pushes alucard to the right
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityPushAlucard);

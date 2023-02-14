@@ -66,7 +66,25 @@ typedef struct {
 } Unkstruct6; // size = 0x4
 
 typedef struct Unkstruct8_ADDR {
-    char pad[0xA8E];
+    char pad0[0xC];
+    u16 unkC;
+    u16 unkE;
+    char pad10[0x2];
+    u16 unk12;
+    u16 unk14;
+    char pad16[0x56];
+    u16 unk6C;
+    u16 unk6E;
+    char pad70[0x2];
+    u16 unk72;
+    u16 unk74;
+    char pad76[0x56];
+    u16 unkCC;
+    u16 unkCE;
+    char padD0[0x2];
+    u16 unkD2;
+    u16 unkD4;
+    char pad[0x9B8];
     s16 unkA8E;
     s16 unkA90;
 } Unkstruct8_ADDR;
