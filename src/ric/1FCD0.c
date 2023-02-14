@@ -3,7 +3,7 @@
 void func_8015BCD0(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    D_80072EF4 = 0;
+    *D_80072EF4 = 0;
     D_80072EFC = 4;
     switch (PLAYER.unk2E) {
     case 0:
