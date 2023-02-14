@@ -200,7 +200,42 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityZoeTallWeight);
 
 // trap door that leads to underground garden in saturn version.
 // also opens the one leading to the save room
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityTrapDoor);
+void EntityTrapDoor(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B18);
+        entity->animCurFrame = 27;
+        entity->zPriority = 0x6A;
+        entity->hitboxWidth = 16;
+        entity->hitboxHeight = 4;
+        entity->unk3C = 1;
+        if (D_8018123C == 0) {
+            if (PLAYER.posY.val < entity->posY.val) {
+                g_CurrentRoomTileLayout.addr1->unkA8E = 0x129;
+                g_CurrentRoomTileLayout.addr1->unkA90 = 0x132;
+                DestroyEntity(entity);
+                break;
+            }
+            g_CurrentRoomTileLayout.addr1->unkA8E = 0x6C8;
+            g_CurrentRoomTileLayout.addr1->unkA90 = 0x6C9;
+        } else {
+            entity->animCurFrame = 0x1E;
+            g_CurrentRoomTileLayout.addr1->unkA8E = 0x6C8;
+            g_CurrentRoomTileLayout.addr1->unkA90 = 0x6C9;
+            entity->step = 128;
+        }
+            
+    case 1:
+        if (entity->unk48 != 0) {
+            D_8018123C = 1;
+            entity->step++;
+        }
+        break;
+        
+    case 2:
+        AnimateEntity(&D_80181240, entity);
+    }
+}
 
 // left side of the breakable rock, drops pot roast
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityMermanRockLeftSide);
