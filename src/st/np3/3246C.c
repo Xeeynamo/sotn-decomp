@@ -644,4 +644,3 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C90E8);
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityBoneScimitar);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C9874);
-
