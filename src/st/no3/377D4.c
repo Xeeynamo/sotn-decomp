@@ -336,7 +336,34 @@ void EntityBackgroundCastleWall(Entity* entity) {
 INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFlyingOwlAndLeaves);
 
 // a single leaf from when the owl comes out in the intro
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingLeaf);
+void EntityFallingLeaf(Entity* entity) {
+    volatile int pad;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B00);
+        entity->animSet = -0x7FFF;
+        entity->animCurFrame = (entity->subId & 1) + 63;
+        entity->zPriority = 0xC1;
+        entity->accelerationX = D_801819E8[entity->subId * 2];
+        entity->accelerationY = D_801819EC[entity->subId * 2];
+        entity->unk68 = 0x1C0;
+        break;
+
+    case 1:
+        if (entity->accelerationX > 0) {
+            entity->accelerationX = entity->accelerationX - 0x1000;
+        }
+        if (entity->accelerationY <= 0xFFFF) {
+            entity->accelerationY = entity->accelerationY + 0x400;
+        }
+        if (entity->accelerationY > 0x10000) {
+            entity->accelerationY -= 0x400;
+        }
+        MoveEntity();
+        break;
+    }
+}
 
 void func_801BE544(void) {
     D_801D7D30 = 0x182;
