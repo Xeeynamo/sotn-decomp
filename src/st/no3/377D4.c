@@ -333,10 +333,8 @@ void EntityUnkId49(Entity* entity) {
                 InitializeEntity(&D_80180ADC);
                 return;
             case 1:
-                g_CurrentRoomTileLayout.fg[6] =
-                    g_CurrentRoomTileLayout.fg[9];
-                g_CurrentRoomTileLayout.fg[7] =
-                    g_CurrentRoomTileLayout.fg[10];
+                g_CurrentRoomTileLayout.fg[6] = g_CurrentRoomTileLayout.fg[9];
+                g_CurrentRoomTileLayout.fg[7] = g_CurrentRoomTileLayout.fg[10];
                 g_CurrentRoomTileLayout.fg[0x36] =
                     g_CurrentRoomTileLayout.fg[0x39];
                 g_CurrentRoomTileLayout.fg[0x37] =
