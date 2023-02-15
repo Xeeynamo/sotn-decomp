@@ -1347,7 +1347,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityExplosion2);
 
 // medium sized water splash used with merman
 void EntityMediumWaterSplash(Entity* entity) {
-    Entity* temp_v0;
+    Entity* newEntity;
 
     if (entity->step == 0) {
         InitializeEntity(D_80180B54);
@@ -1362,10 +1362,10 @@ void EntityMediumWaterSplash(Entity* entity) {
     AnimateEntity(D_80183994, entity);
     MoveEntity();
     if (entity->unk34 & 0x100) {
-        temp_v0 = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
-        if (temp_v0 != NULL) {
-            CreateEntityFromEntity(2, entity, temp_v0);
-            temp_v0->subId = 0;
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, entity, newEntity);
+            newEntity->subId = 0;
         }
         DestroyEntity(entity);
     }
