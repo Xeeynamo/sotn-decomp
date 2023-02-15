@@ -1345,9 +1345,6 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman3);
 // some sort of explosion
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityExplosion2);
 
-extern u16 D_80180B54[];
-extern u8 D_80183994[];
-
 // medium sized water splash used with merman
 void EntityMediumWaterSplash(Entity* entity) {
     Entity* temp_v0;
