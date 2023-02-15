@@ -139,7 +139,77 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId52);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 
+// regalloc
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId55);
+#else
+void EntityUnkId55(Entity* entity, u16 arg2) {
+    s32 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 temp_v0;
+    s16 temp_v0_2;
+    s16 temp_v1_2;
+    s16 var_a2;
+    u16 new_var2;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180AD0);
+        firstPolygonIndex = g_api.AllocPolygons(4, 9);
+        if (firstPolygonIndex == 0) {
+            DestroyEntity(entity);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        var_a2 = 0;
+        entity->posX.i.hi = 128;
+        entity->firstPolygonIndex = firstPolygonIndex;
+        entity->unk68 = 0x10;
+        entity->unk34 |= 0x08800000;
+
+        while (poly != 0) {
+            poly->x2 = 0;
+            poly->x0 = poly->x2 = var_a2;
+            var_a2 += 0x1E;
+            poly->tpage = 0xE;
+            poly->clut = 0x67;
+            poly->u2 = 0x61;
+            poly->u0 = 0x61;
+            poly->u3 = 0x7F;
+            poly->u1 = 0x7F;
+            poly->v1 = 0xE1;
+            poly->v0 = 0xE1;
+            poly->v3 = 0xFF;
+            poly->v2 = 0xFF;
+            poly->x1 = poly->x3 = var_a2;
+            poly->y1 = 0xC0;
+            poly->y0 = 0xC0;
+            poly->y3 = 0xE3;
+            poly->y2 = 0xE3;
+            poly->pad2 = 0x40;
+            poly->pad3 = 0;
+            poly = (POLY_GT4*)poly->tag;
+        }
+        break;
+
+    case 1:
+        new_var2 = 0x80 - entity->posX.i.hi;
+        entity->posX.i.hi = 0x80;
+        firstPolygonIndex = entity->firstPolygonIndex;
+        poly = &D_80086FEC[firstPolygonIndex];
+        while (poly != 0) {
+            temp_v0_2 = poly->x2 - new_var2;
+            temp_v1_2 = temp_v0_2 + 0x1E;
+            poly->x2 = temp_v0_2;
+            poly->x0 = temp_v0_2;
+            poly->x3 = temp_v1_2;
+            poly->x1 = temp_v1_2;
+            poly = (POLY_GT4*)poly->tag;
+        };
+        break;
+    }
+}
+#endif
 
 // shows part of the parallax background castle wall
 void EntityBackgroundCastleWall(Entity* entity) {
