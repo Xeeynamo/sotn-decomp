@@ -14,9 +14,10 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".bss"
 segments:
   - name: dra
     type: code
@@ -24,17 +25,19 @@ segments:
     vram:  0x800A0000
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x518, rodata]
-      - [0x1F18, rodata]
-      - [0x2BC0, rodata]
+      - [0x0, data]
+      - [0x518, data]
+      - [0x1F18, data]
+      - [0x2BC0, data]
+      - [0x3C40, data]
+      - [0x4A00, data]
       - [0x4B04, bin, equipment_data]
       - [0x7718, bin, accessory_data]
-      - [0x8000, rodata]
-      - [0x8900, rodata]
-      - [0xCEB0, rodata]
-      - [0xD670, rodata]
-      - [0x3B3F0, rodata]
+      - [0x8000, data]
+      - [0x8900, data]
+      - [0xCEB0, data]
+      - [0xD670, rodata] # not rodata but data
+      - [0x3B3B0, rodata]
       - [0x3B44C, .rodata, 42398]
       - [0x3B524, rodata]
       - [0x3B560, rodata]
@@ -76,5 +79,9 @@ segments:
       - [0x75DA0, c, 75DA0]
       - [0x75F54, c, 75F54]
       - [0x953A0, c, 953A0]
-      - [0x962AC, data]
+      - [0x962AC, sbss]
+  - name: dra_data
+    type: data
+    start: 0x9B6A0
+    vram:  0x8013B6A0
   - [0x119870]
