@@ -1459,4 +1459,34 @@ void func_801D59D0(void) {
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityBoneScimitar);
 
 // debris that rotates and falls down
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityFallingDebris);
+// INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityFallingDebris);
+extern u16 D_80180B84[];
+extern s16 D_80183BA8[];
+
+void EntityFallingDebris(Entity* entity) {
+    if (entity->step) {
+        entity->unk88.S8.unk0--;
+        if (entity->unk88.S8.unk0 & 0xFF) {
+            entity->unk1E += D_80183BA8[entity->subId];
+            FallEntity();
+            MoveEntity();
+            return;
+        }
+        entity->objectId = ENTITY_EXPLOSION;
+        entity->pfnUpdate = EntityExplosion;
+        entity->subId = 0;
+        entity->step = 0;
+        return;
+    }
+    InitializeEntity(&D_80180B84);
+    entity->unk19 = 4;
+    entity->animCurFrame = *(u8*)&entity->subId + 16;
+
+    if (entity->facing != 0) {
+        entity->accelerationX = -entity->accelerationX;
+    }
+
+    if (entity->subId & 0xF00) {
+        entity->palette += entity->subId / 256;
+    }
+}

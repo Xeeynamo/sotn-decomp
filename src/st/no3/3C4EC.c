@@ -140,7 +140,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId52);
 INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 
 // regalloc
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId55);
 #else
 void EntityUnkId55(Entity* entity, u16 arg2) {

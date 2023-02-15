@@ -1073,15 +1073,10 @@ void func_801C3708(void) {
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityBoneScimitar);
 
-// Not matching by a single instruction, must likely compiler version
-// https://decomp.me/scratch/irC21
-#ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityFallingDebris);
-#else
 void EntityFallingDebris(Entity* entity) {
     if (entity->step) {
-        entity->unk88--;
-        if (entity->unk88 & 0xFF) {
+        entity->unk88.S8.unk0--;
+        if (entity->unk88.S8.unk0 & 0xFF) {
             entity->unk1E += D_801820E4[entity->subId];
             FallEntity();
             MoveEntity();
@@ -1095,7 +1090,7 @@ void EntityFallingDebris(Entity* entity) {
     }
     InitializeEntity(&D_80180C58);
     entity->unk19 = 4;
-    entity->animCurFrame = entity->subId + 16;
+    entity->animCurFrame = *(u8*)&entity->subId + 16;
 
     if (entity->facing != 0) {
         entity->accelerationX = -entity->accelerationX;
@@ -1105,7 +1100,6 @@ void EntityFallingDebris(Entity* entity) {
         entity->palette += entity->subId / 256;
     }
 }
-#endif
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801C3F9C); // Unique
 
