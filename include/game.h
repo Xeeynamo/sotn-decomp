@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+#include "common.h"
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
 #include <psxsdk/libc.h>
@@ -123,6 +124,22 @@ typedef struct {
     unsigned short unk2;
     unsigned char data[0];
 } ImgSrc;
+
+typedef struct {
+    /* 00 */ u32 gfxOff;
+    /* 04 */ u32 ovlOff;
+    /* 08 */ u32 ovlLen;
+    /* 0C */ u32 vhOff;
+    /* 10 */ u32 vhLen;
+    /* 14 */ u32 vbLen;
+    /* 18 */ u32 unk18;
+    /* 1C */ const char* unk1C;
+    /* 20 */ const char* unk20;
+    /* 24 */ const char* unk24;
+    /* 28 */ u8 unk28;
+    /* 29 */ u8 unk29;
+    /* 2A */ u16 unk2A;
+} Lba; /* size=0x2C */
 
 typedef struct {
     /* 0x00 */ s16 cursorX;
