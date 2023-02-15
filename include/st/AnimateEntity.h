@@ -1,5 +1,5 @@
 s32 AnimateEntity(const u8 frames[], Entity* entity) {
-    s32 flag = 0;
+    s32 flag = false;
     u16 currentFrameIndex = entity->animFrameIdx * 2;
     u8* currentFrame = frames + currentFrameIndex;
 
