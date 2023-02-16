@@ -1443,6 +1443,8 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801D2D40);
 // another merman variant
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman3);
 
+// https://decomp.me/scratch/SXkSP
+// https://decomp.me/scratch/v6yMP
 // some sort of explosion
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityExplosion2);
