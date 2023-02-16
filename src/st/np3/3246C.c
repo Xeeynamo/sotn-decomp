@@ -360,15 +360,22 @@ void PreventEntityFromRespawning(Entity* entity) {
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC6BC);
 
 s32 func_801BC7D4(void) {
-    s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
+    s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
-    if (temp_v1 >> 16) {
-        temp_v1 = -temp_v1;
+    if (yDistance < 0) {
+        yDistance = -yDistance;
     }
-    return temp_v1;
+    return yDistance;
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
+s32 func_801BC810(void) {
+    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
+
+    if (yDistance < 0) {
+        yDistance = -yDistance;
+    }
+    return yDistance;
+}
 
 s16 func_801BC844(void) {
     s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
