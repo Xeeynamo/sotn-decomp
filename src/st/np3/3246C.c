@@ -721,7 +721,7 @@ void func_801C7E18(Entity* self) {
         self->unk1C = 0x1A0;
         self->unk19 |= 3;
         self->unk84.S8.unk1 = 0x11;
-        self->unk84.S8.unk0 = *(s8*)&self->subId;
+        self->unk84.S8.unk0 = *(s8*)&self->subId; // wtf
         self->unk19 |= 8;
         break;
         
