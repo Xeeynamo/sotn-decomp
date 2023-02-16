@@ -330,19 +330,19 @@ void UpdateEntitySpawn(int variant) {
     FntPrint("objID %02X\n", g_SpawnObjId);
     FntPrint("subID %02X\n", g_SpawnSubId);
     FntPrint("func %08X\n", entUpdate);
-    if (g_pads->pressed & PAD_LEFT) {
+    if (g_pads->tapped & PAD_LEFT) {
         if (g_SpawnObjId > 1) {
             g_SpawnObjId--;
             g_SpawnSubId = 0;
         }
-    } else if (g_pads->pressed & PAD_RIGHT) {
+    } else if (g_pads->tapped & PAD_RIGHT) {
         if (g_SpawnObjId < def->length) {
             g_SpawnObjId++;
             g_SpawnSubId = 0;
         }
-    } else if (g_pads->pressed & PAD_UP) {
+    } else if (g_pads->tapped & PAD_UP) {
         g_SpawnSubId--;
-    } else if (g_pads->pressed & PAD_DOWN) {
+    } else if (g_pads->tapped & PAD_DOWN) {
         g_SpawnSubId++;
     }
 
