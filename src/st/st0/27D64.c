@@ -20,9 +20,12 @@ void MoveEntity();
 void func_801B5794(u8);
 void EntityExplosion(Entity*);
 
+extern u16 D_8018058C[];
 extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern ObjInit2 D_80180638[];
+extern u32 D_80181D7C[];
+const u8* D_80181E28[];
 
 void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
@@ -988,14 +991,6 @@ INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B633C);
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6358);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityExplosion);
-void EntityExplosion(Entity* entity);
-#else
-extern u16 D_8018058C[];
-extern u32 D_80181D7C[];
-extern u16 D_80181E28[][2];
-
 void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
         u32 zPriority;
@@ -1022,12 +1017,11 @@ void EntityExplosion(Entity* entity) {
         s32 posY = entity->posY.val;
         posY += entity->accelerationY;
         entity->posY.val = posY;
-        if (!AnimateEntity(D_80181E28 + entity->subId, entity)) {
+        if (!AnimateEntity(D_80181E28[entity->subId], entity)) {
             DestroyEntity(entity);
         }
     }
 }
-#endif
 
 INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6C5C);
 
