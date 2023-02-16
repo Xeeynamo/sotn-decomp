@@ -738,7 +738,7 @@ extern s32 D_8003C734;
 extern s32 D_8003C73C;
 extern void (*D_8003C744)(s32, s32);
 extern GameApi g_api;
-#ifndef STAGE_MAD
+#ifndef STAGE_MAD_FIX
 extern void (*g_pfnInitRoomEntities)(void);
 #endif
 extern u32 D_8003C8C4;
