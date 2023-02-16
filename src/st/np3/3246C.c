@@ -722,7 +722,50 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityMerman2);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityMerman);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8DF0);
+void func_801C8DF0(Entity* self) {
+    Entity* entity;
+
+    if (self->step == 0) {
+        InitializeEntity(&D_80180AD8);
+        self->hitboxWidth = 6;
+        self->animCurFrame = 0;
+        self->hitboxHeight = 3;
+
+        if (self->facing != 0) {
+            self->accelerationX = 0x10000 | 0x8000;
+        } else {
+            self->accelerationX = 0xFFFE0000 | 0x8000;
+        }
+
+        self->unk19 = 3;
+        self->unk1C = self->unk1A = 0x80;
+
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(ENTITY_15, self, entity);
+            entity->unk94 = 4;
+            entity->unk19 = 3;
+            entity->zPriority = self->zPriority + 8;
+            entity->unk1C = entity->unk1A = 192;
+        }
+    } else {
+        AnimateEntity(&D_80182400, self);
+        MoveEntity();
+
+        if (self->unk1A < 0x100) {
+            self->unk1C = self->unk1A += 8;
+        }
+
+        if (self->unk34 & 0x100) {
+            entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(2, self, entity);
+                entity->subId = 0;
+            }
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8F54);
 
