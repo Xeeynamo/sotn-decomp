@@ -206,7 +206,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityDeathStolenItem);
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId5A);
 
 // https://decomp.me/scratch/ZdlQS
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId5B);
 #else
 extern s32 D_80181B40;
