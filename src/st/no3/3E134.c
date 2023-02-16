@@ -1611,7 +1611,30 @@ void EntityFallingObject2(Entity* arg0) {
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId3D);
 
 // falling object, larger
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityLargeFallingObject);
+void EntityLargeFallingObject(Entity* self) {
+    u8 temp_v0;
+
+    if (self->step == 0) {
+        InitializeEntity(&D_80180B48);
+        self->animCurFrame = 13;
+        self->unk84.S8.unk0 = 0x20;
+        self->unk3C = 0;
+        self->accelerationY = 0x1000;
+        self->palette = self->subId + 0xE;
+        self->unk6C = 0x80;
+        self->unk19 |= 8;
+        self->unk34 |= 0x2000;
+        return;
+    }
+    MoveEntity();
+    temp_v0 = self->unk84.U8.unk0 - 1;
+    self->unk84.U8.unk0--;
+    self->accelerationY += 0x1000;
+    self->unk6C += 0xFE;
+    if (temp_v0 == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman2);
 
