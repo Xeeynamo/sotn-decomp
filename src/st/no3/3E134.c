@@ -1769,19 +1769,16 @@ s32 func_801C52EC(s32*);
 s32 func_801C5A98(s32*, s32);
 
 void func_801D59D0(void) {
-    s32 temp_s0;
-    s32 temp_v0;
+    s32 temp = func_801C52EC(&D_80183C30);
+    s32 temp2 = func_801C5A98(&D_80183C38, 3);
 
-    temp_s0 = func_801C52EC(&D_80183C30);
-    temp_v0 = func_801C5A98(&D_80183C38, 3);
-
-    if ((temp_s0 == 0x80) || (temp_v0 & 2)) {
+    if ((temp == 128) || (temp2 & 2)) {
         func_801C58A4(5);
         return;
     }
 
     if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
-        if (func_801C4F64() < 0x40) {
+        if (func_801C4F64() < 64) {
             if (g_CurrentEntity->facing != (func_801C4FD4() & 1)) {
                 func_801C58A4(4);
             }
