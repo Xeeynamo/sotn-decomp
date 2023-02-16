@@ -211,38 +211,38 @@ void EntityUnkId5B(Entity* entity) {
     entity->posX.i.hi = entity[-1].posX.i.hi;
     entity->posY.i.hi = entity[-1].posY.i.hi;
 
-    switch(entity->step) {
-        case 0:
-            InitializeEntity(&D_80180B00);
-            entity->animSet = -0x7FF8;
-            entity->palette = 0x2D6;
-            entity->animCurFrame = 0;
-            entity->unk5A = 0x44;
-            break;
-            
-        case 1:
-            if(entity->unk7C.u != 0) {
-                switch(entity->unk7C.u) {
-                    case 1:
-                        AnimateEntity(&D_80181B40, entity);
-                        break;
-                    case 2:
-                        AnimateEntity(&D_80181B4C, entity);
-                        break;
-                    case 3:
-                        AnimateEntity(&D_80181B4C, entity);
-                        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
-                        if (newEntity == NULL) {
-                            break;
-                        }
-                        CreateEntityFromCurrentEntity(0x5E, newEntity);
-                        newEntity->animCurFrame = entity->animCurFrame;
-                        newEntity->subId = 1;
-                        break;
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B00);
+        entity->animSet = -0x7FF8;
+        entity->palette = 0x2D6;
+        entity->animCurFrame = 0;
+        entity->unk5A = 0x44;
+        break;
+
+    case 1:
+        if (entity->unk7C.u != 0) {
+            switch (entity->unk7C.u) {
+            case 1:
+                AnimateEntity(&D_80181B40, entity);
+                break;
+            case 2:
+                AnimateEntity(&D_80181B4C, entity);
+                break;
+            case 3:
+                AnimateEntity(&D_80181B4C, entity);
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity == NULL) {
+                    break;
                 }
-            } else {
-                entity->animCurFrame = 0;
+                CreateEntityFromCurrentEntity(0x5E, newEntity);
+                newEntity->animCurFrame = entity->animCurFrame;
+                newEntity->subId = 1;
+                break;
             }
+        } else {
+            entity->animCurFrame = 0;
+        }
     }
     entity->unk7C.s = 0;
 }
