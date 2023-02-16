@@ -5,7 +5,7 @@
  */
 
 // hack to make the code compile for this weird overlay
-#define STAGE_MAD
+#define STAGE_MAD_FIX
 #include "stage.h"
 
 void func_801908DC(s16);
