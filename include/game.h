@@ -1,5 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
+#include "common.h"
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
 #include <psxsdk/libc.h>
@@ -74,7 +75,7 @@
 #define STAGE_IWA_LOAD 0x42
 #define STAGE_IGA_LOAD 0x43
 #define STAGE_HAGI_LOAD 0x44
-#define STAGE_UNKNOWN 0x45
+#define STAGE_SEL 0x45
 #define STAGE_TE1 0x46
 #define STAGE_TE2 0x47
 #define STAGE_TE3 0x48
@@ -123,6 +124,22 @@ typedef struct {
     unsigned short unk2;
     unsigned char data[0];
 } ImgSrc;
+
+typedef struct {
+    /* 00 */ u32 gfxOff;
+    /* 04 */ u32 ovlOff;
+    /* 08 */ u32 ovlLen;
+    /* 0C */ u32 vhOff;
+    /* 10 */ u32 vhLen;
+    /* 14 */ u32 vbLen;
+    /* 18 */ u32 unk18;
+    /* 1C */ const char* gfxName;
+    /* 20 */ const char* ovlName;
+    /* 24 */ const char* name;
+    /* 28 */ u8 unk28;
+    /* 29 */ u8 unk29;
+    /* 2A */ u16 unk2A;
+} Lba; /* size=0x2C */
 
 typedef struct {
     /* 0x00 */ s16 cursorX;
