@@ -361,7 +361,7 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC6BC);
 
 s32 func_801BC7D4(void) {
     s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-    
+
     if (temp_v1 >> 16) {
         temp_v1 = -temp_v1;
     }
