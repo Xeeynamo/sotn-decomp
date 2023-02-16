@@ -29,7 +29,7 @@ CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx 
 all: build
 build: $(BUILD_DIR)/$(MODULE_NAME).bin
 clean:
-	rm $(BUILD_DIR)/$(MODULE_NAME).*
+	rm -f $(BUILD_DIR)/$(MODULE_NAME).*
 	rm -rf $(BUILD_DIR)/tools/$(MODULE_NAME)
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")

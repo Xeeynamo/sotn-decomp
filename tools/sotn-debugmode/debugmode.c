@@ -33,6 +33,7 @@ int g_DebugMode;
 
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
+void DestroyEntity(Entity* item);
 void Init() {
     Entity* e;
 
@@ -41,19 +42,26 @@ void Init() {
     InitSfxPlayer();
 
     // forces to make the game think that the Familiar is actually active
+    DestroyEntity(e);
     e = &g_EntityArray[4];
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
     e->objectId = 0xD1;
     e->subId = 0;
-    // e->pfnUpdate = Update;
+    e->unk34 = 0x10000;
+    e->pfnUpdate = Update;
 }
 
 void UpdateEntitySpawn(int variant);
 void UpdateSfxPlayer(void);
 void Update(Entity* e) {
+    if (g_pads->tapped & PAD_R2) {
+        g_DebugMode++;
+    }
+
     switch (g_DebugMode) {
     case 0:
+        FntFlush(-1);
         break;
     case 1:
         UpdateEntitySpawn(0);
@@ -64,8 +72,10 @@ void Update(Entity* e) {
     case 3:
         UpdateSfxPlayer();
         break;
+    default:
+        g_DebugMode = 0;
+        break;
     }
-    FntFlush(-1);
 }
 
-void Dummy() { FntFlush(-1); }
+void Dummy() {}
