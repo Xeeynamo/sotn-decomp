@@ -215,7 +215,7 @@ extern u8* D_80181B4C;
 void EntityUnkId5B(Entity* entity) {
     /**
      * There might be a switch or two in here
-    */
+     */
     s32* var_a0;
     u16 temp_a0;
     s16 temp_v1;
@@ -223,12 +223,12 @@ void EntityUnkId5B(Entity* entity) {
 
     entity->posX.i.hi = entity[-1].posX.i.hi;
     entity->posY.i.hi = entity[-1].posY.i.hi;
-    
+
     temp_a0 = entity->step;
     if (temp_a0 != 0) { // probably a switch
         if (temp_a0 != 1) {
-        entity->unk7C.s = 0;
-        return;
+            entity->unk7C.s = 0;
+            return;
         }
         goto block_4;
     }
