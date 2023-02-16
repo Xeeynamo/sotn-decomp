@@ -124,11 +124,11 @@ void func_800E7458(void) {
 
     switch (D_80073060) {
     case 0:
-        g_StageId = STAGE_UNKNOWN;
+        g_StageId = STAGE_SEL;
         if (D_800978AC != 0) {
             D_8006C398 = 1;
             D_8006BAFC = 3;
-            g_mapTilesetId = STAGE_UNKNOWN;
+            g_mapTilesetId = STAGE_SEL;
         }
         D_80073060++;
         break;

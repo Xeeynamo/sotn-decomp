@@ -75,7 +75,7 @@
 #define STAGE_IWA_LOAD 0x42
 #define STAGE_IGA_LOAD 0x43
 #define STAGE_HAGI_LOAD 0x44
-#define STAGE_UNKNOWN 0x45
+#define STAGE_SEL 0x45
 #define STAGE_TE1 0x46
 #define STAGE_TE2 0x47
 #define STAGE_TE3 0x48
@@ -133,9 +133,9 @@ typedef struct {
     /* 10 */ u32 vhLen;
     /* 14 */ u32 vbLen;
     /* 18 */ u32 unk18;
-    /* 1C */ const char* unk1C;
-    /* 20 */ const char* unk20;
-    /* 24 */ const char* unk24;
+    /* 1C */ const char* gfxName;
+    /* 20 */ const char* ovlName;
+    /* 24 */ const char* name;
     /* 28 */ u8 unk28;
     /* 29 */ u8 unk29;
     /* 2A */ u16 unk2A;
