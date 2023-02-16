@@ -1014,7 +1014,9 @@ void EntityExplosion(Entity* entity) {
         entity->subId = entity->subId & 0xF;
         entity->accelerationY = D_80181D7C[entity->subId];
     } else {
-        entity->posY.val = entity->posY.val + entity->accelerationY;
+        s32 posY = entity->posY.val;
+        posY += entity->accelerationY;
+        entity->posY.val = posY;
         if (!AnimateEntity(D_80181E28[entity->subId], entity)) {
             DestroyEntity(entity);
         }
