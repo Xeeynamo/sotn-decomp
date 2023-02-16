@@ -1456,12 +1456,12 @@ s32 func_801D2D40(s16 arg0) {
     Entity* entity;
     int new_var;
     CollisionResult* sp10;
-    
+
     g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                          (s16)(arg0 + g_CurrentEntity->posY.i.hi), &sp10, 0);
     new_var = 0;
     new_var = (sp10->unk0 & 1) == new_var;
-    
+
     if (sp10->unk0 & 8) {
         if (*(u8*)&g_CurrentEntity->unkA0 == 0) {
             entity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
