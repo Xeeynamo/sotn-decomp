@@ -2,6 +2,9 @@
 
 void CreateEntityFromCurrentEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
+s32 func_801BCB5C(u16* arg0);
+s16 func_801BD308(u16* arg0, s16 arg1);
+s16 func_801BC7D4(void);
 int func_801CD658();
 void EntityPriceDrop(Entity* entity);
 void EntityInventoryDrop(Entity* entity);
@@ -21,6 +24,8 @@ extern u8* D_801822C0;
 extern s32 D_80182440[];
 extern u8 D_80182454[];
 extern u16 D_80182458[];
+extern s32 D_80182540;
+extern s32 D_80182548;
 extern u16* D_80182554;
 extern u16* D_80182570;
 extern u16* D_80182400;

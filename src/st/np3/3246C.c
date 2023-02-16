@@ -876,7 +876,24 @@ void EntityMermanExplosion(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C90E8);
+void func_801C90E8(void) {
+    s32 temp = func_801BCB5C(&D_80182540);
+    s16 temp2 = func_801BD308(&D_80182548, 3);
+
+    if ((temp == 128) || (temp2 & 2)) {
+        func_801BD114(5);
+        return;
+    }
+    if ((g_CurrentEntity->unk7C.U8.unk0) == 0) {
+        if (func_801BC7D4() < 64) {
+            if (g_CurrentEntity->facing != (func_801BC844() & 1)) {
+                func_801BD114(4);
+            }
+        }
+    } else {
+        g_CurrentEntity->unk7C.S8.unk0--;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityBoneScimitar);
 
