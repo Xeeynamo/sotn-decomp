@@ -250,7 +250,8 @@ INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F62E8);
 
 INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F6304);
 
-INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", DrawMenuAlucardCloakPreview);
+INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8",
+            DrawMenuAlucardCloakPreview);
 
 INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F6508);
 
