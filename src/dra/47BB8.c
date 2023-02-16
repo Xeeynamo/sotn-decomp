@@ -249,10 +249,9 @@ INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", DrawMenuAlucardPortrait);
 INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F62E8);
 
 INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F6304);
-
-INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8",
-            DrawMenuAlucardCloakPreview);
-
+// clang-format off
+INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", DrawMenuAlucardCloakPreview);
+// clang-format on
 INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F6508);
 
 INCLUDE_ASM("config/../asm/dra/nonmatchings/47BB8", func_800F6568);

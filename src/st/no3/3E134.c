@@ -116,10 +116,10 @@ void EntityFallingLeaf(Entity* entity) {
 
     case 1:
         if (entity->accelerationX > 0) {
-            entity->accelerationX = entity->accelerationX - 0x1000;
+            entity->accelerationX -= 0x1000;
         }
-        if (entity->accelerationY <= 0xFFFF) {
-            entity->accelerationY = entity->accelerationY + 0x400;
+        if (entity->accelerationY < 0x10000) {
+            entity->accelerationY += 0x400;
         }
         if (entity->accelerationY > 0x10000) {
             entity->accelerationY -= 0x400;
@@ -1304,7 +1304,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->unk6C = 0x60;
         temp_v0 = entity->subId & 0xFF00;
         if (temp_v0 != 0) {
-            entity->zPriority = (u16)(temp_v0 >> 8);
+            entity->zPriority = temp_v0 >> 8;
         }
         entity->accelerationY += 0xFFFF0000;
         return;

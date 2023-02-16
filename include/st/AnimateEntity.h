@@ -1,5 +1,5 @@
 s32 AnimateEntity(const u8 frames[], Entity* entity) {
-    s32 flag = false;
+    s32 flag = 0;
     u16 currentFrameIndex = entity->animFrameIdx * 2;
     u8* currentFrame = frames + currentFrameIndex;
 
@@ -7,7 +7,7 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
         if (currentFrame[0] > 0) {
             flag = 0x80;
             if (currentFrame[0] == 0xFF) {
-                return false;
+                return 0;
             }
 
             entity->animFrameDuration = *currentFrame++;
@@ -20,7 +20,7 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
             entity->animFrameDuration = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
             entity->animFrameIdx++;
-            return false;
+            return 0;
         }
     }
 
