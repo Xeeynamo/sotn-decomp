@@ -866,11 +866,11 @@ void func_801C8FEC(Entity* self) {
         self->animFrameDuration++;
         self->posY.val += self->accelerationY;
     }
-    
+
     if (!(self->animFrameDuration & 1)) {
         self->animCurFrame++;
     }
-    
+
     if (D_80182458[self->subId] < self->animFrameDuration) {
         DestroyEntity(self);
     }
