@@ -1641,7 +1641,50 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman2);
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman);
 
 // fireball shot by merman
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMermanFireball);
+void EntityMermanFireball(Entity* self) {
+    Entity* entity;
+
+    if (self->step == 0) {
+        InitializeEntity(&D_80180B6C);
+        self->hitboxWidth = 6;
+        self->animCurFrame = 0;
+        self->hitboxHeight = 3;
+
+        if (self->facing != 0) {
+            self->accelerationX = 0x10000 | 0x8000;
+        } else {
+            self->accelerationX = 0xFFFE0000 | 0x8000;
+        }
+
+        self->unk19 = 3;
+        self->unk1C = self->unk1A = 0x80;
+
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(ENTITY_15, self, entity);
+            entity->unk94 = 4;
+            entity->unk19 = 3;
+            entity->zPriority = self->zPriority + 8;
+            entity->unk1C = entity->unk1A = 192;
+        }
+    } else {
+        AnimateEntity(&D_80183AF0, self);
+        MoveEntity();
+
+        if (self->unk1A < 0x100) {
+            self->unk1C = self->unk1A += 8;
+        }
+
+        if (self->unk34 & 0x100) {
+            entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(2, self, entity);
+                entity->subId = 0;
+            }
+            DestroyEntity(self);
+        }
+    }
+}
 
 extern u16 D_80180B60;
 extern u8 D_80183B04;
