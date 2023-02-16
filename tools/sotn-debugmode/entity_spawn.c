@@ -327,11 +327,11 @@ void UpdateEntitySpawn(int variant) {
     entUpdate = def->values[g_SpawnObjId];
 
     FntPrint("alloc %d/%d\n", GetEntityAllocationCount(), MaxEntityCount);
-    FntPrint("objID %02X\n", g_SpawnObjId);
+    FntPrint("objID %02X\n", g_SpawnObjId + 1);
     FntPrint("subID %02X\n", g_SpawnSubId);
     FntPrint("func %08X\n", entUpdate);
     if (g_pads->tapped & PAD_LEFT) {
-        if (g_SpawnObjId > 1) {
+        if (g_SpawnObjId > 0) {
             g_SpawnObjId--;
             g_SpawnSubId = 0;
         }
