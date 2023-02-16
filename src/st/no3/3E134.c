@@ -205,7 +205,82 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityDeathStolenItem);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId5A);
 
+// https://decomp.me/scratch/ZdlQS
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId5B);
+#else
+extern s32 D_80181B40;
+extern u8* D_80181B4C;
+
+void EntityUnkId5B(Entity* entity) {
+    /**
+     * There might be a switch or two in here
+    */
+    s32* var_a0;
+    u16 temp_a0;
+    s16 temp_v1;
+    Entity* newEntity;
+
+    entity->posX.i.hi = entity[-1].posX.i.hi;
+    entity->posY.i.hi = entity[-1].posY.i.hi;
+    
+    temp_a0 = entity->step;
+    if (temp_a0 != 0) { // probably a switch
+        if (temp_a0 != 1) {
+        entity->unk7C.s = 0;
+        return;
+        }
+        goto block_4;
+    }
+    InitializeEntity(&D_80180B00);
+    entity->animSet = -0x7FF8;
+    entity->palette = 0x2D6;
+    entity->animCurFrame = 0;
+    entity->unk5A = 0x44;
+    entity->unk7C.s = 0;
+    return;
+block_4:
+    if (entity->unk7C.u != 0) { // // probably a switch
+        if (entity->unk7C.u != 2) {
+            if (entity->unk7C.u < 3) {
+                if (entity->unk7C.u == temp_a0) {
+                    goto block_11;
+                }
+                entity->unk7C.s = 0;
+                return;
+            }
+            if (entity->unk7C.u == 3) {
+                goto block_14;
+            }
+            entity->unk7C.u = 0;
+            return;
+        block_11:
+            var_a0 = &D_80181B40;
+            goto block_13;
+        }
+        var_a0 = &D_80181B4C;
+    block_13:
+        AnimateEntity(var_a0, entity);
+        entity->unk7C.s = 0;
+        return;
+    block_14:
+        AnimateEntity(&D_80181B4C, entity);
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (newEntity == NULL) {
+            entity->unk7C.s = 0;
+            return;
+        }
+        CreateEntityFromCurrentEntity(0x5E, newEntity);
+        newEntity->animCurFrame = entity->animCurFrame;
+        newEntity->subId = 1;
+        entity->unk7C.s = 0;
+        return;
+    }
+    entity->animCurFrame = 0;
+    entity->unk7C.s = 0;
+    return;
+}
+#endif
 
 void EntityUnkId5E(Entity* entity) {
     s16 animCurFrame;
