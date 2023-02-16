@@ -689,7 +689,20 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7880);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7954);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7D80);
+void func_801C7D80(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(&D_80180AB4);
+        self->animCurFrame = 0;
+        self->unk3C = 0;
+        self->unk34 |= 0x2000;
+        self->zPriority += 4;
+    }
+    MoveEntity();
+    self->accelerationY += 0x2800;
+    if (AnimateEntity(&D_801822B8, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7E18);
 
@@ -767,7 +780,21 @@ void func_801C8DF0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8F54);
+// some kind of falling object
+void func_801C8F54(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(&D_80180ACC);
+        self->animCurFrame = 0;
+        self->unk3C = 0;
+        self->zPriority += 4;
+        self->unk34 |= 0x2000;
+    }
+    MoveEntity();
+    self->accelerationY += 0x2800;
+    if (AnimateEntity(&D_80182414, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8FEC);
 
