@@ -1036,6 +1036,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C7680);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityRelicOrb);
 
+// https://decomp.me/scratch/Hp332
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityHeartDrop);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId0E);
