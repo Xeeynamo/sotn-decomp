@@ -180,3 +180,39 @@ void func_800E7458(void) {
         break;
     }
 }
+
+INCLUDE_ASM("asm/dra/nonmatchings/46FD4", func_800E768C);
+
+void func_800E7AEC(void) {
+    switch (D_8003C734) {
+    case 0:
+    case 1:
+    case 99:
+        func_800E451C();
+        break;
+    case 2:
+        func_800E4A14();
+        break;
+    case 3:
+        func_800E5584();
+        break;
+    case 4:
+        func_800E6358();
+        break;
+    case 5:
+        func_800E6FD4();
+        break;
+    case 6:
+        nullsub_9();
+        break;
+    case 7:
+        func_800E738C();
+        break;
+    case 8:
+        func_800E7458();
+        break;
+    case 9:
+        func_800E768C();
+        break;
+    }
+}
