@@ -219,6 +219,7 @@ void EntityUnkId5B(Entity* entity) {
             entity->animCurFrame = 0;
             entity->unk5A = 0x44;
             break;
+            
         case 1:
             if(entity->unk7C.u != 0) {
                 switch(entity->unk7C.u) {
