@@ -43,6 +43,7 @@ EntityRoomForeground = 0x801C3D28;
 EntityLargeFallingObject = 0x801C8010;
 EntityMerman2 = 0x801C80DC;
 EntityMerman = 0x801C8238;
+EntityMermanExplosion = 0x801C8FEC;
 EntityBoneScimitar = 0x801C91C4;
 EntityBat = 0x801C997C;
 EntityZombie = 0x801C9BC8;

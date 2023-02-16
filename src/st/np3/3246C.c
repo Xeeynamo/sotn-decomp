@@ -853,7 +853,7 @@ void func_801C8F54(Entity* self) {
     }
 }
 
-void func_801C8FEC(Entity* self) {
+void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(&D_80180A54);
         self->palette = 0x82BB;
