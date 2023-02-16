@@ -70,7 +70,14 @@ INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018D6B0);
 
 INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018D768);
 
-INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018D880);
+s32 func_8018D880(void) {
+    s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
+    
+    if (temp_v1 >> 16) {
+        temp_v1 = -temp_v1;
+    }
+    return temp_v1;
+}
 
 INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018D8BC);
 
