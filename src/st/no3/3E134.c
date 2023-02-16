@@ -1448,7 +1448,7 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman3);
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityExplosion2);
 #else
 void func_801D6880(POLY_GT4*, s32);
-void func_801D6FCC(POLY_GT4*, s16 );
+void func_801D6FCC(POLY_GT4*, s16);
 extern s32 D_801839A0;
 
 void EntityExplosion2(Entity* entity, s32 arg1) {
