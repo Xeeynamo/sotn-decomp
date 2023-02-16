@@ -72,7 +72,7 @@ INCLUDE_ASM("asm/st/rwrp/nonmatchings/8DF0", func_8018D768);
 
 s32 func_8018D880(void) {
     s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-    
+
     if (temp_v1 >> 16) {
         temp_v1 = -temp_v1;
     }
