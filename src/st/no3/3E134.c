@@ -1628,7 +1628,7 @@ void EntityUnkId3D(Entity* self) {
         self->unk84.S8.unk0 = *(s8*)&self->subId;
         self->unk19 |= 8;
         break;
-        
+
     case 1:
         temp = self->unk84.S8.unk0 - 1;
         self->unk84.S8.unk0--;
