@@ -305,6 +305,7 @@ void InitEntitySpawn(void) {
 }
 
 void UpdateEntitySpawn(int variant) {
+    int i;
     EntityDef* def;
     void* entUpdate;
 
@@ -346,6 +347,12 @@ void UpdateEntitySpawn(int variant) {
         g_SpawnSubId++;
     }
 
+    if (g_pads->tapped & (PAD_R1 | PAD_L1)) {
+        for (i = 0; i < MaxEntityCount; i++) {
+            DestroyEntity(&D_8007D858[i]);
+        }
+    }
+
     if (g_pads->tapped & PAD_L2 && entUpdate) {
         Entity* e = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (e != NULL) {
@@ -353,11 +360,14 @@ void UpdateEntitySpawn(int variant) {
             e->objectId = g_SpawnObjId;
             e->pfnUpdate = entUpdate;
             e->subId = g_SpawnSubId;
+            e->zPriority = PLAYER.zPriority + 0x20;
 
             // these coords will spawn the entity at the right side
             // of the camera, a bit far from Alucard.
             e->posX.i.hi = 176;
             e->posY.i.hi = 120;
+            e->hitboxWidth = 8;
+            e->hitboxHeight = 8;
         }
     }
 
