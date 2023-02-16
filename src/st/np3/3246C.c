@@ -853,7 +853,28 @@ void func_801C8F54(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8FEC);
+void func_801C8FEC(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(&D_80180A54);
+        self->palette = 0x82BB;
+        self->animSet = 2;
+        self->animCurFrame = D_80182454[self->subId];
+        self->accelerationY = D_80182440[self->subId];
+        self->step++;
+        return;
+    } else {
+        self->animFrameDuration++;
+        self->posY.val += self->accelerationY;
+    }
+    
+    if (!(self->animFrameDuration & 1)) {
+        self->animCurFrame++;
+    }
+    
+    if (D_80182458[self->subId] < self->animFrameDuration) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C90E8);
 
