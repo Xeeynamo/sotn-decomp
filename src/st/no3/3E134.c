@@ -1036,8 +1036,51 @@ INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C7680);
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityRelicOrb);
 
-// https://decomp.me/scratch/Hp332
+// https://decomp.me/scratch/TfITc
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityHeartDrop);
+#else
+extern u8 D_8003BEEC[];
+extern u16 D_80181C8C[];
+
+void EntityHeartDrop(Entity* self) {
+    u8 new_var;
+    u16 temp_a0_2;
+    u16 var_a0;
+    u32 temp_a1;
+    if (self->step == 0) {
+        var_a0 = self->subId;
+        self->unkB4 = var_a0 + 0x30;
+
+        new_var = var_a0;
+        if ((D_8003BEEC[new_var >> 3] >> (new_var & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+        var_a0 -= 0x30;
+        var_a0 = D_80181C8C[var_a0];
+        if (var_a0 < 0x80) {
+            self->unkB8.unkFuncB8 = EntityPriceDrop;
+        } else {
+            self->unkB8.unkFuncB8 = EntityInventoryDrop;
+            var_a0 -= 0x80;
+        }
+        self->subId = var_a0 + 0x8000;
+    } else {
+        temp_a0_2 = (u16)self->unkB4;
+        if (self->step < 5U) {
+            temp_a1 = temp_a0_2;
+            temp_a1 >>= 3;
+            if (self->unk48 != 0) {
+                D_8003BEEC[temp_a1] =
+                    D_8003BEEC[temp_a1] | (1 << (temp_a0_2 & 7));
+                self->step = 5;
+            }
+        }
+    }
+    self->unkB8.unkFuncB8(self);
+}
+#endif
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId0E);
 
