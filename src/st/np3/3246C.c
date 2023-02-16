@@ -386,9 +386,12 @@ s16 func_801BC844(void) {
     return var_a0;
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", MoveEntity);
+void MoveEntity(void) {
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
+}
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC8B8);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", FallEntity);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC8E4);
 
@@ -911,4 +914,31 @@ void func_801C90E8(void) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityBoneScimitar);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C9874);
+// debris that rotates and falls down
+void EntityFallingDebris(Entity* entity) {
+    if (entity->step) {
+        entity->unk88.S8.unk0--;
+        if (entity->unk88.S8.unk0 & 0xFF) {
+            entity->unk1E += D_801824B8[entity->subId];
+            FallEntity();
+            MoveEntity();
+            return;
+        }
+        entity->objectId = ENTITY_EXPLOSION;
+        entity->pfnUpdate = EntityExplosion;
+        entity->subId = 0;
+        entity->step = 0;
+        return;
+    }
+    InitializeEntity(&D_80180AF0);
+    entity->unk19 = 4;
+    entity->animCurFrame = *(u8*)&entity->subId + 16;
+
+    if (entity->facing != 0) {
+        entity->accelerationX = -entity->accelerationX;
+    }
+
+    if (entity->subId & 0xF00) {
+        entity->palette += entity->subId / 256;
+    }
+}
