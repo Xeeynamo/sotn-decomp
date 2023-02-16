@@ -71,9 +71,9 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         if ((entity->subId == 0) && (currentRoomTiles->unkA > 0xD80)) {
             entity->step++;
         }
-        if ((entity->posX.i.hi > 288)) {
+        if (entity->posX.i.hi > 288) {
             DestroyEntity(entity);
-        } else if (((entity->posY.i.hi < -16) != 0)) {
+        } else if (entity->posY.i.hi < -16) {
             DestroyEntity(entity);
         }
         break;
@@ -163,7 +163,33 @@ void func_801BE9F4(s32 arg0) {
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BEA20);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BECCC);
+void func_801BECCC(Entity* entity) {
+    /** TODO: !FAKE
+     * do while (0) fixed instruction reordering at
+     * entity->unk34 ^= 0x800000;
+     * but intruduces a problem in PlaySfx, which is fixed
+     * by using gameApi pointer.
+     */
+    GameApi* gameApi;
+
+    if (D_80097494 == 0x800) {
+        D_801D7D20 = 1;
+        g_api.FreePolygons(entity->firstPolygonIndex);
+        do {
+            entity->unk34 ^= 0x800000;
+        } while (0);
+        if (D_801D7D58 != (-1)) {
+            g_api.FreePolygons(D_801D7D58);
+        }
+        if (D_801D7D54 != (-1)) {
+            g_api.FreePolygons(D_801D7D54);
+        }
+        gameApi = &g_api;
+        (*gameApi).PlaySfx(0xA);
+        entity->step = 1;
+        entity->unk2E = 0;
+    }
+}
 
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BEDAC);
 
