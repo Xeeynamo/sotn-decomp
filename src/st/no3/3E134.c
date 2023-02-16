@@ -1593,18 +1593,18 @@ void EntityMediumWaterSplash(Entity* entity) {
 INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityLargeWaterSplash);
 
 // some kind of falling object
-void EntityFallingObject2(Entity* arg0) {
-    if (arg0->step == 0) {
+void EntityFallingObject2(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(D_80180B48);
-        arg0->animCurFrame = 0;
-        arg0->unk3C = 0;
-        arg0->unk34 |= 0x2000;
-        arg0->zPriority += 4;
+        self->animCurFrame = 0;
+        self->unk3C = 0;
+        self->unk34 |= 0x2000;
+        self->zPriority += 4;
     }
     MoveEntity();
-    arg0->accelerationY += 0x2800;
-    if (AnimateEntity(&D_801839A8, arg0) == 0) {
-        DestroyEntity(arg0);
+    self->accelerationY += 0x2800;
+    if (AnimateEntity(&D_801839A8, self) == 0) {
+        DestroyEntity(self);
     }
 }
 
