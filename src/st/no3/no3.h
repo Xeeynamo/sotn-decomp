@@ -46,6 +46,7 @@ extern ObjInit2 D_80182764[];
 extern s32 c_GoldPrizes[];
 extern u8 D_80183994[];
 extern u8 D_801839A8;
+extern u8* D_801839B0;
 extern u16* D_80183AF0;
 extern s32 D_80183C30;
 extern s32 D_80183C38;

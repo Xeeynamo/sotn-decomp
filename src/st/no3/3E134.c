@@ -1608,7 +1608,64 @@ void EntityFallingObject2(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId3D);
+void EntityUnkId3D(Entity* self) {
+    s8 temp; // probably !FAKE
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180AC4);
+        self->animSet = 2;
+        self->accelerationY = -0x50000;
+        self->palette = 0x8162;
+        self->blendMode = 0x10;
+        self->palette = 0x8018;
+        self->blendMode = 0x30;
+        self->unk6C = 0xA0;
+        self->unk1A = 0x100;
+        self->unk1C = 0x1A0;
+        self->unk19 |= 3;
+        self->unk84.S8.unk1 = 0x11;
+        self->unk84.S8.unk0 = *(s8*)&self->subId;
+        self->unk19 |= 8;
+        break;
+        
+    case 1:
+        temp = self->unk84.S8.unk0 - 1;
+        self->unk84.S8.unk0--;
+        self->unk84.S8.unk1--;
+        if (!(temp & 0xFF)) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(&D_801839B0, self);
+        MoveEntity();
+        self->accelerationY += 0x4000;
+        self->unk1A += 6;
+        self->unk1C -= 4;
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        if (!--self->unk84.U8.unk1) {
+            self->accelerationY = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(&D_801839B0, self) == 0) {
+            MoveEntity();
+            self->accelerationY += 0x4000;
+            self->unk1A += 6;
+            self->unk1C -= 4;
+        }
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // falling object, larger
 void EntityLargeFallingObject(Entity* self) {
