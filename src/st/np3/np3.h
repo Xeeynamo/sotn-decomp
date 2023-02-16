@@ -9,6 +9,7 @@ void EntityInventoryDrop(Entity* entity);
 extern u16 D_80180A78[];
 extern u16 D_80180A90[];
 extern u16 D_80180AA8[];
+extern u16 D_80180AB4[];
 extern u16* D_80180AFC;
 extern ObjInit2 D_80180C10[];
 extern s16 D_80181A50[];

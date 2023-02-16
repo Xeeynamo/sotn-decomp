@@ -372,7 +372,7 @@ s16 func_801BC844(void) {
     return var_a0;
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC888);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", MoveEntity);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC8B8);
 
@@ -693,7 +693,30 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7D80);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7E18);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8010);
+void EntityLargeFallingObject(Entity* self) {
+    u8 temp_v0;
+
+    if (self->step == 0) {
+        InitializeEntity(&D_80180AB4);
+        self->animCurFrame = 13;
+        self->unk84.S8.unk0 = 0x20;
+        self->unk3C = 0;
+        self->accelerationY = 0x1000;
+        self->palette = self->subId + 0xE;
+        self->unk6C = 0x80;
+        self->unk19 |= 8;
+        self->unk34 |= 0x2000;
+        return;
+    }
+    MoveEntity();
+    temp_v0 = self->unk84.U8.unk0 - 1;
+    self->unk84.U8.unk0--;
+    self->accelerationY += 0x1000;
+    self->unk6C += 0xFE;
+    if (temp_v0 == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityMerman2);
 
