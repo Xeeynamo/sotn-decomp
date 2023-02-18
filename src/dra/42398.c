@@ -462,7 +462,7 @@ loop_5:
         func_800EB314();
         ReadPads();
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
-            if (D_80097494 & PAD_START) {
+            if (D_80097494.unk0 & PAD_START) {
                 g_softResetTimer = 1;
             }
             if (g_softResetTimer != 0) {
@@ -776,4 +776,3 @@ s32 func_800E6300(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6358);
