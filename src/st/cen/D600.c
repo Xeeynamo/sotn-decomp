@@ -7,7 +7,9 @@
 #include "common.h"
 #include "stage.h"
 
+extern s32 D_80180390;
 extern s16 D_80180BBC[];
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
 extern LayoutObject* D_8019C768;
 extern s16 D_8019D3B4;
@@ -153,7 +155,13 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193298);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193410);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801934C4);
+void CreateEntityFromCurrentEntity(u16 arg0, Entity* arg1) {
+    DestroyEntity(arg1);
+    arg1->objectId = arg0;
+    arg1->pfnUpdate = *(&D_80180390 + arg0);
+    arg1->posX.i.hi = (s16)(u16)g_CurrentEntity->posX.i.hi;
+    arg1->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
+}
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193538);
@@ -246,7 +254,10 @@ s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
 s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B7C);
+void func_80194B7C(s32 arg0, s16 arg1) {
+    g_CurrentEntity->accelerationX = func_80194B34(arg0 & 0xFF, arg1);
+    g_CurrentEntity->accelerationY = func_80194B34((arg0 - 0x40) & 0xFF, arg1);
+}
 
 u8 func_80194BE8(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
@@ -267,7 +278,28 @@ u16 func_80194C68(s16 x, s16 y) {
     return func_80194BE8(x, y);
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194CB0);
+u8 func_80194CB0(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_80194D08(u16 slope, s16 speed) {
     Entity* entity;
@@ -307,7 +339,29 @@ u16 func_80194DFC(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194E44);
+u16 func_80194E44(u16 arg0, s16 arg1, s16 arg2) {
+    u16 var_v0 = arg1;
+    u16 temp_a2 = arg2 - arg1;
+    u16 var_v0_2;
+
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_80194EA4(u8 step) {
     Entity* entity = g_CurrentEntity;
@@ -537,4 +591,30 @@ void func_8019C674(POLY_GT4* poly) {
     ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8019C6A0);
+s32 func_8019C6A0(s32 arg0, u8 arg1) {
+    s32 var_v0;
+    s32 ret = 0;
+    u8* var_a0 = arg0 + 4;
+    u8* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        var_v1 = var_a0;
+        do {
+            var_v0 = *var_v1 - arg1;
+
+            if (var_v0 < 0) {
+                var_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            *var_v1 = var_v0;
+            var_v1++;
+        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
+
+        var_a0 += 0xC;
+    }
+
+    return ret;
+}
