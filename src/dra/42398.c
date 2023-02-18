@@ -775,4 +775,3 @@ s32 func_800E6300(void) {
     }
     return 0;
 }
-
