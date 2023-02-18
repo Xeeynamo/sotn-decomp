@@ -158,9 +158,9 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193410);
 void CreateEntityFromCurrentEntity(u16 arg0, Entity* arg1) {
     DestroyEntity(arg1);
     arg1->objectId = arg0;
-    arg1->pfnUpdate = *(&D_80180390 + arg0 );
-    arg1->posX.i.hi = (s16) (u16) g_CurrentEntity->posX.i.hi;
-    arg1->posY.i.hi = (s16) (u16) g_CurrentEntity->posY.i.hi;
+    arg1->pfnUpdate = *(&D_80180390 + arg0);
+    arg1->posX.i.hi = (s16)(u16)g_CurrentEntity->posX.i.hi;
+    arg1->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
 }
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
