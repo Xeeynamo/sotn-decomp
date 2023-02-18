@@ -246,7 +246,10 @@ s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
 s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80194B7C);
+void func_80194B7C(s32 arg0, s16 arg1) {
+    g_CurrentEntity->accelerationX = func_80194B34(arg0 & 0xFF, arg1);
+    g_CurrentEntity->accelerationY = func_80194B34((arg0 - 0x40) & 0xFF, arg1);
+}
 
 u8 func_80194BE8(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
