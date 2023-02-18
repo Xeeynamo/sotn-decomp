@@ -45,6 +45,7 @@ EntityRedEyeBust = 0x801B11C0;
 EntityAxeKnight = 0x801C45BC;
 EntityAxeKnightThrowingAxe = 0x801C4D18;
 EntityBloodDrips = 0x801C5568;
+EntityBloodSplatter = 0x801C4EAC;
 EntitySkeleton = 0x801C5FC4;
 EntitySpittleBone = 0x801C672C;
 EntitySpittleBoneSpit = 0x801C6C6C;
