@@ -133,7 +133,8 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySlogra);
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801B54A8);
 
 // projectile fired from slogra's spear
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySlograSpearProjectile);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntitySlograSpearProjectile);
 
 // gaibon boss
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityGaibon);
@@ -141,10 +142,12 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityGaibon);
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801B69E8);
 
 // small red projectile from gaibon
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntitySmallGaibonProjectile);
 
 // large red projectile from gaibon
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityLargeGaibonProjectile);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntityLargeGaibonProjectile);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801B6DE4);
 
@@ -1127,7 +1130,8 @@ void func_801C4550(void) {
 }
 
 // green knight that throws axes
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityAxeKnight); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntityAxeKnight); // Unique
 
 void func_801C4CC0(void) {
     if (g_CurrentEntity->subId != 0) {
@@ -1196,7 +1200,8 @@ INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityBloodSplatter);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801C53AC);
 
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityBloodDrips); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntityBloodDrips); // Unique
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801C5D20);
 
@@ -1215,7 +1220,8 @@ void func_801C5F2C(Entity* arg0) {
 }
 
 // throws bones at you
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySkeleton); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntitySkeleton); // Unique
 
 void func_801C6494(Entity* entity) {
     if (entity->step) {
@@ -1302,16 +1308,19 @@ void func_801C6678(Entity* entity) {
 }
 
 // moves around on walls and drips poison
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySpittleBone); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntitySpittleBone); // Unique
 
 // https://decomp.me/scratch/T0T7K mostly regalloc
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801C6B24);
 
 // spit projectile from spittle bone
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySpittleBoneSpit); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntitySpittleBoneSpit); // Unique
 
 // probably the subweapons floating in the breakable containers
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntitySubWeaponPickup); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntitySubWeaponPickup); // Unique
 
 void func_801C7538(Entity* entity) {
     s32 new_var;
@@ -1464,7 +1473,8 @@ s32 func_801C7CF0(Unkstruct5* arg0) {
 }
 
 // sealed door that displays "Magically Sealed" prompt
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityMagicallySealedDoor);
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntityMagicallySealedDoor);
 
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801C8ADC);
 
@@ -1585,4 +1595,5 @@ s32 func_801CA0FC(s32 arg0, u8 arg1) {
 }
 
 // particle effect that spawns life up item
-INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", EntityLifeUpSpawn); // Unique
+INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958",
+            EntityLifeUpSpawn); // Unique
