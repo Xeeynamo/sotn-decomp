@@ -48,7 +48,7 @@ void EntityBat(Entity* entity) {
 
     case 3:
         AnimateEntity(&D_80182554, entity);
-        func_801BC888();
+        MoveEntity();
         if (func_801BC810() < 0x20) {
             if (entity->facing == 0) {
                 entity->accelerationX = -0x10000;
@@ -62,7 +62,7 @@ void EntityBat(Entity* entity) {
 
     case 4:
         AnimateEntity(&D_80182554, entity);
-        func_801BC888();
+        MoveEntity();
         if ((u32)(entity->accelerationY + 0x10000) > 0x20000U) {
             *(s32*)&entity->unk7C.s = (s32) - *(s32*)&entity->unk7C.s;
         }

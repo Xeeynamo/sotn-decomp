@@ -315,7 +315,7 @@ typedef struct Entity {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity*, u32, struct Entity*);
+        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
         /* 0xB8 */ struct Entity* entityPtr;
         struct {
             /* 0xB8 */ u8 unk0;

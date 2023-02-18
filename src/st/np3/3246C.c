@@ -359,9 +359,23 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC6BC);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC7D4);
+s32 func_801BC7D4(void) {
+    s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC810);
+    if (yDistance < 0) {
+        yDistance = -yDistance;
+    }
+    return yDistance;
+}
+
+s32 func_801BC810(void) {
+    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
+
+    if (yDistance < 0) {
+        yDistance = -yDistance;
+    }
+    return yDistance;
+}
 
 s16 func_801BC844(void) {
     s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
@@ -372,9 +386,12 @@ s16 func_801BC844(void) {
     return var_a0;
 }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC888);
+void MoveEntity(void) {
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
+}
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC8B8);
+INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", FallEntity);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801BC8E4);
 
@@ -689,24 +706,239 @@ INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7880);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7954);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7D80);
+void func_801C7D80(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(&D_80180AB4);
+        self->animCurFrame = 0;
+        self->unk3C = 0;
+        self->unk34 |= 0x2000;
+        self->zPriority += 4;
+    }
+    MoveEntity();
+    self->accelerationY += 0x2800;
+    if (AnimateEntity(&D_801822B8, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C7E18);
+void func_801C7E18(Entity* self) {
+    s8 temp; // probably !FAKE
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8010);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180A54);
+        self->animSet = 2;
+        self->accelerationY = -0x50000;
+        self->palette = 0x8162;
+        self->blendMode = 0x10;
+        self->palette = 0x8018;
+        self->blendMode = 0x30;
+        self->unk6C = 0xA0;
+        self->unk1A = 0x100;
+        self->unk1C = 0x1A0;
+        self->unk19 |= 3;
+        self->unk84.S8.unk1 = 0x11;
+        self->unk84.S8.unk0 = *(s8*)&self->subId; // wtf
+        self->unk19 |= 8;
+        break;
+
+    case 1:
+        temp = self->unk84.S8.unk0 - 1;
+        self->unk84.S8.unk0--;
+        self->unk84.S8.unk1--;
+        if (!(temp & 0xFF)) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(&D_801822C0, self);
+        MoveEntity();
+        self->accelerationY += 0x4000;
+        self->unk1A += 6;
+        self->unk1C -= 4;
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        if (!--self->unk84.U8.unk1) {
+            self->accelerationY = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(&D_801822C0, self) == 0) {
+            MoveEntity();
+            self->accelerationY += 0x4000;
+            self->unk1A += 6;
+            self->unk1C -= 4;
+        }
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+void EntityLargeFallingObject(Entity* self) {
+    u8 temp_v0;
+
+    if (self->step == 0) {
+        InitializeEntity(&D_80180AB4);
+        self->animCurFrame = 13;
+        self->unk84.S8.unk0 = 0x20;
+        self->unk3C = 0;
+        self->accelerationY = 0x1000;
+        self->palette = self->subId + 0xE;
+        self->unk6C = 0x80;
+        self->unk19 |= 8;
+        self->unk34 |= 0x2000;
+        return;
+    }
+    MoveEntity();
+    temp_v0 = self->unk84.U8.unk0 - 1;
+    self->unk84.U8.unk0--;
+    self->accelerationY += 0x1000;
+    self->unk6C += 0xFE;
+    if (temp_v0 == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityMerman2);
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityMerman);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8DF0);
+void func_801C8DF0(Entity* self) {
+    Entity* entity;
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8F54);
+    if (self->step == 0) {
+        InitializeEntity(&D_80180AD8);
+        self->hitboxWidth = 6;
+        self->animCurFrame = 0;
+        self->hitboxHeight = 3;
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C8FEC);
+        if (self->facing != 0) {
+            self->accelerationX = 0x10000 | 0x8000;
+        } else {
+            self->accelerationX = 0xFFFE0000 | 0x8000;
+        }
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C90E8);
+        self->unk19 = 3;
+        self->unk1C = self->unk1A = 0x80;
+
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(ENTITY_15, self, entity);
+            entity->unk94 = 4;
+            entity->unk19 = 3;
+            entity->zPriority = self->zPriority + 8;
+            entity->unk1C = entity->unk1A = 192;
+        }
+    } else {
+        AnimateEntity(&D_80182400, self);
+        MoveEntity();
+
+        if (self->unk1A < 0x100) {
+            self->unk1C = self->unk1A += 8;
+        }
+
+        if (self->unk34 & 0x100) {
+            entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(2, self, entity);
+                entity->subId = 0;
+            }
+            DestroyEntity(self);
+        }
+    }
+}
+
+// some kind of falling object
+void func_801C8F54(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(&D_80180ACC);
+        self->animCurFrame = 0;
+        self->unk3C = 0;
+        self->zPriority += 4;
+        self->unk34 |= 0x2000;
+    }
+    MoveEntity();
+    self->accelerationY += 0x2800;
+    if (AnimateEntity(&D_80182414, self) == 0) {
+        DestroyEntity(self);
+    }
+}
+
+void EntityMermanExplosion(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(&D_80180A54);
+        self->palette = 0x82BB;
+        self->animSet = 2;
+        self->animCurFrame = D_80182454[self->subId];
+        self->accelerationY = D_80182440[self->subId];
+        self->step++;
+        return;
+    } else {
+        self->animFrameDuration++;
+        self->posY.val += self->accelerationY;
+    }
+
+    if (!(self->animFrameDuration & 1)) {
+        self->animCurFrame++;
+    }
+
+    if (D_80182458[self->subId] < self->animFrameDuration) {
+        DestroyEntity(self);
+    }
+}
+
+void func_801C90E8(void) {
+    s32 temp = func_801BCB5C(&D_80182540);
+    s16 temp2 = func_801BD308(&D_80182548, 3);
+
+    if ((temp == 128) || (temp2 & 2)) {
+        func_801BD114(5);
+        return;
+    }
+    if ((g_CurrentEntity->unk7C.U8.unk0) == 0) {
+        if (func_801BC7D4() < 64) {
+            if (g_CurrentEntity->facing != (func_801BC844() & 1)) {
+                func_801BD114(4);
+            }
+        }
+    } else {
+        g_CurrentEntity->unk7C.S8.unk0--;
+    }
+}
 
 INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", EntityBoneScimitar);
 
-INCLUDE_ASM("asm/st/np3/nonmatchings/3246C", func_801C9874);
+// debris that rotates and falls down
+void EntityFallingDebris(Entity* entity) {
+    if (entity->step) {
+        entity->unk88.S8.unk0--;
+        if (entity->unk88.S8.unk0 & 0xFF) {
+            entity->unk1E += D_801824B8[entity->subId];
+            FallEntity();
+            MoveEntity();
+            return;
+        }
+        entity->objectId = ENTITY_EXPLOSION;
+        entity->pfnUpdate = EntityExplosion;
+        entity->subId = 0;
+        entity->step = 0;
+        return;
+    }
+    InitializeEntity(&D_80180AF0);
+    entity->unk19 = 4;
+    entity->animCurFrame = *(u8*)&entity->subId + 16;
+
+    if (entity->facing != 0) {
+        entity->accelerationX = -entity->accelerationX;
+    }
+
+    if (entity->subId & 0xF00) {
+        entity->palette += entity->subId / 256;
+    }
+}
