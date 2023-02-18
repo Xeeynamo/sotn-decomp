@@ -7,7 +7,9 @@
 #include "common.h"
 #include "stage.h"
 
+extern s32 D_80180390;
 extern s16 D_80180BBC[];
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
 extern LayoutObject* D_8019C768;
 extern s16 D_8019D3B4;
@@ -153,7 +155,13 @@ INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193298);
 
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193410);
 
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_801934C4);
+void CreateEntityFromCurrentEntity(u16 arg0, Entity* arg1) {
+    DestroyEntity(arg1);
+    arg1->objectId = arg0;
+    arg1->pfnUpdate = *(&D_80180390 + arg0 );
+    arg1->posX.i.hi = (s16) (u16) g_CurrentEntity->posX.i.hi;
+    arg1->posY.i.hi = (s16) (u16) g_CurrentEntity->posY.i.hi;
+}
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80193538);
