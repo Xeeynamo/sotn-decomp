@@ -1049,25 +1049,22 @@ void EntityRoomForeground(Entity* entity) {
 INCLUDE_ASM("config/../asm/st/nz0/nonmatchings/30958", func_801C33D8);
 
 void func_801C3708(void) {
-    s32 temp_s0;
-    s32 temp_v0;
+    s32 temp = func_801BCF74(&D_8018216C);
+    s32 temp2 = func_801BD720(&D_80182174, 3);
 
-    temp_s0 = func_801BCF74(&D_8018216C);
-    temp_v0 = func_801BD720(&D_80182174, 3);
-
-    if ((temp_s0 == 0x80) || (temp_v0 & 2)) {
+    if ((temp == 128) || (temp2 & 2)) {
         func_801BD52C(5);
         return;
     }
 
     if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
-        if (func_801BCBEC() < 0x40) {
+        if (func_801BCBEC() < 64) {
             if (g_CurrentEntity->facing != (func_801BCC5C() & 1)) {
                 func_801BD52C(4);
             }
         }
     } else {
-        g_CurrentEntity->unk7C.U8.unk0 = (s8)g_CurrentEntity->unk7C.U8.unk0 - 1;
+        g_CurrentEntity->unk7C.U8.unk0--;
     }
 }
 

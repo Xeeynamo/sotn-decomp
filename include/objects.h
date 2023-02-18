@@ -62,7 +62,9 @@ typedef enum {
 
     // Its use is unknown but it is found in DRA, not in any other overlay.
     // Its meaning depends from the stage currently loaded.
-    /* 0x13 */ ENTITY_13 = 0x13
+    /* 0x13 */ ENTITY_13 = 0x13,
+
+    /* 0x15 */ ENTITY_15 = 0x15
 } SotnEntityIds;
 
 void EntityBreakable(Entity*);
