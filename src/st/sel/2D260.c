@@ -96,13 +96,13 @@ void func_801AD490(void) {
 }
 
 void func_801AD590(void) {
-    if (D_80097494 & 0x6000) {
+    if (D_80097494.unk0 & 0x6000) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (++D_801D6B0C == 5) {
             D_801D6B0C = 1;
         }
     }
-    if (D_80097494 & 0x9000) {
+    if (D_80097494.unk0 & 0x9000) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (--D_801D6B0C == 0) {
             D_801D6B0C = 4;
@@ -152,7 +152,7 @@ void func_801ADC3C(void) {
     s32* new_var = &D_801BCC84;
 
     if (*new_var >= 0 || D_801BD02C >= 0) {
-        u16* tmp = &D_80097496;
+        u16* tmp = &D_80097494.unk2;
         if (*tmp & 0x2000) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 1) % 6;
@@ -169,7 +169,7 @@ void func_801ADC3C(void) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
-        if (*new_var > 0 && D_801BD02C > 0 && D_80097494 & 0xF) {
+        if (*new_var > 0 && D_801BD02C > 0 && D_80097494.unk0 & 0xF) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
             D_801BC3D8 = (D_801BC3D8 + 3) % 6;
         }

@@ -2474,14 +2474,14 @@ void func_800FAC48(void) {
 void func_800FAC98(void) { func_800F9808(2); }
 
 bool func_800FACB8(void) {
-    if (D_80097494 & 2) {
+    if (D_80097494.unk0 & 2) {
         (*g_menuRelicsCursorIndex)++;
         if (*g_menuRelicsCursorIndex == 7) {
             *g_menuRelicsCursorIndex = 0;
         }
         return true;
     }
-    if (D_80097494 & 1) {
+    if (D_80097494.unk0 & 1) {
         g_menuRelicsCursorIndex[0]--;
         if (*g_menuRelicsCursorIndex == -1) {
             *g_menuRelicsCursorIndex = 6;

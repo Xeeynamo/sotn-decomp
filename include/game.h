@@ -940,7 +940,13 @@ extern s32 D_80097448;
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
-extern u16 D_80097494; // related to g_menuRelicsCursorIndex
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+} Unkstruct_80097494;
+extern Unkstruct_80097494 D_80097494;
+
 extern u16 D_80097496;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
