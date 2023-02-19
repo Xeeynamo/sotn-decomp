@@ -730,17 +730,13 @@ extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
-extern Unkstruct5* D_8003C704;
+extern s32 D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
-extern void (*D_8003C744)(s32, s32);
 extern GameApi g_api;
-#ifndef STAGE_MAD_FIX
-extern void (*g_pfnInitRoomEntities)(void);
-#endif
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
