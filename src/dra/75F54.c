@@ -825,7 +825,8 @@ void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
     poly->b0 = (u32)colorChannel >> 8;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801243B0);
+// teleport effect like when using library card (ID 0x42)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityTeleport);
 
 // move a0,s0 thing
 #ifndef NON_MATCHING
@@ -1281,9 +1282,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801291C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80129864);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A0A4);
+// opens hole in backround and spirit comes out (ID 0x40)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySummonSpirit);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A528);
+// expanding circle effect when activating stopwatch
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityStopWatchExpandingCircle);
 
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityStopWatch);
@@ -1343,9 +1346,11 @@ void func_8012B78C(Entity* entity) {
             entity->unk7E.modeU8.unk0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012B990);
+// book rotates around player
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponBible);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012BEF8);
+// echo of bat effect
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityBatEcho);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012C600);
 
