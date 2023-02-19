@@ -76,7 +76,7 @@ void func_8018F8EC(u16 arg0) {
     u16 var_t0 = 0x5B6;
     u16* var_a3 = &D_8018068C[arg0 * 8];
     s32 var_t1 = 0;
-    
+
     while (var_t1 < 2) {
     s32 var_a1 = 0;
         while (var_a1 < 4)
@@ -196,7 +196,22 @@ void func_80193538(u16 objectId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801935B4);
+s32 func_801935B4(Unkstruct5* arg0) {
+    s16 diff;
+
+    diff = PLAYER.posX.i.hi - arg0->unk2;
+    diff = ABS(diff);
+
+    if (diff >= 17) {
+        diff = 0;
+    } else {
+        diff = PLAYER.posY.i.hi - arg0->unk6;
+        diff = ABS(diff);
+        diff = diff < 33;
+    }
+
+    return diff;
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019362C);
 
