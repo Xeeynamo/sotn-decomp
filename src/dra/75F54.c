@@ -251,9 +251,11 @@ s32 func_80118C84(s16 arg0, s16 arg1) {
     return -1;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80118D0C);
+// number appears and moves to HP meter, probably for healing effects
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityNumberMovesToHpMeter);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80119588);
+// "Guard" text displays on screen
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityGuardText);
 
 void func_80119D3C(Entity* entity) {
     s32 temp;
@@ -510,9 +512,11 @@ bool func_8011BD48(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011BDA4);
+// player turns white for some sort of status effect
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityPlayerBlinkWhite);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011D9F8);
+// blue outline around player when mp refills
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityMpReplenished);
 
 void func_8011E0E4(Entity* entity) {}
 
@@ -572,17 +576,23 @@ void func_8011F074(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011F24C);
+// effect when player takes lightning damage
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityHitByLightning);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8011F934);
+// player gets frozen
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityHitByIce);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801200AC);
+// transparent white circle closes over player
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityTransparentWhiteCircle);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80120AF8);
+// pink effect on player
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityPlayerPinkEffect);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80120DD0);
+// player dissolves into pixels
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityPlayerDissolves);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80121980);
+// level up animation
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityLevelUpAnimation);
 
 extern Unkstruct_80138094 D_80138094[];
 
@@ -598,7 +608,8 @@ void func_80121F14(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80121F58);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012231C);
+// spawns mist (player transform)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityMist);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80123788);
 
@@ -858,9 +869,11 @@ void func_80124A8C(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80124B88);
+// dagger thrown when using subweapon
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponThrownDagger);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80125330);
+// axe thrown when using subweapon
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponThrownAxe);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80125A30);
 
@@ -889,7 +902,7 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     return 0;
 }
 
-void func_80125C2C(Entity* entity) {
+void EntityHolyWater(Entity* entity) {
     s16 temp3;
     s32 temp;
     s32 temp2;
@@ -964,13 +977,17 @@ void func_80125C2C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80125E68);
+// glass breaking effect for holy water
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityHolyWaterBreakGlass);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801262AC);
+// green flame when holy water explodes
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityHolyWaterFlame);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801267B0);
+// cross subweapon crash (full effect with all parts)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponCrashCross);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80126C48);
+// rising blue particles from cross crash
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponCrashCrossParticles);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80126ECC);
 
@@ -1067,7 +1084,8 @@ void func_80127840(Entity* entity) {
     }
 }
 
-void func_801279FC(Entity* entity) {
+// circle expands out of player
+void EntityExpandingCircle(Entity* entity) {
     POLY_GT4* poly;
     s32 firstPolygonIndex;
 
@@ -1232,9 +1250,10 @@ void func_80127EF0(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80127F40);
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponReboundStone);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80128714);
+// ash thrown when using vibhuti subweapon
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponThrownVibhuti);
 
 s32 func_80128BBC(Unkstruct_80128BBC* arg0, u8 value) {
     u8 ret = 0;
@@ -1266,7 +1285,8 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A0A4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A528);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A89C);
+// stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityStopWatch);
 
 void func_8012B78C(Entity* entity) {
     POLY_GT4* poly;
@@ -1576,6 +1596,7 @@ void func_8013136C(Entity* entity) {
 }
 #endif
 
+// one rotating cross from the cross subweapon crash
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801315F8);
 
 void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
