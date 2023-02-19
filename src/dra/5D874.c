@@ -537,21 +537,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801027C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801028AC);
 
-// https://decomp.me/scratch/8D47k
-// Matches in gcc 2.6.0, aspsx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102CD8);
-#else
-extern s32 D_800A3194[];
-extern u16 D_801379AC[2];
-extern s32 D_801379B0;
-
 void func_80102CD8(s32 arg0) {
     D_801379AC[0] = arg0;
     D_801379AC[1] = 0;
     D_801379B0 = D_800A3194[arg0];
 }
-#endif
 
 // https://decomp.me/scratch/NNXbc
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102D08);
@@ -866,21 +856,10 @@ void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
 void func_801072DC(POLY_GT4* poly) { func_80107250(poly, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
-    poly->r0 = 0;
-    poly->g0 = 0;
-    poly->b0 = 0;
-
-    poly->r1 = 0;
-    poly->g1 = 0;
-    poly->b1 = 0;
-
-    poly->r2 = 0;
-    poly->g2 = 0;
-    poly->b2 = 0;
-
-    poly->r3 = 0;
-    poly->g3 = 0;
-    poly->b3 = 0;
+    setRGB0(poly, 0, 0, 0);
+    setRGB1(poly, 0, 0, 0);
+    setRGB2(poly, 0, 0, 0);
+    setRGB3(poly, 0, 0, 0);
 }
 
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
@@ -926,7 +905,7 @@ s32 func_801073E8(void) {
         D_80137F9C = 0;
         return D_80137F9C;
     } else {
-        if ((((u32)(func_80019444() - 0x10)) < 2) || (!(sp10 & 0x10))) {
+        if (((u32)(func_80019444() - 0x10) < 2) || (!(sp10 & 0x10))) {
             CdControlF(1, 0);
             D_80137F9C = 0;
             return D_80137F9C;

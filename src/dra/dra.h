@@ -124,6 +124,7 @@ extern const char* c_strWindow;
 extern const char* c_strTime;
 extern const char* c_strALUCART;
 extern const char* c_strSSword;
+extern s32 D_800A3194[];
 extern Lba D_800A3C40[]; // g_lba
 extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
@@ -271,6 +272,8 @@ extern s32 D_80137994;
 extern s32 D_80137998;
 extern u32 D_8013799C;
 extern s32 D_801379A0;
+extern u16 D_801379AC[2];
+extern s32 D_801379B0;
 extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
