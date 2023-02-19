@@ -66,7 +66,31 @@ void func_8018F890(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F8EC);
+#ifndef NOT_EQUIVALENT
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F8EC);
+#else
+extern u16 D_8018068C[];
+
+void func_8018F8EC(u16 arg0) {
+    Unkstruct8* room = &g_CurrentRoomTileLayout;
+    u16 var_t0 = 0x5B6;
+    u16* var_a3 = &D_8018068C[arg0 * 8];
+    s32 var_t1 = 0;
+    
+    while (var_t1 < 2) {
+    s32 var_a1 = 0;
+        while (var_a1 < 4)
+        {
+            var_a3 += 2;
+            var_a1 += 2;
+            room->fg[var_t0] = *var_a3;
+            var_t0 += 1;
+        }
+        var_t1 += 1;
+        var_t0 += 0x2C;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F95C);
 
