@@ -905,7 +905,7 @@ s32 func_801073E8(void) {
         D_80137F9C = 0;
         return D_80137F9C;
     } else {
-        if ((((u32)(func_80019444() - 0x10)) < 2) || (!(sp10 & 0x10))) {
+        if (((u32)(func_80019444() - 0x10) < 2) || (!(sp10 & 0x10))) {
             CdControlF(1, 0);
             D_80137F9C = 0;
             return D_80137F9C;
