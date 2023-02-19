@@ -346,13 +346,10 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
 
 Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
-    Entity* entity;
-    s16 start;
-    s16 end;
+    s16 start = D_80171094[rangeIndex].start;
+    s16 end = D_80171094[rangeIndex].end;
+    Entity* entity = &g_EntityArray[start];
     s32 i;
-    start = D_80171094[rangeIndex].start;
-    end = D_80171094[rangeIndex].end;
-    entity = &g_EntityArray[start];
 
     for (i = start; end >= i; i++, entity++) {
         if (entity->objectId == objectId) {
