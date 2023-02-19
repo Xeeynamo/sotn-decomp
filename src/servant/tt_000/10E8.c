@@ -357,7 +357,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
         }
     }
 
-    return 0;
+    return NULL;
 }
 
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
