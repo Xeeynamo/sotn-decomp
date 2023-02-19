@@ -3,6 +3,8 @@
 #include "objects.h"
 #include "sfx.h"
 
+s32 DecompressData(u8* dst, u8* src);
+
 INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E7BB8);
 
 void func_800E7D08(void) {
@@ -623,35 +625,140 @@ void func_800EAEEC(void) {
 
 INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EAF28);
 
-void func_800EAFC8(s32 arg0) {
-    u8 temp = arg0;
+void DecompressWriteNibble(s32 ch) {
+    u8 temp = ch;
 
-    if (D_80137584 == 0) {
-        D_80137584 = 1;
-        *D_8013757C = temp;
+    if (g_DecWriteNibbleFlag == 0) {
+        g_DecWriteNibbleFlag = 1;
+        *g_DecDstPtr = temp;
     } else {
-        D_80137584 = 0;
-        *D_8013757C += arg0 * 16;
-        D_8013757C++;
+        g_DecWriteNibbleFlag = 0;
+        *g_DecDstPtr += ch * 16;
+        g_DecDstPtr++;
     }
 }
 
-u32 func_800EB03C(void) {
+u32 DecompressReadNibble(void) {
     u8 ret;
 
-    if (D_80137580 != 0) {
-        D_80137580 = 0;
-        ret = *D_80137578;
-        D_80137578++;
+    if (g_DecReadNibbleFlag != 0) {
+        g_DecReadNibbleFlag = 0;
+        ret = *g_DecSrcPtr;
+        g_DecSrcPtr++;
         return (ret >> 0) & 0xF;
     } else {
-        D_80137580 = 1;
-        ret = *D_80137578;
+        g_DecReadNibbleFlag = 1;
+        ret = *g_DecSrcPtr;
         return (ret >> 4) & 0xF;
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EB098);
+// reg swap + fake stuff
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DecompressData);
+#else
+s32 DecompressData(u8* dst, u8* src) {
+    u32 buf[8];
+    s32 temp_s0;
+    s32 ch;
+    s32 temp_s1_3;
+    s32 temp_s2;
+    s32 temp_s2_2;
+    s32 temp_s2_3;
+    s32 temp_s2_4;
+    s32 count;
+    s32 i;
+    s32 var_v1;
+    s32* var_a0;
+    u8* new_var;
+    u8* srcptr;
+    s32 op;
+    srcptr = src;
+    var_a0 = &buf;
+
+    for (var_v1 = 0; var_v1 < 8; var_v1++) {
+        *var_a0++ = *srcptr++;
+    }
+
+    g_DecReadNibbleFlag = 0;
+    g_DecWriteNibbleFlag = 0;
+    g_DecSrcPtr = srcptr;
+    g_DecDstPtr = dst;
+    while (count = true /*fake??*/) {
+        op = DecompressReadNibble();
+        switch (op) {
+        case 0:
+            do {
+                temp_s2 = DecompressReadNibble();
+                temp_s2_2 = DecompressReadNibble();
+            } while (0);
+            temp_s2_4 = temp_s2;
+            temp_s2_3 = temp_s2_2;
+            temp_s2_3 = temp_s2_4 * 0x10 + temp_s2_3 + 0x13;
+            for (i = 0; i < temp_s2_3; i++) {
+                DecompressWriteNibble(0);
+            }
+            break;
+        case 2:
+            temp_s0 = DecompressReadNibble();
+            DecompressWriteNibble(temp_s0);
+            DecompressWriteNibble(temp_s0);
+            break;
+        case 4:
+            DecompressWriteNibble(DecompressReadNibble());
+        case 3:
+            DecompressWriteNibble(DecompressReadNibble());
+        case 1:
+            DecompressWriteNibble(DecompressReadNibble());
+            break;
+        case 5:
+            temp_s1_3 = (ch = DecompressReadNibble());
+            count = (op = DecompressReadNibble()) + 3;
+            for (i = 0; i < count; i++) {
+                temp_s2 = ch;
+                DecompressWriteNibble(temp_s2 & 0xFF);
+            }
+            break;
+        case 6:
+            temp_s2 = DecompressReadNibble();
+            count = temp_s2 + 3;
+            for (i = 0; i < count; i++) {
+                DecompressWriteNibble(0);
+            }
+            break;
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+            temp_s1_3 = (buf + op)[-7];
+            switch (temp_s1_3 & 0xF0) {
+            case 0x20:
+                DecompressWriteNibble(temp_s1_3 & 0xF);
+            case 0x10:
+                DecompressWriteNibble(temp_s1_3 & 0xF);
+                break;
+            case 0x60:
+                count = (temp_s1_3 & 0xF) + 3;
+                for (i = 0; i < count; i++) {
+                    DecompressWriteNibble(0);
+                }
+                break;
+            }
+            break;
+        case 15:
+            if ((dst + 0x2000) >= ((u32)g_DecDstPtr)) {
+                return 0;
+            }
+            new_var = dst;
+            return (g_DecDstPtr - new_var) + 0x2000;
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EB314);
 
