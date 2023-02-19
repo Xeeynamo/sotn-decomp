@@ -369,7 +369,7 @@ s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
     s32 diffTmp = arg1 - arg0;
     s16 diff = ABS(diffTmp);
     s16 res;
-    
+
     if (arg2 > diff) {
         arg2 = diff;
     }
