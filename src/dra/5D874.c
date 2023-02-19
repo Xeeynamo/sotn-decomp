@@ -537,21 +537,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801027C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801028AC);
 
-// https://decomp.me/scratch/8D47k
-// Matches in gcc 2.6.0, aspsx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102CD8);
-#else
-extern s32 D_800A3194[];
-extern u16 D_801379AC[2];
-extern s32 D_801379B0;
-
 void func_80102CD8(s32 arg0) {
     D_801379AC[0] = arg0;
     D_801379AC[1] = 0;
     D_801379B0 = D_800A3194[arg0];
 }
-#endif
 
 // https://decomp.me/scratch/NNXbc
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102D08);
