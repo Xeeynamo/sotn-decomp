@@ -856,21 +856,10 @@ void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
 void func_801072DC(POLY_GT4* poly) { func_80107250(poly, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
-    poly->r0 = 0;
-    poly->g0 = 0;
-    poly->b0 = 0;
-
-    poly->r1 = 0;
-    poly->g1 = 0;
-    poly->b1 = 0;
-
-    poly->r2 = 0;
-    poly->g2 = 0;
-    poly->b2 = 0;
-
-    poly->r3 = 0;
-    poly->g3 = 0;
-    poly->b3 = 0;
+    setRGB0(poly, 0, 0, 0);
+    setRGB1(poly, 0, 0, 0);
+    setRGB2(poly, 0, 0, 0);
+    setRGB3(poly, 0, 0, 0);
 }
 
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
