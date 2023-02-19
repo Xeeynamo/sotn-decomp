@@ -450,7 +450,30 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195318);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019565C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195714);
+// like its duplicates, has a minor branch issue
+// so probably aspsx and/or compiler issue
+#ifndef NON_MATCHING
+INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195714);
+#else
+void func_80195714(void) {
+
+    s32 temp_v1_2;
+
+    if (g_CurrentEntity->accelerationY >= 0) {
+    s32 temp_v1 = g_CurrentEntity->unk88.S16.unk0 + g_CurrentEntity->unk84.unk;
+        g_CurrentEntity->unk84.unk = temp_v1;
+        g_CurrentEntity->accelerationX = temp_v1;
+        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
+            g_CurrentEntity->unk88.S16.unk0 = -(s16) (u16) g_CurrentEntity->unk88.S16.unk0;
+        }
+    }
+    
+    temp_v1_2 = g_CurrentEntity->accelerationY;
+    if (temp_v1_2 < 0x4000) {
+        g_CurrentEntity->accelerationY = temp_v1_2 + 0x2000;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195798);
 
