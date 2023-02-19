@@ -366,12 +366,10 @@ s32 func_80173F30(Entity* entity, s16 x, s16 y) {
 }
 
 s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 diffTmp;
+    s32 diffTmp = arg1 - arg0;
+    s16 diff = ABS(diffTmp);
     s16 res;
-    s16 diff;
-
-    diffTmp = arg1 - arg0;
-    diff = ABS(diffTmp);
+    
     if (arg2 > diff) {
         arg2 = diff;
     }
