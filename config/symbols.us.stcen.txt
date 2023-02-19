@@ -5,3 +5,5 @@ AllocEntity = 0x80194AD4;
 InitializeEntity = 0x80194F74;
 EntityExplosion = 0x801964F8;
 CreateEntityFromCurrentEntity = 0x801934C4;
+CreateEntityFromEntity = 0x80193538;
+DestroyEntityFromIndex = 0x801942D0
