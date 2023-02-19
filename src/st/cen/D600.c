@@ -8,6 +8,7 @@
 #include "stage.h"
 
 extern PfnEntityUpdate D_80180390[];
+extern PfnEntityUpdate D_80180390[];
 extern s16 D_80180BBC[];
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
@@ -187,8 +188,7 @@ void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-void func_80193538(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = D_80180390[objectId];
@@ -492,7 +492,7 @@ void func_80198174(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_80193538(ENTITY_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
                 newEntity->objectId = ENTITY_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
