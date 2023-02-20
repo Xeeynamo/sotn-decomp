@@ -90,42 +90,44 @@
 #define MU_I_AM_THE_WIND 0x33C
 #define MU_SILENCE 0x33D
 #define MU_LAND_OF_BENEDICTION 0x33E
-#define MU_JP_FAIRY_SONG 0x33F // japanese version of fairy song
+#define MU_JP_FAIRY_SONG 0x33F      // japanese version of fairy song
 #define MU_MOONLIGHT_NOCTURNE 0x340 // music during intro scrolling text
 
 // japanese intro narration
 #define JP_VO_KATSUTE 0x341 // Narrator says "Katsute ..."
-#define JP_VO_SOSHITE 0x342 // Narrator says "Soshite 5 nen no tsukihi ga nagareta"
-#define JP_VO_AKUMAJO 0x343 // Narrator says "Akumajo Dracula X Gekka no Yasoukyoku"
+#define JP_VO_SOSHITE                                                          \
+    0x342 // Narrator says "Soshite 5 nen no tsukihi ga nagareta"
+#define JP_VO_AKUMAJO                                                          \
+    0x343 // Narrator says "Akumajo Dracula X Gekka no Yasoukyoku"
 
 // japanese voice actor messages
-#define JP_VO_FUKAMI_RIKA_MESSAGE 0x344 // Message from Fukami Rika
-#define JP_VO_SHIINA_HEKIRU_MESSAGE 0x345 // Message from Shiina Hekiru
-#define JP_VO_YANADA_KIYOYUKI_MESSAGE 0x346 // Message from Yanada Kiyoyuki
+#define JP_VO_FUKAMI_RIKA_MESSAGE 0x344      // Message from Fukami Rika
+#define JP_VO_SHIINA_HEKIRU_MESSAGE 0x345    // Message from Shiina Hekiru
+#define JP_VO_YANADA_KIYOYUKI_MESSAGE 0x346  // Message from Yanada Kiyoyuki
 #define JP_VO_OKIAYU_RYOUTAROU_MESSAGE 0x347 // Message from Okiayu Ryoutarou
-#define JP_VO_SATOU_MASAHARU_MESSAGE 0x348 // Message from Satou Masaharu
-#define JP_VO_WAKAMOTO_NORIO_MESSAGE 0x349 // Message from Wakamoto Norio
-#define JP_VO_YOKOYAMA_CHISA_MESSAGE 0x34A // Message from Yokoyama Chisa
-#define JP_VO_YANAMI_JYOUJI_MESSAGE 0x34B // Message from Yanami Jyouji
+#define JP_VO_SATOU_MASAHARU_MESSAGE 0x348   // Message from Satou Masaharu
+#define JP_VO_WAKAMOTO_NORIO_MESSAGE 0x349   // Message from Wakamoto Norio
+#define JP_VO_YOKOYAMA_CHISA_MESSAGE 0x34A   // Message from Yokoyama Chisa
+#define JP_VO_YANAMI_JYOUJI_MESSAGE 0x34B    // Message from Yanami Jyouji
 
 // various voice actors saying konami
-#define JP_VO_KONAMI_1 0x34C // woman says konami
-#define JP_VO_KONAMI_2 0x34D // woman says konami
-#define JP_VO_KONAMI_3 0x34E // woman says konami
-#define JP_VO_KONAMI_4 0x34F // man says kona (mi cut off?)
-#define JP_VO_KONAMI_5 0x350 // man says kona (mi cut off?)
-#define JP_VO_KONAMI_6 0x351 // man says konami
-#define JP_VO_KONAMI_7 0x352 // man says konami
-#define JP_VO_KONAMI_8 0x353 // man says konami
-#define JP_VO_KONAMI_9 0x354 // woman says konami
+#define JP_VO_KONAMI_1 0x34C  // woman says konami
+#define JP_VO_KONAMI_2 0x34D  // woman says konami
+#define JP_VO_KONAMI_3 0x34E  // woman says konami
+#define JP_VO_KONAMI_4 0x34F  // man says kona (mi cut off?)
+#define JP_VO_KONAMI_5 0x350  // man says kona (mi cut off?)
+#define JP_VO_KONAMI_6 0x351  // man says konami
+#define JP_VO_KONAMI_7 0x352  // man says konami
+#define JP_VO_KONAMI_8 0x353  // man says konami
+#define JP_VO_KONAMI_9 0x354  // woman says konami
 #define JP_VO_KONAMI_10 0x355 // woman says konami
 #define JP_VO_KONAMI_11 0x356 // man says konami
 #define JP_VO_KONAMI_12 0x357 // man says konami
 
 // Prologue cutscene
 #define NA_VO_RI_DIE_MONSTER 0x358 // Richter says "Die monster ..."
-#define NA_VO_DR_IT_WAS_NOT 0x359 // Dracula says "It was not by my hand ..."
-#define NA_VO_RI_TRIBUTE 0x35A // Richter says "Tribute? ..."
+#define NA_VO_DR_IT_WAS_NOT 0x359  // Dracula says "It was not by my hand ..."
+#define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
 
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
