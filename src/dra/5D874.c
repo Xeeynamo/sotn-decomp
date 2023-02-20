@@ -580,7 +580,47 @@ s32 func_80102E04(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102EB8);
+void func_80102EB8(void) {
+    POLY_GT4 *poly1, *poly2, *poly3;
+    s32 i;
+
+    D_80137E58 = AllocPolygons(4, 3);
+    poly1 = &D_80086FEC[D_80137E58];
+
+    D_80137E5C = AllocPolygons(3, 3);
+    poly2 = &D_80086FEC[D_80137E5C];
+
+    D_80137E60 = AllocPolygons(2, 12);
+    poly3 = &D_80086FEC[D_80137E60];
+
+    for (i = 0; i < 3; i++) {
+        func_80107360(poly1, 98, 79, 96, 0, 0, 0);
+        func_801072DC(poly1);
+        poly1->tpage = 0x10;
+        poly1->clut = 0x1A1;
+        poly1->pad2 = g_zEntityCenter.S16.unk0 + 32;
+        poly1->pad3 = 8;
+        poly1->p1 = 0;
+        SetPolyRect(poly2, 80, 79, 96, 0);
+        func_801072DC(poly2);
+        func_801071CC(poly2, 96, 0);
+        func_801071CC(poly2, 96, 1);
+        poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
+            poly2->r2 = poly2->r3 = 0;
+        poly2->tpage = 0x1F;
+        poly2->pad2 = g_zEntityCenter.S16.unk0 + 31;
+        poly2->pad3 = 8;
+        poly1 = (POLY_GT4*)poly1->tag;
+        poly2 = (POLY_GT4*)poly2->tag;
+    }
+
+    for (i = 0; i < 12; i++) {
+        func_80107250(poly3, 255);
+        poly3->pad2 = g_zEntityCenter.S16.unk0 + 32;
+        poly3->pad3 = 8;
+        poly3 = (POLY_GT4*)poly3->tag;
+    }
+}
 
 void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
     s32 var_v1;
