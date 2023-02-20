@@ -825,7 +825,8 @@ void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
     poly->b0 = (u32)colorChannel >> 8;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801243B0);
+// teleport effect like when using library card (ID 0x42)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityTeleport);
 
 // move a0,s0 thing
 #ifndef NON_MATCHING
@@ -1281,9 +1282,11 @@ INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_801291C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80129864);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A0A4);
+// opens hole in backround and spirit comes out (ID 0x40)
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySummonSpirit);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012A528);
+// expanding circle effect when activating stopwatch
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityStopWatchExpandingCircle);
 
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityStopWatch);
@@ -1343,9 +1346,11 @@ void func_8012B78C(Entity* entity) {
             entity->unk7E.modeU8.unk0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012B990);
+// book rotates around player
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntitySubweaponBible);
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012BEF8);
+// echo of bat effect
+INCLUDE_ASM("asm/dra/nonmatchings/75F54", EntityBatEcho);
 
 INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_8012C600);
 
@@ -2102,7 +2107,35 @@ s32 func_80134678(s16 arg0, u16 arg1) {
     return ret;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/75F54", func_80134714);
+u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
+    u32 ret;
+    u32 var_v0;
+    s16 temp_v0;
+    s32 temp_a0;
+    u16 var;
+
+    ret = 0;
+    if (D_8013AEEC == 0) {
+        return -2;
+    }
+    if ((u32)((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
+        D_801390DC[D_80139000].unk00 = arg0 - 0x600;
+        D_801390DC[D_80139000].unk02 = arg1 & 0x7F;
+        var = (arg2 + 8);
+        if (var > 16) {
+            D_801390E0[D_80139000].unk00 = 0;
+            ret = -1;
+        } else {
+            D_801390E0[D_80139000].unk00 = arg2;
+        }
+        if (++D_80139000 == 0x100) {
+            D_80139000 = 0;
+        }
+    } else {
+        ret = -3;
+    }
+    return ret;
+}
 
 void PlaySfx(s16 sfxId) {
     u16 offset;
