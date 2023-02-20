@@ -634,20 +634,14 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
 
         poly->r0 = poly->r1 = var_v1 - 16;
         poly->r2 = poly->r3 = var_v1 + 16;
-        poly->b3 = 0;
-        poly->b2 = 0;
-        poly->b1 = 0;
-        poly->b0 = 0;
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
         poly->pad3 = 0x404;
     } else {
         poly->b1 = 96;
         poly->b0 = 96;
         poly->b3 = 128;
         poly->b2 = 128;
-        poly->r3 = 0;
-        poly->r2 = 0;
-        poly->r1 = 0;
-        poly->r0 = 0;
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0;
         poly->pad3 = 0x415;
     }
 }
@@ -1033,7 +1027,17 @@ INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801093C4);
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109594);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109990);
+void func_80109990(void) {
+    if (D_80137FB4 == 0) {
+        if ((D_80097B9C.mp == D_80097B9C.mpMax) && !(D_80072F2C & 0x100000)) {
+            func_8011AAFC(g_CurrentEntity, 0x28, 0);
+            PlaySfx(NA_SE_PL_MP_GAUGE);
+            D_80137FB4++;
+        }
+    } else if (D_80097B9C.mp != D_80097B9C.mpMax) {
+        D_80137FB4 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109A44);
 
