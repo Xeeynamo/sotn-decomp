@@ -346,13 +346,10 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
 
 Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
-    Entity* entity;
-    s16 start;
-    s16 end;
+    s16 start = D_80171094[rangeIndex].start;
+    s16 end = D_80171094[rangeIndex].end;
+    Entity* entity = &g_EntityArray[start];
     s32 i;
-    start = D_80171094[rangeIndex].start;
-    end = D_80171094[rangeIndex].end;
-    entity = &g_EntityArray[start];
 
     for (i = start; end >= i; i++, entity++) {
         if (entity->objectId == objectId) {
@@ -360,7 +357,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
         }
     }
 
-    return 0;
+    return NULL;
 }
 
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
@@ -369,12 +366,10 @@ s32 func_80173F30(Entity* entity, s16 x, s16 y) {
 }
 
 s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 diffTmp;
+    s32 diffTmp = arg1 - arg0;
+    s16 diff = ABS(diffTmp);
     s16 res;
-    s16 diff;
 
-    diffTmp = arg1 - arg0;
-    diff = ABS(diffTmp);
     if (arg2 > diff) {
         arg2 = diff;
     }
