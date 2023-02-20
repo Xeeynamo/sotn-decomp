@@ -319,6 +319,7 @@ extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
 extern Unkstruct_801390DC D_801390DC[];
+extern Unkstruct_801390DC D_801390E0[];
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
