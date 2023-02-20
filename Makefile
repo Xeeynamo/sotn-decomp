@@ -228,7 +228,7 @@ context:
 
 extract_sotn: $(SOTNDISK)
 	$(SOTNDISK) extract iso/sotn.cue iso/
-disk: build $(SOTNDISK)
+disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r iso/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
@@ -245,8 +245,13 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
+disk: disk_prepare
 	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
-
+disk_debug: disk_prepare $(BUILD_DIR)/sotn-debugmode.bin
+	cp $(BUILD_DIR)/sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
+	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
+$(BUILD_DIR)/sotn-debugmode.bin:
+	cd tools/sotn-debugmode && make
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
 update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
