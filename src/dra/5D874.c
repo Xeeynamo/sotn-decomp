@@ -580,7 +580,6 @@ s32 func_80102E04(void) {
     return 0;
 }
 
-
 void func_80102EB8(void) {
     POLY_GT4 *poly1, *poly2, *poly3;
     s32 i;
