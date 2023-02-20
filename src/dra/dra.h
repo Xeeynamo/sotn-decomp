@@ -288,6 +288,7 @@ extern s32 D_80137E68;
 extern s32 D_80137F6C;
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
+extern s32 D_80137FB4;
 extern s32 D_80138008;
 extern s32 D_8013808C;
 extern s32 D_8013841C;
