@@ -634,20 +634,14 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
 
         poly->r0 = poly->r1 = var_v1 - 16;
         poly->r2 = poly->r3 = var_v1 + 16;
-        poly->b3 = 0;
-        poly->b2 = 0;
-        poly->b1 = 0;
-        poly->b0 = 0;
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
         poly->pad3 = 0x404;
     } else {
         poly->b1 = 96;
         poly->b0 = 96;
         poly->b3 = 128;
         poly->b2 = 128;
-        poly->r3 = 0;
-        poly->r2 = 0;
-        poly->r1 = 0;
-        poly->r0 = 0;
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0;
         poly->pad3 = 0x415;
     }
 }
