@@ -2118,7 +2118,7 @@ u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
     if (D_8013AEEC == 0) {
         return -2;
     }
-    if ((u32) ((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
+    if ((u32)((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
         D_801390DC[D_80139000].unk00 = arg0 - 0x600;
         D_801390DC[D_80139000].unk02 = arg1 & 0x7F;
         var = (arg2 + 8);
