@@ -826,7 +826,7 @@ void func_80124A8C(Entity* entity) {
 #ifdef PSY_Q_3_5
     if (PLAYER.step != 0 || PLAYER.unk2E != 4) { // REAL: Matches with PSY-Q 3.5
 #else
-    if (*(s32*)&PLAYER.step != 0x40000) { // !FAKE
+    if (*(s32*)&PLAYER.step != 0x40000) { // !FAKE: Probably ASPSX
 #endif
         DestroyEntity(entity);
         return;
