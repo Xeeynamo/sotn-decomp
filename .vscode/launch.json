@@ -12,8 +12,8 @@
             "program": "tools/sotn-disk",
             "args": [
                 "extract",
-                "../../iso/sotn.cue",
-                "../../iso/"
+                "../../disks/sotn.us.cue",
+                "../../disks/"
             ]
         }
     ]

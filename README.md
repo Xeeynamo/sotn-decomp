@@ -35,7 +35,7 @@ This repo does not include any assets or assembly code necessary for compiling t
 | hk      | PS1     | 1997-11-30 | same psx.exe as jp10
 | jp12    | PS1     | 1998-01-23 | same psx.exe as jp10
 | saturn  | Saturn  | 1998-04-27 |
-| psphd   | PSP     | 2006-10-22 | unknown PSP version
+| hd      | PS1     | 2006-10-22 | build found in the PSP game
 | pspko   | PSP     | 2007-09-07 |
 | pspus   | PSP     | 2007-09-10 |
 | pspjp   | PSP     | 2007-09-14 |
@@ -63,9 +63,8 @@ sudo apt-get install -y $(cat tools/requirements-debian.txt)
 make update-dependencies
 ```
 
-1. Create a new `iso/` folder and put the game disc image in, both BIN and CUE files
-1. Run `mv iso/*.cue iso/sotn.cue`
-1. Run `make extract_sotn`
+1. Run `mv disks/*.cue disks/sotn.us.cue`
+1. Run `make extract_disk`
 
 ## Build
 

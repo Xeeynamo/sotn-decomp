@@ -15,11 +15,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  matrices:
+    strategy:
+      matrix:
+        version: ["us"]
   build-and-test:
     # build-and-test cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
+    env:
+      VERSION=${{ matrix.version }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
@@ -27,16 +33,21 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: false
-      - name: Clone game data repository
+      - name: Clone dependencies
         uses: actions/checkout@v3
         with:
-          repository: xeeynamo/sotn-decomp-private
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.version }}
           token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
-          path: 'data'
-      - name: Copy game data
+          path: 'disks/dependencies'
+      - name: Setting up dependencies
+        working-directory: disks
         run: |
-          mkdir -p iso
-          cp -r data/psx_us10/* ./iso
+          cat dependencies/* > dependencies.tar.gz
+          tar -xf dependencies.tar.gz
+          mv *.cue sotn.${{ matrix.version }}.cue
+      - name: Extract dependencies
+        run: make extract_disk
       - name: Split game data
         run: make -j extract
       - name: Build binaries
