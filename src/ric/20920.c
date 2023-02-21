@@ -589,32 +589,25 @@ void func_80160D2C(Entity* self) {
 #endif
 
 void func_80160E4C(Entity* self) {
-    /**
-     * Suspect self might be recasted to another variant of Entity
-     * e.g. EntityVariant* temp = (Entity*) self;
-     */
-    Entity* temp = self;
-
-    if (PLAYER.step == 24) {
+    if (PLAYER.step != 24) {
+        func_80156C60(self);
+    } else {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
         self->facing = PLAYER.facing;
         if (self->step == 0) {
-            asm volatile("move $4, $16"); // !FAKE
             self->unk34 = 0x04060000;
             self->hitboxHeight = 20;
             self->hitboxWidth = 20;
             self->unk12 = 0;
             self->unk10 = 0;
             self->unkB0 = 0x11;
-            func_8015FAB8(temp);
+            func_8015FAB8(self);
             self->step++;
         }
         if (PLAYER.animFrameIdx >= 19) {
-            func_80156C60(temp);
+            func_80156C60(self);
         }
-    } else {
-        func_80156C60(temp);
     }
 }
 
