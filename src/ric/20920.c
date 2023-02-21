@@ -591,7 +591,7 @@ void func_80160D2C(Entity* self) {
 void func_80160E4C(Entity* self) {
     /**
      * Suspect self might be recasted to another variant of Entity
-     * e.g. EntityVariant* temp = (Entity* self);
+     * e.g. EntityVariant* temp = (Entity*) self;
      */
     Entity* temp = self;
 
