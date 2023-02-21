@@ -282,7 +282,7 @@ INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D3CC);
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D678);
 
-void func_8015D9B4() { func_8015C908(0x16); }
+void func_8015D9B4() { func_8015C908(22); }
 
 void func_8015D9D4(void) {
     func_8015C9CC();
