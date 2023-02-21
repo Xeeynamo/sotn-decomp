@@ -547,7 +547,46 @@ void func_80160C38(Entity* entity) {
 }
 #endif
 
+// aspatch jumps to the wrong instruction
+// Matches with PSY-Q 3-5 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160D2C);
+#else
+void func_80160D2C(Entity* self) {
+    if (PLAYER.step != 26) {
+        func_80156C60(self);
+        return;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facing = PLAYER.facing;
+
+    if (self->step == 0) {
+        self->unk34 = 0x04060000;
+        self->unk10 = 0x14;
+        self->hitboxHeight = 9;
+        self->hitboxWidth = 9;
+        self->unkB0 = 0x17;
+        func_8015FAB8(self);
+        self->step++;
+    }
+
+    if (PLAYER.animCurFrame == 140) {
+        self->unk12 = 0;
+    }
+
+    if (PLAYER.animCurFrame == 141) {
+        self->unk12 = 0xC;
+    }
+
+    if (self->unk48 != 0) {
+        D_80072F20.unk44 |= 0x80;
+    } else {
+        D_80072F20.unk44 &= 0xFF7F;
+    }
+    self->unk48 = 0;
+}
+#endif
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160E4C);
 
