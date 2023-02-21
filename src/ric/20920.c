@@ -548,7 +548,7 @@ void func_80160C38(Entity* entity) {
 #endif
 
 // aspatch jumps to the wrong instruction
-// Matches with PSY-Q 3-5 + aspsx 2.3.4
+// Matches with PSY-Q 3.5 + aspsx 2.3.4
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160D2C);
 #else
@@ -588,7 +588,32 @@ void func_80160D2C(Entity* self) {
 }
 #endif
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160E4C);
+void func_80160E4C(Entity* self) {
+    Entity* temp = self;
+    Entity* player = &PLAYER; // Unnecessary temp for now
+    
+    if (PLAYER.step == 24) {
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->facing = PLAYER.facing;
+        if (self->step == 0) {
+            asm volatile("move $4, $16"); // !FAKE
+            self->unk34 = 0x04060000;
+            self->hitboxHeight = 20;
+            self->hitboxWidth = 20;
+            self->unk12 = 0;
+            self->unk10 = 0;
+            self->unkB0 = 0x11;
+            func_8015FAB8(temp);
+            self->step++;
+        }
+        if (PLAYER.animFrameIdx >= 0x13U) {
+            func_80156C60(temp);
+        }
+    } else {
+        func_80156C60(temp);
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160F0C);
 
