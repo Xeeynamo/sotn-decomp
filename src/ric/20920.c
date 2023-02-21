@@ -275,6 +275,7 @@ void func_8015D120(void) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D1D0);
 
+// decompiling func_8015FB84 first is recommended to discover struct
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D250);
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D3CC);
