@@ -82,9 +82,6 @@ define link
 		-s
 endef
 
-test:
-	echo ${VERSION}
-
 all: build check
 build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
