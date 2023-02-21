@@ -7,9 +7,9 @@ options:
   asset_path:   assets/st/np3
   src_path:     src/st/np3
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stnp3.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stnp3.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stnp3.txt
+  symbol_addrs_path:    config/generated.symbols.us.stnp3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnp3.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stnp3.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
