@@ -309,7 +309,18 @@ void func_8015DA60(void) {
     func_801606BC(g_CurrentEntity, 0x1F, 0);
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015DB04);
+void func_8015DB04(void) {
+    func_8015C908(0x18);
+    func_8015C920(&D_801557D8);
+    g_CurrentEntity->accelerationY = 0;
+    func_8015CA84(0x58000);
+    D_80072F66 = 5;
+    D_80072F18 = 4;
+    func_801606BC(g_CurrentEntity, 0x1A, 0);
+    func_8015CC28();
+    g_api.PlaySfx(0x6FB);
+    g_api.PlaySfx(0x707);
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015DBB0);
 
