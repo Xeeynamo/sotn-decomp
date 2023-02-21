@@ -3,7 +3,7 @@ options:
   basename:     ric
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/BIN/RIC.BIN
+  target_path:  disks/us/BIN/RIC.BIN
   asm_path:     asm/us/ric
   asset_path:   assets/ric
   src_path:     src/ric

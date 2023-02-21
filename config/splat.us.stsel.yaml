@@ -3,7 +3,7 @@ options:
   basename:     stsel
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/ST/SEL/SEL.BIN
+  target_path:  disks/us/ST/SEL/SEL.BIN
   asm_path:     asm/us/st/sel
   asset_path:   assets/st/sel
   src_path:     src/st/sel

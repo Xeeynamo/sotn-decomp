@@ -3,7 +3,7 @@ options:
   basename:     stdre
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/ST/DRE/DRE.BIN
+  target_path:  disks/us/ST/DRE/DRE.BIN
   asm_path:     asm/us/st/dre
   asset_path:   assets/st/dre
   src_path:     src/st/dre

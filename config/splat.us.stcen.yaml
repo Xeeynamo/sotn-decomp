@@ -3,7 +3,7 @@ options:
   basename:     stcen
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/ST/CEN/CEN.BIN
+  target_path:  disks/us/ST/CEN/CEN.BIN
   asm_path:     asm/us/st/cen
   asset_path:   assets/st/cen
   src_path:     src/st/cen

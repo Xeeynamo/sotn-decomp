@@ -4,8 +4,6 @@ BIN/ARC_F.BIN
 BIN/RIC.BIN
 ST/
 
-iso/
-
 ctx.c
 ctx.c.m2c
 *.ld
@@ -29,5 +27,6 @@ asm/*/st/*/nonmatchings/*/*/*.s
 assets/
 build/
 expected/
+disks/
 
 tools/go

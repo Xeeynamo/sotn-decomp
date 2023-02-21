@@ -3,7 +3,7 @@ options:
   basename:     stwrp
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/ST/WRP/WRP.BIN
+  target_path:  disks/us/ST/WRP/WRP.BIN
   asm_path:     asm/us/st/wrp
   asset_path:   assets/st/wrp
   src_path:     src/st/wrp

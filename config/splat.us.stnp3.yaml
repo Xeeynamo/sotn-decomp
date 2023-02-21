@@ -3,7 +3,7 @@ options:
   basename:     stnp3
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/ST/NP3/NP3.BIN
+  target_path:  disks/us/ST/NP3/NP3.BIN
   asm_path:     asm/us/st/np3
   asset_path:   assets/st/np3
   src_path:     src/st/np3

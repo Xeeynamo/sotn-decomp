@@ -3,7 +3,7 @@ options:
   basename:     stmad
   base_path:    ..
   build_path:   build/us
-  target_path:  iso/ST/MAD/MAD.BIN
+  target_path:  disks/us/ST/MAD/MAD.BIN
   asm_path:     asm/us/st/mad
   asset_path:   assets/st/mad
   src_path:     src/st/mad
