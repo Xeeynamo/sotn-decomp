@@ -23,6 +23,24 @@ This repo does not include any assets or assembly code necessary for compiling t
 | ST/RWRP/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json) | Warp Room (reverse)
 | SERVANT/TT_000.BIN | ![progress TT_000.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-tt_000.json) | Bat Familiar
 
+## Game versions
+
+| ID      | Console | Build date | Notes
+|---------|---------|------------|-------
+| jp10    | PS1     | 1997-02-20 |
+| jp11    | PS1     | 1997-03-06 | same psx.exe as jp10
+| usproto | PS1     | 1997-06-17 | same psx.exe as jp10
+| us      | PS1     | 1997-09-01 |
+| eu      | PS1     | 1997-09-30 |
+| hk      | PS1     | 1997-11-30 | same psx.exe as jp10
+| jp12    | PS1     | 1998-01-23 | same psx.exe as jp10
+| saturn  | Saturn  | 1998-04-27 |
+| psphd   | PSP     | 2006-10-22 | unknown PSP version
+| pspko   | PSP     | 2007-09-07 |
+| pspus   | PSP     | 2007-09-10 |
+| pspjp   | PSP     | 2007-09-14 |
+| pspeu   | PSP     | 2007-11-21 |
+
 ## Game internals
 
 The game is divided into three modules:
