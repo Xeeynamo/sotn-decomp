@@ -791,7 +791,7 @@ extern s32 D_80072EFC;
 extern s16 D_80072F00[];
 extern s16 D_80072F02[];
 extern s16 D_80072F04;
-extern s16 D_80072F0A;
+extern s16 D_80072F0A[];
 extern s16 D_80072F0C;
 extern s16 D_80072F10;
 extern s16 D_80072F14[]; // could be an array or a struct
