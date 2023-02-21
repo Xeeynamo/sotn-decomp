@@ -610,7 +610,7 @@ void func_80160E4C(Entity* self) {
             func_8015FAB8(temp);
             self->step++;
         }
-        if (PLAYER.animFrameIdx >= 0x13U) {
+        if (PLAYER.animFrameIdx >= 19) {
             func_80156C60(temp);
         }
     } else {
