@@ -2,6 +2,7 @@ options:
   platform:     psx
   basename:     stwrp
   base_path:    ..
+  build_path:   build/us
   target_path:  iso/ST/WRP/WRP.BIN
   asm_path:     asm/us/st/wrp
   asset_path:   assets/st/wrp

@@ -2,6 +2,7 @@ options:
   platform:     psx
   basename:     tt_000
   base_path:    ..
+  build_path:   build/us
   target_path:  iso/SERVANT/TT_000.BIN
   asm_path:     asm/us/servant/tt_000
   asset_path:   assets/servant/tt_000

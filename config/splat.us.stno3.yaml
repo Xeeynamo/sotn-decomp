@@ -2,6 +2,7 @@ options:
   platform:     psx
   basename:     stno3
   base_path:    ..
+  build_path:   build/us
   target_path:  iso/ST/NO3/NO3.BIN
   asm_path:     asm/us/st/no3
   asset_path:   assets/st/no3

@@ -2,6 +2,7 @@ options:
   platform:     psx
   basename:     stmad
   base_path:    ..
+  build_path:   build/us
   target_path:  iso/ST/MAD/MAD.BIN
   asm_path:     asm/us/st/mad
   asset_path:   assets/st/mad
