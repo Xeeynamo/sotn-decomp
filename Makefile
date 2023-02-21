@@ -24,7 +24,7 @@ SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
 BUILD_DIR       := build/$(VERSION)
-DISK_DIR        := $(BUILD_DIR)/disk
+DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
@@ -228,11 +228,11 @@ context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-extract_sotn: $(SOTNDISK)
-	$(SOTNDISK) extract iso/sotn.cue iso/
+extract_disk: $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$(VERSION).cue disks/$(VERSION)
 disk: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
-	cp -r iso/* $(DISK_DIR)
+	cp -r disks/${VERSION}/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
 	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
