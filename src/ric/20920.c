@@ -589,8 +589,11 @@ void func_80160D2C(Entity* self) {
 #endif
 
 void func_80160E4C(Entity* self) {
+    /**
+     * Suspect self might be recasted to another variant of Entity
+     */
     Entity* temp = self;
-    
+
     if (PLAYER.step == 24) {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
