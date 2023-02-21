@@ -19,7 +19,7 @@ CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
 
 # Directories
-ASM_DIR         := asm
+ASM_DIR         := asm/$(VERSION)
 SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include

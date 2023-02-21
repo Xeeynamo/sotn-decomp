@@ -61,117 +61,117 @@ extern s32 D_80180C70;
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B0958);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0958);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B0A20);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0A20);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B0AA4);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityBreakable);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
 
 // bust with red eyes that can have a candle on it
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityRedEyeBust);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityRedEyeBust);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B12E8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B12E8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B14C4);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B14C4);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B1770);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B19A0);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B19A0);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B1C18);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1C18);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B1E54);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
 
 // moveable box for spike/switch areas
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityMoveableBox);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMoveableBox);
 
 // lever to operate cannon
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityCannonLever);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
 
 // cannon for shortcut
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityCannon);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannon);
 
 // projectile shot by cannon
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityCannonShot);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonShot);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B2978);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B2AD8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2AD8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B2D08);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B2FD8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B3294);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3294);
 
 // table with globe on it that can be broken
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityTableWithGlobe);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityTableWithGlobe);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B3648);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3648);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B37C0);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B37C0);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B3A50);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3A50);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B3B78);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3B78);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B3C38);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
 
 // trigger to stop music and close slogra/gaibon room
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityCloseBossRoom);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCloseBossRoom);
 
 // blocks that move to close slogra/gaibon room
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityBossRoomBlock);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBossRoomBlock);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B4690);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B4690);
 
 // slogra boss
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySlogra);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlogra);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B54A8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B54A8);
 
 // projectile fired from slogra's spear
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySlograSpearProjectile);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlograSpearProjectile);
 
 // gaibon boss
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityGaibon);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B69E8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
 
 // small red projectile from gaibon
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
 
 // large red projectile from gaibon
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityLargeGaibonProjectile);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityLargeGaibonProjectile);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B6DE4);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B6DE4);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B7034);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7034);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B74CC);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B74CC);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B7520);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7520);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B76E4);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B76E4);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B7740);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7740);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B77F8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B77F8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B797C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B797C);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B79A8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B79A8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B7C54);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7C54);
 
 // cutscene where alucard and maria discuss castle changing
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityMariaCutscene);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMariaCutscene);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B8E0C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B8E0C);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B8F94);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B8F94);
 
 s32 Random(void) {
     // Linear congruential generator algorithm
@@ -180,13 +180,13 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", Update);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", Update);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801B9800);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B9800);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", TestCollisions);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", TestCollisions);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityNumericDamage);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityNumericDamage);
 
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
@@ -201,9 +201,9 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB188);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB188);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB2A0);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB2A0);
 
 void func_801BB3B8(s16 arg0) {
     while (true) {
@@ -224,9 +224,9 @@ void func_801BB404(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB45C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB45C);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB558);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB558);
 
 void func_801BB66C(s16 arg0) {
     while (true) {
@@ -247,15 +247,15 @@ void func_801BB6B8(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB710);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB710);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB80C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB80C);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BB920);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB920);
 
 // TODO: try after resolving aspsx
 // https://decomp.me/scratch/cJ3CF
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BBA98);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BBA98);
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
@@ -290,7 +290,7 @@ s32 func_801BBC3C(Unkstruct5* arg0) {
     return diff;
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityRedDoor);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -327,7 +327,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #include "st/AnimateEntity.h"
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BCAD4);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BCAD4);
 
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
@@ -373,9 +373,9 @@ void FallEntity(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BCCFC);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BCCFC);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BCF74);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BCF74);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
@@ -577,11 +577,11 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BD720);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD720);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BD848);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD848);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BD9A0);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD9A0);
 
 void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 subId;
@@ -613,7 +613,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
 // https://decomp.me/scratch/W8pIb branch problem, probably aspsx
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BDD9C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BDD9C);
 #else
 void func_801BDD9C(void) {
     if (g_CurrentEntity->accelerationY >= 0) {
@@ -707,7 +707,7 @@ void CollectGold(u16 goldSize) {
 
 // https://decomp.me/scratch/2vxD2
 // https://decomp.me/scratch/peM5t by stuckpixel
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BE0D8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BE0D8);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
@@ -732,7 +732,7 @@ void CollectLifeVessel(void) {
 
 void func_801BE2E4(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityPriceDrop);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
@@ -796,17 +796,17 @@ void func_801BEC7C(Entity* entity, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityInventoryDrop);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityInventoryDrop);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801BF308);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BF308);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityRelicOrb);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityHeartDrop);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityHeartDrop);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityUnkId0E);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityUnkId0E);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C070C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C070C);
 
 void func_801C07FC(Entity* entity) {
     switch (entity->step) {
@@ -835,9 +835,9 @@ void func_801C07FC(Entity* entity) {
 }
 
 // https://decomp.me/scratch/0VI4v
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C090C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C090C);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C0A3C);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C0A3C);
 
 void func_801C0B24(Entity* entity) {
     if (entity->step == 0) {
@@ -894,7 +894,7 @@ void func_801C0C14(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C0D08);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C0D08);
 
 bool func_801C0F38(Unkstruct6* unk) {
     CollisionResult res;
@@ -921,7 +921,7 @@ bool func_801C0F38(Unkstruct6* unk) {
     return false;
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C1034);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C1034);
 
 void EntityIntenseExplosion(Entity* entity) {
     u32 temp_v0;
@@ -1022,19 +1022,19 @@ void func_801C1848(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C1900);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C1900);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C1AD8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C1AD8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C20B8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C20B8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C27B8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C27B8);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C29B0);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C29B0);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityAbsorbOrb);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityEnemyBlood);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80182014[entity->subId];
@@ -1060,7 +1060,7 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C33D8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C33D8);
 
 void func_801C3708(void) {
     s32 temp = func_801BCF74(&D_8018216C);
@@ -1082,7 +1082,7 @@ void func_801C3708(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityBoneScimitar);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBoneScimitar);
 
 // debris that rotates and falls down
 void EntityFallingDebris(Entity* entity) {
@@ -1113,9 +1113,11 @@ void EntityFallingDebris(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C3F9C); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C3F9C);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C4198); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C4198);
 
 void func_801C4550(void) {
     if (g_CurrentEntity->unk80.modeS16.unk2 > 0) {
@@ -1127,7 +1129,8 @@ void func_801C4550(void) {
 }
 
 // green knight that throws axes
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityAxeKnight); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityAxeKnight);
 
 void func_801C4CC0(void) {
     if (g_CurrentEntity->subId != 0) {
@@ -1192,13 +1195,14 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityBloodSplatter);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBloodSplatter);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C53AC);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C53AC);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityBloodDrips); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBloodDrips);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C5D20);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C5D20);
 
 void func_801C5F2C(Entity* arg0) {
     if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
@@ -1215,7 +1219,8 @@ void func_801C5F2C(Entity* arg0) {
 }
 
 // throws bones at you
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySkeleton); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySkeleton);
 
 void func_801C6494(Entity* entity) {
     if (entity->step) {
@@ -1302,16 +1307,19 @@ void func_801C6678(Entity* entity) {
 }
 
 // moves around on walls and drips poison
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySpittleBone); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySpittleBone);
 
 // https://decomp.me/scratch/T0T7K mostly regalloc
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C6B24);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C6B24);
 
 // spit projectile from spittle bone
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySpittleBoneSpit); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySpittleBoneSpit);
 
 // probably the subweapons floating in the breakable containers
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntitySubWeaponPickup); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySubwpnPickup);
 
 void func_801C7538(Entity* entity) {
     s32 new_var;
@@ -1444,7 +1452,7 @@ void func_801C7884(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityBloodSkeleton);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBloodSkeleton);
 
 s32 func_801C7CF0(Unkstruct5* arg0) {
     s16 diff;
@@ -1464,15 +1472,15 @@ s32 func_801C7CF0(Unkstruct5* arg0) {
 }
 
 // sealed door that displays "Magically Sealed" prompt
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityMagicallySealedDoor);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMagicallySealedDoor);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C8ADC);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C8ADC);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityStageNamePopup);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityStageNamePopup);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C9930);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C9930);
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C9D18);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C9D18);
 
 POLY_GT4* func_801C9E68(POLY_GT4* poly) {
     while (poly != NULL) {
@@ -1485,7 +1493,7 @@ POLY_GT4* func_801C9E68(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", func_801C9E98);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C9E98);
 
 POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
@@ -1585,4 +1593,5 @@ s32 func_801CA0FC(s32 arg0, u8 arg1) {
 }
 
 // particle effect that spawns life up item
-INCLUDE_ASM("asm/st/nz0/nonmatchings/30958", EntityLifeUpSpawn); // Unique
+// Unique
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityLifeUpSpawn);

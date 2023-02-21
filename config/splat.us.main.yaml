@@ -3,7 +3,7 @@ options:
   basename:     main
   base_path:    ..
   target_path:  iso/SLUS_000.67
-  asm_path:     asm/main
+  asm_path:     asm/us/main
   asset_path:   assets/main
   src_path:     src/main
   compiler:     GCC

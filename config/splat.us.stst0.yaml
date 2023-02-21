@@ -3,7 +3,7 @@ options:
   basename:     stst0
   base_path:    ..
   target_path:  iso/ST/ST0/ST0.BIN
-  asm_path:     asm/st/st0
+  asm_path:     asm/us/st/st0
   asset_path:   assets/st/st0
   src_path:     src/st/st0
   compiler:     GCC

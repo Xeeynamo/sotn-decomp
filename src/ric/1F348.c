@@ -129,7 +129,7 @@ void func_8015B348(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1F348", func_8015B898);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1F348", func_8015B898);
 
 // same as DRA/func_80115C50
 void func_8015BB80(void) {
