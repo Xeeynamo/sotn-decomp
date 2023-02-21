@@ -83,7 +83,7 @@ void EntityPushAlucard(Entity* entity) {
 // Instruction reorder, only matches in PSY-Q 4.0
 // Probably ASPSX
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId53);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId53);
 #else
 void EntityUnkId53(Entity* entity) {
     s32 temp_v0;
@@ -128,20 +128,20 @@ void EntityUnkId53(Entity* entity) {
 #endif
 
 // large foreground tree during intro
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityForegroundTree);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityForegroundTree);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId50);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId50);
 
 // part of parallax background with pine trees
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId52);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId52);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId54);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 
 // regalloc
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/3C4EC", EntityUnkId55);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId55);
 #else
 void EntityUnkId55(Entity* entity, u16 arg2) {
     s32 firstPolygonIndex;

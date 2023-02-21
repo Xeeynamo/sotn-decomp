@@ -3,7 +3,7 @@ options:
   basename:     ric
   base_path:    ..
   target_path:  iso/BIN/RIC.BIN
-  asm_path:     asm/ric
+  asm_path:     asm/us/ric
   asset_path:   assets/ric
   src_path:     src/ric
   compiler:     GCC

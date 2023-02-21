@@ -111,7 +111,7 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[D_801D6B0C], 9);
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AD66C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AD66C);
 
 /* DATA */
 extern u8* D_801803B0;
@@ -146,7 +146,7 @@ void func_801AD78C(void) {
     DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AD968);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AD968);
 
 void func_801ADC3C(void) {
     s32* new_var = &D_801BCC84;
@@ -184,15 +184,15 @@ void func_801ADC3C(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801ADF94);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AE6D0);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE6D0);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AE9A8);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE9A8);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AEA8C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEA8C);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AEB74);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEB74);
 
 void func_801AECA0(void) {
     s32 i = 0;
@@ -214,7 +214,7 @@ void func_801AECA0(void) {
     g_api.func_800EA5E4(0x8004);
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801AED48);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AED48);
 
 void func_801AEE74(void) {
     s32 i = 0;
@@ -234,7 +234,7 @@ void func_801AEE74(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", Update);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", Update);
 
 void func_801B17C8(void) {
     switch (D_800978F8) {
@@ -366,7 +366,7 @@ void func_801B1D68(POLY_GT4* poly) { func_801B1CFC(poly, 0); }
 
 void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B1DA8);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B1DA8);
 
 void func_801B1ED0(void) {
     s32 var_v1 = 0xF;
@@ -403,10 +403,10 @@ void func_801B1F4C(s32 arg0) {
 }
 
 void func_801B1FD8(u8* arg0, s32 arg1);
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B1FD8);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B1FD8);
 
 void func_801B2108(s32, s32);
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B2108);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2108);
 
 void func_801B248C(s32 arg0, s32 arg1) {
     if (D_801BC398[arg1] != arg0) {
@@ -488,11 +488,11 @@ void func_801B26A0(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
 extern RECT D_80182584;
 
 void func_801B2700(s32 arg0, s32 arg1);
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B2700);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2700);
 
 void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
                    s32 tge, s32 c);
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B27A8);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B27A8);
 
 void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
     const int w = 12;
@@ -520,7 +520,7 @@ s32 func_801B2984(u8 ch) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", DrawString16x16);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", DrawString16x16);
 #else
 extern u8 D_8018046D[];
 
@@ -626,9 +626,9 @@ void func_801B2DF4(void) {
     func_801B2DEC();
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B2E5C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2E5C);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B2F50);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2F50);
 
 void func_801B3120(void) {
     s32* var_a0;
@@ -651,7 +651,7 @@ void func_801B3120(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B3164);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3164);
 
 void func_801B367C(s32 arg0) {
     g_memCardRStep = 0;
@@ -659,7 +659,7 @@ void func_801B367C(s32 arg0) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B3694);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3694);
 #else
 s32 func_801B3694(void) {
     char saveFile[0x20];
@@ -720,7 +720,7 @@ s32 func_801B3694(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B38B4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B38B4);
 
 void func_801B3A54(s32 arg0, s32 arg1) {
     char pad[0x20];
@@ -733,7 +733,7 @@ void func_801B3A54(s32 arg0, s32 arg1) {
     D_801BB008 = arg1;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B3A94);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3A94);
 
 void func_801B3E14(s32 arg0) {
     g_memCardRStep = 0;
@@ -741,7 +741,7 @@ void func_801B3E14(s32 arg0) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B3E2C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3E2C);
 #else
 s32 func_801B3E2C(void) {
     char saveFile[0x20];
@@ -780,7 +780,7 @@ void func_801B3F7C(s32 arg0) {
     g_memCardRStepSub = arg0;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B3F94);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3F94);
 
 void InitRoomEntities(s32 objLayoutId) {
     s32 temp_s0 = D_8003C9A4;
@@ -808,7 +808,7 @@ void InitRoomEntities(s32 objLayoutId) {
     }
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", TestCollisions);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", TestCollisions);
 
 void func_801B4B30(Entity* entity) {
     s32 i;
@@ -865,7 +865,7 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
     return (u8)flag;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B4C68);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4C68);
 
 void func_801B4D78(void) {
     Entity* e = &g_EntityArray[UNK_ENTITY_3];
@@ -881,11 +881,11 @@ void func_801B4D78(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B4DE0);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4DE0);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B4FFC);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4FFC);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B519C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B519C);
 
 void func_801B5350(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_5];
@@ -955,4 +955,4 @@ void func_801B5548(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/2D260", func_801B55C8);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B55C8);

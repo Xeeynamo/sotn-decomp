@@ -3,7 +3,7 @@ options:
   basename:     stsel
   base_path:    ..
   target_path:  iso/ST/SEL/SEL.BIN
-  asm_path:     asm/st/sel
+  asm_path:     asm/us/st/sel
   asset_path:   assets/st/sel
   src_path:     src/st/sel
   compiler:     GCC

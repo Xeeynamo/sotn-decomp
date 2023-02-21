@@ -3,7 +3,7 @@ options:
   basename:     stno3
   base_path:    ..
   target_path:  iso/ST/NO3/NO3.BIN
-  asm_path:     asm/st/no3
+  asm_path:     asm/us/st/no3
   asset_path:   assets/st/no3
   src_path:     src/st/no3
   compiler:     GCC

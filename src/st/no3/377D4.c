@@ -29,7 +29,7 @@ void EntityCavernDoorVase(Entity* arg0) {
     AnimateEntity(temp_s0->unk10, arg0);
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId12);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId12);
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
@@ -64,7 +64,7 @@ void EntityBreakable(Entity* entity) {
 
 // matches except for nops after loads
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId16);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId16);
 #else
 extern u8 D_8003CB25;
 extern u8 D_8003CB26;
@@ -95,23 +95,23 @@ void func_801B7B98(Entity* arg0) {
 #endif
 
 // lightning and sound for background
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityBackgroundLightning);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundLightning);
 
 // window that opens and shuts in the background
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityShuttingWindow);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityShuttingWindow);
 
 // main door to the castle that closes during intro
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCastleDoor);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityCastleDoor);
 
 // bushes in parallax background
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityBackgroundBushes);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundBushes);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId1C);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId1C);
 
 // transparent water "plane" seen in the merman room
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityTransparentWater);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityTransparentWater);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B94F0);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B94F0);
 
 // lever and platform to open caverns door
 void EntityCavernDoorLever(Entity* entity) {
@@ -154,12 +154,12 @@ void EntityCavernDoorLever(Entity* entity) {
 }
 
 // platform attached to lever at cavern door
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCavernDoorPlatform);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityCavernDoorPlatform);
 
 // door blocking way to caverns
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityCavernDoor);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityCavernDoor);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801B9C44);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B9C44);
 
 // switch that clicks when you step on it
 void EntityClickSwitch(Entity* entity) {
@@ -193,10 +193,10 @@ void EntityClickSwitch(Entity* entity) {
 }
 
 // smaller weight blocking path near cube of zoe
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityZoeSmallWeight);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityZoeSmallWeight);
 
 // taller weight blocking path near cube of zoe
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityZoeTallWeight);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityZoeTallWeight);
 
 // trap door that leads to underground garden in saturn version.
 // also opens the one leading to the save room
@@ -238,26 +238,26 @@ void EntityTrapDoor(Entity* entity) {
 }
 
 // left side of the breakable rock, drops pot roast
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityMermanRockLeftSide);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockLeftSide);
 
 // right side of the merman room rock, breaks when hit
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityMermanRockRightSide);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockRightSide);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId26);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId26);
 
 // falling rock that breaks into dust
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingRock2);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityFallingRock2);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityUnkId5C);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityFallingRock);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityFallingRock);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", func_801BB548);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 
 // sky animation during death cutscene
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
 
 extern u8 D_80181390;
 
@@ -323,7 +323,7 @@ void EntitySwitch(Entity* entity) {
 }
 
 // door preventing access to warp room / heart
-INCLUDE_ASM("asm/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
 
 void EntityUnkId49(Entity* entity) {
     do {

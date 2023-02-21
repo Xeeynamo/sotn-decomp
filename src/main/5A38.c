@@ -2,7 +2,7 @@
 #include <game.h>
 #include <psxsdk/libetc.h>
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", PadInit);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", PadInit);
 // void PadInit(s32 arg0) {
 //     D_80073080 = arg0;
 //     D_8003925C = -1;
@@ -11,31 +11,31 @@ INCLUDE_ASM("asm/main/nonmatchings/5A38", PadInit);
 //     ChangeClearPAD(0);
 // }
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", PadRead);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", PadRead);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", PadStop);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", PadStop);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", StopPAD);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", StopPAD);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_init);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", PAD_init);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", PAD_dr);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", PAD_dr);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", VSync);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", VSync);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", v_wait);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", v_wait);
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", ChangeClearRCnt);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", ChangeClearRCnt);
 
 int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", InterruptCallback);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", InterruptCallback);
 
 void* DMACallback(int dma, void (*func)()) {
     return D_8002D340->DMACallback(dma, func);
 }
 
-INCLUDE_ASM("asm/main/nonmatchings/5A38", VSyncCallback);
+INCLUDE_ASM("asm/us/main/nonmatchings/5A38", VSyncCallback);
 // int VSyncCallback(void (*f)()) {
 //     return D_8002D340->VSyncCallbacks(0, f);
 // }

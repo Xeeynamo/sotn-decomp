@@ -3,7 +3,7 @@ options:
   basename:     tt_000
   base_path:    ..
   target_path:  iso/SERVANT/TT_000.BIN
-  asm_path:     asm/servant/tt_000
+  asm_path:     asm/us/servant/tt_000
   asset_path:   assets/servant/tt_000
   src_path:     src/servant/tt_000
   compiler:     GCC

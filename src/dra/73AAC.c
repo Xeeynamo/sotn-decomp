@@ -183,11 +183,11 @@ block_13:
     PLAYER.objectRoomIndex = 1;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/73AAC", func_8011405C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_8011405C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/73AAC", func_80114DF4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80114DF4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/73AAC", func_80115394);
+INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80115394);
 
 void func_80115BB0(void) {
     PLAYER.unk19 = 4;

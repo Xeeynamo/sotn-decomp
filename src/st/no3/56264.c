@@ -71,13 +71,13 @@ void EntityBat(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/56264", EntityZombie);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/56264", EntityUnkId4D);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityUnkId4D);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/56264", func_801D6880);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", func_801D6880);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/56264", func_801D6C68);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", func_801D6C68);
 
 POLY_GT4* func_801D6DB8(POLY_GT4* poly) {
     while (poly != NULL) {

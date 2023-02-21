@@ -61,9 +61,9 @@ void func_8015C2A8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/202A8", func_8015C4AC);
+INCLUDE_ASM("asm/us/ric/nonmatchings/202A8", func_8015C4AC);
 
-INCLUDE_ASM("asm/ric/nonmatchings/202A8", func_8015C6D4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/202A8", func_8015C6D4);
 
 void func_8015C908(s32 step) {
     PLAYER.step = step;

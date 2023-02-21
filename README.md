@@ -81,7 +81,7 @@ Some non-matching functions are present in the source preprocessed by the macro 
 
 1. Run `make clean extract all expected` at least once
 1. After setup and build, choose an overlay (eg. `ST/WRP`)
-1. Look for one of those functions which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
+1. Look for one of those functions which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_801873A0);`)
 1. Run `./tools/decompile.py func_801873A0` to decompile the function in the C source code where the function is supposed to be located
 1. If the function does not compile, try addressing the compilation errors until `make` compiles
 1. If the function does not match, invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0` and refactor the code until it matches

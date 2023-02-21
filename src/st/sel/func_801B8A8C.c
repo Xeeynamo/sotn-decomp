@@ -4,7 +4,7 @@
 // points to a 'nop' while the current build toolchain points to the
 // instruction right after the 'nop'.
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/sel/nonmatchings/func_801B8A8C", func_801B8A8C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/func_801B8A8C", func_801B8A8C);
 #else
 void _clear_event(void);
 void _clear_event_x(void);

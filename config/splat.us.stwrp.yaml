@@ -3,7 +3,7 @@ options:
   basename:     stwrp
   base_path:    ..
   target_path:  iso/ST/WRP/WRP.BIN
-  asm_path:     asm/st/wrp
+  asm_path:     asm/us/st/wrp
   asset_path:   assets/st/wrp
   src_path:     src/st/wrp
   compiler:     GCC

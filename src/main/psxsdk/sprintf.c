@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/main/nonmatchings/psxsdk/sprintf", sprintf);
+INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/sprintf", sprintf);

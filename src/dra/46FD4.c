@@ -181,7 +181,7 @@ void func_800E7458(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/46FD4", func_800E768C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/46FD4", func_800E768C);
 
 void func_800E7AEC(void) {
     switch (D_8003C734) {

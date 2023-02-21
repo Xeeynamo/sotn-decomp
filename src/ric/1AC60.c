@@ -21,21 +21,21 @@ void func_80156C60(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80156CCC);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156CCC);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80156DE4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156DE4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80156F40);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156F40);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801572A8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801572A8);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80157894);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157894);
 
 // https://decomp.me/scratch/hk5zb
 // Almost matched, just a jump issue
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80157A50);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157A50);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", UpdateEntityRichter);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", UpdateEntityRichter);
 
 void func_801587C0() { D_80175956 = 0; }
 
@@ -54,7 +54,7 @@ void func_80158814(void) {
     PLAYER.palette = D_80175954;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015885C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015885C);
 
 void func_80158B04(s32 arg0) {
     s32 var_s0;
@@ -215,7 +215,7 @@ void func_80158FA4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_801590A0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801590A0);
 
 void func_801595D8(void) {
     if (!func_8015DBB0(0x9009)) {
@@ -232,7 +232,7 @@ void func_801595D8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159670);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80159670);
 
 void func_80159BC8(void) {
     PLAYER.animFrameDuration = 0;
@@ -281,11 +281,11 @@ void func_80159C04(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_80159CE4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80159CE4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A7D0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A7D0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/1AC60", func_8015A9B0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A9B0);
 
 void func_8015AFE0(void) {
     if (PLAYER.unk2E == 0) {
