@@ -7,9 +7,9 @@ options:
   asset_path:   assets/st/cen
   src_path:     src/st/cen
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stcen.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stcen.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stcen.txt
+  symbol_addrs_path:    config/generated.symbols.us.stcen.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stcen.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stcen.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
