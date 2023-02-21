@@ -1503,7 +1503,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80130E94);
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8013136C);
 #else
-void func_8012C600(void);                 /* extern */
+void func_8012C600(void);
 extern u16 D_8007412E;
 extern s32 D_800741CC;
 extern s32 D_800741D0;
