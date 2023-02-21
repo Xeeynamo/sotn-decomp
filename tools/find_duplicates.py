@@ -11,28 +11,35 @@ import re
 import sys
 import glob
 
+version = "us"
 script_dir = os.path.dirname(os.path.realpath(__file__))
-root_directory = script_dir + "/../"
-asm_directory = root_directory + "asm"
-build_dir = root_directory + "build/"
+root_directory = os.path.join(script_dir, "../")
+asm_directory = os.path.join(root_directory, "asm", version)
+src_directory = os.path.join(root_directory, "src")
+build_dir = os.path.join(root_directory, "build", version)
+
+
+def read_binary(name: str) -> bytes:
+    with open(os.path.join(build_dir, name), "rb") as f:
+        return f.read()
 
 
 def read_roms():
     roms = dict()
-    roms["MAIN"] = open(root_directory + "build/main.exe", "rb").read()
-    roms["DRA"] = open(root_directory + "build/DRA.BIN", "rb").read()
-    roms["RIC"] = open(root_directory + "build/RIC.BIN", "rb").read()
-    roms["CEN"] = open(root_directory + "build/CEN.BIN", "rb").read()
-    roms["DRE"] = open(root_directory + "build/DRE.BIN", "rb").read()
-    roms["MAD"] = open(root_directory + "build/MAD.BIN", "rb").read()
-    roms["NO3"] = open(root_directory + "build/NO3.BIN", "rb").read()
-    roms["NP3"] = open(root_directory + "build/NP3.BIN", "rb").read()
-    roms["NZ0"] = open(root_directory + "build/NZ0.BIN", "rb").read()
-    roms["SEL"] = open(root_directory + "build/SEL.BIN", "rb").read()
-    roms["ST0"] = open(root_directory + "build/ST0.BIN", "rb").read()
-    roms["WRP"] = open(root_directory + "build/WRP.BIN", "rb").read()
-    roms["RWRP"] = open(root_directory + "build/RWRP.BIN", "rb").read()
-    roms["TT_000"] = open(root_directory + "build/TT_000.BIN", "rb").read()
+    roms["MAIN"] = read_binary("main.exe")
+    roms["DRA"] = read_binary("DRA.BIN")
+    roms["RIC"] = read_binary("RIC.BIN")
+    roms["CEN"] = read_binary("CEN.BIN")
+    roms["DRE"] = read_binary("DRE.BIN")
+    roms["MAD"] = read_binary("MAD.BIN")
+    roms["NO3"] = read_binary("NO3.BIN")
+    roms["NP3"] = read_binary("NP3.BIN")
+    roms["NZ0"] = read_binary("NZ0.BIN")
+    roms["SEL"] = read_binary("SEL.BIN")
+    roms["ST0"] = read_binary("ST0.BIN")
+    roms["WRP"] = read_binary("WRP.BIN")
+    roms["RWRP"] = read_binary("RWRP.BIN")
+    roms["TT_000"] = read_binary("TT_000.BIN")
     return roms
 
 
@@ -244,7 +251,7 @@ def do_query(query):
 
 def all_matches_comment():
     c_files = list()
-    for root, directories, files in os.walk(root_directory + "src"):
+    for root, directories, files in os.walk(src_directory):
         for file in files:
             if file.endswith(".c"):
                 c_files.append(os.path.join(root, file))
@@ -315,7 +322,7 @@ def all_matches_comment():
 
 def all_matches_uncomment():
     c_files = list()
-    for root, directories, files in os.walk(root_directory + "src"):
+    for root, directories, files in os.walk(src_directory):
         for file in files:
             if file.endswith(".c"):
                 c_files.append(os.path.join(root, file))
