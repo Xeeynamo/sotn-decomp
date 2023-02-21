@@ -144,7 +144,7 @@ extern s16 D_800ACF60[]; // collection of sounds?
 extern s32 D_800ACFB4[];
 extern s32 D_800ADC44;
 extern s32 D_800AE270[];
-extern s32* D_800AE294; // might not really be a pointer
+extern AnimationFrame* D_800AE294;
 extern s16 D_800AFDA6;
 extern const char* c_strEquip;
 extern const char* c_strSpells;

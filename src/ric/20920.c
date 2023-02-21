@@ -514,12 +514,10 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80160788);
 
-// move a0,s0
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80160C38);
-#else
 void func_80160C38(Entity* entity) {
-    if (PLAYER.step == 17) {
+    if (PLAYER.step != 23) {
+        func_80156C60(entity);
+    } else {
         entity->posX.i.hi = PLAYER.posX.i.hi;
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->facing = PLAYER.facing;
@@ -541,11 +539,8 @@ void func_80160C38(Entity* entity) {
         if (PLAYER.animFrameIdx >= 8) {
             func_80156C60(entity);
         }
-    } else {
-        func_80156C60(entity);
     }
 }
-#endif
 
 // aspatch jumps to the wrong instruction
 // Matches with PSY-Q 3.5 + aspsx 2.3.4
