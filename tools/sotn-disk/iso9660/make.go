@@ -194,6 +194,15 @@ func (img *WritableImage) GetFileLocation(name string) (uint32, error) {
 	return node.dirent.ExtentLocation.LSB, nil
 }
 
+func (img *WritableImage) GetFileSize(name string) (uint32, error) {
+	node, found := img.dirMap[name]
+	if !found {
+		return 0, fmt.Errorf("get size failed: '%s' not found", name)
+	}
+
+	return node.dirent.DataLength.LSB, nil
+}
+
 func (img *WritableImage) addDirEntry(name string, fullPath string, ts Timestamp, mode XaMode) {
 	parent := &img.root
 	localPath := parent.dirent.FileIdentifier

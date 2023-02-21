@@ -7,9 +7,9 @@ options:
   asset_path:   assets/st/rwrp
   src_path:     src/st/rwrp
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.strwrp.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.strwrp.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.strwrp.txt
+  symbol_addrs_path:    config/generated.symbols.us.strwrp.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.strwrp.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.strwrp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

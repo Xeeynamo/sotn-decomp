@@ -2,6 +2,7 @@
 .SECONDARY:
 
 # Binaries
+VERSION			?= us
 MAIN            := main
 DRA             := dra
 
@@ -73,17 +74,21 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
-		-T $(CONFIG_DIR)/symbols.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(1).txt \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt \
 		--no-check-sections \
 		-nostdlib \
 		-s
 endef
 
+test:
+	echo ${VERSION}
+
 all: build check
 build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
+	git clean -fdx assets/
 	git clean -fdx asm/
 	git clean -fdx $(BUILD_DIR)
 	git clean -fdx config/
@@ -106,8 +111,8 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(MAIN).ld \
-	-T $(CONFIG_DIR)/symbols.txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(MAIN).txt \
+	-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt \
 	--no-check-sections \
 	-nostdlib \
 	-s
@@ -172,7 +177,7 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T stmad.ld \
-		-T $(CONFIG_DIR)/symbols.txt \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
 		--no-check-sections \
@@ -204,23 +209,23 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_main: require-tools
-	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
 extract_dra: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.dra.txt > $(CONFIG_DIR)/generated.symbols.dra.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(DRA).yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).dra.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).dra.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(DRA).yaml
 extract_ric: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.ric.yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).ric.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).ric.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).ric.yaml
 extract_stmad: require-tools
 	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.stmad.yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
 extract_st%: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
 extract_tt_%: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.tt_$*.txt > $(CONFIG_DIR)/generated.symbols.tt_$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.tt_$*.yaml
-$(CONFIG_DIR)/generated.symbols.%.txt:
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
+$(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
 context:
 	$(M2CTX) $(SOURCE)
