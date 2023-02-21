@@ -221,7 +221,7 @@ void func_801595D8(void) {
     if (!func_8015DBB0(0x9009)) {
         func_8015C93C(0x1000);
         if (PLAYER.unk2E == 0) {
-            if ((D_80072F0A != 0) && (D_80072EEC & 0x40)) {
+            if ((D_80072F0A[0] != 0) && (D_80072EEC & 0x40)) {
                 func_8015D020();
                 return;
             }

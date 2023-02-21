@@ -17,7 +17,7 @@ extern void func_8015CCC8(s32 arg0, s32 accelerationX);
 extern void func_8015CD98(s32 accelerationX);
 extern void func_8015CDE0(s32);
 extern void func_8015CE7C(void);
-extern s32 func_8015CF08(void);
+extern void func_8015CF08(void);
 extern void func_8015D020(void);
 extern bool func_8015DBB0(s32);
 extern s32 func_8015E380(s32);

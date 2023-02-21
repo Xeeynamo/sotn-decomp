@@ -189,7 +189,39 @@ void func_8015CE7C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015CF08);
+void func_8015CF08(void) {
+    /**
+     * TODO: labels are !FAKE
+     */
+    if ((D_80072F20.unk50 != 0x19) && (D_80072F20.unk50 != 0x17)) {
+        PLAYER.accelerationX = 0;
+    }
+    if (D_80072F20.unk50 != 1) {
+        if (D_80072F20.unk50 != 0x19) {
+            func_8015C920(&D_80155534);
+            goto block_6;
+        }
+        goto block_7;
+    }
+block_6:
+    if (D_80072F20.unk50 == 0x19) {
+    block_7:
+        D_80072F64 = 0x10;
+    }
+    func_8015C908(3);
+    PLAYER.accelerationY = 0x20000;
+    D_80072F0A[0] = 8;
+    D_80072F0A[1] = 8;
+    *D_80072F02 = 0;
+    D_80072F10 = 0;
+    if (D_80072F20.unk50 == 0x17) {
+        D_80072F0A[1] = 0;
+        D_80072F0A[0] = 0;
+        PLAYER.animFrameIdx = 2;
+        PLAYER.animFrameDuration = 0x10;
+        PLAYER.accelerationX /= 2;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D020);
 

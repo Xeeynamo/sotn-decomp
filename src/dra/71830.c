@@ -141,7 +141,7 @@ void func_80112B64(void) {
 INCLUDE_ASM("asm/dra/nonmatchings/71830", func_80112BB0);
 
 void func_80113148(void) {
-    if ((D_80072F0A != 0) && (D_80072EEC & 0x40)) {
+    if ((D_80072F0A[0] != 0) && (D_80072EEC & 0x40)) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         func_8010E1EC(0x1000);
