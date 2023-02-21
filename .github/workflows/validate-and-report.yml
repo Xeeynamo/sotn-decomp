@@ -24,7 +24,7 @@ jobs:
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     env:
-      VERSION=${{ matrix.version }}
+      VERSION: ${{ matrix.version }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
@@ -110,7 +110,7 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     env:
-      VERSION=${{ matrix.version }}
+      VERSION: ${{ matrix.version }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
