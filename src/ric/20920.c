@@ -626,17 +626,16 @@ void func_80160F0C(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->facing = PLAYER.facing;
-    if (self->step != 0) {
-        return;
+    if (self->step == 0) {
+        self->unk34 = 0x04060000;
+        self->unk10 = 0xC;
+        self->unk12 = -0x1A;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->unkB0 = 0x16;
+        func_8015FAB8(self);
+        self->step++;
     }
-    self->unk34 = 0x04060000;
-    self->unk10 = 0xC;
-    self->unk12 = -0x1A;
-    self->hitboxWidth = 12;
-    self->hitboxHeight = 12;
-    self->unkB0 = 0x16;
-    func_8015FAB8(self);
-    self->step++;
 }
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160FC4);
