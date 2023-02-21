@@ -615,46 +615,40 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80123788);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801238CC);
 
-// move a0,s0 thing
-// https://decomp.me/scratch/rJCCX
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80123A60);
-#else
 void func_80123A60(Entity* entity) {
-    if (D_80072F2C & 0x01000000) {
+    Entity* player = &PLAYER;
 
-#if 1
-        entity->posX.i.hi = PLAYER.posX.i.hi; //(u16) D_800733DA;
-        entity->posY.i.hi = PLAYER.posY.i.hi; //(u16) D_800733DE;
-#else // This one generates the  first missing move a0, s0 for some reason?
-        entity->posX.i.hi = (u16)D_800733DA;
-        entity->posY.i.hi = (u16)D_800733DE;
-#endif
-        if (entity->step == 0) {
-            func_8011A328(entity, 0xB);
-            entity->unk34 = 0x04060000;
-            entity->step++;
-        }
-        if (PLAYER.animCurFrame == 5) {
-            entity->hitboxWidth = 12;
-            entity->hitboxHeight = 32;
-            entity->unk10 = 0x1C;
-            entity->unk12 = -0xC;
-            return;
-        }
-        if (PLAYER.animCurFrame == 6) {
-            entity->hitboxWidth = 10;
-            entity->hitboxHeight = 10;
-            entity->unk10 = 0x1C;
-            entity->unk12 = 0x10;
-            return;
-        }
-        goto block_7;
+    if (!(D_80072F2C & 0x01000000)) {
+        DestroyEntity(entity);
+        return;
     }
-block_7:
+
+    entity->posX.i.hi = player->posX.i.hi;
+    entity->posY.i.hi = player->posY.i.hi;
+    if (entity->step == 0) {
+        func_8011A328(entity, 0xB);
+        entity->unk34 = 0x04060000;
+        entity->step++;
+    }
+
+    if (player->animCurFrame == 5) {
+        entity->hitboxWidth = 12;
+        entity->hitboxHeight = 32;
+        entity->unk10 = 0x1C;
+        entity->unk12 = -0xC;
+        return;
+    }
+
+    if (player->animCurFrame == 6) {
+        entity->hitboxWidth = 10;
+        entity->hitboxHeight = 10;
+        entity->unk10 = 0x1C;
+        entity->unk12 = 0x10;
+        return;
+    }
+
     DestroyEntity(entity);
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80123B40);
 
