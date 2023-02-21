@@ -1421,7 +1421,7 @@ void func_8012CED4(void) {
         }
     }
     PLAYER.unk2E = 5;
-    D_80072F0A = 8;
+    D_80072F0A[0] = 8;
     PLAYER.accelerationY = 0;
     D_80138430 -= 0x100;
 }
@@ -1431,7 +1431,7 @@ void func_8012CFA8(void) {
     PLAYER.unk2E = 6;
     D_800B0914 = 0;
     PLAYER.accelerationX = 0;
-    D_80072F0A = 8;
+    D_80072F0A[0] = 8;
 }
 
 void func_8012CFF0(void) {

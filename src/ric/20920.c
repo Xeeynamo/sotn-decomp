@@ -189,9 +189,73 @@ void func_8015CE7C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015CF08);
+void func_8015CF08(void) {
+    /**
+     * TODO: labels are !FAKE
+     */
+    if ((D_80072F20.unk50 != 0x19) && (D_80072F20.unk50 != 0x17)) {
+        PLAYER.accelerationX = 0;
+    }
+    if (D_80072F20.unk50 != 1) {
+        if (D_80072F20.unk50 != 0x19) {
+            func_8015C920(&D_80155534);
+            goto block_6;
+        }
+        goto block_7;
+    }
+block_6:
+    if (D_80072F20.unk50 == 0x19) {
+    block_7:
+        D_80072F64 = 0x10;
+    }
+    func_8015C908(3);
+    PLAYER.accelerationY = 0x20000;
+    D_80072F0A[0] = 8;
+    D_80072F0A[1] = 8;
+    *D_80072F02 = 0;
+    D_80072F10 = 0;
+    if (D_80072F20.unk50 == 0x17) {
+        D_80072F0A[1] = 0;
+        D_80072F0A[0] = 0;
+        PLAYER.animFrameIdx = 2;
+        PLAYER.animFrameDuration = 0x10;
+        PLAYER.accelerationX /= 2;
+    }
+}
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D020);
+void func_8015D020(void) {
+    u16 temp; // TODO: !FAKE
+
+    if (D_80072F20.unk72 != 0) {
+        func_8015CF08();
+        return;
+    }
+
+    if ((func_8015C9CC() != 0) || (PLAYER.step == 0x17)) {
+        func_8015C920(&D_8015550C);
+        if (PLAYER.step == 0x19) {
+            func_8015CA84(0x24000);
+            temp = 0x10;
+            goto block_8;
+        }
+        func_8015CA84(0x14000);
+        D_80072F20.unk44 = 0;
+    } else {
+        func_8015C920(&D_801554F0);
+        temp = 4;
+        PLAYER.accelerationX = 0;
+    block_8:
+        D_80072F20.unk44 = temp;
+    }
+
+    func_8015C908(4);
+
+    if (D_80154570 != 0) {
+        PLAYER.accelerationY = -0x4B000;
+    } else {
+        PLAYER.accelerationY = -0x57000;
+    }
+}
 
 void func_8015D120(void) {
     func_8015C908(8);
@@ -211,13 +275,14 @@ void func_8015D120(void) {
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D1D0);
 
+// decompiling func_8015FB84 first is recommended to discover struct
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D250);
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D3CC);
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D678);
 
-void func_8015D9B4() { func_8015C908(0x16); }
+void func_8015D9B4() { func_8015C908(22); }
 
 void func_8015D9D4(void) {
     func_8015C9CC();
@@ -231,9 +296,31 @@ void func_8015D9D4(void) {
     D_80072F18 = 4;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015DA60);
+void func_8015DA60(void) {
+    D_80072F20.unk44 = 0;
+    func_8015C908(0x1A);
+    func_8015C920(&D_8015577C);
+    g_CurrentEntity->accelerationY = -0x20000;
+    func_8015CA84(0x58000);
+    func_8015CC28();
+    func_801606BC(g_CurrentEntity, 0x19, 0);
+    g_api.PlaySfx(0x6FA);
+    D_80072F18 = 4;
+    func_801606BC(g_CurrentEntity, 0x1F, 0);
+}
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015DB04);
+void func_8015DB04(void) {
+    func_8015C908(0x18);
+    func_8015C920(&D_801557D8);
+    g_CurrentEntity->accelerationY = 0;
+    func_8015CA84(0x58000);
+    D_80072F66 = 5;
+    D_80072F18 = 4;
+    func_801606BC(g_CurrentEntity, 0x1A, 0);
+    func_8015CC28();
+    g_api.PlaySfx(0x6FB);
+    g_api.PlaySfx(0x707);
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015DBB0);
 
@@ -460,11 +547,89 @@ void func_80160C38(Entity* entity) {
 }
 #endif
 
+// aspatch jumps to the wrong instruction
+// Matches with PSY-Q 3.5 + aspsx 2.3.4
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160D2C);
+#else
+void func_80160D2C(Entity* self) {
+    if (PLAYER.step != 26) {
+        func_80156C60(self);
+        return;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facing = PLAYER.facing;
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160E4C);
+    if (self->step == 0) {
+        self->unk34 = 0x04060000;
+        self->unk10 = 0x14;
+        self->hitboxHeight = 9;
+        self->hitboxWidth = 9;
+        self->unkB0 = 0x17;
+        func_8015FAB8(self);
+        self->step++;
+    }
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160F0C);
+    if (PLAYER.animCurFrame == 140) {
+        self->unk12 = 0;
+    }
+
+    if (PLAYER.animCurFrame == 141) {
+        self->unk12 = 0xC;
+    }
+
+    if (self->unk48 != 0) {
+        D_80072F20.unk44 |= 0x80;
+    } else {
+        D_80072F20.unk44 &= 0xFF7F;
+    }
+    self->unk48 = 0;
+}
+#endif
+
+void func_80160E4C(Entity* self) {
+    if (PLAYER.step != 24) {
+        func_80156C60(self);
+    } else {
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->facing = PLAYER.facing;
+        if (self->step == 0) {
+            self->unk34 = 0x04060000;
+            self->hitboxHeight = 20;
+            self->hitboxWidth = 20;
+            self->unk12 = 0;
+            self->unk10 = 0;
+            self->unkB0 = 0x11;
+            func_8015FAB8(self);
+            self->step++;
+        }
+        if (PLAYER.animFrameIdx >= 19) {
+            func_80156C60(self);
+        }
+    }
+}
+
+void func_80160F0C(Entity* self) {
+    if (PLAYER.step != 8) {
+        func_80156C60(self);
+        return;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facing = PLAYER.facing;
+    if (self->step == 0) {
+        self->unk34 = 0x04060000;
+        self->unk10 = 0xC;
+        self->unk12 = -0x1A;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->unkB0 = 0x16;
+        func_8015FAB8(self);
+        self->step++;
+    }
+}
 
 INCLUDE_ASM("asm/ric/nonmatchings/20920", func_80160FC4);
 
