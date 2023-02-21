@@ -23,7 +23,7 @@ ASM_DIR         := asm/$(VERSION)
 SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
-BUILD_DIR       := build
+BUILD_DIR       := build/$(VERSION)
 DISK_DIR        := $(BUILD_DIR)/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
@@ -87,14 +87,14 @@ build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/
-	git clean -fdx $(BUILD_DIR)
+	git clean -fdx build/
 	git clean -fdx config/
 	git clean -fx
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 check:
-	sha1sum --check slus00067.sha
+	sha1sum --check config/check.$(VERSION).sha
 expected: check
 	rm -rf expected/build
 	cp -r build expected/
@@ -247,7 +247,7 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)

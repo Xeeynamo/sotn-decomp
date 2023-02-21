@@ -2,6 +2,7 @@ options:
   platform:     psx
   basename:     stst0
   base_path:    ..
+  build_path:   build/us
   target_path:  iso/ST/ST0/ST0.BIN
   asm_path:     asm/us/st/st0
   asset_path:   assets/st/st0
