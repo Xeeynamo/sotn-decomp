@@ -223,7 +223,39 @@ block_6:
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/20920", func_8015D020);
+void func_8015D020(void) {
+    u16 temp; // TODO: !FAKE
+
+    if (D_80072F20.unk72 != 0) {
+        func_8015CF08();
+        return;
+    }
+
+    if ((func_8015C9CC() != 0) || (PLAYER.step == 0x17)) {
+        func_8015C920(&D_8015550C);
+        if (PLAYER.step == 0x19) {
+            func_8015CA84(0x24000);
+            temp = 0x10;
+            goto block_8;
+        }
+        func_8015CA84(0x14000);
+        D_80072F20.unk44 = 0;
+    } else {
+        func_8015C920(&D_801554F0);
+        temp = 4;
+        PLAYER.accelerationX = 0;
+    block_8:
+        D_80072F20.unk44 = temp;
+    }
+
+    func_8015C908(4);
+
+    if (D_80154570 != 0) {
+        PLAYER.accelerationY = -0x4B000;
+    } else {
+        PLAYER.accelerationY = -0x57000;
+    }
+}
 
 void func_8015D120(void) {
     func_8015C908(8);
