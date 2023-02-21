@@ -2,6 +2,7 @@ options:
   platform:     psx
   basename:     main
   base_path:    ..
+  build_path:   build/us
   target_path:  iso/SLUS_000.67
   asm_path:     asm/us/main
   asset_path:   assets/main
