@@ -590,7 +590,6 @@ void func_80160D2C(Entity* self) {
 
 void func_80160E4C(Entity* self) {
     Entity* temp = self;
-    Entity* player = &PLAYER; // Unnecessary temp for now
     
     if (PLAYER.step == 24) {
         self->posX.i.hi = PLAYER.posX.i.hi;
