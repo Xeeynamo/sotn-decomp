@@ -60,6 +60,7 @@ extern AnimationFrame* D_80155670;
 extern AnimationFrame* D_80155730;
 extern AnimationFrame* D_80155748;
 extern AnimationFrame* D_80155750;
+extern AnimationFrame* D_8015577C;
 extern AnimationFrame* D_80155788;
 extern AnimationFrame* D_8015579C;
 extern AnimationFrame* D_801558B4;
