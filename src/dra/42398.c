@@ -48,7 +48,7 @@ s32 func_80136010(void);
 
 // matching in gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2398);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2398);
 #else
 u_long* FntFlush(int id);
 int FntPrint();
@@ -76,11 +76,11 @@ void func_800E2438(const char* str) {
         func_800E2398(str);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E249C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E249C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2824);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2824);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E2B00);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2B00);
 
 void func_800E2E98(s32 colorAdd) {
     s32 newColorChannel;
@@ -165,7 +165,7 @@ void func_800E2F3C(void) {
 // matching in gcc 2.6.0 + aspsx 2.3.4
 // https://decomp.me/scratch/NgIDx
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E31C0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E31C0);
 #else
 void func_800E31C0(void) {
     if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
@@ -184,7 +184,7 @@ void func_800E31C0(void) {
 // TODO: fix branching
 // https://decomp.me/scratch/y3otf
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E3278);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
 #else
 extern s32 D_800BD1C8;
 extern s32 D_800BD1CC;
@@ -323,7 +323,7 @@ void func_800E376C(void) {
 
 // https://decomp.me/scratch/Ocshz
 // mips to c doesn't support this function very well
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E385C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
 
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
@@ -410,7 +410,7 @@ loop_5:
     D_801362C8 = 0;
     D_801362D8 = 0;
     D_80097914 = 0;
-    D_8003C704 = NULL;
+    D_8003C704 = 0;
     D_800973EC = 0;
     D_800974A4 = 0;
     D_8006C398 = 0;
@@ -462,7 +462,7 @@ loop_5:
         func_800EB314();
         ReadPads();
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
-            if (D_80097494 & PAD_START) {
+            if (D_80097494.unk0 & PAD_START) {
                 g_softResetTimer = 1;
             }
             if (g_softResetTimer != 0) {
@@ -557,14 +557,14 @@ void func_800E4124(s32 context) {
     g_backbufferY = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E414C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E414C);
 
 void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 
 // TODO aspatch jump points to the wrong instruction,
 // otherwise this is fully decompiled
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E451C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E451C);
 #else
 
 void func_800E451C(void) {
@@ -697,7 +697,7 @@ void func_800E4970(void) {
 
 void func_800E4A04(void) { s32 pad[3]; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E4A14);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
 
 void func_800E5358(void) {
     POLY_GT4* poly = &D_80086FEC[D_8013640C];
@@ -740,9 +740,9 @@ void func_800E5498(void) {
     D_80097930[0]++;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5584);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5584);
 
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E5D30);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5D30);
 
 void func_800E6218(void) {
     if (D_8006CBC4 != 0) {
@@ -775,5 +775,3 @@ s32 func_800E6300(void) {
     }
     return 0;
 }
-
-INCLUDE_ASM("asm/dra/nonmatchings/42398", func_800E6358);

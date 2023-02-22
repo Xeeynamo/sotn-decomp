@@ -35,7 +35,7 @@ void func_801AC048(void) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AC084);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC084);
 #else
 // Those arrays are weird. They do not store s32 but they are used as such.
 extern s32 D_80180068[];
@@ -65,7 +65,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801AC174);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC174);
 
 void func_801ACBE4(s32 arg0, u16 arg1) {
     POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
@@ -82,11 +82,11 @@ void func_801ACC3C(void) {
     }
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACC7C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACC7C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACDFC);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACDFC);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACEC0);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACEC0);
 
 void func_801ACF7C(void) {
     func_801B1ED0();
@@ -94,7 +94,7 @@ void func_801ACF7C(void) {
     func_801B25D4(D_801A75C0, 1);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/2C048", func_801ACFBC);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACFBC);
 
 void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
     const s32 x = 160;

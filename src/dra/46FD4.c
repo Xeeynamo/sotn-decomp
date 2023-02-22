@@ -7,7 +7,7 @@ void func_800E6FD4(void) {
     POLY_GT4* poly;
     u8 temp;
 
-    if ((!(D_80097494 & 0x800)) || (!g_IsTimeAttackUnlocked)) {
+    if ((!(D_80097494.unk0 & 0x800)) || (!g_IsTimeAttackUnlocked)) {
         switch (D_80073060) {
         case 0:
             if (D_8006C3B0 == 0) {
@@ -181,7 +181,7 @@ void func_800E7458(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/46FD4", func_800E768C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/46FD4", func_800E768C);
 
 void func_800E7AEC(void) {
     switch (D_8003C734) {

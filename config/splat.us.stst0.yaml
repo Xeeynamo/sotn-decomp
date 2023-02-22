@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     stst0
   base_path:    ..
-  target_path:  iso/ST/ST0/ST0.BIN
-  asm_path:     asm/st/st0
+  build_path:   build/us
+  target_path:  disks/us/ST/ST0/ST0.BIN
+  asm_path:     asm/us/st/st0
   asset_path:   assets/st/st0
   src_path:     src/st/st0
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stst0.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stst0.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stst0.txt
+  symbol_addrs_path:    config/generated.symbols.us.stst0.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stst0.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stst0.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

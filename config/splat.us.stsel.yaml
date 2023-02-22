@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     stsel
   base_path:    ..
-  target_path:  iso/ST/SEL/SEL.BIN
-  asm_path:     asm/st/sel
+  build_path:   build/us
+  target_path:  disks/us/ST/SEL/SEL.BIN
+  asm_path:     asm/us/st/sel
   asset_path:   assets/st/sel
   src_path:     src/st/sel
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stsel.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stsel.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stsel.txt
+  symbol_addrs_path:    config/generated.symbols.us.stsel.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stsel.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stsel.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

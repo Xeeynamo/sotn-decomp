@@ -23,6 +23,24 @@ This repo does not include any assets or assembly code necessary for compiling t
 | ST/RWRP/RWRP.BIN | ![progress RWRP.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-rwrp.json) | Warp Room (reverse)
 | SERVANT/TT_000.BIN | ![progress TT_000.BIN](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-report/assets/progress-tt_000.json) | Bat Familiar
 
+## Game versions
+
+| ID      | Console | Build date | Notes
+|---------|---------|------------|-------
+| jp10    | PS1     | 1997-02-20 |
+| jp11    | PS1     | 1997-03-06 | same psx.exe as jp10
+| usproto | PS1     | 1997-06-17 | same psx.exe as jp10
+| us      | PS1     | 1997-09-01 |
+| eu      | PS1     | 1997-09-30 |
+| hk      | PS1     | 1997-11-30 | same psx.exe as jp10
+| jp12    | PS1     | 1998-01-23 | same psx.exe as jp10
+| saturn  | Saturn  | 1998-04-27 |
+| hd      | PS1     | 2006-10-22 | build found in the PSP game
+| pspko   | PSP     | 2007-09-07 |
+| pspus   | PSP     | 2007-09-10 |
+| pspjp   | PSP     | 2007-09-14 |
+| pspeu   | PSP     | 2007-11-21 |
+
 ## Game internals
 
 The game is divided into three modules:
@@ -45,9 +63,8 @@ sudo apt-get install -y $(cat tools/requirements-debian.txt)
 make update-dependencies
 ```
 
-1. Create a new `iso/` folder and put the game disc image in, both BIN and CUE files
-1. Run `mv iso/*.cue iso/sotn.cue`
-1. Run `make extract_sotn`
+1. Run `mv disks/*.cue disks/sotn.us.cue`
+1. Run `make extract_disk`
 
 ## Build
 
@@ -63,7 +80,7 @@ Some non-matching functions are present in the source preprocessed by the macro 
 
 1. Run `make clean extract all expected` at least once
 1. After setup and build, choose an overlay (eg. `ST/WRP`)
-1. Look for one of those functions which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/st/wrp/nonmatchings/6FD0", func_801873A0);`)
+1. Look for one of those functions which hasn't successfully decompiled yet (eg. `INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_801873A0);`)
 1. Run `./tools/decompile.py func_801873A0` to decompile the function in the C source code where the function is supposed to be located
 1. If the function does not compile, try addressing the compilation errors until `make` compiles
 1. If the function does not match, invoke `python3 ./tools/asm-differ/diff.py -mwo --overlay st/wrp func_801873A0` and refactor the code until it matches

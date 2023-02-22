@@ -39,13 +39,13 @@ void func_8016E324(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8016E46C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016E46C);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8016E9E4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016E9E4);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8016F198);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F198);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8016F6F0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F6F0);
 
 void func_80170548(Entity* entity) {
     switch (entity->step) {
@@ -74,7 +74,7 @@ void func_80170548(Entity* entity) {
  * to be included in a NON_MATCHING state.
  */
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801705EC);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801705EC);
 #else
 void func_80156C60(Entity* entity);
 
@@ -114,17 +114,17 @@ void func_801705EC(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801706C0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801706C0);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_80170874);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80170874);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8017091C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8017091C);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_80170F64);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80170F64);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8017161C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8017161C);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_801719A4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801719A4);
 
 void func_80172AE8(Entity* entity) {
     POLY_GT4* poly;
@@ -181,6 +181,6 @@ void func_80172AE8(Entity* entity) {
             entity->unk7E.modeU8.unk0;
 }
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_80172D00);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80172D00);
 
-INCLUDE_ASM("asm/ric/nonmatchings/32324", func_8017328C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8017328C);

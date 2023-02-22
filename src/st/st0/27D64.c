@@ -48,7 +48,7 @@ void func_801A7D64(Entity* arg0) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A7E2C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A7E2C);
 #else
 bool func_801A7E2C(Entity* entity) {
     s16 distance;
@@ -68,7 +68,7 @@ bool func_801A7E2C(Entity* entity) {
 #endif
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityLockCamera);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityLockCamera);
 #else
 extern u16 D_801805B0[];
 extern u8 D_8018065C[];
@@ -128,9 +128,9 @@ void EntityLockCamera(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A805C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A805C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8328);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8328);
 
 void func_801A8620(Entity* entity) {
     s16 dist;
@@ -253,9 +253,9 @@ void func_801A8620(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8984);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8984);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A89D8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A89D8);
 
 void func_801A8B9C(s16 yOffset) {
     RECT rect;
@@ -267,23 +267,23 @@ void func_801A8B9C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8BF8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8BF8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8CB0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8CB0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8E34);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8E34);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A8E60);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8E60);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801A910C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A910C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDialogue);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDialogue);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AA218);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AA218);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscene);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityCutscene);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntitySecretButton);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntitySecretButton);
 
 extern u16 D_80180628[];
 void EntitySecretStairsEmitter(Entity* entity) {
@@ -315,17 +315,17 @@ void EntitySecretStairsEmitter(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntitySecretStairsChunk);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntitySecretStairsChunk);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityStageTitleFadeout);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityStageTitleFadeout);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityStageTitleCard);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityStageTitleCard);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801ABBBC);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801ABBBC);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AC458);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AC458);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDracula);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDracula);
 
 extern u16 D_801805E0[];
 void EntityDraculaBody(Entity* entity) {
@@ -559,19 +559,19 @@ bool func_801ADAC8(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801ADB10);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801ADB10);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaFinalForm);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDraculaFinalForm);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaMegaFireball);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDraculaMegaFireball);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDraculaRainAttack);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDraculaRainAttack);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AF380);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF380);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AF6D0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF6D0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801AF774);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF774);
 
 void func_801B0030(s32 arg0) {
     D_8003C734 = arg0;
@@ -580,29 +580,29 @@ void func_801B0030(s32 arg0) {
     g_backbufferY = 0;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B0058);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0058);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B0180);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0180);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B01C0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B01C0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B01F8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B01F8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B0280);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0280);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B0324);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0324);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B0414);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0414);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B0464);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0464);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B101C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B101C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1198);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B1198);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B11E8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B11E8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1298);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B1298);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -610,7 +610,7 @@ s32 Random(void) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", Update);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", Update);
 #else
 extern s16 D_801815EC[];
 extern u16 D_801C2584[];
@@ -697,11 +697,11 @@ void Update(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1B98);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B1B98);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B1CA0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B1CA0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityNumericDamage);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityNumericDamage);
 
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
@@ -716,31 +716,31 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B31A4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B31A4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B32BC);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B32BC);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B33D4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B33D4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3420);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3420);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3478);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3478);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3574);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3574);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3688);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3688);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B36D4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B36D4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B372C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B372C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3828);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3828);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B393C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B393C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B3AB4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3AB4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", CreateEntityFromCurrentEntity);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", CreateEntityFromCurrentEntity);
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
@@ -767,7 +767,7 @@ s32 func_801B3C58(Unkstruct5* arg0) {
     return diff;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityRedDoor);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -804,7 +804,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #include "st/AnimateEntity.h"
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4AF0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B4AF0);
 
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
@@ -866,11 +866,11 @@ u8 func_801B4D18(void) {
     return unkState;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4D5C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B4D5C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B4FD4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B4FD4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B51E4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B51E4);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
@@ -885,21 +885,21 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B542C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B542C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5458);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5458);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5474);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5474);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B54E0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B54E0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5518);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5518);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5560);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5560);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B55A8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B55A8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5600);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5600);
 
 u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
 
@@ -916,7 +916,7 @@ u16 func_801B56F4(s32 x, s32 y) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B573C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B573C);
 #else
 // very minor reg swap
 u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
@@ -957,39 +957,39 @@ void func_801B57B4(u8 arg0) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B57D0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B57D0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", InitializeEntity);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", InitializeEntity);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityDummy);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDummy);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5970);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5970);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5A98);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5A98);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5BF0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5BF0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5E38);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5E38);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5EC8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5EC8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B5F4C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5F4C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B60A8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B60A8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B615C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B615C);
 
 void func_801B61D4(void) {}
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B61DC);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B61DC);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6204);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6204);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6314);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6314);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B633C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B633C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6358);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6358);
 
 void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
@@ -1014,22 +1014,20 @@ void EntityExplosion(Entity* entity) {
         entity->subId = entity->subId & 0xF;
         entity->accelerationY = D_80181D7C[entity->subId];
     } else {
-        s32 posY = entity->posY.val;
-        posY += entity->accelerationY;
-        entity->posY.val = posY;
+        entity->posY.val += entity->accelerationY;
         if (!AnimateEntity(D_80181E28[entity->subId], entity)) {
             DestroyEntity(entity);
         }
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6C5C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6C5C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B6D34);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6D34);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7308);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7308);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7B0C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7B0C);
 
 void func_801B7BFC(Entity* entity) {
     switch (entity->step) {
@@ -1057,15 +1055,15 @@ void func_801B7BFC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7D0C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7D0C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7E3C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7E3C);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B7F24);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7F24);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8014);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8014);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8108);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8108);
 
 bool func_801B8338(Unkstruct6* unk) {
     CollisionResult res;
@@ -1092,29 +1090,29 @@ bool func_801B8338(Unkstruct6* unk) {
     return false;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8434);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8434);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityIntenseExplosion);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityIntenseExplosion);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8AB4);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8AB4);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8B80);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8B80);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8C48);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8C48);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8D00);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8D00);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B8ED8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8ED8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B94B8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B94B8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9BB8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B9BB8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801B9DB0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B9DB0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityAbsorbOrb);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA23C);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BA23C);
 
 extern ObjInit2 D_80181FE8[];
 void EntityRoomForeground(Entity* entity) {
@@ -1139,16 +1137,16 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BA7D8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BA7D8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityClouds);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityClouds);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityClockTower3D);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityClockTower3D);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscenePhotograph);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityCutscenePhotograph);
 
 #ifndef NON_MATCHING // TODO fix 'li' opcode with ASPATCH
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityCutscenePhotographFire);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityCutscenePhotographFire);
 #else
 extern u16 D_801805D4[];
 extern u8 D_801824CC[];
@@ -1181,15 +1179,15 @@ void EntityCutscenePhotographFire(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BC5C0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BC5C0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD0C0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BD0C0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD4A8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BD4A8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD5F8);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BD5F8);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD628);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BD628);
 
 POLY_GT4* func_801BD6A4(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
@@ -1287,6 +1285,6 @@ s32 func_801BD88C(s32 arg0, u8 arg1) {
     return ret;
 }
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", func_801BD8F0);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801BD8F0);
 
-INCLUDE_ASM("asm/st/st0/nonmatchings/27D64", EntityBackgroundVortex);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityBackgroundVortex);

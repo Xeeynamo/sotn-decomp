@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     dra
   base_path:    ..
-  target_path:  iso/DRA.BIN
-  asm_path:     asm/dra
+  build_path:   build/us
+  target_path:  disks/us/DRA.BIN
+  asm_path:     asm/us/dra
   asset_path:   assets/dra
   src_path:     src/dra
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.dra.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.dra.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.dra.txt
+  symbol_addrs_path:    config/generated.symbols.us.dra.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.dra.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.dra.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
@@ -70,6 +71,7 @@ segments:
       - [0x42000, rodata]
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
+      - [0x46358, c, 46358]
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
       - [0x5D7C0, c, 5D7C0]

@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     stwrp
   base_path:    ..
-  target_path:  iso/ST/WRP/WRP.BIN
-  asm_path:     asm/st/wrp
+  build_path:   build/us
+  target_path:  disks/us/ST/WRP/WRP.BIN
+  asm_path:     asm/us/st/wrp
   asset_path:   assets/st/wrp
   src_path:     src/st/wrp
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stwrp.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stwrp.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stwrp.txt
+  symbol_addrs_path:    config/generated.symbols.us.stwrp.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stwrp.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stwrp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

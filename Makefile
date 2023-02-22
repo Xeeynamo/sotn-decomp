@@ -2,6 +2,7 @@
 .SECONDARY:
 
 # Binaries
+VERSION			?= us
 MAIN            := main
 DRA             := dra
 
@@ -18,12 +19,12 @@ CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
 
 # Directories
-ASM_DIR         := asm
+ASM_DIR         := asm/$(VERSION)
 SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
-BUILD_DIR       := build
-DISK_DIR        := $(BUILD_DIR)/disk
+BUILD_DIR       := build/$(VERSION)
+DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
@@ -73,9 +74,9 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
-		-T $(CONFIG_DIR)/symbols.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(1).txt \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt \
 		--no-check-sections \
 		-nostdlib \
 		-s
@@ -84,15 +85,16 @@ endef
 all: build check
 build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
+	git clean -fdx assets/
 	git clean -fdx asm/
-	git clean -fdx $(BUILD_DIR)
+	git clean -fdx build/
 	git clean -fdx config/
 	git clean -fx
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 check:
-	sha1sum --check slus00067.sha
+	sha1sum --check config/check.$(VERSION).sha
 expected: check
 	rm -rf expected/build
 	cp -r build expected/
@@ -106,8 +108,8 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(MAIN).ld \
-	-T $(CONFIG_DIR)/symbols.txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(MAIN).txt \
+	-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt \
 	--no-check-sections \
 	-nostdlib \
 	-s
@@ -168,53 +170,17 @@ tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
-mad_fix: stmad_dirs mad_patch $(BUILD_DIR)/MAD.BIN
-MAD_PATCHES = \
-	-e "s/D_8003BEE8/D_8003BEEC/g" -e "s/0x8003BEE8/0x8003BEEC/g" \
-	-e "s/D_8003BF08/D_8003BF7C/g" -e "s/0x8003BF08/0x8003BF7C/g" \
-	-e "s/D_8003C6B0/g_api.FreePolygons/g" -e "s/0x8003C6B0/0x8003C7B4/g" \
-	-e "s/D_8003C6B8/g_api.CheckCollision/g" -e "s/0x8003C6B8/0x8003C7BC/g" \
-	-e "s/D_8003C6D8/g_api.PlaySfx/g" -e "s/0x8003C6D8/0x8003c7dc/g" \
-	-e "s/D_8003C704/D_800A8900/g" -e "s/0x8003C704/0x8003C808/g" \
-	-e "s/D_8003C724/D_8003C828/g" -e "s/0x8003C724/0x8003C828/g" \
-	-e "s/D_8003C744/func_800FE044/g" -e "s/0x8003C744/0x8003C848/g" \
-	-e "s/g_pfnInitRoomEntities/D_8003C8C4/g" -e "s/0x8003c780/0x8003C8C4/g" \
-	-e "s/D_8006C26C/g_CurrentEntity/g" -e "s/0x8006C26C/0x8006C3B8/g" \
-	-e "s/D_80072B34/g_CurrentRoomTileLayout/g" -e "s/0x80072B34/0x80073084/g" \
-	-e "s/D_80072E8A/D_800733DA/g" -e "s/0x80072E8A/0x800733DA/g" \
-	-e "s/D_80072E8E/D_800733DE/g" -e "s/0x80072E8E/0x800733DE/g" \
-	-e "s/D_80072E88/D_800733D8/g" -e "s/0x80072E88/0x800733D8/g" \
-	-e "s/D_80072EC2/D_80073412/g" -e "s/0x80072EC2/0x80073412/g" \
-	-e "s/D_80072ED0/D_80073420/g" -e "s/0x80072ED0/0x80073420/g" \
-	-e "s/D_80072F40/D_80073490/g" -e "s/0x80072F40/0x80073490/g" \
-	-e "s/D_80072F44/D_80073494/g" -e "s/0x80072F44/0x80073494/g" \
-	-e "s/D_800751C8/D_80075718/g" -e "s/0x800751C8/0x80075718/g" \
-	-e "s/D_8007A408/D_8007A958/g" -e "s/0x8007A408/0x8007A958/g" \
-	-e "s/D_8007BB88/D_8007C0D8/g" -e "s/0x8007BB88/0x8007C0D8/g" \
-	-e "s/D_8007D308/D_8007D858/g" -e "s/0x8007D308/0x8007D858/g" \
-	-e "s/D_8007E9CC/D_8007EF1C/g" -e "s/0x8007E9CC/0x8007EF1C/g" \
-	-e "s/D_80086A9C/D_80086FEC/g" -e "s/0x80086A9C/0x80086FEC/g" \
-	-e "s/D_80096EA8/D_800973F8/g" -e "s/0x80096EA8/0x800973F8/g" \
-	-e "s/D_80096EB8/g_zEntityCenter/g" -e "s/0x80096EB8/0x80097408/g" \
-	-e "s/D_80096EC0/D_80097410/g" -e "s/0x80096EC0/0x80097410/g" \
-	-e "s/D_80096EC4/D_80097414/g" -e "s/0x80096EC4/0x80097414/g" \
-	-e "s/D_80096ED8/g_entityDestroyed/g" \ -e "s/D_8009769C/g_playerGold/g" \
-	-e "s/D_80097364/g_randomNext/g" -e "s/0x80097364/0x800978b8/g" \
-	-e "s/D_800973B8/D_8009790C/g" -e "s/0x800973B8/0x8009790C/g" \
-	-e "s/D_8009741B/D_8009796F/g" -e "s/0x8009741B/0x8009796F/g" \
-	-e "s/D_8009741F/D_80097973/g" -e "s/0x8009741F/0x80097973/g" \
-	-e "s/D_80072B3E/D_8007308E/g" -e "s/0x80072B3E/0x8007308E/g" \
-	-e "s/D_80072B42/D_80073092/g" -e "s/0x80072B42/0x80073092/g" \
-	-e "s/D_80072B58/g_CurrentRoomVSize/g" -e "s/0x80072B58/0x800730a8/g" \
-	-e "s/D_80075D88/D_800762D8/g" -e "s/0x80075D88/0x800762D8/g" \
-	-e "s/D_8007EA88/D_8007EFD8/g" -e "s/0x8007EA88/0x8007EFD8/g" \
-	-e "s/D_80096EAC/D_800973FC/g" -e "s/0x80096EAC/0x800973FC/g" \
-	-e "s/D_8009741A/D_8009796E/g" -e "s/0x8009741A/0x8009796E/g" \
-	-e "s/D_800976A0/g_killCount/g" -e "s/0x800976A0/0x80097BF4/g"
-mad_patch:
-	find config -type f -name "*stmad.txt" -print0 | xargs -0 sed -i $(MAD_PATCHES)
-	find asm/st/mad -type f -name "*.s" -print0 | xargs -0 sed -i $(MAD_PATCHES)
-	find src/st/mad -type f -name "*.c" -print0 | xargs -0 sed -i $(MAD_PATCHES)
+mad_fix: stmad_dirs $$(call list_o_files,st/mad)
+	$(LD) -o $(BUILD_DIR)/stmad_fix.elf \
+		-Map $(BUILD_DIR)/stmad_fix.map \
+		-T stmad.ld \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
+		--no-check-sections \
+		-nostdlib \
+		-s
+	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
@@ -225,35 +191,48 @@ st%_dirs:
 
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
+$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
+	$(LD) -o $@ \
+		-Map $(BUILD_DIR)/stmad.map \
+		-T stmad.ld \
+		-T $(CONFIG_DIR)/symbols.beta.txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
+		--no-check-sections \
+		-nostdlib \
+		-s
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_main: require-tools
-	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
 extract_dra: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.dra.txt > $(CONFIG_DIR)/generated.symbols.dra.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(DRA).yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).dra.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).dra.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(DRA).yaml
 extract_ric: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.ric.yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).ric.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).ric.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).ric.yaml
+extract_stmad: require-tools
+	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
 extract_st%: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
 extract_tt_%: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.tt_$*.txt > $(CONFIG_DIR)/generated.symbols.tt_$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.tt_$*.yaml
-$(CONFIG_DIR)/generated.symbols.%.txt:
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
+$(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
 context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-extract_sotn: $(SOTNDISK)
-	$(SOTNDISK) extract iso/sotn.cue iso/
+extract_disk: $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$(VERSION).cue disks/$(VERSION)
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
-	cp -r iso/* $(DISK_DIR)
+	cp -r disks/${VERSION}/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
 	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
@@ -269,10 +248,10 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
-	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare $(BUILD_DIR)/sotn-debugmode.bin
 	cp $(BUILD_DIR)/sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 $(BUILD_DIR)/sotn-debugmode.bin:
 	cd tools/sotn-debugmode && make
 

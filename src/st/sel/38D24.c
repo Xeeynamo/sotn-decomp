@@ -2,7 +2,7 @@
 
 s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot);
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B8D24);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B8D24);
 #else
 s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot) {
     s8 cardPath[0x8];
@@ -44,14 +44,14 @@ void func_801B8DE8(u8* dst, s32 arg1) {
 }
 
 void StoreSaveData(SaveData* save, s32 arg1, s32 arg2);
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", StoreSaveData);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", StoreSaveData);
 
 s32 LoadSaveData(SaveData* save); // LoadSaveData
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", LoadSaveData);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", LoadSaveData);
 
 void func_801B9698(char* dstSaveName, s32 saveSlot);
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B9698);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B9698);
 #else
 void func_801B9698(char* dstSaveName, s32 saveSlot) {
     strncpy(dstSaveName, D_801A802C, sizeof(D_801A802C));
@@ -79,7 +79,7 @@ s32 func_801B9744(void) {
 }
 
 s32 func_801B97BC(s32*);
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B97BC);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B97BC);
 
 void func_801B988C(u32* arg0) {
     s32 temp_v0;
@@ -108,13 +108,13 @@ void func_801B9924(void) {
     func_801B18F4();
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B994C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B994C);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B99E4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B99E4);
 
 // func_801B9B7C(Unkstruct_801B9B7C* arg0, s16 arg1, s16 arg2, s16 arg3, s32
 // arg4);
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B9B7C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B9B7C);
 
 void func_801B9C18(s32 unused, void (*callback)()) {
     s32* s0 = D_801BD044;
@@ -125,7 +125,7 @@ void func_801B9C18(s32 unused, void (*callback)()) {
     StSetStream(D_801BD038, 1, -1, NULL, NULL);
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801B9C80);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B9C80);
 
 void func_801BA460(s32 option) {
     if (option == 0) {
@@ -223,7 +223,7 @@ void func_801BA6A8(void (*func)()) { DMACallback(0, func); }
 
 void func_801BA6CC(void (*func)()) { DMACallback(1, func); }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", MDEC_rest);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MDEC_rest);
 
 void func_801BA7EC(s32* arg0, u32 arg1) {
     MDEC_in_sync();
@@ -242,10 +242,10 @@ void func_801BA880(s32 arg0, u32 arg1) {
     *D_80196410 = 0x01000200;
 }
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", MDEC_in_sync);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MDEC_in_sync);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", MDEC_out_sync);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MDEC_out_sync);
 #else
 void MDEC_out_sync(void) {
     volatile s32 sp10 = 0x100000;
@@ -259,8 +259,8 @@ void MDEC_out_sync(void) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", MDEC_print_error);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MDEC_print_error);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801BAB70);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801BAB70);
 
-INCLUDE_ASM("config/../asm/st/sel/nonmatchings/38D24", func_801BABA4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801BABA4);

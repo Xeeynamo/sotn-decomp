@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     main
   base_path:    ..
-  target_path:  iso/SLUS_000.67
-  asm_path:     asm/main
+  build_path:   build/us
+  target_path:  disks/us/SLUS_000.67
+  asm_path:     asm/us/main
   asset_path:   assets/main
   src_path:     src/main
   compiler:     GCC
-  symbol_addrs_path:    config/symbols.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.main.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.main.txt
+  symbol_addrs_path:    config/symbols.us.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.main.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.main.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

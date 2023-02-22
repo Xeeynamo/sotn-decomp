@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     stno3
   base_path:    ..
-  target_path:  iso/ST/NO3/NO3.BIN
-  asm_path:     asm/st/no3
+  build_path:   build/us
+  target_path:  disks/us/ST/NO3/NO3.BIN
+  asm_path:     asm/us/st/no3
   asset_path:   assets/st/no3
   src_path:     src/st/no3
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stno3.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stno3.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stno3.txt
+  symbol_addrs_path:    config/generated.symbols.us.stno3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno3.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stno3.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

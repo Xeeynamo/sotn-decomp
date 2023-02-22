@@ -315,7 +315,7 @@ typedef struct Entity {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity*, u32, struct Entity*);
+        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
         /* 0xB8 */ struct Entity* entityPtr;
         struct {
             /* 0xB8 */ u8 unk0;
@@ -730,17 +730,14 @@ extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
-extern Unkstruct5* D_8003C704;
+extern s32 D_8003C704;
 extern u16 D_8003C708;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
-extern void (*D_8003C744)(s32, s32);
+extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
-#ifndef STAGE_MAD_FIX
-extern void (*g_pfnInitRoomEntities)(void);
-#endif
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
@@ -794,7 +791,7 @@ extern s32 D_80072EFC;
 extern s16 D_80072F00[];
 extern s16 D_80072F02[];
 extern s16 D_80072F04;
-extern s16 D_80072F0A;
+extern s16 D_80072F0A[];
 extern s16 D_80072F0C;
 extern s16 D_80072F10;
 extern s16 D_80072F14[]; // could be an array or a struct
@@ -940,7 +937,13 @@ extern s32 D_80097448;
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
-extern u16 D_80097494; // related to g_menuRelicsCursorIndex
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+} Unkstruct_80097494;
+extern Unkstruct_80097494 D_80097494;
+
 extern u16 D_80097496;
 extern u16 D_80097498;
 extern u16 D_8009749C[];

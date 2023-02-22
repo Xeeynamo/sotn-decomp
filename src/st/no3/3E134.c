@@ -139,7 +139,7 @@ void func_801BE544(void) {
     D_801D7D2A = D_801D7D2C + 0x14;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BE598);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BE598);
 
 void func_801BE75C(s16 yOffset) {
     RECT rect;
@@ -151,9 +151,9 @@ void func_801BE75C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BE7BC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BE7BC);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BE870);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BE870);
 
 void func_801BE9F4(s32 arg0) {
     D_801D7D64 = arg0 + 0x100000;
@@ -161,7 +161,7 @@ void func_801BE9F4(s32 arg0) {
     D_801D7D60 = 1;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BEA20);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEA20);
 
 void func_801BECCC(Entity* entity) {
     /** TODO: !FAKE
@@ -172,7 +172,7 @@ void func_801BECCC(Entity* entity) {
      */
     GameApi* gameApi;
 
-    if (D_80097494 == 0x800) {
+    if (D_80097494.unk0 == 0x800) {
         D_801D7D20 = 1;
         g_api.FreePolygons(entity->firstPolygonIndex);
         do {
@@ -191,96 +191,61 @@ void func_801BECCC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801BEDAC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEDAC);
 
 // seems to cause a room transition
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityRoomTransition1);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRoomTransition1);
 
 // seems to cause a room transition
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityRoomTransition2);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRoomTransition2);
 
 // shows the sword taken from you by Death. Using a different subid shows
 // the other items?
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityDeathStolenItem);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityDeathStolenItem);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId5A);
-
-// https://decomp.me/scratch/ZdlQS
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId5B);
-#else
-extern s32 D_80181B40;
-extern u8* D_80181B4C;
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId5A);
 
 void EntityUnkId5B(Entity* entity) {
-    /**
-     * There might be a switch or two in here
-     */
-    s32* var_a0;
-    u16 temp_a0;
-    s16 temp_v1;
     Entity* newEntity;
 
     entity->posX.i.hi = entity[-1].posX.i.hi;
     entity->posY.i.hi = entity[-1].posY.i.hi;
 
-    temp_a0 = entity->step;
-    if (temp_a0 != 0) { // probably a switch
-        if (temp_a0 != 1) {
-            entity->unk7C.s = 0;
-            return;
-        }
-        goto block_4;
-    }
-    InitializeEntity(&D_80180B00);
-    entity->animSet = -0x7FF8;
-    entity->palette = 0x2D6;
-    entity->animCurFrame = 0;
-    entity->unk5A = 0x44;
-    entity->unk7C.s = 0;
-    return;
-block_4:
-    if (entity->unk7C.u != 0) { // // probably a switch
-        if (entity->unk7C.u != 2) {
-            if (entity->unk7C.u < 3) {
-                if (entity->unk7C.u == temp_a0) {
-                    goto block_11;
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180B00);
+        entity->animSet = -0x7FF8;
+        entity->palette = 0x2D6;
+        entity->animCurFrame = 0;
+        entity->unk5A = 0x44;
+        break;
+
+    case 1:
+        if (entity->unk7C.u != 0) {
+            switch (entity->unk7C.u) {
+            case 1:
+                AnimateEntity(&D_80181B40, entity);
+                break;
+            case 2:
+                AnimateEntity(&D_80181B4C, entity);
+                break;
+            case 3:
+                AnimateEntity(&D_80181B4C, entity);
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity == NULL) {
+                    break;
                 }
-                entity->unk7C.s = 0;
-                return;
+                CreateEntityFromCurrentEntity(0x5E, newEntity);
+                newEntity->animCurFrame = entity->animCurFrame;
+                newEntity->subId = 1;
+                break;
             }
-            if (entity->unk7C.u == 3) {
-                goto block_14;
-            }
-            entity->unk7C.u = 0;
-            return;
-        block_11:
-            var_a0 = &D_80181B40;
-            goto block_13;
+        } else {
+            entity->animCurFrame = 0;
         }
-        var_a0 = &D_80181B4C;
-    block_13:
-        AnimateEntity(var_a0, entity);
-        entity->unk7C.s = 0;
-        return;
-    block_14:
-        AnimateEntity(&D_80181B4C, entity);
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
-        if (newEntity == NULL) {
-            entity->unk7C.s = 0;
-            return;
-        }
-        CreateEntityFromCurrentEntity(0x5E, newEntity);
-        newEntity->animCurFrame = entity->animCurFrame;
-        newEntity->subId = 1;
-        entity->unk7C.s = 0;
-        return;
     }
-    entity->animCurFrame = 0;
     entity->unk7C.s = 0;
-    return;
 }
-#endif
 
 void EntityUnkId5E(Entity* entity) {
     s16 animCurFrame;
@@ -339,20 +304,20 @@ void func_801C13F8() {
 }
 
 // A single "puff" of the warg explosion animation, opaque
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityWargExplosionPuffOpaque);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityWargExplosionPuffOpaque);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", Update);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", Update);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C1B78);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C1B78);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C1C80);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C1C80);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityNumericDamage);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityNumericDamage);
 
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
@@ -367,9 +332,9 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C3500);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3500);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C3618);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3618);
 
 void func_801C3730(s16 arg0) {
     while (true) {
@@ -391,9 +356,9 @@ void func_801C377C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C37D4);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C37D4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C38D0);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C38D0);
 
 void func_801C39E4(s16 arg0) {
     while (true) {
@@ -416,12 +381,12 @@ void func_801C3A30(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C3A88);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3A88);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C3B84);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3B84);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", InitRoomEntities);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", InitRoomEntities);
 #else
 void InitRoomEntities(s32 objLayoutId) {
     s16 temp_s0;
@@ -529,7 +494,7 @@ s32 func_801C3FB4(Unkstruct5* arg0) {
     return diff;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityRedDoor);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -566,7 +531,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #include "st/AnimateEntity.h"
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C4E4C);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C4E4C);
 
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
@@ -612,9 +577,9 @@ void FallEntity(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C5074);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C5074);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C52EC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C52EC);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
@@ -810,11 +775,11 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C5A98);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C5A98);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C5BC0);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C5BC0);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C5D18);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C5D18);
 
 void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 temp_a0;
@@ -848,7 +813,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C6114);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C6114);
 #else
 // matches with gcc 2.6.0 + aspsx 2.34
 void func_801C6114(void) {
@@ -944,7 +909,7 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C6450);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C6450);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
@@ -969,7 +934,7 @@ void func_801C660C(void) {
 
 void func_801C665C(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityPriceDrop);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     u16 zPriority;
@@ -1030,15 +995,59 @@ void func_801C6FF4(Entity* entity, s32 renderFlags) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityInventoryDrop);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityInventoryDrop);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C7680);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C7680);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityRelicOrb);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRelicOrb);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityHeartDrop);
+// https://decomp.me/scratch/TfITc
+#ifndef NON_EQUIVALENT
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityHeartDrop);
+#else
+extern u8 D_8003BEEC[];
+extern u16 D_80181C8C[];
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId0E);
+void EntityHeartDrop(Entity* self) {
+    u8 new_var;
+    u16 temp_a0_2;
+    u16 var_a0;
+    u32 temp_a1;
+    if (self->step == 0) {
+        var_a0 = self->subId;
+        self->unkB4 = var_a0 + 0x30;
+
+        new_var = var_a0;
+        if ((D_8003BEEC[new_var >> 3] >> (new_var & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+        var_a0 -= 0x30;
+        var_a0 = D_80181C8C[var_a0];
+        if (var_a0 < 0x80) {
+            self->unkB8.unkFuncB8 = EntityPriceDrop;
+        } else {
+            self->unkB8.unkFuncB8 = EntityInventoryDrop;
+            var_a0 -= 0x80;
+        }
+        self->subId = var_a0 + 0x8000;
+    } else {
+        temp_a0_2 = (u16)self->unkB4;
+        if (self->step < 5U) {
+            temp_a1 = temp_a0_2;
+            temp_a1 >>= 3;
+            if (self->unk48 != 0) {
+                D_8003BEEC[temp_a1] =
+                    D_8003BEEC[temp_a1] | (1 << (temp_a0_2 & 7));
+                self->step = 5;
+            }
+        }
+    }
+    self->unkB8.unkFuncB8(self);
+}
+#endif
+
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId0E);
 
 u8 func_801C8A84(s16* arg0, u8 facing) {
     u8 ret = 0;
@@ -1088,9 +1097,9 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C8C84);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C8C84);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C8DB4);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C8DB4);
 
 void EntityUnkId14(Entity* entity) {
     if (entity->step == 0) {
@@ -1142,7 +1151,7 @@ void EntityUnkId15(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C9080);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C9080);
 
 bool func_801C92B0(Unkstruct6* unk) {
     CollisionResult res;
@@ -1169,7 +1178,7 @@ bool func_801C92B0(Unkstruct6* unk) {
     return false;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C93AC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C93AC);
 
 void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
@@ -1262,23 +1271,23 @@ void func_801C9BC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C9C78);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C9C78);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801C9E50);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C9E50);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CA430);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CA430);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CAB30);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CAB30);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CAD28);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CAD28);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CAE20);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CAE20);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityStageNamePopup);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityStageNamePopup);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityAbsorbOrb);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityEnemyBlood);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityEnemyBlood);
 
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80182764[entity->subId];
@@ -1302,11 +1311,11 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CC5A4);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CC5A4);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CC6F8);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CC6F8);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CC820);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CC820);
 
 void func_801CC90C(Entity* arg0) {
     s16 temp_v0_2;
@@ -1330,26 +1339,26 @@ void func_801CC90C(Entity* arg0) {
 }
 
 // stronger version of warg with jump and flame attack
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityStrongWarg);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityStrongWarg);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId30);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId30);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId31);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId31);
 
 // some sort of explosion
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityExplosion3);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityExplosion3);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CE740);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CE740);
 
 // flame-like attack on ground from strong warg
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityStrongWargGroundWaveAttack);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityStrongWargWaveAttack);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId2F);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId2F);
 
 // beams that go up when strong warg dies
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityStrongWargDeathBeams);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityStrongWargDeathBeams);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CF438);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CF438);
 
 void func_801CF58C(Entity* arg0) {
     arg0->accelerationX = 0;
@@ -1359,7 +1368,7 @@ void func_801CF58C(Entity* arg0) {
     arg0->unk80.modeS16.unk0 = 0x20;
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801CF5E0);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CF5E0);
 
 // duplicate of func_801CC90C in this file
 void func_801CF6D8(Entity* arg0) {
@@ -1383,9 +1392,9 @@ void func_801CF6D8(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityWarg);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityWarg);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId4B);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId4B);
 
 extern u8 D_8018383C;
 
@@ -1416,38 +1425,68 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801D06FC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801D06FC);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801D0A2C);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801D0A2C);
 
 // Alucard says "ahh" and turns blue from water contact
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityAlucardWaterEffect);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityAlucardWaterEffect);
 
 // large splash going upwards
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityLargeUpwardsSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityLargeUpwardsSplash);
 
 // splash animation and sound when Alucard touches water
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityAlucardSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityAlucardSplash);
 
 // small water droplets go to the side
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntitySidewaysWaterDroplets);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySidewaysWaterDroplets);
 
 // small water droplets go upwards
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntitySmallUpwardsSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySmallUpwardsSplash);
 
 // particle effect, part of merman splash
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntitySmallWaterSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySmallWaterSplash);
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", func_801D2D40);
+// https://decomp.me/scratch/steI4
+#ifndef NON_EQUIVALENT
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801D2D40);
+#else
+extern Entity D_8007DE38[];
+
+s32 func_801D2D40(s16 arg0) {
+    Entity* entity;
+    int new_var;
+    CollisionResult* sp10;
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         (s16)(arg0 + g_CurrentEntity->posY.i.hi), &sp10, 0);
+    new_var = 0;
+    new_var = (sp10->unk0 & 1) == new_var;
+
+    if (sp10->unk0 & 8) {
+        if (*(u8*)&g_CurrentEntity->unkA0 == 0) {
+            entity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
+            if (entity != 0) {
+                CreateEntityFromEntity(0x3B, g_CurrentEntity, entity);
+                entity->posY.i.hi = arg0 + entity->posY.i.hi;
+                entity->zPriority = g_CurrentEntity->zPriority;
+            }
+            g_api.PlaySfx(0x7C2);
+            *(u8*)&g_CurrentEntity->unkA0 = 1;
+        }
+    }
+    return new_var;
+}
+#endif
 
 // another merman variant
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman3);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMerman3);
 
 // https://decomp.me/scratch/SXkSP
 // https://decomp.me/scratch/v6yMP
 // some sort of explosion
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityExplosion2);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityExplosion2);
 #else
 void func_801D6880(POLY_GT4*, s32);
 void func_801D6FCC(POLY_GT4*, s16);
@@ -1546,35 +1585,158 @@ void EntityMediumWaterSplash(Entity* entity) {
 }
 
 // spawns EntityMediumWaterSplash, part of merman splash
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityLargeWaterSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityLargeWaterSplash);
 
 // some kind of falling object
-void EntityFallingObject2(Entity* arg0) {
-    if (arg0->step == 0) {
+void EntityFallingObject2(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(D_80180B48);
-        arg0->animCurFrame = 0;
-        arg0->unk3C = 0;
-        arg0->unk34 |= 0x2000;
-        arg0->zPriority += 4;
+        self->animCurFrame = 0;
+        self->unk3C = 0;
+        self->unk34 |= 0x2000;
+        self->zPriority += 4;
     }
     MoveEntity();
-    arg0->accelerationY += 0x2800;
-    if (AnimateEntity(&D_801839A8, arg0) == 0) {
-        DestroyEntity(arg0);
+    self->accelerationY += 0x2800;
+    if (AnimateEntity(&D_801839A8, self) == 0) {
+        DestroyEntity(self);
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityUnkId3D);
+void EntityUnkId3D(Entity* self) {
+    s8 temp; // probably !FAKE
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180AC4);
+        self->animSet = 2;
+        self->accelerationY = -0x50000;
+        self->palette = 0x8162;
+        self->blendMode = 0x10;
+        self->palette = 0x8018;
+        self->blendMode = 0x30;
+        self->unk6C = 0xA0;
+        self->unk1A = 0x100;
+        self->unk1C = 0x1A0;
+        self->unk19 |= 3;
+        self->unk84.S8.unk1 = 0x11;
+        self->unk84.S8.unk0 = *(s8*)&self->subId;
+        self->unk19 |= 8;
+        break;
+
+    case 1:
+        temp = self->unk84.S8.unk0 - 1;
+        self->unk84.S8.unk0--;
+        self->unk84.S8.unk1--;
+        if (!(temp & 0xFF)) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(&D_801839B0, self);
+        MoveEntity();
+        self->accelerationY += 0x4000;
+        self->unk1A += 6;
+        self->unk1C -= 4;
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        if (!--self->unk84.U8.unk1) {
+            self->accelerationY = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(&D_801839B0, self) == 0) {
+            MoveEntity();
+            self->accelerationY += 0x4000;
+            self->unk1A += 6;
+            self->unk1C -= 4;
+        }
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // falling object, larger
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityLargeFallingObject);
+void EntityLargeFallingObject(Entity* self) {
+    u8 temp_v0;
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman2);
+    if (self->step == 0) {
+        InitializeEntity(&D_80180B48);
+        self->animCurFrame = 13;
+        self->unk84.S8.unk0 = 0x20;
+        self->unk3C = 0;
+        self->accelerationY = 0x1000;
+        self->palette = self->subId + 0xE;
+        self->unk6C = 0x80;
+        self->unk19 |= 8;
+        self->unk34 |= 0x2000;
+        return;
+    }
+    MoveEntity();
+    temp_v0 = self->unk84.U8.unk0 - 1;
+    self->unk84.U8.unk0--;
+    self->accelerationY += 0x1000;
+    self->unk6C += 0xFE;
+    if (temp_v0 == 0) {
+        DestroyEntity(self);
+    }
+}
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMerman);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMerman2);
+
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMerman);
 
 // fireball shot by merman
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMermanFireball);
+void EntityMermanFireball(Entity* self) {
+    Entity* entity;
+
+    if (self->step == 0) {
+        InitializeEntity(&D_80180B6C);
+        self->hitboxWidth = 6;
+        self->animCurFrame = 0;
+        self->hitboxHeight = 3;
+
+        if (self->facing != 0) {
+            self->accelerationX = 0x10000 | 0x8000;
+        } else {
+            self->accelerationX = 0xFFFE0000 | 0x8000;
+        }
+
+        self->unk19 = 3;
+        self->unk1C = self->unk1A = 0x80;
+
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(ENTITY_15, self, entity);
+            entity->unk94 = 4;
+            entity->unk19 = 3;
+            entity->zPriority = self->zPriority + 8;
+            entity->unk1C = entity->unk1A = 192;
+        }
+    } else {
+        AnimateEntity(&D_80183AF0, self);
+        MoveEntity();
+
+        if (self->unk1A < 0x100) {
+            self->unk1C = self->unk1A += 8;
+        }
+
+        if (self->unk34 & 0x100) {
+            entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(2, self, entity);
+                entity->subId = 0;
+            }
+            DestroyEntity(self);
+        }
+    }
+}
 
 extern u16 D_80180B60;
 extern u8 D_80183B04;
@@ -1596,25 +1758,22 @@ void EntityFallingObject(Entity* arg0) {
 }
 
 // part of explosion when merman dies
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityMermanExplosion);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMermanExplosion);
 
 s32 func_801C52EC(s32*);
 s32 func_801C5A98(s32*, s32);
 
 void func_801D59D0(void) {
-    s32 temp_s0;
-    s32 temp_v0;
+    s32 temp = func_801C52EC(&D_80183C30);
+    s32 temp2 = func_801C5A98(&D_80183C38, 3);
 
-    temp_s0 = func_801C52EC(&D_80183C30);
-    temp_v0 = func_801C5A98(&D_80183C38, 3);
-
-    if ((temp_s0 == 0x80) || (temp_v0 & 2)) {
+    if ((temp == 128) || (temp2 & 2)) {
         func_801C58A4(5);
         return;
     }
 
     if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
-        if (func_801C4F64() < 0x40) {
+        if (func_801C4F64() < 64) {
             if (g_CurrentEntity->facing != (func_801C4FD4() & 1)) {
                 func_801C58A4(4);
             }
@@ -1624,7 +1783,7 @@ void func_801D59D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/st/no3/nonmatchings/3E134", EntityBoneScimitar);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityBoneScimitar);
 
 // debris that rotates and falls down
 void EntityFallingDebris(Entity* entity) {

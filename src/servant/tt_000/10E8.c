@@ -42,7 +42,7 @@ void func_801710E8(Entity* entity, s32* arg1) {
     }
 }
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_8017110C);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_8017110C);
 
 s32 func_801713C8(Entity* entity) {
     if (entity->unk3C == 0)
@@ -202,10 +202,10 @@ void func_801718A0(Entity* entity) {
     poly->y2 = poly->y3 = poly->y0 + D_80170608[frame].height;
 }
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801719E0);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80171ED4);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80171ED4);
 #else
 extern void* D_8003C788;
 extern u16 D_8006F3CC[];
@@ -276,9 +276,9 @@ void func_80171ED4(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172120);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80172C30);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172C30);
 
 void func_8017339C(void) {}
 
@@ -294,7 +294,7 @@ void func_801733C4(void) {}
 
 void func_801733CC(void) {}
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801733D4);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801733D4);
 
 void func_80173C0C(void) {}
 
@@ -311,7 +311,7 @@ void func_80173C2C(Entity* entity) {
     DestroyEntity(entity);
 }
 
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80173C64);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80173C64);
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -346,13 +346,10 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
 
 Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
-    Entity* entity;
-    s16 start;
-    s16 end;
+    s16 start = D_80171094[rangeIndex].start;
+    s16 end = D_80171094[rangeIndex].end;
+    Entity* entity = &g_EntityArray[start];
     s32 i;
-    start = D_80171094[rangeIndex].start;
-    end = D_80171094[rangeIndex].end;
-    entity = &g_EntityArray[start];
 
     for (i = start; end >= i; i++, entity++) {
         if (entity->objectId == objectId) {
@@ -360,7 +357,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
         }
     }
 
-    return 0;
+    return NULL;
 }
 
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
@@ -369,12 +366,10 @@ s32 func_80173F30(Entity* entity, s16 x, s16 y) {
 }
 
 s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 diffTmp;
+    s32 diffTmp = arg1 - arg0;
+    s16 diff = ABS(diffTmp);
     s16 res;
-    s16 diff;
 
-    diffTmp = arg1 - arg0;
-    diff = ABS(diffTmp);
     if (arg2 > diff) {
         arg2 = diff;
     }
@@ -404,7 +399,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
 
 // PSY-Q 3.5 match as in GCC a jump skips a 'nop'
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174038);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174038);
 #else
 void func_80174038(Entity* entity) {
     switch (entity->step) {
@@ -476,7 +471,7 @@ void func_80174038(Entity* entity) {
 #endif
 
 // TODO func_80174210
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_80174210);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
 
 void func_801745E4(Entity* entityParent, u16 objectId, u16 subId) {
     Entity* entity;
@@ -504,7 +499,7 @@ init_entity:
 
 // PSY-Q 3.5 match as in GCC a jump skips a 'nop'
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/servant/tt_000/nonmatchings/10E8", func_801746A0);
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801746A0);
 #else
 s32 func_801746A0(s32 arg0) {
     if (D_800733E4 < 0 && !(*D_80072F20 & 1))

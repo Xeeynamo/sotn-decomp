@@ -3,7 +3,9 @@
 #include "objects.h"
 #include "sfx.h"
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E7BB8);
+s32 DecompressData(u8* dst, u8* src);
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7BB8);
 
 void func_800E7D08(void) {
     s32 i;
@@ -18,7 +20,7 @@ void func_800E7D08(void) {
 
 #ifndef NON_EQUIVALENT
 void LoadStageTileset(u32* pTilesetData, s16 y);
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", LoadStageTileset);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
 #else
 void LoadStageTileset(u32* pTilesetData, s16 y) {
     RECT sp10;
@@ -49,7 +51,7 @@ void LoadStageTileset(u32* pTilesetData, s16 y) {
 
 // Not matching due to case 2/11
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E7E08);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7E08);
 #else
 void LoadStageTileset(u32* pTilesetData, s16 y);
 extern u32 g_Clut;
@@ -177,7 +179,7 @@ s32 func_800E7E08(u32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E81FC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E81FC);
 
 void func_800E8D24(void) {
     s8* ptr;
@@ -193,7 +195,7 @@ void func_800E8D24(void) {
 }
 
 // https://decomp.me/scratch/YhofM
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E8D54);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8D54);
 void func_800E8D54(void);
 
 void InitializePads(void) {
@@ -226,7 +228,7 @@ void ReadPads(void) {
     func_800E8D54();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E8EE4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8EE4);
 
 s32 func_800E908C(void) {
     if (TestEvent(D_80073068) == 1) {
@@ -291,7 +293,7 @@ void func_800E92F4(void) {
     D_8013B3D0 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E930C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E930C);
 
 extern Unkstruct_8013B15C D_8013B15C[];
 
@@ -301,7 +303,7 @@ s32 func_800E9508(s32 arg0) {
     return temp;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E9530);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
@@ -383,7 +385,7 @@ s32 func_800E9804(s32 arg0) {
     return ret;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E9880);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9880);
 
 s32 func_800E9B18(s32 arg0, s32 arg1) {
     char buffer[0x8];
@@ -427,14 +429,14 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800E9C14);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9C14);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EA2B0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA2B0);
 
 // This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
 // probably aspsx
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EA48C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA48C);
 #else
 extern const char aBaslus00067dra[];
 
@@ -487,7 +489,7 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EA5E4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA5E4);
 #else
 extern s32 D_8003C78C;
 extern s32* D_800A3BB8[];
@@ -554,9 +556,9 @@ void func_800EA5E4(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EA720);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA720);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EA7CC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA7CC);
 
 s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(4);
@@ -621,45 +623,181 @@ void func_800EAEEC(void) {
     func_800EAEA4();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EAF28);
+// ASPSX
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EAF28);
+#else
+void func_800EAF28(s32 arg0) {
+    s32 temp_v1;
+    s32 i;
+    s32 new_var;
+    Unsktruct_800EAF28* var_a1;
+    unkstruct_80072FA0* var_a0;
 
-void func_800EAFC8(s32 arg0) {
-    u8 temp = arg0;
-
-    if (D_80137584 == 0) {
-        D_80137584 = 1;
-        *D_8013757C = temp;
+    if (arg0 & 0x8000) {
+        var_a1 = D_8003C798[arg0 & 0x7FFF];
     } else {
-        D_80137584 = 0;
-        *D_8013757C += arg0 * 16;
-        D_8013757C++;
+        var_a1 = D_800A3B5C[arg0];
+    }
+
+    temp_v1 = *(s32*)var_a1;
+    if (temp_v1 != 0 && temp_v1 != (new_var = -1)) {
+        for (i = 0; i < 0x10; i++) {
+            var_a0 = &D_80072FA0[i];
+            if (var_a0->unk4 == 0) {
+                var_a0->unk4 = var_a1->unk0;
+                var_a0->unk6 = 0;
+                var_a0->unk8 = 0;
+                var_a0->unk0 = var_a1 + 1;
+                break;
+            }
+        }
+    }
+}
+#endif
+
+void DecompressWriteNibble(s32 ch) {
+    u8 temp = ch;
+
+    if (g_DecWriteNibbleFlag == 0) {
+        g_DecWriteNibbleFlag = 1;
+        *g_DecDstPtr = temp;
+    } else {
+        g_DecWriteNibbleFlag = 0;
+        *g_DecDstPtr += ch * 16;
+        g_DecDstPtr++;
     }
 }
 
-u32 func_800EB03C(void) {
+u32 DecompressReadNibble(void) {
     u8 ret;
 
-    if (D_80137580 != 0) {
-        D_80137580 = 0;
-        ret = *D_80137578;
-        D_80137578++;
+    if (g_DecReadNibbleFlag != 0) {
+        g_DecReadNibbleFlag = 0;
+        ret = *g_DecSrcPtr;
+        g_DecSrcPtr++;
         return (ret >> 0) & 0xF;
     } else {
-        D_80137580 = 1;
-        ret = *D_80137578;
+        g_DecReadNibbleFlag = 1;
+        ret = *g_DecSrcPtr;
         return (ret >> 4) & 0xF;
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EB098);
+// reg swap + fake stuff
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DecompressData);
+#else
+s32 DecompressData(u8* dst, u8* src) {
+    u32 buf[8];
+    s32 temp_s0;
+    s32 ch;
+    s32 temp_s1_3;
+    s32 temp_s2;
+    s32 temp_s2_2;
+    s32 temp_s2_3;
+    s32 temp_s2_4;
+    s32 count;
+    s32 i;
+    s32 var_v1;
+    s32* var_a0;
+    u8* new_var;
+    u8* srcptr;
+    s32 op;
+    srcptr = src;
+    var_a0 = &buf;
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EB314);
+    for (var_v1 = 0; var_v1 < 8; var_v1++) {
+        *var_a0++ = *srcptr++;
+    }
+
+    g_DecReadNibbleFlag = 0;
+    g_DecWriteNibbleFlag = 0;
+    g_DecSrcPtr = srcptr;
+    g_DecDstPtr = dst;
+    while (count = true /*fake??*/) {
+        op = DecompressReadNibble();
+        switch (op) {
+        case 0:
+            do {
+                temp_s2 = DecompressReadNibble();
+                temp_s2_2 = DecompressReadNibble();
+            } while (0);
+            temp_s2_4 = temp_s2;
+            temp_s2_3 = temp_s2_2;
+            temp_s2_3 = temp_s2_4 * 0x10 + temp_s2_3 + 0x13;
+            for (i = 0; i < temp_s2_3; i++) {
+                DecompressWriteNibble(0);
+            }
+            break;
+        case 2:
+            temp_s0 = DecompressReadNibble();
+            DecompressWriteNibble(temp_s0);
+            DecompressWriteNibble(temp_s0);
+            break;
+        case 4:
+            DecompressWriteNibble(DecompressReadNibble());
+        case 3:
+            DecompressWriteNibble(DecompressReadNibble());
+        case 1:
+            DecompressWriteNibble(DecompressReadNibble());
+            break;
+        case 5:
+            temp_s1_3 = (ch = DecompressReadNibble());
+            count = (op = DecompressReadNibble()) + 3;
+            for (i = 0; i < count; i++) {
+                temp_s2 = ch;
+                DecompressWriteNibble(temp_s2 & 0xFF);
+            }
+            break;
+        case 6:
+            temp_s2 = DecompressReadNibble();
+            count = temp_s2 + 3;
+            for (i = 0; i < count; i++) {
+                DecompressWriteNibble(0);
+            }
+            break;
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+            temp_s1_3 = (buf + op)[-7];
+            switch (temp_s1_3 & 0xF0) {
+            case 0x20:
+                DecompressWriteNibble(temp_s1_3 & 0xF);
+            case 0x10:
+                DecompressWriteNibble(temp_s1_3 & 0xF);
+                break;
+            case 0x60:
+                count = (temp_s1_3 & 0xF) + 3;
+                for (i = 0; i < count; i++) {
+                    DecompressWriteNibble(0);
+                }
+                break;
+            }
+            break;
+        case 15:
+            if ((dst + 0x2000) >= ((u32)g_DecDstPtr)) {
+                return 0;
+            }
+            new_var = dst;
+            return (g_DecDstPtr - new_var) + 0x2000;
+        }
+    }
+}
+#endif
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB314);
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EB534);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB534);
 
 void func_800EB6B4(void) {
     s32 i;
@@ -684,7 +822,7 @@ bool func_800EB720(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EB758);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
 
 // clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
@@ -703,11 +841,11 @@ void func_800EBB70(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EBBAC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EBBAC);
 
 // The loop at the end is weird, the rest is matching
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800ECBF8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECBF8);
 #else
 typedef struct {
     s16 unk00, unk02;
@@ -817,11 +955,11 @@ void func_800ECE2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800ECE58);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECE58);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", SetRoomForegroundLayer);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomForegroundLayer);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", SetRoomBackgroundLayer);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomBackgroundLayer);
 
 extern Unkstruct_8003C794* D_8003C794;
 
@@ -881,7 +1019,7 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EDB58);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDB58);
 
 s32 AllocPolygons(u8 primitives, s32 count) {
     s32 polyIndex = 0;
@@ -972,13 +1110,13 @@ void FreePolygons(s32 polygonIndex) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EDEDC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDEDC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", CheckCollision);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", CheckCollision);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800EFBF8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EFBF8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F0334);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F0334);
 
 extern Unkstruct_aSimCBinDemoKey aSimCBinDemoKey;
 
@@ -1028,7 +1166,7 @@ void func_800F0578(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F0608);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F0608);
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
@@ -1047,10 +1185,10 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F0940);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F0940);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", SetNextRoomToLoad);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetNextRoomToLoad);
 #else
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     s32 res;
@@ -1085,7 +1223,7 @@ loop_3:
 #endif
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F0CD8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F0CD8);
 #else
 extern s16 D_80072F98;
 extern s32 D_801375A4;
@@ -1252,7 +1390,7 @@ void func_800F1424(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F14CC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F14CC);
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
@@ -1292,9 +1430,9 @@ u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F180C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F180C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F1868);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F1868);
 
 void func_800F18C4(s32 arg0, s32 arg1) {
     s8 sp10[20];
@@ -1311,7 +1449,7 @@ void func_800F18C4(s32 arg0, s32 arg1) {
     func_800F1868(arg0, arg1, &sp10);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F1954);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F1954);
 
 void func_800F1A3C(s32 arg0) {
     if (arg0 == 0) {
@@ -1331,20 +1469,20 @@ void func_800F1A3C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F1B08);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F1B08);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F1D54);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F1D54);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F1EB0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F1EB0);
 
 void func_800F1FC4(s32 arg0) {
     func_800F1EB0((playerX >> 8) + g_CurrentRoom.left,
                   (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F2014);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F2014);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F2120);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F2120);
 
 void func_800F223C(void) {
     g_StageId ^= 0x20;
@@ -1352,7 +1490,7 @@ void func_800F223C(void) {
     g_StageId ^= 0x20;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F2288);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F2288);
 
 void func_800F2404(s32 arg0) {
     s32* temp;
@@ -1398,7 +1536,7 @@ void func_800F2404(s32 arg0) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F24F4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F24F4);
 #else
 void func_801042C4(s32);
 void func_80105428();
@@ -1450,7 +1588,7 @@ block_18:
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F2658);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F2658);
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
@@ -1463,11 +1601,11 @@ bool func_800F27F4(s32 arg0) {
     D_801375C8 = 8;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F2860);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F2860);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F298C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F298C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F483C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F483C);
 
 bool IsAlucart(void) {
     if (CheckEquipmentItemCount(0xA8, 0) && CheckEquipmentItemCount(0xA7, 0) &&
@@ -1476,9 +1614,9 @@ bool IsAlucart(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F4994);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F4994);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F4D38);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F4D38);
 
 void func_800F4F48(void) {
     s32 i;
@@ -1489,7 +1627,7 @@ void func_800F4F48(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F4FD0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F4FD0);
 
 void func_800F53A4(void) {
     func_800F4994();
@@ -1653,13 +1791,13 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F5904);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F5904);
 
 void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F5AE4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F5AE4);
 
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
@@ -1706,7 +1844,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
 
 // Matches with gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawMenuRect);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawMenuRect);
 #else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
@@ -1755,7 +1893,7 @@ void func_800F5E68(MenuContext* context, s32 iOption, s32 x, s32 y, s32 w,
     DrawMenuRect(context, x, y + (iOption * (h + yGap)), w, h, r, 0, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawRelicsMenu);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawRelicsMenu);
 
 void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x24, 0x40, 0x40, 0, 0x80, 0x150, 0x9C, 1, 0, 0);
@@ -1769,7 +1907,7 @@ s32 func_800F62E8(s32 context) {
 }
 
 // Apply cloak palette
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F6304);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F6304);
 
 void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
@@ -1849,7 +1987,7 @@ void DrawMenuChar(char ch, int x, int y, MenuContext* context) {
                   0x196, 0x1E, 1, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawMenuStr);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawMenuStr);
 // https://decomp.me/scratch/S4Dzb
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
@@ -1860,23 +1998,23 @@ void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     } while (digit != 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F6998);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F6998);
 
 void func_800F6A48(void) {
     func_800EA538(6);
     func_800EA5E4(0x411);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F6A70);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F6A70);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F6BEC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F6BEC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F6CC0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F6CC0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F6DC8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F6DC8);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawSettingsButton);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawSettingsButton);
 #else
 extern s32 g_menuButtonSettingsCursorPos;
 extern s32 g_menuButtonSettingsConfig[];
@@ -1953,10 +2091,10 @@ void func_800F7244(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F72BC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F72BC);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawPauseMenu);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawPauseMenu);
 #else
 void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
 extern s32 g_menuButtonSettingsCursorPos;
@@ -2138,9 +2276,9 @@ void DrawPauseMenu(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawSpellMenu);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawSpellMenu);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F7F64);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F7F64);
 
 void func_800F82F4(void) {
     RECT dstRect;
@@ -2157,9 +2295,9 @@ void func_800F82F4(void) {
     LoadImage(&dstRect, (u_long*)g_imgUnk8013C270->data);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", DrawSystemMenu);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DrawSystemMenu);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F84CC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F84CC);
 
 void func_800F86E4(void) {
     s32 i;
@@ -2222,7 +2360,7 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
 // does not match due to stack bigger than expected
 // matches in gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F8990);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F8990);
 #else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     const s32 Cols = 2;
@@ -2296,11 +2434,11 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F8C98);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F8C98);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F8E18);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F8E18);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F8F28);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F8F28);
 
 void func_800F9690(void) {
     POLY_GT4* poly = &D_80086FEC[D_8013783C];
@@ -2380,9 +2518,9 @@ void func_800F9808(u32 arg0) {
     LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F98AC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F98AC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F99B8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F99B8);
 
 void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
@@ -2415,23 +2553,23 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
 }
 
 // https://decomp.me/scratch/VmuNt 99.46%
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F9E18);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F9E18);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800F9F40);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800F9F40);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FA034);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FA034);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FA3C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FA3C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FA60C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FA60C);
 
 // https://decomp.me/scratch/JL0hI
 // has some logic related to the weapon struct
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FA7E8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FA7E8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FA8C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FA8C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FA9DC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FA9DC);
 
 void func_800FAB1C(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_4];
@@ -2474,14 +2612,14 @@ void func_800FAC48(void) {
 void func_800FAC98(void) { func_800F9808(2); }
 
 bool func_800FACB8(void) {
-    if (D_80097494 & 2) {
+    if (D_80097494.unk0 & 2) {
         (*g_menuRelicsCursorIndex)++;
         if (*g_menuRelicsCursorIndex == 7) {
             *g_menuRelicsCursorIndex = 0;
         }
         return true;
     }
-    if (D_80097494 & 1) {
+    if (D_80097494.unk0 & 1) {
         g_menuRelicsCursorIndex[0]--;
         if (*g_menuRelicsCursorIndex == -1) {
             *g_menuRelicsCursorIndex = 6;
@@ -2502,19 +2640,19 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FADC0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FADC0);
 
 void func_800FAE98(void) {
     func_800FADC0();
     D_800978F8 = 0x40;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FAEC4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FAEC4);
 
 // https://decomp.me/scratch/HEhaF by @pixel-stuck
 // matches with gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FAF44);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FAF44);
 #else
 void func_800FAF44(s32 arg0) {
     s32 var_a0;
@@ -2579,7 +2717,7 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FB160);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FB160);
 
 bool func_800FB1EC(s32 arg0) {
     if (D_801375CC.equipTypeFilter == 0) {
@@ -2594,15 +2732,15 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FB23C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FB23C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FB9BC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FB9BC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FBAC4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FBAC4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FBC24);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FBC24);
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FD39C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FD39C);
 
 s32 func_800FD4C0(s32 bossId, s32 action) {
     s32 temp_v0;
@@ -2669,7 +2807,7 @@ extern Unkstruct_800A4B12 D_800A4B12[];
 
 u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/47BB8", func_800FD6C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FD6C4);
 
 u8* func_800FD744(s32 equipTypeFilter) {
     u8* phi_v0 = &D_80097A8D;
