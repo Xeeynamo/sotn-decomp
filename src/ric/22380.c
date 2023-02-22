@@ -2,13 +2,9 @@
 
 // same as func_800E2398
 void func_8015E380(const char* str) {
-    s32 temp_v0;
-
     D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
     FntPrint(str);
-    temp_v0 = D_80174F7C & 4;
-    D_80174F7C++;
-    if (temp_v0 != 0) {
+    if (D_80174F7C++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
