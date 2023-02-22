@@ -25,7 +25,7 @@ void func_8015E420(s32 arg0) {
         func_8015E380(arg0);
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015E484);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E484);
 
 void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
     s32 temp = D_80154604;
@@ -36,13 +36,13 @@ void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
     arg0->unk20 = D_801545EA[0] + 1;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015E800);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E800);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015EE28);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015EE28);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015F414);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015F680);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
 
 Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
     Entity* entity = &g_EntityArray[entityIndex];
@@ -60,15 +60,15 @@ Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015F96C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F96C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015F9F0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F9F0);
 
 // This function matches with GCC 2.7.2 using -01 Compilation flags
 // Matches with GCC 2.6.0 + aspsx 2.3.4
 // https://decomp.me/scratch/VaPMV
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015FA5C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FA5C);
 #else
 extern s32 D_80154674[];
 extern s32 D_80154675[];
@@ -92,7 +92,7 @@ void func_8015FA5C(s32 arg0) {
 // aspsx
 // https://decomp.me/scratch/bRvg6
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015FAB8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FAB8);
 #else
 void func_8015FAB8(Entity* entity) {
     u16 var_v0;
@@ -118,11 +118,11 @@ void func_8015FAB8(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015FB84);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FB84);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015FDB0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FDB0);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015FEA8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FEA8);
 
 // same as DRA/func_8011F074
 void func_801601DC(Entity* entity) {
@@ -174,7 +174,7 @@ void func_801603B4(void) {}
 
 void func_801603BC(void) {}
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_801603C4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801603C4);
 
 Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
     /**
@@ -203,7 +203,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
     return entity;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80160788);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160788);
 
 void func_80160C38(Entity* entity) {
     if (PLAYER.step != 23) {
@@ -236,7 +236,7 @@ void func_80160C38(Entity* entity) {
 // aspatch jumps to the wrong instruction
 // Matches with PSY-Q 3.5 + aspsx 2.3.4
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80160D2C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160D2C);
 #else
 void func_80160D2C(Entity* self) {
     if (PLAYER.step != 26) {
@@ -317,15 +317,15 @@ void func_80160F0C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80160FC4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160FC4);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016147C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016147C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80161C2C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161C2C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80161EF8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161EF8);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80161FF0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161FF0);
 
 void func_801623E0(Entity* entity) {
     POLY_GT4* poly;
@@ -387,7 +387,7 @@ void func_801623E0(Entity* entity) {
  * Aspatch jumps to the wrong instruction
  */
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80162604);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162604);
 #else
 void func_80162604(Entity* entity) {
     POLY_GT4* poly;
@@ -461,7 +461,7 @@ void func_80162604(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80162870);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162870);
 
 void func_80162C7C(void) {}
 
@@ -474,7 +474,7 @@ void func_80162C7C(void) {}
  * CAUTION: rodata yet to be confirmed matching
  */
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80162C84);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162C84);
 #else
 extern s32 D_80154ED4;
 extern s32 D_80154EF8;
@@ -556,7 +556,7 @@ bool func_80162E9C(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80162EF8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162EF8);
 
 void func_801641A0(Entity* entity) {
     POLY_GT4* poly;
@@ -631,11 +631,11 @@ void func_801641A0(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80164444);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80164444);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80164DF8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80164DF8);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_801656B0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801656B0);
 
 void func_80165DD8(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
                    bool arg4) {
@@ -750,9 +750,9 @@ void func_80166044() {
     PLAYER.blendMode = 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80166060);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166060);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80166784);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166784);
 
 void func_8016779C(Entity* entity) {
     if (D_80072F66 == 0) {
@@ -825,11 +825,11 @@ void func_80167A60(void) {}
 
 void func_80167A68(void) {}
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80167A70);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80167A70);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80167EC4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80167EC4);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_801682B4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801682B4);
 
 s32 func_8016840C(s16 x, s16 y) {
     CollisionResult sp10;
@@ -854,15 +854,15 @@ s32 func_8016840C(s16 x, s16 y) {
     return 2;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_801684D8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801684D8);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80168A20);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80168A20);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016902C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016902C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80169470);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169470);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80169704);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169704);
 
 void func_80169C10(Entity* entity) {
     POLY_GT4* poly;
@@ -950,13 +950,13 @@ void func_80169D74(Entity* entity) {
     entity->unk80.modeS16.unk0 = (entity->unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_80169F04);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169F04);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016A26C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016A26C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016A974);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016A974);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016B0C0);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
     g_CurrentEntity->unk7C.s = (arg0 << 0x10 >> 0xF) - g_CurrentEntity->unk7C.s;
@@ -974,9 +974,9 @@ void func_8016B92C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016B97C);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016B97C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016C1BC);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016C1BC);
 
 s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
     u8 ret = 0;
@@ -998,9 +998,9 @@ s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016C734);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016C734);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016CC74);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016CC74);
 
 void func_8016D328(Entity* entity) {
     s16 firstPolygonIndex;
@@ -1047,7 +1047,7 @@ void func_8016D328(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016D4D8);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016D4D8);
 
 void func_8016D920(Entity* entity) {
     switch (entity->step) {
@@ -1068,6 +1068,6 @@ void func_8016D920(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016D9C4);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016D9C4);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8016DF74);
+INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016DF74);
