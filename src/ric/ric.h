@@ -20,7 +20,7 @@ extern void func_8015CE7C(void);
 extern void func_8015CF08(void);
 extern void func_8015D020(void);
 extern bool func_8015DBB0(s32);
-//extern s32 func_8015E380(s32);
+extern void func_8015E380(const char* str);
 extern void func_8015F9F0(Entity* entity);
 extern void func_8015FAB8(Entity*);
 extern s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY);
