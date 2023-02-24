@@ -102,6 +102,46 @@ jobs:
             git commit -m 'Update progress' || true
             git push
         working-directory: gh-report
+  generate-progress-report:
+    strategy:
+      matrix:
+        version: ["us"]
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ matrix.version }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_SECRET }}
+    steps:
+      - name: Clone main repository
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+      - name: Clone dependencies
+        uses: actions/checkout@v3
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.version }}
+          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          path: 'disks/dependencies'
+      - name: Setting up dependencies
+        working-directory: disks
+        run: |
+          cat dependencies/* > dependencies.tar.gz
+          tar -xf dependencies.tar.gz
+          mv *.cue sotn.${{ matrix.version }}.cue
+      - name: Extract dependencies
+        run: make extract_disk
+      - name: Split game data
+        run: make -j extract
+      - name: Obtain built binaries
+        uses: actions/download-artifact@v3
+        with:
+          name: build_${{ matrix.version }}
+          path: build/${{ matrix.version }}
+      - name: Generate and send progress report
+        run: python3 tools/progress.py --version us
   generate-duplicates-report:
     strategy:
       matrix:
@@ -112,8 +152,6 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
-      - name: Install requirements
-        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
         uses: actions/checkout@v3
         with:
