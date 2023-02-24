@@ -294,7 +294,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FF7B8);
 
 extern Unkstruct_80137990 D_80137990;
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", DrawHudRichter);
 #else
 void DrawHudRichter(void) {
