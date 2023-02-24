@@ -49,7 +49,7 @@ s32 func_80136010(void);
 extern const char* aO;
 
 void func_800E2398(const char* str) {
-    D_8006C37C = D_8006C37C->unk0;
+    D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
     FntPrint(str);
     if (D_80136300++ & 4) {
         FntPrint(&aO); // TODO: rodata split
