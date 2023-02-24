@@ -16,7 +16,6 @@ parser.add_argument('--version', metavar='version', default='us', required=False
 parser.add_argument('--dry-run', dest="dryrun", default=False, required=False,
                     action="store_true", help='Print the request instead of posting it to the server')
 args = parser.parse_args()
-args.version = "us"
 
 
 def exiterr(msg: str):
@@ -95,7 +94,7 @@ class DecompProgressStats:
                     progressPerFolder[folder].decompedSize += func.size
 
         self.code_matching = totalStats.decompedSize
-        self.code_total = totalStats.undecompedSize
+        self.code_total = totalStats.decompedSize + totalStats.undecompedSize
 
 
 def get_progress(module_name: str, path: str) -> DecompProgressStats:
