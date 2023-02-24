@@ -137,11 +137,11 @@ extern RECT D_800ACD80;
 extern RECT D_800ACD88[2];
 extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
+extern u8 D_800ACFB4[][4];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
-extern s32 D_800ACFB4[];
 extern s32 D_800ADC44;
 extern s32 D_800AE270[];
 extern AnimationFrame* D_800AE294;
@@ -291,6 +291,10 @@ extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80138008;
+extern u8 D_8013803C;
+extern u8 D_80138040;
+extern u8 D_80138044;
+extern u8 D_80138048;
 extern s32 D_8013808C;
 extern s32 D_8013841C;
 extern s32 D_80138430;
