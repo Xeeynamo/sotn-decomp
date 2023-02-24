@@ -502,16 +502,16 @@ init_entity:
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801746A0);
 #else
 s32 func_801746A0(s32 arg0) {
-    if (D_800733E4 < 0 && !(*D_80072F20 & 1))
+    if (D_800733E4 < 0 && !(D_80072F20.pl_vram_flag & 1))
         return 1;
 
-    if (D_800733E4 > 0 && !(*D_80072F20 & 2))
+    if (D_800733E4 > 0 && !(D_80072F20.pl_vram_flag & 2))
         return 1;
 
-    if (D_800733E0 < 0 && !(*D_80072F20 & 8))
+    if (D_800733E0 < 0 && !(D_80072F20.pl_vram_flag & 8))
         return 1;
 
-    if (D_800733E0 > 0 && !(*D_80072F20 & 4))
+    if (D_800733E0 > 0 && !(D_80072F20.pl_vram_flag & 4))
         return 1;
 
     if (arg0 == 0)

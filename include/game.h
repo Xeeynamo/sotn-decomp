@@ -742,7 +742,7 @@ extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 D_8003C99C;
 extern u16 D_8003C9C8;
-extern s32 D_8003C9CC[];
+extern s16 D_8003C9CC[];
 extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003C9A4; // related to when player change stages?
 extern s32 g_blinkTimer;

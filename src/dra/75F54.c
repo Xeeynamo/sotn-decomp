@@ -210,31 +210,12 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     return posX;
 }
 
-// https://decomp.me/scratch/LmXYY
-// nops between assignments probably aspsx
-// matching in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118C28);
-#else
-extern u8 D_800ACFB4[];
-extern u8 D_800ACFB5[];
-extern u8 D_800ACFB6[];
-extern u8 D_800ACFB7[];
-extern u8 D_8013803C;
-extern u8 D_80138040;
-extern u8 D_80138044;
-extern u8 D_80138048;
-
 void func_80118C28(s32 arg0) {
-    s32 temp_a0;
-
-    temp_a0 = arg0 * 4;
-    D_8013803C = D_800ACFB4[temp_a0];
-    D_80138040 = D_800ACFB5[temp_a0];
-    D_80138044 = D_800ACFB6[temp_a0];
-    D_80138048 = D_800ACFB7[temp_a0];
+    D_8013803C = D_800ACFB4[arg0][0];
+    D_80138040 = D_800ACFB4[arg0][1];
+    D_80138044 = D_800ACFB4[arg0][2];
+    D_80138048 = D_800ACFB4[arg0][3];
 }
-#endif
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
     Entity* entity = GetFreeDraEntity(0x38, 0x40);

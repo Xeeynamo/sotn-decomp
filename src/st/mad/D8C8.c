@@ -226,7 +226,8 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-#ifndef NON_MATCHING
+// very close. Mostly reg swap
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", Update);
 #else
 extern s16 D_801806B4[];

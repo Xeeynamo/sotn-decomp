@@ -1733,10 +1733,6 @@ void func_80186FD0(Entity* arg0) {
     AnimateEntity(objInit->unk10, arg0);
 }
 
-// nops in between array assignments, matches with PSY-Q 3.6 and 4.0
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_801870B0);
-#else
 void func_801870B0(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
@@ -1794,7 +1790,6 @@ void func_801870B0(Entity* entity) {
         }
     }
 }
-#endif
 
 void func_801870B0(Entity* entity);
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);

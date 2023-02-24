@@ -726,6 +726,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 }
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
+// branch skips a nop
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019B858);
 #else
@@ -734,12 +735,12 @@ void func_8019B858(void) {
     Entity* entity = g_CurrentEntity;
 
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84.value;
-        entity->unk84.value = temp_v1;
+        temp_v1 = entity->unk84.unk + entity->unk88.S16.unk0;
+        entity->unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
 
         if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
-            entity->unk88 = -entity->unk88;
+            entity->unk88.U16.unk0 = -entity->unk88.U16.unk0;
         }
         entity = g_CurrentEntity;
     }

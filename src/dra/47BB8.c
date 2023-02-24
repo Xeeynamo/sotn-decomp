@@ -2649,11 +2649,6 @@ void func_800FAE98(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FAEC4);
 
-// https://decomp.me/scratch/HEhaF by @pixel-stuck
-// matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800FAF44);
-#else
 void func_800FAF44(s32 arg0) {
     s32 var_a0;
     s32 i;
@@ -2672,7 +2667,7 @@ void func_800FAF44(s32 arg0) {
         D_80137688 = D_8013768C = D_8003C9C8;
         return;
     }
-    D_80137688 = D_8013768C = D_8003C9CC[D_801375D4];
+    D_80137688 = D_8013768C = D_8003C9CC[D_801375D4 * 2];
 
     for (i = 0; i < 90; i++) {
         if (D_800A7734[i].unk00 == D_801375D4) {
@@ -2681,7 +2676,6 @@ void func_800FAF44(s32 arg0) {
         }
     }
 }
-#endif
 
 void func_800FB004(void) {
     s32 temp_a1 = func_800FD6C4(D_801375CC.equipTypeFilter);

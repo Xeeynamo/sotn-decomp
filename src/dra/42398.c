@@ -153,12 +153,6 @@ void func_800E2F3C(void) {
     }
 }
 
-// one nop
-// matching in gcc 2.6.0 + aspsx 2.3.4
-// https://decomp.me/scratch/NgIDx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E31C0);
-#else
 void func_800E31C0(void) {
     if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
         if (g_blinkTimer & 1) {
@@ -171,7 +165,6 @@ void func_800E31C0(void) {
         D_801362D0[0] = D_801362D0[1];
     }
 }
-#endif
 
 // TODO: fix branching
 // https://decomp.me/scratch/y3otf
