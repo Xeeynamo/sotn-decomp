@@ -62,21 +62,21 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-void EntityUnkId16(Entity* arg0) {
-    switch (arg0->step) {
+void EntityUnkId16(Entity* self) {
+    switch (self->step) {
     case 0:
         InitializeEntity(&D_80180AD0);
-        arg0->unk7C.S8.unk0 = 16;
-        arg0->unk7C.S8.unk1 = 8;
-        arg0->unk7E.modeU8.unk0 = 56;
+        self->unk7C.S8.unk0 = 16;
+        self->unk7C.S8.unk1 = 8;
+        self->unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB25 = arg0->unk7C.S8.unk0;
-        D_8003CB26 = arg0->unk7C.S8.unk1;
-        D_8003CB27 = arg0->unk7E.modeU8.unk0;
-        D_80054319 = arg0->unk7C.S8.unk0;
-        D_8005431A = arg0->unk7C.S8.unk1;
-        D_8005431B = arg0->unk7E.modeU8.unk0;
+        D_8003CB25 = self->unk7C.S8.unk0;
+        D_8003CB26 = self->unk7C.S8.unk1;
+        D_8003CB27 = self->unk7E.modeU8.unk0;
+        D_80054319 = self->unk7C.S8.unk0;
+        D_8005431A = self->unk7C.S8.unk1;
+        D_8005431B = self->unk7E.modeU8.unk0;
         break;
     }
 }
