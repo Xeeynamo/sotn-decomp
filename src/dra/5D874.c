@@ -1391,12 +1391,6 @@ void func_8010E42C(u16 arg0) {
     }
 }
 
-// https://decomp.me/scratch/wgVVw // nop in between array assignments
-// matches in gcc 2.6.0 + aspsx 2.3.4
-// aspsx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010E470);
-#else
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
@@ -1404,7 +1398,6 @@ void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.unk2E = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
-#endif
 
 // This may be the function that turns Alucard into stone
 void func_8010E4D0(void) {
