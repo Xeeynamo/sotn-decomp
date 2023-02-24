@@ -18,6 +18,7 @@ void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
+extern ObjInit2 D_80180D64[];
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
 extern s16 D_80181978[];
@@ -61,7 +62,23 @@ extern s32 D_80180C70;
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0958);
+void func_801B0958(Entity* self) {
+    ObjInit2* temp_s0 = &D_80180D64[self->subId];
+    
+    if (self->step == 0) {
+        InitializeEntity(&D_80180C1C);
+        self->animSet = temp_s0->animSet;
+        self->zPriority = temp_s0->zPriority;
+        self->unk5A = temp_s0->unk4.u;
+        self->palette = temp_s0->palette;
+        self->unk19 = temp_s0->unk8;
+        self->blendMode = temp_s0->blendMode;
+        if (temp_s0->unkC != 0) {
+            self->unk34 = temp_s0->unkC;
+        }
+    }
+    AnimateEntity(temp_s0->unk10, self);
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0A20);
 
