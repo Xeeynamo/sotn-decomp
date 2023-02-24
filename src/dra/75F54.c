@@ -900,7 +900,7 @@ void EntityHolyWater(Entity* entity) {
         entity->unk34 = 0x08000000;
         entity->animSet = 9;
         entity->animCurFrame = 0x1D;
-        entity->zPriority = D_800733FC - 2;
+        entity->zPriority = PLAYER.zPriority - 2;
         entity->posY.i.hi += 8;
         AccelerateX(0x14000);
         entity->accelerationY = -0x32000;

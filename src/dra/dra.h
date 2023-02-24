@@ -204,6 +204,7 @@ extern s32 D_801362D4;
 extern s32 D_801362D8;
 extern GpuUsage g_GpuMaxUsage;
 extern s32 g_softResetTimer;
+extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s16 D_80136460[];
