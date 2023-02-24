@@ -60,21 +60,11 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F96C);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F9F0);
 
-extern u8 D_80154674[];
-extern u8 D_80154675[];
-extern u8 D_80154676[];
-extern u8 D_80154677[];
-
-extern u8 D_80174FAC;
-extern u8 D_80174FB0;
-extern u8 D_80174FB4;
-extern u8 D_80174FB8;
-
 void func_8015FA5C(s32 arg0) {
-    D_80174FAC = D_80154674[arg0 * 4];
-    D_80174FB0 = D_80154675[arg0 * 4];
-    D_80174FB4 = D_80154676[arg0 * 4];
-    D_80174FB8 = D_80154677[arg0 * 4];
+    D_80174FAC = D_80154674[arg0][0];
+    D_80174FB0 = D_80154674[arg0][1];
+    D_80174FB4 = D_80154674[arg0][2];
+    D_80174FB8 = D_80154674[arg0][3];
 }
 
 // aspsx

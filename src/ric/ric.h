@@ -39,6 +39,7 @@ extern s16 D_801545AC;
 extern s16 D_801545EA[];
 extern s16 D_80154604;
 extern s16 D_80154606;
+extern u8 D_80154674[][4];
 extern s8 D_80154688;
 extern AnimationFrame* D_80154924;
 extern s32 D_80155368[];
