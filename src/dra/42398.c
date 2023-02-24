@@ -52,7 +52,7 @@ void func_800E2398(const char* str) {
     D_8006C37C = D_8006C37C->unk0;
     FntPrint(str);
     if (D_80136300++ & 4) {
-        FntPrint(&aO);
+        FntPrint(&aO); // TODO: rodata split
     }
     DrawSync(0);
     VSync(0);
