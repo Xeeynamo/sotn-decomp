@@ -6,26 +6,24 @@
 
 #include "np3.h"
 
-void func_801B246C(Entity* arg0) {
-    s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180C10[arg0->subId];
+void func_801B246C(Entity* self) {
+    ObjInit2* temp_s0 = &D_80180C10[self->subId];
 
-    if (arg0->step == 0) {
+    if (self->step == 0) {
         InitializeEntity(D_80180A90);
-        arg0->animSet = temp_s0->animSet;
-        arg0->zPriority = temp_s0->zPriority;
-        arg0->facing = temp_s0->unk4.U8.unk0;
-        arg0->unk5A = temp_s0->unk4.U8.unk1;
-        arg0->palette = temp_s0->palette;
-        arg0->unk19 = temp_s0->unk8;
-        arg0->blendMode = temp_s0->blendMode;
-        temp_v0 = temp_s0->unkC;
-        if (temp_v0 != 0) {
-            arg0->unk34 = temp_v0;
+        self->animSet = temp_s0->animSet;
+        self->zPriority = temp_s0->zPriority;
+        self->facing = temp_s0->unk4.U8.unk0;
+        self->unk5A = temp_s0->unk4.U8.unk1;
+        self->palette = temp_s0->palette;
+        self->unk19 = temp_s0->unk8;
+        self->blendMode = temp_s0->blendMode;
+        if (temp_s0->unkC != 0) {
+            self->unk34 = temp_s0->unkC;
         }
     }
 
-    AnimateEntity(temp_s0->unk10, arg0);
+    AnimateEntity(temp_s0->unk10, self);
 }
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2540);
@@ -61,48 +59,24 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-// TODO: Probably aspsx or compiler flags
-// nops in between assignments
-// https://decomp.me/scratch/sKMmw
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2830);
-#else
-
-extern u16 D_80180A60;
-extern s8 D_8003CB25;
-extern s8 D_8003CB26;
-extern s8 D_8003CB27;
-extern s8 D_80054319;
-extern s8 D_8005431A;
-extern s8 D_8005431B;
-
-typedef struct {
-    /* 0x00 */ char pad00[0x2C];
-    /* 0x2C */ u16 unk2C;
-    /* 0x2E */ char pad2E[0x4E];
-    /* 0x7C */ s8 unk7C;
-    /* 0x7D */ s8 unk7D;
-    /* 0x7E */ s8 unk7E;
-} UnkStruct11; // size = 0x7F
-
-void func_801B2830(Entity* entity) {
-    switch (entity->step) {
+void func_801B2830(Entity* self) {
+    switch (self->step) {
     case 0:
         InitializeEntity(&D_80180A60);
-        entity->unk7C.U8.unk0 = 0x10;
-        entity->unk7C.U8.unk1 = 8;
-        entity->unk7E = 0x38;
+        self->unk7C.S8.unk0 = 16;
+        self->unk7C.S8.unk1 = 8;
+        self->unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB25 = entity->unk7C.U8.unk0;
-        D_8003CB26 = entity->unk7C.U8.unk1;
-        D_8003CB27 = entity->unk7E.modeU8.unk0;
-        D_80054319 = entity->unk7C.U8.unk0;
-        D_8005431A = entity->unk7C.U8.unk1;
-        D_8005431B = entity->unk7E.modeU8.unk0;
+        D_8003CB25 = self->unk7C.S8.unk0;
+        D_8003CB26 = self->unk7C.S8.unk1;
+        D_8003CB27 = self->unk7E.modeU8.unk0;
+        D_80054319 = self->unk7C.S8.unk0;
+        D_8005431A = self->unk7C.S8.unk1;
+        D_8005431B = self->unk7E.modeU8.unk0;
+        break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
 
