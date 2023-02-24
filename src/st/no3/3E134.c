@@ -385,6 +385,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3A88);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3B84);
 
+// reg swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", InitRoomEntities);
 #else
