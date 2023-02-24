@@ -61,48 +61,24 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-// TODO: Probably aspsx or compiler flags
-// nops in between assignments
-// https://decomp.me/scratch/sKMmw
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2830);
-#else
-
-extern u16 D_80180A60;
-extern s8 D_8003CB25;
-extern s8 D_8003CB26;
-extern s8 D_8003CB27;
-extern s8 D_80054319;
-extern s8 D_8005431A;
-extern s8 D_8005431B;
-
-typedef struct {
-    /* 0x00 */ char pad00[0x2C];
-    /* 0x2C */ u16 unk2C;
-    /* 0x2E */ char pad2E[0x4E];
-    /* 0x7C */ s8 unk7C;
-    /* 0x7D */ s8 unk7D;
-    /* 0x7E */ s8 unk7E;
-} UnkStruct11; // size = 0x7F
-
-void func_801B2830(Entity* entity) {
-    switch (entity->step) {
+void func_801B2830(Entity* self) {
+    switch (self->step) {
     case 0:
         InitializeEntity(&D_80180A60);
-        entity->unk7C.U8.unk0 = 0x10;
-        entity->unk7C.U8.unk1 = 8;
-        entity->unk7E = 0x38;
+        self->unk7C.S8.unk0 = 16;
+        self->unk7C.S8.unk1 = 8;
+        self->unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB25 = entity->unk7C.U8.unk0;
-        D_8003CB26 = entity->unk7C.U8.unk1;
-        D_8003CB27 = entity->unk7E.modeU8.unk0;
-        D_80054319 = entity->unk7C.U8.unk0;
-        D_8005431A = entity->unk7C.U8.unk1;
-        D_8005431B = entity->unk7E.modeU8.unk0;
+        D_8003CB25 = self->unk7C.S8.unk0;
+        D_8003CB26 = self->unk7C.S8.unk1;
+        D_8003CB27 = self->unk7E.modeU8.unk0;
+        D_80054319 = self->unk7C.S8.unk0;
+        D_8005431A = self->unk7C.S8.unk1;
+        D_8005431B = self->unk7E.modeU8.unk0;
+        break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
 
