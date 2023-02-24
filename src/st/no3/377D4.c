@@ -62,26 +62,14 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-// matches except for nops after loads
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId16);
-#else
-extern u8 D_8003CB25;
-extern u8 D_8003CB26;
-extern u8 D_8003CB27;
-extern u8 D_80054319;
-extern u8 D_8005431A;
-extern u8 D_8005431B;
-extern u16 D_80180AD0;
-
-void func_801B7B98(Entity* arg0) {
+void EntityUnkId16(Entity* arg0) {
     switch (arg0->step) {
     case 0:
         InitializeEntity(&D_80180AD0);
-        arg0->unk7C.S8.unk0 = 0x10U;
-        arg0->unk7C.S8.unk1 = 8U;
-        arg0->unk7E.modeU8.unk0 = 0x38U;
-        /* fallthrough */
+        arg0->unk7C.S8.unk0 = 16;
+        arg0->unk7C.S8.unk1 = 8;
+        arg0->unk7E.modeU8.unk0 = 56;
+
     case 1:
         D_8003CB25 = arg0->unk7C.S8.unk0;
         D_8003CB26 = arg0->unk7C.S8.unk1;
@@ -92,7 +80,6 @@ void func_801B7B98(Entity* arg0) {
         break;
     }
 }
-#endif
 
 // lightning and sound for background
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundLightning);
