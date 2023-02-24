@@ -46,20 +46,13 @@ void func_801325D8(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
-// matching in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2398);
-#else
-u_long* FntFlush(int id);
-int FntPrint();
-extern s32 D_80136300;
 extern const char* aO;
 
 void func_800E2398(const char* str) {
-    D_8006C37C = D_8006C37C->unk0;
+    D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
     FntPrint(str);
     if (D_80136300++ & 4) {
-        FntPrint(&aO); // "\no\n"
+        FntPrint(&aO); // TODO: rodata split
     }
     DrawSync(0);
     VSync(0);
@@ -67,7 +60,6 @@ void func_800E2398(const char* str) {
     PutDispEnv(&D_8006C37C->buf.disp);
     FntFlush(-1);
 }
-#endif
 
 void func_800E2438(const char* str) {
     while (PadRead(0))
@@ -183,7 +175,7 @@ void func_800E31C0(void) {
 
 // TODO: fix branching
 // https://decomp.me/scratch/y3otf
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
 #else
 extern s32 D_800BD1C8;
