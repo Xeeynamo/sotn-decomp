@@ -64,7 +64,7 @@ extern u32 D_801822C8[];
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->subId];
-    
+
     if (self->step == 0) {
         InitializeEntity(&D_80180C1C);
         self->animSet = temp_s0->animSet;
