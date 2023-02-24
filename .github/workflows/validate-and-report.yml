@@ -111,6 +111,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ matrix.version }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_SECRET }}
     steps:
       - name: Clone main repository
         uses: actions/checkout@v3
