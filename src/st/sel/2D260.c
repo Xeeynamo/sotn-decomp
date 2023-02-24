@@ -519,6 +519,7 @@ s32 func_801B2984(u8 ch) {
     return 0x20;
 }
 
+// reg swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", DrawString16x16);
 #else
