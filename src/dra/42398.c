@@ -175,7 +175,7 @@ void func_800E31C0(void) {
 
 // TODO: fix branching
 // https://decomp.me/scratch/y3otf
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
 #else
 extern s32 D_800BD1C8;
