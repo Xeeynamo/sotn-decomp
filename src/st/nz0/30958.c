@@ -111,6 +111,11 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMoveableBox);
 
 // lever to operate cannon
+// https://decomp.me/scratch/FriVp
+// Matching in PSY-Q 3.5, assembler skips a nop
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
+#else
 void EntityCannonLever(Entity* self) {
     /** TODO: !FAKE
      * self->unk7C should be a POLY_G4*
@@ -201,6 +206,7 @@ void EntityCannonLever(Entity* self) {
     poly->x0 = self->posX.i.hi - 4;
     poly->y0 = self->posY.i.hi - 20;
 }
+#endif
 
 // cannon for shortcut
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannon);
