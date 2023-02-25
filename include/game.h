@@ -944,7 +944,6 @@ typedef struct {
 } Unkstruct_80097494;
 extern Unkstruct_80097494 D_80097494;
 
-extern u16 D_80097496;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern u32 g_StageId;
