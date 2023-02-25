@@ -18,6 +18,8 @@ void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
+extern s8 D_8003BE6F;
+extern u16 D_80180BF8[];
 extern ObjInit2 D_80180D64[];
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -111,7 +113,33 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannon);
 
 // projectile shot by cannon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonShot);
+void EntityCannonShot(Entity* self) {
+    Entity* newEntity;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->palette = 0x81AF;
+        self->zPriority = 0x6F;
+        self->accelerationX = -0x80000;
+
+    case 1:
+        MoveEntity();
+        if ((self->posX.i.hi + (s16)D_8007308E) < 0x70) {
+            g_api.func_80102CD8(1);
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->subId = 3;
+            }
+            D_8003BE6F = 1;
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
 
