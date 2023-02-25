@@ -18,8 +18,10 @@ void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
-extern s8 D_8003BE6F;
+extern u8 D_8003BE6F;
 extern u16 D_80180BF8[];
+extern u16 D_80180C1C[];
+extern u16 D_80180C88;
 extern ObjInit2 D_80180D64[];
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -35,17 +37,16 @@ extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
+extern s32 D_80180ED0;
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
-extern u16 D_80180C1C[];
 extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
 extern u8 D_801822B4[];
 PfnEntityUpdate D_80180A90[];
 extern s32 D_801824B8;
 extern s32 D_801824C0;
-extern u16 D_80180C88;
 extern const u8 D_80181F30;
 extern const u16* D_80180CF4;
 extern s32 D_80182600[];
@@ -110,7 +111,96 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMoveableBox);
 
 // lever to operate cannon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
+void EntityCannonLever(Entity* self) {
+    /** TODO: !FAKE
+     * self->unk7C should be a POLY_G4*
+     */
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+    s32 temp_v0_2;
+    s32 temp_v1_2;
+    s32 var_v0;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 20;
+        self->unk3C = 2;
+
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *(s32*)&self->unk7C = poly;
+
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 0x68;
+        poly->v0 = 0x80;
+        poly->u1 = 8;
+        poly->v1 = 0x28;
+        poly->pad2 = 0x70;
+        poly->pad3 = 2;
+
+        if (PLAYER.posX.i.hi < 128) {
+            self->unk3C = 0;
+        }
+        break;
+
+    case 1:
+        if (self->unk48 != 0) {
+            self->accelerationX = -0x40000;
+            self->step++;
+        }
+        if (D_8003BE6F != 0) {
+            self->unk3C = 0;
+        }
+        poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+        poly->x0 = self->posX.i.hi - 4;
+        poly->y0 = self->posY.i.hi - 20;
+        return;
+
+    case 2:
+        MoveEntity();
+        temp_v1_2 = self->accelerationX;
+        if (temp_v1_2 < 0) {
+            var_v0 = temp_v1_2 + 0xF;
+        } else {
+            var_v0 = temp_v1_2;
+        }
+        temp_v0_2 = temp_v1_2 - (var_v0 >> 4);
+        self->accelerationX = temp_v0_2;
+        if (temp_v0_2 < 0x2000) {
+            self->step++;
+        }
+
+        if (D_8003BE6F != 0) {
+            self->unk3C = 0;
+        }
+
+        poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+        poly->x0 = self->posX.i.hi - 4;
+        poly->y0 = self->posY.i.hi - 20;
+        return;
+
+    case 3:
+        D_80180ED0 = 1;
+        break;
+    }
+
+    if (D_8003BE6F != 0) {
+        self->unk3C = 0;
+    }
+    poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+    poly->x0 = self->posX.i.hi - 4;
+    poly->y0 = self->posY.i.hi - 20;
+}
 
 // cannon for shortcut
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannon);
