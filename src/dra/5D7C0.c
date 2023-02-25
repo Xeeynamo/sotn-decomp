@@ -85,7 +85,51 @@ void func_800FD874(u16 context, s32 arg1) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FD9D4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FDB18);
+s16 func_800FDB18(s32 arg0, s32 arg1) {
+    s16 temp_v0;
+    s32 ret;
+    s32 var_v1;
+
+    switch (arg0) {
+    case 0:
+        temp_v0 = arg1 - (D_80097BDC * 0x10);
+        asm volatile("move $16, $2"); // HACK
+        if (temp_v0 < 0x100) {
+            ret = 0x100;
+        }
+        break;
+    case 1:
+        temp_v0 = arg1 - (D_80097BDC * 4);
+        asm volatile("move $16, $2"); // HACK
+        if (temp_v0 < 0x40) {
+            ret = 0x40;
+        }
+        break;
+    case 2:
+        ret = arg1;
+        var_v1 = (((rand() % 12) + D_80097BDC) - 9) / 10;
+        if (var_v1 < 0) {
+            var_v1 = 0;
+        }
+        if (var_v1 > 4) {
+            var_v1 = 4;
+        }
+        ret = ret - var_v1;
+        break;
+    case 3:
+        ret = arg1 + (D_80097BE0 * 4);
+        break;
+    case 4:
+    case 5:
+        ret = arg1;
+        if (CheckEquipmentItemCount(80, 4)) {
+            ret += ((s32)(((s16)ret) + (((u32)(ret << 0x10)) >> 0x1F))) >> 1;
+        }
+        break;
+    }
+
+    return ret;
+}
 
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
