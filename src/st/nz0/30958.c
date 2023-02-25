@@ -121,7 +121,7 @@ void EntityMoveableBox(Entity* self) {
     s32 var_v0;
     s32 var_v1;
     s32 new_var;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180BF8);
