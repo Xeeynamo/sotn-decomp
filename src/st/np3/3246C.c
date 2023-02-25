@@ -212,7 +212,65 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B8CC0);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B8D84);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B8E94);
+void EntityLargeGaibonProjectile(Entity* self) {
+    Entity* newEntity;
+
+    if (self->unk34 & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->objectId = 2;
+        self->unk19 = 0;
+        self->step = 0;
+        self->subId = 1;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180B80);
+        if (self->subId == 0) {
+            self->animSet = 2;
+            self->unk19 = 4;
+            self->accelerationX = (rcos(self->unk1E) * 0x38000) >> 0xC;
+            self->accelerationY = (rsin(self->unk1E) * 0x38000) >> 0xC;
+            self->palette = 0x81B6;
+            self->unk1E -= 0x400;
+        } else {
+            self->animSet = 14;
+            self->unk5A = 0x79;
+            self->unk19 = 0xD;
+            self->unk1A = 0x100;
+            self->unk6C = 0x80;
+            self->palette = 0x81F3;
+            self->blendMode = 0x30;
+            self->step = 2;
+            self->unk3C = 0;
+            self->unk34 |= 0x2000;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(&D_801815EC, self);
+        if (!(g_blinkTimer & 3)) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x54, self, newEntity);
+                newEntity->subId = 1;
+                newEntity->unk1E = self->unk1E;
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        break;
+
+    case 2:
+        self->unk6C += 0xFE;
+        self->unk1A -= 4;
+        if (AnimateEntity(&D_801815FC, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B90BC);
 

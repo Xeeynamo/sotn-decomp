@@ -18,6 +18,10 @@ void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
+extern u8 D_8003BE6F;
+extern u16 D_80180BF8[];
+extern u16 D_80180C1C[];
+extern u16 D_80180C88;
 extern ObjInit2 D_80180D64[];
 extern u32 g_randomNext;
 extern PfnEntityUpdate D_80180A90[];
@@ -25,22 +29,24 @@ extern s16 D_80181978[];
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
 extern const u16 D_80180BE0[];
+extern u16 D_80180D48[];
+extern const u8* D_80181378;
+extern const u8* D_80181388;
 extern s32 D_80181DA8[];
 extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
+extern s32 D_80180ED0;
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
-extern u16 D_80180C1C[];
 extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
 extern u8 D_801822B4[];
 PfnEntityUpdate D_80180A90[];
 extern s32 D_801824B8;
 extern s32 D_801824C0;
-extern u16 D_80180C88;
 extern const u8 D_80181F30;
 extern const u16* D_80180CF4;
 extern s32 D_80182600[];
@@ -105,13 +111,134 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMoveableBox);
 
 // lever to operate cannon
+// https://decomp.me/scratch/FriVp
+// Matching in PSY-Q 3.5, assembler skips a nop
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
+#else
+void EntityCannonLever(Entity* self) {
+    /** TODO: !FAKE
+     * self->unk7C should be a POLY_G4*
+     */
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+    s32 temp_v0_2;
+    s32 temp_v1_2;
+    s32 var_v0;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 20;
+        self->unk3C = 2;
+
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *(s32*)&self->unk7C = poly;
+
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 0x68;
+        poly->v0 = 0x80;
+        poly->u1 = 8;
+        poly->v1 = 0x28;
+        poly->pad2 = 0x70;
+        poly->pad3 = 2;
+
+        if (PLAYER.posX.i.hi < 128) {
+            self->unk3C = 0;
+        }
+        break;
+
+    case 1:
+        if (self->unk48 != 0) {
+            self->accelerationX = -0x40000;
+            self->step++;
+        }
+        if (D_8003BE6F != 0) {
+            self->unk3C = 0;
+        }
+        poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+        poly->x0 = self->posX.i.hi - 4;
+        poly->y0 = self->posY.i.hi - 20;
+        return;
+
+    case 2:
+        MoveEntity();
+        temp_v1_2 = self->accelerationX;
+        if (temp_v1_2 < 0) {
+            var_v0 = temp_v1_2 + 0xF;
+        } else {
+            var_v0 = temp_v1_2;
+        }
+        temp_v0_2 = temp_v1_2 - (var_v0 >> 4);
+        self->accelerationX = temp_v0_2;
+        if (temp_v0_2 < 0x2000) {
+            self->step++;
+        }
+
+        if (D_8003BE6F != 0) {
+            self->unk3C = 0;
+        }
+
+        poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+        poly->x0 = self->posX.i.hi - 4;
+        poly->y0 = self->posY.i.hi - 20;
+        return;
+
+    case 3:
+        D_80180ED0 = 1;
+        break;
+    }
+
+    if (D_8003BE6F != 0) {
+        self->unk3C = 0;
+    }
+    poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+    poly->x0 = self->posX.i.hi - 4;
+    poly->y0 = self->posY.i.hi - 20;
+}
+#endif
 
 // cannon for shortcut
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannon);
 
 // projectile shot by cannon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonShot);
+void EntityCannonShot(Entity* self) {
+    Entity* newEntity;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->palette = 0x81AF;
+        self->zPriority = 0x6F;
+        self->accelerationX = -0x80000;
+
+    case 1:
+        MoveEntity();
+        if ((self->posX.i.hi + D_8007308E) < 112) {
+            g_api.func_80102CD8(1);
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->subId = 3;
+            }
+            D_8003BE6F = 1;
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
 
@@ -161,7 +288,65 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
 
 // large red projectile from gaibon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityLargeGaibonProjectile);
+void EntityLargeGaibonProjectile(Entity* self) {
+    Entity* newEntity;
+
+    if (self->unk34 & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->objectId = 2;
+        self->unk19 = 0;
+        self->step = 0;
+        self->subId = 1;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180D48);
+        if (self->subId == 0) {
+            self->animSet = 2;
+            self->unk19 = 4;
+            self->accelerationX = (rcos(self->unk1E) * 0x38000) >> 0xC;
+            self->accelerationY = (rsin(self->unk1E) * 0x38000) >> 0xC;
+            self->palette = 0x81B6;
+            self->unk1E -= 0x400;
+        } else {
+            self->animSet = 14;
+            self->unk5A = 0x79;
+            self->unk19 = 0xD;
+            self->unk1A = 0x100;
+            self->unk6C = 0x80;
+            self->palette = 0x81F3;
+            self->blendMode = 0x30;
+            self->step = 2;
+            self->unk3C = 0;
+            self->unk34 |= 0x2000;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(&D_80181378, self);
+        if (!(g_blinkTimer & 3)) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x46, self, newEntity);
+                newEntity->subId = 1;
+                newEntity->unk1E = self->unk1E;
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        break;
+
+    case 2:
+        self->unk6C += 0xFE;
+        self->unk1A -= 4;
+        if (AnimateEntity(&D_80181388, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B6DE4);
 
