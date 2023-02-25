@@ -205,21 +205,21 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
-extract_main: require-tools
+extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
-extract_dra: require-tools
+extract_dra: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).dra.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).dra.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(DRA).yaml
-extract_ric: require-tools
+extract_ric: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).ric.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).ric.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).ric.yaml
-extract_stmad: require-tools
+extract_stmad: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
-extract_st%: require-tools
+extract_st%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
-extract_tt_%: require-tools
+extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
@@ -249,9 +249,7 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
-
-require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
-update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
+update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
