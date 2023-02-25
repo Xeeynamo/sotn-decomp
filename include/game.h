@@ -736,6 +736,7 @@ extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C734;
 extern s32 D_8003C73C;
+extern u32 D_8003C744;
 extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
 extern u32 D_8003C8C4;
