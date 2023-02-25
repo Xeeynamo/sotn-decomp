@@ -27,6 +27,9 @@ extern s16 D_80181978[];
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
 extern const u16 D_80180BE0[];
+extern u16 D_80180D48[];
+extern const u8* D_80181378;
+extern const u8* D_80181388;
 extern s32 D_80181DA8[];
 extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
@@ -189,7 +192,65 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
 
 // large red projectile from gaibon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityLargeGaibonProjectile);
+void EntityLargeGaibonProjectile(Entity* self) {
+    Entity* newEntity;
+
+    if (self->unk34 & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->objectId = 2;
+        self->unk19 = 0;
+        self->step = 0;
+        self->subId = 1;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180D48);
+        if (self->subId == 0) {
+            self->animSet = 2;
+            self->unk19 = 4;
+            self->accelerationX = (rcos(self->unk1E) * 0x38000) >> 0xC;
+            self->accelerationY = (rsin(self->unk1E) * 0x38000) >> 0xC;
+            self->palette = 0x81B6;
+            self->unk1E -= 0x400;
+        } else {
+            self->animSet = 14;
+            self->unk5A = 0x79;
+            self->unk19 = 0xD;
+            self->unk1A = 0x100;
+            self->unk6C = 0x80;
+            self->palette = 0x81F3;
+            self->blendMode = 0x30;
+            self->step = 2;
+            self->unk3C = 0;
+            self->unk34 |= 0x2000;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(&D_80181378, self);
+        if (!(g_blinkTimer & 3)) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x46, self, newEntity);
+                newEntity->subId = 1;
+                newEntity->unk1E = self->unk1E;
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        break;
+
+    case 2:
+        self->unk6C += 0xFE;
+        self->unk1A -= 4;
+        if (AnimateEntity(&D_80181388, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B6DE4);
 
