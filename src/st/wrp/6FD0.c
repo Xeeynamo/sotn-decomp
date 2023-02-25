@@ -1819,7 +1819,7 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-#ifdef NON_EQUIVALENT
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
@@ -2468,7 +2468,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189E9C);
 #else
 void func_80189E9C(LayoutObject* layoutObj) {
