@@ -314,25 +314,24 @@ void func_800FF708(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FF7B8);
 
-extern Unkstruct_80137990 D_80137990;
-
-#ifndef NON_EQUIVALENT
+// matches with ASPSX
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", DrawHudRichter);
 #else
 void DrawHudRichter(void) {
     POLY_GT4* poly;
 
-    D_80137978 = 0x190;
-    D_8013797C = 0x190;
+    D_80137978 = 400;
+    D_8013797C = 400;
     D_801397FC = 0;
     D_80139008 = 0;
     D_80137994 = 0;
-    D_8003C744 = NULL;
-    D_80137980 = 50;
+    D_8003C744 = 0;
+    D_80137980 = 48;
     D_80137984 = 0;
     D_80137990.unk0 = 0;
-    D_8013798C = 0x9C40U / 400U;
-    D_80137988 = 0x9C40U / 400U;
+    D_8013798C = 40000 / D_80137978;
+    D_80137988 = 40000 / D_8013797C;
     D_80137970 = func_800EDD9C(4, 9);
     poly = &D_80086FEC[D_80137970];
 
@@ -415,8 +414,8 @@ void DrawHudRichter(void) {
             poly->p1 = (rand() & 0x3F) + 1;
             poly->p2 = 0;
             poly = poly->tag;
-            phi_s0 += 2;
             phi_s1 += 2;
+            phi_s0 += 2;
         } while (poly != 0);
     }
 }
