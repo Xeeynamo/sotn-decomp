@@ -2582,7 +2582,7 @@ void func_8018A424(s16 arg0) {
 }
 #endif
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A520);
 void func_8018A424(s16 arg0);
 #else
