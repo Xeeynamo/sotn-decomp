@@ -185,15 +185,15 @@ void EntityMoveableBox(Entity* self) {
             }
             self->unk84.unk = var_s1;
             if (var_s1 != 0) {
-                self->posY.i.hi = (0x1C0 - D_801CB736[var_s1]) - D_80073092;
+                self->posY.i.hi = (448 - D_801CB736[var_s1]) - D_80073092;
             }
         }
         break;
     }
     poly = (POLY_GT4*)(*((s32*)(&self->unk7C.s)));
-    new_var = ((u16)self->posX.i.hi) - 0x10;
+    new_var = ((u16)self->posX.i.hi) - 16;
     poly->x0 = new_var;
-    poly->y0 = ((u16)self->posY.i.hi) - 0x10;
+    poly->y0 = ((u16)self->posY.i.hi) - 16;
 }
 
 // lever to operate cannon
