@@ -1819,13 +1819,12 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
+#ifdef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
 extern void (*D_8003C7E8)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern s32 D_8003C8B8;
-extern s32* D_80072EF4;
 extern s32 D_80072EFC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
