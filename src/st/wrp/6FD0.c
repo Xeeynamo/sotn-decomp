@@ -3092,6 +3092,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 // matches in gcc 2.6.0 + aspsx 2.3.4
 // matches in gcc 2.7.2 + aspsx
 // most likely aspsx
+// branch skips a nop
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018CAB0);
 #else
