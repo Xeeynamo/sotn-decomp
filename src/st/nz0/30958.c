@@ -12,6 +12,7 @@ void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);
+s32 func_801BD9A0(void* arg0, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
 void func_801C29B0(s32);
 void func_801C33D8(const u32*, s32);
@@ -19,12 +20,12 @@ void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
 extern u8 D_8003BE6F;
+extern PfnEntityUpdate D_80180A90[];
 extern u16 D_80180BF8[];
 extern u16 D_80180C1C[];
 extern u16 D_80180C88;
 extern ObjInit2 D_80180D64[];
 extern u32 g_randomNext;
-extern PfnEntityUpdate D_80180A90[];
 extern s16 D_80181978[];
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
@@ -37,6 +38,7 @@ extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
+extern s32* D_80180EB8;
 extern s32 D_80180ED0;
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
@@ -67,6 +69,7 @@ extern u8 D_801825F0;
 extern s32 D_80180C70;
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
+extern u16 D_801CB736[];
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->subId];
@@ -108,7 +111,90 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1C18);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
 
 // moveable box for spike/switch areas
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMoveableBox);
+void EntityMoveableBox(Entity* self) {
+    Entity* player;
+    POLY_GT4* poly;
+    s32 temp_s1 = func_801BD9A0(self, 0x10, 0x10, 5);
+    s32 var_s1 = temp_s1;
+    s16 firstPolygonIndex;
+    s32 temp_v0_2;
+    s32 var_v0;
+    s32 var_v1;
+    s32 new_var;
+    
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C.s)) = poly;
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 8;
+        poly->v0 = 200;
+        poly->u1 = 32;
+        poly->v1 = 32;
+        poly->pad2 = 112;
+        poly->pad3 = 2;
+
+    case 1:
+        player = &PLAYER;
+        self->accelerationX = 0;
+        self->accelerationY = 0;
+
+        if (var_s1 & 1) {
+            temp_s1 = func_801BCC5C();
+            if (temp_s1 & 1 && player->accelerationX > 0) {
+                if (!(g_blinkTimer & 7)) {
+                    g_api.PlaySfx(0x608);
+                }
+                self->accelerationX = 0x8000;
+            }
+            temp_s1 = func_801BCC5C();
+            if (!(firstPolygonIndex = (temp_s1 & 1)) &&
+                (player->accelerationX < 0)) {
+                if (!(g_blinkTimer & 7)) {
+                    g_api.PlaySfx(0x608);
+                }
+                self->accelerationX = -0x8000;
+            }
+        }
+
+        func_801BCF74(&D_80180EB8);
+
+        if (self->subId == 0) {
+            temp_v0_2 = self->posX.i.hi + D_8007308E;
+            var_v1 = temp_v0_2 - 0xC0;
+            var_v1 = ABS(var_v1);
+            var_v0 = temp_v0_2 - 0x100;
+            var_v0 = ABS(var_v0);
+            var_s1 = 24 > var_v1;
+            if (var_v0 < 24) {
+                var_s1 = 2;
+            }
+            if ((self->unk84.unk == 0) && (*(s16*)&D_801CB736[var_s1] != 0)) {
+                var_s1 = 0;
+                self->posX.val -= self->accelerationX;
+            }
+            self->unk84.unk = var_s1;
+            if (var_s1 != 0) {
+                self->posY.i.hi = (0x1C0 - D_801CB736[var_s1]) - D_80073092;
+            }
+        }
+        break;
+    }
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C.s)));
+    new_var = ((u16)self->posX.i.hi) - 0x10;
+    poly->x0 = new_var;
+    poly->y0 = ((u16)self->posY.i.hi) - 0x10;
+}
 
 // lever to operate cannon
 // https://decomp.me/scratch/FriVp
