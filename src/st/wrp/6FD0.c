@@ -1819,13 +1819,12 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC;
 extern void (*D_8003C7E8)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern s32 D_8003C8B8;
-extern s32* D_80072EF4;
 extern s32 D_80072EFC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
@@ -2469,7 +2468,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189E9C);
 #else
 void func_80189E9C(LayoutObject* layoutObj) {
@@ -2583,7 +2582,7 @@ void func_8018A424(s16 arg0) {
 }
 #endif
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A520);
 void func_8018A424(s16 arg0);
 #else
@@ -3093,6 +3092,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 // matches in gcc 2.6.0 + aspsx 2.3.4
 // matches in gcc 2.7.2 + aspsx
 // most likely aspsx
+// branch skips a nop
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018CAB0);
 #else

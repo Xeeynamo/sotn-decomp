@@ -47,7 +47,7 @@ void func_801A7D64(Entity* arg0) {
     AnimateEntity(temp_s0->unk10, arg0);
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A7E2C);
 #else
 bool func_801A7E2C(Entity* entity) {

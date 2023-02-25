@@ -659,7 +659,7 @@ void func_801B367C(s32 arg0) {
     g_memCardRStepSub = arg0;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3694);
 #else
 s32 func_801B3694(void) {
