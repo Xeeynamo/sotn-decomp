@@ -127,7 +127,7 @@ void EntityCannonShot(Entity* self) {
 
     case 1:
         MoveEntity();
-        if ((self->posX.i.hi + (s16)D_8007308E) < 0x70) {
+        if ((self->posX.i.hi + D_8007308E) < 112) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
