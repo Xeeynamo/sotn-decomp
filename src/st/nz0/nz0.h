@@ -64,5 +64,5 @@ extern u8 D_801825F0;
 extern s32 D_80180C70;
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
-extern s8 D_801B058C;
+extern s8 D_801B058C; // "charal %x\n"
 extern u16 D_801CB736[];
