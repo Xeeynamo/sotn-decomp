@@ -916,6 +916,7 @@ void func_80106670(s32 blendMode) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_80106A28);
 
+// https://decomp.me/scratch/jlWFd 99.82%
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_8010715C);
 
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
