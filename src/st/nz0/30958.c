@@ -331,7 +331,40 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlogra);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B54A8);
 
 // projectile fired from slogra's spear
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlograSpearProjectile);
+void EntitySlograSpearProjectile(Entity* self) {
+    Entity* entity;
+
+    if (self->unk34 & 0x100) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, self, entity);
+            entity->subId = 1;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180D24);
+        if (self->facing == 0) {
+            self->accelerationX = -0x40000;
+        } else {
+            self->accelerationX = 0x40000;
+        }
+
+    case 1:
+        if (AnimateEntity(&D_80181160, self) == 0) {
+            func_801BD52C(2);
+        }
+        break;
+        
+    case 2:
+        MoveEntity();
+        AnimateEntity(&D_80181170, self);
+        break;
+    }
+}
 
 // gaibon boss
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
