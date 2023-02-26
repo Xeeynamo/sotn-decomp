@@ -372,7 +372,34 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
 
 // small red projectile from gaibon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
+void EntitySmallGaibonProjectile(Entity* self) {
+    if (self->unk34 & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->unk19 = 0;
+        self->step = 0;
+        self->objectId = 2;
+        self->subId = 0;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180D3C);
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->unk19 = 5;
+        self->unk1A = 0xC0;
+        self->accelerationX = (rcos(self->unk1E) * 0x28000) >> 0xC;
+        self->accelerationY = (rsin(self->unk1E) * 0x28000) >> 0xC;
+        self->palette = 0x81B6;
+        self->unk1E -= 0x400;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(&D_8018136C, self);
+        break;
+    }
+}
 
 // large red projectile from gaibon
 void EntityLargeGaibonProjectile(Entity* self) {
