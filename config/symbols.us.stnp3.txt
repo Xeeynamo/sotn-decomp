@@ -14,6 +14,7 @@ EntityTrapDoor = 0x801B4BE8;
 EntitySwitch = 0x801B5F60;
 EntityUnkId49 = 0x801B644C;
 EntitySlograSpearProjectile = 0x801B7798;
+EntitySmallGaibonProjectile = 0x801B8D84;
 EntityLargeGaibonProjectile = 0x801B8E94;
 Update = 0x801B90EC;
 EntityNumericDamage = 0x801BA608;
