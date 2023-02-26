@@ -358,7 +358,7 @@ void EntitySlograSpearProjectile(Entity* self) {
             func_801BD52C(2);
         }
         break;
-        
+
     case 2:
         MoveEntity();
         AnimateEntity(&D_80181170, self);
