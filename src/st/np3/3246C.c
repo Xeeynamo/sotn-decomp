@@ -204,7 +204,41 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6990);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B75EC);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B7798);
+// projectile fired from slogra's spear
+void EntitySlograSpearProjectile(Entity* self) {
+    Entity* entity;
+
+    if (self->unk34 & 0x100) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, self, entity);
+            entity->subId = 1;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180B5C);
+        if (self->facing == 0) {
+            self->accelerationX = -0x40000;
+        } else {
+            self->accelerationX = 0x40000;
+        }
+
+    case 1:
+        if (AnimateEntity(&D_801813D4, self) == 0) {
+            func_801BD114(2);
+        }
+        break;
+        
+    case 2:
+        MoveEntity();
+        AnimateEntity(&D_801813E4, self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B78BC);
 
