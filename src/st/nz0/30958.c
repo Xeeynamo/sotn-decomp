@@ -70,6 +70,9 @@ extern s32 D_80180C70;
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern u16 D_801CB736[];
+extern u16 D_80180D24;
+extern u8 D_80181160;
+extern u8 D_80181170;
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->subId];
@@ -363,7 +366,38 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlogra);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B54A8);
 
 // projectile fired from slogra's spear
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlograSpearProjectile);
+void EntitySlograSpearProjectile(Entity* self) {
+    Entity* newEntity;
+    if (self->unk34 & 0x100) {
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2U, self, newEntity);
+            newEntity->subId = 1;
+        }
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180D24);
+        if (self->facing == 0) {
+            self->accelerationX = -0x40000;
+        } else {
+            self->accelerationX = 0x40000;
+        }
+    case 1:
+        if (AnimateEntity(&D_80181160, self) == 0) {
+            func_801BD52C(2U);
+            return;
+        }
+        return;
+    case 2:
+        MoveEntity();
+        AnimateEntity(&D_80181170, self);
+        break;
+    }
+}
+//#endif
 
 // gaibon boss
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
