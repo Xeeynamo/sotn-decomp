@@ -70,9 +70,6 @@ extern s32 D_80180C70;
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern u16 D_801CB736[];
-extern u16 D_80180D24;
-extern u8 D_80181160;
-extern u8 D_80181170;
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->subId];
