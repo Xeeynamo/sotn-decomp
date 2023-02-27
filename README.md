@@ -90,7 +90,7 @@ Some non-matching functions are present in the source preprocessed by the macro 
 
 There are a few tricks to make the process more streamlined:
 
-1. Use [decomp.me](https://decomp.me/) with PSY-Q 4.0. Be aware that the repo is using GCC 2.6.x, so decomp.me will sometimes give a slightly different output.
+1. Use [decomp.me](https://decomp.me/) with PSY-Q 3.5. Be aware that the repo is using GCC 2.6.x, therefore the local output might be slightly wrong.
 1. The “context” section of decomp.me, is provided by the cmd `SOURCE=src/dra/42398.c make context`.
 1. Use [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) to solve some mismatches.
 1. Use [this](https://github.com/mkst/sssv/wiki/Jump-Tables) and [this](https://github.com/pmret/papermario/wiki/GCC-2.8.1-Tips-and-Tricks) guide to understand how some compiler patterns work.
@@ -122,5 +122,5 @@ The project is very barebone at the moment and there is a massive room of improv
 
 * The debug room overlay `ST/MAD.BIN` was compiled earlier than the first retail release of the game. All the offsets that refers to DRA.BIN points to invalid portions of data or to the wrong API calls, effectively breaking the majority of its original functionalities. That is why the debug room does not contain any object. By compiling the debug room with make mad_fix you can restore it by redirecting the old pointers to the retail version of the game.
 Be aware that not all the offsets have been yet redirected, so it will still be not entirely functional until further update.
-* I suspect that GCC 2.6.x / PSY-Q 3.4 have been used to originally compile DRA.BIN
+* I suspect that PSY-Q 3.5 have been used to originally compile the game
 * `main.exe` uses PS-X libraries that might have been created with a different compiler and with `-O1` rather than `-O2`
