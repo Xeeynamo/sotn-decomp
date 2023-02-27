@@ -959,6 +959,7 @@ extern s32 D_80097908;
 extern s32 D_8009790C;
 extern s32 D_80097910;
 extern s32 D_80097914;
+extern s32 g_mapTilesetId; // 0x80097918
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;

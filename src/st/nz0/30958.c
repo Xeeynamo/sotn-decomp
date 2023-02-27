@@ -24,7 +24,18 @@ void func_801B0958(Entity* self) {
     AnimateEntity(temp_s0->unk10, self);
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0A20);
+bool func_801B0A20(Entity* self) {
+    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
+
+    diffX = ABS(diffX);
+    if (self->hitboxWidth >= diffX) {
+        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
+        diffX = ABS(diffX);
+        return (self->hitboxHeight >= diffX);
+    } else {
+        return false;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
@@ -305,7 +316,33 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3294);
 
 // table with globe on it that can be broken
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityTableWithGlobe);
+void EntityTableWithGlobe(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CC4);
+        self->zPriority = 0x6A;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 12;
+        self->unk12 = -0xA;
+        self->unk10 = 0;
+        self->unk3C = 2;
+
+    case 1:
+        AnimateEntity(D_80180EF0, self);
+        if (self->unk48 != 0) {
+            func_801C29B0(0x61D);
+            self->unk3C = 0;
+            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+            self[1].subId = D_80180F10[self->subId];
+            func_801BD52C(2);
+        }
+        break;
+
+    case 2:
+        AnimateEntity(D_80180EF8, self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3648);
 
@@ -1602,7 +1639,7 @@ void func_801C6574(Entity* entity) {
 
 void func_801C6678(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(&D_80180C88);
+        InitializeEntity(D_80180C88);
         entity->unk1A = 0x120;
         entity->unk1C = 0x200;
         entity->unk6C = 0;

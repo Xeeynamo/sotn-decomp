@@ -422,6 +422,7 @@ void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
+s32 func_800E81FC(s32 mapTilesetId, s32);
 void func_800E8D24(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
