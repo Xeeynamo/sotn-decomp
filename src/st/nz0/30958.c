@@ -397,7 +397,6 @@ void EntitySlograSpearProjectile(Entity* self) {
         break;
     }
 }
-//#endif
 
 // gaibon boss
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
