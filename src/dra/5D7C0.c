@@ -926,8 +926,7 @@ s32 func_8010715C(s32 arg0) {
         if (func_800E81FC(arg0, 0xD) < 0) {
             return 0;
         }
-    }
-    else {
+    } else {
         D_8006C398 = 1;
         D_8006BAFC = 0x1C;
         g_mapTilesetId = arg0;
