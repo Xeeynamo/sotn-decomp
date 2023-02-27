@@ -916,7 +916,23 @@ void func_80106670(s32 blendMode) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_80106A28);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_8010715C);
+extern s32 g_mapTilesetId; // 0x80097918
+
+s32 func_8010715C(s32 arg0) {
+    if (D_8006C3B0 != 0)
+        return 0;
+
+    if (D_800978AC == 0) {
+        if (func_800E81FC(arg0, 0xD) < 0) {
+            return 0;
+        }
+    } else {
+        D_8006C398 = 1;
+        D_8006BAFC = 0x1C;
+        g_mapTilesetId = arg0;
+    }
+    return 1;
+}
 
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
