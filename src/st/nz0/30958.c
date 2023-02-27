@@ -317,18 +317,18 @@ void EntityTableWithGlobe(Entity* self) {
         self->unk3C = 2;
 
     case 1:
-        AnimateEntity(&D_80180EF0, self);
+        AnimateEntity(D_80180EF0, self);
         if (self->unk48 != 0) {
             func_801C29B0(0x61D);
             self->unk3C = 0;
-            CreateEntityFromEntity(0xC, self, &self[1]);
+            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
             self[1].subId = D_80180F10[self->subId];
             func_801BD52C(2);
         }
         break;
 
     case 2:
-        AnimateEntity(&D_80180EF8, self);
+        AnimateEntity(D_80180EF8, self);
         break;
     }
 }
