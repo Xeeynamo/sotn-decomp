@@ -24,7 +24,18 @@ void func_801B0958(Entity* self) {
     AnimateEntity(temp_s0->unk10, self);
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0A20);
+bool func_801B0A20(Entity* self) {
+    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
+    
+    diffX = ABS(diffX);
+    if (self->hitboxWidth >= diffX) {
+        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
+        diffX = ABS(diffX);
+        return (self->hitboxHeight >= diffX);
+    } else {
+        return false;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
