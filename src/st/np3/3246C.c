@@ -204,13 +204,75 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6990);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B75EC);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B7798);
+// projectile fired from slogra's spear
+void EntitySlograSpearProjectile(Entity* self) {
+    Entity* entity;
+
+    if (self->unk34 & 0x100) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, self, entity);
+            entity->subId = 1;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180B5C);
+        if (self->facing == 0) {
+            self->accelerationX = -0x40000;
+        } else {
+            self->accelerationX = 0x40000;
+        }
+
+    case 1:
+        if (AnimateEntity(&D_801813D4, self) == 0) {
+            func_801BD114(2);
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        AnimateEntity(&D_801813E4, self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B78BC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B8CC0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B8D84);
+// small red projectile from gaibon
+void EntitySmallGaibonProjectile(Entity* self) {
+    if (self->unk34 & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->unk19 = 0;
+        self->step = 0;
+        self->objectId = 2;
+        self->subId = 0;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B74);
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->unk19 = 5;
+        self->unk1A = 0xC0;
+        self->accelerationX = (rcos(self->unk1E) * 0x28000) >> 0xC;
+        self->accelerationY = (rsin(self->unk1E) * 0x28000) >> 0xC;
+        self->palette = 0x81B6;
+        self->unk1E -= 0x400;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_801815E0, self);
+        break;
+    }
+}
 
 void EntityLargeGaibonProjectile(Entity* self) {
     Entity* newEntity;
