@@ -56,7 +56,7 @@ void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_8013572C);
 
-s16 func_80135C00(s16 arg0) {
+s16 IncrementRingBufferPos(s16 arg0) {
     arg0++;
 
     if (arg0 == 0x100) {
@@ -66,6 +66,7 @@ s16 func_80135C00(s16 arg0) {
     return arg0;
 }
 
+// https://decomp.me/scratch/Gy0Jr 91.59%
 INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135C2C);
 void func_80135C2C();
 

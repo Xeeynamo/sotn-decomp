@@ -262,7 +262,7 @@ typedef struct {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ u16 unk02;
     /* 0x04 */ u16 unk04;
-} Unkstruct_801390DC;
+} SfxRingBufferItem;
 
 typedef struct {
     /* 0x00 */ s32 unk0;
