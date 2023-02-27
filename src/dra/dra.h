@@ -314,7 +314,7 @@ extern s16 D_80138FAC;
 extern s32 D_80138FB0;
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
-extern s16 D_80139000;
+extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern s8 D_80139014;
@@ -332,8 +332,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
-extern Unkstruct_801390DC D_801390DC[];
-extern Unkstruct_801390DC D_801390E0[];
+extern SfxRingBufferItem g_sfxRingBuffer1[]; //D_801390DC
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
@@ -352,7 +351,7 @@ extern s32 D_80139834[];
 extern s16 D_80139868[];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
-extern s16 D_80139A70;
+extern s16 g_sfxRingBufferPos2; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
 extern s16 D_8013AE7C;
@@ -374,7 +373,7 @@ extern s16 D_8013AEF0;
 extern s32 D_8013B158;
 extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
-extern s16 D_8013B3E8[];
+extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern s8 D_8013B5EC[];
 extern s8 D_8013B614[];
