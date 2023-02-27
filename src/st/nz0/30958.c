@@ -346,7 +346,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180D24);
+        InitializeEntity(D_80180D24);
         if (self->facing == 0) {
             self->accelerationX = -0x40000;
         } else {
@@ -354,14 +354,14 @@ void EntitySlograSpearProjectile(Entity* self) {
         }
 
     case 1:
-        if (AnimateEntity(&D_80181160, self) == 0) {
+        if (AnimateEntity(D_80181160, self) == 0) {
             func_801BD52C(2);
         }
         break;
 
     case 2:
         MoveEntity();
-        AnimateEntity(&D_80181170, self);
+        AnimateEntity(D_80181170, self);
         break;
     }
 }
@@ -384,7 +384,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180D3C);
+        InitializeEntity(D_80180D3C);
         self->animSet = 2;
         self->animCurFrame = 1;
         self->unk19 = 5;
@@ -396,7 +396,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(&D_8018136C, self);
+        AnimateEntity(D_8018136C, self);
         break;
     }
 }
@@ -440,7 +440,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(&D_80181378, self);
+        AnimateEntity(D_80181378, self);
         if (!(g_blinkTimer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -455,7 +455,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 2:
         self->unk6C += 0xFE;
         self->unk1A -= 4;
-        if (AnimateEntity(&D_80181388, self) == 0) {
+        if (AnimateEntity(D_80181388, self) == 0) {
             DestroyEntity(self);
         }
         break;

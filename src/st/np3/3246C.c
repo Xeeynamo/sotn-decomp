@@ -257,7 +257,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B74);
+        InitializeEntity(D_80180B74);
         self->animSet = 2;
         self->animCurFrame = 1;
         self->unk19 = 5;
@@ -269,7 +269,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(&D_801815E0, self);
+        AnimateEntity(D_801815E0, self);
         break;
     }
 }
