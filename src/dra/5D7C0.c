@@ -85,6 +85,10 @@ void func_800FD874(u16 context, s32 arg1) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FD9D4);
 
+// TODO get rid of the asm volatile
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FDB18);
+#else
 s16 func_800FDB18(s32 arg0, s32 arg1) {
     s16 temp_v0;
     s32 ret;
@@ -93,14 +97,14 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
     switch (arg0) {
     case 0:
         temp_v0 = arg1 - (D_80097BDC * 0x10);
-        asm volatile("move $16, $2"); // HACK
+        asm volatile("move $16, $2");
         if (temp_v0 < 0x100) {
             ret = 0x100;
         }
         break;
     case 1:
         temp_v0 = arg1 - (D_80097BDC * 4);
-        asm volatile("move $16, $2"); // HACK
+        asm volatile("move $16, $2");
         if (temp_v0 < 0x40) {
             ret = 0x40;
         }
@@ -130,6 +134,7 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
 
     return ret;
 }
+#endif
 
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
