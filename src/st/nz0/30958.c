@@ -26,7 +26,7 @@ void func_801B0958(Entity* self) {
 
 bool func_801B0A20(Entity* self) {
     s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
-    
+
     diffX = ABS(diffX);
     if (self->hitboxWidth >= diffX) {
         diffX = PLAYER.posY.i.hi - self->posY.i.hi;
