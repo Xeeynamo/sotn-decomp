@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - master
+      - docs
   schedule:
     - cron: "0 12 * * 1" # see https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events
 jobs:
