@@ -218,7 +218,7 @@ typedef struct Entity {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;
+    /* 0x1E */ s16 unk1E; // some kind of angle
     /* 0x20 */ s16 unk20;
     /* 0x22 */ s16 unk22;
     /* 0x24 */ u16 zPriority;

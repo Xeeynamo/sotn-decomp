@@ -4,72 +4,7 @@
  * Description: Alchemy Laboratory
  */
 
-#include "stage.h"
-
-void DestroyEntity(Entity* item);
-void func_8018F928(Entity*);
-void func_8019B858(void);
-void func_801BDD9C(void);
-s32 func_801BCF74(s32*);
-s32 func_801BD720(s32*, s32);
-s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
-void EntityExplosion(Entity*);
-void func_801C29B0(s32);
-void func_801C33D8(const u32*, s32);
-void func_801C0B24(Entity* entity);
-void func_801C4CC0(void);
-
-extern u8 D_8003BE6F;
-extern PfnEntityUpdate D_80180A90[];
-extern u16 D_80180BF8[];
-extern u16 D_80180C1C[];
-extern u16 D_80180C88;
-extern ObjInit2 D_80180D64[];
-extern u32 g_randomNext;
-extern s16 D_80181978[];
-extern s8 c_HeartPrizes[];
-extern Entity* g_CurrentEntity;
-extern const u16 D_80180BE0[];
-extern u16 D_80180D48[];
-extern const u8* D_80181378;
-extern const u8* D_80181388;
-extern s32 D_80181DA8[];
-extern const u8* D_80181E54[];
-extern u8 D_80181F1C[];
-extern s32 D_80181F04[];
-extern u16 D_80181F20[];
-extern s32* D_80180EB8;
-extern s32 D_80180ED0;
-extern s16 D_80181EDC[];
-extern u32 D_80181EEC[];
-extern ObjInit2 D_80182014[];
-extern LayoutObject* D_801CAA74;
-extern LayoutObject* D_801CAA78;
-extern u8 D_801822B4[];
-PfnEntityUpdate D_80180A90[];
-extern s32 D_801824B8;
-extern s32 D_801824C0;
-extern const u8 D_80181F30;
-extern const u16* D_80180CF4;
-extern s32 D_80182600[];
-extern s32 D_8018216C;
-extern s32 D_80182174;
-extern const u16* D_80180BD4;
-extern const s32 D_80181D3C[];
-extern const u16* D_80180C94;
-extern u16 D_80182424[];
-extern const u32* D_80181CEC[];
-extern const s32 c_GoldPrizes[];
-extern const u16 D_80180CA0[];
-extern u32 D_80182488[];
-extern const u16* D_80180C58;
-extern s16 D_801820E4[];
-extern const u16 D_80180C04[];
-extern u8 D_801825F0;
-extern s32 D_80180C70;
-extern u32 D_801822BC[];
-extern u32 D_801822C8[];
-extern u16 D_801CB736[];
+#include "nz0.h"
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->subId];
@@ -96,7 +31,40 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
 
 // bust with red eyes that can have a candle on it
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityRedEyeBust);
+void EntityRedEyeBust(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180C34);
+        self->animCurFrame = 7;
+        self->zPriority = 0x70;
+        break;
+
+    case 1:
+        break;
+
+    case 2:
+        FntPrint(&D_801B058C, self->animCurFrame); // "charal %x\n"
+        if (D_80097498 & 0x80) {
+            if (self->subId == 0) {
+                self->animCurFrame++;
+                self->subId |= 1;
+            } else
+                break;
+        } else {
+            self->subId = 0;
+        }
+
+        if (D_80097498 & 0x20) {
+            if (self->unk2E == 0) {
+                self->animCurFrame--;
+                self->unk2E |= 1;
+            }
+        } else {
+            self->unk2E = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B12E8);
 
@@ -363,7 +331,40 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlogra);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B54A8);
 
 // projectile fired from slogra's spear
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlograSpearProjectile);
+void EntitySlograSpearProjectile(Entity* self) {
+    Entity* entity;
+
+    if (self->unk34 & 0x100) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, self, entity);
+            entity->subId = 1;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180D24);
+        if (self->facing == 0) {
+            self->accelerationX = -0x40000;
+        } else {
+            self->accelerationX = 0x40000;
+        }
+
+    case 1:
+        if (AnimateEntity(D_80181160, self) == 0) {
+            func_801BD52C(2);
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        AnimateEntity(D_80181170, self);
+        break;
+    }
+}
 
 // gaibon boss
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
@@ -371,7 +372,34 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
 
 // small red projectile from gaibon
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySmallGaibonProjectile);
+void EntitySmallGaibonProjectile(Entity* self) {
+    if (self->unk34 & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->unk19 = 0;
+        self->step = 0;
+        self->objectId = 2;
+        self->subId = 0;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180D3C);
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->unk19 = 5;
+        self->unk1A = 0xC0;
+        self->accelerationX = (rcos(self->unk1E) * 0x28000) >> 0xC;
+        self->accelerationY = (rsin(self->unk1E) * 0x28000) >> 0xC;
+        self->palette = 0x81B6;
+        self->unk1E -= 0x400;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_8018136C, self);
+        break;
+    }
+}
 
 // large red projectile from gaibon
 void EntityLargeGaibonProjectile(Entity* self) {
@@ -412,7 +440,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(&D_80181378, self);
+        AnimateEntity(D_80181378, self);
         if (!(g_blinkTimer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -427,7 +455,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 2:
         self->unk6C += 0xFE;
         self->unk1A -= 4;
-        if (AnimateEntity(&D_80181388, self) == 0) {
+        if (AnimateEntity(D_80181388, self) == 0) {
             DestroyEntity(self);
         }
         break;
