@@ -47,25 +47,18 @@ void func_801A7D64(Entity* arg0) {
     AnimateEntity(temp_s0->unk10, arg0);
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A7E2C);
-#else
-bool func_801A7E2C(Entity* entity) {
-    s16 distance;
+bool func_801A7E2C(Entity* self) {
+    s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
 
-    distance = PLAYER.posX.i.hi - entity->posX.i.hi;
-    if (distance < 0) {
-        distance = -distance;
+    diffX = ABS(diffX);
+    if (self->hitboxWidth >= diffX) {
+        diffX = PLAYER.posY.i.hi - self->posY.i.hi;
+        diffX = ABS(diffX);
+        return (self->hitboxHeight >= diffX);
+    } else {
+        return false;
     }
-    if (entity->hitboxWidth >= distance) {
-        if ((s16)(PLAYER.posY.i.hi - entity->posY.i.hi) < 0) {
-            return true;
-        }
-    }
-
-    return false;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityLockCamera);
