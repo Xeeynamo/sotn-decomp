@@ -149,7 +149,7 @@ void EntityMoveableBox(Entity* self) {
         func_801BCF74(&D_80180EB8);
 
         if (self->subId == 0) {
-            temp_v0_2 = self->posX.i.hi + D_8007308E;
+            temp_v0_2 = self->posX.i.hi + g_Camera.posX.i.lo;
             var_v1 = temp_v0_2 - 0xC0;
             var_v1 = ABS(var_v1);
             var_v0 = temp_v0_2 - 0x100;
@@ -164,7 +164,7 @@ void EntityMoveableBox(Entity* self) {
             }
             self->unk84.unk = var_s1;
             if (var_s1 != 0) {
-                self->posY.i.hi = (448 - D_801CB736[var_s1]) - D_80073092;
+                self->posY.i.hi = (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
             }
         }
         break;
@@ -291,7 +291,7 @@ void EntityCannonShot(Entity* self) {
 
     case 1:
         MoveEntity();
-        if ((self->posX.i.hi + D_8007308E) < 112) {
+        if ((self->posX.i.hi + g_Camera.posX.i.lo) < 112) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -372,7 +372,6 @@ void func_801B2AD8(Entity* self) {
         poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
         poly->x0 = self->posX.i.hi - 8;
         poly->y0 = self->posY.i.hi - 8;
-        return;
     }
 }
 
@@ -611,11 +610,9 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    do { //! FAKE https://decomp.me/scratch/zysYC
-        entity->pfnUpdate = D_80180A90[entity->objectId];
-    } while (0);
-    entity->posX.i.hi = initDesc->posX - D_8007308E;
-    entity->posY.i.hi = initDesc->posY - (u16)D_80073092;
+    entity->pfnUpdate = D_80180A90[entity->objectId];
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;

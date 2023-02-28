@@ -923,8 +923,8 @@ void func_80169D74(Entity* entity) {
     }
     temp = entity->unk84;
     ptr = temp.unk + ((u16)entity->unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - D_8007308E;
-    entity->posY.i.hi = ptr[1] - D_80073092;
+    entity->posX.i.hi = ptr[0] - g_Camera.posX.i.lo;
+    entity->posY.i.hi = ptr[1] - g_Camera.posY.i.lo;
     entity->unk80.modeS16.unk0 = (entity->unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
