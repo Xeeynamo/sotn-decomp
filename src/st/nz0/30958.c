@@ -566,7 +566,7 @@ void func_801B3A50(Entity* self) {
         break;
 
     case 2:
-        CreateEntityFromEntity(0xC, self, &self[1]);
+        CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
         self[1].subId = D_80180F9C[self->subId];
         self->step++;
 
