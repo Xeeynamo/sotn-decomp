@@ -1973,7 +1973,8 @@ void EntityWarpRoom(Entity* entity) {
         *((u32*)D_80180648) = 0;
         entity->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << entity->subId);
-        if (((u32)((PLAYER.posX.i.hi + ((s16)g_Camera.posX.i.lo)) - 0x61)) < 0x3F) {
+        if (((u32)((PLAYER.posX.i.hi + ((s16)g_Camera.posX.i.lo)) - 0x61)) <
+            0x3F) {
             D_80072EFC = 0x10;
             *D_80072EF4 = 0;
             D_8003C8B8 = 0;
