@@ -6,6 +6,8 @@
 
 #include "stage.h"
 
+extern PfnEntityUpdate D_801803E0[];
+
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188DF0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188ED0);
@@ -54,7 +56,13 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C72C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C7E0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C854);
+void func_8018C854(u16 objectId, Entity* source, Entity* entity) {
+    func_8018D580(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_801803E0[objectId];
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C8D0);
 
