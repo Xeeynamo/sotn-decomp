@@ -270,8 +270,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&g_EntityArray[4].unkAC = g_Camera.posX.val;
-    *(u16*)&g_EntityArray[4].unkAE = g_Camera.posY.val;
+    *(u16*)&g_EntityArray[4].unkAC = g_Camera.posX.i.lo;
+    *(u16*)&g_EntityArray[4].unkAE = g_Camera.posY.i.lo;
 }
 #endif
 
