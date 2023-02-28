@@ -362,7 +362,7 @@ void func_801B2AD8(Entity* self) {
             D_80180EEC = 1;
         } else {
             self->posY.val += 0xFFFF0000;
-            if (((g_Camera.posY.i.lo) + self->posY.i.hi) < 372) {
+            if ((g_Camera.posY.i.lo + self->posY.i.hi) < 372) {
                 new_var = 372 - g_Camera.posY.i.lo;
                 self->posY.i.hi = new_var;
             }
