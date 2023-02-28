@@ -878,8 +878,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BCAD4);
 
 /*
- * Returns the absolute distance from g_CurrentEntity to player in the X
- * Axis
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
 s32 func_801BCBEC(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
@@ -891,8 +890,7 @@ s32 func_801BCBEC(void) {
 }
 
 /*
- * Returns the absolute distance from g_CurrentEntity to player in the Y
- * Axis
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
 s32 func_801BCC28(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
