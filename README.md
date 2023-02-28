@@ -124,3 +124,16 @@ The project is very barebone at the moment and there is a massive room of improv
 Be aware that not all the offsets have been yet redirected, so it will still be not entirely functional until further update.
 * I suspect that PSY-Q 3.5 have been used to originally compile the game
 * `main.exe` uses PS-X libraries that might have been created with a different compiler and with `-O1` rather than `-O2`
+
+## Special thanks
+
+This project is possible thanks to the hard work of tools provided by the Decompilation community:
+
+* [mips2c](https://github.com/matt-kempster/m2c) from @matt-kempster to decompile MIPS assembly into C. This proven to be more accurate than Hexrays IDA and Ghidra.
+* [splat](https://github.com/ethteck/splat) from @ethteck to disassemble code and extract data with a symbol map. This tool provides the fundamental of the SOTN decomp.
+* [asm-differ](https://github.com/simonlindholm/asm-differ) from @simonlindholm to know how the decompiled code compares to the original binary.
+* [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) from @simonlindholm to pick different versions of the same code that better matches the original binary.
+* [decomp.me](https://github.com/decompme/decomp.me/) by @ethteck, @nanaian and @mkst to provide a collaborative decompilation site to share and contribute to work-in-progress decompiled functions.
+* [frogress](https://github.com/decompals/frogress) by @ethteck to store and retrieve progression data.
+* [esa-new](https://github.com/mkst/esa-new) by @mkst as an inspiration on how to set-up a PS1 decompilation project.
+* [oot](https://github.com/zeldaret/oot) as an inspiration of what it is possible to achieve with a complete disassembled video game.
