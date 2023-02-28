@@ -34,7 +34,7 @@ void func_801027C4(u32 arg0) {
         poly1->clut = 0;
         D_801379A4 = 1;
         D_801379A4 = arg0 + D_801379A4;
-        return;
+        break;
     case 4:
         poly1->x1 = 0xFF;
         poly1->clut = 1;
@@ -53,7 +53,7 @@ void func_801027C4(u32 arg0) {
         poly2->pad3 = 0xD1U;
         poly1->pad3 = 0xD1;
     default:
-        return;
+        break;
     }
 }
 
