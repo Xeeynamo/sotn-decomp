@@ -425,7 +425,6 @@ void EntityCannonShot(Entity* self) {
 
     case 1:
         MoveEntity();
-        if ((self->posX.i.hi + g_Camera.posX.i.lo) < 112) {
             if ((self->posX.i.hi + g_Camera.posX.i.lo) < 112) {
                 g_api.func_80102CD8(1);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -437,8 +436,8 @@ void EntityCannonShot(Entity* self) {
                 DestroyEntity(self);
             }
             break;
-        }
     }
+}
 
     INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
 
