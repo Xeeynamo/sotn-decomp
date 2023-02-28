@@ -314,7 +314,7 @@ void func_801B2AD8(Entity* self) {
     int var_a0;
     int new_var;
     s32 var_v0;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
@@ -351,7 +351,7 @@ void func_801B2AD8(Entity* self) {
         if (ABS(var_v0) < 8) {
             var_a0 |= 0x8000;
         }
-        
+
         if (var_a0 != 0) {
             self->posY.val += 0x10000;
             if ((g_Camera.posY.i.lo + self->posY.i.hi) > 376) {
