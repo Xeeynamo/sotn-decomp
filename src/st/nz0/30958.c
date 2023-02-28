@@ -545,7 +545,36 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3648);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B37C0);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3A50);
+void func_801B3A50(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CDC);
+        self->zPriority = 0x6A;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 16;
+        self->unk12 = -0xA;
+        self->unk10 = 0;
+        self->unk3C = 2;
+
+    case 1:
+        AnimateEntity(D_80180F88, self);
+        if (self->unk48 != 0) {
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            self->unk3C = 0;
+            func_801BD52C(2);
+        }
+        break;
+
+    case 2:
+        CreateEntityFromEntity(0xC, self, &self[1]);
+        self[1].subId = D_80180F9C[self->subId];
+        self->step++;
+
+    case 3:
+        self->animCurFrame = 18;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3B78);
 

@@ -29,6 +29,8 @@ extern ObjInit2 D_80180D64[];
 extern s32 D_80180EB4;
 extern s32 D_80180EEC;
 extern u16 D_80180F10[];
+extern u8 D_80180F88[];
+extern u16 D_80180F9C[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
@@ -74,6 +76,7 @@ extern s16 D_801820E4[];
 extern const u16 D_80180C04[];
 extern u8 D_801825F0;
 extern s32 D_80180C70;
+extern u16 D_80180CDC[];
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern s8 D_801B058C; // "charal %x\n"
