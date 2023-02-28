@@ -243,11 +243,9 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    do { //! FAKE https://decomp.me/scratch/zysYC
-        entity->pfnUpdate = D_801803C4[entity->objectId];
-    } while (0);
-    entity->posX.i.hi = initDesc->posX - D_8007308E;
-    entity->posY.i.hi = initDesc->posY - (u16)D_80073092;
+    entity->pfnUpdate = D_801803C4[entity->objectId];
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
@@ -315,7 +313,7 @@ void func_80199554(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = D_8007308E;
+        s16 tmp = g_Camera.posX.i.lo;
         if (D_80097908 > 0) {
             func_80198F18(tmp + 0x140);
         } else {

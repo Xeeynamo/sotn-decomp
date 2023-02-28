@@ -119,6 +119,11 @@ typedef union {
 #include "unkstruct.h"
 
 typedef struct {
+    f32 posX;
+    f32 posY;
+} Camera;
+
+typedef struct {
     unsigned char width;
     unsigned char height;
     unsigned short unk2;
@@ -828,8 +833,9 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
-extern s16 D_8007308E; // camera X
-extern s16 D_80073092; // camera Y
+extern Camera g_Camera;
+extern s16 D_8007308E; // g_Camera.posX.i.lo
+extern s16 D_80073092; // g_Camera.posY.i.lo
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
 extern s32 D_800730AC;          // g_CurrentRoom.unk8
