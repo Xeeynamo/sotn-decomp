@@ -148,7 +148,77 @@ void func_801B1C18(Entity* self) {
     poly->y0 = self->posY.i.hi - 8;
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
+void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
+    POLY_GT4* poly;
+    s8 var_v1;
+    s32 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->unk42 = 1;
+        self->unk40 = 7;
+        self->unk3C = 1;
+
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 40;
+        poly->v0 = 200;
+        poly->u1 = 32;
+        poly->v1 = 32;
+        poly->pad2 = 0x5F;
+        poly->pad3 = 2;
+
+        if (self->subId & D_80180EB4) {
+            self->posY.i.hi = 480 - g_Camera.posY.i.lo;
+            self->unk88.S8.unk0 = 1;
+        } else {
+            self->posY.i.hi = 452 - g_Camera.posY.i.lo;
+            self->unk88.S8.unk0 = 0;
+        }
+
+    case 1:
+        if (self->subId & D_80180EB4) {
+            self->posY.val += 0x10000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp > 480) {
+                self->posY.i.hi = 480 - g_Camera.posY.i.lo;
+            }
+            var_v1 = 1;
+        } else {
+            self->posY.val += 0xFFFF0000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp < 452) {
+                self->posY.i.hi = 452 - g_Camera.posY.i.lo;
+                self->step = 1;
+            }
+            var_v1 = 0;
+        }
+
+        if (self->unk88.U8.unk0 != var_v1) {
+            self->unk88.U8.unk0 = var_v1;
+            func_801C29B0(0x69D);
+        }
+    }
+
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly->x0 = self->posX.i.hi - 16;
+    poly->y0 = self->posY.i.hi - 16;
+    temp = 480 - (g_Camera.posY.i.lo + self->posY.i.hi);
+    D_801CB736[self->subId] = temp;
+}
 
 // moveable box for spike/switch areas
 void EntityMoveableBox(Entity* self) {
