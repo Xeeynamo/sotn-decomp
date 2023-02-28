@@ -21,6 +21,7 @@ extern u16 D_80180C1C[];
 extern u16 D_80180C34[];
 extern u16 D_80180C88[];
 extern u16 D_80180CC4[];
+extern s32 D_80180EEC;
 extern u16 D_80180D24[];
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];

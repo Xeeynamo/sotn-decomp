@@ -297,6 +297,8 @@ void EntityMoveableBox(Entity* self) {
             if (var_s1 != 0) {
                 self->posY.i.hi =
                     (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
+                self->posY.i.hi =
+                    (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
             }
         }
         break;
@@ -423,6 +425,7 @@ void EntityCannonShot(Entity* self) {
 
     case 1:
         MoveEntity();
+        if ((self->posX.i.hi + g_Camera.posX.i.lo) < 112) {
         if ((self->posX.i.hi + g_Camera.posX.i.lo) < 112) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -741,6 +744,9 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
+    entity->pfnUpdate = D_80180A90[entity->objectId];
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
     entity->pfnUpdate = D_80180A90[entity->objectId];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
