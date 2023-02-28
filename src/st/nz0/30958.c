@@ -164,7 +164,8 @@ void EntityMoveableBox(Entity* self) {
             }
             self->unk84.unk = var_s1;
             if (var_s1 != 0) {
-                self->posY.i.hi = (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
+                self->posY.i.hi =
+                    (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
             }
         }
         break;
