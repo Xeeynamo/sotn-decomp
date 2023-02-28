@@ -757,7 +757,7 @@ void func_801B6DE4(Entity* self) {
         self->unk12 = -0x16;
         self->hitboxWidth = 6;
         self->unk3C = 1;
-        
+
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
         if (firstPolygonIndex == (-1)) {
             DestroyEntity(self);
