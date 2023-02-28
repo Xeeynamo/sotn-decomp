@@ -85,7 +85,68 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B19A0);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1C18);
+void func_801B1C18(Entity* self) {
+    s32 temp_s1 = func_801BD9A0(self, 8, 8, 4);
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    Entity* player;
+    s32 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 72;
+        poly->v0 = 200;
+        poly->u1 = 16;
+        poly->v1 = 16;
+        poly->pad2 = 0x5F;
+        poly->pad3 = 2;
+
+    case 1:
+        if (temp_s1 != 0) {
+            player = &PLAYER;
+            player->posY.i.hi++;
+            self->posY.val += 0x10000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp > 468) {
+                self->posY.i.hi = 468 - g_Camera.posY.i.lo;
+                D_80180EB4 ^= self->subId;
+                self->step++;
+            }
+        }
+        break;
+
+    case 2:
+        if (temp_s1 == 0) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        self->posY.val += 0xFFFF0000;
+        temp = g_Camera.posY.i.lo + self->posY.i.hi;
+        if (temp < 464) {
+            self->posY.i.hi = 464 - g_Camera.posY.i.lo;
+            self->step = 1;
+        }
+        break;
+    }
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly->x0 = self->posX.i.hi - 8;
+    poly->y0 = self->posY.i.hi - 8;
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
 
@@ -150,9 +211,9 @@ void EntityMoveableBox(Entity* self) {
 
         if (self->subId == 0) {
             temp_v0_2 = self->posX.i.hi + g_Camera.posX.i.lo;
-            var_v1 = temp_v0_2 - 0xC0;
+            var_v1 = temp_v0_2 - 192;
             var_v1 = ABS(var_v1);
-            var_v0 = temp_v0_2 - 0x100;
+            var_v0 = temp_v0_2 - 256;
             var_v0 = ABS(var_v0);
             var_s1 = 24 > var_v1;
             if (var_v0 < 24) {
@@ -309,12 +370,11 @@ void EntityCannonShot(Entity* self) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
 
 void func_801B2AD8(Entity* self) {
-    volatile int pad[3];
-    POLY_GT4* poly;
     s16 firstPolygonIndex;
-    int var_a0;
-    int new_var;
+    POLY_GT4* poly;
     s32 var_v0;
+    s32 var_a0;
+    s32 temp;
 
     switch (self->step) {
     case 0:
@@ -333,7 +393,7 @@ void func_801B2AD8(Entity* self) {
         }
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        (POLY_GT4*)*((s32*)(&self->unk7C)) = poly;
+        *((s32*)(&self->unk7C)) = poly;
         self->unk34 |= 0x800000;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -355,16 +415,16 @@ void func_801B2AD8(Entity* self) {
 
         if (var_a0 != 0) {
             self->posY.val += 0x10000;
-            if ((g_Camera.posY.i.lo + self->posY.i.hi) > 376) {
-                new_var = 376 - g_Camera.posY.i.lo;
-                self->posY.i.hi = new_var;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp > 376) {
+                self->posY.i.hi = 376 - g_Camera.posY.i.lo;
             }
             D_80180EEC = 1;
         } else {
             self->posY.val += 0xFFFF0000;
-            if ((g_Camera.posY.i.lo + self->posY.i.hi) < 372) {
-                new_var = 372 - g_Camera.posY.i.lo;
-                self->posY.i.hi = new_var;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp < 372) {
+                self->posY.i.hi = 372 - g_Camera.posY.i.lo;
             }
             D_80180EEC = 0;
         }
