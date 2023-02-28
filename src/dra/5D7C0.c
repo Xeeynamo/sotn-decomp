@@ -542,7 +542,46 @@ void func_8010189C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_80101A80);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_801024DC);
+void func_801024DC(void) {
+    POLY_GT4* temp_v1;
+    POLY_GT4* var_v1;
+    s32 temp_v0_2;
+    s32 var_a0;
+    u32 temp_v0;
+    temp_v0 = AllocPolygons(1, 4);
+    D_8013799C = temp_v0;
+    var_v1 = &D_80086FEC[temp_v0];
+    var_a0 = 0;
+    if (var_v1 != 0) {
+        do {
+            var_v1->x0 = (var_a0 & 1) << 7;
+            var_v1->u0 = 0x80;
+            var_v1->v0 = 0xF0;
+            var_v1->pad2 = 0x1FD;
+            var_v1->pad3 = 8;
+            var_v1 = (POLY_GT4*)var_v1->tag;
+            var_a0 += 1;
+        } while (var_v1 != 0);
+    }
+    D_801379A8 = 0;
+    D_801379A4 = 0;
+    temp_v0_2 = AllocPolygons(4, 1);
+    temp_v1 = &D_80086FEC[temp_v0_2];
+    D_801379A0 = temp_v0_2;
+    temp_v1->u1 = 0xFF;
+    temp_v1->v2 = 0xFF;
+    temp_v1->u3 = 0xFF;
+    temp_v1->v3 = 0xFF;
+    temp_v1->tpage = 0x1D;
+    temp_v1->clut = 0x1C0;
+    temp_v1->pad2 = 0x1FE;
+    temp_v1->u0 = 0;
+    temp_v1->v0 = 0;
+    var_v1 = temp_v1;
+    var_v1->v1 = 0;
+    var_v1->u2 = 0;
+    var_v1->pad3 = 8;
+}
 
 extern Unkstruct_80086FFA D_80086FFA[];
 
