@@ -85,9 +85,140 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B19A0);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1C18);
+void func_801B1C18(Entity* self) {
+    s32 temp_s1 = func_801BD9A0(self, 8, 8, 4);
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    Entity* player;
+    s32 temp;
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1E54);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 72;
+        poly->v0 = 200;
+        poly->u1 = 16;
+        poly->v1 = 16;
+        poly->pad2 = 0x5F;
+        poly->pad3 = 2;
+
+    case 1:
+        if (temp_s1 != 0) {
+            player = &PLAYER;
+            player->posY.i.hi++;
+            self->posY.val += 0x10000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp > 468) {
+                self->posY.i.hi = 468 - g_Camera.posY.i.lo;
+                D_80180EB4 ^= self->subId;
+                self->step++;
+            }
+        }
+        break;
+
+    case 2:
+        if (temp_s1 == 0) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        self->posY.val += 0xFFFF0000;
+        temp = g_Camera.posY.i.lo + self->posY.i.hi;
+        if (temp < 464) {
+            self->posY.i.hi = 464 - g_Camera.posY.i.lo;
+            self->step = 1;
+        }
+        break;
+    }
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly->x0 = self->posX.i.hi - 8;
+    poly->y0 = self->posY.i.hi - 8;
+}
+
+void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
+    POLY_GT4* poly;
+    s8 var_v1;
+    s32 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->unk42 = 1;
+        self->unk40 = 7;
+        self->unk3C = 1;
+
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+        self->unk34 |= 0x800000;
+        poly->code = 6;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 40;
+        poly->v0 = 200;
+        poly->u1 = 32;
+        poly->v1 = 32;
+        poly->pad2 = 0x5F;
+        poly->pad3 = 2;
+
+        if (self->subId & D_80180EB4) {
+            self->posY.i.hi = 480 - g_Camera.posY.i.lo;
+            self->unk88.S8.unk0 = 1;
+        } else {
+            self->posY.i.hi = 452 - g_Camera.posY.i.lo;
+            self->unk88.S8.unk0 = 0;
+        }
+
+    case 1:
+        if (self->subId & D_80180EB4) {
+            self->posY.val += 0x10000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp > 480) {
+                self->posY.i.hi = 480 - g_Camera.posY.i.lo;
+            }
+            var_v1 = 1;
+        } else {
+            self->posY.val += 0xFFFF0000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp < 452) {
+                self->posY.i.hi = 452 - g_Camera.posY.i.lo;
+                self->step = 1;
+            }
+            var_v1 = 0;
+        }
+
+        if (self->unk88.U8.unk0 != var_v1) {
+            self->unk88.U8.unk0 = var_v1;
+            func_801C29B0(0x69D);
+        }
+    }
+
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly->x0 = self->posX.i.hi - 16;
+    poly->y0 = self->posY.i.hi - 16;
+    temp = 480 - (g_Camera.posY.i.lo + self->posY.i.hi);
+    D_801CB736[self->subId] = temp;
+}
 
 // moveable box for spike/switch areas
 void EntityMoveableBox(Entity* self) {
@@ -150,9 +281,9 @@ void EntityMoveableBox(Entity* self) {
 
         if (self->subId == 0) {
             temp_v0_2 = self->posX.i.hi + g_Camera.posX.i.lo;
-            var_v1 = temp_v0_2 - 0xC0;
+            var_v1 = temp_v0_2 - 192;
             var_v1 = ABS(var_v1);
-            var_v0 = temp_v0_2 - 0x100;
+            var_v0 = temp_v0_2 - 256;
             var_v0 = ABS(var_v0);
             var_s1 = 24 > var_v1;
             if (var_v0 < 24) {
@@ -309,12 +440,11 @@ void EntityCannonShot(Entity* self) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
 
 void func_801B2AD8(Entity* self) {
-    volatile int pad[3];
-    POLY_GT4* poly;
     s16 firstPolygonIndex;
-    int var_a0;
-    int new_var;
+    POLY_GT4* poly;
     s32 var_v0;
+    s32 var_a0;
+    s32 temp;
 
     switch (self->step) {
     case 0:
@@ -333,7 +463,7 @@ void func_801B2AD8(Entity* self) {
         }
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        (POLY_GT4*)*((s32*)(&self->unk7C)) = poly;
+        *((s32*)(&self->unk7C)) = poly;
         self->unk34 |= 0x800000;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -355,16 +485,16 @@ void func_801B2AD8(Entity* self) {
 
         if (var_a0 != 0) {
             self->posY.val += 0x10000;
-            if ((g_Camera.posY.i.lo + self->posY.i.hi) > 376) {
-                new_var = 376 - g_Camera.posY.i.lo;
-                self->posY.i.hi = new_var;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp > 376) {
+                self->posY.i.hi = 376 - g_Camera.posY.i.lo;
             }
             D_80180EEC = 1;
         } else {
             self->posY.val += 0xFFFF0000;
-            if ((g_Camera.posY.i.lo + self->posY.i.hi) < 372) {
-                new_var = 372 - g_Camera.posY.i.lo;
-                self->posY.i.hi = new_var;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp < 372) {
+                self->posY.i.hi = 372 - g_Camera.posY.i.lo;
             }
             D_80180EEC = 0;
         }
@@ -415,9 +545,56 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3648);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B37C0);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3A50);
+void func_801B3A50(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CDC);
+        self->zPriority = 0x6A;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 16;
+        self->unk12 = -0xA;
+        self->unk10 = 0;
+        self->unk3C = 2;
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3B78);
+    case 1:
+        AnimateEntity(D_80180F88, self);
+        if (self->unk48 != 0) {
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            self->unk3C = 0;
+            func_801BD52C(2);
+        }
+        break;
+
+    case 2:
+        CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+        self[1].subId = D_80180F9C[self->subId];
+        self->step++;
+
+    case 3:
+        self->animCurFrame = 18;
+        break;
+    }
+}
+
+void func_801B3B78() {
+    Entity* entity;
+    s16 temp_s3;
+    s32 i;
+    s8 temp_s4;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
+            entity->subId = 2;
+            entity->unk88.S8.unk1 = 6 - i;
+            entity->unk84.S16.unk0 = temp_s3;
+            entity->unk88.S8.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
 
@@ -566,7 +743,73 @@ void EntityLargeGaibonProjectile(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B6DE4);
+void func_801B6DE4(Entity* self) {
+    s32 temp_s1 = self->unk48;
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.lo;
+        self->hitboxHeight = 8;
+        self->unk12 = -0x16;
+        self->hitboxWidth = 6;
+        self->unk3C = 1;
+
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+
+        self->unk34 |= 0x800000;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 72;
+        poly->v0 = 200;
+        poly->u1 = 16;
+        poly->v1 = 16;
+        poly->pad2 = 0x5F;
+        poly->code = 6;
+        poly->pad3 = 2;
+
+    case 1:
+        if (temp_s1 != 0) {
+            self->posY.val += 0x10000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if ((self->unk80.modeS32 + 4) < temp) {
+                self->posY.i.hi =
+                    (u16)(self->unk80.modeS16.unk0 - (g_Camera.posY.i.lo - 4));
+                self->step++;
+                func_801C29B0(0x676);
+                D_801813A4 = self->subId;
+            }
+        }
+        break;
+
+    case 2:
+        if (temp_s1 == 0) {
+            self->posY.val += 0xFFFF0000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp < self->unk80.modeS32) {
+                self->posY.i.hi =
+                    (u16)(self->unk80.modeS16.unk0) - g_Camera.posY.i.lo;
+                self->step = 1;
+            }
+        }
+        break;
+    }
+
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly->x0 = ((u16)self->posX.i.hi) - 8;
+    poly->y0 = (u16)self->posY.i.hi;
+    poly->y0 = poly->y0 - 8;
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7034);
 
