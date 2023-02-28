@@ -297,8 +297,6 @@ void EntityMoveableBox(Entity* self) {
             if (var_s1 != 0) {
                 self->posY.i.hi =
                     (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
-                self->posY.i.hi =
-                    (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
             }
         }
         break;
@@ -743,9 +741,6 @@ void EntityCannonShot(Entity* self) {
     void CreateEntityFromLayout(Entity * entity, LayoutObject * initDesc) {
         DestroyEntity(entity);
         entity->objectId = initDesc->objectId & 0x3FF;
-        entity->pfnUpdate = D_80180A90[entity->objectId];
-        entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
-        entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
         entity->pfnUpdate = D_80180A90[entity->objectId];
         entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
         entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
