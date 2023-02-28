@@ -112,7 +112,6 @@ init_entity:
 void func_8017160C(s32 amount, s32 objectId) {
     s32 i;
     Entity* entity;
-    s16* camera;
     s16 facing;
 
     if (amount > 3) {
@@ -121,7 +120,6 @@ void func_8017160C(s32 amount, s32 objectId) {
 
     for (i = 0; i < amount; i++) {
         entity = &g_EntityArray[5 + i];
-        camera = &D_8007308E;
         if (entity->objectId == objectId) {
             entity->step = 0;
         } else {
@@ -135,8 +133,8 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->subId = i + 1;
             entity->facing = facing;
         }
-        *((s16*)(&entity->unkAC)) = camera[0];
-        *((s16*)(&entity->unkAE)) = camera[2];
+        *((s16*)(&entity->unkAC)) = g_Camera.posX.i.lo;
+        *((s16*)(&entity->unkAE)) = g_Camera.posY.i.lo;
     }
 }
 
@@ -204,6 +202,7 @@ void func_801718A0(Entity* entity) {
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
+// https://decomp.me/scratch/i7uUy
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80171ED4);
 #else
@@ -271,8 +270,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    g_EntityArray[4].unkAC = (u16)D_8007308E;
-    g_EntityArray[4].unkAE = (u16)D_80073092;
+    *(u16*)&g_EntityArray[4].unkAC = g_Camera.posX.i.lo;
+    *(u16*)&g_EntityArray[4].unkAE = g_Camera.posY.i.lo;
 }
 #endif
 

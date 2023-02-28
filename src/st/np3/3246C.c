@@ -157,8 +157,8 @@ void EntityClickSwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += 0xC000;
-            if ((D_80073092 + entity->posY.i.hi) > 160) {
-                entity->posY.i.hi = 160 - D_80073092;
+            if ((g_Camera.posY.i.lo + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - g_Camera.posY.i.lo;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
                 *D_8003BE1D = 1;
                 entity->step++;
@@ -347,11 +347,9 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    do {
-        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    } while (0);
-    entity->posX.i.hi = initDesc->posX - D_8007308E;
-    entity->posY.i.hi = initDesc->posY - D_80073092;
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
