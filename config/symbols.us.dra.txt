@@ -960,3 +960,4 @@ g_sfxRingBufferPos1 = 0x80139000;
 g_sfxRingBuffer1 = 0x801390DC;
 g_sfxRingBufferPos2 = 0x80139A70;
 g_sfxRingBuffer2 = 0x8013B3E8;
+jpt_80102810 = 0x80102810;
