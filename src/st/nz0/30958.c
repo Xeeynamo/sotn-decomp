@@ -576,7 +576,25 @@ void func_801B3A50(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3B78);
+void func_801B3B78() {
+    Entity* entity;
+    s16 temp_s3;
+    s32 i;
+    s8 temp_s4;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
+            entity->subId = 2;
+            entity->unk88.S8.unk1 = 6 - i;
+            entity->unk84.S16.unk0 = temp_s3;
+            entity->unk88.S8.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
 
