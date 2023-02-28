@@ -743,7 +743,73 @@ void EntityLargeGaibonProjectile(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B6DE4);
+void func_801B6DE4(Entity* self) {
+    s32 temp_s1 = self->unk48;
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.lo;
+        self->hitboxHeight = 8;
+        self->unk12 = -0x16;
+        self->hitboxWidth = 6;
+        self->unk3C = 1;
+        
+        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        if (firstPolygonIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+
+        self->unk34 |= 0x800000;
+        poly->tpage = 0xF;
+        poly->clut = 9;
+        poly->u0 = 72;
+        poly->v0 = 200;
+        poly->u1 = 16;
+        poly->v1 = 16;
+        poly->pad2 = 0x5F;
+        poly->code = 6;
+        poly->pad3 = 2;
+
+    case 1:
+        if (temp_s1 != 0) {
+            self->posY.val += 0x10000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if ((self->unk80.modeS32 + 4) < temp) {
+                self->posY.i.hi =
+                    (u16)(self->unk80.modeS16.unk0 - (g_Camera.posY.i.lo - 4));
+                self->step++;
+                func_801C29B0(0x676);
+                D_801813A4 = self->subId;
+            }
+        }
+        break;
+
+    case 2:
+        if (temp_s1 == 0) {
+            self->posY.val += 0xFFFF0000;
+            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            if (temp < self->unk80.modeS32) {
+                self->posY.i.hi =
+                    (u16)(self->unk80.modeS16.unk0) - g_Camera.posY.i.lo;
+                self->step = 1;
+            }
+        }
+        break;
+    }
+
+    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly->x0 = ((u16)self->posX.i.hi) - 8;
+    poly->y0 = (u16)self->posY.i.hi;
+    poly->y0 = poly->y0 - 8;
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7034);
 
