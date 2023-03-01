@@ -1020,7 +1020,15 @@ void func_801B74CC(void) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7520);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B76E4);
+void func_801B76E4(s16 arg0) {
+    RECT rect;
+
+    rect.y = (arg0 * 12) + 384;
+    rect.w = 64;
+    rect.x = 0;
+    rect.h = 12;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7740);
 
