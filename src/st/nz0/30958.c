@@ -1610,18 +1610,18 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->step = 0;
 }
 
-// https://decomp.me/scratch/W8pIb branch problem, probably aspsx
+// aspatch skips a nop, ASPSX
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BDD9C);
 #else
 void func_801BDD9C(void) {
     if (g_CurrentEntity->accelerationY >= 0) {
-        g_CurrentEntity->unk84.value += g_CurrentEntity->unk88;
-        g_CurrentEntity->accelerationX = g_CurrentEntity->unk84.value;
+        g_CurrentEntity->unk84.unk += g_CurrentEntity->unk88.S16.unk0;
+        g_CurrentEntity->accelerationX = g_CurrentEntity->unk84.unk;
 
         if ((g_CurrentEntity->accelerationX == 0x10000) ||
             (g_CurrentEntity->accelerationX == -0x10000)) {
-            g_CurrentEntity->unk88 = -g_CurrentEntity->unk88;
+            g_CurrentEntity->unk88.U16.unk0 = -g_CurrentEntity->unk88.U16.unk0;
         }
     }
 
