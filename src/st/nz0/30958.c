@@ -154,8 +154,6 @@ void func_801B19A0(Entity* self) {
             self->accelerationY = -self->accelerationY;
             self->accelerationY *= 2;
             self->accelerationY /= 3;
-        } else {
-            break;
         }
     }
 }
