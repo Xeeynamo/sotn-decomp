@@ -832,7 +832,49 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7C54);
 // cutscene where alucard and maria discuss castle changing
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityMariaCutscene);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B8E0C);
+void func_801B8E0C(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BEC);
+        D_8003C8B8 = 0;
+        *D_80097400 = 1;
+        *D_80072EF4 = 0x8000;
+        if (D_80072F2C & 4) {
+            *D_80072EF4 = 2;
+        }
+        D_80072EFC = 1;
+        break;
+
+    case 1:
+        if (PLAYER.posX.i.hi < 176) {
+            *D_80072EF4 = 0;
+            self->step++;
+        } else {
+            *D_80072EF4 = 0;
+            if (D_80072F2C & 4) {
+                if (g_blinkTimer & 1) {
+                    *D_80072EF4 = 2;
+                }
+            } else {
+                *D_80072EF4 = 0x8000;
+            }
+        }
+        D_80072EFC = 1;
+        break;
+
+    case 2:
+        if (D_801CB734 & 0x2000) {
+            D_8003C8B8 = 1;
+            if (*D_80097400 != 0) {
+                *D_80097400 = 0;
+            }
+            DestroyEntity(self);
+        }
+        *D_80072EF4 = 0;
+        D_80072EFC = 1;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B8F94);
 

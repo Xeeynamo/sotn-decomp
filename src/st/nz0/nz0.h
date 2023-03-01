@@ -16,6 +16,7 @@ void func_801C4CC0(void);
 extern u8 D_8003BE6F;
 extern PfnEntityUpdate D_80180A90[];
 extern const u16 D_80180BE0[];
+extern u16 D_80180BEC[];
 extern u16 D_80180BF8[];
 extern u16 D_80180C1C[];
 extern u16 D_80180C34[];
@@ -81,4 +82,5 @@ extern u16 D_80180CDC[];
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern s8 D_801B058C; // "charal %x\n"
+extern s32 D_801CB734;
 extern u16 D_801CB736[];
