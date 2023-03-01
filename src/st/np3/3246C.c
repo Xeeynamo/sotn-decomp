@@ -246,9 +246,7 @@ void func_801B75EC(Entity* self) {
             if (!(self->unk1E & 0xFFF)) {
                 func_801C2598(0x625);
             }
-            break;
         }
-        break;
     }
 }
 
