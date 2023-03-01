@@ -614,7 +614,48 @@ void EntityTableWithGlobe(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3648);
+void func_801B3648(Entity* self) {
+    Entity* newEntity;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CD0);
+        self->zPriority = 0x6A;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 12;
+        self->unk12 = -0xA;
+        self->unk10 = 0;
+        self->unk3C = 2;
+
+    case 1:
+        AnimateEntity(D_80180F1C, self);
+        if (self->unk48 != 0) {
+            func_801C29B0(0x619);
+            self->unk3C = 0;
+            func_801BD52C(2);
+        }
+        break;
+
+    case 2:
+        if (AnimateEntity(&D_80180F30, self) == 0) {
+            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+            self[1].subId = D_80180F4C[self->subId];
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                newEntity->subId = 2;
+                newEntity->posY.i.hi -= 8;
+            }
+            self->step++;
+        }
+        break;
+
+    case 3:
+        newEntity = self;
+        newEntity->animCurFrame = 20;
+        break;
+    }
+}
 
 void func_801B37C0(Entity* self) {
     Entity* newEntity;
