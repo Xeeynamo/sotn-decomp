@@ -3372,6 +3372,7 @@ void func_8018F510(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018F620);
 
+// https://decomp.me/scratch/peM5t by stuckpixel
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018F750);
 #else

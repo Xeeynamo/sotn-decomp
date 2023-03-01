@@ -1704,8 +1704,7 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-// https://decomp.me/scratch/2vxD2
-// https://decomp.me/scratch/peM5t by stuckpixel
+// https://decomp.me/scratch/gto6i
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BE0D8);
 
 void CollectHeartVessel(void) {
