@@ -96,5 +96,8 @@ extern s16 D_801CB696;
 extern s16 D_801CB69A;
 extern s8 D_801CB69E;
 extern s8 D_801CB69F;
+extern s16 D_801CB6C4;
+extern s16 D_801CB6C6;
+extern s32 D_801CB6C8;
 extern s32 D_801CB734;
 extern u16 D_801CB736[];

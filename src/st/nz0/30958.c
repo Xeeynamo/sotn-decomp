@@ -1034,7 +1034,11 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7740);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B77F8);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B797C);
+void func_801B797C(s32 arg0) {
+    D_801CB6C8 = arg0 + 0x100000;
+    D_801CB6C6 = 0;
+    D_801CB6C4 = 1;
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B79A8);
 
