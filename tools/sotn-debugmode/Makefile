@@ -1,6 +1,7 @@
 .SECONDEXPANSION:
 .SECONDARY:
 
+VERSION			?= us
 MODULE_NAME		:= sotn-debugmode
 
 # Directories
@@ -10,7 +11,7 @@ SRC_DIR         := ../../src
 ASSETS_DIR      := ../../assets
 INCLUDE_DIR     := ../../include
 BUILD_DIR       := ../../build
-DISK_DIR        := ../../$(BUILD_DIR)/disk
+DISK_DIR        := ../../$(BUILD_DIR)/$(VERSION)/disk
 CONFIG_DIR      := ../../config
 TOOLS_DIR       := ../../tools
 
@@ -39,12 +40,11 @@ $(BUILD_DIR)/$(MODULE_NAME).bin: $(BUILD_DIR)/$(MODULE_NAME).elf
 	$(OBJCOPY) -O binary $< $@
 	printf '\x00' | dd of=$@ bs=1 seek=40959 count=1 conv=notrunc
 
-$(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o
+$(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o $(BUILD_DIR)/tools/%/dra_800FD874.o
 	$(LD) -o $@ \
 	-Map $*.map \
 	-T $*.ld \
-	-T $(CONFIG_DIR)/symbols.txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.stwrp.txt \
+	-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
 	--no-check-sections \
 	-nostdlib \
 	-s

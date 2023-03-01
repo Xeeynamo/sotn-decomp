@@ -249,10 +249,10 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
-disk_debug: disk_prepare $(BUILD_DIR)/sotn-debugmode.bin
-	cp $(BUILD_DIR)/sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
+disk_debug: disk_prepare $(BUILD_DIR)/../sotn-debugmode.bin
+	cp $(BUILD_DIR)/../sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
-$(BUILD_DIR)/sotn-debugmode.bin:
+$(BUILD_DIR)/../sotn-debugmode.bin:
 	cd tools/sotn-debugmode && make
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
