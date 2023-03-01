@@ -3,6 +3,10 @@
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
+s32 func_801BB45C(s16);
+s32 func_801BB558(s16);
+s32 func_801BB710(s16);
+s32 func_801BB80C(s16);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(s32*, s32);

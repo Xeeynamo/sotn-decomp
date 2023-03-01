@@ -1236,9 +1236,25 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB80C);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB920);
 
-// TODO: try after resolving aspsx
-// https://decomp.me/scratch/cJ3CF
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BBA98);
+void func_801BBA98(void) {
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+
+    if (D_80097908 != 0) {
+        s16 tmp = g_Camera.posX.i.lo;
+        if (D_80097908 > 0)
+            func_801BB45C(tmp + 320);
+        else
+            func_801BB558(tmp - 64);
+    }
+
+    if (D_8009790C != 0) {
+        s16 tmp = currentRoomTileLayout->unkE;
+        if (D_8009790C > 0)
+            func_801BB710(currentRoomTileLayout->unkE + 288);
+        else
+            func_801BB80C(tmp - 64);
+    }
+}
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
