@@ -794,7 +794,31 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCloseBossRoom);
 // blocks that move to close slogra/gaibon room
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBossRoomBlock);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B4690);
+s32 func_801B4690(void) {
+    s32 ret = 0;
+    s32 temp;
+
+    MoveEntity();
+    g_CurrentEntity->accelerationY += 0x4000;
+    temp = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.lo;
+
+    if ((g_CurrentEntity->accelerationX > 0) && (temp > 896)) {
+        g_CurrentEntity->posX.i.hi = 896 - g_Camera.posX.i.lo;
+    }
+
+    if ((g_CurrentEntity->accelerationX < 0) && (temp < 64)) {
+        g_CurrentEntity->posX.i.hi = 64 - g_Camera.posX.i.lo;
+    }
+
+    if ((g_CurrentEntity->posY.i.hi + g_Camera.posY.i.lo) > 416) {
+        ret = 1;
+        g_CurrentEntity->posY.i.hi = 416 - g_Camera.posY.i.lo;
+        g_CurrentEntity->accelerationX = 0;
+        g_CurrentEntity->accelerationY = 0;
+    }
+
+    return ret;
+}
 
 // slogra boss
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntitySlogra);
