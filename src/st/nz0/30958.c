@@ -1008,7 +1008,15 @@ void func_801B6DE4(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7034);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B74CC);
+void func_801B74CC(void) {
+    D_801CB694 = 2;
+    D_801CB692 = 2;
+    D_801CB696 = 0;
+    D_801CB69A = 0;
+    D_801CB69E = 0;
+    D_801CB69F = 8;
+    D_801CB68E = D_801CB690 + 0x14;
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7520);
 

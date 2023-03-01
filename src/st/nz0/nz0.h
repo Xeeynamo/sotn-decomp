@@ -88,5 +88,13 @@ extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern s8 D_801B058C; // "charal %x\n"
 extern s8 D_801B0598; // "charal %x\n"
+extern s16 D_801CB68E;
+extern u16 D_801CB690;
+extern s16 D_801CB692;
+extern s16 D_801CB694;
+extern s16 D_801CB696;
+extern s16 D_801CB69A;
+extern s8 D_801CB69E;
+extern s8 D_801CB69F;
 extern s32 D_801CB734;
 extern u16 D_801CB736[];
