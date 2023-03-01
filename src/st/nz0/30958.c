@@ -671,7 +671,7 @@ void func_801B37C0(Entity* self) {
         break;
 
     case 255:
-        FntPrint(&D_801B0598, self->animCurFrame);
+        FntPrint(&D_801B0598, self->animCurFrame); // "charal %x\n"
         if (D_80097498 & 0x80) {
             if (self->subId != 0) {
                 break;
