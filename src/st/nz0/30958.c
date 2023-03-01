@@ -83,7 +83,79 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B14C4);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B19A0);
+void func_801B19A0(Entity* self) {
+    CollisionResult collider;
+    Entity* newEntity;
+    s32 rnd;
+    s16 rnd2;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180C34);
+        self->unk19 = 4;
+
+        if (Random() & 1) {
+            self->animCurFrame = 1;
+        } else {
+            self->animCurFrame = 2;
+        }
+
+        rnd = (Random() & 0x1F) + 16;
+        rnd2 = ((Random() & 0x3F) * 16) | 0xC00;
+        if (self->subId != 0) {
+            self->animCurFrame = 3;
+            rnd = (Random() & 0x1F) + 16;
+            rnd2 = (Random() * 6) + 0x900;
+        }
+
+        self->accelerationX = rnd * rcos(rnd2);
+        self->accelerationY = rnd * rsin(rnd2);
+        if (self->accelerationX < 0) {
+            self->facing = 1;
+        }
+        
+    case 1:
+        MoveEntity();
+        self->unk1E += 0x20;
+        if (self->subId != 0) {
+            self->unk1E += 0x20;
+        }
+        
+        self->accelerationY += 0x2000;
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 6, &collider,
+                             0);
+        if (collider.unk0 & 1) {
+            self->posY.i.hi += collider.unk18;
+            if (self->subId == 0) {
+                func_801C29B0(0x644);
+                for (i = 0; i < 2; i++) {
+                    newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+                    if (newEntity != NULL) {
+                        CreateEntityFromEntity(0x22, self, newEntity);
+                        newEntity->subId = 0x1;
+                    }
+                }
+                DestroyEntity(self);
+                return;
+            }
+            if (self->accelerationY < 0x8000) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(ENTITY_INTENSE_EXPLOSION, self, newEntity);
+                    newEntity->subId = 0x10;
+                }
+                DestroyEntity(self);
+                return;
+            }
+            self->accelerationY = -self->accelerationY;
+            self->accelerationY *= 2;
+            self->accelerationY /= 3;
+        } else {
+            return;
+        }
+    }
+}
 
 void func_801B1C18(Entity* self) {
     s32 temp_s1 = func_801BD9A0(self, 8, 8, 4);
