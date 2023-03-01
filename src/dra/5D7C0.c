@@ -26,9 +26,9 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
 const u32 rodataPadding_800DCBD8 = 0;
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FD874);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", AddToInventory);
 #else
-void func_800FD874(u16 context, s32 arg1) {
+void AddToInventory(u16 itemId, s32 itemCategory) {
     u8* temp_a0_2;
     u8* temp_v0;
     u8 temp_a1;
@@ -38,16 +38,16 @@ void func_800FD874(u16 context, s32 arg1) {
     u16 i;
     s32 phi_a1;
     s32 phi_a1_2;
-    u8* cursorY = func_800FD744(arg1);
-    u8* temp_a3 = func_800FD760(arg1);
-    u16 temp_a2 = context & 0xFFFF;
+    u8* cursorY = func_800FD744(itemCategory);
+    u8* temp_a3 = func_800FD760(itemCategory);
+    u16 temp_a2 = itemId & 0xFFFF;
     u8* temp_a0 = temp_a3 + temp_a2;
     if (*temp_a0 < 0x63) {
         temp_a1 = *temp_a0;
         *temp_a0 = temp_a1 + 1;
         if (*temp_a0 == 1) {
             *temp_a0 = temp_a1;
-            if (arg1 != 0) {
+            if (itemCategory != 0) {
                 i = D_800A7734[temp_a2 << 5];
             }
             phi_a0 = cursorY;
@@ -67,16 +67,16 @@ void func_800FD874(u16 context, s32 arg1) {
                 phi_a1 += 1;
                 goto loop_8;
             }
-            if ((arg1 != 0) && (i != D_800A7734[temp_v1 << 5])) {
+            if ((itemCategory != 0) && (i != D_800A7734[temp_v1 << 5])) {
                 goto block_12;
             }
 
-            temp_v0 = temp_a3 + (context & 0xFFFF);
+            temp_v0 = temp_a3 + (itemId & 0xFFFF);
             *temp_v0 += 1;
             temp_a0_2 = &cursorY[phi_a1];
             if (phi_a1 < phi_a1_2) {
                 cursorY[phi_a1_2] = *temp_a0_2;
-                *temp_a0_2 = context;
+                *temp_a0_2 = itemId;
             }
         }
     }

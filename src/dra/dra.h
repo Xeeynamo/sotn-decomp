@@ -334,7 +334,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
-extern SfxRingBufferItem g_sfxRingBuffer1[]; //D_801390DC
+extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
@@ -491,7 +491,7 @@ u8* func_800FD744(s32 equipTypeFilter);
 u8* func_800FD760(s32 equipTypeFilter);
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_800FD874(u16 arg0, s32 arg1);
+void AddToInventory(u16 itemId, s32 itemCategory);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
 void func_800FDE00(void);
