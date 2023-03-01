@@ -137,7 +137,7 @@ void func_801B19A0(Entity* self) {
                     }
                 }
                 DestroyEntity(self);
-                return;
+                break;
             }
             if (self->accelerationY < 0x8000) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
@@ -146,13 +146,13 @@ void func_801B19A0(Entity* self) {
                     newEntity->subId = 0x10;
                 }
                 DestroyEntity(self);
-                return;
+                break;
             }
             self->accelerationY = -self->accelerationY;
             self->accelerationY *= 2;
             self->accelerationY /= 3;
         } else {
-            return;
+            break;
         }
     }
 }
