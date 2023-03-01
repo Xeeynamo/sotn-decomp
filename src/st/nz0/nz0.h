@@ -30,6 +30,8 @@ extern ObjInit2 D_80180D64[];
 extern s32 D_80180EB4;
 extern s32 D_80180EEC;
 extern u16 D_80180F10[];
+extern const u8 D_80180F50[];
+extern const u8 D_80180F74[];
 extern u8 D_80180F88[];
 extern u16 D_80180F9C[];
 extern u32 g_randomNext;
@@ -82,5 +84,6 @@ extern u16 D_80180CDC[];
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern s8 D_801B058C; // "charal %x\n"
+extern s8 D_801B0598; // "charal %x\n"
 extern s32 D_801CB734;
 extern u16 D_801CB736[];

@@ -616,7 +616,83 @@ void EntityTableWithGlobe(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3648);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B37C0);
+void func_801B37C0(Entity* self) {
+    Entity* newEntity;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CDC);
+        if (self->subId & 0x100) {
+            self->blendMode = 0x30;
+        } else {
+            self->zPriority = 0x6A;
+            self->hitboxWidth = 8;
+            self->hitboxHeight = 12;
+            self->unk12 = -0xA;
+            self->unk10 = 0;
+            self->unk3C = 2;
+            CreateEntityFromEntity(0x37, self, &self[1]);
+            self[1].subId = 0x100;
+        }
+
+    case 1:
+        if (self->subId & 0x100) {
+            AnimateEntity(D_80180F74, self);
+            break;
+        }
+        AnimateEntity(D_80180F50, self);
+        if (self->unk48 != 0) {
+            self->unk3C = 0;
+            func_801BD52C(2);
+        }
+        break;
+
+    case 2:
+        if (self->subId > 0x1) {
+            CreateEntityFromEntity(ENTITY_RELIC_ORB, self, &self[1]);
+        } else {
+            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+        }
+
+        self[1].subId = D_80180F9C[self->subId];
+        do { // !FAKE
+        } while (0);
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, self, newEntity);
+            newEntity->subId = 2;
+            newEntity->posY.i.hi -= 8;
+        }
+        func_801C29B0(0x61D);
+        self->step++;
+
+    case 3:
+        self->animCurFrame = 4;
+        break;
+
+    case 255:
+        FntPrint(&D_801B0598, self->animCurFrame);
+        if (D_80097498 & 0x80) {
+            if (self->subId != 0) {
+                break;
+            }
+            self->animCurFrame++;
+            self->subId |= 1;
+        } else {
+            self->subId = 0;
+        }
+        if (D_80097498 & 0x20) {
+            if (self->unk2E == 0) {
+                self->animCurFrame--;
+                self->unk2E |= 1;
+            }
+        } else {
+            newEntity = self;
+            newEntity->unk2E = 0;
+        }
+        break;
+    }
+}
 
 void func_801B3A50(Entity* self) {
     switch (self->step) {
