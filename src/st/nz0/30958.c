@@ -792,7 +792,59 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCloseBossRoom);
 
 // blocks that move to close slogra/gaibon room
+// assembler skips a nop
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBossRoomBlock);
+#else
+void EntityBossRoomBlock(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180D00);
+        self->animCurFrame = 8;
+
+    case 1:
+        if (D_80181010 & 1) {
+            self->unk80.modeS16.unk0 = 0x10;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->subId == 0) {
+            self->accelerationX = 0x10000;
+        } else {
+            self->accelerationX = -0x10000;
+        }
+        MoveEntity();
+        func_801BD9A0(self, 8, 8, 5);
+        if (!(g_blinkTimer & 3)) {
+            g_api.PlaySfx(0x608);
+        }
+        if (--self->unk80.modeS16.unk0) {
+            break;
+        }
+        self->step++;
+        break;
+
+    case 3:
+        func_801BD9A0(self, 8, 8, 5);
+        if (D_80181010 & 2) {
+            self->step++;
+        }
+        break;
+
+    case 4:
+        self->unk34 |= 0x80000000;
+        if (self->subId != 0) {
+            self->accelerationX = 0x10000;
+        } else {
+            self->accelerationX = -0x10000;
+        }
+        MoveEntity();
+        break;
+    }
+}
+#endif
 
 s32 func_801B4690(void) {
     s32 ret = 0;
