@@ -375,7 +375,7 @@ void EntityMoveableBox(Entity* self) {
         }
         break;
     }
-    poly = (POLY_GT4*)(*((s32*)(&self->unk7C.s)));
+    poly = (POLY_GT4*)(*(s32*)(&self->unk7C.s));
     new_var = ((u16)self->posX.i.hi) - 16;
     poly->x0 = new_var;
     poly->y0 = ((u16)self->posY.i.hi) - 16;
@@ -769,12 +769,10 @@ void func_801B3A50(Entity* self) {
 
 void func_801B3B78() {
     Entity* entity;
-    s16 temp_s3;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
-    s8 temp_s4;
-
-    temp_s4 = Random() & 3;
-    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
