@@ -39,6 +39,7 @@ bool func_801B0A20(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
+// https://decomp.me/scratch/0tv5m 92.76 %
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
 
 // bust with red eyes that can have a candle on it
