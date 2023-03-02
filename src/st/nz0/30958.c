@@ -772,7 +772,7 @@ void func_801B3B78() {
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
-    
+
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
