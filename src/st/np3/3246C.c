@@ -713,7 +713,36 @@ void func_801BDECC(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityPriceDrop);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityExplosion);
+void EntityExplosion(Entity* entity) {
+    u32 temp_v0;
+
+    if (entity->step == 0) {
+        InitializeEntity(D_80180A54);
+        entity->animSet = 2;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
+        entity->blendMode = 0x30;
+
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->blendMode = 0x10;
+        }
+
+        temp_v0 = entity->subId & 0xFF00;
+        if (temp_v0) {
+            entity->zPriority = temp_v0 >> 8;
+        }
+
+        entity->subId = entity->subId & 0xF;
+        entity->accelerationY = D_80181E80[entity->subId];
+        return;
+    }
+
+    entity->posY.val += entity->accelerationY;
+    if (!AnimateEntity(D_80181F2C[entity->subId], entity)) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BE864);
 

@@ -38,6 +38,8 @@ extern ObjInit2 D_80180C10[];
 extern const u8* D_801813D4;
 extern const u8* D_801813E4;
 extern s16 D_80181A50[];
+extern s32 D_80181E80[];
+extern const u8* D_80181F2C[];
 extern u8* D_801822B8;
 extern u8* D_801822C0;
 extern s32 D_80182440[];
