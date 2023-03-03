@@ -151,7 +151,7 @@ s32 func_801ACEC0(void) {
     }
 
     func_801B1CFC(poly, var_s0);
-    poly = poly->tag;
+    poly = (POLY_GT4*)poly->tag;
     poly->pad3 = 0x51;
     func_801B1CFC((POLY_GT4*)poly, var_s0);
 
