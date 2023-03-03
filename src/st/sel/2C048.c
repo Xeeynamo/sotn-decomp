@@ -34,7 +34,7 @@ void func_801AC048(void) {
     D_801BC3DC = 0;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC084);
 #else
 // Those arrays are weird. They do not store s32 but they are used as such.
