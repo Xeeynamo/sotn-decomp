@@ -355,7 +355,7 @@ void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_801B1CFC(POLY_GT4* poly, u8 colorIntensity) {
+void func_801B1CFC(POLY_GT4* poly, s32 colorIntensity) {
     func_801B1C78(poly, colorIntensity, 0);
     func_801B1C78(poly, colorIntensity, 1);
     func_801B1C78(poly, colorIntensity, 2);

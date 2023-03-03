@@ -26,6 +26,7 @@ void func_801B9C80(void);
 void InitRoomEntities(s32 objLayoutId);
 void func_801B60D4(void);
 void func_801B17C8(void);
+void func_801B1CFC(POLY_GT4* poly, s32 colorIntensity);
 void func_801B26A0(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
                    s32 v);
 
