@@ -927,7 +927,7 @@ void func_8010E3E0(void) {
 
 void func_8010E42C(u16 arg0) {
     PLAYER.unk2E = arg0;
-    PLAYER.step = 0x12;
+    PLAYER.step = 18;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
