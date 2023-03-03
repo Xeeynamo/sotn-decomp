@@ -56,7 +56,8 @@ extern u32 D_8018130C[];
 extern u8 D_80181324[];
 extern u16 D_80181328[];
 
-void func_80191A64(Entity* entity) {
+// puts garbled hp max up text on screen
+void EntityUnkId11(Entity* entity) {
     ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
 
     if (entity->step == 0) {
@@ -113,13 +114,17 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80191E34);
+// clouds in the background ID 0x18
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityBackgroundClouds);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80192104);
+// Shows Alucard's mother on cross, but may be the succubus boss given
+// that the asm is huge (ID 0x19)
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityMother);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80193B3C);
+// Petal projectile shot by succubus ID 0x1A
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusPetal);
 
-void func_80193D7C(Entity* entity) {
+void EntityUnkId1B(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(&D_801804E8);
     }
@@ -140,13 +145,15 @@ void func_80193D7C(Entity* entity) {
     entity->zPriority = PLAYER.zPriority + 4;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80193E18);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId1C);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80194214);
+// Pink ball projectile shot by succubus duplicates ID 0x1D
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityPinkBallProjectile);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80194488);
+// Extending wing spike from succubus ID 0x1E
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusWingSpike);
 
-void func_801946C4(Entity* entity) {
+void EntityUnkId1F(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_8018050C);
@@ -205,7 +212,8 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80194F14);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80194FF4);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_801950F8);
+// dialogue with mother opens as alucard walks right ID 20
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusIntroCutscene);
 
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - *(s16*)D_8009740C;
@@ -219,13 +227,16 @@ void func_801961DC(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80196238);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId21);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80196678);
+// appears to load from the CD and freeze the game
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId23);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019697C);
+// Fades to white
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityFadeToWhite1);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80196CC8);
+// Fades to white ID 24
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityFadeToWhite2);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -903,11 +914,11 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityRelicOrb);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityHeartDrop);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019DC6C);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId0E);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019E1C8);
 
-void func_8019E2B8(Entity* entity) {
+void EntityUnkId13(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180494);
@@ -938,7 +949,8 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019E3C8);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019E4F8);
 
-void func_8019E5E0(Entity* entity) {
+// an explosion animation ID 0x14
+void EntityExplosion14(Entity* entity) {
     u8 new_var2;
     u32 new_var;
 
@@ -967,7 +979,8 @@ void func_8019E5E0(Entity* entity) {
     }
 }
 
-void func_8019E6D0(Entity* entity) {
+// looks like a particle of dust fading away
+void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 
@@ -1151,7 +1164,8 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_801A174C);
+// ID 0x0D
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityEnemyBlood);
 
 extern ObjInit2 D_80181420[];
 void EntityRoomForeground(Entity* entity) {
@@ -1302,6 +1316,8 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_801A2A58);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_801A2C9C);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_801A2E20);
+// https://decomp.me/scratch/nNfXk 95.28%
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId17);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_801A2F10);
+// 3D house object in background ID 0x16
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", Entity3DBackgroundHouse);
