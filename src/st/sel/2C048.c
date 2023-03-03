@@ -115,7 +115,29 @@ void func_801ACC7C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACDFC);
+s32 func_801ACDFC(void) {
+    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    s32 var_s1 = poly->r0;
+
+    var_s1 -= 0x10;
+    if (var_s1 < 0) {
+        var_s1 = 0;
+    }
+
+    func_801B1CFC(poly, var_s1);
+    func_801B1CFC((POLY_GT4*)poly->tag, var_s1);
+
+    if (!var_s1) {
+        do {
+            poly = &D_80086FEC[D_801BAFC4];
+            poly->pad3 = 8;
+        } while (0);
+        poly = (POLY_GT4*)poly->tag;
+        poly->pad3 = 8;
+    } else {
+        return 0;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACEC0);
 
