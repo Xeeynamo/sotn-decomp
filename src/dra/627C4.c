@@ -951,7 +951,7 @@ void func_8010E4D0(void) {
     PLAYER.palette = 0x8100;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
 
-    if ((u32)(D_80072F92 - 1) < 2U) {
+    if ((u32)(D_80072F20.unk72 - 1) < 2U) {
         func_8010DA48(0xC7);
         PLAYER.accelerationY = 0;
         PLAYER.accelerationX = 0;
