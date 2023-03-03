@@ -82,7 +82,38 @@ void func_801ACC3C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACC7C);
+void func_801ACC7C(void) {
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 i;
+
+    firstPolygonIndex = g_api.AllocPolygons(4, 3);
+    poly = &D_80086FEC[firstPolygonIndex];
+    D_801BAFC0 = firstPolygonIndex;
+
+    for (i = 0; i < 3; i++) {
+        func_801B26A0(poly, i << 7, 0, 128, 240, 0, 0);
+        func_801B1D88(poly);
+        poly->tpage = i + 137;
+        poly->clut = 0x210;
+        poly->pad3 = 4;
+        poly = (POLY_GT4*)poly->tag;
+    }
+
+    firstPolygonIndex = g_api.AllocPolygons(1, 2);
+    poly = &D_80086FEC[firstPolygonIndex];
+    D_801BAFC4 = firstPolygonIndex;
+
+    for (i = 0; poly != NULL; i++) {
+        poly->x0 = (i & 1) * 192;
+        poly->u0 = 192;
+        poly->v0 = 240;
+        func_801B1CFC(poly, 255);
+        poly->pad2 = 0x1FD;
+        poly->pad3 = 0x51;
+        poly = (POLY_GT4*)poly->tag;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACDFC);
 
