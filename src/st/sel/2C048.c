@@ -119,7 +119,7 @@ s32 func_801ACDFC(void) {
     POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
     s32 var_s1 = poly->r0;
 
-    var_s1 -= 0x10;
+    var_s1 -= 16;
     if (var_s1 < 0) {
         var_s1 = 0;
     }
@@ -127,7 +127,7 @@ s32 func_801ACDFC(void) {
     func_801B1CFC(poly, var_s1);
     func_801B1CFC((POLY_GT4*)poly->tag, var_s1);
 
-    if (!var_s1) {
+    if (var_s1 == 0) {
         do {
             poly = &D_80086FEC[D_801BAFC4];
             poly->pad3 = 8;
