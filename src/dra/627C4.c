@@ -1050,7 +1050,7 @@ void func_8010E940(void) {
     func_8010DA48(0x20);
     PLAYER.unk2E = 0;
     PLAYER.accelerationY = -0x44000;
-    if (D_80072F92 != 0) {
+    if (D_80072F20.unk72 != 0) {
         PLAYER.accelerationY = 0;
     }
 }
