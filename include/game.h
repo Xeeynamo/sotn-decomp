@@ -740,7 +740,13 @@ extern u16 D_8003C708; // can save
 //extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-extern s32 D_8003C734; //game status. InGame = 0x2, MainMenu = 0x8, MenuOpen = 0x1
+extern s32 D_8003C730;
+
+/**
+ * game status. InGame = 0x2,
+ * MainMenu = 0x8, MenuOpen
+ * */
+extern s32 D_8003C734;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern Unsktruct_800EAF28** D_8003C798;
