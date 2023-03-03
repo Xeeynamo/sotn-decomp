@@ -919,11 +919,9 @@ void func_8010E3B8(s32 accelerationX) {
 }
 
 void func_8010E3E0(void) {
-    // D_80072F68 is part of a struct, the temp isn't needed in that case
-    u16* temp = &D_80072F68;
-    if (*temp != 0) {
+    if (D_80072F20.unk48 != 0) {
         DestroyEntity(&g_EntityArray[16]);
-        *temp = 0;
+        D_80072F20.unk48 = 0;
     }
 }
 
