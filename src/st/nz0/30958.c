@@ -580,6 +580,7 @@ void func_801B2AD8(Entity* self) {
     }
 }
 
+// https://decomp.me/scratch/ixW6j 93.06%
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
@@ -772,7 +773,7 @@ void func_801B3B78() {
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
-    
+
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
