@@ -34,7 +34,7 @@ void func_801AC048(void) {
     D_801BC3DC = 0;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC084);
 #else
 // Those arrays are weird. They do not store s32 but they are used as such.
@@ -82,11 +82,85 @@ void func_801ACC3C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACC7C);
+void func_801ACC7C(void) {
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 i;
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACDFC);
+    firstPolygonIndex = g_api.AllocPolygons(4, 3);
+    poly = &D_80086FEC[firstPolygonIndex];
+    D_801BAFC0 = firstPolygonIndex;
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACEC0);
+    for (i = 0; i < 3; i++) {
+        func_801B26A0(poly, i << 7, 0, 128, 240, 0, 0);
+        func_801B1D88(poly);
+        poly->tpage = i + 137;
+        poly->clut = 0x210;
+        poly->pad3 = 4;
+        poly = (POLY_GT4*)poly->tag;
+    }
+
+    firstPolygonIndex = g_api.AllocPolygons(1, 2);
+    poly = &D_80086FEC[firstPolygonIndex];
+    D_801BAFC4 = firstPolygonIndex;
+
+    for (i = 0; poly != NULL; i++) {
+        poly->x0 = (i & 1) * 192;
+        poly->u0 = 192;
+        poly->v0 = 240;
+        func_801B1CFC(poly, 255);
+        poly->pad2 = 0x1FD;
+        poly->pad3 = 0x51;
+        poly = (POLY_GT4*)poly->tag;
+    }
+}
+
+s32 func_801ACDFC(void) {
+    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    s32 var_s1 = poly->r0;
+
+    var_s1 -= 16;
+    if (var_s1 < 0) {
+        var_s1 = 0;
+    }
+
+    func_801B1CFC(poly, var_s1);
+    func_801B1CFC((POLY_GT4*)poly->tag, var_s1);
+
+    if (var_s1 == 0) {
+        do {
+            poly = &D_80086FEC[D_801BAFC4];
+            poly->pad3 = 8;
+        } while (0);
+        poly = (POLY_GT4*)poly->tag;
+        poly->pad3 = 8;
+    } else {
+        return 0;
+    }
+}
+
+s32 func_801ACEC0(void) {
+    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    s32 var_s0 = poly->r0;
+
+    var_s0 += 0x10;
+    poly->pad3 = 0x51;
+
+    if (var_s0 > 255) {
+        var_s0 = 255;
+    }
+
+    func_801B1CFC(poly, var_s0);
+    poly = (POLY_GT4*)poly->tag;
+    poly->pad3 = 0x51;
+    func_801B1CFC((POLY_GT4*)poly, var_s0);
+
+    if (g_api.func_80131F68()) {
+        return 0;
+    } else {
+        return var_s0 == 255;
+    }
+}
 
 void func_801ACF7C(void) {
     func_801B1ED0();

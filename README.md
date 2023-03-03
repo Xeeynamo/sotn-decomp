@@ -136,4 +136,4 @@ This project is possible thanks to the hard work of tools provided by the Decomp
 * [decomp.me](https://github.com/decompme/decomp.me/) by @ethteck, @nanaian and @mkst to provide a collaborative decompilation site to share and contribute to work-in-progress decompiled functions.
 * [frogress](https://github.com/decompals/frogress) by @ethteck to store and retrieve progression data.
 * [esa-new](https://github.com/mkst/esa-new) by @mkst as an inspiration on how to set-up a PS1 decompilation project.
-* [oot](https://github.com/zeldaret/oot) as an inspiration of what it is possible to achieve with a complete disassembled video game.
+* [oot](https://github.com/zeldaret/oot) as an inspiration of what it is possible to achieve with a complete decompiled video game.
