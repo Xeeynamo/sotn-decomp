@@ -202,7 +202,53 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B65FC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6990);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B75EC);
+void func_801B75EC(Entity* self) {
+    s8* hitbox;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B50);
+
+    case 1:
+        self->facing = self[-1].facing;
+        self->posX.i.hi = self[-1].posX.i.hi;
+        self->posY.i.hi = self[-1].posY.i.hi;
+        hitbox = D_80181454;
+        hitbox += 4 * D_8018148C[self[-1].animCurFrame];
+        self->unk10 = *hitbox++;
+        self->unk12 = *hitbox++;
+        self->hitboxWidth = *hitbox++;
+        self->hitboxHeight = *hitbox++;
+        if (self[-1].unk84.U8.unk2 != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        switch (self->unk2E) {
+        case 0:
+            self->unk19 = 4;
+            self->unk3C = 0;
+            if (self->facing != 0) {
+                self->accelerationX = -0x24000;
+            } else {
+                self->accelerationX = 0x24000;
+            }
+            self->accelerationY = -0x40000;
+            self->animCurFrame = 0x23;
+            self->unk34 |= 0x80000000;
+            self->unk2E++;
+
+        case 1:
+            MoveEntity();
+            self->accelerationY += 0x2800;
+            self->unk1E += 0x80;
+            if (!(self->unk1E & 0xFFF)) {
+                func_801C2598(0x625);
+            }
+        }
+    }
+}
 
 // projectile fired from slogra's spear
 void EntitySlograSpearProjectile(Entity* self) {
@@ -667,7 +713,36 @@ void func_801BDECC(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityPriceDrop);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityExplosion);
+void EntityExplosion(Entity* entity) {
+    u32 temp_v0;
+
+    if (entity->step == 0) {
+        InitializeEntity(D_80180A54);
+        entity->animSet = 2;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
+        entity->blendMode = 0x30;
+
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->blendMode = 0x10;
+        }
+
+        temp_v0 = entity->subId & 0xFF00;
+        if (temp_v0) {
+            entity->zPriority = temp_v0 >> 8;
+        }
+
+        entity->subId = entity->subId & 0xF;
+        entity->accelerationY = D_80181E80[entity->subId];
+        return;
+    }
+
+    entity->posY.val += entity->accelerationY;
+    if (!AnimateEntity(D_80181F2C[entity->subId], entity)) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BE864);
 
