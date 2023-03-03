@@ -139,7 +139,28 @@ s32 func_801ACDFC(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACEC0);
+s32 func_801ACEC0(void) {
+    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    s32 var_s0 = poly->r0;
+
+    var_s0 += 0x10;
+    poly->pad3 = 0x51;
+
+    if (var_s0 > 255) {
+        var_s0 = 255;
+    }
+
+    func_801B1CFC(poly, var_s0);
+    poly = poly->tag;
+    poly->pad3 = 0x51;
+    func_801B1CFC((POLY_GT4*)poly, var_s0);
+
+    if (g_api.func_80131F68()) {
+        return 0;
+    } else {
+        return var_s0 == 255;
+    }
+}
 
 void func_801ACF7C(void) {
     func_801B1ED0();
