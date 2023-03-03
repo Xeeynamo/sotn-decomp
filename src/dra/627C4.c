@@ -984,7 +984,7 @@ void func_8010E6AC(s32 arg0) {
         func_8011AAFC(g_CurrentEntity, 0x50001, 0);
     }
 
-    if (D_80072F6C != 0) {
+    if (D_80072F20.unk4C != 0) {
         PLAYER.unkAC = 9;
     }
 
@@ -992,7 +992,7 @@ void func_8010E6AC(s32 arg0) {
         PLAYER.animFrameIdx = 1;
     }
 
-    if (D_80072F70 == 2) {
+    if (D_80072F20.unk50 == 2) {
         PLAYER.animFrameIdx = 4;
     }
 }
@@ -1000,7 +1000,7 @@ void func_8010E6AC(s32 arg0) {
 void func_8010E7AC(void) {
     func_8010D584(3);
 
-    if (D_80072F70 != 1) {
+    if (D_80072F20.unk50 != 1) {
         func_8010DA48(0x1C);
     }
 
@@ -1014,7 +1014,7 @@ void func_8010E7AC(void) {
         D_80072F0A[0] = 0;
     }
 
-    D_80072F64 = 0x10;
+    D_80072F20.unk44 = 0x10;
 }
 
 void func_8010E83C(s32 arg0) {
@@ -1024,11 +1024,11 @@ void func_8010E83C(s32 arg0) {
     } else if (func_8010E27C() != 0) {
         func_8010DA48(0x1A);
         AccelerateX(0x18000);
-        D_80072F64 = 0;
+        D_80072F20.unk44 = 0;
     } else {
         func_8010DA48(0x16);
         PLAYER.accelerationX = 0;
-        D_80072F64 = 4;
+        D_80072F20.unk44 = 4;
     }
 
     PLAYER.accelerationY = 0xFFFB0000 | 0x2000;
@@ -1039,9 +1039,9 @@ void func_8010E83C(s32 arg0) {
     }
 
     if (arg0 != 0) {
-        D_80072F64 = D_80072F64 & ~1;
+        D_80072F64 &= ~1;
     } else {
-        D_80072F64 = D_80072F64 | 1;
+        D_80072F64 |= 1;
     }
 }
 
