@@ -223,9 +223,9 @@ typedef struct Entity {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E; // some kind of angle
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ s16 unk22;
+    /* 0x1E */ s16 unk1E; // poly rotation angle
+    /* 0x20 */ s16 unk20; // poly / rotation origin x
+    /* 0x22 */ s16 unk22; // poly / rotation origin y
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -741,12 +741,7 @@ extern u16 D_8003C708; // can save
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C730;
-
-/**
- * game status. InGame = 0x2,
- * MainMenu = 0x8, MenuOpen
- * */
-extern s32 D_8003C734;
+extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern Unsktruct_800EAF28** D_8003C798;
