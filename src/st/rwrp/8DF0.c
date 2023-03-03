@@ -104,9 +104,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DDF0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE50);
 
-s16 func_8018DE7C(u8 arg0) {
-    return D_80180A94[arg0];
-}
+s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE98);
 
