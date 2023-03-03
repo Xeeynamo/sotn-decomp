@@ -1046,9 +1046,7 @@ void func_8010E83C(s32 arg0) {
 }
 
 void func_8010E940(void) {
-    u16* temp = &D_80072F64;
-
-    *temp |= 0x21;
+    D_80072F20.unk44 |= 0x21;
     func_8010DA48(0x20);
     PLAYER.unk2E = 0;
     PLAYER.accelerationY = -0x44000;
