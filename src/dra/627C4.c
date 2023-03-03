@@ -1063,9 +1063,9 @@ void func_8010E9A4(void) {
     }
 
     if (PLAYER.step == 4) {
-        D_80072F60[2] |= 1;
+        D_80072F20.unk44 |= 1;
     } else {
-        D_80072F60[2] = 0;
+        D_80072F20.unk44 = 0;
     }
 
     func_8011AAFC(g_CurrentEntity, 2, 0);
