@@ -29,54 +29,46 @@ const u32 rodataPadding_800DCBD8 = 0;
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", AddToInventory);
 #else
 void AddToInventory(u16 itemId, s32 itemCategory) {
-    u8* temp_a0_2;
-    u8* temp_v0;
     u8 temp_a1;
-    u8 temp_v1;
+    s32 new_var2;
     u8* phi_a0;
     u8* phi_a0_2;
-    u16 i;
+    long i;
     s32 phi_a1;
     s32 phi_a1_2;
     u8* cursorY = func_800FD744(itemCategory);
-    u8* temp_a3 = func_800FD760(itemCategory);
-    u16 temp_a2 = itemId & 0xFFFF;
-    u8* temp_a0 = temp_a3 + temp_a2;
-    if (*temp_a0 < 0x63) {
-        temp_a1 = *temp_a0;
-        *temp_a0 = temp_a1 + 1;
-        if (*temp_a0 == 1) {
-            *temp_a0 = temp_a1;
-            if (itemCategory != 0) {
-                i = D_800A7734[temp_a2 << 5];
+    u8* itemArray = func_800FD760(itemCategory);
+    if (itemArray[itemId] < 99) {
+        temp_a1 = itemArray[itemId];
+        itemArray[itemId]++;
+        if (itemArray[itemId] == 1) {
+            itemArray[itemId] = temp_a1;
+            phi_a1_2 = itemCategory;
+            if (phi_a1_2 != 0) {
+                i = D_800A7734[itemId].unk00;
             }
             phi_a0 = cursorY;
-            phi_a1 = 0;
-            phi_a1_2 = 0;
-            while (true) {
-                if (*++phi_a0 == temp_a2)
+            for (phi_a1_2 = 0; true; phi_a1_2++) {
+                if (phi_a0[phi_a1_2] == itemId) {
                     break;
-                phi_a1_2 += 1;
-            }
-            phi_a0_2 = cursorY;
-        loop_8:
-            temp_v1 = *phi_a0_2;
-            if (*((s8*)temp_a3 + temp_v1) != 0) {
-            block_12:
-                phi_a0_2 += 1;
-                phi_a1 += 1;
-                goto loop_8;
-            }
-            if ((itemCategory != 0) && (i != D_800A7734[temp_v1 << 5])) {
-                goto block_12;
+                }
             }
 
-            temp_v0 = temp_a3 + (itemId & 0xFFFF);
-            *temp_v0 += 1;
-            temp_a0_2 = &cursorY[phi_a1];
-            if (phi_a1 < phi_a1_2) {
-                cursorY[phi_a1_2] = *temp_a0_2;
-                *temp_a0_2 = itemId;
+            phi_a0_2++;
+            phi_a0_2 = cursorY;
+            for (phi_a1 = 0; true; phi_a1++) {
+                if (((!itemArray[*phi_a0_2]) && phi_a1_2) &&
+                    (i == D_800A7734[*phi_a0_2].unk00)) {
+                    new_var2 = phi_a1;
+                    cursorY[new_var2] = itemId;
+                    break;
+                }
+            }
+
+            itemArray[itemId]++;
+            if (new_var2 < phi_a1_2) {
+                cursorY[phi_a1_2] = cursorY[new_var2];
+                cursorY[new_var2] = itemId;
             }
         }
     }
