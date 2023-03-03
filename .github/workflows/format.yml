@@ -13,8 +13,6 @@ on:
       - '*/*.h'
       - '**/*.c'
       - '**/*.h'
-    paths-ignore:
-      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
