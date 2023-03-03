@@ -753,7 +753,18 @@ void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_8010DF70);
+void func_8010DF70(void) {
+    g_CurrentEntity = &PLAYER;
+
+    switch (PLAYER.unkAC) {
+        case 0xBA:
+        case 0xBB:
+        case 0xBE:
+        case 0xF0:
+        case 0xF1:
+        func_8010DBFC(D_800B0130, D_800B01B8);
+    }
+}
 
 void func_8010DFF0(s32 arg0, s32 arg1) {
     POLY_GT4* poly;
