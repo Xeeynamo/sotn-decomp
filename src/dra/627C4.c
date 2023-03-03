@@ -1072,7 +1072,7 @@ void func_8010E9A4(void) {
     func_8010D584(8);
     PLAYER.accelerationY = -0xC0000;
     func_8010DA48(0x21);
-    D_80072F6A[0] = 0;
+    D_80072F20.unk4A = 0;
 }
 
 // https://decomp.me/scratch/9jKqU
