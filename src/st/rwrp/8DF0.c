@@ -7,6 +7,7 @@
 #include "stage.h"
 
 extern PfnEntityUpdate D_801803E0[];
+extern s16 D_80180A94[];
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188DF0);
 
@@ -103,7 +104,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DDF0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE50);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE7C);
+s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE98);
 
