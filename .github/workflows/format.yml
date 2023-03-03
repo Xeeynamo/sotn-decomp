@@ -3,13 +3,18 @@ name: Format code
 on:
   push:
     paths:
+      - '*/*.c'
+      - '*/*.h'
       - '**/*.c'
       - '**/*.h'
   pull_request_target:
-    paths-ignore:
-      - '.github/workflows/**'
+    paths:
+      - '*/*.c'
+      - '*/*.h'
       - '**/*.c'
       - '**/*.h'
+    paths-ignore:
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
