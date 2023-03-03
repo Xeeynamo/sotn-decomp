@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Chart } from './Chart';
 
 export const ChartsVersion = ({
-    gameVersion
+    gameVersion,
+    name,
 }) => {
     const getEntryProgress = function(name, entry) {
         return entry[name] / entry[`${name}/total`]
@@ -41,20 +42,20 @@ export const ChartsVersion = ({
     const [progressCode, setProgressCode] = useState(undefined)
     const [progressFuncs, setProgressFuncs] = useState(undefined)
 
-    const fetchProgress = (type, setter) => {
+    const fetchProgress = async (type, setter) => {
       const host = "https://progress.deco.mp"
       const url = `${host}/data/sotn/${gameVersion}/${type}/?mode=all`
-      return fetch(url)
-            .then((response) => response.json())
-            .then((data) => setter(normaliseData(data, "sotn", gameVersion, type)))
+      const response = await fetch(url);
+        const data = await response.json();
+        return setter(normaliseData(data, "sotn", gameVersion, type));
     }
   
     useEffect(() => {
         fetchProgress('code', setProgressCode);
         fetchProgress('functions', setProgressFuncs);
-    },[])
+    },[fetchProgress])
 
-    return (progressCode && progressFuncs &&
+    const progressCharts = (progressCode && progressFuncs &&
         progressCode.overlays.map(ovl => {
             const timeline = progressCode.timeline
             const code = progressCode.overlays
@@ -63,4 +64,10 @@ export const ChartsVersion = ({
                 .filter(x => x.name === ovl.name)[0].percentage
             return renderOvlChart(ovl.name, timeline, code, funcs)
         }))
+
+    return (
+        <div>
+            <h2>Progress for {name}</h2>
+            <center>{progressCharts}</center>
+        </div>)
 }
