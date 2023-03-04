@@ -37,42 +37,140 @@ segments:
       - [0x8000, data]
       - [0x8900, data]
       - [0xCEB0, data]
-      - [0xD670, rodata] # not rodata but data
+      - [0xD670, rodata]
       - [0x3B3B0, rodata]
       - [0x3B44C, .rodata, 42398]
       - [0x3B524, rodata]
-      - [0x3B560, rodata]
+      - [0x3B530, rodata] # jpt_800E4A64
+      - [0x3B560, rodata] # jpt_800E55C4
+      - [0x3B720, rodata]
       - [0x3B790, rodata]
-      - [0x3B7A0, rodata]
+      - [0x3B7A0, rodata] # jpt_800E63C4
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
-      - [0x3BF10, rodata]
+      - [0x3BD70, rodata] # jpt_800E7C28
+      - [0x3BD88, rodata] # jpt_800E7E3C
+      - [0x3BDE0, rodata]
+      - [0x3BEF8, rodata] # jpt_800E98E4
+      - [0x3BF10, rodata] # jpt_800E9934
+      - [0x3BF28, rodata] # jpt_800E9A48
+      - [0x3BF3C, rodata]
       - [0x3C160, rodata]
+      - [0x3C1A8, rodata] # jpt_800EA8C0
+      - [0x3C1E8, rodata] # jpt_800EB120
+      - [0x3C228, rodata]
+      - [0x3C238, rodata] # jpt_800EE2FC
       - [0x3C290, .rodata, 4F45C]
       - [0x3C490, rodata]
+      - [0x3C500, rodata] # jpt_800F0658
+      - [0x3C514, rodata] # jpt_800F096C
+      - [0x3C534, rodata] # jpt_800F288C
+      - [0x3C55C, rodata] # jpt_800F3684
+      - [0x3C57C, rodata] # jpt_800F3758
+      - [0x3C59C, rodata] # jpt_800F3C14
+      - [0x3C5B4, rodata] # jpt_800F42A0
+      - [0x3C5D4, rodata]
+      - [0x3C68C, rodata] # jpt_800F8150
+      - [0x3C6AC, rodata] # jpt_800F93A0
+      - [0x3C6EC, rodata]
+      - [0x3C71C, rodata] # jpt_800FA060
+      - [0x3C734, rodata]
+      - [0x3C75C, rodata] # jpt_800FBCC4
+      - [0x3CB7C, rodata] # jpt_800FC36C
+      - [0x3CB94, rodata] # jpt_800FC5B8
+      - [0x3CBAC, rodata] # jpt_800FD6E0
       - [0x3CBC4, .rodata, 5D7C0]
-      - [0x3CBDC, rodata]
+      - [0x3CBDC, rodata] # jpt_800FDB40
+      - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
-      - [0x3CC2C, rodata]
+      - [0x3CC2C, rodata] # jpt_80102918
+      - [0x3CC54, rodata] # jpt_80102D9C
+      - [0x3CC70, rodata]
       - [0x3CC80, rodata]
       - [0x3CD00, rodata]
       - [0x3CD10, rodata]
-      - [0x40FC0, rodata]
-      - [0x41360, rodata]
+      - [0x3CDC0, rodata] # jpt_80103F08
+      - [0x3CDDC, rodata]
+      - [0x40D38, rodata] # jpt_8010812C
+      - [0x40D54, rodata]
+      - [0x40DD8, rodata] # jpt_80108CFC
+      - [0x40E28, rodata]
+      - [0x40E48, rodata] # jpt_8010A86C
+      - [0x40E88, rodata] # jpt_8010AA30
+      - [0x40EC8, rodata] # jpt_8010AE88
+      - [0x40EF0, rodata] # jpt_8010B3B4
+      - [0x40FC0, rodata] # jpt_8010B658
+      - [0x4108C, rodata] # jpt_8010F424
+      - [0x412AC, rodata] # jpt_8010F48C
+      - [0x412C4, rodata] # jpt_8010F75C
+      - [0x412DC, rodata] # jpt_8010F958
+      - [0x412F4, rodata] # jpt_8010F9E8
+      - [0x41308, rodata] # jpt_801109D0
+      - [0x41320, rodata] # jpt_80110C1C
+      - [0x41334, rodata]
+      - [0x41348, rodata] # jpt_80110E54
+      - [0x41360, rodata] # jpt_80111080
+      - [0x41380, rodata] # jpt_8011131C
+      - [0x413A0, rodata]
       - [0x413C0, .rodata, 71830]
       - [0x41400, rodata]
-      - [0x41750, rodata]
+      - [0x41410, rodata] # jpt_80112264
+      - [0x41588, rodata] # jpt_80112C9C
+      - [0x41750, rodata] # jpt_80113328
+      - [0x418C8, rodata] # jpt_80113938
       - [0x418E0, .rodata, 73AAC]
       - [0x418F4, rodata]
-      - [0x41990, rodata]
-      - [0x419B0, rodata]
+      - [0x41908, rodata] # jpt_801140A8
+      - [0x41948, rodata] # jpt_801141F0
+      - [0x41990, rodata] # jpt_80114300
+      - [0x419B0, rodata] # jpt_80114388
       - [0x419D0, .rodata, 75DA0]
-      - [0x419E8, rodata]
-      - [0x41A00, rodata]
-      - [0x41F30, rodata]
-      - [0x41F70, rodata]
-      - [0x41FB0, rodata]
-      - [0x42000, rodata]
+      - [0x419E8, rodata] # jpt_8011643C
+      - [0x41A00, rodata] # jpt_801169F4
+      - [0x41A20, rodata] # jpt_80116CF8
+      - [0x41A38, rodata]
+      - [0x41A44, rodata] # jpt_80118D54
+      - [0x41A74, rodata]
+      - [0x41A84, rodata] # jpt_801195F4
+      - [0x41AA4, rodata]
+      - [0x41AB4, rodata] # jpt_8011AD40
+      - [0x41AD4, rodata] # jpt_8011AD94
+      - [0x41AF4, rodata] # jpt_8011C214
+      - [0x41B44, rodata] # jpt_8011C490
+      - [0x41B74, rodata] # jpt_8011CB08
+      - [0x41B94, rodata] # jpt_8011DC74
+      - [0x41BF4, rodata] # jpt_8011DD70
+      - [0x41C54, rodata] # jpt_8011DDCC
+      - [0x41CB4, rodata] # jpt_8011E580
+      - [0x41CE4, rodata] # jpt_8011E648
+      - [0x41D1C, rodata] # jpt_8011E9D4
+      - [0x41D4C, rodata] # jpt_8011EADC
+      - [0x41D84, rodata] # jpt_80120C98
+      - [0x41DA4, rodata] # jpt_80120FDC
+      - [0x41DBC, rodata] # jpt_80122494
+      - [0x41DD4, rodata] # jpt_80124410
+      - [0x41E34, rodata] # jpt_80126808
+      - [0x41E48, rodata]
+      - [0x41E5C, rodata] # jpt_80126F54
+      - [0x41E7C, rodata] # jpt_80128C94
+      - [0x41E90, rodata] # jpt_8012A918
+      - [0x41EB0, rodata] # jpt_8012D4D8
+      - [0x41EC8, rodata] # jpt_8012EFE4
+      - [0x41EF0, rodata] # jpt_8012FA74
+      - [0x41F18, rodata] # jpt_8012FAC0
+      - [0x41F30, rodata] # jpt_80130384
+      - [0x41F58, rodata] # jpt_801303DC
+      - [0x41F70, rodata] # jpt_80130728
+      - [0x41F98, rodata] # jpt_80130788
+      - [0x41FB0, rodata] # jpt_80130B00
+      - [0x41FD8, rodata] # jpt_80131014
+      - [0x42000, rodata] # jpt_801314B4
+      - [0x4202C, rodata]
+      - [0x42034, rodata] # jpt_80132F94
+      - [0x4205C, rodata] # jpt_801332C4
+      - [0x42074, rodata] # jpt_80133990
+      - [0x4208C, rodata] # jpt_80133C10
+      - [0x420B4, rodata] # jpt_80135058
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
       - [0x46358, c, 46358]
