@@ -408,8 +408,8 @@ extern s32 D_801EC000[];
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
-void SetRoomForegroundLayer(s32 /* ? */);
-void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
+void SetRoomForegroundLayer(LayerDef2* layerDef);
+void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
 void PlaySfx(s16 sfxId);
 s32 func_80019444(void);
@@ -443,7 +443,7 @@ void func_800EDA94(void);
 void func_800EDAE4(void);
 s32 AllocPolygons(u8 primitives, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
-void func_800EFBF8(void);
+void func_800EFBF8(s32 arg0);
 void FreePolygons(s32 index);
 void func_800F0334(s32);
 void func_800F0578(s32 arg0);
@@ -471,6 +471,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
+void func_800FF7B8(s32 arg0);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(char ch, int x, int y, MenuContext* context);

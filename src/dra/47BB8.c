@@ -954,17 +954,82 @@ void func_800ECE2C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECE58);
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomForegroundLayer);
+#else
+extern s16 D_8003C70A;
+extern s16 D_8003C70C;
+extern u16 D_8003C70E;
+extern s32 D_8007309C;
+extern s32 D_8013AED0;
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomBackgroundLayer);
+void SetRoomForegroundLayer(LayerDef2* layerDef) {
+    D_8003C708 = 0;
+    D_8013AED0 = 1;
+    D_800730A0.unk00 = 0;
+    D_80073088 = layerDef->tileDef;
+    if (layerDef->tileDef != NULL) {
+        g_CurrentRoomTileLayout.fg = layerDef->layout;
+        D_8007309C = (s32)layerDef->unkC;
+        if (layerDef->rect.flags & 0x40) {
+            D_8007309C = 0x60;
+            D_8003C70A = 0;
+            D_8003C70C = 0;
+            D_8003C708 = (u16)layerDef->rect.flags;
+            D_8003C70E = layerDef->unkC;
+        }
+        if (layerDef->rect.flags & 0x20) {
+            D_8007309C = 0x60;
+            D_8003C708 = (u16)layerDef->rect.flags;
+        }
+        if (layerDef->rect.flags & 0x10) {
+            D_8007309C = 0x60;
+            D_8013AED0 = 0;
+        }
+        D_800730A0.unk00 = (s32)layerDef->unkE;
+        g_CurrentRoomLeft = layerDef->rect.left;
+        g_CurrentRoomTop = layerDef->rect.top;
+        g_CurrentRoomRight = layerDef->rect.right;
+        g_CurrentRoom.hSize = (g_CurrentRoomRight - g_CurrentRoomLeft) + 1;
+        g_CurrentRoomY = 0;
+        g_CurrentRoomX = 0;
+        g_CurrentRoomWidth = g_CurrentRoom.hSize << 8;
+        D_800730AC = 1;
+        g_CurrentRoomBottom = layerDef->rect.bottom;
+        g_CurrentRoomVSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
+        g_CurrentRoomHeight = g_CurrentRoomVSize << 8;
+    }
+}
+#endif
 
-extern Unkstruct_8003C794* D_8003C794;
+void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
+    u32 rect;
+
+    D_800730D8[index].D_800730F4 = 0;
+    D_800730D8[index].tileDef = layerDef->tileDef;
+    D_800730D8[index].layout = layerDef->layout;
+    if (D_800730D8[index].tileDef != 0) {
+        D_800730D8[index].D_800730F0 = layerDef->unkC;
+        D_800730D8[index].D_800730F4 = layerDef->unkE;
+#if 0 // matches with PSY-Q 3.5
+        D_800730D8[index].w = layerDef->rect.right - layerDef->rect.left + 1;
+        D_800730D8[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
+#else
+        rect = *(u32*)&layerDef->rect;
+        D_800730D8[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
+        rect = *(u32*)&layerDef->rect;
+        D_800730D8[index].h = ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
+#endif
+        D_800730D8[index].flags = layerDef->rect.flags;
+        D_800730D8[index].D_80073100 = 1;
+    }
+}
 
 void LoadRoomLayer(s32 arg0) {
     s32 i;
 
-    SetRoomForegroundLayer(D_8003C794[arg0].unk00);
-    SetRoomBackgroundLayer(0, D_8003C794[arg0].unk04);
+    SetRoomForegroundLayer(g_api.o.tileLayers[arg0].fg);
+    SetRoomBackgroundLayer(0, g_api.o.tileLayers[arg0].bg);
 
     for (i = 1; i < 16; i++) {
         D_800730A0.unk54[i].unk00[0] = 0;
