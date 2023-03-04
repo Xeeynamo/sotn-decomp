@@ -37,7 +37,7 @@ segments:
       - [0x8000, data]
       - [0x8900, data]
       - [0xCEB0, data]
-      - [0xD670, rodata]
+      - [0xD670, rodata] # not rodata but data
       - [0x3B3B0, rodata]
       - [0x3B44C, .rodata, 42398]
       - [0x3B524, rodata]
