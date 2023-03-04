@@ -188,9 +188,41 @@ INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE6D0);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE9A8);
+void func_801AE9A8(void) {
+    s32 i;
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEA8C);
+    func_801ACC3C();
+    func_801ACBE4(0, 0);
+
+    for (i = 1; i < 5; i++) {
+        func_801ACBE4(i + 1, 4);
+        func_801B26A0(&D_80086FEC[D_801BAF18[i + 1].unk0], (i * 64) - 32,
+                      (i * 5) * 8, 127, 31, D_80180040[i], D_80180054[i]);
+    }
+
+    DrawNavigationTips(0);
+    func_801ACBE4(0x11, 0);
+}
+
+void func_801AEA8C(s32 arg0) {
+    D_801D6B08 = 0;
+    D_801BC3E0 = 0;
+    func_801ACC3C();
+    func_801ACBE4(7, 0x11);
+    func_801ACBE4(8, 0);
+    func_801ACBE4(9, 0x11);
+    func_801ACBE4(10, 0);
+
+    if (arg0 == 0) {
+        func_801ACBE4(1, 0);
+        func_801B2670(&D_80086FEC[D_801BAF20], 24, 24, 127, 31);
+    } else {
+        func_801ACBE4(3, 0);
+        func_801B2670(&D_80086FEC[D_801BAF30], 24, 24, 127, 31);
+    }
+
+    DrawNavigationTips(1);
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEB74);
 
@@ -882,7 +914,62 @@ void func_801B4D78(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4DE0);
+void func_801B4DE0(void) {
+    Entity* unkEntity = &g_EntityArray[2];
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+
+    switch (unkEntity->step) {
+    case 0:
+        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        if (firstPolygonIndex != -1) {
+            poly = &D_80086FEC[firstPolygonIndex];
+            unkEntity->firstPolygonIndex = firstPolygonIndex;
+            unkEntity->unk34 |= 0x800000;
+            *(s32*)&unkEntity->unk7C = poly;
+
+            poly->x1 = poly->x3 = 255;
+            poly->y0 = poly->y1 = 4;
+            poly->y2 = poly->y3 = 228;
+
+            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
+                    poly->b3 = 255;
+
+            poly->pad2 = 0xC8;
+            poly->x0 = poly->x2 = 0;
+            poly->pad3 = 81;
+            D_801BC3E4 = 0;
+            unkEntity->step++;
+        }
+        break;
+
+    case 1:
+        poly = *(s32*)&unkEntity->unk7C;
+        if (D_801BC3E4 != 0) {
+            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
+                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                    poly->r0 = poly->b3 - 2;
+            if (poly->r0 < 5) {
+                D_801BC3E4 = 0;
+                unkEntity->step++;
+            }
+        }
+        break;
+
+    case 2:
+        poly = *(s32*)&unkEntity->unk7C;
+        if (D_801BC3E4 != 0) {
+            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
+                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                    poly->r0 = poly->b3 + 1;
+            if (poly->r0 >= 254) {
+                D_801BC3E4 = 0;
+                unkEntity->step++;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4FFC);
 
