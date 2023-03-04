@@ -1018,7 +1018,6 @@ extern s32 D_800987C8;
 extern s32 D_80098850;
 extern s32 D_80098894;
 
-void func_8010DBFC(s32*, s32*); // should be part of g_api
 void PadInit(s32 arg0);
 int VSync(s32);
 s32 rcos(s32);
