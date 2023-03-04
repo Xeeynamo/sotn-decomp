@@ -197,7 +197,7 @@ void func_801AE9A8(void) {
     for (i = 1; i < 5; i++) {
         func_801ACBE4(i + 1, 4);
         func_801B26A0(&D_80086FEC[D_801BAF18[i + 1].unk0], (i * 64) - 32,
-                      (i * 5) * 8, 0x7F, 0x1F, D_80180040[i], D_80180054[i]);
+                      (i * 5) * 8, 127, 31, D_80180040[i], D_80180054[i]);
     }
 
     DrawNavigationTips(0);
