@@ -223,9 +223,9 @@ typedef struct Entity {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E; // some kind of angle
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ s16 unk22;
+    /* 0x1E */ s16 unk1E; // poly rotation angle
+    /* 0x20 */ s16 unk20; // poly / rotation origin x
+    /* 0x22 */ s16 unk22; // poly / rotation origin y
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -238,13 +238,13 @@ typedef struct Entity {
     /* 0x3A */ s16 unk3A;
     /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 unk40;
-    /* 0x42 */ s16 unk42;
+    /* 0x40 */ s16 unk40; // damage
+    /* 0x42 */ s16 unk42; // damage type
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 unk48;
-    /* 0x49 */ u8 unk49;
+    /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
@@ -739,10 +739,12 @@ extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
-extern u16 D_8003C708;
+extern u16 D_8003C708; // can save
+//extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-extern s32 D_8003C734;
+extern s32 D_8003C730;
+extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern Unsktruct_800EAF28** D_8003C798;
@@ -797,18 +799,18 @@ extern s32 D_80072EE8;
 extern s32 D_80072EEC;
 extern s32 D_80072EF4[];
 extern u16 D_80072EF6;
-extern s32 D_80072EFC;
-extern s16 D_80072F00[];
-extern s16 D_80072F02[];
-extern s16 D_80072F04;
+extern s32 D_80072EFC; //stun timer
+extern s16 D_80072F00[]; //poison timer
+extern s16 D_80072F02[]; //curse timer
+extern s16 D_80072F04; //visual effect timer stoned/hit
 extern s16 D_80072F0A[];
 extern s16 D_80072F0C;
 extern s16 D_80072F10;
 extern s16 D_80072F14[]; // could be an array or a struct
 extern s16 D_80072F16[];
 extern s16 D_80072F18;
-extern s16 D_80072F1A[];
-extern s16 D_80072F1C[];
+extern s16 D_80072F1A[]; //invincibility timer
+extern s16 D_80072F1C[]; //invincibility timer from consumables
 extern s16 D_80072F1E;
 extern Unkstruct_80072F20 D_80072F20;
 extern s32 D_80072F24;   // D_80072F20.unk04
@@ -946,7 +948,7 @@ extern s32 D_80097418;
 extern s32 D_8009741C;
 extern s32 D_80097420[];
 extern s32 D_80097424;
-extern s32 D_80097448;
+extern s32 D_80097448; //underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
@@ -960,7 +962,7 @@ extern Unkstruct_80097494 D_80097494;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern u32 g_StageId;
-extern s32 D_800974A4;
+extern s32 D_800974A4; //map open
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
 extern s32 D_800978B4;
@@ -983,8 +985,8 @@ extern u8 D_8009796E;
 extern s8 D_8009798A[];
 extern u8 D_80097A8D;
 extern s32 D_80097BDC;
-extern s32 D_80097BE0;
-extern s32 D_80097BE4[];
+extern s32 D_80097BE0; // total CON
+extern s32 D_80097BE4[]; // total LCK
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
@@ -997,9 +999,10 @@ extern s32 g_playerHeart;    // D_80097B9C.hearts
 extern s32 g_playerHeartMax; // D_80097B9C.heartsMax
 extern s32 g_playerMP;       // D_80097B9C.mp
 extern s32 g_playerMpMax;    // D_80097B9C.mpMax
-extern s32 D_80097C1C[];
-extern s32 D_80097C20;
-extern s32 D_80097C24;
+extern s32 D_80097C1C[];     // player Atk right hand
+extern s32 D_80097C20;       // player Atk left hand
+extern s32 D_80097C24;       // player Def
+//extern s32 D_80097C28 //player armor resistance flags
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;
