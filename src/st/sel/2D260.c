@@ -923,24 +923,21 @@ void func_801B4DE0(void) {
     case 0:
         firstPolygonIndex = g_api.AllocPolygons(3, 1);
         if (firstPolygonIndex != -1) {
-                poly = &D_80086FEC[firstPolygonIndex];
-                unkEntity->firstPolygonIndex = firstPolygonIndex;
-                unkEntity->unk34 |= 0x800000;
-                *(s32*)&unkEntity->unk7C = poly;
+            poly = &D_80086FEC[firstPolygonIndex];
+            unkEntity->firstPolygonIndex = firstPolygonIndex;
+            unkEntity->unk34 |= 0x800000;
+            *(s32*)&unkEntity->unk7C = poly;
 
-            do { // !FAKE
-                poly->x1 = poly->x3 = 255;
-                poly->y0 = poly->y1 = 4;
-                poly->y2 = poly->y3 = 228;
+            poly->x1 = poly->x3 = 255;
+            poly->y0 = poly->y1 = 4;
+            poly->y2 = poly->y3 = 228;
 
-                poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 =
-                    poly->g1 = poly->g2 = poly->g3 = poly->b0 = poly->b1 =
-                        poly->b2 = poly->b3 = 255;
+            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
+                    poly->b3 = 255;
 
-                poly->pad2 = 0xC8;
-                poly->x0 = poly->x2 = 0;
-                firstPolygonIndex = 81; // !FAKE
-            } while (0);
+            poly->pad2 = 0xC8;
+            poly->x0 = poly->x2 = 0;
             poly->pad3 = 81;
             D_801BC3E4 = 0;
             unkEntity->step++;
