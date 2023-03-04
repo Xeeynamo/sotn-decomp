@@ -609,6 +609,13 @@ typedef struct RoomDimensions {
     /* 0x28 */ s32 height;
 } RoomDimensions; /* size=0x2C */
 
+typedef struct {
+    /* 0x00 */ const u8* gfxPage;
+    /* 0x04 */ const u8* gfxIndex;
+    /* 0x08 */ const u8* clut;
+    /* 0x0C */ const u8* collision;
+} TileDefinition; // size = 0x10
+
 typedef struct CollisionResult {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
@@ -830,6 +837,7 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
+extern TileDefinition* D_80073088;
 extern Camera g_Camera;
 extern s16 D_8007308E;                // g_Camera.posX.i.lo
 extern s16 D_80073092;                // g_Camera.posY.i.lo

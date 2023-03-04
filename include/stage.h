@@ -11,13 +11,6 @@
 #define ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
 typedef struct {
-    /* 0x00 */ const u8* gfxPage;
-    /* 0x04 */ const u8* gfxIndex;
-    /* 0x08 */ const u8* clut;
-    /* 0x0C */ const u8* collision;
-} TileDefinition; // size = 0x10
-
-typedef struct {
     /* 0x00 */ const u32 left : 6;
     /* 0x04 */ const u32 top : 6;
     /* 0x08 */ const u32 right : 6;
