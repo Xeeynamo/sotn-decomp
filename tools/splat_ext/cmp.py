@@ -56,19 +56,6 @@ class PSXSegCmp(N64Segment):
         with open(self.dec_path(), "wb") as f:
             f.write(dec)
 
-        self.append_header()
-        self.append_bin2c_config()
-
-    def append_header(self):
-        data_header_path = options.opts.asset_path / self.dir / "data.h"
-        with open(data_header_path, "a") as f:
-            f.write(f"unsigned char {self.name}[];\n")
-
-    def append_bin2c_config(self):
-        data_config_path = options.opts.asset_path / self.dir / "bin2c.config"
-        with open(data_config_path, "a") as f:
-            f.write(f"unsigned char {self.name}[];\n")
-
     def decompress(data):
         return data
 
