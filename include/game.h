@@ -577,6 +577,43 @@ typedef struct {
 } SaveData; /* size = 0x11CC */
 
 typedef struct {
+    /* 0x00 */ const u8* gfxPage;
+    /* 0x04 */ const u8* gfxIndex;
+    /* 0x08 */ const u8* clut;
+    /* 0x0C */ const u8* collision;
+} TileDefinition; // size = 0x10
+
+typedef struct {
+    /* 0x00 */ u32 left : 6;
+    /* 0x04 */ u32 top : 6;
+    /* 0x08 */ u32 right : 6;
+    /* 0x0C */ u32 bottom : 6;
+    /* 0x10 */ u32 flags : 8;
+} LayoutRect; // size = 0x14
+
+typedef struct {
+    /* 0x00 */ const u16* layout;
+    /* 0x04 */ const TileDefinition* tileDef;
+    /* 0x08 */ const LayoutRect rect;
+    /* 0x0C */ const u16 unkC;
+    /* 0x0E */ const u16 unkE;
+} LayerDef2; // size = 0x10
+
+typedef struct {
+    /* 0x00 */ const u16* layout;
+    /* 0x04 */ const TileDefinition* tileDef;
+    /* 0x08 */ const u32 rect;
+    /* 0x0C */ const u16 unkC;
+    /* 0x0E */ const u8 unkE;
+    /* 0x0F */ const u8 unkF;
+} LayerDef; // size = 0x10
+
+typedef struct {
+    LayerDef* fg;
+    LayerDef* bg;
+} RoomDef;
+
+typedef struct {
     /* 8003C774 */ void (*Update)(void);
     /* 8003C778 */ void (*TestCollisions)(void);
     /* 8003C77C */ void (*unk08)(void);
@@ -584,8 +621,8 @@ typedef struct {
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
     /* 8003C78C */ s32** cluts;
-    /* 8003C790 */ void* unk1C;       // related to object layout
-    /* 8003C794 */ void** tileLayers; // related to tiles layout
+    /* 8003C790 */ void* unk1C; // related to object layout
+    /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
@@ -608,13 +645,6 @@ typedef struct RoomDimensions {
     /* 0x24 */ s32 width;
     /* 0x28 */ s32 height;
 } RoomDimensions; /* size=0x2C */
-
-typedef struct {
-    /* 0x00 */ const u8* gfxPage;
-    /* 0x04 */ const u8* gfxIndex;
-    /* 0x08 */ const u8* clut;
-    /* 0x0C */ const u8* collision;
-} TileDefinition; // size = 0x10
 
 typedef struct CollisionResult {
     /* 0x00 */ s32 unk0;
@@ -730,6 +760,21 @@ typedef struct {
     /* 00 */ u16 count;
     /* 02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
+
+typedef struct {
+    /* 800730D8 */ u32 layout;
+    /* 800730DC */ u32 tileDef;
+    /* 800730E0 */ f32 scrollX;
+    /* 800730E4 */ f32 scrollY;
+    /* 800730E8 */ u32 D_800730E8;
+    /* 800730EC */ u32 D_800730EC;
+    /* 800730F0 */ u32 D_800730F0;
+    /* 800730F4 */ u32 D_800730F4;
+    /* 800730F8 */ u32 w;
+    /* 800730FC */ u32 h;
+    /* 80073100 */ u32 D_80073100;
+    /* 80073104 */ u32 flags;
+} BgLayer;
 
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
@@ -855,6 +900,7 @@ extern s32 g_CurrentRoomX;      // g_CurrentRoom.x
 extern s32 g_CurrentRoomY;      // g_CurrentRoom.y
 extern s32 g_CurrentRoomWidth;  // g_CurrentRoom.width
 extern s32 g_CurrentRoomHeight; // g_CurrentRoom.height
+extern BgLayer D_800730D8[];
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
