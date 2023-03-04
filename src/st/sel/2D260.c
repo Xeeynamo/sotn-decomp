@@ -188,7 +188,21 @@ INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE6D0);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE9A8);
+void func_801AE9A8(void) {
+    s32 i;
+
+    func_801ACC3C();
+    func_801ACBE4(0, 0);
+
+    for (i = 1; i < 5; i++) {
+        func_801ACBE4(i + 1, 4);
+        func_801B26A0(&D_80086FEC[D_801BAF18[i + 1].unk0], (i * 64) - 32,
+                      (i * 5) * 8, 0x7F, 0x1F, D_80180040[i], D_80180054[i]);
+    }
+
+    DrawNavigationTips(0);
+    func_801ACBE4(0x11, 0);
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEA8C);
 

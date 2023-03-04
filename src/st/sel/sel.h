@@ -6,6 +6,8 @@
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
 
+extern s32 D_80180040[];
+extern s32 D_80180054[];
 extern u8* D_801803B0;
 extern u8* D_801803B4;
 void* g_Cluts[];
