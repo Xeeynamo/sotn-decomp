@@ -923,10 +923,10 @@ void func_801B4DE0(void) {
     case 0:
         firstPolygonIndex = g_api.AllocPolygons(3, 1);
         if (firstPolygonIndex != -1) {
-                poly = &D_80086FEC[firstPolygonIndex];
-                unkEntity->firstPolygonIndex = firstPolygonIndex;
-                unkEntity->unk34 |= 0x800000;
-                *(s32*)&unkEntity->unk7C = poly;
+            poly = &D_80086FEC[firstPolygonIndex];
+            unkEntity->firstPolygonIndex = firstPolygonIndex;
+            unkEntity->unk34 |= 0x800000;
+            *(s32*)&unkEntity->unk7C = poly;
 
             do { // !FAKE
                 poly->x1 = poly->x3 = 255;
