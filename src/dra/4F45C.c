@@ -412,7 +412,7 @@ void func_800F0578(s32 arg0) {
     D_80137590 = (s32*)0x801E8000;
     *((s32*)0x801E8000) = 0;
 
-    func_800EFBF8();
+    func_800EFBF8(arg0);
 
     switch (arg0) {
     case 0:
