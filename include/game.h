@@ -740,7 +740,7 @@ extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
 extern u16 D_8003C708; // can save
-//extern u16 D_8003C710; // can warp
+// extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C730;
@@ -799,18 +799,18 @@ extern s32 D_80072EE8;
 extern s32 D_80072EEC;
 extern s32 D_80072EF4[];
 extern u16 D_80072EF6;
-extern s32 D_80072EFC; //stun timer
-extern s16 D_80072F00[]; //poison timer
-extern s16 D_80072F02[]; //curse timer
-extern s16 D_80072F04; //visual effect timer stoned/hit
+extern s32 D_80072EFC;   // stun timer
+extern s16 D_80072F00[]; // poison timer
+extern s16 D_80072F02[]; // curse timer
+extern s16 D_80072F04;   // visual effect timer stoned/hit
 extern s16 D_80072F0A[];
 extern s16 D_80072F0C;
 extern s16 D_80072F10;
 extern s16 D_80072F14[]; // could be an array or a struct
 extern s16 D_80072F16[];
 extern s16 D_80072F18;
-extern s16 D_80072F1A[]; //invincibility timer
-extern s16 D_80072F1C[]; //invincibility timer from consumables
+extern s16 D_80072F1A[]; // invincibility timer
+extern s16 D_80072F1C[]; // invincibility timer from consumables
 extern s16 D_80072F1E;
 extern Unkstruct_80072F20 D_80072F20;
 extern s32 D_80072F24;   // D_80072F20.unk04
@@ -948,7 +948,7 @@ extern s32 D_80097418;
 extern s32 D_8009741C;
 extern s32 D_80097420[];
 extern s32 D_80097424;
-extern s32 D_80097448; //underwater physics
+extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
@@ -962,7 +962,7 @@ extern Unkstruct_80097494 D_80097494;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern u32 g_StageId;
-extern s32 D_800974A4; //map open
+extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
 extern s32 D_800978B4;
@@ -985,7 +985,7 @@ extern u8 D_8009796E;
 extern s8 D_8009798A[];
 extern u8 D_80097A8D;
 extern s32 D_80097BDC;
-extern s32 D_80097BE0; // total CON
+extern s32 D_80097BE0;   // total CON
 extern s32 D_80097BE4[]; // total LCK
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
@@ -1002,7 +1002,7 @@ extern s32 g_playerMpMax;    // D_80097B9C.mpMax
 extern s32 D_80097C1C[];     // player Atk right hand
 extern s32 D_80097C20;       // player Atk left hand
 extern s32 D_80097C24;       // player Def
-//extern s32 D_80097C28 //player armor resistance flags
+// extern s32 D_80097C28 //player armor resistance flags
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;
