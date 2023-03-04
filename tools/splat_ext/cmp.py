@@ -52,7 +52,7 @@ class PSXSegCmp(N64Segment):
         with open(self.cmp_path(), "wb") as f:
             f.write(data)
 
-        dec = SOTNDec0ompress(data).decompress_data()
+        dec = SOTNDecompress(data).decompress_data()
         with open(self.dec_path(), "wb") as f:
             f.write(dec)
 
