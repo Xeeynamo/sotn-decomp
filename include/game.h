@@ -607,22 +607,18 @@ typedef struct RoomDimensions {
     /* 0x20 */ s32 y;
     /* 0x24 */ s32 width;
     /* 0x28 */ s32 height;
-} RoomDimensions;
+} RoomDimensions; /* size=0x2C */
 
 typedef struct CollisionResult {
-    /* 0x00 */ s32 unk0; // if not 0 it collides
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
-    /* 0x10 */ u16 unk10;
-    /* 0x10 */ u16 unk12;
-    /* 0x14 */ s16 unk14; // rightRepel
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18; // bottomRepel
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ u16 unk1C;
-    /* 0x1E */ u16 unk1E;
-    /* 0x20 */ u8 pad2[2];
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
 } CollisionResult; /* size=0x24 */
 
 typedef struct {
@@ -835,8 +831,9 @@ extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
 extern Camera g_Camera;
-extern s16 D_8007308E; // g_Camera.posX.i.lo
-extern s16 D_80073092; // g_Camera.posY.i.lo
+extern s16 D_8007308E;                // g_Camera.posX.i.lo
+extern s16 D_80073092;                // g_Camera.posY.i.lo
+extern Unkstruct_800ECE2C D_800730A0; // 4 bytes before 'g_CurrentRoom'
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
 extern s32 D_800730AC;          // g_CurrentRoom.unk8
