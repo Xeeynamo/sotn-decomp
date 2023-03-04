@@ -204,7 +204,25 @@ void func_801AE9A8(void) {
     func_801ACBE4(0x11, 0);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEA8C);
+void func_801AEA8C(s32 arg0) {
+    D_801D6B08 = 0;
+    D_801BC3E0 = 0;
+    func_801ACC3C();
+    func_801ACBE4(7, 0x11);
+    func_801ACBE4(8, 0);
+    func_801ACBE4(9, 0x11);
+    func_801ACBE4(0xA, 0);
+
+    if (arg0 == 0) {
+        func_801ACBE4(1, 0);
+        func_801B2670(&D_80086FEC[D_801BAF20], 24, 24, 127, 31);
+    } else {
+        func_801ACBE4(3, 0);
+        func_801B2670(&D_80086FEC[D_801BAF30], 24, 24, 127, 31);
+    }
+
+    DrawNavigationTips(1);
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEB74);
 

@@ -10,6 +10,10 @@ extern s32 D_80180040[];
 extern s32 D_80180054[];
 extern u8* D_801803B0;
 extern u8* D_801803B4;
+extern s32 D_801BAF20;
+extern s32 D_801BAF30;
+extern s32 D_801BC3E0;
+extern s32 D_801D6B08;
 void* g_Cluts[];
 void* g_EntityGfxs[];
 s16** g_SpriteBanks[]; // g_SpriteBanks
