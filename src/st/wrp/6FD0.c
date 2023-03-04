@@ -2826,7 +2826,7 @@ s32 func_8018BA10(u16* arg0) {
                     if (new_var4 & 1) {
                         g_api.CheckCollision(x, y - 8, &resBack, 0);
                         if (!(resBack.unk0 & 1)) {
-                            new_var = res.unk18;
+                            new_var = LOH(res.unk18);
                             g_CurrentEntity->accelerationX = 0;
                             g_CurrentEntity->accelerationY = 0;
                             g_CurrentEntity->posY.i.hi =
@@ -2849,7 +2849,7 @@ s32 func_8018BA10(u16* arg0) {
                     }
                     g_api.CheckCollision(x, y - 8, &resBack, 0);
                     if (!(resBack.unk0 & 1)) {
-                        x = ((u16)g_CurrentEntity->posY.i.hi) + res.unk18;
+                        x = ((u16)g_CurrentEntity->posY.i.hi) + LOH(res.unk18);
                         new_var = x;
                         g_CurrentEntity->accelerationX = 0;
                         g_CurrentEntity->accelerationY = 0;
@@ -3145,7 +3145,7 @@ void func_8018CB34(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->posY.i.hi += (u16)res.unk18;
+        g_CurrentEntity->posY.i.hi += LOH(res.unk18);
         return;
     }
 
@@ -3467,7 +3467,7 @@ bool func_8018FC4C(Unkstruct6* unk) {
         posY += unk->y;
         g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += res.unk18;
+            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {

@@ -934,7 +934,7 @@ void func_801934D0(u16 arg0) {
         }
 
         g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + (u16)res.unk18;
+            (u16)g_CurrentEntity->posY.i.hi + LOH(res.unk18);
         return;
     }
 
@@ -1210,7 +1210,7 @@ bool func_80195E68(Unkstruct6* unk) {
         posY += unk->y;
         g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += res.unk18;
+            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {

@@ -75,7 +75,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
             break;
         case 1:
             *outX = x;
-            *outY = curY + D_80174AD8.unk10;
+            *outY = curY + LOH(D_80174AD8.unk10);
             return 1;
         default:
             return 0;
