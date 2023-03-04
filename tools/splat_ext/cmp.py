@@ -34,13 +34,13 @@ class PSXSegCmp(N64Segment):
         return f"D_{self.vram_start:X}"
 
     def out_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}"
+        return self.cmp_path()
 
     def cmp_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}.bin.cmp"
+        return options.opts.asset_path / self.dir / f"{self.name}.bin"
 
     def dec_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}.bin"
+        return options.opts.asset_path / self.dir / f"{self.name}.bin.dec"
 
     def split(self, rom_bytes):
         path = self.out_path()
