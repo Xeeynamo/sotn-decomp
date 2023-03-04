@@ -943,9 +943,9 @@ extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
 extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
 
 // D_80073550 g_EntityArray[2]
-extern u16 D_8007357C; // g_EntityArray[2].step
-extern s32 D_80073584; // g_EntityArray[2].unk34
-extern s32 D_800735B4; // g_EntityArray[2].firstPolygonIndex
+extern u16 D_8007357C;       // g_EntityArray[2].step
+extern s32 D_80073584;       // g_EntityArray[2].unk34
+extern s32 D_800735B4;       // g_EntityArray[2].firstPolygonIndex
 extern POLY_GT4* D_800735CC; // *(s32*)g_EntityArray[2].unk7C
 
 // D_80073550 g_EntityArray[2]
