@@ -753,7 +753,18 @@ void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_8010DF70);
+void func_8010DF70(void) {
+    g_CurrentEntity = &PLAYER;
+
+    switch (PLAYER.unkAC) {
+    case 0xBA:
+    case 0xBB:
+    case 0xBE:
+    case 0xF0:
+    case 0xF1:
+        func_8010DBFC(D_800B0130, D_800B01B8);
+    }
+}
 
 void func_8010DFF0(s32 arg0, s32 arg1) {
     POLY_GT4* poly;
@@ -857,7 +868,7 @@ void func_8010E234(s32 speed) {
 s32 func_8010E27C(void) {
     u16* facing;
 
-    if (D_80072F64 & 2) {
+    if (D_80072F20.unk44 & 2) {
         return 0;
     }
 
@@ -908,17 +919,15 @@ void func_8010E3B8(s32 accelerationX) {
 }
 
 void func_8010E3E0(void) {
-    // D_80072F68 is part of a struct, the temp isn't needed in that case
-    u16* temp = &D_80072F68;
-    if (*temp != 0) {
+    if (D_80072F20.unk48 != 0) {
         DestroyEntity(&g_EntityArray[16]);
-        *temp = 0;
+        D_80072F20.unk48 = 0;
     }
 }
 
 void func_8010E42C(u16 arg0) {
     PLAYER.unk2E = arg0;
-    PLAYER.step = 0x12;
+    PLAYER.step = 18;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -942,7 +951,7 @@ void func_8010E4D0(void) {
     PLAYER.palette = 0x8100;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
 
-    if ((u32)(D_80072F92 - 1) < 2U) {
+    if ((u32)(D_80072F20.unk72 - 1) < 2U) {
         func_8010DA48(0xC7);
         PLAYER.accelerationY = 0;
         PLAYER.accelerationX = 0;
@@ -975,7 +984,7 @@ void func_8010E6AC(s32 arg0) {
         func_8011AAFC(g_CurrentEntity, 0x50001, 0);
     }
 
-    if (D_80072F6C != 0) {
+    if (D_80072F20.unk4C != 0) {
         PLAYER.unkAC = 9;
     }
 
@@ -983,7 +992,7 @@ void func_8010E6AC(s32 arg0) {
         PLAYER.animFrameIdx = 1;
     }
 
-    if (D_80072F70 == 2) {
+    if (D_80072F20.unk50 == 2) {
         PLAYER.animFrameIdx = 4;
     }
 }
@@ -991,7 +1000,7 @@ void func_8010E6AC(s32 arg0) {
 void func_8010E7AC(void) {
     func_8010D584(3);
 
-    if (D_80072F70 != 1) {
+    if (D_80072F20.unk50 != 1) {
         func_8010DA48(0x1C);
     }
 
@@ -1005,7 +1014,7 @@ void func_8010E7AC(void) {
         D_80072F0A[0] = 0;
     }
 
-    D_80072F64 = 0x10;
+    D_80072F20.unk44 = 0x10;
 }
 
 void func_8010E83C(s32 arg0) {
@@ -1015,11 +1024,11 @@ void func_8010E83C(s32 arg0) {
     } else if (func_8010E27C() != 0) {
         func_8010DA48(0x1A);
         AccelerateX(0x18000);
-        D_80072F64 = 0;
+        D_80072F20.unk44 = 0;
     } else {
         func_8010DA48(0x16);
         PLAYER.accelerationX = 0;
-        D_80072F64 = 4;
+        D_80072F20.unk44 = 4;
     }
 
     PLAYER.accelerationY = 0xFFFB0000 | 0x2000;
@@ -1030,20 +1039,18 @@ void func_8010E83C(s32 arg0) {
     }
 
     if (arg0 != 0) {
-        D_80072F64 = D_80072F64 & ~1;
+        D_80072F64 &= ~1;
     } else {
-        D_80072F64 = D_80072F64 | 1;
+        D_80072F64 |= 1;
     }
 }
 
 void func_8010E940(void) {
-    u16* temp = &D_80072F64;
-
-    *temp |= 0x21;
+    D_80072F20.unk44 |= 0x21;
     func_8010DA48(0x20);
     PLAYER.unk2E = 0;
     PLAYER.accelerationY = -0x44000;
-    if (D_80072F92 != 0) {
+    if (D_80072F20.unk72 != 0) {
         PLAYER.accelerationY = 0;
     }
 }
@@ -1056,16 +1063,16 @@ void func_8010E9A4(void) {
     }
 
     if (PLAYER.step == 4) {
-        D_80072F60[2] |= 1;
+        D_80072F20.unk44 |= 1;
     } else {
-        D_80072F60[2] = 0;
+        D_80072F20.unk44 = 0;
     }
 
     func_8011AAFC(g_CurrentEntity, 2, 0);
     func_8010D584(8);
     PLAYER.accelerationY = -0xC0000;
     func_8010DA48(0x21);
-    D_80072F6A[0] = 0;
+    D_80072F20.unk4A = 0;
 }
 
 // https://decomp.me/scratch/9jKqU

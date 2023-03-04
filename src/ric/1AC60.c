@@ -283,6 +283,7 @@ void func_80159C04(void) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80159CE4);
 
+// https://decomp.me/scratch/1JWA0
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A7D0);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A9B0);
