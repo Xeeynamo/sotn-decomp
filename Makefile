@@ -280,7 +280,7 @@ $(SOTNDISK): $(GO)
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.bin.o: %.bin
-	$(LD) -r -b binary -Map $*.map -o $@ $<
+	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
