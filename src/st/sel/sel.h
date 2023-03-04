@@ -12,7 +12,6 @@ extern u8* D_801803B0;
 extern u8* D_801803B4;
 extern s32 D_801BAF20;
 extern s32 D_801BAF30;
-extern s32 D_801BC3E0;
 extern s32 D_801D6B08;
 void* g_Cluts[];
 void* g_EntityGfxs[];
