@@ -1221,6 +1221,7 @@ void func_8010FD88(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_8010FDF8);
 s32 func_8010FDF8(/*?*/ s32);
 
+// https://decomp.me/scratch/Akstc 94.80%
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_80110394);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_801104D0);

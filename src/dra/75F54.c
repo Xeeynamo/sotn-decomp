@@ -847,7 +847,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
-    CollisionResult collisionResult;
+    CollisionResult res;
     s16 var_a1;
 
     if (g_CurrentEntity->accelerationX == 0) {
@@ -855,14 +855,14 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     }
 
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
-                   g_CurrentEntity->posY.i.hi + arg0, &collisionResult, 0);
+                   g_CurrentEntity->posY.i.hi + arg0, &res, 0);
     if (g_CurrentEntity->accelerationX > 0) {
-        var_a1 = collisionResult.unk14;
+        var_a1 = LOH(res.unk14);
     } else {
-        var_a1 = collisionResult.unk1C;
+        var_a1 = LOH(res.unk1C);
     }
 
-    if (collisionResult.unk0 & 2) {
+    if (res.unk0 & 2) {
         g_CurrentEntity->posX.i.lo = 0;
         g_CurrentEntity->posX.i.hi += var_a1;
         return 2;

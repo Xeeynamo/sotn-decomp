@@ -223,9 +223,9 @@ typedef struct Entity {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E; // some kind of angle
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ s16 unk22;
+    /* 0x1E */ s16 unk1E; // poly rotation angle
+    /* 0x20 */ s16 unk20; // poly / rotation origin x
+    /* 0x22 */ s16 unk22; // poly / rotation origin y
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -238,13 +238,13 @@ typedef struct Entity {
     /* 0x3A */ s16 unk3A;
     /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 unk40;
-    /* 0x42 */ s16 unk42;
+    /* 0x40 */ s16 unk40; // damage
+    /* 0x42 */ s16 unk42; // damage type
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 unk48;
-    /* 0x49 */ u8 unk49;
+    /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
@@ -607,22 +607,25 @@ typedef struct RoomDimensions {
     /* 0x20 */ s32 y;
     /* 0x24 */ s32 width;
     /* 0x28 */ s32 height;
-} RoomDimensions;
+} RoomDimensions; /* size=0x2C */
+
+typedef struct {
+    /* 0x00 */ const u8* gfxPage;
+    /* 0x04 */ const u8* gfxIndex;
+    /* 0x08 */ const u8* clut;
+    /* 0x0C */ const u8* collision;
+} TileDefinition; // size = 0x10
 
 typedef struct CollisionResult {
-    /* 0x00 */ s32 unk0; // if not 0 it collides
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
-    /* 0x10 */ u16 unk10;
-    /* 0x10 */ u16 unk12;
-    /* 0x14 */ s16 unk14; // rightRepel
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18; // bottomRepel
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ u16 unk1C;
-    /* 0x1E */ u16 unk1E;
-    /* 0x20 */ u8 pad2[2];
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
 } CollisionResult; /* size=0x24 */
 
 typedef struct {
@@ -666,7 +669,7 @@ typedef struct {
     /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
+    /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
     /* 8003C850 */ void* D_800A8720;
     /* 8003C854 */ void* func_800FF7B8;
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
@@ -736,10 +739,12 @@ extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
-extern u16 D_8003C708;
+extern u16 D_8003C708; // can save
+// extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-extern s32 D_8003C734;
+extern s32 D_8003C730;
+extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern Unsktruct_800EAF28** D_8003C798;
@@ -794,18 +799,18 @@ extern s32 D_80072EE8;
 extern s32 D_80072EEC;
 extern s32 D_80072EF4[];
 extern u16 D_80072EF6;
-extern s32 D_80072EFC;
-extern s16 D_80072F00[];
-extern s16 D_80072F02[];
-extern s16 D_80072F04;
+extern s32 D_80072EFC;   // stun timer
+extern s16 D_80072F00[]; // poison timer
+extern s16 D_80072F02[]; // curse timer
+extern s16 D_80072F04;   // visual effect timer stoned/hit
 extern s16 D_80072F0A[];
 extern s16 D_80072F0C;
 extern s16 D_80072F10;
 extern s16 D_80072F14[]; // could be an array or a struct
 extern s16 D_80072F16[];
 extern s16 D_80072F18;
-extern s16 D_80072F1A[];
-extern s16 D_80072F1C[];
+extern s16 D_80072F1A[]; // invincibility timer
+extern s16 D_80072F1C[]; // invincibility timer from consumables
 extern s16 D_80072F1E;
 extern Unkstruct_80072F20 D_80072F20;
 extern s32 D_80072F24;   // D_80072F20.unk04
@@ -834,9 +839,11 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
+extern TileDefinition* D_80073088;
 extern Camera g_Camera;
-extern s16 D_8007308E; // g_Camera.posX.i.lo
-extern s16 D_80073092; // g_Camera.posY.i.lo
+extern s16 D_8007308E;                // g_Camera.posX.i.lo
+extern s16 D_80073092;                // g_Camera.posY.i.lo
+extern Unkstruct_800ECE2C D_800730A0; // 4 bytes before 'g_CurrentRoom'
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
 extern s32 D_800730AC;          // g_CurrentRoom.unk8
@@ -941,7 +948,7 @@ extern s32 D_80097418;
 extern s32 D_8009741C;
 extern s32 D_80097420[];
 extern s32 D_80097424;
-extern s32 D_80097448;
+extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
@@ -955,7 +962,7 @@ extern Unkstruct_80097494 D_80097494;
 extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern u32 g_StageId;
-extern s32 D_800974A4;
+extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
 extern s32 D_800978B4;
@@ -978,8 +985,8 @@ extern u8 D_8009796E;
 extern s8 D_8009798A[];
 extern u8 D_80097A8D;
 extern s32 D_80097BDC;
-extern s32 D_80097BE0;
-extern s32 D_80097BE4[];
+extern s32 D_80097BE0;   // total CON
+extern s32 D_80097BE4[]; // total LCK
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
@@ -992,9 +999,10 @@ extern s32 g_playerHeart;    // D_80097B9C.hearts
 extern s32 g_playerHeartMax; // D_80097B9C.heartsMax
 extern s32 g_playerMP;       // D_80097B9C.mp
 extern s32 g_playerMpMax;    // D_80097B9C.mpMax
-extern s32 D_80097C1C[];
-extern s32 D_80097C20;
-extern s32 D_80097C24;
+extern s32 D_80097C1C[];     // player Atk right hand
+extern s32 D_80097C20;       // player Atk left hand
+extern s32 D_80097C24;       // player Def
+// extern s32 D_80097C28 //player armor resistance flags
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;
