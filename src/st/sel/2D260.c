@@ -211,7 +211,7 @@ void func_801AEA8C(s32 arg0) {
     func_801ACBE4(7, 0x11);
     func_801ACBE4(8, 0);
     func_801ACBE4(9, 0x11);
-    func_801ACBE4(0xA, 0);
+    func_801ACBE4(10, 0);
 
     if (arg0 == 0) {
         func_801ACBE4(1, 0);
