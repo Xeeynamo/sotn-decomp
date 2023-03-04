@@ -525,6 +525,7 @@ s32 func_801106A4();
 s32 func_8011081C();
 s32 func_80110968();
 s32 func_80110BC8();
+void func_8010DBFC(s32*, s32*);
 s32 func_80110DF8();
 s32 func_80111018();
 s32 func_801112AC();
