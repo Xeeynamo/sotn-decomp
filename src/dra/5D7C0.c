@@ -353,7 +353,483 @@ void func_800FF708(s32 arg0, s32 arg1) {
     g_playerEquip[arg1 + 2] = rnd;
 }
 
+// https://decomp.me/scratch/Ti1u1
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FF7B8);
+#else
+extern s8 D_8006C373[];
+typedef struct {
+    // part of a larger struct, maybe part of PlayerStats?
+    s32 subWeapon;
+} Unkstruct_80097BFC;
+extern Unkstruct_80097BFC D_80097BFC; // g_SubWeapon
+extern s32 D_800A872C[];
+
+void func_800FF7B8(s32 arg0) {
+    s32 temp_v0;
+    s32 var_a0_2;
+    s32 var_s0;
+    s32 var_s0_10;
+    s32 var_s0_11;
+    s32 var_s0_12;
+    s32 var_s0_13;
+    s32 var_s0_14;
+    s32 var_s0_15;
+    s32 i;
+    s32 var_s0_2;
+    s32 var_s0_3;
+    s32 var_s0_6;
+    s32 var_s0_7;
+    s32 var_s0_8;
+    s32 var_s0_9;
+    s32 var_v0_3;
+    s32 var_v1_2;
+    s32* var_a1;
+    s32* var_v0_4;
+    s32* var_v0_10;
+    s32* var_v1;
+    s32* var_v1_4;
+    s8* var_v1_5;
+    s32 var_s0_5;
+    s8* var_a0;
+    s8* var_v0;
+    s8* var_v0_2;
+    s8* var_v0_5;
+    s8* var_v0_6;
+    s8* var_v1_3;
+    u8 var_s0_4;
+    u8* var_a1_2;
+    u8* var_a1_3;
+    u8 temp_var_1;
+    u8 temp_var_2;
+    u8 temp_var_3;
+    s32* thingPtr;
+    int new_var;
+
+    if (D_8003C730 != 0) {
+        func_800F53A4();
+        func_800FF60C();
+        return;
+    }
+    if (arg0 == 1) { // First block fully matching
+        if (g_playerEquip[0] == 0x7B) {
+            g_playerEquip[0] = 0;
+        } else if (g_playerEquip[1] == 0x7B) {
+            g_playerEquip[1] = 0;
+        } else if (D_80097A05 != 0) {
+            D_80097A05--;
+        }
+        if (g_playerEquip[0] == 0x10) {
+            g_playerEquip[0] = 0;
+        } else if (g_playerEquip[1] == 0x10) {
+            g_playerEquip[1] = 0;
+        } else if (D_8009799A != 0) {
+            D_8009799A--;
+        }
+        if (g_playerEquip[2] == 0x2D) {
+            g_playerEquip[2] = 0x1A;
+        } else if (D_80097A60 != 0) {
+            D_80097A60--;
+        }
+        if (g_playerEquip[3] == 0xF) {
+            g_playerEquip[3] = 0;
+        } else if (D_80097A42 != 0) {
+            D_80097A42--;
+        }
+        if (g_playerEquip[4] == 0x38) {
+            g_playerEquip[4] = 0x30;
+            func_800FF60C();
+        } else if (D_80097A6B != 0) {
+            D_80097A6B--;
+        }
+        if (g_playerEquip[5] == 0x4E) {
+            g_playerEquip[5] = 0x39;
+        } else if (D_80097C18 == 0x4E) {
+            D_80097C18 = 0x39;
+        } else if (D_80097A81 != 0) {
+            D_80097A81--;
+        }
+    } else { // 220
+        var_s0 = 0x7FF;
+        var_v0 = &D_8006BB74[var_s0];
+        for (; var_s0 >= 0; var_s0--) {
+            *var_v0-- = 0;
+        }
+
+        var_s0_2 = 3;
+        var_v0_10 = &D_80097BF8;
+        var_v1 = var_v0_10 - 9;
+        g_roomCount = 0;
+        *var_v0_10 = 0;
+        for (; var_s0_2 >= 0; var_s0_2--) {
+            *var_v1-- = 0;
+        }
+
+        var_s0_3 = 0;
+        g_playerExp = 0;
+        g_playerLevel = 1;
+        g_killCount = 0;
+        do {
+            D_80097C44[var_s0_3].level = 1;
+            D_80097C44[var_s0_3].exp = 0;
+            D_80097C44[var_s0_3].killCount = 0;
+            var_s0_3++;
+        } while (var_s0_3 < FAMILIAR_COUNT);
+
+        for (var_s0_3 = 0; var_s0_3 < 0xA9; var_s0_3++) {
+            D_8009798A[var_s0_3] = 0;
+            D_80097A8D[var_s0_3] = var_s0_3;
+        }
+
+        var_s0_5 = 0;
+        do {
+            D_80097A33[var_s0_5] = 0;
+            D_80097B36[var_s0_5] = var_s0_5;
+            var_s0_5++;
+        } while (var_s0_5 < 90);
+
+        D_8009798A[0] = 1;
+        D_80097A4D = 1;
+        D_80097A33[0] = 1;
+        D_80097A63 = 1;
+        D_80097A6C = 1;
+        var_s0_6 = 7;
+        var_a0 = D_8009798A - 1;
+        for (; var_s0_6 >= 0; var_s0_6--) {
+            *var_a0-- = 0;
+        }
+
+        thingPtr = &D_80097B9C.unk0;
+        D_80097B9C.unk0 = 0;
+        if (g_StageId == STAGE_ST0 ||
+            g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+            temp_var_3 = 1;
+            var_s0_7 = 0x1D;
+            var_v0_2 = thingPtr;
+            var_v0_2 -= 0x21B;
+            for (; var_s0_7 >= 0; var_s0_7--) {
+                *var_v0_2-- = temp_var_3;
+            }
+
+            var_s0_8 = 0x1F;
+            var_a1 = D_8003CAA4;
+            D_80097964[10] |= 2;
+            D_80097964[11] |= 2;
+            D_80097964[15] |= 2;
+            D_80097964[16] |= 2;
+            for (; var_s0_8 >= 0; var_s0_8--) {
+                *var_a1-- = 0;
+            }
+
+            *D_8003CB00 = 0;
+            D_8003CB04 = 0;
+            D_80097BFC.subWeapon = 0;
+            if (g_StageId != STAGE_ST0 && g_StageId != STAGE_NO3) {
+                D_80097BFC.subWeapon = (rand() % 9) + 1;
+            }
+
+            D_80097B9C.hp = 50;
+            D_80097B9C.hpMax = 50;
+            D_80097B9C.hearts = 30;
+            D_80097B9C.heartsMax = 99;
+            D_80097B9C.mpMax = 20;
+            D_80097B9C.mp = 20;
+            D_80097B9C.statStr = 10;
+            D_80097B9C.statCon = 10;
+            D_80097B9C.statInt = 10;
+            D_80097B9C.statLck = 10;
+            g_playerEquip[2] = 0x1A;
+            g_playerEquip[4] = 0x30;
+            g_playerEquip[5] = 0x39;
+            D_80097C18 = 0x39;
+            g_playerGold = 0;
+            g_playerEquip[0] = 0;
+            g_playerEquip[1] = 0;
+            g_playerEquip[3] = 0;
+            if (g_StageId == STAGE_NO3) {
+                func_800FD4C0(26, 1);
+                func_800FD4C0(9, 1);
+                func_800FD4C0(4, 1);
+                func_800FD4C0(14, 1);
+                func_800FD4C0(12, 1);
+            }
+            g_GameTimer.hours = 0;
+            D_80097C34 = 0;
+            D_80097C38->unk0 = 0;
+            D_80097C3C = 0;
+        } else {
+            if (g_StageId == STAGE_NO3) {
+                D_80097B9C.statStr = 6;
+                D_80097B9C.statCon = 6;
+                D_80097B9C.statInt = 6;
+                D_80097B9C.statLck = 6;
+                g_playerGold = 0;
+                var_v0_2 = thingPtr;
+                var_v0_2 -= 0x21B;
+                for (var_s0_10 = 0x1D; var_s0_10 >= 0; var_s0_10--) {
+                    *var_v1_3-- = 0;
+                }
+
+                if (D_801397FC != 0) { // maria saves Ricther flag
+                    func_800FD874(159, 0);
+                    var_s0_11 = 3;
+                } else if (D_80097B9C.hp == D_80097B9C.hpMax) {
+                    D_80097B9C.statStr++;
+                    D_80097B9C.statCon++;
+                    D_80097B9C.statInt++;
+                    D_80097B9C.statLck++;
+                    var_s0_11 = 0;
+                } else {
+                    var_s0_11 = 2;
+                    if (D_80097B9C.hp >=
+                        (((s32)(D_80097B9C.hpMax +
+                                (((u32)D_80097B9C.hpMax) >> 0x1F))) >>
+                         1)) {
+                        D_80097B9C.statStr++;
+                        var_s0_11 = 1;
+                    } else {
+                        D_80097B9C.statCon++;
+                    }
+                }
+                if (g_playerHeart == 0 && var_s0_11 < 3) {
+                    func_800FD874(0x8E, 0);
+                }
+                D_80097B9C.hpMax = 70;
+                if (var_s0_11 == 0) {
+                    D_80097B9C.hpMax = 75;
+                }
+                g_playerHeart = 0xA;
+                g_playerHeartMax = 0x32;
+                g_playerMpMax = 0x14;
+                if (D_80139008 >= 0x29) {
+                    func_800FD874(0x47, 0);
+                    D_80097B9C.statInt++;
+                } else {
+                    D_80097B9C.statStr++;
+                }
+
+                if (D_80097BFC.subWeapon == 4) {
+                    if (var_s0_11 < 3) {
+                        g_playerHeartMax += 5;
+                        g_playerMpMax += 5;
+                    }
+                } else if (D_80097BFC.subWeapon == 3) {
+                    if (var_s0_11 < 2) {
+                        g_playerHeartMax += 5;
+                        player_stat_int++;
+                    }
+                } else {
+                    switch (var_s0_11) {
+                    case 0:
+                        player_stat_lck += 5;
+                        player_stat_con++;
+                        player_stat_int++;
+
+                    case 1:
+                        D_80097B9C.hpMax += 5;
+
+                    case 2:
+                        D_80097B9C.statStr++;
+                        break;
+                    }
+                }
+
+                temp_v0 = func_800FD4C0(0, 0);
+                if (temp_v0 < 101) {
+                    D_80097B9C.hpMax += 5;
+                    g_playerMpMax += 5;
+                    g_playerHeartMax += 5;
+                    D_80097B9C.statStr += 5;
+                    D_80097B9C.statCon += 5;
+                    D_80097B9C.statInt += 5;
+                    D_80097B9C.statLck += 5;
+                } else if (temp_v0 < 201) {
+                    D_80097B9C.statLck += 2;
+                } else if (temp_v0 < 301) {
+                    D_80097B9C.statLck += 1;
+                } else if (temp_v0 >= 1000) {
+                    D_80097B9C.statCon += 1;
+                }
+
+                var_s0_12 = 0;
+                var_a1_2 = D_800A300C;
+                g_playerEquip[0] = 0x7B;
+                g_playerEquip[1] = 0x10;
+                g_playerEquip[2] = 0x2D;
+                g_playerEquip[3] = 0xF;
+                g_playerEquip[4] = 0x38;
+                g_playerEquip[5] = 0x4E;
+                D_80097BFC.subWeapon = 0;
+                D_80097C18 = 0x39;
+                D_80097B9C.hp = D_80097B9C.hpMax;
+                g_playerMP = g_playerMpMax;
+
+                // checks for the cheat code "x-x!v''q"
+            loop_103:
+                if (g_SaveName[var_s0_12] == *var_a1_2++) {
+                    var_s0_12++;
+                    if (var_s0_12 < 8) {
+                        goto loop_103;
+                    }
+                }
+
+                if (var_s0_12 == 8) {
+                    player_stat_lck = 99;
+                    g_playerHeartMax = 5;
+                    D_80097B9C.statStr = 1;
+                    D_80097B9C.statCon = 0;
+                    D_80097B9C.statInt = 0;
+                    D_80097B9C.hpMax = 25;
+                    g_playerMpMax = 1;
+                    D_80097B9C.hp = 25;
+                    g_playerHeart = 5;
+                    g_playerMP = 1;
+                    D_80097C18 = 70;
+                }
+
+                if (g_IsTimeAttackUnlocked != false) {
+                    // checks for "axearmor"
+                    var_a1_3 = D_800A3010;
+                    var_s0_13 = 0;
+                loop_109:
+                    if (g_SaveName[var_s0_13] == *var_a1_3++) {
+                        var_s0_13++;
+                        if (var_s0_13 < 8) {
+                            goto loop_109;
+                        }
+                    }
+                    if (var_s0_13 == 8) {
+                        func_800FD874(0x19, 2);
+                    }
+                }
+            } else {
+                var_s0_9 = 0x1F;
+                var_v0_4 = &D_8003CAA4;
+                do {
+                    *var_v0_4 = 0;
+                    var_s0_9--;
+                    var_v0_4 -= 4;
+                } while (var_s0_9 >= 0);
+                D_80097B9C.statStr = 6;
+                D_80097B9C.statCon = 6;
+                D_80097B9C.statInt = 6;
+                player_stat_lck = 6;
+                D_80097B9C.hpMax = 70;
+                D_80097B9C.hp = 70;
+                g_playerHeart = 10;
+                g_playerGold = 500000;
+                g_playerHeartMax = 50;
+                g_playerMP = 20;
+                g_playerMpMax = 20;
+                g_playerHeart = 1234;
+                g_playerHeartMax = 2000;
+                g_playerExp = 11000;
+                g_playerLevel = 20;
+                var_s0_9 = 0x10;
+                if (g_StageId & 0x20) {
+                    g_playerExp = 110000;
+                }
+
+                new_var = 3;
+                var_v1_5 = thingPtr - 0x238; // 0x80097964
+                var_a0_2 = 0;
+                do {
+                    var_a0_2 += var_s0_9;
+                    if (D_800A872C[var_a0_2] != 0) {
+                        *var_v1_5 = 1;
+                    } else {
+                        *var_v1_5 = new_var;
+                    }
+                    var_v1_5++;
+                } while ((s32)var_v1_5 <
+                         ((s32)((&D_80097B9C.statStr) - 0x21A)));
+
+                temp_var_2 = 0x32;
+                var_s0_14 = 0xA8;
+                var_v0_5 = D_80097A32;
+                for (; var_s0_14 >= 0; var_s0_14--) {
+                    *var_v0_5-- = temp_var_2;
+                }
+
+                temp_var_1 = 1;
+                var_s0_15 = 0x59;
+                var_v0_6 = D_80097A8C;
+                for (; var_s0_15 >= 0; var_s0_15--) {
+                    *var_v0_6-- = temp_var_1;
+                }
+
+                g_playerEquip[0] = 0x13;
+                g_playerEquip[1] = 5;
+                g_playerEquip[2] = 0x1A;
+                g_playerEquip[3] = 2;
+                g_playerEquip[4] = 0x30;
+                g_playerEquip[5] = 0x39;
+                D_80097C18 = 0x39;
+                g_GameTimer.hours = 0;
+                g_GameTimer.minutes = 0;
+                g_GameTimer.seconds = 0;
+                g_GameTimer.frames = 0;
+                D_80097BFC.subWeapon = 0;
+                D_8009796E = 3;
+                (&D_8009796E)[1] = 3;
+                D_80097973 = 3;
+                *D_80097964 = 3;
+                D_80097965 = 3;
+                D_80097968 = 3;
+                D_80097969 = 3;
+                D_8009796A = 3;
+                D_8009796B = 3;
+                D_80097970 = 3;
+                D_80097971 = 3;
+                func_800FD874(0x6F, 0);
+                func_800FD874(0x70, 0);
+                func_800FD874(0x71, 0);
+                func_800FD874(0x62, 0);
+                func_800FD874(0x80, 0);
+                func_800FD874(0x64, 0);
+                func_800FD874(6, 0);
+                func_800FD874(7, 0);
+                func_800FD874(0x12, 0);
+                func_800FD874(0x17, 0);
+                func_800FD874(0x55, 0);
+                func_800FD874(0x58, 0);
+                func_800FD874(1, 2);
+                func_800FD874(3, 2);
+                func_800FD874(4, 2);
+                func_800FD874(5, 2);
+                func_800FD874(6, 2);
+                func_800FD874(7, 2);
+                func_800FD874(0xA, 2);
+                func_800FD874(0xD, 2);
+                func_800FD874(0x1F, 1);
+                func_800FD874(0x21, 1);
+                func_800FD874(0x23, 1);
+                func_800FD874(0x31, 3);
+                func_800FD874(0x33, 3);
+                func_800FD874(0x35, 3);
+                func_800FD874(0x32, 3);
+                func_800FD874(0x52, 4);
+                func_800FD874(0x4F, 4);
+
+                for (i = 0; i < 0x50; i++) {
+                    func_800FD874(0x9F, 0);
+                }
+
+                for (i = 0; i < 10; i++) {
+                    func_800FD874(0x19, 0);
+                    func_800FD874(0x45, 0);
+                    func_800FD874(0x43, 0);
+                    func_800FD874(0x90, 0);
+                    func_800FD874(0x51, 0);
+                    func_800FD874(0x52, 0);
+                    func_800FD874(0x49, 0);
+                }
+            }
+        }
+    }
+    func_800F53A4();
+}
+#endif
 
 // matches with ASPSX
 #ifndef NON_MATCHING
