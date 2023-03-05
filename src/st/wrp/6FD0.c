@@ -1867,7 +1867,7 @@ void EntityWarpRoom(Entity* entity) {
     s32 bgColorB0;
     s32 var_v0_8;
     s32 bgColorR1;
-    s8 fadeIn;
+    s32 fadeIn;
     s8 var_v0_14;
     s32 temp_s4_3;
     s32 temp_s5_3;
@@ -1986,11 +1986,10 @@ void EntityWarpRoom(Entity* entity) {
         // Wait for player to press the UP button
         if (((entity->unk48 != 0) && (g_pads->pressed & 0x1000)) &&
             (!(D_80072F2C & 0xC5CF3EF7))) {
-            *D_80072EF4 = 0;
+            D_8003C8B8 = (*D_80072EF4 = 0);
             D_80072EFC = 0x80;
             PLAYER.accelerationX = 0;
             PLAYER.accelerationY = 0;
-            D_8003C8B8 = 0;
             entity->step++;
         }
         break;
@@ -2092,6 +2091,7 @@ void EntityWarpRoom(Entity* entity) {
         D_8003C7E8(0, 0, 0, 0);
         entity->step++;
         /* fallthrough */
+
     case 6:
         // Finalize warp by fading in from white
         // .rodata+0x24
@@ -2123,7 +2123,8 @@ void EntityWarpRoom(Entity* entity) {
 
     default:
         warpCoord = &D_8018065C[D_80193AA0];
-        temp_s4_3 = warpCoord->x - g_CurrentRoom.left;
+        bgColorR1 = warpCoord->x - g_CurrentRoom.left;
+        temp_s4_3 = bgColorR1;
         temp_s5_3 = warpCoord->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, D_80193AA0);
         FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
@@ -2152,7 +2153,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorR0 < 0) {
             bgColorR0 += 255;
         }
-        poly->r0 = (bgColorR0 >> 8);
+        poly->r0 = bgColorR0 >> 8;
         temp_v1_6 = i3 + 5;
         var_v0_4 = temp_v1_6;
         if (var_v0_4 < 0) {
@@ -2178,7 +2179,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorB0 < 0) {
             bgColorB0 += 255;
         }
-        poly->b0 = (bgColorB0 >> 8);
+        poly->b0 = bgColorB0 >> 8;
         temp_s1_2 = i3 + 1;
         var_v0_8 = temp_s1_2;
         if (var_v0_8 < 0) {
@@ -2191,7 +2192,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorR1 < 0) {
             bgColorR1 += 255;
         }
-        poly->r1 = (bgColorR1 >> 8);
+        poly->r1 = bgColorR1 >> 8;
         temp_v1_6 = i3 + 6;
         var_v0_10 = temp_v1_6;
         if (var_v0_10 < 0) {
@@ -2204,7 +2205,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorG1 < 0) {
             bgColorG1 += 255;
         }
-        poly->g1 = (bgColorG1 >> 8);
+        poly->g1 = bgColorG1 >> 8;
         temp_v1_6 = i3 + 11;
         var_v0_12 = temp_v1_6;
         if (temp_v1_6 < 0) {
@@ -2217,7 +2218,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorB1 < 0) {
             bgColorB1 += 255;
         }
-        poly->b1 = (bgColorB1 >> 8);
+        poly->b1 = bgColorB1 >> 8;
         tintColor = (u8)D_80193AAC;
         poly->b3 = tintColor;
         poly->g3 = tintColor;

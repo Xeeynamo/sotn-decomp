@@ -642,13 +642,13 @@ block_25:
 #endif
 
 void func_800F1424(void) {
-    if (D_8009749C[0] & 8) {
+    if (g_pads[1].tapped & PAD_R1) {
         D_800730A0.unk00 ^= 2;
     }
-    if (D_8009749C[0] & 4) {
+    if (g_pads[1].tapped & PAD_L1) {
         D_800730A0.unk00 ^= 1;
     }
-    if ((D_8009749C[0] & 1) && (D_800730A0.unk3C != 0)) {
+    if ((g_pads[1].tapped & PAD_L2) && (D_800730A0.unk3C != 0)) {
         D_800730A0.unk54[0].unk00[0] ^= 1;
     }
 }
@@ -1875,14 +1875,14 @@ void func_800FAC48(void) {
 void func_800FAC98(void) { func_800F9808(2); }
 
 bool func_800FACB8(void) {
-    if (D_80097494.unk0 & 2) {
+    if (g_pads[0].tapped & 2) {
         (*g_menuRelicsCursorIndex)++;
         if (*g_menuRelicsCursorIndex == 7) {
             *g_menuRelicsCursorIndex = 0;
         }
         return true;
     }
-    if (D_80097494.unk0 & 1) {
+    if (g_pads[0].tapped & 1) {
         g_menuRelicsCursorIndex[0]--;
         if (*g_menuRelicsCursorIndex == -1) {
             *g_menuRelicsCursorIndex = 6;

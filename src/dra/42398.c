@@ -107,7 +107,7 @@ void func_800E2F3C(void) {
     if (D_800BD1C0 == 0)
         return;
 
-    if (D_80097498 & 0x100) {
+    if (g_pads[1].pressed & PAD_SELECT) {
         FntPrint("dr  :%03x\n", g_GpuMaxUsage.drawModes);
         FntPrint("gt4 :%03x\n", g_GpuMaxUsage.gt4);
         FntPrint("g4  :%03x\n", g_GpuMaxUsage.g4);
@@ -447,7 +447,7 @@ loop_5:
         func_800EB314();
         ReadPads();
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
-            if (D_80097494.unk0 & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
             }
             if (g_softResetTimer != 0) {
