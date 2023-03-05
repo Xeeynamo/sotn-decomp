@@ -172,7 +172,7 @@ void func_801BECCC(Entity* entity) {
      */
     GameApi* gameApi;
 
-    if (D_80097494.unk0 == 0x800) {
+    if (g_pads[0].tapped == 0x800) {
         D_801D7D20 = 1;
         g_api.FreePolygons(entity->firstPolygonIndex);
         do {

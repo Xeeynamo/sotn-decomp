@@ -194,8 +194,8 @@ typedef struct {
 typedef struct {
     /* 0x0 */ u16 pressed;
     /* 0x2 */ s16 previous;
-    /* 0x4 */ s16 tapped;
-    /* 0x6 */ s16 repeat;
+    /* 0x4 */ u16 tapped;
+    /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
 typedef struct {
@@ -1004,9 +1004,6 @@ extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
-
-extern Unkstruct_80097494 D_80097494;
-extern u16 D_80097496; // D_80097494.unk2
 extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern u32 g_StageId;

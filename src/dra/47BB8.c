@@ -185,7 +185,7 @@ void func_800E8D24(void) {
     s8* ptr;
     s32 i;
 
-    D_80097494.unk2 = 0;
+    g_pads[0].repeat = 0;
     ptr = D_80137460;
 
     for (i = 0; i < 16; i++) {
@@ -201,7 +201,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8D54);
 void func_800E8D54(void) {
     u16 button = 1;
     u16 repeat = 0;
-    u16 unk = D_80097494.unk0;
+    u16 unk = g_pads[0].tapped;
     u16 pressed = g_pads[0].pressed;
     u8* timers = D_80137460;
     s32 i = 0;
@@ -223,7 +223,7 @@ void func_800E8D54(void) {
         timers++;
         button <<= 1;
     } while (i < 0x10);
-    D_80097494.unk2 = repeat;
+    g_pads[0].repeat = repeat;
 }
 #endif
 
