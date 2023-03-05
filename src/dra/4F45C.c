@@ -642,13 +642,13 @@ block_25:
 #endif
 
 void func_800F1424(void) {
-    if (D_8009749C[0] & 8) {
+    if (g_pads[1].tapped & PAD_R1) {
         D_800730A0.unk00 ^= 2;
     }
-    if (D_8009749C[0] & 4) {
+    if (g_pads[1].tapped & PAD_L1) {
         D_800730A0.unk00 ^= 1;
     }
-    if ((D_8009749C[0] & 1) && (D_800730A0.unk3C != 0)) {
+    if ((g_pads[1].tapped & PAD_L2) && (D_800730A0.unk3C != 0)) {
         D_800730A0.unk54[0].unk00[0] ^= 1;
     }
 }

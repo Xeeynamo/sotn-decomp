@@ -56,7 +56,7 @@ void EntityRedEyeBust(Entity* self) {
 
     case 2:
         FntPrint(&D_801B058C, self->animCurFrame); // "charal %x\n"
-        if (D_80097498 & 0x80) {
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->subId == 0) {
                 self->animCurFrame++;
                 self->subId |= 1;
@@ -66,7 +66,7 @@ void EntityRedEyeBust(Entity* self) {
             self->subId = 0;
         }
 
-        if (D_80097498 & 0x20) {
+        if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->unk2E == 0) {
                 self->animCurFrame--;
                 self->unk2E |= 1;
@@ -715,7 +715,7 @@ void func_801B37C0(Entity* self) {
 
     case 255:
         FntPrint(&D_801B0598, self->animCurFrame); // "charal %x\n"
-        if (D_80097498 & 0x80) {
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->subId != 0) {
                 break;
             }
@@ -724,7 +724,7 @@ void func_801B37C0(Entity* self) {
         } else {
             self->subId = 0;
         }
-        if (D_80097498 & 0x20) {
+        if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->unk2E == 0) {
                 self->animCurFrame--;
                 self->unk2E |= 1;
