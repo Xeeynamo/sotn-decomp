@@ -208,7 +208,7 @@ extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
-extern u8 D_80137460[];
+extern u8 D_80137460[]; // button timers
 extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
