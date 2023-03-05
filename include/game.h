@@ -1005,12 +1005,8 @@ extern s32 D_8009744C;
 extern s32 D_80097450;
 extern Pad g_pads[];
 
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-} Unkstruct_80097494;
 extern Unkstruct_80097494 D_80097494;
-
+extern u16 D_80097496; // D_80097494.unk2
 extern u16 D_80097498;
 extern u16 D_8009749C[];
 extern u32 g_StageId;
