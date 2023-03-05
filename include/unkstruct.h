@@ -336,3 +336,8 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } Unkstruct_800FDB18;
+
+typedef struct { // From SEL
+    u16 unk0;
+    u16 unk2;
+} Unkstruct_80097494;
