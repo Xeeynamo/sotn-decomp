@@ -128,7 +128,15 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E160);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1C0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1E0);
+//#ifndef NON_MATCHING
+//INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1E0);
+//#else
+void func_8018E1E0(s32 arg0) {
+    g_CurrentEntity->unk2E = arg0 & 0xFF;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+}
+//#endif
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1FC);
 
