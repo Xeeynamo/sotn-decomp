@@ -192,7 +192,7 @@ typedef struct {
 } RoomBossTeleport; /* size=0x14 */
 
 typedef struct {
-    /* 0x0 */ s16 pressed;
+    /* 0x0 */ u16 pressed;
     /* 0x2 */ s16 previous;
     /* 0x4 */ s16 tapped;
     /* 0x6 */ s16 repeat;
