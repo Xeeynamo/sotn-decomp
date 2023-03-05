@@ -439,12 +439,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA48C);
 #else
 extern const char aBaslus00067dra[];
 
-typedef struct {
-    u8 data[19];
-} Block;
-
 void func_800EA48C(char* dstSaveName, s32 saveSlot) {
-    *(Block*)dstSaveName = *(Block*)aBaslus00067dra;
+    __builtin_memcpy(dstSaveName, aBaslus00067dra, 19);
     dstSaveName[0x10] += saveSlot / 10;
     dstSaveName[0x11] += saveSlot % 10;
 }

@@ -17,7 +17,7 @@ void* g_Cluts[];
 void* g_EntityGfxs[];
 s16** g_SpriteBanks[]; // g_SpriteBanks
 void* D_8018C404;      // unknown type
-extern s8 g_InputSaveName[9];
+extern u8 g_InputSaveName[9];
 
 void Update(void);
 void TestCollisions(void);
@@ -113,6 +113,7 @@ extern u8* D_801803BC;
 extern u8* D_801803C0;
 extern u8* D_801803C4; // images
 extern s32 D_80180454[];
+extern const u8* D_80180468;  // pointer to D_801A7748 (string "richter ")
 extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
@@ -136,6 +137,8 @@ extern s32* D_80196410;
 extern s32* D_8019642C;
 extern s32* D_80196430;
 extern s32* D_80196434;
+extern const u8 D_801A7748[]; // string "richter "
+extern const u8 D_801A7754[12] __attribute__((aligned(4))); // string "alucard "
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
 extern const char D_801A7AF8[];   // rstep:%d,%d

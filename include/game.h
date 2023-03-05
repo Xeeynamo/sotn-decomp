@@ -989,6 +989,8 @@ extern s32 D_80096ED8[];
 extern u32 D_80097364;
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
+extern s8 D_80097B98;
+extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern s32 D_800973F8;
 extern s32 D_800973FC;
@@ -1039,7 +1041,7 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern u8 g_SaveName[12];
+extern u8 g_SaveName[12]  __attribute__((aligned(4)));
 extern PlayerStats D_80097B9C;
 extern s32 g_playerHp;       // D_80097B9C.hp
 extern s32 g_playerHpMax;    // D_80097B9C.hpMax

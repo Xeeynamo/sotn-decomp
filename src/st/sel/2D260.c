@@ -111,7 +111,55 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[D_801D6B0C], 9);
 }
 
+// single instruction reorder, function tested working in-game
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AD66C);
+#else
+void func_801AD66C(void) {
+    s32 spaceCounter;
+    s32 counter;
+    s32 i;
+
+    /**
+     * If the entered name contains 8 spaces, sets the default
+     * name to "alucard " which is stored in D_801A7754
+     */
+    for (spaceCounter = 0, i = 0; i < 8; i++) {
+        g_SaveName[i] = g_InputSaveName[i];
+        if (g_InputSaveName[i] == 0x20) { // if the character is a space ?
+            spaceCounter++;
+        }
+    }
+
+    if (spaceCounter == 8) {
+        __builtin_memcpy(g_SaveName, D_801A7754, 9);
+    }
+
+    /**
+     * Checks byte by byte if the entered name is equal
+     * to "richter " and if time attack is unlocked,
+     * in which case enables the player to play as Richter
+     */
+    D_80097B98 = 0;
+    D_80097B99 = 0;
+
+    for (counter = 0; counter < 8; counter++) {
+        if (g_SaveName[counter] != D_80180468[counter]) {
+            break;
+        }
+    }
+
+    if (g_IsTimeAttackUnlocked != false) {
+        g_IsTimeAttackUnlocked = 2;
+    }
+
+    if ((counter == 8) && (g_IsTimeAttackUnlocked != false)) {
+        g_CurrentPlayableCharacter = PLAYER_RICHTER;
+    } else {
+        g_CurrentPlayableCharacter = PLAYER_ALUCARD;
+    }
+}
+#endif
 
 /* DATA */
 extern u8* D_801803B0;
@@ -147,7 +195,7 @@ void func_801AD78C(void) {
 }
 
 void func_801AD968(void) {
-    if (D_80097494.unk2 & PAD_UP) {
+    if (D_80097494.unk2 & PAD_RIGHT) {
         g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
         D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
     }
@@ -327,10 +375,12 @@ void func_801B17C8(void) {
             D_800978F8++;
         }
         break;
+
     case 1:
         func_801B3A54(D_80097924, D_8006C378);
         D_800978F8++;
         break;
+
     case 2:
         D_800978C4 = 0;
         if (func_801B3A94(1) != 0) {
