@@ -147,7 +147,7 @@ void func_801AD78C(void) {
 }
 
 void func_801AD968(void) {
-    if (D_80097494.unk2 & PAD_UP) {
+    if (D_80097494.unk2 & PAD_RIGHT) {
         g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
         D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
     }
