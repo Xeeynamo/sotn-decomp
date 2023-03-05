@@ -8,7 +8,6 @@
 #include "stage.h"
 
 extern PfnEntityUpdate D_80180390[];
-extern PfnEntityUpdate D_80180390[];
 extern s16 D_80180BBC[];
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
@@ -68,7 +67,7 @@ void func_8018F890(s16 arg0) {
 }
 
 #ifndef NOT_EQUIVALENT
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_8018F8EC);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F8EC);
 #else
 extern u16 D_8018068C[];
 
@@ -453,7 +452,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019565C);
 // like its duplicates, has a minor branch issue
 // so probably aspsx and/or compiler issue
 #ifndef NON_MATCHING
-INCLUDE_ASM("config/../asm/st/cen/nonmatchings/D600", func_80195714);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195714);
 #else
 void func_80195714(void) {
 
