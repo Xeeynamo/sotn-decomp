@@ -1005,7 +1005,7 @@ extern s32 D_80097424;
 extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
-extern Pad g_pads[]; // 0x80097490
+extern Pad g_pads[];   // 0x80097490
 extern s16 D_80097492; // g_pads[0].previous
 extern u16 D_80097494; // g_pads[0].tapped
 extern u16 D_80097496; // g_pads[0].repeat
