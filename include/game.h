@@ -682,7 +682,7 @@ typedef struct {
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
     /* 8003C804 */ void* func_80118894;
-    /* 8003C808 */ Unkstruct5* D_800A8900;
+    /* 8003C808 */ Unkstruct_800FF494* D_800A8900;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
     /* 8003C814 */ void* func_8010DB38;

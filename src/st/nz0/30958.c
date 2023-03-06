@@ -1324,7 +1324,7 @@ void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2) {
     ent2->posY.i.hi = ent1->posY.i.hi;
 }
 
-s32 func_801BBC3C(Unkstruct5* arg0) {
+s32 func_801BBC3C(Unkstruct_800FF494* arg0) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - arg0->unk2;
@@ -1596,7 +1596,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
 
 void InitializeEntity(u16 arg0[]) {
     u16 temp_v1;
-    Unkstruct5* temp_v0;
+    Unkstruct_800FF494* temp_v0;
 
     g_CurrentEntity->animSet = *arg0++;
     g_CurrentEntity->animCurFrame = *arg0++;
@@ -1605,7 +1605,7 @@ void InitializeEntity(u16 arg0[]) {
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
     temp_v0 =
-        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
+        (Unkstruct_800FF494*)(temp_v1 * sizeof(Unkstruct_800FF494) + (u32)g_api.D_800A8900);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
@@ -2504,7 +2504,7 @@ void func_801C7884(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBloodSkeleton);
 
-s32 func_801C7CF0(Unkstruct5* arg0) {
+s32 func_801C7CF0(Unkstruct_800FF494* arg0) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - arg0->unk2;
