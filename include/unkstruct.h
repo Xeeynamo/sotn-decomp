@@ -184,17 +184,6 @@ typedef struct {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ char pad0[0xD];
-    /* 0x0D */ s8 unk0D;
-    /* 0x0E */ s16 unk0E;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 attackElement;
-    /* 0x18 */ s16 attack;
-} Unkstruct_8011A328;
-
-typedef struct {
     /* 0x00 */ s16 unk0; /* D_800ACEC6 */
     /* 0x02 */ char pad2[0xE];
     /* 0x10 */ s16 unk10; /* D_800ACED6 */

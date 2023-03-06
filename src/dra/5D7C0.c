@@ -75,7 +75,13 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FD9D4);
+void func_800FD9D4(SpellDef* spell, s32 id) {
+    *spell = g_Spells[id];
+    spell->attack += (D_80097BE0 * 2 + (rand() % 12)) / 10;
+    if (CheckEquipmentItemCount(0x15, 2) != 0) {
+        spell->attack = spell->attack + spell->attack / 2;
+    }
+}
 
 // TODO get rid of the asm volatile
 #ifndef NON_MATCHING
