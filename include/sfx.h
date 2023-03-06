@@ -10,6 +10,7 @@
  * PL = Player
  * WP = Weapon
  * EV = Environment
+ * CS = Cutscene
  * IT = Item
  * EN = Enemy
  * VO = Voice
@@ -155,3 +156,5 @@
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F6
 #define NA_SE_VO_WO_BARK 0x706
+#define NA_SE_PL_TELEPORT 0x8BA
+#define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
