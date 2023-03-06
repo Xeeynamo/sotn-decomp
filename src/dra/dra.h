@@ -126,6 +126,7 @@ extern const char* c_strSSword;
 extern s32 D_800A3194[];
 extern Lba D_800A3C40[]; // g_lba
 extern Unsktruct_800EAF28* D_800A3B5C[];
+extern SubweaponDef g_Subweapons[];
 extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern Accessory D_800A7718[];
@@ -496,7 +497,7 @@ void AddToInventory(u16 itemId, s32 itemCategory);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
 void func_800FDE00(void);
-void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
+s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void func_800FE728(s32, Unkstruct_8011B334*, s32);
 s32 func_800FE97C(s32*, s32, s32, s32);
 s32 func_800FEEA4(s32, s32);
