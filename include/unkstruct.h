@@ -40,8 +40,8 @@ typedef struct {
 typedef struct Unkstruct_800FF494 {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2; // compared to Entity posX
-    /* 0x04 */ u16 unk4;
-    /* 0x06 */ u16 unk6; // compared to Entity posY
+    /* 0x04 */ u16 hitPoints;
+    /* 0x06 */ u16 unk6;
     /* 0x08 */ u16 unk8;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ u16 unkC;
@@ -53,8 +53,8 @@ typedef struct Unkstruct_800FF494 {
     /* 0x18 */ s16 unk18;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 rareItemDropRate;
-    /* 0x20 */ s16 uncommonItemDropRate;
+    /* 0x1E */ u16 rareItemDropRate;
+    /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
     /* 0x23 */ u8 hitboxHeight;
     /* 0x24 */ s32 unk24;
