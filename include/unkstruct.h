@@ -37,7 +37,7 @@ typedef struct {
     /* 0xE */ s16 unkE;
 } Unkstruct4; // size = 0x10
 
-typedef struct {
+typedef struct Unkstruct_800FF494 {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2; // compared to Entity posX
     /* 0x04 */ u16 unk4;
@@ -53,12 +53,12 @@ typedef struct {
     /* 0x18 */ s16 unk18;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;
-    /* 0x20 */ s16 unk20;
+    /* 0x1E */ s16 rareItemDropRate;
+    /* 0x20 */ s16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
     /* 0x23 */ u8 hitboxHeight;
     /* 0x24 */ s32 unk24;
-} Unkstruct5; // size = 0x28
+} Unkstruct_800FF494;
 
 typedef struct {
     /* 0x0 */ s16 x;
@@ -317,12 +317,6 @@ typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ char unk02[0x1E];
 } Unkstruct_800A7734; // size = 0x20
-
-typedef struct Unkstruct_800FF494 {
-    char pad0[0x1E];
-    u16 unk1E;
-    u16 unk20;
-} Unkstruct_800FF494;
 
 typedef struct {
     s32 unk0;

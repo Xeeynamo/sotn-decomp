@@ -741,7 +741,7 @@ void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-s32 func_801B3C58(Unkstruct5* arg0) {
+s32 func_801B3C58(Unkstruct_800FF494* arg0) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - arg0->unk2;
