@@ -194,7 +194,7 @@ void func_801AD78C(void) {
     DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
 }
 
-void func_801AD968(void) {
+void UpdateNameEntry(void) {
     if (g_pads[0].repeat & PAD_RIGHT) {
         g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
         D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
@@ -237,7 +237,7 @@ void func_801AD968(void) {
         }
     }
 
-    if (g_pads[0].tapped & PAD_TRIANGLE) {
+    if (g_pads[0].tapped & PAD_TRIANGLE) { // Backspace
         if (--g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
         }
@@ -249,19 +249,19 @@ void func_801ADC3C(void) {
     s32* new_var = &D_801BCC84;
 
     if (*new_var >= 0 || D_801BD02C >= 0) {
-        if (g_pads[0].repeat & 0x2000) {
+        if (g_pads[0].repeat & PAD_RIGHT) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 1) % 6;
         }
-        if (g_pads[0].repeat & 0x4000) {
+        if (g_pads[0].repeat & PAD_DOWN) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 4) % 5;
         }
-        if (g_pads[0].repeat & 0x8000) {
+        if (g_pads[0].repeat & PAD_LEFT) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 5) % 6;
         }
-        if (g_pads[0].repeat & 0x1000) {
+        if (g_pads[0].repeat & PAD_UP) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
