@@ -238,8 +238,8 @@ typedef struct Entity {
     /* 0x3A */ s16 enemyId;
     /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 unk40; // damage
-    /* 0x42 */ s16 unk42; // damage type
+    /* 0x40 */ s16 attack;
+    /* 0x42 */ s16 attackElement;
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
@@ -659,6 +659,28 @@ typedef struct CollisionResult {
 } CollisionResult; /* size=0x24 */
 
 typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ u16 hitPoints;
+    /* 0x06 */ u16 attack;
+    /* 0x08 */ u16 attackElement;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ s16 weaknesses;
+    /* 0x10 */ s16 strengths;
+    /* 0x12 */ s16 immunes;
+    /* 0x14 */ s16 absorbs;
+    /* 0x16 */ s16 level;
+    /* 0x18 */ s16 exp;
+    /* 0x1A */ s16 rareItemId;
+    /* 0x1C */ s16 uncommonItemId;
+    /* 0x1E */ u16 rareItemDropRate;
+    /* 0x20 */ u16 uncommonItemDropRate;
+    /* 0x22 */ u8 hitboxWidth;
+    /* 0x23 */ u8 hitboxHeight;
+    /* 0x24 */ s32 unk24;
+} EnemyDef; /* size=0x28 */
+
+typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePolygons)(s32);
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
@@ -682,7 +704,7 @@ typedef struct {
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
     /* 8003C804 */ void* func_80118894;
-    /* 8003C808 */ Unkstruct_800FF494* D_800A8900;
+    /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
     /* 8003C814 */ void* func_8010DB38;

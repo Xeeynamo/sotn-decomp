@@ -271,7 +271,7 @@ s32 func_800FF460(s32 arg0) {
 }
 
 // Determine what type of item to drop
-s32 func_800FF494(Unkstruct_800FF494* arg0) {
+s32 func_800FF494(EnemyDef* arg0) {
     // 0x4B is the item ID for Ring of Arcana
     // Ring of Arcana is an item that increases enemy item drop rates when
     // equipped

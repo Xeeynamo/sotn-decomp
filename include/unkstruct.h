@@ -37,28 +37,6 @@ typedef struct {
     /* 0xE */ s16 unkE;
 } Unkstruct4; // size = 0x10
 
-typedef struct Unkstruct_800FF494 {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ u16 hitPoints;
-    /* 0x06 */ u16 unk6;
-    /* 0x08 */ u16 unk8;
-    /* 0x0A */ s16 unkA;
-    /* 0x0C */ u16 unkC;
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ u16 rareItemDropRate;
-    /* 0x20 */ u16 uncommonItemDropRate;
-    /* 0x22 */ u8 hitboxWidth;
-    /* 0x23 */ u8 hitboxHeight;
-    /* 0x24 */ s32 unk24;
-} Unkstruct_800FF494;
-
 typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
@@ -206,9 +184,9 @@ typedef struct {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ s16 sp10;
+    /* 0x00 */ s16 attack;
     /* 0x02 */ char pad2[0x2];
-    /* 0x04 */ u16 sp14;
+    /* 0x04 */ u16 attackElement;
     /* 0x06 */ char pad6[0x1];
     /* 0x07 */ u8 sp17;
     /* 0x08 */ u16 sp18;
@@ -227,8 +205,8 @@ typedef struct {
     /* 0x10 */ s16 unk10;
     /* 0x12 */ s16 unk12;
     /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
+    /* 0x16 */ s16 attackElement;
+    /* 0x18 */ s16 attack;
 } Unkstruct_8011A328;
 
 typedef struct {

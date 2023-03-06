@@ -285,8 +285,8 @@ void func_8011A290(Entity* entity) {
     Unkstruct_8011A290 sp10;
 
     func_800FE3C4(&sp10, entity->unkB0, 0);
-    entity->unk40 = sp10.sp10;
-    entity->unk42 = sp10.sp14;
+    entity->attack = sp10.attack;
+    entity->attackElement = sp10.attackElement;
     entity->unk3C = sp10.sp1C;
     entity->unk49 = sp10.sp17;
     entity->unk58 = sp10.sp18;
@@ -302,8 +302,8 @@ void func_8011A328(Entity* entity, s32 arg1) {
     Unkstruct_8011A328 sp10;
 
     func_800FD9D4(&sp10, arg1);
-    entity->unk40 = sp10.unk18;
-    entity->unk42 = sp10.unk16;
+    entity->attack = sp10.attack;
+    entity->attackElement = sp10.attackElement;
     entity->unk3C = sp10.unk10;
     entity->unk49 = sp10.unk0D;
     entity->unk58 = sp10.unk0E;
@@ -318,14 +318,14 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
     *arg3 = D_80097C38[D_8006CBC4];
     if (arg2 != 0) {
         func_800FD9D4(&sp10, arg1);
-        arg0->unk40 = sp10.unk18;
-        arg0->unk42 = sp10.unk16;
+        arg0->attack = sp10.attack;
+        arg0->attackElement = sp10.attackElement;
         arg0->unk3C = sp10.unk10;
         arg0->unk49 = sp10.unk0D;
         arg0->unk58 = sp10.unk0E;
         arg0->unk6A = sp10.unk12;
         arg0->objectRoomIndex = sp10.unk14;
-        arg0->unk40 = sp10.unk18 * ((arg3->unk0 * 4 / 95) + 1);
+        arg0->attack = sp10.attack * ((arg3->unk0 * 4 / 95) + 1);
         func_80118894(arg0);
     }
 }
@@ -443,8 +443,8 @@ void func_8011B334(Entity* entity) {
 
     if (entity->step == 0) {
         func_800FE728(0, &temp, 0);
-        entity->unk40 = temp.unk8;
-        entity->unk42 = temp.unkC;
+        entity->attack = temp.unk8;
+        entity->attackElement = temp.unkC;
         entity->unk3C = temp.unk28;
         entity->unk49 = temp.unk1A;
         entity->unk58 = temp.unk26;

@@ -232,8 +232,8 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         InitializeEntity(&D_80180BF8);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        self->unk42 = 1;
-        self->unk40 = 7;
+        self->attackElement = 1;
+        self->attack = 7;
         self->unk3C = 1;
 
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
@@ -1596,7 +1596,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
 
 void InitializeEntity(u16 arg0[]) {
     u16 enemyId;
-    Unkstruct_800FF494* enemyDef;
+    EnemyDef* enemyDef;
 
     g_CurrentEntity->animSet = *arg0++;
     g_CurrentEntity->animCurFrame = *arg0++;
@@ -1605,10 +1605,10 @@ void InitializeEntity(u16 arg0[]) {
 
     enemyId = *arg0++;
     g_CurrentEntity->enemyId = enemyId;
-    enemyDef = &g_api.D_800A8900[enemyId];
+    enemyDef = &g_api.enemyDefs[enemyId];
     g_CurrentEntity->hitPoints = enemyDef->hitPoints;
-    g_CurrentEntity->unk40 = enemyDef->unk6;
-    g_CurrentEntity->unk42 = enemyDef->unk8;
+    g_CurrentEntity->attack = enemyDef->attack;
+    g_CurrentEntity->attackElement = enemyDef->attackElement;
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
