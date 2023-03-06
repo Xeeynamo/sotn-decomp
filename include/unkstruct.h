@@ -184,21 +184,6 @@ typedef struct {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ s16 attack;
-    /* 0x02 */ char pad2[0x2];
-    /* 0x04 */ u16 attackElement;
-    /* 0x06 */ char pad6[0x1];
-    /* 0x07 */ u8 sp17;
-    /* 0x08 */ u16 sp18;
-    /* 0x0A */ char padA[0x2];
-    /* 0x0C */ u16 sp1C;
-    /* 0x0E */ u16 sp1E;
-    /* 0x10 */ u8 sp20;
-    /* 0x11 */ char pad11[0x1];
-    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
-} Unkstruct_8011A290;
-
-typedef struct {
     /* 0x00 */ char pad0[0xD];
     /* 0x0D */ s8 unk0D;
     /* 0x0E */ s16 unk0E;

@@ -282,17 +282,17 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119E78);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119F70);
 
 void func_8011A290(Entity* entity) {
-    Unkstruct_8011A290 sp10;
+    SubweaponDef subwpn;
 
-    func_800FE3C4(&sp10, entity->unkB0, 0);
-    entity->attack = sp10.attack;
-    entity->attackElement = sp10.attackElement;
-    entity->unk3C = sp10.sp1C;
-    entity->unk49 = sp10.sp17;
-    entity->unk58 = sp10.sp18;
-    entity->unk6A = sp10.sp1E;
-    entity->objectRoomIndex = sp10.sp22;
-    entity->unkB2 = sp10.sp20;
+    func_800FE3C4(&subwpn, entity->unkB0, 0);
+    entity->attack = subwpn.attack;
+    entity->attackElement = subwpn.attackElement;
+    entity->unk3C = subwpn.sp1C;
+    entity->unk49 = subwpn.sp17;
+    entity->unk58 = subwpn.sp18;
+    entity->unk6A = subwpn.sp1E;
+    entity->objectRoomIndex = subwpn.sp22;
+    entity->unkB2 = subwpn.sp20;
     func_80118894(entity);
 }
 

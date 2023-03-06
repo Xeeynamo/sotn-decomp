@@ -185,7 +185,52 @@ bool func_800FE3A8(s32 arg0) {
     return (D_80097964[arg0] & temp) != 0;
 }
 
+// Matches with PSY-Q 3.5
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE3C4);
+#else
+s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+    u32 accessoryCount;
+
+    if (subweaponId == 0) {
+        *subwpn = g_Subweapons[D_80097BFC];
+        accessoryCount = CheckEquipmentItemCount(0x4D, 4);
+        if (accessoryCount == 1) {
+            subwpn->unk2 = subwpn->unk2 / 2;
+        }
+        if (accessoryCount == 2) {
+            subwpn->unk2 = subwpn->unk2 / 3;
+        }
+        if (subwpn->unk2 <= 0) {
+            subwpn->unk2 = 1;
+        }
+        if (D_80097B9C.hearts >= subwpn->unk2) {
+            if (useHearts) {
+                D_80097B9C.hearts -= subwpn->unk2;
+            }
+            return D_80097BFC;
+        } else {
+            return 0;
+        }
+    } else {
+        *subwpn = g_Subweapons[subweaponId];
+        if (CheckEquipmentItemCount(0x14, 2) != 0) {
+            subwpn->attack += 10;
+        }
+        if (subweaponId == 4 || subweaponId == 12) {
+            accessoryCount = CheckEquipmentItemCount(0x3D, 4);
+            if (accessoryCount == 1) {
+                subwpn->attack *= 2;
+            }
+            if (accessoryCount == 2) {
+                subwpn->attack *= 3;
+            }
+        }
+        subwpn->attack += ((D_80097BE0 * 2) + (rand() % 12)) / 10;
+        return subweaponId;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE728);
 

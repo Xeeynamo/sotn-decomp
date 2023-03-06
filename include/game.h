@@ -379,18 +379,18 @@ typedef struct {
 } GpuUsage;
 
 typedef struct {
-    u32 unk0;
-    s32 hp;
-    s32 hpMax;
-    s32 hearts;
-    s32 heartsMax;
-    s32 mp;
-    s32 mpMax;
-    s32 statStr;
-    s32 statCon;
-    s32 statInt;
-    s32 statLck;
-} PlayerStats;
+    /* 0x00 */ u32 unk0;
+    /* 0x04 */ s32 hp;
+    /* 0x08 */ s32 hpMax;
+    /* 0x0C */ s32 hearts;
+    /* 0x10 */ s32 heartsMax;
+    /* 0x14 */ s32 mp;
+    /* 0x18 */ s32 mpMax;
+    /* 0x1C */ s32 statStr;
+    /* 0x20 */ s32 statCon;
+    /* 0x24 */ s32 statInt;
+    /* 0x28 */ s32 statLck;
+} PlayerStats; /* size=unk */
 
 typedef struct {
     s32 hours;
@@ -679,6 +679,22 @@ typedef struct {
     /* 0x23 */ u8 hitboxHeight;
     /* 0x24 */ s32 unk24;
 } EnemyDef; /* size=0x28 */
+
+typedef struct {
+    /* 0x00 */ s16 attack;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ u16 attackElement;
+    /* 0x06 */ u8 unk6;
+    /* 0x07 */ u8 sp17;
+    /* 0x08 */ u16 sp18;
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u16 sp1C;
+    /* 0x0E */ u16 sp1E;
+    /* 0x10 */ u8 sp20;
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+} SubweaponDef;          /* size=0x14 */
 
 typedef struct {
     /* 8003C774 */ Overlay o;
@@ -1049,15 +1065,16 @@ extern u8 D_80097964[];
 extern u8 D_8009796E;
 extern s8 D_8009798A[];
 extern u8 D_80097A8D;
+extern PlayerStats D_80097B9C;
 extern s32 D_80097BDC;
 extern s32 D_80097BE0;   // total CON
 extern s32 D_80097BE4[]; // total LCK
+extern s32 D_80097BFC;   // g_SubweaponId
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
 extern u8 g_SaveName[12];
-extern PlayerStats D_80097B9C;
 extern s32 g_playerHp;       // D_80097B9C.hp
 extern s32 g_playerHpMax;    // D_80097B9C.hpMax
 extern s32 g_playerHeart;    // D_80097B9C.hearts

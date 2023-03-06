@@ -67,31 +67,28 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-// aspsx
-// https://decomp.me/scratch/bRvg6
+// Jumps to 'nop'. Matches with PSY-Q 3.5
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FAB8);
 #else
 void func_8015FAB8(Entity* entity) {
-    u16 var_v0;
-    s32 temp;
-    Unkstruct_8011A290* temp_v1 = (entity->unkB0 * 0x14) + (&D_80154688);
+    u16 attack;
+    SubweaponDef* subwpn = &D_80154688[entity->unkB0];
 
     if ((*D_80072F1A) != NULL) {
-        var_v0 = temp_v1->sp10 * 2;
+        attack = subwpn->attack * 2;
     } else {
-        var_v0 = temp_v1->sp10;
+        attack = subwpn->attack;
     }
 
-    entity->unk40 = var_v0;
-    entity->unk42 = temp_v1->sp14;
-    entity->unk3C = temp_v1->sp1C;
-    temp = entity->unk40;
-    entity->unk49 = temp_v1->sp17;
-    entity->unk58 = temp_v1->sp18;
-    entity->unk6A = temp_v1->sp1E;
-    entity->objectRoomIndex = temp_v1->sp22;
-    entity->unk40 = g_api.func_800FD664(temp);
+    entity->attack = attack;
+    entity->attackElement = subwpn->attackElement;
+    entity->unk3C = subwpn->sp1C;
+    entity->unk49 = subwpn->sp17;
+    entity->unk58 = subwpn->sp18;
+    entity->unk6A = subwpn->sp1E;
+    entity->objectRoomIndex = subwpn->sp22;
+    entity->attack = g_api.func_800FD664(entity->attack);
     func_8015F9F0(entity);
 }
 #endif
