@@ -137,10 +137,10 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
 
-    if (D_80097B9C.mp < (s32)temp) {
+    if (D_80097BA0.mp < (s32)temp) {
         return false;
     } else {
-        D_80097B9C.mp -= temp;
+        D_80097BA0.mp -= temp;
         return true;
     }
 }
@@ -210,9 +210,9 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         if (subwpn->unk2 <= 0) {
             subwpn->unk2 = 1;
         }
-        if (D_80097B9C.hearts >= subwpn->unk2) {
+        if (D_80097BA0.hearts >= subwpn->unk2) {
             if (useHearts) {
-                D_80097B9C.hearts -= subwpn->unk2;
+                D_80097BA0.hearts -= subwpn->unk2;
             }
             return D_80097BFC;
         } else {
@@ -241,9 +241,9 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE728);
 
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
-    if (D_80097B9C.mp >= mpCount) {
+    if (D_80097BA0.mp >= mpCount) {
         if (subtractMp != 0) {
-            D_80097B9C.mp -= mpCount;
+            D_80097BA0.mp -= mpCount;
         }
         return false;
     }
@@ -257,10 +257,10 @@ void func_800FE8F0(void) {
 }
 
 void AddHearts(s32 value) {
-    if (D_80097B9C.hearts < D_80097B9C.heartsMax) {
-        D_80097B9C.hearts += value;
-        if (D_80097B9C.heartsMax < D_80097B9C.hearts) {
-            D_80097B9C.hearts = D_80097B9C.heartsMax;
+    if (D_80097BA0.hearts < D_80097BA0.heartsMax) {
+        D_80097BA0.hearts += value;
+        if (D_80097BA0.heartsMax < D_80097BA0.hearts) {
+            D_80097BA0.hearts = D_80097BA0.heartsMax;
         }
         func_8011AAFC(g_EntityArray, 99, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -287,11 +287,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FEEA4);
 s32 func_800FF064(s32 arg0) {
     s32 playerMP;
 
-    playerMP = D_80097B9C.mp - 4;
+    playerMP = D_80097BA0.mp - 4;
 
     if (playerMP > 0) {
         if (arg0 != 0) {
-            D_80097B9C.mp = playerMP;
+            D_80097BA0.mp = playerMP;
         }
         return 0;
     }
@@ -555,8 +555,8 @@ void func_800FF7B8(s32 arg0) {
             *var_a0-- = 0;
         }
 
-        thingPtr = &D_80097B9C.unk0;
-        D_80097B9C.unk0 = 0;
+        thingPtr = &D_80097BA0.unk0;
+        D_80097BA0.unk0 = 0;
         if (g_StageId == STAGE_ST0 ||
             g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             temp_var_3 = 1;
@@ -584,16 +584,16 @@ void func_800FF7B8(s32 arg0) {
                 D_80097BFC.subWeapon = (rand() % 9) + 1;
             }
 
-            D_80097B9C.hp = 50;
-            D_80097B9C.hpMax = 50;
-            D_80097B9C.hearts = 30;
-            D_80097B9C.heartsMax = 99;
-            D_80097B9C.mpMax = 20;
-            D_80097B9C.mp = 20;
-            D_80097B9C.statStr = 10;
-            D_80097B9C.statCon = 10;
-            D_80097B9C.statInt = 10;
-            D_80097B9C.statLck = 10;
+            D_80097BA0.hp = 50;
+            D_80097BA0.hpMax = 50;
+            D_80097BA0.hearts = 30;
+            D_80097BA0.heartsMax = 99;
+            D_80097BA0.mpMax = 20;
+            D_80097BA0.mp = 20;
+            D_80097BA0.statStr = 10;
+            D_80097BA0.statCon = 10;
+            D_80097BA0.statInt = 10;
+            D_80097BA0.statLck = 10;
             g_playerEquip[2] = 0x1A;
             g_playerEquip[4] = 0x30;
             g_playerEquip[5] = 0x39;
@@ -615,10 +615,10 @@ void func_800FF7B8(s32 arg0) {
             D_80097C3C = 0;
         } else {
             if (g_StageId == STAGE_NO3) {
-                D_80097B9C.statStr = 6;
-                D_80097B9C.statCon = 6;
-                D_80097B9C.statInt = 6;
-                D_80097B9C.statLck = 6;
+                D_80097BA0.statStr = 6;
+                D_80097BA0.statCon = 6;
+                D_80097BA0.statInt = 6;
+                D_80097BA0.statLck = 6;
                 g_playerGold = 0;
                 var_v0_2 = thingPtr;
                 var_v0_2 -= 0x21B;
@@ -629,39 +629,39 @@ void func_800FF7B8(s32 arg0) {
                 if (D_801397FC != 0) { // maria saves Ricther flag
                     func_800FD874(159, 0);
                     var_s0_11 = 3;
-                } else if (D_80097B9C.hp == D_80097B9C.hpMax) {
-                    D_80097B9C.statStr++;
-                    D_80097B9C.statCon++;
-                    D_80097B9C.statInt++;
-                    D_80097B9C.statLck++;
+                } else if (D_80097BA0.hp == D_80097BA0.hpMax) {
+                    D_80097BA0.statStr++;
+                    D_80097BA0.statCon++;
+                    D_80097BA0.statInt++;
+                    D_80097BA0.statLck++;
                     var_s0_11 = 0;
                 } else {
                     var_s0_11 = 2;
-                    if (D_80097B9C.hp >=
-                        (((s32)(D_80097B9C.hpMax +
-                                (((u32)D_80097B9C.hpMax) >> 0x1F))) >>
+                    if (D_80097BA0.hp >=
+                        (((s32)(D_80097BA0.hpMax +
+                                (((u32)D_80097BA0.hpMax) >> 0x1F))) >>
                          1)) {
-                        D_80097B9C.statStr++;
+                        D_80097BA0.statStr++;
                         var_s0_11 = 1;
                     } else {
-                        D_80097B9C.statCon++;
+                        D_80097BA0.statCon++;
                     }
                 }
                 if (g_playerHeart == 0 && var_s0_11 < 3) {
                     func_800FD874(0x8E, 0);
                 }
-                D_80097B9C.hpMax = 70;
+                D_80097BA0.hpMax = 70;
                 if (var_s0_11 == 0) {
-                    D_80097B9C.hpMax = 75;
+                    D_80097BA0.hpMax = 75;
                 }
                 g_playerHeart = 0xA;
                 g_playerHeartMax = 0x32;
                 g_playerMpMax = 0x14;
                 if (D_80139008 >= 0x29) {
                     func_800FD874(0x47, 0);
-                    D_80097B9C.statInt++;
+                    D_80097BA0.statInt++;
                 } else {
-                    D_80097B9C.statStr++;
+                    D_80097BA0.statStr++;
                 }
 
                 if (D_80097BFC.subWeapon == 4) {
@@ -682,29 +682,29 @@ void func_800FF7B8(s32 arg0) {
                         player_stat_int++;
 
                     case 1:
-                        D_80097B9C.hpMax += 5;
+                        D_80097BA0.hpMax += 5;
 
                     case 2:
-                        D_80097B9C.statStr++;
+                        D_80097BA0.statStr++;
                         break;
                     }
                 }
 
                 temp_v0 = func_800FD4C0(0, 0);
                 if (temp_v0 < 101) {
-                    D_80097B9C.hpMax += 5;
+                    D_80097BA0.hpMax += 5;
                     g_playerMpMax += 5;
                     g_playerHeartMax += 5;
-                    D_80097B9C.statStr += 5;
-                    D_80097B9C.statCon += 5;
-                    D_80097B9C.statInt += 5;
-                    D_80097B9C.statLck += 5;
+                    D_80097BA0.statStr += 5;
+                    D_80097BA0.statCon += 5;
+                    D_80097BA0.statInt += 5;
+                    D_80097BA0.statLck += 5;
                 } else if (temp_v0 < 201) {
-                    D_80097B9C.statLck += 2;
+                    D_80097BA0.statLck += 2;
                 } else if (temp_v0 < 301) {
-                    D_80097B9C.statLck += 1;
+                    D_80097BA0.statLck += 1;
                 } else if (temp_v0 >= 1000) {
-                    D_80097B9C.statCon += 1;
+                    D_80097BA0.statCon += 1;
                 }
 
                 var_s0_12 = 0;
@@ -717,7 +717,7 @@ void func_800FF7B8(s32 arg0) {
                 g_playerEquip[5] = 0x4E;
                 D_80097BFC.subWeapon = 0;
                 D_80097C18 = 0x39;
-                D_80097B9C.hp = D_80097B9C.hpMax;
+                D_80097BA0.hp = D_80097BA0.hpMax;
                 g_playerMP = g_playerMpMax;
 
                 // checks for the cheat code "x-x!v''q"
@@ -732,12 +732,12 @@ void func_800FF7B8(s32 arg0) {
                 if (var_s0_12 == 8) {
                     player_stat_lck = 99;
                     g_playerHeartMax = 5;
-                    D_80097B9C.statStr = 1;
-                    D_80097B9C.statCon = 0;
-                    D_80097B9C.statInt = 0;
-                    D_80097B9C.hpMax = 25;
+                    D_80097BA0.statStr = 1;
+                    D_80097BA0.statCon = 0;
+                    D_80097BA0.statInt = 0;
+                    D_80097BA0.hpMax = 25;
                     g_playerMpMax = 1;
-                    D_80097B9C.hp = 25;
+                    D_80097BA0.hp = 25;
                     g_playerHeart = 5;
                     g_playerMP = 1;
                     D_80097C18 = 70;
@@ -766,12 +766,12 @@ void func_800FF7B8(s32 arg0) {
                     var_s0_9--;
                     var_v0_4 -= 4;
                 } while (var_s0_9 >= 0);
-                D_80097B9C.statStr = 6;
-                D_80097B9C.statCon = 6;
-                D_80097B9C.statInt = 6;
+                D_80097BA0.statStr = 6;
+                D_80097BA0.statCon = 6;
+                D_80097BA0.statInt = 6;
                 player_stat_lck = 6;
-                D_80097B9C.hpMax = 70;
-                D_80097B9C.hp = 70;
+                D_80097BA0.hpMax = 70;
+                D_80097BA0.hp = 70;
                 g_playerHeart = 10;
                 g_playerGold = 500000;
                 g_playerHeartMax = 50;
@@ -798,7 +798,7 @@ void func_800FF7B8(s32 arg0) {
                     }
                     var_v1_5++;
                 } while ((s32)var_v1_5 <
-                         ((s32)((&D_80097B9C.statStr) - 0x21A)));
+                         ((s32)((&D_80097BA0.statStr) - 0x21A)));
 
                 temp_var_2 = 0x32;
                 var_s0_14 = 0xA8;
@@ -1023,7 +1023,7 @@ void func_8010189C(void) {
 
     D_8013B5E8 = 0;
     D_80137998 = 0;
-    D_8013796C = D_80097B9C.hp;
+    D_8013796C = D_80097BA0.hp;
 
     if ((g_StageId == STAGE_ST0) ||
         (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
