@@ -1073,7 +1073,50 @@ void func_801B4DE0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4FFC);
+void func_801B4FFC(void) {
+    Entity* unkEntity = &g_EntityArray[2];
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+
+    switch (unkEntity->step) {
+    case 0:
+        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        if (firstPolygonIndex != -1) {
+            poly = &D_80086FEC[firstPolygonIndex];
+            unkEntity->firstPolygonIndex = firstPolygonIndex;
+            unkEntity->unk34 |= 0x800000;
+            *(s32*)&unkEntity->unk7C = poly;
+
+            poly->x1 = poly->x3 = 384;
+            poly->y0 = poly->y1 = 4;
+            poly->y2 = poly->y3 = 228;
+
+            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
+                    poly->b3 = poly->x0 = poly->x2 = 0;
+
+            poly->pad2 = 0xC8;
+            poly->pad3 = 0x51;
+
+            unkEntity->step++;
+        }
+        break;
+
+    case 1:
+        poly = *(s32*)&unkEntity->unk7C;
+        if (D_801BC3E4 != 0) {
+            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
+                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                    poly->r0 = poly->b3 + 2;
+            if (poly->r0 >= 254) {
+                D_801BC3E4 = 0;
+                unkEntity->step++;
+            }
+        }
+    case 2:
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B519C);
 
