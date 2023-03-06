@@ -247,22 +247,22 @@ void UpdateNameEntry(void) {
 
 void UpdateFileSelect(void) {
     if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
-        if (g_pads[0].repeat & PAD_RIGHT) { // move cursor to the right
+        if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X coord positions
-            selectorPosX = (selectorPosX + 1) % 6; 
+            selectorPosX = (selectorPosX + 1) % 6;
         }
-        if (g_pads[0].repeat & PAD_DOWN) {
+        if (g_pads[0].repeat & PAD_DOWN) { // move selector down
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 5 possible Y coord positions
             selectorPosY = (selectorPosY + 4) % 5;
         }
-        if (g_pads[0].repeat & PAD_LEFT) {
+        if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X coord positions
             selectorPosX = (selectorPosX + 5) % 6;
         }
-        if (g_pads[0].repeat & PAD_UP) {
+        if (g_pads[0].repeat & PAD_UP) { // move selector up
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 5 possible Y coord positions
             selectorPosY = (selectorPosY + 1) % 5;
