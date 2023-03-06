@@ -1324,16 +1324,16 @@ void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2) {
     ent2->posY.i.hi = ent1->posY.i.hi;
 }
 
-s32 func_801BBC3C(Unkstruct_800FF494* arg0) {
+s32 func_801BBC3C(Entity* e) {
     s16 diff;
 
-    diff = PLAYER.posX.i.hi - arg0->unk2;
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
     diff = ABS(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.i.hi - arg0->unk6;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
         diff = ABS(diff);
         diff = diff < 33;
     }
@@ -2504,16 +2504,16 @@ void func_801C7884(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBloodSkeleton);
 
-s32 func_801C7CF0(Unkstruct_800FF494* arg0) {
+s32 func_801C7CF0(Entity* e) {
     s16 diff;
 
-    diff = PLAYER.posX.i.hi - arg0->unk2;
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
     diff = ABS(diff);
 
     if (diff >= 25) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.i.hi - arg0->unk6;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
         diff = ABS(diff);
         diff = diff < 33;
     }

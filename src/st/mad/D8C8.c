@@ -536,21 +536,21 @@ void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2) {
     ent2->posY.i.hi = (s16)ent1->posY.i.hi;
 }
 
-s32 func_801910A8(Unkstruct_800FF494* arg0) {
-    s16 var_v0_2;
+s32 func_801910A8(Entity* e) {
+    s16 diff;
 
-    var_v0_2 = PLAYER.posX.i.hi - arg0->unk2;
-    var_v0_2 = ABS(var_v0_2);
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
+    diff = ABS(diff);
 
-    if (var_v0_2 >= 0x11) {
-        var_v0_2 = 0;
+    if (diff >= 17) {
+        diff = 0;
     } else {
-        var_v0_2 = PLAYER.posY.i.hi - arg0->unk6;
-        var_v0_2 = ABS(var_v0_2);
-        var_v0_2 = var_v0_2 < 0x21;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
+        diff = ABS(diff);
+        diff = diff < 33;
     }
 
-    return var_v0_2;
+    return diff;
 }
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", EntityRedDoor);
