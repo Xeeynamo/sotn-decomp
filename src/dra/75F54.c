@@ -296,36 +296,34 @@ void func_8011A290(Entity* entity) {
     func_80118894(entity);
 }
 
-void func_800FD9D4(Unkstruct_8011A328*, s32 arg1);
-
 void func_8011A328(Entity* entity, s32 arg1) {
-    Unkstruct_8011A328 sp10;
+    SpellDef spell;
 
-    func_800FD9D4(&sp10, arg1);
-    entity->attack = sp10.attack;
-    entity->attackElement = sp10.attackElement;
-    entity->unk3C = sp10.unk10;
-    entity->unk49 = sp10.unk0D;
-    entity->unk58 = sp10.unk0E;
-    entity->unk6A = sp10.unk12;
-    entity->objectRoomIndex = sp10.unk14;
+    func_800FD9D4(&spell, arg1);
+    entity->attack = spell.attack;
+    entity->attackElement = spell.attackElement;
+    entity->unk3C = spell.unk10;
+    entity->unk49 = spell.unk0D;
+    entity->unk58 = spell.unk0E;
+    entity->unk6A = spell.unk12;
+    entity->objectRoomIndex = spell.unk14;
     func_80118894(entity);
 }
 
 void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
-    Unkstruct_8011A328 sp10;
+    SpellDef spell;
 
     *arg3 = D_80097C38[D_8006CBC4];
     if (arg2 != 0) {
-        func_800FD9D4(&sp10, arg1);
-        arg0->attack = sp10.attack;
-        arg0->attackElement = sp10.attackElement;
-        arg0->unk3C = sp10.unk10;
-        arg0->unk49 = sp10.unk0D;
-        arg0->unk58 = sp10.unk0E;
-        arg0->unk6A = sp10.unk12;
-        arg0->objectRoomIndex = sp10.unk14;
-        arg0->attack = sp10.attack * ((arg3->unk0 * 4 / 95) + 1);
+        func_800FD9D4(&spell, arg1);
+        arg0->attack = spell.attack;
+        arg0->attackElement = spell.attackElement;
+        arg0->unk3C = spell.unk10;
+        arg0->unk49 = spell.unk0D;
+        arg0->unk58 = spell.unk0E;
+        arg0->unk6A = spell.unk12;
+        arg0->objectRoomIndex = spell.unk14;
+        arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
         func_80118894(arg0);
     }
 }

@@ -50,6 +50,21 @@ typedef struct {
     /* 1C */ u32 unk1C;
 } Accessory;
 
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* combo;
+    /* 0x08 */ const char* description;
+    /* 0x0C */ s8 mpUsage;
+    /* 0x0D */ s8 unk0D;
+    /* 0x0E */ s16 unk0E;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u16 attackElement;
+    /* 0x18 */ s16 attack;
+    /* 0x1A */ s16 unk1A;
+} SpellDef;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
 extern s32 D_800A015C;
@@ -127,6 +142,8 @@ extern s32 D_800A3194[];
 extern Lba D_800A3C40[]; // g_lba
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
+extern SpellDef g_Spells[];
+extern EnemyDef g_EnemyDefs[];
 extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern Accessory D_800A7718[];
@@ -494,6 +511,7 @@ u8* func_800FD760(s32 equipTypeFilter);
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void AddToInventory(u16 itemId, s32 itemCategory);
+void func_800FD9D4(SpellDef* spell, s32 id);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
 void func_800FDE00(void);
