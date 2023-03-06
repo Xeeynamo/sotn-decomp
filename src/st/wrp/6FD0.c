@@ -3021,24 +3021,24 @@ void func_8018C27C(u16 arg0, u16 arg1) {
 }
 
 void InitializeEntity(u16 arg0[]) {
-    u16 temp_v1;
-    Unkstruct_800FF494* temp_v0;
+    u16 enemyId;
+    Unkstruct_800FF494* enemyDef;
 
     g_CurrentEntity->animSet = *arg0++;
     g_CurrentEntity->animCurFrame = *arg0++;
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
-    temp_v1 = *arg0++;
-    g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 = (Unkstruct_800FF494*)(temp_v1 * sizeof(Unkstruct_800FF494) +
-                                    (u32)g_api.D_800A8900);
-    g_CurrentEntity->hitPoints = temp_v0->unk4;
-    g_CurrentEntity->unk40 = temp_v0->unk6;
-    g_CurrentEntity->unk42 = temp_v0->unk8;
-    g_CurrentEntity->unk3C = temp_v0->unkC;
-    g_CurrentEntity->hitboxWidth = temp_v0->hitboxWidth;
-    g_CurrentEntity->hitboxHeight = temp_v0->hitboxHeight;
-    g_CurrentEntity->unk34 = temp_v0->unk24;
+
+    enemyId = *arg0++;
+    g_CurrentEntity->enemyId = enemyId;
+    enemyDef = &g_api.D_800A8900[enemyId];
+    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
+    g_CurrentEntity->unk40 = enemyDef->unk6;
+    g_CurrentEntity->unk42 = enemyDef->unk8;
+    g_CurrentEntity->unk3C = enemyDef->unkC;
+    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
+    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
+    g_CurrentEntity->unk34 = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;

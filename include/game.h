@@ -235,7 +235,7 @@ typedef struct Entity {
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
     /* 0x38 */ s16 unk38;
-    /* 0x3A */ s16 unk3A;
+    /* 0x3A */ s16 enemyId;
     /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 unk40; // damage
