@@ -245,7 +245,7 @@ void UpdateNameEntry(void) {
     }
 }
 
-void func_801ADC3C(void) {
+void UpdateFileSelect(void) {
     if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
         if (g_pads[0].repeat & PAD_RIGHT) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
