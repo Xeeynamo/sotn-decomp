@@ -249,24 +249,28 @@ void UpdateFileSelect(void) {
     if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
         if (g_pads[0].repeat & PAD_RIGHT) { // move cursor to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            // clamp selector inside the 6 possible X positions
+            // clamp selector inside the 6 possible X coord positions
             selectorPosX = (selectorPosX + 1) % 6; 
         }
         if (g_pads[0].repeat & PAD_DOWN) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 5 possible Y coord positions
             selectorPosY = (selectorPosY + 4) % 5;
         }
         if (g_pads[0].repeat & PAD_LEFT) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 6 possible X coord positions
             selectorPosX = (selectorPosX + 5) % 6;
         }
         if (g_pads[0].repeat & PAD_UP) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 5 possible Y coord positions
             selectorPosY = (selectorPosY + 1) % 5;
         }
         if ((D_801BCC84[0] > 0) && (D_801BD02C > 0) &&
             (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+            // clamp selector inside the 6 possible X coord positions
             selectorPosX = (selectorPosX + 3) % 6;
         }
         if (D_801BCC84[0] < 0) {
