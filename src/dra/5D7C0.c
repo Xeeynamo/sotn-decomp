@@ -75,7 +75,13 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FD9D4);
+void func_800FD9D4(SpellDef* spell, s32 id) {
+    *spell = g_Spells[id];
+    spell->attack += (D_80097BE0 * 2 + (rand() % 12)) / 10;
+    if (CheckEquipmentItemCount(0x15, 2) != 0) {
+        spell->attack = spell->attack + spell->attack / 2;
+    }
+}
 
 // TODO get rid of the asm volatile
 #ifndef NON_MATCHING
@@ -185,7 +191,52 @@ bool func_800FE3A8(s32 arg0) {
     return (D_80097964[arg0] & temp) != 0;
 }
 
+// Matches with PSY-Q 3.5
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE3C4);
+#else
+s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+    u32 accessoryCount;
+
+    if (subweaponId == 0) {
+        *subwpn = g_Subweapons[D_80097BFC];
+        accessoryCount = CheckEquipmentItemCount(0x4D, 4);
+        if (accessoryCount == 1) {
+            subwpn->unk2 = subwpn->unk2 / 2;
+        }
+        if (accessoryCount == 2) {
+            subwpn->unk2 = subwpn->unk2 / 3;
+        }
+        if (subwpn->unk2 <= 0) {
+            subwpn->unk2 = 1;
+        }
+        if (D_80097B9C.hearts >= subwpn->unk2) {
+            if (useHearts) {
+                D_80097B9C.hearts -= subwpn->unk2;
+            }
+            return D_80097BFC;
+        } else {
+            return 0;
+        }
+    } else {
+        *subwpn = g_Subweapons[subweaponId];
+        if (CheckEquipmentItemCount(0x14, 2) != 0) {
+            subwpn->attack += 10;
+        }
+        if (subweaponId == 4 || subweaponId == 12) {
+            accessoryCount = CheckEquipmentItemCount(0x3D, 4);
+            if (accessoryCount == 1) {
+                subwpn->attack *= 2;
+            }
+            if (accessoryCount == 2) {
+                subwpn->attack *= 3;
+            }
+        }
+        subwpn->attack += ((D_80097BE0 * 2) + (rand() % 12)) / 10;
+        return subweaponId;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE728);
 
@@ -270,36 +321,41 @@ s32 func_800FF460(s32 arg0) {
     return arg0 + ((u32)(arg0 * D_80097BE4[0]) >> 7);
 }
 
-s32 func_800FF494(Unkstruct_800FF494* arg0) {
-    s32 temp_s2 = CheckEquipmentItemCount(0x4B, 4);
+// Determine what type of item to drop
+s32 func_800FF494(EnemyDef* arg0) {
+    // 0x4B is the item ID for Ring of Arcana
+    // Ring of Arcana is an item that increases enemy item drop rates when
+    // equipped
+    s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
 
-    if (temp_s2 != 0) {
-        rnd -= arg0->unk1E * temp_s2;
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
     }
 
-    if (rnd < arg0->unk1E) {
-        return 0x40;
+    if (rnd < arg0->rareItemDropRate) {
+        return 0x40; // drop the enemy's rare item
     } else {
-        rnd -= arg0->unk1E;
-        if (temp_s2 != 0) {
-            rnd -= arg0->unk20 * temp_s2;
+        // drop a common item, typically hearts or money
+        rnd -= arg0->rareItemDropRate;
+        if (ringOfArcanaCount != 0) {
+            rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
         }
         rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
 
-        if (rnd >= arg0->unk20) {
+        if (rnd >= arg0->uncommonItemDropRate) {
             rnd = rand() % 28;
-            if (arg0->unk1E == 0) {
+            if (arg0->rareItemDropRate == 0) {
                 rnd++;
             }
-            if (arg0->unk20 == 0) {
+            if (arg0->uncommonItemDropRate == 0) {
                 rnd++;
             }
-            return rnd + temp_s2;
+            return rnd + ringOfArcanaCount;
         } else {
-            return 0x20;
+            return 0x20; // drop the enemy's uncommon item
         }
     }
 }

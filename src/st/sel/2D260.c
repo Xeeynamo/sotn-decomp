@@ -182,8 +182,8 @@ void func_801AD78C(void) {
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
     DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
-    func_801B26A0(&D_80086FEC[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80, 0x48,
-                  0x0F, 0x0F, 0xF0, 0xF0);
+    func_801B26A0(&D_80086FEC[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80,
+                  0x48, 0x0F, 0x0F, 0xF0, 0xF0);
     func_801B26A0(&D_80086FEC[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
                   (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_blinkTimer & 8) {

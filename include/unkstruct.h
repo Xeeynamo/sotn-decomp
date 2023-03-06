@@ -38,29 +38,6 @@ typedef struct {
 } Unkstruct4; // size = 0x10
 
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2; // compared to Entity posX
-    /* 0x04 */ u16 unk4;
-    /* 0x06 */ u16 unk6; // compared to Entity posY
-    /* 0x08 */ u16 unk8;
-    /* 0x0A */ s16 unkA;
-    /* 0x0C */ u16 unkC;
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ u8 hitboxWidth;
-    /* 0x23 */ u8 hitboxHeight;
-    /* 0x24 */ s32 unk24;
-} Unkstruct5; // size = 0x28
-
-typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Unkstruct6; // size = 0x4
@@ -207,32 +184,6 @@ typedef struct {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ s16 sp10;
-    /* 0x02 */ char pad2[0x2];
-    /* 0x04 */ u16 sp14;
-    /* 0x06 */ char pad6[0x1];
-    /* 0x07 */ u8 sp17;
-    /* 0x08 */ u16 sp18;
-    /* 0x0A */ char padA[0x2];
-    /* 0x0C */ u16 sp1C;
-    /* 0x0E */ u16 sp1E;
-    /* 0x10 */ u8 sp20;
-    /* 0x11 */ char pad11[0x1];
-    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
-} Unkstruct_8011A290;
-
-typedef struct {
-    /* 0x00 */ char pad0[0xD];
-    /* 0x0D */ s8 unk0D;
-    /* 0x0E */ s16 unk0E;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-} Unkstruct_8011A328;
-
-typedef struct {
     /* 0x00 */ s16 unk0; /* D_800ACEC6 */
     /* 0x02 */ char pad2[0xE];
     /* 0x10 */ s16 unk10; /* D_800ACED6 */
@@ -317,12 +268,6 @@ typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ char unk02[0x1E];
 } Unkstruct_800A7734; // size = 0x20
-
-typedef struct Unkstruct_800FF494 {
-    char pad0[0x1E];
-    u16 unk1E;
-    u16 unk20;
-} Unkstruct_800FF494;
 
 typedef struct {
     s32 unk0;

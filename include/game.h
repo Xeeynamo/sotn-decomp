@@ -235,11 +235,11 @@ typedef struct Entity {
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 unk34;
     /* 0x38 */ s16 unk38;
-    /* 0x3A */ s16 unk3A;
+    /* 0x3A */ s16 enemyId;
     /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 unk40; // damage
-    /* 0x42 */ s16 unk42; // damage type
+    /* 0x40 */ s16 attack;
+    /* 0x42 */ s16 attackElement;
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
@@ -379,18 +379,18 @@ typedef struct {
 } GpuUsage;
 
 typedef struct {
-    u32 unk0;
-    s32 hp;
-    s32 hpMax;
-    s32 hearts;
-    s32 heartsMax;
-    s32 mp;
-    s32 mpMax;
-    s32 statStr;
-    s32 statCon;
-    s32 statInt;
-    s32 statLck;
-} PlayerStats;
+    /* 0x00 */ u32 unk0;
+    /* 0x04 */ s32 hp;
+    /* 0x08 */ s32 hpMax;
+    /* 0x0C */ s32 hearts;
+    /* 0x10 */ s32 heartsMax;
+    /* 0x14 */ s32 mp;
+    /* 0x18 */ s32 mpMax;
+    /* 0x1C */ s32 statStr;
+    /* 0x20 */ s32 statCon;
+    /* 0x24 */ s32 statInt;
+    /* 0x28 */ s32 statLck;
+} PlayerStats; /* size=unk */
 
 typedef struct {
     s32 hours;
@@ -659,6 +659,44 @@ typedef struct CollisionResult {
 } CollisionResult; /* size=0x24 */
 
 typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ u16 hitPoints;
+    /* 0x06 */ u16 attack;
+    /* 0x08 */ u16 attackElement;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ s16 weaknesses;
+    /* 0x10 */ s16 strengths;
+    /* 0x12 */ s16 immunes;
+    /* 0x14 */ s16 absorbs;
+    /* 0x16 */ s16 level;
+    /* 0x18 */ s16 exp;
+    /* 0x1A */ s16 rareItemId;
+    /* 0x1C */ s16 uncommonItemId;
+    /* 0x1E */ u16 rareItemDropRate;
+    /* 0x20 */ u16 uncommonItemDropRate;
+    /* 0x22 */ u8 hitboxWidth;
+    /* 0x23 */ u8 hitboxHeight;
+    /* 0x24 */ s32 unk24;
+} EnemyDef; /* size=0x28 */
+
+typedef struct {
+    /* 0x00 */ s16 attack;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ u16 attackElement;
+    /* 0x06 */ u8 unk6;
+    /* 0x07 */ u8 sp17;
+    /* 0x08 */ u16 sp18;
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u16 sp1C;
+    /* 0x0E */ u16 sp1E;
+    /* 0x10 */ u8 sp20;
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+} SubweaponDef;          /* size=0x14 */
+
+typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePolygons)(s32);
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
@@ -682,7 +720,7 @@ typedef struct {
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
     /* 8003C804 */ void* func_80118894;
-    /* 8003C808 */ Unkstruct5* D_800A8900;
+    /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
     /* 8003C814 */ void* func_8010DB38;
@@ -1034,9 +1072,11 @@ extern u8 D_80097964[];
 extern u8 D_8009796E;
 extern s8 D_8009798A[];
 extern u8 D_80097A8D;
+extern PlayerStats D_80097B9C;
 extern s32 D_80097BDC;
 extern s32 D_80097BE0;   // total CON
 extern s32 D_80097BE4[]; // total LCK
+extern s32 D_80097BFC;   // g_SubweaponId
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;

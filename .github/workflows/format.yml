@@ -8,11 +8,6 @@ on:
       - '**/*.c'
       - '**/*.h'
   pull_request_target:
-    paths:
-      - '*/*.c'
-      - '*/*.h'
-      - '**/*.c'
-      - '**/*.h'
   workflow_dispatch:
 
 jobs:
@@ -22,7 +17,9 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install clang-format
       - name: Clone main repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          submodules: false
       - name: Format code
         run: make format
       - name: Check if files have been modified

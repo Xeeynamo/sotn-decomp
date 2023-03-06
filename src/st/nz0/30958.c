@@ -232,8 +232,8 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         InitializeEntity(&D_80180BF8);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        self->unk42 = 1;
-        self->unk40 = 7;
+        self->attackElement = 1;
+        self->attack = 7;
         self->unk3C = 1;
 
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
@@ -1324,16 +1324,16 @@ void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2) {
     ent2->posY.i.hi = ent1->posY.i.hi;
 }
 
-s32 func_801BBC3C(Unkstruct5* arg0) {
+s32 func_801BBC3C(Entity* e) {
     s16 diff;
 
-    diff = PLAYER.posX.i.hi - arg0->unk2;
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
     diff = ABS(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.i.hi - arg0->unk6;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
         diff = ABS(diff);
         diff = diff < 33;
     }
@@ -1595,24 +1595,24 @@ void func_801BD568(u16 arg0, u16 arg1) {
 }
 
 void InitializeEntity(u16 arg0[]) {
-    u16 temp_v1;
-    Unkstruct5* temp_v0;
+    u16 enemyId;
+    EnemyDef* enemyDef;
 
     g_CurrentEntity->animSet = *arg0++;
     g_CurrentEntity->animCurFrame = *arg0++;
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
-    temp_v1 = *arg0++;
-    g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 =
-        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
-    g_CurrentEntity->hitPoints = temp_v0->unk4;
-    g_CurrentEntity->unk40 = temp_v0->unk6;
-    g_CurrentEntity->unk42 = temp_v0->unk8;
-    g_CurrentEntity->unk3C = temp_v0->unkC;
-    g_CurrentEntity->hitboxWidth = temp_v0->hitboxWidth;
-    g_CurrentEntity->hitboxHeight = temp_v0->hitboxHeight;
-    g_CurrentEntity->unk34 = temp_v0->unk24;
+
+    enemyId = *arg0++;
+    g_CurrentEntity->enemyId = enemyId;
+    enemyDef = &g_api.enemyDefs[enemyId];
+    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
+    g_CurrentEntity->attack = enemyDef->attack;
+    g_CurrentEntity->attackElement = enemyDef->attackElement;
+    g_CurrentEntity->unk3C = enemyDef->unkC;
+    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
+    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
+    g_CurrentEntity->unk34 = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -2504,16 +2504,16 @@ void func_801C7884(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBloodSkeleton);
 
-s32 func_801C7CF0(Unkstruct5* arg0) {
+s32 func_801C7CF0(Entity* e) {
     s16 diff;
 
-    diff = PLAYER.posX.i.hi - arg0->unk2;
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
     diff = ABS(diff);
 
     if (diff >= 25) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.i.hi - arg0->unk6;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
         diff = ABS(diff);
         diff = diff < 33;
     }
