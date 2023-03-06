@@ -803,11 +803,11 @@ void func_8019BA38(u16 arg0) {
     s32* hearts;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &D_80097B9C.hearts;
+    hearts = &D_80097BA0.hearts;
     *hearts += c_HeartPrizes[arg0];
 
-    if (D_80097B9C.heartsMax < *hearts) {
-        *hearts = D_80097B9C.heartsMax;
+    if (D_80097BA0.heartsMax < *hearts) {
+        *hearts = D_80097BA0.heartsMax;
     }
 
     DestroyEntity(g_CurrentEntity);
@@ -820,10 +820,10 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_8019BB94);
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_80097B9C.hearts += HEART_VESSEL_RICHTER;
+        D_80097BA0.hearts += HEART_VESSEL_RICHTER;
 
-        if (D_80097B9C.heartsMax < D_80097B9C.hearts) {
-            D_80097B9C.hearts = D_80097B9C.heartsMax;
+        if (D_80097BA0.heartsMax < D_80097BA0.hearts) {
+            D_80097BA0.hearts = D_80097BA0.heartsMax;
         }
     } else {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);

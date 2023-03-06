@@ -62,8 +62,8 @@ void func_8015B348(void) {
             PLAYER.unk2E++;
         }
 
-        if (D_80097B9C.hp < D_80097B9C.hpMax) {
-            D_80097B9C.hp++;
+        if (D_80097BA0.hp < D_80097BA0.hpMax) {
+            D_80097BA0.hp++;
         }
 
         D_80174F78--;
@@ -79,8 +79,8 @@ void func_8015B348(void) {
             PLAYER.unk2E++;
         }
 
-        if (D_80097B9C.hp < D_80097B9C.hpMax) {
-            D_80097B9C.hp++;
+        if (D_80097BA0.hp < D_80097BA0.hpMax) {
+            D_80097BA0.hp++;
         }
 
         D_80174F78--;
@@ -104,8 +104,8 @@ void func_8015B348(void) {
             break;
         }
 
-        if (D_80097B9C.hp < D_80097B9C.hpMax) {
-            D_80097B9C.hp++;
+        if (D_80097BA0.hp < D_80097BA0.hpMax) {
+            D_80097BA0.hp++;
         }
         break;
 
