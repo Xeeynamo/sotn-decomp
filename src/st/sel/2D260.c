@@ -250,7 +250,7 @@ void UpdateFileSelect(void) {
         if (g_pads[0].repeat & PAD_RIGHT) { // move cursor to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X positions
-            selectorPosX = (selectorPosX + 1) % 6; 
+            selectorPosX = (selectorPosX + 1) % 6;
         }
         if (g_pads[0].repeat & PAD_DOWN) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
@@ -275,8 +275,8 @@ void UpdateFileSelect(void) {
         if (D_801BD02C < 0) {
             selectorPosX %= 3;
         }
-        D_801D6B04 =
-            (selectorPosX % 3) + (selectorPosY * 3) + ((selectorPosX / 3) * 0xF);
+        D_801D6B04 = (selectorPosX % 3) + (selectorPosY * 3) +
+                     ((selectorPosX / 3) * 0xF);
     }
 }
 
