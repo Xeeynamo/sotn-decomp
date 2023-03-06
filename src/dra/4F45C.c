@@ -2067,19 +2067,19 @@ u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800FD6C4);
 
 u8* func_800FD744(s32 equipTypeFilter) {
-    u8* phi_v0 = &D_80097A8D;
+    u8* begin = g_InventoryOrder;
     if (equipTypeFilter != 0) {
-        phi_v0 += 0xA9;
+        begin += 0xA9;
     }
-    return phi_v0;
+    return begin;
 }
 
 u8* func_800FD760(s32 equipTypeFilter) {
-    s8* phi_v0 = &D_8009798A;
+    s8* begin = &g_Inventory;
     if (equipTypeFilter != 0) {
-        phi_v0 += 0xA9;
+        begin += 0xA9;
     }
-    return phi_v0;
+    return begin;
 }
 
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {

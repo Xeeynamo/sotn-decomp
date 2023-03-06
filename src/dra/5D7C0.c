@@ -76,7 +76,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 #endif
 
 void func_800FD9D4(SpellDef* spell, s32 id) {
-    *spell = g_Spells[id];
+    *spell = g_SpellDefs[id];
     spell->attack += (D_80097BE0 * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(0x15, 2) != 0) {
         spell->attack = spell->attack + spell->attack / 2;
@@ -157,13 +157,13 @@ bool func_800FDD44(s32 equipHeadIndex) {
     temp_s1 = D_800A4B1D[g_playerEquip[equipHeadIndex]].unk0;
     if (!CheckEquipmentItemCount(0x54, 4)) {
         if (temp_s1 != 0) {
-            temp_v0 = D_8009798A[equippedItem];
+            temp_v0 = g_Inventory[equippedItem];
             if (temp_v0 == 0) {
                 g_playerEquip[equipHeadIndex] = 0;
                 func_800F53A4();
                 return true;
             }
-            D_8009798A[equippedItem]--;
+            g_Inventory[equippedItem]--;
         }
     }
     return false;
@@ -533,8 +533,8 @@ void func_800FF7B8(s32 arg0) {
         } while (var_s0_3 < FAMILIAR_COUNT);
 
         for (var_s0_3 = 0; var_s0_3 < 0xA9; var_s0_3++) {
-            D_8009798A[var_s0_3] = 0;
-            D_80097A8D[var_s0_3] = var_s0_3;
+            g_Inventory[var_s0_3] = 0;
+            g_InventoryOrder[var_s0_3] = var_s0_3;
         }
 
         var_s0_5 = 0;
@@ -544,13 +544,13 @@ void func_800FF7B8(s32 arg0) {
             var_s0_5++;
         } while (var_s0_5 < 90);
 
-        D_8009798A[0] = 1;
+        g_Inventory[0] = 1;
         D_80097A4D = 1;
         D_80097A33[0] = 1;
         D_80097A63 = 1;
         D_80097A6C = 1;
         var_s0_6 = 7;
-        var_a0 = D_8009798A - 1;
+        var_a0 = g_Inventory - 1;
         for (; var_s0_6 >= 0; var_s0_6--) {
             *var_a0-- = 0;
         }

@@ -1063,8 +1063,9 @@ extern s32 D_80097934;
 extern u32 D_80097944;
 extern u8 D_80097964[];
 extern u8 D_8009796E;
-extern s8 D_8009798A[];
-extern u8 D_80097A8D;
+/* 80097982 */ extern u8 g_Spells[];
+/* 8009798A */ extern s8 g_Inventory[];
+/* 80097A8D */ extern s8 g_InventoryOrder[];
 extern PlayerStats D_80097B9C;
 extern s32 D_80097BDC;
 extern s32 D_80097BE0;   // total CON
