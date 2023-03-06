@@ -96,13 +96,13 @@ void func_801AD490(void) {
 }
 
 void func_801AD590(void) {
-    if (g_pads[0].tapped & 0x6000) {
+    if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (++D_801D6B0C == 5) {
             D_801D6B0C = 1;
         }
     }
-    if (g_pads[0].tapped & 0x9000) {
+    if (g_pads[0].tapped & (PAD_LEFT + PAD_UP)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (--D_801D6B0C == 0) {
             D_801D6B0C = 4;
