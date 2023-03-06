@@ -126,7 +126,7 @@ void func_801AD66C(void) {
      */
     for (spaceCounter = 0, i = 0; i < 8; i++) {
         g_SaveName[i] = g_InputSaveName[i];
-        if (g_InputSaveName[i] == 0x20) { // if the character is a space ?
+        if (g_InputSaveName[i] == 32) { // if the character is a space ?
             spaceCounter++;
         }
     }
@@ -330,7 +330,7 @@ void func_801AECA0(void) {
     s32 xnext = 384;
     u32* pix = D_801822E4;
 
-    for (; i < 0x10; i++) {
+    for (; i < 16; i++) {
         s32 tmp = 4;
         x = xnext;
         xnext += tmp;
@@ -720,7 +720,7 @@ void func_801B2D1C(void) {
     s32 i;
     POLY_GT4* poly;
 
-    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
+    for (i = 0, poly = D_80086FEC; i < 1280; i++) {
         func_801B2CF8((s32*)poly);
         setcode(poly, 0);
         poly++;
