@@ -246,9 +246,7 @@ void UpdateNameEntry(void) {
 }
 
 void func_801ADC3C(void) {
-    s32* new_var = &D_801BCC84;
-
-    if (*new_var >= 0 || D_801BD02C >= 0) {
+    if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
         if (g_pads[0].repeat & PAD_RIGHT) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3D8 = (D_801BC3D8 + 1) % 6;
@@ -265,11 +263,12 @@ void func_801ADC3C(void) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             D_801BC3DC = (D_801BC3DC + 1) % 5;
         }
-        if (*new_var > 0 && D_801BD02C > 0 && g_pads[0].tapped & 0xF) {
+        if ((D_801BCC84[0] > 0) && (D_801BD02C > 0) &&
+            (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
             D_801BC3D8 = (D_801BC3D8 + 3) % 6;
         }
-        if (D_801BCC84 < 0) {
+        if (D_801BCC84[0] < 0) {
             D_801BC3D8 = (D_801BC3D8 % 3) + 3;
         }
         if (D_801BD02C < 0) {

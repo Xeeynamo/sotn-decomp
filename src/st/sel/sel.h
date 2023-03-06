@@ -200,7 +200,7 @@ extern s32 D_801BC8C8;
 extern s32 D_801BC8E0[];
 extern SaveSummary D_801BC91C[15];
 extern s32* D_801BC958[];
-extern s32 D_801BCC84;
+extern s32 D_801BCC84[];
 extern s32 D_801BD02C;
 extern u32 D_801BD030;
 extern u32 D_801BD038; // StSetStream mode
