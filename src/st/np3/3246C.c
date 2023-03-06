@@ -634,8 +634,8 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->palette = *arg0++;
     temp_v1 = *arg0++;
     g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 =
-        (Unkstruct_800FF494*)(temp_v1 * sizeof(Unkstruct_800FF494) + (u32)g_api.D_800A8900);
+    temp_v0 = (Unkstruct_800FF494*)(temp_v1 * sizeof(Unkstruct_800FF494) +
+                                    (u32)g_api.D_800A8900);
     g_CurrentEntity->hitPoints = temp_v0->unk4;
     g_CurrentEntity->unk40 = temp_v0->unk6;
     g_CurrentEntity->unk42 = temp_v0->unk8;
