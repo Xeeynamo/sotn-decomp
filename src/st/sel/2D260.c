@@ -215,14 +215,14 @@ void UpdateNameEntry(void) {
         D_801BC3E0 = ((D_801BC3E0 - 8) & 0x18) | (D_801BC3E0 & 7);
     }
 
-    if (g_pads[0].tapped & PAD_R1 + PAD_R2) {
+    if (g_pads[0].tapped & (PAD_R1 + PAD_R2)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (++g_InputCursorPos == 8) {
             g_InputCursorPos = 0;
         }
     }
 
-    if (g_pads[0].tapped & PAD_L1 + PAD_L2) {
+    if (g_pads[0].tapped & (PAD_L1 + PAD_L2)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (--g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
