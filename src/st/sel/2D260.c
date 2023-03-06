@@ -250,7 +250,7 @@ void UpdateFileSelect(void) {
         if (g_pads[0].repeat & PAD_RIGHT) { // move cursor to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X coord positions
-            selectorPosX = (selectorPosX + 1) % 6; 
+            selectorPosX = (selectorPosX + 1) % 6;
         }
         if (g_pads[0].repeat & PAD_DOWN) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
