@@ -270,36 +270,41 @@ s32 func_800FF460(s32 arg0) {
     return arg0 + ((u32)(arg0 * D_80097BE4[0]) >> 7);
 }
 
+// Determine what type of item to drop
 s32 func_800FF494(Unkstruct_800FF494* arg0) {
-    s32 temp_s2 = CheckEquipmentItemCount(0x4B, 4);
+    // 0x4B is the item ID for Ring of Arcana
+    // Ring of Arcana is an item that increases enemy item drop rates when
+    // equipped
+    s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
 
-    if (temp_s2 != 0) {
-        rnd -= arg0->unk1E * temp_s2;
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
     }
 
-    if (rnd < arg0->unk1E) {
-        return 0x40;
+    if (rnd < arg0->rareItemDropRate) {
+        return 0x40; // drop the enemy's rare item
     } else {
-        rnd -= arg0->unk1E;
-        if (temp_s2 != 0) {
-            rnd -= arg0->unk20 * temp_s2;
+        // drop a common item, typically hearts or money
+        rnd -= arg0->rareItemDropRate;
+        if (ringOfArcanaCount != 0) {
+            rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
         }
         rnd -= ((rand() & 0x1F) + D_80097BE4[0]) / 20;
 
-        if (rnd >= arg0->unk20) {
+        if (rnd >= arg0->uncommonItemDropRate) {
             rnd = rand() % 28;
-            if (arg0->unk1E == 0) {
+            if (arg0->rareItemDropRate == 0) {
                 rnd++;
             }
-            if (arg0->unk20 == 0) {
+            if (arg0->uncommonItemDropRate == 0) {
                 rnd++;
             }
-            return rnd + temp_s2;
+            return rnd + ringOfArcanaCount;
         } else {
-            return 0x20;
+            return 0x20; // drop the enemy's uncommon item
         }
     }
 }
