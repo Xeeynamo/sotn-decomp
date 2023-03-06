@@ -320,8 +320,8 @@ typedef struct Unkstruct_800A7734 {
 
 typedef struct Unkstruct_800FF494 {
     char pad0[0x1E];
-    u16 unk1E;
-    u16 unk20;
+    u16 rareItemDropRate;
+    u16 uncommonItemDropRate;
 } Unkstruct_800FF494;
 
 typedef struct {
