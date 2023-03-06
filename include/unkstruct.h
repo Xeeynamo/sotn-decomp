@@ -38,8 +38,7 @@ typedef struct {
 } Unkstruct4; // size = 0x10
 
 typedef struct Unkstruct_800FF494 {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2; // compared to Entity posX
+    /* 0x00 */ const char* name;
     /* 0x04 */ u16 hitPoints;
     /* 0x06 */ u16 unk6;
     /* 0x08 */ u16 unk8;
