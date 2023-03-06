@@ -142,7 +142,7 @@ extern s32 D_800A3194[];
 extern Lba D_800A3C40[]; // g_lba
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
-extern SpellDef g_Spells[];
+extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
 extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
