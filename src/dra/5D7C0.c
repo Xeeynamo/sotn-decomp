@@ -273,7 +273,8 @@ s32 func_800FF460(s32 arg0) {
 // Determine what type of item to drop
 s32 func_800FF494(Unkstruct_800FF494* arg0) {
     // 0x4B is the item ID for Ring of Arcana
-    // Ring of Arcana is an item that increases enemy item drop rates when equipped
+    // Ring of Arcana is an item that increases enemy item drop rates when
+    // equipped
     s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
