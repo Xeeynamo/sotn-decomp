@@ -279,8 +279,8 @@ void UpdateFileSelect(void) {
         if (D_801BD02C < 0) {
             selectorPosX %= 3;
         }
-        D_801D6B04 =
-            (selectorPosX % 3) + (selectorPosY * 3) + ((selectorPosX / 3) * 0xF);
+        D_801D6B04 = (selectorPosX % 3) + (selectorPosY * 3) +
+                     ((selectorPosX / 3) * 0xF);
     }
 }
 
