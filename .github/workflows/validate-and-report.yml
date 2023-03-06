@@ -30,9 +30,17 @@ jobs:
         run: echo '${{ toJSON(github) }}'
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
-      - name: Clone main repository
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.after }}
+          submodules: false
+      - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
           submodules: false
       - name: Clone dependencies
         uses: actions/checkout@v3
