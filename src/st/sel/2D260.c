@@ -247,35 +247,36 @@ void UpdateNameEntry(void) {
 
 void UpdateFileSelect(void) {
     if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
-        if (g_pads[0].repeat & PAD_RIGHT) {
+        if (g_pads[0].repeat & PAD_RIGHT) { // move cursor to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3D8 = (D_801BC3D8 + 1) % 6;
+            // clamp selector inside the 6 possible X positions
+            selectorPosX = (selectorPosX + 1) % 6; 
         }
         if (g_pads[0].repeat & PAD_DOWN) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3DC = (D_801BC3DC + 4) % 5;
+            selectorPosY = (selectorPosY + 4) % 5;
         }
         if (g_pads[0].repeat & PAD_LEFT) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3D8 = (D_801BC3D8 + 5) % 6;
+            selectorPosX = (selectorPosX + 5) % 6;
         }
         if (g_pads[0].repeat & PAD_UP) {
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3DC = (D_801BC3DC + 1) % 5;
+            selectorPosY = (selectorPosY + 1) % 5;
         }
         if ((D_801BCC84[0] > 0) && (D_801BD02C > 0) &&
             (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-            D_801BC3D8 = (D_801BC3D8 + 3) % 6;
+            selectorPosX = (selectorPosX + 3) % 6;
         }
         if (D_801BCC84[0] < 0) {
-            D_801BC3D8 = (D_801BC3D8 % 3) + 3;
+            selectorPosX = (selectorPosX % 3) + 3;
         }
         if (D_801BD02C < 0) {
-            D_801BC3D8 %= 3;
+            selectorPosX %= 3;
         }
         D_801D6B04 =
-            (D_801BC3D8 % 3) + (D_801BC3DC * 3) + ((D_801BC3D8 / 3) * 0xF);
+            (selectorPosX % 3) + (selectorPosY * 3) + ((selectorPosX / 3) * 0xF);
     }
 }
 

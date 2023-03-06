@@ -189,8 +189,8 @@ extern s16 D_801BC392;
 extern s32 D_801BC394;
 extern u32 D_801BC398[];
 extern s32 D_801BC3D4[];
-extern s32 D_801BC3D8;
-extern s32 D_801BC3DC;
+extern s32 selectorPosX; // FileSelect selector PosX
+extern s32 selectorPosY; // FileSelect selector PosY
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
 extern Unkstruct_801B8A8C D_801BC3F0[];

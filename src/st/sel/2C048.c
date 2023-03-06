@@ -30,8 +30,8 @@ void func_801AC048(void) {
     g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     D_801D6B04 = 0;
-    D_801BC3D8 = 0;
-    D_801BC3DC = 0;
+    selectorPosX = 0;
+    selectorPosY = 0;
 }
 
 #ifndef NON_EQUIVALENT
