@@ -12,7 +12,7 @@ extern u8* D_801803B0;
 extern u8* D_801803B4;
 extern s32 D_801BAF20;
 extern s32 D_801BAF30;
-extern s32 D_801D6B08;
+extern s32 g_InputCursorPos; // cursor Position
 void* g_Cluts[];
 void* g_EntityGfxs[];
 s16** g_SpriteBanks[]; // g_SpriteBanks

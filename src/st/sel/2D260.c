@@ -182,7 +182,7 @@ void func_801AD78C(void) {
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
     DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
-    func_801B26A0(&D_80086FEC[D_801BAF58], (D_801D6B08 * 0x10) + 0x80, 0x48,
+    func_801B26A0(&D_80086FEC[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80, 0x48,
                   0x0F, 0x0F, 0xF0, 0xF0);
     func_801B26A0(&D_80086FEC[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
                   (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
@@ -217,31 +217,31 @@ void func_801AD968(void) {
 
     if (g_pads[0].tapped & 0xA) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-        if (++D_801D6B08 == 8) {
-            D_801D6B08 = 0;
+        if (++g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
         }
     }
 
     if (g_pads[0].tapped & 5) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-        if (--D_801D6B08 == -1) {
-            D_801D6B08 = 7;
+        if (--g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
         }
     }
 
-    if (g_pads[0].tapped & 0x40) {
+    if (g_pads[0].tapped & PAD_CROSS) {
         g_api.PlaySfx(0x8CD);
-        g_InputSaveName[D_801D6B08] = D_801823A0[D_801BC3E0];
-        if (++D_801D6B08 == 8) {
-            D_801D6B08 = 0;
+        g_InputSaveName[g_InputCursorPos] = D_801823A0[D_801BC3E0];
+        if (++g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
         }
     }
 
-    if (g_pads[0].tapped & 0x10) {
-        if (--D_801D6B08 == -1) {
-            D_801D6B08 = 7;
+    if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (--g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
         }
-        g_InputSaveName[D_801D6B08] = 0x20;
+        g_InputSaveName[g_InputCursorPos] = 32;
     }
 }
 
@@ -301,7 +301,7 @@ void func_801AE9A8(void) {
 }
 
 void func_801AEA8C(s32 arg0) {
-    D_801D6B08 = 0;
+    g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     func_801ACC3C();
     func_801ACBE4(7, 0x11);

@@ -27,7 +27,7 @@ Overlay g_StageOverlay = {
 
 void func_801AC048(void) {
     D_801D6B0C = 1;
-    D_801D6B08 = 0;
+    g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     D_801D6B04 = 0;
     D_801BC3D8 = 0;
