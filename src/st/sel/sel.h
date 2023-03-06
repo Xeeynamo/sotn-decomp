@@ -120,7 +120,7 @@ extern u8 D_80180528[];
 extern /*?*/ s32 D_801808DC[];
 extern u16 D_801808E4[];
 extern u32 D_801822E4[];
-extern s8 D_801823A0[];
+extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_8018258C;
 extern RECT D_801825A4;
 extern s32 D_801962F4;
@@ -191,7 +191,7 @@ extern u32 D_801BC398[];
 extern s32 D_801BC3D4[];
 extern s32 D_801BC3D8;
 extern s32 D_801BC3DC;
-extern s32 D_801BC3E0;
+extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
 extern Unkstruct_801B8A8C D_801BC3F0[];
 extern s32 D_801BC650;
