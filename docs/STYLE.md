@@ -11,8 +11,8 @@ We always write our enums and structs as `typedef`s. (Usually one can't use an e
 | Type                 | Style                   | Example                 |
 | -------------------- | ----------------------- | ----------------------- |
 | Local variables      | camelCase               | `entityRotation`        |
-| Global variables     | g_CamelCase             | `g_SettingsSoundMode`   |
-| Static variables[^1] | s_CamelCase             | `s_ZeroVec`             |
+| Global variables     | g_PascalCase            | `g_SettingsSoundMode`   |
+| Static variables[^1] | s_PascalCase            | `s_ZeroVec`             |
 | Struct members       | camelCase               | `hitboxWidth`           |
 | Struct types         | PascalCase              | `RoomHeader`            |
 | Enum types           | PascalCase              | `EntitySteps`           |
