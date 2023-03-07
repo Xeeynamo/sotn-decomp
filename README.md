@@ -144,7 +144,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/93BDC", func_80133FCC);
 * The `.` in `.rodata` indicates that the segment should be ignored in the final compilation and the table from `93BDC.c` should be used instead.
 
 * Make sure to change the file paths for the `INCLUDE_ASM`s.
-* 
 
 ## Duplicate functions
 
