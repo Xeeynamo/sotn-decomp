@@ -25,7 +25,7 @@ Overlay g_StageOverlay = {
     /* 0x3C */ func_801B17C8,
 };
 
-void func_801AC048(void) {
+void SetupFileChoose(void) {
     D_801D6B0C = 1;
     g_InputCursorPos = 0;
     D_801BC3E0 = 0;
