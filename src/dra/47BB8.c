@@ -342,7 +342,7 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     s32 nBytes;
     s32 ret;
 
-    sprintf(file, g_strMemcardSavePath, arg0, arg1, arg2);
+    sprintf(file, g_MemcardSavePath, arg0, arg1, arg2);
     nBytes = fd << 0xD;
 
     if (fd == 0) {
@@ -367,11 +367,11 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     s32 new_var;
     s32 device;
 
-    sprintf(savePath, &g_strMemcardSavePath, arg0, arg1, arg2);
+    sprintf(savePath, g_MemcardSavePath, arg0, arg1, arg2);
 
     if (arg5 == 1) {
         device = open(savePath, (arg4 << 0x10) | 0x200);
-        if (device == (-1)) {
+        if (device == -1) {
             return -2;
         } else {
             close(device);
@@ -394,7 +394,7 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
 s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
     char buffer[0x20];
 
-    sprintf(buffer, g_strMemcardSavePath, arg0, arg1, arg2);
+    sprintf(buffer, g_MemcardSavePath, arg0, arg1, arg2);
     return -(erase(buffer) == 0);
 }
 
@@ -1075,7 +1075,7 @@ void func_800EDA94(void) {
     POLY_GT4* poly;
     s32 i;
 
-    for (i = 0, poly = D_80086FEC; i < 1280; i++) {
+    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
         func_800EDA70((s32*)poly);
         setcode(poly, 0);
         poly++;

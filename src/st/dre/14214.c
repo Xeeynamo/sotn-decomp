@@ -24,7 +24,7 @@ void EntityPinkBallProjectile(Entity* self) {
         if (self->unk1A > 256) {
             self->unk19 = 0;
         }
-        AnimateEntity(&D_80180794, self);
+        AnimateEntity(D_80180794, self);
 
         entity = self->unk9C;
         if (entity->unk84.U8.unk1 != 0) {
@@ -135,7 +135,7 @@ void EntitySuccubusWingSpike(Entity* self) {
 void EntityUnkId1F(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_8018050C);
+        InitializeEntity(D_8018050C);
         entity->animCurFrame = 0;
         entity->unk19 = 4;
         entity->unk3C = 0;

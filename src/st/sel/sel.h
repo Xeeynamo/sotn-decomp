@@ -113,7 +113,7 @@ extern u8* D_801803BC;
 extern u8* D_801803C0;
 extern u8* D_801803C4; // images
 extern s32 D_80180454[];
-extern const u8* D_80180468;  // pointer to D_801A7748 (string "richter ")
+extern const u8* D_80180468; // pointer to D_801A7748 (string "richter ")
 extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
@@ -137,21 +137,21 @@ extern s32* D_80196410;
 extern s32* D_8019642C;
 extern s32* D_80196430;
 extern s32* D_80196434;
-extern const u8 D_801A7748[]; // string "richter "
+extern const u8 D_801A7748[];                               // string "richter "
 extern const u8 D_801A7754[12] __attribute__((aligned(4))); // string "alucard "
 extern s32 D_801A75A0[];
 extern s32 D_801A75C0[];
-extern const char D_801A7AF8[];   // rstep:%d,%d
-extern const char D_801A7B08[];   // retry:%d
-extern const char D_801A7D78[];   // "bu%1d%1d:"
-extern const char g_strMemcardSavePath[];   // "bu%1d%1d:%s"
-extern const char D_801A802C[18]; // "BASLUS-00067DRAX00"
-extern const char D_801ABF9C[];   // "MDEC_rest:bad option(%d)\n"
-extern const char D_801ABFB8[];   // MDEC_in_sync
-extern const char D_801ABFC8[];   // MDEC_out_sync
-extern const char D_801ABFD8[];   // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
-extern const char D_801AC000[];   // FIFO
-extern const char D_801AC038[];   // "%s timeout:\n"
+extern const char D_801A7AF8[];        // rstep:%d,%d
+extern const char D_801A7B08[];        // retry:%d
+extern const char D_801A7D78[];        // "bu%1d%1d:"
+extern const char g_MemcardSavePath[]; // "bu%1d%1d:%s"
+extern const char D_801A802C[18];      // "BASLUS-00067DRAX00"
+extern const char D_801ABF9C[];        // "MDEC_rest:bad option(%d)\n"
+extern const char D_801ABFB8[];        // MDEC_in_sync
+extern const char D_801ABFC8[];        // MDEC_out_sync
+extern const char D_801ABFD8[];        // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
+extern const char D_801AC000[];        // FIFO
+extern const char D_801AC038[];        // "%s timeout:\n"
 extern s32 D_801BAF10;
 extern Unkstruct_801ACBE4 D_801BAF18[];
 extern s32 D_801BAF48;
@@ -189,8 +189,8 @@ extern s16 D_801BC392;
 extern s32 D_801BC394;
 extern u32 D_801BC398[];
 extern s32 D_801BC3D4[];
-extern s32 selectorPosX; // FileSelect selector PosX
-extern s32 selectorPosY; // FileSelect selector PosY
+extern s32 g_MemCardSelectorX;
+extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
 extern Unkstruct_801B8A8C D_801BC3F0[];

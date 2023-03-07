@@ -30,8 +30,8 @@ void SetupFileChoose(void) {
     g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     D_801D6B04 = 0;
-    selectorPosX = 0;
-    selectorPosY = 0;
+    g_MemCardSelectorX = 0;
+    g_MemCardSelectorY = 0;
 }
 
 #ifndef NON_EQUIVALENT

@@ -126,7 +126,7 @@ void func_801AD66C(void) {
      */
     for (spaceCounter = 0, i = 0; i < 8; i++) {
         g_SaveName[i] = g_InputSaveName[i];
-        if (g_InputSaveName[i] == 32) { // if the character is a space ?
+        if (g_InputSaveName[i] == ' ') {
             spaceCounter++;
         }
     }
@@ -241,7 +241,7 @@ void UpdateNameEntry(void) {
         if (--g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
         }
-        g_InputSaveName[g_InputCursorPos] = 32; // space
+        g_InputSaveName[g_InputCursorPos] = ' ';
     }
 }
 
@@ -250,44 +250,44 @@ void UpdateFileSelect(void) {
         if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X coord positions
-            selectorPosX = (selectorPosX + 1) % 6;
+            g_MemCardSelectorX = (g_MemCardSelectorX + 1) % 6;
         }
 
         if (g_pads[0].repeat & PAD_DOWN) { // move selector down
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 5 possible Y coord positions
-            selectorPosY = (selectorPosY + 4) % 5;
+            g_MemCardSelectorY = (g_MemCardSelectorY + 4) % 5;
         }
 
         if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X coord positions
-            selectorPosX = (selectorPosX + 5) % 6;
+            g_MemCardSelectorX = (g_MemCardSelectorX + 5) % 6;
         }
 
         if (g_pads[0].repeat & PAD_UP) { // move selector up
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 5 possible Y coord positions
-            selectorPosY = (selectorPosY + 1) % 5;
+            g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
         }
 
         if ((D_801BCC84[0] > 0) && (D_801BD02C > 0) &&
             (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
             // clamp selector inside the 6 possible X coord positions
-            selectorPosX = (selectorPosX + 3) % 6;
+            g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
         }
 
         if (D_801BCC84[0] < 0) {
-            selectorPosX = (selectorPosX % 3) + 3;
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
 
         if (D_801BD02C < 0) {
-            selectorPosX %= 3;
+            g_MemCardSelectorX %= 3;
         }
 
-        D_801D6B04 = (selectorPosX % 3) + (selectorPosY * 3) +
-                     ((selectorPosX / 3) * 0xF);
+        D_801D6B04 = (g_MemCardSelectorX % 3) + (g_MemCardSelectorY * 3) +
+                     ((g_MemCardSelectorX / 3) * 0xF);
     }
 }
 
@@ -753,7 +753,7 @@ void func_801B2D1C(void) {
     s32 i;
     POLY_GT4* poly;
 
-    for (i = 0, poly = D_80086FEC; i < 1280; i++) {
+    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
         func_801B2CF8((s32*)poly);
         setcode(poly, 0);
         poly++;

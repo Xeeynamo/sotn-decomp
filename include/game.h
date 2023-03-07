@@ -852,7 +852,7 @@ extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
-extern const char g_strMemcardSavePath[];
+extern const char g_MemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
