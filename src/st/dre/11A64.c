@@ -23,6 +23,10 @@ void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern u16 D_801804A0[];
+extern u8 D_80180580[];
+extern u8 D_80180588[];
+extern u16 D_80180590[];
 extern u16 D_80180494[];
 extern s16 D_80180D80[];
 extern LayoutObject* D_801A32C4;
@@ -37,7 +41,6 @@ extern u8 D_80181338;
 extern PfnEntityUpdate D_801803C4[];
 extern u16 D_801804E8;
 extern u16 D_8018050C;
-extern PfnEntityUpdate D_801803C4[];
 extern s16 D_801A3EDE;
 extern u16 D_801A3EE0;
 extern s16 D_801A3EE2;
@@ -82,7 +85,63 @@ void EntityUnkId11(Entity* entity) {
     AnimateEntity(obj->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", func_80191B44);
+void func_80191B44(Entity* entity) {
+    s32 ret;
+    u16* temp_v0_2;
+    u16 temp_s1 = entity->subId;
+    u16 phi_v1;
+    u16 unk;
+    entity->unk6D = 0;
+
+    if (entity->step != 0) {
+        switch (temp_s1) {
+        case 4:
+        case 5:
+            if (g_CurrentRoom.x != 0) {
+                return;
+            }
+            break;
+
+        case 6:
+            if (g_pads->pressed & PAD_TRIANGLE) {
+                g_CurrentRoom.x = 0;
+                g_CurrentRoom.width = 1280;
+                do {
+                    entity->step++;
+                } while (0);
+                return;
+            }
+            break;
+        }
+
+        if (entity->unk44 != 0) {
+            ret = func_8019A718();
+            phi_v1 = entity->unk7C.s;
+            if (phi_v1 != 0) {
+                phi_v1 = (ret & 2) * 2;
+            } else {
+                phi_v1 = (ret & 1) * 4;
+            }
+            unk = 8;
+            temp_s1 = (temp_s1 * unk) + phi_v1;
+            temp_v0_2 = &D_80180590[temp_s1];
+            g_CurrentRoom.x = *(temp_v0_2++);
+            g_CurrentRoom.y = *(temp_v0_2++);
+            g_CurrentRoom.width = *(temp_v0_2++);
+            g_CurrentRoom.height = *(temp_v0_2++);
+        }
+    } else {
+        InitializeEntity(D_801804A0);
+        entity->unk7C.s = D_80180588[temp_s1];
+        if (entity->unk7C.s != 0) {
+            entity->hitboxWidth = D_80180580[temp_s1];
+            entity->hitboxHeight = 16;
+        } else {
+            entity->hitboxWidth = 16;
+            entity->hitboxHeight = D_80180580[temp_s1];
+        }
+    }
+}
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[];
