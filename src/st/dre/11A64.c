@@ -39,8 +39,15 @@ extern s16 D_801812E4[];
 extern u32 D_801812F4[];
 extern u8 D_80181338;
 extern PfnEntityUpdate D_801803C4[];
-extern u16 D_801804E8;
+extern u16 D_801804E8[];
 extern u16 D_8018050C;
+extern u16 D_80180528[];
+extern s32 D_80180664;
+extern s32 D_80180668;
+extern s16 D_801807F0[];
+extern u32 D_8018130C[];
+extern u8 D_80181324[];
+extern u16 D_80181328[];
 extern s16 D_801A3EDE;
 extern u16 D_801A3EE0;
 extern s16 D_801A3EE2;
@@ -53,11 +60,6 @@ extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern s8 c_HeartPrizes[];
-extern s32 D_80180668;
-extern u16 D_80180528[];
-extern u32 D_8018130C[];
-extern u8 D_80181324[];
-extern u16 D_80181328[];
 
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
@@ -185,7 +187,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusPetal);
 
 void EntityUnkId1B(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(&D_801804E8);
+        InitializeEntity(D_801804E8);
     }
 
     entity->posX.i.hi = entity[-1].posX.i.hi;
@@ -210,7 +212,66 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId1C);
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityPinkBallProjectile);
 
 // Extending wing spike from succubus ID 0x1E
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusWingSpike);
+void EntitySuccubusWingSpike(Entity* self) {
+    s32 temp_s2;
+    s16 var_s0;
+
+    if (D_80180664 & 2) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_801804E8);
+        self->unk19 = 4;
+        self->animCurFrame = 0;
+        var_s0 = D_801807F0[self->subId];
+        self->unk1E = var_s0;
+        self->unk19 |= 1;
+        self->unk1A = 0x100;
+        CreateEntityFromEntity(0x1F, self, &self[1]);
+        self[1].facing = self->facing;
+        self[1].subId = self->subId;
+        self[1].unk1E = self->unk1E;
+
+    case 1:
+        if (self->unk9C->unk84.U8.unk1 != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->animCurFrame = 85;
+        self->unk1A += 0x40;
+        if (self->unk1A > 0x600) {
+            self->unk1A = 0x600;
+        }
+
+        if (self->unk9C->unk84.U8.unk1 == 0) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        self->unk1A -= 0x40;
+        if (self->unk1A < 0x100) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+
+    var_s0 = self->unk1E;
+    temp_s2 = (self->unk1A * 0xB) >> 6;
+    if (self->facing == 0) {
+        var_s0 = 0x800 - var_s0;
+    }
+
+    self[1].posX.i.hi = self->posX.i.hi;
+    self[1].posY.i.hi = self->posY.i.hi;
+    self[1].posX.i.hi += temp_s2 * rcos(var_s0) >> 0xC;
+    self[1].posY.i.hi -= temp_s2 * rsin(var_s0) >> 0xC;
+}
 
 void EntityUnkId1F(Entity* entity) {
     switch (entity->step) {

@@ -304,7 +304,7 @@ typedef struct Entity {
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ s32 unk9C;
+    /* 0x9C */ struct Entity* unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
