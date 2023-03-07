@@ -285,7 +285,7 @@ void UpdateFileSelect(void) {
         if (D_801BD02C < 0) {
             selectorPosX %= 3;
         }
-        
+
         D_801D6B04 = (selectorPosX % 3) + (selectorPosY * 3) +
                      ((selectorPosX / 3) * 0xF);
     }
@@ -507,7 +507,28 @@ void func_801B1D68(POLY_GT4* poly) { func_801B1CFC(poly, 0); }
 
 void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B1DA8);
+void func_801B1DA8(void) {
+    s32 index = 0;
+    s32 i, j;
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x200; j < 0x300; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0; j < 0x100; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x100; j < 0x200; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+}
 
 void func_801B1ED0(void) {
     s32 var_v1 = 0xF;
