@@ -1754,9 +1754,7 @@ void func_801870B0(Entity* entity) {
             if (g_pads->pressed & PAD_TRIANGLE) {
                 g_CurrentRoom.x = 0;
                 g_CurrentRoom.width = 1280;
-                do {
-                    entity->step++;
-                } while (0);
+                entity->step++;
                 return;
             }
             break;
