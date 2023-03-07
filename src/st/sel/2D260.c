@@ -1045,7 +1045,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* unkEntity = &g_EntityArray[2];
+    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1102,7 +1102,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* unkEntity = &g_EntityArray[2];
+    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
