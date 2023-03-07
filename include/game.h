@@ -304,7 +304,7 @@ typedef struct Entity {
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ s32 unk9C;
+    /* 0x9C */ struct Entity* unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
@@ -852,7 +852,7 @@ extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
-extern const char g_strMemcardSavePath[];
+extern const char g_MemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
@@ -1026,6 +1026,8 @@ extern s32 D_80096ED8[];
 extern u32 D_80097364;
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
+extern s8 D_80097B98;
+extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern s32 D_800973F8;
 extern s32 D_800973FC;
@@ -1040,7 +1042,12 @@ extern s32 D_80097424;
 extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
-extern Pad g_pads[];
+extern Pad g_pads[];   // 0x80097490
+extern s16 D_80097492; // g_pads[0].previous
+extern u16 D_80097494; // g_pads[0].tapped
+extern u16 D_80097496; // g_pads[0].repeat
+extern u16 D_80097498;
+extern u16 D_8009749C[];
 extern u32 g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
@@ -1075,7 +1082,7 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern u8 g_SaveName[12];
+extern u8 g_SaveName[12] __attribute__((aligned(4)));
 extern s32 g_playerHp;       // D_80097BA0.hp
 extern s32 g_playerHpMax;    // D_80097BA0.hpMax
 extern s32 g_playerHeart;    // D_80097BA0.hearts

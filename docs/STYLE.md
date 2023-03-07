@@ -11,8 +11,8 @@ We always write our enums and structs as `typedef`s. (Usually one can't use an e
 | Type                 | Style                   | Example                 |
 | -------------------- | ----------------------- | ----------------------- |
 | Local variables      | camelCase               | `entityRotation`        |
-| Global variables     | g_CamelCase             | `g_SettingsSoundMode`   |
-| Static variables[^1] | s_CamelCase             | `s_ZeroVec`             |
+| Global variables     | g_PascalCase            | `g_SettingsSoundMode`   |
+| Static variables[^1] | s_PascalCase            | `s_ZeroVec`             |
 | Struct members       | camelCase               | `hitboxWidth`           |
 | Struct types         | PascalCase              | `RoomHeader`            |
 | Enum types           | PascalCase              | `EntitySteps`           |
@@ -116,7 +116,6 @@ If a function returns only `0` or `1`, and is used as a boolean (i.e. in conditi
 - Those in `macros.h`
   - `ABS`, `ABS_ALT`,
   - `CLAMP` and friends.
-  - `GET_PLATER` (look at examples around the repo), if it matches
 
   ## Arrays
 
