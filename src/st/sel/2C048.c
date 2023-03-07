@@ -25,13 +25,13 @@ Overlay g_StageOverlay = {
     /* 0x3C */ func_801B17C8,
 };
 
-void func_801AC048(void) {
+void SetupFileChoose(void) {
     D_801D6B0C = 1;
-    D_801D6B08 = 0;
+    g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     D_801D6B04 = 0;
-    D_801BC3D8 = 0;
-    D_801BC3DC = 0;
+    g_MemCardSelectorX = 0;
+    g_MemCardSelectorY = 0;
 }
 
 #ifndef NON_EQUIVALENT

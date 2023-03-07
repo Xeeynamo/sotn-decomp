@@ -96,13 +96,13 @@ void func_801AD490(void) {
 }
 
 void func_801AD590(void) {
-    if (g_pads[0].tapped & 0x6000) {
+    if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (++D_801D6B0C == 5) {
             D_801D6B0C = 1;
         }
     }
-    if (g_pads[0].tapped & 0x9000) {
+    if (g_pads[0].tapped & (PAD_LEFT + PAD_UP)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
         if (--D_801D6B0C == 0) {
             D_801D6B0C = 4;
@@ -111,7 +111,55 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[D_801D6B0C], 9);
 }
 
+// single instruction reorder, function tested working in-game
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AD66C);
+#else
+void func_801AD66C(void) {
+    s32 spaceCounter;
+    s32 counter;
+    s32 i;
+
+    /**
+     * If the entered name contains 8 spaces, sets the default
+     * name to "alucard " which is stored in D_801A7754
+     */
+    for (spaceCounter = 0, i = 0; i < 8; i++) {
+        g_SaveName[i] = g_InputSaveName[i];
+        if (g_InputSaveName[i] == ' ') {
+            spaceCounter++;
+        }
+    }
+
+    if (spaceCounter == 8) {
+        __builtin_memcpy(g_SaveName, D_801A7754, 9);
+    }
+
+    /**
+     * Checks byte by byte if the entered name is equal
+     * to "richter " and if time attack is unlocked,
+     * in which case enables the player to play as Richter
+     */
+    D_80097B98 = 0;
+    D_80097B99 = 0;
+
+    for (counter = 0; counter < 8; counter++) {
+        if (g_SaveName[counter] != D_80180468[counter]) {
+            break;
+        }
+    }
+
+    if (g_IsTimeAttackUnlocked != false) {
+        g_IsTimeAttackUnlocked = 2;
+    }
+
+    if ((counter == 8) && (g_IsTimeAttackUnlocked != false)) {
+        g_CurrentPlayableCharacter = PLAYER_RICHTER;
+    } else {
+        g_CurrentPlayableCharacter = PLAYER_ALUCARD;
+    }
+}
+#endif
 
 /* DATA */
 extern u8* D_801803B0;
@@ -134,8 +182,8 @@ void func_801AD78C(void) {
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
     DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
-    func_801B26A0(&D_80086FEC[D_801BAF58], (D_801D6B08 * 0x10) + 0x80, 0x48,
-                  0x0F, 0x0F, 0xF0, 0xF0);
+    func_801B26A0(&D_80086FEC[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80,
+                  0x48, 0x0F, 0x0F, 0xF0, 0xF0);
     func_801B26A0(&D_80086FEC[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
                   (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_blinkTimer & 8) {
@@ -146,7 +194,7 @@ void func_801AD78C(void) {
     DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
 }
 
-void func_801AD968(void) {
+void UpdateNameEntry(void) {
     if (g_pads[0].repeat & PAD_RIGHT) {
         g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
         D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
@@ -167,68 +215,79 @@ void func_801AD968(void) {
         D_801BC3E0 = ((D_801BC3E0 - 8) & 0x18) | (D_801BC3E0 & 7);
     }
 
-    if (g_pads[0].tapped & 0xA) {
+    if (g_pads[0].tapped & (PAD_R1 + PAD_R2)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-        if (++D_801D6B08 == 8) {
-            D_801D6B08 = 0;
+        if (++g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
         }
     }
 
-    if (g_pads[0].tapped & 5) {
+    if (g_pads[0].tapped & (PAD_L1 + PAD_L2)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-        if (--D_801D6B08 == -1) {
-            D_801D6B08 = 7;
+        if (--g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
         }
     }
 
-    if (g_pads[0].tapped & 0x40) {
+    if (g_pads[0].tapped & PAD_CROSS) { // Input Character
         g_api.PlaySfx(0x8CD);
-        g_InputSaveName[D_801D6B08] = D_801823A0[D_801BC3E0];
-        if (++D_801D6B08 == 8) {
-            D_801D6B08 = 0;
+        g_InputSaveName[g_InputCursorPos] = D_801823A0[D_801BC3E0];
+        if (++g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
         }
     }
 
-    if (g_pads[0].tapped & 0x10) {
-        if (--D_801D6B08 == -1) {
-            D_801D6B08 = 7;
+    if (g_pads[0].tapped & PAD_TRIANGLE) { // Backspace
+        if (--g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
         }
-        g_InputSaveName[D_801D6B08] = 0x20;
+        g_InputSaveName[g_InputCursorPos] = ' ';
     }
 }
 
-void func_801ADC3C(void) {
-    s32* new_var = &D_801BCC84;
+void UpdateFileSelect(void) {
+    if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
+        if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 6 possible X coord positions
+            g_MemCardSelectorX = (g_MemCardSelectorX + 1) % 6;
+        }
 
-    if (*new_var >= 0 || D_801BD02C >= 0) {
-        if (g_pads[0].repeat & 0x2000) {
+        if (g_pads[0].repeat & PAD_DOWN) { // move selector down
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3D8 = (D_801BC3D8 + 1) % 6;
+            // clamp selector inside the 5 possible Y coord positions
+            g_MemCardSelectorY = (g_MemCardSelectorY + 4) % 5;
         }
-        if (g_pads[0].repeat & 0x4000) {
+
+        if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3DC = (D_801BC3DC + 4) % 5;
+            // clamp selector inside the 6 possible X coord positions
+            g_MemCardSelectorX = (g_MemCardSelectorX + 5) % 6;
         }
-        if (g_pads[0].repeat & 0x8000) {
+
+        if (g_pads[0].repeat & PAD_UP) { // move selector up
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3D8 = (D_801BC3D8 + 5) % 6;
+            // clamp selector inside the 5 possible Y coord positions
+            g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
         }
-        if (g_pads[0].repeat & 0x1000) {
-            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
-            D_801BC3DC = (D_801BC3DC + 1) % 5;
-        }
-        if (*new_var > 0 && D_801BD02C > 0 && g_pads[0].tapped & 0xF) {
+
+        if ((D_801BCC84[0] > 0) && (D_801BD02C > 0) &&
+            (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-            D_801BC3D8 = (D_801BC3D8 + 3) % 6;
+            // clamp selector inside the 6 possible X coord positions
+            g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
         }
-        if (D_801BCC84 < 0) {
-            D_801BC3D8 = (D_801BC3D8 % 3) + 3;
+
+        if (D_801BCC84[0] < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
+
         if (D_801BD02C < 0) {
-            D_801BC3D8 %= 3;
+            g_MemCardSelectorX %= 3;
         }
-        D_801D6B04 =
-            (D_801BC3D8 % 3) + (D_801BC3DC * 3) + ((D_801BC3D8 / 3) * 0xF);
+
+        D_801D6B04 = (g_MemCardSelectorX % 3) + (g_MemCardSelectorY * 3) +
+                     ((g_MemCardSelectorX / 3) * 0xF);
     }
 }
 
@@ -253,7 +312,7 @@ void func_801AE9A8(void) {
 }
 
 void func_801AEA8C(s32 arg0) {
-    D_801D6B08 = 0;
+    g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     func_801ACC3C();
     func_801ACBE4(7, 0x11);
@@ -283,7 +342,7 @@ void func_801AECA0(void) {
     s32 xnext = 384;
     u32* pix = D_801822E4;
 
-    for (; i < 0x10; i++) {
+    for (; i < 16; i++) {
         s32 tmp = 4;
         x = xnext;
         xnext += tmp;
@@ -326,10 +385,12 @@ void func_801B17C8(void) {
             D_800978F8++;
         }
         break;
+
     case 1:
         func_801B3A54(D_80097924, D_8006C378);
         D_800978F8++;
         break;
+
     case 2:
         D_800978C4 = 0;
         if (func_801B3A94(1) != 0) {
@@ -446,7 +507,28 @@ void func_801B1D68(POLY_GT4* poly) { func_801B1CFC(poly, 0); }
 
 void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B1DA8);
+void func_801B1DA8(void) {
+    s32 index = 0;
+    s32 i, j;
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x200; j < 0x300; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0; j < 0x100; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x100; j < 0x200; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+}
 
 void func_801B1ED0(void) {
     s32 var_v1 = 0xF;
@@ -821,7 +903,7 @@ void func_801B3E14(s32 arg0) {
     g_memCardRStepSub = arg0;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3E2C);
 #else
 s32 func_801B3E2C(void) {
@@ -963,7 +1045,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* unkEntity = &g_EntityArray[2];
+    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1019,7 +1101,51 @@ void func_801B4DE0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4FFC);
+void func_801B4FFC(void) {
+    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+
+    switch (unkEntity->step) {
+    case 0:
+        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        if (firstPolygonIndex != -1) {
+            poly = &D_80086FEC[firstPolygonIndex];
+            unkEntity->firstPolygonIndex = firstPolygonIndex;
+            unkEntity->unk34 |= 0x800000;
+            *(s32*)&unkEntity->unk7C = poly;
+
+            poly->x1 = poly->x3 = 384;
+            poly->y0 = poly->y1 = 4;
+            poly->y2 = poly->y3 = 228;
+
+            poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+                poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 =
+                    poly->b3 = poly->x0 = poly->x2 = 0;
+
+            poly->pad2 = 0xC8;
+            poly->pad3 = 0x51;
+
+            unkEntity->step++;
+        }
+        break;
+
+    case 1:
+        poly = *(s32*)&unkEntity->unk7C;
+        if (D_801BC3E4 != 0) {
+            poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
+                poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                    poly->r0 = poly->b3 + 2;
+            if (poly->r0 >= 254) {
+                D_801BC3E4 = 0;
+                unkEntity->step++;
+            }
+        }
+
+    case 2:
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B519C);
 
