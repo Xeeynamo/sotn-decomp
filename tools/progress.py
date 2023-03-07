@@ -5,6 +5,7 @@ import mapfile_parser.utils
 import mapfile_parser.frontends.upload_frogress
 import os
 import requests
+import subprocess
 import sys
 from pathlib import Path
 from mapfile_parser import MapFile
@@ -21,6 +22,10 @@ args = parser.parse_args()
 def exiterr(msg: str):
     print(msg, file=sys.stderr)
     exit(-1)
+
+
+def get_git_commit_message() -> str:
+    return subprocess.check_output(['git', 'show', '-s', '--format=%s']).decode('ascii').rstrip()
 
 
 class DecompProgressStats:
@@ -54,7 +59,8 @@ class DecompProgressStats:
 
         depth = 4 + path.count("/")
 
-        self.calculate_progress(map_file.filterBySegmentType(".text"), asm_path, nonmatchings, depth)
+        self.calculate_progress(map_file.filterBySegmentType(
+            ".text"), asm_path, nonmatchings, depth)
 
     # modified version of mapfile_parser.MapFile.getProgress
     def calculate_progress(self, map_file: MapFile, asmPath: Path, nonmatchings: Path, pathIndex: int):
@@ -80,7 +86,8 @@ class DecompProgressStats:
 
             for func in file.symbols:
                 self.functions_total += 1
-                funcAsmPath = nonmatchings / extensionlessFilePath / f"{func.name}.s"
+                funcAsmPath = nonmatchings / \
+                    extensionlessFilePath / f"{func.name}.s"
 
                 if wholeFileIsUndecomped:
                     totalStats.undecompedSize += func.size
@@ -101,7 +108,7 @@ def get_progress(module_name: str, path: str) -> DecompProgressStats:
     return DecompProgressStats(module_name, path)
 
 
-def report_progress(progresses: dict[str, DecompProgressStats]):
+def get_progress_entry(progresses: dict[str, DecompProgressStats]):
     def as_code(progresses: dict[str, DecompProgressStats]):
         obj = {}
         for key in progresses:
@@ -109,6 +116,7 @@ def report_progress(progresses: dict[str, DecompProgressStats]):
             obj[overlay_progress.name] = overlay_progress.code_matching
             obj[f"{overlay_progress.name}/total"] = overlay_progress.code_total
         return obj
+
     def as_functions(progresses: DecompProgressStats):
         obj = {}
         for key in progresses:
@@ -117,28 +125,48 @@ def report_progress(progresses: dict[str, DecompProgressStats]):
             obj[f"{overlay_progress.name}/total"] = overlay_progress.functions_total
         return obj
 
-    slug = "sotn"
-    version = args.version
-
-    entry = {
-            "timestamp": mapfile_parser.utils.getGitCommitTimestamp(),
-            "git_hash": mapfile_parser.utils.getGitCommitHash(),
-            "categories": {
-                "code": as_code(progresses),
-                "functions": as_functions(progresses),
-            }
+    return {
+        "timestamp": mapfile_parser.utils.getGitCommitTimestamp(),
+        "git_hash": mapfile_parser.utils.getGitCommitHash(),
+        "categories": {
+            "code": as_code(progresses),
+            "functions": as_functions(progresses),
         }
-    
-    if args.dryrun == False:
-        api_base_url = os.getenv("FROGRESS_API_BASE_URL")
-        url = f"{api_base_url}/data/{slug}/{version}/"
-        r = requests.post(url, json={
-            "api_key": os.getenv("FROGRESS_API_SECRET"),
-            "entries": [entry]
-        })
-        r.raise_for_status()
-    else:
-        print(entry)
+    }
+
+
+def report_stdout(entry):
+    print(entry)
+
+
+def report_frogress(entry, slug, version):
+    api_base_url = os.getenv("FROGRESS_API_BASE_URL")
+    url = f"{api_base_url}/data/{slug}/{version}/"
+    r = requests.post(url, json={
+        "api_key": os.getenv("FROGRESS_API_SECRET"),
+        "entries": [entry]
+    }).raise_for_status()
+
+
+def report_discord(progresses: dict[str, DecompProgressStats]):
+    report = ""
+    for overlay in progresses:
+        stat = progresses[overlay]
+        coverage = stat.code_matching / stat.code_total
+        funcs = stat.functions_matching / stat.functions_total
+        report += f"**{overlay.upper()}**: coverage {coverage*100:.2f}%, funcs {funcs*100:.2f}%\n"
+
+    url = os.getenv("DISCORD_PROGRESS_WEBHOOK")
+    data = {
+        "username": "Progress",
+        "content": "Testing this new functionality. Hello world everyone!",
+        "embeds": [{
+            "title": get_git_commit_message(),
+            "description": report,
+        }],
+    }
+    r = requests.post(url, json=data).raise_for_status()
+
 
 if __name__ == "__main__":
     progress = dict[str, DecompProgressStats]()
@@ -155,4 +183,10 @@ if __name__ == "__main__":
     progress["stwrp"] = DecompProgressStats("stwrp", "st/wrp")
     progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
     progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
-    report_progress(progress)
+
+    entry = get_progress_entry(progress)
+    if args.dryrun == False:
+        report_discord(progress)
+        report_frogress(entry, "sotn", args.version)
+    else:
+        report_stdout(entry)
