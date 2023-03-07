@@ -144,7 +144,7 @@ extern s32 D_801A75C0[];
 extern const char D_801A7AF8[];   // rstep:%d,%d
 extern const char D_801A7B08[];   // retry:%d
 extern const char D_801A7D78[];   // "bu%1d%1d:"
-extern const char D_801A7D84[];   // "bu%1d%1d:%s"
+extern const char g_strMemcardSavePath[];   // "bu%1d%1d:%s"
 extern const char D_801A802C[18]; // "BASLUS-00067DRAX00"
 extern const char D_801ABF9C[];   // "MDEC_rest:bad option(%d)\n"
 extern const char D_801ABFB8[];   // MDEC_in_sync
