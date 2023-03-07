@@ -116,7 +116,6 @@ If a function returns only `0` or `1`, and is used as a boolean (i.e. in conditi
 - Those in `macros.h`
   - `ABS`, `ABS_ALT`,
   - `CLAMP` and friends.
-  - `GET_PLATER` (look at examples around the repo), if it matches
 
   ## Arrays
 
