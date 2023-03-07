@@ -1843,8 +1843,6 @@ void EntityWarpRoom(Entity* entity) {
     s16 temp_s7;
     s16 firstPolyIndex;
     s32 temp_s1_2;
-    POLY_GT4* temp_s2_2;
-    POLY_GT4* temp_s2_3;
     POLY_GT4* temp_s2_4;
     s32 temp_v1_6;
     u16 move_room;
@@ -1866,31 +1864,29 @@ void EntityWarpRoom(Entity* entity) {
     s32 var_v0_8;
     s32 bgColorR1;
     s32 fadeIn;
-    s8 var_v0_14;
     s32 temp_s4_3;
     s32 temp_s5_3;
     u32* temp_v1_8;
     POLY_GT4* temp_s2;
     u32 temp_v0_5;
     u8 tintColor;
-    u8 temp_v1_9;
     WarpCoord* warpCoord;
     POLY_GT4* temp_s2_5;
     POLY_GT4* var_s2_3;
     s32 tmpa;
     s32 tmpb;
+
     FntPrint("step %x\n", entity->step);
     switch (entity->step) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        firstPolyIndex = g_api.AllocPolygons(4, 0x18);
+        firstPolyIndex = g_api.AllocPolygons(4, 24);
         if (firstPolyIndex == -1) {
             entity->step = 0;
             return;
         }
         poly = &D_80086FEC[firstPolyIndex];
-        var_s0 = 0;
         temp_s5 = entity->posY.i.hi; // must not be lhu but lh
         temp_s4 = entity->posX.i.hi; // must not be lhu but lh
         entity->firstPolygonIndex = firstPolyIndex;
@@ -1898,6 +1894,8 @@ void EntityWarpRoom(Entity* entity) {
         temp_s7 = temp_s4;
         temp_s6 = temp_s5;
         entity->unk34 |= 0x800000;
+        var_s0 = 0;
+
         while (var_s0 < 0x10) {
             var_s1 = var_s0 << 8;
             var_s0++;
@@ -1929,45 +1927,36 @@ void EntityWarpRoom(Entity* entity) {
         setcode(poly, 1);
         poly->u0 = 0x40;
         poly->v0 = 0x50;
-        poly->y0 = 0x70;
         poly->x0 = 0x60;
-        poly->b0 = 0;
-        poly->g0 = 0;
-        poly->r0 = 0;
+        poly->y0 = 0x70;
+        poly->r0 = poly->g0 = poly->b0 = 0;
         poly->pad2 = 0x60;
         poly->pad3 = 0xA;
-        temp_s2 = poly->tag;
-        temp_s2->code = 3;
-        temp_s2->b0 = 0;
-        temp_s2->g0 = 0;
-        temp_s2->r0 = 0;
-        temp_s2->x3 = 0x100;
-        temp_s2->x1 = 0x100;
-        temp_s2->y1 = 0x10;
-        temp_s2->y0 = 0x10;
-        temp_s2->y3 = 0xF0;
-        temp_s2->y2 = 0xF0;
-        temp_s2->pad2 = 0x1F0;
-        temp_s2->pad3 = 8;
-        temp_s2->x2 = 0;
-        temp_s2->x0 = 0;
-        *((s32*)(&temp_s2->r1)) = *((s32*)(&temp_s2->r0));
-        *((s32*)(&temp_s2->r2)) = *((s32*)(&temp_s2->r0));
-        *((s32*)(&temp_s2->r3)) = *((s32*)(&temp_s2->r0));
+        poly = (POLY_GT4*)poly->tag;
+        poly->code = 3;
+        poly->r0 = poly->g0 = poly->b0 = 0;
+        poly->x1 = poly->x3 = 256;
+        poly->y0 = poly->y1 = 16;
+        poly->y2 = poly->y3 = 240;
+        poly->pad2 = 0x1F0;
+        poly->pad3 = 8;
+        poly->x0 = poly->x2 = 0;
+        *((s32*)(&poly->r1)) = *((s32*)(&poly->r0));
+        *((s32*)(&poly->r2)) = *((s32*)(&poly->r0));
+        *((s32*)(&poly->r3)) = *((s32*)(&poly->r0));
         D_80193AA4 = 0x100;
-        var_v0_14 = 0x4680;
-        for (i = 0; i < 0x20; i++) {
-            Entity* newEntity = AllocEntity(D_8007A958, D_8007A958 + var_v0_14);
+        for (i = 0; i < 32; i++) {
+            Entity* newEntity = AllocEntity(D_8007A958, &D_8007A958[96]);
             if (newEntity) {
                 CreateEntityFromCurrentEntity(0x17, newEntity);
-                newEntity->posY.i.hi = 0xCC - D_80073092;
+                newEntity->posY.i.hi = 0xCC - g_Camera.posY.i.lo;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
 
         entity->unk3C = 1;
         entity->hitboxWidth = 2;
-        entity->hitboxHeight = 0x10;
+        entity->hitboxHeight = 16;
         *((u32*)D_80180648) = 0;
         entity->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << entity->subId);
@@ -1998,14 +1987,11 @@ void EntityWarpRoom(Entity* entity) {
         PLAYER.zPriority = 0x5C;
         *D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
-        temp_s2_2 = (POLY_GT4*)(*&entity->unk84.unk);
+        poly = (POLY_GT4*)(*&entity->unk84.unk);
         D_8003C8B8 = 0;
-        temp_v1_9 = temp_s2_2->r0 + 2;
-        temp_s2_2->r0 = temp_v1_9;
-        temp_s2_2->b0 = temp_v1_9;
-        temp_s2_2->g0 = temp_v1_9;
-        temp_s2_2->pad3 = 0x31;
-        if (temp_s2_2->r0 >= 97) {
+        poly->g0 = poly->b0 = poly->r0 = poly->r0 + 2;
+        poly->pad3 = 0x31;
+        if (poly->r0 >= 97) {
             *((u32*)D_80180648) = 1;
             g_api.PlaySfx(0x636);
             entity->step++;
@@ -2018,22 +2004,16 @@ void EntityWarpRoom(Entity* entity) {
         PLAYER.zPriority = 0x5C;
         *D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
-        temp_s2_3 = (POLY_GT4*)(*&entity->unk84.unk);
+        poly = (POLY_GT4*)(*&entity->unk84.unk);
         D_8003C8B8 = 0;
-        temp_s2_3->pad3 = 0x31;
-        if (temp_s2_3->r0 < 0xF0) {
-            var_v0_14 = temp_s2_3->r0 + 2;
-            temp_s2_3->r0 = var_v0_14;
-            temp_s2_3->b0 = var_v0_14;
-            temp_s2_3->g0 = var_v0_14;
+        poly->pad3 = 0x31;
+        if (poly->r0 < 0xF0) {
+            poly->g0 = poly->b0 = poly->r0 += 2;
         }
-        var_s2_3 = temp_s2_3->tag;
+        var_s2_3 = poly->tag;
         var_s2_3->pad3 = 0x31;
         if (var_s2_3->r0 < 0xF8) {
-            var_v0_14 = var_s2_3->r0 + 2;
-            var_s2_3->r0 = var_v0_14;
-            var_s2_3->b0 = var_v0_14;
-            var_s2_3->g0 = var_v0_14;
+            var_s2_3->g0 = var_s2_3->b0 = var_s2_3->r0 += 2;
         } else {
             entity->step++;
         }
@@ -2065,7 +2045,7 @@ void EntityWarpRoom(Entity* entity) {
         D_80097C98 = 2;
         PLAYER.posX.i.hi += move_x << 8;
         PLAYER.posY.i.hi += move_y << 8;
-        entity->step = 0x80;
+        entity->step = 128;
         break;
 
     case 5:
@@ -2107,13 +2087,10 @@ void EntityWarpRoom(Entity* entity) {
             entity->step = 1;
             var_v0_15 = 0 < 0x28;
         }
-        var_v0_14 = fadeIn;
         if (var_v0_15 != 0) {
             *((u32*)D_80180648) = 0;
         }
-        var_s2_3->r0 = var_v0_14;
-        var_s2_3->b0 = var_v0_14;
-        var_s2_3->g0 = var_v0_14;
+        var_s2_3->g0 = var_s2_3->b0 = var_s2_3->r0 = fadeIn;
         *((s32*)(&var_s2_3->r1)) = *((s32*)(&var_s2_3->r0));
         *((s32*)(&var_s2_3->r2)) = *((s32*)(&var_s2_3->r0));
         *((s32*)(&var_s2_3->r3)) = *((s32*)(&var_s2_3->r0));
@@ -2217,13 +2194,8 @@ void EntityWarpRoom(Entity* entity) {
             bgColorB1 += 255;
         }
         poly->b1 = bgColorB1 >> 8;
-        tintColor = (u8)D_80193AAC;
-        poly->b3 = tintColor;
-        poly->g3 = tintColor;
-        poly->r3 = tintColor;
-        poly->b2 = tintColor;
-        poly->g2 = tintColor;
-        poly->r2 = tintColor;
+        poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3 =
+            D_80193AAC;
         D_80180608[i3] += 0x20;
         poly = (POLY_GT4*)poly->tag;
     }
