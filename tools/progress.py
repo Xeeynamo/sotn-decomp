@@ -159,7 +159,6 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
     url = os.getenv("DISCORD_PROGRESS_WEBHOOK")
     data = {
         "username": "Progress",
-        "content": "Testing this new functionality. Hello world everyone!",
         "embeds": [{
             "title": get_git_commit_message(),
             "description": report,
