@@ -63,7 +63,7 @@ define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.s))
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
 	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**.bin))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
 endef
 
 define list_o_files
@@ -279,7 +279,7 @@ $(SOTNDISK): $(GO)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.bin.o: %.bin
+$(BUILD_DIR)/assets/%.o: assets/%
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@

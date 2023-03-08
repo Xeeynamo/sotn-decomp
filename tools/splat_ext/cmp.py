@@ -1,12 +1,6 @@
-import subprocess
-
 from pathlib import Path
 from typing import Optional
-
 from segtypes.n64.segment import N64Segment
-from segtypes.n64.rgba16 import N64SegRgba16
-from segtypes.n64.i4 import N64SegI4
-
 from util import options, log
 
 
@@ -34,13 +28,13 @@ class PSXSegCmp(N64Segment):
         return f"D_{self.vram_start:X}"
 
     def out_path(self) -> Optional[Path]:
-        return self.cmp_path()
+        return options.opts.asset_path / self.dir / self.name
 
     def cmp_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}.bin"
+        return f"{self.out_path()}"
 
     def dec_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}.bin.dec"
+        return f"{self.out_path()}.dec"
 
     def split(self, rom_bytes):
         path = self.out_path()
