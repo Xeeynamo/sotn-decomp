@@ -1120,8 +1120,8 @@ void func_801B6DE4(Entity* self) {
     }
 
     poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
-    poly->x0 = ((u16)self->posX.i.hi) - 8;
-    poly->y0 = (u16)self->posY.i.hi;
+    poly->x0 = self->posX.i.hi - 8;
+    poly->y0 = self->posY.i.hi;
     poly->y0 = poly->y0 - 8;
 }
 
@@ -2134,6 +2134,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C20B8);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C27B8);
 
+// https://decomp.me/scratch/Cxlhx 93.39 % 4 missing instructions
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C29B0);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityAbsorbOrb);
