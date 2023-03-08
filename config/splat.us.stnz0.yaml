@@ -38,7 +38,7 @@ segments:
       - [0x30790, rodata]
       - [0x3089C, .rodata, 4672C]
       - [0x308B4, rodata]
-      - [0x30958, c]
+      - [0x30958, c, 30958]
       - [0x4672C, c, 4672C]
       - [0x4AA10, data]
   - [0x4B780]
