@@ -2258,7 +2258,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180C70);
+        InitializeEntity(D_80180C70);
         entity->unk19 = 4;
         entity->accelerationY = D_801822C8[entity->subId];
         var_v0 = D_801822BC[entity->subId];

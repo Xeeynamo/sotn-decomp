@@ -97,7 +97,7 @@ extern const u16 D_80180C04[];
 extern s32 D_80182504[];
 extern u8 D_80182524;
 extern u8 D_801825F0;
-extern s32 D_80180C70;
+extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];
 extern u32 D_801822BC[];
