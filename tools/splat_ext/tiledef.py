@@ -20,7 +20,7 @@ def generate_assembly_tiledef(writer: io.BufferedWriter, name: str, content: str
     gfxIndex = obj["gfxIndex"]
     clut = obj["clut"]
     collision = obj["collision"]
-    
+
     writer.write(".section .data\n")
     writer.write(f".global {name}\n")
     writer.write(f"{name}:\n")
@@ -42,7 +42,6 @@ class PSXSegTiledef(N64Segment):
         path.parent.mkdir(parents=True, exist_ok=True)
 
         data = self.parse_tiledef(rom_bytes[self.rom_start:self.rom_end])
-        print(data)
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
@@ -53,7 +52,7 @@ class PSXSegTiledef(N64Segment):
                 (data[1] << 8) |
                 (data[2] << 16) |
                 (data[3] << 24)).value
-        
+
         return {
             "gfxPage": self.get_symbol(to_u32(data[0:])).given_name,
             "gfxIndex": self.get_symbol(to_u32(data[4:])).given_name,

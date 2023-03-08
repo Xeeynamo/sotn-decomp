@@ -63,6 +63,11 @@ segments:
       - [0x5D78, raw, D_80185D78]
       - [0x6D78, tiledef, D_80186D78]
       - [0x6D88, .data, spriteparts]
+      - [0x6DA4, spriteparts, D_80186DA4]
+      - [0x6DC0, spriteparts, D_80186DC0]
+      - [0x6DDC, spriteparts, D_80186DDC]
+      - [0x6DF8, spriteparts, D_80186DF8]
+      - [0x6E14, spriteparts, D_80186E14]
       - [0x6E30, .rodata, 6FD0]
       - [0x6E70, rodata] # EntityWarpRoom
       - [0x6E90, rodata] # EntityWarpSmallRocks
