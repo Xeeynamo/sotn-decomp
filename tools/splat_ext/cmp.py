@@ -45,9 +45,9 @@ class PSXSegCmp(N64Segment):
         with open(self.cmp_path(), "wb") as f:
             f.write(data)
 
-        dec = SOTNDecompress(data).decompress_data()
-        with open(self.dec_path(), "wb") as f:
-            f.write(dec)
+        # dec = SOTNDecompress(data).decompress_data()
+        # with open(self.dec_path(), "wb") as f:
+        #     f.write(dec)
 
     def decompress(data):
         return data
