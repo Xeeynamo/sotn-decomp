@@ -1,18 +1,9 @@
-print("RAWRAWRAWRAW")
-
-import subprocess
-
-from pathlib import Path
-from typing import Optional
-
-from segtypes.n64.segment import N64Segment
-from segtypes.n64.rgba16 import N64SegRgba16
-from segtypes.n64.i4 import N64SegI4
-
-from pathlib import Path
-from typing import Optional
-from segtypes.n64.segment import N64Segment
 from util import options, log
+from segtypes.n64.i4 import N64SegI4
+from segtypes.n64.rgba16 import N64SegRgba16
+from segtypes.n64.segment import N64Segment
+from typing import Optional
+from pathlib import Path
 
 
 class PSXSegRaw(N64Segment):
@@ -20,11 +11,13 @@ class PSXSegRaw(N64Segment):
         super().__init__(rom_start, rom_end, type, name, vram_start, args, yaml),
 
     def out_path(self) -> Optional[Path]:
-        return options.opts.asset_path / self.dir / f"{self.name}"
+        return options.opts.asset_path / self.dir / self.name
+
+    def src_path(self) -> Optional[Path]:
+        return options.opts.asset_path / self.dir / f"{self.name}.bin"
 
     def split(self, rom_bytes):
-        path = self.out_path()
-        print(f"PATH: {path}")
+        path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(path, "wb") as f:

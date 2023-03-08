@@ -31,7 +31,7 @@ class PSXSegCmp(N64Segment):
         return options.opts.asset_path / self.dir / self.name
 
     def cmp_path(self) -> Optional[Path]:
-        return f"{self.out_path()}"
+        return f"{self.out_path()}.bin"
 
     def dec_path(self) -> Optional[Path]:
         return f"{self.out_path()}.dec"
@@ -46,9 +46,9 @@ class PSXSegCmp(N64Segment):
         with open(self.cmp_path(), "wb") as f:
             f.write(data)
 
-        dec = SOTNDecompress(data).decompress_data()
-        with open(self.dec_path(), "wb") as f:
-            f.write(dec)
+        # dec = SOTNDecompress(data).decompress_data()
+        # with open(self.dec_path(), "wb") as f:
+        #     f.write(dec)
 
     def decompress(data):
         return data
