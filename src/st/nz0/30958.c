@@ -2288,7 +2288,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
             entity->accelerationX = var_v0;
         }
 
-        entity->unk7C.s += 1;
+        entity->unk7C.s++;
         MoveEntity();
         break;
 
