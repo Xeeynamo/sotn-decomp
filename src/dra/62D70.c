@@ -11,14 +11,14 @@ void func_80102D70(void) {
     switch (*D_801379AC) {
     case 2:
         func_80102D08();
-        g_backbufferX = (s32) D_801379B4;
+        g_backbufferX = (s32)D_801379B4;
         return;
     case 1:
     case 3:
     case 4:
     case 6:
         func_80102D08();
-        g_backbufferY = (s32) D_801379B4;
+        g_backbufferY = (s32)D_801379B4;
         /* fallthrough */
     case 0:
     case 5:

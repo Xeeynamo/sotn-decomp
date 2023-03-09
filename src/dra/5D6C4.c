@@ -22,14 +22,13 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
         break;
     case 4:
         var_a1 = 3;
-     default:
+    default:
         break;
     }
     var_a0 = 0;
     var_v1 = 0;
     do {
-        if(D_800A7734[var_v1].unk00 == var_a1)
-        {
+        if (D_800A7734[var_v1].unk00 == var_a1) {
             var_a0 += 1;
         }
         var_v1 += 1;

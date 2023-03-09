@@ -1,5 +1,11 @@
- #include "dra.h"
+#include "dra.h"
 
+// Needs PlaySfx to have a signature of
+// void PlaySfx(s32 sfxId); but changing it causes other parts 
+// of binary to mismatch
+#ifndef NON_EQUIVALENT
+INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F2860);
+#else
 void func_800F2860(void) {
     s32 var_v0;
 
@@ -30,7 +36,7 @@ void func_800F2860(void) {
     case 5:
         if (func_80131F68() == false) {
             D_801375C8++;
-           break;
+            break;
         }
         break;
     case 6:
@@ -39,7 +45,7 @@ void func_800F2860(void) {
         return;
     case 7:
         if (func_80131F68() != 0) {
-           return;
+            return;
         }
         D_801375C8--;
         break;
@@ -51,6 +57,7 @@ void func_800F2860(void) {
 }
 
 const rodataPadding_jpt_800F288C = 0;
+#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F298C);
 
@@ -1249,4 +1256,3 @@ s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 extern Unkstruct_800A4B12 D_800A4B12[];
 
 u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
-
