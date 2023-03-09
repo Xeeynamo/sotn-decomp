@@ -1,7 +1,7 @@
 #include "dra.h"
 
 // Needs PlaySfx to have a signature of
-// void PlaySfx(s32 sfxId); but changing it causes other parts 
+// void PlaySfx(s32 sfxId); but changing it causes other parts
 // of binary to mismatch
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F2860);
