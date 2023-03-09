@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  extensions_path: tools/splat_ext
   section_order:
     - ".data"
     - ".rodata"
@@ -27,9 +28,46 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 6FD0]
-      - [0x2968, .data, tiledef1]
-      - [0x2D78, .data, tiledef2]
-      - [0x6D88, .data, spriteparts]
+      - [0x11AC, roomdef, g_Rooms]
+      - [0x1228, layoutobj, D_80181228]
+      - [0x1250, layoutobj, D_80181250]
+      - [0x1278, layoutobj, D_80181278]
+      - [0x12A0, layoutobj, D_801812A0]
+      - [0x12C8, layoutobj, D_801812C8]
+      - [0x12F0, layoutobj, D_801812F0]
+      - [0x1304, layoutobj, D_80181304]
+      - [0x1324, layoutobj, D_80181324]
+      - [0x134C, layoutobj, D_8018134C]
+      - [0x1374, layoutobj, D_80181374]
+      - [0x139C, layoutobj, D_8018139C]
+      - [0x13C4, layoutobj, D_801813C4]
+      - [0x13EC, layoutobj, D_801813EC]
+      - [0x1400, layoutobj, D_80181400]
+      - [0x1420, cmp, D_80181420]
+      - [0x1764, cmp, D_80181764]
+      - [0x1D08, cmp, D_80181D08]
+      - [0x1D68, tilelayout, D_80181D68]
+      - [0x1F68, tilelayout, D_80181F68]
+      - [0x2168, tilelayout, D_80182168]
+      - [0x2368, tilelayout, D_80182368]
+      - [0x2568, tilelayout, D_80182568]
+      - [0x2768, tilelayout, D_80182768]
+      - [0x2968, raw, D_80182968]
+      - [0x2A68, raw, D_80182A68]
+      - [0x2B68, raw, D_80182B68]
+      - [0x2C68, raw, D_80182C68]
+      - [0x2D68, tiledef, D_80182D68]
+      - [0x2D78, raw, D_80182D78]
+      - [0x3D78, raw, D_80183D78]
+      - [0x4D78, raw, D_80184D78]
+      - [0x5D78, raw, D_80185D78]
+      - [0x6D78, tiledef, D_80186D78]
+      - [0x6D88, spritepartslist, D_80186D88]
+      - [0x6DA4, spriteparts, D_80186DA4]
+      - [0x6DC0, spriteparts, D_80186DC0]
+      - [0x6DDC, spriteparts, D_80186DDC]
+      - [0x6DF8, spriteparts, D_80186DF8]
+      - [0x6E14, spriteparts, D_80186E14]
       - [0x6E30, .rodata, 6FD0]
       - [0x6E70, rodata] # EntityWarpRoom
       - [0x6E90, rodata] # EntityWarpSmallRocks
