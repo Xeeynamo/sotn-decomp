@@ -84,7 +84,7 @@ segments:
       - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
       - [0x3CC2C, rodata] # jpt_80102918
-      - [0x3CC54, rodata] # jpt_80102D9C
+      - [0x3CC54, .rodata, 62D70] # jpt_80102D9C
       - [0x3CC70, rodata]
       - [0x3CC80, rodata]
       - [0x3CD00, rodata]
@@ -179,6 +179,7 @@ segments:
       - [0x4F45C, c, 4F45C]
       - [0x5D7C0, c, 5D7C0]
       - [0x627C4, c, 627C4]
+      - [0x62D70, c, 62D70]
       - [0x71830, c, 71830]
       - [0x73AAC, c, 73AAC]
       - [0x75DA0, c, 75DA0]
