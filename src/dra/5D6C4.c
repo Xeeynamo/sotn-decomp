@@ -3,6 +3,66 @@
 #include "objects.h"
 #include "sfx.h"
 
+s32 func_800FD6C4(s32 equipTypeFilter) {
+    s32 var_a0;
+    s32 var_v1;
+    s32 var_a1;
+
+    switch (equipTypeFilter) {
+    case 0:
+        return 0xA9;
+    case 1:
+        var_a1 = 0;
+        break;
+    case 2:
+        var_a1 = 1;
+        break;
+    case 3:
+        var_a1 = 2;
+        break;
+    case 4:
+        var_a1 = 3;
+    default:
+        break;
+    }
+    var_a0 = 0;
+    var_v1 = 0;
+    do {
+        if (D_800A7734[var_v1].unk00 == var_a1) {
+            var_a0 += 1;
+        }
+        var_v1 += 1;
+    } while (var_v1 < 90);
+
+    return var_a0;
+}
+
+const u32 rodataPadding_jpt_800FD6E0 = 0;
+
+u8* func_800FD744(s32 equipTypeFilter) {
+    u8* begin = g_InventoryOrder;
+    if (equipTypeFilter != 0) {
+        begin += 0xA9;
+    }
+    return begin;
+}
+
+u8* func_800FD760(s32 equipTypeFilter) {
+    s8* begin = &g_Inventory;
+    if (equipTypeFilter != 0) {
+        begin += 0xA9;
+    }
+    return begin;
+}
+
+const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
+    if (!equipTypeFilter) {
+        return D_800A4B04[equipId].name;
+    } else {
+        return D_800A7718[equipId].name;
+    }
+}
+
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     if (equipType < 5) {
         switch (equipType) {
@@ -26,7 +86,7 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
 const u32 rodataPadding_800DCBD8 = 0;
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", AddToInventory);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", AddToInventory);
 #else
 void AddToInventory(u16 itemId, s32 itemCategory) {
     u8 temp_a1;
@@ -85,7 +145,7 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
 
 // TODO get rid of the asm volatile
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FDB18);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDB18);
 #else
 s16 func_800FDB18(s32 arg0, s32 arg1) {
     s16 temp_v0;
@@ -146,7 +206,7 @@ bool func_800FDC94(s32 arg0) {
 }
 
 // https://decomp.me/scratch/5ufgy
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FDCE0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDCE0);
 
 bool func_800FDD44(s32 equipHeadIndex) {
     s32 equippedItem;
@@ -175,9 +235,9 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FDE20);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE044);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE044);
 
 bool func_800FE3A8(s32 arg0) {
     /*
@@ -193,7 +253,7 @@ bool func_800FE3A8(s32 arg0) {
 
 // Matches with PSY-Q 3.5
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE3C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE3C4);
 #else
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
@@ -238,7 +298,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE728);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE728);
 
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
     if (D_80097BA0.mp >= mpCount) {
@@ -267,7 +327,7 @@ void AddHearts(s32 value) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FE97C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE97C);
 
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
@@ -282,7 +342,7 @@ void func_800FEE6C(void) {
     } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FEEA4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FEEA4);
 
 s32 func_800FF064(s32 arg0) {
     s32 playerMP;
@@ -312,7 +372,7 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FF128);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF128);
 
 s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
@@ -411,7 +471,7 @@ void func_800FF708(s32 arg0, s32 arg1) {
 
 // https://decomp.me/scratch/Ti1u1
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_800FF7B8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF7B8);
 #else
 extern s8 D_8006C373[];
 typedef struct {
@@ -889,7 +949,7 @@ void func_800FF7B8(s32 arg0) {
 
 // matches with ASPSX
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", DrawHudRichter);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", DrawHudRichter);
 #else
 void DrawHudRichter(void) {
     POLY_GT4* poly;
@@ -994,7 +1054,7 @@ void DrawHudRichter(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_80100B50);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80100B50);
 
 extern Unkstruct_80137990 D_80137990;
 
@@ -1064,7 +1124,7 @@ void func_8010189C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D7C0", func_80101A80);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80101A80);
 
 void func_801024DC(void) {
     POLY_GT4* temp_v1;
