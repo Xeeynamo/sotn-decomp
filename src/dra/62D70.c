@@ -4,31 +4,28 @@
 #include "objects.h"
 #include "sfx.h"
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80102D70);
-#else
 void func_80102D08();
 extern s16 D_801379B4;
 
 void func_80102D70(void) {
     switch (*D_801379AC) {
-    case 1:
+    case 2:
         func_80102D08();
         g_backbufferX = (s32) D_801379B4;
         return;
-    case 0:
-    case 2:
+    case 1:
     case 3:
-    case 5:
+    case 4:
+    case 6:
         func_80102D08();
         g_backbufferY = (s32) D_801379B4;
         /* fallthrough */
-    case 6:
+    case 0:
+    case 5:
     default:
         return;
     }
 }
-#endif
 
 void func_80102DEC(s32 context) {
     D_80137E64 = 0;
