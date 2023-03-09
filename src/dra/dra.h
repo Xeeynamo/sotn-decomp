@@ -429,7 +429,7 @@ void ClearBackbuffer(void);
 void SetRoomForegroundLayer(LayerDef2* layerDef);
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
-void PlaySfx(s16 sfxId);
+void PlaySfx(s32 sfxId);
 s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);
 void func_80021E38(s32);
