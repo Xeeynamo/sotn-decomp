@@ -2064,28 +2064,3 @@ extern Unkstruct_800A4B12 D_800A4B12[];
 
 u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800FD6C4);
-
-u8* func_800FD744(s32 equipTypeFilter) {
-    u8* begin = g_InventoryOrder;
-    if (equipTypeFilter != 0) {
-        begin += 0xA9;
-    }
-    return begin;
-}
-
-u8* func_800FD760(s32 equipTypeFilter) {
-    s8* begin = &g_Inventory;
-    if (equipTypeFilter != 0) {
-        begin += 0xA9;
-    }
-    return begin;
-}
-
-const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
-    if (!equipTypeFilter) {
-        return D_800A4B04[equipId].name;
-    } else {
-        return D_800A7718[equipId].name;
-    }
-}
