@@ -819,7 +819,41 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C0B20);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C0C1C);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityIntenseExplosion);
+void EntityIntenseExplosion(Entity* entity) {
+    u32 temp_v0;
+
+    if (entity->step == 0) {
+        InitializeEntity(D_80180A54);
+        entity->palette = 0x8170;
+        entity->animSet = 5;
+        entity->animCurFrame = 1;
+        entity->blendMode = 0x30;
+
+        if (entity->subId & 0xF0) {
+            entity->palette = 0x8195;
+            entity->blendMode = 0x10;
+        }
+
+        temp_v0 = entity->subId & 0xFF00;
+        if (temp_v0 != 0) {
+            entity->zPriority = temp_v0 >> 8;
+        }
+
+        entity->zPriority += 8;
+        return;
+    }
+
+    entity->animFrameDuration++;
+    entity->posY.val -= 0x4000;
+
+    if (!(entity->animFrameDuration & 1)) {
+        entity->animCurFrame++;
+    }
+
+    if (entity->animFrameDuration >= 0x25) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C129C);
 
