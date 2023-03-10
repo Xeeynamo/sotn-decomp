@@ -289,18 +289,16 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 // sky animation during death cutscene
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
 
-extern u8 D_80181390;
-
-void EntityUnkId29(Entity* arg0) {
-    if (arg0->step == 0) {
+void EntityUnkId29(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(D_80180B18);
-        arg0->zPriority = 0x2A;
-        arg0->unk34 &= 0xF7FFFFFF;
-        arg0->facing = Random() & 1;
-        g_api.func_80134714(0x665, 0x40, (arg0->posX.i.hi >> 0x4) - 8);
+        self->zPriority = 0x2A;
+        self->unk34 &= 0xF7FFFFFF;
+        self->facing = Random() & 1;
+        g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
-    if (AnimateEntity(&D_80181390, arg0) == 0) {
-        DestroyEntity(arg0);
+    if (AnimateEntity(D_80181390, self) == 0) {
+        DestroyEntity(self);
     }
 }
 

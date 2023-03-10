@@ -287,7 +287,18 @@ void EntityFallingRock(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5DE8);
+void func_801B5DE8(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(D_80180AA8);
+        self->zPriority = 0x2A;
+        self->unk34 &= 0xF7FFFFFF;
+        self->facing = Random() & 1;
+        g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
+    }
+    if (AnimateEntity(D_80181214, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5E98);
 
