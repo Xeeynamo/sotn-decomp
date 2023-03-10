@@ -194,7 +194,30 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntitySwitch);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6084);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityUnkId49);
+void EntityUnkId49(Entity* self) {
+    u16 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A6C);
+        break;
+    case 1:
+        temp = g_CurrentRoomTileLayout.fg[0x12 / 2];
+        g_CurrentRoomTileLayout.fg[0xC / 2] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x14 / 2];
+        g_CurrentRoomTileLayout.fg[0xE / 2] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x72 / 2];
+        g_CurrentRoomTileLayout.fg[0x6C / 2] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x74 / 2];
+        g_CurrentRoomTileLayout.fg[0x6E / 2] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0xD2 / 2];
+        g_CurrentRoomTileLayout.fg[0xCC / 2] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0xD4 / 2];
+        g_CurrentRoomTileLayout.fg[0xCE / 2] = temp;
+        self->step++;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B653C);
 
