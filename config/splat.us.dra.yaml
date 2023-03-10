@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  extensions_path: tools/splat_ext
   section_order:
     - ".data"
     - ".rodata"
@@ -32,12 +33,14 @@ segments:
       - [0x2BC0, data]
       - [0x3C40, data]
       - [0x4A00, data]
-      - [0x4B04, bin, equipment_data]
-      - [0x7718, bin, accessory_data]
+      - [0x4B04, raw, equipment_data]
+      - [0x7718, raw, accessory_data]
       - [0x8000, data]
       - [0x8900, data]
       - [0xCEB0, data]
       - [0xD670, rodata] # not rodata but data
+      - [0x2217C, rodata]
+      - [0x227B0, rodata]
       - [0x3B3B0, rodata]
       - [0x3B44C, .rodata, 42398]
       - [0x3B524, rodata]
@@ -64,7 +67,7 @@ segments:
       - [0x3C490, rodata]
       - [0x3C500, rodata] # jpt_800F0658
       - [0x3C514, rodata] # jpt_800F096C
-      - [0x3C534, rodata] # jpt_800F288C
+      - [0x3C534, rodata, 52860] # jpt_800F288C
       - [0x3C55C, rodata] # jpt_800F3684
       - [0x3C57C, rodata] # jpt_800F3758
       - [0x3C59C, rodata] # jpt_800F3C14
@@ -78,13 +81,13 @@ segments:
       - [0x3C75C, rodata] # jpt_800FBCC4
       - [0x3CB7C, rodata] # jpt_800FC36C
       - [0x3CB94, rodata] # jpt_800FC5B8
-      - [0x3CBAC, rodata] # jpt_800FD6E0
-      - [0x3CBC4, .rodata, 5D7C0]
+      - [0x3CBAC, .rodata, 5D6C4] # jpt_800FD6E0
+      - [0x3CBC4, .rodata, 5D6C4]
       - [0x3CBDC, rodata] # jpt_800FDB40
       - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
       - [0x3CC2C, rodata] # jpt_80102918
-      - [0x3CC54, rodata] # jpt_80102D9C
+      - [0x3CC54, .rodata, 62D70] # jpt_80102D9C
       - [0x3CC70, rodata]
       - [0x3CC80, rodata]
       - [0x3CD00, rodata]
@@ -177,8 +180,10 @@ segments:
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
       - [0x4F45C, c, 4F45C]
-      - [0x5D7C0, c, 5D7C0]
+      - [0x52860, c, 52860]
+      - [0x5D6C4, c, 5D6C4]
       - [0x627C4, c, 627C4]
+      - [0x62D70, c, 62D70]
       - [0x71830, c, 71830]
       - [0x73AAC, c, 73AAC]
       - [0x75DA0, c, 75DA0]
