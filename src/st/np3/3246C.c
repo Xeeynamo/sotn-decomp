@@ -192,7 +192,7 @@ void EntityFallingRock2(Entity* self) {
     case 0:
         InitializeEntity(D_80180AA8);
         self->animCurFrame = animFrame;
-        self->animCurFrame = 31 + self->animCurFrame;
+        self->animCurFrame += 31;
         self->zPriority = 0x9F;
         self->unk19 |= 4;
         break;
