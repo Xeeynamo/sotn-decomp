@@ -180,6 +180,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5108);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5488);
 
+// fake match with PSY-Q 3.5: https://decomp.me/scratch/FOCjN
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B560C);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5790);
