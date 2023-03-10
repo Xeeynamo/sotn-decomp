@@ -1032,11 +1032,10 @@ void EntityLargeFallingObject(Entity* self) {
 
 void EntityMerman2(Entity* self) {
     Entity* newEntity;
-    Entity* player;
-    u16 temp_s0;
     u16 temp_s0_2;
-    s16 temp;
+    u16 temp_s0;
     s32 temp2;
+    s16 temp;
 
     if (self->step == 0) {
         InitializeEntity(D_80180A60);
@@ -1044,9 +1043,9 @@ void EntityMerman2(Entity* self) {
     }
 
     if (!(g_blinkTimer & 0x3F)) {
-        player = &PLAYER;
+        Entity* player = &PLAYER;
         temp = g_Camera.posY.i.lo + player->posY.i.hi;
-        if (temp >= 0x100) {
+        if (temp >= 256) {
             temp_s0 = g_Camera.posX.i.lo + player->posX.i.hi;
             temp_s0_2 = 128;
             temp_s0_2 = temp_s0 - temp_s0_2 + Random();
