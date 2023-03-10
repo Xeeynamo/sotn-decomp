@@ -180,11 +180,6 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5108);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5488);
 
-// match with PSY-Q 3.5: https://decomp.me/scratch/FOCjN
-// stack wrong at the end
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityFallingRock2);
-#else
 void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;
     CollisionResult collider;
@@ -205,12 +200,10 @@ void EntityFallingRock2(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x4000;
-        // <FAKE ?>
         self->unk1E -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_80181204[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
-        // </FAKE ?>
 
         if (collider.unk0 & 1) {
             if (self->accelerationY > 0x40000) {
@@ -225,7 +218,7 @@ void EntityFallingRock2(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->posY.i.hi += collider.unk18;
+            self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
             temp_a0 = -self->accelerationY;
             self->accelerationY = -self->accelerationY;
             if (temp_a0 < 0) {
@@ -238,7 +231,6 @@ void EntityFallingRock2(Entity* self) {
         break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5790);
 
