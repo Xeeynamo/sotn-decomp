@@ -80,7 +80,7 @@ void func_801B2830(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2C20);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityShuttingWindow);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2F30);
 
