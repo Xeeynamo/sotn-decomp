@@ -331,7 +331,23 @@ void EntityUnkId49(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B653C);
+void func_801B653C(void) {
+    Entity* entity;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s32 i;
+
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(0x4D, g_CurrentEntity, entity);
+            entity->subId = 2;
+            entity->unk88.U8.unk1 = 6 - i;
+            entity->unk84.S16.unk0 = temp_s3;
+            entity->unk88.U8.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B65FC);
 
