@@ -555,7 +555,11 @@ void MoveEntity(void) {
     g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", FallEntity);
+void FallEntity(void) {
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BC8E4);
 
