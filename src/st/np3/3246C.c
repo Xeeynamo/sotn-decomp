@@ -380,7 +380,10 @@ void EntityLargeGaibonProjectile(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B90BC);
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", Update);
 
@@ -1027,7 +1030,45 @@ void EntityLargeFallingObject(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityMerman2);
+void EntityMerman2(Entity* self) {
+    Entity* newEntity;
+    Entity* player;
+    u16 temp_s0;
+    u16 temp_s0_2;
+    s16 temp;
+    s32 temp2;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180A60);
+        self->unk34 |= 0x2000;
+    }
+
+    if (!(g_blinkTimer & 0x3F)) {
+        player = &PLAYER;
+        temp = g_Camera.posY.i.lo + player->posY.i.hi;
+        if (temp >= 0x100) {
+            temp_s0 = g_Camera.posX.i.lo + player->posX.i.hi;
+            temp_s0_2 = 128;
+            temp_s0_2 = temp_s0 - temp_s0_2 + Random();
+            temp_s0 = temp_s0_2 - 64;
+            if (temp_s0 <= 0x280) {
+                temp2 = 496;
+                newEntity =
+                    AllocEntity(&g_EntityArray[160], &g_EntityArray[170]);
+                if (newEntity != 0) {
+                    if (Random() & 1) {
+                        CreateEntityFromCurrentEntity(0x32, newEntity);
+                        newEntity->subId = Random() & 1;
+                    } else {
+                        CreateEntityFromCurrentEntity(0x39, newEntity);
+                    }
+                    newEntity->posX.i.hi = temp_s0_2 - g_Camera.posX.i.lo;
+                    newEntity->posY.i.hi = temp2 - g_Camera.posY.i.lo;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityMerman);
 
