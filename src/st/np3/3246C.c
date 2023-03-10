@@ -180,8 +180,65 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5108);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5488);
 
-// fake match with PSY-Q 3.5: https://decomp.me/scratch/FOCjN
+// match with PSY-Q 3.5: https://decomp.me/scratch/FOCjN
+// stack wrong at the end
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B560C);
+#else
+void func_801B560C(Entity* self) {
+    s32 animFrame = self->subId & 0xF;
+    CollisionResult collider;
+    Entity* newEntity;
+    s32 temp_a0;
+    int new_var2;
+    s32 var_a1;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        self->animCurFrame = animFrame;
+        self->animCurFrame = 31 + self->animCurFrame;
+        self->zPriority = 0x9F;
+        self->unk19 |= 4;
+        break;
+
+    case 1:
+        MoveEntity();
+        self->accelerationY += 0x4000;
+        // <FAKE ?>
+        self->unk1E -= 0x20;
+        new_var2 = self->posY.i.hi;
+        new_var2 += D_80181204[animFrame];
+        g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
+        // </FAKE ?>
+
+        if (collider.unk0 & 1) {
+            if (self->accelerationY > 0x40000) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != 0) {
+                    CreateEntityFromEntity(2, self, newEntity);
+                    newEntity->subId = 0x11;
+                    if (animFrame == 0) {
+                        newEntity->subId = 0x13;
+                    }
+                }
+                DestroyEntity(self);
+                return;
+            }
+            self->posY.i.hi += collider.unk18;
+            temp_a0 = -self->accelerationY;
+            self->accelerationY = -self->accelerationY;
+            if (temp_a0 < 0) {
+                var_a1 = temp_a0 + 7;
+            } else {
+                var_a1 = temp_a0;
+            }
+            self->accelerationY = temp_a0 - (var_a1 >> 3);
+        }
+        break;
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5790);
 
