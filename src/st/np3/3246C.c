@@ -183,15 +183,15 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5488);
 // match with PSY-Q 3.5: https://decomp.me/scratch/FOCjN
 // stack wrong at the end
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B560C);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityFallingRock2);
 #else
-void func_801B560C(Entity* self) {
+void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;
     CollisionResult collider;
     Entity* newEntity;
     s32 temp_a0;
-    int new_var2;
     s32 var_a1;
+    s32 new_var2;
 
     switch (self->step) {
     case 0:
