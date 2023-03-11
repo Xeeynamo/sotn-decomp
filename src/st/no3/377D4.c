@@ -408,7 +408,7 @@ void EntityUnkId49(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180ADC);
-        return;
+        break;
     case 1:
         temp = g_CurrentRoomTileLayout.fg[9];
         g_CurrentRoomTileLayout.fg[6] = temp;
