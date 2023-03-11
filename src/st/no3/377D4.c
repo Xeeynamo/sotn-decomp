@@ -404,26 +404,25 @@ void EntitySwitch(Entity* entity) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
 
 void EntityUnkId49(Entity* entity) {
-    do {
-        do {
-            switch (entity->step) {
-            case 0:
-                InitializeEntity(&D_80180ADC);
-                return;
-            case 1:
-                g_CurrentRoomTileLayout.fg[6] = g_CurrentRoomTileLayout.fg[9];
-                g_CurrentRoomTileLayout.fg[7] = g_CurrentRoomTileLayout.fg[10];
-                g_CurrentRoomTileLayout.fg[0x36] =
-                    g_CurrentRoomTileLayout.fg[0x39];
-                g_CurrentRoomTileLayout.fg[0x37] =
-                    g_CurrentRoomTileLayout.fg[0x3A];
-                g_CurrentRoomTileLayout.fg[0x66] =
-                    g_CurrentRoomTileLayout.fg[0x69];
-                g_CurrentRoomTileLayout.fg[0x67] =
-                    g_CurrentRoomTileLayout.fg[0x6A];
-                entity->step++;
-                break;
-            }
-        } while (0);
-    } while (0);
+    u16 temp;
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(&D_80180ADC);
+        return;
+    case 1:
+        temp = g_CurrentRoomTileLayout.fg[9];
+        g_CurrentRoomTileLayout.fg[6] = temp;
+        temp = g_CurrentRoomTileLayout.fg[10];
+        g_CurrentRoomTileLayout.fg[7] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x39];
+        g_CurrentRoomTileLayout.fg[0x36] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x3A];
+        g_CurrentRoomTileLayout.fg[0x37] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x69];
+        g_CurrentRoomTileLayout.fg[0x66] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x6A];
+        g_CurrentRoomTileLayout.fg[0x67] = temp;
+        entity->step++;
+        break;
+    }
 }
