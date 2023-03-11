@@ -2,10 +2,8 @@
 
 // Needs PlaySfx to have a signature of
 // void PlaySfx(s32 sfxId); but changing it causes other parts
-// of binary to mismatch
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F2860);
-#else
+// of binary to mismatch. Removing it from the header seems
+// to make it match everywhere
 void func_800F2860(void) {
     s32 var_v0;
 
@@ -57,7 +55,6 @@ void func_800F2860(void) {
 }
 
 const rodataPadding_jpt_800F288C = 0;
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F298C);
 
@@ -356,14 +353,19 @@ void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x64, 0x40, 0x20, 0, 0xC0, 0x150, 0x9C, 0, 0, 1);
 }
 
-s32 func_800F62E8(s32 context) {
-    s32 temp_v0 = context * 3;
+// seems to be equivalent to floor(number * .75)
+// Cloak color components are 5 bit. Examples:
+// 31 -> 23
+// 15 -> 11
+s32 DarkenCloakColor(s32 color) {
+    s32 temp_v0 = color * 3;
     s32 phi_v0 = temp_v0 < 0 ? temp_v0 + 3 : temp_v0;
     return phi_v0 >> 2;
 }
 
 // Apply cloak palette
-INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F6304);
+// Creates light and dark versions of cloak colors in BGR555 format
+INCLUDE_ASM("asm/us/dra/nonmatchings/52860", ApplyJosephsCloakPalette);
 
 void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
