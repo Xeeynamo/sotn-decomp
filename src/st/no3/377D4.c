@@ -405,6 +405,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
 
 void EntityUnkId49(Entity* entity) {
     u16 temp;
+    
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180ADC);
