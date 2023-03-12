@@ -1,16 +1,32 @@
 #include "dra.h"
 
-enum CollisionTypes
-{
-    COLLISION_TYPE_SOLID = 0x03, // most common block type
-    COLLISION_TYPE_RIGHT_45_ANGLE = 0x80, // right slanting 45* angle (/)
-    COLLISION_TYPE_LEFT_45_ANGLE = 0x83, // left slanting 45* angle (\)
-    COLLISION_TYPE_RIGHT_CEILING_45_ANGLE = 0x84, // right slanting 45* angle on ceiling (\)
-    COLLISION_TYPE_LEFT_CEILING_45_ANGLE = 0x87, // left slanting 45* angle on ceiling (/)
-    COLLISION_TYPE_LEFT_225_ANGLE_1 = 0x88, // 22.5* angle sloping left (/) takes two tiles to go up one tile
-    COLLISION_TYPE_LEFT_225_ANGLE_2 = 0x89, // tile #2 of previous
-    COLLISION_TYPE_FLAT_DROP_THROUGH = 0xE7, // flat tile you can press down + jump to drop through
-    COLLISION_TYPE_WATER = 0xED // water
+enum CollisionTypes {
+    // most common block type
+    COLLISION_TYPE_SOLID = 0x03,
+
+    // right slanting 45* angle (/)
+    COLLISION_TYPE_RIGHT_45_ANGLE = 0x80,
+
+    // left slanting 45* angle (\)
+    COLLISION_TYPE_LEFT_45_ANGLE = 0x83,
+
+    // right slanting 45* angle on ceiling (\)
+    COLLISION_TYPE_RIGHT_CEILING_45_ANGLE = 0x84,
+
+    // left slanting 45* angle on ceiling (/)
+    COLLISION_TYPE_LEFT_CEILING_45_ANGLE = 0x87,
+
+    // 22.5* angle sloping left (/) takes two tiles to go up one tile
+    COLLISION_TYPE_LEFT_225_ANGLE_1 = 0x88,
+
+    // tile #2 of previous
+    COLLISION_TYPE_LEFT_225_ANGLE_2 = 0x89,
+
+    // flat tile you can press down + jump to drop through
+    COLLISION_TYPE_FLAT_DROP_THROUGH = 0xE7,
+
+    // water
+    COLLISION_TYPE_WATER = 0xED
 };
 
 void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
