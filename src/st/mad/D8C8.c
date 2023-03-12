@@ -37,6 +37,7 @@ extern s32 D_80097908;
 
 // ST/MAD
 extern u16 D_8018052C[];
+extern u16 D_801806B4[];
 extern u16 D_80180F5C[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
@@ -62,6 +63,7 @@ extern LayoutObject* D_801997D8;
 extern LayoutObject* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
+extern u16 D_80199E54[];
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
@@ -225,13 +227,6 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-// very close. Mostly reg swap
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", Update);
-#else
-extern s16 D_801806B4[];
-extern u16 D_80199E54[];
-
 void Update(void) {
     s16 i;
     Entity* entity;
@@ -256,11 +251,11 @@ void Update(void) {
 
         if (entity->step) {
             s32 unk34 = entity->unk34;
-            if (unk34 < 0) {
-                u16 posX = entity->posX.i.hi;
-                u16 posY = entity->posY.i.hi;
-                if (unk34 & 0x40000000) {
-                    if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
+            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                s16 posX = i = entity->posX.i.hi;
+                s16 posY = entity->posY.i.hi;
+                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
                     }
@@ -296,7 +291,7 @@ void Update(void) {
                     ((u16)(entity->posY.i.hi + 64) <= 352)) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
-                        (unk34 & 0x200 && !(g_pfnInitRoomEntities & 3))) {
+                        (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
@@ -312,7 +307,6 @@ void Update(void) {
         }
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018EC90);
 

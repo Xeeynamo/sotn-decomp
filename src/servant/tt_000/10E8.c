@@ -475,6 +475,9 @@ void func_80174038(Entity* entity) {
 }
 #endif
 
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
+#else
 typedef struct {
     u32 unk0;
     u32 unk4;
@@ -592,6 +595,7 @@ void func_80174210(Entity* self, s32 arg1) {
         }
     }
 }
+#endif
 
 void func_801745E4(Entity* entityParent, s32 objectId, s32 subId) {
     Entity* entity;

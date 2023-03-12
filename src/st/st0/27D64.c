@@ -24,8 +24,10 @@ extern u16 D_8018058C[];
 extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern ObjInit2 D_80180638[];
+extern s16 D_801815EC[];
 extern u32 D_80181D7C[];
 const u8* D_80181E28[];
+extern u16 D_801C2584[];
 
 void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
@@ -602,12 +604,6 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", Update);
-#else
-extern s16 D_801815EC[];
-extern u16 D_801C2584[];
-
 void Update(void) {
     s16 i;
     Entity* entity;
@@ -632,11 +628,11 @@ void Update(void) {
 
         if (entity->step) {
             s32 unk34 = entity->unk34;
-            if (unk34 < 0) {
-                u16 posX = entity->posX.i.hi;
-                u16 posY = entity->posY.i.hi;
-                if (unk34 & 0x40000000) {
-                    if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
+            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                s16 posX = i = entity->posX.i.hi;
+                s16 posY = entity->posY.i.hi;
+                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
                     }
@@ -650,7 +646,7 @@ void Update(void) {
 
             if ((unk34 & 0x02000000)) {
                 s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
-                s16 test = ((u16)g_CurrentRoom.vSize * 256) + 128;
+                s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
                     continue;
@@ -688,7 +684,6 @@ void Update(void) {
         }
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B1B98);
 

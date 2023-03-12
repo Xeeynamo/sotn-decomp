@@ -1888,9 +1888,6 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", Update);
-#else
 void Update(void) {
     s16 i;
     Entity* entity;
@@ -1916,10 +1913,10 @@ void Update(void) {
         if (entity->step) {
             s32 unk34 = entity->unk34;
             if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
-                u16 posX = entity->posX.i.hi;
-                u16 posY = entity->posY.i.hi;
+                s16 posX = i = entity->posX.i.hi;
+                s16 posY = entity->posY.i.hi;
                 if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
-                    if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
+                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
                     }
@@ -1971,7 +1968,6 @@ void Update(void) {
         }
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80188514);
