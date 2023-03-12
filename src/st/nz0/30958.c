@@ -382,7 +382,7 @@ void EntityMoveableBox(Entity* self) {
 }
 
 // lever to operate cannon
-// https://decomp.me/scratch/FriVp
+// https://decomp.me/scratch/7ce8a
 // Matching in PSY-Q 3.5, assembler skips a nop
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
@@ -434,13 +434,7 @@ void EntityCannonLever(Entity* self) {
             self->accelerationX = -0x40000;
             self->step++;
         }
-        if (D_8003BE6F != 0) {
-            self->unk3C = 0;
-        }
-        poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
-        poly->x0 = self->posX.i.hi - 4;
-        poly->y0 = self->posY.i.hi - 20;
-        return;
+        break;
 
     case 2:
         MoveEntity();
@@ -455,15 +449,7 @@ void EntityCannonLever(Entity* self) {
         if (temp_v0_2 < 0x2000) {
             self->step++;
         }
-
-        if (D_8003BE6F != 0) {
-            self->unk3C = 0;
-        }
-
-        poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
-        poly->x0 = self->posX.i.hi - 4;
-        poly->y0 = self->posY.i.hi - 20;
-        return;
+        break;
 
     case 3:
         D_80180ED0 = 1;

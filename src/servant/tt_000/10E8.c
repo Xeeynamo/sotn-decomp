@@ -496,20 +496,28 @@ init_entity:
     entity->subId = subId;
 }
 
-// PSY-Q 3.5 match as in GCC a jump skips a 'nop'
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801746A0);
-#else
 s32 func_801746A0(s32 arg0) {
-    if (D_800733E4 < 0 && !(D_80072F20.pl_vram_flag & 1))
-        return 1;
+    s32 tmp;
 
-    if (D_800733E4 > 0 && !(D_80072F20.pl_vram_flag & 2))
-        return 1;
+    if (D_800733E4 < 0) {
+        if (!(D_80072F20.pl_vram_flag & 1)) {
+            return 1;
+        }
+    }
+
+    tmp = D_800733E4;
+    NOP;
+    if (tmp > 0) {
+        if (!(D_80072F20.pl_vram_flag & 2)) {
+            return 1;
+        }
+    }
 
     if (D_800733E0 < 0 && !(D_80072F20.pl_vram_flag & 8))
         return 1;
 
+    tmp = D_800733E0;
+    NOP;
     if (D_800733E0 > 0 && !(D_80072F20.pl_vram_flag & 4))
         return 1;
 
@@ -527,7 +535,6 @@ s32 func_801746A0(s32 arg0) {
 
     return D_80072F72 != 0 && D_80072F72 != 4;
 }
-#endif
 
 s32 func_801747B8(void) {
     Entity* entity;

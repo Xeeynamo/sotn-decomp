@@ -67,10 +67,6 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-// Jumps to 'nop'. Matches with PSY-Q 3.5
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FAB8);
-#else
 void func_8015FAB8(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->unkB0];
@@ -80,6 +76,7 @@ void func_8015FAB8(Entity* entity) {
     } else {
         attack = subwpn->attack;
     }
+    NOP;
 
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
@@ -91,7 +88,6 @@ void func_8015FAB8(Entity* entity) {
     entity->attack = g_api.func_800FD664(entity->attack);
     func_8015F9F0(entity);
 }
-#endif
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FB84);
 
