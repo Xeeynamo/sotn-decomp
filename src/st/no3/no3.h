@@ -6,16 +6,6 @@ s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void func_801C8C84(Entity* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
                    u8 arg5, s32 arg6);
 
-extern u8 D_8003BE1C[]; // probably part of a struct
-extern u8 D_8003BE1D[]; // probably part of a struct
-extern u8 D_8003BE20[];
-extern s32 D_8003C8B8;
-extern u8 D_8003CB25;
-extern u8 D_8003CB26;
-extern u8 D_8003CB27;
-extern u8 D_80054319;
-extern u8 D_8005431A;
-extern u8 D_8005431B;
 extern u8* D_80180850;
 extern u16 D_80180AC4[];
 extern u16 D_80180AD0[];

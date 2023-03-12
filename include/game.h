@@ -856,10 +856,12 @@ extern s32 D_8003CA28[]; // time attack checkpoints, also holds boss fought flag
 extern s32 D_8003CACC;
 extern s32 D_8003CB00[];
 extern s32 D_8003CB04;
+
 extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
-extern s16 D_80054302;     // TODO overlap, hard to remove
+extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
+
 extern const char g_MemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
