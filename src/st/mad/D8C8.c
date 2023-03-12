@@ -23,7 +23,6 @@ void func_8019344C(void);
 extern u8 D_8003BEE8[];
 extern s32 g_pfnInitRoomEntities; // It's 8003C8C4!
 extern Entity* g_CurrentEntity;
-extern s16 D_80073092;
 extern Entity g_EntityArray[];
 extern Entity D_8007D858[];
 extern Entity D_8007EF1C;
@@ -274,7 +273,7 @@ void Update(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.i.hi + D_80073092;
+                s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
                 s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
@@ -327,8 +326,8 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     do { //! FAKE https://decomp.me/scratch/zysYC
         entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     } while (0);
-    entity->posX.i.hi = initDesc->posX - D_8007308E;
-    entity->posY.i.hi = initDesc->posY - D_80073092;
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
@@ -347,8 +346,8 @@ void func_80190608(LayoutObject* initDesc) {
     s16 phi_a0;
     Entity* entity;
 
-    temp_a2 = D_80073092 + 0x120;
-    phi_a0 = D_80073092 - 0x40;
+    temp_a2 = g_Camera.posY.i.hi + 0x120;
+    phi_a0 = g_Camera.posY.i.hi - 0x40;
     if (phi_a0 < 0) {
         phi_a0 = 0;
     }
@@ -504,7 +503,7 @@ void func_80190F04(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = D_8007308E;
+        s16 tmp = g_Camera.posX.i.hi;
         if (D_80097908 > 0)
             func_801908DC(tmp + 0x140);
         else

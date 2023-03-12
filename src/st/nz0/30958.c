@@ -193,9 +193,9 @@ void func_801B1C18(Entity* self) {
             player = &PLAYER;
             player->posY.i.hi++;
             self->posY.val += 0x10000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 468) {
-                self->posY.i.hi = 468 - g_Camera.posY.i.lo;
+                self->posY.i.hi = 468 - g_Camera.posY.i.hi;
                 D_80180EB4 ^= self->subId;
                 self->step++;
             }
@@ -210,9 +210,9 @@ void func_801B1C18(Entity* self) {
 
     case 3:
         self->posY.val += 0xFFFF0000;
-        temp = g_Camera.posY.i.lo + self->posY.i.hi;
+        temp = g_Camera.posY.i.hi + self->posY.i.hi;
         if (temp < 464) {
-            self->posY.i.hi = 464 - g_Camera.posY.i.lo;
+            self->posY.i.hi = 464 - g_Camera.posY.i.hi;
             self->step = 1;
         }
         break;
@@ -256,26 +256,26 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         poly->pad3 = 2;
 
         if (self->subId & D_80180EB4) {
-            self->posY.i.hi = 480 - g_Camera.posY.i.lo;
+            self->posY.i.hi = 480 - g_Camera.posY.i.hi;
             self->unk88.S8.unk0 = 1;
         } else {
-            self->posY.i.hi = 452 - g_Camera.posY.i.lo;
+            self->posY.i.hi = 452 - g_Camera.posY.i.hi;
             self->unk88.S8.unk0 = 0;
         }
 
     case 1:
         if (self->subId & D_80180EB4) {
             self->posY.val += 0x10000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 480) {
-                self->posY.i.hi = 480 - g_Camera.posY.i.lo;
+                self->posY.i.hi = 480 - g_Camera.posY.i.hi;
             }
             var_v1 = 1;
         } else {
             self->posY.val += 0xFFFF0000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp < 452) {
-                self->posY.i.hi = 452 - g_Camera.posY.i.lo;
+                self->posY.i.hi = 452 - g_Camera.posY.i.hi;
                 self->step = 1;
             }
             var_v1 = 0;
@@ -290,7 +290,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
     poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
     poly->x0 = self->posX.i.hi - 16;
     poly->y0 = self->posY.i.hi - 16;
-    temp = 480 - (g_Camera.posY.i.lo + self->posY.i.hi);
+    temp = 480 - (g_Camera.posY.i.hi + self->posY.i.hi);
     D_801CB736[self->subId] = temp;
 }
 
@@ -354,7 +354,7 @@ void EntityMoveableBox(Entity* self) {
         func_801BCF74(&D_80180EB8);
 
         if (self->subId == 0) {
-            temp_v0_2 = self->posX.i.hi + g_Camera.posX.i.lo;
+            temp_v0_2 = self->posX.i.hi + g_Camera.posX.i.hi;
             var_v1 = temp_v0_2 - 192;
             var_v1 = ABS(var_v1);
             var_v0 = temp_v0_2 - 256;
@@ -370,7 +370,7 @@ void EntityMoveableBox(Entity* self) {
             self->unk84.unk = var_s1;
             if (var_s1 != 0) {
                 self->posY.i.hi =
-                    (448 - D_801CB736[var_s1]) - g_Camera.posY.i.lo;
+                    (448 - D_801CB736[var_s1]) - g_Camera.posY.i.hi;
             }
         }
         break;
@@ -483,7 +483,7 @@ void EntityCannonShot(Entity* self) {
 
     case 1:
         MoveEntity();
-        if ((self->posX.i.hi + g_Camera.posX.i.lo) < 112) {
+        if ((self->posX.i.hi + g_Camera.posX.i.hi) < 112) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -514,7 +514,7 @@ void func_801B2AD8(Entity* self) {
         self->hitboxWidth = 6;
         self->unk3C = 1;
         CreateEntityFromEntity(0x26, self, &self[-1]);
-        self[-1].posY.i.hi = 344 - g_Camera.posY.i.lo;
+        self[-1].posY.i.hi = 344 - g_Camera.posY.i.hi;
 
         firstPolygonIndex = g_api.AllocPolygons(4, 1);
         if (firstPolygonIndex == -1) {
@@ -545,16 +545,16 @@ void func_801B2AD8(Entity* self) {
 
         if (var_a0 != 0) {
             self->posY.val += 0x10000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 376) {
-                self->posY.i.hi = 376 - g_Camera.posY.i.lo;
+                self->posY.i.hi = 376 - g_Camera.posY.i.hi;
             }
             D_80180EEC = 1;
         } else {
             self->posY.val += 0xFFFF0000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp < 372) {
-                self->posY.i.hi = 372 - g_Camera.posY.i.lo;
+                self->posY.i.hi = 372 - g_Camera.posY.i.hi;
             }
             D_80180EEC = 0;
         }
@@ -840,19 +840,19 @@ s32 func_801B4690(void) {
 
     MoveEntity();
     g_CurrentEntity->accelerationY += 0x4000;
-    temp = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.lo;
+    temp = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.hi;
 
     if ((g_CurrentEntity->accelerationX > 0) && (temp > 896)) {
-        g_CurrentEntity->posX.i.hi = 896 - g_Camera.posX.i.lo;
+        g_CurrentEntity->posX.i.hi = 896 - g_Camera.posX.i.hi;
     }
 
     if ((g_CurrentEntity->accelerationX < 0) && (temp < 64)) {
-        g_CurrentEntity->posX.i.hi = 64 - g_Camera.posX.i.lo;
+        g_CurrentEntity->posX.i.hi = 64 - g_Camera.posX.i.hi;
     }
 
-    if ((g_CurrentEntity->posY.i.hi + g_Camera.posY.i.lo) > 416) {
+    if ((g_CurrentEntity->posY.i.hi + g_Camera.posY.i.hi) > 416) {
         ret = 1;
-        g_CurrentEntity->posY.i.hi = 416 - g_Camera.posY.i.lo;
+        g_CurrentEntity->posY.i.hi = 416 - g_Camera.posY.i.hi;
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
     }
@@ -1052,7 +1052,7 @@ void func_801B6DE4(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.lo;
+        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
         self->hitboxHeight = 8;
         self->unk12 = -0x16;
         self->hitboxWidth = 6;
@@ -1081,10 +1081,10 @@ void func_801B6DE4(Entity* self) {
     case 1:
         if (temp_s1 != 0) {
             self->posY.val += 0x10000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if ((self->unk80.modeS32 + 4) < temp) {
                 self->posY.i.hi =
-                    (u16)(self->unk80.modeS16.unk0 - (g_Camera.posY.i.lo - 4));
+                    (u16)(self->unk80.modeS16.unk0 - (g_Camera.posY.i.hi - 4));
                 self->step++;
                 func_801C29B0(0x676);
                 D_801813A4 = self->subId;
@@ -1095,10 +1095,10 @@ void func_801B6DE4(Entity* self) {
     case 2:
         if (temp_s1 == 0) {
             self->posY.val += 0xFFFF0000;
-            temp = g_Camera.posY.i.lo + self->posY.i.hi;
+            temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp < self->unk80.modeS32) {
                 self->posY.i.hi =
-                    (u16)(self->unk80.modeS16.unk0) - g_Camera.posY.i.lo;
+                    (u16)(self->unk80.modeS16.unk0) - g_Camera.posY.i.hi;
                 self->step = 1;
             }
         }
@@ -1217,8 +1217,8 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = D_80180A90[entity->objectId];
-    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
-    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
@@ -1280,7 +1280,7 @@ void func_801BBA98(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = g_Camera.posX.i.lo;
+        s16 tmp = g_Camera.posX.i.hi;
         if (D_80097908 > 0)
             func_801BB45C(tmp + 320);
         else

@@ -1534,7 +1534,7 @@ void EntityWarpRoom(Entity* entity) {
             Entity* newEntity = AllocEntity(D_8007A958, &D_8007A958[96]);
             if (newEntity) {
                 CreateEntityFromCurrentEntity(0x17, newEntity);
-                newEntity->posY.i.hi = 0xCC - g_Camera.posY.i.lo;
+                newEntity->posY.i.hi = 0xCC - g_Camera.posY.i.hi;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
@@ -1545,7 +1545,7 @@ void EntityWarpRoom(Entity* entity) {
         *((u32*)D_80180648) = 0;
         entity->unk12 += 0x10;
         D_8003BEBC |= 1 | (1 << entity->subId);
-        if (((u32)((PLAYER.posX.i.hi + ((s16)g_Camera.posX.i.lo)) - 0x61)) <
+        if (((u32)((PLAYER.posX.i.hi + ((s16)g_Camera.posX.i.hi)) - 0x61)) <
             0x3F) {
             D_80072EFC = 0x10;
             *D_80072EF4 = 0;
@@ -1866,7 +1866,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
 
     case 5:
-        y_unk = &D_80073092;
+        y_unk = &g_Camera.posY.i.hi;
         *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
         if (*(u32*)&entity->unk88 == 0) {
             func_801916C4(0x644);
@@ -1932,7 +1932,7 @@ void Update(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.i.hi + D_80073092;
+                s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
                 s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
@@ -2016,8 +2016,8 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
-    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
@@ -2030,14 +2030,14 @@ void func_80189E9C(LayoutObject* layoutObj) {
     s16 temp_v0, posY;
     u16 initFlags;
 
-    temp_v0 = D_80073092 - 0x40;
+    temp_v0 = g_Camera.posY.i.hi - 0x40;
     if (temp_v0 < 0) {
         temp_v0 = 0;
     }
 
     if ((s16)layoutObj->posY < temp_v0)
         return;
-    if (((s16)(D_80073092 + 0x120) < layoutObj->posY))
+    if (((s16)(g_Camera.posY.i.hi + 0x120) < layoutObj->posY))
         return;
 
     initFlags = layoutObj->objectId & 0xE000;
@@ -2221,7 +2221,7 @@ void func_8018A7AC(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = g_Camera.posX.i.lo;
+        s16 tmp = g_Camera.posX.i.hi;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
         else

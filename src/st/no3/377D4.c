@@ -168,8 +168,8 @@ void EntityClickSwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += 0xC000;
-            if ((g_Camera.posY.i.lo + entity->posY.i.hi) > 160) {
-                entity->posY.i.hi = 160 - g_Camera.posY.i.lo;
+            if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
                 *D_8003BE1D = 1;
                 entity->step++;
@@ -389,8 +389,8 @@ void EntitySwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += 0x4000;
-            if ((g_Camera.posY.i.lo + entity->posY.i.hi) > 193) {
-                entity->posY.i.hi = 193 - g_Camera.posY.i.lo;
+            if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 193) {
+                entity->posY.i.hi = 193 - g_Camera.posY.i.hi;
                 *D_8003BE1E = 1;
                 g_api.PlaySfx(0x608);
                 entity->step++;

@@ -35,8 +35,8 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
     u32 var_v0;
     u8 colType;
 
-    absX = x + g_Camera.posX.i.lo;
-    absY = y + g_Camera.posY.i.lo;
+    absX = x + g_Camera.posX.i.hi;
+    absY = y + g_Camera.posY.i.hi;
     new_var = 0x10;
     if ((((absX < 0) || (((u32)absX) >= (g_CurrentRoom.hSize << 8))) ||
          (absY < 0)) ||
@@ -581,7 +581,7 @@ block_25:
                 (u16)g_EntityArray[0].posX.i.hi +
                 (playerX + D_801375A4 - (g_CurrentRoom.x + *D_8009740C));
         }
-        D_8007308E = g_CurrentRoom.x;
+        g_Camera.posX.i.hi = g_CurrentRoom.x;
     } else {
         temp_a1_2 = g_CurrentRoom.width + *D_8009740C - 0x100;
         if (temp_a1_2 < playerX) {
@@ -592,48 +592,49 @@ block_25:
                     (((playerX + D_801375A4) + 0x100) -
                      (g_CurrentRoom.width + (*D_8009740C)));
             }
-            D_8007308E = g_CurrentRoom.width - 0x100;
+            g_Camera.posX.i.hi = g_CurrentRoom.width - 0x100;
         } else {
-            D_8007308E = playerX - (*D_8009740C);
+            g_Camera.posX.i.hi = playerX - (*D_8009740C);
             g_EntityArray[0].posX.i.hi = *D_8009740C;
         }
     }
     if (D_8009741C != 0) {
         if (playerY < g_CurrentRoom.y + 0x8C) {
-            D_80073092 = g_CurrentRoom.y + 4;
-            g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+            g_Camera.posY.i.hi = g_CurrentRoom.y + 4;
+            g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
         } else if (g_CurrentRoom.height - 0x74 < playerY) {
-            D_80073092 = g_CurrentRoom.height - 0xFC;
-            g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+            g_Camera.posY.i.hi = g_CurrentRoom.height - 0xFC;
+            g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
         } else {
             g_EntityArray[0].posY.i.hi = 0x88;
-            D_80073092 = playerY - 0x88;
+            g_Camera.posY.i.hi = playerY - 0x88;
         }
     } else {
         new_var2 = 0x88;
         if (playerY < g_CurrentRoom.y + 0x8C) {
-            if (D_80073092 + new_var2 - playerY >= 4 &&
-                g_CurrentRoom.y + 8 < D_80073092) {
-                D_80073092 -= 4;
+            if (g_Camera.posY.i.hi + new_var2 - playerY >= 4 &&
+                g_CurrentRoom.y + 8 < g_Camera.posY.i.hi) {
+                g_Camera.posY.i.hi -= 4;
                 g_EntityArray[0].posY.i.hi += 4;
-            } else if (D_80073092 < g_CurrentRoom.y && g_CurrentRoom.y != 0) {
-                D_80073092 += 4;
+            } else if (g_Camera.posY.i.hi < g_CurrentRoom.y &&
+                       g_CurrentRoom.y != 0) {
+                g_Camera.posY.i.hi += 4;
                 g_EntityArray[0].posY.i.hi -= 4;
             } else {
-                D_80073092 = g_CurrentRoom.y + 4;
-                g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+                g_Camera.posY.i.hi = g_CurrentRoom.y + 4;
+                g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
             }
         } else {
-            g_EntityArray[0].posY.i.hi = D_80073092;
+            g_EntityArray[0].posY.i.hi = g_Camera.posY.i.hi;
             if (g_CurrentRoom.height - 0x74 < playerY) {
-                D_80073092 = g_CurrentRoom.height - 0xFC;
-                g_EntityArray[0].posY.i.hi = playerY - D_80073092;
-            } else if (D_80073092 + new_var2 - playerY >= 4) {
-                D_80073092 -= 4;
+                g_Camera.posY.i.hi = g_CurrentRoom.height - 0xFC;
+                g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
+            } else if (g_Camera.posY.i.hi + new_var2 - playerY >= 4) {
+                g_Camera.posY.i.hi -= 4;
                 g_EntityArray[0].posY.i.hi += 4;
             } else {
                 g_EntityArray[0].posY.i.hi = 0x88;
-                D_80073092 = playerY - 0x88;
+                g_Camera.posY.i.hi = playerY - 0x88;
             }
         }
     }

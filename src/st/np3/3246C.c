@@ -157,8 +157,8 @@ void EntityClickSwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += 0xC000;
-            if ((g_Camera.posY.i.lo + entity->posY.i.hi) > 160) {
-                entity->posY.i.hi = 160 - g_Camera.posY.i.lo;
+            if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
                 *D_8003BE1D = 1;
                 entity->step++;
@@ -540,8 +540,8 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
-    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
@@ -1191,9 +1191,9 @@ void EntityMerman2(Entity* self) {
 
     if (!(g_blinkTimer & 0x3F)) {
         Entity* player = &PLAYER;
-        temp = g_Camera.posY.i.lo + player->posY.i.hi;
+        temp = g_Camera.posY.i.hi + player->posY.i.hi;
         if (temp >= 256) {
-            temp_s0 = g_Camera.posX.i.lo + player->posX.i.hi;
+            temp_s0 = g_Camera.posX.i.hi + player->posX.i.hi;
             temp_s0_2 = 128;
             temp_s0_2 = temp_s0 - temp_s0_2 + Random();
             temp_s0 = temp_s0_2 - 64;
@@ -1208,8 +1208,8 @@ void EntityMerman2(Entity* self) {
                     } else {
                         CreateEntityFromCurrentEntity(0x39, newEntity);
                     }
-                    newEntity->posX.i.hi = temp_s0_2 - g_Camera.posX.i.lo;
-                    newEntity->posY.i.hi = temp2 - g_Camera.posY.i.lo;
+                    newEntity->posX.i.hi = temp_s0_2 - g_Camera.posX.i.hi;
+                    newEntity->posY.i.hi = temp2 - g_Camera.posY.i.hi;
                 }
             }
         }
