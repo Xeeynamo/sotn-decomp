@@ -40,7 +40,7 @@ $(BUILD_DIR)/$(MODULE_NAME).bin: $(BUILD_DIR)/$(MODULE_NAME).elf
 	$(OBJCOPY) -O binary $< $@
 	printf '\x00' | dd of=$@ bs=1 seek=40959 count=1 conv=notrunc
 
-$(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o $(BUILD_DIR)/tools/%/dra_800FD874.o
+$(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o $(BUILD_DIR)/tools/%/collision_viewer.o $(BUILD_DIR)/tools/%/dra_800FD874.o
 	$(LD) -o $@ \
 	-Map $*.map \
 	-T $*.ld \
