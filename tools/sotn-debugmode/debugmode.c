@@ -57,6 +57,8 @@ void Init() {
 void UpdateEntitySpawn(int variant);
 void UpdateSfxPlayer(void);
 void UpdateDraTest800FD874(void);
+void CollisionDebug(void);
+
 void Update(Entity* e) {
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
@@ -77,6 +79,9 @@ void Update(Entity* e) {
         break;
     case 4:
         UpdateDraTest800FD874();
+        break;
+    case 5:
+        CollisionDebug();
         break;
     default:
         g_DebugMode = 0;
