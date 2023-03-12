@@ -369,7 +369,6 @@ void EntityUnkId2A(Entity* entity) {
 }
 
 // switch that goes downwards when you stand on it
-extern u8 D_8003BE1E[];
 void EntitySwitch(Entity* entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
     Entity* player = &PLAYER;
@@ -379,7 +378,7 @@ void EntitySwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (*D_8003BE1E != 0) {
+        if (D_8003BDEC[0x32] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -391,7 +390,7 @@ void EntitySwitch(Entity* entity) {
             entity->posY.val += 0x4000;
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Camera.posY.i.hi;
-                *D_8003BE1E = 1;
+                D_8003BDEC[0x32] = 1;
                 g_api.PlaySfx(0x608);
                 entity->step++;
             }

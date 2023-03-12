@@ -815,6 +815,13 @@ typedef struct {
 
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
+
+// Holds flags that checks if certain switches are enabled to allow to have
+// shortcuts around the castle. One typical example is the wood column that
+// prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
+// column will disappear.
+extern u8 D_8003BDEC[];
+
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;

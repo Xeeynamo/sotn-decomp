@@ -91,7 +91,7 @@ void EntityUnkId53(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (*D_8003BE20 != 0) {
+        if (D_8003BDEC[0x34] != 0) {
             DestroyEntity(entity);
             return;
         }
