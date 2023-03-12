@@ -1042,12 +1042,7 @@ extern s32 D_80097424;
 extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
-extern Pad g_pads[];   // 0x80097490
-extern s16 D_80097492; // g_pads[0].previous
-extern u16 D_80097494; // g_pads[0].tapped
-extern u16 D_80097496; // g_pads[0].repeat
-extern u16 D_80097498; // g_pads[1].pressed
-extern u16 D_8009749C[];
+extern Pad g_pads[];
 extern u32 g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
