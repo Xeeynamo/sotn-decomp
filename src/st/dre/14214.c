@@ -222,7 +222,86 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", Update);
+void Update(void) {
+    s16 i;
+    Entity* entity;
+    s32* unk;
+
+    for (i = 0; i < 0x20; i++) {
+        if (D_801A3F8C[i]) {
+            D_801A3F8C[i]--;
+        }
+    }
+
+    unk = &D_80097410;
+    if (*unk) {
+        if (!--*unk) {
+            g_api.FreePolygons(D_80097414);
+        }
+    }
+
+    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+        if (!entity->pfnUpdate)
+            continue;
+
+        if (entity->step) {
+            s32 unk34 = entity->unk34;
+            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                s16 posX = i = entity->posX.i.hi;
+                s16 posY = entity->posY.i.hi;
+                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
+                        DestroyEntity(entity);
+                        continue;
+                    }
+                } else {
+                    if ((u16)(posX + 128) > 512 || (u16)(posY + 128) > 480) {
+                        DestroyEntity(entity);
+                        continue;
+                    }
+                }
+            }
+
+            if ((unk34 & 0x02000000)) {
+                s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
+                s16 test = (g_CurrentRoom.vSize * 256) + 128;
+                if (posY > test) {
+                    DestroyEntity(entity);
+                    continue;
+                }
+            }
+
+            if (unk34 & 0xF) {
+                entity->palette =
+                    D_8018097C[(entity->unk49 << 1) | (unk34 & 1)];
+                entity->unk34--;
+                if ((entity->unk34 & 0xF) == 0) {
+                    entity->palette = entity->unk6A;
+                    entity->unk6A = 0;
+                }
+            }
+
+            if (!(unk34 & 0x20000000) || (unk34 & 0x10000000) ||
+                ((u16)(entity->posX.i.hi + 64) <= 384) &&
+                    ((u16)(entity->posY.i.hi + 64) <= 352)) {
+                if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
+                    if (!D_800973FC || unk34 & 0x2100 ||
+                        (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
+                        g_CurrentEntity = entity;
+                        entity->pfnUpdate(entity);
+                        entity->unk44 = 0;
+                        entity->unk48 = 0;
+                    }
+                }
+            }
+        } else {
+            g_CurrentEntity = entity;
+            entity->pfnUpdate(entity);
+            entity->unk44 = 0;
+            entity->unk48 = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801972BC);
 

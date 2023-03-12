@@ -40,6 +40,7 @@ extern u16 D_80180B80[];
 extern ObjInit2 D_80180C10[];
 extern const u8* D_801813D4;
 extern const u8* D_801813E4;
+extern u16 D_8018164C[];
 extern s16 D_80181A50[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
@@ -61,3 +62,4 @@ extern u8* D_80182414;
 extern u8 D_8003BE1C[]; // probably part of a struct
 extern u8 D_8003BE1D[]; // probably part of a struct
 extern PfnEntityUpdate PfnEntityUpdates[];
+extern u16 D_801D33F4[];

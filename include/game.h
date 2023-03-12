@@ -633,7 +633,8 @@ typedef struct {
 
 typedef struct RoomDimensions {
     /* 0x00 */ s32 hSize;
-    /* 0x04 */ s32 vSize;
+    /* 0x04 */ u16 vSize;
+    /* 0x06 */ u16 _padding06;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 left;
     /* 0x10 */ s32 top;
