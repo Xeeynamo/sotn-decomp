@@ -1,5 +1,34 @@
 #include "dra.h"
 
+enum CollisionTypes {
+    // most common block type
+    COLLISION_TYPE_SOLID = 0x03,
+
+    // right slanting 45* angle (/)
+    COLLISION_TYPE_RIGHT_45_ANGLE = 0x80,
+
+    // left slanting 45* angle (\)
+    COLLISION_TYPE_LEFT_45_ANGLE = 0x83,
+
+    // right slanting 45* angle on ceiling (\)
+    COLLISION_TYPE_RIGHT_CEILING_45_ANGLE = 0x84,
+
+    // left slanting 45* angle on ceiling (/)
+    COLLISION_TYPE_LEFT_CEILING_45_ANGLE = 0x87,
+
+    // 22.5* angle sloping left (/) takes two tiles to go up one tile
+    COLLISION_TYPE_LEFT_225_ANGLE_1 = 0x88,
+
+    // tile #2 of previous
+    COLLISION_TYPE_LEFT_225_ANGLE_2 = 0x89,
+
+    // flat tile you can press down + jump to drop through
+    COLLISION_TYPE_FLAT_DROP_THROUGH = 0xE7,
+
+    // water
+    COLLISION_TYPE_WATER = 0xED
+};
+
 void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
     CollisionResult sp10;
     CollisionResult sp38;
@@ -88,7 +117,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 1;
         }
         break;
-    case 0x80:
+    case COLLISION_TYPE_RIGHT_45_ANGLE:
         temp_v1_2 = res->unk1C + res->unk20;
         if (temp_v1_2 < 0x10) {
             res->unk18 = temp_v1_2 - 0xF;
@@ -98,9 +127,9 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 0x8000;
         }
         break;
-    case 0x88:
+    case COLLISION_TYPE_LEFT_225_ANGLE_1:
         var_a1 = 0x10;
-    case 0x89:
+    case COLLISION_TYPE_LEFT_225_ANGLE_2:
         temp_v1_3 = var_a1 + res->unk1C + res->unk20 * 2;
         if (temp_v1_3 < 0x20) {
             res->unk14 = temp_v1_3 - 0x1F;
@@ -127,7 +156,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 0xA000;
         }
         break;
-    case 0x83:
+    case COLLISION_TYPE_LEFT_45_ANGLE:
         temp_a0 = res->unk1C;
         temp_v1_5 = res->unk20;
         if (temp_a0 >= temp_v1_5) {
@@ -189,7 +218,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 1;
         }
         break;
-    case 0x84:
+    case COLLISION_TYPE_RIGHT_CEILING_45_ANGLE:
         temp_a0_4 = res->unk1C;
         temp_v1_8 = res->unk20;
         if (temp_v1_8 >= (s32)temp_a0_4) {
@@ -237,7 +266,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 0x2800;
         }
         break;
-    case 0x87:
+    case COLLISION_TYPE_LEFT_CEILING_45_ANGLE:
         if ((res->unk1C + res->unk20) >= 0xF) {
             res->unk0 = 0x4801;
             temp_v0_11 = res->unk18 + 0xF;
@@ -335,7 +364,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
     case 0xF3:
         res->unk0 = 3;
         break;
-    case 0xED:
+    case COLLISION_TYPE_WATER:
         res->unk0 = 8;
         break;
     case 0xEA:
@@ -356,7 +385,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk18 += 8;
         }
         break;
-    case 0xE7:
+    case COLLISION_TYPE_FLAT_DROP_THROUGH:
         if (res->unk20 >= 8) {
             res->unk0 = 0x41;
             res->unk20 -= 8;
