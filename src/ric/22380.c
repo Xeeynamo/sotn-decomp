@@ -803,7 +803,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80167EC4);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801682B4);
 
 s32 func_8016840C(s16 x, s16 y) {
-    CollisionResult res;
+    Collider res;
     u16 temp;
 
     if (g_CurrentEntity->accelerationX != 0) {

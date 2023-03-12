@@ -6,7 +6,7 @@ Sprite D_80170608[];
 u16 D_80170720[];
 s32 D_80171090;
 EntitySearch D_80171094[];
-CollisionResult D_80174AD8;
+Collider D_80174AD8;
 s32 D_80174D3C;
 
 void func_80171ED4(s32 arg0);

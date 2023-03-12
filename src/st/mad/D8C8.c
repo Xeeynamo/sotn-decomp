@@ -898,7 +898,7 @@ void func_8019344C(void) {
 #endif
 
 void func_801934D0(u16 arg0) {
-    CollisionResult res;
+    Collider res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
@@ -1190,7 +1190,7 @@ void func_80195B44(Entity* entity) {
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80195C38);
 
 bool func_80195E68(Unkstruct6* unk) {
-    CollisionResult res;
+    Collider res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;

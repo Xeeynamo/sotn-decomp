@@ -82,7 +82,7 @@ void func_80111CC0(void) {
 }
 
 bool func_80111D24(void) {
-    CollisionResult res;
+    Collider res;
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.i.hi;
     s16 posY = PLAYER.posY.i.hi;
