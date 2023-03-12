@@ -71,12 +71,12 @@ void EntityUnkId16(Entity* self) {
         self->unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB25 = self->unk7C.S8.unk0;
-        D_8003CB26 = self->unk7C.S8.unk1;
-        D_8003CB27 = self->unk7E.modeU8.unk0;
-        D_80054319 = self->unk7C.S8.unk0;
-        D_8005431A = self->unk7C.S8.unk1;
-        D_8005431B = self->unk7E.modeU8.unk0;
+        D_8003CB08.buf.draw.r0 = self->unk7C.S8.unk0;
+        D_8003CB08.buf.draw.g0 = self->unk7C.S8.unk1;
+        D_8003CB08.buf.draw.b0 = self->unk7E.modeU8.unk0;
+        D_800542FC.buf.draw.r0 = self->unk7C.S8.unk0;
+        D_800542FC.buf.draw.g0 = self->unk7C.S8.unk1;
+        D_800542FC.buf.draw.b0 = self->unk7E.modeU8.unk0;
         break;
     }
 }
@@ -112,7 +112,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
-        if (*D_8003BE1C != 0) {
+        if (D_8003BDEC[0x30] != 0) {
             entity->unk1E = 0;
         }
 
@@ -121,10 +121,10 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->unk1E += 4;
             if (entity->unk1E > 0) {
                 entity->unk1E = 0;
-                if (*D_8003BE1C == 0) {
+                if (D_8003BDEC[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
-                *D_8003BE1C = 1;
+                D_8003BDEC[0x30] = 1;
             } else if (!(g_blinkTimer & 0xF)) {
                 g_api.PlaySfx(0x675);
             }
@@ -158,7 +158,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (*D_8003BE1D != 0) {
+        if (D_8003BDEC[0x31] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -171,7 +171,7 @@ void EntityClickSwitch(Entity* entity) {
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
-                *D_8003BE1D = 1;
+                D_8003BDEC[0x31] = 1;
                 entity->step++;
             }
         }
