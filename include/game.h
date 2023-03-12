@@ -646,7 +646,7 @@ typedef struct RoomDimensions {
     /* 0x28 */ s32 height;
 } RoomDimensions; /* size=0x2C */
 
-typedef struct CollisionResult {
+typedef struct Collider {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
     /* 0x08 */ s32 unk8;
@@ -656,7 +656,7 @@ typedef struct CollisionResult {
     /* 0x18 */ s32 unk18;
     /* 0x1C */ s32 unk1C;
     /* 0x20 */ s32 unk20;
-} CollisionResult; /* size=0x24 */
+} Collider; /* size=0x24 */
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -696,12 +696,58 @@ typedef struct {
     /* 0x12 */ u16 sp22; // entity->objectRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
+// Defines the equipment that can be set on left and right hand
+// This includes weapons, throw weapons, consumable and restoration items.
+// D_800A4B04 it is assumed the equip data starts from here
+// https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
+typedef struct {
+    /* 800a4b38 */ const char* name;
+    /* 800a4b3C */ const char* description;
+    /* 800a4b40 */ u16 attack;
+    /* 800a4b42 */ u16 defense;
+    /* 800a4b44 */ u16 element;
+    /* 800a4b46 */ u8 unk0E;
+    /* 800a4b46 */ u8 entId;
+    /* 800a4b48 */ u16 unk10;
+    /* 800a4b4A */ u16 unk12;
+    /* 800a4b4C */ u16 unk14;
+    /* 800a4b4E */ u16 unk16;
+    /* 800a4b50 */ u8 unk18;
+    /* 800a4b51 */ u8 isConsumable;
+    /* 800a4b52 */ u16 unk1A;
+    /* 800a4b54 */ u16 unk1C;
+    /* 800a4b56 */ u16 unk1E;
+    /* 800a4b58 */ u16 unk20;
+    /* 800a4b5A */ u16 unk22;
+    /* 800a4b5C */ u16 mpUsage;
+    /* 800a4b5E */ u16 unk26;
+    /* 800a4b60 */ u8 unk28; // somewhat range-related
+    /* 800a4b61 */ u8 unk29;
+    /* 800a4b62 */ u16 unk2A;
+    /* 800a4b64 */ u16 icon;
+    /* 800a4b66 */ u16 palette;
+    /* 800a4b68 */ u16 unk30;
+    /* 800a4b6A */ u16 unk32;
+} Equipment; /* size=0x34 */
+
+// Defines armor, cloak and rings
+typedef struct {
+    /* 00 */ const char* name;
+    /* 04 */ const char* description;
+    /* 08 */ u32 unk08;
+    /* 0C */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u16 icon;
+    /* 1A */ u16 palette;
+    /* 1C */ u32 unk1C;
+} Accessory; /* size=0x20 */
+
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePolygons)(s32);
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
-    /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
-                                          s32 unk);
+    /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
@@ -730,8 +776,8 @@ typedef struct {
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
     /* 8003C828 */ void* func_800FF128;
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
-    /* 8003C830 */ s32 D_800A4B04;
-    /* 8003C834 */ s32 D_800A7718;
+    /* 8003C830 */ Equipment* D_800A4B04;
+    /* 8003C834 */ Accessory* D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
     /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);

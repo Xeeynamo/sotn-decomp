@@ -155,7 +155,7 @@ void func_801C7538(Entity* entity) {
 }
 
 void func_801C7654(Entity* entity) {
-    CollisionResult res;
+    Collider res;
 
     switch (entity->step) {
     case 0:

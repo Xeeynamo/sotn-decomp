@@ -235,7 +235,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId26);
 // falling rock that breaks into dust
 void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;
-    CollisionResult collider;
+    Collider collider;
     Entity* newEntity;
     s32 temp_a0;
     s32 var_a1;
@@ -291,7 +291,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 // merman room breakable rock
 void EntityFallingRock(Entity* self) {
     s32 animFrame = self->subId & 0xF;
-    CollisionResult collider;
+    Collider collider;
     Entity* newEntity;
     s16 rndAngle;
     s32 rnd;

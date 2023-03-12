@@ -1052,7 +1052,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8014);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8108);
 
 bool func_801B8338(Unkstruct6* unk) {
-    CollisionResult res;
+    Collider res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;

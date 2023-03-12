@@ -182,7 +182,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5488);
 
 void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;
-    CollisionResult collider;
+    Collider collider;
     Entity* newEntity;
     s32 temp_a0;
     s32 var_a1;
@@ -236,7 +236,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5790);
 
 void EntityFallingRock(Entity* self) {
     s32 animFrame = self->subId & 0xF;
-    CollisionResult collider;
+    Collider collider;
     Entity* newEntity;
     s16 rndAngle;
     s32 rnd;

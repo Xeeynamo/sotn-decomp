@@ -912,7 +912,7 @@ void func_801C6114(void) {
 #endif
 
 void func_801C6198(u16 arg0) {
-    CollisionResult res;
+    Collider res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
@@ -1129,7 +1129,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityUnkId0E);
 
 u8 func_801C8A84(s16* arg0, u8 facing) {
     u8 ret = 0;
-    CollisionResult res;
+    Collider res;
     s16 posX, posY;
 
     while (*arg0 != 0xFF) {
@@ -1232,7 +1232,7 @@ void EntityUnkId15(Entity* arg0) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C9080);
 
 bool func_801C92B0(Unkstruct6* unk) {
-    CollisionResult res;
+    Collider res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -1534,7 +1534,7 @@ extern Entity D_8007DE38[];
 s32 func_801D2D40(s16 arg0) {
     Entity* entity;
     int new_var;
-    CollisionResult* sp10;
+    Collider* sp10;
 
     g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                          (s16)(arg0 + g_CurrentEntity->posY.i.hi), &sp10, 0);

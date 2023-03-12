@@ -845,7 +845,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
-    CollisionResult res;
+    Collider res;
     s16 var_a1;
 
     if (g_CurrentEntity->accelerationX == 0) {

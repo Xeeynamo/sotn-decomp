@@ -85,7 +85,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B14C4);
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
 
 void func_801B19A0(Entity* self) {
-    CollisionResult collider;
+    Collider collider;
     Entity* newEntity;
     s32 rnd;
     s16 rnd2;
@@ -1753,7 +1753,7 @@ void func_801BDD9C(void) {
 #endif
 
 void func_801BDE20(u16 arg0) {
-    CollisionResult res;
+    Collider res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
@@ -2016,7 +2016,7 @@ void func_801C0C14(Entity* entity) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C0D08);
 
 bool func_801C0F38(Unkstruct6* unk) {
-    CollisionResult res;
+    Collider res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;

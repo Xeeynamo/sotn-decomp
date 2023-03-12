@@ -29,9 +29,9 @@ enum CollisionTypes {
     COLLISION_TYPE_WATER = 0xED
 };
 
-void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
-    CollisionResult sp10;
-    CollisionResult sp38;
+void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
+    Collider sp10;
+    Collider sp38;
     s32 temp_a0_2;
     int new_var3;
     s32 temp_a0_3;
