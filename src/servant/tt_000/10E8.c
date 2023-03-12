@@ -475,10 +475,125 @@ void func_80174038(Entity* entity) {
 }
 #endif
 
-// TODO func_80174210
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
+typedef struct {
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+    s32 unkC;
+    u32 unk10;
+    u32 cameraX;
+    u32 cameraY;
+    s32 unk1C;
+    u32 unk20;
+    u32 objectId;
+    u32 subId;
+    u32 unk2C;
+} Unkstruct_80174210;
 
-void func_801745E4(Entity* entityParent, u16 objectId, u16 subId) {
+extern Unkstruct_80174210 D_80170760[];
+extern s32* D_8017109C;
+extern s32 D_801710A0;
+extern s32 D_801710A4;
+extern s32 D_801710A8;
+
+void func_80174210(Entity* self, s32 arg1) {
+    Unkstruct_80174210* temp_s0;
+    Unkstruct_80174210** var_s1_2;
+    Unkstruct_80174210* temp_v1_5;
+    Unkstruct_80174210* temp_v1_4;
+    s32* var_s1;
+    s32 cameraY;
+    s32 cameraX;
+    s32 var_s2;
+    s32 var_v0_2;
+
+    if (arg1 != 0) {
+        D_801710A8 = 0;
+        D_801710A4 = 0;
+        D_801710A0 = 0;
+        return;
+    }
+    cameraX = g_Camera.posX.i.hi;
+    cameraY = g_Camera.posY.i.hi;
+    if (D_801710A0 != D_8006CBC4 || D_801710A4 != g_CurrentRoomLeft ||
+        D_801710A8 != g_CurrentRoomTop) {
+        var_s1 = D_8017109C;
+        D_801710A0 = D_8006CBC4;
+        D_801710A4 = g_CurrentRoomLeft;
+        D_801710A8 = g_CurrentRoomTop;
+        if (D_80170760[1].unkC != -1) {
+            var_s2 = 1;
+            do {
+                temp_s0 = &D_80170760[var_s2];
+                if (temp_s0->unk8 == -1 || temp_s0->unk8 == D_801710A0) {
+                    if ((temp_s0->unkC < 0 && !(g_StageId & 0x20)) ||
+                        !(g_StageId & 0x20)) {
+                        if (ABS(temp_s0->unkC) == D_801710A4 &&
+                            temp_s0->unk10 == D_801710A8) {
+                            if (temp_s0->cameraX == cameraX &&
+                                temp_s0->cameraY == cameraY &&
+                                (temp_s0->unk1C == -1 ||
+                                 (temp_s0->unk1C >= 0 ||
+                                  D_8003BDEC[temp_s0->unk1C & 0xFFFF] == 0) &&
+                                     (!(temp_s0->unk1C & 0x40000000) ||
+                                      !(D_80097964[temp_s0->unk1C & 0xFFFF] &
+                                        1)))) {
+                                temp_s0->unk4 = 0;
+                                if (temp_s0->unk20 == 0) {
+                                    func_801745E4(self, temp_s0->objectId,
+                                                  temp_s0->subId);
+                                    if (temp_s0->unk2C == 0) {
+                                        goto block_26;
+                                    }
+                                } else {
+                                    goto block_27;
+                                }
+                            } else {
+                            block_26:
+                                if (temp_s0->unk20 != 0) {
+                                block_27:
+                                    temp_s0->unk4 = (s32)(temp_s0->unk20 - 1);
+                                }
+                                *var_s1 = temp_s0;
+                                var_s1 = temp_s0;
+                            }
+                        }
+                    }
+                }
+            } while (D_80170760[++var_s2].unkC != -1);
+        }
+        *var_s1 = NULL;
+    } else {
+        var_s1_2 = D_8017109C;
+        while (*var_s1_2 != NULL) {
+            temp_v1_5 = *var_s1_2;
+            if (temp_v1_5->cameraX == cameraX &&
+                temp_v1_5->cameraY == cameraY &&
+                (temp_v1_5->unk1C == -1 ||
+                 (temp_v1_5->unk1C >= 0 ||
+                  D_8003BDEC[temp_v1_5->unk1C & 0xFFFF] == 0) &&
+                     (!(temp_v1_5->unk1C & 0x40000000) ||
+                      !(D_80097964[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
+                temp_v1_5 = *var_s1_2;
+                var_v0_2 = temp_v1_5->unk4 - 1;
+                if (temp_v1_5->unk4 == 0) {
+                    func_801745E4(self, temp_v1_5->objectId, temp_v1_5->subId);
+                    temp_v1_4 = *var_s1_2;
+                    if (temp_v1_4->unk2C != 0) {
+                        *var_s1_2 = temp_v1_4->unk0;
+                        continue;
+                    } else {
+                        var_v0_2 = temp_v1_4->unk20;
+                    }
+                }
+                temp_v1_5->unk4 = var_v0_2;
+            }
+            var_s1_2 = *var_s1_2;
+        }
+    }
+}
+
+void func_801745E4(Entity* entityParent, s32 objectId, s32 subId) {
     Entity* entity;
     s32 i;
 
