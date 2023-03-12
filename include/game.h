@@ -1082,7 +1082,7 @@ extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern u8 g_SaveName[12] __attribute__((aligned(4)));
+extern u8 g_SaveName[12] ALIGNED4;
 extern s32 g_playerHp;       // D_80097BA0.hp
 extern s32 g_playerHpMax;    // D_80097BA0.hpMax
 extern s32 g_playerHeart;    // D_80097BA0.hearts
