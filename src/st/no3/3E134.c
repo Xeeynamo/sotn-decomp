@@ -323,8 +323,8 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.lo;
-    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.lo;
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
@@ -444,7 +444,7 @@ void func_801C3E10(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = g_Camera.posX.i.lo;
+        s16 tmp = g_Camera.posX.i.hi;
         if (D_80097908 > 0)
             func_801C37D4(tmp + 0x140);
         else

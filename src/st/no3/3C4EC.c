@@ -106,7 +106,7 @@ void EntityUnkId53(Entity* entity) {
     case 1:
         player->posX.val += *(s32*)&entity->unk7C.s;
         D_80072EFC = 1;
-        if ((player->posX.i.hi + g_Camera.posX.i.lo) > 120) {
+        if ((player->posX.i.hi + g_Camera.posX.i.hi) > 120) {
             *D_80072EF4 = 0;
             entity->step++;
         }

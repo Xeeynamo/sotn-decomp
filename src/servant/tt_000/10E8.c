@@ -135,8 +135,8 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->subId = i + 1;
             entity->facing = facing;
         }
-        *((s16*)(&entity->unkAC)) = g_Camera.posX.i.lo;
-        *((s16*)(&entity->unkAE)) = g_Camera.posY.i.lo;
+        *((s16*)(&entity->unkAC)) = g_Camera.posX.i.hi;
+        *((s16*)(&entity->unkAE)) = g_Camera.posY.i.hi;
     }
 }
 
@@ -277,8 +277,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&e->unkAC = g_Camera.posX.i.lo;
-    *(u16*)&e->unkAE = g_Camera.posY.i.lo;
+    *(u16*)&e->unkAC = g_Camera.posX.i.hi;
+    *(u16*)&e->unkAE = g_Camera.posY.i.hi;
 }
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);

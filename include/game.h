@@ -925,8 +925,6 @@ extern u32 D_80073078; // ev3
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
-extern s16 D_8007308E;                // g_Camera.posX.i.lo
-extern s16 D_80073092;                // g_Camera.posY.i.lo
 extern Unkstruct_800ECE2C D_800730A0; // 4 bytes before 'g_CurrentRoom'
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
