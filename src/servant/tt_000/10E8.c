@@ -1,7 +1,9 @@
 #include "servant.h"
 
+SpriteParts* D_80170040[];
 u16 D_80170448[];
 Sprite D_80170608[];
+u16 D_80170720[];
 s32 D_80171090;
 EntitySearch D_80171094[];
 CollisionResult D_80174AD8;
@@ -202,78 +204,82 @@ void func_801718A0(Entity* entity) {
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801719E0);
 
-// https://decomp.me/scratch/i7uUy
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80171ED4);
-#else
-extern void* D_8003C788;
-extern u16 D_8006F3CC[];
-extern u16 D_8006F42C[];
-extern /*?*/ s32 D_80170040;
-extern u16 D_80170720[];
-
 void func_80171ED4(s32 arg0) {
     RECT rect;
     s32 i;
+    s32 x;
+    u16* spriteBanks;
+    s16* src;
+    s16* dst;
+    Entity* e;
 
     if (arg0 == 1 || arg0 == 3)
-        return;
+        func_80174210(0, 1);
 
-    func_80174210(0, 1);
     if (arg0 == 3)
         return;
 
+    dst = D_8006F3CC;
+    src = D_80170448;
     for (i = 0; i < 0x100; i++) {
-        D_8006F3CC[i] = D_80170448[i];
+        *dst++ = *src++;
     }
 
+    dst = D_8006F42C;
+    spriteBanks = D_80170720;
+    src = spriteBanks;
     for (i = 0; i < 0x20; i++) {
-        D_8006F42C[i] = D_80170720[i];
+        *dst++ = *src++;
     }
 
     rect.w = 0x100;
     rect.h = 1;
     rect.x = 0;
     rect.y = 0xF4;
-    LoadImage(&rect, D_8006F3CC);
+    dst = D_8006F3CC;
+    LoadImage(&rect, dst);
 
-    g_api.o.spriteBanks[0x14] = D_80170040;
+    spriteBanks = D_80170040;
+    g_api.o.spriteBanks[0x14] = spriteBanks;
 
-    DestroyEntity(&g_EntityArray[4]);
-    g_EntityArray[4].unk5A = 0x6C;
-    g_EntityArray[4].palette = 0x140;
-    g_EntityArray[4].animSet = 0x8014;
-    g_EntityArray[4].subId = 0;
-    g_EntityArray[4].zPriority = PLAYER.zPriority - 2;
-    g_EntityArray[4].facing = (PLAYER.facing + 1) & 1;
-    g_EntityArray[4].posX.val = PLAYER.posX.val;
-    g_EntityArray[4].posY.val = PLAYER.posY.val;
-    g_EntityArray[4].objectId = 0xD1;
+    e = &g_EntityArray[4];
+    DestroyEntity(e);
+    e->unk5A = 0x6C;
+    e->palette = 0x140;
+    e->animSet = 0x8014;
+    e->subId = 0;
+    e->zPriority = PLAYER.zPriority - 2;
+    e->facing = (PLAYER.facing + 1) & 1;
+    e->posX.val = PLAYER.posX.val;
+    e->posY.val = PLAYER.posY.val;
     if (arg0 == 1) {
-        g_EntityArray[4].posX.val = 0x800000;
-        g_EntityArray[4].posY.val = 0xFFE00000;
+        e->objectId = 0xD1;
+        e->posX.val = 0x800000;
+        e->posY.val = 0xFFE00000;
     } else {
+        Entity* p;
+        e->objectId = 0xD1;
         if (D_8003C708 & 0x20) {
             if (func_80174864() != 0) {
-                g_EntityArray[4].posX.val = PLAYER.posX.val + 0xC00000;
+                x = 0xC00000;
             } else {
-                g_EntityArray[4].posX.val = PLAYER.posX.val + 0x400000;
+                x = 0x400000;
             }
-            g_EntityArray[4].posY.val = 0xA00000;
+            e->posX.val = x;
+            e->posY.val = 0xA00000;
         } else {
             if (D_800733EC == 0) {
-                g_EntityArray[4].posX.val = PLAYER.posX.val + 0xFFEE0000;
+                e->posX.val = PLAYER.posX.val - 0x120000;
             } else {
-                g_EntityArray[4].posX.val = PLAYER.posX.val + 0x120000;
+                e->posX.val = PLAYER.posX.val + 0x120000;
             }
-            g_EntityArray[4].posY.val = PLAYER.posY.val + 0xFFDE0000;
+            e->posY.val = PLAYER.posY.val - 0x220000;
         }
     }
     D_80174D3C = 0;
-    *(u16*)&g_EntityArray[4].unkAC = g_Camera.posX.i.lo;
-    *(u16*)&g_EntityArray[4].unkAE = g_Camera.posY.i.lo;
+    *(u16*)&e->unkAC = g_Camera.posX.i.lo;
+    *(u16*)&e->unkAE = g_Camera.posY.i.lo;
 }
-#endif
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
 

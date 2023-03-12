@@ -876,6 +876,8 @@ extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern u16 g_Clut[];
+extern u16 D_8006F3CC[];
+extern u16 D_8006F42C[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
