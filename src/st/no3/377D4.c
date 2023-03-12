@@ -233,31 +233,122 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockRightSide);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId26);
 
 // falling rock that breaks into dust
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityFallingRock2);
+void EntityFallingRock2(Entity* self) {
+    s32 animFrame = self->subId & 0xF;
+    CollisionResult collider;
+    Entity* newEntity;
+    s32 temp_a0;
+    s32 var_a1;
+    s32 new_var2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B18);
+        self->animCurFrame = animFrame;
+        self->animCurFrame += 31;
+        self->zPriority = 0x9F;
+        self->unk19 |= 4;
+        break;
+
+    case 1:
+        MoveEntity();
+        self->accelerationY += 0x4000;
+        self->unk1E -= 0x20;
+        new_var2 = self->posY.i.hi;
+        new_var2 += D_8018133C[animFrame];
+        g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
+
+        if (collider.unk0 & 1) {
+            if (self->accelerationY > 0x40000) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != 0) {
+                    CreateEntityFromEntity(2, self, newEntity);
+                    newEntity->subId = 0x11;
+                    if (animFrame == 0) {
+                        newEntity->subId = 0x13;
+                    }
+                }
+                DestroyEntity(self);
+                return;
+            }
+            self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
+            temp_a0 = -self->accelerationY;
+            self->accelerationY = -self->accelerationY;
+            if (temp_a0 < 0) {
+                var_a1 = temp_a0 + 7;
+            } else {
+                var_a1 = temp_a0;
+            }
+            self->accelerationY = temp_a0 - (var_a1 >> 3);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityFallingRock);
+void EntityFallingRock(Entity* self) {
+    s32 animFrame = self->subId & 0xF;
+    CollisionResult collider;
+    Entity* newEntity;
+    s16 rndAngle;
+    s32 rnd;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B18);
+        self->animCurFrame = animFrame + 31;
+        self->unk1C = 0x60;
+        self->unk1A = 0x60;
+        self->unk19 |= 7;
+        rnd = (Random() & 0x1F) + 16;
+        rndAngle = (Random() * 6) + 0x900;
+        self->accelerationX = rnd * rcos(rndAngle);
+        self->accelerationY = rnd * rsin(rndAngle);
+        if (self->accelerationX > 0) {
+            self->facing = 1;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        self->accelerationY += 0x2000;
+        self->unk1E -= 0x20;
+
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
+                             0);
+        if (collider.unk0 & 1) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(6, self, newEntity);
+                newEntity->subId = 0x10;
+                if (animFrame == 0) {
+                    newEntity->subId = 0x13;
+                }
+            }
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 
 // sky animation during death cutscene
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
 
-extern u8 D_80181390;
-
-void EntityUnkId29(Entity* arg0) {
-    if (arg0->step == 0) {
+void EntityUnkId29(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(D_80180B18);
-        arg0->zPriority = 0x2A;
-        arg0->unk34 &= 0xF7FFFFFF;
-        arg0->facing = Random() & 1;
-        g_api.func_80134714(0x665, 0x40, (arg0->posX.i.hi >> 0x4) - 8);
+        self->zPriority = 0x2A;
+        self->unk34 &= 0xF7FFFFFF;
+        self->facing = Random() & 1;
+        g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
-    if (AnimateEntity(&D_80181390, arg0) == 0) {
-        DestroyEntity(arg0);
+    if (AnimateEntity(D_80181390, self) == 0) {
+        DestroyEntity(self);
     }
 }
 
@@ -313,26 +404,26 @@ void EntitySwitch(Entity* entity) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
 
 void EntityUnkId49(Entity* entity) {
-    do {
-        do {
-            switch (entity->step) {
-            case 0:
-                InitializeEntity(&D_80180ADC);
-                return;
-            case 1:
-                g_CurrentRoomTileLayout.fg[6] = g_CurrentRoomTileLayout.fg[9];
-                g_CurrentRoomTileLayout.fg[7] = g_CurrentRoomTileLayout.fg[10];
-                g_CurrentRoomTileLayout.fg[0x36] =
-                    g_CurrentRoomTileLayout.fg[0x39];
-                g_CurrentRoomTileLayout.fg[0x37] =
-                    g_CurrentRoomTileLayout.fg[0x3A];
-                g_CurrentRoomTileLayout.fg[0x66] =
-                    g_CurrentRoomTileLayout.fg[0x69];
-                g_CurrentRoomTileLayout.fg[0x67] =
-                    g_CurrentRoomTileLayout.fg[0x6A];
-                entity->step++;
-                break;
-            }
-        } while (0);
-    } while (0);
+    u16 temp;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        break;
+    case 1:
+        temp = g_CurrentRoomTileLayout.fg[9];
+        g_CurrentRoomTileLayout.fg[6] = temp;
+        temp = g_CurrentRoomTileLayout.fg[10];
+        g_CurrentRoomTileLayout.fg[7] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x39];
+        g_CurrentRoomTileLayout.fg[0x36] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x3A];
+        g_CurrentRoomTileLayout.fg[0x37] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x69];
+        g_CurrentRoomTileLayout.fg[0x66] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x6A];
+        g_CurrentRoomTileLayout.fg[0x67] = temp;
+        entity->step++;
+        break;
+    }
 }

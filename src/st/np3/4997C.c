@@ -40,7 +40,7 @@ void EntityBat(Entity* entity) {
             } else {
                 entity->accelerationX = -0x4000;
             }
-            entity->animFrameIdx = (func_801B90BC() & 3) * 3;
+            entity->animFrameIdx = (Random() & 3) * 3;
             entity->animFrameDuration = 0;
             entity->step++;
         }
