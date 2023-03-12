@@ -193,11 +193,6 @@ void func_800E8D24(void) {
     }
 }
 
-// Matches in PSY-Q, locally there's a jump on a nop
-#ifndef NON_MATCHING
-void func_800E8D54(void);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8D54);
-#else
 void func_800E8D54(void) {
     u16 button = 1;
     u16 repeat = 0;
@@ -207,13 +202,13 @@ void func_800E8D54(void) {
     s32 i = 0;
 
     do {
-        // asm volatile("nop");
+        NOP;
         if (pressed & button) {
             if (unk & button) {
                 repeat |= button;
                 timers[0] = 0x10;
             } else {
-                if (timers[0]-- == 0xFF) {
+                if (--timers[0] == 0xFF) {
                     repeat |= button;
                     timers[0] = 5;
                 }
@@ -225,7 +220,6 @@ void func_800E8D54(void) {
     } while (i < 0x10);
     g_pads[0].repeat = repeat;
 }
-#endif
 
 void InitializePads(void) {
     Pad* pad;
@@ -257,7 +251,26 @@ void ReadPads(void) {
     func_800E8D54();
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8EE4);
+void func_800E8EE4(void) {
+    EnterCriticalSection();
+    D_80073068 = OpenEvent(0xF4000001U, 4, 0x2000, NULL);
+    D_8007306C = OpenEvent(0xF4000001U, 0x8000, 0x2000, NULL);
+    D_80073070 = OpenEvent(0xF4000001U, 0x100, 0x2000, NULL);
+    D_80073078 = OpenEvent(0xF4000001U, 0x2000, 0x2000, NULL);
+    D_8007EFD8 = OpenEvent(0xF0000011U, 4, 0x2000, NULL);
+    D_8007EFDC = OpenEvent(0xF0000011U, 0x8000, 0x2000, NULL);
+    D_8007EFE0 = OpenEvent(0xF0000011U, 0x100, 0x2000, NULL);
+    D_80086FE4 = OpenEvent(0xF0000011U, 0x2000, 0x2000, NULL);
+    ExitCriticalSection();
+    EnableEvent((s32)D_80073068);
+    EnableEvent((s32)D_8007306C);
+    EnableEvent((s32)D_80073070);
+    EnableEvent((s32)D_80073078);
+    EnableEvent((s32)D_8007EFD8);
+    EnableEvent(D_8007EFDC);
+    EnableEvent(D_8007EFE0);
+    EnableEvent(D_80086FE4);
+}
 
 s32 func_800E908C(void) {
     if (TestEvent(D_80073068) == 1) {
