@@ -6,10 +6,6 @@
 #include "objects.h"
 #include "sfx.h"
 
-// Flags for entity->unk34
-#define ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
-#define ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
-
 typedef struct {
     /* 0x0 */ u16 posX;
     /* 0x2 */ u16 posY;

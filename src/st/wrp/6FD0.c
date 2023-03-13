@@ -1306,7 +1306,7 @@ void func_80186FD0(Entity* arg0) {
         arg0->blendMode = objInit->blendMode;
 
         if (objInit->unkC != 0) {
-            arg0->unk34 = objInit->unkC;
+            arg0->flags = objInit->unkC;
         }
 
         if (arg0->subId == 1) {
@@ -1478,7 +1478,7 @@ void EntityWarpRoom(Entity* entity) {
         *(u32*)&entity->unk7C.s = poly;
         temp_s7 = temp_s4;
         temp_s6 = temp_s5;
-        entity->unk34 |= 0x800000;
+        entity->flags |= FLAG_FREE_POLYGONS;
         var_s0 = 0;
 
         while (var_s0 < 0x10) {
@@ -1911,11 +1911,11 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 s16 posX = i = entity->posX.i.hi;
                 s16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
@@ -1940,8 +1940,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_80180690[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -1979,12 +1979,12 @@ void func_80188514(void) {
             continue;
 
         if (entity->step) {
-            if (entity->unk34 & 0x10000) {
-                if (entity->unk34 & 0xF) {
+            if (entity->flags & FLAG_UNK_10000) {
+                if (entity->flags & 0xF) {
                     entity->palette =
-                        D_80180690[entity->unk49 << 1 | entity->unk34 & 1];
-                    entity->unk34--;
-                    if ((entity->unk34 & 0xF) == 0) {
+                        D_80180690[entity->unk49 << 1 | entity->flags & 1];
+                    entity->flags--;
+                    if ((entity->flags & 0xF) == 0) {
                         entity->palette = entity->unk6A;
                         entity->unk6A = 0;
                     }
@@ -2273,7 +2273,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -2384,7 +2384,7 @@ s32 func_8018BA10(u16* arg0) {
                             g_CurrentEntity->posY.i.hi =
                                 (((u16)g_CurrentEntity->posY.i.hi) + 4) +
                                 new_var;
-                            g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                            g_CurrentEntity->flags &= 0xEFFFFFFF;
                             return 1;
                         }
                     }
@@ -2396,7 +2396,7 @@ s32 func_8018BA10(u16* arg0) {
             if (new_var4 & 5) {
                 if (i != 1) {
                     if (new_var4 & 4) {
-                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        g_CurrentEntity->flags &= 0xEFFFFFFF;
                         return 4;
                     }
                     g_api.CheckCollision(x, y - 8, &resBack, 0);
@@ -2406,14 +2406,14 @@ s32 func_8018BA10(u16* arg0) {
                         g_CurrentEntity->accelerationX = 0;
                         g_CurrentEntity->accelerationY = 0;
                         g_CurrentEntity->posY.i.hi = new_var;
-                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        g_CurrentEntity->flags &= 0xEFFFFFFF;
                         return 1;
                     }
                 }
             }
         }
     }
-    g_CurrentEntity->unk34 |= 0x10000000;
+    g_CurrentEntity->flags |= 0x10000000;
     return 0;
 }
 #endif
@@ -2589,7 +2589,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->unk34 = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -2949,7 +2949,7 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
 void func_8018F838(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181020[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80181038[entity->subId];
@@ -2973,7 +2973,7 @@ void func_8018F928(Entity* arg0) {
     u16 temp_v0;
 
     if (arg0->step == 0) {
-        arg0->unk34 = 0x0C002000;
+        arg0->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         arg0->palette = 0x8195;
         arg0->animSet = 5;
         arg0->animCurFrame = 1U;
@@ -3092,7 +3092,9 @@ void func_80190494(u16 objectId, Entity* source, Entity* entity) {
     entity->unk5A = source->unk5A;
     entity->zPriority = source->zPriority;
     entity->animSet = source->animSet;
-    entity->unk34 = 0xCD002000;
+    entity->flags = 0x1002000 | FLAG_UNK_04000000 | FLAG_UNK_08000000 |
+                    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     palette = source->palette;
     entity->palette = palette & 0x8000 ? source->unk6A : palette;
@@ -3148,7 +3150,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
-            entity->unk34 = objInit->unkC;
+            entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
             entity->unk1E = 0x800;

@@ -183,7 +183,7 @@ void func_8018E5AC(Entity* self) {
         self->blendMode = objInit->blendMode;
         temp_v0 = objInit->unkC;
         if (temp_v0 != 0) {
-            self->unk34 = temp_v0;
+            self->flags = temp_v0;
         }
     }
     AnimateEntity(objInit->unk10, self);
@@ -250,11 +250,11 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 s16 posX = i = entity->posX.i.hi;
                 s16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
@@ -279,8 +279,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_801806B4[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -553,7 +553,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -819,7 +819,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->unk34 = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -1136,7 +1136,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8019596C);
 void func_80195A54(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80180FE4[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80180FFC[entity->subId];
@@ -1161,7 +1161,7 @@ void func_80195B44(Entity* entity) {
     u16 temp_v0;
 
     if (entity->step == 0) {
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 5;
         entity->animCurFrame = 1;
@@ -1280,23 +1280,22 @@ void func_801965E4(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_801966B0);
 
-void func_8019686C(u16 objectId, Entity* ent1, Entity* ent2) {
-    DestroyEntity(ent2);
-    ent2->objectId = objectId;
-    ent2->pfnUpdate = PfnEntityUpdates[objectId];
-    ent2->posX.i.hi = ent1->posX.i.hi;
-    ent2->posY.i.hi = ent1->posY.i.hi;
-    ent2->unk5A = ent1->unk5A;
-    ent2->zPriority = ent1->zPriority;
-    ent2->animSet = ent1->animSet;
-    ent2->unk34 = 0xCD002000;
+void func_8019686C(u16 objectId, Entity* src, Entity* dst) {
+    DestroyEntity(dst);
+    dst->objectId = objectId;
+    dst->pfnUpdate = PfnEntityUpdates[objectId];
+    dst->posX.i.hi = src->posX.i.hi;
+    dst->posY.i.hi = src->posY.i.hi;
+    dst->unk5A = src->unk5A;
+    dst->zPriority = src->zPriority;
+    dst->animSet = src->animSet;
+    dst->flags = 0x45002000 | FLAG_UNK_08000000 | FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
-    if ((u16)ent1->palette & 0x8000) {
-        ent2->palette = ent1->unk6A;
-        return;
+    if (src->palette & 0x8000) {
+        dst->palette = src->unk6A;
+    } else {
+        dst->palette = (s16)src->palette;
     }
-
-    ent2->palette = (s16)ent1->palette;
 }
 
 // https://decomp.me/scratch/fA367 TODO: 0x80 entity member unconfirmed
@@ -1348,7 +1347,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = obj->unk8;
         entity->blendMode = obj->blendMode;
         if (obj->unkC != 0) {
-            entity->unk34 = obj->unkC;
+            entity->flags = obj->unkC;
         }
     }
     AnimateEntity(obj->unk10, entity);

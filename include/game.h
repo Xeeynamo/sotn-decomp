@@ -86,6 +86,14 @@
 #define STAGE_ENDING 0xFE
 #define STAGE_MEMORYCARD 0xFF
 
+// Flags for entity->flags
+#define FLAG_UNK_10000 0x10000
+#define FLAG_FREE_POLYGONS 0x00800000
+#define FLAG_UNK_04000000 0x04000000
+#define FLAG_UNK_08000000 0x08000000
+#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
+#define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -215,7 +223,7 @@ typedef struct Entity {
     /* 0x2E */ u16 unk2E; // pl_step_s
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
-    /* 0x34 */ s32 unk34;
+    /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 enemyId;
     /* 0x3C */ u16 unk3C;

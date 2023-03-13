@@ -22,7 +22,7 @@ void EntityCavernDoorVase(Entity* arg0) {
         arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
-            arg0->unk34 = temp_v0;
+            arg0->flags = temp_v0;
         }
     }
 
@@ -343,7 +343,7 @@ void EntityUnkId29(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B18);
         self->zPriority = 0x2A;
-        self->unk34 &= 0xF7FFFFFF;
+        self->flags &= ~FLAG_UNK_08000000;
         self->facing = Random() & 1;
         g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
@@ -356,7 +356,7 @@ void EntityUnkId2A(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
-        entity->unk34 &= 0xF7FFFFFF;
+        entity->flags &= ~FLAG_UNK_08000000;
         entity->animCurFrame = entity->subId + 0x22;
         entity->posX.i.hi = D_8018139C[entity->subId << 1];
         entity->posY.i.hi = D_8018139E[entity->subId << 1];

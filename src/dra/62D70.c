@@ -188,7 +188,7 @@ void DestroyEntity(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->unk34 & 0x800000) {
+    if (entity->flags & FLAG_FREE_POLYGONS) {
         FreePolygons(entity->firstPolygonIndex);
     }
 
@@ -772,13 +772,13 @@ void func_8010E0D0(s32 arg0) {
         entity = func_8011AAFC(g_EntityArray, 0x47002C, 0);
 
         if (entity != NULL) {
-            entity->unk34 |= 0x10000;
+            entity->flags |= FLAG_UNK_10000;
         }
 
         entity = func_8011AAFC(g_EntityArray, 0x40002C, 0);
 
         if (entity != NULL) {
-            entity->unk34 |= 0x10000;
+            entity->flags |= FLAG_UNK_10000;
         }
     }
     func_8010DFF0(1, 1);

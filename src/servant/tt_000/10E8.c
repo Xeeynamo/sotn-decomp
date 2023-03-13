@@ -105,7 +105,7 @@ init_entity:
     entity->objectId = 0xDA;
     entity->zPriority = self->zPriority;
     entity->facing = self->facing;
-    entity->unk34 = 0x04000000;
+    entity->flags = FLAG_UNK_04000000;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
     entity->unk8C.entityPtr = self;
@@ -323,7 +323,7 @@ void DestroyEntity(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->unk34 & 0x800000) {
+    if (entity->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
@@ -409,7 +409,7 @@ INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174038);
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x04020000;
+        entity->flags = 0x20000 | FLAG_UNK_04000000;
         if (D_8003C704 == 0) {
             if (g_api.func_80133940() != 0) {
                 g_api.PlaySfx(16);
@@ -614,7 +614,7 @@ init_entity:
     entity->objectId = objectId;
     entity->zPriority = entityParent->zPriority;
     entity->facing = entityParent->facing;
-    entity->unk34 = 0x04000000;
+    entity->flags = FLAG_UNK_04000000;
     entity->posX.val = entityParent->posX.val;
     entity->posY.val = entityParent->posY.val;
     entity->unk8C.entityPtr = entityParent;
@@ -671,7 +671,7 @@ s32 func_801747B8(void) {
             continue;
         if (entity->unk3C == 0)
             continue;
-        if (entity->unk34 & 0x200000)
+        if (entity->flags & 0x200000)
             continue;
         if (entity->posX.i.hi < -16)
             continue;

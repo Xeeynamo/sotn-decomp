@@ -188,7 +188,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
         if (ent2->unk3C == 0) {
             var_a1 = 0x2000;
         }
-        if (ent2->unk34 & 0x200000) {
+        if (ent2->flags & 0x200000) {
             var_a1 = 0x3000;
         }
     }
@@ -253,7 +253,7 @@ void func_80119D3C(Entity* entity) {
         entity->animCurFrame = 0xE;
         entity->animSet = 3;
         entity->unk80.modeS16.unk0 = 0x80;
-        entity->unk34 = 0x08000000;
+        entity->flags = FLAG_UNK_08000000;
         break;
 
     case 1:
@@ -353,14 +353,14 @@ loop_1: // !FAKE: this should be a for loop
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->objectId != 0) {
-                if ((!(entity->unk34 & 0x04000000)) &&
+                if ((!(entity->flags & FLAG_UNK_04000000)) &&
                     (((u32)((((u16)entity->posX.i.hi) + 0x20) & 0xFFFF) >=
                       0x141) ||
                      ((u32)((((u16)entity->posY.i.hi) + 0x10) & 0xFFFF) >=
                       0x111))) {
                     DestroyEntity(entity);
                     goto label;
-                } else if (entity->unk34 & 0x100000) {
+                } else if (entity->flags & 0x100000) {
                     UpdateAnim(NULL, D_800ACFB4);
                 }
             }
@@ -402,8 +402,8 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     }
     entity->unkA0 = (flags >> 8) & 0xFF00;
     entity->unk92 = temp;
-    if (self->unk34 & 0x10000) {
-        entity->unk34 |= 0x10000;
+    if (self->flags & FLAG_UNK_10000) {
+        entity->flags |= FLAG_UNK_10000;
     }
     if (flags & 0x1000) {
         entity->objectId = 0xEF;
@@ -433,7 +433,7 @@ void func_8011B334(Entity* entity) {
         return;
     }
 
-    entity->unk34 = 0x60000;
+    entity->flags = 0x60000;
     entity->facing = PLAYER.facing;
     entity->posY.i.hi = PLAYER.posY.i.hi;
     entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -465,7 +465,7 @@ void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
-        entity->unk34 = 0x60000;
+        entity->flags = 0x60000;
         func_8011A328(entity, 5);
         entity->step++;
     }
@@ -516,7 +516,7 @@ void func_8011F074(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x08120000;
+        entity->flags = 0x120000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
         entity->animSet = 0xE;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -606,7 +606,7 @@ void func_80123A60(Entity* entity) {
     entity->posY.i.hi = player->posY.i.hi;
     if (entity->step == 0) {
         func_8011A328(entity, 0xB);
-        entity->unk34 = 0x04060000;
+        entity->flags = 0x60000 | FLAG_UNK_04000000;
         entity->step++;
     }
 
@@ -640,7 +640,7 @@ void func_80123F78(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x0C030000;
+        entity->flags = 0x30000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         if (PLAYER.animSet != 1) {
             DestroyEntity(entity);
             break;
@@ -819,7 +819,7 @@ void func_80124A8C(Entity* entity) {
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
         entity->unk4C = &D_800AE294;
-        entity->unk34 = 0x100000;
+        entity->flags = 0x100000;
         entity->facing = 0;
         entity->posY.i.hi -= 16;
         entity->posX.val += entity->accelerationX << 5;
@@ -912,7 +912,7 @@ void EntityHolyWater(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x08000000;
+        entity->flags = FLAG_UNK_08000000;
         entity->animSet = 9;
         entity->animCurFrame = 0x1D;
         entity->zPriority = PLAYER.zPriority - 2;
@@ -1000,7 +1000,7 @@ void func_801274DC(Entity* entity) {
         if (entity->subId == 0) {
             PlaySfx(0x660);
         }
-        entity->unk34 = 0x08100000;
+        entity->flags = 0x100000 | FLAG_UNK_08000000;
         entity->animSet = 9;
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1046,7 +1046,7 @@ void func_80127840(Entity* entity) {
             PlaySfx(0x683);
         }
 
-        entity->unk34 = 0x08100000;
+        entity->flags = 0x100000 | FLAG_UNK_08000000;
 
         if (entity->subId != 0) {
             entity->posY.i.hi = entity->posY.i.hi + 16;
@@ -1131,7 +1131,7 @@ void EntityExpandingCircle(Entity* entity) {
             poly->clut = 0x15F;
             poly->pad2 = PLAYER.zPriority + 1;
             poly->pad3 = 0x35;
-            entity->unk34 = 0x04840000;
+            entity->flags = 0x40000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
             entity->step++;
             break;
         }
@@ -1193,7 +1193,7 @@ void func_80127CC8(Entity* entity) {
             return;
         }
 
-        entity->unk34 = 0x04860000;
+        entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
         poly = &D_80086FEC[entity->firstPolygonIndex];
         poly->r3 = 192;
         poly->r2 = 192;
@@ -1302,7 +1302,7 @@ void func_8012B78C(Entity* entity) {
         ret = AllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
-            entity->unk34 = 0x04820000;
+            entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
             poly = &D_80086FEC[entity->firstPolygonIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
@@ -1532,7 +1532,7 @@ void func_8013136C(Entity* entity) {
         entity->animSet = 0xF;
         entity->unk5A = 0x7E;
         entity->palette = PLAYER.palette;
-        entity->unk34 = 0x04060000;
+        entity->flags = 0x60000 | FLAG_UNK_04000000;
         entity->unk19 = 4;
         entity->unk20 = -8;
         entity->step++;

@@ -19,7 +19,7 @@ void func_801B246C(Entity* self) {
         self->unk19 = temp_s0->unk8;
         self->blendMode = temp_s0->blendMode;
         if (temp_s0->unkC != 0) {
-            self->unk34 = temp_s0->unkC;
+            self->flags = temp_s0->unkC;
         }
     }
 
@@ -283,7 +283,7 @@ void func_801B5DE8(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x2A;
-        self->unk34 &= 0xF7FFFFFF;
+        self->flags &= ~FLAG_UNK_08000000;
         self->facing = Random() & 1;
         g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
@@ -379,7 +379,7 @@ void func_801B75EC(Entity* self) {
             }
             self->accelerationY = -0x40000;
             self->animCurFrame = 0x23;
-            self->unk34 |= 0x80000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->unk2E++;
 
         case 1:
@@ -397,7 +397,7 @@ void func_801B75EC(Entity* self) {
 void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
-    if (self->unk34 & 0x100) {
+    if (self->flags & 0x100) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             CreateEntityFromEntity(2, self, entity);
@@ -435,7 +435,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B8CC0);
 
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
-    if (self->unk34 & 0x100) {
+    if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->unk19 = 0;
         self->step = 0;
@@ -466,7 +466,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 void EntityLargeGaibonProjectile(Entity* self) {
     Entity* newEntity;
 
-    if (self->unk34 & 0x100) {
+    if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->objectId = 2;
         self->unk19 = 0;
@@ -495,7 +495,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->blendMode = 0x30;
             self->step = 2;
             self->unk3C = 0;
-            self->unk34 |= 0x2000;
+            self->flags |= 0x2000;
         }
         break;
 
@@ -551,11 +551,11 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 s16 posX = i = entity->posX.i.hi;
                 s16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
@@ -580,8 +580,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_8018164C[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -690,7 +690,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -871,7 +871,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->unk34 = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -1020,7 +1020,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C0624);
 void func_801C070C(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181FDC[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80181FF4[entity->subId];
@@ -1121,7 +1121,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
-            entity->unk34 = objInit->unkC;
+            entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
             entity->unk1E = 0x800;
@@ -1162,7 +1162,7 @@ void func_801C7D80(Entity* self) {
         InitializeEntity(&D_80180AB4);
         self->animCurFrame = 0;
         self->unk3C = 0;
-        self->unk34 |= 0x2000;
+        self->flags |= 0x2000;
         self->zPriority += 4;
     }
     MoveEntity();
@@ -1243,7 +1243,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->palette = self->subId + 0xE;
         self->unk6C = 0x80;
         self->unk19 |= 8;
-        self->unk34 |= 0x2000;
+        self->flags |= 0x2000;
         return;
     }
     MoveEntity();
@@ -1265,7 +1265,7 @@ void EntityMerman2(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180A60);
-        self->unk34 |= 0x2000;
+        self->flags |= 0x2000;
     }
 
     if (!(g_blinkTimer & 0x3F)) {
@@ -1331,7 +1331,7 @@ void func_801C8DF0(Entity* self) {
             self->unk1C = self->unk1A += 8;
         }
 
-        if (self->unk34 & 0x100) {
+        if (self->flags & 0x100) {
             entity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (entity != NULL) {
                 CreateEntityFromEntity(2, self, entity);
@@ -1349,7 +1349,7 @@ void func_801C8F54(Entity* self) {
         self->animCurFrame = 0;
         self->unk3C = 0;
         self->zPriority += 4;
-        self->unk34 |= 0x2000;
+        self->flags |= 0x2000;
     }
     MoveEntity();
     self->accelerationY += 0x2800;

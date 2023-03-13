@@ -165,7 +165,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
         entity->posX.i.hi = 128;
         entity->firstPolygonIndex = firstPolygonIndex;
         entity->unk68 = 0x10;
-        entity->unk34 |= 0x08800000;
+        entity->flags |= FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
 
         while (poly != 0) {
             poly->x2 = 0;

@@ -3,7 +3,7 @@
 void func_8016E324(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x04020000;
+        entity->flags = 0x20000 | FLAG_UNK_04000000;
         entity->unk7C.s = 0x14;
         entity->step++;
 
@@ -50,7 +50,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F6F0);
 void func_80170548(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x04000000;
+        entity->flags = FLAG_UNK_04000000;
         entity->unkB0 = 0x1E;
         func_8015FAB8(entity);
         entity->hitboxWidth = 8;
@@ -83,7 +83,7 @@ void func_801705EC(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x04000000;
+        entity->flags = FLAG_UNK_04000000;
         entity->unk7E.modeU16 = 0;
         entity->step++;
 
@@ -135,7 +135,7 @@ void func_80172AE8(Entity* entity) {
         ret = g_api.AllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
-            entity->unk34 = 0x04820000;
+            entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
             poly = &D_80086FEC[entity->firstPolygonIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
