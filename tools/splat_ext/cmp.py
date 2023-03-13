@@ -8,7 +8,6 @@ class PSXSegCmp(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml),
         self.name = self.get_symbol_name()
-        print(f"{vram_start:X}: {self.name}")
 
     # does splat provide this without extracting the symbols for every file?
     # this might become extremely inefficient over time.

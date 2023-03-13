@@ -9,28 +9,10 @@ from pathlib import Path
 
 sys.path.append(f"{os.getcwd()}/tools/n64splat")
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
-from util import options
+from util import options, log
 from segtypes.n64.segment import N64Segment
 
 item_size = 0x8  # sizeof(RoomHeader)
-
-
-def parse_roomdef(data: bytearray) -> list:
-    count = int(len(data) / item_size)
-    items = []
-    for i in range(0, count):
-        item = {
-            "left": data[i * item_size + 0],
-            "top": data[i * item_size + 1],
-            "right": data[i * item_size + 2],
-            "bottom": data[i * item_size + 3],
-            "tileLayoutId": data[i * item_size + 4],
-            "tilesetId": data[i * item_size + 5],
-            "objGfxId": data[i * item_size + 6],
-            "objLayoutId": data[i * item_size + 7],
-        }
-        items.append(item)
-    return items
 
 
 def serialize_roomdef(content: str) -> bytearray:
@@ -48,7 +30,7 @@ def serialize_roomdef(content: str) -> bytearray:
         data[i * item_size + 5] = item["tilesetId"]
         data[i * item_size + 6] = item["objGfxId"]
         data[i * item_size + 7] = item["objLayoutId"]
-    data[byte_size - 4] = 0x40 # marks the end of the room array
+    data[byte_size - 4] = 0x40  # marks the end of the room array
     return data
 
 
@@ -66,9 +48,40 @@ class PSXSegRoomdef(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = parse_roomdef(rom_bytes[self.rom_start:self.rom_end])
+        data = self.parse_roomdef(rom_bytes[self.rom_start:self.rom_end])
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
+
+    def parse_roomdef(self, data: bytearray) -> list:
+
+        count = int(len(data) / item_size)
+        expected_data_size = count * item_size + 4
+        if len(data) != expected_data_size:
+            log.write(
+                f"data for '{self.name}' is {expected_data_size - len(data)} too long. Data might look incorrect.", status="warn")
+
+        items = []
+        for i in range(0, count):
+            if data[i * item_size + 0] == 64:
+                log.write(
+                    f"data for '{self.name}' includes the array terminator. Try reducing the size of the subsegment.", status="warn")
+            item = {
+                "left": data[i * item_size + 0],
+                "top": data[i * item_size + 1],
+                "right": data[i * item_size + 2],
+                "bottom": data[i * item_size + 3],
+                "tileLayoutId": data[i * item_size + 4],
+                "tilesetId": data[i * item_size + 5],
+                "objGfxId": data[i * item_size + 6],
+                "objLayoutId": data[i * item_size + 7],
+            }
+            items.append(item)
+
+        if data[count * item_size] != 64:
+            log.write(
+                f"data for '{self.name}' does not end with a terminator.", status="warn")
+
+        return items
 
 
 if __name__ == "__main__":

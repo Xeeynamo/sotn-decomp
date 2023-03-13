@@ -1,3 +1,4 @@
 g_SpriteBanks = 0x80180040;
+g_Rooms = 0x801811AC;
 Update = 0x8018A198;
 func_801951F0 = 0x801951F0;

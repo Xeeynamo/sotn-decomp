@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  extensions_path: tools/splat_ext
   section_order:
     - ".rodata"
     - ".text"
@@ -43,6 +44,8 @@ segments:
       - [0x3AC0, rodata]
       - [0x3AF0, rodata]
       - [0x3B30, rodata]
+      - [0x3CC4, roomdef, g_Rooms]
+      - [0x3DC8, rodata]
       - [0x4CE0, rodata]
       - [0x373E0, rodata]
       - [0x373E8, rodata]
