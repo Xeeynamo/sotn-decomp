@@ -86,24 +86,6 @@
 #define STAGE_ENDING 0xFE
 #define STAGE_MEMORYCARD 0xFF
 
-#define LBA_BIN_F_GAME 0x61CE
-#define LBA_BIN_F_GAME2 0x6252
-#define LBA_STAGE_MAD_ART 0x7D6F
-#define LBA_STAGE_MAD_VH 0x7DEF
-#define LBA_STAGE_MAD_BIN 0x7E28
-#define LBA_STAGE_NO0_ART 0x7E5D
-#define LBA_STAGE_NO0_VH 0x7EDD
-#define LBA_STAGE_NO0_BIN 0x7F16
-#define LBA_STAGE_NO3_ART 0x8297
-#define LBA_STAGE_NO3_VH 0x8317
-#define LBA_STAGE_NO3_BIN 0x834F
-#define LBA_STAGE_ST0_ART 0x9044
-#define LBA_STAGE_ST0_VH 0x90C4
-#define LBA_STAGE_ST0_BIN 0x90F9
-#define LBA_STAGE_NP3_ART 0x917F
-#define LBA_STAGE_NP3_VH 0x91FF
-#define LBA_STAGE_NP3_BIN 0x9235
-
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
