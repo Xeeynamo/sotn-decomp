@@ -1004,13 +1004,13 @@ void CollectHeartVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_801C660C(void) {
+void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_801C665C(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityPriceDrop);
 
