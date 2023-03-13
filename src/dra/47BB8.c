@@ -18,33 +18,36 @@ void func_800E7D08(void) {
     D_800A04EC = 1;
 }
 
-#ifndef NON_EQUIVALENT
-void LoadStageTileset(u32* pTilesetData, s16 y);
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
 #else
-void LoadStageTileset(u32* pTilesetData, s16 y) {
-    RECT sp10;
+void LoadStageTileset(u8* pTilesetData, s32 y) {
+    int new_var;
+    RECT rect;
+    u16* var_s2;
     s32 i;
-    u16* pVramDstX;
-    u32* pData;
+    s32 new_var2;
 
     i = 0;
-    pData = pTilesetData;
-    pVramDstX = D_800AC958;
-    sp10.w = 0x20;
-    sp10.h = 0x80;
+    new_var2 = y;
+    new_var = y + 0x80;
+    var_s2 = D_800AC958;
+    rect.w = 0x20;
+    rect.h = 0x80;
     for (; i < 0x20; i++) {
-        sp10.x = *pVramDstX;
+        rect.x = *var_s2;
         if (i & 2) {
-            sp10.y = y + 0x80;
+            rect.y = new_var;
         } else {
-            sp10.y = y;
+            rect.y = new_var2;
         }
-        LoadImage(&sp10, pData);
-        while (DrawSync(1))
+        LoadImage(&rect, pTilesetData);
+        while (DrawSync(1)) {
             ;
-        pVramDstX++;
-        pData += 0x2000;
+        }
+
+        var_s2++;
+        pTilesetData += 0x2000;
     }
 }
 #endif
