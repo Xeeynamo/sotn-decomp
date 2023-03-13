@@ -369,7 +369,7 @@ void func_801B60D4(void) {
     case 2:
         ent = g_EntityArray;
         for (i = 0; i < 9; i++) {
-            func_801B4B30(ent);
+            DestroyEntity(ent);
             ent++;
         }
 
@@ -404,12 +404,12 @@ void func_801B60D4(void) {
         if (D_801BD030 != 0) {
             ent = g_EntityArray;
             for (i = 0; i < 9; i++) {
-                func_801B4B30(ent);
+                DestroyEntity(ent);
                 ent++;
             }
 
             for (i = 0; i < 9; i++) {
-                func_801B4B30(ent);
+                DestroyEntity(ent);
                 ent++;
             }
 

@@ -3120,7 +3120,59 @@ void func_8019055C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80190614);
+void func_80190614(Entity* self) {
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 temp;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180458);
+        self->animSet = 2;
+        self->palette = 0x81B6;
+        self->unk6C = 0x70;
+        self->zPriority = 192;
+        self->unk19 |= 0xC;
+        self->blendMode |= 0x30;
+
+        switch (self->unk84.U8.unk0) {
+        case 1:
+            if (self->unk84.U8.unk1 >= 4) {
+                self->unk84.U8.unk1 += 253;
+                self->unk80.modeS16.unk0 -= 0x800;
+            }
+            break;
+
+        case 2:
+            self->unk80.modeS16.unk0 += self->unk84.U8.unk1 * 192;
+            break;
+        }
+
+        self->unk1E = self->unk80.modeS16.unk0 &= 0xFFF;
+        temp = (self->unk84.U8.unk1 * 320) / 24;
+        self->accelerationX = temp * rsin(self->unk80.modeS16.unk0);
+        self->accelerationY = -(temp * rcos(self->unk80.modeS16.unk0));
+    }
+
+    if (self->animFrameIdx >= 13) {
+        accelerationX = self->accelerationX;
+        if (accelerationX < 0) {
+            accelerationX += 3;
+        }
+
+        accelerationY = self->accelerationY;
+        self->accelerationX = (accelerationX >> 2) * 3;
+        if (accelerationY < 0) {
+            accelerationY += 3;
+        }
+        self->accelerationY = (accelerationY >> 2) * 3;
+    }
+
+    MoveEntity();
+
+    if (AnimateEntity(D_80180EEC, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_801907EC);
 
