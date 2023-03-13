@@ -4,6 +4,7 @@ g_eBreakableAnimations = 0x80180610;
 g_eBreakableHitboxes = 0x80180630;
 g_eBreakableExplosionTypes = 0x80180638;
 g_eBreakableanimSets = 0x80180640;
+g_Rooms = 0x80181498;
 g_eBreakableBlendModes = 0x80180650;
 Update = 0x80196FC0;
 CreateEntityFromCurrentEntity = 0x80199608;

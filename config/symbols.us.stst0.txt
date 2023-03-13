@@ -2,6 +2,7 @@ g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x801804B8;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;
+g_Rooms = 0x80182060;
 D_80183D1C = 0x80183D1C;
 D_80197F80 = 0x80197F80;
 D_8019A40C = 0x8019A40C;
