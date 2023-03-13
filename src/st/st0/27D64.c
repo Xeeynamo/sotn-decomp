@@ -9,6 +9,8 @@
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_ALL_H
+#define DISP_UNK2_W 512
+#define DISP_UNK2_H DISP_ALL_H
 
 extern const char* D_801A7984;
 extern const char* D_801A7990;
@@ -36,6 +38,11 @@ extern u16 D_80181DA4[];
 extern u8* D_80181E28[];
 extern s16 D_80181E3C[];
 extern s16 D_80181E3E[];
+extern s16 D_80181EB0[];
+extern u32 D_80181EC0[];
+extern s32 D_80181ED8[];
+extern u8 D_80181EF0[];
+extern u16 D_80181EF4[];
 extern u16 D_80181F04[];
 extern s16 D_801C24D2;
 extern u16 D_801C24D4;
@@ -659,7 +666,21 @@ void func_801B0280(void) {
     func_801B01F8(0);
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0324);
+void func_801B0324(void) {
+    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    D_800542FC.buf.draw.clip.y = DISP_UNK2_W / 2;
+    D_800542FC.buf.draw.clip.h = DISP_UNK2_H;
+    D_8003CB08.buf.draw.clip.h = DISP_UNK2_H;
+    D_8003CB08.buf.draw.clip.y = 0;
+    D_800542FC.buf.draw.isbg = 1;
+    D_8003CB08.buf.draw.isbg = 1;
+    func_801B01C0();
+    D_800542FC.buf.disp.isrgb24 = 0;
+    D_8003CB08.buf.disp.isrgb24 = 0;
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0414);
 
@@ -792,21 +813,43 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B33D4);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3420);
 
+void func_801B3478(s16);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3478);
 
+void func_801B3574(s16);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3574);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3688);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B36D4);
 
+void func_801B372C(s16);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B372C);
 
+void func_801B3828(s16);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3828);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", InitRoomEntities);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3AB4);
+void func_801B3AB4(void) {
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+
+    if (D_80097908 != 0) {
+        s16 tmp = g_Camera.posX.i.hi;
+        if (D_80097908 > 0)
+            func_801B3478(tmp + 320);
+        else
+            func_801B3574(tmp - 64);
+    }
+
+    if (D_8009790C != 0) {
+        s16 tmp = currentRoomTileLayout->unkE;
+        if (D_8009790C > 0)
+            func_801B372C(currentRoomTileLayout->unkE + 288);
+        else
+            func_801B3828(tmp - 64);
+    }
+}
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
@@ -1131,7 +1174,26 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5BF0);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5E38);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5EC8);
+void func_801B5EC8(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = *(s16*)&entity->unk88 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            *(s16*)&entity->unk88 = -*(s16*)&entity->unk88;
+        }
+        entity = g_CurrentEntity;
+    }
+    NOP;
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
 
 void func_801B5F4C(u16 arg0) {
     Collider res;
@@ -1299,9 +1361,59 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7D0C);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7E3C);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7F24);
+void func_801B7F24(Entity* entity) {
+    if (entity->step == 0) {
+        entity->accelerationY = D_80181ED8[entity->unk94];
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->palette = 0x8195;
+        entity->animSet = 2;
+        entity->animCurFrame = D_80181EF0[entity->subId];
+        entity->blendMode = 0x10;
+        entity->step++;
+    } else {
+        entity->animFrameDuration++;
+        entity->posY.val -= entity->accelerationY;
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8014);
+        if (!(entity->animFrameDuration & 1)) {
+            entity->animCurFrame++;
+        }
+
+        if (D_80181EF4[entity->subId] < (s32)entity->animFrameDuration) {
+            DestroyEntity(entity);
+        }
+    }
+}
+
+void func_801B8014(Entity* entity) {
+    u16 temp_v0;
+    u32 temp2;
+
+    if (entity->step == 0) {
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->palette = 0x8195;
+        entity->animSet = 5;
+        entity->animCurFrame = 1;
+        entity->blendMode = 0x10;
+        entity->unk19 = 3;
+        temp_v0 = D_80181EB0[entity->subId];
+        entity->unk1A = temp_v0;
+        entity->unk1C = temp_v0;
+        temp2 = D_80181EC0[entity->subId];
+        entity->step += 1;
+        entity->accelerationY = temp2;
+    } else {
+        entity->animFrameDuration++;
+        entity->posY.val -= entity->accelerationY;
+
+        if (!(entity->animFrameDuration & 1)) {
+            entity->animCurFrame++;
+        }
+
+        if (entity->animFrameDuration >= 0x25) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B8108);
 
