@@ -101,7 +101,8 @@ extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
-extern s8 D_800A841C[];  // related to player MP
+extern s8 D_800A841C[]; // related to player MP
+extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT D_800ACD88[2];
