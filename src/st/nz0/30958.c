@@ -18,7 +18,7 @@ void func_801B0958(Entity* self) {
         self->unk19 = temp_s0->unk8;
         self->blendMode = temp_s0->blendMode;
         if (temp_s0->unkC != 0) {
-            self->unk34 = temp_s0->unkC;
+            self->flags = temp_s0->unkC;
         }
     }
     AnimateEntity(temp_s0->unk10, self);
@@ -177,7 +177,7 @@ void func_801B1C18(Entity* self) {
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
-        self->unk34 |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -244,7 +244,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
-        self->unk34 |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -317,7 +317,7 @@ void EntityMoveableBox(Entity* self) {
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C.s)) = poly;
-        self->unk34 |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -413,7 +413,7 @@ void EntityCannonLever(Entity* self) {
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
 
-        self->unk34 |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -524,7 +524,7 @@ void func_801B2AD8(Entity* self) {
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
-        self->unk34 |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         poly->tpage = 0xF;
         poly->clut = 9;
         poly->u0 = 72;
@@ -822,7 +822,7 @@ void EntityBossRoomBlock(Entity* self) {
         break;
 
     case 4:
-        self->unk34 |= 0x80000000;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         if (self->subId != 0) {
             self->accelerationX = 0x10000;
         } else {
@@ -897,7 +897,7 @@ void func_801B54A8(Entity* self) {
             }
             self->accelerationY = -0x40000;
             self->animCurFrame = 0x23;
-            self->unk34 |= 0x80000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->unk2E++;
 
         case 1:
@@ -915,7 +915,7 @@ void func_801B54A8(Entity* self) {
 void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
-    if (self->unk34 & 0x100) {
+    if (self->flags & 0x100) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             CreateEntityFromEntity(2, self, entity);
@@ -954,7 +954,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
 
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
-    if (self->unk34 & 0x100) {
+    if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->unk19 = 0;
         self->step = 0;
@@ -986,7 +986,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 void EntityLargeGaibonProjectile(Entity* self) {
     Entity* newEntity;
 
-    if (self->unk34 & 0x100) {
+    if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->objectId = 2;
         self->unk19 = 0;
@@ -1015,7 +1015,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->blendMode = 0x30;
             self->step = 2;
             self->unk3C = 0;
-            self->unk34 |= 0x2000;
+            self->flags |= 0x2000;
         }
         break;
 
@@ -1067,7 +1067,7 @@ void func_801B6DE4(Entity* self) {
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
 
-        self->unk34 |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         poly->tpage = 0xF;
         poly->clut = 9;
         poly->u0 = 72;
@@ -1230,11 +1230,11 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 s16 posX = i = entity->posX.i.hi;
                 s16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
@@ -1259,8 +1259,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_80181574[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -1417,7 +1417,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -1681,7 +1681,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->unk34 = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -1961,7 +1961,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801C0A3C);
 void func_801C0B24(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181F04[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80181F1C[entity->subId];
@@ -1986,7 +1986,7 @@ void func_801C0C14(Entity* entity) {
     u32 temp2;
 
     if (!entity->step) {
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 5;
         entity->animCurFrame = 1;
@@ -2105,23 +2105,22 @@ void func_801C16B4(Entity* entity) {
     }
 }
 
-void func_801C1780(u16 objectId, Entity* ent1, Entity* ent2) {
-    DestroyEntity(ent2);
-    ent2->objectId = objectId;
-    ent2->pfnUpdate = D_80180A90[objectId];
-    ent2->posX.i.hi = ent1->posX.i.hi;
-    ent2->posY.i.hi = ent1->posY.i.hi;
-    ent2->unk5A = ent1->unk5A;
-    ent2->zPriority = ent1->zPriority;
-    ent2->animSet = ent1->animSet;
-    ent2->unk34 = 0xCD002000;
+void func_801C1780(u16 objectId, Entity* src, Entity* dst) {
+    DestroyEntity(dst);
+    dst->objectId = objectId;
+    dst->pfnUpdate = D_80180A90[objectId];
+    dst->posX.i.hi = src->posX.i.hi;
+    dst->posY.i.hi = src->posY.i.hi;
+    dst->unk5A = src->unk5A;
+    dst->zPriority = src->zPriority;
+    dst->animSet = src->animSet;
+    dst->flags = 0x45002000 | FLAG_UNK_08000000 | FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
-    if ((u16)ent1->palette & 0x8000) {
-        ent2->palette = ent1->unk6A;
-        return;
+    if (src->palette & 0x8000) {
+        dst->palette = src->unk6A;
+    } else {
+        dst->palette = (s16)src->palette;
     }
-
-    ent2->palette = (s16)ent1->palette;
 }
 
 void func_801C1848(void) {
@@ -2221,7 +2220,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->blendMode = objInit->blendMode;
 
         if (objInit->unkC != 0) {
-            entity->unk34 = objInit->unkC;
+            entity->flags = objInit->unkC;
         }
 
         if (entity->subId >= 5) {
@@ -2317,7 +2316,7 @@ void func_801C4CC0(void) {
 void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 var_v0;
 
-    if (entity->unk34 & 0x100) {
+    if (entity->flags & 0x100) {
         func_801C29B0(0x66B);
         func_801BD568(0, 0);
         return;
@@ -2425,7 +2424,7 @@ void func_801C6574(Entity* entity) {
     u32 value;
 
     if (entity->step) {
-        if (entity->unk34 & 0x100) {
+        if (entity->flags & 0x100) {
             func_801BD568(0, 0);
             return;
         }

@@ -166,7 +166,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEA20);
 void func_801BECCC(Entity* entity) {
     /** TODO: !FAKE
      * do while (0) fixed instruction reordering at
-     * entity->unk34 ^= 0x800000;
+     * entity->flags ^= FLAG_FREE_POLYGONS;
      * but intruduces a problem in PlaySfx, which is fixed
      * by using gameApi pointer.
      */
@@ -176,7 +176,7 @@ void func_801BECCC(Entity* entity) {
         D_801D7D20 = 1;
         g_api.FreePolygons(entity->firstPolygonIndex);
         do {
-            entity->unk34 ^= 0x800000;
+            entity->flags ^= FLAG_FREE_POLYGONS;
         } while (0);
         if (D_801D7D58 != (-1)) {
             g_api.FreePolygons(D_801D7D58);
@@ -334,11 +334,11 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 s16 posX = i = entity->posX.i.hi;
                 s16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
@@ -363,8 +363,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_80181CC0[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -579,7 +579,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -837,7 +837,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->unk34 = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -1182,7 +1182,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C8DB4);
 void EntityUnkId14(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80182650[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80182668[entity->subId];
@@ -1206,7 +1206,7 @@ void EntityUnkId15(Entity* arg0) {
     u16 temp_v0;
 
     if (arg0->step == 0) {
-        arg0->unk34 = 0x0C002000;
+        arg0->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         arg0->palette = 0x8195;
         arg0->animSet = 5;
         arg0->animCurFrame = 1U;
@@ -1326,7 +1326,8 @@ void func_801C9AF8(u16 objectId, Entity* source, Entity* entity) {
     entity->unk5A = source->unk5A;
     entity->zPriority = source->zPriority;
     entity->animSet = source->animSet;
-    entity->unk34 = 0xCD002000;
+    entity->flags =
+        0x45002000 | FLAG_UNK_08000000 | FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     palette = source->palette;
     entity->palette = palette & 0x8000 ? source->unk6A : palette;
@@ -1379,7 +1380,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
-            entity->unk34 = objInit->unkC;
+            entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
             entity->unk1E = 0x800;
@@ -1585,7 +1586,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
                 poly = &D_80086FEC[firstPolygonIndex];
                 entity->firstPolygonIndex = firstPolygonIndex;
                 *(s32*)&entity->unk7C.s = poly;
-                entity->unk34 |= 0x800000;
+                entity->flags |= FLAG_FREE_POLYGONS;
                 func_801D6FCC(poly, firstPolygonIndex);
                 poly->u0 = 0;
                 poly->u1 = 0x20;
@@ -1652,7 +1653,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     }
     AnimateEntity(D_80183994, entity);
     MoveEntity();
-    if (entity->unk34 & 0x100) {
+    if (entity->flags & 0x100) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(2, entity, newEntity);
@@ -1671,7 +1672,7 @@ void EntityFallingObject2(Entity* self) {
         InitializeEntity(D_80180B48);
         self->animCurFrame = 0;
         self->unk3C = 0;
-        self->unk34 |= 0x2000;
+        self->flags |= 0x2000;
         self->zPriority += 4;
     }
     MoveEntity();
@@ -1753,7 +1754,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->palette = self->subId + 0xE;
         self->unk6C = 0x80;
         self->unk19 |= 8;
-        self->unk34 |= 0x2000;
+        self->flags |= 0x2000;
         return;
     }
     MoveEntity();
@@ -1805,7 +1806,7 @@ void EntityMermanFireball(Entity* self) {
             self->unk1C = self->unk1A += 8;
         }
 
-        if (self->unk34 & 0x100) {
+        if (self->flags & 0x100) {
             entity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (entity != NULL) {
                 CreateEntityFromEntity(2, self, entity);
@@ -1826,7 +1827,7 @@ void EntityFallingObject(Entity* arg0) {
         arg0->animCurFrame = 0;
         arg0->unk3C = 0;
         arg0->zPriority += 4;
-        arg0->unk34 |= 0x2000;
+        arg0->flags |= 0x2000;
     }
     MoveEntity();
     arg0->accelerationY += 0x2800;

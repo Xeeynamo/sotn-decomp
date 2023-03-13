@@ -43,7 +43,7 @@ void func_801A7D64(Entity* arg0) {
         arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
-            arg0->unk34 = temp_v0;
+            arg0->flags = temp_v0;
         }
     }
     AnimateEntity(temp_s0->unk10, arg0);
@@ -361,10 +361,10 @@ void EntityDraculaFireball(Entity* entity) {
     u16 temp_v0;
 
     if (g_isDraculaFirstFormDefeated) {
-        entity->unk34 |= 0x100;
+        entity->flags |= 0x100;
     }
 
-    if (entity->unk34 & 0x100) {
+    if (entity->flags & 0x100) {
         entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         entity->step = 0;
         entity->subId = 2;
@@ -627,11 +627,11 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
                 s16 posX = i = entity->posX.i.hi;
                 s16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
                     if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
@@ -656,8 +656,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_801815EC[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -760,7 +760,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -1113,7 +1113,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
-            entity->unk34 = objInit->unkC;
+            entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
             entity->unk1E = 0x800;
@@ -1146,7 +1146,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->palette = 0x8285;
         entity->unk19 = 8;
         entity->unk6C = 0x40;
-        entity->unk34 &= 0xF7FFFFFF;
+        entity->flags &= ~FLAG_UNK_08000000;
         if (entity->subId) {
             entity->unk6C = 0x10;
             entity->zPriority = 0x1FB;
