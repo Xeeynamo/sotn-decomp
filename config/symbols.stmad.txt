@@ -63,6 +63,7 @@ EntityDummy = 0x80192DA8;
 ReplaceBreakableWithItemDrop = 0x80193394;
 CollectHeartVessel = 0x801938FC;
 CollectLifeVessel = 0x8019394C;
+DestroyCurrentEntity = 0x8019399C;
 EntityPriceDrop = 0x801939E0;
 EntityExplosion = 0x80194218;
 EntityInventoryDrop = 0x801943EC;

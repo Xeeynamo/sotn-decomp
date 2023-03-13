@@ -984,7 +984,7 @@ void CollectLifeVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_8019399C(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801939C4(void) {
     g_CurrentEntity->step = 3;

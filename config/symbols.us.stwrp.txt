@@ -89,6 +89,7 @@ CollectHeart = 0x8018CC90;
 CollectGold = 0x8018CD10;
 CollectHeartVessel = 0x8018CF04;
 CollectLifeVessel = 0x8018CFA8;
+DestroyCurrentEntity = 0x8018CFF8;
 EntityPriceDrop = 0x8018D020;
 EntityExplosion = 0x8018D894;
 EntityInventoryDrop = 0x8018DA34;

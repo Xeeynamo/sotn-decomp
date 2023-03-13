@@ -934,11 +934,28 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDBE4);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDCC0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDDD8);
+void CollectHeartVessel(void) {
+    if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        D_80097BA0.hearts += HEART_VESSEL_RICHTER;
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDE7C);
+        if (D_80097BA0.heartsMax < D_80097BA0.hearts) {
+            D_80097BA0.hearts = D_80097BA0.heartsMax;
+        }
+    } else {
+        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
-void func_801BDECC(void) { DestroyEntity(g_CurrentEntity); }
+void CollectLifeVessel(void) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.func_800FE044(5, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
+
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityPriceDrop);
 
