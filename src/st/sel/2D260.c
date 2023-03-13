@@ -973,7 +973,7 @@ void InitRoomEntities(s32 objLayoutId) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", TestCollisions);
 
-void func_801B4B30(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
