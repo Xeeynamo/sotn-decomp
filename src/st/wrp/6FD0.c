@@ -3066,6 +3066,7 @@ void func_801903C8(Entity* entity) {
         entity->animSet = 8;
         entity->animCurFrame = 1;
         entity->zPriority += 16;
+
         if (entity->subId) {
             entity->palette = entity->subId;
         } else {
@@ -3110,7 +3111,7 @@ void func_8019055C(void) {
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
             CreateEntityFromEntity(ENTITY_EXPLOSION, g_CurrentEntity, entity);
             entity->unk84.U8.unk1 = 6 - i;
