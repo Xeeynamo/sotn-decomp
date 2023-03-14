@@ -286,7 +286,7 @@ void EntityZoeTallWeight(Entity* self) {
 
         if (D_8003BDEC[49] != 0) {
             self->step = 3;
-            self->posY.i.hi -= 0x80;
+            self->posY.i.hi -= 128;
         }
         break;
 
