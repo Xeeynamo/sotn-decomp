@@ -5,7 +5,7 @@ void EntitySpittleBone(Entity* self) {
     Entity* newEntity;
     s32 i;
 
-    if ((self->unk34 & 0x100) && (self->step < 3)) {
+    if ((self->flags & 0x100) && (self->step < 3)) {
         self->step = 3;
     }
 
@@ -14,7 +14,7 @@ void EntitySpittleBone(Entity* self) {
         InitializeEntity(D_80180CAC);
         self->unk19 = 4;
         self->unk1E = 0;
-        self->unk34 &= ~0x2200;
+        self->flags &= ~0x2200;
         self->facing = self->subId;
         break;
 
@@ -65,7 +65,7 @@ void EntitySpittleBone(Entity* self) {
             if (newEntity != NULL) {
                 func_801C1780(0x31, self, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->unk34 = -0x37FFE000;
+                newEntity->flags = -0x37FFE000;
                 newEntity->palette = 0x20D;
                 newEntity->animCurFrame = i + 0x3A;
                 newEntity->unk19 |= 4;
@@ -155,7 +155,7 @@ void func_801C7538(Entity* entity) {
 }
 
 void func_801C7654(Entity* entity) {
-    CollisionResult res;
+    Collider res;
 
     switch (entity->step) {
     case 0:

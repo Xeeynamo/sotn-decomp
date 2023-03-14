@@ -973,12 +973,12 @@ void InitRoomEntities(s32 objLayoutId) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", TestCollisions);
 
-void func_801B4B30(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
 
-    if (entity->unk34 & 0x800000) {
+    if (entity->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
@@ -1055,7 +1055,7 @@ void func_801B4DE0(void) {
         if (firstPolygonIndex != -1) {
             poly = &D_80086FEC[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
-            unkEntity->unk34 |= 0x800000;
+            unkEntity->flags |= FLAG_FREE_POLYGONS;
             *(s32*)&unkEntity->unk7C = poly;
 
             poly->x1 = poly->x3 = 255;
@@ -1112,7 +1112,7 @@ void func_801B4FFC(void) {
         if (firstPolygonIndex != -1) {
             poly = &D_80086FEC[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
-            unkEntity->unk34 |= 0x800000;
+            unkEntity->flags |= FLAG_FREE_POLYGONS;
             *(s32*)&unkEntity->unk7C = poly;
 
             poly->x1 = poly->x3 = 384;

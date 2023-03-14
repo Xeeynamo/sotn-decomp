@@ -20,8 +20,6 @@
 #define DISP_UNK2_H DISP_ALL_H
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
-extern u16 D_800AC958[];
-
 void func_800E2398(const char* str);
 s32 func_800E3278(void);
 void func_800E385C(u32*);

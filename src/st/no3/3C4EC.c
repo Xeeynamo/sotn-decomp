@@ -91,7 +91,7 @@ void EntityUnkId53(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        if (*D_8003BE20 != 0) {
+        if (D_8003BDEC[0x34] != 0) {
             DestroyEntity(entity);
             return;
         }
@@ -106,7 +106,7 @@ void EntityUnkId53(Entity* entity) {
     case 1:
         player->posX.val += *(s32*)&entity->unk7C.s;
         D_80072EFC = 1;
-        if ((player->posX.i.hi + g_Camera.posX.i.lo) > 120) {
+        if ((player->posX.i.hi + g_Camera.posX.i.hi) > 120) {
             *D_80072EF4 = 0;
             entity->step++;
         }
@@ -165,7 +165,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
         entity->posX.i.hi = 128;
         entity->firstPolygonIndex = firstPolygonIndex;
         entity->unk68 = 0x10;
-        entity->unk34 |= 0x08800000;
+        entity->flags |= FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
 
         while (poly != 0) {
             poly->x2 = 0;

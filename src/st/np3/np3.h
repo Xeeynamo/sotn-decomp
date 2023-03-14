@@ -9,14 +9,11 @@ int func_801CD658();
 void EntityPriceDrop(Entity* entity);
 void EntityInventoryDrop(Entity* entity);
 
-extern s8 D_8003CB25;
-extern s8 D_8003CB26;
-extern s8 D_8003CB27;
-extern s8 D_80054319;
-extern s8 D_8005431A;
-extern s8 D_8005431B;
 extern u16 D_80180A54[];
-extern u16 D_80180A60;
+extern u16 D_80180A60[];
+extern u16 D_80180A6C[];
+extern u16 D_80181204[];
+extern const u8 D_80181214[];
 extern s8 D_80181454[];
 extern u8 D_8018148C[];
 extern const u8 D_801815E0[];
@@ -37,6 +34,7 @@ extern u16 D_80180B80[];
 extern ObjInit2 D_80180C10[];
 extern const u8* D_801813D4;
 extern const u8* D_801813E4;
+extern u16 D_8018164C[];
 extern s16 D_80181A50[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
@@ -55,6 +53,5 @@ extern u16* D_80182554;
 extern u16* D_80182570;
 extern u16* D_80182400;
 extern u8* D_80182414;
-extern u8 D_8003BE1C[]; // probably part of a struct
-extern u8 D_8003BE1D[]; // probably part of a struct
 extern PfnEntityUpdate PfnEntityUpdates[];
+extern u16 D_801D33F4[];

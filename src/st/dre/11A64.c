@@ -20,7 +20,7 @@ void EntityUnkId11(Entity* entity) {
         entity->blendMode = obj->blendMode;
 
         if (obj->unkC != 0) {
-            entity->unk34 = obj->unkC;
+            entity->flags = obj->unkC;
         }
 
         if (entity->subId == 1) {

@@ -3,7 +3,7 @@
 void func_8015B348(void) {
     switch (PLAYER.unk2E) {
     case 0:
-        g_CurrentEntity->unk34 |= 0x10000;
+        g_CurrentEntity->flags |= FLAG_UNK_10000;
         D_80097420[0] = 4;
         func_8015C93C(0x2000);
 
@@ -118,7 +118,7 @@ void func_8015B348(void) {
 
     case 7:
         if (PLAYER.animFrameDuration < 0) {
-            g_CurrentEntity->unk34 &= 0xFFFEFFFF;
+            g_CurrentEntity->flags &= ~FLAG_UNK_10000;
             D_80097420[0] = 0;
             func_8015CF08();
             func_8015C920(&D_801558DC);

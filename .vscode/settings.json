@@ -1,4 +1,9 @@
 {
+    "editor.formatOnSave": true,
+    "python.formatting.autopep8Args": [
+        "--ignore",
+        "E402"
+    ],
     "search.useIgnoreFiles": false,
     "search.exclude": {
         "**/.git": true,

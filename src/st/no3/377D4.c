@@ -22,7 +22,7 @@ void EntityCavernDoorVase(Entity* arg0) {
         arg0->blendMode = temp_s0->blendMode;
         temp_v0 = temp_s0->unkC;
         if (temp_v0 != 0) {
-            arg0->unk34 = temp_v0;
+            arg0->flags = temp_v0;
         }
     }
 
@@ -71,12 +71,12 @@ void EntityUnkId16(Entity* self) {
         self->unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB25 = self->unk7C.S8.unk0;
-        D_8003CB26 = self->unk7C.S8.unk1;
-        D_8003CB27 = self->unk7E.modeU8.unk0;
-        D_80054319 = self->unk7C.S8.unk0;
-        D_8005431A = self->unk7C.S8.unk1;
-        D_8005431B = self->unk7E.modeU8.unk0;
+        D_8003CB08.buf.draw.r0 = self->unk7C.S8.unk0;
+        D_8003CB08.buf.draw.g0 = self->unk7C.S8.unk1;
+        D_8003CB08.buf.draw.b0 = self->unk7E.modeU8.unk0;
+        D_800542FC.buf.draw.r0 = self->unk7C.S8.unk0;
+        D_800542FC.buf.draw.g0 = self->unk7C.S8.unk1;
+        D_800542FC.buf.draw.b0 = self->unk7E.modeU8.unk0;
         break;
     }
 }
@@ -112,7 +112,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
-        if (*D_8003BE1C != 0) {
+        if (D_8003BDEC[0x30] != 0) {
             entity->unk1E = 0;
         }
 
@@ -121,10 +121,10 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->unk1E += 4;
             if (entity->unk1E > 0) {
                 entity->unk1E = 0;
-                if (*D_8003BE1C == 0) {
+                if (D_8003BDEC[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
-                *D_8003BE1C = 1;
+                D_8003BDEC[0x30] = 1;
             } else if (!(g_blinkTimer & 0xF)) {
                 g_api.PlaySfx(0x675);
             }
@@ -158,7 +158,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (*D_8003BE1D != 0) {
+        if (D_8003BDEC[0x31] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -168,10 +168,10 @@ void EntityClickSwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += 0xC000;
-            if ((g_Camera.posY.i.lo + entity->posY.i.hi) > 160) {
-                entity->posY.i.hi = 160 - g_Camera.posY.i.lo;
+            if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
-                *D_8003BE1D = 1;
+                D_8003BDEC[0x31] = 1;
                 entity->step++;
             }
         }
@@ -233,31 +233,122 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockRightSide);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId26);
 
 // falling rock that breaks into dust
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityFallingRock2);
+void EntityFallingRock2(Entity* self) {
+    s32 animFrame = self->subId & 0xF;
+    Collider collider;
+    Entity* newEntity;
+    s32 temp_a0;
+    s32 var_a1;
+    s32 new_var2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B18);
+        self->animCurFrame = animFrame;
+        self->animCurFrame += 31;
+        self->zPriority = 0x9F;
+        self->unk19 |= 4;
+        break;
+
+    case 1:
+        MoveEntity();
+        self->accelerationY += 0x4000;
+        self->unk1E -= 0x20;
+        new_var2 = self->posY.i.hi;
+        new_var2 += D_8018133C[animFrame];
+        g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
+
+        if (collider.unk0 & 1) {
+            if (self->accelerationY > 0x40000) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != 0) {
+                    CreateEntityFromEntity(2, self, newEntity);
+                    newEntity->subId = 0x11;
+                    if (animFrame == 0) {
+                        newEntity->subId = 0x13;
+                    }
+                }
+                DestroyEntity(self);
+                return;
+            }
+            self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
+            temp_a0 = -self->accelerationY;
+            self->accelerationY = -self->accelerationY;
+            if (temp_a0 < 0) {
+                var_a1 = temp_a0 + 7;
+            } else {
+                var_a1 = temp_a0;
+            }
+            self->accelerationY = temp_a0 - (var_a1 >> 3);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityFallingRock);
+void EntityFallingRock(Entity* self) {
+    s32 animFrame = self->subId & 0xF;
+    Collider collider;
+    Entity* newEntity;
+    s16 rndAngle;
+    s32 rnd;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B18);
+        self->animCurFrame = animFrame + 31;
+        self->unk1C = 0x60;
+        self->unk1A = 0x60;
+        self->unk19 |= 7;
+        rnd = (Random() & 0x1F) + 16;
+        rndAngle = (Random() * 6) + 0x900;
+        self->accelerationX = rnd * rcos(rndAngle);
+        self->accelerationY = rnd * rsin(rndAngle);
+        if (self->accelerationX > 0) {
+            self->facing = 1;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        self->accelerationY += 0x2000;
+        self->unk1E -= 0x20;
+
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
+                             0);
+        if (collider.unk0 & 1) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(6, self, newEntity);
+                newEntity->subId = 0x10;
+                if (animFrame == 0) {
+                    newEntity->subId = 0x13;
+                }
+            }
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 
 // sky animation during death cutscene
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
 
-extern u8 D_80181390;
-
-void EntityUnkId29(Entity* arg0) {
-    if (arg0->step == 0) {
+void EntityUnkId29(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(D_80180B18);
-        arg0->zPriority = 0x2A;
-        arg0->unk34 &= 0xF7FFFFFF;
-        arg0->facing = Random() & 1;
-        g_api.func_80134714(0x665, 0x40, (arg0->posX.i.hi >> 0x4) - 8);
+        self->zPriority = 0x2A;
+        self->flags &= ~FLAG_UNK_08000000;
+        self->facing = Random() & 1;
+        g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
-    if (AnimateEntity(&D_80181390, arg0) == 0) {
-        DestroyEntity(arg0);
+    if (AnimateEntity(D_80181390, self) == 0) {
+        DestroyEntity(self);
     }
 }
 
@@ -265,7 +356,7 @@ void EntityUnkId2A(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
-        entity->unk34 &= 0xF7FFFFFF;
+        entity->flags &= ~FLAG_UNK_08000000;
         entity->animCurFrame = entity->subId + 0x22;
         entity->posX.i.hi = D_8018139C[entity->subId << 1];
         entity->posY.i.hi = D_8018139E[entity->subId << 1];
@@ -278,7 +369,6 @@ void EntityUnkId2A(Entity* entity) {
 }
 
 // switch that goes downwards when you stand on it
-extern u8 D_8003BE1E[];
 void EntitySwitch(Entity* entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
     Entity* player = &PLAYER;
@@ -288,7 +378,7 @@ void EntitySwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (*D_8003BE1E != 0) {
+        if (D_8003BDEC[0x32] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -298,9 +388,9 @@ void EntitySwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += 0x4000;
-            if ((g_Camera.posY.i.lo + entity->posY.i.hi) > 193) {
-                entity->posY.i.hi = 193 - g_Camera.posY.i.lo;
-                *D_8003BE1E = 1;
+            if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 193) {
+                entity->posY.i.hi = 193 - g_Camera.posY.i.hi;
+                D_8003BDEC[0x32] = 1;
                 g_api.PlaySfx(0x608);
                 entity->step++;
             }
@@ -313,26 +403,26 @@ void EntitySwitch(Entity* entity) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityHeartRoomGoldDoor);
 
 void EntityUnkId49(Entity* entity) {
-    do {
-        do {
-            switch (entity->step) {
-            case 0:
-                InitializeEntity(&D_80180ADC);
-                return;
-            case 1:
-                g_CurrentRoomTileLayout.fg[6] = g_CurrentRoomTileLayout.fg[9];
-                g_CurrentRoomTileLayout.fg[7] = g_CurrentRoomTileLayout.fg[10];
-                g_CurrentRoomTileLayout.fg[0x36] =
-                    g_CurrentRoomTileLayout.fg[0x39];
-                g_CurrentRoomTileLayout.fg[0x37] =
-                    g_CurrentRoomTileLayout.fg[0x3A];
-                g_CurrentRoomTileLayout.fg[0x66] =
-                    g_CurrentRoomTileLayout.fg[0x69];
-                g_CurrentRoomTileLayout.fg[0x67] =
-                    g_CurrentRoomTileLayout.fg[0x6A];
-                entity->step++;
-                break;
-            }
-        } while (0);
-    } while (0);
+    u16 temp;
+
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        break;
+    case 1:
+        temp = g_CurrentRoomTileLayout.fg[9];
+        g_CurrentRoomTileLayout.fg[6] = temp;
+        temp = g_CurrentRoomTileLayout.fg[10];
+        g_CurrentRoomTileLayout.fg[7] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x39];
+        g_CurrentRoomTileLayout.fg[0x36] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x3A];
+        g_CurrentRoomTileLayout.fg[0x37] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x69];
+        g_CurrentRoomTileLayout.fg[0x66] = temp;
+        temp = g_CurrentRoomTileLayout.fg[0x6A];
+        g_CurrentRoomTileLayout.fg[0x67] = temp;
+        entity->step++;
+        break;
+    }
 }

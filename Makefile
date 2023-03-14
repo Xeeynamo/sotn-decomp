@@ -16,7 +16,7 @@ OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 CC_FLAGS        += -mcpu=3000 -quiet -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float
 CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
+CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
@@ -56,6 +56,7 @@ GO				:= $(TOOLS_DIR)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 SOTNDISK		:= $(GOPATH)/bin/sotn-disk
+GFXSTAGE		:= $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -126,45 +127,63 @@ $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
 
-cen: stcen_dirs $(BUILD_DIR)/CEN.BIN
+cen: stcen_dirs $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_CEN.BIN:
+	$(GFXSTAGE) e assets/st/cen $@
 
-dre: stdre_dirs $(BUILD_DIR)/DRE.BIN
+dre: stdre_dirs $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_DRE.BIN:
+	$(GFXSTAGE) e assets/st/dre $@
 
-mad: stmad_dirs $(BUILD_DIR)/MAD.BIN
+mad: stmad_dirs $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
 $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_MAD.BIN:
+	$(GFXSTAGE) e assets/st/mad $@
 
-no3: stno3_dirs $(BUILD_DIR)/NO3.BIN
+no3: stno3_dirs $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO3.BIN:
+	$(GFXSTAGE) e assets/st/no3 $@
 
-np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN
+np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NP3.BIN:
+	$(GFXSTAGE) e assets/st/np3 $@
 
-nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN
+nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
 $(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NZ0.BIN:
+	$(GFXSTAGE) e assets/st/nz0 $@
 
 sel: stsel_dirs $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 	$(OBJCOPY) -O binary $< $@
 
-st0: stst0_dirs $(BUILD_DIR)/ST0.BIN
+st0: stst0_dirs $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_ST0.BIN:
+	$(GFXSTAGE) e assets/st/st0 $@
 
-wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN
+wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_WRP.BIN:
+	$(GFXSTAGE) e assets/st/wrp $@
 
-rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN
+rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_RWRP.BIN:
+	$(GFXSTAGE) e assets/st/rwrp $@
 
 tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
@@ -216,9 +235,11 @@ extract_ric: $(SPLAT_APP)
 extract_stmad: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
+	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
 extract_st%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
+	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
 extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
@@ -237,15 +258,24 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
 	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
+	cp $(BUILD_DIR)/F_CEN.BIN $(DISK_DIR)/ST/CEN/F_CEN.BIN
 	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
+	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
 	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
+	cp $(BUILD_DIR)/F_MAD.BIN $(DISK_DIR)/ST/MAD/F_MAD.BIN
 	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
+	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO3.BIN
 	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
+	cp $(BUILD_DIR)/F_NP3.BIN $(DISK_DIR)/ST/NP3/F_NP3.BIN
 	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
+	cp $(BUILD_DIR)/F_NZ0.BIN $(DISK_DIR)/ST/NZ0/F_NZ0.BIN
 	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
+	cp $(BUILD_DIR)/F_RWRP.BIN $(DISK_DIR)/ST/RWRP/F_RWRP.BIN
 	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
+	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
+	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 

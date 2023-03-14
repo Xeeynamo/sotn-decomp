@@ -18,33 +18,36 @@ void func_800E7D08(void) {
     D_800A04EC = 1;
 }
 
-#ifndef NON_EQUIVALENT
-void LoadStageTileset(u32* pTilesetData, s16 y);
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
 #else
-void LoadStageTileset(u32* pTilesetData, s16 y) {
-    RECT sp10;
+void LoadStageTileset(u8* pTilesetData, s32 y) {
+    int new_var;
+    RECT rect;
+    u16* var_s2;
     s32 i;
-    u16* pVramDstX;
-    u32* pData;
+    s32 new_var2;
 
     i = 0;
-    pData = pTilesetData;
-    pVramDstX = D_800AC958;
-    sp10.w = 0x20;
-    sp10.h = 0x80;
+    new_var2 = y;
+    new_var = y + 0x80;
+    var_s2 = D_800AC958;
+    rect.w = 0x20;
+    rect.h = 0x80;
     for (; i < 0x20; i++) {
-        sp10.x = *pVramDstX;
+        rect.x = *var_s2;
         if (i & 2) {
-            sp10.y = y + 0x80;
+            rect.y = new_var;
         } else {
-            sp10.y = y;
+            rect.y = new_var2;
         }
-        LoadImage(&sp10, pData);
-        while (DrawSync(1))
+        LoadImage(&rect, pTilesetData);
+        while (DrawSync(1)) {
             ;
-        pVramDstX++;
-        pData += 0x2000;
+        }
+
+        var_s2++;
+        pTilesetData += 0x2000;
     }
 }
 #endif
@@ -193,11 +196,6 @@ void func_800E8D24(void) {
     }
 }
 
-// Matches in PSY-Q, locally there's a jump on a nop
-#ifndef NON_MATCHING
-void func_800E8D54(void);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8D54);
-#else
 void func_800E8D54(void) {
     u16 button = 1;
     u16 repeat = 0;
@@ -207,13 +205,13 @@ void func_800E8D54(void) {
     s32 i = 0;
 
     do {
-        // asm volatile("nop");
+        NOP;
         if (pressed & button) {
             if (unk & button) {
                 repeat |= button;
                 timers[0] = 0x10;
             } else {
-                if (timers[0]-- == 0xFF) {
+                if (--timers[0] == 0xFF) {
                     repeat |= button;
                     timers[0] = 5;
                 }
@@ -225,7 +223,6 @@ void func_800E8D54(void) {
     } while (i < 0x10);
     g_pads[0].repeat = repeat;
 }
-#endif
 
 void InitializePads(void) {
     Pad* pad;
@@ -257,7 +254,26 @@ void ReadPads(void) {
     func_800E8D54();
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E8EE4);
+void func_800E8EE4(void) {
+    EnterCriticalSection();
+    D_80073068 = OpenEvent(0xF4000001U, 4, 0x2000, NULL);
+    D_8007306C = OpenEvent(0xF4000001U, 0x8000, 0x2000, NULL);
+    D_80073070 = OpenEvent(0xF4000001U, 0x100, 0x2000, NULL);
+    D_80073078 = OpenEvent(0xF4000001U, 0x2000, 0x2000, NULL);
+    D_8007EFD8 = OpenEvent(0xF0000011U, 4, 0x2000, NULL);
+    D_8007EFDC = OpenEvent(0xF0000011U, 0x8000, 0x2000, NULL);
+    D_8007EFE0 = OpenEvent(0xF0000011U, 0x100, 0x2000, NULL);
+    D_80086FE4 = OpenEvent(0xF0000011U, 0x2000, 0x2000, NULL);
+    ExitCriticalSection();
+    EnableEvent((s32)D_80073068);
+    EnableEvent((s32)D_8007306C);
+    EnableEvent((s32)D_80073070);
+    EnableEvent((s32)D_80073078);
+    EnableEvent((s32)D_8007EFD8);
+    EnableEvent(D_8007EFDC);
+    EnableEvent(D_8007EFE0);
+    EnableEvent(D_80086FE4);
+}
 
 s32 func_800E908C(void) {
     if (TestEvent(D_80073068) == 1) {
