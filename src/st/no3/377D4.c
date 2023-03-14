@@ -264,7 +264,7 @@ void EntityZoeTallWeight(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
         firstPolygonIndex = g_api.AllocPolygons(4, 8);
-        if (firstPolygonIndex == (-1)) {
+        if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
