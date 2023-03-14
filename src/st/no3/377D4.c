@@ -180,7 +180,73 @@ void EntityClickSwitch(Entity* entity) {
 }
 
 // smaller weight blocking path near cube of zoe
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityZoeSmallWeight);
+void EntityZoeSmallWeight(Entity* self) {
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 var_a1;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B18);
+        self->animCurFrame = 8;
+        self->zPriority = 0x5E;
+        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *(s32*)&self->unk7C = poly;
+        self->flags |= 0x800000;
+
+        for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
+            poly->tpage = 0xF;
+            poly->clut = 0x22;
+            poly->u0 = poly->u2 = 224;
+            poly->u1 = poly->u3 = 240;
+            poly->v0 = poly->v1 = 84;
+            poly->v2 = poly->v3 = 116;
+            poly->pad2 = self->zPriority + 1;
+            poly->pad3 = 8;
+        }
+        if (D_8003BDEC[49] != 0) {
+            self->step = 3;
+            self->posY.i.hi += 111;
+        }
+        break;
+
+    case 1:
+        if (D_8003BDEC[49] != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posY.val += 0x8000;
+        if ((self->posY.i.hi + g_Camera.posY.i.hi) >= 175) {
+            self->posY.i.hi = 175 - g_Camera.posY.i.hi;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        for (var_a1 = 0x179, i = 0; i < 2; var_a1 -= 0x20, i++) {
+            g_CurrentRoomTileLayout.fg[var_a1] = 0x4FA;
+            g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0x4FA;
+        }
+        self->step++;
+        break;
+    }
+
+    if ((self->step < 3) && (func_801C5D18(self, 16, 16, 5) & 4)) {
+        Entity* player = &PLAYER;
+
+        player->posY.i.hi++;
+    }
+    func_801B9C44(0);
+}
 
 // taller weight blocking path near cube of zoe
 void EntityZoeTallWeight(Entity* self) {
@@ -204,7 +270,7 @@ void EntityZoeTallWeight(Entity* self) {
         }
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C)) = poly;
+        *(s32*)&self->unk7C = poly;
         self->flags |= 0x800000;
 
         for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
@@ -234,7 +300,7 @@ void EntityZoeTallWeight(Entity* self) {
         self->posY.val -= 0x8000;
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
         if (temp < -0xF) {
-            self->posY.i.hi = -0x10 - g_Camera.posY.i.hi;
+            self->posY.i.hi = -16 - g_Camera.posY.i.hi;
             self->step++;
         }
         break;
