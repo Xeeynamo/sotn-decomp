@@ -299,7 +299,7 @@ void EntityZoeTallWeight(Entity* self) {
     case 2:
         self->posY.val -= 0x8000;
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
-        if (temp < -15) {
+        if (temp <= -16) {
             self->posY.i.hi = -16 - g_Camera.posY.i.hi;
             self->step++;
         }
