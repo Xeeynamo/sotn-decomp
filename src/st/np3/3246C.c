@@ -168,9 +168,89 @@ void EntityClickSwitch(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4680);
+// very similar to EntityZoeSmallWeight in NO3
+// smaller weight blocking path near cube of zoe
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityZoeSmallWeight);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4940);
+// taller weight blocking path near cube of zoe
+void EntityZoeTallWeight(Entity* self) {
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+    s32 temp_a2;
+    s32 var_a1;
+    s32 var_v0;
+    s32 temp;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        self->animCurFrame = 7;
+        self->zPriority = 0x5E;
+        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *(s32*)&self->unk7C = poly;
+        self->flags |= 0x800000;
+
+        for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
+            poly->tpage = 0xF;
+            poly->clut = 0x22;
+            poly->u0 = poly->u2 = 224;
+            poly->u1 = poly->u3 = 240;
+            poly->v0 = poly->v1 = 84;
+            poly->v2 = poly->v3 = 116;
+            poly->pad2 = self->zPriority + 1;
+            poly->pad3 = 8;
+        }
+
+        if (D_8003BDEC[49] != 0) {
+            self->step = 3;
+            self->posY.i.hi -= 0x80;
+        }
+        break;
+
+    case 1:
+        if (D_8003BDEC[49] != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posY.val -= 0x8000;
+        temp = self->posY.i.hi + g_Camera.posY.i.hi;
+        if (temp < -0xF) {
+            self->posY.i.hi = -16 - g_Camera.posY.i.hi;
+            self->step++;
+        }
+        break;
+    }
+
+    func_801B44B4(1);
+    do {
+        temp = self->posY.i.hi + g_Camera.posY.i.hi;
+    } while (0);
+    var_v0 = 0x70 - temp;
+    var_a1 = 0x157;
+
+    if (var_v0 < 0) {
+        var_v0 += 0xF;
+    }
+
+    for (temp_a2 = var_v0 >> 4, i = 0; i < temp_a2; var_a1 -= 0x20, i++) {
+        g_CurrentRoomTileLayout.fg[var_a1] = 0;
+        g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0;
+    }
+
+    for (temp_a2 = 8 - temp_a2, i = 0; i < temp_a2; var_a1 -= 0x20, i++) {
+        g_CurrentRoomTileLayout.fg[var_a1] = 0x4FA;
+        g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0x4FA;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityTrapDoor);
 
