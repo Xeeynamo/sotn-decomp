@@ -37,7 +37,7 @@ def ensure_dir_exists(file_path):
     path.mkdir(parents=True, exist_ok=True)
 
 
-def encode(input_base: str, output_file: str) -> str | None:
+def encode(input_base: str, output_file: str):
 
     def unroll_rows(rows):
         list_of_rows = []
@@ -58,7 +58,7 @@ def encode(input_base: str, output_file: str) -> str | None:
                 dst[start + y * 0x40 + x] = c
             y += 1
 
-    def encode_image(dst: bytearray, idx: int, file_name: str) -> str | None:
+    def encode_image(dst: bytearray, idx: int, file_name: str):
         img = png.Reader(file_name).read()
         width = img[0]
         height = img[1]
@@ -91,7 +91,7 @@ def encode(input_base: str, output_file: str) -> str | None:
             dst[idx + i * 2 + 0] = c & 0xFF
             dst[idx + i * 2 + 1] = (c >> 8) & 0xFF
 
-    def encode_clut(dst: bytearray, file_name: str) -> str | None:
+    def encode_clut(dst: bytearray, file_name: str):
         img = png.Reader(file_name).read()
         width = img[0]
         height = img[1]
