@@ -23,7 +23,6 @@ void func_8019344C(void);
 extern u8 D_8003BEE8[];
 extern s32 g_pfnInitRoomEntities; // It's 8003C8C4!
 extern Entity* g_CurrentEntity;
-extern s16 D_80073092;
 extern Entity g_EntityArray[];
 extern Entity D_8007D858[];
 extern Entity D_8007EF1C;
@@ -38,6 +37,7 @@ extern s32 D_80097908;
 
 // ST/MAD
 extern u16 D_8018052C[];
+extern u16 D_801806B4[];
 extern u16 D_80180F5C[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
@@ -63,6 +63,7 @@ extern LayoutObject* D_801997D8;
 extern LayoutObject* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
+extern u16 D_80199E54[];
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
@@ -182,7 +183,7 @@ void func_8018E5AC(Entity* self) {
         self->blendMode = objInit->blendMode;
         temp_v0 = objInit->unkC;
         if (temp_v0 != 0) {
-            self->unk34 = temp_v0;
+            self->flags = temp_v0;
         }
     }
     AnimateEntity(objInit->unk10, self);
@@ -226,13 +227,6 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-// very close. Mostly reg swap
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", Update);
-#else
-extern s16 D_801806B4[];
-extern u16 D_80199E54[];
-
 void Update(void) {
     s16 i;
     Entity* entity;
@@ -256,12 +250,12 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 < 0) {
-                u16 posX = entity->posX.i.hi;
-                u16 posY = entity->posY.i.hi;
-                if (unk34 & 0x40000000) {
-                    if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                s16 posX = i = entity->posX.i.hi;
+                s16 posY = entity->posY.i.hi;
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
                     }
@@ -274,7 +268,7 @@ void Update(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.i.hi + D_80073092;
+                s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
                 s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
@@ -285,8 +279,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_801806B4[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -297,7 +291,7 @@ void Update(void) {
                     ((u16)(entity->posY.i.hi + 64) <= 352)) {
                 if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
-                        (unk34 & 0x200 && !(g_pfnInitRoomEntities & 3))) {
+                        (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
@@ -313,7 +307,6 @@ void Update(void) {
         }
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018EC90);
 
@@ -327,8 +320,8 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     do { //! FAKE https://decomp.me/scratch/zysYC
         entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     } while (0);
-    entity->posX.i.hi = initDesc->posX - D_8007308E;
-    entity->posY.i.hi = initDesc->posY - D_80073092;
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
@@ -347,8 +340,8 @@ void func_80190608(LayoutObject* initDesc) {
     s16 phi_a0;
     Entity* entity;
 
-    temp_a2 = D_80073092 + 0x120;
-    phi_a0 = D_80073092 - 0x40;
+    temp_a2 = g_Camera.posY.i.hi + 0x120;
+    phi_a0 = g_Camera.posY.i.hi - 0x40;
     if (phi_a0 < 0) {
         phi_a0 = 0;
     }
@@ -504,7 +497,7 @@ void func_80190F04(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = D_8007308E;
+        s16 tmp = g_Camera.posX.i.hi;
         if (D_80097908 > 0)
             func_801908DC(tmp + 0x140);
         else
@@ -560,7 +553,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -826,7 +819,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk3C = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->unk34 = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -905,7 +898,7 @@ void func_8019344C(void) {
 #endif
 
 void func_801934D0(u16 arg0) {
-    CollisionResult res;
+    Collider res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
@@ -991,7 +984,7 @@ void CollectLifeVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_8019399C(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801939C4(void) {
     g_CurrentEntity->step = 3;
@@ -1143,7 +1136,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8019596C);
 void func_80195A54(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80180FE4[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80180FFC[entity->subId];
@@ -1168,7 +1161,7 @@ void func_80195B44(Entity* entity) {
     u16 temp_v0;
 
     if (entity->step == 0) {
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 5;
         entity->animCurFrame = 1;
@@ -1197,7 +1190,7 @@ void func_80195B44(Entity* entity) {
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80195C38);
 
 bool func_80195E68(Unkstruct6* unk) {
-    CollisionResult res;
+    Collider res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -1287,23 +1280,22 @@ void func_801965E4(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_801966B0);
 
-void func_8019686C(u16 objectId, Entity* ent1, Entity* ent2) {
-    DestroyEntity(ent2);
-    ent2->objectId = objectId;
-    ent2->pfnUpdate = PfnEntityUpdates[objectId];
-    ent2->posX.i.hi = ent1->posX.i.hi;
-    ent2->posY.i.hi = ent1->posY.i.hi;
-    ent2->unk5A = ent1->unk5A;
-    ent2->zPriority = ent1->zPriority;
-    ent2->animSet = ent1->animSet;
-    ent2->unk34 = 0xCD002000;
+void func_8019686C(u16 objectId, Entity* src, Entity* dst) {
+    DestroyEntity(dst);
+    dst->objectId = objectId;
+    dst->pfnUpdate = PfnEntityUpdates[objectId];
+    dst->posX.i.hi = src->posX.i.hi;
+    dst->posY.i.hi = src->posY.i.hi;
+    dst->unk5A = src->unk5A;
+    dst->zPriority = src->zPriority;
+    dst->animSet = src->animSet;
+    dst->flags = 0x45002000 | FLAG_UNK_08000000 | FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
-    if ((u16)ent1->palette & 0x8000) {
-        ent2->palette = ent1->unk6A;
-        return;
+    if (src->palette & 0x8000) {
+        dst->palette = src->unk6A;
+    } else {
+        dst->palette = (s16)src->palette;
     }
-
-    ent2->palette = (s16)ent1->palette;
 }
 
 // https://decomp.me/scratch/fA367 TODO: 0x80 entity member unconfirmed
@@ -1355,7 +1347,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = obj->unk8;
         entity->blendMode = obj->blendMode;
         if (obj->unkC != 0) {
-            entity->unk34 = obj->unkC;
+            entity->flags = obj->unkC;
         }
     }
     AnimateEntity(obj->unk10, entity);

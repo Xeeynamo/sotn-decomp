@@ -1,8 +1,37 @@
 #include "dra.h"
 
-void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
-    CollisionResult sp10;
-    CollisionResult sp38;
+enum CollisionTypes {
+    // most common block type
+    COLLISION_TYPE_SOLID = 0x03,
+
+    // right slanting 45* angle (/)
+    COLLISION_TYPE_RIGHT_45_ANGLE = 0x80,
+
+    // left slanting 45* angle (\)
+    COLLISION_TYPE_LEFT_45_ANGLE = 0x83,
+
+    // right slanting 45* angle on ceiling (\)
+    COLLISION_TYPE_RIGHT_CEILING_45_ANGLE = 0x84,
+
+    // left slanting 45* angle on ceiling (/)
+    COLLISION_TYPE_LEFT_CEILING_45_ANGLE = 0x87,
+
+    // 22.5* angle sloping left (/) takes two tiles to go up one tile
+    COLLISION_TYPE_LEFT_225_ANGLE_1 = 0x88,
+
+    // tile #2 of previous
+    COLLISION_TYPE_LEFT_225_ANGLE_2 = 0x89,
+
+    // flat tile you can press down + jump to drop through
+    COLLISION_TYPE_FLAT_DROP_THROUGH = 0xE7,
+
+    // water
+    COLLISION_TYPE_WATER = 0xED
+};
+
+void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
+    Collider sp10;
+    Collider sp38;
     s32 temp_a0_2;
     int new_var3;
     s32 temp_a0_3;
@@ -35,8 +64,8 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
     u32 var_v0;
     u8 colType;
 
-    absX = x + g_Camera.posX.i.lo;
-    absY = y + g_Camera.posY.i.lo;
+    absX = x + g_Camera.posX.i.hi;
+    absY = y + g_Camera.posY.i.hi;
     new_var = 0x10;
     if ((((absX < 0) || (((u32)absX) >= (g_CurrentRoom.hSize << 8))) ||
          (absY < 0)) ||
@@ -88,7 +117,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 1;
         }
         break;
-    case 0x80:
+    case COLLISION_TYPE_RIGHT_45_ANGLE:
         temp_v1_2 = res->unk1C + res->unk20;
         if (temp_v1_2 < 0x10) {
             res->unk18 = temp_v1_2 - 0xF;
@@ -98,9 +127,9 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 0x8000;
         }
         break;
-    case 0x88:
+    case COLLISION_TYPE_LEFT_225_ANGLE_1:
         var_a1 = 0x10;
-    case 0x89:
+    case COLLISION_TYPE_LEFT_225_ANGLE_2:
         temp_v1_3 = var_a1 + res->unk1C + res->unk20 * 2;
         if (temp_v1_3 < 0x20) {
             res->unk14 = temp_v1_3 - 0x1F;
@@ -127,7 +156,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 0xA000;
         }
         break;
-    case 0x83:
+    case COLLISION_TYPE_LEFT_45_ANGLE:
         temp_a0 = res->unk1C;
         temp_v1_5 = res->unk20;
         if (temp_a0 >= temp_v1_5) {
@@ -189,7 +218,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 1;
         }
         break;
-    case 0x84:
+    case COLLISION_TYPE_RIGHT_CEILING_45_ANGLE:
         temp_a0_4 = res->unk1C;
         temp_v1_8 = res->unk20;
         if (temp_v1_8 >= (s32)temp_a0_4) {
@@ -237,7 +266,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk0 = 0x2800;
         }
         break;
-    case 0x87:
+    case COLLISION_TYPE_LEFT_CEILING_45_ANGLE:
         if ((res->unk1C + res->unk20) >= 0xF) {
             res->unk0 = 0x4801;
             temp_v0_11 = res->unk18 + 0xF;
@@ -335,7 +364,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
     case 0xF3:
         res->unk0 = 3;
         break;
-    case 0xED:
+    case COLLISION_TYPE_WATER:
         res->unk0 = 8;
         break;
     case 0xEA:
@@ -356,7 +385,7 @@ void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk) {
             res->unk18 += 8;
         }
         break;
-    case 0xE7:
+    case COLLISION_TYPE_FLAT_DROP_THROUGH:
         if (res->unk20 >= 8) {
             res->unk0 = 0x41;
             res->unk20 -= 8;
@@ -581,7 +610,7 @@ block_25:
                 (u16)g_EntityArray[0].posX.i.hi +
                 (playerX + D_801375A4 - (g_CurrentRoom.x + *D_8009740C));
         }
-        D_8007308E = g_CurrentRoom.x;
+        g_Camera.posX.i.hi = g_CurrentRoom.x;
     } else {
         temp_a1_2 = g_CurrentRoom.width + *D_8009740C - 0x100;
         if (temp_a1_2 < playerX) {
@@ -592,48 +621,49 @@ block_25:
                     (((playerX + D_801375A4) + 0x100) -
                      (g_CurrentRoom.width + (*D_8009740C)));
             }
-            D_8007308E = g_CurrentRoom.width - 0x100;
+            g_Camera.posX.i.hi = g_CurrentRoom.width - 0x100;
         } else {
-            D_8007308E = playerX - (*D_8009740C);
+            g_Camera.posX.i.hi = playerX - (*D_8009740C);
             g_EntityArray[0].posX.i.hi = *D_8009740C;
         }
     }
     if (D_8009741C != 0) {
         if (playerY < g_CurrentRoom.y + 0x8C) {
-            D_80073092 = g_CurrentRoom.y + 4;
-            g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+            g_Camera.posY.i.hi = g_CurrentRoom.y + 4;
+            g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
         } else if (g_CurrentRoom.height - 0x74 < playerY) {
-            D_80073092 = g_CurrentRoom.height - 0xFC;
-            g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+            g_Camera.posY.i.hi = g_CurrentRoom.height - 0xFC;
+            g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
         } else {
             g_EntityArray[0].posY.i.hi = 0x88;
-            D_80073092 = playerY - 0x88;
+            g_Camera.posY.i.hi = playerY - 0x88;
         }
     } else {
         new_var2 = 0x88;
         if (playerY < g_CurrentRoom.y + 0x8C) {
-            if (D_80073092 + new_var2 - playerY >= 4 &&
-                g_CurrentRoom.y + 8 < D_80073092) {
-                D_80073092 -= 4;
+            if (g_Camera.posY.i.hi + new_var2 - playerY >= 4 &&
+                g_CurrentRoom.y + 8 < g_Camera.posY.i.hi) {
+                g_Camera.posY.i.hi -= 4;
                 g_EntityArray[0].posY.i.hi += 4;
-            } else if (D_80073092 < g_CurrentRoom.y && g_CurrentRoom.y != 0) {
-                D_80073092 += 4;
+            } else if (g_Camera.posY.i.hi < g_CurrentRoom.y &&
+                       g_CurrentRoom.y != 0) {
+                g_Camera.posY.i.hi += 4;
                 g_EntityArray[0].posY.i.hi -= 4;
             } else {
-                D_80073092 = g_CurrentRoom.y + 4;
-                g_EntityArray[0].posY.i.hi = playerY - D_80073092;
+                g_Camera.posY.i.hi = g_CurrentRoom.y + 4;
+                g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
             }
         } else {
-            g_EntityArray[0].posY.i.hi = D_80073092;
+            g_EntityArray[0].posY.i.hi = g_Camera.posY.i.hi;
             if (g_CurrentRoom.height - 0x74 < playerY) {
-                D_80073092 = g_CurrentRoom.height - 0xFC;
-                g_EntityArray[0].posY.i.hi = playerY - D_80073092;
-            } else if (D_80073092 + new_var2 - playerY >= 4) {
-                D_80073092 -= 4;
+                g_Camera.posY.i.hi = g_CurrentRoom.height - 0xFC;
+                g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
+            } else if (g_Camera.posY.i.hi + new_var2 - playerY >= 4) {
+                g_Camera.posY.i.hi -= 4;
                 g_EntityArray[0].posY.i.hi += 4;
             } else {
                 g_EntityArray[0].posY.i.hi = 0x88;
-                D_80073092 = playerY - 0x88;
+                g_Camera.posY.i.hi = playerY - 0x88;
             }
         }
     }

@@ -1,6 +1,7 @@
 g_SpriteBanks = 0x80180040;
 c_GoldPrizes = 0x80181D14;
 c_HeartPrizes = 0x80181DA4;
+g_Rooms = 0x8018272C;
 EntityBreakable = 0x801B0EEC;
 Random = 0x801B94D4;
 Update = 0x801B9504;
@@ -23,6 +24,7 @@ CollectHeart = 0x801BDF7C;
 CollectGold = 0x801BDFFC;
 CollectHeartVessel = 0x801BE1F0;
 CollectLifeVessel = 0x801BE294;
+DestroyCurrentEntity = 0x801BE2E4;
 EntityPriceDrop = 0x801BE30C;
 EntityExplosion = 0x801BEB80;
 EntityInventoryDrop = 0x801BED20;

@@ -3,53 +3,6 @@
 
 #include "game.h"
 
-// Defines the equipment that can be set on left and right hand
-// This includes weapons, throw weapons, consumable and restoration items.
-// D_800A4B04 it is assumed the equip data starts from here
-// https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
-typedef struct {
-    /* 800a4b38 */ const char* name;
-    /* 800a4b3C */ const char* description;
-    /* 800a4b40 */ u16 attack;
-    /* 800a4b42 */ u16 defense;
-    /* 800a4b44 */ u16 element;
-    /* 800a4b46 */ u8 unk0E;
-    /* 800a4b46 */ u8 entId;
-    /* 800a4b48 */ u16 unk10;
-    /* 800a4b4A */ u16 unk12;
-    /* 800a4b4C */ u16 unk14;
-    /* 800a4b4E */ u16 unk16;
-    /* 800a4b50 */ u8 unk18;
-    /* 800a4b51 */ u8 isConsumable;
-    /* 800a4b52 */ u16 unk1A;
-    /* 800a4b54 */ u16 unk1C;
-    /* 800a4b56 */ u16 unk1E;
-    /* 800a4b58 */ u16 unk20;
-    /* 800a4b5A */ u16 unk22;
-    /* 800a4b5C */ u16 mpUsage;
-    /* 800a4b5E */ u16 unk26;
-    /* 800a4b60 */ u8 unk28; // somewhat range-related
-    /* 800a4b61 */ u8 unk29;
-    /* 800a4b62 */ u16 unk2A;
-    /* 800a4b64 */ u16 icon;
-    /* 800a4b66 */ u16 palette;
-    /* 800a4b68 */ u16 unk30;
-    /* 800a4b6A */ u16 unk32;
-} Equipment;
-
-// Defines armor, cloak and rings
-typedef struct {
-    /* 00 */ const char* name;
-    /* 04 */ const char* description;
-    /* 08 */ u32 unk08;
-    /* 0C */ u32 unk0C;
-    /* 10 */ u32 unk10;
-    /* 14 */ u32 unk14;
-    /* 18 */ u16 icon;
-    /* 1A */ u16 palette;
-    /* 1C */ u32 unk1C;
-} Accessory;
-
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
@@ -148,7 +101,8 @@ extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
-extern s8 D_800A841C[];  // related to player MP
+extern s8 D_800A841C[]; // related to player MP
+extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT D_800ACD88[2];
@@ -428,7 +382,7 @@ void ReadPads(void);
 void ClearBackbuffer(void);
 void SetRoomForegroundLayer(LayerDef2* layerDef);
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
-void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
+void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);
 void func_80021E38(s32);
