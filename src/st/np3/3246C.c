@@ -223,7 +223,7 @@ void EntityZoeTallWeight(Entity* self) {
     case 2:
         self->posY.val -= 0x8000;
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
-        if (temp < -0xF) {
+        if (temp < -15) {
             self->posY.i.hi = -16 - g_Camera.posY.i.hi;
             self->step++;
         }
@@ -234,11 +234,11 @@ void EntityZoeTallWeight(Entity* self) {
     do {
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
     } while (0);
-    var_v0 = 0x70 - temp;
+    var_v0 = 112 - temp;
     var_a1 = 0x157;
 
     if (var_v0 < 0) {
-        var_v0 += 0xF;
+        var_v0 += 15;
     }
 
     for (temp_a2 = var_v0 >> 4, i = 0; i < temp_a2; var_a1 -= 0x20, i++) {
