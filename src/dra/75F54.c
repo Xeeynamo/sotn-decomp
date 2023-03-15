@@ -2253,7 +2253,19 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801349F4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134B48);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134C60);
+void func_80134C60(void) {
+    s32 temp_v1;
+    u16 temp;
+    temp_v1 = D_8013B664;
+    temp = ((D_8013AE7C * (D_800BF554[temp_v1].volume)) >> 7) & 0xFFFF;
+    func_80132A04(0x14,                                    // voice
+                  D_800BF554[temp_v1].vabid,               // vabid
+                  D_800BF554[temp_v1].prog,                // prog
+                  D_800BF554[temp_v1].tone,                // tone
+                  D_800BF554[temp_v1].note,                // note
+                  ((temp * (u16)D_801390A4) << 9) >> 0x10, // volume
+                  D_80139010);                             // distance
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134D14);
 
