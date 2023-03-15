@@ -199,7 +199,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
 
         for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
             poly->tpage = 0xF;
@@ -271,7 +271,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
 
         for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
             poly->tpage = 0xF;
