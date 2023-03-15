@@ -544,15 +544,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E414C);
 
 void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 
-// TODO aspatch jump points to the wrong instruction,
-// otherwise this is fully decompiled
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E451C);
-#else
-
 void func_800E451C(void) {
+    void (*callback)(void);
+
     switch (D_80073060) {
-    case 0x0:
+    case 0:
         ClearBackbuffer();
         func_800ECBF8();
         func_800EAD7C();
@@ -564,19 +560,17 @@ void func_800E451C(void) {
         func_800EA538(0);
         func_800EAEEC();
         func_800E3574();
-        g_StageId = 0x45;
+        g_StageId = STAGE_SEL;
         if (D_800978AC != 0) {
-            if (D_8006C3B0 == 0) {
-                D_8006C398 = 1;
-                D_8006BAFC = 1;
-                goto block_15;
+            if (D_8006C3B0 != 0) {
+                return;
             }
-            return;
+            D_8006C398 = 1;
+            D_8006BAFC = 1;
         }
-    block_15:
         D_80073060++;
         break;
-    case 0x64:
+    case 100:
         if (D_8006C3B0 == 0) {
             RECT sp18;
             sp18.x = 0;
@@ -598,7 +592,7 @@ void func_800E451C(void) {
             D_80073060++;
         }
         break;
-    case 0x65:
+    case 101:
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
             ClearImage(&D_800ACDF0, 0, 0, 0);
@@ -614,43 +608,44 @@ void func_800E451C(void) {
             D_80073060 = 1;
         }
         break;
-    case 0x1:
+    case 1:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
             (D_800978AC == 0 && func_800E81FC(2, 0) >= 0 &&
              func_800E81FC(0, 0) >= 0)) {
             D_80073060++;
         }
         break;
-    case 0x2:
+    case 2:
         D_80073060 = 3;
         break;
-    case 0x3:
+    case 3:
         D_80073060 = 4;
         break;
-    case 0x4:
+    case 4:
         if (D_800978AC != 0) {
             D_8006C398 = 1;
             D_8006BAFC = 0x100;
         }
         D_80073060 = 5;
         break;
-    case 0x5:
+    case 5:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
             (D_800978AC == 0 && func_800E81FC(0, 1) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
         break;
-    case 0x6:
+    case 6:
         if (D_8003C734 == 1) {
-            g_api.o.TestCollisions();
+            callback = g_api.o.TestCollisions;
         } else {
-            g_pfnInitRoomEntities();
+            callback = g_api.o.InitRoomEntities;
         }
+        NOP;
+        callback();
         break;
     }
 }
-#endif
 
 void func_800E493C(void) {
     if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
