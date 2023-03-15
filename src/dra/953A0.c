@@ -42,19 +42,13 @@ void func_801353A0(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135484);
 
-void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
+void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 volume, s16 distance) {
     if (arg2 != 0) {
         D_80138F28 |= (1 << ((arg1 + 6) * 2)) + (1 << (((arg1 + 6) * 2) + 1));
     }
-    func_80132A04((arg1 * 2) + 12,        // voice
-                  D_800BF554[arg0].vabid, // vabid
-                  D_800BF554[arg0].prog,  // prog
-                  D_800BF554[arg0].tone,  // tone
-                  D_800BF554[arg0].note,  // note
-                  arg3,                   // volume
-                  arg4);                  // distance
-    do {                                  // TODO: !FAKE
-    } while (0);
+    func_80132A04((arg1 * 2) + 12, D_800BF554[arg0].vabid,
+                  D_800BF554[arg0].prog, D_800BF554[arg0].tone,
+                  D_800BF554[arg0].note, volume, distance);
     D_8013B650[arg1] = arg0;
     D_8013AED4[arg1] = D_800BF554[arg0].pad1;
 }
