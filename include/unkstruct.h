@@ -133,6 +133,16 @@ typedef struct {
 } Unkstruct_80086FFA; // size = 0x34
 
 typedef struct {
+    /* 0x00 */ u8 vabid;
+    /* 0x01 */ u8 prog;
+    /* 0x02 */ u8 note;
+    /* 0x03 */ s8 volume;
+    /* 0x04 */ u8 pad0;
+    /* 0x05 */ u8 tone;
+    /* 0x06 */ u8 pad1;
+} Unkstruct_800BF554; // size = 0x7
+
+typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
     /* 0x08 */ char pad8[0xC];
