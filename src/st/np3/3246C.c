@@ -144,7 +144,7 @@ void EntityClickSwitch(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AA8);
+        InitializeEntity(D_80180AA8);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
         if (D_8003BDEC[0x31] != 0) {
