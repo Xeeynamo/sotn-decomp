@@ -168,12 +168,12 @@ void EntityClickSwitch(Entity* entity) {
     }
 }
 
-// very similar to EntityZoeSmallWeight in NO3
+// very similar to EntityPathBlockSmallWeight in NO3
 // smaller weight blocking path near cube of zoe
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityZoeSmallWeight);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityPathBlockSmallWeight);
 
 // taller weight blocking path near cube of zoe
-void EntityZoeTallWeight(Entity* self) {
+void EntityPathBlockTallWeight(Entity* self) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
     s32 temp_a2;

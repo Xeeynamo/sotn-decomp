@@ -180,7 +180,7 @@ void EntityClickSwitch(Entity* entity) {
 }
 
 // smaller weight blocking path near cube of zoe
-void EntityZoeSmallWeight(Entity* self) {
+void EntityPathBlockSmallWeight(Entity* self) {
     s16 firstPolygonIndex;
     POLY_GT4* poly;
     s32 var_a1;
@@ -249,7 +249,7 @@ void EntityZoeSmallWeight(Entity* self) {
 }
 
 // taller weight blocking path near cube of zoe
-void EntityZoeTallWeight(Entity* self) {
+void EntityPathBlockTallWeight(Entity* self) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
     s32 temp_a2;
