@@ -161,8 +161,7 @@ void EntityCavernDoorPlatform(Entity* self) {
     }
 }
 
-// door blocking way to the Underground Caverns
-void EntityCavernDoor(Entity* self) {
+void func_801B40F8(Entity* self) {
     s16 firstPolygonIndex;
     u16* tileLayoutPtr;
     Entity* entity;
@@ -282,7 +281,6 @@ void EntityCavernDoor(Entity* self) {
             }
         }
     }
-    return;
 }
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B44B4);

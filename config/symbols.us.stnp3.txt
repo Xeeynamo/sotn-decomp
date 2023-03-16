@@ -12,7 +12,6 @@ EntityBreakable = 0x801B26FC;
 EntityShuttingWindow = 0x801B2C20;
 EntityCavernDoorLever= 0x801B3E84;
 EntityCavernDoorPlatform = 0x801B4004;
-EntityCavernDoor = 0x801B40F8;
 EntityClickSwitch = 0x801B4558;
 EntityPathBlockSmallWeight = 0x801B4680;
 EntityPathBlockTallWeight = 0x801B4940;
