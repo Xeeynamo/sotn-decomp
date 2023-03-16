@@ -456,7 +456,15 @@ void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     } while (digit != 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F6998);
+// Draw a number with a limit of N digits
+void DrawMenuTime(s32 number, s32 x, s32 y, MenuContext* context, s32 digits) {
+    do {
+        DrawMenuChar(((number % 10) + 0x10), x, y, context);
+        number /= 10;
+        x -= 8;
+        digits -= 1;
+    } while (digits != 0);
+}
 
 void func_800F6A48(void) {
     func_800EA538(6);
@@ -554,7 +562,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F72BC);
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", DrawPauseMenu);
 #else
-void func_800F6998(s32, s32 x, s32 y, MenuContext*, s32);
 extern s32 g_menuButtonSettingsCursorPos;
 extern s32 g_menuButtonSettingsConfig[];
 extern const u8 c_chPlaystationButtons[];
@@ -654,9 +661,9 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuStr(c_strTIME, 0xD0, 0xC0, context);
         DrawMenuInt(g_GameTimer.hours, 0x108, 0xC0, context);
         DrawMenuChar(0x1A, 0x110, 0xC0, context);
-        func_800F6998(g_GameTimer.minutes, 0x120, 0xC0, context, 2);
+        DrawMenuTime(g_GameTimer.minutes, 0x120, 0xC0, context, 2);
         DrawMenuChar(0x1A, 0x128, 0xC0, context);
-        func_800F6998(g_GameTimer.seconds, 0x138, 0xC0, context, 2);
+        DrawMenuTime(g_GameTimer.seconds, 0x138, 0xC0, context, 2);
     }
 
     phi_s3 = 0xE8;
@@ -1105,6 +1112,7 @@ void func_800FAE98(void) {
     D_800978F8 = 0x40;
 }
 
+// https://decomp.me/scratch/f40LU 91.22%
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800FAEC4);
 
 void func_800FAF44(s32 arg0) {
