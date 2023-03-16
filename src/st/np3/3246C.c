@@ -1234,6 +1234,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C4144);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C424C);
 
+// EntitySplashWater
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C4DCC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C56D8);
