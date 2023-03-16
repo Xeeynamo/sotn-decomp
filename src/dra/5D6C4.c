@@ -1119,7 +1119,7 @@ void func_8010189C(void) {
                 poly->p3 = (7 & rand()) + 1;
             }
 
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
         }
     }
 }
@@ -1190,7 +1190,7 @@ void func_80102628(s32 arg0) {
             poly->pad2 = 0x1FD;
             poly->pad3 = 8;
             poly->x0 = temp * (i & 1);
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
             i++;
         }
     }

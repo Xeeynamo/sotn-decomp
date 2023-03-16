@@ -281,7 +281,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C9D18);
 POLY_GT4* func_801C9E68(POLY_GT4* poly) {
     while (poly != NULL) {
         if (poly->p3 != 0) {
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
         } else {
             return poly;
         }
@@ -312,7 +312,7 @@ POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         if (poly == NULL)
             return NULL;
         poly->p3 = unk;

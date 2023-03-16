@@ -99,7 +99,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
         poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
         while (poly != NULL) {
             poly->x1 = 0;
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
         }
     }
     g_EntityArray[UNK_ENTITY_1].unk7C.S8.unk0 = 1;

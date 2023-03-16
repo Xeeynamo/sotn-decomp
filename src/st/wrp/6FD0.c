@@ -1504,7 +1504,7 @@ void EntityWarpRoom(Entity* entity) {
             poly->y2 = temp_s6;
             poly->x3 = temp_s7;
             poly->x2 = temp_s7;
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
             var_s1 = var_s0 << 8;
         }
 
@@ -1517,7 +1517,7 @@ void EntityWarpRoom(Entity* entity) {
         poly->r0 = poly->g0 = poly->b0 = 0;
         poly->pad2 = 0x60;
         poly->pad3 = 0xA;
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         poly->code = 3;
         poly->r0 = poly->g0 = poly->b0 = 0;
         poly->x1 = poly->x3 = 256;
@@ -1782,7 +1782,7 @@ void EntityWarpRoom(Entity* entity) {
         poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3 =
             D_80193AAC;
         D_80180608[i3] += 0x20;
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
     }
 }
 #endif
@@ -3388,7 +3388,7 @@ POLY_GT4* func_801937A8(POLY_GT4* poly) {
     while (poly) {
         if (poly->p3 == 0)
             return poly;
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
     }
     return NULL;
 }
@@ -3403,7 +3403,7 @@ POLY_GT4* func_801937D8(POLY_GT4* poly, u8 index) {
             s32 i = 1;
             if (i < index_) {
                 do {
-                    poly = (POLY_GT4*)poly->tag;
+                    NEXT_POLY(poly);
                     if (!poly)
                         return NULL;
                 } while (poly->p3 == 0 && ++i < index);
@@ -3412,7 +3412,7 @@ POLY_GT4* func_801937D8(POLY_GT4* poly, u8 index) {
             if (i == index_)
                 return var_v0;
         }
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         if (poly) {
             goto loop_2;
         }
@@ -3441,7 +3441,7 @@ POLY_GT4* func_80193854(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         if (poly == 0)
             return 0;
         poly->p3 = unk;

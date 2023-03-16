@@ -935,7 +935,7 @@ void func_800F96F4(void) { // !Fake:
         poly->pad3 = 0x8;
     }
 
-    poly = (POLY_GT4*)poly->tag;
+    NEXT_POLY(poly);
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {

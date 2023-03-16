@@ -211,7 +211,7 @@ void EntityCavernDoor(Entity* self) {
             poly->pad2 = self->zPriority + 0x18;
             poly->pad3 = 8;
             poly->p3 = 0;
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
         }
 
     label:
@@ -278,8 +278,7 @@ void EntityCavernDoor(Entity* self) {
     }
 
     if (self->flags & FLAG_FREE_POLYGONS) {
-        for (poly = *(s32*)&self->unk7C; poly != NULL;
-             poly = (POLY_GT4*)poly->tag) {
+        for (poly = *(s32*)&self->unk7C; poly != NULL; NEXT_POLY(poly)) {
             if (poly->p3 != 0) {
                 func_801B94F0(poly);
             }
@@ -342,7 +341,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
-        for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
+        for (poly; poly != NULL; NEXT_POLY(poly)) {
             poly->tpage = 0xF;
             poly->clut = 0x22;
             poly->u0 = poly->u2 = 224;
@@ -415,7 +414,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
-        for (poly; poly != NULL; poly = (POLY_GT4*)poly->tag) {
+        for (poly; poly != NULL; NEXT_POLY(poly)) {
             poly->tpage = 0xF;
             poly->clut = 0x22;
             poly->u0 = poly->u2 = 224;

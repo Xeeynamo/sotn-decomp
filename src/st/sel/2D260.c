@@ -48,7 +48,7 @@ void DrawNavigationTips(NavigationTips mode) {
         poly = poly->tag;
         func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         if (mode == Tips_YesNo) {
@@ -68,7 +68,7 @@ void DrawNavigationTips(NavigationTips mode) {
     case Tips_MenuNavigation:
         func_801B2670(poly, 32, 184, 16, 16);
         poly->pad3 = 0;
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         func_801B2670(poly, 32, 200, 16, 16);
         poly->pad3 = 0;
         break;

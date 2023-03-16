@@ -1362,7 +1362,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80199388);
 POLY_GT4* func_801994D8(POLY_GT4* poly) {
     while (poly != NULL) {
         if (poly->p3 != 0) {
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
         } else {
             return poly;
         }
@@ -1393,7 +1393,7 @@ POLY_GT4* func_80199584(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        poly = (POLY_GT4*)poly->tag;
+        NEXT_POLY(poly);
         if (poly == NULL)
             return NULL;
         poly->p3 = unk;

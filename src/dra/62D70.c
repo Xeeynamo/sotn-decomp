@@ -736,7 +736,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
-            poly = (POLY_GT4*)poly->tag;
+            NEXT_POLY(poly);
         }
     }
 
