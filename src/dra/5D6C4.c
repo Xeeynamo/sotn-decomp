@@ -973,21 +973,21 @@ void DrawHudRichter(void) {
     poly->clut = 0x101;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0x2000;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, D_80137980 + 216, 22, 32, 96, 32, 0);
     poly->tpage = 0x1BU;
     poly->clut = 0x100;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, 4, 112, 9, 3, 64, 89);
     poly->tpage = 0x1B;
     poly->clut = 0x105;
     poly->pad2 = 0x1F0;
     poly->pad3 = 0x2000;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, D_80137980 + 228, 112, 9, 3, 64, 89);
     poly->tpage = 0x1BU;
@@ -996,35 +996,35 @@ void DrawHudRichter(void) {
     poly->pad3 = 0x2000U;
     poly->p1 = 0;
     poly->p2 = 6;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, D_80137980 + 236, 112, 9, 3, 64, 89);
     poly->tpage = 0x1B;
     poly->clut = 0x103;
     poly->pad2 = 0x1F0;
     poly->pad3 = 0x2000;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, 14, 27, 8, 8, 0, 96);
     poly->tpage = 0x1BU;
     poly->clut = 0x103U;
     poly->pad2 = 0x1F0U;
     poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, 22, 27, 8, 8, 0, 96);
     poly->tpage = 0x1B;
     poly->clut = 0x103;
     poly->pad2 = 0x1F0;
     poly->pad3 = 0x2000;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, 18, 38, 8, 8, 0, 0);
     poly->tpage = 0x1BU;
     poly->clut = 0x102;
     poly->pad2 = 0x1F0U;
     poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    NEXT_POLY(poly);
 
     func_80107360(poly, 33, 20, 64, 24, 64, 40);
     poly->tpage = 0x1B;
@@ -1046,7 +1046,7 @@ void DrawHudRichter(void) {
             poly->pad3 = 8;
             poly->p1 = (rand() & 0x3F) + 1;
             poly->p2 = 0;
-            poly = poly->tag;
+            NEXT_POLY(poly);
             phi_s1 += 2;
             phi_s0 += 2;
         } while (poly != 0);

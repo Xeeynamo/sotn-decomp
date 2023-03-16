@@ -3306,7 +3306,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->x2 = var_t5_2;
     poly->x0 = var_t5_2;
     var_t5_3 = var_t5_2 + 0x10;
-    poly = poly->tag;
+    NEXT_POLY(poly);
     poly->tpage = 0x1F;
     poly->clut = 0x197;
     poly->x0 = var_t5_2 - 6;
@@ -3317,7 +3317,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->v1 = 0x18;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
-    poly = poly->tag;
+    NEXT_POLY(poly);
     poly->tpage = 0x1F;
     poly->clut = 0x197;
     poly->x0 = temp_v1 + 0x16;
@@ -3329,7 +3329,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->v1 = 0x18;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
-    poly = poly->tag;
+    NEXT_POLY(poly);
     setcode(poly, 4);
     poly->y1 = 0xCD;
     poly->y0 = 0xCD;
@@ -3353,7 +3353,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->v2 = 0x16;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
-    poly = poly->tag;
+    NEXT_POLY(poly);
     var_a1_3 = &sp10;
     while (poly != 0) {
         var_v1 = *var_a1_3++;
@@ -3369,7 +3369,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
             poly->pad2 = 0x1F0;
             poly->pad3 = 0;
             poly->y0 = 0xD4;
-            poly = poly->tag;
+            NEXT_POLY(poly);
             var_t5_3 += 8;
         } else {
             var_t5_3 += 4;
