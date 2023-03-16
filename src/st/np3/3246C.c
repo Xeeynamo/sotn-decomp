@@ -225,7 +225,7 @@ void EntityCavernDoor(Entity* self) {
         }
 
         if (!(g_blinkTimer & 1)) {
-            poly = func_801D2470((POLY_GT4*)(*((s32*)(&self->unk7C))));
+            poly = func_801D2470((POLY_GT4*)(*(s32*)&self->unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
