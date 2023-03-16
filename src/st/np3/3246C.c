@@ -205,7 +205,7 @@ void func_801B40F8(Entity* self) {
                 NEXT_POLY(poly);
             }
         }
-        
+
         for (tilePos = 0x76, i = 0; i < 3; i++) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
             tileLayoutPtr++;
@@ -313,9 +313,81 @@ void EntityClickSwitch(Entity* entity) {
     }
 }
 
-// very similar to EntityPathBlockSmallWeight in NO3
 // smaller weight blocking path near cube of zoe
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityPathBlockSmallWeight);
+void EntityPathBlockSmallWeight(Entity* self) {
+    s16 firstPolygonIndex;
+    POLY_GT4* poly;
+    s32 var_a1;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180AA8);
+        self->animCurFrame = 8;
+        self->zPriority = 0x5E;
+
+        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        if (firstPolygonIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *(s32*)&self->unk7C = poly;
+        self->flags |= FLAG_FREE_POLYGONS;
+
+        while (poly != NULL) {
+            poly->tpage = 0xF;
+            poly->clut = 0x22;
+            poly->u0 = poly->u2 = 224;
+            poly->u1 = poly->u3 = 240;
+            poly->v0 = poly->v1 = 84;
+            poly->v2 = poly->v3 = 116;
+            poly->pad2 = self->zPriority + 1;
+            poly->pad3 = 8;
+            NEXT_POLY(poly);
+        }
+
+        self->posX.i.hi = 416 - g_Camera.posX.i.hi;
+        self->posY.i.hi = 64 - g_Camera.posY.i.hi;
+        if (D_8003BDEC[49] != 0) {
+            self->posY.i.hi += 111;
+            self->step = 3;
+        }
+        break;
+
+    case 1:
+        if (D_8003BDEC[49] != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posY.val += 0x8000;
+        if ((self->posY.i.hi + g_Camera.posY.i.hi) >= 175) {
+            func_801C2598(0x63D);
+            self->posY.i.hi = 175 - g_Camera.posY.i.hi;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        for (var_a1 = 0x179, i = 0; i < 2; var_a1 -= 0x20, i++) {
+            g_CurrentRoomTileLayout.fg[var_a1] = 0x4FA;
+            g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0x4FA;
+        }
+        self->step++;
+        break;
+    }
+
+    if ((self->step < 3) && (func_801BD588(self, 16, 16, 5) & 4)) {
+        Entity* player = &PLAYER;
+
+        player->posY.i.hi++;
+    }
+    func_801B44B4(0);
+}
 
 // taller weight blocking path near cube of zoe
 void EntityPathBlockTallWeight(Entity* self) {
