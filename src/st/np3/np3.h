@@ -4,6 +4,7 @@ void CreateEntityFromCurrentEntity(u16, Entity*);
 void ReplaceBreakableWithItemDrop(Entity*);
 s32 func_801BCB5C(u16* arg0);
 s16 func_801BD308(u16* arg0, s32 arg1);
+s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_801BC7D4(void);
 int func_801CD658();
 void EntityPriceDrop(Entity* entity);

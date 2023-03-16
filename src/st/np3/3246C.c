@@ -131,7 +131,34 @@ void EntityCavernDoorLever(Entity* entity) {
     entity[1].posY.val = posY;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4004);
+void EntityCavernDoorPlatform(Entity* self) {
+    Entity* player;
+    s32 temp;
+    s32 temp2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        self->animCurFrame = 17;
+        self->unk88.unk = self->posX.val;
+        self->unk88.unk = self->posX.val; // ? WTF
+
+    case 1:
+        player = &PLAYER;
+        self->unk84.S8.unk0 = temp2 = func_801BD588(self, 6, 5, 4);
+
+        if (temp2 != 0) {
+            temp = self->posX.i.hi;
+            temp -= self->unk88.S16.unk2;
+            player->posX.i.hi += temp;
+            player->posY.i.hi++;
+            D_8009748A[0] += temp;
+            D_8009748A[2] += 1;
+        }
+        self->unk88.unk = self->posX.val;
+        self->unk8C.modeS32 = self->posY.val;
+    }
+}
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
