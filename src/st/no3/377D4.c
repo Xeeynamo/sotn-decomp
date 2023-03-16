@@ -243,7 +243,7 @@ void EntityCavernDoor(Entity* self) {
 
             if (!(g_blinkTimer & 0xF)) {
                 entity = AllocEntity(D_8007D858, &D_8007D858[32]);
-                if (entity != 0) {
+                if (entity != NULL) {
                     CreateEntityFromEntity(6, self, entity);
                     entity->posY.i.hi = 156;
                     entity->posX.i.hi += -8 + (Random() & 15);
