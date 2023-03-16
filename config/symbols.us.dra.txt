@@ -970,3 +970,4 @@ g_josephsCloakExteriorDark555 = 0x800A37E0;
 g_josephsCloakExteriorLight555 = 0x800A37E2;
 ApplyJosephsCloakPalette = 0x800F6304;
 DarkenCloakColor = 0x800F62E8;
+DrawMenuTime = 0x800F6998;
