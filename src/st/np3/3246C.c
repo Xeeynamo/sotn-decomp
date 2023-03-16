@@ -205,6 +205,7 @@ void func_801B40F8(Entity* self) {
                 NEXT_POLY(poly);
             }
         }
+        
         for (tilePos = 0x76, i = 0; i < 3; i++) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
             tileLayoutPtr++;
