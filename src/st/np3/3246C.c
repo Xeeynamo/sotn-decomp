@@ -131,6 +131,7 @@ void EntityCavernDoorLever(Entity* entity) {
     entity[1].posY.val = posY;
 }
 
+// platform attached to lever at cavern door
 void EntityCavernDoorPlatform(Entity* self) {
     Entity* player;
     s32 temp;
