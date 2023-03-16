@@ -159,7 +159,7 @@ void EntityCavernDoor(Entity* self) {
         }
 
         firstPolygonIndex = g_api.AllocPolygons(1, 64);
-        if (firstPolygonIndex == (-1)) {
+        if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
