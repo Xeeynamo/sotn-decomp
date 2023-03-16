@@ -29,4 +29,5 @@ build/
 expected/
 disks/
 
+.vscode/settings.json
 tools/go
