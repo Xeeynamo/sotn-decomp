@@ -352,7 +352,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly->pad2 = self->zPriority + 1;
             poly->pad3 = 8;
         }
-        
+
         if (D_8003BDEC[49] != 0) {
             self->step = 3;
             self->posY.i.hi += 111;
