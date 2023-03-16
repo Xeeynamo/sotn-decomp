@@ -331,11 +331,13 @@ void EntityPathBlockSmallWeight(Entity* self) {
         InitializeEntity(D_80180B18);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
+
         firstPolygonIndex = g_api.AllocPolygons(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
+
         poly = &D_80086FEC[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
