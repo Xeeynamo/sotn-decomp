@@ -190,31 +190,29 @@ void EntityCavernDoor(Entity* self) {
             tileLayoutPtr = &D_80181230[3];
             self->step = 128;
             self->animCurFrame = 0;
-            goto label;
+        } else {
+            firstPolygonIndex = g_api.AllocPolygons(1, 64);
+            if (firstPolygonIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+
+            poly = &D_80086FEC[firstPolygonIndex];
+            self->firstPolygonIndex = firstPolygonIndex;
+            *(s32*)&self->unk7C = poly;
+            self->flags |= FLAG_FREE_POLYGONS;
+            while (poly != NULL) {
+                poly->u0 = poly->v0 = 1;
+                poly->r0 = 64;
+                poly->b0 = 128;
+                poly->g0 = 96;
+                poly->pad2 = self->zPriority + 0x18;
+                poly->pad3 = 8;
+                poly->p3 = 0;
+                NEXT_POLY(poly);
+            }
         }
 
-        firstPolygonIndex = g_api.AllocPolygons(1, 64);
-        if (firstPolygonIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        poly = &D_80086FEC[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
-        while (poly != NULL) {
-            poly->u0 = poly->v0 = 1;
-            poly->r0 = 64;
-            poly->b0 = 128;
-            poly->g0 = 96;
-            poly->pad2 = self->zPriority + 0x18;
-            poly->pad3 = 8;
-            poly->p3 = 0;
-            NEXT_POLY(poly);
-        }
-
-    label:
         for (tilePos = 0x76, i = 0; i < 3; i++) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
             tileLayoutPtr++;
