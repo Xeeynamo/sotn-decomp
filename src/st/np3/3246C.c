@@ -597,7 +597,7 @@ void func_801B5E98(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x29;
-        self->flags &= 0xF7FFFFFF;
+        self->flags &= ~FLAG_UNK_08000000;
         self->animCurFrame = self->subId + 0x22;
         self->posX.i.hi = D_80181220[self->subId][0];
         self->posY.i.hi = D_80181220[self->subId][1];

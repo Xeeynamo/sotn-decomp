@@ -193,7 +193,7 @@ void func_801BA5CC(s32* arg0, s32 arg1) {
     s32 var_v0_2;
 
     if (arg1 & 1) {
-        var_v0 = (*arg0) & 0xF7FFFFFF;
+        var_v0 = (*arg0) & ~FLAG_UNK_08000000;
     } else {
         new_var2 = 0x08000000;
         var_v0 = 0x08000000;
