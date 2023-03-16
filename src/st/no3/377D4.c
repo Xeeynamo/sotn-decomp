@@ -343,7 +343,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
-        for (poly; poly != NULL; NEXT_POLY(poly)) {
+        while (poly != NULL) {
             poly->tpage = 0xF;
             poly->clut = 0x22;
             poly->u0 = poly->u2 = 224;
@@ -352,6 +352,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly->v2 = poly->v3 = 116;
             poly->pad2 = self->zPriority + 1;
             poly->pad3 = 8;
+            NEXT_POLY(poly);
         }
 
         if (D_8003BDEC[49] != 0) {
@@ -406,6 +407,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         InitializeEntity(D_80180B18);
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
+
         firstPolygonIndex = g_api.AllocPolygons(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
@@ -416,7 +418,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
-        for (poly; poly != NULL; NEXT_POLY(poly)) {
+        while (poly != NULL) {
             poly->tpage = 0xF;
             poly->clut = 0x22;
             poly->u0 = poly->u2 = 224;
@@ -425,6 +427,7 @@ void EntityPathBlockTallWeight(Entity* self) {
             poly->v2 = poly->v3 = 116;
             poly->pad2 = self->zPriority + 1;
             poly->pad3 = 8;
+            NEXT_POLY(poly);
         }
 
         if (D_8003BDEC[49] != 0) {
