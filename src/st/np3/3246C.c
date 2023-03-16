@@ -133,7 +133,129 @@ void EntityCavernDoorLever(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4004);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B40F8);
+// door blocking way to the Underground Caverns
+void EntityCavernDoor(Entity* self) {
+    s16 firstPolygonIndex;
+    u16* tileLayoutPtr;
+    Entity* entity;
+    POLY_GT4* poly;
+    s32 tilePos;
+    s32 i;
+    s32 temp;
+    s32 temp2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        self->animCurFrame = 10;
+        self->zPriority = 0x9F;
+
+        tileLayoutPtr = &D_801810F8[0];
+        if (D_8003BDEC[48] != 0) {
+            tileLayoutPtr = &D_801810F8[3];
+            self->step = 128;
+            self->animCurFrame = 0;
+            goto label;
+        }
+
+        firstPolygonIndex = g_api.AllocPolygons(1, 64);
+        if (firstPolygonIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+
+        poly = &D_80086FEC[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        *((s32*)(&self->unk7C)) = poly;
+        self->flags |= FLAG_FREE_POLYGONS;
+        while (poly != NULL) {
+            poly->u0 = poly->v0 = 1;
+            poly->r0 = 64;
+            poly->b0 = 128;
+            poly->g0 = 96;
+            tilePos = 0x76;
+            poly->pad2 = self->zPriority + 0x18;
+            poly->pad3 = 8;
+            poly->p3 = 0;
+            poly = (POLY_GT4*)poly->tag;
+        }
+
+    label:
+        for (tilePos = 0x76, i = 0; i < 3; i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            tileLayoutPtr++;
+            tilePos += 0x10;
+        }
+        break;
+
+    case 1:
+        if (D_8003BDEC[48] != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posY.val += 0x6000;
+        if (++self->unk80.modeS32 & 1) {
+            self->posX.i.hi++;
+        } else {
+            self->posX.i.hi--;
+        }
+
+        temp = self->posY.i.hi - 136;
+        if (temp < 0) {
+            temp2 = self->posY.i.hi - 121;
+        } else {
+            temp2 = self->posY.i.hi - 136;
+        }
+
+        temp = temp2 >> 4;
+        if (temp >= 4) {
+            temp = 3;
+            self->step = 3;
+        }
+
+        if (!(self->unk80.modeS32 & 15)) {
+            g_api.PlaySfx(NA_SE_EV_HEAVY_BLOCK_DRAG);
+        }
+
+        for (tilePos = 0x76, tileLayoutPtr = &D_801810F8[3], i = 0; i < temp;
+             tileLayoutPtr++, tilePos += 0x10, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+        }
+
+        if (!(g_blinkTimer & 1)) {
+            poly = func_801D2470((POLY_GT4*)(*((s32*)(&self->unk7C))));
+            if (poly != NULL) {
+                poly->p3 = 1;
+            }
+
+            if (!(g_blinkTimer & 15)) {
+                entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(6, self, entity);
+                    entity->posY.i.hi = 156;
+                    entity->posX.i.hi += -8 + (Random() & 15);
+                    entity->zPriority = self->zPriority + 2;
+                    entity->subId = 0x10;
+                    entity->unk19 |= 3;
+                    entity->unk1A = entity->unk1C = 192;
+                }
+            }
+        }
+        break;
+    }
+
+    if (self->flags & FLAG_FREE_POLYGONS) {
+        for (poly = *(s32*)&self->unk7C; poly != NULL;
+             poly = (POLY_GT4*)poly->tag) {
+            if (poly->p3 != 0) {
+                func_801B3D24(poly);
+            }
+        }
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B44B4);
 

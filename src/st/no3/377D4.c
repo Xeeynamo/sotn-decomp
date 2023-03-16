@@ -187,7 +187,7 @@ void EntityCavernDoor(Entity* self) {
             poly->pad3 = 8;
             poly->p3 = 0;
             poly = (POLY_GT4*)poly->tag;
-        };
+        }
 
     label:
         for (tilePos = 0x76, i = 0; i < 3; i++) {
@@ -206,7 +206,7 @@ void EntityCavernDoor(Entity* self) {
 
     case 2:
         self->posY.val += 0x6000;
-        if ((++self->unk80.modeS32) & 1) {
+        if (++self->unk80.modeS32 & 1) {
             self->posX.i.hi++;
         } else {
             self->posX.i.hi--;
@@ -220,19 +220,14 @@ void EntityCavernDoor(Entity* self) {
         }
 
         temp = temp2 >> 4;
-        tilePos = 0x76;
         if (temp >= 4) {
             temp = 3;
             self->step = 3;
         }
 
-        for (tileLayoutPtr = &D_80181230[3], i = 0; i < temp;) {
-            do { // !FAKE:
-                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
-                tileLayoutPtr++;
-                tilePos += 0x10;
-                i++;
-            } while (0);
+        for (tilePos = 0x76, tileLayoutPtr = &D_80181230[3], i = 0; i < temp;
+             tileLayoutPtr++, tilePos += 0x10, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
         }
 
         if (!(g_blinkTimer & 1)) {
@@ -241,7 +236,7 @@ void EntityCavernDoor(Entity* self) {
                 poly->p3 = 1;
             }
 
-            if (!(g_blinkTimer & 0xF)) {
+            if (!(g_blinkTimer & 15)) {
                 entity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(6, self, entity);

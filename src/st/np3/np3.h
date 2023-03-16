@@ -8,10 +8,12 @@ s32 func_801BC7D4(void);
 int func_801CD658();
 void EntityPriceDrop(Entity* entity);
 void EntityInventoryDrop(Entity* entity);
+POLY_GT4* func_801D2470(POLY_GT4* poly);
 
 extern u16 D_80180A54[];
 extern u16 D_80180A60[];
 extern u16 D_80180A6C[];
+extern u16 D_801810F8[];
 extern u16 D_80181204[];
 extern const u8 D_80181214[];
 extern s8 D_80181454[];
