@@ -1209,7 +1209,7 @@ void FreePolygons(s32 polygonIndex) {
                 setcode(poly, 0);
             } else
                 setcode(poly, 0);
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         } while (poly);
     }
 }

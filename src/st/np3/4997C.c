@@ -197,7 +197,7 @@ POLY_GT4* func_801D251C(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;

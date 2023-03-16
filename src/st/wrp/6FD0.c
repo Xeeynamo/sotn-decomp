@@ -1509,7 +1509,7 @@ void EntityWarpRoom(Entity* entity) {
             poly->y2 = temp_s6;
             poly->x3 = temp_s7;
             poly->x2 = temp_s7;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
             var_s1 = var_s0 << 8;
         }
 
@@ -1522,7 +1522,7 @@ void EntityWarpRoom(Entity* entity) {
         poly->r0 = poly->g0 = poly->b0 = 0;
         poly->pad2 = 0x60;
         poly->pad3 = 0xA;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         poly->code = 3;
         poly->r0 = poly->g0 = poly->b0 = 0;
         poly->x1 = poly->x3 = 256;
@@ -1794,7 +1794,7 @@ void EntityWarpRoom(Entity* entity) {
         poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3 =
             *(u8*)&D_80193AAC;
         D_80180608[i3] += 0x20;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
 }
 #endif
@@ -3318,7 +3318,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->x2 = var_t5_2;
     poly->x0 = var_t5_2;
     var_t5_3 = var_t5_2 + 0x10;
-    NEXT_POLY(poly);
+    poly = (POLY_GT4*)poly->tag;
     poly->tpage = 0x1F;
     poly->clut = 0x197;
     poly->x0 = var_t5_2 - 6;
@@ -3329,7 +3329,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->v1 = 0x18;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
-    NEXT_POLY(poly);
+    poly = (POLY_GT4*)poly->tag;
     poly->tpage = 0x1F;
     poly->clut = 0x197;
     poly->x0 = temp_v1 + 0x16;
@@ -3341,7 +3341,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->v1 = 0x18;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
-    NEXT_POLY(poly);
+    poly = (POLY_GT4*)poly->tag;
     setcode(poly, 4);
     poly->y1 = 0xCD;
     poly->y0 = 0xCD;
@@ -3365,7 +3365,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     poly->v2 = 0x16;
     poly->pad2 = 0x1EF;
     poly->pad3 = 0;
-    NEXT_POLY(poly);
+    poly = (POLY_GT4*)poly->tag;
     var_a1_3 = &sp10;
     while (poly != 0) {
         var_v1 = *var_a1_3++;
@@ -3381,7 +3381,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
             poly->pad2 = 0x1F0;
             poly->pad3 = 0;
             poly->y0 = 0xD4;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
             var_t5_3 += 8;
         } else {
             var_t5_3 += 4;
@@ -3400,7 +3400,7 @@ POLY_GT4* func_801937A8(POLY_GT4* poly) {
     while (poly) {
         if (poly->p3 == 0)
             return poly;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
     return NULL;
 }
@@ -3415,7 +3415,7 @@ POLY_GT4* func_801937D8(POLY_GT4* poly, u8 index) {
             s32 i = 1;
             if (i < index_) {
                 do {
-                    NEXT_POLY(poly);
+                    poly = (POLY_GT4*)poly->tag;
                     if (!poly)
                         return NULL;
                 } while (poly->p3 == 0 && ++i < index);
@@ -3424,7 +3424,7 @@ POLY_GT4* func_801937D8(POLY_GT4* poly, u8 index) {
             if (i == index_)
                 return var_v0;
         }
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly) {
             goto loop_2;
         }
@@ -3453,7 +3453,7 @@ POLY_GT4* func_80193854(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;

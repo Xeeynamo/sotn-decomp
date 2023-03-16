@@ -188,7 +188,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
             poly->y2 = 0xE3;
             poly->pad2 = 0x40;
             poly->pad3 = 0;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         }
         break;
 
@@ -204,7 +204,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
             poly->x0 = temp_v0_2;
             poly->x3 = temp_v1_2;
             poly->x1 = temp_v1_2;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         };
         break;
     }

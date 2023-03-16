@@ -1650,7 +1650,7 @@ POLY_GT4* func_801BD5F8(POLY_GT4* poly) {
     while (poly) {
         if (poly->p3 == 0)
             return poly;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
     return NULL;
 }
@@ -1665,7 +1665,7 @@ POLY_GT4* func_801BD628(POLY_GT4* poly, u8 index) {
             s32 i = 1;
             if (i < index_) {
                 do {
-                    NEXT_POLY(poly);
+                    poly = (POLY_GT4*)poly->tag;
                     if (!poly)
                         return NULL;
                 } while (poly->p3 == 0 && ++i < index);
@@ -1674,7 +1674,7 @@ POLY_GT4* func_801BD628(POLY_GT4* poly, u8 index) {
             if (i == index_)
                 return var_v0;
         }
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly) {
             goto loop_2;
         }
@@ -1703,7 +1703,7 @@ POLY_GT4* func_801BD6A4(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;

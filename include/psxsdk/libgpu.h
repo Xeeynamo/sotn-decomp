@@ -3,11 +3,6 @@
 #include <types.h>
 
 /*
- * Set Next Polygon
- */
-#define NEXT_POLY(poly) (poly = (poly)->tag)
-
-/*
  *	Set Primitive Attributes
  */
 #define setTPage(p, tp, abr, x, y) ((p)->tpage = getTPage(tp, abr, x, y))

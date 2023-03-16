@@ -82,7 +82,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", func_801D6C68);
 POLY_GT4* func_801D6DB8(POLY_GT4* poly) {
     while (poly != NULL) {
         if (poly->p3 != 0) {
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         } else {
             return poly;
         }
@@ -100,7 +100,7 @@ POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
             s32 i = 1;
             if (i < index_) {
                 do {
-                    NEXT_POLY(poly);
+                    poly = (POLY_GT4*)poly->tag;
                     if (!poly)
                         return NULL;
                 } while (poly->p3 == 0 && ++i < index);
@@ -109,7 +109,7 @@ POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
             if (i == index_)
                 return var_v0;
         }
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly) {
             goto loop_2;
         }
@@ -138,7 +138,7 @@ POLY_GT4* func_801D6E64(POLY_GT4* startPoly, s32 count) {
             unk = 1;
         }
 
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         if (poly == 0)
             return 0;
         poly->p3 = unk;

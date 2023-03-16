@@ -60,7 +60,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
         poly->pad2 = 0x11;
         poly->pad3 = 8;
         poly->v1 = D_80180108[i];
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
 }
 #endif
@@ -71,7 +71,7 @@ void func_801ACBE4(s32 arg0, u16 arg1) {
     POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
     while (poly != NULL) {
         poly->pad3 = arg1;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
 }
 
@@ -97,7 +97,7 @@ void func_801ACC7C(void) {
         poly->tpage = i + 137;
         poly->clut = 0x210;
         poly->pad3 = 4;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
 
     firstPolygonIndex = g_api.AllocPolygons(1, 2);
@@ -111,7 +111,7 @@ void func_801ACC7C(void) {
         func_801B1CFC(poly, 255);
         poly->pad2 = 0x1FD;
         poly->pad3 = 0x51;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
     }
 }
 
@@ -132,7 +132,7 @@ s32 func_801ACDFC(void) {
             poly = &D_80086FEC[D_801BAFC4];
             poly->pad3 = 8;
         } while (0);
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         poly->pad3 = 8;
     } else {
         return 0;
@@ -151,7 +151,7 @@ s32 func_801ACEC0(void) {
     }
 
     func_801B1CFC(poly, var_s0);
-    NEXT_POLY(poly);
+    poly = (POLY_GT4*)poly->tag;
     poly->pad3 = 0x51;
     func_801B1CFC((POLY_GT4*)poly, var_s0);
 

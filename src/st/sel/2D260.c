@@ -21,10 +21,10 @@ void DrawNavigationTips(NavigationTips mode) {
     case Tips_Generic:
         func_801B2670(poly, 32, 176, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         break;
@@ -32,23 +32,23 @@ void DrawNavigationTips(NavigationTips mode) {
     case Tips_Input:
         func_801B2670(poly, 288, 32, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 288, 48, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 288, 64, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 288, 80, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_YesNo:
     case Tips_NoYes:
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         if (mode == Tips_YesNo) {
@@ -59,7 +59,7 @@ void DrawNavigationTips(NavigationTips mode) {
         break;
 
     case Tips_Confirm:
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         DrawImages8x8(*imgs, 52, 196, 1);
@@ -68,7 +68,7 @@ void DrawNavigationTips(NavigationTips mode) {
     case Tips_MenuNavigation:
         func_801B2670(poly, 32, 184, 16, 16);
         poly->pad3 = 0;
-        NEXT_POLY(poly);
+        poly = (POLY_GT4*)poly->tag;
         func_801B2670(poly, 32, 200, 16, 16);
         poly->pad3 = 0;
         break;

@@ -1250,7 +1250,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801A2400);
 POLY_GT4* func_801A2550(POLY_GT4* poly) {
     while (poly != NULL) {
         if (poly->p3 != 0) {
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         } else {
             return poly;
         }

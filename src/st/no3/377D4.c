@@ -209,7 +209,7 @@ void EntityCavernDoor(Entity* self) {
                 poly->pad2 = self->zPriority + 0x18;
                 poly->pad3 = 8;
                 poly->p3 = 0;
-                NEXT_POLY(poly);
+                poly = (POLY_GT4*)poly->tag;
             }
         }
 
@@ -276,7 +276,8 @@ void EntityCavernDoor(Entity* self) {
     }
 
     if (self->flags & FLAG_FREE_POLYGONS) {
-        for (poly = *(s32*)&self->unk7C; poly != NULL; NEXT_POLY(poly)) {
+        for (poly = *(s32*)&self->unk7C; poly != NULL;
+             poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
                 func_801B94F0(poly);
             }
@@ -350,7 +351,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly->v2 = poly->v3 = 116;
             poly->pad2 = self->zPriority + 1;
             poly->pad3 = 8;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         }
 
         if (D_8003BDEC[49] != 0) {
@@ -425,7 +426,7 @@ void EntityPathBlockTallWeight(Entity* self) {
             poly->v2 = poly->v3 = 116;
             poly->pad2 = self->zPriority + 1;
             poly->pad3 = 8;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         }
 
         if (D_8003BDEC[49] != 0) {
@@ -730,7 +731,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             poly->pad2 = self->zPriority + 0x18;
             poly->pad3 = 8;
             poly->p3 = 0;
-            NEXT_POLY(poly);
+            poly = (POLY_GT4*)poly->tag;
         }
 
         for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0;
@@ -791,7 +792,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
     }
 
     if (self->flags & FLAG_FREE_POLYGONS) {
-        for (poly = *(s32*)&self->unk7C; poly != NULL; NEXT_POLY(poly)) {
+        for (poly = *(s32*)&self->unk7C; poly != NULL;
+             poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
                 func_801B94F0(poly);
             }
