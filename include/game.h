@@ -1088,6 +1088,7 @@ extern s32 D_80097424;
 extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
+extern u16 D_8009748A[];
 extern Pad g_pads[];
 extern u32 g_StageId;
 extern s32 D_800974A4; // map open
