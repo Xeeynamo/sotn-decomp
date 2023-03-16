@@ -143,7 +143,7 @@ void EntityCavernDoorLever(Entity* entity) {
 // platform attached to lever at cavern door
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityCavernDoorPlatform);
 
-// door blocking way to caverns
+// door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
     s16 firstPolygonIndex;
     u16* tileLayoutPtr;
