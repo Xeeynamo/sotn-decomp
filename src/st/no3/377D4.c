@@ -162,7 +162,7 @@ void EntityCavernDoor(Entity* self) {
 
         tileLayoutPtr = &D_80181230[0];
         if (D_8003BDEC[48] != 0) {
-            tileLayoutPtr += 3;
+            tileLayoutPtr = &D_80181230[3];
             self->step = 128;
             self->animCurFrame = 0;
             goto label;
