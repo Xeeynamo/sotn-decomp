@@ -52,7 +52,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS		:= -P 4
-GO				:= $(TOOLS_DIR)/go/bin/go
+GO				:= $(HOME)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 SOTNDISK		:= $(GOPATH)/bin/sotn-disk
@@ -299,9 +299,9 @@ $(M2C_APP):
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
 $(GO):
-	curl -L -o go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
-	tar -C $(TOOLS_DIR) -xzf go1.19.3.linux-amd64.tar.gz
-	rm go1.19.3.linux-amd64.tar.gz
+	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
+	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
+	rm go1.19.7.linux-amd64.tar.gz
 $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 $(SOTNDISK): $(GO)
