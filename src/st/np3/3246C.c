@@ -953,7 +953,14 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB044);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB140);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB254);
+void func_801BB254(s16 arg0) {
+    while (true) {
+        if ((D_801D276C->posY != (u16)~1) && !(D_801D276C->posY < arg0)) {
+            break;
+        }
+        D_801D276C++;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB2A0);
 
