@@ -426,7 +426,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011AC3C);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
 
 void func_8011B334(Entity* entity) {
-    Unkstruct_8011B334 temp;
+    Equipment temp;
 
     if (PLAYER.unk2E != 0x70) {
         DestroyEntity(entity);
@@ -441,13 +441,13 @@ void func_8011B334(Entity* entity) {
 
     if (entity->step == 0) {
         func_800FE728(0, &temp, 0);
-        entity->attack = temp.unk8;
-        entity->attackElement = temp.unkC;
-        entity->unk3C = temp.unk28;
-        entity->unk49 = temp.unk1A;
-        entity->unk58 = temp.unk26;
-        entity->unk6A = temp.unk2A;
-        entity->objectRoomIndex = temp.unk30;
+        entity->attack = temp.attack;
+        entity->attackElement = temp.element;
+        entity->unk3C = temp.hitType;
+        entity->unk49 = temp.enemyInvincibilityFrames;
+        entity->unk58 = temp.stunFrames;
+        entity->unk6A = temp.hitEffect;
+        entity->objectRoomIndex = temp.criticalRate;
         func_80118894(entity);
         entity->unk10 = 9;
         entity->unk12 = 0x15;

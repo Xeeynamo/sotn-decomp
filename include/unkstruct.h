@@ -252,21 +252,6 @@ typedef struct Unkstruct_800A2D98 {
     /* 0x8 */ s32 unk8;
 } Unkstruct_800A2D98;
 
-typedef struct Unkstruct_8011B334 {
-    /* 0x00 */ char pad0[0x8];
-    /* 0x08 */ u16 unk8; // assigned to entity->unk40
-    /* 0x0A */ char padA[0x2];
-    /* 0x0C */ u16 unkC; // assigned to entity->unk42
-    /* 0x0E */ char padE[0xC];
-    /* 0x1A */ u8 unk1A; // assigned to entity->unk49
-    /* 0x1B */ char pad1B[0xB];
-    /* 0x26 */ s16 unk26; // assigned to entity->unk58
-    /* 0x28 */ u16 unk28; // assigned to entity->unk3C
-    /* 0x2A */ u16 unk2A; // assigned to entity->unk6A
-    /* 0x2C */ char pad2C[0x4];
-    /* 0x30 */ u16 unk30; // assigned to entity->objectRoomIndex
-} Unkstruct_8011B334;
-
 typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
