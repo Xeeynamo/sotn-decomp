@@ -214,7 +214,7 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
                 f"({coverage_diff:+.2f}%)",
                 f"funcs {funcs*100:.2f}%",
                 f"({funcs_diff:+.2f}%)",
-            ])
+            ]) + "\n"
     if len(report) == 0:
         # nothing to report, do not send any message to Discord
         return
