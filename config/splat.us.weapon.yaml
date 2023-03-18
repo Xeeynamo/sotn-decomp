@@ -652,6 +652,7 @@ segments:
     subsegments:
       - [0x138000, data, weapon44]
       - [0x1382C0, c, weapon44]
+      - [0x138F24, sbss, weapon44]
   - name: weapon45
     type: ci4
     start: 0x13B000
