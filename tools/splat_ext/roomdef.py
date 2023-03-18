@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import ctypes
 import json
 import os
 import sys
@@ -53,7 +52,6 @@ class PSXSegRoomdef(N64Segment):
             f.write(json.dumps(data, indent=4))
 
     def parse_roomdef(self, data: bytearray) -> list:
-
         count = int(len(data) / item_size)
         expected_data_size = count * item_size + 4
         if len(data) != expected_data_size:

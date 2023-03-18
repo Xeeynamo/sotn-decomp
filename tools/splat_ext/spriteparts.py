@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import ctypes
 import json
 import os
 import sys
@@ -11,29 +10,27 @@ sys.path.append(f"{os.getcwd()}/tools/n64splat")
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from util import options
 from segtypes.n64.segment import N64Segment
+import utils
 
 item_size = 0x18  # sizeof(SpritePart)
 
 
 def parse_spriteparts(data: bytearray) -> list:
-    def to_s16(data):
-        return ctypes.c_short(data[0] | (data[1] << 8)).value
-
-    count = to_s16(data[0:])
+    count = utils.to_s16(data[0:])
     items = []
     for i in range(0, count):
         items.append({
-            "flags": to_s16(data[2 + i * item_size + 0:]),
-            "offsetx": to_s16(data[2 + i * item_size + 2:]),
-            "offsety": to_s16(data[2 + i * item_size + 4:]),
-            "width": to_s16(data[2 + i * item_size + 6:]),
-            "height": to_s16(data[2 + i * item_size + 8:]),
-            "clut": to_s16(data[2 + i * item_size + 10:]),
-            "tileset": to_s16(data[2 + i * item_size + 12:]),
-            "left": to_s16(data[2 + i * item_size + 14:]),
-            "top": to_s16(data[2 + i * item_size + 16:]),
-            "right": to_s16(data[2 + i * item_size + 18:]),
-            "bottom": to_s16(data[2 + i * item_size + 20:]),
+            "flags": utils.to_s16(data[2 + i * item_size + 0:]),
+            "offsetx": utils.to_s16(data[2 + i * item_size + 2:]),
+            "offsety": utils.to_s16(data[2 + i * item_size + 4:]),
+            "width": utils.to_s16(data[2 + i * item_size + 6:]),
+            "height": utils.to_s16(data[2 + i * item_size + 8:]),
+            "clut": utils.to_s16(data[2 + i * item_size + 10:]),
+            "tileset": utils.to_s16(data[2 + i * item_size + 12:]),
+            "left": utils.to_s16(data[2 + i * item_size + 14:]),
+            "top": utils.to_s16(data[2 + i * item_size + 16:]),
+            "right": utils.to_s16(data[2 + i * item_size + 18:]),
+            "bottom": utils.to_s16(data[2 + i * item_size + 20:]),
         })
     return items
 

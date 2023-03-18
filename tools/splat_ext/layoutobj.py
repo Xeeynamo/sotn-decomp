@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import ctypes
 import json
 import os
 import sys
@@ -11,23 +10,21 @@ sys.path.append(f"{os.getcwd()}/tools/n64splat")
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from util import options
 from segtypes.n64.segment import N64Segment
+import utils
 
 item_size = 0xA  # sizeof(LayoutObject)
 
 
 def parse_layoutobj(data: bytearray) -> list:
-    def to_s16(data):
-        return ctypes.c_short(data[0] | (data[1] << 8)).value
-
     count = int(len(data) / item_size)
     items = []
     for i in range(0, count):
         item = {
-            "x": to_s16(data[i * item_size + 0:]),
-            "y": to_s16(data[i * item_size + 2:]),
-            "objectId": to_s16(data[i * item_size + 4:]),
-            "objectRoomIndex": to_s16(data[i * item_size + 6:]),
-            "subId": to_s16(data[i * item_size + 8:]),
+            "x": utils.to_s16(data[i * item_size + 0:]),
+            "y": utils.to_s16(data[i * item_size + 2:]),
+            "objectId": utils.to_s16(data[i * item_size + 4:]),
+            "objectRoomIndex": utils.to_s16(data[i * item_size + 6:]),
+            "subId": utils.to_s16(data[i * item_size + 8:]),
         }
         if item["x"] == -1 and item["y"] == -1:
             break

@@ -691,33 +691,35 @@ typedef struct {
 // D_800A4B04 it is assumed the equip data starts from here
 // https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
 typedef struct {
-    /* 800a4b38 */ const char* name;
-    /* 800a4b3C */ const char* description;
-    /* 800a4b40 */ u16 attack;
-    /* 800a4b42 */ u16 defense;
-    /* 800a4b44 */ u16 element;
-    /* 800a4b46 */ u8 unk0E;
-    /* 800a4b46 */ u8 entId;
-    /* 800a4b48 */ u16 unk10;
-    /* 800a4b4A */ u16 unk12;
-    /* 800a4b4C */ u16 unk14;
-    /* 800a4b4E */ u16 unk16;
-    /* 800a4b50 */ u8 unk18;
-    /* 800a4b51 */ u8 isConsumable;
-    /* 800a4b52 */ u16 unk1A;
-    /* 800a4b54 */ u16 unk1C;
-    /* 800a4b56 */ u16 unk1E;
-    /* 800a4b58 */ u16 unk20;
-    /* 800a4b5A */ u16 unk22;
-    /* 800a4b5C */ u16 mpUsage;
-    /* 800a4b5E */ u16 unk26;
-    /* 800a4b60 */ u8 unk28; // somewhat range-related
-    /* 800a4b61 */ u8 unk29;
-    /* 800a4b62 */ u16 unk2A;
-    /* 800a4b64 */ u16 icon;
-    /* 800a4b66 */ u16 palette;
-    /* 800a4b68 */ u16 unk30;
-    /* 800a4b6A */ u16 unk32;
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ s16 attack;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 element;
+    /* 0x0E */ u8 damageScale;
+    /* 0x0F */ u8 weaponId;
+    /* 0x10 */ u16 unk10;
+    /* 0x12 */ u8 playerAnim;
+    /* 0x13 */ u8 unk13;
+    /* 0x14 */ u8 unk14;
+    /* 0x15 */ u8 lockDuration;
+    /* 0x16 */ u16 chainable;
+    /* 0x18 */ u8 specialMove;
+    /* 0x19 */ u8 isConsumable;
+    /* 0x1A */ u8 enemyInvincibilityFrames;
+    /* 0x1B */ u8 unk1B;
+    /* 0x1C */ u16 unk1C;
+    /* 0x1E */ u16 unk1E;
+    /* 0x20 */ u16 unk20;
+    /* 0x22 */ u16 unk22;
+    /* 0x24 */ u16 mpUsage;
+    /* 0x26 */ u16 stunFrames;
+    /* 0x28 */ u16 hitType;
+    /* 0x2A */ u16 hitEffect;
+    /* 0x2C */ u16 icon;
+    /* 0x2E */ u16 palette;
+    /* 0x30 */ u16 criticalRate;
+    /* 0x32 */ u16 unk32;
 } Equipment; /* size=0x34 */
 
 // Defines armor, cloak and rings

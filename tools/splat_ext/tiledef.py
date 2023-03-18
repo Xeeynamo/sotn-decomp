@@ -13,6 +13,8 @@ sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from util import options
 from segtypes.n64.segment import N64Segment
 from util.symbols import spim_context
+import utils
+
 
 def generate_assembly_tiledef(writer: io.BufferedWriter, name: str, content: str):
     obj = json.loads(content)
@@ -46,18 +48,11 @@ class PSXSegTiledef(N64Segment):
             f.write(json.dumps(data, indent=4))
 
     def parse_tiledef(self, data: bytearray):
-        def to_u32(data):
-            return ctypes.c_uint32(
-                data[0] |
-                (data[1] << 8) |
-                (data[2] << 16) |
-                (data[3] << 24)).value
-
         return {
-            "gfxPage": self.get_symbol(to_u32(data[0:])).given_name,
-            "gfxIndex": self.get_symbol(to_u32(data[4:])).given_name,
-            "clut": self.get_symbol(to_u32(data[8:])).given_name,
-            "collision": self.get_symbol(to_u32(data[12:])).given_name,
+            "gfxPage": self.get_symbol(utils.to_u32(data[0:])).given_name,
+            "gfxIndex": self.get_symbol(utils.to_u32(data[4:])).given_name,
+            "clut": self.get_symbol(utils.to_u32(data[8:])).given_name,
+            "collision": self.get_symbol(utils.to_u32(data[12:])).given_name,
         }
 
 
