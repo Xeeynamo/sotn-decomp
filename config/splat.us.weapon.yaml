@@ -28,6 +28,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon0
     start: 0x04000
     vram: 0x8017A000
     subalign: 4
@@ -41,6 +42,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon1
     start: 0x0B000
     vram: 0x8017A000
     subalign: 4
@@ -54,6 +56,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon2
     start: 0x12000
     vram: 0x8017A000
     subalign: 4
@@ -67,6 +70,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon3
     start: 0x19000
     vram: 0x8017A000
     subalign: 4
@@ -80,6 +84,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon4
     start: 0x20000
     vram: 0x8017A000
     subalign: 4
@@ -93,6 +98,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon5
     start: 0x27000
     vram: 0x8017A000
     subalign: 4
@@ -106,6 +112,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon6
     start: 0x2E000
     vram: 0x8017A000
     subalign: 4
@@ -119,6 +126,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon7
     start: 0x35000
     vram: 0x8017A000
     subalign: 4
@@ -132,6 +140,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon8
     start: 0x3C000
     vram: 0x8017A000
     subalign: 4
@@ -145,6 +154,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon9
     start: 0x43000
     vram: 0x8017A000
     subalign: 4
@@ -158,6 +168,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon10
     start: 0x4A000
     vram: 0x8017A000
     subalign: 4
@@ -171,6 +182,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon11
     start: 0x51000
     vram: 0x8017A000
     subalign: 4
@@ -184,6 +196,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon12
     start: 0x58000
     vram: 0x8017A000
     subalign: 4
@@ -197,6 +210,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon13
     start: 0x5F000
     vram: 0x8017A000
     subalign: 4
@@ -210,6 +224,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon14
     start: 0x66000
     vram: 0x8017A000
     subalign: 4
@@ -223,6 +238,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon15
     start: 0x6D000
     vram: 0x8017A000
     subalign: 4
@@ -236,6 +252,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon16
     start: 0x74000
     vram: 0x8017A000
     subalign: 4
@@ -249,6 +266,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon17
     start: 0x7B000
     vram: 0x8017A000
     subalign: 4
@@ -262,6 +280,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon18
     start: 0x82000
     vram: 0x8017A000
     subalign: 4
@@ -275,6 +294,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon19
     start: 0x89000
     vram: 0x8017A000
     subalign: 4
@@ -288,6 +308,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon20
     start: 0x90000
     vram: 0x8017A000
     subalign: 4
@@ -301,6 +322,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon21
     start: 0x97000
     vram: 0x8017A000
     subalign: 4
@@ -314,6 +336,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon22
     start: 0x9E000
     vram: 0x8017A000
     subalign: 4
@@ -327,6 +350,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon23
     start: 0xA5000
     vram: 0x8017A000
     subalign: 4
@@ -340,6 +364,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon24
     start: 0xAC000
     vram: 0x8017A000
     subalign: 4
@@ -353,6 +378,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon25
     start: 0xB3000
     vram: 0x8017A000
     subalign: 4
@@ -366,6 +392,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon26
     start: 0xBA000
     vram: 0x8017A000
     subalign: 4
@@ -379,6 +406,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon27
     start: 0xC1000
     vram: 0x8017A000
     subalign: 4
@@ -392,6 +420,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon28
     start: 0xC8000
     vram: 0x8017A000
     subalign: 4
@@ -405,6 +434,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon29
     start: 0xCF000
     vram: 0x8017A000
     subalign: 4
@@ -418,6 +448,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon30
     start: 0xD6000
     vram: 0x8017A000
     subalign: 4
@@ -431,6 +462,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon31
     start: 0xDD000
     vram: 0x8017A000
     subalign: 4
@@ -444,6 +476,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon32
     start: 0xE4000
     vram: 0x8017A000
     subalign: 4
@@ -457,6 +490,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon33
     start: 0xEB000
     vram: 0x8017A000
     subalign: 4
@@ -470,6 +504,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon34
     start: 0xF2000
     vram: 0x8017A000
     subalign: 4
@@ -483,6 +518,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon35
     start: 0xF9000
     vram: 0x8017A000
     subalign: 4
@@ -496,6 +532,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon36
     start: 0x100000
     vram: 0x8017A000
     subalign: 4
@@ -509,6 +546,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon37
     start: 0x107000
     vram: 0x8017A000
     subalign: 4
@@ -522,6 +560,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon38
     start: 0x10E000
     vram: 0x8017A000
     subalign: 4
@@ -535,6 +574,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon39
     start: 0x115000
     vram: 0x8017A000
     subalign: 4
@@ -548,6 +588,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon40
     start: 0x11C000
     vram: 0x8017A000
     subalign: 4
@@ -561,6 +602,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon41
     start: 0x123000
     vram: 0x8017A000
     subalign: 4
@@ -574,6 +616,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon42
     start: 0x12A000
     vram: 0x8017A000
     subalign: 4
@@ -587,6 +630,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon43
     start: 0x131000
     vram: 0x8017A000
     subalign: 4
@@ -600,6 +644,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon44
     start: 0x138000
     vram: 0x8017A000
     subalign: 4
@@ -613,6 +658,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon45
     start: 0x13F000
     vram: 0x8017A000
     subalign: 4
@@ -626,6 +672,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon46
     start: 0x146000
     vram: 0x8017A000
     subalign: 4
@@ -639,6 +686,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon47
     start: 0x14D000
     vram: 0x8017A000
     subalign: 4
@@ -652,6 +700,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon48
     start: 0x154000
     vram: 0x8017A000
     subalign: 4
@@ -665,6 +714,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon49
     start: 0x15B000
     vram: 0x8017A000
     subalign: 4
@@ -678,6 +728,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon50
     start: 0x162000
     vram: 0x8017A000
     subalign: 4
@@ -691,6 +742,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon51
     start: 0x169000
     vram: 0x8017A000
     subalign: 4
@@ -704,6 +756,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon52
     start: 0x170000
     vram: 0x8017A000
     subalign: 4
@@ -717,6 +770,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon53
     start: 0x177000
     vram: 0x8017A000
     subalign: 4
@@ -730,6 +784,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon54
     start: 0x17E000
     vram: 0x8017A000
     subalign: 4
@@ -743,6 +798,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon55
     start: 0x185000
     vram: 0x8017A000
     subalign: 4
@@ -756,6 +812,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon56
     start: 0x18C000
     vram: 0x8017A000
     subalign: 4
@@ -769,6 +826,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon57
     start: 0x193000
     vram: 0x8017A000
     subalign: 4
@@ -782,6 +840,7 @@ segments:
     width: 256
     height: 128
   - type: code
+    exclusive_ram_id: weapon58
     start: 0x19A000
     vram: 0x8017A000
     subalign: 4
