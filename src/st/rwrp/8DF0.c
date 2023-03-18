@@ -167,7 +167,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EE84);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EF28);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EF78);
+void func_8018EF78(void) { func_8018D580(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EFA0);
 
