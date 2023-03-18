@@ -796,8 +796,6 @@ void func_801C58C4(u8 state) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-s32 func_801CAD28(s32);
-
 void func_801C58E0(u16 arg0, u16 arg1) {
     Entity* entity;
 
