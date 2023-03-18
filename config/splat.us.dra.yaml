@@ -33,7 +33,7 @@ segments:
       - [0x2BC0, data]
       - [0x3C40, data]
       - [0x4A00, data]
-      - [0x4B04, raw, equipment_data]
+      - [0x4B04, equipment, equipments]
       - [0x7718, raw, accessory_data]
       - [0x8000, data]
       - [0x8900, data]
