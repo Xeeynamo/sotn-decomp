@@ -90,7 +90,7 @@ clean:
 	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
-	git clean -fx
+	git clean -fx --exclude=.vscode/settings.json
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
