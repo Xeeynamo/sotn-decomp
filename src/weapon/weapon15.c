@@ -34,28 +34,20 @@ INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon15", func_8017BD34);
 
 INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon15", func_8017BF80);
 
-void func_8017BF88(void) {
-}
+void func_8017BF88(void) {}
 
-void func_8017BF90(void) {
-}
+void func_8017BF90(void) {}
 
-void func_8017BF98(void) {
-}
+void func_8017BF98(void) {}
 
-void func_8017BFA0(void) {
-}
+void func_8017BFA0(void) {}
 
-void func_8017BFA8(void) {
-}
+void func_8017BFA8(void) {}
 
-void func_8017BFB0(void) {
-}
+void func_8017BFB0(void) {}
 
-void func_8017BFB8(void) {
-}
+void func_8017BFB8(void) {}
 
-void func_8017BFC0(void) {
-}
+void func_8017BFC0(void) {}
 
 INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon15", func_8017BFC8);

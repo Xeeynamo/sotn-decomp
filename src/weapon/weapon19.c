@@ -22,45 +22,32 @@ INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon19", func_8017A7F8);
 
 INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon19", func_8017A8F4);
 
-void func_8017AD44(void) {
-}
+void func_8017AD44(void) {}
 
-void func_8017AD4C(void) {
-}
+void func_8017AD4C(void) {}
 
-void func_8017AD54(void) {
-}
+void func_8017AD54(void) {}
 
-void func_8017AD5C(void) {
-}
+void func_8017AD5C(void) {}
 
-void func_8017AD64(void) {
-}
+void func_8017AD64(void) {}
 
 INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon19", func_8017AD6C);
 
-void func_8017AD74(void) {
-}
+void func_8017AD74(void) {}
 
-void func_8017AD7C(void) {
-}
+void func_8017AD7C(void) {}
 
-void func_8017AD84(void) {
-}
+void func_8017AD84(void) {}
 
-void func_8017AD8C(void) {
-}
+void func_8017AD8C(void) {}
 
-void func_8017AD94(void) {
-}
+void func_8017AD94(void) {}
 
-void func_8017AD9C(void) {
-}
+void func_8017AD9C(void) {}
 
-void func_8017ADA4(void) {
-}
+void func_8017ADA4(void) {}
 
-void func_8017ADAC(void) {
-}
+void func_8017ADAC(void) {}
 
 INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon19", func_8017ADB4);
