@@ -35,6 +35,7 @@ segments:
     subsegments:
       - [0x04000, data, weapon0]
       - [0x050D4, c, weapon0]
+      - [0x05700, sbss]
   - name: weapon1
     type: ci4
     start: 0x07000
