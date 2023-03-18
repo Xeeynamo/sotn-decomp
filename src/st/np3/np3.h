@@ -58,4 +58,5 @@ extern u16* D_80182570;
 extern u16* D_80182400;
 extern u8* D_80182414;
 extern PfnEntityUpdate PfnEntityUpdates[];
+LayoutObject* D_801D276C;
 extern u16 D_801D33F4[];
