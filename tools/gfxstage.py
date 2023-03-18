@@ -67,7 +67,7 @@ def encode(input_base: str, output_file: str):
         if width != 256:
             return f"'{file_name}' width must be 256 but found {width} instead"
         if height != 240 and height != 256:
-            return f"'{file_name}' width must be 240 or 256 but found {height} instead"
+            return f"'{file_name}' height must be 240 or 256 but found {height} instead"
         if info["planes"] != 1 or info["bitdepth"] != 8:
             return f"'{file_name}' must be an indexed image"
         if len(palette) != 16:

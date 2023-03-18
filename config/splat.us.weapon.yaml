@@ -22,7 +22,7 @@ options:
     - ".bss"
 segments:
   - name: weapon0
-    type: i4
+    type: ci4
     start: 0x00000
     vram: 0
     width: 256
@@ -36,7 +36,7 @@ segments:
       - [0x04000, data, weapon0]
       - [0x050D4, c, weapon0]
   - name: weapon1
-    type: i4
+    type: ci4
     start: 0x07000
     vram: 0
     width: 256
@@ -50,7 +50,7 @@ segments:
       - [0x0B000, data, weapon1]
       - [0x0C014, c, weapon1]
   - name: weapon2
-    type: i4
+    type: ci4
     start: 0x0E000
     vram: 0
     width: 256
@@ -64,7 +64,7 @@ segments:
       - [0x12000, data, weapon2]
       - [0x12BDC, c, weapon2]
   - name: weapon3
-    type: i4
+    type: ci4
     start: 0x15000
     vram: 0
     width: 256
@@ -78,7 +78,7 @@ segments:
       - [0x19000, data, weapon3]
       - [0x19C40, c, weapon3]
   - name: weapon4
-    type: i4
+    type: ci4
     start: 0x1C000
     vram: 0
     width: 256
@@ -92,7 +92,7 @@ segments:
       - [0x20000, data, weapon4]
       - [0x2131C, c, weapon4]
   - name: weapon5
-    type: i4
+    type: ci4
     start: 0x23000
     vram: 0
     width: 256
@@ -106,7 +106,7 @@ segments:
       - [0x27000, data, weapon5]
       - [0x2831C, c, weapon5]
   - name: weapon6
-    type: i4
+    type: ci4
     start: 0x2A000
     vram: 0
     width: 256
@@ -120,7 +120,7 @@ segments:
       - [0x2E000, data, weapon6]
       - [0x2EC54, c, weapon6]
   - name: weapon7
-    type: i4
+    type: ci4
     start: 0x31000
     vram: 0
     width: 256
@@ -134,7 +134,7 @@ segments:
       - [0x35000, data, weapon7]
       - [0x35CA0, c, weapon7]
   - name: weapon8
-    type: i4
+    type: ci4
     start: 0x38000
     vram: 0
     width: 256
@@ -148,7 +148,7 @@ segments:
       - [0x3C000, data, weapon8]
       - [0x3CB4C, c, weapon8]
   - name: weapon9
-    type: i4
+    type: ci4
     start: 0x3F000
     vram: 0
     width: 256
@@ -162,7 +162,7 @@ segments:
       - [0x43000, data, weapon9]
       - [0x43B4C, c, weapon9]
   - name: weapon10
-    type: i4
+    type: ci4
     start: 0x46000
     vram: 0
     width: 256
@@ -176,7 +176,7 @@ segments:
       - [0x4A000, data, weapon10]
       - [0x4ACC0, c, weapon10]
   - name: weapon11
-    type: i4
+    type: ci4
     start: 0x4D000
     vram: 0
     width: 256
@@ -190,7 +190,7 @@ segments:
       - [0x51000, data, weapon11]
       - [0x51CDC, c, weapon11]
   - name: weapon12
-    type: i4
+    type: ci4
     start: 0x54000
     vram: 0
     width: 256
@@ -204,7 +204,7 @@ segments:
       - [0x58000, data, weapon12]
       - [0x58ACC, c, weapon12]
   - name: weapon13
-    type: i4
+    type: ci4
     start: 0x5B000
     vram: 0
     width: 256
@@ -218,7 +218,7 @@ segments:
       - [0x5F000, data, weapon13]
       - [0x5F62C, c, weapon13]
   - name: weapon14
-    type: i4
+    type: ci4
     start: 0x62000
     vram: 0
     width: 256
@@ -232,7 +232,7 @@ segments:
       - [0x66000, data, weapon14]
       - [0x665BC, c, weapon14]
   - name: weapon15
-    type: i4
+    type: ci4
     start: 0x69000
     vram: 0
     width: 256
@@ -246,7 +246,7 @@ segments:
       - [0x6D000, data, weapon15]
       - [0x6D7E4, c, weapon15]
   - name: weapon16
-    type: i4
+    type: ci4
     start: 0x70000
     vram: 0
     width: 256
@@ -260,7 +260,7 @@ segments:
       - [0x74000, data, weapon16]
       - [0x7460C, c, weapon16]
   - name: weapon17
-    type: i4
+    type: ci4
     start: 0x77000
     vram: 0
     width: 256
@@ -274,7 +274,7 @@ segments:
       - [0x7B000, data, weapon17]
       - [0x7B3AC, c, weapon17]
   - name: weapon18
-    type: i4
+    type: ci4
     start: 0x7E000
     vram: 0
     width: 256
@@ -288,7 +288,7 @@ segments:
       - [0x82000, data, weapon18]
       - [0x82740, c, weapon18]
   - name: weapon19
-    type: i4
+    type: ci4
     start: 0x85000
     vram: 0
     width: 256
@@ -302,7 +302,7 @@ segments:
       - [0x89000, data, weapon19]
       - [0x89554, c, weapon19]
   - name: weapon20
-    type: i4
+    type: ci4
     start: 0x8C000
     vram: 0
     width: 256
@@ -316,7 +316,7 @@ segments:
       - [0x90000, data, weapon20]
       - [0x90BC8, c, weapon20]
   - name: weapon21
-    type: i4
+    type: ci4
     start: 0x93000
     vram: 0
     width: 256
@@ -330,7 +330,7 @@ segments:
       - [0x97000, data, weapon21]
       - [0x977B4, c, weapon21]
   - name: weapon22
-    type: i4
+    type: ci4
     start: 0x9A000
     vram: 0
     width: 256
@@ -344,7 +344,7 @@ segments:
       - [0x9E000, data, weapon22]
       - [0x9E814, c, weapon22]
   - name: weapon23
-    type: i4
+    type: ci4
     start: 0xA1000
     vram: 0
     width: 256
@@ -358,7 +358,7 @@ segments:
       - [0xA5000, data, weapon23]
       - [0xA5D80, c, weapon23]
   - name: weapon24
-    type: i4
+    type: ci4
     start: 0xA8000
     vram: 0
     width: 256
@@ -372,7 +372,7 @@ segments:
       - [0xAC000, data, weapon24]
       - [0xACDE0, c, weapon24]
   - name: weapon25
-    type: i4
+    type: ci4
     start: 0xAF000
     vram: 0
     width: 256
@@ -386,7 +386,7 @@ segments:
       - [0xB3000, data, weapon25]
       - [0xB3B74, c, weapon25]
   - name: weapon26
-    type: i4
+    type: ci4
     start: 0xB6000
     vram: 0
     width: 256
@@ -400,7 +400,7 @@ segments:
       - [0xBA000, data, weapon26]
       - [0xBAB9C, c, weapon26]
   - name: weapon27
-    type: i4
+    type: ci4
     start: 0xBD000
     vram: 0
     width: 256
@@ -414,7 +414,7 @@ segments:
       - [0xC1000, data, weapon27]
       - [0xC1D54, c, weapon27]
   - name: weapon28
-    type: i4
+    type: ci4
     start: 0xC4000
     vram: 0
     width: 256
@@ -428,7 +428,7 @@ segments:
       - [0xC8000, data, weapon28]
       - [0xC8BF4, c, weapon28]
   - name: weapon29
-    type: i4
+    type: ci4
     start: 0xCB000
     vram: 0
     width: 256
@@ -442,7 +442,7 @@ segments:
       - [0xCF000, data, weapon29]
       - [0xCFDD8, c, weapon29]
   - name: weapon30
-    type: i4
+    type: ci4
     start: 0xD2000
     vram: 0
     width: 256
@@ -456,7 +456,7 @@ segments:
       - [0xD6000, data, weapon30]
       - [0xD66DC, c, weapon30]
   - name: weapon31
-    type: i4
+    type: ci4
     start: 0xD9000
     vram: 0
     width: 256
@@ -470,7 +470,7 @@ segments:
       - [0xDD000, data, weapon31]
       - [0xDD918, c, weapon31]
   - name: weapon32
-    type: i4
+    type: ci4
     start: 0xE0000
     vram: 0
     width: 256
@@ -484,7 +484,7 @@ segments:
       - [0xE4000, data, weapon32]
       - [0xE4924, c, weapon32]
   - name: weapon33
-    type: i4
+    type: ci4
     start: 0xE7000
     vram: 0
     width: 256
@@ -498,7 +498,7 @@ segments:
       - [0xEB000, data, weapon33]
       - [0xEBC58, c, weapon33]
   - name: weapon34
-    type: i4
+    type: ci4
     start: 0xEE000
     vram: 0
     width: 256
@@ -512,7 +512,7 @@ segments:
       - [0xF2000, data, weapon34]
       - [0xF2950, c, weapon34]
   - name: weapon35
-    type: i4
+    type: ci4
     start: 0xF5000
     vram: 0
     width: 256
@@ -526,7 +526,7 @@ segments:
       - [0xF9000, data, weapon35]
       - [0xF954C, c, weapon35]
   - name: weapon36
-    type: i4
+    type: ci4
     start: 0xFC000
     vram: 0
     width: 256
@@ -540,7 +540,7 @@ segments:
       - [0x100000, data, weapon36]
       - [0x10055C, c, weapon36]
   - name: weapon37
-    type: i4
+    type: ci4
     start: 0x103000
     vram: 0
     width: 256
@@ -554,7 +554,7 @@ segments:
       - [0x107000, data, weapon37]
       - [0x1077C4, c, weapon37]
   - name: weapon38
-    type: i4
+    type: ci4
     start: 0x10A000
     vram: 0
     width: 256
@@ -568,7 +568,7 @@ segments:
       - [0x10E000, data, weapon38]
       - [0x10EDEC, c, weapon38]
   - name: weapon39
-    type: i4
+    type: ci4
     start: 0x111000
     vram: 0
     width: 256
@@ -582,7 +582,7 @@ segments:
       - [0x115000, data, weapon39]
       - [0x115DEC, c, weapon39]
   - name: weapon40
-    type: i4
+    type: ci4
     start: 0x118000
     vram: 0
     width: 256
@@ -596,7 +596,7 @@ segments:
       - [0x11C000, data, weapon40]
       - [0x11C874, c, weapon40]
   - name: weapon41
-    type: i4
+    type: ci4
     start: 0x11F000
     vram: 0
     width: 256
@@ -610,7 +610,7 @@ segments:
       - [0x123000, data, weapon41]
       - [0x123574, c, weapon41]
   - name: weapon42
-    type: i4
+    type: ci4
     start: 0x126000
     vram: 0
     width: 256
@@ -624,7 +624,7 @@ segments:
       - [0x12A000, data, weapon42]
       - [0x12A764, c, weapon42]
   - name: weapon43
-    type: i4
+    type: ci4
     start: 0x12D000
     vram: 0
     width: 256
@@ -638,7 +638,7 @@ segments:
       - [0x131000, data, weapon43]
       - [0x13205C, c, weapon43]
   - name: weapon44
-    type: i4
+    type: ci4
     start: 0x134000
     vram: 0
     width: 256
@@ -652,7 +652,7 @@ segments:
       - [0x138000, data, weapon44]
       - [0x1382C0, c, weapon44]
   - name: weapon45
-    type: i4
+    type: ci4
     start: 0x13B000
     vram: 0
     width: 256
@@ -666,7 +666,7 @@ segments:
       - [0x13F000, data, weapon45]
       - [0x13F378, c, weapon45]
   - name: weapon46
-    type: i4
+    type: ci4
     start: 0x142000
     vram: 0
     width: 256
@@ -680,7 +680,7 @@ segments:
       - [0x146000, data, weapon46]
       - [0x146C64, c, weapon46]
   - name: weapon47
-    type: i4
+    type: ci4
     start: 0x149000
     vram: 0
     width: 256
@@ -694,7 +694,7 @@ segments:
       - [0x14D000, data, weapon47]
       - [0x14D568, c, weapon47]
   - name: weapon48
-    type: i4
+    type: ci4
     start: 0x150000
     vram: 0
     width: 256
@@ -708,7 +708,7 @@ segments:
       - [0x154000, data, weapon48]
       - [0x155050, c, weapon48]
   - name: weapon49
-    type: i4
+    type: ci4
     start: 0x157000
     vram: 0
     width: 256
@@ -722,7 +722,7 @@ segments:
       - [0x15B000, data, weapon49]
       - [0x15C14C, c, weapon49]
   - name: weapon50
-    type: i4
+    type: ci4
     start: 0x15E000
     vram: 0
     width: 256
@@ -736,7 +736,7 @@ segments:
       - [0x162000, data, weapon50]
       - [0x163080, c, weapon50]
   - name: weapon51
-    type: i4
+    type: ci4
     start: 0x165000
     vram: 0
     width: 256
@@ -750,7 +750,7 @@ segments:
       - [0x169000, data, weapon51]
       - [0x169ED4, c, weapon51]
   - name: weapon52
-    type: i4
+    type: ci4
     start: 0x16C000
     vram: 0
     width: 256
@@ -764,7 +764,7 @@ segments:
       - [0x170000, data, weapon52]
       - [0x170CB0, c, weapon52]
   - name: weapon53
-    type: i4
+    type: ci4
     start: 0x173000
     vram: 0
     width: 256
@@ -778,7 +778,7 @@ segments:
       - [0x177000, data, weapon53]
       - [0x178280, c, weapon53]
   - name: weapon54
-    type: i4
+    type: ci4
     start: 0x17A000
     vram: 0
     width: 256
@@ -792,7 +792,7 @@ segments:
       - [0x17E000, data, weapon54]
       - [0x17EF0C, c, weapon54]
   - name: weapon55
-    type: i4
+    type: ci4
     start: 0x181000
     vram: 0
     width: 256
@@ -806,7 +806,7 @@ segments:
       - [0x185000, data, weapon55]
       - [0x1861A0, c, weapon55]
   - name: weapon56
-    type: i4
+    type: ci4
     start: 0x188000
     vram: 0
     width: 256
@@ -820,7 +820,7 @@ segments:
       - [0x18C000, data, weapon56]
       - [0x18D060, c, weapon56]
   - name: weapon57
-    type: i4
+    type: ci4
     start: 0x18F000
     vram: 0
     width: 256
@@ -834,7 +834,7 @@ segments:
       - [0x193000, data, weapon57]
       - [0x1940B4, c, weapon57]
   - name: weapon58
-    type: i4
+    type: ci4
     start: 0x196000
     vram: 0
     width: 256
