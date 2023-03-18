@@ -836,7 +836,7 @@ typedef struct {
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 typedef struct {
-    /* 800730D8 */ u32 layout;
+    /* 800730D8 */ u16* layout;
     /* 800730DC */ u32 tileDef;
     /* 800730E0 */ f32 scrollX;
     /* 800730E4 */ f32 scrollY;
