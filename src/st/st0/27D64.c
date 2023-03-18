@@ -1240,11 +1240,11 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B615C);
 
 void func_801B61D4(void) {}
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B61DC);
+void func_801B61DC(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6204);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6314);
+void func_801B6314(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801B633C(void) {
     g_CurrentEntity->step = 3;
