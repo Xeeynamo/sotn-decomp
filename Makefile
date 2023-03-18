@@ -90,7 +90,7 @@ clean:
 	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
-	git clean -fx
+	git clean -fx --exclude=.vscode/settings.json
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
@@ -324,6 +324,9 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spriteparts.json.o: $(ASSETS_DIR)/%.spriteparts.json
 	./tools/splat_ext/spriteparts.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.equipment.json.o: $(ASSETS_DIR)/%.equipment.json
+	./tools/splat_ext/equipment.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritepartslist.json.o: $(ASSETS_DIR)/%.spritepartslist.json
 	./tools/splat_ext/spritepartslist.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
