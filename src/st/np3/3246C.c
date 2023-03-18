@@ -479,7 +479,49 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4D60);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5108);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5488);
+void func_801B5488(Entity* self) {
+    u16* tileLayoutPtr;
+    s32 tileLayoutPos;
+    s32 i;
+    s32 j;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A6C);
+        if (D_8003BDEC[58] != 0) {
+            self->step = 2;
+        }
+        break;
+
+    case 1:
+        if ((D_8003BDEC[51] & 12) == 12) {
+            func_801C2598(0x644);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        for (tileLayoutPtr = &D_801811AA, i = 0; i < 3; i++) {
+            tileLayoutPos = 0x420 + i;
+            for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
+                g_CurrentRoomTileLayout.fg[tileLayoutPos] = *tileLayoutPtr;
+            }
+        }
+
+        for (tileLayoutPtr = &D_801811E6, i = 0; i < 3; i++) {
+            tileLayoutPos = 0x420 + i;
+            for (j = 0; j < 5; j++, tileLayoutPtr++) {
+                D_800730D8[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                tileLayoutPos += 0x30;
+            }
+        }
+
+        D_8003BDEC[58] |= 1;
+        g_api.func_800F1FC4(0x3A);
+        self->step++;
+        break;
+    }
+}
 
 void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;

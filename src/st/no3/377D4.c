@@ -518,7 +518,49 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockLeftSide);
 // right side of the merman room rock, breaks when hit
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockRightSide);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId26);
+void EntityUnkId26(Entity* self) {
+    u16* tileLayoutPtr;
+    s32 tileLayoutPos;
+    s32 i;
+    s32 j;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        if (D_8003BDEC[58] != 0) {
+            self->step = 2;
+        }
+        break;
+
+    case 1:
+        if ((D_8003BDEC[51] & 12) == 12) {
+            func_801CAD28(0x644);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        for (tileLayoutPtr = &D_801812E2, i = 0; i < 3; i++) {
+            tileLayoutPos = 0x420 + i;
+            for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
+                g_CurrentRoomTileLayout.fg[tileLayoutPos] = *tileLayoutPtr;
+            }
+        }
+
+        for (tileLayoutPtr = &D_8018131E, i = 0; i < 3; i++) {
+            tileLayoutPos = 0x420 + i;
+            for (j = 0; j < 5; j++, tileLayoutPtr++) {
+                D_800730D8[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                tileLayoutPos += 0x30;
+            }
+        }
+
+        D_8003BDEC[58] |= 1;
+        g_api.func_800F1FC4(0x3A);
+        self->step++;
+        break;
+    }
+}
 
 // falling rock that breaks into dust
 void EntityFallingRock2(Entity* self) {
