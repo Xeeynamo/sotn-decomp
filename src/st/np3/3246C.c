@@ -1301,10 +1301,10 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDCC0);
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_80097BA0.hearts += HEART_VESSEL_RICHTER;
+        g_Player.hearts += HEART_VESSEL_RICHTER;
 
-        if (D_80097BA0.heartsMax < D_80097BA0.hearts) {
-            D_80097BA0.hearts = D_80097BA0.heartsMax;
+        if (g_Player.heartsMax < g_Player.hearts) {
+            g_Player.hearts = g_Player.heartsMax;
         }
     } else {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);

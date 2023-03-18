@@ -612,17 +612,17 @@ void DrawPauseMenu(s32 arg0) {
         }
         DrawMenuStr(strPlayerName, 0x80, 0x28, context);
         DrawMenuStr(c_strHP, 0x60, 0x38, context);
-        DrawMenuInt(D_80097BA0.hp, 0xA8, 0x38, context);
+        DrawMenuInt(g_Player.hp, 0xA8, 0x38, context);
         DrawMenuChar(0xF, 0xB0, 0x38, context);
-        DrawMenuInt(D_80097BA0.hpMax, 0xD0, 0x38, context);
+        DrawMenuInt(g_Player.hpMax, 0xD0, 0x38, context);
         DrawMenuStr(c_strMP, 0x60, 0x44, context);
-        DrawMenuInt(D_80097BA0.mp, 0xA8, 0x44, context);
+        DrawMenuInt(g_Player.mp, 0xA8, 0x44, context);
         DrawMenuChar(0xF, 0xB0, 0x44, context);
-        DrawMenuInt(D_80097BA0.mpMax, 0xD0, 0x44, context);
+        DrawMenuInt(g_Player.mpMax, 0xD0, 0x44, context);
         DrawMenuStr(c_strHEART, 0x60, 0x50, context);
-        DrawMenuInt(D_80097BA0.hearts, 0xA8, 0x50, context);
+        DrawMenuInt(g_Player.hearts, 0xA8, 0x50, context);
         DrawMenuChar(0xF, 0xB0, 0x50, context);
-        DrawMenuInt(D_80097BA0.heartsMax, 0xD0, 0x50, context);
+        DrawMenuInt(g_Player.heartsMax, 0xD0, 0x50, context);
         DrawMenuStr(c_strEXP, 0x20, 0xB0, context);
         DrawMenuInt(g_playerExp, 0x90, 0xB0, context);
         DrawMenuStr(c_strNEXT, 0x20, 0xBC, context);
@@ -1241,22 +1241,22 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 
     if (arg0->unk4 != 5) {
         if (((u32)arg0->unk4) >= 0x10U) {
-            temp = D_80097BA0.hpMax;
-            if (D_80097BA0.hpMax < 0) {
+            temp = g_Player.hpMax;
+            if (g_Player.hpMax < 0) {
                 temp += 7;
             }
             arg0->unk8 = temp >> 3;
-        } else if (D_80097BA0.hpMax >= (arg0->unk8 * 0x14)) {
+        } else if (g_Player.hpMax >= (arg0->unk8 * 0x14)) {
             arg0->unk4 = 3;
         } else {
             arg0->unk4 = 2;
         }
     }
-    if (D_80097BA0.hp <= arg0->unk8) {
-        D_80097BA0.hp = 0;
+    if (g_Player.hp <= arg0->unk8) {
+        g_Player.hp = 0;
         return true;
     } else {
-        D_80097BA0.hp -= arg0->unk8;
+        g_Player.hp -= arg0->unk8;
         return false;
     }
 }
