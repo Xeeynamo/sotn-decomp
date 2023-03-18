@@ -465,7 +465,7 @@ s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
-void func_800FE728(s32, Unkstruct_8011B334*, s32);
+void func_800FE728(s32, Equipment* res, s32 equipId);
 s32 func_800FE97C(s32*, s32, s32, s32);
 s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);
