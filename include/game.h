@@ -369,17 +369,30 @@ typedef struct {
 } GpuUsage;
 
 typedef struct {
-    /* 0x00 */ s32 hp;
-    /* 0x04 */ s32 hpMax;
-    /* 0x08 */ s32 hearts;
-    /* 0x0C */ s32 heartsMax;
-    /* 0x10 */ s32 mp;
-    /* 0x14 */ s32 mpMax;
-    /* 0x18 */ s32 statStr;
-    /* 0x1C */ s32 statCon;
-    /* 0x20 */ s32 statInt;
-    /* 0x24 */ s32 statLck;
-} PlayerStats; /* size=unk */
+    s32 statStr;
+    s32 statCon;
+    s32 statInt;
+    s32 statLck;
+} Stats;
+
+typedef struct {
+    s32 hp;
+    s32 hpMax;
+    s32 hearts;
+    s32 heartsMax;
+    s32 mp;
+    s32 mpMax;
+    Stats base;
+    Stats fromEquip;
+    Stats total;
+    u32 level;
+    u32 exp;
+    u32 gold;
+    u32 killCount;
+    u32 D_80097BF8;
+    u32 D_80097BFC;
+    u32 equipment[6];
+} PlayerStats;
 
 typedef struct {
     s32 hours;
@@ -1117,25 +1130,25 @@ extern u8 D_8009796E;
 /* 8009798A */ extern s8 g_Inventory[];
 /* 80097A8D */ extern s8 g_InventoryOrder[];
 extern u8 D_80097B9C[];
-extern PlayerStats D_80097BA0;
-extern s32 D_80097BDC;
-extern s32 D_80097BE0;   // total CON
-extern s32 D_80097BE4[]; // total LCK
-extern s32 D_80097BFC;   // g_SubweaponId
+extern PlayerStats g_Player;
+extern s32 g_player_total_con;
+extern s32 g_player_total_int;   // total CON
+extern s32 g_player_total_lck[]; // total LCK
+extern s32 D_80097BFC;           // g_SubweaponId
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
 extern u8 g_SaveName[12] ALIGNED4;
-extern s32 g_playerHp;       // D_80097BA0.hp
-extern s32 g_playerHpMax;    // D_80097BA0.hpMax
-extern s32 g_playerHeart;    // D_80097BA0.hearts
-extern s32 g_playerHeartMax; // D_80097BA0.heartsMax
-extern s32 g_playerMP;       // D_80097BA0.mp
-extern s32 g_playerMpMax;    // D_80097BA0.mpMax
-extern s32 D_80097C1C[];     // player Atk right hand
-extern s32 D_80097C20;       // player Atk left hand
-extern s32 D_80097C24;       // player Def
+extern s32 g_playerHp;         // g_Player.hp
+extern s32 g_player_hpMax;     // g_Player.hpMax
+extern s32 g_player_hearts;    // g_Player.hearts
+extern s32 g_player_heartsMax; // g_Player.heartsMax
+extern s32 g_player_mp;        // g_Player.mp
+extern s32 g_player_mpMax;     // g_Player.mpMax
+extern s32 D_80097C1C[];       // player Atk right hand
+extern s32 D_80097C20;         // player Atk left hand
+extern s32 D_80097C24;         // player Def
 // extern s32 D_80097C28 //player armor resistance flags
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
