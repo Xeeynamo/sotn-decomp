@@ -376,23 +376,69 @@ typedef struct {
 } Stats;
 
 typedef struct {
-    s32 hp;
-    s32 hpMax;
-    s32 hearts;
-    s32 heartsMax;
-    s32 mp;
-    s32 mpMax;
-    Stats base;
-    Stats fromEquip;
-    Stats total;
-    u32 level;
-    u32 exp;
-    u32 gold;
-    u32 killCount;
-    u32 D_80097BF8;
-    u32 D_80097BFC;
-    u32 equipment[6];
-} PlayerStats;
+    /* 80097964 */ u8 relics[30];
+    /* 80097982 */ u8 spells[8];
+    /* 8009798A */ u8 equipHandCount[169];
+    /* 80097A33 */ u8 equipBodyCount[26];
+    /* 80097A4D */ u8 equipHeadCount[22];
+    /* 80097A63 */ u8 equipCloakCount[9];
+    /* 80097A6C */ u8 equipOtherCount[33];
+    /* 80097A8D */ u8 equipHandOrder[169];
+    /* 80097B36 */ u8 equipBodyOrder[26];
+    /* 80097B50 */ u8 equipHeadOrder[22];
+    /* 80097B66 */ u8 equipCloakOrder[9];
+    /* 80097B6F */ u8 equipOtherOrder[33];
+    /* 80097B90 */ u8 saveName[12];
+    /* 80097B90 */ u32 D_80097B9C;
+    /* 80097BA0 */ s32 hp;
+    /* 80097BA4 */ s32 hpMax;
+    /* 80097BA8 */ s32 hearts;
+    /* 80097BAC */ s32 heartsMax;
+    /* 80097BB0 */ s32 mp;
+    /* 80097BB4 */ s32 mpMax;
+    /* 80097BB8 */ s32 statsBase[4];
+    /* 80097BC8 */ s32 statsEquip[4];
+    /* 80097BD8 */ s32 statsTotal[4];
+    /* 80097BE8 */ u32 level;
+    /* 80097BEC */ u32 exp;
+    /* 80097BF0 */ u32 gold;
+    /* 80097BF4 */ u32 killCount;
+    /* 80097BF8 */ u32 D_80097BF8;
+    /* 80097BFC */ u32 D_80097BFC;
+    /* 80097C00 */ u32 equipment[7];
+    /* 80097C1C */ u32 attackRightHand;
+    /* 80097C20 */ u32 attackLeftHand;
+    /* 80097C24 */ u32 defenseEquip;
+    /* 80097C28 */ u16 defenseElement;
+    /* 80097C2A */ u16 D_80097C2A;
+    /* 80097C2C */ u16 D_80097C2C;
+    /* 80097C2E */ u16 D_80097C2E;
+    /* 80097C30 */ u32 timerHours;
+    /* 80097C34 */ u32 timerMinutes;
+    /* 80097C38 */ u32 timerSeconds;
+    /* 80097C3C */ u32 timerFrames;
+    /* 80097C40 */ u32 D_80097C40;
+    /* 80097C44 */ u32 D_80097C44;
+    /* 80097C48 */ u32 D_80097C48;
+    /* 80097C4C */ u32 D_80097C4C;
+    /* 80097C50 */ u32 D_80097C50;
+    /* 80097C54 */ u32 D_80097C54;
+    /* 80097C58 */ u32 D_80097C58;
+    /* 80097C5C */ u32 D_80097C5C;
+    /* 80097C60 */ u32 D_80097C60;
+    /* 80097C64 */ u32 D_80097C64;
+    /* 80097C68 */ u32 D_80097C68;
+    /* 80097C6C */ u32 D_80097C6C;
+    /* 80097C70 */ u32 D_80097C70;
+    /* 80097C74 */ u32 D_80097C74;
+    /* 80097C78 */ u32 D_80097C78;
+    /* 80097C7C */ u32 D_80097C7C;
+    /* 80097C80 */ u32 D_80097C80;
+    /* 80097C84 */ u32 D_80097C84;
+    /* 80097C88 */ u32 D_80097C88;
+    /* 80097C8C */ u32 D_80097C8C;
+    /* 80097C90 */ u32 D_80097C90;
+} PlayerStatus; /* size=0x330 */
 
 typedef struct {
     s32 hours;
@@ -1124,13 +1170,8 @@ extern GpuUsage g_GpuUsage;
 extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;
-extern u8 D_80097964[];
-extern u8 D_8009796E;
-/* 80097982 */ extern u8 g_Spells[];
-/* 8009798A */ extern s8 g_Inventory[];
-/* 80097A8D */ extern s8 g_InventoryOrder[];
+extern PlayerStatus g_Status;
 extern u8 D_80097B9C[];
-extern PlayerStats g_Player;
 extern s32 g_player_total_con;
 extern s32 g_player_total_int;   // total CON
 extern s32 g_player_total_lck[]; // total LCK
@@ -1140,16 +1181,6 @@ extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
 extern u8 g_SaveName[12] ALIGNED4;
-extern s32 g_playerHp;         // g_Player.hp
-extern s32 g_player_hpMax;     // g_Player.hpMax
-extern s32 g_player_hearts;    // g_Player.hearts
-extern s32 g_player_heartsMax; // g_Player.heartsMax
-extern s32 g_player_mp;        // g_Player.mp
-extern s32 g_player_mpMax;     // g_Player.mpMax
-extern s32 D_80097C1C[];       // player Atk right hand
-extern s32 D_80097C20;         // player Atk left hand
-extern s32 D_80097C24;         // player Def
-// extern s32 D_80097C28 //player armor resistance flags
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;

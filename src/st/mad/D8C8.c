@@ -28,7 +28,6 @@ extern Entity D_8007D858[];
 extern Entity D_8007EF1C;
 extern s32 D_80097410;
 extern s32 D_80097414;
-extern u8 D_8009796E;
 extern Entity D_800762D8[];
 extern s32 D_800973FC;
 
@@ -846,7 +845,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 var_v1;
 
     PreventEntityFromRespawning(entity);
-    if (!(D_8009796E & 2)) {
+    if (!(g_Status.relics[10] & 2)) {
         DestroyEntity(entity);
         return;
     }
