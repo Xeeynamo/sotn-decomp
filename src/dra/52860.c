@@ -54,7 +54,7 @@ void func_800F2860(void) {
     }
 }
 
-const rodataPadding_jpt_800F288C = 0;
+const int rodataPadding_jpt_800F288C = 0;
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F298C);
 
