@@ -766,7 +766,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 var_v1;
 
     PreventEntityFromRespawning(entity);
-    if (!(D_8009796E & 2)) {
+    if (!(g_Status.relics[10] & 2)) {
         DestroyEntity(entity);
         return;
     }
@@ -856,11 +856,11 @@ void func_8019BA38(u16 arg0) {
     s32* hearts;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &g_Player.hearts;
+    hearts = &g_Status.hearts;
     *hearts += c_HeartPrizes[arg0];
 
-    if (g_Player.heartsMax < *hearts) {
-        *hearts = g_Player.heartsMax;
+    if (g_Status.heartsMax < *hearts) {
+        *hearts = g_Status.heartsMax;
     }
 
     DestroyEntity(g_CurrentEntity);
@@ -873,10 +873,10 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019BB94);
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        g_Player.hearts += HEART_VESSEL_RICHTER;
+        g_Status.hearts += HEART_VESSEL_RICHTER;
 
-        if (g_Player.heartsMax < g_Player.hearts) {
-            g_Player.hearts = g_Player.heartsMax;
+        if (g_Status.heartsMax < g_Status.hearts) {
+            g_Status.hearts = g_Status.heartsMax;
         }
     } else {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);

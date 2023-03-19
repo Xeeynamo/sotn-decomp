@@ -218,10 +218,10 @@ extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
-extern s32 g_someValue;
-extern s32 D_80137930;
-extern s32 D_80137934;
-extern s32 D_80137938[];
+extern s32 g_StatusAttackRightHand;
+extern s32 g_StatusAttackLeftHand;
+extern s32 g_StatusDefenseEquip;
+extern s32 g_StatusPlayerStatsTotal[];
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;

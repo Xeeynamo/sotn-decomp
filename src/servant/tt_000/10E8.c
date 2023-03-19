@@ -539,7 +539,8 @@ void func_80174210(Entity* self, s32 arg1) {
                                  (temp_s0->unk1C >= 0 ||
                                   D_8003BDEC[temp_s0->unk1C & 0xFFFF] == 0) &&
                                      (!(temp_s0->unk1C & 0x40000000) ||
-                                      !(D_80097964[temp_s0->unk1C & 0xFFFF] &
+                                      !(g_Status
+                                            .relics[temp_s0->unk1C & 0xFFFF] &
                                         1)))) {
                                 temp_s0->unk4 = 0;
                                 if (temp_s0->unk20 == 0) {
@@ -576,7 +577,7 @@ void func_80174210(Entity* self, s32 arg1) {
                  (temp_v1_5->unk1C >= 0 ||
                   D_8003BDEC[temp_v1_5->unk1C & 0xFFFF] == 0) &&
                      (!(temp_v1_5->unk1C & 0x40000000) ||
-                      !(D_80097964[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
+                      !(g_Status.relics[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
                 temp_v1_5 = *var_s1_2;
                 var_v0_2 = temp_v1_5->unk4 - 1;
                 if (temp_v1_5->unk4 == 0) {
