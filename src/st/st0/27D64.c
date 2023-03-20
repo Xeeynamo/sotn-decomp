@@ -811,7 +811,17 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B32BC);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B33D4);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3420);
+extern LayoutObject* D_801C00A0;
+void func_801B3420(s16 arg0) {
+    while (true) {
+        if ((D_801C00A0->posX != 0xFFFF) &&
+            ((arg0 >= D_801C00A0->posX) || (D_801C00A0->posX == 0xFFFE))
+        ) {
+            break;
+        }
+        D_801C00A0--;
+    }
+}
 
 void func_801B3478(s16);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B3478);
