@@ -55,7 +55,17 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C1EC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C300);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C34C);
+extern LayoutObject* D_80195A34;
+void func_8018C34C(s16 arg0) {
+    while (true) {
+        if ((D_80195A34->posY != 0xFFFF) &&
+            ((arg0 >= D_80195A34->posY) || (D_80195A34->posY == 0xFFFE))
+        ) {
+            break;
+        }
+        D_80195A34--;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C3A4);
 
