@@ -989,7 +989,18 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BAE88);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BAFA0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BAFEC);
+extern LayoutObject* D_801D2768;
+
+void func_801BAFEC(s16 arg0) {
+    while (true) {
+        if ((D_801D2768->posX != 0xFFFF) &&
+            ((arg0 >= D_801D2768->posX) || (D_801D2768->posX == 0xFFFE))
+        ) {
+            break;
+        }
+        D_801D2768--;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB044);
 
