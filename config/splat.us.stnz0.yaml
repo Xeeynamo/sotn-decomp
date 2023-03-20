@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     stnz0
   base_path:    ..
-  target_path:  iso/ST/NZ0/NZ0.BIN
-  asm_path:     asm/st/nz0
+  build_path:   build/us
+  target_path:  disks/us/ST/NZ0/NZ0.BIN
+  asm_path:     asm/us/st/nz0
   asset_path:   assets/st/nz0
   src_path:     src/st/nz0
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stnz0.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stnz0.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stnz0.txt
+  symbol_addrs_path:    config/generated.symbols.us.stnz0.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnz0.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stnz0.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

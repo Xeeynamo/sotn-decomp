@@ -70,7 +70,7 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/71830", func_801119C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801119C4);
 
 void func_80111CC0(void) {
     if (D_80072F00[1] != 0) {
@@ -107,7 +107,7 @@ bool func_80111D24(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/71830", func_80111DE8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_80111DE8);
 
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
@@ -127,7 +127,7 @@ bool func_8011203C(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/71830", func_801120B4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801120B4);
 
 void func_80112B64(void) {
     if (func_8010FDF8(0x4301C) == 0) {
@@ -138,10 +138,10 @@ void func_80112B64(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/71830", func_80112BB0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_80112BB0);
 
 void func_80113148(void) {
-    if ((D_80072F0A != 0) && (D_80072EEC & 0x40)) {
+    if ((D_80072F0A[0] != 0) && (D_80072EEC & 0x40)) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         func_8010E1EC(0x1000);
@@ -151,7 +151,7 @@ void func_80113148(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/71830", func_801131C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801131C4);
 
 void func_801139CC(s32 arg0) {
     s32 move = PLAYER.facing != 0 ? -3 : 3;

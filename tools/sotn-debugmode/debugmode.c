@@ -33,6 +33,7 @@ int g_DebugMode;
 
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
+void InitDraTest800FD874(void);
 void DestroyEntity(Entity* item);
 void Init() {
     Entity* e;
@@ -40,6 +41,7 @@ void Init() {
     g_DebugMode = 0;
     InitEntitySpawn();
     InitSfxPlayer();
+    InitDraTest800FD874();
 
     // forces to make the game think that the Familiar is actually active
     DestroyEntity(e);
@@ -54,6 +56,9 @@ void Init() {
 
 void UpdateEntitySpawn(int variant);
 void UpdateSfxPlayer(void);
+void UpdateDraTest800FD874(void);
+void CollisionDebug(void);
+
 void Update(Entity* e) {
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
@@ -71,6 +76,12 @@ void Update(Entity* e) {
         break;
     case 3:
         UpdateSfxPlayer();
+        break;
+    case 4:
+        UpdateDraTest800FD874();
+        break;
+    case 5:
+        CollisionDebug();
         break;
     default:
         g_DebugMode = 0;

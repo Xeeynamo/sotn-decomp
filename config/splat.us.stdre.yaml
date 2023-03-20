@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     stdre
   base_path:    ..
-  target_path:  iso/ST/DRE/DRE.BIN
-  asm_path:     asm/st/dre
+  build_path:   build/us
+  target_path:  disks/us/ST/DRE/DRE.BIN
+  asm_path:     asm/us/st/dre
   asset_path:   assets/st/dre
   src_path:     src/st/dre
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stdre.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stdre.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.stdre.txt
+  symbol_addrs_path:    config/generated.symbols.us.stdre.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stdre.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.stdre.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

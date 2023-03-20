@@ -4,7 +4,7 @@
 #include "sfx.h"
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FD874);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FD874);
 #else
 void func_800FD874(u16 context, s32 arg1) {
     u8* temp_a0_2;
@@ -61,9 +61,9 @@ void func_800FD874(u16 context, s32 arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FD9D4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FD9D4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FDB18);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FDB18);
 
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
@@ -77,7 +77,7 @@ bool func_800FDC94(s32 arg0) {
 }
 
 // https://decomp.me/scratch/5ufgy
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FDCE0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FDCE0);
 
 bool func_800FDD44(s32 equipHeadIndex) {
     s32 equippedItem;
@@ -106,9 +106,9 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FDE20);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FDE20);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE044);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FE044);
 
 bool func_800FE3A8(s32 arg0) {
     /*
@@ -122,9 +122,9 @@ bool func_800FE3A8(s32 arg0) {
     return (D_80097964[arg0] & temp) != 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE3C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FE3C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE728);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FE728);
 
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
     if (D_80097B9C.mp >= mpCount) {
@@ -153,7 +153,7 @@ void AddHearts(s32 value) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FE97C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FE97C);
 
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
@@ -168,7 +168,7 @@ void func_800FEE6C(void) {
     } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FEEA4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FEEA4);
 
 s32 func_800FF064(s32 arg0) {
     s32 playerMP;
@@ -198,7 +198,7 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FF128);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FF128);
 
 s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
@@ -290,12 +290,12 @@ void func_800FF708(s32 arg0, s32 arg1) {
     g_playerEquip[arg1 + 2] = rnd;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_800FF7B8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_800FF7B8);
 
 extern Unkstruct_80137990 D_80137990;
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", DrawHudRichter);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", DrawHudRichter);
 #else
 void DrawHudRichter(void) {
     POLY_GT4* poly;
@@ -400,7 +400,7 @@ void DrawHudRichter(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80100B50);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80100B50);
 
 extern Unkstruct_80137990 D_80137990;
 
@@ -470,9 +470,9 @@ void func_8010189C(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80101A80);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80101A80);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801024DC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801024DC);
 
 extern Unkstruct_80086FFA D_80086FFA[];
 
@@ -533,9 +533,9 @@ void func_801026BC(s32 arg0) {
 
 void func_801027A4(void) { func_801026BC(0); }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801027C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801027C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801028AC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801028AC);
 
 void func_80102CD8(s32 arg0) {
     D_801379AC[0] = arg0;
@@ -544,9 +544,9 @@ void func_80102CD8(s32 arg0) {
 }
 
 // https://decomp.me/scratch/NNXbc
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102D08);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80102D08);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80102D70);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80102D70);
 
 void func_80102DEC(s32 context) {
     D_80137E64 = 0;
@@ -676,14 +676,14 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80103238);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80103238);
 
 void func_80103EAC(void) {
     D_80137E4C = 0;
     func_800E92F4();
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80103ED4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80103ED4);
 
 void func_8010427C(void) {
     FreePolygons(D_80137E40);
@@ -691,18 +691,18 @@ void func_8010427C(void) {
     FreePolygons(D_80137E48);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801042C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801042C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80104790);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80104790);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80105078);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80105078);
 
 void func_80105408(void) {
     *D_80072EF4 = 0x1000;
     D_80072EFC = 1;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80105428);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80105428);
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -731,7 +731,7 @@ void func_801065F4(s16 startIndex) {
 void func_80106670(s32 blendMode);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80106670);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80106670);
 #else
 extern u32 D_80097944; // tile count?
 
@@ -849,9 +849,9 @@ void func_80106670(s32 blendMode) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80106A28);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80106A28);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010715C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010715C);
 
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
@@ -955,25 +955,25 @@ void func_80107460(void) {
     D_80137F6C = (D_80137F6C + 1) & 7;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", CopyMapOverlayCallback);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", CopyMapOverlayCallback);
 // https://decomp.me/scratch/1AWN1
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80107614);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80107614);
 // https://decomp.me/scratch/U0IGY
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80107750);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80107750);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801078C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801078C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80107B04);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80107B04);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80107C6C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80107C6C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80107DB4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80107DB4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80107EF0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80107EF0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801080DC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801080DC);
 
 void func_8010838C(s32 arg0) {
     func_801073C0();
@@ -1001,10 +1001,10 @@ bool func_801083F0(void) {
     return true;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80108448);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80108448);
 
 // https://decomp.me/scratch/QZk8K
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801092E8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801092E8);
 
 void func_80109328(void) {
     s16* player_unk1E = &PLAYER.unk1E;
@@ -1023,9 +1023,9 @@ void func_80109328(void) {
     PLAYER.blendMode = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801093C4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801093C4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109594);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80109594);
 
 void func_80109990(void) {
     if (D_80137FB4 == 0) {
@@ -1039,12 +1039,12 @@ void func_80109990(void) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80109A44);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80109A44);
 
 // regalloc
 // https://decomp.me/scratch/rdeqb
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A234);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010A234);
 #else
 void func_8010A234(s32 arg0) {
     s32 temp;
@@ -1094,7 +1094,7 @@ void func_8010A234(s32 arg0) {
 // Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
 // https://decomp.me/scratch/oKHMJ
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A3F0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010A3F0);
 #else
 void func_8010A3F0(void) {
     s32 temp = 0x38;
@@ -1113,9 +1113,9 @@ void func_8010A3F0(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010A4A4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010A4A4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", UpdateEntityAlucard);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", UpdateEntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
@@ -1128,24 +1128,24 @@ void func_8010BF64(Unkstruct_8010BF64* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010BFFC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010BFFC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010C36C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010C36C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010C9F4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010C9F4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D010);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010D010);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D2C8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010D2C8);
 
 void func_8010D584(s16 step) {
     PLAYER.step = step;
     PLAYER.unk2E = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D59C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010D59C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010D800);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010D800);
 
 void func_8010DA2C(s32* arg0) {
     g_CurrentEntity->unk4C = arg0;
@@ -1159,14 +1159,14 @@ void func_8010DA48(u32 arg0) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DA70);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010DA70);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DB38);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010DB38);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DBFC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010DBFC);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", UpdateAnim);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", UpdateAnim);
 #else
 void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
     AnimationFrame* animFrame;
@@ -1217,7 +1217,7 @@ void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010DF70);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010DF70);
 
 void func_8010DFF0(s32 arg0, s32 arg1) {
     POLY_GT4* poly;
@@ -1349,7 +1349,7 @@ s32 func_8010E27C(void) {
 }
 
 // https://decomp.me/scratch/YvoMU
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E334);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010E334);
 
 /*
  * Updates the Entity acceleration in the X Axis
@@ -1395,7 +1395,7 @@ void func_8010E42C(u16 arg0) {
 // matches in gcc 2.6.0 + aspsx 2.3.4
 // aspsx
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E470);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010E470);
 #else
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
@@ -1426,7 +1426,7 @@ void func_8010E4D0(void) {
     func_8010E470(0, 0);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010E570);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010E570);
 void func_8010E570(/*?*/ s32);
 
 void func_8010E6AC(s32 arg0) {
@@ -1471,9 +1471,9 @@ void func_8010E7AC(void) {
     D_80072F0C = 8;
 
     if (D_80072F20.unk04 & 1) {
-        D_80072F0A = 8;
+        D_80072F0A[0] = 8;
     } else {
-        D_80072F0A = 0;
+        D_80072F0A[0] = 0;
     }
 
     D_80072F64 = 0x10;
@@ -1544,7 +1544,7 @@ void func_8010E9A4(void) {
 // TODO: aspatch div macro
 // https://discord.com/channels/710646040331681844/815529862604390411/1051628313073958992
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EA54);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010EA54);
 #else
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -1585,10 +1585,10 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     return (ret == 0) ? -1 : 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EB5C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010EB5C);
 
 // https://decomp.me/scratch/N8Srk
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EC8C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
     PLAYER.accelerationY = 0;
@@ -1599,7 +1599,7 @@ void func_8010ED54(u8 arg0) {
     D_80072F68 = 0;
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010EDB8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010EDB8);
 
 void func_8010FAF4(void) {
     DestroyEntity(&g_EntityArray[UNK_ENTITY_10]);
@@ -1682,25 +1682,25 @@ void func_8010FD88(void) {
     PlaySfx(NA_SE_AL_BACKSLIDE);
 }
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8010FDF8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8010FDF8);
 s32 func_8010FDF8(/*?*/ s32);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80110394);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80110394);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801104D0);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801104D0);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801106A4);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801106A4);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011081C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8011081C);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80110968);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80110968);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80110BC8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80110BC8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80110DF8);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80110DF8);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_80111018);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_80111018);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_801112AC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_801112AC);
 
-INCLUDE_ASM("asm/dra/nonmatchings/5D874", func_8011151C);
+INCLUDE_ASM("asm/us/dra/nonmatchings/5D874", func_8011151C);

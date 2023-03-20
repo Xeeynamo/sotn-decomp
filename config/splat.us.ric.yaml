@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     ric
   base_path:    ..
-  target_path:  iso/BIN/RIC.BIN
-  asm_path:     asm/ric
+  build_path:   build/us
+  target_path:  disks/us/BIN/RIC.BIN
+  asm_path:     asm/us/ric
   asset_path:   assets/ric
   src_path:     src/ric
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.ric.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.ric.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.ric.txt
+  symbol_addrs_path:    config/generated.symbols.us.ric.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.ric.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.ric.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

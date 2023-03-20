@@ -10,7 +10,7 @@ void func_801B642C(void) {
     D_801BC35A = D_801BC35C + 0x14;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B6480);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B6480);
 
 void func_801B6648(s16 yOffset) {
     RECT rect;
@@ -22,9 +22,9 @@ void func_801B6648(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B66A4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B66A4);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B675C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B675C);
 
 void func_801B68E0(s32 arg0) {
     D_801BC394 = arg0 + 0x100000;
@@ -32,11 +32,11 @@ void func_801B68E0(s32 arg0) {
     D_801BC390 = 1;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B690C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B690C);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B69F8);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B69F8);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B76F0);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B76F0);
 
 void func_801B786C(s16 arg0) {
     RECT rect;
@@ -48,9 +48,9 @@ void func_801B786C(s16 arg0) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B78BC);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B78BC);
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B79D4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B79D4);
 
 void func_801B80F0(void) {
     EnterCriticalSection();
@@ -136,14 +136,14 @@ void func_801B8500(void) {
     D_801BC8C8 = 0;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B8518);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B8518);
 
 s32 func_801B8714(s32 arg0) { return D_801BC654[arg0 * 0x9E]; }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B873C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B873C);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B881C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B881C);
 #else
 extern volatile u8 D_801BC658[];
 u8 func_801B881C(s32 arg0, s32 arg1) {
@@ -176,7 +176,7 @@ s32 func_801B884C(s32 cardSlot, s32 cardSubSlot, const char* saveFile,
     return 0;
 }
 
-INCLUDE_ASM("asm/st/sel/nonmatchings/3642C", func_801B88F4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B88F4);
 
 s32 func_801B89C8(s32 cardSlot, s32 cardBlock, const char* path) {
     char buf[0x20];

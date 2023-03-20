@@ -2,14 +2,15 @@ options:
   platform:     psx
   basename:     tt_000
   base_path:    ..
-  target_path:  iso/SERVANT/TT_000.BIN
-  asm_path:     asm/servant/tt_000
+  build_path:   build/us
+  target_path:  disks/us/SERVANT/TT_000.BIN
+  asm_path:     asm/us/servant/tt_000
   asset_path:   assets/servant/tt_000
   src_path:     src/servant/tt_000
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.tt_000.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.tt_000.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.tt_000.txt
+  symbol_addrs_path:    config/generated.symbols.us.tt_000.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.tt_000.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.tt_000.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

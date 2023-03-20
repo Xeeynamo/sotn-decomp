@@ -4,8 +4,6 @@ BIN/ARC_F.BIN
 BIN/RIC.BIN
 ST/
 
-iso/
-
 ctx.c
 ctx.c.m2c
 *.ld
@@ -14,22 +12,23 @@ ctx.c.m2c
 generated.symbols.*.txt
 __pycache__
 
-asm/*/*.s
-asm/*/data/*.s
-asm/*/nonmatchings/*.s
-asm/*/nonmatchings/*/*.s
-asm/*/nonmatchings/*/*/*.s
-asm/servant/*/data/*.s
-asm/servant/*/nonmatchings/*.s
-asm/servant/*/nonmatchings/*/*.s
-asm/servant/*/nonmatchings/*/*/*.s
-asm/st/*/data/*.s
-asm/st/*/nonmatchings/*.s
-asm/st/*/nonmatchings/*/*.s
-asm/st/*/nonmatchings/*/*/*.s
+asm/*/*/*.s
+asm/*/*/data/*.s
+asm/*/*/nonmatchings/*.s
+asm/*/*/nonmatchings/*/*.s
+asm/*/*/nonmatchings/*/*/*.s
+asm/*/servant/*/data/*.s
+asm/*/servant/*/nonmatchings/*.s
+asm/*/servant/*/nonmatchings/*/*.s
+asm/*/servant/*/nonmatchings/*/*/*.s
+asm/*/st/*/data/*.s
+asm/*/st/*/nonmatchings/*.s
+asm/*/st/*/nonmatchings/*/*.s
+asm/*/st/*/nonmatchings/*/*/*.s
 assets/
 build/
 expected/
+disks/
 
 tools/go
 

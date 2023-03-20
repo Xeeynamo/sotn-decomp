@@ -2,6 +2,7 @@
 .SECONDARY:
 
 # Binaries
+VERSION			?= us
 MAIN            := main
 DRA             := dra
 
@@ -18,12 +19,12 @@ CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
 
 # Directories
-ASM_DIR         := asm
+ASM_DIR         := asm/$(VERSION)
 SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
-BUILD_DIR       := build
-DISK_DIR        := $(BUILD_DIR)/disk
+BUILD_DIR       := build/$(VERSION)
+DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
@@ -73,9 +74,9 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
-		-T $(CONFIG_DIR)/symbols.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(1).txt \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt \
 		--no-check-sections \
 		-nostdlib \
 		-s
@@ -84,15 +85,16 @@ endef
 all: build check
 build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
+	git clean -fdx assets/
 	git clean -fdx asm/
-	git clean -fdx $(BUILD_DIR)
+	git clean -fdx build/
 	git clean -fdx config/
 	git clean -fx
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 check:
-	sha1sum --check slus00067.sha
+	sha1sum --check config/check.$(VERSION).sha
 expected: check
 	rm -rf expected/build
 	cp -r build expected/
@@ -106,8 +108,8 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(MAIN).ld \
-	-T $(CONFIG_DIR)/symbols.txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(MAIN).txt \
+	-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt \
 	--no-check-sections \
 	-nostdlib \
 	-s
@@ -172,7 +174,7 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T stmad.ld \
-		-T $(CONFIG_DIR)/symbols.txt \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
 		--no-check-sections \
@@ -204,33 +206,33 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_main: require-tools
-	$(SPLAT) $(CONFIG_DIR)/splat.$(MAIN).yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
 extract_dra: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.dra.txt > $(CONFIG_DIR)/generated.symbols.dra.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(DRA).yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).dra.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).dra.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(DRA).yaml
 extract_ric: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.ric.txt > $(CONFIG_DIR)/generated.symbols.ric.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.ric.yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).ric.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).ric.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).ric.yaml
 extract_stmad: require-tools
 	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.stmad.yaml
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
 extract_st%: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.st$*.txt > $(CONFIG_DIR)/generated.symbols.st$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.st$*.yaml
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
 extract_tt_%: require-tools
-	cat $(CONFIG_DIR)/symbols.txt $(CONFIG_DIR)/symbols.tt_$*.txt > $(CONFIG_DIR)/generated.symbols.tt_$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.tt_$*.yaml
-$(CONFIG_DIR)/generated.symbols.%.txt:
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
+$(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
 context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-extract_sotn: $(SOTNDISK)
-	$(SOTNDISK) extract iso/sotn.cue iso/
+extract_disk: $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$(VERSION).cue disks/$(VERSION)
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
-	cp -r iso/* $(DISK_DIR)
+	cp -r disks/${VERSION}/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
 	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
@@ -246,11 +248,11 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
-	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
-disk_debug: disk_prepare $(BUILD_DIR)/sotn-debugmode.bin
-	cp $(BUILD_DIR)/sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make $(BUILD_DIR)/sotn.cue $(DISK_DIR) $(CONFIG_DIR)/slus00067.lba
-$(BUILD_DIR)/sotn-debugmode.bin:
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+disk_debug: disk_prepare $(BUILD_DIR)/../sotn-debugmode.bin
+	cp $(BUILD_DIR)/../sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+$(BUILD_DIR)/../sotn-debugmode.bin:
 	cd tools/sotn-debugmode && make
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
