@@ -522,12 +522,12 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80109594);
 
 void func_80109990(void) {
     if (D_80137FB4 == 0) {
-        if ((D_80097BA0.mp == D_80097BA0.mpMax) && !(D_80072F2C & 0x100000)) {
+        if ((g_Status.mp == g_Status.mpMax) && !(D_80072F2C & 0x100000)) {
             func_8011AAFC(g_CurrentEntity, 0x28, 0);
             PlaySfx(NA_SE_PL_MP_GAUGE);
             D_80137FB4++;
         }
-    } else if (D_80097BA0.mp != D_80097BA0.mpMax) {
+    } else if (g_Status.mp != g_Status.mpMax) {
         D_80137FB4 = 0;
     }
 }

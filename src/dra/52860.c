@@ -54,7 +54,7 @@ void func_800F2860(void) {
     }
 }
 
-const rodataPadding_jpt_800F288C = 0;
+const int rodataPadding_jpt_800F288C = 0;
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/52860", func_800F298C);
 
@@ -548,12 +548,13 @@ u8 func_800F7218(u16 arg0, u16 arg1) {
 void func_800F7244(void) {
     s32 i;
 
-    g_someValue = D_80097C1C[0];
-    D_80137930 = D_80097C20;
-    D_80137934 = D_80097C24;
+    g_StatusAttackRightHand = g_Status.attackRightHand;
+    g_StatusAttackLeftHand = g_Status.attackLeftHand;
+    g_StatusDefenseEquip = g_Status.defenseEquip;
 
     for (i = 0; i < 4; i++) {
-        D_80137938[i] = D_80097C1C[i - 0x19] + D_80097C1C[i - 0x15];
+        g_StatusPlayerStatsTotal[i] =
+            g_Status.statsBase[i] + g_Status.statsEquip[i];
     }
 }
 
@@ -612,17 +613,17 @@ void DrawPauseMenu(s32 arg0) {
         }
         DrawMenuStr(strPlayerName, 0x80, 0x28, context);
         DrawMenuStr(c_strHP, 0x60, 0x38, context);
-        DrawMenuInt(D_80097BA0.hp, 0xA8, 0x38, context);
+        DrawMenuInt(g_Status.hp, 0xA8, 0x38, context);
         DrawMenuChar(0xF, 0xB0, 0x38, context);
-        DrawMenuInt(D_80097BA0.hpMax, 0xD0, 0x38, context);
+        DrawMenuInt(g_Status.hpMax, 0xD0, 0x38, context);
         DrawMenuStr(c_strMP, 0x60, 0x44, context);
-        DrawMenuInt(D_80097BA0.mp, 0xA8, 0x44, context);
+        DrawMenuInt(g_Status.mp, 0xA8, 0x44, context);
         DrawMenuChar(0xF, 0xB0, 0x44, context);
-        DrawMenuInt(D_80097BA0.mpMax, 0xD0, 0x44, context);
+        DrawMenuInt(g_Status.mpMax, 0xD0, 0x44, context);
         DrawMenuStr(c_strHEART, 0x60, 0x50, context);
-        DrawMenuInt(D_80097BA0.hearts, 0xA8, 0x50, context);
+        DrawMenuInt(g_Status.hearts, 0xA8, 0x50, context);
         DrawMenuChar(0xF, 0xB0, 0x50, context);
-        DrawMenuInt(D_80097BA0.heartsMax, 0xD0, 0x50, context);
+        DrawMenuInt(g_Status.heartsMax, 0xD0, 0x50, context);
         DrawMenuStr(c_strEXP, 0x20, 0xB0, context);
         DrawMenuInt(g_playerExp, 0x90, 0xB0, context);
         DrawMenuStr(c_strNEXT, 0x20, 0xBC, context);
@@ -686,7 +687,7 @@ void DrawPauseMenu(s32 arg0) {
         phi_a1 = phi_s3 + 0x30;
     }
     DrawMenuChar(phi_a0_3, phi_a1, phi_s5, context);
-    DrawMenuInt(*D_80097C1C, phi_s3 + 0x4C, phi_s5, context);
+    DrawMenuInt(*g_Status_attackRightHand, phi_s3 + 0x4C, phi_s5, context);
 
     temp_s1_2 = D_8003C9FC;
     phi_a1_2 = phi_s3 + 0x2C;
@@ -703,9 +704,9 @@ void DrawPauseMenu(s32 arg0) {
     }
     DrawMenuChar(phi_a0_4, phi_a1_2, phi_a2, context);
     temp_s0_2 = phi_s3 + 0x4C;
-    DrawMenuInt(D_80097C20, temp_s0_2, phi_s5 + 0xA, context);
+    DrawMenuInt(g_Status_attackLeftHand, temp_s0_2, phi_s5 + 0xA, context);
     func_800F66BC(D_800A2D6C, phi_s3, phi_s5 + 0x14, context, 1);
-    DrawMenuInt(D_80097C24, temp_s0_2, phi_s5 + 0x1A, context);
+    DrawMenuInt(g_Status_defenseEquip, temp_s0_2, phi_s5 + 0x1A, context);
 
     if (context == &D_8013763A) {
         phi_s3_2 = 0x20;
@@ -1241,22 +1242,22 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 
     if (arg0->unk4 != 5) {
         if (((u32)arg0->unk4) >= 0x10U) {
-            temp = D_80097BA0.hpMax;
-            if (D_80097BA0.hpMax < 0) {
+            temp = g_Status.hpMax;
+            if (g_Status.hpMax < 0) {
                 temp += 7;
             }
             arg0->unk8 = temp >> 3;
-        } else if (D_80097BA0.hpMax >= (arg0->unk8 * 0x14)) {
+        } else if (g_Status.hpMax >= (arg0->unk8 * 0x14)) {
             arg0->unk4 = 3;
         } else {
             arg0->unk4 = 2;
         }
     }
-    if (D_80097BA0.hp <= arg0->unk8) {
-        D_80097BA0.hp = 0;
+    if (g_Status.hp <= arg0->unk8) {
+        g_Status.hp = 0;
         return true;
     } else {
-        D_80097BA0.hp -= arg0->unk8;
+        g_Status.hp -= arg0->unk8;
         return false;
     }
 }

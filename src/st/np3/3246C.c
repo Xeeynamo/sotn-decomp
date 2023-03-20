@@ -1262,7 +1262,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     u16 var_v1;
 
     PreventEntityFromRespawning(entity);
-    if (!(D_8009796E & 2)) {
+    if (!(g_Status.relics[10] & 2)) {
         DestroyEntity(entity);
         return;
     }
@@ -1301,10 +1301,10 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDCC0);
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_80097BA0.hearts += HEART_VESSEL_RICHTER;
+        g_Status.hearts += HEART_VESSEL_RICHTER;
 
-        if (D_80097BA0.heartsMax < D_80097BA0.hearts) {
-            D_80097BA0.hearts = D_80097BA0.heartsMax;
+        if (g_Status.heartsMax < g_Status.hearts) {
+            g_Status.hearts = g_Status.heartsMax;
         }
     } else {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
