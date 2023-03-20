@@ -174,16 +174,17 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
         stat = progresses[overlay]
         if stat.code_matching != stat.code_matching_prev:
             coverage = stat.code_matching / stat.code_total
-            coverage_diff = coverage - \
-                (stat.code_matching_prev / stat.code_total)
+            coverage_diff = (stat.code_matching -
+                             stat.code_matching_prev) / stat.code_total
             funcs = stat.functions_matching / stat.functions_total
-            funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
+            funcs_diff = (stat.functions_matching -
+                          stat.functions_prev) / stat.functions_total
             print(str.join(" ", [
                 f"{overlay.upper()}:",
                 f"coverage {coverage*100:.2f}%",
-                f"({coverage_diff:+.2f}%)",
+                f"({coverage_diff:+.3f}%)",
                 f"funcs {funcs*100:.2f}%",
-                f"({funcs_diff:+.2f}%)",
+                f"({funcs_diff:+.3f}%)",
             ]))
         else:
             print(f"{overlay.upper()} no new progress")
