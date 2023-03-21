@@ -21,8 +21,8 @@ void func_800F4F48(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
-        g_playerEquip[i + 7] =
-            func_800F4D38(g_playerEquip[i], g_playerEquip[1 - i]);
+        g_Status.attackHands[i] =
+            func_800F4D38(g_Status.equipment[i], g_Status.equipment[1 - i]);
     }
 }
 
@@ -493,8 +493,8 @@ u8 func_800F7218(u16 arg0, u16 arg1) {
 void func_800F7244(void) {
     s32 i;
 
-    g_StatusAttackRightHand = g_Status.attackRightHand;
-    g_StatusAttackLeftHand = g_Status.attackLeftHand;
+    g_StatusAttackRightHand = g_Status.attackHands[0];
+    g_StatusAttackLeftHand = g_Status.attackHands[1];
     g_StatusDefenseEquip = g_Status.defenseEquip;
 
     for (i = 0; i < 4; i++) {
@@ -587,7 +587,7 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 40, y, ctx);
         DrawMenuChar(c_chShoulderButtons[temp_s1], x + 48, y, ctx);
     }
-    DrawMenuInt(g_Status.attackRightHand, x + 76, y, ctx);
+    DrawMenuInt(g_Status.attackHands[0], x + 76, y, ctx);
 
     temp_var = g_menuButtonSettingsConfig.leftHand;
     temp_s1 = temp_var;
@@ -598,7 +598,7 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuChar(c_chShoulderButtons[temp_s1], x + 48, y + 10, ctx);
     }
 
-    DrawMenuInt(g_Status.attackLeftHand, x + 76, y + 10, ctx);
+    DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
     func_800F66BC(D_800A2D6C, x, y + 20, ctx, 1);
     DrawMenuInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
     if (ctx == (&D_8013763A)) {
@@ -1149,6 +1149,6 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 
 s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 
-extern Unkstruct_800A4B12 D_800A4B12[];
-
-u8 func_800FD688(s32 arg0) { return D_800A4B12[g_playerEquip[arg0]].unk0; }
+u8 GetEquipDamageScale(s32 equipId) {
+    return D_800A4B04[g_Status.equipment[equipId]].damageScale;
+}

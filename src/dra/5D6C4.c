@@ -67,15 +67,17 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     if (equipType < 5) {
         switch (equipType) {
         case 0:
-            return (g_playerEquip[0] == itemId) + (g_playerEquip[1] == itemId);
+            return (g_Status.equipment[0] == itemId) +
+                   (g_Status.equipment[1] == itemId);
         case 1:
-            return g_playerEquip[2] == itemId;
+            return g_Status.equipment[2] == itemId;
         case 2:
-            return g_playerEquip[3] == itemId;
+            return g_Status.equipment[3] == itemId;
         case 3:
-            return g_playerEquip[4] == itemId;
+            return g_Status.equipment[4] == itemId;
         case 4:
-            return (g_playerEquip[5] == itemId) + (g_playerEquip[6] == itemId);
+            return (g_Status.equipment[5] == itemId) +
+                   (g_Status.equipment[6] == itemId);
         }
     }
     // seems to require missing return
@@ -208,18 +210,16 @@ bool func_800FDC94(s32 arg0) {
 // https://decomp.me/scratch/5ufgy
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDCE0);
 
-bool func_800FDD44(s32 equipHeadIndex) {
+bool func_800FDD44(s32 equipId) {
     s32 equippedItem;
-    u8 temp_s1;
-    u8 temp_v0;
+    bool isConsumable;
 
-    equippedItem = g_Status.equipment[equipHeadIndex];
-    temp_s1 = D_800A4B1D[g_Status.equipment[equipHeadIndex]].unk0;
+    equippedItem = g_Status.equipment[equipId];
+    isConsumable = D_800A4B04[equippedItem].isConsumable;
     if (!CheckEquipmentItemCount(0x54, 4)) {
-        if (temp_s1 != 0) {
-            temp_v0 = g_Status.equipHandCount[equippedItem];
-            if (temp_v0 == 0) {
-                g_Status.equipment[equipHeadIndex] = 0;
+        if (isConsumable) {
+            if (g_Status.equipHandCount[equippedItem] == 0) {
+                g_Status.equipment[equipId] = 0;
                 func_800F53A4();
                 return true;
             }
@@ -298,23 +298,19 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 }
 #endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE728);
-#else
-void func_800FE728(s32 arg0, Equipment* res, s32 equipId) {
+void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
+    s32 criticalModRate;
     Equipment* var_a2;
-    Equipment* var_a3;
-    s16 temp_v0;
     s32 criticalRate;
-    u16* temp_t0;
     u8 damageScale;
 
-    var_a3 = res;
-    var_a2 = &D_800A4B04[equipId];
+    var_a2 = &D_800A4B04[(s16)equipId]; // FAKE
+    criticalModRate = 5;
+
     __builtin_memcpy(res, &D_800A4B04[equipId], sizeof(Equipment));
     criticalRate = res->criticalRate;
-    criticalRate = criticalRate - 5 +
-                   SquareRoot0(*g_player_total_lck * 2 + (rand() & 0xF));
+    criticalRate = criticalRate - criticalModRate +
+                   SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
     if (criticalRate > 255) {
         criticalRate = 255;
     }
@@ -324,18 +320,19 @@ void func_800FE728(s32 arg0, Equipment* res, s32 equipId) {
     if (g_StageId == STAGE_ST0) {
         criticalRate = 0;
     }
-    res->criticalRate = (u16)criticalRate;
+
+    res->criticalRate = criticalRate;
     func_800F4994();
     damageScale = D_800A4B04[equipId].damageScale;
     if (damageScale != 6 && damageScale != 10) {
-        res->attack =
-            func_800F4D38(equipId, /*g_player_total_lck[1 - arg0].unk1C*/ 9999);
+        res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
+        do {
+        } while (0); // FAKE
         if (D_80072F2C & 0x4000) {
             res->attack >>= 1;
         }
     }
 }
-#endif
 
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
     if (g_Status.mp >= mpCount) {
@@ -465,7 +462,7 @@ void func_800FF60C(void) {
 
     i = 0;
     while (1) {
-        if (g_playerEquip[4] == D_800A2FBC[i]) {
+        if (g_Status.equipment[4] == D_800A2FBC[i]) {
             break;
         }
 
@@ -476,11 +473,11 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if ((g_playerEquip[4] == 0x32) && (g_SettingsCloakMode != 0)) {
+    if ((g_Status.equipment[4] == 0x32) && (g_SettingsCloakMode != 0)) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
-    if (g_playerEquip[4] == 0x38) {
+    if (g_Status.equipment[4] == 0x38) {
         func_800EA5E4(0x415);
     }
 }
@@ -503,7 +500,7 @@ void func_800FF708(s32 arg0, s32 arg1) {
             goto loop_1;
         }
     } while (D_800A7734[rnd].unk00 != arg0);
-    g_playerEquip[arg1 + 2] = rnd;
+    g_Status.equipment[arg1 + 2] = rnd;
 }
 
 // https://decomp.me/scratch/Ti1u1
@@ -565,38 +562,38 @@ void func_800FF7B8(s32 arg0) {
         return;
     }
     if (arg0 == 1) { // First block fully matching
-        if (g_playerEquip[0] == 0x7B) {
-            g_playerEquip[0] = 0;
-        } else if (g_playerEquip[1] == 0x7B) {
-            g_playerEquip[1] = 0;
+        if (g_Status.equipment[0] == 0x7B) {
+            g_Status.equipment[0] = 0;
+        } else if (g_Status.equipment[1] == 0x7B) {
+            g_Status.equipment[1] = 0;
         } else if (D_80097A05 != 0) {
             D_80097A05--;
         }
-        if (g_playerEquip[0] == 0x10) {
-            g_playerEquip[0] = 0;
-        } else if (g_playerEquip[1] == 0x10) {
-            g_playerEquip[1] = 0;
+        if (g_Status.equipment[0] == 0x10) {
+            g_Status.equipment[0] = 0;
+        } else if (g_Status.equipment[1] == 0x10) {
+            g_Status.equipment[1] = 0;
         } else if (D_8009799A != 0) {
             D_8009799A--;
         }
-        if (g_playerEquip[2] == 0x2D) {
-            g_playerEquip[2] = 0x1A;
+        if (g_Status.equipment[2] == 0x2D) {
+            g_Status.equipment[2] = 0x1A;
         } else if (D_80097A60 != 0) {
             D_80097A60--;
         }
-        if (g_playerEquip[3] == 0xF) {
-            g_playerEquip[3] = 0;
+        if (g_Status.equipment[3] == 0xF) {
+            g_Status.equipment[3] = 0;
         } else if (D_80097A42 != 0) {
             D_80097A42--;
         }
-        if (g_playerEquip[4] == 0x38) {
-            g_playerEquip[4] = 0x30;
+        if (g_Status.equipment[4] == 0x38) {
+            g_Status.equipment[4] = 0x30;
             func_800FF60C();
         } else if (D_80097A6B != 0) {
             D_80097A6B--;
         }
-        if (g_playerEquip[5] == 0x4E) {
-            g_playerEquip[5] = 0x39;
+        if (g_Status.equipment[5] == 0x4E) {
+            g_Status.equipment[5] = 0x39;
         } else if (D_80097C18 == 0x4E) {
             D_80097C18 = 0x39;
         } else if (D_80097A81 != 0) {
@@ -691,14 +688,14 @@ void func_800FF7B8(s32 arg0) {
             g_Status.statCon = 10;
             g_Status.statInt = 10;
             g_Status.statLck = 10;
-            g_playerEquip[2] = 0x1A;
-            g_playerEquip[4] = 0x30;
-            g_playerEquip[5] = 0x39;
+            g_Status.equipment[2] = 0x1A;
+            g_Status.equipment[4] = 0x30;
+            g_Status.equipment[5] = 0x39;
             D_80097C18 = 0x39;
             g_playerGold = 0;
-            g_playerEquip[0] = 0;
-            g_playerEquip[1] = 0;
-            g_playerEquip[3] = 0;
+            g_Status.equipment[0] = 0;
+            g_Status.equipment[1] = 0;
+            g_Status.equipment[3] = 0;
             if (g_StageId == STAGE_NO3) {
                 func_800FD4C0(26, 1);
                 func_800FD4C0(9, 1);
@@ -806,12 +803,12 @@ void func_800FF7B8(s32 arg0) {
 
                 var_s0_12 = 0;
                 var_a1_2 = D_800A300C;
-                g_playerEquip[0] = 0x7B;
-                g_playerEquip[1] = 0x10;
-                g_playerEquip[2] = 0x2D;
-                g_playerEquip[3] = 0xF;
-                g_playerEquip[4] = 0x38;
-                g_playerEquip[5] = 0x4E;
+                g_Status.equipment[0] = 0x7B;
+                g_Status.equipment[1] = 0x10;
+                g_Status.equipment[2] = 0x2D;
+                g_Status.equipment[3] = 0xF;
+                g_Status.equipment[4] = 0x38;
+                g_Status.equipment[5] = 0x4E;
                 D_80097BFC.subWeapon = 0;
                 D_80097C18 = 0x39;
                 g_Status.hp = g_Status.hpMax;
@@ -910,12 +907,12 @@ void func_800FF7B8(s32 arg0) {
                     *var_v0_6-- = temp_var_1;
                 }
 
-                g_playerEquip[0] = 0x13;
-                g_playerEquip[1] = 5;
-                g_playerEquip[2] = 0x1A;
-                g_playerEquip[3] = 2;
-                g_playerEquip[4] = 0x30;
-                g_playerEquip[5] = 0x39;
+                g_Status.equipment[0] = 0x13;
+                g_Status.equipment[1] = 5;
+                g_Status.equipment[2] = 0x1A;
+                g_Status.equipment[3] = 2;
+                g_Status.equipment[4] = 0x30;
+                g_Status.equipment[5] = 0x39;
                 D_80097C18 = 0x39;
                 g_GameTimer.hours = 0;
                 g_GameTimer.minutes = 0;
