@@ -537,7 +537,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 1) { /* 0 0 0 0 0 0 0 1 = Half broken */
+        if (FLAG_CHECK(MERMAN_ROCK, LEFT_HALF_BROKEN)) {
             tileLayoutPtr = &D_80181264;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -594,7 +594,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(0xA, self, newEntity);
                 newEntity->subId = 0x43;
             }
-            D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Half broken */
+            FLAG_SET(MERMAN_ROCK, LEFT_HALF_BROKEN);
             self->unk3C = 1;
             self->step++;
         }
@@ -602,7 +602,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
-            D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
+            FLAG_SET(MERMAN_ROCK, LEFT_BROKEN);
         }
         break;
     }
@@ -632,7 +632,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 = Half broken */
+        if (FLAG_CHECK(MERMAN_ROCK, RIGHT_HALF_BROKEN)) {
             tileLayoutPtr = &D_801812A0;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -685,7 +685,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->unk84.S16.unk0 >= 2) {
-            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
+            FLAG_SET(MERMAN_ROCK, RIGHT_BROKEN);
             self->unk3C = 1;
             self->step++;
         }
@@ -693,7 +693,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
-            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
+            FLAG_SET(MERMAN_ROCK, RIGHT_BROKEN);
         }
         break;
     }

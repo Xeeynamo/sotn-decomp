@@ -5,6 +5,7 @@
 #include "game.h"
 #include "objects.h"
 #include "sfx.h"
+#include "flags.h"
 
 typedef struct {
     /* 0x0 */ u16 posX;
