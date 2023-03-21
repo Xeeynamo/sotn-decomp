@@ -1,6 +1,6 @@
 #include <game.h>
 
-u8 g_Flag;
+int g_Flag;
 
 void InitFlagChecker(void) {
     g_Flag = 0;
@@ -8,7 +8,7 @@ void InitFlagChecker(void) {
 
 void UpdateFlagChecker(void) {
     FntPrint("* Flag Checker (L2=decrease)\n");
-    FntPrint("* Flag: %d      (L1=increase)\n", g_Flag);
+    FntPrint("* Flag: %02d      (L1=increase)\n", g_Flag);
     FntPrint("* Value: %02x\n", D_8003BDEC[g_Flag]);
 
     if (g_pads->pressed & PAD_UP) {
