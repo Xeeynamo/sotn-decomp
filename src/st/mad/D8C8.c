@@ -376,16 +376,15 @@ loop_1:
     }
 }
 
-void func_80190884(s32 arg0) {
-    s32 a2, a3;
-    a3 = 0xFFFF;
-    arg0 = (s16)arg0;
-    a2 = 0xFFFE;
-loop_1:
-    if ((D_801997D8->posX == a3) ||
-        ((arg0 < D_801997D8->posX) && (D_801997D8->posX != a2))) {
+void func_80190884(s16 arg0) {
+    while (true) {
+        if (
+            (D_801997D8->posX != 0xFFFF) &&
+            ((arg0 >= (s32)D_801997D8->posX) || (D_801997D8->posX == 0xFFFE))
+        ) {
+            break;
+        }
         D_801997D8--;
-        goto loop_1;
     }
 }
 
@@ -428,12 +427,13 @@ loop_1:
 
 void func_80190B24(s16 arg0) {
     while (true) {
-        if (D_801997DC->posY == 0xFFFF)
-            D_801997DC--;
-        else if (arg0 >= (s32)D_801997DC->posY || D_801997DC->posY == 0xFFFE)
+        if (
+            (D_801997DC->posY != 0xFFFF) &&
+            ((arg0 >= D_801997DC->posY || D_801997DC->posY == 0xFFFE))
+        ) {
             break;
-        else
-            D_801997DC--;
+        }
+        D_801997DC--;
     }
 }
 

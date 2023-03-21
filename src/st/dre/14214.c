@@ -335,12 +335,12 @@ void func_80198E74(s16 arg0) {
 }
 
 void func_80198EC0(s16 arg0) {
-    while (1) {
-        if (D_801A32C4->posX != 0xFFFF) {
-            if ((arg0 >= (s32)D_801A32C4->posX) ||
-                (D_801A32C4->posX == 0xFFFE)) {
-                break;
-            }
+    while (true) {
+        if (
+            (D_801A32C4->posX != 0xFFFF) &&
+            ((arg0 >= (s32)D_801A32C4->posX) || (D_801A32C4->posX == 0xFFFE))
+        ) {
+            break;
         }
         D_801A32C4--;
     }
@@ -361,12 +361,12 @@ void func_80199128(s16 arg0) {
 }
 
 void func_80199174(s16 arg0) {
-    while (1) {
-        if (D_801A32C8->posY != 0xFFFF) {
-            if (((s32)arg0 >= D_801A32C8->posY) ||
-                (D_801A32C8->posY == 0xFFFE)) {
-                break;
-            }
+    while (true) {
+        if (
+            (D_801A32C8->posY != 0xFFFF) &&
+            (((s32)arg0 >= D_801A32C8->posY) || (D_801A32C8->posY == 0xFFFE))
+        ) {
+            break;
         }
         D_801A32C8--;
     }
