@@ -8,6 +8,7 @@ g_eBreakableExplosionTypes = 0x80180E50;
 g_eBreakableanimSets = 0x80180E58;
 g_eBreakableBlendModes = 0x80180E68;
 g_Rooms = 0x80183A7C;
+g_TrapDoorFlag = 0x80181104;
 EntityBreakable = 0x801B26FC;
 EntityShuttingWindow = 0x801B2C20;
 EntityCavernDoorLever= 0x801B3E84;

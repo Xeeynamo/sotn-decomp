@@ -473,7 +473,44 @@ void EntityPathBlockTallWeight(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityTrapDoor);
+void EntityTrapDoor(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        entity->animCurFrame = 0x1B;
+        entity->zPriority = 0x6A;
+        entity->hitboxWidth = 0x10;
+        entity->hitboxHeight = 4;
+        entity->unk3C = 1;
+
+        if (g_TrapDoorFlag == 0) {
+            if (PLAYER.posY.val < entity->posY.val) {
+                g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x129;
+                g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x132;
+                DestroyEntity(entity);
+                return;
+            }
+            g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
+            g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
+        } else {
+            entity->animCurFrame = 0x1E;
+            g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
+            g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
+            entity->step = 128;
+        }
+
+    case 1:
+        if (entity->unk48 != 0) {
+            g_TrapDoorFlag = 1;
+            entity->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(&D_80181108, entity);
+        break;
+    }
+}
 
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {

@@ -478,13 +478,14 @@ void EntityPathBlockTallWeight(Entity* self) {
 void EntityTrapDoor(Entity* entity) {
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B18);
+        InitializeEntity(D_80180B18);
         entity->animCurFrame = 27;
         entity->zPriority = 0x6A;
         entity->hitboxWidth = 16;
         entity->hitboxHeight = 4;
         entity->unk3C = 1;
-        if (D_8018123C == 0) {
+
+        if (g_TrapDoorFlag == 0) {
             if (PLAYER.posY.val < entity->posY.val) {
                 g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x129;
                 g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x132;
@@ -502,7 +503,7 @@ void EntityTrapDoor(Entity* entity) {
 
     case 1:
         if (entity->unk48 != 0) {
-            D_8018123C = 1;
+            g_TrapDoorFlag = 1;
             entity->step++;
         }
         break;
