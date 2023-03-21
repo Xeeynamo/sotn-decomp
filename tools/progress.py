@@ -182,9 +182,9 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
             print(str.join(" ", [
                 f"{overlay.upper()}:",
                 f"coverage {coverage*100:.2f}%",
-                f"({coverage_diff:+.3f}%)",
+                f"({coverage_diff*100:+.3f}%)",
                 f"funcs {funcs*100:.2f}%",
-                f"({funcs_diff:+.3f}%)",
+                f"({funcs_diff*100:+.3f}%)",
             ]))
         else:
             print(f"{overlay.upper()} no new progress")
