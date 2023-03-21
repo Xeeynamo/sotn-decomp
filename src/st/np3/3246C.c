@@ -488,8 +488,8 @@ void func_801B5108(Entity* self) {
     case 0:
         InitializeEntity(D_80180A6C);
         self->unk3C = 2;
-        self->hitboxWidth = 0x10;
-        self->hitboxHeight = 0x18;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 24;
 
         tileLayoutPtr = &D_80181180;
         tilePos = 0x1FD;
@@ -521,8 +521,8 @@ void func_801B5108(Entity* self) {
             for (i = 0; i < 3; i++) {
                 g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
                 g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
-                tilePos += 0x30;
                 tileLayoutPtr++;
+                tilePos += 0x30;
             }
 
             g_api.PlaySfx(0x644);
