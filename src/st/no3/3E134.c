@@ -1437,15 +1437,50 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityStrongWargDeathBeams);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CF438);
 
-void func_801CF58C(Entity* arg0) {
-    arg0->accelerationX = 0;
-    arg0->unk84.S16.unk2 = 0x100;
+void func_801CF58C(Entity* self) {
+    self->accelerationX = 0;
+    self->unk84.S16.unk2 = 0x100;
     func_801C58A4(6);
     g_api.PlaySfx(0x783);
-    arg0->unk80.modeS16.unk0 = 0x20;
+    self->unk80.modeS16.unk0 = 0x20;
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CF5E0);
+void func_801CF5E0(Entity* self) {
+    s16 temp_v0;
+
+    if (self->facing == func_801C4FD4()) {
+        func_801C58A4(5);
+        return;
+    }
+
+    if (self->unk84.S16.unk2 == 0) {
+        func_801CF58C(self);
+        return;
+    }
+
+    temp_v0 = self->unk84.S16.unk0 - self->posX.i.hi - g_Camera.posX.i.hi;
+
+    if (temp_v0 > 16) {
+        func_801C58A4(3);
+        if (self->facing != 0) {
+            self->unk7C.S8.unk0 = 0;
+        } else {
+            self->unk7C.S8.unk0 = 1;
+        }
+    } else if (temp_v0 < -16) {
+        func_801C58A4(3);
+        if (self->facing != 0) {
+            self->unk7C.S8.unk0 = 1;
+        } else {
+            self->unk7C.S8.unk0 = 0;
+        }
+    } else {
+        func_801C58A4(7);
+    }
+
+    self->unk80.modeS16.unk0 = 0;
+    self->unk80.modeS16.unk2 = 32;
+}
 
 // duplicate of func_801CC90C in this file
 void func_801CF6D8(Entity* arg0) {
@@ -1524,116 +1559,93 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySmallUpwardsSplash);
 // particle effect, part of merman splash
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySmallWaterSplash);
 
-// https://decomp.me/scratch/steI4
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801D2D40);
-#else
-extern Entity D_8007DE38[];
+s32 func_801D2D40(s16 yVector) {
+    s16 newY = yVector + g_CurrentEntity->posY.i.hi;
+    s32 expectedResult = 0;
+    Collider collider;
+    Entity* newEntity;
+    s32 res;
 
-s32 func_801D2D40(s16 arg0) {
-    Entity* entity;
-    int new_var;
-    Collider* sp10;
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
+    res = expectedResult == (collider.unk0 & 1);
 
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         (s16)(arg0 + g_CurrentEntity->posY.i.hi), &sp10, 0);
-    new_var = 0;
-    new_var = (sp10->unk0 & 1) == new_var;
-
-    if (sp10->unk0 & 8) {
+    if (collider.unk0 & 8) {
         if (*(u8*)&g_CurrentEntity->unkA0 == 0) {
-            entity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
-            if (entity != 0) {
-                CreateEntityFromEntity(0x3B, g_CurrentEntity, entity);
-                entity->posY.i.hi = arg0 + entity->posY.i.hi;
-                entity->zPriority = g_CurrentEntity->zPriority;
+            newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3B, g_CurrentEntity, newEntity);
+                newEntity->posY.i.hi += yVector;
+                newEntity->zPriority = g_CurrentEntity->zPriority;
             }
             g_api.PlaySfx(0x7C2);
             *(u8*)&g_CurrentEntity->unkA0 = 1;
         }
     }
-    return new_var;
+    return res;
 }
-#endif
 
 // another merman variant
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMerman3);
 
-// https://decomp.me/scratch/SXkSP
-// https://decomp.me/scratch/v6yMP
 // some sort of explosion
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityExplosion2);
-#else
-void func_801D6880(POLY_GT4*, s32);
-void func_801D6FCC(POLY_GT4*, s16);
-extern s32 D_801839A0;
-
 void EntityExplosion2(Entity* entity, s32 arg1) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180B48);
+        InitializeEntity(D_80180B48);
         entity->animCurFrame = 0;
         entity->unk3C = 0;
         entity->zPriority += 4;
         if (entity->subId != 0) {
             firstPolygonIndex = g_api.AllocPolygons(4, 2);
-            if (firstPolygonIndex != -1) {
-                poly = &D_80086FEC[firstPolygonIndex];
-                entity->firstPolygonIndex = firstPolygonIndex;
-                *(s32*)&entity->unk7C.s = poly;
-                entity->flags |= FLAG_FREE_POLYGONS;
-                func_801D6FCC(poly, firstPolygonIndex);
-                poly->u0 = 0;
-                poly->u1 = 0x20;
-                poly->tpage = 0x1A;
-                poly->clut = 0x1FF;
-                poly->v2 = 0x20;
-                poly->v3 = 0x20;
-                poly->v0 = 0;
-                poly->v1 = 0;
-                poly->u2 = poly->u0;
-                poly->u3 = poly->u1;
-                *(s16*)&((POLY_GT4*)poly->tag)->r2 = 0x40;
-                *(s16*)&((POLY_GT4*)poly->tag)->b2 = 0x40;
-                *(s16*)&((POLY_GT4*)poly->tag)->u1 = 0;
-                ((POLY_GT4*)poly->tag)->b3 = 0x60;
-                ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
-                ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
-                poly->pad2 = entity->zPriority - 4;
-                poly->pad3 = 6;
+            if (firstPolygonIndex == -1) {
+                DestroyEntity(entity);
                 return;
             }
-            DestroyEntity(entity);
-            return;
+            poly = &D_80086FEC[firstPolygonIndex];
+            entity->firstPolygonIndex = firstPolygonIndex;
+            *(s32*)&entity->unk7C.s = poly;
+            entity->flags |= FLAG_FREE_POLYGONS;
+            func_801D6FCC(poly, firstPolygonIndex);
+            poly->u0 = 0;
+            poly->u1 = 0x20;
+            poly->tpage = 0x1A;
+            poly->clut = 0x1FF;
+            poly->v3 = poly->v2 = 0x20;
+            poly->v1 = poly->v0 = 0;
+            poly->u2 = poly->u0;
+            poly->u3 = poly->u1;
+            *(s16*)&((POLY_GT4*)poly->tag)->r2 = 0x40;
+            *(s16*)&((POLY_GT4*)poly->tag)->b2 = 0x40;
+            *(s16*)&((POLY_GT4*)poly->tag)->u1 = 0;
+            ((POLY_GT4*)poly->tag)->b3 = 0x60;
+            ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
+            ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
+            poly->pad2 = entity->zPriority - 4;
+            poly->pad3 = 6;
         }
-        if (!(++entity->unk84.S8.unk0 & 3)) {
-            entity->posY.i.hi++;
-        }
-        if (AnimateEntity(&D_801839A0, entity) == 0) {
-            DestroyEntity(entity);
-        }
-        return;
     }
+
     if (entity->subId != 0) {
-        poly->tag = *(s32*)&entity->unk7C.s;
-        func_801D6880(poly->tag, arg1);
+        poly = *(s32*)&entity->unk7C.s;
+        func_801D6880(poly);
         ((POLY_GT4*)poly->tag)->b3 += 252;
         *(s16*)&((POLY_GT4*)poly->tag)->u1 -= 128;
         if (((POLY_GT4*)poly->tag)->b3 < 16) {
             poly->pad3 = 8;
         }
     }
-    if (!(++entity->unk84.S8.unk0 & 3)) {
+
+    entity->unk84.U8.unk0++;
+    if (!(entity->unk84.U8.unk0 % 4)) {
         entity->posY.i.hi++;
     }
-    if (AnimateEntity(&D_801839A0, entity) == 0) {
+
+    if (AnimateEntity(D_801839A0, entity) == 0) {
         DestroyEntity(entity);
     }
 }
-#endif
 
 // medium sized water splash used with merman
 void EntityMediumWaterSplash(Entity* entity) {

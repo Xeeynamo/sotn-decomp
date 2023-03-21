@@ -9,6 +9,7 @@ g_eBreakableanimSets = 0x80180E80;
 g_eBreakableBlendModes = 0x80180E90;
 c_GoldPrizes = 0x80182460;
 g_Rooms = 0x80183CC4;
+g_TrapDoorFlag = 0x8018123C;
 EntityBreakable = 0x801B7A64;
 EntityWargExplosionPuffOpaque = 0x801C14B8;
 Random = 0x801C184C;
