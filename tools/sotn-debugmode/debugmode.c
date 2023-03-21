@@ -50,7 +50,7 @@ void Init() {
     e->posY.val = PLAYER.posY.val;
     e->objectId = 0xD1;
     e->subId = 0;
-    e->unk34 = 0x10000;
+    e->flags = 0x10000;
     e->pfnUpdate = Update;
 }
 

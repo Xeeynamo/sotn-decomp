@@ -186,7 +186,6 @@ void* g_EntitiesNO3[] = {
     (void*)0x801BB3BC, (void*)0x801C12E8, (void*)0x801BE134, (void*)0x801BE444,
     (void*)0x801D0624, (void*)0x801C14B8,
 };
-void* g_EntitiesDAI[] = {};
 void* g_EntitiesSEL[] = {};
 void* g_EntitiesTE1[] = {};
 void* g_EntitiesTE2[] = {};
@@ -391,7 +390,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & 0x800000) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
