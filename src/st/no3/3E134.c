@@ -1524,37 +1524,30 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySmallUpwardsSplash);
 // particle effect, part of merman splash
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntitySmallWaterSplash);
 
-// https://decomp.me/scratch/steI4
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801D2D40);
-#else
-extern Entity D_8007DE38[];
+s32 func_801D2D40(s16 yVector) {
+    s16 newY = yVector + g_CurrentEntity->posY.i.hi;
+    s32 expectedResult = 0;
+    Collider collider;
+    Entity* newEntity;
+    s32 res;
 
-s32 func_801D2D40(s16 arg0) {
-    Entity* entity;
-    int new_var;
-    Collider* sp10;
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
+    res = expectedResult == (collider.unk0 & 1);
 
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         (s16)(arg0 + g_CurrentEntity->posY.i.hi), &sp10, 0);
-    new_var = 0;
-    new_var = (sp10->unk0 & 1) == new_var;
-
-    if (sp10->unk0 & 8) {
+    if (collider.unk0 & 8) {
         if (*(u8*)&g_CurrentEntity->unkA0 == 0) {
-            entity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
-            if (entity != 0) {
-                CreateEntityFromEntity(0x3B, g_CurrentEntity, entity);
-                entity->posY.i.hi = arg0 + entity->posY.i.hi;
-                entity->zPriority = g_CurrentEntity->zPriority;
+            newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3b, g_CurrentEntity, newEntity);
+                newEntity->posY.i.hi += yVector;
+                newEntity->zPriority = g_CurrentEntity->zPriority;
             }
             g_api.PlaySfx(0x7C2);
             *(u8*)&g_CurrentEntity->unkA0 = 1;
         }
     }
-    return new_var;
+    return res;
 }
-#endif
 
 // another merman variant
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMerman3);

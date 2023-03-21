@@ -808,7 +808,7 @@ typedef struct {
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
-    /* 8003C7E0 */ void* func_800EDB58;
+    /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* func_801027C4;
@@ -1125,6 +1125,7 @@ extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007C0D8[];
 extern Entity D_8007D858[];
+extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;

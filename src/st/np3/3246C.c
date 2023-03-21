@@ -1748,7 +1748,30 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C5F58);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C61B4);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C6458);
+s32 func_801C6458(s16 yVector) {
+    s16 newY = yVector + g_CurrentEntity->posY.i.hi;
+    s32 expectedResult = 0;
+    Collider collider;
+    Entity* newEntity;
+    s32 res;
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
+    res = expectedResult == (collider.unk0 & 1);
+
+    if (collider.unk0 & 8) {
+        if (*(u8*)&g_CurrentEntity->unkA0 == 0) {
+            newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x33, g_CurrentEntity, newEntity);
+                newEntity->posY.i.hi += yVector;
+                newEntity->zPriority = g_CurrentEntity->zPriority;
+            }
+            g_api.PlaySfx(0x7C2);
+            *(u8*)&g_CurrentEntity->unkA0 = 1;
+        }
+    }
+    return res;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C6564);
 
