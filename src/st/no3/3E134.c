@@ -1437,15 +1437,50 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityStrongWargDeathBeams);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CF438);
 
-void func_801CF58C(Entity* arg0) {
-    arg0->accelerationX = 0;
-    arg0->unk84.S16.unk2 = 0x100;
+void func_801CF58C(Entity* self) {
+    self->accelerationX = 0;
+    self->unk84.S16.unk2 = 0x100;
     func_801C58A4(6);
     g_api.PlaySfx(0x783);
-    arg0->unk80.modeS16.unk0 = 0x20;
+    self->unk80.modeS16.unk0 = 0x20;
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801CF5E0);
+void func_801CF5E0(Entity* self) {
+    s16 temp_v0;
+
+    if (self->facing == func_801C4FD4()) {
+        func_801C58A4(5);
+        return;
+    }
+
+    if (self->unk84.S16.unk2 == 0) {
+        func_801CF58C(self);
+        return;
+    }
+
+    temp_v0 = self->unk84.S16.unk0 - self->posX.i.hi - g_Camera.posX.i.hi;
+
+    if (temp_v0 > 16) {
+        func_801C58A4(3);
+        if (self->facing != 0) {
+            self->unk7C.S8.unk0 = 0;
+        } else {
+            self->unk7C.S8.unk0 = 1;
+        }
+    } else if (temp_v0 < -16) {
+        func_801C58A4(3);
+        if (self->facing != 0) {
+            self->unk7C.S8.unk0 = 1;
+        } else {
+            self->unk7C.S8.unk0 = 0;
+        }
+    } else {
+        func_801C58A4(7);
+    }
+
+    self->unk80.modeS16.unk0 = 0;
+    self->unk80.modeS16.unk2 = 32;
+}
 
 // duplicate of func_801CC90C in this file
 void func_801CF6D8(Entity* arg0) {
