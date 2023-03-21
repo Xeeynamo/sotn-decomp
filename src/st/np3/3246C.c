@@ -477,6 +477,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityTrapDoor);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4D60);
 
+// right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;

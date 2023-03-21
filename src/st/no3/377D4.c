@@ -516,7 +516,95 @@ void EntityTrapDoor(Entity* entity) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockLeftSide);
 
 // right side of the merman room rock, breaks when hit
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockRightSide);
+void EntityMermanRockRightSide(Entity* self) {
+    u16* tileLayoutPtr;
+    Entity* newEntity;
+    s32 tilePos;
+    u8* subId;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        self->unk3C = 2;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 24;
+
+        tileLayoutPtr = &D_801812B8;
+        tilePos = 0x1FD;
+        for (i = 0; i < 3; i++) {
+            D_800730D8[0].layout[tilePos] = *tileLayoutPtr;
+            D_800730D8[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            tileLayoutPtr++;
+            tilePos += 0x30;
+        }
+
+        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 */
+            tileLayoutPtr = &D_801812A0;
+            tilePos = 0x1FD;
+            for (i = 0; i < 3; i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                tileLayoutPtr++;
+                tilePos += 0x30;
+            }
+            self->unk3C = 1;
+            self->step = 2;
+        }
+        break;
+
+    case 1:
+        if (self->unk48 != 0) {
+            tileLayoutPtr = &D_80181294[(self->unk84.S16.unk0 * 6)];
+            tilePos = 0x1FD;
+            for (i = 0; i < 3; i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                tileLayoutPtr++;
+                tilePos += 0x30;
+            }
+
+            g_api.PlaySfx(0x644);
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->subId = 0x13;
+                newEntity->zPriority = 0xA9;
+                newEntity->posX.i.hi -= self->unk84.S16.unk0 * 16;
+                newEntity->posY.i.hi += 16;
+            }
+
+            subId = &D_80181344[self->unk84.S16.unk0 * 3];
+
+            for (i = 0; i < 3; i++) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x27, self, newEntity);
+                    newEntity->subId = *subId++;
+                    newEntity->accelerationX = (Random() << 8) + 0x8000;
+                    newEntity->accelerationY = -Random() * 0x100;
+                    newEntity->facing = 1;
+                    newEntity->posY.i.hi += -16 + (i * 16);
+                }
+            }
+            self->unk84.S16.unk0++;
+        }
+
+        if (self->unk84.S16.unk0 >= 2) {
+            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 */
+            self->unk3C = 1;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
+            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 */
+        }
+        break;
+    }
+}
 
 void EntityUnkId26(Entity* self) {
     u16* tileLayoutPtr;
