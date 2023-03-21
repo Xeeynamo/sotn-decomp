@@ -145,8 +145,8 @@ void func_80192FE4(s16 arg0) {
 
 void func_80193030(s16 arg0) {
     while (true) {
-        if (((D_8019C768->posY != 0xFFFF) &&
-             ((arg0 >= D_8019C768->posY) || (!(D_8019C768->posY != 0xFFFE))))) {
+        if ((D_8019C768->posY != 0xFFFF) &&
+            ((arg0 >= D_8019C768->posY) || !(D_8019C768->posY != 0xFFFE))) {
             break;
         }
         D_8019C768--;
