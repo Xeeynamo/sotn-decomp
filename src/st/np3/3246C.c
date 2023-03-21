@@ -507,7 +507,7 @@ void EntityTrapDoor(Entity* entity) {
         break;
 
     case 2:
-        AnimateEntity(&D_80181108, entity);
+        AnimateEntity(D_80181108, entity);
         break;
     }
 }
@@ -1830,7 +1830,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->posY.i.hi++;
     }
 
-    if (AnimateEntity(&D_801822B0, entity) == 0) {
+    if (AnimateEntity(D_801822B0, entity) == 0) {
         DestroyEntity(entity);
     }
 }
