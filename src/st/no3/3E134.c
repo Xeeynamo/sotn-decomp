@@ -1606,7 +1606,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             poly = &D_80086FEC[firstPolygonIndex];
             entity->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&entity->unk7C.s = poly;
-            entity->flags |= 0x00800000;
+            entity->flags |= FLAG_FREE_POLYGONS;
             func_801D6FCC(poly, firstPolygonIndex);
             poly->u0 = 0;
             poly->u1 = 0x20;
