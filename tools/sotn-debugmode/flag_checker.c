@@ -9,7 +9,7 @@ void InitFlagChecker(void) {
 void UpdateFlagChecker(void) {
     FntPrint("* Flag Checker (L2=decrease)\n");
     FntPrint("* Flag: %d      (L1=increase)\n", g_Flag);
-    FntPrint("* Value: %d\n", D_8003BDEC[g_Flag]);
+    FntPrint("* Value: %02x\n", D_8003BDEC[g_Flag]);
 
     if (g_pads->pressed & PAD_UP) {
         g_Flag--;
