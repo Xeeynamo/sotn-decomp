@@ -685,7 +685,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->unk84.S16.unk0 >= 2) {
-            FLAG_SET(MERMAN_ROCK, RIGHT_BROKEN);
+            FLAG_SET(MERMAN_ROCK, RIGHT_HALF_BROKEN);
             self->unk3C = 1;
             self->step++;
         }
