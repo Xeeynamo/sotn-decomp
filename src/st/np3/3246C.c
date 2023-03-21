@@ -477,11 +477,11 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityTrapDoor);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4D60);
 
-void func_801B5108(Entity* self) {
+void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* var_s3;
+    u8* subId;
     s32 i;
 
     switch (self->step) {
@@ -500,7 +500,7 @@ void func_801B5108(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 2) {
+        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 */
             tileLayoutPtr = &D_80181168;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -536,13 +536,13 @@ void func_801B5108(Entity* self) {
                 newEntity->posY.i.hi += 16;
             }
 
-            var_s3 = &D_8018120C[self->unk84.S16.unk0 * 3];
+            subId = &D_8018120C[self->unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *var_s3++;
+                    newEntity->subId = *subId++;
                     newEntity->accelerationX = (Random() << 8) + 0x8000;
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->facing = 1;
@@ -553,7 +553,7 @@ void func_801B5108(Entity* self) {
         }
 
         if (self->unk84.S16.unk0 >= 2) {
-            D_8003BDEC[51] |= 2;
+            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 */
             self->unk3C = 1;
             self->step++;
         }
@@ -561,7 +561,7 @@ void func_801B5108(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
-            D_8003BDEC[51] |= 8;
+            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 */
         }
         break;
     }
