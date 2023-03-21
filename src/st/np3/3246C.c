@@ -493,7 +493,7 @@ void EntityTrapDoor(Entity* entity) {
             g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
             g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
         } else {
-            entity->animCurFrame = 0x1E;
+            entity->animCurFrame = 30;
             g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
             g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
             entity->step = 128;
