@@ -52,8 +52,11 @@ void Init() {
     e->posY.val = PLAYER.posY.val;
     e->objectId = 0xD1;
     e->subId = 0;
-    e->flags = 0x10000;
     e->pfnUpdate = Update;
+
+    // the following two flags are important to disallow the game engine to
+    // destroy the entity when the room chnages.
+    e->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
 }
 void UpdateFlagChecker(void);
 void UpdateEntitySpawn(int variant);
