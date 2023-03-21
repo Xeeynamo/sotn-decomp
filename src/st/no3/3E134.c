@@ -1573,7 +1573,7 @@ s32 func_801D2D40(s16 yVector) {
         if (*(u8*)&g_CurrentEntity->unkA0 == 0) {
             newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x3b, g_CurrentEntity, newEntity);
+                CreateEntityFromEntity(0x3B, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yVector;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
