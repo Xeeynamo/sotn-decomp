@@ -16,7 +16,7 @@ OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 CC_FLAGS        += -mcpu=3000 -quiet -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float
 CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C
+CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
@@ -52,10 +52,11 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS		:= -P 4
-GO				:= $(TOOLS_DIR)/go/bin/go
+GO				:= $(HOME)/go/bin/go
 GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 SOTNDISK		:= $(GOPATH)/bin/sotn-disk
+GFXSTAGE		:= $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -63,7 +64,7 @@ define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.s))
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
 	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**.bin))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
 endef
 
 define list_o_files
@@ -89,7 +90,7 @@ clean:
 	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
-	git clean -fx
+	git clean -fx --exclude=.vscode/settings.json
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
@@ -126,45 +127,63 @@ $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
 
-cen: stcen_dirs $(BUILD_DIR)/CEN.BIN
+cen: stcen_dirs $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_CEN.BIN:
+	$(GFXSTAGE) e assets/st/cen $@
 
-dre: stdre_dirs $(BUILD_DIR)/DRE.BIN
+dre: stdre_dirs $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_DRE.BIN:
+	$(GFXSTAGE) e assets/st/dre $@
 
-mad: stmad_dirs $(BUILD_DIR)/MAD.BIN
+mad: stmad_dirs $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
 $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_MAD.BIN:
+	$(GFXSTAGE) e assets/st/mad $@
 
-no3: stno3_dirs $(BUILD_DIR)/NO3.BIN
+no3: stno3_dirs $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO3.BIN:
+	$(GFXSTAGE) e assets/st/no3 $@
 
-np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN
+np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NP3.BIN:
+	$(GFXSTAGE) e assets/st/np3 $@
 
-nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN
+nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
 $(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NZ0.BIN:
+	$(GFXSTAGE) e assets/st/nz0 $@
 
 sel: stsel_dirs $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 	$(OBJCOPY) -O binary $< $@
 
-st0: stst0_dirs $(BUILD_DIR)/ST0.BIN
+st0: stst0_dirs $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_ST0.BIN:
+	$(GFXSTAGE) e assets/st/st0 $@
 
-wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN
+wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_WRP.BIN:
+	$(GFXSTAGE) e assets/st/wrp $@
 
-rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN
+rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_RWRP.BIN:
+	$(GFXSTAGE) e assets/st/rwrp $@
 
 tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
@@ -205,21 +224,23 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
-extract_main: require-tools
+extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
-extract_dra: require-tools
+extract_dra: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).dra.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).dra.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(DRA).yaml
-extract_ric: require-tools
+extract_ric: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).ric.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).ric.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).ric.yaml
-extract_stmad: require-tools
+extract_stmad: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
-extract_st%: require-tools
+	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
+extract_st%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
-extract_tt_%: require-tools
+	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
+extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
@@ -237,15 +258,24 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
 	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
 	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
+	cp $(BUILD_DIR)/F_CEN.BIN $(DISK_DIR)/ST/CEN/F_CEN.BIN
 	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
+	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
 	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
+	cp $(BUILD_DIR)/F_MAD.BIN $(DISK_DIR)/ST/MAD/F_MAD.BIN
 	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
+	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO3.BIN
 	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
+	cp $(BUILD_DIR)/F_NP3.BIN $(DISK_DIR)/ST/NP3/F_NP3.BIN
 	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
+	cp $(BUILD_DIR)/F_NZ0.BIN $(DISK_DIR)/ST/NZ0/F_NZ0.BIN
 	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
+	cp $(BUILD_DIR)/F_RWRP.BIN $(DISK_DIR)/ST/RWRP/F_RWRP.BIN
 	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
+	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
+	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
@@ -256,7 +286,7 @@ $(BUILD_DIR)/../sotn-debugmode.bin:
 	cd tools/sotn-debugmode && make
 
 require-tools: $(SPLAT_APP) $(ASMDIFFER_APP) $(GO)
-update-dependencies: require-tools $(M2CTX_APP) $(M2C_APP)
+update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
@@ -276,9 +306,9 @@ $(M2C_APP):
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
 $(GO):
-	curl -L -o go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
-	tar -C $(TOOLS_DIR) -xzf go1.19.3.linux-amd64.tar.gz
-	rm go1.19.3.linux-amd64.tar.gz
+	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
+	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
+	rm go1.19.7.linux-amd64.tar.gz
 $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 $(SOTNDISK): $(GO)
@@ -286,10 +316,35 @@ $(SOTNDISK): $(GO)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.bin.o: %.bin
-	$(LD) -r -b binary -Map %.map -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
+
+# Handles assets
+$(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
+	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.roomdef.json.o: $(ASSETS_DIR)/%.roomdef.json
+	./tools/splat_ext/roomdef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
+	./tools/splat_ext/tiledef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spriteparts.json.o: $(ASSETS_DIR)/%.spriteparts.json
+	./tools/splat_ext/spriteparts.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.equipment.json.o: $(ASSETS_DIR)/%.equipment.json
+	./tools/splat_ext/equipment.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spritepartslist.json.o: $(ASSETS_DIR)/%.spritepartslist.json
+	./tools/splat_ext/spritepartslist.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/%.tilelayout.bin.o: $(ASSETS_DIR)/%.tilelayout.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(ASSETS_DIR)/$*.tilelayout.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
+# for now '.dec' files are ignored
+	touch $@
 
 SHELL = /bin/bash -e -o pipefail
 

@@ -244,7 +244,8 @@ void func_801BA880(s32 arg0, u32 arg1) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MDEC_in_sync);
 
-#ifndef NON_MATCHING
+// missing a return maybe?
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MDEC_out_sync);
 #else
 void MDEC_out_sync(void) {

@@ -86,23 +86,13 @@
 #define STAGE_ENDING 0xFE
 #define STAGE_MEMORYCARD 0xFF
 
-#define LBA_BIN_F_GAME 0x61CE
-#define LBA_BIN_F_GAME2 0x6252
-#define LBA_STAGE_MAD_ART 0x7D6F
-#define LBA_STAGE_MAD_VH 0x7DEF
-#define LBA_STAGE_MAD_BIN 0x7E28
-#define LBA_STAGE_NO0_ART 0x7E5D
-#define LBA_STAGE_NO0_VH 0x7EDD
-#define LBA_STAGE_NO0_BIN 0x7F16
-#define LBA_STAGE_NO3_ART 0x8297
-#define LBA_STAGE_NO3_VH 0x8317
-#define LBA_STAGE_NO3_BIN 0x834F
-#define LBA_STAGE_ST0_ART 0x9044
-#define LBA_STAGE_ST0_VH 0x90C4
-#define LBA_STAGE_ST0_BIN 0x90F9
-#define LBA_STAGE_NP3_ART 0x917F
-#define LBA_STAGE_NP3_VH 0x91FF
-#define LBA_STAGE_NP3_BIN 0x9235
+// Flags for entity->flags
+#define FLAG_UNK_10000 0x10000
+#define FLAG_FREE_POLYGONS 0x00800000
+#define FLAG_UNK_04000000 0x04000000
+#define FLAG_UNK_08000000 0x08000000
+#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
+#define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
 struct Entity;
 
@@ -117,6 +107,11 @@ typedef union {
 } f32;
 
 #include "unkstruct.h"
+
+typedef struct {
+    f32 posX;
+    f32 posY;
+} Camera;
 
 typedef struct {
     unsigned char width;
@@ -154,6 +149,7 @@ typedef struct {
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
 } MenuContext; // size = 0x1E
+#define SIZEOF_MENUCONTEXT (0x1E)
 
 typedef struct {
     /* 0x0 */ u8 tileLayoutId;
@@ -187,10 +183,10 @@ typedef struct {
 } RoomBossTeleport; /* size=0x14 */
 
 typedef struct {
-    /* 0x0 */ s16 pressed;
+    /* 0x0 */ u16 pressed;
     /* 0x2 */ s16 previous;
-    /* 0x4 */ s16 tapped;
-    /* 0x6 */ s16 repeat;
+    /* 0x4 */ u16 tapped;
+    /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
 typedef struct {
@@ -218,9 +214,9 @@ typedef struct Entity {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;
-    /* 0x20 */ s16 unk20;
-    /* 0x22 */ s16 unk22;
+    /* 0x1E */ s16 unk1E; // poly rotation angle
+    /* 0x20 */ s16 unk20; // poly / rotation origin x
+    /* 0x22 */ s16 unk22; // poly / rotation origin y
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -228,18 +224,18 @@ typedef struct Entity {
     /* 0x2E */ u16 unk2E; // pl_step_s
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
-    /* 0x34 */ s32 unk34;
+    /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
-    /* 0x3A */ s16 unk3A;
+    /* 0x3A */ s16 enemyId;
     /* 0x3C */ u16 unk3C;
     /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 unk40;
-    /* 0x42 */ s16 unk42;
+    /* 0x40 */ s16 attack;
+    /* 0x42 */ s16 attackElement;
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 unk48;
-    /* 0x49 */ u8 unk49;
+    /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
@@ -299,7 +295,7 @@ typedef struct Entity {
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ s32 unk9C;
+    /* 0x9C */ struct Entity* unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
@@ -374,18 +370,76 @@ typedef struct {
 } GpuUsage;
 
 typedef struct {
-    u32 unk0;
-    s32 hp;
-    s32 hpMax;
-    s32 hearts;
-    s32 heartsMax;
-    s32 mp;
-    s32 mpMax;
     s32 statStr;
     s32 statCon;
     s32 statInt;
     s32 statLck;
-} PlayerStats;
+} Stats;
+
+typedef struct {
+    /* 80097964 */ u8 relics[30];
+    /* 80097982 */ u8 spells[8];
+    /* 8009798A */ u8 equipHandCount[169];
+    /* 80097A33 */ u8 equipBodyCount[26];
+    /* 80097A4D */ u8 equipHeadCount[22];
+    /* 80097A63 */ u8 equipCloakCount[9];
+    /* 80097A6C */ u8 equipOtherCount[33];
+    /* 80097A8D */ u8 equipHandOrder[169];
+    /* 80097B36 */ u8 equipBodyOrder[26];
+    /* 80097B50 */ u8 equipHeadOrder[22];
+    /* 80097B66 */ u8 equipCloakOrder[9];
+    /* 80097B6F */ u8 equipOtherOrder[33];
+    /* 80097B90 */ u8 saveName[12];
+    /* 80097B90 */ u32 D_80097B9C;
+    /* 80097BA0 */ s32 hp;
+    /* 80097BA4 */ s32 hpMax;
+    /* 80097BA8 */ s32 hearts;
+    /* 80097BAC */ s32 heartsMax;
+    /* 80097BB0 */ s32 mp;
+    /* 80097BB4 */ s32 mpMax;
+    /* 80097BB8 */ s32 statsBase[4];
+    /* 80097BC8 */ s32 statsEquip[4];
+    /* 80097BD8 */ s32 statsTotal[4];
+    /* 80097BE8 */ u32 level;
+    /* 80097BEC */ u32 exp;
+    /* 80097BF0 */ u32 gold;
+    /* 80097BF4 */ u32 killCount;
+    /* 80097BF8 */ u32 D_80097BF8;
+    /* 80097BFC */ u32 D_80097BFC;
+    /* 80097C00 */ u32 equipment[7];
+    /* 80097C1C */ u32 attackRightHand;
+    /* 80097C20 */ u32 attackLeftHand;
+    /* 80097C24 */ u32 defenseEquip;
+    /* 80097C28 */ u16 defenseElement;
+    /* 80097C2A */ u16 D_80097C2A;
+    /* 80097C2C */ u16 D_80097C2C;
+    /* 80097C2E */ u16 D_80097C2E;
+    /* 80097C30 */ u32 timerHours;
+    /* 80097C34 */ u32 timerMinutes;
+    /* 80097C38 */ u32 timerSeconds;
+    /* 80097C3C */ u32 timerFrames;
+    /* 80097C40 */ u32 D_80097C40;
+    /* 80097C44 */ u32 D_80097C44;
+    /* 80097C48 */ u32 D_80097C48;
+    /* 80097C4C */ u32 D_80097C4C;
+    /* 80097C50 */ u32 D_80097C50;
+    /* 80097C54 */ u32 D_80097C54;
+    /* 80097C58 */ u32 D_80097C58;
+    /* 80097C5C */ u32 D_80097C5C;
+    /* 80097C60 */ u32 D_80097C60;
+    /* 80097C64 */ u32 D_80097C64;
+    /* 80097C68 */ u32 D_80097C68;
+    /* 80097C6C */ u32 D_80097C6C;
+    /* 80097C70 */ u32 D_80097C70;
+    /* 80097C74 */ u32 D_80097C74;
+    /* 80097C78 */ u32 D_80097C78;
+    /* 80097C7C */ u32 D_80097C7C;
+    /* 80097C80 */ u32 D_80097C80;
+    /* 80097C84 */ u32 D_80097C84;
+    /* 80097C88 */ u32 D_80097C88;
+    /* 80097C8C */ u32 D_80097C8C;
+    /* 80097C90 */ u32 D_80097C90;
+} PlayerStatus; /* size=0x330 */
 
 typedef struct {
     s32 hours;
@@ -572,6 +626,43 @@ typedef struct {
 } SaveData; /* size = 0x11CC */
 
 typedef struct {
+    /* 0x00 */ const u8* gfxPage;
+    /* 0x04 */ const u8* gfxIndex;
+    /* 0x08 */ const u8* clut;
+    /* 0x0C */ const u8* collision;
+} TileDefinition; // size = 0x10
+
+typedef struct {
+    /* 0x00 */ u32 left : 6;
+    /* 0x04 */ u32 top : 6;
+    /* 0x08 */ u32 right : 6;
+    /* 0x0C */ u32 bottom : 6;
+    /* 0x10 */ u32 flags : 8;
+} LayoutRect; // size = 0x14
+
+typedef struct {
+    /* 0x00 */ const u16* layout;
+    /* 0x04 */ const TileDefinition* tileDef;
+    /* 0x08 */ const LayoutRect rect;
+    /* 0x0C */ const u16 unkC;
+    /* 0x0E */ const u16 unkE;
+} LayerDef2; // size = 0x10
+
+typedef struct {
+    /* 0x00 */ const u16* layout;
+    /* 0x04 */ const TileDefinition* tileDef;
+    /* 0x08 */ const u32 rect;
+    /* 0x0C */ const u16 unkC;
+    /* 0x0E */ const u8 unkE;
+    /* 0x0F */ const u8 unkF;
+} LayerDef; // size = 0x10
+
+typedef struct {
+    LayerDef* fg;
+    LayerDef* bg;
+} RoomDef;
+
+typedef struct {
     /* 8003C774 */ void (*Update)(void);
     /* 8003C778 */ void (*TestCollisions)(void);
     /* 8003C77C */ void (*unk08)(void);
@@ -579,8 +670,8 @@ typedef struct {
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
     /* 8003C78C */ s32** cluts;
-    /* 8003C790 */ void* unk1C;       // related to object layout
-    /* 8003C794 */ void** tileLayers; // related to tiles layout
+    /* 8003C790 */ void* unk1C; // related to object layout
+    /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
@@ -592,7 +683,8 @@ typedef struct {
 
 typedef struct RoomDimensions {
     /* 0x00 */ s32 hSize;
-    /* 0x04 */ s32 vSize;
+    /* 0x04 */ u16 vSize;
+    /* 0x06 */ u16 _padding06;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 left;
     /* 0x10 */ s32 top;
@@ -602,35 +694,117 @@ typedef struct RoomDimensions {
     /* 0x20 */ s32 y;
     /* 0x24 */ s32 width;
     /* 0x28 */ s32 height;
-} RoomDimensions;
+} RoomDimensions; /* size=0x2C */
 
-typedef struct CollisionResult {
-    /* 0x00 */ s32 unk0; // if not 0 it collides
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
+typedef struct Collider {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
+} Collider; /* size=0x24 */
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ u16 hitPoints;
+    /* 0x06 */ u16 attack;
+    /* 0x08 */ u16 attackElement;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ s16 weaknesses;
+    /* 0x10 */ s16 strengths;
+    /* 0x12 */ s16 immunes;
+    /* 0x14 */ s16 absorbs;
+    /* 0x16 */ s16 level;
+    /* 0x18 */ s16 exp;
+    /* 0x1A */ s16 rareItemId;
+    /* 0x1C */ s16 uncommonItemId;
+    /* 0x1E */ u16 rareItemDropRate;
+    /* 0x20 */ u16 uncommonItemDropRate;
+    /* 0x22 */ u8 hitboxWidth;
+    /* 0x23 */ u8 hitboxHeight;
+    /* 0x24 */ s32 unk24;
+} EnemyDef; /* size=0x28 */
+
+typedef struct {
+    /* 0x00 */ s16 attack;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ u16 attackElement;
+    /* 0x06 */ u8 unk6;
+    /* 0x07 */ u8 sp17;
+    /* 0x08 */ u16 sp18;
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u16 sp1C;
+    /* 0x0E */ u16 sp1E;
+    /* 0x10 */ u8 sp20;
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+} SubweaponDef;          /* size=0x14 */
+
+// Defines the equipment that can be set on left and right hand
+// This includes weapons, throw weapons, consumable and restoration items.
+// D_800A4B04 it is assumed the equip data starts from here
+// https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ s16 attack;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 element;
+    /* 0x0E */ u8 damageScale;
+    /* 0x0F */ u8 weaponId;
     /* 0x10 */ u16 unk10;
-    /* 0x10 */ u16 unk12;
-    /* 0x14 */ s16 unk14; // rightRepel
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18; // bottomRepel
-    /* 0x1A */ s16 unk1A;
+    /* 0x12 */ u8 playerAnim;
+    /* 0x13 */ u8 unk13;
+    /* 0x14 */ u8 unk14;
+    /* 0x15 */ u8 lockDuration;
+    /* 0x16 */ u16 chainable;
+    /* 0x18 */ u8 specialMove;
+    /* 0x19 */ u8 isConsumable;
+    /* 0x1A */ u8 enemyInvincibilityFrames;
+    /* 0x1B */ u8 unk1B;
     /* 0x1C */ u16 unk1C;
     /* 0x1E */ u16 unk1E;
-    /* 0x20 */ u8 pad2[2];
-} CollisionResult; /* size=0x24 */
+    /* 0x20 */ u16 unk20;
+    /* 0x22 */ u16 unk22;
+    /* 0x24 */ u16 mpUsage;
+    /* 0x26 */ u16 stunFrames;
+    /* 0x28 */ u16 hitType;
+    /* 0x2A */ u16 hitEffect;
+    /* 0x2C */ u16 icon;
+    /* 0x2E */ u16 palette;
+    /* 0x30 */ u16 criticalRate;
+    /* 0x32 */ u16 unk32;
+} Equipment; /* size=0x34 */
+
+// Defines armor, cloak and rings
+typedef struct {
+    /* 00 */ const char* name;
+    /* 04 */ const char* description;
+    /* 08 */ u32 unk08;
+    /* 0C */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u16 icon;
+    /* 1A */ u16 palette;
+    /* 1C */ u32 unk1C;
+} Accessory; /* size=0x20 */
 
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePolygons)(s32);
     /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
-    /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, CollisionResult* res,
-                                          s32 unk);
+    /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
-    /* 8003C7D0 */ void* func_800FE728;
+    /* 8003C7D0 */ void (*func_800FE728)(s32, Equipment* res, s32 equipId);
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
@@ -643,25 +817,25 @@ typedef struct {
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
-    /* 8003C804 */ void* func_80118894;
-    /* 8003C808 */ Unkstruct5* D_800A8900;
+    /* 8003C804 */ void (*func_80118894)(Entity*);
+    /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
     /* 8003C814 */ void* func_8010DB38;
-    /* 8003C818 */ void* func_8010DBFC;
+    /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
     /* 8003C828 */ void* func_800FF128;
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
-    /* 8003C830 */ s32 D_800A4B04;
-    /* 8003C834 */ s32 D_800A7718;
+    /* 8003C830 */ Equipment* D_800A4B04;
+    /* 8003C834 */ Accessory* D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
     /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*func_800FD874)(u16 context, s32 arg1);
+    /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
     /* 8003C850 */ void* D_800A8720;
     /* 8003C854 */ void* func_800FF7B8;
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
@@ -723,29 +897,65 @@ typedef struct {
     /* 02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
+typedef struct {
+    /* 800730D8 */ u16* layout;
+    /* 800730DC */ u32 tileDef;
+    /* 800730E0 */ f32 scrollX;
+    /* 800730E4 */ f32 scrollY;
+    /* 800730E8 */ u32 D_800730E8;
+    /* 800730EC */ u32 D_800730EC;
+    /* 800730F0 */ u32 D_800730F0;
+    /* 800730F4 */ u32 D_800730F4;
+    /* 800730F8 */ u32 w;
+    /* 800730FC */ u32 h;
+    /* 80073100 */ u32 D_80073100;
+    /* 80073104 */ u32 flags;
+} BgLayer;
+
+typedef struct {
+    u32 rightHand;
+    u32 leftHand;
+    u32 jump;
+    u32 dodge;
+} ConfigButtons;
+
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
+
+// Holds flags that checks if certain switches are enabled to allow to have
+// shortcuts around the castle. One typical example is the wood column that
+// prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
+// column will disappear.
+extern u8 D_8003BDEC[];
+
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
-extern u16 D_8003C708;
+extern u16 D_8003C708; // can save
+// extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-extern s32 D_8003C734;
+extern s32 D_8003C730;
+extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
 extern s32 D_8003C73C;
+extern u32 D_8003C744;
 extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
+extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
+extern s32 g_blinkTimer;
 extern s32 D_8003C99C;
-extern u16 D_8003C9C8;
-extern s32 D_8003C9CC[];
 extern s32 g_CurrentPlayableCharacter;
 extern s32 D_8003C9A4; // related to when player change stages?
-extern s32 g_blinkTimer;
+extern u16 D_8003C9C8;
+extern s16 D_8003C9CC[];
+extern s32 g_menuButtonSettingsCursorPos;
+extern ConfigButtons g_menuButtonSettingsConfig;
+extern s32 D_8003C9FC;
 extern s32 g_menuMainCursorIndex;
 extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;
@@ -754,11 +964,13 @@ extern s32 D_8003CA28[]; // time attack checkpoints, also holds boss fought flag
 extern s32 D_8003CACC;
 extern s32 D_8003CB00[];
 extern s32 D_8003CB04;
+
 extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
-extern s16 D_80054302;     // TODO overlap, hard to remove
+extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
-extern const char g_strMemcardSavePath[];
+
+extern const char g_MemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
@@ -782,23 +994,25 @@ extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern u16 g_Clut[];
+extern u16 D_8006F3CC[];
+extern u16 D_8006F42C[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
 extern s32 D_80072EF4[];
 extern u16 D_80072EF6;
-extern s32 D_80072EFC;
-extern s16 D_80072F00[];
-extern s16 D_80072F02[];
-extern s16 D_80072F04;
+extern s32 D_80072EFC;   // stun timer
+extern s16 D_80072F00[]; // poison timer
+extern s16 D_80072F02[]; // curse timer
+extern s16 D_80072F04;   // visual effect timer stoned/hit
 extern s16 D_80072F0A[];
 extern s16 D_80072F0C;
 extern s16 D_80072F10;
 extern s16 D_80072F14[]; // could be an array or a struct
 extern s16 D_80072F16[];
 extern s16 D_80072F18;
-extern s16 D_80072F1A[];
-extern s16 D_80072F1C[];
+extern s16 D_80072F1A[]; // invincibility timer
+extern s16 D_80072F1C[]; // invincibility timer from consumables
 extern s16 D_80072F1E;
 extern Unkstruct_80072F20 D_80072F20;
 extern s32 D_80072F24;   // D_80072F20.unk04
@@ -827,8 +1041,9 @@ extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2
 extern u32 D_80073078; // ev3
 extern s32 D_80073080;
-extern s16 D_8007308E; // camera X
-extern s16 D_80073092; // camera Y
+extern TileDefinition* D_80073088;
+extern Camera g_Camera;
+extern Unkstruct_800ECE2C D_800730A0; // 4 bytes before 'g_CurrentRoom'
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
 extern s32 D_800730AC;          // g_CurrentRoom.unk8
@@ -840,6 +1055,7 @@ extern s32 g_CurrentRoomX;      // g_CurrentRoom.x
 extern s32 g_CurrentRoomY;      // g_CurrentRoom.y
 extern s32 g_CurrentRoomWidth;  // g_CurrentRoom.width
 extern s32 g_CurrentRoomHeight; // g_CurrentRoom.height
+extern BgLayer D_800730D8[];
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
@@ -882,6 +1098,12 @@ extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
 extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
 
 // D_80073550 g_EntityArray[2]
+extern u16 D_8007357C;       // g_EntityArray[2].step
+extern s32 D_80073584;       // g_EntityArray[2].unk34
+extern s32 D_800735B4;       // g_EntityArray[2].firstPolygonIndex
+extern POLY_GT4* D_800735CC; // *(s32*)g_EntityArray[2].unk7C
+
+// D_80073550 g_EntityArray[2]
 extern s16 D_800735A6; // g_EntityArray[2].animCurFrame
 
 // D_8007360C g_EntityArray[3]
@@ -922,6 +1144,8 @@ extern s32 D_80096ED8[];
 extern u32 D_80097364;
 extern s32 D_800973B4;
 extern POLY_GT4 D_800973B8[];
+extern s8 D_80097B98;
+extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern s32 D_800973F8;
 extern s32 D_800973FC;
@@ -933,22 +1157,13 @@ extern s32 D_80097418;
 extern s32 D_8009741C;
 extern s32 D_80097420[];
 extern s32 D_80097424;
-extern s32 D_80097448;
+extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
+extern u16 D_8009748A[];
 extern Pad g_pads[];
-
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-} Unkstruct_80097494;
-extern Unkstruct_80097494 D_80097494;
-
-extern u16 D_80097496;
-extern u16 D_80097498;
-extern u16 D_8009749C[];
 extern u32 g_StageId;
-extern s32 D_800974A4;
+extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
 extern s32 D_800978AC;
 extern s32 D_800978B4;
@@ -959,32 +1174,24 @@ extern s32 D_80097908;
 extern s32 D_8009790C;
 extern s32 D_80097910;
 extern s32 D_80097914;
+extern s32 g_mapTilesetId; // 0x80097918
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern s32 D_80097930[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;
-extern u8 D_80097964[];
-extern u8 D_8009796E;
-extern s8 D_8009798A[];
-extern u8 D_80097A8D;
-extern s32 D_80097BE4[];
+extern PlayerStatus g_Status;
+extern u8 D_80097B9C[];
+extern s32 g_player_total_con;
+extern s32 g_player_total_int;   // total CON
+extern s32 g_player_total_lck[]; // total LCK
+extern s32 D_80097BFC;           // g_SubweaponId
 extern s32 g_playerLevel;
 extern s32 g_playerExp;
 extern s32 g_playerGold;
 extern s32 g_killCount;
-extern u8 g_SaveName[12];
-extern PlayerStats D_80097B9C;
-extern s32 g_playerHp;       // D_80097B9C.hp
-extern s32 g_playerHpMax;    // D_80097B9C.hpMax
-extern s32 g_playerHeart;    // D_80097B9C.hearts
-extern s32 g_playerHeartMax; // D_80097B9C.heartsMax
-extern s32 g_playerMP;       // D_80097B9C.mp
-extern s32 g_playerMpMax;    // D_80097B9C.mpMax
-extern s32 D_80097C1C[];
-extern s32 D_80097C20;
-extern s32 D_80097C24;
+extern u8 g_SaveName[12] ALIGNED4;
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern GameTimer g_GameTimer;

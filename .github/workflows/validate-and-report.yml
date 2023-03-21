@@ -26,11 +26,21 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
+      - name: Debug context
+        run: echo '${{ toJSON(github) }}'
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
-      - name: Clone main repository
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.after }}
+          submodules: false
+      - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
           submodules: false
       - name: Clone dependencies
         uses: actions/checkout@v3
@@ -61,47 +71,47 @@ jobs:
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
-  update-progress:
+  generate-progress-report:
+    strategy:
+      matrix:
+        version: ["us"]
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    needs: build-and-test
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ matrix.version }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
+      FROGRESS_API_SECRET: ${{ secrets.FROGRESS_API_SECRET }}
+      DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
     steps:
       - name: Clone main repository
         uses: actions/checkout@v3
         with:
           submodules: false
-      - name: Clone asset repository
+      - name: Clone dependencies
         uses: actions/checkout@v3
         with:
-          ref: 'gh-report'
-          path: 'gh-report'
-      - name: Set-up Python
-        uses: actions/setup-python@v4
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.version }}
+          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          path: 'disks/dependencies'
+      - name: Setting up dependencies
+        working-directory: disks
+        run: |
+          cat dependencies/* > dependencies.tar.gz
+          tar -xf dependencies.tar.gz
+          mv *.cue sotn.${{ matrix.version }}.cue
+      - name: Extract dependencies
+        run: make extract_disk
+      - name: Split game data
+        run: make -j extract
+      - name: Obtain built binaries
+        uses: actions/download-artifact@v3
         with:
-          python-version: '3.x'
-      - name: Generate progress report
-        run: |
-            mkdir -p gh-report/assets
-            python tools/report_progress.py DRA.BIN 630 src/dra > gh-report/assets/progress-dra.json
-            python tools/report_progress.py RIC.BIN 155 src/ric > gh-report/assets/progress-ric.json
-            python tools/report_progress.py CEN.BIN 128 src/st/cen > gh-report/assets/progress-cen.json
-            python tools/report_progress.py DRE.BIN 136 src/st/dre > gh-report/assets/progress-dre.json
-            python tools/report_progress.py MAD.BIN 116 src/st/mad > gh-report/assets/progress-mad.json
-            python tools/report_progress.py NO3.BIN 210 src/st/no3 > gh-report/assets/progress-no3.json
-            python tools/report_progress.py NP3.BIN 214 src/st/np3 > gh-report/assets/progress-np3.json
-            python tools/report_progress.py NZ0.BIN 184 src/st/nz0 > gh-report/assets/progress-nz0.json
-            python tools/report_progress.py SEL.BIN 164 src/st/sel > gh-report/assets/progress-sel.json
-            python tools/report_progress.py ST0.BIN 160 src/st/st0 > gh-report/assets/progress-st0.json
-            python tools/report_progress.py WRP.BIN 110 src/st/wrp > gh-report/assets/progress-wrp.json
-            python tools/report_progress.py RWRP.BIN 110 src/st/rwrp > gh-report/assets/progress-rwrp.json
-            python tools/report_progress.py TT_000.BIN 27 src/servant/tt_000 > gh-report/assets/progress-tt_000.json
-      - name: Commit report
-        run: |
-            git config --global user.name 'GitHub Action' 
-            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add -A
-            git commit -m 'Update progress' || true
-            git push
-        working-directory: gh-report
+          name: build_${{ matrix.version }}
+          path: build/${{ matrix.version }}
+      - name: Generate and send progress report
+        run: python3 tools/progress.py --version us
   generate-duplicates-report:
     strategy:
       matrix:
@@ -112,8 +122,6 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
-      - name: Install requirements
-        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
         uses: actions/checkout@v3
         with:

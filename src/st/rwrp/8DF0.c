@@ -6,6 +6,9 @@
 
 #include "stage.h"
 
+extern PfnEntityUpdate D_801803E0[];
+extern s16 D_80180A94[];
+
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188DF0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188ED0);
@@ -54,7 +57,13 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C72C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C7E0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C854);
+void func_8018C854(u16 objectId, Entity* source, Entity* entity) {
+    func_8018D580(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_801803E0[objectId];
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C8D0);
 
@@ -95,7 +104,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DDF0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE50);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE7C);
+s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE98);
 
@@ -117,9 +126,18 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E118);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E160);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1C0);
+void func_8018E1C0(s32 arg0) {
+    g_CurrentEntity->step = arg0 & 0xFF;
+    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+}
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1E0);
+void func_8018E1E0(s32 arg0) {
+    g_CurrentEntity->unk2E = arg0 & 0xFF;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E1FC);
 
@@ -149,7 +167,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EE84);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EF28);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EF78);
+void func_8018EF78(void) { func_8018D580(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EFA0);
 

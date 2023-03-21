@@ -5,7 +5,7 @@ void EntityBat(Entity* entity) {
     s16 xDistance;
     s16 yDistance;
 
-    if (entity->unk34 & 0x100) {
+    if (entity->flags & 0x100) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(2, entity, newEntity);
@@ -40,7 +40,7 @@ void EntityBat(Entity* entity) {
             } else {
                 entity->accelerationX = -0x4000;
             }
-            entity->animFrameIdx = (func_801B90BC() & 3) * 3;
+            entity->animFrameIdx = (Random() & 3) * 3;
             entity->animFrameDuration = 0;
             entity->step++;
         }

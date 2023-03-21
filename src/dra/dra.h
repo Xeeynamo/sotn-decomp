@@ -3,52 +3,20 @@
 
 #include "game.h"
 
-// Defines the equipment that can be set on left and right hand
-// This includes weapons, throw weapons, consumable and restoration items.
-// D_800A4B04 it is assumed the equip data starts from here
-// https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
 typedef struct {
-    /* 800a4b38 */ const char* name;
-    /* 800a4b3C */ const char* description;
-    /* 800a4b40 */ u16 attack;
-    /* 800a4b42 */ u16 defense;
-    /* 800a4b44 */ u16 element;
-    /* 800a4b46 */ u8 unk0E;
-    /* 800a4b46 */ u8 entId;
-    /* 800a4b48 */ u16 unk10;
-    /* 800a4b4A */ u16 unk12;
-    /* 800a4b4C */ u16 unk14;
-    /* 800a4b4E */ u16 unk16;
-    /* 800a4b50 */ u8 unk18;
-    /* 800a4b51 */ u8 isConsumable;
-    /* 800a4b52 */ u16 unk1A;
-    /* 800a4b54 */ u16 unk1C;
-    /* 800a4b56 */ u16 unk1E;
-    /* 800a4b58 */ u16 unk20;
-    /* 800a4b5A */ u16 unk22;
-    /* 800a4b5C */ u16 mpUsage;
-    /* 800a4b5E */ u16 unk26;
-    /* 800a4b60 */ u8 unk28; // somewhat range-related
-    /* 800a4b61 */ u8 unk29;
-    /* 800a4b62 */ u16 unk2A;
-    /* 800a4b64 */ u16 icon;
-    /* 800a4b66 */ u16 palette;
-    /* 800a4b68 */ u16 unk30;
-    /* 800a4b6A */ u16 unk32;
-} Equipment;
-
-// Defines armor, cloak and rings
-typedef struct {
-    /* 00 */ const char* name;
-    /* 04 */ const char* description;
-    /* 08 */ u32 unk08;
-    /* 0C */ u32 unk0C;
-    /* 10 */ u32 unk10;
-    /* 14 */ u32 unk14;
-    /* 18 */ u16 icon;
-    /* 1A */ u16 palette;
-    /* 1C */ u32 unk1C;
-} Accessory;
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* combo;
+    /* 0x08 */ const char* description;
+    /* 0x0C */ s8 mpUsage;
+    /* 0x0D */ s8 unk0D;
+    /* 0x0E */ s16 unk0E;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u16 attackElement;
+    /* 0x18 */ s16 attack;
+    /* 0x1A */ s16 unk1A;
+} SpellDef;
 
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
@@ -60,6 +28,10 @@ extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
 extern s32 D_800A2438;
 extern RoomBossTeleport D_800A297C[];
+extern s32 D_800A2D68;
+extern s32 D_800A2D6C;
+extern u8 c_chPlaystationButtons[];
+extern u8 c_chShoulderButtons[];
 extern Unkstruct_800A2D98 D_800A2D98[];
 extern u8 D_800A2EE8[];
 extern u8 D_800A2EED;
@@ -75,7 +47,6 @@ extern u16 D_800A2F48[];
 extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
-extern u16 player_equip_left_hand;
 
 extern u32 g_playerEquip[];
 // D_80097C00 = g_playerEquip[0]
@@ -88,7 +59,7 @@ extern u32 g_playerEquip[];
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
 extern const char* c_strALUCARD;
-extern const char* c_strSTR;
+extern const char** c_strSTR;
 extern const char* c_strCON;
 extern const char* c_strINT;
 extern const char* c_strLCK;
@@ -123,25 +94,31 @@ extern const char* c_strMono;
 extern const char* c_strWindow;
 extern const char* c_strTime;
 extern const char* c_strALUCART;
+extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
 extern Lba D_800A3C40[]; // g_lba
 extern Unsktruct_800EAF28* D_800A3B5C[];
+extern SubweaponDef g_Subweapons[];
+extern SpellDef g_SpellDefs[];
+extern EnemyDef g_EnemyDefs[];
+extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
 extern Unkstruct_800A4B12 D_800A4B1D[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
-extern s8 D_800A841C[];  // related to player MP
+extern s8 D_800A841C[]; // related to player MP
+extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern RECT D_800ACD80;
 extern RECT D_800ACD88[2];
 extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
+extern u8 D_800ACFB4[][4];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
-extern s32 D_800ACFB4[];
 extern s32 D_800ADC44;
 extern s32 D_800AE270[];
 extern AnimationFrame* D_800AE294;
@@ -185,11 +162,7 @@ extern const char aSp1603x;
 extern const char aTile03x;
 extern s32 D_800DC4C0;
 extern s8 D_800DC4C4;
-extern u8 D_800BF554[];
-extern u8 D_800BF555[];
-extern u8 D_800BF556[];
-extern u8 D_800BF559[];
-extern u8 D_800BF55A[];
+extern Unkstruct_800BF554 D_800BF554[];
 extern s32 D_801362AC;
 extern s32 D_801362B0;
 extern s32 D_801362B4;
@@ -204,11 +177,12 @@ extern s32 D_801362D4;
 extern s32 D_801362D8;
 extern GpuUsage g_GpuMaxUsage;
 extern s32 g_softResetTimer;
+extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
-extern u8 D_80137460;
+extern u8 D_80137460[]; // button timers
 extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
@@ -250,10 +224,10 @@ extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
-extern s32 g_someValue;
-extern s32 D_80137930;
-extern s32 D_80137934;
-extern s32 D_80137938[];
+extern s32 g_StatusAttackRightHand;
+extern s32 g_StatusAttackLeftHand;
+extern s32 g_StatusDefenseEquip;
+extern s32 g_StatusPlayerStatsTotal[];
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
@@ -269,10 +243,13 @@ extern s32 D_80137980;
 extern s32 D_80137984;
 extern u32 D_80137988;
 extern u32 D_8013798C;
+extern Unkstruct_80137990 D_80137990;
 extern s32 D_80137994;
 extern s32 D_80137998;
 extern u32 D_8013799C;
 extern s32 D_801379A0;
+extern s32 D_801379A4;
+extern s32 D_801379A8;
 extern u16 D_801379AC[2];
 extern s32 D_801379B0;
 extern s32 D_80137E40;
@@ -290,6 +267,10 @@ extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80138008;
+extern u8 D_8013803C;
+extern u8 D_80138040;
+extern u8 D_80138044;
+extern u8 D_80138048;
 extern s32 D_8013808C;
 extern s32 D_8013841C;
 extern s32 D_80138430;
@@ -309,8 +290,8 @@ extern s16 D_80138FAC;
 extern s32 D_80138FB0;
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
-extern s16 D_80139000;
-extern s16 D_80139008;
+extern s16 g_sfxRingBufferPos1; // D_80139000
+extern s32 D_80139008;
 extern s16 D_80139010;
 extern s8 D_80139014;
 extern s8 D_80139018[];
@@ -327,8 +308,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* D_801390D4;
 extern u8 D_801390D8;
-extern Unkstruct_801390DC D_801390DC[];
-extern Unkstruct_801390DC D_801390E0[];
+extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
@@ -347,10 +327,10 @@ extern s32 D_80139834[];
 extern s16 D_80139868[];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
-extern s16 D_80139A70;
+extern s16 g_sfxRingBufferPos2; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
-extern s16 D_8013AE7C;
+extern u16 D_8013AE7C;
 extern volatile unsigned char D_8013AE80;
 extern s16 D_8013AE84[];
 extern s16 D_8013AE8C;
@@ -369,7 +349,7 @@ extern s16 D_8013AEF0;
 extern s32 D_8013B158;
 extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
-extern s16 D_8013B3E8[];
+extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern s8 D_8013B5EC[];
 extern s8 D_8013B614[];
@@ -402,10 +382,9 @@ extern s32 D_801EC000[];
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
-void SetRoomForegroundLayer(s32 /* ? */);
-void SetRoomBackgroundLayer(s32 /* ? */, s32 /* ? */);
-void CheckCollision(s32 x, s32 y, CollisionResult* res, s32 unk);
-void PlaySfx(s16 sfxId);
+void SetRoomForegroundLayer(LayerDef2* layerDef);
+void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
+void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);
 void func_80021E38(s32);
@@ -418,6 +397,7 @@ void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
+s32 func_800E81FC(s32 mapTilesetId, s32);
 void func_800E8D24(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
@@ -436,7 +416,7 @@ void func_800EDA94(void);
 void func_800EDAE4(void);
 s32 AllocPolygons(u8 primitives, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
-void func_800EFBF8(void);
+void func_800EFBF8(s32 arg0);
 void FreePolygons(s32 index);
 void func_800F0334(s32);
 void func_800F0578(s32 arg0);
@@ -464,9 +444,10 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
+void func_800FF7B8(s32 arg0);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
-void DrawMenuChar(char ch, int x, int y, MenuContext* context);
+void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
 void DrawSettingsReverseCloak(MenuContext* context);
@@ -484,12 +465,13 @@ u8* func_800FD744(s32 equipTypeFilter);
 u8* func_800FD760(s32 equipTypeFilter);
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void func_800FD874(u16 arg0, s32 arg1);
+void AddToInventory(u16 itemId, s32 itemCategory);
+void func_800FD9D4(SpellDef* spell, s32 id);
 s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
 void func_800FDE00(void);
-void func_800FE3C4(Unkstruct_8011A290*, s32, s32);
-void func_800FE728(s32, Unkstruct_8011B334*, s32);
+s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
+void func_800FE728(s32, Equipment* res, s32 equipId);
 s32 func_800FE97C(s32*, s32, s32, s32);
 s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);
@@ -518,6 +500,7 @@ s32 func_801106A4();
 s32 func_8011081C();
 s32 func_80110968();
 s32 func_80110BC8();
+void func_8010DBFC(s32*, s32*);
 s32 func_80110DF8();
 s32 func_80111018();
 s32 func_801112AC();
