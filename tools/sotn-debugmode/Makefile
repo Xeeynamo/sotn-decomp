@@ -49,6 +49,10 @@ $(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity
 	-nostdlib \
 	-s
 
-$(BUILD_DIR)/tools/$(MODULE_NAME)/%.o: %.c
+$(BUILD_DIR)/tools/$(MODULE_NAME)/%.o: $(BUILD_DIR)/tools/$(MODULE_NAME)/%.s
+	$(AS) $(AS_FLAGS) -o $@ $<
+$(BUILD_DIR)/tools/$(MODULE_NAME)/%.s: $(BUILD_DIR)/tools/$(MODULE_NAME)/%.c
+	$(CC) $(CC_FLAGS) -o $@ $<
+$(BUILD_DIR)/tools/$(MODULE_NAME)/%.c: %.c
 	mkdir -p $(BUILD_DIR)/tools/$(MODULE_NAME)
-	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) -o $@ $<
