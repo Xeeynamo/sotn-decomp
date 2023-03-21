@@ -29,6 +29,9 @@ extern u16 D_80180B74[];
 extern u16 D_80180B80[];
 extern ObjInit2 D_80180C10[];
 extern u16 D_801810F8[];
+extern u16 D_80181120[];
+extern u16 D_8018112C[];
+extern u16 D_80181144[];
 extern u16 D_8018115C[]; // this could be a struct
 extern u16 D_80181168[];
 extern u16 D_80181180[];

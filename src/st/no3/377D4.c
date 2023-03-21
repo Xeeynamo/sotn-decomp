@@ -513,7 +513,99 @@ void EntityTrapDoor(Entity* entity) {
 }
 
 // left side of the breakable rock, drops pot roast
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityMermanRockLeftSide);
+void EntityMermanRockLeftSide(Entity* self) {
+    u16* tileLayoutPtr;
+    Entity* newEntity;
+    s32 tilePos;
+    u8* subId;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        self->unk3C = 2;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 24;
+
+        tileLayoutPtr = &D_8018127C;
+        tilePos = 0x1F1;
+        for (i = 0; i < 3; i++) {
+            D_800730D8[0].layout[tilePos] = *tileLayoutPtr;
+            D_800730D8[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            tileLayoutPtr++;
+            tilePos += 0x30;
+        }
+
+        if (D_8003BDEC[51] & 1) { /* 0 0 0 0 0 0 0 1 = Half broken */
+            tileLayoutPtr = &D_80181264;
+            tilePos = 0x1F1;
+            for (i = 0; i < 3; i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                tileLayoutPtr++;
+                tilePos += 0x30;
+            }
+            self->unk3C = 1;
+            self->step = 2;
+        }
+        break;
+
+    case 1:
+        if (self->unk48 != 0) {
+            tileLayoutPtr = &D_80181258[self->unk84.S16.unk0 * 6];
+            tilePos = 0x1F1;
+            for (i = 0; i < 3; i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                tileLayoutPtr++;
+                tilePos += 0x30;
+            }
+
+            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->subId = 0x13;
+                newEntity->zPriority = 0xA9;
+                newEntity->posX.i.hi += self->unk84.S16.unk0 * 16;
+                newEntity->posY.i.hi += 16;
+            }
+
+            subId = &D_80181344[self->unk84.S16.unk0 * 3];
+
+            for (i = 0; i < 3; i++) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x27, self, newEntity);
+                    newEntity->subId = *subId++;
+                    newEntity->accelerationX = -0x8000 - (Random() << 8);
+                    newEntity->accelerationY = -Random() * 0x100;
+                    newEntity->posY.i.hi += -16 + (i * 16);
+                }
+            }
+            self->unk84.S16.unk0++;
+        }
+
+        if (self->unk84.S16.unk0 >= 2) {
+            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0xA, self, newEntity);
+                newEntity->subId = 0x43;
+            }
+            D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Half broken */
+            self->unk3C = 1;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
+            D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
+        }
+        break;
+    }
+}
 
 // right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
