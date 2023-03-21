@@ -1587,16 +1587,7 @@ s32 func_801D2D40(s16 yVector) {
 // another merman variant
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityMerman3);
 
-// https://decomp.me/scratch/SXkSP
-// https://decomp.me/scratch/v6yMP
 // some sort of explosion
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityExplosion2);
-#else
-void func_801D6880(POLY_GT4*, s32);
-void func_801D6FCC(POLY_GT4*, s16);
-extern s32 D_801839A0;
-
 void EntityExplosion2(Entity* entity, s32 arg1) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
@@ -1608,60 +1599,53 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->zPriority += 4;
         if (entity->subId != 0) {
             firstPolygonIndex = g_api.AllocPolygons(4, 2);
-            if (firstPolygonIndex != -1) {
-                poly = &D_80086FEC[firstPolygonIndex];
-                entity->firstPolygonIndex = firstPolygonIndex;
-                *(s32*)&entity->unk7C.s = poly;
-                entity->flags |= FLAG_FREE_POLYGONS;
-                func_801D6FCC(poly, firstPolygonIndex);
-                poly->u0 = 0;
-                poly->u1 = 0x20;
-                poly->tpage = 0x1A;
-                poly->clut = 0x1FF;
-                poly->v2 = 0x20;
-                poly->v3 = 0x20;
-                poly->v0 = 0;
-                poly->v1 = 0;
-                poly->u2 = poly->u0;
-                poly->u3 = poly->u1;
-                *(s16*)&((POLY_GT4*)poly->tag)->r2 = 0x40;
-                *(s16*)&((POLY_GT4*)poly->tag)->b2 = 0x40;
-                *(s16*)&((POLY_GT4*)poly->tag)->u1 = 0;
-                ((POLY_GT4*)poly->tag)->b3 = 0x60;
-                ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
-                ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
-                poly->pad2 = entity->zPriority - 4;
-                poly->pad3 = 6;
+            if (firstPolygonIndex == -1) {
+                DestroyEntity(entity);
                 return;
             }
-            DestroyEntity(entity);
-            return;
+            poly = &D_80086FEC[firstPolygonIndex];
+            entity->firstPolygonIndex = firstPolygonIndex;
+            *(s32*)&entity->unk7C.s = poly;
+            entity->flags |= 0x00800000;
+            func_801D6FCC(poly, firstPolygonIndex);
+            poly->u0 = 0;
+            poly->u1 = 0x20;
+            poly->tpage = 0x1A;
+            poly->clut = 0x1FF;
+            poly->v3 = poly->v2 = 0x20;
+            poly->v1 = poly->v0 = 0;
+            poly->u2 = poly->u0;
+            poly->u3 = poly->u1;
+            *(s16*)&((POLY_GT4*)poly->tag)->r2 = 0x40;
+            *(s16*)&((POLY_GT4*)poly->tag)->b2 = 0x40;
+            *(s16*)&((POLY_GT4*)poly->tag)->u1 = 0;
+            ((POLY_GT4*)poly->tag)->b3 = 0x60;
+            ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
+            ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
+            poly->pad2 = entity->zPriority - 4;
+            poly->pad3 = 6;
         }
-        if (!(++entity->unk84.S8.unk0 & 3)) {
-            entity->posY.i.hi++;
-        }
-        if (AnimateEntity(&D_801839A0, entity) == 0) {
-            DestroyEntity(entity);
-        }
-        return;
     }
+
     if (entity->subId != 0) {
-        poly->tag = *(s32*)&entity->unk7C.s;
-        func_801D6880(poly->tag, arg1);
+        poly = *(s32*)&entity->unk7C.s;
+        func_801D6880(poly);
         ((POLY_GT4*)poly->tag)->b3 += 252;
         *(s16*)&((POLY_GT4*)poly->tag)->u1 -= 128;
         if (((POLY_GT4*)poly->tag)->b3 < 16) {
             poly->pad3 = 8;
         }
     }
-    if (!(++entity->unk84.S8.unk0 & 3)) {
+
+    entity->unk84.U8.unk0++;
+    if (!(entity->unk84.U8.unk0 % 4)) {
         entity->posY.i.hi++;
     }
+
     if (AnimateEntity(&D_801839A0, entity) == 0) {
         DestroyEntity(entity);
     }
 }
-#endif
 
 // medium sized water splash used with merman
 void EntityMediumWaterSplash(Entity* entity) {
