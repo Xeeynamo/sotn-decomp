@@ -1775,7 +1775,65 @@ s32 func_801C6458(s16 yVector) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C6564);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C7650);
+// some sort of explosion
+void EntityExplosion2(Entity* entity, s32 arg1) {
+    POLY_GT4* poly;
+    s16 firstPolygonIndex;
+
+    if (entity->step == 0) {
+        InitializeEntity(D_80180AB4);
+        entity->animCurFrame = 0;
+        entity->unk3C = 0;
+        entity->zPriority += 4;
+        if (entity->subId != 0) {
+            firstPolygonIndex = g_api.AllocPolygons(4, 2);
+            if (firstPolygonIndex == -1) {
+                DestroyEntity(entity);
+                return;
+            }
+            poly = &D_80086FEC[firstPolygonIndex];
+            entity->firstPolygonIndex = firstPolygonIndex;
+            *(s32*)&entity->unk7C.s = poly;
+            entity->flags |= 0x00800000;
+            func_801D2684(poly, firstPolygonIndex);
+            poly->u0 = 0;
+            poly->u1 = 0x20;
+            poly->tpage = 0x1A;
+            poly->clut = 0x1FF;
+            poly->v3 = poly->v2 = 0x20;
+            poly->v1 = poly->v0 = 0;
+            poly->u2 = poly->u0;
+            poly->u3 = poly->u1;
+            *(s16*)&((POLY_GT4*)poly->tag)->r2 = 0x40;
+            *(s16*)&((POLY_GT4*)poly->tag)->b2 = 0x40;
+            *(s16*)&((POLY_GT4*)poly->tag)->u1 = 0;
+            ((POLY_GT4*)poly->tag)->b3 = 0x60;
+            ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
+            ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
+            poly->pad2 = entity->zPriority - 4;
+            poly->pad3 = 6;
+        }
+    }
+
+    if (entity->subId != 0) {
+        poly = *(s32*)&entity->unk7C.s;
+        func_801D1F38(poly);
+        ((POLY_GT4*)poly->tag)->b3 += 252;
+        *(s16*)&((POLY_GT4*)poly->tag)->u1 -= 128;
+        if (((POLY_GT4*)poly->tag)->b3 < 16) {
+            poly->pad3 = 8;
+        }
+    }
+
+    entity->unk84.U8.unk0++;
+    if (!(entity->unk84.U8.unk0 % 4)) {
+        entity->posY.i.hi++;
+    }
+
+    if (AnimateEntity(&D_801822B0, entity) == 0) {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801C7880);
 

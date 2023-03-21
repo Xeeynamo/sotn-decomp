@@ -1593,7 +1593,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
     s16 firstPolygonIndex;
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180B48);
+        InitializeEntity(D_80180B48);
         entity->animCurFrame = 0;
         entity->unk3C = 0;
         entity->zPriority += 4;
@@ -1642,7 +1642,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->posY.i.hi++;
     }
 
-    if (AnimateEntity(&D_801839A0, entity) == 0) {
+    if (AnimateEntity(D_801839A0, entity) == 0) {
         DestroyEntity(entity);
     }
 }
