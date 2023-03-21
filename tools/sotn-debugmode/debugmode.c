@@ -34,6 +34,7 @@ int g_DebugMode;
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
+void InitFlagChecker(void);
 void DestroyEntity(Entity* item);
 void Init() {
     Entity* e;
@@ -42,6 +43,7 @@ void Init() {
     InitEntitySpawn();
     InitSfxPlayer();
     InitDraTest800FD874();
+    InitFlagChecker();
 
     // forces to make the game think that the Familiar is actually active
     DestroyEntity(e);
@@ -50,10 +52,10 @@ void Init() {
     e->posY.val = PLAYER.posY.val;
     e->objectId = 0xD1;
     e->subId = 0;
-    e->unk34 = 0x10000;
+    e->flags = 0x10000;
     e->pfnUpdate = Update;
 }
-
+void UpdateFlagChecker(void);
 void UpdateEntitySpawn(int variant);
 void UpdateSfxPlayer(void);
 void UpdateDraTest800FD874(void);
@@ -82,6 +84,9 @@ void Update(Entity* e) {
         break;
     case 5:
         CollisionDebug();
+        break;
+    case 6:
+        UpdateFlagChecker();
         break;
     default:
         g_DebugMode = 0;
