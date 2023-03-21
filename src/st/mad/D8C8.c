@@ -378,10 +378,8 @@ loop_1:
 
 void func_80190884(s16 arg0) {
     while (true) {
-        if (
-            (D_801997D8->posX != 0xFFFF) &&
-            ((arg0 >= (s32)D_801997D8->posX) || (D_801997D8->posX == 0xFFFE))
-        ) {
+        if ((D_801997D8->posX != 0xFFFF) &&
+            ((arg0 >= (s32)D_801997D8->posX) || (D_801997D8->posX == 0xFFFE))) {
             break;
         }
         D_801997D8--;
@@ -427,10 +425,8 @@ loop_1:
 
 void func_80190B24(s16 arg0) {
     while (true) {
-        if (
-            (D_801997DC->posY != 0xFFFF) &&
-            ((arg0 >= D_801997DC->posY || D_801997DC->posY == 0xFFFE))
-        ) {
+        if ((D_801997DC->posY != 0xFFFF) &&
+            ((arg0 >= D_801997DC->posY || D_801997DC->posY == 0xFFFE))) {
             break;
         }
         D_801997DC--;

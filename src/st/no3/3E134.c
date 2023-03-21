@@ -424,10 +424,8 @@ void func_801C3730(s16 arg0) {
 
 void func_801C377C(s16 arg0) {
     while (true) {
-        if (
-            (D_801D7110->posX == (u16)~0) ||
-            ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))
-        ) {
+        if ((D_801D7110->posX == (u16)~0) ||
+            ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))) {
             D_801D7110--;
         } else {
             break;
