@@ -1320,8 +1320,10 @@ void func_801BB3B8(s16 arg0) {
 
 void func_801BB404(s16 arg0) {
     while (true) {
-        if (!(D_801CAA74->posX == 0xFFFF) &&
-            (((s32)arg0 >= D_801CAA74->posX) || (D_801CAA74->posX == 0xFFFE))) {
+        if (
+            !(D_801CAA74->posX == 0xFFFF) &&
+            (((s32)arg0 >= D_801CAA74->posX) || (D_801CAA74->posX == 0xFFFE))
+        ) {
             break;
         }
         D_801CAA74--;
