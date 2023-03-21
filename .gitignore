@@ -30,6 +30,7 @@ build/
 expected/
 disks/
 
+.vscode/settings.json
 tools/go
 
 !tools/sotn-debugmode/sotn-debugmode.ld

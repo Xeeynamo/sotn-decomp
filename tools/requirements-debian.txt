@@ -1,1 +1,1 @@
-make gcc-mipsel-linux-gnu binutils-mips-linux-gnu clang-format python3-pip
+curl make gcc-mipsel-linux-gnu binutils-mipsel-linux-gnu clang-format python3-pip

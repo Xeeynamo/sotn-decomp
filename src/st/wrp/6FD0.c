@@ -24,7 +24,7 @@ void func_80192F40(u8*, u8);
 RoomHeader g_Rooms[];
 s16** g_SpriteBanks[];
 void* g_Cluts[];
-LayerDef* g_TileLayers[];
+RoomDef g_TileLayers[];
 void* g_EntityGfxs[];
 void func_80188514(void);
 
@@ -107,27 +107,17 @@ LayerDef D_80180128 = {D_80182768, &D_80182D68, 0x41990990, 0x1F, 3, 2};
 LayerDef D_80180138 = {D_80182768, &D_80182D68, 0x40564564, 0x1E, 3, 2};
 LayerDef D_80180148 = {D_80182768, &D_80182D68, 0x4147C47C, 0x1D, 3, 2};
 LayerDef D_80180158 = {D_80182768, &D_80182D68, 0x40327327, 0x1C, 3, 2};
-LayerDef* g_TileLayers[] = {
-    /* 0x168 */ &D_801800C8,
-    /* 0x16C */ &D_801800B8,
-    /* 0x170 */ &D_801800D8,
-    /* 0x174 */ &D_801800B8,
-    /* 0x178 */ &D_801800E8,
-    /* 0x17C */ &D_801800B8,
-    /* 0x180 */ &D_801800F8,
-    /* 0x184 */ &D_801800B8,
-    /* 0x188 */ &D_80180108,
-    /* 0x18C */ &D_801800B8,
-    /* 0x190 */ &D_80180118,
-    /* 0x194 */ &D_801800B8,
-    /* 0x198 */ &D_80180128,
-    /* 0x19C */ &D_801800B8,
-    /* 0x1A0 */ &D_80180138,
-    /* 0x1A4 */ &D_801800B8,
-    /* 0x1A8 */ &D_80180148,
-    /* 0x1AC */ &D_801800B8,
-    /* 0x1B0 */ &D_80180158,
-    /* 0x1B4 */ &D_801800B8,
+RoomDef g_TileLayers[] = {
+    /* 0x168 */ {&D_801800C8, &D_801800B8},
+    /* 0x170 */ {&D_801800D8, &D_801800B8},
+    /* 0x178 */ {&D_801800E8, &D_801800B8},
+    /* 0x180 */ {&D_801800F8, &D_801800B8},
+    /* 0x188 */ {&D_80180108, &D_801800B8},
+    /* 0x190 */ {&D_80180118, &D_801800B8},
+    /* 0x198 */ {&D_80180128, &D_801800B8},
+    /* 0x1A0 */ {&D_80180138, &D_801800B8},
+    /* 0x1A8 */ {&D_80180148, &D_801800B8},
+    /* 0x1B0 */ {&D_80180158, &D_801800B8},
 };
 
 u32 D_80181420[];
@@ -551,8 +541,8 @@ u32 D_80180608[] = {
 };
 
 // owned by EntityWarpRoom
-u32 D_80180648[] = {
-    /* 648 */ 0x00000000,
+u32 D_80180648 = 0;
+u32 D_8018064C[] = {
     /* 64C */ 0x00040000,
     /* 650 */ 0x00040000,
     /* 654 */ 0xFFFC0004,
@@ -1285,411 +1275,6 @@ ObjInit2 D_80181134[] = {
     {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181130},
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
 };
-
-RoomHeader g_Rooms[] = {
-    {40, 12, 40, 12, {0, 0, 0, 1}},   {37, 21, 37, 21, {1, 0, 0, 2}},
-    {59, 17, 59, 17, {2, 0, 0, 3}},   {15, 38, 15, 38, {3, 0, 0, 4}},
-    {35, 44, 35, 44, {4, 0, 0, 5}},   {34, 44, 34, 44, {5, 0, 0, 48}},
-    {16, 38, 16, 38, {6, 0, 0, 49}},  {36, 21, 36, 21, {7, 0, 0, 50}},
-    {60, 17, 60, 17, {8, 0, 0, 51}},  {39, 12, 39, 12, {9, 0, 0, 52}},
-    {38, 12, 38, 12, {28, -1, 0, 0}}, {61, 17, 61, 17, {29, -1, 0, 0}},
-    {35, 21, 35, 21, {30, -1, 0, 0}}, {17, 38, 17, 38, {31, -1, 0, 0}},
-    {33, 44, 33, 44, {32, -1, 0, 0}},
-};
-u8 g_RoomsEndSignature[] = {64, 0, 0, 0};
-
-LayoutObject D_80181228[] = {
-    {-2, -2, 0, 0, 0},
-    {8, 97, 5, 144, 0},
-    {128, 144, 22, 16, 3},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_80181250[] = {
-    {-2, -2, 0, 0, 0},
-    {8, 97, 5, 144, 0},
-    {128, 144, 22, 16, 4},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_80181278[] = {
-    {-2, -2, 0, 0, 0},
-    {8, 97, 5, 144, 0},
-    {128, 144, 22, 16, 1},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_801812A0[] = {
-    {-2, -2, 0, 0, 0},
-    {128, 144, 22, 16, 2},
-    {248, 97, 5, 144, 256},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_801812C8[] = {
-    {-2, -2, 0, 0, 0},
-    {128, 144, 22, 16, 0},
-    {248, 97, 5, 144, 256},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_801812F0[] = {
-    {-2, -2, 0, 0, 0},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_80181304[] = {
-    {-2, -2, 0, 0, 0},
-    {0, 56, 8, 128, 0},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_80181324[] = {
-    {-2, -2, 0, 0, 0},
-    {8, 97, 5, 144, 0},
-    {128, 144, 22, 16, 3},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_8018134C[] = {
-    {-2, -2, 0, 0, 0},
-    {8, 97, 5, 144, 0},
-    {128, 144, 22, 16, 4},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_80181374[] = {
-    {-2, -2, 0, 0, 0},
-    {8, 97, 5, 144, 0},
-    {128, 144, 22, 16, 1},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_8018139C[] = {
-    {-2, -2, 0, 0, 0},
-    {248, 97, 5, 144, 256},
-    {128, 144, 22, 16, 2},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_801813C4[] = {
-    {-2, -2, 0, 0, 0},
-    {248, 97, 5, 144, 256},
-    {128, 144, 22, 16, 0},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_801813EC[] = {
-    {-2, -2, 0, 0, 0},
-    {-1, -1, 0, 0, 0},
-};
-
-LayoutObject D_80181400[] = {
-    {-2, -2, 0, 0, 0},
-    {0, 56, 8, 128, 0},
-    {-1, -1, 0, 0, 0},
-};
-
-u32 D_80181420[] = {
-    0x65616020, 0x15126463, 0x4AFFF00F, 0xF5C31F68, 0x0343848E, 0x7742007C,
-    0x30405913, 0xF2E1F237, 0x65F465C4, 0xA49F74FE, 0x2CB0E302, 0x931898C5,
-    0x5C9F73F9, 0xF402EC13, 0xB25E642C, 0x28F42854, 0x24BD84FD, 0xE2C2D1BF,
-    0x5C14B8C1, 0xC1D5DF14, 0x773F841A, 0x3E91F53B, 0x5C1A2FA0, 0x2B2CFE03,
-    0x621E0B4E, 0x4B299E42, 0xA41729FB, 0xF4464A6F, 0x0459EC73, 0x552F70BF,
-    0x51828F04, 0xCB0DC442, 0xF5454738, 0x5FFA3968, 0xC5F16214, 0x02F44B90,
-    0xC0345FFE, 0x96F190F4, 0x13F73521, 0x9232CCC2, 0xC44593E4, 0x048C0403,
-    0x24D904BC, 0x0EF65453, 0x5735015F, 0x4F66EAA3, 0x027D5990, 0xA40DB4E2,
-    0xFE4947CE, 0xD3E20342, 0x8A415C04, 0x4FA4F744, 0xFDD32C64, 0x4932305C,
-    0x33273C57, 0x04EB2446, 0x4750657F, 0x3A7FA4F7, 0x2D40F347, 0x023D551E,
-    0x19FAE5E1, 0x0A842F74, 0xA3F445F9, 0xF23A66AE, 0xFCE3D281, 0x552F105E,
-    0xE1F26B04, 0x52B352D2, 0x0C545F74, 0xF63EC1E5, 0x9E43CC62, 0x4E4AEF4F,
-    0xCB436F4B, 0xA437E402, 0x4482E4DF, 0x94E7C3FB, 0xC50F449F, 0x63C63E91,
-    0xA49EC4F9, 0xA49E5440, 0x800F844E, 0x48EB452E, 0x495642FA, 0xCF45E8FE,
-    0x2A35FB4E, 0x034AFAE5, 0x6E54BE94, 0x30F106B4, 0xF1C53730, 0xFD4E244C,
-    0x62E40237, 0x48F5E591, 0xB4AE5904, 0x34F9B423, 0x3531C0CE, 0xA7365B82,
-    0x54D52936, 0x472A5400, 0xF00F824B, 0xBFF55B0C, 0x5BBFF55B, 0x4D0AB6F5,
-    0xE402AD01, 0x2AA8947A, 0x5400E549, 0x6C24764B, 0x02E5496A, 0xB583CBD3,
-    0x06502FA4, 0xCF93E24C, 0x02F54266, 0x38929CC3, 0xF5835243, 0x42624583,
-    0x2C35D705, 0x7182E949, 0x835244F9, 0x6245C3F5, 0xB3011422, 0x942CC4D8,
-    0x504FA75B, 0xD246B742, 0xCE489E40, 0xC42E4B4D, 0xA574ED97, 0x48B544F7,
-    0x04F574E3, 0xB402248B, 0x9E24D276, 0x1A70CE84, 0x842B5C3F, 0x03F504E7,
-    0x049A74B9, 0xF402942F, 0xB4F52380, 0x55A0D390, 0x4738F701, 0x523F573F,
-    0x49973B68, 0x30F842A0, 0x583F1B30, 0xE5409746, 0xF5049B84, 0x3D29FB03,
-    0x3F573FC7, 0x495B3F57, 0x40394F05, 0xFE49945F, 0x3FB9F271, 0x73DC93B2,
-    0xC8D301F5, 0xF503F594, 0xF5049C84, 0xF5B3F503, 0xF573F573, 0x472C97B1,
-    0x4B741F05, 0x4F570F64, 0xF583178E, 0xD301F5B3, 0x03F5946E, 0x04C884B9,
-    0xB3C903F5, 0x73F573F5, 0x3597B1F5, 0x4EF735E7, 0x74F54350, 0x73F573F5,
-    0x01F5B3C9, 0x4F37ABE4, 0x40E54450, 0x604F228D, 0x6745E944, 0x02462F40,
-    0xF642604F, 0x731498B1, 0x29ED735F, 0xF642B34E, 0x04447E40, 0x7046954E,
-    0xF401F642, 0x84849338, 0x46679127, 0x48024297, 0x74697496, 0x64729426,
-    0x94442997, 0x60942794, 0x49049534, 0x20736944, 0x48024228, 0x7D697496,
-    0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF, 0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF,
-    0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF, 0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF,
-    0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF, 0x0FFFF00F, 0x00F0FFF0,
-};
-
-u32 D_80181764[] = {
-    0x1260202F, 0x13156117, 0x819BD40A, 0xB8471540, 0xEA4438B0, 0xC44F0D44,
-    0x16B84869, 0xA6D84765, 0x711A4C41, 0xFD4A38A0, 0x931E2F44, 0xA8259E95,
-    0x64B6FE4D, 0x4262EB7F, 0x4D204AFE, 0x3F8403FC, 0xFD7365E4, 0x14FE4C25,
-    0x871B8781, 0x16C781D6, 0x07A274CB, 0xCD830318, 0xC5CF0458, 0xCF841482,
-    0x695720A4, 0xDFC41DB7, 0x9316D788, 0x7D240378, 0x94F74A29, 0xF24E782D,
-    0x9DD67F84, 0xFD46E971, 0x0243B7A8, 0x02B2731A, 0x529545E4, 0x3625F74D,
-    0x1D3F48E7, 0xA4A6AF94, 0xF53D99EF, 0x5CFE4EC1, 0xE52E6041, 0x58FE4983,
-    0x94FB6342, 0x35A376DF, 0x4C8C7F94, 0x949E03FC, 0xC422C85F, 0x6E7D898F,
-    0x7162EB42, 0xE8453880, 0x25FA4A25, 0xF54CA92D, 0x4A6F4781, 0x1647C1D2,
-    0xC27F8403, 0x8AA3DF84, 0xF24EB971, 0xE4D67F84, 0x7E2B266D, 0x31902DC4,
-    0xDF84F749, 0xDCF10644, 0xFA49A93F, 0x4964146E, 0x734EC3FE, 0xCFF402C2,
-    0xFB497858, 0x69F74D66, 0xE534A242, 0x02162CCF, 0xC45F84F7, 0x62F8D356,
-    0xD6970158, 0x4D516541, 0x4444A0FD, 0x937F84FD, 0x49A7746D, 0x1DF0B537,
-    0x1D81D565, 0xE066CE7B, 0x84B44435, 0x710574AF, 0x46621987, 0x942635FD,
-    0xF944ACDF, 0xBA4E34A6, 0x29CD8403, 0x4464FA4A, 0x7A563E2D, 0xC475CB7B,
-    0x30B0711D, 0x4D598537, 0x6D4355FA, 0x6D66015F, 0x6497C17D, 0x03037E18,
-    0xB551587A, 0x415819F1, 0x61E682B5, 0xFC4C6287, 0x03FC4C64, 0x8C746EA3,
-    0xFB2B2486, 0x62FC4C6B, 0xEF449671, 0x74183990, 0x495F04C3, 0xA6F0E536,
-    0x149CEFA4, 0xB0E7637B, 0x18D73437, 0x3B44BEC4, 0xBE46D7F4, 0x557BCB7B,
-    0x3540713B, 0x711E8F42, 0xD9E4A24C, 0x1467E146, 0x84E59FC4, 0x4735701D,
-    0x636738DE, 0x6CB37314, 0xEA4AAF43, 0x44C6CFC4, 0xB233B0CF, 0x7F0472D4,
-    0x035F4BC6, 0xB73668A4, 0xD64F064A, 0x4246BA84, 0x8D14037A, 0xF94A6CB1,
-    0xCD485740, 0x5F1E054A, 0x4146D704, 0x47B9F085, 0x35A74EEF, 0x03553A46,
-    0xC4022978, 0x56422835, 0x4EF1D538, 0x5F3CC3A6, 0x4262E923, 0x3A23B6DF,
-    0x03E3E35F, 0x4DF1C521, 0xD5376695, 0x356419F0, 0xA13754B6, 0x33D0FAC5,
-    0x4639EF43, 0x06707DB4, 0x26366055, 0xA2EDF00F, 0xA036695E, 0x469D4259,
-    0x43671D5B, 0xBD9405DF, 0x38681D29, 0xF64458F0, 0xA3723265, 0x948F8372,
-    0x94A59328, 0x44AC346A, 0x3404CD3A, 0xDB53267F, 0x8F83BD83, 0x4E04D894,
-    0xFBD40334, 0x2DA5D362, 0x658F3304, 0x3F84F346, 0x47F80864, 0xB82F40F2,
-    0xF838F838, 0x4743F038, 0xF43B84F2, 0x4FFC8160, 0x38F83880, 0x38D881F5,
-    0x38F838F8, 0xF74343F0, 0x7F848F93, 0x40F74228, 0x267F848F, 0x8F838F33,
-    0x44048F83, 0xF838288D, 0x8E84E842, 0x42F80824, 0x8F839EEA, 0x8F838F83,
-    0x917C5404, 0xB234A982, 0x3C04B4A4, 0xD44C84FB, 0xC40344CA, 0x74CF34F7,
-    0xF00FFB3C, 0x348308FF, 0x1D97B106, 0x426585C3, 0x6B9E04A2, 0x4DECFC4C,
-    0xDF4458FC, 0x2A6404DA, 0x627D6AEB, 0xD741557B, 0x753430B0, 0x5F1D255F,
-    0x62D7680B, 0xEF44A6D7, 0x2C143160, 0x1D575819, 0x47688B58, 0xFD4762FD,
-    0x037A1464, 0x04B071CA, 0x4A62FA4A, 0xAF4458FD, 0x18D73DD0, 0x74DF4400,
-    0xD320D404, 0xAF4455FA, 0x7D183DB0, 0x5773DC6F, 0x647DD273, 0xD103F84C,
-    0xC1F5A6B7, 0xB7C2751D, 0x50EF44A6, 0x00FD4D3D, 0x2BD67F44, 0x037A8575,
-    0x04B071CA, 0x4A62FB49, 0x9F4455FB, 0x18D73DD0, 0x86CF4400, 0x4466DF24,
-    0x0349637C, 0x04D087B1, 0x2634627D, 0xA0F16E74, 0x007A1B3A, 0x4F424731,
-    0xF1B55C1D, 0xFD4D39D0, 0xD67F4400, 0x40E16F34, 0x001BA745, 0x24B69F44,
-    0x3266FB3E, 0x18D73B60, 0x89CF4400, 0xA53F0D45, 0x03F74D57, 0x04D087A1,
-    0x472D9A73, 0x4F8D4BAF, 0xB27119E8, 0x39E0F085, 0x446F7A1B, 0x4DD73A68,
-    0x4A8F4093, 0xB3407405, 0xD06781FC, 0x6FFD4D3A, 0x944DF1E5, 0x04A47F94,
-    0x7F04F7E4, 0xA0BF84EA, 0x001BA73A, 0x66C1AF04, 0x04748F24, 0x4F04F7E4,
-    0xD0A748E1, 0x0018D73A, 0x24263B04, 0x2E0453AE, 0xF74E0345, 0x3BD07F94,
-    0x44657D18, 0xC4A26BD4, 0x40E44230, 0x4D7CDF24, 0xB7B103F7, 0xF37E44A6,
-    0xD74469E4, 0x20C46E84, 0x477CDF24, 0x3A2EA0FE, 0x751D8895, 0x135F1984,
-    0xF8486CE4, 0x5EE24D84, 0x80F15E84, 0xF555272F, 0x2DAEA656, 0xC45E8414,
-    0x1DF2A532, 0x797DA405, 0x3DC3E748, 0xE405D273, 0x4D63AE5D, 0x455EA0EA,
-    0xAEF00FA3, 0x453456A2, 0x056A7346, 0x438C6F64, 0xDF4367FD, 0xEA5F6405,
-    0x83C6AD94, 0x5A64058F, 0xB23388F1, 0xC683E2C9, 0x270A8F94, 0xA5932894,
-    0xBA446A94, 0x8A454120, 0x5238204E, 0x40E443C8, 0x048F949F, 0x804D2949,
-    0x4D40E344, 0x203BA64F, 0x4E824541, 0xC8023BA2, 0x948F8322, 0x47AC718F,
-    0xB82F40F2, 0x4545F038, 0x36F94880, 0x8943C902, 0xFE48F93C, 0x588FC31A,
-    0x048F831D, 0x2E045854, 0x4E842CD8, 0x48F90844, 0x47A93FF5, 0xF03863F2,
-    0x38883545, 0x8F832C78, 0x84F24D24, 0x787F048F, 0x839EEA42, 0x2844048F,
-    0xD442C1BE, 0xA4DF3440, 0xCF34D24E, 0x84FB0874, 0x44CAD44C, 0x0FF7C303,
-    0xF00FFFF0, 0xFFF00FFF, 0x0FFFF00F, 0xF00FFFF0, 0xFFF00FFF, 0x0FFFF00F,
-    0x00F005F0,
-};
-
-u32 D_80181D08[] = {
-    0x04240000, 0x2DF60932, 0x01804B1F, 0x2B3A0280, 0x14A50421, 0x318C2108,
-    0x56B53DEF, 0x7FFF6B5A, 0x04210000, 0x29D4152B, 0x04A63A99, 0x05B3052E,
-    0x14A5483F, 0x296D18E9, 0x4A953A11, 0x7BDE5B39, 0x04210000, 0x1CEB1889,
-    0x04A6214F, 0x05B3052E, 0xBD03483F, 0xD5E9C926, 0xF34FE68C, 0xFFFFFFF2,
-};
-
-u16 D_80181D68[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
-    0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
-    0x0003, 0x002D, 0x002E, 0x0001, 0x0001, 0x0001, 0x0001, 0x0005, 0x0006,
-    0x0007, 0x0008, 0x0007, 0x0009, 0x0007, 0x0009, 0x0007, 0x0008, 0x002F,
-    0x0030, 0x0001, 0x0001, 0x0001, 0x000A, 0x000B, 0x00C5, 0x00C5, 0x00C5,
-    0x00C5, 0x000C, 0x0031, 0x00C5, 0x00C5, 0x00C5, 0x00C5, 0x0032, 0x0033,
-    0x0001, 0x000D, 0x000E, 0x000F, 0x0010, 0x0011, 0x0012, 0x0013, 0x0055,
-    0x0056, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039, 0x003A, 0x003B, 0x0015,
-    0x0016, 0x0017, 0x0018, 0x0019, 0x001A, 0x001B, 0x005D, 0x005E, 0x003D,
-    0x003E, 0x003F, 0x0040, 0x0041, 0x0042, 0x0043, 0x001D, 0x001E, 0x00CA,
-    0x0020, 0x0021, 0x0022, 0x0023, 0x0065, 0x0066, 0x0045, 0x0046, 0x0047,
-    0x0048, 0x0049, 0x004A, 0x004B, 0x0025, 0x0026, 0x00CB, 0x0028, 0x0029,
-    0x002A, 0x002B, 0x006D, 0x006E, 0x004D, 0x004E, 0x004F, 0x0050, 0x0051,
-    0x0052, 0x004A, 0x0075, 0x0076, 0x00CC, 0x0078, 0x0079, 0x007A, 0x007B,
-    0x0000, 0x0000, 0x00A2, 0x00A3, 0x00A4, 0x00A5, 0x0049, 0x004A, 0x004B,
-    0x007D, 0x007E, 0x00CD, 0x0080, 0x0081, 0x0082, 0x0083, 0x0000, 0x0000,
-    0x00A6, 0x00A7, 0x00A8, 0x00A9, 0x0051, 0x0052, 0x004A, 0x0084, 0x0085,
-    0x0086, 0x0087, 0x0088, 0x0089, 0x008A, 0x008B, 0x00AA, 0x00AB, 0x00AC,
-    0x00AD, 0x00AE, 0x00AF, 0x00B0, 0x00B1, 0x008C, 0x008D, 0x008E, 0x008F,
-    0x0090, 0x0091, 0x0092, 0x0093, 0x00B2, 0x00B3, 0x00B4, 0x00B5, 0x00B6,
-    0x00B7, 0x00B8, 0x00B9, 0x0001, 0x0094, 0x0095, 0x00C5, 0x0096, 0x0097,
-    0x0098, 0x0099, 0x00BA, 0x00BB, 0x00BC, 0x00BD, 0x00C5, 0x00BE, 0x00BF,
-    0x0001, 0x0001, 0x0001, 0x009A, 0x009B, 0x009C, 0x009D, 0x009E, 0x009D,
-    0x00C0, 0x009D, 0x009E, 0x009D, 0x00C1, 0x00C2, 0x0001, 0x0001, 0x0001,
-    0x0001, 0x009F, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0,
-    0x00A1, 0x00A0, 0x00C3, 0x00C4, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-u16 D_80181F68[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
-    0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
-    0x0003, 0x002D, 0x002E, 0x0001, 0x0001, 0x0001, 0x0001, 0x0005, 0x0006,
-    0x0007, 0x0008, 0x0007, 0x0009, 0x0007, 0x0009, 0x0007, 0x0008, 0x002F,
-    0x0030, 0x0001, 0x0001, 0x0001, 0x000A, 0x000B, 0x00C5, 0x00C5, 0x00C5,
-    0x00C5, 0x000C, 0x0031, 0x00C5, 0x00C5, 0x00C5, 0x00C5, 0x0032, 0x0033,
-    0x0001, 0x000D, 0x000E, 0x000F, 0x0010, 0x0011, 0x0012, 0x0013, 0x0014,
-    0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039, 0x003A, 0x003B, 0x0015,
-    0x0016, 0x0017, 0x0018, 0x0019, 0x001A, 0x001B, 0x001C, 0x003C, 0x003D,
-    0x003E, 0x003F, 0x0040, 0x0041, 0x0042, 0x0043, 0x001D, 0x001E, 0x00CA,
-    0x0020, 0x0021, 0x0022, 0x0023, 0x0024, 0x0044, 0x0045, 0x0046, 0x0047,
-    0x0048, 0x0049, 0x004A, 0x004B, 0x0025, 0x0026, 0x00CB, 0x0028, 0x0029,
-    0x002A, 0x002B, 0x002C, 0x004C, 0x004D, 0x004E, 0x004F, 0x0050, 0x0051,
-    0x0052, 0x004A, 0x0075, 0x0076, 0x00CC, 0x0078, 0x0079, 0x007A, 0x007B,
-    0x007C, 0x007C, 0x00A2, 0x00A3, 0x00A4, 0x00A5, 0x0049, 0x004A, 0x004B,
-    0x007D, 0x007E, 0x00CD, 0x0080, 0x0081, 0x0082, 0x0083, 0x007C, 0x007C,
-    0x00A6, 0x00A7, 0x00A8, 0x00A9, 0x0051, 0x0052, 0x004A, 0x0084, 0x0085,
-    0x0086, 0x0087, 0x0088, 0x0089, 0x008A, 0x008B, 0x00AA, 0x00AB, 0x00AC,
-    0x00AD, 0x00AE, 0x00AF, 0x00B0, 0x00B1, 0x008C, 0x008D, 0x008E, 0x008F,
-    0x0090, 0x0091, 0x0092, 0x0093, 0x00B2, 0x00B3, 0x00B4, 0x00B5, 0x00B6,
-    0x00B7, 0x00B8, 0x00B9, 0x0001, 0x0094, 0x0095, 0x00C5, 0x0096, 0x0097,
-    0x0098, 0x0099, 0x00BA, 0x00BB, 0x00BC, 0x00BD, 0x00C5, 0x00BE, 0x00BF,
-    0x0001, 0x0001, 0x0001, 0x009A, 0x009B, 0x009C, 0x009D, 0x009E, 0x009D,
-    0x00C0, 0x009D, 0x009E, 0x009D, 0x00C1, 0x00C2, 0x0001, 0x0001, 0x0001,
-    0x0001, 0x009F, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0,
-    0x00A1, 0x00A0, 0x00C3, 0x00C4, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-u16 D_80182168[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
-    0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
-    0x0003, 0x002D, 0x002E, 0x0001, 0x0001, 0x0001, 0x0001, 0x0005, 0x0006,
-    0x0007, 0x0008, 0x0007, 0x0009, 0x0007, 0x0009, 0x0007, 0x0008, 0x002F,
-    0x0030, 0x0001, 0x0001, 0x0001, 0x000A, 0x000B, 0x00C5, 0x00C5, 0x00C5,
-    0x00C5, 0x000C, 0x0031, 0x00C5, 0x00C5, 0x00C5, 0x00C5, 0x0032, 0x0033,
-    0x0001, 0x000D, 0x000E, 0x000F, 0x0010, 0x0011, 0x0012, 0x0013, 0x0059,
-    0x005A, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039, 0x003A, 0x003B, 0x0015,
-    0x0016, 0x0017, 0x0018, 0x0019, 0x001A, 0x001B, 0x0061, 0x0062, 0x003D,
-    0x003E, 0x003F, 0x0040, 0x0041, 0x0042, 0x0043, 0x0049, 0x004A, 0x0053,
-    0x0020, 0x0021, 0x0022, 0x0023, 0x0069, 0x006A, 0x0045, 0x0046, 0x0047,
-    0x0048, 0x00C6, 0x001E, 0x001F, 0x0051, 0x0052, 0x0054, 0x0028, 0x0029,
-    0x002A, 0x002B, 0x0071, 0x0072, 0x004D, 0x004E, 0x004F, 0x0050, 0x00C7,
-    0x0026, 0x0027, 0x0049, 0x004A, 0x0053, 0x0078, 0x0079, 0x007A, 0x007B,
-    0x007C, 0x007C, 0x00A2, 0x00A3, 0x00A4, 0x00A5, 0x00C8, 0x0076, 0x0077,
-    0x0051, 0x0052, 0x0054, 0x0080, 0x0081, 0x0082, 0x0083, 0x007C, 0x007C,
-    0x00A6, 0x00A7, 0x00A8, 0x00A9, 0x00C9, 0x007E, 0x007F, 0x0084, 0x0085,
-    0x0086, 0x0087, 0x0088, 0x0089, 0x008A, 0x008B, 0x00AA, 0x00AB, 0x00AC,
-    0x00AD, 0x00AE, 0x00AF, 0x00B0, 0x00B1, 0x008C, 0x008D, 0x008E, 0x008F,
-    0x0090, 0x0091, 0x0092, 0x0093, 0x00B2, 0x00B3, 0x00B4, 0x00B5, 0x00B6,
-    0x00B7, 0x00B8, 0x00B9, 0x0001, 0x0094, 0x0095, 0x00C5, 0x0096, 0x0097,
-    0x0098, 0x0099, 0x00BA, 0x00BB, 0x00BC, 0x00BD, 0x00C5, 0x00BE, 0x00BF,
-    0x0001, 0x0001, 0x0001, 0x009A, 0x009B, 0x009C, 0x009D, 0x009E, 0x009D,
-    0x00C0, 0x009D, 0x009E, 0x009D, 0x00C1, 0x00C2, 0x0001, 0x0001, 0x0001,
-    0x0001, 0x009F, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0,
-    0x00A1, 0x00A0, 0x00C3, 0x00C4, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-u16 D_80182368[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
-    0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
-    0x0003, 0x002D, 0x002E, 0x0001, 0x0001, 0x0001, 0x0001, 0x0005, 0x0006,
-    0x0007, 0x0008, 0x0007, 0x0009, 0x0007, 0x0009, 0x0007, 0x0008, 0x002F,
-    0x0030, 0x0001, 0x0001, 0x0001, 0x000A, 0x000B, 0x00C5, 0x00C5, 0x00C5,
-    0x00C5, 0x000C, 0x0031, 0x00C5, 0x00C5, 0x00C5, 0x00C5, 0x0032, 0x0033,
-    0x0001, 0x000D, 0x000E, 0x000F, 0x0010, 0x0011, 0x0012, 0x0013, 0x0057,
-    0x0058, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039, 0x003A, 0x003B, 0x0015,
-    0x0016, 0x0017, 0x0018, 0x0019, 0x001A, 0x001B, 0x005F, 0x0060, 0x003D,
-    0x003E, 0x003F, 0x0040, 0x0041, 0x0042, 0x0043, 0x0049, 0x004A, 0x0053,
-    0x0020, 0x0021, 0x0022, 0x0023, 0x0067, 0x0068, 0x0045, 0x0046, 0x0047,
-    0x0048, 0x00C6, 0x001E, 0x001F, 0x0051, 0x0052, 0x0054, 0x0028, 0x0029,
-    0x002A, 0x002B, 0x006F, 0x0070, 0x004D, 0x004E, 0x004F, 0x0050, 0x00C7,
-    0x0026, 0x0027, 0x0049, 0x004A, 0x0053, 0x0078, 0x0079, 0x007A, 0x007B,
-    0x007C, 0x007C, 0x00A2, 0x00A3, 0x00A4, 0x00A5, 0x00C8, 0x0076, 0x0077,
-    0x0051, 0x0052, 0x0054, 0x0080, 0x0081, 0x0082, 0x0083, 0x007C, 0x007C,
-    0x00A6, 0x00A7, 0x00A8, 0x00A9, 0x00C9, 0x007E, 0x007F, 0x0084, 0x0085,
-    0x0086, 0x0087, 0x0088, 0x0089, 0x008A, 0x008B, 0x00AA, 0x00AB, 0x00AC,
-    0x00AD, 0x00AE, 0x00AF, 0x00B0, 0x00B1, 0x008C, 0x008D, 0x008E, 0x008F,
-    0x0090, 0x0091, 0x0092, 0x0093, 0x00B2, 0x00B3, 0x00B4, 0x00B5, 0x00B6,
-    0x00B7, 0x00B8, 0x00B9, 0x0001, 0x0094, 0x0095, 0x00C5, 0x0096, 0x0097,
-    0x0098, 0x0099, 0x00BA, 0x00BB, 0x00BC, 0x00BD, 0x00C5, 0x00BE, 0x00BF,
-    0x0001, 0x0001, 0x0001, 0x009A, 0x009B, 0x009C, 0x009D, 0x009E, 0x009D,
-    0x00C0, 0x009D, 0x009E, 0x009D, 0x00C1, 0x00C2, 0x0001, 0x0001, 0x0001,
-    0x0001, 0x009F, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0,
-    0x00A1, 0x00A0, 0x00C3, 0x00C4, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-u16 D_80182568[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001,
-    0x0002, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004, 0x0003, 0x0004,
-    0x0003, 0x002D, 0x002E, 0x0001, 0x0001, 0x0001, 0x0001, 0x0005, 0x0006,
-    0x0007, 0x0008, 0x0007, 0x0009, 0x0007, 0x0009, 0x0007, 0x0008, 0x002F,
-    0x0030, 0x0001, 0x0001, 0x0001, 0x000A, 0x000B, 0x00C5, 0x00C5, 0x00C5,
-    0x00C5, 0x000C, 0x0031, 0x00C5, 0x00C5, 0x00C5, 0x00C5, 0x0032, 0x0033,
-    0x0001, 0x000D, 0x000E, 0x000F, 0x0010, 0x0011, 0x0012, 0x0013, 0x005B,
-    0x005C, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039, 0x003A, 0x003B, 0x0015,
-    0x0016, 0x0017, 0x0018, 0x0019, 0x001A, 0x001B, 0x0063, 0x0064, 0x003D,
-    0x003E, 0x003F, 0x0040, 0x0041, 0x0042, 0x0043, 0x001D, 0x001E, 0x00CA,
-    0x0020, 0x0021, 0x0022, 0x0023, 0x006B, 0x006C, 0x0045, 0x0046, 0x0047,
-    0x0048, 0x0049, 0x004A, 0x004B, 0x0025, 0x0026, 0x00CB, 0x0028, 0x0029,
-    0x002A, 0x002B, 0x0073, 0x0074, 0x004D, 0x004E, 0x004F, 0x0050, 0x0051,
-    0x0052, 0x004A, 0x0075, 0x0076, 0x00CC, 0x0078, 0x0079, 0x007A, 0x007B,
-    0x007C, 0x007C, 0x00A2, 0x00A3, 0x00A4, 0x00A5, 0x0049, 0x004A, 0x004B,
-    0x007D, 0x007E, 0x00CD, 0x0080, 0x0081, 0x0082, 0x0083, 0x007C, 0x007C,
-    0x00A6, 0x00A7, 0x00A8, 0x00A9, 0x0051, 0x0052, 0x004A, 0x0084, 0x0085,
-    0x0086, 0x0087, 0x0088, 0x0089, 0x008A, 0x008B, 0x00AA, 0x00AB, 0x00AC,
-    0x00AD, 0x00AE, 0x00AF, 0x00B0, 0x00B1, 0x008C, 0x008D, 0x008E, 0x008F,
-    0x0090, 0x0091, 0x0092, 0x0093, 0x00B2, 0x00B3, 0x00B4, 0x00B5, 0x00B6,
-    0x00B7, 0x00B8, 0x00B9, 0x0001, 0x0094, 0x0095, 0x00C5, 0x0096, 0x0097,
-    0x0098, 0x0099, 0x00BA, 0x00BB, 0x00BC, 0x00BD, 0x00C5, 0x00BE, 0x00BF,
-    0x0001, 0x0001, 0x0001, 0x009A, 0x009B, 0x009C, 0x009D, 0x009E, 0x009D,
-    0x00C0, 0x009D, 0x009E, 0x009D, 0x00C1, 0x00C2, 0x0001, 0x0001, 0x0001,
-    0x0001, 0x009F, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0, 0x00A1, 0x00A0,
-    0x00A1, 0x00A0, 0x00C3, 0x00C4, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-};
-
-u16 D_80182768[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0001,
-    0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001,
-    0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0006, 0x000B, 0x0006, 0x0006, 0x0006, 0x0006, 0x0006, 0x0006, 0x000B,
-    0x0006, 0x0000, 0x0000, 0x0000, 0x0007, 0x0007, 0x0006, 0x0006, 0x0004,
-    0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0004, 0x0006, 0x0006,
-    0x0007, 0x0007, 0x0007, 0x0007, 0x0006, 0x0005, 0x000C, 0x0005, 0x0005,
-    0x0005, 0x0005, 0x0005, 0x0005, 0x000C, 0x0005, 0x0006, 0x0007, 0x0007,
-    0x000A, 0x000A, 0x0009, 0x0008, 0x0008, 0x0008, 0x0008, 0x0008, 0x0008,
-    0x0008, 0x0008, 0x0008, 0x0008, 0x0009, 0x000A, 0x000A, 0x0001, 0x0001,
-    0x0003, 0x0002, 0x0003, 0x0002, 0x0003, 0x0002, 0x0003, 0x0002, 0x0003,
-    0x0002, 0x0003, 0x0002, 0x0001, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000,
-};
 // *** Unknown stuff end ***
 
 // *** rodata section start ***
@@ -1721,7 +1306,7 @@ void func_80186FD0(Entity* arg0) {
         arg0->blendMode = objInit->blendMode;
 
         if (objInit->unkC != 0) {
-            arg0->unk34 = objInit->unkC;
+            arg0->flags = objInit->unkC;
         }
 
         if (arg0->subId == 1) {
@@ -1733,10 +1318,6 @@ void func_80186FD0(Entity* arg0) {
     AnimateEntity(objInit->unk10, arg0);
 }
 
-// nops in between array assignments, matches with PSY-Q 3.6 and 4.0
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_801870B0);
-#else
 void func_801870B0(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
@@ -1758,9 +1339,7 @@ void func_801870B0(Entity* entity) {
             if (g_pads->pressed & PAD_TRIANGLE) {
                 g_CurrentRoom.x = 0;
                 g_CurrentRoom.width = 1280;
-                do {
-                    entity->step++;
-                } while (0);
+                entity->step++;
                 return;
             }
             break;
@@ -1794,7 +1373,6 @@ void func_801870B0(Entity* entity) {
         }
     }
 }
-#endif
 
 void func_801870B0(Entity* entity);
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
@@ -1824,13 +1402,11 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
-extern u8 D_8003BEBC;
-extern void (*D_8003C7E8)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+extern u8 D_8003BEBC[];
 extern s32 D_8003C8B8;
-extern s32* D_80072EF4;
 extern s32 D_80072EFC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
@@ -1851,11 +1427,9 @@ void EntityWarpRoom(Entity* entity) {
     s16 temp_s7;
     s16 firstPolyIndex;
     s32 temp_s1_2;
-    POLY_GT4* temp_s2_2;
-    POLY_GT4* temp_s2_3;
     POLY_GT4* temp_s2_4;
     s32 temp_v1_6;
-    u16 move_room;
+    s32 move_room;
     s32 var_s0;
     s32 i;
     s32 i3;
@@ -1868,51 +1442,57 @@ void EntityWarpRoom(Entity* entity) {
     s32 var_v0_2;
     s32 bgColorR0;
     s32 var_v0_4;
+    POLY_GT4* new_var;
     s32 bgColorG0;
     s32 var_v0_6;
     s32 bgColorB0;
     s32 var_v0_8;
     s32 bgColorR1;
-    s8 fadeIn;
-    s8 var_v0_14;
+    s32 fadeIn;
     s32 temp_s4_3;
     s32 temp_s5_3;
     u32* temp_v1_8;
     POLY_GT4* temp_s2;
     u32 temp_v0_5;
     u8 tintColor;
-    u8 temp_v1_9;
     WarpCoord* warpCoord;
     POLY_GT4* temp_s2_5;
     POLY_GT4* var_s2_3;
     s32 tmpa;
     s32 tmpb;
+    u16 newtmp_0;
+    s32 newtmp_1;
+    s32 newtmp_a1;
+    s32 newtmp_v0;
+    u8* newtmp_a0;
+
     FntPrint("step %x\n", entity->step);
     switch (entity->step) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        firstPolyIndex = g_api.AllocPolygons(4, 0x18);
+        firstPolyIndex = g_api.AllocPolygons(4, 24);
         if (firstPolyIndex == -1) {
             entity->step = 0;
             return;
         }
         poly = &D_80086FEC[firstPolyIndex];
-        var_s0 = 0;
         temp_s5 = entity->posY.i.hi; // must not be lhu but lh
         temp_s4 = entity->posX.i.hi; // must not be lhu but lh
         entity->firstPolygonIndex = firstPolyIndex;
         *(u32*)&entity->unk7C.s = poly;
         temp_s7 = temp_s4;
         temp_s6 = temp_s5;
-        entity->unk34 |= 0x800000;
+        entity->flags |= FLAG_FREE_POLYGONS;
+        var_s0 = 0;
+
         while (var_s0 < 0x10) {
             var_s1 = var_s0 << 8;
-            var_s0++;
             poly->x0 = temp_s4 + ((rcos(var_s1) * 4) >> 8);
             poly->y0 = temp_s5 - ((rsin(var_s1) * 4) >> 8);
             poly->u0 = (((rcos(var_s1) >> 4) * 30) >> 8) + 0x20;
             poly->v0 = (-0x20) - (((rsin(var_s1) >> 4) * 30) >> 8);
+            var_s0++;
             poly->x1 = temp_s4 + ((rcos(var_s0 << 8) * 4) >> 8);
             poly->y1 = temp_s5 - ((rsin(var_s0 << 8) * 4) >> 8);
             poly->u1 = (((rcos(var_s0 << 8) >> 4) * 30) >> 8) + 0x20;
@@ -1937,65 +1517,62 @@ void EntityWarpRoom(Entity* entity) {
         setcode(poly, 1);
         poly->u0 = 0x40;
         poly->v0 = 0x50;
-        poly->y0 = 0x70;
         poly->x0 = 0x60;
-        poly->b0 = 0;
-        poly->g0 = 0;
-        poly->r0 = 0;
+        poly->y0 = 0x70;
+        poly->r0 = poly->g0 = poly->b0 = 0;
         poly->pad2 = 0x60;
         poly->pad3 = 0xA;
-        temp_s2 = poly->tag;
-        temp_s2->code = 3;
-        temp_s2->b0 = 0;
-        temp_s2->g0 = 0;
-        temp_s2->r0 = 0;
-        temp_s2->x3 = 0x100;
-        temp_s2->x1 = 0x100;
-        temp_s2->y1 = 0x10;
-        temp_s2->y0 = 0x10;
-        temp_s2->y3 = 0xF0;
-        temp_s2->y2 = 0xF0;
-        temp_s2->pad2 = 0x1F0;
-        temp_s2->pad3 = 8;
-        temp_s2->x2 = 0;
-        temp_s2->x0 = 0;
-        *((s32*)(&temp_s2->r1)) = *((s32*)(&temp_s2->r0));
-        *((s32*)(&temp_s2->r2)) = *((s32*)(&temp_s2->r0));
-        *((s32*)(&temp_s2->r3)) = *((s32*)(&temp_s2->r0));
+        poly = (POLY_GT4*)poly->tag;
+        poly->code = 3;
+        poly->r0 = poly->g0 = poly->b0 = 0;
+        poly->x1 = poly->x3 = 256;
+        poly->y0 = poly->y1 = 16;
+        poly->y2 = poly->y3 = 240;
+        poly->pad2 = 0x1F0;
+        poly->pad3 = 8;
+        poly->x0 = poly->x2 = 0;
+        *((s32*)(&poly->r1)) = *((s32*)(&poly->r0));
+        *((s32*)(&poly->r2)) = *((s32*)(&poly->r0));
+        *((s32*)(&poly->r3)) = *((s32*)(&poly->r0));
         D_80193AA4 = 0x100;
-        var_v0_14 = 0x4680;
-        for (i = 0; i < 0x20; i++) {
-            Entity* newEntity = AllocEntity(D_8007A958, D_8007A958 + var_v0_14);
+        for (i = 0; i < 32; i++) {
+            Entity* newEntity = AllocEntity(D_8007A958, &D_8007A958[96]);
             if (newEntity) {
                 CreateEntityFromCurrentEntity(0x17, newEntity);
-                newEntity->posY.i.hi = 0xCC - D_80073092;
+                newEntity->posY.i.hi = 0xCC - g_Camera.posY.i.hi;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
 
         entity->unk3C = 1;
         entity->hitboxWidth = 2;
-        entity->hitboxHeight = 0x10;
-        *((u32*)D_80180648) = 0;
-        entity->unk12 += 0x10;
-        D_8003BEBC |= 1 | (1 << entity->subId);
-        if (((u32)((PLAYER.posX.i.hi + ((s16)D_8007308E)) - 0x61)) < 0x3F) {
+        entity->hitboxHeight = 16;
+        newtmp_0 = entity->unk12;
+        D_80180648 = 0;
+        entity->unk12 = newtmp_0 + 0x10;
+        newtmp_v0 = g_Camera.posX.i.hi;
+        newtmp_a1 = PLAYER.posX.i.hi;
+        newtmp_1 = newtmp_a1 + newtmp_v0;
+        newtmp_a0 = D_8003BEBC;
+        newtmp_a0[0] |= 1;
+        newtmp_a0[0] |= 1 << entity->subId;
+        if ((u32)(newtmp_1 - 0x61) < 0x3F) {
             D_80072EFC = 0x10;
             *D_80072EF4 = 0;
             D_8003C8B8 = 0;
             entity->step = 5;
-            *((u32*)D_80180648) = 1;
+            D_80180648 = 1;
         }
+        break;
 
     case 1:
         // Wait for player to press the UP button
-        if (((entity->unk48 != 0) && (g_pads->pressed & 0x1000)) &&
-            (!(D_80072F2C & 0xC5CF3EF7))) {
-            *D_80072EF4 = 0;
+        if (entity->unk48 != 0 && (g_pads->pressed & 0x1000) &&
+            !(D_80072F2C & 0xC5CF3EF7)) {
+            D_8003C8B8 = (*D_80072EF4 = 0);
             D_80072EFC = 0x80;
             PLAYER.accelerationX = 0;
             PLAYER.accelerationY = 0;
-            D_8003C8B8 = 0;
             entity->step++;
         }
         break;
@@ -2006,15 +1583,12 @@ void EntityWarpRoom(Entity* entity) {
         PLAYER.zPriority = 0x5C;
         *D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
-        temp_s2_2 = (POLY_GT4*)(*&entity->unk84.unk);
+        poly = (POLY_GT4*)(*&entity->unk84.unk);
         D_8003C8B8 = 0;
-        temp_v1_9 = temp_s2_2->r0 + 2;
-        temp_s2_2->r0 = temp_v1_9;
-        temp_s2_2->b0 = temp_v1_9;
-        temp_s2_2->g0 = temp_v1_9;
-        temp_s2_2->pad3 = 0x31;
-        if (temp_s2_2->r0 >= 97) {
-            *((u32*)D_80180648) = 1;
+        poly->g0 = poly->b0 = poly->r0 += 2;
+        poly->pad3 = 0x31;
+        if (poly->r0 >= 97) {
+            D_80180648 = 1;
             g_api.PlaySfx(0x636);
             entity->step++;
         }
@@ -2026,22 +1600,16 @@ void EntityWarpRoom(Entity* entity) {
         PLAYER.zPriority = 0x5C;
         *D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
-        temp_s2_3 = (POLY_GT4*)(*&entity->unk84.unk);
+        poly = (POLY_GT4*)(*&entity->unk84.unk);
         D_8003C8B8 = 0;
-        temp_s2_3->pad3 = 0x31;
-        if (temp_s2_3->r0 < 0xF0) {
-            var_v0_14 = temp_s2_3->r0 + 2;
-            temp_s2_3->r0 = var_v0_14;
-            temp_s2_3->b0 = var_v0_14;
-            temp_s2_3->g0 = var_v0_14;
+        poly->pad3 = 0x31;
+        if (poly->r0 < 0xF0) {
+            poly->g0 = poly->b0 = poly->r0 += 2;
         }
-        var_s2_3 = temp_s2_3->tag;
+        var_s2_3 = poly->tag;
         var_s2_3->pad3 = 0x31;
         if (var_s2_3->r0 < 0xF8) {
-            var_v0_14 = var_s2_3->r0 + 2;
-            var_s2_3->r0 = var_v0_14;
-            var_s2_3->b0 = var_v0_14;
-            var_s2_3->g0 = var_v0_14;
+            var_s2_3->g0 = var_s2_3->b0 = var_s2_3->r0 += 2;
         } else {
             entity->step++;
         }
@@ -2058,14 +1626,15 @@ void EntityWarpRoom(Entity* entity) {
             if (move_room >= 5) {
                 move_room = 0;
             }
-            if ((D_8003BEBC >> move_room) & 1)
+            if ((D_8003BEBC[0] >> move_room) & 1)
                 break;
             move_room++;
         }
 
         warpCoord = &D_8018065C[move_room];
         D_80193AA0 = move_room;
-        move_x = warpCoord->x - g_CurrentRoom.left;
+        newtmp_1 = warpCoord->x - g_CurrentRoom.left;
+        move_x = newtmp_1;
         move_y = warpCoord->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, move_room);
         FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
@@ -2073,54 +1642,52 @@ void EntityWarpRoom(Entity* entity) {
         D_80097C98 = 2;
         PLAYER.posX.i.hi += move_x << 8;
         PLAYER.posY.i.hi += move_y << 8;
-        entity->step = 0x80;
+        entity->step = 128;
         break;
 
     case 5:
         // .rodata+0x20
         *D_80072EF4 = 0;
         D_80072EFC = 0x10;
-        D_8003C8B8 = 0;
         temp_s2_4 = (POLY_GT4*)entity->unk84.unk;
+        D_8003C8B8 = 0;
         temp_s2_4->pad3 = 8;
         temp_s2_4->r0 = 0;
         temp_s2_4->b0 = 0;
-        temp_s2_4->r0 = 0;
+        temp_s2_4->g0 = 0;
         temp_s2_5 = temp_s2_4->tag;
         temp_s2_5->b0 = 0xF8;
-        temp_s2_5->r0 = 0xF8;
+        temp_s2_5->g0 = 0xF8;
         temp_s2_5->r0 = 0xF8;
         temp_s2_5->pad3 = 0x31;
         *((s32*)(&temp_s2_5->r1)) = *((s32*)(&temp_s2_5->r0));
         *((s32*)(&temp_s2_5->r2)) = *((s32*)(&temp_s2_5->r0));
         *((s32*)(&temp_s2_5->r3)) = *((s32*)(&temp_s2_5->r0));
-        D_8003C7E8(0, 0, 0, 0);
+        g_api.g_pfn_800EA5AC(0, 0, 0, 0);
         entity->step++;
         /* fallthrough */
+
     case 6:
         // Finalize warp by fading in from white
         // .rodata+0x24
         *D_80072EF4 = 0;
         D_80072EFC = 0x10;
+        new_var = (POLY_GT4*)*&entity->unk84.unk;
+        var_s2_3 = new_var->tag;
         D_8003C8B8 = 0;
-        var_s2_3 = ((POLY_GT4*)(*&entity->unk84.unk))->tag;
         fadeIn = var_s2_3->r0 - 4;
-        var_v0_15 = fadeIn < 0x28;
         if (fadeIn < 0) {
             // Fade-in complete
             fadeIn = 0;
             var_s2_3->pad3 = 8;
             D_8003C8B8 = 1;
             entity->step = 1;
-            var_v0_15 = 0 < 0x28;
         }
-        var_v0_14 = fadeIn;
+        var_v0_15 = fadeIn < 0x28;
         if (var_v0_15 != 0) {
-            *((u32*)D_80180648) = 0;
+            D_80180648 = 0;
         }
-        var_s2_3->r0 = var_v0_14;
-        var_s2_3->b0 = var_v0_14;
-        var_s2_3->g0 = var_v0_14;
+        var_s2_3->g0 = var_s2_3->b0 = var_s2_3->r0 = fadeIn;
         *((s32*)(&var_s2_3->r1)) = *((s32*)(&var_s2_3->r0));
         *((s32*)(&var_s2_3->r2)) = *((s32*)(&var_s2_3->r0));
         *((s32*)(&var_s2_3->r3)) = *((s32*)(&var_s2_3->r0));
@@ -2128,7 +1695,8 @@ void EntityWarpRoom(Entity* entity) {
 
     default:
         warpCoord = &D_8018065C[D_80193AA0];
-        temp_s4_3 = warpCoord->x - g_CurrentRoom.left;
+        bgColorR1 = warpCoord->x - g_CurrentRoom.left;
+        temp_s4_3 = bgColorR1;
         temp_s5_3 = warpCoord->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, D_80193AA0);
         FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
@@ -2146,7 +1714,7 @@ void EntityWarpRoom(Entity* entity) {
     }
     poly = (POLY_GT4*)&entity->unk7C.s;
     D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
-    for (i3 = 0; i3 <= 0x10; i3++) {
+    for (i3 = 0; i3 < 0x10; i3++) {
         var_v0_2 = i3;
         if (i3 < 0) {
             var_v0_2 = i3 + 15;
@@ -2157,7 +1725,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorR0 < 0) {
             bgColorR0 += 255;
         }
-        poly->r0 = (bgColorR0 >> 8);
+        poly->r0 = bgColorR0 >> 8;
         temp_v1_6 = i3 + 5;
         var_v0_4 = temp_v1_6;
         if (var_v0_4 < 0) {
@@ -2183,7 +1751,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorB0 < 0) {
             bgColorB0 += 255;
         }
-        poly->b0 = (bgColorB0 >> 8);
+        poly->b0 = bgColorB0 >> 8;
         temp_s1_2 = i3 + 1;
         var_v0_8 = temp_s1_2;
         if (var_v0_8 < 0) {
@@ -2196,7 +1764,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorR1 < 0) {
             bgColorR1 += 255;
         }
-        poly->r1 = (bgColorR1 >> 8);
+        poly->r1 = bgColorR1 >> 8;
         temp_v1_6 = i3 + 6;
         var_v0_10 = temp_v1_6;
         if (var_v0_10 < 0) {
@@ -2209,7 +1777,7 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorG1 < 0) {
             bgColorG1 += 255;
         }
-        poly->g1 = (bgColorG1 >> 8);
+        poly->g1 = bgColorG1 >> 8;
         temp_v1_6 = i3 + 11;
         var_v0_12 = temp_v1_6;
         if (temp_v1_6 < 0) {
@@ -2222,14 +1790,9 @@ void EntityWarpRoom(Entity* entity) {
         if (bgColorB1 < 0) {
             bgColorB1 += 255;
         }
-        poly->b1 = (bgColorB1 >> 8);
-        tintColor = (u8)D_80193AAC;
-        poly->b3 = tintColor;
-        poly->g3 = tintColor;
-        poly->r3 = tintColor;
-        poly->b2 = tintColor;
-        poly->g2 = tintColor;
-        poly->r2 = tintColor;
+        poly->b1 = bgColorB1 >> 8;
+        poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3 =
+            *(u8*)&D_80193AAC;
         D_80180608[i3] += 0x20;
         poly = (POLY_GT4*)poly->tag;
     }
@@ -2315,7 +1878,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
 
     case 5:
-        y_unk = &D_80073092;
+        y_unk = &g_Camera.posY.i.hi;
         *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
         if (*(u32*)&entity->unk88 == 0) {
             func_801916C4(0x644);
@@ -2337,9 +1900,6 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", Update);
-#else
 void Update(void) {
     s16 i;
     Entity* entity;
@@ -2363,12 +1923,12 @@ void Update(void) {
             continue;
 
         if (entity->step) {
-            s32 unk34 = entity->unk34;
-            if (unk34 & ENTITYFLAG_DESTROY_IF_OUT_OF_CAMERA) {
-                u16 posX = entity->posX.i.hi;
-                u16 posY = entity->posY.i.hi;
-                if (unk34 & ENTITYFLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
-                    if ((u16)(posY + 64) > 352 || (u16)(posX + 64) > 384) {
+            s32 unk34 = entity->flags;
+            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                s16 posX = i = entity->posX.i.hi;
+                s16 posY = entity->posY.i.hi;
+                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
                         DestroyEntity(entity);
                         continue;
                     }
@@ -2381,7 +1941,7 @@ void Update(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.i.hi + D_80073092;
+                s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
                 s16 test = (g_CurrentRoom.vSize * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
@@ -2392,8 +1952,8 @@ void Update(void) {
             if (unk34 & 0xF) {
                 entity->palette =
                     D_80180690[(entity->unk49 << 1) | (unk34 & 1)];
-                entity->unk34--;
-                if ((entity->unk34 & 0xF) == 0) {
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
                     entity->unk6A = 0;
                 }
@@ -2420,7 +1980,6 @@ void Update(void) {
         }
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80188514);
@@ -2432,12 +1991,12 @@ void func_80188514(void) {
             continue;
 
         if (entity->step) {
-            if (entity->unk34 & 0x10000) {
-                if (entity->unk34 & 0xF) {
+            if (entity->flags & FLAG_UNK_10000) {
+                if (entity->flags & 0xF) {
                     entity->palette =
-                        D_80180690[entity->unk49 << 1 | entity->unk34 & 1];
-                    entity->unk34--;
-                    if ((entity->unk34 & 0xF) == 0) {
+                        D_80180690[entity->unk49 << 1 | entity->flags & 1];
+                    entity->flags--;
+                    if ((entity->flags & 0xF) == 0) {
                         entity->palette = entity->unk6A;
                         entity->unk6A = 0;
                     }
@@ -2464,31 +2023,29 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    do {
-        entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
-    } while (0);
-    entity->posX.i.hi = initDesc->posX - D_8007308E;
-    entity->posY.i.hi = initDesc->posY - D_80073092;
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
+    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->subId = initDesc->subId;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189E9C);
 #else
 void func_80189E9C(LayoutObject* layoutObj) {
     s16 temp_v0, posY;
     u16 initFlags;
 
-    temp_v0 = D_80073092 - 0x40;
+    temp_v0 = g_Camera.posY.i.hi - 0x40;
     if (temp_v0 < 0) {
         temp_v0 = 0;
     }
 
     if ((s16)layoutObj->posY < temp_v0)
         return;
-    if (((s16)(D_80073092 + 0x120) < layoutObj->posY))
+    if (((s16)(g_Camera.posY.i.hi + 0x120) < layoutObj->posY))
         return;
 
     initFlags = layoutObj->objectId & 0xE000;
@@ -2588,7 +2145,7 @@ void func_8018A424(s16 arg0) {
 }
 #endif
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A520);
 void func_8018A424(s16 arg0);
 #else
@@ -2672,7 +2229,7 @@ void func_8018A7AC(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
-        s16 tmp = D_8007308E;
+        s16 tmp = g_Camera.posX.i.hi;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
         else
@@ -2704,16 +2261,16 @@ void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-s32 func_8018A950(Unkstruct5* arg0) {
+s32 func_8018A950(Entity* e) {
     s16 diff;
 
-    diff = PLAYER.posX.i.hi - arg0->unk2;
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
     diff = ABS(diff);
 
     if (diff >= 17) {
         diff = 0;
     } else {
-        diff = PLAYER.posY.i.hi - arg0->unk6;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
         diff = ABS(diff);
         diff = diff < 33;
     }
@@ -2728,7 +2285,7 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->unk34 & 0x800000) {
+    if (item->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(item->firstPolygonIndex);
     }
 
@@ -2810,8 +2367,8 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018BA10);
 s32 func_8018BA10(u16* arg0) {
     s16 new_var;
     s32 new_var4;
-    CollisionResult res;
-    CollisionResult resBack;
+    Collider res;
+    Collider resBack;
     s16 i;
     s16 x;
     s16 y;
@@ -2833,13 +2390,13 @@ s32 func_8018BA10(u16* arg0) {
                     if (new_var4 & 1) {
                         g_api.CheckCollision(x, y - 8, &resBack, 0);
                         if (!(resBack.unk0 & 1)) {
-                            new_var = res.unk18;
+                            new_var = LOH(res.unk18);
                             g_CurrentEntity->accelerationX = 0;
                             g_CurrentEntity->accelerationY = 0;
                             g_CurrentEntity->posY.i.hi =
                                 (((u16)g_CurrentEntity->posY.i.hi) + 4) +
                                 new_var;
-                            g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                            g_CurrentEntity->flags &= 0xEFFFFFFF;
                             return 1;
                         }
                     }
@@ -2851,24 +2408,24 @@ s32 func_8018BA10(u16* arg0) {
             if (new_var4 & 5) {
                 if (i != 1) {
                     if (new_var4 & 4) {
-                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        g_CurrentEntity->flags &= 0xEFFFFFFF;
                         return 4;
                     }
                     g_api.CheckCollision(x, y - 8, &resBack, 0);
                     if (!(resBack.unk0 & 1)) {
-                        x = ((u16)g_CurrentEntity->posY.i.hi) + res.unk18;
+                        x = ((u16)g_CurrentEntity->posY.i.hi) + LOH(res.unk18);
                         new_var = x;
                         g_CurrentEntity->accelerationX = 0;
                         g_CurrentEntity->accelerationY = 0;
                         g_CurrentEntity->posY.i.hi = new_var;
-                        g_CurrentEntity->unk34 &= 0xEFFFFFFF;
+                        g_CurrentEntity->flags &= 0xEFFFFFFF;
                         return 1;
                     }
                 }
             }
         }
     }
-    g_CurrentEntity->unk34 |= 0x10000000;
+    g_CurrentEntity->flags |= 0x10000000;
     return 0;
 }
 #endif
@@ -3027,24 +2584,24 @@ void func_8018C27C(u16 arg0, u16 arg1) {
 }
 
 void InitializeEntity(u16 arg0[]) {
-    u16 temp_v1;
-    Unkstruct5* temp_v0;
+    u16 enemyId;
+    EnemyDef* enemyDef;
 
     g_CurrentEntity->animSet = *arg0++;
     g_CurrentEntity->animCurFrame = *arg0++;
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
-    temp_v1 = *arg0++;
-    g_CurrentEntity->unk3A = temp_v1;
-    temp_v0 =
-        (Unkstruct5*)(temp_v1 * sizeof(Unkstruct5) + (u32)g_api.D_800A8900);
-    g_CurrentEntity->hitPoints = temp_v0->unk4;
-    g_CurrentEntity->unk40 = temp_v0->unk6;
-    g_CurrentEntity->unk42 = temp_v0->unk8;
-    g_CurrentEntity->unk3C = temp_v0->unkC;
-    g_CurrentEntity->hitboxWidth = temp_v0->hitboxWidth;
-    g_CurrentEntity->hitboxHeight = temp_v0->hitboxHeight;
-    g_CurrentEntity->unk34 = temp_v0->unk24;
+
+    enemyId = *arg0++;
+    g_CurrentEntity->enemyId = enemyId;
+    enemyDef = &g_api.enemyDefs[enemyId];
+    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
+    g_CurrentEntity->attack = enemyDef->attack;
+    g_CurrentEntity->attackElement = enemyDef->attackElement;
+    g_CurrentEntity->unk3C = enemyDef->unkC;
+    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
+    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
+    g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
     g_CurrentEntity->unk2E = 0;
@@ -3072,7 +2629,7 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
 
     PreventEntityFromRespawning(entity);
 
-    if (!(D_8009796E & 2)) {
+    if (!(g_Status.relics[10] & 2)) {
         DestroyEntity(entity);
         return;
     }
@@ -3095,12 +2652,6 @@ void ReplaceBreakableWithItemDrop(Entity* entity) {
     entity->step = 0;
 }
 
-// matches in gcc 2.6.0 + aspsx 2.3.4
-// matches in gcc 2.7.2 + aspsx
-// most likely aspsx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018CAB0);
-#else
 void func_8018CAB0(void) {
     s32 temp_v1;
     Entity* entity;
@@ -3115,15 +2666,15 @@ void func_8018CAB0(void) {
         }
         entity = g_CurrentEntity;
     }
+    NOP;
 
     if (entity->accelerationY < 0x00004000) {
         entity->accelerationY += 0x2000;
     }
 }
-#endif
 
 void func_8018CB34(u16 arg0) {
-    CollisionResult res;
+    Collider res;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
@@ -3151,7 +2702,7 @@ void func_8018CB34(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->posY.i.hi += (u16)res.unk18;
+        g_CurrentEntity->posY.i.hi += LOH(res.unk18);
         return;
     }
 
@@ -3165,11 +2716,11 @@ void CollectHeart(u16 heartSize) {
     s32* hearts;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &D_80097B9C.hearts;
+    hearts = &g_Status.hearts;
     *hearts += c_HeartPrizes[heartSize];
 
-    if (D_80097B9C.heartsMax < *hearts) {
-        *hearts = D_80097B9C.heartsMax;
+    if (g_Status.heartsMax < *hearts) {
+        *hearts = g_Status.heartsMax;
     }
 
     DestroyEntity(g_CurrentEntity);
@@ -3237,10 +2788,10 @@ void func_8018CDEC(u16 arg0) {
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        D_80097B9C.hearts += HEART_VESSEL_RICHTER;
+        g_Status.hearts += HEART_VESSEL_RICHTER;
 
-        if (D_80097B9C.heartsMax < D_80097B9C.hearts) {
-            D_80097B9C.hearts = D_80097B9C.heartsMax;
+        if (g_Status.heartsMax < g_Status.hearts) {
+            g_Status.hearts = g_Status.heartsMax;
         }
     } else {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -3255,7 +2806,7 @@ void CollectLifeVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_8018CFF8(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityPriceDrop);
 
@@ -3330,7 +2881,7 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityUnkId0E);
 
 u8 func_8018F420(s16* arg0, u8 facing) {
     u8 ret = 0;
-    CollisionResult res;
+    Collider res;
     s16 posX, posY;
 
     while (*arg0 != 0xFF) {
@@ -3378,6 +2929,7 @@ void func_8018F510(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018F620);
 
+// https://decomp.me/scratch/peM5t by stuckpixel
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018F750);
 #else
@@ -3409,7 +2961,7 @@ void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
 void func_8018F838(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181020[entity->unk94];
-        entity->unk34 = 0x0C002000;
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80181038[entity->subId];
@@ -3433,7 +2985,7 @@ void func_8018F928(Entity* arg0) {
     u16 temp_v0;
 
     if (arg0->step == 0) {
-        arg0->unk34 = 0x0C002000;
+        arg0->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         arg0->palette = 0x8195;
         arg0->animSet = 5;
         arg0->animCurFrame = 1U;
@@ -3459,7 +3011,7 @@ void func_8018F928(Entity* arg0) {
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018FA1C);
 
 bool func_8018FC4C(Unkstruct6* unk) {
-    CollisionResult res;
+    Collider res;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -3472,7 +3024,7 @@ bool func_8018FC4C(Unkstruct6* unk) {
         posY += unk->y;
         g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += res.unk18;
+            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
@@ -3526,6 +3078,7 @@ void func_801903C8(Entity* entity) {
         entity->animSet = 8;
         entity->animCurFrame = 1;
         entity->zPriority += 16;
+
         if (entity->subId) {
             entity->palette = entity->subId;
         } else {
@@ -3552,7 +3105,9 @@ void func_80190494(u16 objectId, Entity* source, Entity* entity) {
     entity->unk5A = source->unk5A;
     entity->zPriority = source->zPriority;
     entity->animSet = source->animSet;
-    entity->unk34 = 0xCD002000;
+    entity->flags = 0x1002000 | FLAG_UNK_04000000 | FLAG_UNK_08000000 |
+                    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     palette = source->palette;
     entity->palette = palette & 0x8000 ? source->unk6A : palette;
@@ -3568,7 +3123,7 @@ void func_8019055C(void) {
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
             CreateEntityFromEntity(ENTITY_EXPLOSION, g_CurrentEntity, entity);
             entity->unk84.U8.unk1 = 6 - i;
@@ -3578,7 +3133,59 @@ void func_8019055C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80190614);
+void func_80190614(Entity* self) {
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 temp;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180458);
+        self->animSet = 2;
+        self->palette = 0x81B6;
+        self->unk6C = 0x70;
+        self->zPriority = 192;
+        self->unk19 |= 0xC;
+        self->blendMode |= 0x30;
+
+        switch (self->unk84.U8.unk0) {
+        case 1:
+            if (self->unk84.U8.unk1 >= 4) {
+                self->unk84.U8.unk1 += 253;
+                self->unk80.modeS16.unk0 -= 0x800;
+            }
+            break;
+
+        case 2:
+            self->unk80.modeS16.unk0 += self->unk84.U8.unk1 * 192;
+            break;
+        }
+
+        self->unk1E = self->unk80.modeS16.unk0 &= 0xFFF;
+        temp = (self->unk84.U8.unk1 * 320) / 24;
+        self->accelerationX = temp * rsin(self->unk80.modeS16.unk0);
+        self->accelerationY = -(temp * rcos(self->unk80.modeS16.unk0));
+    }
+
+    if (self->animFrameIdx >= 13) {
+        accelerationX = self->accelerationX;
+        if (accelerationX < 0) {
+            accelerationX += 3;
+        }
+
+        accelerationY = self->accelerationY;
+        self->accelerationX = (accelerationX >> 2) * 3;
+        if (accelerationY < 0) {
+            accelerationY += 3;
+        }
+        self->accelerationY = (accelerationY >> 2) * 3;
+    }
+
+    MoveEntity();
+
+    if (AnimateEntity(D_80180EEC, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_801907EC);
 
@@ -3608,7 +3215,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk19 = objInit->unk8;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
-            entity->unk34 = objInit->unkC;
+            entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
             entity->unk1E = 0x800;

@@ -188,7 +188,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
         if (ent2->unk3C == 0) {
             var_a1 = 0x2000;
         }
-        if (ent2->unk34 & 0x200000) {
+        if (ent2->flags & 0x200000) {
             var_a1 = 0x3000;
         }
     }
@@ -210,31 +210,12 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     return posX;
 }
 
-// https://decomp.me/scratch/LmXYY
-// nops between assignments probably aspsx
-// matching in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118C28);
-#else
-extern u8 D_800ACFB4[];
-extern u8 D_800ACFB5[];
-extern u8 D_800ACFB6[];
-extern u8 D_800ACFB7[];
-extern u8 D_8013803C;
-extern u8 D_80138040;
-extern u8 D_80138044;
-extern u8 D_80138048;
-
 void func_80118C28(s32 arg0) {
-    s32 temp_a0;
-
-    temp_a0 = arg0 * 4;
-    D_8013803C = D_800ACFB4[temp_a0];
-    D_80138040 = D_800ACFB5[temp_a0];
-    D_80138044 = D_800ACFB6[temp_a0];
-    D_80138048 = D_800ACFB7[temp_a0];
+    D_8013803C = D_800ACFB4[arg0][0];
+    D_80138040 = D_800ACFB4[arg0][1];
+    D_80138044 = D_800ACFB4[arg0][2];
+    D_80138048 = D_800ACFB4[arg0][3];
 }
-#endif
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
     Entity* entity = GetFreeDraEntity(0x38, 0x40);
@@ -272,7 +253,7 @@ void func_80119D3C(Entity* entity) {
         entity->animCurFrame = 0xE;
         entity->animSet = 3;
         entity->unk80.modeS16.unk0 = 0x80;
-        entity->unk34 = 0x08000000;
+        entity->flags = FLAG_UNK_08000000;
         break;
 
     case 1:
@@ -301,50 +282,48 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119E78);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119F70);
 
 void func_8011A290(Entity* entity) {
-    Unkstruct_8011A290 sp10;
+    SubweaponDef subwpn;
 
-    func_800FE3C4(&sp10, entity->unkB0, 0);
-    entity->unk40 = sp10.sp10;
-    entity->unk42 = sp10.sp14;
-    entity->unk3C = sp10.sp1C;
-    entity->unk49 = sp10.sp17;
-    entity->unk58 = sp10.sp18;
-    entity->unk6A = sp10.sp1E;
-    entity->objectRoomIndex = sp10.sp22;
-    entity->unkB2 = sp10.sp20;
+    func_800FE3C4(&subwpn, entity->unkB0, 0);
+    entity->attack = subwpn.attack;
+    entity->attackElement = subwpn.attackElement;
+    entity->unk3C = subwpn.sp1C;
+    entity->unk49 = subwpn.sp17;
+    entity->unk58 = subwpn.sp18;
+    entity->unk6A = subwpn.sp1E;
+    entity->objectRoomIndex = subwpn.sp22;
+    entity->unkB2 = subwpn.sp20;
     func_80118894(entity);
 }
 
-void func_800FD9D4(Unkstruct_8011A328*, s32 arg1);
-
 void func_8011A328(Entity* entity, s32 arg1) {
-    Unkstruct_8011A328 sp10;
+    SpellDef spell;
 
-    func_800FD9D4(&sp10, arg1);
-    entity->unk40 = sp10.unk18;
-    entity->unk42 = sp10.unk16;
-    entity->unk3C = sp10.unk10;
-    entity->unk49 = sp10.unk0D;
-    entity->unk58 = sp10.unk0E;
-    entity->unk6A = sp10.unk12;
-    entity->objectRoomIndex = sp10.unk14;
+    func_800FD9D4(&spell, arg1);
+    entity->attack = spell.attack;
+    entity->attackElement = spell.attackElement;
+    entity->unk3C = spell.unk10;
+    entity->unk49 = spell.unk0D;
+    entity->unk58 = spell.unk0E;
+    entity->unk6A = spell.unk12;
+    entity->objectRoomIndex = spell.unk14;
     func_80118894(entity);
 }
 
 void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
-    Unkstruct_8011A328 sp10;
+    SpellDef spell;
 
     *arg3 = D_80097C38[D_8006CBC4];
     if (arg2 != 0) {
-        func_800FD9D4(&sp10, arg1);
-        arg0->unk40 = sp10.unk18;
-        arg0->unk42 = sp10.unk16;
-        arg0->unk3C = sp10.unk10;
-        arg0->unk49 = sp10.unk0D;
-        arg0->unk58 = sp10.unk0E;
-        arg0->unk6A = sp10.unk12;
-        arg0->objectRoomIndex = sp10.unk14;
-        arg0->unk40 = sp10.unk18 * ((arg3->unk0 * 4 / 95) + 1);
+        func_800FD9D4(&spell, arg1);
+        arg0->attack = spell.attack;
+        arg0->attackElement = spell.attackElement;
+        arg0->unk3C = spell.unk10;
+        arg0->unk49 = spell.unk0D;
+        arg0->unk58 = spell.unk0E;
+        arg0->unk6A = spell.unk12;
+        arg0->objectRoomIndex = spell.unk14;
+        arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
         func_80118894(arg0);
     }
 }
@@ -374,14 +353,14 @@ loop_1: // !FAKE: this should be a for loop
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->objectId != 0) {
-                if ((!(entity->unk34 & 0x04000000)) &&
+                if ((!(entity->flags & FLAG_UNK_04000000)) &&
                     (((u32)((((u16)entity->posX.i.hi) + 0x20) & 0xFFFF) >=
                       0x141) ||
                      ((u32)((((u16)entity->posY.i.hi) + 0x10) & 0xFFFF) >=
                       0x111))) {
                     DestroyEntity(entity);
                     goto label;
-                } else if (entity->unk34 & 0x100000) {
+                } else if (entity->flags & 0x100000) {
                     UpdateAnim(NULL, D_800ACFB4);
                 }
             }
@@ -423,8 +402,8 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     }
     entity->unkA0 = (flags >> 8) & 0xFF00;
     entity->unk92 = temp;
-    if (self->unk34 & 0x10000) {
-        entity->unk34 |= 0x10000;
+    if (self->flags & FLAG_UNK_10000) {
+        entity->flags |= FLAG_UNK_10000;
     }
     if (flags & 0x1000) {
         entity->objectId = 0xEF;
@@ -447,14 +426,14 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011AC3C);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
 
 void func_8011B334(Entity* entity) {
-    Unkstruct_8011B334 temp;
+    Equipment temp;
 
     if (PLAYER.unk2E != 0x70) {
         DestroyEntity(entity);
         return;
     }
 
-    entity->unk34 = 0x60000;
+    entity->flags = 0x60000;
     entity->facing = PLAYER.facing;
     entity->posY.i.hi = PLAYER.posY.i.hi;
     entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -462,13 +441,13 @@ void func_8011B334(Entity* entity) {
 
     if (entity->step == 0) {
         func_800FE728(0, &temp, 0);
-        entity->unk40 = temp.unk8;
-        entity->unk42 = temp.unkC;
-        entity->unk3C = temp.unk28;
-        entity->unk49 = temp.unk1A;
-        entity->unk58 = temp.unk26;
-        entity->unk6A = temp.unk2A;
-        entity->objectRoomIndex = temp.unk30;
+        entity->attack = temp.attack;
+        entity->attackElement = temp.element;
+        entity->unk3C = temp.hitType;
+        entity->unk49 = temp.enemyInvincibilityFrames;
+        entity->unk58 = temp.stunFrames;
+        entity->unk6A = temp.hitEffect;
+        entity->objectRoomIndex = temp.criticalRate;
         func_80118894(entity);
         entity->unk10 = 9;
         entity->unk12 = 0x15;
@@ -486,7 +465,7 @@ void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
-        entity->unk34 = 0x60000;
+        entity->flags = 0x60000;
         func_8011A328(entity, 5);
         entity->step++;
     }
@@ -537,7 +516,7 @@ void func_8011F074(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x08120000;
+        entity->flags = 0x120000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
         entity->animSet = 0xE;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -627,7 +606,7 @@ void func_80123A60(Entity* entity) {
     entity->posY.i.hi = player->posY.i.hi;
     if (entity->step == 0) {
         func_8011A328(entity, 0xB);
-        entity->unk34 = 0x04060000;
+        entity->flags = 0x60000 | FLAG_UNK_04000000;
         entity->step++;
     }
 
@@ -661,7 +640,7 @@ void func_80123F78(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x0C030000;
+        entity->flags = 0x30000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         if (PLAYER.animSet != 1) {
             DestroyEntity(entity);
             break;
@@ -840,7 +819,7 @@ void func_80124A8C(Entity* entity) {
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
         entity->unk4C = &D_800AE294;
-        entity->unk34 = 0x100000;
+        entity->flags = 0x100000;
         entity->facing = 0;
         entity->posY.i.hi -= 16;
         entity->posX.val += entity->accelerationX << 5;
@@ -863,10 +842,46 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownDagger);
 // axe thrown when using subweapon
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 
+// Matches perfectly on PSY-Q 3.5: https://decomp.me/scratch/dhDdI
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
+#else
+s32 func_80125A30(s32 baseY, s32 baseX) {
+    s16 x;
+    s16 y;
+    Collider res1;
+    Collider res2;
+    s16 colRes1;
+    s16 colRes2;
+
+    x = baseX + g_CurrentEntity->posX.i.hi;
+    y = baseY + g_CurrentEntity->posY.i.hi;
+
+    CheckCollision(x, y, &res1, 0);
+    colRes1 = res1.unk0 & 0xF801;
+    CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
+    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
+
+    if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
+        colRes2 = res2.unk0 & 0xF001;
+        if (!(*(u16*)&res2.unk0 & 1)) {
+            g_CurrentEntity->posY.i.hi = y;
+            return 1;
+        }
+        if ((res2.unk0 & 0x8001) == 0x8001) {
+            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
+            return colRes2;
+        }
+    } else if ((colRes1 & 0x8001) == 0x8001) {
+        g_CurrentEntity->posY.i.hi = y;
+        return colRes1 & 0xF001;
+    }
+    return 0;
+}
+#endif
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
-    CollisionResult collisionResult;
+    Collider res;
     s16 var_a1;
 
     if (g_CurrentEntity->accelerationX == 0) {
@@ -874,14 +889,14 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     }
 
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
-                   g_CurrentEntity->posY.i.hi + arg0, &collisionResult, 0);
+                   g_CurrentEntity->posY.i.hi + arg0, &res, 0);
     if (g_CurrentEntity->accelerationX > 0) {
-        var_a1 = collisionResult.unk14;
+        var_a1 = LOH(res.unk14);
     } else {
-        var_a1 = collisionResult.unk1C;
+        var_a1 = LOH(res.unk1C);
     }
 
-    if (collisionResult.unk0 & 2) {
+    if (res.unk0 & 2) {
         g_CurrentEntity->posX.i.lo = 0;
         g_CurrentEntity->posX.i.hi += var_a1;
         return 2;
@@ -897,10 +912,10 @@ void EntityHolyWater(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->unk34 = 0x08000000;
+        entity->flags = FLAG_UNK_08000000;
         entity->animSet = 9;
         entity->animCurFrame = 0x1D;
-        entity->zPriority = D_800733FC - 2;
+        entity->zPriority = PLAYER.zPriority - 2;
         entity->posY.i.hi += 8;
         AccelerateX(0x14000);
         entity->accelerationY = -0x32000;
@@ -985,7 +1000,7 @@ void func_801274DC(Entity* entity) {
         if (entity->subId == 0) {
             PlaySfx(0x660);
         }
-        entity->unk34 = 0x08100000;
+        entity->flags = 0x100000 | FLAG_UNK_08000000;
         entity->animSet = 9;
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1031,7 +1046,7 @@ void func_80127840(Entity* entity) {
             PlaySfx(0x683);
         }
 
-        entity->unk34 = 0x08100000;
+        entity->flags = 0x100000 | FLAG_UNK_08000000;
 
         if (entity->subId != 0) {
             entity->posY.i.hi = entity->posY.i.hi + 16;
@@ -1116,7 +1131,7 @@ void EntityExpandingCircle(Entity* entity) {
             poly->clut = 0x15F;
             poly->pad2 = PLAYER.zPriority + 1;
             poly->pad3 = 0x35;
-            entity->unk34 = 0x04840000;
+            entity->flags = 0x40000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
             entity->step++;
             break;
         }
@@ -1178,7 +1193,7 @@ void func_80127CC8(Entity* entity) {
             return;
         }
 
-        entity->unk34 = 0x04860000;
+        entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
         poly = &D_80086FEC[entity->firstPolygonIndex];
         poly->r3 = 192;
         poly->r2 = 192;
@@ -1287,7 +1302,7 @@ void func_8012B78C(Entity* entity) {
         ret = AllocPolygons(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
-            entity->unk34 = 0x04820000;
+            entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
             poly = &D_80086FEC[entity->firstPolygonIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
@@ -1517,7 +1532,7 @@ void func_8013136C(Entity* entity) {
         entity->animSet = 0xF;
         entity->unk5A = 0x7E;
         entity->palette = PLAYER.palette;
-        entity->unk34 = 0x04060000;
+        entity->flags = 0x60000 | FLAG_UNK_04000000;
         entity->unk19 = 4;
         entity->unk20 = -8;
         entity->step++;
@@ -1717,20 +1732,20 @@ void func_80132264(void) {
     D_8013AEE8 = 0;
     D_80138454 = 0;
     do {
-        D_8013B3E8[D_80138454] = 0;
+        g_sfxRingBuffer2[D_80138454] = 0;
     } while (++D_80138454 < 0x100);
     D_80139A68 = 0;
-    D_80139A70 = 0;
+    g_sfxRingBufferPos2 = 0;
     D_80138454 = 0;
     do {
-        D_801390DC[D_80138454].unk00 = 0;
-        D_801390DC[D_80138454].unk02 = 0;
-        D_801390DC[D_80138454].unk04 = 0;
+        g_sfxRingBuffer1[D_80138454].unk00 = 0;
+        g_sfxRingBuffer1[D_80138454].unk02 = 0;
+        g_sfxRingBuffer1[D_80138454].unk04 = 0;
     } while (++D_80138454 < 0x100);
     D_80139A6C = 0x20;
     D_8013AE7C = 0x7F;
     D_80138FAC = 0;
-    D_80139000 = 0;
+    g_sfxRingBufferPos1 = 0;
     D_801390C4 = 0;
     D_8013AEE0 = 0;
     D_8013AE94 = 0;
@@ -2139,11 +2154,11 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
         D_8013AE94 = arg1;
         D_8013AEE0 = arg0;
-        D_8013B3E8[D_80139A70] = 1;
-        D_80139A70++;
+        g_sfxRingBuffer2[g_sfxRingBufferPos2] = 1;
+        g_sfxRingBufferPos2++;
 
-        if (D_80139A70 == 0x100) {
-            D_80139A70 = 0;
+        if (g_sfxRingBufferPos2 == 0x100) {
+            g_sfxRingBufferPos2 = 0;
         }
     }
     return ret;
@@ -2161,17 +2176,17 @@ u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
         return -2;
     }
     if ((u32)((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
-        D_801390DC[D_80139000].unk00 = arg0 - 0x600;
-        D_801390DC[D_80139000].unk02 = arg1 & 0x7F;
+        g_sfxRingBuffer1[g_sfxRingBufferPos1].unk00 = arg0 - 0x600;
+        g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = arg1 & 0x7F;
         var = (arg2 + 8);
         if (var > 16) {
-            D_801390E0[D_80139000].unk00 = 0;
+            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = 0;
             ret = -1;
         } else {
-            D_801390E0[D_80139000].unk00 = arg2;
+            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = arg2;
         }
-        if (++D_80139000 == 0x100) {
-            D_80139000 = 0;
+        if (++g_sfxRingBufferPos1 == 0x100) {
+            g_sfxRingBufferPos1 = 0;
         }
     } else {
         ret = -3;
@@ -2185,12 +2200,12 @@ void PlaySfx(s16 sfxId) {
     if (D_8013AEEC != 0) {
         offset = (u32)(sfxId - 0x601);
         if (offset < 0x2E0) {
-            D_801390DC[D_80139000].unk00 = sfxId - 0x600;
-            D_801390DC[D_80139000].unk02 = 0xFFFF;
-            D_801390DC[D_80139000].unk04 = 0;
-            D_80139000++;
-            if (D_80139000 == 0x100) {
-                D_80139000 = 0;
+            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk00 = sfxId - 0x600;
+            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = 0xFFFF;
+            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = 0;
+            g_sfxRingBufferPos1++;
+            if (g_sfxRingBufferPos1 == 0x100) {
+                g_sfxRingBufferPos1 = 0;
             }
         } else {
             switch (sfxId) {
@@ -2216,10 +2231,10 @@ void PlaySfx(s16 sfxId) {
                 break;
             }
 
-            D_8013B3E8[D_80139A70] = sfxId;
-            D_80139A70++;
-            if (D_80139A70 == 0x100) {
-                D_80139A70 = 0;
+            g_sfxRingBuffer2[g_sfxRingBufferPos2] = sfxId;
+            g_sfxRingBufferPos2++;
+            if (g_sfxRingBufferPos2 == 0x100) {
+                g_sfxRingBufferPos2 = 0;
             }
         }
     }
@@ -2238,7 +2253,13 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801349F4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134B48);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134C60);
+void func_80134C60(void) {
+    u16 temp = (D_8013AE7C * D_800BF554[D_8013B664].volume) >> 7;
+    func_80132A04(0x14, D_800BF554[D_8013B664].vabid,
+                  D_800BF554[D_8013B664].prog, D_800BF554[D_8013B664].tone,
+                  D_800BF554[D_8013B664].note, (temp * (u16)D_801390A4) >> 7,
+                  D_80139010);
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134D14);
 

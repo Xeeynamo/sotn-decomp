@@ -7,7 +7,7 @@
 #include "common.h"
 #include "stage.h"
 
-extern s32 D_80180390;
+extern PfnEntityUpdate D_80180390[];
 extern s16 D_80180BBC[];
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
@@ -16,11 +16,12 @@ extern s16 D_8019D3B4;
 extern s16 D_8019D3B6;
 extern s32 D_8019D3B8;
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018D600);
+// background block of rock
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityBackgroundBlock);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018D6E0);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018D89C);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId01);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018DB18);
 
@@ -52,7 +53,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E3E8);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E6C4);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E7C8);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId16);
 
 void func_8018F890(s16 arg0) {
     s16 temp_v0 = arg0 - *(s16*)&g_CurrentRoom.height;
@@ -68,21 +69,26 @@ void func_8018F890(s16 arg0) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F8EC);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F95C);
+// platform that lifts you into chamber, starts cutscene
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019007C);
+// Black layer that covers room interior and lights up when cutscene starts
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRoomDarkness);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80190374);
+// Maria sprite
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityMaria);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801904B8);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80190540);
+// Elevator when not moving (ID 1A)
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityElevatorStationary);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80190A78);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId1B);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80190B64);
+// Elevator when moving, fixes player into position (ID 1C)
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityMovingElevator);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -95,7 +101,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80191178);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80191280);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192398);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityNumericDamage);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192A3C);
 
@@ -155,27 +161,34 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193298);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193410);
 
-void CreateEntityFromCurrentEntity(u16 arg0, Entity* arg1) {
-    DestroyEntity(arg1);
-    arg1->objectId = arg0;
-    arg1->pfnUpdate = *(&D_80180390 + arg0);
-    arg1->posX.i.hi = (s16)(u16)g_CurrentEntity->posX.i.hi;
-    arg1->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_80180390[objectId];
+    entity->posX.i.hi = (s16)(u16)g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
 }
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193538);
+void func_80193538(u16 objectId, Entity* source, Entity* entity) {
+    DestroyEntity(entity);
+    entity->objectId = objectId;
+    entity->pfnUpdate = D_80180390[objectId];
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801935B4);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019362C);
+// Red door (ID 05)
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRedDoor);
 
 void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
 
-    if (entity->unk34 & 0x800000) {
+    if (entity->flags & FLAG_FREE_POLYGONS) {
         g_api.FreePolygons(entity->firstPolygonIndex);
     }
 
@@ -418,26 +431,26 @@ void func_80195C0C(void) {
 
 void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195C84);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId03);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityExplosion);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801965F4);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80196698);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80196C80);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80196F30);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRelicOrb);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80197A00);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId0C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80197B28);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId0E);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80198084);
 
 extern u16 D_80180440[];
-void func_80198174(Entity* entity) {
+void EntityUnkId13(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180440);
@@ -467,9 +480,10 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80198284);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801983B4);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019849C);
+// ID 14
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityExplosion14);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019858C);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId15);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80198680);
 
@@ -477,7 +491,8 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801988B0);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801989AC);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80198F2C);
+// ID 06
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityIntenseExplosion);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019902C);
 
@@ -497,13 +512,13 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019A328);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019A420);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019A5F0);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityStageNamePopup);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019B274);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019B608);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityEnemyBlood);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019BAB8);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId08);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019BBA4);
 

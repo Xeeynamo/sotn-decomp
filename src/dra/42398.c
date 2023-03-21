@@ -20,8 +20,6 @@
 #define DISP_UNK2_H DISP_ALL_H
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
-extern u16 D_800AC958[];
-
 void func_800E2398(const char* str);
 s32 func_800E3278(void);
 void func_800E385C(u32*);
@@ -46,20 +44,13 @@ void func_801325D8(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
-// matching in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2398);
-#else
-u_long* FntFlush(int id);
-int FntPrint();
-extern s32 D_80136300;
 extern const char* aO;
 
 void func_800E2398(const char* str) {
-    D_8006C37C = D_8006C37C->unk0;
+    D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
     FntPrint(str);
     if (D_80136300++ & 4) {
-        FntPrint(&aO); // "\no\n"
+        FntPrint(&aO); // TODO: rodata split
     }
     DrawSync(0);
     VSync(0);
@@ -67,7 +58,6 @@ void func_800E2398(const char* str) {
     PutDispEnv(&D_8006C37C->buf.disp);
     FntFlush(-1);
 }
-#endif
 
 void func_800E2438(const char* str) {
     while (PadRead(0))
@@ -115,7 +105,7 @@ void func_800E2F3C(void) {
     if (D_800BD1C0 == 0)
         return;
 
-    if (D_80097498 & 0x100) {
+    if (g_pads[1].pressed & PAD_SELECT) {
         FntPrint("dr  :%03x\n", g_GpuMaxUsage.drawModes);
         FntPrint("gt4 :%03x\n", g_GpuMaxUsage.gt4);
         FntPrint("g4  :%03x\n", g_GpuMaxUsage.g4);
@@ -161,12 +151,6 @@ void func_800E2F3C(void) {
     }
 }
 
-// one nop
-// matching in gcc 2.6.0 + aspsx 2.3.4
-// https://decomp.me/scratch/NgIDx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E31C0);
-#else
 void func_800E31C0(void) {
     if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
         if (g_blinkTimer & 1) {
@@ -179,11 +163,10 @@ void func_800E31C0(void) {
         D_801362D0[0] = D_801362D0[1];
     }
 }
-#endif
 
 // TODO: fix branching
 // https://decomp.me/scratch/y3otf
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
 #else
 extern s32 D_800BD1C8;
@@ -462,7 +445,7 @@ loop_5:
         func_800EB314();
         ReadPads();
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
-            if (D_80097494.unk0 & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
             }
             if (g_softResetTimer != 0) {
@@ -561,15 +544,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E414C);
 
 void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
 
-// TODO aspatch jump points to the wrong instruction,
-// otherwise this is fully decompiled
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E451C);
-#else
-
 void func_800E451C(void) {
+    void (*callback)(void);
+
     switch (D_80073060) {
-    case 0x0:
+    case 0:
         ClearBackbuffer();
         func_800ECBF8();
         func_800EAD7C();
@@ -581,19 +560,17 @@ void func_800E451C(void) {
         func_800EA538(0);
         func_800EAEEC();
         func_800E3574();
-        g_StageId = 0x45;
+        g_StageId = STAGE_SEL;
         if (D_800978AC != 0) {
-            if (D_8006C3B0 == 0) {
-                D_8006C398 = 1;
-                D_8006BAFC = 1;
-                goto block_15;
+            if (D_8006C3B0 != 0) {
+                return;
             }
-            return;
+            D_8006C398 = 1;
+            D_8006BAFC = 1;
         }
-    block_15:
         D_80073060++;
         break;
-    case 0x64:
+    case 100:
         if (D_8006C3B0 == 0) {
             RECT sp18;
             sp18.x = 0;
@@ -615,7 +592,7 @@ void func_800E451C(void) {
             D_80073060++;
         }
         break;
-    case 0x65:
+    case 101:
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
             ClearImage(&D_800ACDF0, 0, 0, 0);
@@ -631,43 +608,44 @@ void func_800E451C(void) {
             D_80073060 = 1;
         }
         break;
-    case 0x1:
+    case 1:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
             (D_800978AC == 0 && func_800E81FC(2, 0) >= 0 &&
              func_800E81FC(0, 0) >= 0)) {
             D_80073060++;
         }
         break;
-    case 0x2:
+    case 2:
         D_80073060 = 3;
         break;
-    case 0x3:
+    case 3:
         D_80073060 = 4;
         break;
-    case 0x4:
+    case 4:
         if (D_800978AC != 0) {
             D_8006C398 = 1;
             D_8006BAFC = 0x100;
         }
         D_80073060 = 5;
         break;
-    case 0x5:
+    case 5:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
             (D_800978AC == 0 && func_800E81FC(0, 1) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
         break;
-    case 0x6:
+    case 6:
         if (D_8003C734 == 1) {
-            g_api.o.TestCollisions();
+            callback = g_api.o.TestCollisions;
         } else {
-            g_pfnInitRoomEntities();
+            callback = g_api.o.InitRoomEntities;
         }
+        NOP;
+        callback();
         break;
     }
 }
-#endif
 
 void func_800E493C(void) {
     if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
@@ -769,7 +747,7 @@ s32 func_800E6300(void) {
     s32 i;
 
     for (i = 0; i < 30; i++) {
-        if ((D_800A872C[i].unk0 > 0) && (D_80097964[i] & 2)) {
+        if ((D_800A872C[i].unk0 > 0) && (g_Status.relics[i] & 2)) {
             return D_800A872C[i].unk0;
         }
     }

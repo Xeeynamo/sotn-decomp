@@ -1,15 +1,13 @@
 #include "stage.h"
 
-void CreateEntityFromCurrentEntity(u16, Entity*);
-void ReplaceBreakableWithItemDrop(Entity*);
-s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
-void func_801C8C84(Entity* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
-                   u8 arg5, s32 arg6);
+extern void CreateEntityFromCurrentEntity(u16, Entity*);
+extern void ReplaceBreakableWithItemDrop(Entity*);
+extern s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
+extern void func_801C8C84(Entity* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
+                          u8 arg5, s32 arg6);
+extern void func_801CAD28(s32);
+extern POLY_GT4* func_801D6DB8(POLY_GT4* poly);
 
-extern u8 D_8003BE1C[]; // probably part of a struct
-extern u8 D_8003BE1D[]; // probably part of a struct
-extern u8 D_8003BE20[];
-extern s32 D_8003C8B8;
 extern u8* D_80180850;
 extern u16 D_80180AC4[];
 extern u16 D_80180AD0[];
@@ -24,8 +22,13 @@ extern u16 D_80180B6C[];
 extern u16 D_80180B84[];
 extern u16* D_80180B90;
 extern ObjInit2 D_80180BFC[];
+extern u16 D_80181230[];
 extern s32 D_8018123C;
 extern s32 D_80181240;
+extern u16 D_801812E2[];
+extern u16 D_8018131E[];
+extern u16 D_8018133C[];
+extern const u8 D_80181390[];
 extern u16 D_8018139C[];
 extern u16 D_8018139E[];
 extern s32 D_801819D0;
@@ -34,6 +37,7 @@ extern s32 D_801819E8[];
 extern s32 D_801819EC[];
 extern s32 D_80181B40;
 extern u8* D_80181B4C;
+extern u16 D_80181CC0[];
 extern s16 D_801820C4[];
 u8* D_80182438[];
 extern s32 D_801824F4[];
@@ -60,18 +64,19 @@ extern LayoutObject* D_801D7114;
 extern s8 D_801D7118;
 extern s8 D_801D711C;
 extern s32 D_801D7D20;
+extern s16 D_801D7D2A;
+extern u16 D_801D7D2C;
+extern s16 D_801D7D2E;
 extern s16 D_801D7D30;
 extern s16 D_801D7D32;
 extern s16 D_801D7D36;
+extern s8 D_801D7D3A;
+extern s8 D_801D7D3B;
 extern s32 D_801D7D54;
 extern s32 D_801D7D58;
 extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
-extern s16 D_801D7D2A;
-extern u16 D_801D7D2C;
-extern s16 D_801D7D2E;
-extern s8 D_801D7D3A;
-extern s8 D_801D7D3B;
+extern u16 D_801D7DD8[];
 extern LayoutObject* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
