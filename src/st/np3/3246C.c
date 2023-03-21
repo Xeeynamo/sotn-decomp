@@ -477,7 +477,95 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityTrapDoor);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B4D60);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5108);
+void func_801B5108(Entity* self) {
+    u16* tileLayoutPtr;
+    Entity* newEntity;
+    s32 tilePos;
+    u8* var_s3;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A6C);
+        self->unk3C = 2;
+        self->hitboxWidth = 0x10;
+        self->hitboxHeight = 0x18;
+
+        tileLayoutPtr = &D_80181180;
+        tilePos = 0x1FD;
+        for (i = 0; i < 3; i++) {
+            D_800730D8[0].layout[tilePos] = *tileLayoutPtr;
+            D_800730D8[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            tileLayoutPtr++;
+            tilePos += 0x30;
+        }
+
+        if (D_8003BDEC[51] & 2) {
+            tileLayoutPtr = &D_80181168;
+            tilePos = 0x1FD;
+            for (i = 0; i < 3; i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                tileLayoutPtr++;
+                tilePos += 0x30;
+            }
+            self->unk3C = 1;
+            self->step = 2;
+        }
+        break;
+
+    case 1:
+        if (self->unk48 != 0) {
+            tileLayoutPtr = &D_8018115C[(self->unk84.S16.unk0 * 6)];
+            tilePos = 0x1FD;
+            for (i = 0; i < 3; i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                tilePos += 0x30;
+                tileLayoutPtr++;
+            }
+
+            g_api.PlaySfx(0x644);
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->subId = 0x13;
+                newEntity->zPriority = 0xA9;
+                newEntity->posX.i.hi -= self->unk84.S16.unk0 * 16;
+                newEntity->posY.i.hi += 16;
+            }
+
+            var_s3 = &D_8018120C[self->unk84.S16.unk0 * 3];
+
+            for (i = 0; i < 3; i++) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x27, self, newEntity);
+                    newEntity->subId = *var_s3++;
+                    newEntity->accelerationX = (Random() << 8) + 0x8000;
+                    newEntity->accelerationY = -Random() * 0x100;
+                    newEntity->facing = 1;
+                    newEntity->posY.i.hi += -16 + (i * 16);
+                }
+            }
+            self->unk84.S16.unk0++;
+        }
+
+        if (self->unk84.S16.unk0 >= 2) {
+            D_8003BDEC[51] |= 2;
+            self->unk3C = 1;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
+            D_8003BDEC[51] |= 8;
+        }
+        break;
+    }
+}
 
 void func_801B5488(Entity* self) {
     u16* tileLayoutPtr;
