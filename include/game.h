@@ -407,8 +407,7 @@ typedef struct {
     /* 80097BF8 */ u32 D_80097BF8;
     /* 80097BFC */ u32 D_80097BFC;
     /* 80097C00 */ u32 equipment[7];
-    /* 80097C1C */ u32 attackRightHand;
-    /* 80097C20 */ u32 attackLeftHand;
+    /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ u32 defenseEquip;
     /* 80097C28 */ u16 defenseElement;
     /* 80097C2A */ u16 D_80097C2A;
@@ -804,7 +803,8 @@ typedef struct {
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
-    /* 8003C7D0 */ void (*func_800FE728)(s32, Equipment* res, s32 equipId);
+    /* 8003C7D0 */ void (*GetEquipProperties)(s32 handId, Equipment* res,
+                                              s32 equipId);
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
