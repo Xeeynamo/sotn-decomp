@@ -2,10 +2,10 @@
 #define STAGE_H
 
 #include "common.h"
+#include "flags.h"
 #include "game.h"
 #include "objects.h"
 #include "sfx.h"
-#include "flags.h"
 
 typedef struct {
     /* 0x0 */ u16 posX;
