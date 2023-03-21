@@ -16,6 +16,7 @@ typedef struct {
 
 s32 Random();
 void Update(void);
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntityFromIndex(s16 index);
