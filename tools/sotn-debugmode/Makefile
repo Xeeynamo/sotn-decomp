@@ -40,7 +40,7 @@ $(BUILD_DIR)/$(MODULE_NAME).bin: $(BUILD_DIR)/$(MODULE_NAME).elf
 	$(OBJCOPY) -O binary $< $@
 	printf '\x00' | dd of=$@ bs=1 seek=40959 count=1 conv=notrunc
 
-$(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o $(BUILD_DIR)/tools/%/collision_viewer.o $(BUILD_DIR)/tools/%/dra_800FD874.o
+$(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity_spawn.o $(BUILD_DIR)/tools/%/sfx_player.o $(BUILD_DIR)/tools/%/collision_viewer.o $(BUILD_DIR)/tools/%/flag_checker.o $(BUILD_DIR)/tools/%/dra_800FD874.o
 	$(LD) -o $@ \
 	-Map $*.map \
 	-T $*.ld \
@@ -49,6 +49,10 @@ $(BUILD_DIR)/%.elf: $(BUILD_DIR)/tools/%/debugmode.o $(BUILD_DIR)/tools/%/entity
 	-nostdlib \
 	-s
 
-$(BUILD_DIR)/tools/$(MODULE_NAME)/%.o: %.c
+$(BUILD_DIR)/tools/$(MODULE_NAME)/%.o: $(BUILD_DIR)/tools/$(MODULE_NAME)/%.s
+	$(AS) $(AS_FLAGS) -o $@ $<
+$(BUILD_DIR)/tools/$(MODULE_NAME)/%.s: $(BUILD_DIR)/tools/$(MODULE_NAME)/%.c
+	$(CC) $(CC_FLAGS) -o $@ $<
+$(BUILD_DIR)/tools/$(MODULE_NAME)/%.c: %.c
 	mkdir -p $(BUILD_DIR)/tools/$(MODULE_NAME)
-	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) -o $@ $<
