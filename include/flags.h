@@ -53,7 +53,7 @@
 
 /**
  * Merman Room Secret Passage
- *
- *
+ * used by:
+ * EntityMermanSecretPassage
  */
 #define MERMAN_ROOM_SECRET_PASSAGE_OPEN (CASTLE_FLAGS[58])
