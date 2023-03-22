@@ -1,5 +1,5 @@
 /**
- * Holds flags that checks if certain switches are enabled to allow to have
+ * Holds flags that check if certain switches are enabled to allow to have
  * shortcuts around the castle. One typical example is the wood column that
  * prevents the player to enter the warp room.
  */
