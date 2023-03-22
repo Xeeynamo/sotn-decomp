@@ -693,7 +693,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
-            MERMAN_ROCK |=  RIGHT_BROKEN;
+            MERMAN_ROCK |= RIGHT_BROKEN;
         }
         break;
     }
