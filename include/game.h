@@ -11,6 +11,7 @@
 #include <psxsdk/libgte.h>
 #include <psxsdk/libsnd.h>
 
+#define BUTTON_COUNT 8
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
 #define PAD_R2 0x0002
@@ -625,6 +626,11 @@ typedef struct {
 } SaveData; /* size = 0x11CC */
 
 typedef struct {
+    /* 0x00 */ u32 buttonConfig[BUTTON_COUNT];
+    /* 0x20 */ u16 D_8003CA18[BUTTON_COUNT];
+} Settings; /* size=? */
+
+typedef struct {
     /* 0x00 */ const u8* gfxPage;
     /* 0x04 */ const u8* gfxIndex;
     /* 0x08 */ const u8* clut;
@@ -912,13 +918,6 @@ typedef struct {
     /* 80073104 */ u32 flags;
 } BgLayer;
 
-typedef struct {
-    u32 rightHand;
-    u32 leftHand;
-    u32 jump;
-    u32 dodge;
-} ConfigButtons;
-
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
 
@@ -954,8 +953,7 @@ extern s32 D_8003C9A4; // related to when player change stages?
 extern u16 D_8003C9C8;
 extern s16 D_8003C9CC[];
 extern s32 g_menuButtonSettingsCursorPos;
-extern ConfigButtons g_menuButtonSettingsConfig;
-extern s32 D_8003C9FC;
+extern Settings g_Settings;
 extern s32 g_menuMainCursorIndex;
 extern s32 g_menuRelicsCursorIndex[];
 extern s32 g_SettingsCloakMode;

@@ -4,7 +4,39 @@
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F298C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F483C);
+bool func_800F483C(void) {
+    s32 buf[BUTTON_COUNT];
+    s32 i;
+    s32 var_a1;
+    s32* buttonConfig;
+
+    for (i = 0; i < 8; i++) {
+        buf[i] = 0;
+    }
+
+    for (i = 0; i < 7; i++) {
+        buf[g_Settings.buttonConfig[i]] = 1;
+    }
+
+    for (i = 0; i < 8; i++) {
+        if (buf[i] == 0) {
+            g_Settings.buttonConfig[7] = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < 8; i++) {
+        g_Settings.D_8003CA18[i] = D_800A0160[g_Settings.buttonConfig[i]];
+    }
+
+    var_a1 = 0;
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 8; i++) {
+        var_a1 |= 1 << *buttonConfig++;
+    }
+
+    return var_a1 == 0xFF;
+}
 
 bool IsAlucart(void) {
     if (CheckEquipmentItemCount(0xA8, 0) && CheckEquipmentItemCount(0xA7, 0) &&
@@ -447,7 +479,7 @@ void DrawSettingsButton(MenuContext* ctx) {
     y = 0x30;
     for (; i < 7; i++) {
         DrawMenuStr(c_strButtonRightHand[i], cursorX, y, ctx);
-        buttonId = g_menuButtonSettingsConfig[i];
+        buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
         DrawMenuChar(c_chPlaystationButtons[buttonId], x + btn1_x, y, ctx);
         if (buttonId >= 4) {
@@ -579,7 +611,7 @@ void DrawPauseMenu(s32 arg0) {
     }
     func_800F66BC(D_800A2D68, x, y, ctx, 1);
 
-    temp_var = g_menuButtonSettingsConfig.rightHand;
+    temp_var = g_Settings.buttonConfig[0];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
         DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 44, y, ctx);
@@ -589,7 +621,7 @@ void DrawPauseMenu(s32 arg0) {
     }
     DrawMenuInt(g_Status.attackHands[0], x + 76, y, ctx);
 
-    temp_var = g_menuButtonSettingsConfig.leftHand;
+    temp_var = g_Settings.buttonConfig[1];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
         DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 44, y + 10, ctx);
