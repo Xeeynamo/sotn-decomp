@@ -73,7 +73,7 @@ typedef struct Unkstruct_80072F20 {
     /* 0x00 */ s32 pl_vram_flag;
     /* 0x04 */ s32 unk04;
     /* 0x08 */ char pad08[0x4];
-    /* 0x0C */ s32 unk0C;
+    /* 0x0C */ s32 unk0C; // 1 = bat form, 4 = wolf form
     /* 0x10 */ s32 unk10;
     /* 0x14 */ char pad14[0x4];
     /* 0x18 */ s32 unk18;

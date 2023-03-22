@@ -13,11 +13,11 @@
  * EntityMermanRockRightSide
  */
 #define MERMAN_ROCK (CASTLE_FLAGS[51])
-#define LEFT_HALF_BROKEN (1 << 0)
-#define RIGHT_HALF_BROKEN (1 << 1)
-#define LEFT_BROKEN (1 << 2)
-#define RIGHT_BROKEN (1 << 3)
-#define MERMAN_ROCKS_BROKEN (LEFT_BROKEN + RIGHT_BROKEN)
+#define LEFT_BROKEN (1 << 0)
+#define RIGHT_BROKEN (1 << 1)
+#define WOLF_FLAG (1 << 2)
+#define BAT_FLAG (1 << 3)
+#define MERMAN_ROCKS_BROKEN (WOLF_FLAG + BAT_FLAG)
 
 /**
  * Weight blocking the path to Marble Gallery
