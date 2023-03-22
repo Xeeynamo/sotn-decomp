@@ -3,7 +3,6 @@
  * shortcuts around the castle. One typical example is the wood column that
  * prevents the player to enter the warp room.
  */
-
 #define CASTLE_FLAGS g_CastleFlags
 
 /**
@@ -34,8 +33,8 @@
  * used by:
  * EntityTrapDoor
  */
-#define UNDERGROUND_GARDEN_HATCH_CLOSED false
-#define UNDERGROUND_GARDEN_HATCH_OPEN true
+#define UNDERGROUND_GARDEN_HATCH_CLOSED (false)
+#define UNDERGROUND_GARDEN_HATCH_OPEN (true)
 
 /**
  * Castle Entrance Warp room shortcut
