@@ -1981,9 +1981,6 @@ void Update(void) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80188514);
-#else
 void func_80188514(void) {
     Entity* entity;
     for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
@@ -1991,18 +1988,17 @@ void func_80188514(void) {
             continue;
 
         if (entity->step) {
-            if (entity->flags & FLAG_UNK_10000) {
-                if (entity->flags & 0xF) {
-                    entity->palette =
-                        D_80180690[entity->unk49 << 1 | entity->flags & 1];
-                    entity->flags--;
-                    if ((entity->flags & 0xF) == 0) {
-                        entity->palette = entity->unk6A;
-                        entity->unk6A = 0;
-                    }
-                }
-            } else
+            if (!(entity->flags & FLAG_UNK_10000))
                 continue;
+            if (entity->flags & 0xF) {
+                entity->palette =
+                    D_80180690[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
+                    entity->palette = entity->unk6A;
+                    entity->unk6A = 0;
+                }
+            }
         }
 
         g_CurrentEntity = entity;
@@ -2011,8 +2007,6 @@ void func_80188514(void) {
         entity->unk48 = 0;
     }
 }
-
-#endif
 
 // https://decomp.me/scratch/Nq66t
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", TestCollisions);
