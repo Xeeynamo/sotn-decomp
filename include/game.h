@@ -947,19 +947,20 @@ extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 g_blinkTimer;
-extern s32 D_8003C99C;
-extern s32 g_CurrentPlayableCharacter;
-extern s32 D_8003C9A4; // related to when player change stages?
-extern u16 D_8003C9C8;
-extern s16 D_8003C9CC[];
-extern s32 g_menuButtonSettingsCursorPos;
-extern Settings g_Settings;
-extern s32 g_menuMainCursorIndex;
-extern s32 g_menuRelicsCursorIndex[];
-extern s32 g_SettingsCloakMode;
-extern s32 g_SettingsSoundMode;
+/* 0x8003C99C */ extern s32 D_8003C99C;
+/* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
+/* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
+/* 0x8003C9A8 */ extern s32 g_menuMainCursorIndex;
+/* 0x8003C9B0 */ extern s32 g_menuRelicsCursorIndex[];
+/* 0x8003C9C8 */ extern u16 D_8003C9C8;
+/* 0x8003C9CC */ extern s16 D_8003C9CC[];
+/* 0x8003C9E0 */ extern s32 g_MenuSystemOptionIndex[];
+/* 0x8003C9E8 */ extern s32 g_menuButtonSettingsCursorPos;
+/* 0x8003C9F8 */ extern Settings g_Settings;
 extern s32 D_8003CA28[]; // time attack checkpoints, also holds boss fought flag
 extern s32 D_8003CACC;
+/* 0x8003CAF8 */ extern s32 g_SettingsCloakMode;
+/* 0x8003CAFC */ extern s32 g_SettingsSoundMode;
 extern s32 D_8003CB00[];
 extern s32 D_8003CB04;
 
