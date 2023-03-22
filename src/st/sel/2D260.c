@@ -340,7 +340,7 @@ void func_801AECA0(void) {
     s32 w = 16;
     s32 h = 48;
     s32 xnext = 384;
-    u32* pix = D_801822E4;
+    u32* pix = g_saveIconTexture;
 
     for (; i < 16; i++) {
         s32 tmp = 4;
