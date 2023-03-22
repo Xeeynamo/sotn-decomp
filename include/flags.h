@@ -22,6 +22,7 @@
 /**
  * Weight blocking the path to Marble Gallery
  * used by:
+ * EntityMermanSecretPassage
  * EntityPathBlockTallWeight
  * EntityPathBlockSmallWeight
  * EntityClickSwitch
