@@ -118,8 +118,8 @@ extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
 extern /*?*/ s32 D_801808DC[];
-extern u16 D_801808E4[];
-extern u32 D_801822E4[];
+extern u16 g_saveIconPalette[0x10][0x10];
+extern u32 g_saveIconTexture[];
 extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_8018258C;
 extern RECT D_801825A4;

@@ -24,21 +24,24 @@ s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot) {
 }
 #endif
 
-void func_801B8DB0(u16* arg0, s32 arg1) {
+void GetSavePalette(u16* dst, s32 palIdx) {
+    const s32 ColorCount = 16;
     s32 i;
-    u16* var_v1;
+    u16* src = g_saveIconPalette[0];
 
-    var_v1 = &(D_801808E4 - 1)[arg1 * 0x10]; // FAKE
-    var_v1++;
-    for (i = 0; i < 0x10; i++)
-        *arg0++ = *var_v1++;
+    src = g_saveIconPalette[palIdx];
+    for (i = 0; i < ColorCount; i++) {
+        *dst++ = *src++;
+    }
 }
 
-void func_801B8DE8(u8* dst, s32 arg1) {
+void GetSaveIcon(u8* dst, s32 iconIdx) {
+    const s32 IconSize = 0x80 * 3;
     s32 i;
-    u8* src = (u8*)D_801822E4[arg1];
+    u8* src;
 
-    for (i = 0; i < 0x180; i++) {
+    src = g_saveIconTexture[iconIdx];
+    for (i = 0; i < IconSize; i++) {
         *dst++ = *src++;
     }
 }

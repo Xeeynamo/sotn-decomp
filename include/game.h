@@ -501,7 +501,7 @@ typedef struct {
     /* 0x214 */ u32 playTimeHours;
     /* 0x218 */ u32 playTimeMinutes;
     /* 0x21C */ u32 playTimeSeconds;
-    /* 0x220 */ u32 unk220;
+    /* 0x220 */ u32 memcardIcon;
     /* 0x224 */ u32 isTimeAttackUnlocked;
     /* 0x228 */ s16 stageID;
     /* 0x22A */ u16 exploredRoomCount;
