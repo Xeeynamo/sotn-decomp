@@ -27,7 +27,7 @@
  * EntityPathBlockSmallWeight
  * EntityClickSwitch
  */
-#define PATH_SHORTCUT_OPEN (CASTLE_FLAGS[49])
+#define MARBLE_GALLERY_SHORTCUT_OPEN (CASTLE_FLAGS[49])
 
 /**
  * Underground Garden hatch

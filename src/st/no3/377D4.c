@@ -297,7 +297,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (PATH_SHORTCUT_OPEN) {
+        if (MARBLE_GALLERY_SHORTCUT_OPEN) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -310,7 +310,7 @@ void EntityClickSwitch(Entity* entity) {
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
-                PATH_SHORTCUT_OPEN = true;
+                MARBLE_GALLERY_SHORTCUT_OPEN = true;
                 entity->step++;
             }
         }
@@ -354,14 +354,14 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (PATH_SHORTCUT_OPEN) {
+        if (MARBLE_GALLERY_SHORTCUT_OPEN) {
             self->step = 3;
             self->posY.i.hi += 111;
         }
         break;
 
     case 1:
-        if (PATH_SHORTCUT_OPEN) {
+        if (MARBLE_GALLERY_SHORTCUT_OPEN) {
             self->step++;
         }
         break;
@@ -429,14 +429,14 @@ void EntityPathBlockTallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (PATH_SHORTCUT_OPEN) {
+        if (MARBLE_GALLERY_SHORTCUT_OPEN) {
             self->step = 3;
             self->posY.i.hi -= 128;
         }
         break;
 
     case 1:
-        if (PATH_SHORTCUT_OPEN) {
+        if (MARBLE_GALLERY_SHORTCUT_OPEN) {
             self->step++;
         }
         break;
