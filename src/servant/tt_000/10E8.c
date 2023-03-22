@@ -537,7 +537,8 @@ void func_80174210(Entity* self, s32 arg1) {
                                 temp_s0->cameraY == cameraY &&
                                 (temp_s0->unk1C == -1 ||
                                  (temp_s0->unk1C >= 0 ||
-                                  g_CastleFlags[temp_s0->unk1C & 0xFFFF] == 0) &&
+                                  g_CastleFlags[temp_s0->unk1C & 0xFFFF] ==
+                                      0) &&
                                      (!(temp_s0->unk1C & 0x40000000) ||
                                       !(g_Status
                                             .relics[temp_s0->unk1C & 0xFFFF] &
