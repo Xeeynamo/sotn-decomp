@@ -429,14 +429,14 @@ void EntityPathBlockTallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (D_8003BDEC[49] != 0) {
+        if (PATH_SHORTCUT_OPEN) {
             self->step = 3;
             self->posY.i.hi -= 128;
         }
         break;
 
     case 1:
-        if (D_8003BDEC[49] != 0) {
+        if (PATH_SHORTCUT_OPEN) {
             self->step++;
         }
         break;
@@ -485,7 +485,7 @@ void EntityTrapDoor(Entity* entity) {
         entity->hitboxHeight = 4;
         entity->unk3C = 1;
 
-        if (g_TrapDoorFlag == 0) {
+        if (g_TrapDoorFlag == UNDERGROUND_GARDEN_HATCH_CLOSED) {
             if (PLAYER.posY.val < entity->posY.val) {
                 g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x129;
                 g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x132;
@@ -503,13 +503,13 @@ void EntityTrapDoor(Entity* entity) {
 
     case 1:
         if (entity->unk48 != 0) {
-            g_TrapDoorFlag = 1;
+            g_TrapDoorFlag = UNDERGROUND_GARDEN_HATCH_OPEN;
             entity->step++;
         }
         break;
 
     case 2:
-        AnimateEntity(&D_80181240, entity);
+        AnimateEntity(D_80181240, entity);
     }
 }
 
