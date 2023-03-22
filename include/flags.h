@@ -17,6 +17,7 @@
 #define RIGHT_HALF_BROKEN (1 << 1)
 #define LEFT_BROKEN (1 << 2)
 #define RIGHT_BROKEN (1 << 3)
+#define MERMAN_ROCKS_BROKEN (LEFT_BROKEN + RIGHT_BROKEN)
 
 /**
  * Weight blocking the path to Marble Gallery
