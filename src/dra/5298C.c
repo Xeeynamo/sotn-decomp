@@ -535,7 +535,60 @@ void func_800F7244(void) {
     }
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F72BC);
+#else
+extern s32 D_80137948;
+
+void func_800F72BC(void) {
+    int new_var4;
+    u8* new_var3;
+    s32 temp_a2;
+    s32 temp_s0;
+    s32 y;
+    s32 i;
+    s8** temp_a0;
+    u16 temp_a0_2;
+    u16 temp_v1;
+    u8* new_var2;
+    u16* temp_s0_2;
+    s32* new_var;
+    u16* var_s2;
+    u16* var_s3;
+    MenuContext* ctx;
+    new_var3 = &D_80137692;
+    if (((*new_var3) == 0) && (D_80137948 != 0)) {
+        DrawMenuInt(g_StatusAttackRightHand, 0x154, 0x50, (&D_80137692) - 0x3A);
+        DrawMenuChar(func_800F7218(LOH(g_Status.attackHands[0]),
+                                   LOH(g_StatusAttackRightHand)),
+                     0x13C, 0x50, (&D_80137692) - 0x3A);
+        DrawMenuInt(g_StatusAttackLeftHand, 0x154, 0x5A, (&D_80137692) - 0x3A);
+        new_var4 = 0x108;
+        DrawMenuChar(func_800F7218(LOH(g_Status.attackHands[1]),
+                                   LOH(g_StatusAttackLeftHand)),
+                     0x13C, 0x5A, (&D_80137692) - 0x3A);
+        DrawMenuInt(g_StatusDefenseEquip, 0x154, 0x6A, (&D_80137692) - 0x3A);
+        DrawMenuChar(func_800F7218(LOH(g_Status.defenseEquip),
+                                   LOH(g_StatusDefenseEquip)),
+                     0x13C, 0x6A, (&D_80137692) - 0x3A);
+        y = 0x22;
+        new_var = g_Status.statsTotal;
+        for (i = 0; i < 4; i++) {
+            new_var2 = (&D_80137692) - 0x3A;
+            temp_a0 = (&c_strSTR)[i];
+            DrawMenuStr((s8*)temp_a0, new_var4, y, new_var2);
+            DrawMenuInt(g_Status.statsBase[i] + g_Status.statsEquip[i], 0x134,
+                        y, new_var2);
+            temp_v1 = g_Status.statsEquip[i];
+            temp_a0_2 = g_Status.statsBase[i];
+            DrawMenuChar(func_800F7218(temp_a0_2 + temp_v1, LOH(new_var[i])),
+                         0x13C, y, new_var2);
+            DrawMenuInt(new_var[i], 0x154, y, (&D_80137692) - 0x3A);
+            y += 10;
+        }
+    }
+}
+#endif
 
 void DrawPauseMenu(s32 arg0) {
     MenuContext* ctx;
@@ -678,7 +731,29 @@ void func_800F82F4(void) {
     LoadImage(&dstRect, (u_long*)g_imgUnk8013C270->data);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawSystemMenu);
+void DrawSystemMenu(MenuContext* ctx) {
+    const char** new_var;
+    s32 strIdx;
+    s8** menuOptions;
+
+    func_800F5E68(ctx, *g_MenuSystemOptionIndex, 30, 46, 128, 12, 4,
+                  D_800978F8 == 0x101);
+
+    new_var = &c_strButton;
+    DrawMenuStr(*new_var, 0x20, 0x30, ctx);
+
+    strIdx = g_IsCloakLiningUnlocked ? 0x11 : 0x13;
+    menuOptions = (&c_strButton) - 0x10;
+    DrawMenuStr(menuOptions[strIdx], 32, 64, ctx);
+
+    strIdx = g_IsCloakColorUnlocked ? 0x12 : 0x13;
+    DrawMenuStr(menuOptions[strIdx], 32, 80, ctx);
+    DrawMenuStr(c_strWindow, 32, 96, ctx);
+    DrawMenuStr(c_strSound, 32, 112, ctx);
+
+    strIdx = g_IsTimeAttackUnlocked ? 0x24 : 0x13;
+    DrawMenuStr(menuOptions[strIdx], 32, 128, ctx);
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F84CC);
 
