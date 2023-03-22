@@ -132,7 +132,9 @@
 
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
-#define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
+#define NA_SE_EV_HEAVY_BLOCK_DRAG_1 0x607
+#define NA_SE_EV_HEAVY_BLOCK_DRAG_2 0x608
+#define NA_SE_EV_HEAVY_BLOCK_DRAG_3 0x609
 #define NA_SE_AL_BACKSLIDE 0x617
 #define NA_SE_BREAK_CANDLE 0x634
 #define NA_SE_PL_WARP 0x636

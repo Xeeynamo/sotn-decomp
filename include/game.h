@@ -838,7 +838,7 @@ typedef struct {
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
     /* 8003C850 */ void* D_800A8720;
     /* 8003C854 */ void* func_800FF7B8;
-    /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
+    /* 8003C858 */ s32 (*func_80134714)(s32 sfxId, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
@@ -921,13 +921,7 @@ typedef struct {
 
 extern s32 D_8003925C;
 extern bool g_IsTimeAttackUnlocked;
-
-// Holds flags that checks if certain switches are enabled to allow to have
-// shortcuts around the castle. One typical example is the wood column that
-// prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
-// column will disappear.
-extern u8 D_8003BDEC[];
-
+extern u8 g_CastleFlags[];
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;

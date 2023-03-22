@@ -537,7 +537,7 @@ void func_80174210(Entity* self, s32 arg1) {
                                 temp_s0->cameraY == cameraY &&
                                 (temp_s0->unk1C == -1 ||
                                  (temp_s0->unk1C >= 0 ||
-                                  D_8003BDEC[temp_s0->unk1C & 0xFFFF] == 0) &&
+                                  g_CastleFlags[temp_s0->unk1C & 0xFFFF] == 0) &&
                                      (!(temp_s0->unk1C & 0x40000000) ||
                                       !(g_Status
                                             .relics[temp_s0->unk1C & 0xFFFF] &
@@ -575,7 +575,7 @@ void func_80174210(Entity* self, s32 arg1) {
                 temp_v1_5->cameraY == cameraY &&
                 (temp_v1_5->unk1C == -1 ||
                  (temp_v1_5->unk1C >= 0 ||
-                  D_8003BDEC[temp_v1_5->unk1C & 0xFFFF] == 0) &&
+                  g_CastleFlags[temp_v1_5->unk1C & 0xFFFF] == 0) &&
                      (!(temp_v1_5->unk1C & 0x40000000) ||
                       !(g_Status.relics[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
                 temp_v1_5 = *var_s1_2;

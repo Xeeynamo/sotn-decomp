@@ -103,7 +103,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
-        if (D_8003BDEC[0x30] != 0) {
+        if (g_CastleFlags[0x30] != 0) {
             entity->unk1E = 0;
         }
 
@@ -112,10 +112,10 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->unk1E += 4;
             if (entity->unk1E > 0) {
                 entity->unk1E = 0;
-                if (D_8003BDEC[0x30] == 0) {
+                if (g_CastleFlags[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
-                D_8003BDEC[0x30] = 1;
+                g_CastleFlags[0x30] = 1;
             } else if (!(g_blinkTimer & 0xF)) {
                 g_api.PlaySfx(0x675);
             }
@@ -178,7 +178,7 @@ void func_801B40F8(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &D_801810F8[0];
-        if (D_8003BDEC[48] != 0) {
+        if (g_CastleFlags[48] != 0) {
             tileLayoutPtr = &D_801810F8[3];
             self->step = 128;
             self->animCurFrame = 0;
@@ -214,7 +214,7 @@ void func_801B40F8(Entity* self) {
         break;
 
     case 1:
-        if (D_8003BDEC[48] != 0) {
+        if (g_CastleFlags[48] != 0) {
             self->step++;
         }
         break;
@@ -241,7 +241,7 @@ void func_801B40F8(Entity* self) {
         }
 
         if (!(self->unk80.modeS32 & 15)) {
-            g_api.PlaySfx(NA_SE_EV_HEAVY_BLOCK_DRAG);
+            g_api.PlaySfx(0x609);
         }
 
         for (tilePos = 0x76, tileLayoutPtr = &D_801810F8[3], i = 0; i < temp;
@@ -293,7 +293,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(D_80180AA8);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (D_8003BDEC[0x31] != 0) {
+        if (g_CastleFlags[0x31] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -306,7 +306,7 @@ void EntityClickSwitch(Entity* entity) {
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
-                D_8003BDEC[0x31] = 1;
+                g_CastleFlags[0x31] = 1;
                 entity->step++;
             }
         }
@@ -352,14 +352,14 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
         self->posX.i.hi = 416 - g_Camera.posX.i.hi;
         self->posY.i.hi = 64 - g_Camera.posY.i.hi;
-        if (D_8003BDEC[49] != 0) {
+        if (g_CastleFlags[49] != 0) {
             self->posY.i.hi += 111;
             self->step = 3;
         }
         break;
 
     case 1:
-        if (D_8003BDEC[49] != 0) {
+        if (g_CastleFlags[49] != 0) {
             self->step++;
         }
         break;
@@ -429,14 +429,14 @@ void EntityPathBlockTallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (D_8003BDEC[49] != 0) {
+        if (g_CastleFlags[49] != 0) {
             self->step = 3;
             self->posY.i.hi -= 128;
         }
         break;
 
     case 1:
-        if (D_8003BDEC[49] != 0) {
+        if (g_CastleFlags[49] != 0) {
             self->step++;
         }
         break;
@@ -536,7 +536,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (FLAG_CHECK(MERMAN_ROCK, LEFT_HALF_BROKEN)) {
+        if (MERMAN_ROCK & LEFT_HALF_BROKEN) {
             tileLayoutPtr = &D_8018112C;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -593,7 +593,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(0xA, self, newEntity);
                 newEntity->subId = 0x43;
             }
-            FLAG_SET(MERMAN_ROCK, LEFT_HALF_BROKEN);
+            MERMAN_ROCK |= LEFT_HALF_BROKEN;
             self->unk3C = 1;
             self->step++;
         }
@@ -601,7 +601,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
-            FLAG_SET(MERMAN_ROCK, LEFT_BROKEN);
+            MERMAN_ROCK |= LEFT_BROKEN;
         }
         break;
     }
@@ -631,7 +631,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (FLAG_CHECK(MERMAN_ROCK, RIGHT_HALF_BROKEN)) {
+        if (MERMAN_ROCK & RIGHT_HALF_BROKEN) {
             tileLayoutPtr = &D_80181168;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -684,7 +684,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->unk84.S16.unk0 >= 2) {
-            FLAG_SET(MERMAN_ROCK, RIGHT_HALF_BROKEN);
+            MERMAN_ROCK |= RIGHT_HALF_BROKEN;
             self->unk3C = 1;
             self->step++;
         }
@@ -692,7 +692,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
-            FLAG_SET(MERMAN_ROCK, RIGHT_BROKEN);
+            MERMAN_ROCK |=  RIGHT_BROKEN;
         }
         break;
     }
@@ -707,13 +707,13 @@ void func_801B5488(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A6C);
-        if (D_8003BDEC[58] != 0) {
+        if (g_CastleFlags[58] != 0) {
             self->step = 2;
         }
         break;
 
     case 1:
-        if ((D_8003BDEC[51] & 12) == 12) {
+        if ((g_CastleFlags[51] & 12) == 12) {
             func_801C2598(0x644);
             self->step++;
         }
@@ -735,7 +735,7 @@ void func_801B5488(Entity* self) {
             }
         }
 
-        D_8003BDEC[58] |= 1;
+        g_CastleFlags[58] |= 1;
         g_api.func_800F1FC4(0x3A);
         self->step++;
         break;

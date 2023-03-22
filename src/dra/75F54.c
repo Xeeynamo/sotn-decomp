@@ -2164,7 +2164,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
     return ret;
 }
 
-u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
+u32 func_80134714(s32 sfxId, s32 arg1, u16 arg2) {
     u32 ret;
     u32 var_v0;
     s16 temp_v0;
@@ -2175,8 +2175,8 @@ u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
     if (D_8013AEEC == 0) {
         return -2;
     }
-    if ((u32)((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
-        g_sfxRingBuffer1[g_sfxRingBufferPos1].unk00 = arg0 - 0x600;
+    if ((u32)((sfxId - 0x601) & 0xFFFF) < 0x2E0) {
+        g_sfxRingBuffer1[g_sfxRingBufferPos1].unk00 = sfxId - 0x600;
         g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = arg1 & 0x7F;
         var = (arg2 + 8);
         if (var > 16) {

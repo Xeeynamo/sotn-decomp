@@ -107,12 +107,12 @@ void EntityCavernDoorLever(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B18);
+        InitializeEntity(D_80180B18);
         entity->animCurFrame = 18;
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
-        if (D_8003BDEC[0x30] != 0) {
+        if (UNDERGROUND_CAVERNS_DOOR_OPEN) {
             entity->unk1E = 0;
         }
 
@@ -121,10 +121,10 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->unk1E += 4;
             if (entity->unk1E > 0) {
                 entity->unk1E = 0;
-                if (D_8003BDEC[0x30] == 0) {
+                if (UNDERGROUND_CAVERNS_DOOR_OPEN == false) {
                     g_api.PlaySfx(0x675);
                 }
-                D_8003BDEC[0x30] = 1;
+                UNDERGROUND_CAVERNS_DOOR_OPEN = true;
             } else if (!(g_blinkTimer & 0xF)) {
                 g_api.PlaySfx(0x675);
             }
@@ -186,7 +186,7 @@ void EntityCavernDoor(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &D_80181230[0];
-        if (D_8003BDEC[48] != 0) {
+        if (UNDERGROUND_CAVERNS_DOOR_OPEN) {
             tileLayoutPtr = &D_80181230[3];
             self->step = 128;
             self->animCurFrame = 0;
@@ -221,7 +221,7 @@ void EntityCavernDoor(Entity* self) {
         break;
 
     case 1:
-        if (D_8003BDEC[48] != 0) {
+        if (UNDERGROUND_CAVERNS_DOOR_OPEN) {
             g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
             self->step++;
         }
@@ -297,7 +297,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (D_8003BDEC[0x31] != 0) {
+        if (PATH_SHORTCUT_OPEN) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -310,7 +310,7 @@ void EntityClickSwitch(Entity* entity) {
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
-                D_8003BDEC[0x31] = 1;
+                PATH_SHORTCUT_OPEN = true;
                 entity->step++;
             }
         }
@@ -354,14 +354,14 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        if (D_8003BDEC[49] != 0) {
+        if (PATH_SHORTCUT_OPEN) {
             self->step = 3;
             self->posY.i.hi += 111;
         }
         break;
 
     case 1:
-        if (D_8003BDEC[49] != 0) {
+        if (PATH_SHORTCUT_OPEN) {
             self->step++;
         }
         break;
@@ -537,7 +537,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (FLAG_CHECK(MERMAN_ROCK, LEFT_HALF_BROKEN)) {
+        if (MERMAN_ROCK & LEFT_HALF_BROKEN) {
             tileLayoutPtr = &D_80181264;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -594,7 +594,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(0xA, self, newEntity);
                 newEntity->subId = 0x43;
             }
-            FLAG_SET(MERMAN_ROCK, LEFT_HALF_BROKEN);
+            MERMAN_ROCK |= LEFT_HALF_BROKEN;
             self->unk3C = 1;
             self->step++;
         }
@@ -602,7 +602,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
-            FLAG_SET(MERMAN_ROCK, LEFT_BROKEN);
+            MERMAN_ROCK |= LEFT_BROKEN;
         }
         break;
     }
@@ -632,7 +632,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (FLAG_CHECK(MERMAN_ROCK, RIGHT_HALF_BROKEN)) {
+        if (MERMAN_ROCK & RIGHT_HALF_BROKEN) {
             tileLayoutPtr = &D_801812A0;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -685,7 +685,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->unk84.S16.unk0 >= 2) {
-            FLAG_SET(MERMAN_ROCK, RIGHT_HALF_BROKEN);
+            MERMAN_ROCK |= RIGHT_HALF_BROKEN;
             self->unk3C = 1;
             self->step++;
         }
@@ -693,13 +693,13 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
-            FLAG_SET(MERMAN_ROCK, RIGHT_BROKEN);
+            MERMAN_ROCK |=  RIGHT_BROKEN;
         }
         break;
     }
 }
 
-void EntityUnkId26(Entity* self) {
+void EntityMermanSecretPassage(Entity* self) {
     u16* tileLayoutPtr;
     s32 tileLayoutPos;
     s32 i;
@@ -708,14 +708,14 @@ void EntityUnkId26(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180ADC);
-        if (D_8003BDEC[58] != 0) {
+        if (MERMAN_ROOM_SECRET_PASSAGE_OPEN) {
             self->step = 2;
         }
         break;
 
     case 1:
-        if ((D_8003BDEC[51] & 12) == 12) {
-            func_801CAD28(0x644);
+        if ((g_CastleFlags[51] & 12) == 12) {
+            func_801CAD28(NA_SE_EN_ROCK_BREAK);
             self->step++;
         }
         break;
@@ -736,7 +736,7 @@ void EntityUnkId26(Entity* self) {
             }
         }
 
-        D_8003BDEC[58] |= 1;
+        MERMAN_ROOM_SECRET_PASSAGE_OPEN |= true;
         g_api.func_800F1FC4(0x3A);
         self->step++;
         break;
@@ -889,7 +889,7 @@ void EntitySwitch(Entity* entity) {
         InitializeEntity(&D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (D_8003BDEC[0x32] != 0) {
+        if (ENTRANCE_WARP_ROOM_SHORTCUT_OPEN) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -901,8 +901,8 @@ void EntitySwitch(Entity* entity) {
             entity->posY.val += 0x4000;
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Camera.posY.i.hi;
-                D_8003BDEC[0x32] = 1;
-                g_api.PlaySfx(0x608);
+                ENTRANCE_WARP_ROOM_SHORTCUT_OPEN = true;
+                g_api.PlaySfx(NA_SE_EV_HEAVY_BLOCK_DRAG_2);
                 entity->step++;
             }
         }
@@ -926,7 +926,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         self->animCurFrame = 37;
         self->zPriority = 0x5E;
 
-        if (D_8003BDEC[50] != 0) {
+        if (ENTRANCE_WARP_ROOM_SHORTCUT_OPEN) {
             for (tilePos = 0x48, i = 7, self->step = 128,
                 self->animCurFrame = 0;
                  i >= 0; tilePos += 0x10, i--) {
@@ -964,8 +964,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         break;
 
     case 1:
-        if (D_8003BDEC[50] != 0) {
-            g_api.PlaySfx(0x607);
+        if (ENTRANCE_WARP_ROOM_SHORTCUT_OPEN) {
+            g_api.PlaySfx(NA_SE_EV_HEAVY_BLOCK_DRAG_1);
             self->step++;
         }
         break;
