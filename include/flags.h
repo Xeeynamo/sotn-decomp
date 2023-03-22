@@ -8,6 +8,7 @@
 /**
  * Rocks in the room full of Mermans
  * used by:
+ * EntityMermanSecretPassage
  * EntityMermanRockLeftSide
  * EntityMermanRockRightSide
  */
@@ -21,7 +22,6 @@
 /**
  * Weight blocking the path to Marble Gallery
  * used by:
- * EntityMermanSecretPassage
  * EntityPathBlockTallWeight
  * EntityPathBlockSmallWeight
  * EntityClickSwitch
