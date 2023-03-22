@@ -17,7 +17,7 @@
 #define RIGHT_BROKEN (1 << 1)
 #define WOLF_FLAG (1 << 2)
 #define BAT_FLAG (1 << 3)
-#define MERMAN_ROCKS_BROKEN (WOLF_FLAG + BAT_FLAG)
+#define MERMAN_WOLF_BAT (WOLF_FLAG + BAT_FLAG)
 
 /**
  * Weight blocking the path to Marble Gallery

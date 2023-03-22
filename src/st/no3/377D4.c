@@ -714,7 +714,7 @@ void EntityMermanSecretPassage(Entity* self) {
         break;
 
     case 1:
-        if ((MERMAN_ROCK & MERMAN_ROCKS_BROKEN) == MERMAN_ROCKS_BROKEN) {
+        if ((MERMAN_ROCK & MERMAN_WOLF_BAT) == MERMAN_WOLF_BAT) {
             func_801CAD28(NA_SE_EN_ROCK_BREAK);
             self->step++;
         }
