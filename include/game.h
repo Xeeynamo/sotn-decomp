@@ -42,6 +42,7 @@
 
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
+#define EQUIP_TYPE_COUNT 11
 
 #define STAGE_NO0 0x00
 #define STAGE_NO1 0x01
@@ -449,6 +450,40 @@ typedef struct {
 } GameTimer;
 
 typedef struct {
+    /* 0x00, 8003C9A8 */ s32 cursorMain;
+    /* 0x04, 8003C9AC */ s32 cursorRelic;
+    /* 0x08, 8003C9B0 */ s32 cursorEquip;
+    /* 0x0C, 8003C9B4 */ s32 cursorEquipHand;
+    /* 0x10, 8003C9B8 */ s32 cursorEquipHead;
+    /* 0x14, 8003C9BC */ s32 cursorEquipBody;
+    /* 0x18, 8003C9C0 */ s32 cursorEquipCloak;
+    /* 0x1C, 8003C9C4 */ s32 cursorEquipOther;
+    /* 0x20, 8003C9C8 */ s32 scrollEquipHand;
+    /* 0x24, 8003C9D0 */ s32 scrollEquipAccessories[4];
+    /* 0x34, 8003C9DC */ s32 cursorSpells;
+    /* 0x38, 8003C9E0 */ s32 cursorSettings;
+    /* 0x3C, 8003C9E4 */ s32 cursorCloak;
+    /* 0x40, 8003C9E8 */ s32 cursorButtons;
+    /* 0x44, 8003C9EC */ s32 cursorWindowColors;
+    /* 0x48, 8003C9F0 */ s32 cursorTimeAttack;
+    /* 0x4C, 8003C9F4 */ s32 padding;
+} MenuNavigation; /* size=0x50 */
+
+typedef struct {
+    /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
+    /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
+    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[32];
+    /* 0x0B0, 0x8003CAA8 */ s32 cloakExteriorColors[3];
+    /* 0x0BC, 0x8003CAB4 */ s32 cloakLiningColors[3];
+    /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
+    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[EQUIP_TYPE_COUNT];
+    /* 0x100, 0x8003CAF8 */ s32 isCloakLingingReversed;
+    /* 0x104, 0x8003CAFC */ s32 isSoundMono;
+    /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
+    /* 0x10C, 0x8003CB04 */ s32 D_8003CB04;
+} GameSettings; /* size=0x110 */
+
+typedef struct {
     /* 0x00 */ u32 unk0;
     /* 0x04 */ u32 unk4;
     /* 0x08 */ u32 unk8;
@@ -624,11 +659,6 @@ typedef struct {
     /* 0x6C4 */ u32 unk6C4;
     /* 0x6C8 */ u8 unk[0x11CC - 0x6C8];
 } SaveData; /* size = 0x11CC */
-
-typedef struct {
-    /* 0x00 */ u32 buttonConfig[BUTTON_COUNT];
-    /* 0x20 */ u16 D_8003CA18[BUTTON_COUNT];
-} Settings; /* size=? */
 
 typedef struct {
     /* 0x00 */ const u8* gfxPage;
@@ -950,20 +980,8 @@ extern s32 g_blinkTimer;
 /* 0x8003C99C */ extern s32 D_8003C99C;
 /* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
-/* 0x8003C9A8 */ extern s32 g_menuMainCursorIndex;
-/* 0x8003C9B0 */ extern s32 g_menuRelicsCursorIndex[];
-/* 0x8003C9C8 */ extern u16 D_8003C9C8;
-/* 0x8003C9CC */ extern s16 D_8003C9CC[];
-/* 0x8003C9E0 */ extern s32 g_MenuSystemOptionIndex[];
-/* 0x8003C9E8 */ extern s32 g_menuButtonSettingsCursorPos;
-/* 0x8003C9F8 */ extern Settings g_Settings;
-extern s32 D_8003CA28[]; // time attack checkpoints, also holds boss fought flag
-extern s32 D_8003CACC;
-/* 0x8003CAF8 */ extern s32 g_SettingsCloakMode;
-/* 0x8003CAFC */ extern s32 g_SettingsSoundMode;
-extern s32 D_8003CB00[];
-extern s32 D_8003CB04;
-
+/* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
+/* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove

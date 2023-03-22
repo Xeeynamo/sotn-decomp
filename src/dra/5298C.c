@@ -26,7 +26,7 @@ bool func_800F483C(void) {
     }
 
     for (i = 0; i < 8; i++) {
-        g_Settings.D_8003CA18[i] = D_800A0160[g_Settings.buttonConfig[i]];
+        g_Settings.buttonMask[i] = D_800A0160[g_Settings.buttonConfig[i]];
     }
 
     var_a1 = 0;
@@ -308,7 +308,7 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
 }
 #endif
 
-void func_800F5E68(MenuContext* context, s32 iOption, s32 x, s32 y, s32 w,
+void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
                    s32 h, s32 yGap, s32 bColorMode) {
     s32 r;
 
@@ -321,7 +321,7 @@ void func_800F5E68(MenuContext* context, s32 iOption, s32 x, s32 y, s32 w,
     } else {
         r = 0x80;
     }
-    DrawMenuRect(context, x, y + (iOption * (h + yGap)), w, h, r, 0, 0);
+    DrawMenuRect(context, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawRelicsMenu);
@@ -373,8 +373,8 @@ void func_800F6568(MenuContext* arg0) {
         r = 0x5F - (g_blinkTimer & 0x1F);
     }
     DrawMenuRect(arg0, arg0->cursorX,
-                 arg0->cursorY + (height * g_menuMainCursorIndex), arg0->unk4,
-                 height, r, 0, 0);
+                 arg0->cursorY + (height * g_MenuNavigation.cursorMain),
+                 arg0->unk4, height, r, 0, 0);
 }
 
 // Draw equip menu cursor
@@ -391,7 +391,7 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
             r = 0x5F - (g_blinkTimer & 0x1F);
         }
     }
-    DrawMenuRect(context, 0x70, (*g_menuRelicsCursorIndex * 0xD) + 0x1C, 0x71,
+    DrawMenuRect(context, 0x70, g_MenuNavigation.cursorEquip * 13 + 0x1C, 0x71,
                  0xB, r, 0, 0);
 }
 
@@ -460,7 +460,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F6DC8);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawSettingsButton);
 #else
-extern s32 g_menuButtonSettingsCursorPos;
 extern u8 c_chPlaystationButtons[];
 extern u8 c_chShoulderButtons[];
 
@@ -489,7 +488,7 @@ void DrawSettingsButton(MenuContext* ctx) {
         y += 16;
     }
 
-    func_800F5E68(ctx, g_menuButtonSettingsCursorPos, cursorX - 2, 46, 84, 12,
+    func_800F5E68(ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, 84, 12,
                   4, 1);
 }
 #endif
@@ -497,7 +496,8 @@ void DrawSettingsButton(MenuContext* ctx) {
 void DrawSettingsReverseCloak(MenuContext* context) {
     DrawMenuStr(c_strNormal, 176, 48, context);
     DrawMenuStr(c_strReversal, 176, 64, context);
-    func_800F5E68(context, g_SettingsCloakMode, 174, 46, 64, 12, 4, 1);
+    func_800F5E68(context, g_Settings.isCloakLingingReversed, 174, 46, 64, 12,
+                  4, 1);
 }
 
 void DrawSettingsSound(MenuContext* context) {
@@ -506,7 +506,7 @@ void DrawSettingsSound(MenuContext* context) {
     s32 subMenuX = cursorX + 4;
     DrawMenuStr(c_strStereo, subMenuX, cursorY + 4, context);
     DrawMenuStr(c_strMono, subMenuX, cursorY + 0x14, context);
-    func_800F5E68(context, g_SettingsSoundMode, cursorX + 2, cursorY + 2, 53,
+    func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2, 53,
                   12, 4, 1);
 }
 
@@ -690,7 +690,7 @@ void DrawPauseMenu(s32 arg0) {
         x = 32;
         y = 120;
     } else {
-        DrawMenuStr(D_800A83AC[*g_menuRelicsCursorIndex], 8, 40, ctx);
+        DrawMenuStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
         x = 12;
         y = 70;
     }
@@ -736,7 +736,7 @@ void DrawSystemMenu(MenuContext* ctx) {
     s32 strIdx;
     s8** menuOptions;
 
-    func_800F5E68(ctx, *g_MenuSystemOptionIndex, 30, 46, 128, 12, 4,
+    func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, 128, 12, 4,
                   D_800978F8 == 0x101);
 
     new_var = &c_strButton;
@@ -795,18 +795,16 @@ void func_800F8754(MenuContext* context, s32 x, s32 y) {
 void func_800F8858(MenuContext* context) {
     s32 i = 0;
     const char** pStrEquipTypes = &c_strSSword;
-    s32 phi_s2 = 8;
-    s32* phi_s1 = &D_8003CACC;
+    s32 y = 8;
 
-    for (; i < 0xB; i++) {
-        DrawMenuStr(pStrEquipTypes[*phi_s1], context->cursorX + 4,
-                    context->cursorY + phi_s2, context);
-        phi_s1++;
-        phi_s2 += 0x10;
+    for (; i < EQUIP_TYPE_COUNT; i++) {
+        DrawMenuStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
+                    context->cursorX + 4, context->cursorY + y, context);
+        y += 16;
     }
 
-    func_800F5E68(context, D_80137618, (s16)context->cursorX + 2,
-                  (s16)context->cursorY + 4, 0x48, 0x10, 0, 1);
+    func_800F5E68(context, D_80137618, context->cursorX + 2,
+                  context->cursorY + 4, 72, 16, 0, 1);
 }
 
 void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
@@ -1071,16 +1069,16 @@ void func_800FAC98(void) { func_800F9808(2); }
 
 bool func_800FACB8(void) {
     if (g_pads[0].tapped & 2) {
-        (*g_menuRelicsCursorIndex)++;
-        if (*g_menuRelicsCursorIndex == 7) {
-            *g_menuRelicsCursorIndex = 0;
+        g_MenuNavigation.cursorEquip++;
+        if (g_MenuNavigation.cursorEquip == 7) {
+            g_MenuNavigation.cursorEquip = 0;
         }
         return true;
     }
     if (g_pads[0].tapped & 1) {
-        g_menuRelicsCursorIndex[0]--;
-        if (*g_menuRelicsCursorIndex == -1) {
-            *g_menuRelicsCursorIndex = 6;
+        g_MenuNavigation.cursorEquip--;
+        if (g_MenuNavigation.cursorEquip == -1) {
+            g_MenuNavigation.cursorEquip = 6;
         }
         return true;
     }
@@ -1123,10 +1121,11 @@ void func_800FAF44(s32 arg0) {
             var_a1++;
         }
 
-        D_80137688 = D_8013768C = D_8003C9C8;
+        D_80137688 = D_8013768C = LOH(g_MenuNavigation.scrollEquipHand);
         return;
     }
-    D_80137688 = D_8013768C = D_8003C9CC[D_801375D4 * 2];
+    D_80137688 = D_8013768C =
+        LOH(((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4]);
 
     for (i = 0; i < 90; i++) {
         if (D_800A7734[i].unk00 == D_801375D4) {
@@ -1160,7 +1159,7 @@ void func_800FB004(void) {
 }
 
 void func_800FB0FC(void) {
-    Unkstruct_800A2D98* temp = &D_800A2D98[*g_menuRelicsCursorIndex];
+    Unkstruct_800A2D98* temp = &D_800A2D98[g_MenuNavigation.cursorEquip];
     s32 temp_a1 = temp->unk4;
     s32 new_var2 = temp->unk8;
 
@@ -1205,27 +1204,27 @@ s32 func_800FD4C0(s32 bossId, s32 action) {
     // get the time attack for a specific defeated boss. this is also
     // responsible to check if the player should teleport into a boss room
     case 0:
-        return D_8003CA28[bossId];
+        return g_Settings.timeAttackRecords[bossId];
 
     // set new time attack record if the boss was not previously defeated
     case 1:
-        timer = D_8003CA28[bossId];
+        timer = g_Settings.timeAttackRecords[bossId];
         if (timer = timer != 0) {
-            return D_8003CA28[bossId];
+            return g_Settings.timeAttackRecords[bossId];
         }
 
         seconds = g_GameTimer.seconds;
-        D_8003CA28[bossId] = seconds;
+        g_Settings.timeAttackRecords[bossId] = seconds;
         temp_v1 = (g_GameTimer.minutes * 100) + seconds;
-        D_8003CA28[bossId] = temp_v1;
+        g_Settings.timeAttackRecords[bossId] = temp_v1;
         temp_v0 = (g_GameTimer.hours * 10000) + temp_v1;
-        D_8003CA28[bossId] = temp_v0;
+        g_Settings.timeAttackRecords[bossId] = temp_v0;
         return temp_v0;
 
     // set boss visited
     // not exactly sure yet why this flag is needed
     case 2:
-        *D_8003CB00 |= 1 << bossId;
+        g_Settings.D_8003CB00 |= 1 << bossId;
     }
 }
 
