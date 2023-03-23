@@ -2117,33 +2117,33 @@ void func_8018A3CC(s16 arg0) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A424);
-void func_8018A424(s16 arg0);
-#else
 void func_8018A424(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
     if (D_80193ABC) {
-        func_8018A380(arg0 - D_8009790C);
+        func_8018A380(arg0 - LOH(D_8009790C));
         D_80193ABC = 0;
     }
 
     while (true) {
-        if (D_80193AB4[1] != -1 && arg0 >= D_80193AB4[1]) {
-            u8 flag = (D_80193AB4[3] >> 8) + 0xFF;
-            if (flag == 0xFF ||
-                (1 << (flag & 0x1F) & g_entityDestroyed[flag >> 5]) == 0) {
-                func_80189FB4(D_80193AB4);
-            }
-            D_80193AB4 += sizeof(LayoutObject) / sizeof(u16);
-        } else
+        if (D_80193AB4[1] == 0xFFFF || D_80193AB4[1] > arg0) {
             break;
+        }
+
+        expected = 0;
+        flag = (D_80193AB4[3] >> 8) + 0xFF;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            func_80189FB4(D_80193AB4);
+        }
+        D_80193AB4 += sizeof(LayoutObject) / sizeof(u16);
     }
 }
-#endif
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A520);
-void func_8018A424(s16 arg0);
+void func_8018A520(s16 arg0);
 #else
 void func_8018A520(s16 arg0) {
     s32 var_v0;
