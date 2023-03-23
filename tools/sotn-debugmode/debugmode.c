@@ -29,6 +29,8 @@ ServantDesc g_ServantDesc = {
 
 };
 
+int g_FntStreamId;
+int g_PrevFntStreamId;
 int g_DebugMode;
 
 void InitEntitySpawn(void);
@@ -40,6 +42,8 @@ void Init() {
     Entity* e;
 
     g_DebugMode = 0;
+    g_FntStreamId = FntOpen(8, 0x30, 256, 240, 0, 1024);
+    g_PrevFntStreamId = g_FntStreamId - 1;
     InitEntitySpawn();
     InitSfxPlayer();
     InitDraTest800FD874();
@@ -69,9 +73,10 @@ void Update(Entity* e) {
         g_DebugMode++;
     }
 
+    SetDumpFnt(g_FntStreamId);
     switch (g_DebugMode) {
     case 0:
-        FntFlush(-1);
+        FntPrint("DEBUG MODE");
         break;
     case 1:
         UpdateEntitySpawn(0);
@@ -95,6 +100,9 @@ void Update(Entity* e) {
         g_DebugMode = 0;
         break;
     }
+
+    FntFlush(g_FntStreamId);
+    SetDumpFnt(g_PrevFntStreamId);
 }
 
 void Dummy() {}

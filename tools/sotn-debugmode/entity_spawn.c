@@ -369,8 +369,6 @@ void UpdateEntitySpawn(int variant) {
             e->hitboxHeight = 8;
         }
     }
-
-    FntFlush(-1);
 }
 
 Entity* AllocEntity(Entity* start, Entity* end) {

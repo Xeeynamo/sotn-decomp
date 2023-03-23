@@ -2,9 +2,7 @@
 
 int g_Flag;
 
-void InitFlagChecker(void) {
-    g_Flag = 0;
-}
+void InitFlagChecker(void) { g_Flag = 0; }
 
 void UpdateFlagChecker(void) {
     FntPrint("* Flag Checker (L2=decrease)\n");
@@ -31,6 +29,4 @@ void UpdateFlagChecker(void) {
     if (g_pads->tapped & PAD_L1) {
         D_8003BDEC[g_Flag]++;
     }
-    
-    FntFlush(-1);
 }

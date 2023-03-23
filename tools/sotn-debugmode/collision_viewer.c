@@ -1,8 +1,7 @@
 #include <game.h>
 
 // borrowing first part of CheckCollision
-u8 GetColType(s32 x, s32 y)
-{
+u8 GetColType(s32 x, s32 y) {
     s32 absX;
     s32 absY;
     u8 colType;
@@ -28,31 +27,25 @@ u8 GetColType(s32 x, s32 y)
     return colType;
 }
 
-void CollisionDebug(void)
-{
+void CollisionDebug(void) {
     int x;
     int y;
     u8 colType;
 
     // skip first 4 rows since we are stuck with their FntOpen settings
-    for(y = 16*4; y < 224; y+= 16)
-    {
+    for (y = 16 * 4; y < 224; y += 16) {
         // skip first column since we are stuck with their FntOpen settings
         FntPrint(" ", colType);
-        for(x = 16; x < 256; x+=16)
-        {
+        for (x = 16; x < 256; x += 16) {
             colType = GetColType(x, y);
 
             // skip empty tiles
-            if (colType == 0)
-            {
+            if (colType == 0) {
                 FntPrint("  ", colType);
-            }
-            else {
+            } else {
                 FntPrint("%02x", colType);
             }
         }
         FntPrint("\n\n");
     }
-    FntFlush(-1);
 }

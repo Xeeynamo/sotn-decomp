@@ -16,7 +16,6 @@ void UpdateDraTest800FD874(void) {
     FntPrint("* func_800FD874\n");
     FntPrint("arg0: %02X\n", g_arg0);
     FntPrint("arg1: %02X\n", g_arg1);
-    FntFlush(-1);
 
     if (g_pads->tapped & PAD_UP && g_arg0 > 0) {
         g_arg0--;

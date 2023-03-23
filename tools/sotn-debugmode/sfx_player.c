@@ -29,6 +29,4 @@ void UpdateSfxPlayer(void) {
     if (g_pads->tapped & PAD_L2) {
         g_api.PlaySfx(g_SfxId);
     }
-
-    FntFlush(-1);
 }
