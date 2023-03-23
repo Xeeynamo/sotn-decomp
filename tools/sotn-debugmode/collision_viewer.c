@@ -1,4 +1,4 @@
-#include <game.h>
+#include "debugmode.h"
 
 // borrowing first part of CheckCollision
 u8 GetColType(s32 x, s32 y) {
@@ -12,9 +12,8 @@ u8 GetColType(s32 x, s32 y) {
     absX = x + *cameraX;
     absY = y + *cameraY;
     new_var = 0x10;
-    if ((((absX < 0) || (((u32)absX) >= (g_CurrentRoom.hSize << 8))) ||
-         (absY < 0)) ||
-        (((u32)absY) >= (g_CurrentRoomVSize << 8))) {
+    if (absX < 0 || (u32)absX >= g_CurrentRoom.hSize << 8 || absY < 0 ||
+        (u32)absY >= g_CurrentRoomVSize << 8) {
         colType = 0;
     } else {
 
@@ -31,9 +30,12 @@ void CollisionDebug(void) {
     int x;
     int y;
     u8 colType;
+    u16 cameraX = *(u16*)0x80073074;
+    u16 cameraY = *(u16*)0x8007307C;
 
     // skip first 4 rows since we are stuck with their FntOpen settings
-    for (y = 16 * 4; y < 224; y += 16) {
+    SetFontCoord(-(cameraX & 0xF) + 8, -(cameraY & 0xF) + 16);
+    for (y = 16; y < 224; y += 16) {
         // skip first column since we are stuck with their FntOpen settings
         FntPrint(" ", colType);
         for (x = 16; x < 256; x += 16) {
