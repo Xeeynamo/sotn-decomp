@@ -2025,41 +2025,43 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189E9C);
-#else
 void func_80189E9C(LayoutObject* layoutObj) {
-    s16 temp_v0, posY;
-    u16 initFlags;
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
 
-    temp_v0 = g_Camera.posY.i.hi - 0x40;
-    if (temp_v0 < 0) {
-        temp_v0 = 0;
+    posY = g_Camera.posY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
     }
 
-    if ((s16)layoutObj->posY < temp_v0)
+    posY = layoutObj->posY;
+    if (posY < yClose) {
         return;
-    if (((s16)(g_Camera.posY.i.hi + 0x120) < layoutObj->posY))
-        return;
+    }
 
-    initFlags = layoutObj->objectId & 0xE000;
-    if (initFlags != 0x8000) {
-        Entity* entity;
-        switch (initFlags) {
-        case 0x0:
-            entity = &D_800762D8[layoutObj->objectRoomIndex];
-            if (entity->objectId == 0) {
-                CreateEntityFromLayout(entity, layoutObj);
-            }
-            break;
-        case 0xA000:
-            entity = &D_800762D8[layoutObj->objectRoomIndex];
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
-            break;
         }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189FB4);
 
