@@ -1801,7 +1801,37 @@ s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD848);
+void func_801BD848(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    s16 x;
+    s16 y;
+
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX == 0)
+        return;
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    for (i = 0; i < sensorCount; i++) {
+        if (accelerationX < 0) {
+            x = x + *hitSensors++;
+        } else {
+            x = x - *hitSensors++;
+        }
+
+        y += *hitSensors++;
+        g_api.CheckCollision(x, y, &collider, 0);
+        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+            if (accelerationX < 0) {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+            } else {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+            }
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD9A0);
 
