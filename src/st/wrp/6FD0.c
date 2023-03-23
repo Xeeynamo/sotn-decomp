@@ -13,7 +13,7 @@ typedef struct {
 // *** Overlay exports start ***
 void Update(void);
 void TestCollisions(void);
-void func_80189FB4(LayoutObject*);
+void CreateEntityWhenInHorizontalRange(LayoutObject*);
 void func_8018A520(s16);
 void func_8018A7AC(void);
 void func_8018CAB0(void);
@@ -2025,7 +2025,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-void func_80189E9C(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -2063,28 +2063,60 @@ void func_80189E9C(LayoutObject* layoutObj) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189FB4);
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
 
-void func_8018A0CC(s16 arg0) {
-    do {
-    loop_1:
-        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < (s32)arg0) {
-            D_80193AB0++;
-            goto loop_1;
+    posX = g_Camera.posX.i.hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
         }
-    } while (0);
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
 }
 
-void func_8018A118(s32 arg0) {
-    s32 a2, a3;
-    a3 = 0xFFFF;
-    arg0 = (s16)arg0;
-    a2 = 0xFFFE;
-loop_1:
-    if ((D_80193AB0->posX == a3) ||
-        (((s32)arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
+void func_8018A0CC(s16 arg0) {
+    while (true) {
+        if (D_80193AB0->posX != 0xFFFE && D_80193AB0->posX >= arg0) {
+            break;
+        }
+        D_80193AB0++;
+    }
+}
+
+void func_8018A118(s16 arg0) {
+    while (true) {
+        if (D_80193AB0->posX != 0xFFFF &&
+            (arg0 >= D_80193AB0->posX || D_80193AB0->posX == 0xFFFE)) {
+            break;
+        }
         D_80193AB0--;
-        goto loop_1;
     }
 }
 
@@ -2135,14 +2167,13 @@ void func_8018A424(s16 arg0) {
         flag = (D_80193AB4[3] >> 8) + 0xFF;
         if (flag == 0xFF ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            func_80189FB4(D_80193AB4);
+            CreateEntityWhenInHorizontalRange(D_80193AB4);
         }
         D_80193AB4 += sizeof(LayoutObject) / sizeof(u16);
     }
 }
 
 void func_8018A520(s16 arg0) {
-    u32 new_var;
     u8 flag;
     s32 expected;
 
@@ -2164,7 +2195,7 @@ void func_8018A520(s16 arg0) {
         flag = (D_80193AB4[3] >> 8) + 0xFF;
         if (flag == 0xFF ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            func_80189FB4(D_80193AB4);
+            CreateEntityWhenInHorizontalRange(D_80193AB4);
         }
         D_80193AB4 -= sizeof(LayoutObject) / sizeof(u16);
     }
