@@ -6,6 +6,8 @@
 #include "types.h"
 
 #define LOH(x) (*(s16*)&(x))
+#define LOB(x) (*(s8*)&(x))
+#define LOBU(x) (*(u8*)&(x))
 #if defined(HACKS) && !defined(PERMUTER)
 // The following hacks are required to get a matching decompilation. If removed
 // they will still logically match the original function.
