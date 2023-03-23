@@ -1305,9 +1305,81 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB188);
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB2A0);
+    posY = g_Camera.posY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
+    }
+
+    posY = layoutObj->posY;
+    if (posY < yClose) {
+        return;
+    }
+
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
+
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera.posX.i.hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
 
 void func_801BB3B8(s16 arg0) {
     while (true) {
@@ -1697,38 +1769,100 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD720);
+s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    u16 temp_a1;
+    s16 x;
+    s16 y;
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD848);
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX != 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < sensorCount; i++) {
+            if (accelerationX < 0) {
+                s16 newX = x + *hitSensors++;
+                x = newX;
+            } else {
+                s16 newX = x - *hitSensors++;
+                x = newX;
+            }
+
+            y += *hitSensors++;
+            g_api.CheckCollision(x, y, &collider, 0);
+            if (collider.unk0 & 2 &&
+                ((!(collider.unk0 & 0x8000)) || (i != 0))) {
+                return 2;
+            }
+        }
+        return 0;
+    }
+}
+
+void func_801BD848(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    s16 x;
+    s16 y;
+
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX == 0)
+        return;
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    for (i = 0; i < sensorCount; i++) {
+        if (accelerationX < 0) {
+            x = x + *hitSensors++;
+        } else {
+            x = x - *hitSensors++;
+        }
+
+        y += *hitSensors++;
+        g_api.CheckCollision(x, y, &collider, 0);
+        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+            if (accelerationX < 0) {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+            } else {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+            }
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BD9A0);
 
-void ReplaceBreakableWithItemDrop(Entity* entity) {
+void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 subId;
 
-    PreventEntityFromRespawning(entity);
+    PreventEntityFromRespawning(self);
 
+#if STAGE != STAGE_ST0
     if (!(g_Status.relics[10] & 2)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
+#endif
 
-    subId = entity->subId &= 0xFFF;
+    subId = self->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        entity->objectId = ENTITY_PRICE_DROP;
-        entity->pfnUpdate = EntityPriceDrop;
-        entity->animFrameDuration = 0;
-        entity->animFrameIdx = 0;
+        self->objectId = ENTITY_PRICE_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
     } else {
         subId -= 0x80;
-        entity->objectId = ENTITY_INVENTORY_DROP;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
+        self->objectId = ENTITY_INVENTORY_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
-    entity->subId = subId;
-    entity->unk6D = 0x10;
-    entity->step = 0;
+    self->subId = subId;
+    self->unk6D = 0x10;
+    self->step = 0;
 }
 
 // aspatch skips a nop, ASPSX

@@ -464,7 +464,7 @@ void GetSavePalette(u16* dst, s32 palIdx) {
 }
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
-    const s32 IconSize = 384;
+    const s32 IconSize = 0x80 * 3;
     s32 i;
     u8* src;
 
@@ -474,9 +474,51 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9C14);
+void StoreSaveData(SaveData* save, s32 arg1, s32 memcardIcon);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", StoreSaveData);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA2B0);
+s32 LoadSaveData(SaveData* save) {
+    s32 i;
+    u32 prevCompletionFlags1;
+    u32 prevCompletionFlags2;
+    PlayerStatus* srcStatus;
+    MenuNavigation* srcNav;
+    GameSettings* settings;
+
+    if (save->saveSize != (sizeof(SaveData))) {
+        return -1;
+    }
+
+    g_StageId = save->stageID;
+    g_IsTimeAttackUnlocked = save->isTimeAttackUnlocked;
+    g_CurrentPlayableCharacter = save->playableCharacter;
+    g_roomCount = save->exploredRoomCount;
+    g_CurrentRoom.left = save->roomX;
+    g_CurrentRoom.top = save->roomY;
+
+    srcStatus = &save->status;
+    srcNav = &save->menuNavigation;
+    settings = &save->settings;
+    __builtin_memcpy(&g_Status, srcStatus, sizeof(g_Status));
+    __builtin_memcpy(&g_MenuNavigation, srcNav, sizeof(g_MenuNavigation));
+
+    prevCompletionFlags1 = g_Settings.D_8003CB00;
+    prevCompletionFlags2 = g_Settings.D_8003CB04;
+    __builtin_memcpy(&g_Settings, settings, sizeof(g_Settings));
+    g_Settings.D_8003CB00 |= prevCompletionFlags1;
+    g_Settings.D_8003CB04 |= prevCompletionFlags2;
+
+    for (i = 0; i < 0x300; i++) {
+        D_8003BDEC[i] = save->castleFlags[i];
+    }
+
+    for (i = 0; i < 0x800; i++) {
+        D_8006BB74[i] = save->castleMap[i];
+    }
+
+    g_randomNext = save->rng;
+    return 0;
+}
 
 // This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
 // probably aspsx

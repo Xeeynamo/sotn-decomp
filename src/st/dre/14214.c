@@ -751,41 +751,100 @@ void func_8019B1B4(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019B1DC);
+s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    u16 temp_a1;
+    s16 x;
+    s16 y;
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019B304);
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX != 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < sensorCount; i++) {
+            if (accelerationX < 0) {
+                s16 newX = x + *hitSensors++;
+                x = newX;
+            } else {
+                s16 newX = x - *hitSensors++;
+                x = newX;
+            }
+
+            y += *hitSensors++;
+            g_api.CheckCollision(x, y, &collider, 0);
+            if (collider.unk0 & 2 &&
+                ((!(collider.unk0 & 0x8000)) || (i != 0))) {
+                return 2;
+            }
+        }
+        return 0;
+    }
+}
+
+void func_8019B304(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    s16 x;
+    s16 y;
+
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX == 0)
+        return;
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    for (i = 0; i < sensorCount; i++) {
+        if (accelerationX < 0) {
+            x = x + *hitSensors++;
+        } else {
+            x = x - *hitSensors++;
+        }
+
+        y += *hitSensors++;
+        g_api.CheckCollision(x, y, &collider, 0);
+        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+            if (accelerationX < 0) {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+            } else {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+            }
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019B45C);
 
-void ReplaceBreakableWithItemDrop(Entity* entity) {
-    u16 temp_a0;
-    u16 var_v1;
+void ReplaceBreakableWithItemDrop(Entity* self) {
+    u16 subId;
 
-    PreventEntityFromRespawning(entity);
+    PreventEntityFromRespawning(self);
+
+#if STAGE != STAGE_ST0
     if (!(g_Status.relics[10] & 2)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
+#endif
 
-    temp_a0 = entity->subId & 0xFFF;
-    var_v1 = temp_a0;
-    entity->subId = var_v1;
+    subId = self->subId &= 0xFFF;
 
-    if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_PRICE_DROP;
-        entity->pfnUpdate = EntityPriceDrop;
-        entity->animFrameDuration = 0;
-        entity->animFrameIdx = 0;
+    if (subId < 0x80) {
+        self->objectId = ENTITY_PRICE_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
     } else {
-        var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_INVENTORY_DROP;
-        entity->pfnUpdate = EntityInventoryDrop;
+        subId -= 0x80;
+        self->objectId = ENTITY_INVENTORY_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
-    entity->subId = var_v1;
-    temp_a0 = 0;
-    entity->unk6D = 0x10;
-    entity->step = temp_a0;
+    self->subId = subId;
+    self->unk6D = 0x10;
+    self->step = 0;
 }
 
 void func_8019B858(void) {

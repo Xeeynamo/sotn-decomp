@@ -473,7 +473,7 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if ((g_Status.equipment[4] == 0x32) && (g_SettingsCloakMode != 0)) {
+    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLingingReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
@@ -662,7 +662,7 @@ void func_800FF7B8(s32 arg0) {
             }
 
             var_s0_8 = 0x1F;
-            var_a1 = D_8003CAA4;
+            var_a1 = D_8003CAA4; // end of g_Settings.timeAttackRecords
             g_Status.relics[10] |= 2;
             g_Status.relics[11] |= 2;
             g_Status.relics[15] |= 2;
@@ -671,8 +671,8 @@ void func_800FF7B8(s32 arg0) {
                 *var_a1-- = 0;
             }
 
-            *D_8003CB00 = 0;
-            D_8003CB04 = 0;
+            g_Settings.D_8003CB00 = 0;
+            g_Settings.D_8003CB04 = 0;
             D_80097BFC.subWeapon = 0;
             if (g_StageId != STAGE_ST0 && g_StageId != STAGE_NO3) {
                 D_80097BFC.subWeapon = (rand() % 9) + 1;
@@ -854,7 +854,7 @@ void func_800FF7B8(s32 arg0) {
                 }
             } else {
                 var_s0_9 = 0x1F;
-                var_v0_4 = &D_8003CAA4;
+                var_v0_4 = &D_8003CAA4; // end of g_Settings.timeAttackRecords
                 do {
                     *var_v0_4 = 0;
                     var_s0_9--;
