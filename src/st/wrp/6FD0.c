@@ -2141,34 +2141,34 @@ void func_8018A424(s16 arg0) {
     }
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A520);
-void func_8018A520(s16 arg0);
-#else
 void func_8018A520(s16 arg0) {
-    s32 var_v0;
     u32 new_var;
     u8 flag;
+    s32 expected;
+
     if (arg0 < 0) {
         arg0 = 0;
     }
-    var_v0 = arg0 << 0x10;
+
     if (D_80193ABC == 0) {
-        func_8018A3CC(arg0 - D_8009790C);
+        func_8018A3CC(arg0 - LOH(D_8009790C));
         D_80193ABC = 1;
     }
-loop_5:
-    if ((D_80193AB4[1] != 0xFFFE) && ((var_v0 >> 0x10) <= D_80193AB4[1])) {
+
+    while (true) {
+        if (D_80193AB4[1] == 0xFFFE || arg0 > D_80193AB4[1]) {
+            return;
+        }
+
+        expected = 0;
         flag = (D_80193AB4[3] >> 8) + 0xFF;
-        new_var = g_entityDestroyed[flag >> 5];
-        if ((flag == 0xFF) || (((1 << (flag & 0x1F)) & new_var) == 0)) {
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             func_80189FB4(D_80193AB4);
         }
-        D_80193AB4 -= 0xA;
-        goto loop_5;
+        D_80193AB4 -= sizeof(LayoutObject) / sizeof(u16);
     }
 }
-#endif
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", InitRoomEntities);
