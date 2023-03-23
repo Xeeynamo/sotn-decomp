@@ -896,35 +896,34 @@ void func_80192EF8(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80193050);
 
-void ReplaceBreakableWithItemDrop(Entity* entity) {
-    u16 temp_a0;
-    u16 var_v1;
+void ReplaceBreakableWithItemDrop(Entity* self) {
+    u16 subId;
 
-    PreventEntityFromRespawning(entity);
+    PreventEntityFromRespawning(self);
+
+#if STAGE != STAGE_ST0
     if (!(g_Status.relics[10] & 2)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
+#endif
 
-    temp_a0 = entity->subId & 0xFFF;
-    var_v1 = temp_a0;
-    entity->subId = var_v1;
+    subId = self->subId &= 0xFFF;
 
-    if (var_v1 < 0x80) {
-        entity->objectId = ENTITY_PRICE_DROP;
-        entity->pfnUpdate = EntityPriceDrop;
-        entity->animFrameDuration = 0;
-        entity->animFrameIdx = 0;
+    if (subId < 0x80) {
+        self->objectId = ENTITY_PRICE_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
     } else {
-        var_v1 = temp_a0 - 0x80;
-        entity->objectId = ENTITY_INVENTORY_DROP;
-        entity->pfnUpdate = EntityInventoryDrop;
+        subId -= 0x80;
+        self->objectId = ENTITY_INVENTORY_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
-    entity->subId = var_v1;
-    entity->unk6D = 0x10;
-    temp_a0 = 0;
-    entity->step = temp_a0;
+    self->subId = subId;
+    self->unk6D = 0x10;
+    self->step = 0;
 }
 
 // This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag

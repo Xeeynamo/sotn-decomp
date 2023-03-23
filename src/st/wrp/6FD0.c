@@ -2708,32 +2708,34 @@ void func_8018C55C(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
-void ReplaceBreakableWithItemDrop(Entity* entity) {
+void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 subId;
 
-    PreventEntityFromRespawning(entity);
+    PreventEntityFromRespawning(self);
 
+#if STAGE != STAGE_ST0
     if (!(g_Status.relics[10] & 2)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
+#endif
 
-    subId = entity->subId &= 0xFFF;
+    subId = self->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        entity->objectId = ENTITY_PRICE_DROP;
-        entity->pfnUpdate = EntityPriceDrop;
-        entity->animFrameDuration = 0;
-        entity->animFrameIdx = 0;
+        self->objectId = ENTITY_PRICE_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
     } else {
         subId -= 0x80;
-        entity->objectId = ENTITY_INVENTORY_DROP;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
+        self->objectId = ENTITY_INVENTORY_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
-    entity->subId = subId;
-    entity->unk6D = 0x10;
-    entity->step = 0;
+    self->subId = subId;
+    self->unk6D = 0x10;
+    self->step = 0;
 }
 
 void func_8018CAB0(void) {
