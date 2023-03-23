@@ -6,6 +6,7 @@
 
 #include "stage.h"
 
+#define STAGE STAGE_ST0
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_ALL_H
@@ -1329,7 +1330,35 @@ void func_801B5A98(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5BF0);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B5E38);
+void ReplaceBreakableWithItemDrop(Entity* self) {
+    u16 subId;
+
+    PreventEntityFromRespawning(self);
+
+#if STAGE != STAGE_ST0
+    if (!(g_Status.relics[10] & 2)) {
+        DestroyEntity(self);
+        return;
+    }
+#endif
+
+    subId = self->subId &= 0xFFF;
+
+    if (subId < 0x80) {
+        self->objectId = ENTITY_PRICE_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
+    } else {
+        subId -= 0x80;
+        self->objectId = ENTITY_INVENTORY_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
+    }
+
+    self->subId = subId;
+    self->unk6D = 0x10;
+    self->step = 0;
+}
 
 void func_801B5EC8(void) {
     s32 temp_v1;
@@ -1409,7 +1438,7 @@ Entity* func_801B633C(void) {
     return g_CurrentEntity;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6358);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityPriceDrop);
 
 void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
@@ -1462,7 +1491,7 @@ void func_801B6C5C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B6D34);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityInventoryDrop);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B7308);
 
