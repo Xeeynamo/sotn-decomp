@@ -1,4 +1,4 @@
-#include <game.h>
+#include "debugmode.h"
 
 void Init();
 void Update();
@@ -29,8 +29,6 @@ ServantDesc g_ServantDesc = {
 
 };
 
-int g_FntStreamId;
-int g_PrevFntStreamId;
 int g_DebugMode;
 
 void InitEntitySpawn(void);
@@ -42,8 +40,7 @@ void Init() {
     Entity* e;
 
     g_DebugMode = 0;
-    g_FntStreamId = FntOpen(8, 0x30, 256, 240, 0, 1024);
-    g_PrevFntStreamId = g_FntStreamId - 1;
+    InitFont();
     InitEntitySpawn();
     InitSfxPlayer();
     InitDraTest800FD874();
@@ -69,13 +66,14 @@ void UpdateDraTest800FD874(void);
 void CollisionDebug(void);
 
 void Update(Entity* e) {
+    BeginFont();
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
     }
 
-    SetDumpFnt(g_FntStreamId);
     switch (g_DebugMode) {
     case 0:
+        SetFontCoord(160, 24);
         FntPrint("DEBUG MODE");
         break;
     case 1:
@@ -101,8 +99,7 @@ void Update(Entity* e) {
         break;
     }
 
-    FntFlush(g_FntStreamId);
-    SetDumpFnt(g_PrevFntStreamId);
+    EndFont();
 }
 
 void Dummy() {}
