@@ -1666,7 +1666,7 @@ void func_801BE864(Entity* self, s32 arg1) {
     poly->y0 = poly->y1 = top;
     poly->y2 = poly->y3 = bottom;
 
-    if (arg1 & 2) {
+    if (arg1 & RENDERFLAGS_NOSHADOW) {
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
             poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
                 255;
