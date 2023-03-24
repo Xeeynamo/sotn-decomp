@@ -346,8 +346,8 @@ void entrypoint_sotn(void) {
     g_blinkTimer = 0;
     D_8003C99C = 0;
     D_800987B4 = 0;
-    D_8003CB00[0] = 0;
-    D_8003CB04 = 0;
+    g_Settings.D_8003CB00 = 0;
+    g_Settings.D_8003CB04 = 0;
     D_8006C37C = &D_8003CB08;
     func_80131ED8(0xB9B6);
     func_801325D8();
@@ -648,7 +648,7 @@ void func_800E451C(void) {
 }
 
 void func_800E493C(void) {
-    if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
+    if (g_Settings.isSoundMono == 0) {
         PlaySfx(6);
     } else {
         PlaySfx(5);

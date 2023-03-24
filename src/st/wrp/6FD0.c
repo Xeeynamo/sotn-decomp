@@ -13,7 +13,7 @@ typedef struct {
 // *** Overlay exports start ***
 void Update(void);
 void TestCollisions(void);
-void func_80189FB4(LayoutObject*);
+void CreateEntityWhenInHorizontalRange(LayoutObject*);
 void func_8018A520(s16);
 void func_8018A7AC(void);
 void func_8018CAB0(void);
@@ -1981,9 +1981,6 @@ void Update(void) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80188514);
-#else
 void func_80188514(void) {
     Entity* entity;
     for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
@@ -1991,18 +1988,17 @@ void func_80188514(void) {
             continue;
 
         if (entity->step) {
-            if (entity->flags & FLAG_UNK_10000) {
-                if (entity->flags & 0xF) {
-                    entity->palette =
-                        D_80180690[entity->unk49 << 1 | entity->flags & 1];
-                    entity->flags--;
-                    if ((entity->flags & 0xF) == 0) {
-                        entity->palette = entity->unk6A;
-                        entity->unk6A = 0;
-                    }
-                }
-            } else
+            if (!(entity->flags & FLAG_UNK_10000))
                 continue;
+            if (entity->flags & 0xF) {
+                entity->palette =
+                    D_80180690[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
+                    entity->palette = entity->unk6A;
+                    entity->unk6A = 0;
+                }
+            }
         }
 
         g_CurrentEntity = entity;
@@ -2011,8 +2007,6 @@ void func_80188514(void) {
         entity->unk48 = 0;
     }
 }
-
-#endif
 
 // https://decomp.me/scratch/Nq66t
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", TestCollisions);
@@ -2031,64 +2025,98 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189E9C);
-#else
-void func_80189E9C(LayoutObject* layoutObj) {
-    s16 temp_v0, posY;
-    u16 initFlags;
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
 
-    temp_v0 = g_Camera.posY.i.hi - 0x40;
-    if (temp_v0 < 0) {
-        temp_v0 = 0;
+    posY = g_Camera.posY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
     }
 
-    if ((s16)layoutObj->posY < temp_v0)
+    posY = layoutObj->posY;
+    if (posY < yClose) {
         return;
-    if (((s16)(g_Camera.posY.i.hi + 0x120) < layoutObj->posY))
-        return;
+    }
 
-    initFlags = layoutObj->objectId & 0xE000;
-    if (initFlags != 0x8000) {
-        Entity* entity;
-        switch (initFlags) {
-        case 0x0:
-            entity = &D_800762D8[layoutObj->objectRoomIndex];
-            if (entity->objectId == 0) {
-                CreateEntityFromLayout(entity, layoutObj);
-            }
-            break;
-        case 0xA000:
-            entity = &D_800762D8[layoutObj->objectRoomIndex];
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
-            break;
         }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
     }
 }
-#endif
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_80189FB4);
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera.posX.i.hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
 
 void func_8018A0CC(s16 arg0) {
-    do {
-    loop_1:
-        if (D_80193AB0->posX == 0xFFFE || D_80193AB0->posX < (s32)arg0) {
-            D_80193AB0++;
-            goto loop_1;
+    while (true) {
+        if (D_80193AB0->posX != 0xFFFE && D_80193AB0->posX >= arg0) {
+            break;
         }
-    } while (0);
+        D_80193AB0++;
+    }
 }
 
-void func_8018A118(s32 arg0) {
-    s32 a2, a3;
-    a3 = 0xFFFF;
-    arg0 = (s16)arg0;
-    a2 = 0xFFFE;
-loop_1:
-    if ((D_80193AB0->posX == a3) ||
-        (((s32)arg0 < D_80193AB0->posX) && (D_80193AB0->posX != a2))) {
+void func_8018A118(s16 arg0) {
+    while (true) {
+        if (D_80193AB0->posX != 0xFFFF &&
+            (arg0 >= D_80193AB0->posX || D_80193AB0->posX == 0xFFFE)) {
+            break;
+        }
         D_80193AB0--;
-        goto loop_1;
     }
 }
 
@@ -2121,58 +2149,57 @@ void func_8018A3CC(s16 arg0) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A424);
-void func_8018A424(s16 arg0);
-#else
 void func_8018A424(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
     if (D_80193ABC) {
-        func_8018A380(arg0 - D_8009790C);
+        func_8018A380(arg0 - LOH(D_8009790C));
         D_80193ABC = 0;
     }
 
     while (true) {
-        if (D_80193AB4[1] != -1 && arg0 >= D_80193AB4[1]) {
-            u8 flag = (D_80193AB4[3] >> 8) + 0xFF;
-            if (flag == 0xFF ||
-                (1 << (flag & 0x1F) & g_entityDestroyed[flag >> 5]) == 0) {
-                func_80189FB4(D_80193AB4);
-            }
-            D_80193AB4 += sizeof(LayoutObject) / sizeof(u16);
-        } else
+        if (D_80193AB4[1] == 0xFFFF || D_80193AB4[1] > arg0) {
             break;
+        }
+
+        expected = 0;
+        flag = (D_80193AB4[3] >> 8) + 0xFF;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_80193AB4);
+        }
+        D_80193AB4 += sizeof(LayoutObject) / sizeof(u16);
     }
 }
-#endif
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A520);
-void func_8018A424(s16 arg0);
-#else
 void func_8018A520(s16 arg0) {
-    s32 var_v0;
-    u32 new_var;
     u8 flag;
+    s32 expected;
+
     if (arg0 < 0) {
         arg0 = 0;
     }
-    var_v0 = arg0 << 0x10;
+
     if (D_80193ABC == 0) {
-        func_8018A3CC(arg0 - D_8009790C);
+        func_8018A3CC(arg0 - LOH(D_8009790C));
         D_80193ABC = 1;
     }
-loop_5:
-    if ((D_80193AB4[1] != 0xFFFE) && ((var_v0 >> 0x10) <= D_80193AB4[1])) {
-        flag = (D_80193AB4[3] >> 8) + 0xFF;
-        new_var = g_entityDestroyed[flag >> 5];
-        if ((flag == 0xFF) || (((1 << (flag & 0x1F)) & new_var) == 0)) {
-            func_80189FB4(D_80193AB4);
+
+    while (true) {
+        if (D_80193AB4[1] == 0xFFFE || arg0 > D_80193AB4[1]) {
+            return;
         }
-        D_80193AB4 -= 0xA;
-        goto loop_5;
+
+        expected = 0;
+        flag = (D_80193AB4[3] >> 8) + 0xFF;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_80193AB4);
+        }
+        D_80193AB4 -= sizeof(LayoutObject) / sizeof(u16);
     }
 }
-#endif
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", InitRoomEntities);
@@ -2366,7 +2393,6 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018BA10);
 #else
 s32 func_8018BA10(u16* arg0) {
     s16 new_var;
-    s32 new_var4;
     Collider res;
     Collider resBack;
     s16 i;
@@ -2377,50 +2403,49 @@ s32 func_8018BA10(u16* arg0) {
     MoveEntity();
     FallEntity();
     if (g_CurrentEntity->accelerationY >= 0) {
-        x = g_CurrentEntity->posX.i.hi;
+        i = g_CurrentEntity->posX.i.hi;
+        x = i;
         y = g_CurrentEntity->posY.i.hi;
         for (i = 0; i < 4; i++) {
             x += *(arg0++);
             y += *(arg0++);
             g_api.CheckCollision(x, y, &res, 0);
-            new_var4 = res.unk0;
-            if (new_var4 & 0x8000) {
-                var_v0 = new_var4 & 5;
+            if (res.unk0 & 0x8000) {
                 if (i == 1) {
-                    if (new_var4 & 1) {
+                    if (res.unk0 & 1) {
                         g_api.CheckCollision(x, y - 8, &resBack, 0);
                         if (!(resBack.unk0 & 1)) {
                             new_var = LOH(res.unk18);
                             g_CurrentEntity->accelerationX = 0;
                             g_CurrentEntity->accelerationY = 0;
                             g_CurrentEntity->posY.i.hi =
-                                (((u16)g_CurrentEntity->posY.i.hi) + 4) +
-                                new_var;
-                            g_CurrentEntity->flags &= 0xEFFFFFFF;
+                                (u16)g_CurrentEntity->posY.i.hi + 4 +
+                                LOH(res.unk18);
+                            g_CurrentEntity->flags &= ~0x10000000;
                             return 1;
                         }
                     }
                     continue;
                 }
-            } else {
-                var_v0 = new_var4 & 5;
             }
-            if (new_var4 & 5) {
-                if (i != 1) {
-                    if (new_var4 & 4) {
-                        g_CurrentEntity->flags &= 0xEFFFFFFF;
-                        return 4;
-                    }
-                    g_api.CheckCollision(x, y - 8, &resBack, 0);
-                    if (!(resBack.unk0 & 1)) {
-                        x = ((u16)g_CurrentEntity->posY.i.hi) + LOH(res.unk18);
-                        new_var = x;
-                        g_CurrentEntity->accelerationX = 0;
-                        g_CurrentEntity->accelerationY = 0;
-                        g_CurrentEntity->posY.i.hi = new_var;
-                        g_CurrentEntity->flags &= 0xEFFFFFFF;
-                        return 1;
-                    }
+
+            if (res.unk0 & 5 && i != 1) {
+                if (res.unk0 & 4) {
+                    g_CurrentEntity->flags &= ~0x10000000;
+                    return 4;
+                }
+
+                g_api.CheckCollision(x, y - 8, &resBack, 0);
+                if (!(resBack.unk0 & 1)) {
+                    new_var = LOH(res.unk18);
+                    x = g_CurrentEntity->posY.i.hi;
+                    x = x + new_var;
+                    new_var = x;
+                    g_CurrentEntity->accelerationX = 0;
+                    g_CurrentEntity->accelerationY = 0;
+                    g_CurrentEntity->posY.i.hi = new_var;
+                    g_CurrentEntity->flags &= ~0x10000000;
+                    return 1;
                 }
             }
         }
@@ -2617,39 +2642,100 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018C434);
+s32 func_8018C434(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    u16 temp_a1;
+    s16 x;
+    s16 y;
 
-void func_8018C55C(u16* arg0, s16 arg1);
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018C55C);
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX != 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < sensorCount; i++) {
+            if (accelerationX < 0) {
+                s16 newX = x + *hitSensors++;
+                x = newX;
+            } else {
+                s16 newX = x - *hitSensors++;
+                x = newX;
+            }
+
+            y += *hitSensors++;
+            g_api.CheckCollision(x, y, &collider, 0);
+            if (collider.unk0 & 2 &&
+                ((!(collider.unk0 & 0x8000)) || (i != 0))) {
+                return 2;
+            }
+        }
+        return 0;
+    }
+}
+
+void func_8018C55C(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 accelerationX;
+    s16 x;
+    s16 y;
+
+    accelerationX = g_CurrentEntity->accelerationX;
+    if (accelerationX == 0)
+        return;
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    for (i = 0; i < sensorCount; i++) {
+        if (accelerationX < 0) {
+            x = x + *hitSensors++;
+        } else {
+            x = x - *hitSensors++;
+        }
+
+        y += *hitSensors++;
+        g_api.CheckCollision(x, y, &collider, 0);
+        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+            if (accelerationX < 0) {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+            } else {
+                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+            }
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
-void ReplaceBreakableWithItemDrop(Entity* entity) {
+void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 subId;
 
-    PreventEntityFromRespawning(entity);
+    PreventEntityFromRespawning(self);
 
+#if STAGE != STAGE_ST0
     if (!(g_Status.relics[10] & 2)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
+#endif
 
-    subId = entity->subId &= 0xFFF;
+    subId = self->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        entity->objectId = ENTITY_PRICE_DROP;
-        entity->pfnUpdate = EntityPriceDrop;
-        entity->animFrameDuration = 0;
-        entity->animFrameIdx = 0;
+        self->objectId = ENTITY_PRICE_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
     } else {
         subId -= 0x80;
-        entity->objectId = ENTITY_INVENTORY_DROP;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
+        self->objectId = ENTITY_INVENTORY_DROP;
+        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
     }
 
-    entity->subId = subId;
-    entity->unk6D = 0x10;
-    entity->step = 0;
+    self->subId = subId;
+    self->unk6D = 0x10;
+    self->step = 0;
 }
 
 void func_8018CAB0(void) {

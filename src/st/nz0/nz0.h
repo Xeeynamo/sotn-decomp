@@ -9,7 +9,7 @@ s32 func_801BB710(s16);
 s32 func_801BB80C(s16);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
-s32 func_801BD720(s32*, s32);
+s32 func_801BD720(u16* hitSensors, s16 sensorCount);
 s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
 void func_801C29B0(s32);

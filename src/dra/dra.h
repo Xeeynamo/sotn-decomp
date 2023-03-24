@@ -21,6 +21,7 @@ typedef struct {
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
 extern s32 D_800A015C;
+extern s16 D_800A0160[];
 extern s32 D_800A04EC;
 extern s32 D_800A04F8;
 extern s32 D_800A0510[];
@@ -47,14 +48,6 @@ extern u16 D_800A2F48[];
 extern u16 D_800A2F64[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
-
-extern u32 g_playerEquip[];
-// D_80097C00 = g_playerEquip[0]
-// D_80097C04 = g_playerEquip[1]
-// D_80097C08 = g_playerEquip[2]
-// D_80097C0C = g_playerEquip[3]
-// D_80097C10 = g_playerEquip[4]
-// D_80097C14 = g_playerEquip[5]
 
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
@@ -104,7 +97,6 @@ extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
 extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
-extern Unkstruct_800A4B12 D_800A4B1D[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
@@ -202,6 +194,8 @@ extern s32* D_801375D8;
 extern s32 D_801375DC;
 extern s32 D_801375FC;
 extern s32 D_80137608;
+extern s32 g_IsCloakLiningUnlocked;
+extern s32 g_IsCloakColorUnlocked;
 extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
@@ -471,7 +465,7 @@ s16 func_800FDB18(s32, s32);
 void func_800FDCE0(s32);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
-void func_800FE728(s32, Equipment* res, s32 equipId);
+void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 func_800FE97C(s32*, s32, s32, s32);
 s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);

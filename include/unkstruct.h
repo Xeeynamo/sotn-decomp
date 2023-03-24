@@ -123,11 +123,6 @@ typedef struct {
 } Unkstruct_80137638; // size = 0x1E
 
 typedef struct {
-    /* 0x00 */ u8 unk0;
-    /* 0x01 */ char pad1[0x33];
-} Unkstruct_800A4B12; // size = 0x34
-
-typedef struct {
     /* 0x00 */ u16 unk0;
     /* 0x02 */ char pad2[0x32];
 } Unkstruct_80086FFA; // size = 0x34
