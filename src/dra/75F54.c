@@ -1101,12 +1101,12 @@ void EntityExpandingCircle(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = AllocPolygons(4, 1);
+        firstPolygonIndex = AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->unk7C.s = 22;
             entity->unk7E.modeU16 = 26;
-            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->firstPolygonIndex];
             poly->u2 = 64;
             poly->u3 = 127;
             poly->u1 = 127;
@@ -1151,7 +1151,7 @@ void EntityExpandingCircle(Entity* entity) {
         break;
     }
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = entity->posX.i.hi - entity->unk7C.s;
     poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
     poly->x1 = entity->posX.i.hi + entity->unk7C.s;
@@ -1184,7 +1184,7 @@ void func_80127CC8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPolygons(3, 1);
+        ret = AllocPrimitives(3, 1);
         entity->firstPolygonIndex = ret;
 
         if (ret == -1) {
@@ -1194,7 +1194,7 @@ void func_80127CC8(Entity* entity) {
         }
 
         entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-        poly = &D_80086FEC[entity->firstPolygonIndex];
+        poly = &g_PrimBuf[entity->firstPolygonIndex];
         poly->r3 = 192;
         poly->r2 = 192;
         poly->r1 = 192;
@@ -1222,7 +1222,7 @@ void func_80127CC8(Entity* entity) {
     default:
         break;
     }
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = poly->x2 = entity->posX.i.hi - 3;
     poly->y0 = 0;
     poly->y1 = 0;
@@ -1299,11 +1299,11 @@ void func_8012B78C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPolygons(4, 1);
+        ret = AllocPrimitives(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->firstPolygonIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
             poly->u2 = 32;
@@ -1342,7 +1342,7 @@ void func_8012B78C(Entity* entity) {
     default:
         break;
     }
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
         poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
             entity->unk7E.modeU8.unk0;

@@ -147,7 +147,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     s32 y;
     s32 index;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     if (frameIndex == 0) {
         poly->pad3 = 8;
         return;
@@ -195,7 +195,7 @@ void func_801718A0(Entity* entity) {
     x += (rsin(entity->unk8C.modeS16.unk0 << 7) * 8) >> 12;
     y -= entity->unk8C.modeS16.unk0 / 2;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = poly->x2 = x - D_80170608[frame].x;
     poly->y0 = poly->y1 = y - D_80170608[frame].y;
     poly->x1 = poly->x3 = poly->x0 + D_80170608[frame].width;
@@ -324,7 +324,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(entity->firstPolygonIndex);
+        g_api.FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;

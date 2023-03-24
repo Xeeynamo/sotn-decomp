@@ -46,7 +46,7 @@ extern s32 D_801800E8[];
 extern s32 D_80180108[];
 
 void func_801AC084(s32 arg0, s32 ypos) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0].unk0];
     s32 i;
 
     for (i = 0; i < 8; i++) {
@@ -68,7 +68,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC174);
 
 void func_801ACBE4(s32 arg0, u16 arg1) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0].unk0];
     while (poly != NULL) {
         poly->pad3 = arg1;
         poly = (POLY_GT4*)poly->tag;
@@ -87,8 +87,8 @@ void func_801ACC7C(void) {
     POLY_GT4* poly;
     s32 i;
 
-    firstPolygonIndex = g_api.AllocPolygons(4, 3);
-    poly = &D_80086FEC[firstPolygonIndex];
+    firstPolygonIndex = g_api.AllocPrimitives(4, 3);
+    poly = &g_PrimBuf[firstPolygonIndex];
     D_801BAFC0 = firstPolygonIndex;
 
     for (i = 0; i < 3; i++) {
@@ -100,8 +100,8 @@ void func_801ACC7C(void) {
         poly = (POLY_GT4*)poly->tag;
     }
 
-    firstPolygonIndex = g_api.AllocPolygons(1, 2);
-    poly = &D_80086FEC[firstPolygonIndex];
+    firstPolygonIndex = g_api.AllocPrimitives(1, 2);
+    poly = &g_PrimBuf[firstPolygonIndex];
     D_801BAFC4 = firstPolygonIndex;
 
     for (i = 0; poly != NULL; i++) {
@@ -116,7 +116,7 @@ void func_801ACC7C(void) {
 }
 
 s32 func_801ACDFC(void) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAFC4];
     s32 var_s1 = poly->r0;
 
     var_s1 -= 16;
@@ -129,7 +129,7 @@ s32 func_801ACDFC(void) {
 
     if (var_s1 == 0) {
         do {
-            poly = &D_80086FEC[D_801BAFC4];
+            poly = &g_PrimBuf[D_801BAFC4];
             poly->pad3 = 8;
         } while (0);
         poly = (POLY_GT4*)poly->tag;
@@ -140,7 +140,7 @@ s32 func_801ACDFC(void) {
 }
 
 s32 func_801ACEC0(void) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAFC4];
     s32 var_s0 = poly->r0;
 
     var_s0 += 0x10;

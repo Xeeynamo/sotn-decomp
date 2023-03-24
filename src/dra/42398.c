@@ -678,7 +678,7 @@ void func_800E4A04(void) { s32 pad[3]; }
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
 
 void func_800E5358(void) {
-    POLY_GT4* poly = &D_80086FEC[D_8013640C];
+    POLY_GT4* poly = &g_PrimBuf[D_8013640C];
     s32 i;
 
     for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {
@@ -704,7 +704,7 @@ void func_800E5358(void) {
 }
 
 void func_800E5498(void) {
-    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
     GpuBuffer* buffer = D_8006C37C;
 
     setSemiTrans(poly, true);
@@ -715,7 +715,7 @@ void func_800E5498(void) {
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
     AddPrim(&buffer->_unk_0474[0x1FF], poly);
-    D_80097930[0]++;
+    g_GpuUsage.gt4++;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5584);

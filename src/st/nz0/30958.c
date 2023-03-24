@@ -169,12 +169,12 @@ void func_801B1C18(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == (-1)) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -236,12 +236,12 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         self->attack = 7;
         self->unk3C = 1;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -309,12 +309,12 @@ void EntityMoveableBox(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180BF8);
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == (-1)) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C.s)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -404,12 +404,12 @@ void EntityCannonLever(Entity* self) {
         self->hitboxHeight = 20;
         self->unk3C = 2;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
 
@@ -516,12 +516,12 @@ void func_801B2AD8(Entity* self) {
         CreateEntityFromEntity(0x26, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Camera.posY.i.hi;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -1058,12 +1058,12 @@ void func_801B6DE4(Entity* self) {
         self->hitboxWidth = 6;
         self->unk3C = 1;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == (-1)) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *((s32*)(&self->unk7C)) = poly;
 
@@ -1221,7 +1221,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -1490,7 +1490,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -1951,7 +1951,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        g_api.FreePolygons(D_80097414);
+        g_api.FreePrimitives(D_80097414);
         *unk = 0;
     }
 
@@ -2022,7 +2022,7 @@ void func_801BEC7C(Entity* entity, s32 arg1) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
 
     left = entity->posX.i.hi - 7;
     right = entity->posX.i.hi + 7;

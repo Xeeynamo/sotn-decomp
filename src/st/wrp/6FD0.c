@@ -1471,12 +1471,12 @@ void EntityWarpRoom(Entity* entity) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        firstPolyIndex = g_api.AllocPolygons(4, 24);
+        firstPolyIndex = g_api.AllocPrimitives(4, 24);
         if (firstPolyIndex == -1) {
             entity->step = 0;
             return;
         }
-        poly = &D_80086FEC[firstPolyIndex];
+        poly = &g_PrimBuf[firstPolyIndex];
         temp_s5 = entity->posY.i.hi; // must not be lhu but lh
         temp_s4 = entity->posX.i.hi; // must not be lhu but lh
         entity->firstPolygonIndex = firstPolyIndex;
@@ -1914,7 +1914,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -2313,7 +2313,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -2826,7 +2826,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        g_api.FreePolygons(D_80097414);
+        g_api.FreePrimitives(D_80097414);
         *unk = 0;
     }
 
@@ -2928,7 +2928,7 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[arg0->firstPolygonIndex];
+    poly = &g_PrimBuf[arg0->firstPolygonIndex];
 
     left = arg0->posX.i.hi - 7;
     right = arg0->posX.i.hi + 7;
@@ -3357,12 +3357,12 @@ void func_80192F40(u8* arg0, u8 arg1) {
         }
     }
 
-    firstPolyIndex = g_api.AllocPolygons(6, polyCount + 4);
+    firstPolyIndex = g_api.AllocPrimitives(6, polyCount + 4);
     D_80097414 = firstPolyIndex;
     if (firstPolyIndex == (-1)) {
         return;
     }
-    poly = &D_80086FEC[firstPolyIndex];
+    poly = &g_PrimBuf[firstPolyIndex];
     setcode(poly, 3);
     poly->r3 = 0;
     poly->r2 = 0;

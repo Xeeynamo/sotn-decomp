@@ -63,14 +63,14 @@ void func_80102EB8(void) {
     POLY_GT4 *poly1, *poly2, *poly3;
     s32 i;
 
-    D_80137E58 = AllocPolygons(4, 3);
-    poly1 = &D_80086FEC[D_80137E58];
+    D_80137E58 = AllocPrimitives(4, 3);
+    poly1 = &g_PrimBuf[D_80137E58];
 
-    D_80137E5C = AllocPolygons(3, 3);
-    poly2 = &D_80086FEC[D_80137E5C];
+    D_80137E5C = AllocPrimitives(3, 3);
+    poly2 = &g_PrimBuf[D_80137E5C];
 
-    D_80137E60 = AllocPolygons(2, 12);
-    poly3 = &D_80086FEC[D_80137E60];
+    D_80137E60 = AllocPrimitives(2, 12);
+    poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
         func_80107360(poly1, 98, 79, 96, 0, 0, 0);
@@ -165,9 +165,9 @@ void func_80103EAC(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103ED4);
 
 void func_8010427C(void) {
-    FreePolygons(D_80137E40);
-    FreePolygons(D_80137E44);
-    FreePolygons(D_80137E48);
+    FreePrimitives(D_80137E40);
+    FreePrimitives(D_80137E44);
+    FreePrimitives(D_80137E48);
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801042C4);
@@ -189,7 +189,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        FreePolygons(entity->firstPolygonIndex);
+        FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -212,8 +212,6 @@ void func_80106670(s32 blendMode);
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106670);
 #else
-extern u32 D_80097944; // tile count?
-
 // https://decomp.me/scratch/iTgjO
 void func_80106670(s32 blendMode) {
     const int MaxPolyCount = 0x100;
@@ -235,12 +233,12 @@ void func_80106670(s32 blendMode) {
     temp_a0 = D_8006C37C;
     entity = g_EntityArray;
     temp_s7 = temp_a0->_unk_0474;
-    tile = &temp_a0->tiles[D_80097944];
+    tile = &temp_a0->tiles[g_GpuUsage.tile];
     sp20 = &temp_a0->drawModes[g_GpuUsage.drawModes];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
-            if (D_80097944 >= MaxPolyCount) {
+            if (g_GpuUsage.tile >= MaxPolyCount) {
                 break;
             }
             absY = (u16)entity->posY.i.hi + (u16)g_backbufferY;
@@ -267,7 +265,7 @@ void func_80106670(s32 blendMode) {
             SetSemiTrans(tile, 1);
             AddPrim(temp_s7 + var_s8 * 4, tile);
             tile++;
-            D_80097944++;
+            g_GpuUsage.tile++;
         }
         polyCount++;
         entity++;
@@ -277,7 +275,7 @@ void func_80106670(s32 blendMode) {
         while (polyCount < MaxPolyCount) {
             if (entity->unk3C != 0) {
                 s32 var_a0_2;
-                if (D_80097944 >= MaxPolyCount) {
+                if (g_GpuUsage.tile >= MaxPolyCount) {
                     break;
                 }
                 absY_2 = (u16)entity->posY.i.hi + (u16)g_backbufferY;
@@ -313,7 +311,7 @@ void func_80106670(s32 blendMode) {
                 SetSemiTrans(tile, 1);
                 AddPrim(temp_s7 + (var_s8 * (new_var2 = 4)), tile);
                 tile++;
-                D_80097944++;
+                g_GpuUsage.tile++;
             }
             polyCount++;
             entity++;
@@ -732,7 +730,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;

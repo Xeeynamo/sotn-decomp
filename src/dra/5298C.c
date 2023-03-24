@@ -234,7 +234,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
     u32* temp_s5 = D_8006C37C->_unk_0474;
-    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
     s32 var_s2 = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
@@ -268,7 +268,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             poly->x1 = poly->x3 = temp_polyx0;
         }
         AddPrim(&temp_s5[var_s2], poly);
-        D_80097930[0]++;
+        g_GpuUsage.gt4++;
         func_800F53D4(tpage, var_s2);
     }
 }
@@ -281,7 +281,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuRect);
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
     u32* temp_s1 = D_8006C37C->_unk_0474;
-    POLY_G4* poly = &D_8006C37C->polyG4[D_80097930[1]];
+    POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage.g4];
     s32 temp_s2 = context->unk18 + 1;
     u32 temp;
 
@@ -302,7 +302,7 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
         AddPrim(&temp_s1[temp_s2], poly);
-        D_80097930[1]++;
+        g_GpuUsage.g4++;
         func_800F53D4(0, temp_s2);
     }
 }
@@ -761,11 +761,11 @@ void func_800F86E4(void) {
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        FreePolygons(D_801377FC[i]);
+        FreePrimitives(D_801377FC[i]);
     }
 
-    FreePolygons(D_8013783C);
-    FreePolygons(D_80137840);
+    FreePrimitives(D_8013783C);
+    FreePrimitives(D_80137840);
 }
 
 void func_800F8754(MenuContext* context, s32 x, s32 y) {
@@ -897,7 +897,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8E18);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8F28);
 
 void func_800F9690(void) {
-    POLY_GT4* poly = &D_80086FEC[D_8013783C];
+    POLY_GT4* poly = &g_PrimBuf[D_8013783C];
 
     if (D_80137608 != 0) {
         poly->pad3 = 0x80;
@@ -917,17 +917,17 @@ void func_800F96F4(void) { // !Fake:
     s32* new_var;
 
     new_var = D_80137848;
-    poly = &D_80086FEC[D_80137840];
+    poly = &g_PrimBuf[D_80137840];
     temp_a2 = D_80137692 == 0;
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
-        (&D_80086FEC[D_80137840])->pad3 = 0x80;
+        (&g_PrimBuf[D_80137840])->blendMode = 0x80;
         if (D_80137844[0] == 1) {
-            (&D_80086FEC[D_80137840])->clut = 0x188;
+            (&g_PrimBuf[D_80137840])->clut = 0x188;
         } else {
             D_80137844[0] -= 1;
-            (&D_80086FEC[D_80137840])->clut = 0x181;
+            (&g_PrimBuf[D_80137840])->clut = 0x181;
         }
     } else {
         poly->pad3 = 0x8;

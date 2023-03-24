@@ -236,7 +236,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -437,7 +437,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -987,7 +987,7 @@ void func_8019C738(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
 
     left = entity->posX.i.hi - 7;
     right = entity->posX.i.hi + 7;

@@ -174,15 +174,15 @@ void func_801BECCC(Entity* entity) {
 
     if (g_pads[0].tapped == 0x800) {
         D_801D7D20 = 1;
-        g_api.FreePolygons(entity->firstPolygonIndex);
+        g_api.FreePrimitives(entity->firstPolygonIndex);
         do {
             entity->flags ^= FLAG_FREE_POLYGONS;
         } while (0);
         if (D_801D7D58 != (-1)) {
-            g_api.FreePolygons(D_801D7D58);
+            g_api.FreePrimitives(D_801D7D58);
         }
         if (D_801D7D54 != (-1)) {
-            g_api.FreePolygons(D_801D7D54);
+            g_api.FreePrimitives(D_801D7D54);
         }
         gameApi = &g_api;
         (*gameApi).PlaySfx(0xA);
@@ -325,7 +325,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -580,7 +580,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -1036,7 +1036,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        g_api.FreePolygons(D_80097414);
+        g_api.FreePrimitives(D_80097414);
         *unk = 0;
     }
 
@@ -1103,7 +1103,7 @@ void func_801C6FF4(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
 
     left = entity->posX.i.hi - 7;
     right = entity->posX.i.hi + 7;
@@ -1657,12 +1657,12 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->unk3C = 0;
         entity->zPriority += 4;
         if (entity->subId != 0) {
-            firstPolygonIndex = g_api.AllocPolygons(4, 2);
+            firstPolygonIndex = g_api.AllocPrimitives(4, 2);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(entity);
                 return;
             }
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             entity->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&entity->unk7C.s = poly;
             entity->flags |= FLAG_FREE_POLYGONS;

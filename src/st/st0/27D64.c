@@ -722,7 +722,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -990,7 +990,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;

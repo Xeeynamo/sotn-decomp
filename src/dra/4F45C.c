@@ -804,7 +804,7 @@ void func_800F2404(s32 arg0) {
     D_8009740C[0] = 0x80;
 
     if (D_80097410 != 0) {
-        FreePolygons(D_80097414);
+        FreePrimitives(D_80097414);
     }
 
     D_80097410 = 0;

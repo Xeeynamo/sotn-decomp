@@ -191,13 +191,13 @@ void EntityCavernDoor(Entity* self) {
             self->step = 128;
             self->animCurFrame = 0;
         } else {
-            firstPolygonIndex = g_api.AllocPolygons(1, 64);
+            firstPolygonIndex = g_api.AllocPrimitives(1, 64);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
 
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&self->unk7C = poly;
             self->flags |= FLAG_FREE_POLYGONS;
@@ -331,13 +331,13 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -407,12 +407,12 @@ void EntityPathBlockTallWeight(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -935,13 +935,13 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             break;
         }
 
-        firstPolygonIndex = g_api.AllocPolygons(1, 64);
+        firstPolygonIndex = g_api.AllocPrimitives(1, 64);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;

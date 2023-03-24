@@ -183,13 +183,13 @@ void func_801B40F8(Entity* self) {
             self->step = 128;
             self->animCurFrame = 0;
         } else {
-            firstPolygonIndex = g_api.AllocPolygons(1, 64);
+            firstPolygonIndex = g_api.AllocPrimitives(1, 64);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
 
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
             *((s32*)(&self->unk7C)) = poly;
             self->flags |= FLAG_FREE_POLYGONS;
@@ -327,13 +327,13 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -406,13 +406,13 @@ void EntityPathBlockTallWeight(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -1118,7 +1118,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -1292,7 +1292,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -1891,12 +1891,12 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->unk3C = 0;
         entity->zPriority += 4;
         if (entity->subId != 0) {
-            firstPolygonIndex = g_api.AllocPolygons(4, 2);
+            firstPolygonIndex = g_api.AllocPrimitives(4, 2);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(entity);
                 return;
             }
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             entity->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&entity->unk7C.s = poly;
             entity->flags |= FLAG_FREE_POLYGONS;
