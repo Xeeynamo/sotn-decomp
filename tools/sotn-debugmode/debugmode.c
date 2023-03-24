@@ -95,12 +95,16 @@ void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
 void InitCollisionViewer(void);
 void InitFlagChecker(void);
+void InitStageSelect(void);
 void UpdateDraEntitySpawn();
 void UpdateStageEntitySpawn();
 void UpdateSfxPlayer(void);
 void UpdateDraTest800FD874(void);
 void UpdateCollisionViewer(void);
 void UpdateFlagChecker(void);
+void UpdateStageSelect(void);
+
+void Foo() {}
 
 DebugMenu g_DebugMenus[] = {
     DummyYummyTummy,     DummyYummyTummy,        true,  "Debug mode",
@@ -110,6 +114,7 @@ DebugMenu g_DebugMenus[] = {
     InitDraTest800FD874, UpdateDraTest800FD874,  true,  "Inventory",
     InitCollisionViewer, UpdateCollisionViewer,  false, "Collision viewer",
     InitFlagChecker,     UpdateFlagChecker,      true,  "Castleflags",
+    InitStageSelect,     UpdateStageSelect,      true,  "Stages",
 };
 
 int g_DebugMode;
