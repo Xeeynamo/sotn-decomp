@@ -1651,23 +1651,20 @@ void EntityExplosion(Entity* entity) {
 }
 
 void func_801BE864(Entity* self, s32 arg1) {
-    POLY_GT4* poly = &D_80086FEC[self->firstPolygonIndex];
-    s16 posXright;
-    s16 posXleft;
-    s16 posYright;
-    s16 posYleft;
+    POLY_GT4* poly = &g_PrimBuf[self->firstPolygonIndex];
+    s16 right, left, top, bottom;
 
-    posXleft = self->posX.i.hi - 7;
-    posXright = self->posX.i.hi + 7;
+    left = self->posX.i.hi - 7;
+    right = self->posX.i.hi + 7;
 
-    poly->x0 = poly->x2 = posXleft;
-    poly->x1 = poly->x3 = posXright;
+    poly->x0 = poly->x2 = left;
+    poly->x1 = poly->x3 = right;
 
-    posYleft = self->posY.i.hi - 7;
-    posYright = self->posY.i.hi + 7;
+    bottom = self->posY.i.hi - 7;
+    top = self->posY.i.hi + 7;
 
-    poly->y0 = poly->y1 = posYleft;
-    poly->y2 = poly->y3 = posYright;
+    poly->y0 = poly->y1 = bottom;
+    poly->y2 = poly->y3 = top;
 
     if (arg1 & 2) {
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
