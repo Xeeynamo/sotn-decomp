@@ -864,7 +864,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
-extern u8 D_8003BDEC[];
+extern u8 D_8003BDEC[0x300];
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;

@@ -84,13 +84,37 @@ ServantDesc g_ServantDesc = {
 typedef struct {
     void (*Init)();
     void (*Update)();
+    bool showMenu;
     const char* name;
 } DebugMenu;
+
+void Dummy() {}
+void DummyYummyTummy() {}
+void InitEntitySpawn(void);
+void InitSfxPlayer(void);
+void InitDraTest800FD874(void);
+void InitCollisionViewer(void);
+void InitFlagChecker(void);
+void UpdateDraEntitySpawn();
+void UpdateStageEntitySpawn();
+void UpdateSfxPlayer(void);
+void UpdateDraTest800FD874(void);
+void UpdateCollisionViewer(void);
+void UpdateFlagChecker(void);
+
+DebugMenu g_DebugMenus[] = {
+    DummyYummyTummy,     DummyYummyTummy,        true,  "Debug mode",
+    InitEntitySpawn,     UpdateDraEntitySpawn,   true,  "DRA spawn",
+    InitEntitySpawn,     UpdateStageEntitySpawn, true,  "Stage spawn",
+    InitSfxPlayer,       UpdateSfxPlayer,        true,  "SFX player",
+    InitDraTest800FD874, UpdateDraTest800FD874,  true,  "Inventory",
+    InitCollisionViewer, UpdateCollisionViewer,  false, "Collision viewer",
+    InitFlagChecker,     UpdateFlagChecker,      true,  "Castleflags",
+};
 
 int g_DebugMode;
 Primitive* g_PrimFirst;
 Primitive* g_PrimCur;
-DebugMenu g_DebugMenus[];
 
 void DestroyEntity(Entity* item);
 void Init() {
@@ -119,8 +143,8 @@ void Init() {
 
     g_PrimFirst = &D_80086FEC[e->firstPolygonIndex];
     DRAW_RESET();
-    DRAW_RECT(158, 22, 84, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
-    FILL_RECT(158, 22, 84, 14, 0x00, 0x30, 0x60, 0x31);
+    DRAW_RECT(159, 22, 90, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
+    FILL_RECT(159, 22, 90, 14, 0x00, 0x30, 0x60, 0x31);
 
     g_DebugMode = 0;
     for (i = 0; i < LEN(g_DebugMenus); i++) {
@@ -132,40 +156,20 @@ void Update(Entity* e) {
     BeginFont();
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
-        if (g_DebugMode > LEN(g_DebugMenus) - 1) {
+        if (g_DebugMode >= LEN(g_DebugMenus)) {
             g_DebugMode = 0;
         }
     }
 
-    if (g_DebugMode == 0) {
+    if (g_DebugMenus[g_DebugMode].showMenu) {
+        SHOW_PRIMS(0, 5);
         SetFontCoord(160, 26);
-        FntPrint("DEBUG MODE");
-    } else {
         FntPrint(g_DebugMenus[g_DebugMode].name);
-        g_DebugMenus[g_DebugMode].Update();
+    } else {
+        HIDE_PRIMS(0, 5);
     }
+    SetFontCoord(8, 48);
+    g_DebugMenus[g_DebugMode].Update();
 
     EndFont();
 }
-
-void Dummy() {}
-void InitEntitySpawn(void);
-void InitSfxPlayer(void);
-void InitDraTest800FD874(void);
-void InitCollisionViewer(void);
-void InitFlagChecker(void);
-void UpdateDraEntitySpawn();
-void UpdateStageEntitySpawn();
-void UpdateSfxPlayer(void);
-void UpdateDraTest800FD874(void);
-void UpdateCollisionViewer(void);
-void UpdateFlagChecker(void);
-
-DebugMenu g_DebugMenus[] = {
-    InitEntitySpawn,     UpdateDraEntitySpawn,   "DRA entities",
-    InitEntitySpawn,     UpdateStageEntitySpawn, "Stage entities",
-    InitSfxPlayer,       UpdateSfxPlayer,        "SFX player",
-    InitDraTest800FD874, UpdateDraTest800FD874,  "Add inventory",
-    InitCollisionViewer, UpdateCollisionViewer,  "Collision viewer",
-    InitFlagChecker,     UpdateFlagChecker,      "Castle flags",
-};
