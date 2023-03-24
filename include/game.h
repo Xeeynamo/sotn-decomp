@@ -1054,9 +1054,6 @@ extern s32 g_mapTilesetId; // 0x80097918
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
-extern s32 D_80097930[]; // confirmed array
-extern s32 D_80097934;
-extern u32 D_80097944;
 extern PlayerStatus g_Status;
 extern u8 D_80097B9C[];
 extern s32 g_player_total_con;

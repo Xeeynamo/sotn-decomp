@@ -234,7 +234,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
     u32* temp_s5 = D_8006C37C->_unk_0474;
-    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
     s32 var_s2 = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
@@ -268,7 +268,7 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             poly->x1 = poly->x3 = temp_polyx0;
         }
         AddPrim(&temp_s5[var_s2], poly);
-        D_80097930[0]++;
+        g_GpuUsage.gt4++;
         func_800F53D4(tpage, var_s2);
     }
 }
@@ -281,7 +281,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuRect);
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
     u32* temp_s1 = D_8006C37C->_unk_0474;
-    POLY_G4* poly = &D_8006C37C->polyG4[D_80097930[1]];
+    POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage.g4];
     s32 temp_s2 = context->unk18 + 1;
     u32 temp;
 
@@ -302,7 +302,7 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
         AddPrim(&temp_s1[temp_s2], poly);
-        D_80097930[1]++;
+        g_GpuUsage.g4++;
         func_800F53D4(0, temp_s2);
     }
 }
