@@ -26,8 +26,7 @@ s16 g_FontCoordY;
 FntStream Font[];
 
 void InitFont() {
-    g_FontStreamId = FntOpen(DefaultFontX, DefaultFontY, 256, 240, 0, 1024);
-    g_PrevFontStreamId = g_FontStreamId - 1;
+    g_FontStreamId = 0;
     g_FontCoordX = DefaultFontX;
     g_FontCoordY = DefaultFontY;
 }
@@ -43,12 +42,15 @@ void SetFontCoord(int x, int y) {
 }
 
 void BeginFont() {
+    Font[g_FontStreamId].x = -255;
+    Font[g_FontStreamId].y = -255;
+    FntFlush(-1);
     Font[g_FontStreamId].x = g_FontCoordX = DefaultFontX;
     Font[g_FontStreamId].y = g_FontCoordY = DefaultFontY;
-    SetDumpFnt(g_FontStreamId);
+    SetDumpFnt(0);
 }
 
 void EndFont() {
     FntFlush(g_FontStreamId);
-    SetDumpFnt(g_PrevFontStreamId);
+    SetDumpFnt(0);
 }
