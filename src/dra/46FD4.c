@@ -16,7 +16,7 @@ void func_800E6FD4(void) {
                 D_8006C398 = 1;
                 D_8006BAFC = 0x18;
                 func_800E3618(0x140);
-                D_8013640C = AllocPolygons(4, 2);
+                D_8013640C = AllocPrimitives(4, 2);
                 poly = &g_PrimBuf[D_8013640C];
                 func_80107360(poly, 44, 96, 232, 32, 0, 0);
                 func_801072BC(poly);
@@ -71,7 +71,7 @@ void func_800E6FD4(void) {
                 ((POLY_GT4*)poly->tag)->pad3 = 8;
             }
             if (temp == 0) {
-                FreePolygons(D_8013640C);
+                FreePrimitives(D_8013640C);
                 D_80073060++;
             }
             break;

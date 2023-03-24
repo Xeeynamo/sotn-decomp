@@ -63,13 +63,13 @@ void func_80102EB8(void) {
     POLY_GT4 *poly1, *poly2, *poly3;
     s32 i;
 
-    D_80137E58 = AllocPolygons(4, 3);
+    D_80137E58 = AllocPrimitives(4, 3);
     poly1 = &g_PrimBuf[D_80137E58];
 
-    D_80137E5C = AllocPolygons(3, 3);
+    D_80137E5C = AllocPrimitives(3, 3);
     poly2 = &g_PrimBuf[D_80137E5C];
 
-    D_80137E60 = AllocPolygons(2, 12);
+    D_80137E60 = AllocPrimitives(2, 12);
     poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
@@ -165,9 +165,9 @@ void func_80103EAC(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103ED4);
 
 void func_8010427C(void) {
-    FreePolygons(D_80137E40);
-    FreePolygons(D_80137E44);
-    FreePolygons(D_80137E48);
+    FreePrimitives(D_80137E40);
+    FreePrimitives(D_80137E44);
+    FreePrimitives(D_80137E48);
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801042C4);
@@ -189,7 +189,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        FreePolygons(entity->firstPolygonIndex);
+        FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;

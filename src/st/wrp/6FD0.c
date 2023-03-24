@@ -1471,7 +1471,7 @@ void EntityWarpRoom(Entity* entity) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        firstPolyIndex = g_api.AllocPolygons(4, 24);
+        firstPolyIndex = g_api.AllocPrimitives(4, 24);
         if (firstPolyIndex == -1) {
             entity->step = 0;
             return;
@@ -1914,7 +1914,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -2313,7 +2313,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -2826,7 +2826,7 @@ void CollectGold(u16 goldSize) {
 
     unk = &D_80097410;
     if (*unk) {
-        g_api.FreePolygons(D_80097414);
+        g_api.FreePrimitives(D_80097414);
         *unk = 0;
     }
 
@@ -3357,7 +3357,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
         }
     }
 
-    firstPolyIndex = g_api.AllocPolygons(6, polyCount + 4);
+    firstPolyIndex = g_api.AllocPrimitives(6, polyCount + 4);
     D_80097414 = firstPolyIndex;
     if (firstPolyIndex == (-1)) {
         return;

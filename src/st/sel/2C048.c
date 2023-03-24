@@ -87,7 +87,7 @@ void func_801ACC7C(void) {
     POLY_GT4* poly;
     s32 i;
 
-    firstPolygonIndex = g_api.AllocPolygons(4, 3);
+    firstPolygonIndex = g_api.AllocPrimitives(4, 3);
     poly = &g_PrimBuf[firstPolygonIndex];
     D_801BAFC0 = firstPolygonIndex;
 
@@ -100,7 +100,7 @@ void func_801ACC7C(void) {
         poly = (POLY_GT4*)poly->tag;
     }
 
-    firstPolygonIndex = g_api.AllocPolygons(1, 2);
+    firstPolygonIndex = g_api.AllocPrimitives(1, 2);
     poly = &g_PrimBuf[firstPolygonIndex];
     D_801BAFC4 = firstPolygonIndex;
 

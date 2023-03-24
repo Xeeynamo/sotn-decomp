@@ -761,11 +761,11 @@ void func_800F86E4(void) {
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        FreePolygons(D_801377FC[i]);
+        FreePrimitives(D_801377FC[i]);
     }
 
-    FreePolygons(D_8013783C);
-    FreePolygons(D_80137840);
+    FreePrimitives(D_8013783C);
+    FreePrimitives(D_80137840);
 }
 
 void func_800F8754(MenuContext* context, s32 x, s32 y) {

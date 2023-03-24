@@ -306,7 +306,7 @@ void func_801623E0(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex == -1) {
             func_80156C60(entity);
@@ -368,7 +368,7 @@ void func_80162604(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != (-1)) {
             entity->unk7E.modeU16 = 0;
@@ -538,7 +538,7 @@ void func_801641A0(Entity* entity) {
     entity->posY.i.hi = PLAYER.posY.i.hi - 8;
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->unk7C.s = 16;
@@ -844,7 +844,7 @@ void func_80169C10(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
@@ -980,7 +980,7 @@ void func_8016D328(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;

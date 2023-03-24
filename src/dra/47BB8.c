@@ -1157,7 +1157,7 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
         if (ptr->tag == 0) {
             ptr->tag = 1;
             setcode(poly, 7);
-            *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePolygons
+            *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePrimitives
             return ptr;
         }
     }
@@ -1167,37 +1167,37 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDB58);
 
-s32 AllocPolygons(u8 primitives, s32 count) {
-    s32 polyIndex = 0;
-    POLY_GT4* poly = g_PrimBuf;
-    u8* polyCode = &g_PrimBuf->type;
+s32 AllocPrimitives(u8 type, s32 count) {
+    s32 primIndex = 0;
+    Primitive* prim = g_PrimBuf;
+    u8* primType = &g_PrimBuf->type;
     s16 index;
 
-    while (polyIndex < 1024) {
-        if (*polyCode == 0) {
-            func_800EDA70(poly);
+    while (primIndex < (s32)LEN(g_PrimBuf)) {
+        if (*primType == 0) {
+            func_800EDA70(prim);
             if (count == 1) {
-                *polyCode = primitives;
-                poly->tag = 0;
-                if (D_800A2438 < polyIndex) {
-                    D_800A2438 = polyIndex;
+                *primType = type;
+                prim->next = NULL;
+                if (D_800A2438 < primIndex) {
+                    D_800A2438 = primIndex;
                 }
             } else {
-                *polyCode = primitives;
-                index = AllocPolygons(primitives, count - 1);
+                *primType = type;
+                index = AllocPrimitives(type, count - 1);
                 if (index == -1) {
-                    *polyCode = 0;
+                    *primType = 0;
                     return -1;
                 }
-                poly->tag = &g_PrimBuf[index];
+                prim->next = &g_PrimBuf[index];
             }
-            return (s16)polyIndex;
+            return (s16)primIndex;
         }
 
-        polyIndex++;
-        polyCode += sizeof(POLY_GT4);
-        poly++;
-        if (polyIndex >= 0x400) {
+        primIndex++;
+        primType += sizeof(Primitive);
+        prim++;
+        if (primIndex >= 0x400) {
             return -1;
         }
     }
@@ -1241,18 +1241,18 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
     return (s16)temp_v0;
 }
 
-void FreePolygons(s32 polygonIndex) {
-    POLY_GT4* poly = &g_PrimBuf[polygonIndex];
+void FreePrimitives(s32 primitiveIndex) {
+    Primitive* prim = &g_PrimBuf[primitiveIndex];
 
-    if (poly) {
+    if (prim) {
         do {
-            if (poly->code == 7) {
-                *(*(s32**)&poly->r1) = 0; // does not make any sense?!
-                setcode(poly, 0);
+            if (prim->type == PRIM_ENV) {
+                *(*(s32**)&prim->r1) = 0;
+                prim->type = PRIM_NONE;
             } else
-                setcode(poly, 0);
-            poly = (POLY_GT4*)poly->tag;
-        } while (poly);
+                prim->type = PRIM_NONE;
+            prim = prim->next;
+        } while (prim);
     }
 }
 
