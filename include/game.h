@@ -925,6 +925,7 @@ extern s32 D_8006CBC4;
 extern u16 g_Clut[];
 extern u16 D_8006F3CC[];
 extern u16 D_8006F42C[];
+extern s16 D_800705CC[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
