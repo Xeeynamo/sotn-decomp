@@ -325,6 +325,8 @@ extern u_short LoadTPage(PixPattern* pix,  // Pointer to texture pattern start a
           int w, int h  // Texture pattern size
 );
 
+extern u_short LoadClut2(u_long *clut, int x, int y);
+
 // clang-format on
 
 /**

@@ -684,14 +684,12 @@ void func_800EAEA4(void) {
     u16* ptr;
     s32 i;
 
-    for (ptr = &D_801374F8, i = 0; i < 32; i++) {
-        *ptr = ~0;
-        ptr++;
+    for (ptr = D_801374F8, i = 0; i < 32; i++) {
+        *ptr++ = ~0;
     }
 
-    for (ptr = &D_80137538, i = 0; i < 32; i++) {
-        *ptr = ~0;
-        ptr++;
+    for (ptr = D_80137538, i = 0; i < 32; i++) {
+        *ptr++ = ~0;
     }
 }
 
@@ -880,7 +878,40 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB534);
+void func_800EB534(s32 equipIcon, s32 palette, s32 index) {
+    u8* iconGfx;
+    s32 vramX;
+    s32 var_t0;
+    s32 i;
+
+    if (D_801374F8[index] != equipIcon) {
+        iconGfx = g_GfxEquipIcon[equipIcon];
+        vramX = ((index & 7) * 4) + 0x280;
+        var_t0 = index;
+        if (index < 0) {
+            var_t0 = index + 7;
+        }
+
+        LoadTPage(iconGfx, 0, 0, vramX, (var_t0 >> 3) * 0x10 + 0x180, 16, 16);
+    }
+
+    if (D_80137538[index] != palette) {
+        for (i = 0; i < 16; i++) {
+            if (D_800705CC) { // FAKE
+            }
+            D_800705CC[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
+        }
+
+        LoadClut2(D_800705CC, 0, 0xFD);
+        LoadClut2(D_800705CC + 0x100, 0, 0xFE);
+    }
+    if (D_800973EC == 0) {
+        D_80137478[index] = equipIcon;
+        D_801374B8[index] = palette;
+    }
+    D_801374F8[index] = equipIcon;
+    D_80137538[index] = palette;
+}
 
 void func_800EB6B4(void) {
     s32 i;
