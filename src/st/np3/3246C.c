@@ -1676,4 +1676,3 @@ void func_801BE864(Entity* self, s32 arg1) {
                 128;
     }
 }
-
