@@ -1120,23 +1120,23 @@ void LoadRoomLayer(s32 arg0) {
     }
 }
 
-void func_800EDA70(s32* context) {
+void func_800EDA70(s32* primData) {
     s32 i;
     s32 n;
 
-    for (n = 13, i = 0; i < n; i++) {
-        *context++ = 0;
+    for (n = sizeof(Primitive) / sizeof(*primData), i = 0; i < n; i++) {
+        *primData++ = 0;
     }
 }
 
 void func_800EDA94(void) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 i;
 
-    for (i = 0, poly = g_PrimBuf; i < 0x500; i++) {
-        func_800EDA70((s32*)poly);
-        setcode(poly, 0);
-        poly++;
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
+        func_800EDA70((s32*)prim);
+        prim->type = PRIM_NONE;
+        prim++;
     }
 }
 
@@ -1173,7 +1173,7 @@ s32 AllocPrimitives(u8 type, s32 count) {
     u8* primType = &g_PrimBuf->type;
     s16 index;
 
-    while (primIndex < (s32)LEN(g_PrimBuf)) {
+    while (primIndex < MAX_PRIM_ALLOC_COUNT) {
         if (*primType == 0) {
             func_800EDA70(prim);
             if (count == 1) {

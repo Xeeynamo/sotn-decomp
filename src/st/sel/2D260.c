@@ -751,12 +751,12 @@ void func_801B2CF8(POLY_GT4* poly) {
 
 void func_801B2D1C(void) {
     s32 i;
-    POLY_GT4* poly;
+    Primitive* prim;
 
-    for (i = 0, poly = g_PrimBuf; i < 0x500; i++) {
-        func_801B2CF8((s32*)poly);
-        setcode(poly, 0);
-        poly++;
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
+        func_801B2CF8((s32*)prim);
+        prim->type = PRIM_NONE;
+        prim++;
     }
 }
 

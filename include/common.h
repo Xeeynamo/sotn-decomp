@@ -5,7 +5,8 @@
 #include "macros.h"
 #include "types.h"
 
-#define LEN(x) (sizeof(x) / sizeof(*(x)))
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
+#define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))
 
 #define LOH(x) (*(s16*)&(x))
 #define LOB(x) (*(s8*)&(x))

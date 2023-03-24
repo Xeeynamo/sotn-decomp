@@ -81,6 +81,9 @@ typedef struct Primitive {
 #define PAD_DOWN 0x4000
 #define PAD_LEFT 0x8000
 
+#define MAX_PRIM_COUNT 0x500
+#define MAX_PRIM_ALLOC_COUNT 0x400
+
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
@@ -1063,7 +1066,7 @@ extern s32 D_80086FE4;  // ev13 NEW CARD
 extern s32* D_8007EFE4; // 'struct SaveData'?
 extern s32 D_80080FE4;  // maybe PixPattern[]?
 extern s8 D_80082FE4;
-extern Primitive g_PrimBuf[0x400]; // entity polygons
+extern Primitive g_PrimBuf[MAX_PRIM_COUNT]; // entity polygons
 extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
