@@ -12,7 +12,7 @@ void func_801027C4(u32 arg0) {
     POLY_GT4* poly2;
     u8 temp_v0;
     u8 new_var2;
-    poly1 = &D_80086FEC[D_8013799C];
+    poly1 = &g_PrimBuf[D_8013799C];
     poly2 = poly1->tag;
     switch (arg0) {
     case 0:

@@ -1133,7 +1133,7 @@ void func_800EDA94(void) {
     POLY_GT4* poly;
     s32 i;
 
-    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
+    for (i = 0, poly = g_PrimBuf; i < 0x500; i++) {
         func_800EDA70((s32*)poly);
         setcode(poly, 0);
         poly++;
@@ -1169,8 +1169,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDB58);
 
 s32 AllocPolygons(u8 primitives, s32 count) {
     s32 polyIndex = 0;
-    POLY_GT4* poly = D_80086FEC;
-    u8* polyCode = &D_80086FEC->code;
+    POLY_GT4* poly = g_PrimBuf;
+    u8* polyCode = &g_PrimBuf->type;
     s16 index;
 
     while (polyIndex < 1024) {
@@ -1189,7 +1189,7 @@ s32 AllocPolygons(u8 primitives, s32 count) {
                     *polyCode = 0;
                     return -1;
                 }
-                poly->tag = &D_80086FEC[index];
+                poly->tag = &g_PrimBuf[index];
             }
             return (s16)polyIndex;
         }
@@ -1226,7 +1226,7 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
             } else {
                 *polyCode = primitives;
                 foundPolyIndex = func_800EDD9C(primitives, count - 1);
-                poly->tag = &D_80086FEC[foundPolyIndex];
+                poly->tag = &g_PrimBuf[foundPolyIndex];
             }
             foundPolyIndex = polyIndex;
             return foundPolyIndex;
@@ -1242,7 +1242,7 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
 }
 
 void FreePolygons(s32 polygonIndex) {
-    POLY_GT4* poly = &D_80086FEC[polygonIndex];
+    POLY_GT4* poly = &g_PrimBuf[polygonIndex];
 
     if (poly) {
         do {

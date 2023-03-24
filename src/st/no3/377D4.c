@@ -197,7 +197,7 @@ void EntityCavernDoor(Entity* self) {
                 return;
             }
 
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&self->unk7C = poly;
             self->flags |= FLAG_FREE_POLYGONS;
@@ -337,7 +337,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -412,7 +412,7 @@ void EntityPathBlockTallWeight(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -941,7 +941,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;

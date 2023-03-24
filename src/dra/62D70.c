@@ -64,13 +64,13 @@ void func_80102EB8(void) {
     s32 i;
 
     D_80137E58 = AllocPolygons(4, 3);
-    poly1 = &D_80086FEC[D_80137E58];
+    poly1 = &g_PrimBuf[D_80137E58];
 
     D_80137E5C = AllocPolygons(3, 3);
-    poly2 = &D_80086FEC[D_80137E5C];
+    poly2 = &g_PrimBuf[D_80137E5C];
 
     D_80137E60 = AllocPolygons(2, 12);
-    poly3 = &D_80086FEC[D_80137E60];
+    poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
         func_80107360(poly1, 98, 79, 96, 0, 0, 0);
@@ -730,7 +730,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
