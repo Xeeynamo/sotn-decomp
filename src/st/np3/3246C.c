@@ -1769,7 +1769,7 @@ void EntityInventoryDrop(Entity* self) {
             top = 0x81;
             top = vramY | top;
             bottom = vramY | 0x8F;
-            
+
             poly->tpage = 0x1A;
             poly->v3 = bottom;
             poly->clut = index + 464;
@@ -1798,7 +1798,7 @@ void EntityInventoryDrop(Entity* self) {
         }
 
         MoveEntity();
-        
+
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
                              0);
 
