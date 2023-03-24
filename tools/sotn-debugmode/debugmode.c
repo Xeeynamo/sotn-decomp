@@ -81,24 +81,21 @@ ServantDesc g_ServantDesc = {
 
 };
 
+typedef struct {
+    void (*Init)();
+    void (*Update)();
+    const char* name;
+} DebugMenu;
+
 int g_DebugMode;
 Primitive* g_PrimFirst;
 Primitive* g_PrimCur;
+DebugMenu g_DebugMenus[];
 
-void InitEntitySpawn(void);
-void InitSfxPlayer(void);
-void InitDraTest800FD874(void);
-void InitFlagChecker(void);
 void DestroyEntity(Entity* item);
 void Init() {
     Entity* e;
-
-    g_DebugMode = 0;
-    InitFont();
-    InitEntitySpawn();
-    InitSfxPlayer();
-    InitDraTest800FD874();
-    InitFlagChecker();
+    int i;
 
     // forces to make the game think that the Familiar is actually active
     e = &g_EntityArray[4];
@@ -124,52 +121,51 @@ void Init() {
     DRAW_RESET();
     DRAW_RECT(158, 22, 84, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
     FILL_RECT(158, 22, 84, 14, 0x00, 0x30, 0x60, 0x31);
+
+    g_DebugMode = 0;
+    for (i = 0; i < LEN(g_DebugMenus); i++) {
+        g_DebugMenus[i].Init();
+    }
 }
-void UpdateFlagChecker(void);
-void UpdateEntitySpawn(int variant);
-void UpdateSfxPlayer(void);
-void UpdateDraTest800FD874(void);
-void CollisionDebug(void);
 
 void Update(Entity* e) {
     BeginFont();
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
+        if (g_DebugMode > LEN(g_DebugMenus) - 1) {
+            g_DebugMode = 0;
+        }
     }
 
     if (g_DebugMode == 0) {
-        SHOW_PRIMS(0, 5);
         SetFontCoord(160, 26);
         FntPrint("DEBUG MODE");
     } else {
-        HIDE_PRIMS(0, 5);
-        switch (g_DebugMode) {
-        case 1:
-            e->firstPolygonIndex = -1;
-            UpdateEntitySpawn(0);
-            break;
-        case 2:
-            UpdateEntitySpawn(1);
-            break;
-        case 3:
-            UpdateSfxPlayer();
-            break;
-        case 4:
-            UpdateDraTest800FD874();
-            break;
-        case 5:
-            CollisionDebug();
-            break;
-        case 6:
-            UpdateFlagChecker();
-            break;
-        default:
-            g_DebugMode = 0;
-            break;
-        }
+        FntPrint(g_DebugMenus[g_DebugMode].name);
+        g_DebugMenus[g_DebugMode].Update();
     }
 
     EndFont();
 }
 
 void Dummy() {}
+void InitEntitySpawn(void);
+void InitSfxPlayer(void);
+void InitDraTest800FD874(void);
+void InitCollisionViewer(void);
+void InitFlagChecker(void);
+void UpdateDraEntitySpawn();
+void UpdateStageEntitySpawn();
+void UpdateSfxPlayer(void);
+void UpdateDraTest800FD874(void);
+void UpdateCollisionViewer(void);
+void UpdateFlagChecker(void);
+
+DebugMenu g_DebugMenus[] = {
+    InitEntitySpawn,     UpdateDraEntitySpawn,   "DRA entities",
+    InitEntitySpawn,     UpdateStageEntitySpawn, "Stage entities",
+    InitSfxPlayer,       UpdateSfxPlayer,        "SFX player",
+    InitDraTest800FD874, UpdateDraTest800FD874,  "Add inventory",
+    InitCollisionViewer, UpdateCollisionViewer,  "Collision viewer",
+    InitFlagChecker,     UpdateFlagChecker,      "Castle flags",
+};

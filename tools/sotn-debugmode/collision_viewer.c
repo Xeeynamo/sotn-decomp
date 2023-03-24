@@ -26,7 +26,9 @@ u8 GetColType(s32 x, s32 y) {
     return colType;
 }
 
-void CollisionDebug(void) {
+void InitCollisionViewer(void) {}
+
+void UpdateCollisionViewer(void) {
     int x;
     int y;
     u8 colType;

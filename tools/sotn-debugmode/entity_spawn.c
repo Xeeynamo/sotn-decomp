@@ -371,6 +371,9 @@ void UpdateEntitySpawn(int variant) {
     }
 }
 
+void UpdateDraEntitySpawn() { UpdateEntitySpawn(0); }
+void UpdateStageEntitySpawn() { UpdateEntitySpawn(1); }
+
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
     while (current < end) {
