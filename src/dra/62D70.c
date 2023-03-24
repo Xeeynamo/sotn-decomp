@@ -212,8 +212,6 @@ void func_80106670(s32 blendMode);
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106670);
 #else
-extern u32 D_80097944; // tile count?
-
 // https://decomp.me/scratch/iTgjO
 void func_80106670(s32 blendMode) {
     const int MaxPolyCount = 0x100;
@@ -235,12 +233,12 @@ void func_80106670(s32 blendMode) {
     temp_a0 = D_8006C37C;
     entity = g_EntityArray;
     temp_s7 = temp_a0->_unk_0474;
-    tile = &temp_a0->tiles[D_80097944];
+    tile = &temp_a0->tiles[g_GpuUsage.tile];
     sp20 = &temp_a0->drawModes[g_GpuUsage.drawModes];
     while (polyCount < 0x40) {
         if (entity->unk3C != 0) {
             s32 var_a0_2;
-            if (D_80097944 >= MaxPolyCount) {
+            if (g_GpuUsage.tile >= MaxPolyCount) {
                 break;
             }
             absY = (u16)entity->posY.i.hi + (u16)g_backbufferY;
@@ -267,7 +265,7 @@ void func_80106670(s32 blendMode) {
             SetSemiTrans(tile, 1);
             AddPrim(temp_s7 + var_s8 * 4, tile);
             tile++;
-            D_80097944++;
+            g_GpuUsage.tile++;
         }
         polyCount++;
         entity++;
@@ -277,7 +275,7 @@ void func_80106670(s32 blendMode) {
         while (polyCount < MaxPolyCount) {
             if (entity->unk3C != 0) {
                 s32 var_a0_2;
-                if (D_80097944 >= MaxPolyCount) {
+                if (g_GpuUsage.tile >= MaxPolyCount) {
                     break;
                 }
                 absY_2 = (u16)entity->posY.i.hi + (u16)g_backbufferY;
@@ -313,7 +311,7 @@ void func_80106670(s32 blendMode) {
                 SetSemiTrans(tile, 1);
                 AddPrim(temp_s7 + (var_s8 * (new_var2 = 4)), tile);
                 tile++;
-                D_80097944++;
+                g_GpuUsage.tile++;
             }
             polyCount++;
             entity++;
