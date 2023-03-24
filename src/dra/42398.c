@@ -678,7 +678,7 @@ void func_800E4A04(void) { s32 pad[3]; }
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
 
 void func_800E5358(void) {
-    POLY_GT4* poly = &D_80086FEC[D_8013640C];
+    POLY_GT4* poly = &g_PrimBuf[D_8013640C];
     s32 i;
 
     for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {

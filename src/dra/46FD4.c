@@ -17,7 +17,7 @@ void func_800E6FD4(void) {
                 D_8006BAFC = 0x18;
                 func_800E3618(0x140);
                 D_8013640C = AllocPolygons(4, 2);
-                poly = &D_80086FEC[D_8013640C];
+                poly = &g_PrimBuf[D_8013640C];
                 func_80107360(poly, 44, 96, 232, 32, 0, 0);
                 func_801072BC(poly);
                 poly->tpage = 0x1C;
@@ -34,7 +34,7 @@ void func_800E6FD4(void) {
             break;
 
         case 1:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             poly->p1--;
             if (poly->p1 == 0) {
                 D_80073060++;
@@ -42,7 +42,7 @@ void func_800E6FD4(void) {
             break;
 
         case 2:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             temp = poly->r0 + 1;
             func_80107250(poly, temp);
             if (temp == 96) {
@@ -55,7 +55,7 @@ void func_800E6FD4(void) {
             break;
 
         case 3:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             poly->p1--;
             if (poly->p1 == 0) {
                 D_80073060++;
@@ -63,7 +63,7 @@ void func_800E6FD4(void) {
             break;
 
         case 4:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             temp = poly->r0 - 1;
             func_80107250(poly, temp);
             if (temp == 64) {

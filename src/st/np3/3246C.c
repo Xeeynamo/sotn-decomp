@@ -189,7 +189,7 @@ void func_801B40F8(Entity* self) {
                 return;
             }
 
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
             *((s32*)(&self->unk7C)) = poly;
             self->flags |= FLAG_FREE_POLYGONS;
@@ -333,7 +333,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -412,7 +412,7 @@ void EntityPathBlockTallWeight(Entity* self) {
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -1868,7 +1868,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
                 DestroyEntity(entity);
                 return;
             }
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             entity->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&entity->unk7C.s = poly;
             entity->flags |= FLAG_FREE_POLYGONS;

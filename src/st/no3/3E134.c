@@ -1103,7 +1103,7 @@ void func_801C6FF4(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
 
     left = entity->posX.i.hi - 7;
     right = entity->posX.i.hi + 7;
@@ -1662,7 +1662,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
                 DestroyEntity(entity);
                 return;
             }
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             entity->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&entity->unk7C.s = poly;
             entity->flags |= FLAG_FREE_POLYGONS;

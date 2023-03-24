@@ -1476,7 +1476,7 @@ void EntityWarpRoom(Entity* entity) {
             entity->step = 0;
             return;
         }
-        poly = &D_80086FEC[firstPolyIndex];
+        poly = &g_PrimBuf[firstPolyIndex];
         temp_s5 = entity->posY.i.hi; // must not be lhu but lh
         temp_s4 = entity->posX.i.hi; // must not be lhu but lh
         entity->firstPolygonIndex = firstPolyIndex;
@@ -2928,7 +2928,7 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[arg0->firstPolygonIndex];
+    poly = &g_PrimBuf[arg0->firstPolygonIndex];
 
     left = arg0->posX.i.hi - 7;
     right = arg0->posX.i.hi + 7;
@@ -3362,7 +3362,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     if (firstPolyIndex == (-1)) {
         return;
     }
-    poly = &D_80086FEC[firstPolyIndex];
+    poly = &g_PrimBuf[firstPolyIndex];
     setcode(poly, 3);
     poly->r3 = 0;
     poly->r2 = 0;

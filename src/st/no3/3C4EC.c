@@ -160,7 +160,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
             DestroyEntity(entity);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         var_a2 = 0;
         entity->posX.i.hi = 128;
         entity->firstPolygonIndex = firstPolygonIndex;
@@ -196,7 +196,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
         new_var2 = 0x80 - entity->posX.i.hi;
         entity->posX.i.hi = 0x80;
         firstPolygonIndex = entity->firstPolygonIndex;
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         while (poly != 0) {
             temp_v0_2 = poly->x2 - new_var2;
             temp_v1_2 = temp_v0_2 + 0x1E;

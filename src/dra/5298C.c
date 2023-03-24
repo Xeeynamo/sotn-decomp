@@ -897,7 +897,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8E18);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8F28);
 
 void func_800F9690(void) {
-    POLY_GT4* poly = &D_80086FEC[D_8013783C];
+    POLY_GT4* poly = &g_PrimBuf[D_8013783C];
 
     if (D_80137608 != 0) {
         poly->pad3 = 0x80;
@@ -917,17 +917,17 @@ void func_800F96F4(void) { // !Fake:
     s32* new_var;
 
     new_var = D_80137848;
-    poly = &D_80086FEC[D_80137840];
+    poly = &g_PrimBuf[D_80137840];
     temp_a2 = D_80137692 == 0;
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
-        (&D_80086FEC[D_80137840])->pad3 = 0x80;
+        (&g_PrimBuf[D_80137840])->blendMode = 0x80;
         if (D_80137844[0] == 1) {
-            (&D_80086FEC[D_80137840])->clut = 0x188;
+            (&g_PrimBuf[D_80137840])->clut = 0x188;
         } else {
             D_80137844[0] -= 1;
-            (&D_80086FEC[D_80137840])->clut = 0x181;
+            (&g_PrimBuf[D_80137840])->clut = 0x181;
         }
     } else {
         poly->pad3 = 0x8;

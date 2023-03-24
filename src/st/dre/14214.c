@@ -987,7 +987,7 @@ void func_8019C738(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
 
     left = entity->posX.i.hi - 7;
     right = entity->posX.i.hi + 7;
