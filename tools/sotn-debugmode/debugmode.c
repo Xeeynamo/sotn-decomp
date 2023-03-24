@@ -1,5 +1,57 @@
 #include "debugmode.h"
 
+#define DRAW_RESET()                                                           \
+    do {                                                                       \
+        g_PrimCur = g_PrimFirst;                                               \
+    } while (0)
+#define FILL_RECT(x, y, w, h, r, g, b, blend)                                  \
+    do {                                                                       \
+        g_PrimCur->r0 = r;                                                     \
+        g_PrimCur->g0 = g;                                                     \
+        g_PrimCur->b0 = b;                                                     \
+        g_PrimCur->blendMode = blend;                                          \
+        g_PrimCur->x0 = x;                                                     \
+        g_PrimCur->y0 = y;                                                     \
+        g_PrimCur->u0 = w;                                                     \
+        g_PrimCur->v0 = h;                                                     \
+        g_PrimCur->priority = 0x80;                                            \
+        g_PrimCur = g_PrimCur->next;                                           \
+    } while (0)
+
+#define DRAW_RECT(x, y, w, h, r, g, b, blend, th)                              \
+    do {                                                                       \
+        FILL_RECT(x - th, y - th, th, h + th * 2, r, g, b, blend);             \
+        FILL_RECT(x, y - th, w, th, r, g, b, blend);                           \
+        FILL_RECT(x + w, y - th, th, h + th * 2, r, g, b, blend);              \
+        FILL_RECT(x, y + h, w, th, r, g, b, blend);                            \
+    } while (0)
+
+#define HIDE_PRIMS(s, c)                                                       \
+    do {                                                                       \
+        int i;                                                                 \
+        Primitive* prim = g_PrimFirst;                                         \
+        for (i = 0; i < s; i++) {                                              \
+            prim = prim->next;                                                 \
+        }                                                                      \
+        for (i = 0; i < c; i++) {                                              \
+            prim->type |= 0x80;                                                \
+            prim = prim->next;                                                 \
+        }                                                                      \
+    } while (0)
+
+#define SHOW_PRIMS(s, c)                                                       \
+    do {                                                                       \
+        int i;                                                                 \
+        Primitive* prim = g_PrimFirst;                                         \
+        for (i = 0; i < s; i++) {                                              \
+            prim = prim->next;                                                 \
+        }                                                                      \
+        for (i = 0; i < c; i++) {                                              \
+            prim->type &= ~0x80;                                               \
+            prim = prim->next;                                                 \
+        }                                                                      \
+    } while (0)
+
 void Init();
 void Update();
 void Dummy();
@@ -30,6 +82,8 @@ ServantDesc g_ServantDesc = {
 };
 
 int g_DebugMode;
+Primitive* g_PrimFirst;
+Primitive* g_PrimCur;
 
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
@@ -47,8 +101,8 @@ void Init() {
     InitFlagChecker();
 
     // forces to make the game think that the Familiar is actually active
-    DestroyEntity(e);
     e = &g_EntityArray[4];
+    DestroyEntity(e);
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
     e->objectId = 0xD1;
@@ -58,6 +112,18 @@ void Init() {
     // the following two flags are important to disallow the game engine to
     // destroy the entity when the room chnages.
     e->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+
+    e->flags |= FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
+    e->firstPolygonIndex = g_api.AllocPolygons(PRIM_TILE, 5);
+    if (e->firstPolygonIndex == -1) {
+        g_PrimFirst = NULL;
+        return;
+    }
+
+    g_PrimFirst = &D_80086FEC[e->firstPolygonIndex];
+    DRAW_RESET();
+    DRAW_RECT(158, 22, 84, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
+    FILL_RECT(158, 22, 84, 14, 0x00, 0x30, 0x60, 0x31);
 }
 void UpdateFlagChecker(void);
 void UpdateEntitySpawn(int variant);
@@ -71,32 +137,36 @@ void Update(Entity* e) {
         g_DebugMode++;
     }
 
-    switch (g_DebugMode) {
-    case 0:
-        SetFontCoord(160, 24);
+    if (g_DebugMode == 0) {
+        SHOW_PRIMS(0, 5);
+        SetFontCoord(160, 26);
         FntPrint("DEBUG MODE");
-        break;
-    case 1:
-        UpdateEntitySpawn(0);
-        break;
-    case 2:
-        UpdateEntitySpawn(1);
-        break;
-    case 3:
-        UpdateSfxPlayer();
-        break;
-    case 4:
-        UpdateDraTest800FD874();
-        break;
-    case 5:
-        CollisionDebug();
-        break;
-    case 6:
-        UpdateFlagChecker();
-        break;
-    default:
-        g_DebugMode = 0;
-        break;
+    } else {
+        HIDE_PRIMS(0, 5);
+        switch (g_DebugMode) {
+        case 1:
+            e->firstPolygonIndex = -1;
+            UpdateEntitySpawn(0);
+            break;
+        case 2:
+            UpdateEntitySpawn(1);
+            break;
+        case 3:
+            UpdateSfxPlayer();
+            break;
+        case 4:
+            UpdateDraTest800FD874();
+            break;
+        case 5:
+            CollisionDebug();
+            break;
+        case 6:
+            UpdateFlagChecker();
+            break;
+        default:
+            g_DebugMode = 0;
+            break;
+        }
     }
 
     EndFont();
