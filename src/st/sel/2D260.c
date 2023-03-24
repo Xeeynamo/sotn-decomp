@@ -979,7 +979,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(entity->firstPolygonIndex);
+        g_api.FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -1051,7 +1051,7 @@ void func_801B4DE0(void) {
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
         if (firstPolygonIndex != -1) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
@@ -1108,7 +1108,7 @@ void func_801B4FFC(void) {
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
         if (firstPolygonIndex != -1) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;

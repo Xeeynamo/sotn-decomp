@@ -1165,7 +1165,7 @@ void func_801024DC(void) {
     s32 temp_v0_2;
     s32 var_a0;
     u32 temp_v0;
-    temp_v0 = AllocPolygons(1, 4);
+    temp_v0 = AllocPrimitives(1, 4);
     D_8013799C = temp_v0;
     var_v1 = &g_PrimBuf[temp_v0];
     var_a0 = 0;
@@ -1182,7 +1182,7 @@ void func_801024DC(void) {
     }
     D_801379A8 = 0;
     D_801379A4 = 0;
-    temp_v0_2 = AllocPolygons(4, 1);
+    temp_v0_2 = AllocPrimitives(4, 1);
     temp_v1 = &g_PrimBuf[temp_v0_2];
     D_801379A0 = temp_v0_2;
     temp_v1->u1 = 0xFF;

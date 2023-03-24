@@ -132,7 +132,7 @@ void func_80172AE8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = g_api.AllocPolygons(4, 1);
+        ret = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;

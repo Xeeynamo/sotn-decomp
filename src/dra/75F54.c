@@ -1101,7 +1101,7 @@ void EntityExpandingCircle(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = AllocPolygons(4, 1);
+        firstPolygonIndex = AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->unk7C.s = 22;
@@ -1184,7 +1184,7 @@ void func_80127CC8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPolygons(3, 1);
+        ret = AllocPrimitives(3, 1);
         entity->firstPolygonIndex = ret;
 
         if (ret == -1) {
@@ -1299,7 +1299,7 @@ void func_8012B78C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPolygons(4, 1);
+        ret = AllocPrimitives(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;

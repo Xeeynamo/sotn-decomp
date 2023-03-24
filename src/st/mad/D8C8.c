@@ -240,7 +240,7 @@ void Update(void) {
     unk = &D_80097410;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePolygons(D_80097414);
+            g_api.FreePrimitives(D_80097414);
         }
     }
 
@@ -549,7 +549,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
@@ -1011,7 +1011,7 @@ void func_801936E0(u16 goldSize) { // CollectGold
 
     unk = &D_80097410;
     if (*unk) {
-        g_api.FreePolygons(D_80097414); // g_api.FreePolygons
+        g_api.FreePrimitives(D_80097414); // g_api.FreePrimitives
         *unk = 0;
     }
 

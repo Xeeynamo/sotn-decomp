@@ -155,7 +155,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_80180AD0);
-        firstPolygonIndex = g_api.AllocPolygons(4, 9);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 9);
         if (firstPolygonIndex == 0) {
             DestroyEntity(entity);
             return;
