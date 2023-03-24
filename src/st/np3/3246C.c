@@ -1650,7 +1650,32 @@ void EntityExplosion(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BE864);
+void func_801BE864(Entity* self, s32 arg1) {
+    POLY_GT4* poly = &g_PrimBuf[self->firstPolygonIndex];
+    s16 right, left, bottom, top;
+
+    left = self->posX.i.hi - 7;
+    right = self->posX.i.hi + 7;
+
+    poly->x0 = poly->x2 = left;
+    poly->x1 = poly->x3 = right;
+
+    top = self->posY.i.hi - 7;
+    bottom = self->posY.i.hi + 7;
+
+    poly->y0 = poly->y1 = top;
+    poly->y2 = poly->y3 = bottom;
+
+    if (arg1 & RENDERFLAGS_NOSHADOW) {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                255;
+    } else {
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
+            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+                128;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityInventoryDrop);
 
