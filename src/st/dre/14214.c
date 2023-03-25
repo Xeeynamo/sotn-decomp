@@ -833,7 +833,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     if (subId < 0x80) {
         self->objectId = ENTITY_PRICE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
@@ -948,7 +948,7 @@ void CollectLifeVessel(void) {
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityPriceDrop);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityPrizeDrop);
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
