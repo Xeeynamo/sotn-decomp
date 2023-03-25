@@ -39,7 +39,7 @@ bool func_801B0A20(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
-// https://decomp.me/scratch/0tv5m 92.76 %
+// DECOMP_ME_WIP EntityBreakable https://decomp.me/scratch/0tv5m 92.76 %
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
 
 // bust with red eyes that can have a candle on it
@@ -382,7 +382,7 @@ void EntityMoveableBox(Entity* self) {
 }
 
 // lever to operate cannon
-// https://decomp.me/scratch/7ce8a
+// DECOMP_ME_WIP EntityCannonLever https://decomp.me/scratch/7ce8a
 // Matching in PSY-Q 3.5, assembler skips a nop
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
@@ -566,7 +566,7 @@ void func_801B2AD8(Entity* self) {
     }
 }
 
-// https://decomp.me/scratch/ixW6j 93.06%
+// DECOMP_ME_WIP func_801B2D08 https://decomp.me/scratch/ixW6j 93.06%
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
@@ -774,7 +774,7 @@ void func_801B3B78() {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
 
-// https://decomp.me/scratch/bqgN9 95.04 %
+// DECOMP_ME_WIP EntityCloseBossRoom https://decomp.me/scratch/bqgN9 95.04 %
 // figuring out D_80181014 struct might help
 // trigger to stop music and close slogra/gaibon room
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCloseBossRoom);
@@ -1959,7 +1959,7 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-// https://decomp.me/scratch/gto6i
+// DECOMP_ME_WIP func_801BE0D8 https://decomp.me/scratch/gto6i
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BE0D8);
 
 void CollectHeartVessel(void) {
