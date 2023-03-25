@@ -12,6 +12,7 @@ extern void EntityPriceDrop(Entity* entity);
 extern void EntityInventoryDrop(Entity* entity);
 extern POLY_GT4* func_801D2470(POLY_GT4* poly);
 
+extern u16 D_80180A48[];
 extern u16 D_80180A54[];
 extern u16 D_80180A60[];
 extern u16 D_80180A6C[];
@@ -52,6 +53,7 @@ extern const u8* D_801815EC;
 extern const u8* D_801815FC;
 extern u16 D_8018164C[];
 extern s16 D_80181A50[];
+extern u16 D_80181E74[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
 extern s32 D_80181FDC[];
