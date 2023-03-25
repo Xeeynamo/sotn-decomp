@@ -253,7 +253,63 @@ void func_801C070C(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3E908", func_801C07FC);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3E908", func_801C08F0);
+void func_801C08F0(Entity* self) {
+    s16 firstPolygonIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A54);
+        firstPolygonIndex = g_api.AllocPrimitives(2, 1);
+        if (firstPolygonIndex != -1) {
+            prim = &g_PrimBuf[firstPolygonIndex];
+            self->firstPolygonIndex = firstPolygonIndex;
+            self->unk3C = 0;
+            *(s32*)&self->unk7C = prim;
+            self->flags |= FLAG_FREE_POLYGONS;
+            while (prim != NULL) {
+                prim->x0 = prim->x1 = self->posX.i.hi;
+                prim->y0 = prim->y1 = self->posY.i.hi;
+                prim->r0 = 64;
+                prim->r1 = 0;
+                prim->g0 = 64;
+                prim->g1 = 0;
+                prim->b0 = 255;
+                prim->b1 = 16;
+                prim->priority = self->zPriority + 1;
+                prim->blendMode |= 0x37;
+                prim = prim->next;
+            }
+        }
+        break;
+
+    case 1:
+        prim = (Primitive*)*(s32*)&self->unk7C.s;
+        if (func_801C02F4(&D_80182000, 0) & 255) {
+            prim->y1 += 2;
+            if (self->unk2E == 0) {
+                func_801C04F4(self, 1, 2, 0, 0, 3, 0);
+                self->unk2E = 1;
+            }
+        } else {
+            self->accelerationY += 0x400;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->firstPolygonIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3E908", func_801C0B20);
 
