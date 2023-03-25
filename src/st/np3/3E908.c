@@ -260,7 +260,7 @@ void func_801C08F0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A54);
-        firstPolygonIndex = g_api.AllocPrimitives(2, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (firstPolygonIndex != -1) {
             prim = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
