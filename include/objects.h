@@ -69,7 +69,7 @@ typedef enum {
 
 void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
-void EntityPriceDrop(Entity*);
+void EntityPrizeDrop(Entity*);
 void EntityNumericDamage(Entity*);
 void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);

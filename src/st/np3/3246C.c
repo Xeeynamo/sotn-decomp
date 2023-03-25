@@ -1570,7 +1570,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
 
     if (subId < 0x80) {
         self->objectId = ENTITY_PRICE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPriceDrop;
+        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
@@ -1588,9 +1588,9 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BD984);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDA08);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDB64);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", CollectHeart);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDBE4);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", CollectGold);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDCC0);
 
@@ -1616,63 +1616,3 @@ void CollectLifeVessel(void) {
 }
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
-
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityPriceDrop);
-
-void EntityExplosion(Entity* entity) {
-    u32 temp_v0;
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180A54);
-        entity->animSet = 2;
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->blendMode = 0x30;
-
-        if (entity->subId & 0xF0) {
-            entity->palette = 0x8195;
-            entity->blendMode = 0x10;
-        }
-
-        temp_v0 = entity->subId & 0xFF00;
-        if (temp_v0) {
-            entity->zPriority = temp_v0 >> 8;
-        }
-
-        entity->subId = entity->subId & 0xF;
-        entity->accelerationY = D_80181E80[entity->subId];
-        return;
-    }
-
-    entity->posY.val += entity->accelerationY;
-    if (!AnimateEntity(D_80181F2C[entity->subId], entity)) {
-        DestroyEntity(entity);
-    }
-}
-
-void func_801BE864(Entity* self, s32 arg1) {
-    POLY_GT4* poly = &g_PrimBuf[self->firstPolygonIndex];
-    s16 right, left, bottom, top;
-
-    left = self->posX.i.hi - 7;
-    right = self->posX.i.hi + 7;
-
-    poly->x0 = poly->x2 = left;
-    poly->x1 = poly->x3 = right;
-
-    top = self->posY.i.hi - 7;
-    bottom = self->posY.i.hi + 7;
-
-    poly->y0 = poly->y1 = top;
-    poly->y2 = poly->y3 = bottom;
-
-    if (arg1 & RENDERFLAGS_NOSHADOW) {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                255;
-    } else {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                128;
-    }
-}

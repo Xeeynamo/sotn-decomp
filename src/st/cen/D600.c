@@ -491,7 +491,7 @@ void func_80195C0C(void) {
 
 void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId03);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPrizeDrop);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityExplosion);
 
