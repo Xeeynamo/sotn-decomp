@@ -1,6 +1,230 @@
 #include "mad.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityPrizeDrop);
+extern u16 D_801804FC[];
+extern u16 D_80180D4C[];
+extern u8* D_80180DB0[];
+extern u16 D_80180E10[];
+void CollectHeartVessel();
+void CollectLifeVessel();
+void DestroyCurrentEntity();
+void func_80192EF8(u16*, s32);
+void func_801934D0(u32);
+void func_8019362C(); // CollectHeart
+void func_801936E0(); // CollectGold
+void func_801937EC();
+extern void (*D_8003C7B4)(s32);
+extern s16 (*D_8003C7B8)(s32 type, s32 count);
+extern void (*D_8003C7BC)(s32 x, s32 y, Collider* res, s32 unk);
+
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityPrizeDrop);
+// #else
+void EntityPrizeDrop(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s16 firstPrimIndex;
+    s16 var_a2;
+    u16 itemId;
+    s16 temp_a0;
+
+    itemId = self->subId & 0x7FFF;
+    if (self->step != 0) {
+        AnimateEntity(D_80180DB0[itemId], self);
+        if (self->step && self->step < 5 && self->unk48 != 0) {
+            self->step = 5;
+        }
+    }
+    self->palette = 0;
+    if ((u8)self->unk6D >= 0x18 && !(D_8003C8C4 & 2) && self->subId != 1) {
+        self->palette = 0x815F;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_801804FC);
+        self->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
+        self->blendMode = 0;
+        if (itemId >= 0x18) {
+            self->subId = 0;
+            itemId = 0;
+        }
+        if (itemId > 13 && itemId < 23 && itemId == D_80180D4C[D_80097BFC]) {
+            self->subId = itemId = 1;
+        }
+        if (itemId == 0 || itemId == 2) {
+            self->hitboxWidth = 4;
+        }
+        break;
+
+    case 1:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.unk0 & 7) {
+            DestroyEntity(self);
+        } else {
+            self->step++;
+        }
+        if (itemId == 0) {
+            self->unk84.unk = -0x10000;
+            self->unk88.S16.unk0 = 0x800;
+        }
+        break;
+
+    case 2:
+        if (self->accelerationY < 0) {
+            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi - 7,
+                                 &collider, 0);
+            if (collider.unk0 & 5) {
+                self->accelerationY = 0;
+            }
+        }
+        MoveEntity();
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
+                             0);
+        if (itemId != 0) {
+            if (collider.unk0 & 5 && self->accelerationY > 0) {
+                self->accelerationX = 0;
+                self->accelerationY = 0;
+                self->posY.i.hi += LOH(collider.unk18);
+                self->unk80.modeS8.unk0 = 0xF0;
+                self->step++;
+            } else {
+                FallEntity();
+            }
+            func_80192EF8(D_80180E10, 2);
+            return;
+        }
+        if (collider.unk0 & 5) {
+            self->posY.i.hi += LOH(collider.unk18);
+            self->unk80.modeS8.unk0 = 0x60;
+            self->step++;
+        } else {
+            func_8019344C();
+        }
+        break;
+
+    case 3:
+        func_801934D0(itemId);
+        if (!(self->subId & 0x8000) && --self->unk80.modeS8.unk0 == 0) {
+            self->unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        func_801934D0(itemId);
+        if (--self->unk80.modeS8.unk0) {
+            if (self->unk80.modeS8.unk0 & 2) {
+                self->animCurFrame = 0;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 5:
+        if (itemId == 0 || itemId == 1) {
+            func_8019362C();
+        } else if (itemId < 12) {
+            func_801936E0();
+        } else if (itemId == 12) {
+            CollectHeartVessel();
+        } else if (itemId < 14) {
+            DestroyCurrentEntity();
+        } else if (itemId < 23) {
+            func_801937EC();
+        } else if (itemId == 23) {
+            CollectLifeVessel();
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 7:
+        switch (self->unk2E) {
+        case 0:
+            self->animCurFrame = 0;
+            if (itemId > 13 && itemId < 23) {
+                if (itemId == D_80180D4C[D_80097BFC]) {
+                    self->subId = itemId = 1;
+                }
+            }
+            firstPrimIndex = g_api.AllocPrimitives(4, 1);
+            if (firstPrimIndex != -1) {
+                self->firstPolygonIndex = firstPrimIndex;
+                self->flags |= 0x800000;
+                prim = &g_PrimBuf[firstPrimIndex];
+                prim->tpage = 0x1A;
+                prim->clut = 0x170;
+                prim->u0 = prim->u2 = 0;
+                prim->v0 = prim->v1 = 0;
+                prim->u1 = prim->u3 = 0x20;
+                prim->v2 = prim->v3 = 0x20;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                prim->blendMode = 8;
+                prim->priority = self->zPriority + 1;
+                self->unk2E++;
+            }
+            break;
+        case 1:
+            MoveEntity();
+            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7,
+                                 &collider, 0);
+            if (collider.unk0 & 5 && self->accelerationY > 0) {
+                self->accelerationX = 0;
+                self->accelerationY = 0;
+                self->posY.i.hi += LOH(collider.unk18);
+                self->unk2E++;
+            } else {
+                FallEntity();
+            }
+            func_80192EF8(D_80180E10, 2);
+            self->animCurFrame = 0;
+            if (self->unk88.S16.unk2 != 0) {
+                self->unk88.S16.unk2--;
+            } else {
+                prim = &g_PrimBuf[self->firstPolygonIndex];
+                prim->x0 = prim->x2 = self->posX.i.hi - 1;
+                prim->x1 = prim->x3 = self->posX.i.hi + 1;
+                prim->y0 = prim->y1 = self->posY.i.hi - 1;
+                prim->y2 = prim->y3 = self->posY.i.hi + 1;
+                prim->blendMode = 0x37;
+            }
+            break;
+
+        case 2:
+            func_801934D0(itemId);
+            prim = &g_PrimBuf[self->firstPolygonIndex];
+            self->unk88.S16.unk2++;
+            if (self->unk88.S16.unk2 < 0x11) {
+                var_a2 = self->unk88.S16.unk2;
+                self->animCurFrame = 0;
+            } else {
+                var_a2 = 0x20 - self->unk88.S16.unk2;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->r3 - 8;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->g3 - 8;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 8;
+            }
+            prim->x0 = prim->x2 = self->posX.i.hi - var_a2;
+            prim->x1 = prim->x3 = self->posX.i.hi + var_a2;
+            prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
+            prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
+            if (self->unk88.S16.unk2 == 0x20) {
+                g_api.FreePrimitives(self->firstPolygonIndex);
+                self->unk80.modeS8.unk0 = 0xD0;
+                self->step = 3;
+                self->unk2E = 0;
+                self->flags &= ~0x800000;
+            }
+            break;
+        }
+        break;
+    }
+}
+// #endif
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
