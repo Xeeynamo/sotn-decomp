@@ -868,6 +868,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // column will disappear.
 extern u8 D_8003BDEC[];
 
+extern u8 D_8003BF9C[];
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
