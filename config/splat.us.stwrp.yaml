@@ -74,7 +74,7 @@ segments:
       - [0x6EA8, rodata] # EntityRedDoor
       - [0x6EC0, rodata] # CollectGold
       - [0x6F10, .rodata, D020]
-      - [0x6F30, rodata] # EntityInventoryDrop
+      - [0x6F30, .rodata, D020] # EntityInventoryDrop
       - [0x6F48, rodata] # EntityRelicOrb
       - [0x6F80, rodata] # EntityUnkId0E
       - [0x6F94, rodata] # EntityStageNamePopup
