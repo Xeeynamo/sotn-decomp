@@ -526,7 +526,8 @@ void func_8019686C(u16 objectId, Entity* src, Entity* dst) {
     }
 }
 
-// DECOMP_ME_WIP func_80196934 https://decomp.me/scratch/fA367 TODO: 0x80 entity member unconfirmed
+// DECOMP_ME_WIP func_80196934 https://decomp.me/scratch/fA367 TODO: 0x80 entity
+// member unconfirmed
 void func_80196934(void) {
     Entity* entity;
     s16 temp_s3;
