@@ -44,7 +44,7 @@ segments:
       - [0x279E8, rodata]
       - [0x27ACC, rodata]
       - [0x27BFC, rodata]
-      - [0x27C8C, rodata] # Prize Drop
+      - [0x27C8C, .rodata, 36358]
       - [0x27CAC, rodata]
       - [0x27CC4, rodata]
       - [0x27D64, c]
