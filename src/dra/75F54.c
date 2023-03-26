@@ -842,11 +842,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownDagger);
 // axe thrown when using subweapon
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 
-// Matches perfectly on PSY-Q 3.5:
-// DECOMP_ME_WIP func_80125A30 https://decomp.me/scratch/dhDdI
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
-#else
 s32 func_80125A30(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
@@ -859,18 +854,18 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
     y = baseY + g_CurrentEntity->posY.i.hi;
 
     CheckCollision(x, y, &res1, 0);
-    colRes1 = res1.unk0 & 0xF801;
-    CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
-    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
+    colRes1 = LOH(res1.unk0) & 0xF801;
+    CheckCollision(x, (s16)(y - 1 + LOH(res1.unk18)), &res2, 0);
+    y = baseY + (g_CurrentEntity->posY.i.hi + LOH(res1.unk18));
 
     if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
-        colRes2 = res2.unk0 & 0xF001;
-        if (!(*(u16*)&res2.unk0 & 1)) {
+        colRes2 = LOH(res2.unk0) & 0xF001;
+        if (!(LOH(res2.unk0) & 1)) {
             g_CurrentEntity->posY.i.hi = y;
             return 1;
         }
         if ((res2.unk0 & 0x8001) == 0x8001) {
-            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
+            g_CurrentEntity->posY.i.hi = y + (s16)(LOH(res2.unk18) - 1);
             return colRes2;
         }
     } else if ((colRes1 & 0x8001) == 0x8001) {
@@ -879,7 +874,6 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
     }
     return 0;
 }
-#endif
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
     Collider res;
