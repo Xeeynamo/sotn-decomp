@@ -487,7 +487,8 @@ POLY_GT4* func_801A2550(POLY_GT4* poly) {
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A2580);
 
-// DECOMP_ME_WIP func_801A25FC https://decomp.me/scratch/IIvQX a0 -> v0 register swap
+// DECOMP_ME_WIP func_801A25FC https://decomp.me/scratch/IIvQX a0 -> v0 register
+// swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A25FC);
 #else

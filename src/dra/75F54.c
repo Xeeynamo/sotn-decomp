@@ -842,7 +842,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownDagger);
 // axe thrown when using subweapon
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 
-// Matches perfectly on PSY-Q 3.5: 
+// Matches perfectly on PSY-Q 3.5:
 // DECOMP_ME_WIP func_80125A30 https://decomp.me/scratch/dhDdI
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
