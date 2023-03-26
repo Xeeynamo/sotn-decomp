@@ -17,6 +17,7 @@ void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
+extern u16 D_80180464[];
 extern u16 D_80180494[];
 extern u16 D_801804A0[];
 extern u16 D_80180500[];
@@ -44,6 +45,7 @@ extern u16 D_80180528[];
 extern s32 D_80180664;
 extern s32 D_80180668;
 extern s16 D_801807F0[];
+extern u16 D_801811A4[];
 extern u32 D_8018130C[];
 extern u8 D_80181324[];
 extern u16 D_80181328[];
