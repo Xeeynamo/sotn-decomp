@@ -54,7 +54,8 @@ segments:
       - [0x37440, rodata]
       - [0x37458, rodata]
       - [0x375E0, .rodata, 46684] # Prize drop
-      - [0x37600, rodata] # EntityInventoryDrop
+      - [0x37600, .rodata, 47098] # EntityInventoryDrop
+      - [0x37618, rodata]
       - [0x37628, rodata]
       - [0x376E8, rodata]
       - [0x377A4, .rodata, 56264]
@@ -63,6 +64,7 @@ segments:
       - [0x3C4EC, c]
       - [0x3E134, c]
       - [0x46684, c]
+      - [0x47098, c, 47098]
       - [0x56264, c]
       - [0x570B0, data]
   - [0x57E18]
