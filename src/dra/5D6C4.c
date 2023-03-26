@@ -207,7 +207,7 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
-// https://decomp.me/scratch/5ufgy
+// DECOMP_ME_WIP func_800FDCE0 https://decomp.me/scratch/5ufgy
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDCE0);
 
 bool func_800FDD44(s32 equipId) {
@@ -503,7 +503,7 @@ void func_800FF708(s32 arg0, s32 arg1) {
     g_Status.equipment[arg1 + 2] = rnd;
 }
 
-// https://decomp.me/scratch/Ti1u1
+// DECOMP_ME_WIP func_800FF7B8 https://decomp.me/scratch/Ti1u1
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF7B8);
 #else

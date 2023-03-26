@@ -106,7 +106,7 @@ void EntitySpittleBone(Entity* self) {
 
 const u32 rodataPadding_801B08B0 = 0;
 
-// https://decomp.me/scratch/T0T7K mostly regalloc
+// DECOMP_ME_WIP func_801C6B24 https://decomp.me/scratch/T0T7K mostly regalloc
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 
 // spit projectile from spittle bone

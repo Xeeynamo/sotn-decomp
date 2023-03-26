@@ -212,7 +212,7 @@ void func_80106670(s32 blendMode);
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106670);
 #else
-// https://decomp.me/scratch/iTgjO
+// DECOMP_ME_WIP func_80106670 https://decomp.me/scratch/iTgjO
 void func_80106670(s32 blendMode) {
     const int MaxPolyCount = 0x100;
     int new_var2 = 4;
@@ -447,10 +447,10 @@ void func_80107460(void) {
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", CopyMapOverlayCallback);
-// https://decomp.me/scratch/1AWN1
+// DECOMP_ME_WIP CopyMapOverlayCallback https://decomp.me/scratch/1AWN1
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80107614);
-// https://decomp.me/scratch/U0IGY
+// DECOMP_ME_WIP func_80107614 https://decomp.me/scratch/U0IGY
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80107750);
 
@@ -494,7 +494,7 @@ bool func_801083F0(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80108448);
 
-// https://decomp.me/scratch/QZk8K
+// DECOMP_ME_WIP func_801092E8 https://decomp.me/scratch/QZk8K
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801092E8);
 
 void func_80109328(void) {
@@ -533,7 +533,7 @@ void func_80109990(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80109A44);
 
 // regalloc
-// https://decomp.me/scratch/rdeqb
+// DECOMP_ME_WIP func_8010A234 https://decomp.me/scratch/rdeqb
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A234);
 #else
@@ -583,7 +583,7 @@ void func_8010A234(s32 arg0) {
 
 // Matching in gcc 2.6.0 + aspsx 2.3.4
 // Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
-// https://decomp.me/scratch/oKHMJ
+// DECOMP_ME_WIP func_8010A3F0 https://decomp.me/scratch/oKHMJ
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A3F0);
 #else
@@ -850,7 +850,7 @@ s32 func_8010E27C(void) {
     return 0;
 }
 
-// https://decomp.me/scratch/YvoMU
+// DECOMP_ME_WIP func_8010E334 https://decomp.me/scratch/YvoMU
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010E334);
 
 /*
@@ -1030,7 +1030,7 @@ void func_8010E9A4(void) {
     D_80072F20.unk4A = 0;
 }
 
-// https://decomp.me/scratch/9jKqU
+// DECOMP_ME_WIP func_8010EA54 https://decomp.me/scratch/9jKqU
 // matching in decomp.me, probably aspsx
 // TODO: aspatch div macro
 // https://discord.com/channels/710646040331681844/815529862604390411/1051628313073958992
@@ -1078,7 +1078,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010EB5C);
 
-// https://decomp.me/scratch/N8Srk
+// DECOMP_ME_WIP func_8010EC8C https://decomp.me/scratch/N8Srk
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
@@ -1176,7 +1176,7 @@ void func_8010FD88(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010FDF8);
 s32 func_8010FDF8(/*?*/ s32);
 
-// https://decomp.me/scratch/Akstc 94.80%
+// DECOMP_ME_WIP func_80110394 https://decomp.me/scratch/Akstc 94.80%
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80110394);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801104D0);

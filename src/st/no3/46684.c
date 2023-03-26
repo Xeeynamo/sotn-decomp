@@ -462,7 +462,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C7680);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityRelicOrb);
 
-// https://decomp.me/scratch/TfITc
+// DECOMP_ME_WIP EntityHeartDrop https://decomp.me/scratch/TfITc
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityHeartDrop);
 #else

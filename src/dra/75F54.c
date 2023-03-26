@@ -842,7 +842,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownDagger);
 // axe thrown when using subweapon
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 
-// Matches perfectly on PSY-Q 3.5: https://decomp.me/scratch/dhDdI
+// Matches perfectly on PSY-Q 3.5: 
+// DECOMP_ME_WIP func_80125A30 https://decomp.me/scratch/dhDdI
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
 #else
@@ -1513,7 +1514,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801309B4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80130E94);
 
-// https://decomp.me/scratch/cu30D
+// DECOMP_ME_WIP func_8013136C https://decomp.me/scratch/cu30D
 // TODO: branching is wrong jpt_ needs a file split
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8013136C);
@@ -1866,7 +1867,7 @@ void func_80132760(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801327B4);
 
-// https://decomp.me/scratch/0X5YL
+// DECOMP_ME_WIP func_80132A04 https://decomp.me/scratch/0X5YL
 // Matches with gcc 2.6.0 + aspsx 2.3.4
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132A04);

@@ -224,7 +224,7 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-// https://decomp.me/scratch/lcx4I
+// DECOMP_ME_WIP func_8019E3C8 https://decomp.me/scratch/lcx4I
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019E3C8);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019E4F8);
@@ -425,7 +425,7 @@ void func_8019F304(void) {
     }
 }
 
-// https://decomp.me/scratch/Hfk9n
+// DECOMP_ME_WIP func_8019F3BC https://decomp.me/scratch/Hfk9n
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019F3BC);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019F594);
@@ -487,7 +487,7 @@ POLY_GT4* func_801A2550(POLY_GT4* poly) {
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A2580);
 
-// https://decomp.me/scratch/IIvQX a0 -> v0 register swap
+// DECOMP_ME_WIP func_801A25FC https://decomp.me/scratch/IIvQX a0 -> v0 register swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A25FC);
 #else
@@ -594,7 +594,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A2A58);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A2C9C);
 
-// https://decomp.me/scratch/nNfXk 95.28%
+// DECOMP_ME_WIP EntityUnkId17 https://decomp.me/scratch/nNfXk 95.28%
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", EntityUnkId17);
 
 // 3D house object in background ID 0x16

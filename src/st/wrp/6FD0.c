@@ -2009,10 +2009,10 @@ void func_80188514(void) {
     }
 }
 
-// https://decomp.me/scratch/Nq66t
+// DECOMP_ME_WIP TestCollisions https://decomp.me/scratch/Nq66t
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", TestCollisions);
 
-// https://decomp.me/scratch/m0PKE
+// DECOMP_ME_WIP EntityNumericDamage https://decomp.me/scratch/m0PKE
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
 
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {

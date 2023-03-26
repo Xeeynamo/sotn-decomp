@@ -65,7 +65,7 @@ s16 IncrementRingBufferPos(s16 arg0) {
     return arg0;
 }
 
-// https://decomp.me/scratch/Gy0Jr 91.59%
+// DECOMP_ME_WIP func_80135C2C https://decomp.me/scratch/Gy0Jr 91.59%
 INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135C2C);
 void func_80135C2C();
 
