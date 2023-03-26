@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # tool to list functions by difficulty and decomp.me WIP links
 from pathlib import Path
 from tabulate import tabulate
