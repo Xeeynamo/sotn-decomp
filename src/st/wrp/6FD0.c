@@ -2836,8 +2836,8 @@ void CollectGold(u16 goldSize) {
 }
 
 #ifndef NON_MATCHING
-void func_8018CDEC(u16);
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018CDEC);
+void CollectSubweapon(u16);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", CollectSubweapon);
 #else
 void CollectSubweapon(u16 arg0) {
     u16 temp_v0;

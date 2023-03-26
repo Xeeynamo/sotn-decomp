@@ -953,8 +953,8 @@ void func_801937BC(void) {}
 
 void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
 
-// DECOMP_ME_WIP func_801937EC https://decomp.me/scratch/GsS0m
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_801937EC);
+// DECOMP_ME_WIP CollectSubweapon https://decomp.me/scratch/GsS0m
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", CollectSubweapon);
 
 void CollectHeartVessel(void) {
     g_api.PlaySfx(0x670);
