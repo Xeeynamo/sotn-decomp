@@ -51,9 +51,9 @@ def get_asm_files(asm_path):
         for branch in branch_types:
             branches = branches + text.count(branch)
 
-        jump_table = False
+        jump_table = '   '
         if "jpt_" in text or "jtbl_" in text:
-            jump_table = True
+            jump_table = 'Yes'
 
         f = {'name': path, 'text': text, 'branches': branches, 'jump_table': jump_table}
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                 # found a decomp.me WIP, get the URL
                 wip = c_file[2]
 
-        output.append([name, length, branches, jump_table, wip])
+        output.append([str(name).replace("asm/", ""), length, branches, jump_table, wip])
 
-    headers = ['Filename', 'Length', 'Branches', 'Jumps', 'Decomp.me WIP']
+    headers = ['Filename', 'Length', 'Branches', 'Jtbl', 'Decomp.me WIP']
     print(tabulate(output, headers=headers))
