@@ -120,7 +120,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId < 14) {
             DestroyCurrentEntity();
         } else if (itemId < 23) {
-            func_801BDCC0(itemId);
+            CollectSubweapon(itemId);
         } else if (itemId == 23) {
             CollectLifeVessel();
         } else {

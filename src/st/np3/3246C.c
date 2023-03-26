@@ -1592,7 +1592,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", CollectHeart);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", CollectGold);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDCC0);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", CollectSubweapon);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {

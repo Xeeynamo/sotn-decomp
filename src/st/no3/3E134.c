@@ -1044,7 +1044,7 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C6450);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", CollectSubweapon);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {

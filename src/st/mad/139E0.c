@@ -4,14 +4,10 @@ extern u16 D_801804FC[];
 extern u16 D_80180D4C[];
 extern u8* D_80180DB0[];
 extern u16 D_80180E10[];
-void CollectHeartVessel();
-void CollectLifeVessel();
 void DestroyCurrentEntity();
 void func_80192EF8(u16*, s32);
 void func_801934D0(u32);
-void func_8019362C(); // CollectHeart
-void func_801936E0(); // CollectGold
-void func_801937EC();
+void CollectSubweapon();
 extern void (*D_8003C7B4)(s32);
 extern s16 (*D_8003C7B8)(s32 type, s32 count);
 extern void (*D_8003C7BC)(s32 x, s32 y, Collider* res, s32 unk);
@@ -124,15 +120,15 @@ void EntityPrizeDrop(Entity* self) {
 
     case 5:
         if (itemId == 0 || itemId == 1) {
-            func_8019362C();
+            CollectHeart(itemId);
         } else if (itemId < 12) {
-            func_801936E0();
+            CollectGold(itemId);
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
             DestroyCurrentEntity();
         } else if (itemId < 23) {
-            func_801937EC();
+            CollectSubweapon(itemId);
         } else if (itemId == 23) {
             CollectLifeVessel();
         } else {
