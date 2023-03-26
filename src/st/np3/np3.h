@@ -9,7 +9,7 @@ extern s32 func_801BC7D4(void);
 extern void func_801C2598(s16 arg0);
 extern s32 func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
-extern void EntityInventoryDrop(Entity* entity);
+extern void EntityEquipItemDrop(Entity* entity);
 extern POLY_GT4* func_801D2470(POLY_GT4* poly);
 
 extern u16 D_80180A48[];

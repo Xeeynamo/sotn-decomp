@@ -497,7 +497,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityExplosion);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801965F4);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityInventoryDrop);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityEquipItemDrop);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80196C80);
 

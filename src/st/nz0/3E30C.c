@@ -275,7 +275,193 @@ void func_801BEC7C(Entity* entity, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityInventoryDrop);
+void EntityEquipItemDrop(Entity* self) {
+    u16 itemId = self->subId & 0x7FFF;
+    s32 firstPolygonIndex;
+    Collider collider;
+    POLY_GT4* poly;
+    s32* itemName;
+    s16 index;
+    s32 vramX;
+    s32 vramY;
+    u8 left;
+    u8 right;
+    u16 top;
+    u8 bottom;
+    u8 temp_v0_6;
+    s16 temp_a0;
+    s32* unk;
+
+    if (((self->step - 2) < 3U) && (self->unk48 != 0)) {
+        self->step = 5;
+    }
+
+    switch (self->step) {
+    case 0:
+        if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+            self->pfnUpdate = EntityPrizeDrop;
+            self->subId = 0;
+            self->objectId = 3;
+            func_801BD52C(0);
+            EntityPrizeDrop(self);
+            return;
+        }
+        InitializeEntity(D_80180BD4);
+        self->unk7C.s = 0;
+        break;
+
+    case 1:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+
+        if (!(collider.unk0 & 7)) {
+            for (index = 0; index < 32; index++) {
+                if (D_801CB740[index] == 0) {
+                    break;
+                }
+            }
+
+            if (index >= 32) {
+                DestroyEntity(self);
+                return;
+            }
+
+            if (*(s16*)&self->unk94 != 0) {
+                temp_a0 = *(s16*)&self->unk94;
+                temp_a0--;
+                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+            }
+
+            firstPolygonIndex = g_api.AllocPrimitives(4, 1);
+            if (firstPolygonIndex == (-1)) {
+                DestroyEntity(self);
+                return;
+            }
+
+            self->flags |= FLAG_FREE_POLYGONS;
+            self->firstPolygonIndex = firstPolygonIndex;
+            D_801CB740[index] = 0x1E0;
+            self->unk8C.modeU16.unk0 = index;
+
+            if (itemId < 169) {
+                g_api.func_800EB534(g_api.D_800A4B04[itemId].icon,
+                                    g_api.D_800A4B04[itemId].palette, index);
+            } else {
+                itemId -= 169;
+                g_api.func_800EB534(g_api.D_800A7718[itemId].icon,
+                                    g_api.D_800A7718[itemId].palette, index);
+            }
+
+            poly = &g_PrimBuf[firstPolygonIndex];
+            vramX = ((temp_v0_6 = index) & 7) * 0x10;
+            vramY = (temp_v0_6 & 0x18) * 2;
+
+            left = vramX | 1;
+            right = vramX | 0xF;
+            top = 0x81;
+            top = vramY | top;
+            bottom = vramY | 0x8F;
+
+            poly->tpage = 0x1A;
+            poly->v3 = bottom;
+            poly->clut = index + 464;
+            poly->u0 = poly->u2 = left;
+            poly->u1 = poly->u3 = right;
+            poly->v1 = top;
+            poly->v2 = bottom;
+            poly->v0 = top;
+            poly->pad2 = 0x80;
+            poly->pad3 = 6;
+
+            self->unk7C.s = 128;
+            self->step++;
+            break;
+        }
+        DestroyEntity(self);
+        break;
+
+    case 2:
+        if (self->accelerationY < 0) {
+            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi - 7,
+                                 &collider, 0);
+            if (collider.unk0 & 5) {
+                self->accelerationY = 0;
+            }
+        }
+
+        MoveEntity();
+
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
+                             0);
+
+        if ((collider.unk0 & 5) && (self->accelerationY > 0)) {
+            self->accelerationX = 0;
+            self->accelerationY = 0;
+            self->posY.i.hi += *(u16*)&collider.unk18;
+            self->unk80.modeS8.unk0 = 240;
+            self->step++;
+        } else {
+            FallEntity();
+        }
+
+        func_801BD848(D_80181D9C, 2);
+        break;
+
+    case 3:
+        func_801BDE20(1);
+        if (!(self->subId & 0x8000)) {
+            if (!(--self->unk80.modeS8.unk0 & 255)) {
+                self->unk80.modeS8.unk0 = 0x50;
+                self->step++;
+            }
+        } else {
+            D_801CB740[self->unk8C.modeS16.unk0] = 0x10;
+        }
+        break;
+
+    case 4:
+        func_801BDE20(1);
+        if (self->unk80.modeS8.unk0 += 255) {
+            poly = &g_PrimBuf[self->firstPolygonIndex];
+            if (self->unk80.modeS8.unk0 & 2) {
+                poly->pad3 = 8;
+            } else {
+                poly->pad3 = 2;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 5:
+        unk = &D_80097410;
+        if (*unk != 0) {
+            g_api.FreePrimitives(D_80097414);
+            *unk = 0;
+        }
+
+        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+
+        if (itemId < 169) {
+            itemName = g_api.D_800A4B04[itemId].name;
+            g_api.AddToInventory(itemId, 0);
+        } else {
+            itemId -= 169;
+            itemName = g_api.D_800A7718[itemId].name;
+            g_api.AddToInventory(itemId, 2);
+        }
+
+        func_801C33D8(itemName, 1);
+        DestroyEntity(self);
+        break;
+    }
+
+    if (self->step >= 2) {
+        if (self->unk7C.u != 0) {
+            self->unk7C.u--;
+        }
+        func_801BEC7C(self, self->unk7C.u);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801BF308);
 

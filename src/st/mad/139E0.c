@@ -274,7 +274,7 @@ void func_80194314(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityInventoryDrop);
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityEquipItemDrop);
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityRelicOrb);
 
@@ -307,7 +307,7 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
         if (var_v1 < 0x80) {
             entity->unkB8.unkFuncB8 = EntityPrizeDrop;
         } else {
-            entity->unkB8.unkFuncB8 = EntityInventoryDrop;
+            entity->unkB8.unkFuncB8 = EntityEquipItemDrop;
             var_v1 -= 0x80;
         }
 

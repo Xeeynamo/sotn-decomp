@@ -274,7 +274,7 @@ void func_801BE864(Entity* self, s32 arg1) {
     }
 }
 
-void EntityInventoryDrop(Entity* self) {
+void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->subId & 0x7FFF;
     s32 firstPolygonIndex;
     Collider collider;

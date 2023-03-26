@@ -310,7 +310,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
     /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
-    /* 408 */ (PfnEntityUpdate)EntityInventoryDrop,
+    /* 408 */ (PfnEntityUpdate)EntityEquipItemDrop,
     /* 40C */ (PfnEntityUpdate)EntityRelicOrb,
     /* 410 */ (PfnEntityUpdate)EntityHeartDrop,
     /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
@@ -2731,7 +2731,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     } else {
         subId -= 0x80;
         self->objectId = ENTITY_INVENTORY_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
+        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
     self->subId = subId;
