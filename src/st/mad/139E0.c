@@ -281,7 +281,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityRelicOrb);
 // v1 -> a0 reg swap
 // branching
 // signature conflict
-// https://decomp.me/scratch/h3CVU
+// DECOMP_ME_WIP EntityHeartDrop https://decomp.me/scratch/h3CVU
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityHeartDrop);
 #else
@@ -358,7 +358,7 @@ void func_8019572C(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", func_8019583C);
 
-// https://decomp.me/scratch/3IMus
+// DECOMP_ME_WIP func_8019596C https://decomp.me/scratch/3IMus
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", func_8019596C);
 
 void func_80195A54(Entity* entity) {
@@ -526,7 +526,7 @@ void func_8019686C(u16 objectId, Entity* src, Entity* dst) {
     }
 }
 
-// https://decomp.me/scratch/fA367 TODO: 0x80 entity member unconfirmed
+// DECOMP_ME_WIP func_80196934 https://decomp.me/scratch/fA367 TODO: 0x80 entity member unconfirmed
 void func_80196934(void) {
     Entity* entity;
     s16 temp_s3;

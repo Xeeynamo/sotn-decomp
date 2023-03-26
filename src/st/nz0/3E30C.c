@@ -519,7 +519,7 @@ void func_801C07FC(Entity* entity) {
     }
 }
 
-// https://decomp.me/scratch/0VI4v
+// DECOMP_ME_WIP func_801C090C https://decomp.me/scratch/0VI4v
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C090C);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C0A3C);
@@ -768,7 +768,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C20B8);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C27B8);
 
-// https://decomp.me/scratch/Cxlhx 93.39 % 4 missing instructions
+// DECOMP_ME_WIP func_801C29B0 https://decomp.me/scratch/Cxlhx 93.39 % 4 missing instructions
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C29B0);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityAbsorbOrb);
