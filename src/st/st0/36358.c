@@ -261,7 +261,7 @@ void func_801B6C5C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityInventoryDrop);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityEquipItemDrop);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7308);
 

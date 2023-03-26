@@ -57,7 +57,7 @@ segments:
       - [0x1D14, rodata]
       - [0xD794, rodata]
       - [0xD83C, .rodata, 139E0]
-      - [0xD85C, rodata] # EntityInventoryDrop
+      - [0xD85C, rodata] # EntityEquipItemDrop
       - [0xD874, rodata]
       - [0xD884, rodata]
       - [0xD8C8, c]
