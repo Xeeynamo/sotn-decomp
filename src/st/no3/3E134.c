@@ -939,7 +939,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     } else {
         subId -= 0x80;
         self->objectId = ENTITY_INVENTORY_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityInventoryDrop;
+        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
     self->subId = subId;

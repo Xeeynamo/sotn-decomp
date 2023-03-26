@@ -1,6 +1,6 @@
 #include "no3.h"
 
-void EntityInventoryDrop(Entity* self) {
+void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->subId & 0x7FFF;
     s32 firstPolygonIndex;
     Collider collider;
@@ -218,7 +218,7 @@ void EntityHeartDrop(Entity* self) {
         if (var_a0 < 0x80) {
             self->unkB8.unkFuncB8 = EntityPrizeDrop;
         } else {
-            self->unkB8.unkFuncB8 = EntityInventoryDrop;
+            self->unkB8.unkFuncB8 = EntityEquipItemDrop;
             var_a0 -= 0x80;
         }
         self->subId = var_a0 + 0x8000;

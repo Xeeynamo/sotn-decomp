@@ -76,7 +76,7 @@ void EntityIntenseExplosion(Entity*);
 void EntityAbsorbOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void EntityInventoryDrop(Entity*);
+void EntityEquipItemDrop(Entity*);
 void EntityRelicOrb(Entity*);
 void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);

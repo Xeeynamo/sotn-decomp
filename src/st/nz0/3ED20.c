@@ -1,6 +1,6 @@
 #include "nz0.h"
 
-void EntityInventoryDrop(Entity* self) {
+void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->subId & 0x7FFF;
     s32 firstPolygonIndex;
     Collider collider;
