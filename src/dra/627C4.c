@@ -65,7 +65,7 @@ void func_80102CD8(s32 arg0) {
     D_801379B0 = D_800A3194[arg0];
 }
 
-// https://decomp.me/scratch/NNXbc
+// DECOMP_ME_WIP func_80102D08 https://decomp.me/scratch/NNXbc
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_80102D08);
 
 // INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_80102D70);

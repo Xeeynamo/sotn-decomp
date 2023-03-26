@@ -424,7 +424,7 @@ void DrawMenuChar(u8 ch, int x, int y, MenuContext* context) {
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuStr);
-// https://decomp.me/scratch/S4Dzb
+// DECOMP_ME_WIP DrawMenuStr https://decomp.me/scratch/S4Dzb
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     do {
@@ -1008,7 +1008,7 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-// https://decomp.me/scratch/VmuNt 99.46%
+// DECOMP_ME_WIP func_800F9E18 https://decomp.me/scratch/VmuNt 99.46%
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F9E18);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F9F40);
@@ -1019,7 +1019,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA3C4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 
-// https://decomp.me/scratch/JL0hI
+// DECOMP_ME_WIP func_800FA7E8 https://decomp.me/scratch/JL0hI
 // has some logic related to the weapon struct
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA7E8);
 
@@ -1103,7 +1103,7 @@ void func_800FAE98(void) {
     D_800978F8 = 0x40;
 }
 
-// https://decomp.me/scratch/f40LU 91.22%
+// DECOMP_ME_WIP func_800FAEC4 https://decomp.me/scratch/f40LU 91.22%
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FAEC4);
 
 void func_800FAF44(s32 arg0) {
