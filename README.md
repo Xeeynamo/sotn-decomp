@@ -97,53 +97,7 @@ There are a few tricks to make the process more streamlined:
 1. Use the `#ifndef NON_MATCHING` if your code is logically equivalent but you cannot yet fully match it.
 
 ## Decompiling functions with jump tables
-* Functions with jump tables will load an address named `jpt_XXXXXXXX` or `jtbl_XXXXXXXX` and jump to it using `jr`.
-* When decompilation is complete these functions need to have the `.rodata` where the jump table is located ignored. The new jump table from the decompiled function will be used instead.
-* This is done by modifying the splat yaml. The jump table needs to be extracted to its own file like this:
-```
-      - [0x3B560, rodata] # jpt_800E55C4
-      - [0x3B720, rodata]
-```
-* We have a tool, `tools/split_jpt_yaml/split_jpt_yaml.py` to automate part of this process.
-* It splits all of the jump tables into their own files. Usage is like this:
-```
-# split DRA (uses jpt_ prefix)
-# python3 tools/split_jpt_yaml/split_jpt_yaml.py config/splat.us.dra.yaml asm/us/dra/data/ jpt_
-
-# split NO3 (uses jtbl_ prefix)
-# python3 tools/split_jpt_yaml/split_jpt_yaml.py config/splat.us.stno3.yaml asm/us/st/no3/data/ jtbl_
-```
-* Paste the resulting output back into the yaml.
-* The new function needs to be split into a new file. For example if our original C file is the following, and we want to decompile `func_80133BDC`, `func_80133BDC` needs to be at the start of the new file.
-```
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80133960);
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80133BDC);
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80133FCC);
-```
-* So we will have:
-```
-// 75F54.c
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80133960);
-
-// 93BDC.c
-INCLUDE_ASM("asm/us/dra/nonmatchings/93BDC", func_80133BDC);
-INCLUDE_ASM("asm/us/dra/nonmatchings/93BDC", func_80133FCC);
-```
-* The function contains `jpt_80133C10` as the jump table. So we will modify the yaml like this:
-
-```
-# before
-      - [0x4208C, rodata] # jpt_80133C10
-      - [0x420B4, rodata] # jpt_80135058
-
-# after
-      - [0x4208C, .rodata, 93BDC] # jpt_80133C10
-      - [0x420B4, rodata] # jpt_80135058
-```
-
-* The `.` in `.rodata` indicates that the segment should be ignored in the final compilation and the table from `93BDC.c` should be used instead.
-
-* Make sure to change the file paths for the `INCLUDE_ASM`s.
+See [Decompiling functions with jump tables](https://github.com/Xeeynamo/sotn-decomp/wiki/Decompiling-functions-with-jump-tables)
 
 ## Duplicate functions
 

@@ -81,6 +81,9 @@ def execute(asm_files, jump_prefix, segments, names):
     segments = [ list(values) [0] for _,values in groupby(segments,key=key_function) ]
     segments = sorted(segments, key=lambda x: x[0])
 
+    print("Cut below this line:")
+    print("------------------------------------------------------------------")
+
     # print out the result
     for segment in segments:
         hex_str = "0x{:X}".format(segment[0])
