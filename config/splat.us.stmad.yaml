@@ -56,7 +56,7 @@ segments:
       - [0x19A4, rodata]
       - [0x1D14, rodata]
       - [0xD794, rodata]
-      - [0xD83C, rodata] # Prize
+      - [0xD83C, .rodata, 139E0]
       - [0xD85C, rodata] # EntityInventoryDrop
       - [0xD874, rodata]
       - [0xD884, rodata]

@@ -46,6 +46,7 @@ EntityDummy = 0x801BD2E0;
 ReplaceBreakableWithItemDrop = 0x801BD8CC;
 CollectHeart = 0x801BDB64;
 CollectGold = 0x801BDBE4;
+CollectSubweapon = 0x801BDCC0;
 CollectHeartVessel = 0x801BDDD8;
 CollectLifeVessel = 0x801BDE7C;
 DestroyCurrentEntity = 0x801BDECC;

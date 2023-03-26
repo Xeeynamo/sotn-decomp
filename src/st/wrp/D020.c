@@ -95,7 +95,7 @@ void EntityPrizeDrop(Entity* self) {
 
     case 3:
         func_8018CB34(itemId);
-        if (!(self->subId & 0x8000) && !(--self->unk80.modeS8.unk0)) {
+        if (!(self->subId & 0x8000) && --self->unk80.modeS8.unk0 == 0) {
             self->unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
             self->step++;
         }
@@ -103,7 +103,7 @@ void EntityPrizeDrop(Entity* self) {
 
     case 4:
         func_8018CB34(itemId);
-        if (self->unk80.modeS8.unk0 += 255) {
+        if (--self->unk80.modeS8.unk0) {
             if (self->unk80.modeS8.unk0 & 2) {
                 self->animCurFrame = 0;
             }
@@ -123,7 +123,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId < 14) {
             DestroyCurrentEntity();
         } else if (itemId < 23) {
-            func_8018CDEC(itemId);
+            CollectSubweapon(itemId);
         } else if (itemId == 23) {
             CollectLifeVessel();
         } else {

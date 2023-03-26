@@ -921,13 +921,13 @@ void func_801934D0(u16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8019362C);
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", CollectHeart);
 
 extern s32 g_playerGold; // g_playerGold?
 void* const D_80180D60[];
 const s32 D_80180D88[]; // c_GoldPrizes
 
-void func_801936E0(u16 goldSize) { // CollectGold
+void CollectGold(u16 goldSize) { // CollectGold
     s32 *gold, *unk;
     u16 goldSizeIndex;
 
@@ -954,7 +954,7 @@ void func_801937BC(void) {}
 void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
 
 // https://decomp.me/scratch/GsS0m
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_801937EC);
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", CollectSubweapon);
 
 void CollectHeartVessel(void) {
     g_api.PlaySfx(0x670);

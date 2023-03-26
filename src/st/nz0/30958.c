@@ -1960,7 +1960,7 @@ void CollectGold(u16 goldSize) {
 }
 
 // https://decomp.me/scratch/gto6i
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BE0D8);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", CollectSubweapon);
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
