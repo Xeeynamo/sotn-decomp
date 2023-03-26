@@ -111,5 +111,5 @@ if __name__ == '__main__':
 
         output.append([name, length, branches, jump_table, wip])
 
-    headers = ['Filename', 'Length', 'Branches', 'Jump Table Present', 'Decomp.me WIP']
+    headers = ['Filename', 'Length', 'Branches', 'Jumps', 'Decomp.me WIP']
     print(tabulate(output, headers=headers))
