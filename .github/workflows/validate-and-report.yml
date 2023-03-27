@@ -163,11 +163,13 @@ jobs:
         run: python3 tools/find_duplicates.py -a
       - name: Rename output file into something more meaningful
         run: mv *_all_matches.txt gh-duplicates/duplicates.txt
+      - name: Generate function report
+        run: python3 tools/function_finder.py > gh-duplicates/functions.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 
             git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit -m 'Update duplicates' || true
+            git commit -m 'Update reports' || true
             git push
         working-directory: gh-duplicates
