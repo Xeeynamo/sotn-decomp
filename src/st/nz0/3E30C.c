@@ -467,7 +467,39 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801BF308);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityRelicOrb);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityHeartDrop);
+void EntityHeartDrop(Entity* self) {
+    u16 temp_a0;
+    u16 temp_a0_2;
+    u16 var_a0;
+
+    if (self->step == 0) {
+        temp_a0 = self->subId + 248;
+        self->unkB4 = temp_a0;
+        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+        temp_a0_2 = temp_a0 - 248;
+        var_a0 = D_801813B0[temp_a0_2];
+        if (var_a0 < 128) {
+            self->unkB8.unkFuncB8 = EntityPrizeDrop;
+        } else {
+            self->unkB8.unkFuncB8 = EntityEquipItemDrop;
+            var_a0 -= 128;
+        }
+        self->subId = var_a0 + 0x8000;
+    } else {
+        temp_a0_2 = self->unkB4;
+        if (self->step < 5) {
+            if (self->unk48 != 0) {
+                var_a0 = self->unkB4;
+                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
+                self->step = 5;
+            }
+        }
+    }
+    self->unkB8.unkFuncB8(self);
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityUnkId0E);
 

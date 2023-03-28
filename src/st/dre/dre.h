@@ -24,6 +24,7 @@ extern u16 D_80180500[];
 extern u8 D_80180580[];
 extern u8 D_80180588[];
 extern u16 D_80180590[];
+extern u16 D_80180660[];
 extern s32 D_80180664;
 extern const u8 D_80180794[];
 extern u16 D_8018097C[];
