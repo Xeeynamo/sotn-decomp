@@ -1200,7 +1200,32 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBC24);
 
+// Does not match due to cc1-26 using the wrong endian
+// the LOBU trick does not work
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FD39C);
+#else
+void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
+                   s32 blend, s32 color) {
+    GpuBuffer* gpuBuffer;
+    SPRT* sprt;
+
+    sprt = &D_8006C37C->sprite[g_GpuUsage.sp];
+    gpuBuffer = D_8006C37C;
+    SetSemiTrans(sprt, 0);
+    SetShadeTex(sprt, blend);
+    sprt->x0 = x;
+    sprt->y0 = y;
+    sprt->w = w;
+    sprt->h = h;
+    sprt->u0 = u;
+    sprt->v0 = v;
+    sprt->b0 = sprt->g0 = sprt->r0 = color;
+    sprt->clut = D_8003C104[pal];
+    AddPrim(&gpuBuffer->_unk_0474[0x1FF], sprt);
+    g_GpuUsage.sp++;
+}
+#endif
 
 s32 func_800FD4C0(s32 bossId, s32 action) {
     s32 temp_v0;
