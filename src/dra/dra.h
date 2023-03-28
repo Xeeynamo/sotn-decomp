@@ -3,6 +3,30 @@
 
 #include "game.h"
 
+typedef enum {
+    FILETYPE_SYSTEM,
+    FILETYPE_STAGE_PRG,
+    FILETYPE_VH,
+    FILETYPE_VB,
+    FILETYPE_SEQ,
+    FILETYPE_STAGE_CHR,
+    FILETYPE_UNUSED_6,
+    FILETYPE_WEAPON0_PRG,
+    FILETYPE_WEAPON1_PRG,
+    FILETYPE_WEAPON0_CHR,
+    FILETYPE_WEAPON1_CHR,
+    FILETYPE_FAMILIAR_PRG,
+    FILETYPE_FAMILIAR_CHR,
+    FILETYPE_MONSTER,
+} FileType;
+
+typedef struct {
+    const char* path;
+    u8* addr;
+    s32 size;
+    s32 type;
+} OvlDesc;
+
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
@@ -22,6 +46,10 @@ extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
+extern s32 D_800A0248;
+extern OvlDesc D_800A024C[];
+extern OvlDesc D_800A036C[];
+extern OvlDesc D_800A04AC[];
 extern s32 D_800A04EC;
 extern s32 D_800A04F8;
 extern s32 D_800A0510[];
@@ -130,6 +158,10 @@ extern s32 D_800B07C8;
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern s32 D_800B0914;
+extern const char aPbav[];
+extern const char aPbav_0[];
+extern const char aPbav_1[];
+extern const char aPbav_2[];
 extern s16 D_800BD07C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
@@ -174,6 +206,8 @@ extern s32 g_softResetTimer;
 extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern OvlDesc* D_8013644C;
+extern OvlDesc D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 D_80137460[]; // button timers
@@ -393,7 +427,8 @@ void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
-s32 func_800E81FC(s32 mapTilesetId, s32);
+void func_800E4970(void);
+s32 func_800E81FC(s32 id, FileType type);
 void func_800E8D24(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);

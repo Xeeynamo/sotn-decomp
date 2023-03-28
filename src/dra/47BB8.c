@@ -19,6 +19,7 @@ void func_800E7D08(void) {
 }
 
 #ifndef NON_MATCHING
+void LoadStageTileset(u8* pTilesetData, s32 y);
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
 #else
 void LoadStageTileset(u8* pTilesetData, s32 y) {
@@ -54,13 +55,12 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
 
 // Not matching due to case 2/11
 #ifndef NON_EQUIVALENT
+s32 func_800E7E08(u32);
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7E08);
 #else
-void LoadStageTileset(u32* pTilesetData, s16 y);
 extern u32 g_Clut;
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
-extern s32 D_800A0248;
 extern u32 D_800A04CC;
 extern RECT D_800ACDA8;
 extern RECT D_800ACDB8;
@@ -69,7 +69,7 @@ extern RECT D_800ACDD0;
 extern RECT D_800ACDD8;
 extern RECT D_800ACDE0;
 extern s32 D_800BD1C8[];
-extern s32* D_8013644C;
+extern s32* D_8013644C;      // this is now an OvlDesc!!
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
 extern s32* g_StageOverlay;
@@ -182,7 +182,171 @@ s32 func_800E7E08(u32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E81FC);
+s32 func_800E81FC(s32 fileId, FileType type) {
+    char buf[33];
+    s32 fid;
+
+    func_800E7D08();
+    D_800A04EC = 1;
+    D_8013644C = &D_800A024C[fileId];
+    if (type == FILETYPE_STAGE_PRG) {
+        STRCPY(buf, "sim:c:\\bin\\");
+        D_8013644C = &D_80136450;
+        strcat(buf, D_800A3C40[g_StageId].ovlName);
+        strcat(buf, ".bin");
+        D_8013644C->addr = (u8*)0x80180000;
+        D_8013644C->path = buf;
+        D_8013644C->size = 0x60000;
+        D_8013644C->type = 0;
+    }
+    if (type == FILETYPE_VH) {
+        if (fileId & 0x8000) {
+            D_8013644C = &D_800A036C[fileId & 0x7FFF];
+        } else {
+            STRCPY(buf, "sim:c:\\sound\\data\\sd_");
+            D_8013644C = &D_80136450;
+            strcat(buf, D_800A3C40[g_StageId].name);
+            strcat(buf, ".vh");
+            D_8013644C->addr = (u8*)aPbav_2;
+            D_8013644C->path = buf;
+            D_8013644C->size = D_800A3C40[g_StageId].vhLen;
+            D_8013644C->type = 4;
+        }
+        if (D_8013644C->addr == aPbav) {
+            D_800A0248 = 0;
+        }
+        if (D_8013644C->addr == aPbav_0) {
+            D_800A0248 = 1;
+        }
+        if (D_8013644C->addr == aPbav_2) {
+            D_800A0248 = 3;
+        }
+        if (D_8013644C->addr == aPbav_1) {
+            D_800A0248 = 2;
+        }
+        SsVabClose(D_800A0248);
+    }
+    if (type == FILETYPE_VB) {
+        if (fileId & 0x8000) {
+            D_8013644C = &D_800A036C[fileId & 0x7FFF];
+        } else {
+            D_8013644C = &D_80136450;
+            STRCPY(buf, "sim:c:\\sound\\data\\sd_");
+            strcat(buf, D_800A3C40[g_StageId].name);
+            strcat(buf, ".vb");
+            D_8013644C->addr = (u8*)0x80280000;
+            D_8013644C->path = buf;
+            D_8013644C->size = D_800A3C40[g_StageId].vbLen;
+            D_8013644C->type = 5;
+        }
+    }
+    if (type == FILETYPE_SEQ) {
+        D_8013644C = &D_800A04AC[fileId];
+    }
+    if (type == FILETYPE_STAGE_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\");
+        strcat(buf, D_800A3C40[g_StageId].gfxName);
+        strcat(buf, ".bin");
+        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->size = 0x40000;
+        D_8013644C->path = buf;
+        D_8013644C->type = 2;
+    }
+    if (type == FILETYPE_WEAPON0_PRG) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\w0_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->size = 0x3000;
+        D_8013644C->addr = (u8*)0x8017A000;
+        D_8013644C->type = 8;
+    }
+    if (type == FILETYPE_WEAPON1_PRG) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\w1_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x8017D000;
+        D_8013644C->size = 0x3000;
+        D_8013644C->type = 8;
+    }
+    if (type == FILETYPE_WEAPON0_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\f0_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)&D_8007EFE4;
+        D_8013644C->size = 0x4000;
+        D_8013644C->type = 9;
+    }
+    if (type == FILETYPE_WEAPON1_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\f1_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)&D_80082FE4;
+        D_8013644C->size = 0x4000;
+        D_8013644C->type = 10;
+    }
+    if (type == FILETYPE_FAMILIAR_PRG) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\tt_000.bin");
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x80170000;
+        D_8013644C->size = 0xA000;
+        D_8013644C->type = 18;
+    }
+    if (type == FILETYPE_FAMILIAR_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\ft_000.bin");
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->size = 0x6000;
+        D_8013644C->type = 19;
+    }
+    if (type == FILETYPE_MONSTER) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\mo_000.bin");
+        buf[14] = fileId / 100 + '0';
+        buf[15] = fileId / 10 - fileId / 100 * 10 + '0';
+        buf[16] = fileId % 10 + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->size = 0x5800;
+        D_8013644C->type = 20;
+    }
+
+    fid = open(D_8013644C->path, 1);
+    if (fid < 0) {
+        FntPrint("o err:%s\n", D_8013644C->path);
+        D_800A04EC = 0;
+        return -1;
+    }
+    if (read(fid, D_8013644C->addr, D_8013644C->size) < 0) {
+        FntPrint("r err\n");
+        D_800A04EC = 0;
+        return -1;
+    }
+    if (close(fid) < 0) {
+        FntPrint("cl err\n");
+        D_800A04EC = 0;
+        return -1;
+    }
+    if (func_800E7E08(D_8013644C->type) < 0) {
+        FntPrint("tr err\n");
+        D_800A04EC = 0;
+        return -1;
+    }
+    D_800A04EC = 0;
+    return 0;
+}
 
 void func_800E8D24(void) {
     s8* ptr;

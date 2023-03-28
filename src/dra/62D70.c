@@ -333,7 +333,7 @@ bool func_8010715C(s32 mapTilesetId) {
         return false;
 
     if (D_800978AC == 0) {
-        if (func_800E81FC(mapTilesetId, 0xD) < 0) {
+        if (func_800E81FC(mapTilesetId, FILETYPE_MONSTER) < 0) {
             return false;
         }
     } else {

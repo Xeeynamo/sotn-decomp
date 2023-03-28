@@ -97,17 +97,13 @@ void func_800E6FD4(void) {
     }
 }
 
-extern s32 g_mapTilesetId;
-s32 func_800E81FC(s32, s32);
-void func_800E4970(void);
-
 void nullsub_9(void) {}
 
 void func_800E738C(void) {
     if (D_80073060 == 1) {
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 &&
-             func_800E81FC(7, 0) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(6, FILETYPE_SYSTEM) >= 0 &&
+             func_800E81FC(7, FILETYPE_SYSTEM) >= 0)) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
@@ -136,7 +132,7 @@ void func_800E7458(void) {
         if (D_800978AC != 0 && D_8006C3B0 != 0)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(12, 0) >= 0) {
+        if (D_800978AC != 0 || func_800E81FC(12, FILETYPE_SYSTEM) >= 0) {
             D_80073060++;
         }
         break;
@@ -151,8 +147,8 @@ void func_800E7458(void) {
         if (D_800978AC != 0 && D_8006C3B0 != 0)
             break;
 
-        if (D_800978AC != 0 ||
-            func_800E81FC(0, 2) >= 0 && func_800E81FC(0, 3) >= 0) {
+        if (D_800978AC != 0 || func_800E81FC(0, FILETYPE_VH) >= 0 &&
+                                   func_800E81FC(0, FILETYPE_VB) >= 0) {
             D_80073060++;
         }
         break;
@@ -167,7 +163,7 @@ void func_800E7458(void) {
         if (D_800978AC != 0 && D_8006C3B0 != 0)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(0, 1) >= 0) {
+        if (D_800978AC != 0 || func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0) {
             D_8003C9A4 = 0;
             D_80073060++;
         }

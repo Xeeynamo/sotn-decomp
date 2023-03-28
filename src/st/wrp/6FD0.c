@@ -2400,7 +2400,6 @@ s32 func_8018BA10(u16* arg0) {
     s16 x;
     s16 y;
     s32 var_v0;
-
     MoveEntity();
     FallEntity();
     if (g_CurrentEntity->accelerationY >= 0) {
@@ -2416,12 +2415,12 @@ s32 func_8018BA10(u16* arg0) {
                     if (res.unk0 & 1) {
                         g_api.CheckCollision(x, y - 8, &resBack, 0);
                         if (!(resBack.unk0 & 1)) {
-                            new_var = LOH(res.unk18);
+                            new_var = *((s16*)(&res.unk18));
                             g_CurrentEntity->accelerationX = 0;
                             g_CurrentEntity->accelerationY = 0;
                             g_CurrentEntity->posY.i.hi =
-                                (u16)g_CurrentEntity->posY.i.hi + 4 +
-                                LOH(res.unk18);
+                                (((u16)g_CurrentEntity->posY.i.hi) + 4) +
+                                (*((s16*)(&res.unk18)));
                             g_CurrentEntity->flags &= ~0x10000000;
                             return 1;
                         }
@@ -2429,16 +2428,14 @@ s32 func_8018BA10(u16* arg0) {
                     continue;
                 }
             }
-
-            if (res.unk0 & 5 && i != 1) {
+            if ((res.unk0 & 5) && (i != 1)) {
                 if (res.unk0 & 4) {
                     g_CurrentEntity->flags &= ~0x10000000;
                     return 4;
                 }
-
                 g_api.CheckCollision(x, y - 8, &resBack, 0);
                 if (!(resBack.unk0 & 1)) {
-                    new_var = LOH(res.unk18);
+                    new_var = *((s16*)(&res.unk18));
                     x = g_CurrentEntity->posY.i.hi;
                     x = x + new_var;
                     new_var = x;
