@@ -4,17 +4,7 @@
  * Description: Center Cube Area (Final Boss)
  */
 
-#include "common.h"
-#include "stage.h"
-
-extern PfnEntityUpdate D_80180390[];
-extern s16 D_80180BBC[];
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
-extern LayoutObject* D_8019C764;
-extern LayoutObject* D_8019C768;
-extern s16 D_8019D3B4;
-extern s16 D_8019D3B6;
-extern s32 D_8019D3B8;
+#include "cen.h"
 
 // background block of rock
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityBackgroundBlock);
@@ -503,7 +493,39 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80196C80);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRelicOrb);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId0C);
+void EntityHeartDrop(Entity* self) {
+    u16 temp_a0;
+    u16 temp_a0_2;
+    u16 var_a0;
+
+    if (self->step == 0) {
+        temp_a0 = self->subId + 0xC0;
+        self->unkB4 = temp_a0;
+        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+        temp_a0_2 = temp_a0 - 0xC0;
+        var_a0 = D_801805D8[temp_a0_2];
+        if (var_a0 < 128) {
+            self->unkB8.unkFuncB8 = EntityPrizeDrop;
+        } else {
+            self->unkB8.unkFuncB8 = EntityEquipItemDrop;
+            var_a0 -= 128;
+        }
+        self->subId = var_a0 + 0x8000;
+    } else {
+        temp_a0_2 = self->unkB4;
+        if (self->step < 5) {
+            if (self->unk48 != 0) {
+                var_a0 = self->unkB4;
+                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
+                self->step = 5;
+            }
+        }
+    }
+    self->unkB8.unkFuncB8(self);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId0E);
 

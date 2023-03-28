@@ -5,9 +5,11 @@ PfnEntityUpdate PfnEntityUpdates[];
 // if self->subId & 0x8000 then the item will not disappear
 // self->unk80.modeS8.unk0: frames left before the prize disappear
 u16 D_8018044C[];
+extern u16 D_80180608[];
 u16 D_80180DF4[];
 u8* D_80180E58[];
 u16 D_80180EB8[];
+
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -475,7 +477,39 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018E01C);
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityRelicOrb);
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityHeartDrop);
+void EntityHeartDrop(Entity* self) {
+    u16 temp_a0;
+    u16 temp_a0_2;
+    u16 var_a0;
+
+    if (self->step == 0) {
+        temp_a0 = self->subId + 0x118;
+        self->unkB4 = temp_a0;
+        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+        temp_a0_2 = temp_a0 - 0x118;
+        var_a0 = D_80180608[temp_a0_2];
+        if (var_a0 < 128) {
+            self->unkB8.unkFuncB8 = EntityPrizeDrop;
+        } else {
+            self->unkB8.unkFuncB8 = EntityEquipItemDrop;
+            var_a0 -= 128;
+        }
+        self->subId = var_a0 + 0x8000;
+    } else {
+        temp_a0_2 = self->unkB4;
+        if (self->step < 5) {
+            if (self->unk48 != 0) {
+                var_a0 = self->unkB4;
+                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
+                self->step = 5;
+            }
+        }
+    }
+    self->unkB8.unkFuncB8(self);
+}
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityUnkId0E);
 

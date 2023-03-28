@@ -45,6 +45,7 @@ extern s32 D_801819E8[];
 extern s32 D_801819EC[];
 extern s32 D_80181B40;
 extern u8* D_80181B4C;
+extern u16 D_80181C8C[];
 extern u16 D_80181CC0[];
 extern s16 D_801820C4[];
 extern u8* D_80182438[];
