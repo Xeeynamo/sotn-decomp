@@ -1169,7 +1169,15 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB160);
+void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
+    u8 swap;
+    u8* equipOrder;
+
+    equipOrder = func_800FD744(equipType);
+    swap = equipOrder[D_801375D8[arg0]];
+    equipOrder[D_801375D8[arg0]] = equipOrder[D_801375D8[arg1]];
+    equipOrder[D_801375D8[arg1]] = swap;
+}
 
 bool func_800FB1EC(s32 arg0) {
     if (D_801375CC.equipTypeFilter == 0) {
