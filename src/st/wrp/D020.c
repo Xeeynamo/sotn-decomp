@@ -9,6 +9,7 @@ extern u16 D_80180608[];
 u16 D_80180DF4[];
 u8* D_80180E58[];
 u16 D_80180EB8[];
+
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
