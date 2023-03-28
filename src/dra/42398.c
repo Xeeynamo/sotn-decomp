@@ -25,7 +25,6 @@ s32 func_800E3278(void);
 void func_800E385C(u32*);
 void func_800E7AEC(void);
 void func_800E7BB8(void);
-s32 func_800E81FC(s32, s32);
 void func_800E8EE4(void);
 void func_800EA7CC(void);
 void func_800EB314(void);
@@ -610,8 +609,8 @@ void func_800E451C(void) {
         break;
     case 1:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(2, 0) >= 0 &&
-             func_800E81FC(0, 0) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
+             func_800E81FC(0, FILETYPE_SYSTEM) >= 0)) {
             D_80073060++;
         }
         break;
@@ -630,7 +629,7 @@ void func_800E451C(void) {
         break;
     case 5:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(0, 1) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
@@ -730,13 +729,13 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0)
+        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_PRG) != 0)
             ;
-        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0)
+        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_CHR) != 0)
             ;
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0)
+        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, FILETYPE_VH) != 0)
             ;
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0)
+        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, FILETYPE_VB) != 0)
             ;
     }
 }

@@ -1,3 +1,6 @@
+#ifndef MAD_H
+#define MAD_H
+
 // hack to make the code compile for this weird overlay
 #define STAGE_MAD_FIX
 #include "stage.h"
@@ -64,3 +67,5 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
+
+#endif

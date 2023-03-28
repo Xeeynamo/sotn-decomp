@@ -7,6 +7,7 @@
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 #define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))
+#define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 
 #define LOH(x) (*(s16*)&(x))
 #define LOB(x) (*(s8*)&(x))
