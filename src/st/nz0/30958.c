@@ -467,12 +467,12 @@ void EntityCannonLever(Entity* self) {
 
 // cannon for shortcut
 void EntityCannon(Entity* self) {
+    s16 firstPrimIndex;
     Entity* newEntity;
     Primitive* prim;
-    s16 firstPrimIndex;
+    s32 var_v0;
     s32 temp;
     s32 temp2;
-    s32 var_v0;
 
     switch (self->step) {
     case 0:
@@ -543,12 +543,14 @@ void EntityCannon(Entity* self) {
         } else {
             var_v0 = temp;
         }
+     
         temp2 = temp - (var_v0 >> 3);
-        
         self->accelerationX = temp - (var_v0 >> 3);
+
         if (temp2 < 0x2000) {
             self->step++;
         }
+        break;
     }
 
     prim = *(s32*)&self->unk7C;
