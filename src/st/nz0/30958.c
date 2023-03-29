@@ -543,7 +543,7 @@ void EntityCannon(Entity* self) {
         } else {
             var_v0 = temp;
         }
-     
+
         temp2 = temp - (var_v0 >> 3);
         self->accelerationX = temp - (var_v0 >> 3);
 
