@@ -496,7 +496,7 @@ void EntityCannon(Entity* self) {
         prim->v1 = 0x20;
         prim->priority = 0x70;
         prim->blendMode = 2;
-        
+
         prim = prim->next;
         prim->type = 6;
         prim->tpage = 0xF;
@@ -509,7 +509,7 @@ void EntityCannon(Entity* self) {
         prim->y0 = 120 - g_Camera.posY.i.hi;
         prim->priority = 0x78;
         prim->blendMode = 2;
-        
+
         if (D_8003BE6F[0] != 0) {
             self->step = 3;
         }
@@ -536,7 +536,7 @@ void EntityCannon(Entity* self) {
         self->posX.i.hi = prim->x0 + 8;
         self->posX.i.lo = 0;
         MoveEntity();
-        
+
         temp = self->accelerationX;
         if (temp < 0) {
             var_v0 = temp + 7;
