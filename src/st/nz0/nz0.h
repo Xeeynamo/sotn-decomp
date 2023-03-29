@@ -17,7 +17,7 @@ void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
-extern u8 D_8003BE6F;
+extern u8 D_8003BE6F[];
 extern PfnEntityUpdate D_80180A90[];
 extern const u16 D_80180BE0[];
 extern u16 D_80180BEC[];
@@ -69,7 +69,7 @@ extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
 extern s32* D_80180EB8;
-extern s32 D_80180ED0;
+extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];

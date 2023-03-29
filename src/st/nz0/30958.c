@@ -466,7 +466,97 @@ void EntityCannonLever(Entity* self) {
 #endif
 
 // cannon for shortcut
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannon);
+void EntityCannon(Entity* self) {
+    s16 firstPrimIndex;
+    Entity* newEntity;
+    Primitive* prim;
+    s32 var_v0;
+    s32 temp;
+    s32 temp2;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[firstPrimIndex];
+        *(s32*)&self->unk7C = prim;
+        self->flags |= 0x800000;
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 0x28;
+        prim->v0 = 0xA8;
+        prim->u1 = 0x38;
+        prim->v1 = 0x20;
+        prim->priority = 0x70;
+        prim->blendMode = 2;
+
+        prim = prim->next;
+        prim->type = PRIM_SPRT;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 0x28;
+        prim->v0 = 0x80;
+        prim->u1 = 0x40;
+        prim->v1 = 0x28;
+        prim->x0 = self->posX.i.hi - 8;
+        prim->y0 = 120 - g_Camera.posY.i.hi;
+        prim->priority = 0x78;
+        prim->blendMode = 2;
+
+        if (D_8003BE6F[0] != 0) {
+            self->step = 3;
+        }
+        break;
+
+    case 1:
+        if (D_80180ED0[0] != 0) {
+            g_api.func_80102CD8(1);
+            g_api.PlaySfx(0x6AC);
+            self->accelerationX = 0x80000;
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != 0) {
+                CreateEntityFromEntity(2, self, newEntity);
+                newEntity->subId = 0x13;
+            }
+            CreateEntityFromEntity(0x1E, self, &self[1]);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        prim = *(s32*)&self->unk7C;
+        prim = prim->next;
+        self->posX.i.hi = prim->x0 + 8;
+        self->posX.i.lo = 0;
+        MoveEntity();
+
+        temp = self->accelerationX;
+        if (temp < 0) {
+            var_v0 = temp + 7;
+        } else {
+            var_v0 = temp;
+        }
+
+        temp2 = temp - (var_v0 >> 3);
+        self->accelerationX = temp - (var_v0 >> 3);
+
+        if (temp2 < 0x2000) {
+            self->step++;
+        }
+        break;
+    }
+
+    prim = *(s32*)&self->unk7C;
+    prim->x0 = self->posX.i.hi - 24;
+    prim->y0 = self->posY.i.hi - 16;
+}
 
 // projectile shot by cannon
 void EntityCannonShot(Entity* self) {
@@ -490,7 +580,7 @@ void EntityCannonShot(Entity* self) {
                 CreateEntityFromEntity(2, self, newEntity);
                 newEntity->subId = 3;
             }
-            D_8003BE6F = 1;
+            D_8003BE6F[0] = 1;
             DestroyEntity(self);
         }
         break;
