@@ -477,7 +477,7 @@ void EntityCannon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        firstPrimIndex = g_api.AllocPrimitives(4, 2);
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (firstPrimIndex == -1) {
             DestroyEntity(self);
             return;
@@ -487,7 +487,7 @@ void EntityCannon(Entity* self) {
         prim = &g_PrimBuf[firstPrimIndex];
         *(s32*)&self->unk7C = prim;
         self->flags |= 0x800000;
-        prim->type = 6;
+        prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
         prim->u0 = 0x28;
@@ -498,7 +498,7 @@ void EntityCannon(Entity* self) {
         prim->blendMode = 2;
 
         prim = prim->next;
-        prim->type = 6;
+        prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
         prim->u0 = 0x28;
