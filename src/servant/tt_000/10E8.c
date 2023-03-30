@@ -259,7 +259,7 @@ void func_80171ED4(s32 arg0) {
     } else {
         Entity* p;
         e->objectId = 0xD1;
-        if (D_8003C708 & 0x20) {
+        if (D_8003C708.flags & 0x20) {
             if (func_80174864() != 0) {
                 x = 0xC00000;
             } else {
@@ -518,12 +518,12 @@ void func_80174210(Entity* self, s32 arg1) {
     }
     cameraX = g_Camera.posX.i.hi;
     cameraY = g_Camera.posY.i.hi;
-    if (D_801710A0 != D_8006CBC4 || D_801710A4 != g_CurrentRoomLeft ||
-        D_801710A8 != g_CurrentRoomTop) {
+    if (D_801710A0 != D_8006CBC4 || D_801710A4 != g_CurrentRoom.left ||
+        D_801710A8 != g_CurrentRoom.top) {
         var_s1 = D_8017109C;
         D_801710A0 = D_8006CBC4;
-        D_801710A4 = g_CurrentRoomLeft;
-        D_801710A8 = g_CurrentRoomTop;
+        D_801710A4 = g_CurrentRoom.left;
+        D_801710A8 = g_CurrentRoom.top;
         if (D_80170760[1].unkC != -1) {
             var_s2 = 1;
             do {
@@ -692,18 +692,18 @@ s32 func_80174864(void) {
     int tmp;
 
     if (g_StageId - 0x20 < 0x15) {
-        if (D_8003C708 == 0x22) {
+        if (D_8003C708.flags == 0x22) {
             return 1;
         }
 
-        tmp = (D_8003C708 != 0x20) * 2;
+        tmp = (D_8003C708.flags != 0x20) * 2;
         return tmp;
     }
 
-    if (D_8003C708 == 0x22) {
+    if (D_8003C708.flags == 0x22) {
         return 0;
     }
 
     tmp = 0x20;
-    return D_8003C708 != tmp ? 2 : 1;
+    return D_8003C708.flags != tmp ? 2 : 1;
 }
