@@ -1414,23 +1414,23 @@ s16 func_800EDB58(u8 primType, s32 count) {
 s32 AllocPrimitives(u8 primType, s32 count) {
     s32 primIndex = 0;
     Primitive* prim = g_PrimBuf;
-    u8* primType = &g_PrimBuf->type;
+    u8* dstPrimType = &g_PrimBuf->type;
     s16 index;
 
     while (primIndex < MAX_PRIM_ALLOC_COUNT) {
-        if (*primType == 0) {
+        if (*dstPrimType == 0) {
             func_800EDA70(prim);
             if (count == 1) {
-                *primType = primType;
+                *dstPrimType = primType;
                 prim->next = NULL;
                 if (D_800A2438 < primIndex) {
                     D_800A2438 = primIndex;
                 }
             } else {
-                *primType = primType;
+                *dstPrimType = primType;
                 index = AllocPrimitives(primType, count - 1);
                 if (index == -1) {
-                    *primType = 0;
+                    *dstPrimType = 0;
                     return -1;
                 }
                 prim->next = &g_PrimBuf[index];
@@ -1439,7 +1439,7 @@ s32 AllocPrimitives(u8 primType, s32 count) {
         }
 
         primIndex++;
-        primType += sizeof(Primitive);
+        dstPrimType += sizeof(Primitive);
         prim++;
         if (primIndex >= 0x400) {
             return -1;
