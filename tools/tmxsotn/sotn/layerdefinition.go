@@ -5,13 +5,12 @@ import (
 )
 
 type LayerDefinition struct {
-	Layout  []uint16
-	TileDef TileDefinition
-	Rect    Rect
-	Flags   uint8
-	UnkC    uint16
-	UnkE    uint8
-	UnkF    uint8
+	Layout     []uint16
+	TileDef    TileDefinition
+	Rect       Rect
+	ScrollMode uint8
+	ZPriority  uint16
+	UnkE       uint16
 }
 
 type LayerBucket struct {
@@ -78,13 +77,12 @@ func readLayerDefinition(data []byte, offset int) LayerDefinition {
 	}
 
 	return LayerDefinition{
-		Layout:  readLayout(data, offLayout, rect),
-		TileDef: readTileDefinition(data, offTileDef),
-		Rect:    rect,
-		Flags:   uint8(rectData >> 24),
-		UnkC:    binary.LittleEndian.Uint16(data[offset+12:]),
-		UnkE:    uint8(data[offset+14]),
-		UnkF:    uint8(data[offset+15]),
+		Layout:     readLayout(data, offLayout, rect),
+		TileDef:    readTileDefinition(data, offTileDef),
+		Rect:       rect,
+		ScrollMode: uint8(rectData >> 24),
+		ZPriority:  binary.LittleEndian.Uint16(data[offset+12:]),
+		UnkE:       binary.LittleEndian.Uint16(data[offset+14:]),
 	}
 }
 

@@ -2,10 +2,7 @@ package main
 
 import (
 	"fmt"
-	"image/png"
-	"os"
 
-	"github.com/xeeynamo/sotn-decomp/tools/gfxsotn/gfx"
 	"github.com/xeeynamo/sotn-decomp/tools/tmxsotn/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/tmxsotn/tiled"
 )
@@ -13,25 +10,74 @@ import (
 const tileSize = 16
 
 func main() {
-	err := convertMap(
-		"../../iso/ST/WRP/WRP.BIN",
-		"../../iso/ST/WRP/F_WRP.BIN",
+	err := writeTmxFromDecomp(
 		"wrp",
+		"../../assets/out",
+		"../../assets/dra",
+		"../../assets/st",
+		"../../assets/st/wrp",
+		"../../assets/st/wrp/D_80186D78.tiledef.json",
+		"../../assets/st/wrp/D_80182368.tilelayout.bin",
 	)
+	// err := writeTmxFromBin(
+	// 	"../../iso/ST/WRP/WRP.BIN",
+	// 	"../../iso/ST/WRP/F_WRP.BIN",
+	// 	"wrp",
+	// )
 	if err != nil {
 		panic(err)
 	}
 }
 
-func convertMap(binPath string, gfxPath string, mapName string) error {
-	stageRaw, err := os.ReadFile(binPath)
+func writeTmxFromDecomp(
+	name string,
+	outPath string,
+	draPath string,
+	gfxPath string,
+	stagePath string,
+	tiledefFileName string,
+	layoutFileName string) error {
+
+	tiledef, err := sotn.ReadTileDefinitionFromJson(stagePath, tiledefFileName)
 	if err != nil {
 		return err
 	}
 
-	layers := sotn.ReadStage(stageRaw)
-	mainLayer := layers.Layers[layers.Rooms[0].Foreground]
+	tilemap, err := sotn.ReadLayout(layoutFileName)
+	if err != nil {
+		return err
+	}
 
+	layer := sotn.LayerDefinition{
+		TileDef: tiledef,
+		Layout:  tilemap,
+		Rect: sotn.Rect{
+			Left:   0,
+			Top:    0,
+			Right:  0,
+			Bottom: 0,
+		},
+		ScrollMode: 1,
+		ZPriority:  0x60,
+		UnkE:       0,
+	}
+	bucket := sotn.LayerBucket{
+		Layers: make([]sotn.LayerDefinition, 0),
+	}
+	bucket.Layers = append(bucket.Layers, layer)
+
+	m, err := makeTmx(name, gfxPath, bucket, bucket.Layers[0])
+	if err != nil {
+		return err
+	}
+	return m.EncodeToFile(fmt.Sprintf("%s.tmx", name))
+}
+
+func makeTmx(
+	name string,
+	gfxPath string,
+	bucket sotn.LayerBucket,
+	mainLayer sotn.LayerDefinition) (tiled.Map, error) {
 	m := tiled.Map{
 		Version:     "1.0",
 		Orientation: "orthogonal",
@@ -44,55 +90,28 @@ func convertMap(binPath string, gfxPath string, mapName string) error {
 		Layers:      make([]tiled.Layer, 0),
 	}
 
-	for i := 0; i < len(layers.Rooms); i++ {
-		appendRoom(&m, &layers, i)
-	}
+	appendLayer(&m, &mainLayer, name)
 
-	gfxTilesets, err := getGfxTilesets(gfxPath)
+	gfxTilesets, err := sotn.GetStageTileset(name, gfxPath)
 	if err != nil {
-		return err
+		return m, err
 	}
 
 	m.Tilesets = make([]tiled.Tileset, len(gfxTilesets))
 	for i := 0; i < len(gfxTilesets); i++ {
-		gfxTileset := gfxTilesets[i]
-		size := gfxTileset.Img.Rect.Size()
-		fileName := fmt.Sprintf("%s_%d_%d.png", mapName, gfxTileset.Clut, gfxTileset.Partition)
+		clut := 0
 		m.Tilesets[i] = tiled.Tileset{
-			FirstGID:   uint32(1 | (gfxTileset.Clut << 10) | (gfxTileset.Partition << 18)),
-			Name:       fmt.Sprintf("%d %d", gfxTileset.Clut, gfxTileset.Partition),
+			FirstGID:   uint32(1 | (i << 10) | (clut << 18)),
+			Name:       fmt.Sprintf("%s %d", name, i),
 			TileWidth:  tileSize,
 			TileHeight: tileSize,
 			Image: tiled.Image{
-				Width:  size.X,
-				Height: size.Y,
-				Source: fileName,
+				Source: gfxTilesets[i],
 			},
 		}
-
-		outFile, err := os.Create(fileName)
-		if err != nil {
-			return err
-		}
-		defer outFile.Close()
-		png.Encode(outFile, gfxTileset.Img)
 	}
 
-	return m.EncodeToFile(fmt.Sprintf("%s.tmx", mapName))
-}
-
-func getGfxTilesets(filePath string) ([]gfx.ImageInfo, error) {
-	gfxData, err := os.ReadFile(filePath)
-	if err != nil {
-		return []gfx.ImageInfo{}, err
-	}
-
-	images, err := gfx.GetGfxAsImages(gfxData)
-	if err != nil {
-		return []gfx.ImageInfo{}, err
-	}
-
-	return images, nil
+	return m, nil
 }
 
 func appendRoom(m *tiled.Map, layers *sotn.LayerBucket, roomIdx int) {
@@ -102,10 +121,6 @@ func appendRoom(m *tiled.Map, layers *sotn.LayerBucket, roomIdx int) {
 }
 
 func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
-	if layerIn.Flags == 0 {
-		return
-	}
-
 	m.Layers = append(m.Layers, tiled.Layer{
 		Name:    name,
 		Width:   layerIn.Width() * tileSize,
@@ -113,10 +128,9 @@ func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
 		OffsetX: float32(layerIn.Rect.Left) * 256,
 		OffsetY: float32(layerIn.Rect.Top) * 256,
 		Properties: []tiled.Property{
-			tiled.GetIntProperty("flags", int(layerIn.Flags)),
-			tiled.GetIntProperty("unkC", int(layerIn.UnkC)),
+			tiled.GetIntProperty("ScrollMode", int(layerIn.ScrollMode)),
+			tiled.GetIntProperty("ZPriority", int(layerIn.ZPriority)),
 			tiled.GetIntProperty("unkE", int(layerIn.UnkE)),
-			tiled.GetIntProperty("unkF", int(layerIn.UnkF)),
 		},
 		Data: tiled.LayerData{
 			Encoding: "csv",
@@ -126,11 +140,14 @@ func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
 }
 
 func getLayerContentAsCsv(data []uint16, tileDef sotn.TileDefinition) string {
+	if len(data) == 0 {
+		return ""
+	}
+
 	content := ""
 	for _, tid := range data {
-		id := 1 + int(tileDef.Tiles[tid]) |
-			(int(tileDef.Palettes[tid]) << 10) |
-			(int(tileDef.Pages[tid]) << 18)
+		id := 1 + int(tileDef.Tiles[tid]) | (int(tileDef.Pages[tid]) << 8)
+		//id |= (int(tileDef.Palettes[tid]) << 16) // palette support temporarily removed
 		content += fmt.Sprintf("%d,", id)
 	}
 
