@@ -83,6 +83,7 @@ typedef struct Primitive {
 
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
+#define MAX_BG_LAYER_COUNT 16
 
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
@@ -583,14 +584,14 @@ typedef struct {
     /* 0x04 */ u32 top : 6;
     /* 0x08 */ u32 right : 6;
     /* 0x0C */ u32 bottom : 6;
-    /* 0x10 */ u32 flags : 8;
+    /* 0x10 */ u8 flags : 8;
 } LayoutRect; // size = 0x14
 
 typedef struct {
     /* 0x00 */ const u16* layout;
     /* 0x04 */ const TileDefinition* tileDef;
     /* 0x08 */ const LayoutRect rect;
-    /* 0x0C */ const u16 unkC;
+    /* 0x0C */ const u16 zPriority;
     /* 0x0E */ const u16 unkE;
 } LayerDef2; // size = 0x10
 
@@ -598,7 +599,7 @@ typedef struct {
     /* 0x00 */ const u16* layout;
     /* 0x04 */ const TileDefinition* tileDef;
     /* 0x08 */ const u32 rect;
-    /* 0x0C */ const u16 unkC;
+    /* 0x0C */ const u16 zPriority;
     /* 0x0E */ const u8 unkE;
     /* 0x0F */ const u8 unkF;
 } LayerDef; // size = 0x10
@@ -626,21 +627,6 @@ typedef struct {
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)();
 } Overlay;
-
-typedef struct RoomDimensions {
-    /* 0x00 */ s32 hSize;
-    /* 0x04 */ u16 vSize;
-    /* 0x06 */ u16 _padding06;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 left;
-    /* 0x10 */ s32 top;
-    /* 0x14 */ s32 right;
-    /* 0x18 */ s32 bottom;
-    /* 0x1C */ s32 x;
-    /* 0x20 */ s32 y;
-    /* 0x24 */ s32 width;
-    /* 0x28 */ s32 height;
-} RoomDimensions; /* size=0x2C */
 
 typedef struct Collider {
     /* 0x00 */ s32 unk0;
@@ -845,19 +831,45 @@ typedef struct {
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 typedef struct {
-    /* 800730D8 */ u16* layout;
-    /* 800730DC */ u32 tileDef;
-    /* 800730E0 */ f32 scrollX;
-    /* 800730E4 */ f32 scrollY;
-    /* 800730E8 */ u32 D_800730E8;
-    /* 800730EC */ u32 D_800730EC;
-    /* 800730F0 */ u32 D_800730F0;
-    /* 800730F4 */ u32 D_800730F4;
-    /* 800730F8 */ u32 w;
-    /* 800730FC */ u32 h;
-    /* 80073100 */ u32 D_80073100;
-    /* 80073104 */ u32 flags;
-} BgLayer;
+    /* 800730D8 0x00 */ u16* layout;
+    /* 800730DC 0x04 */ u32 tileDef;
+    /* 800730E0 0x08 */ f32 scrollX;
+    /* 800730E4 0x0C */ f32 scrollY;
+    /* 800730E8 0x10 */ u32 D_800730E8;
+    /* 800730EC 0x14 */ u32 D_800730EC;
+    /* 800730F0 0x18 */ u32 zPriority;
+    /* 800730F4 0x1C */ u32 D_800730F4;
+    /* 800730F8 0x20 */ u32 w;
+    /* 800730FC 0x24 */ u32 h;
+    /* 80073100 0x28 */ u32 D_80073100;
+    /* 80073104 0x2C */ u32 flags;
+} BgLayer; /* size=0x30 */
+
+typedef struct {
+    /* 800730A0 0x00 */ s32 unk00;
+    /* 800730A4 0x04 */ s32 hSize;
+    /* 800730A8 0x08 */ u16 vSize;
+    /* 800730AA 0x0A */ u16 _padding06;
+    /* 800730AC 0x0C */ s32 unk8;
+    /* 800730B0 0x10 */ s32 left;
+    /* 800730B4 0x14 */ s32 top;
+    /* 800730B8 0x18 */ s32 right;
+    /* 800730BC 0x1C */ s32 bottom;
+    /* 800730C0 0x20 */ s32 x;
+    /* 800730C4 0x24 */ s32 y;
+    /* 800730C8 0x28 */ s32 width;
+    /* 800730CC 0x2C */ s32 height;
+    /* 800730D0 0x30 */ s32 _padding30;
+    /* 800730D4 0x34 */ s32 D_800730D4;
+    /* 800730D8 0x38 */ BgLayer bg[MAX_BG_LAYER_COUNT];
+} RoomDimensions;
+
+typedef struct {
+    /* D_8003C708 */ u16 flags;
+    /* D_8003C70A */ u16 unk2;
+    /* D_8003C70C */ u16 unk4;
+    /* D_8003C70E */ u16 zPriority;
+} FgLayer; /* size=0x8 */
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
@@ -875,7 +887,7 @@ extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
-extern u16 D_8003C708; // can save
+extern FgLayer D_8003C708;
 // extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
@@ -974,19 +986,8 @@ extern u32 D_80073078; // ev3
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
-extern Unkstruct_800ECE2C D_800730A0; // 4 bytes before 'g_CurrentRoom'
 extern RoomDimensions g_CurrentRoom;
-extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
-extern s32 D_800730AC;          // g_CurrentRoom.unk8
-extern s32 g_CurrentRoomLeft;   // g_CurrentRoom.left
-extern s32 g_CurrentRoomTop;    // g_CurrentRoom.top
-extern s32 g_CurrentRoomRight;  // g_CurrentRoom.right
-extern s32 g_CurrentRoomBottom; // g_CurrentRoom.bottom
-extern s32 g_CurrentRoomX;      // g_CurrentRoom.x
-extern s32 g_CurrentRoomY;      // g_CurrentRoom.y
-extern s32 g_CurrentRoomWidth;  // g_CurrentRoom.width
-extern s32 g_CurrentRoomHeight; // g_CurrentRoom.height
-extern BgLayer D_800730D8[];
+extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];

@@ -69,7 +69,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     new_var = 0x10;
     if ((((absX < 0) || (((u32)absX) >= (g_CurrentRoom.hSize << 8))) ||
          (absY < 0)) ||
-        (((u32)absY) >= (g_CurrentRoomVSize << 8))) {
+        (((u32)absY) >= (g_CurrentRoom_vSize << 8))) {
         colType = 0;
     } else {
         u16 colTile = g_CurrentRoomTileLayout
@@ -673,13 +673,13 @@ block_25:
 
 void func_800F1424(void) {
     if (g_pads[1].tapped & PAD_R1) {
-        D_800730A0.unk00 ^= 2;
+        g_CurrentRoom.unk00 ^= 2;
     }
     if (g_pads[1].tapped & PAD_L1) {
-        D_800730A0.unk00 ^= 1;
+        g_CurrentRoom.unk00 ^= 1;
     }
-    if ((g_pads[1].tapped & PAD_L2) && (D_800730A0.unk3C != 0)) {
-        D_800730A0.unk54[0].unk00[0] ^= 1;
+    if ((g_pads[1].tapped & PAD_L2) && (g_CurrentRoom.bg[0].tileDef != 0)) {
+        g_CurrentRoom.bg[0].D_800730F4 ^= 1;
     }
 }
 
@@ -885,7 +885,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800F2658);
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (D_800973FC != 0 || D_8006BB00 != 0 || D_8003C708 & 0x60) {
+        if (D_800973FC != 0 || D_8006BB00 != 0 || D_8003C708.flags & 0x60) {
             return false;
         }
         D_801375C8 = 1;
