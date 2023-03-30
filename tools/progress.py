@@ -27,7 +27,7 @@ def exiterr(msg: str):
 
 
 def get_git_commit_message() -> str:
-    return subprocess.check_output(['git', 'show', '-s', '--format=%s']).decode('ascii').rstrip()
+    return subprocess.check_output(['git', 'show', '-s', '--format=%s']).decode('utf-8').rstrip()
 
 
 class DecompProgressStats:
