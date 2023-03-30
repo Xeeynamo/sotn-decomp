@@ -442,7 +442,7 @@ void func_800EAD7C(void);
 void func_800EAEEC(void);
 void func_800EB534(s32 equipIcon, s32 palette, s32 index);
 void func_800ECE2C(void);
-void func_800EDA70(s32* arg0);
+void func_800EDA70(Primitive* prim);
 void func_800EDA94(void);
 void func_800EDAE4(void);
 s32 AllocPrimitives(u8 primitives, s32 count);

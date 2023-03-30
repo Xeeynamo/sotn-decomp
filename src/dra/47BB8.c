@@ -1316,9 +1316,10 @@ void LoadRoomLayer(s32 arg0) {
     }
 }
 
-void func_800EDA70(s32* primData) {
+void func_800EDA70(Primitive* prim) {
     s32 i;
     s32 n;
+    u32* primData = (u32*)prim;
 
     for (n = sizeof(Primitive) / sizeof(*primData), i = 0; i < n; i++) {
         *primData++ = 0;
@@ -1330,7 +1331,7 @@ void func_800EDA94(void) {
     s32 i;
 
     for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
-        func_800EDA70((s32*)prim);
+        func_800EDA70(prim);
         prim->type = PRIM_NONE;
         prim++;
     }
@@ -1361,9 +1362,56 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDB58);
+s16 func_800EDB58(u8 primType, s32 count) {
+    Primitive* prim;
+    Primitive* temp_v0;
+    bool isLooping;
+    s32 primStartIdx;
+    s32 var_s1;
+    s32 i;
+    s32 var_v1;
 
-s32 AllocPrimitives(u8 type, s32 count) {
+    var_v1 = count;
+    primStartIdx = 0;
+    i = 0;
+    prim = g_PrimBuf;
+    isLooping = 1;
+    while (isLooping) {
+        var_v1--;
+        if (prim->type != 0) {
+            var_v1 = i;
+            primStartIdx = var_v1 + 1;
+            var_v1 = count;
+        } else if (var_v1 == 0) {
+            break;
+        }
+        var_s1 = i + 1;
+        prim++;
+        i++;
+        isLooping = i < 0x400;
+        if (isLooping) {
+            continue;
+        }
+        if (var_v1 != 0) {
+            return -1;
+        }
+    }
+
+    for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
+        func_800EDA70(prim);
+        var_s1 = 0;
+        temp_v0 = &g_PrimBuf[i];
+        prim->type = primType;
+        prim->next = temp_v0;
+        prim->next = prim->next + primStartIdx + 1;
+    }
+    prim[-1].next = NULL;
+    prim[-1].type &= 0xEF;
+
+    return primStartIdx;
+}
+
+s32 AllocPrimitives(u8 primType, s32 count) {
     s32 primIndex = 0;
     Primitive* prim = g_PrimBuf;
     u8* primType = &g_PrimBuf->type;
@@ -1373,14 +1421,14 @@ s32 AllocPrimitives(u8 type, s32 count) {
         if (*primType == 0) {
             func_800EDA70(prim);
             if (count == 1) {
-                *primType = type;
+                *primType = primType;
                 prim->next = NULL;
                 if (D_800A2438 < primIndex) {
                     D_800A2438 = primIndex;
                 }
             } else {
-                *primType = type;
-                index = AllocPrimitives(type, count - 1);
+                *primType = primType;
+                index = AllocPrimitives(primType, count - 1);
                 if (index == -1) {
                     *primType = 0;
                     return -1;
