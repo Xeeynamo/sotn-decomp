@@ -16,9 +16,10 @@ options:
   migrate_rodata_to_functions: no
   extensions_path: tools/splat_ext
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".bss"
 segments:
   - name: stnz0
     type: code
@@ -26,18 +27,56 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x18C0, rodata]
-      - [0x1DD0, rodata]
-      - [0x20A0, rodata]
-      - [0x20B0, rodata]
-      - [0x2220, rodata]
-      - [0x2600, rodata]
-      - [0x2710, rodata]
+      - [0x0, data]
+      - [0x164, layers, rooms]
+      - [0x47C, data]
+      - [0x18C0, data]
+      - [0x1DD0, data]
+      - [0x20A0, data]
+      - [0x20B0, data]
+      - [0x2220, data]
+      - [0x2600, data]
+      - [0x2710, data]
       - [0x272C, roomdef, g_Rooms]
-      - [0x2830, rodata]
-      - [0x2840, rodata]
-      - [0x2850, rodata]
+      - [0x2830, data]
+      - [0x2840, data]
+      - [0x2850, data]
+      - [0x16A5C, tilelayout, D_80196A5C]
+      - [0x16C5C, tilelayout, D_80196C5C]
+      - [0x16E5C, tilelayout, D_80196E5C]
+      - [0x1725C, tilelayout, D_8019725C]
+      - [0x17A5C, tilelayout, D_80197A5C]
+      - [0x17C5C, tilelayout, D_80197C5C]
+      - [0x17E5C, tilelayout, D_80197E5C]
+      - [0x1805C, tilelayout, D_8019805C]
+      - [0x1845C, tilelayout, D_8019845C]
+      - [0x1865C, tilelayout, D_8019865C]
+      - [0x1885C, tilelayout, D_8019885C]
+      - [0x18A5C, tilelayout, D_80198A5C]
+      - [0x1905C, tilelayout, D_8019905C]
+      - [0x1925C, tilelayout, D_8019925C]
+      - [0x19C5C, tilelayout, D_80199C5C]
+      - [0x1A05C, tilelayout, D_8019A05C]
+      - [0x1A45C, tilelayout, D_8019A45C]
+      - [0x1AA5C, tilelayout, D_8019AA5C]
+      - [0x1AE5C, tilelayout, D_8019AE5C]
+      - [0x1BE5C, tilelayout, D_8019BE5C]
+      - [0x1C65C, tilelayout, D_8019C65C]
+      - [0x1C85C, tilelayout, D_8019C85C]
+      - [0x1D45C, tilelayout, D_8019D45C]
+      - [0x1D65C, tilelayout, D_8019D65C]
+      - [0x1E25C, tilelayout, D_8019E25C]
+      - [0x1EE5C, tilelayout, D_8019EE5C]
+      - [0x1F25C, tilelayout, D_8019F25C]
+      - [0x2005C, tilelayout, D_801A005C]
+      - [0x2025C, tilelayout, D_801A025C]
+      - [0x2045C, tilelayout, D_801A045C]
+      - [0x2065C, tilelayout, D_801A065C]
+      - [0x2085C, tilelayout, D_801A085C]
+      - [0x20A5C, data]
+      - [0x20E5C, raw, D_801A0E5C] # tiledef
+      - [0x24E6C, raw, D_801A4E6C] # tiledef
+      - [0x26E7C, raw, D_801A6E7C] # tiledef
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, rodata]
@@ -46,5 +85,5 @@ segments:
       - [0x30958, c]
       - [0x3E30C, c]
       - [0x4672C, c]
-      - [0x4AA10, data]
+      - [0x4AA10, sbss]
   - [0x4B780]
