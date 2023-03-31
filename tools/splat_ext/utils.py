@@ -19,15 +19,15 @@ def from_s32(num):
     return num.to_bytes(4, byteorder='little', signed=True)
 
 
-def to_s32(data):
-    return int.from_bytes(data, byteorder='little', signed=True)
+def to_s32(data: bytearray):
+    return int.from_bytes(data[:4], byteorder='little', signed=True)
 
 
 def from_u32(num):
     return bytes([(num >> i) & 0xff for i in range(0, 32, 8)])
 
 
-def to_u32(data):
+def to_u32(data: bytearray):
     return (data[0] << 0) | (data[1] << 8) | (data[2] << 16) | (data[3] << 24)
 
 
@@ -35,11 +35,11 @@ def from_16(num):
     return bytes([num & 0xff, (num >> 8) & 0xff])
 
 
-def to_s16(data):
+def to_s16(data: bytearray):
     return ctypes.c_int16(data[0] | (data[1] << 8)).value
 
 
-def to_u16(data):
+def to_u16(data: bytearray):
     return data[0] | (data[1] << 8)
 
 
@@ -47,7 +47,7 @@ def from_u8(num):
     return bytes([num])
 
 
-def to_u8(data):
+def to_u8(data: bytearray):
     return data[0]
 
 
@@ -60,8 +60,7 @@ def to_bool(data):
 
 
 def from_ptr_str(ptr_str):
-    num = int(ptr_str, 16)
-    return from_u32(num)
+    return from_u32(int(ptr_str[2:], 16))
 
 
 def to_ptr_str(data):
