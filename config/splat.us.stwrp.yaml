@@ -27,7 +27,9 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, .data, 6FD0]
+      - [0x0, .data, header]
+      - [0xB8, layers, rooms]
+      - [0x1B8, .data, 6FD0]
       - [0x11AC, roomdef, g_Rooms]
       - [0x1228, layoutobj, D_80181228]
       - [0x1250, layoutobj, D_80181250]
