@@ -11,10 +11,14 @@ import concurrent.futures
 
 # search for scratches with the name on decomp.me
 def find_scratches(name):
-    # avoid hitting server too hard
-    time.sleep(1)
-
-    scratches = json.loads(requests.get(f"https://decomp.me/api/scratch?search={name}").text)
+    try:
+        response = requests.get(f"https://decomp.me/api/scratch?search={name}")
+        response.raise_for_status()
+        scratches = json.loads(response.text)
+    except requests.exceptions.HTTPError as http_err:
+        return None
+    except Exception as err:
+        return None
 
     best_result = None
     best_percent = 0
@@ -33,7 +37,6 @@ def find_scratches(name):
         if percent > best_percent:
             best_percent = percent
             best_result = result
-        percent = round(percent,3)
 
     if best_result:
         return [f"https://decomp.me{best_result['url']}", round(best_percent,3)]
