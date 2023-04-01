@@ -1371,7 +1371,30 @@ bool func_8012C88C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CA64);
+void func_8012CA64(void) {
+    u32 var_a0;
+    s32* temp;
+    s32 temp2;
+
+    temp = &D_80072F20;
+
+    D_80073406 = 1;
+    D_800B0914 = 0;
+    var_a0 = 0xDE;
+    if (*temp & 0x20) {
+        var_a0 = 0xDF;
+    }
+    func_8010DA48(var_a0);
+    D_800733E4 = 0;
+    temp2 = D_800733E0;
+    D_800733E0 = (s32)(temp2 + ((u32)temp2 >> 0x1F));
+    D_800733E0 >>= 1;
+    D_800B0918 = 0x200;
+    if (*temp & 0x40) {
+        D_800B0914 = 1;
+        func_8010DA48(0xE9U);
+    }
+}
 
 void func_8012CB0C(void) {
     PLAYER.unkAC = 0xDE;
