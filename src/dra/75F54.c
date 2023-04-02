@@ -1373,24 +1373,22 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
 
 void func_8012CA64(void) {
     u32 var_a0;
-    s32* temp;
-    s32 temp2;
 
-    temp = &D_80072F20;
-
-    D_80073406 = 1;
+    PLAYER.unk2E = 1;
     D_800B0914 = 0;
-    var_a0 = 0xDE;
-    if (*temp & 0x20) {
+
+    if (D_80072F20.pl_vram_flag & 0x20) {
         var_a0 = 0xDF;
+    } else {
+        var_a0 = 0xDE;
     }
     func_8010DA48(var_a0);
-    D_800733E4 = 0;
-    temp2 = D_800733E0;
-    D_800733E0 = (s32)(temp2 + ((u32)temp2 >> 0x1F));
-    D_800733E0 >>= 1;
+    
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX /= 2;
+
     D_800B0918 = 0x200;
-    if (*temp & 0x40) {
+    if (D_80072F20.pl_vram_flag & 0x40) {
         D_800B0914 = 1;
         func_8010DA48(0xE9U);
     }
