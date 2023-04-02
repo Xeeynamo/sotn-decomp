@@ -259,7 +259,7 @@ void func_80171ED4(s32 arg0) {
     } else {
         Entity* p;
         e->objectId = 0xD1;
-        if (D_8003C708 & 0x20) {
+        if (D_8003C708.flags & 0x20) {
             if (func_80174864() != 0) {
                 x = 0xC00000;
             } else {
@@ -316,7 +316,62 @@ void func_80173C2C(Entity* entity) {
     DestroyEntity(entity);
 }
 
+// matching on decomp.me, jumps to a NOP
+// DECOMP_ME_WIP func_80173C64 https://decomp.me/scratch/B45wo
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80173C64);
+#else
+s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
+    AnimationFrame* animFrame;
+    s8 new_var;
+    u16 new_var2;
+    s32 ret;
+    ret = 0;
+    if (self->animFrameDuration == (-1)) {
+        ret = -1;
+    } else if (self->animFrameDuration == 0) {
+        self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+    } else {
+        self->animFrameDuration--;
+        if (self->animFrameDuration == 0) {
+            self->animFrameIdx++;
+            animFrame = &self->unk4C[self->animFrameIdx];
+            if (animFrame->duration == 0) {
+                self->animFrameIdx = animFrame->unk2;
+                self->animFrameDuration =
+                    self->unk4C[self->animFrameIdx].duration;
+            } else {
+                ;
+                if (animFrame->duration == 0xFFFF) {
+                    new_var2 = animFrame->duration;
+                    new_var2 += self->animFrameIdx;
+                    self->animFrameIdx += animFrame->duration;
+                    ret = -1;
+                    self->animFrameDuration = -1;
+                } else if (animFrame->duration == 0xFFFE) {
+                    self->unk4C = frames[animFrame->unk2];
+                    self->animFrameIdx = 0;
+                    ret = -2;
+                    self->animFrameDuration = self->unk4C->duration;
+                } else {
+                    self->animFrameDuration = animFrame->duration;
+                }
+            }
+        }
+    }
+    if (hitboxFrames != 0) {
+        new_var2 = self->unk4C[self->animFrameIdx].unk2 >> 9;
+        hitboxFrames = &hitboxFrames[new_var2 << 2];
+        self->unk10 = (s8)*hitboxFrames++;
+        new_var = *(hitboxFrames++);
+        self->unk12 = new_var;
+        self->hitboxWidth = *hitboxFrames++;
+        self->hitboxHeight = *hitboxFrames++;
+    }
+    self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
+    return ret;
+}
+#endif
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -518,12 +573,12 @@ void func_80174210(Entity* self, s32 arg1) {
     }
     cameraX = g_Camera.posX.i.hi;
     cameraY = g_Camera.posY.i.hi;
-    if (D_801710A0 != D_8006CBC4 || D_801710A4 != g_CurrentRoomLeft ||
-        D_801710A8 != g_CurrentRoomTop) {
+    if (D_801710A0 != D_8006CBC4 || D_801710A4 != g_CurrentRoom.left ||
+        D_801710A8 != g_CurrentRoom.top) {
         var_s1 = D_8017109C;
         D_801710A0 = D_8006CBC4;
-        D_801710A4 = g_CurrentRoomLeft;
-        D_801710A8 = g_CurrentRoomTop;
+        D_801710A4 = g_CurrentRoom.left;
+        D_801710A8 = g_CurrentRoom.top;
         if (D_80170760[1].unkC != -1) {
             var_s2 = 1;
             do {
@@ -692,18 +747,18 @@ s32 func_80174864(void) {
     int tmp;
 
     if (g_StageId - 0x20 < 0x15) {
-        if (D_8003C708 == 0x22) {
+        if (D_8003C708.flags == 0x22) {
             return 1;
         }
 
-        tmp = (D_8003C708 != 0x20) * 2;
+        tmp = (D_8003C708.flags != 0x20) * 2;
         return tmp;
     }
 
-    if (D_8003C708 == 0x22) {
+    if (D_8003C708.flags == 0x22) {
         return 0;
     }
 
     tmp = 0x20;
-    return D_8003C708 != tmp ? 2 : 1;
+    return D_8003C708.flags != tmp ? 2 : 1;
 }

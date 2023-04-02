@@ -1225,9 +1225,9 @@ void func_800ECBF8(void) {
 void func_800ECE2C(void) {
     s32 i;
 
-    D_800730A0.unk00 = 0;
-    for (i = 0; i < 16; i++) {
-        D_800730A0.unk54[i].unk00[0] = 0;
+    g_CurrentRoom.unk00 = 0;
+    for (i = 0; i < MAX_BG_LAYER_COUNT; i++) {
+        g_CurrentRoom.bg[i].D_800730F4 = 0;
     }
 }
 
@@ -1245,7 +1245,7 @@ extern s32 D_8013AED0;
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708 = 0;
     D_8013AED0 = 1;
-    D_800730A0.unk00 = 0;
+    g_CurrentRoom.unk00 = 0;
     D_80073088 = layerDef->tileDef;
     if (layerDef->tileDef != NULL) {
         g_CurrentRoomTileLayout.fg = layerDef->layout;
@@ -1265,18 +1265,18 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
             D_8007309C = 0x60;
             D_8013AED0 = 0;
         }
-        D_800730A0.unk00 = (s32)layerDef->unkE;
-        g_CurrentRoomLeft = layerDef->rect.left;
-        g_CurrentRoomTop = layerDef->rect.top;
-        g_CurrentRoomRight = layerDef->rect.right;
-        g_CurrentRoom.hSize = (g_CurrentRoomRight - g_CurrentRoomLeft) + 1;
-        g_CurrentRoomY = 0;
-        g_CurrentRoomX = 0;
-        g_CurrentRoomWidth = g_CurrentRoom.hSize << 8;
-        D_800730AC = 1;
-        g_CurrentRoomBottom = layerDef->rect.bottom;
-        g_CurrentRoomVSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
-        g_CurrentRoomHeight = g_CurrentRoomVSize << 8;
+        g_CurrentRoom.unk00 = (s32)layerDef->unkE;
+        g_CurrentRoom.left = layerDef->rect.left;
+        g_CurrentRoom.top = layerDef->rect.top;
+        g_CurrentRoom.right = layerDef->rect.right;
+        g_CurrentRoom.hSize = (g_CurrentRoom.right - g_CurrentRoom.left) + 1;
+        g_CurrentRoom.y = 0;
+        g_CurrentRoom.x = 0;
+        g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
+        g_CurrentRoom.D_800730AC = 1;
+        g_CurrentRoom.bottom = layerDef->rect.bottom;
+        g_CurrentRoom.vSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
+        g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
     }
 }
 #endif
@@ -1284,23 +1284,24 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
     u32 rect;
 
-    D_800730D8[index].D_800730F4 = 0;
-    D_800730D8[index].tileDef = layerDef->tileDef;
-    D_800730D8[index].layout = layerDef->layout;
-    if (D_800730D8[index].tileDef != 0) {
-        D_800730D8[index].D_800730F0 = layerDef->unkC;
-        D_800730D8[index].D_800730F4 = layerDef->unkE;
+    g_CurrentRoom.bg[index].D_800730F4 = 0;
+    g_CurrentRoom.bg[index].tileDef = layerDef->tileDef;
+    g_CurrentRoom.bg[index].layout = layerDef->layout;
+    if (g_CurrentRoom.bg[index].tileDef != 0) {
+        g_CurrentRoom.bg[index].zPriority = layerDef->zPriority;
+        g_CurrentRoom.bg[index].D_800730F4 = layerDef->unkE;
 #if 0 // matches with PSY-Q 3.5
-        D_800730D8[index].w = layerDef->rect.right - layerDef->rect.left + 1;
-        D_800730D8[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
+        g_CurrentRoom.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
+        g_CurrentRoom.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
 #else
         rect = *(u32*)&layerDef->rect;
-        D_800730D8[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
+        g_CurrentRoom.bg[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
         rect = *(u32*)&layerDef->rect;
-        D_800730D8[index].h = ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
+        g_CurrentRoom.bg[index].h =
+            ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
 #endif
-        D_800730D8[index].flags = layerDef->rect.flags;
-        D_800730D8[index].D_80073100 = 1;
+        g_CurrentRoom.bg[index].flags = layerDef->rect.flags;
+        g_CurrentRoom.bg[index].D_80073100 = 1;
     }
 }
 
@@ -1310,14 +1311,15 @@ void LoadRoomLayer(s32 arg0) {
     SetRoomForegroundLayer(g_api.o.tileLayers[arg0].fg);
     SetRoomBackgroundLayer(0, g_api.o.tileLayers[arg0].bg);
 
-    for (i = 1; i < 16; i++) {
-        D_800730A0.unk54[i].unk00[0] = 0;
+    for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
+        g_CurrentRoom.bg[i].D_800730F4 = 0;
     }
 }
 
-void func_800EDA70(s32* primData) {
+void func_800EDA70(Primitive* prim) {
     s32 i;
     s32 n;
+    u32* primData = (u32*)prim;
 
     for (n = sizeof(Primitive) / sizeof(*primData), i = 0; i < n; i++) {
         *primData++ = 0;
@@ -1329,7 +1331,7 @@ void func_800EDA94(void) {
     s32 i;
 
     for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
-        func_800EDA70((s32*)prim);
+        func_800EDA70(prim);
         prim->type = PRIM_NONE;
         prim++;
     }
@@ -1360,28 +1362,75 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDB58);
+s16 func_800EDB58(u8 primType, s32 count) {
+    Primitive* prim;
+    Primitive* temp_v0;
+    bool isLooping;
+    s32 primStartIdx;
+    s32 var_s1;
+    s32 i;
+    s32 var_v1;
 
-s32 AllocPrimitives(u8 type, s32 count) {
+    var_v1 = count;
+    primStartIdx = 0;
+    i = 0;
+    prim = g_PrimBuf;
+    isLooping = 1;
+    while (isLooping) {
+        var_v1--;
+        if (prim->type != 0) {
+            var_v1 = i;
+            primStartIdx = var_v1 + 1;
+            var_v1 = count;
+        } else if (var_v1 == 0) {
+            break;
+        }
+        var_s1 = i + 1;
+        prim++;
+        i++;
+        isLooping = i < 0x400;
+        if (isLooping) {
+            continue;
+        }
+        if (var_v1 != 0) {
+            return -1;
+        }
+    }
+
+    for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
+        func_800EDA70(prim);
+        var_s1 = 0;
+        temp_v0 = &g_PrimBuf[i];
+        prim->type = primType;
+        prim->next = temp_v0;
+        prim->next = prim->next + primStartIdx + 1;
+    }
+    prim[-1].next = NULL;
+    prim[-1].type &= 0xEF;
+
+    return primStartIdx;
+}
+
+s32 AllocPrimitives(u8 primType, s32 count) {
     s32 primIndex = 0;
     Primitive* prim = g_PrimBuf;
-    u8* primType = &g_PrimBuf->type;
+    u8* dstPrimType = &g_PrimBuf->type;
     s16 index;
 
     while (primIndex < MAX_PRIM_ALLOC_COUNT) {
-        if (*primType == 0) {
+        if (*dstPrimType == 0) {
             func_800EDA70(prim);
             if (count == 1) {
-                *primType = type;
+                *dstPrimType = primType;
                 prim->next = NULL;
                 if (D_800A2438 < primIndex) {
                     D_800A2438 = primIndex;
                 }
             } else {
-                *primType = type;
-                index = AllocPrimitives(type, count - 1);
+                *dstPrimType = primType;
+                index = AllocPrimitives(primType, count - 1);
                 if (index == -1) {
-                    *primType = 0;
+                    *dstPrimType = 0;
                     return -1;
                 }
                 prim->next = &g_PrimBuf[index];
@@ -1390,7 +1439,7 @@ s32 AllocPrimitives(u8 type, s32 count) {
         }
 
         primIndex++;
-        primType += sizeof(Primitive);
+        dstPrimType += sizeof(Primitive);
         prim++;
         if (primIndex >= 0x400) {
             return -1;
