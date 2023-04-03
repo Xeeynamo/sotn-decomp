@@ -506,7 +506,7 @@ void DrawSettingsSound(MenuContext* context) {
     s32 subMenuX = cursorX + 4;
     DrawMenuStr(c_strStereo, subMenuX, cursorY + 4, context);
     DrawMenuStr(c_strMono, subMenuX, cursorY + 0x14, context);
-    func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2, 53,
+    func_800F5E68(context, g_Settings.SoundMode, cursorX + 2, cursorY + 2, 53,
                   12, 4, 1);
 }
 
