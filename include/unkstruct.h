@@ -88,14 +88,17 @@ typedef struct Unkstruct_80072F20 {
     /* 0x4E */ u16 unk4E;
     /* 0x50 */ u16 unk50;
     /* 0x52 */ u16 unk52;
-    /* 0x54 */ char pad54[0x8];
+    /* 0x54 */ char pad54[0x2];
+    /* 0x56 */ u16 unk56;
+    /* 0x58 */ u16 unk58;
+    /* 0x5A */ char pad5A[0x2];
     /* 0x5C */ u16 unk5C;
-    /* 0x62 */ char pad62[0x8];
+    /* 0x5E */ char pad5E[0x8];
     /* 0x66 */ u16 unk66;
     /* 0x68 */ u16 unk68;
-    /* 0x70 */ char pad70[0x8];
+    /* 0x6A */ char pad6A[0x8];
     /* 0x72 */ u16 unk72;
-    /* 0x78 */ char pad78[0x6];
+    /* 0x78 */ char pad74[0x6];
     /* 0x7A */ u16 unk7A;
 } Unkstruct_80072F20;
 
