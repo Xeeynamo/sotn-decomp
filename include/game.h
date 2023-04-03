@@ -151,6 +151,10 @@ typedef struct Primitive {
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
+// playSfx flags
+#define SET_SOUNDMODE_MONO 5
+#define SET_SOUNDMODE_STEREO 6
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
