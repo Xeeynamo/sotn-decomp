@@ -1780,7 +1780,7 @@ void func_80132500(u8 soundMode) {
     CdlATV audioVolume;
 
     switch (soundMode) {
-    case MONO:
+    case STEREO:
         if (D_801390A8 != 0) { // D_801390A8 fake symbol or part of another
             func_80021174();
             audioVolume.val2 = 128; // CD (R) --> SPU (R)
@@ -1792,7 +1792,7 @@ void func_80132500(u8 soundMode) {
             D_801390A8 = 0;
         }
         break;
-    case STEREO:
+    case MONO:
         if (D_801390A8 != 1) {
             func_80021188();
             audioVolume.val2 = 224; // CD (R) --> SPU (R)
