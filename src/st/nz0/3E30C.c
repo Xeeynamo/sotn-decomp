@@ -831,7 +831,7 @@ void EntityEnemyBlood(Entity* self) {
             self->hitboxWidth = 0;
             self->flags |= FLAG_FREE_POLYGONS;
 
-            for (i = 12; i;) {
+            for (i = 12; i != 0;) {
                 prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
                 rnd = (Random() & 7) - 5;
                 prim->y0 = self->posY.i.hi + rnd;
