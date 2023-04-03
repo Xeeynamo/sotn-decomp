@@ -647,7 +647,7 @@ void func_800E451C(void) {
 }
 
 void func_800E493C(void) {
-    if (g_Settings.isSoundMono == 0) {
+    if (g_Settings.isSoundMono == STEREO) {
         PlaySfx(6);
     } else {
         PlaySfx(5);
