@@ -392,8 +392,6 @@ typedef struct {
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
-typedef enum { STEREO, MONO } SoundMode;
-
 typedef struct {
     /* 0x00 */ DRAWENV draw; // drawing environment
     /* 0x58 */ DISPENV disp; // display environment
