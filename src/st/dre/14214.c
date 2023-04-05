@@ -806,9 +806,9 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
             if (accelerationX < 0) {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+                g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+                g_CurrentEntity->posX.i.hi += collider.unk14;
             }
             return;
         }
@@ -897,7 +897,7 @@ void func_8019B8DC(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+        g_CurrentEntity->posY.i.hi += res.unk18;
         return;
     }
 

@@ -127,7 +127,7 @@ void func_801B19A0(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 6, &collider,
                              0);
         if (collider.unk0 & 1) {
-            self->posY.i.hi += LOH(collider.unk18);
+            self->posY.i.hi += collider.unk18;
             if (self->subId == 0) {
                 func_801C29B0(0x644);
                 for (i = 0; i < 2; i++) {
@@ -363,7 +363,7 @@ void EntityMoveableBox(Entity* self) {
             if (var_v0 < 24) {
                 var_s1 = 2;
             }
-            if ((self->unk84.unk == 0) && (*(s16*)&D_801CB736[var_s1] != 0)) {
+            if ((self->unk84.unk == 0) && ((s16)D_801CB736[var_s1] != 0)) {
                 var_s1 = 0;
                 self->posX.val -= self->accelerationX;
             }
@@ -1419,7 +1419,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1427,7 +1427,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -1457,7 +1457,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1465,7 +1465,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -1914,9 +1914,9 @@ void func_801BD848(u16* hitSensors, s16 sensorCount) {
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
             if (accelerationX < 0) {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+                g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+                g_CurrentEntity->posX.i.hi += collider.unk14;
             }
             return;
         }
@@ -2003,7 +2003,7 @@ void func_801BDE20(u16 arg0) {
         if (res.unk0 & 4) {
             g_CurrentEntity->posY.val += 0x2000;
         } else {
-            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+            g_CurrentEntity->posY.i.hi += res.unk18;
         }
     } else {
         if (!(res.unk0 & 5)) {

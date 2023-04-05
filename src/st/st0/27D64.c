@@ -775,7 +775,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -783,7 +783,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -813,7 +813,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -821,7 +821,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[LOBU(layoutObj->objectRoomIndex)];
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -1264,9 +1264,9 @@ void func_801B5A98(u16* hitSensors, s16 sensorCount) {
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
             if (accelerationX < 0) {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+                g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+                g_CurrentEntity->posX.i.hi += collider.unk14;
             }
             return;
         }
@@ -1311,11 +1311,11 @@ void func_801B5EC8(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = *(s16*)&entity->unk88 + entity->unk84.unk;
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
         entity->unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            *(s16*)&entity->unk88 = -*(s16*)&entity->unk88;
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -1355,7 +1355,7 @@ void func_801B5F4C(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+        g_CurrentEntity->posY.i.hi += res.unk18;
         return;
     }
 

@@ -46,7 +46,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E6C4);
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId16);
 
 void func_8018F890(s16 arg0) {
-    s16 temp_v0 = arg0 - *(s16*)&g_CurrentRoom.height;
+    s16 temp_v0 = arg0 - g_CurrentRoom.height;
 
     if (temp_v0 > 1) {
         g_CurrentRoom.height++;
@@ -448,9 +448,9 @@ void func_801951C0(u16* hitSensors, s16 sensorCount) {
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
             if (accelerationX < 0) {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk1C);
+                g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
-                g_CurrentEntity->posX.i.hi += LOH(collider.unk14);
+                g_CurrentEntity->posX.i.hi += collider.unk14;
             }
             return;
         }

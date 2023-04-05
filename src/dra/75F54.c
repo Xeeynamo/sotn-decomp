@@ -854,18 +854,18 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
     y = baseY + g_CurrentEntity->posY.i.hi;
 
     CheckCollision(x, y, &res1, 0);
-    colRes1 = LOH(res1.unk0) & 0xF801;
-    CheckCollision(x, (s16)(y - 1 + LOH(res1.unk18)), &res2, 0);
-    y = baseY + (g_CurrentEntity->posY.i.hi + LOH(res1.unk18));
+    colRes1 = res1.unk0 & 0xF801;
+    CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
+    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
 
     if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
-        colRes2 = LOH(res2.unk0) & 0xF001;
-        if (!(LOH(res2.unk0) & 1)) {
+        colRes2 = res2.unk0 & 0xF001;
+        if (!((s16)res2.unk0 & 1)) {
             g_CurrentEntity->posY.i.hi = y;
             return 1;
         }
         if ((res2.unk0 & 0x8001) == 0x8001) {
-            g_CurrentEntity->posY.i.hi = y + (s16)(LOH(res2.unk18) - 1);
+            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
             return colRes2;
         }
     } else if ((colRes1 & 0x8001) == 0x8001) {
@@ -886,9 +886,9 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
                    g_CurrentEntity->posY.i.hi + arg0, &res, 0);
     if (g_CurrentEntity->accelerationX > 0) {
-        var_a1 = LOH(res.unk14);
+        var_a1 = res.unk14;
     } else {
-        var_a1 = LOH(res.unk1C);
+        var_a1 = res.unk1C;
     }
 
     if (res.unk0 & 2) {

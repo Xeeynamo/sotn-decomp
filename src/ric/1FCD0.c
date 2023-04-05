@@ -113,12 +113,12 @@ void func_8015C178(void) {
     if (D_8007342A < 0) {
         D_80072F66 = 0;
         func_8015CD98(0);
-    } else if ((*(u16*)&PLAYER.animFrameIdx >= 0x12) &&
+    } else if ((PLAYER.animFrameIdx >= 0x12) &&
                !(D_80072F20.pl_vram_flag & 1)) {
         D_80072F66 = 0;
         func_8015CF08();
     } else {
-        if (!(D_8003C8C4 & 3) && (*(u16*)&PLAYER.animFrameIdx < 0x12) &&
+        if (!(D_8003C8C4 & 3) && (PLAYER.animFrameIdx < 0x12) &&
             (D_80072F20.pl_vram_flag & 1)) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }

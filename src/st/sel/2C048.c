@@ -46,12 +46,12 @@ void func_801AC084(s32 arg0, s32 ypos) {
     Primitive* prim = &g_PrimBuf[D_801BAF18[arg0].unk0];
     s32 i;
     for (i = 0; i < 8; i++) {
-        prim->x0 = LOH(D_80180068[i]) + 0x68;
-        prim->y0 = LOH(D_80180088[i]) + 0x58 + ypos;
-        prim->u0 = LOBU(D_801800A8[i]);
-        prim->v0 = LOBU(D_801800C8[i]);
-        prim->u1 = LOBU(D_801800E8[i]);
-        prim->v1 = LOBU(D_80180108[i]);
+        prim->x0 = D_80180068[i] + 0x68;
+        prim->y0 = D_80180088[i] + 0x58 + ypos;
+        prim->u0 = D_801800A8[i];
+        prim->v0 = D_801800C8[i];
+        prim->u1 = D_801800E8[i];
+        prim->v1 = D_80180108[i];
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;

@@ -782,7 +782,7 @@ void EntityFallingRock2(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
+            self->posY.i.hi = self->posY.i.hi + collider.unk18;
             temp_a0 = -self->accelerationY;
             self->accelerationY = -self->accelerationY;
             if (temp_a0 < 0) {

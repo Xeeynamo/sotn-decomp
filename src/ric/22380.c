@@ -350,7 +350,7 @@ void func_801623E0(Entity* entity) {
     poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
     poly->x3 = entity->posX.i.hi + entity->unk7C.s;
     poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
-    poly->clut = (*(s16*)&g_blinkTimer & 1) + 0x13E;
+    poly->clut = (LOH(g_blinkTimer) & 1) + 0x13E;
 }
 
 /**
@@ -811,9 +811,9 @@ s32 func_8016840C(s16 x, s16 y) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
                              g_CurrentEntity->posY.i.hi + x, &res, 0);
         if (g_CurrentEntity->accelerationX > 0) {
-            temp = LOH(res.unk14);
+            temp = res.unk14;
         } else {
-            temp = LOH(res.unk1C);
+            temp = res.unk1C;
         }
         if (!(res.unk0 & 2)) {
             return 0;
