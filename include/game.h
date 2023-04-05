@@ -531,7 +531,7 @@ typedef struct {
     /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
     /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[EQUIP_TYPE_COUNT];
     /* 0x100, 0x8003CAF8 */ s32 isCloakLingingReversed;
-    /* 0x104, 0x8003CAFC */ s32 SoundMode;
+    /* 0x104, 0x8003CAFC */ s32 soundMode;
     /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
     /* 0x10C, 0x8003CB04 */ s32 D_8003CB04;
 } GameSettings; /* size=0x110 */

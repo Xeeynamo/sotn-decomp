@@ -28,7 +28,7 @@
  */
 
 // playSfx flags
-typedef enum { STEREO, MONO } SoundMode;
+typedef enum { STEREO, MONO } soundMode;
 
 #define SET_SOUNDMODE_MONO 5
 #define SET_SOUNDMODE_STEREO 6
