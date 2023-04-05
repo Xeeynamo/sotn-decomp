@@ -65,9 +65,33 @@ s16 IncrementRingBufferPos(s16 arg0) {
     return arg0;
 }
 
-// DECOMP_ME_WIP func_80135C2C https://decomp.me/scratch/Gy0Jr 91.59%
-INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135C2C);
-void func_80135C2C();
+void func_80135C2C(void) {
+    s16 sfxBufPos;
+    s32 isFound;
+    s16 temp_s2;
+
+    if (g_sfxRingBufferPos1 == D_80138FAC)
+        return;
+    while (D_80138FAC != g_sfxRingBufferPos1) {
+        temp_s2 = g_sfxRingBuffer1[D_80138FAC].unk00;
+        g_sfxRingBuffer1[D_80138FAC].unk00 = 0;
+        isFound = 0;
+        for (sfxBufPos = IncrementRingBufferPos(D_80138FAC);
+             sfxBufPos != g_sfxRingBufferPos1;
+             sfxBufPos = IncrementRingBufferPos(sfxBufPos)) {
+            if (temp_s2 == g_sfxRingBuffer1[sfxBufPos].unk00) {
+                isFound = 1;
+                break;
+            }
+        }
+        if (isFound == 0) {
+            func_8013572C(temp_s2, g_sfxRingBuffer1[D_80138FAC].unk02,
+                          g_sfxRingBuffer1[D_80138FAC].unk04);
+        }
+
+        D_80138FAC = IncrementRingBufferPos(D_80138FAC);
+    }
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135D8C);
 void func_80135D8C();
