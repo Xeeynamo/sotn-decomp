@@ -1371,7 +1371,28 @@ bool func_8012C88C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CA64);
+void func_8012CA64(void) {
+    u32 var_a0;
+
+    PLAYER.unk2E = 1;
+    D_800B0914 = 0;
+
+    if (D_80072F20.pl_vram_flag & 0x20) {
+        var_a0 = 0xDF;
+    } else {
+        var_a0 = 0xDE;
+    }
+    func_8010DA48(var_a0);
+    
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX /= 2;
+
+    D_800B0918 = 0x200;
+    if (D_80072F20.pl_vram_flag & 0x40) {
+        D_800B0914 = 1;
+        func_8010DA48(0xE9U);
+    }
+}
 
 void func_8012CB0C(void) {
     PLAYER.unkAC = 0xDE;
