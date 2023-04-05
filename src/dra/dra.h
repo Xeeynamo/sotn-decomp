@@ -158,6 +158,7 @@ extern s32 D_800B07C8;
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern s32 D_800B0914;
+extern s32 D_800B0918;
 extern const char aPbav[];
 extern const char aPbav_0[];
 extern const char aPbav_1[];
