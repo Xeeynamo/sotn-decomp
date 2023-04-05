@@ -1103,8 +1103,12 @@ void func_800FAE98(void) {
     D_800978F8 = 0x40;
 }
 
-// DECOMP_ME_WIP func_800FAEC4 https://decomp.me/scratch/f40LU 91.22%
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FAEC4);
+void func_800FAEC4(u16 pad, u16 arg1, s32 arg2, s16 arg3, u16 arg4) {
+    g_IsSelectingEquipment = 0;
+    func_800FAC98();
+    func_800FAD34(arg2, arg1, arg3, arg4);
+    D_800978F8 += 1;
+}
 
 void func_800FAF44(s32 arg0) {
     s32 var_a0;
