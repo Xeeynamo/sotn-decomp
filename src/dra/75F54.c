@@ -1383,7 +1383,7 @@ void func_8012CA64(void) {
         var_a0 = 0xDE;
     }
     func_8010DA48(var_a0);
-    
+
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX /= 2;
 
