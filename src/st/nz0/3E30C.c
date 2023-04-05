@@ -1071,7 +1071,7 @@ void func_801C6678(Entity* entity) {
     entity->zPriority = entity[-1].zPriority - 1;
     entity->animCurFrame = entity[-1].animCurFrame;
     entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.val - 0x14;
+    entity->posY.i.hi = entity[-1].posY.i.hi - 0x14;
 
     if (entity[-1].objectId != 0x2E) {
         DestroyEntity(entity);

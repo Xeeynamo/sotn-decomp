@@ -7,9 +7,10 @@ MAIN            := main
 DRA             := dra
 
 # Compilers
+CC1PSX			:= ./bin/cc1-psx-26
 CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
-CC              := ./bin/cc1-26
+CC              := $(CC1PSX)
 LD              := $(CROSS)ld
 CPP				:= $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
@@ -90,7 +91,6 @@ clean:
 	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
-	git clean -fx --exclude=.vscode/settings.json
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
@@ -284,7 +284,13 @@ update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
+	git clean -fd bin/
 
+bin/%:
+	cd ./bin && wget https://github.com/Xeeynamo/sotn-decomp/releases/download/$*/$*.tar.gz
+	rm -f $*.tar.gz*
+	cd ./bin && sha256sum --check $*.tar.gz.sha256 && tar -xzf $*.tar.gz
+	rm -f $*.tar.gz*
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
 	git submodule update $(SPLAT_DIR)
@@ -309,7 +315,7 @@ $(SOTNDISK): $(GO)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
+$(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets

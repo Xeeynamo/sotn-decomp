@@ -25,6 +25,7 @@ asm/*/st/*/nonmatchings/*.s
 asm/*/st/*/nonmatchings/*/*.s
 asm/*/st/*/nonmatchings/*/*/*.s
 assets/
+bin/
 build/
 expected/
 disks/
