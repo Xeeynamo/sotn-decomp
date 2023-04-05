@@ -535,7 +535,7 @@ void func_800F7244(void) {
     }
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F72BC);
 #else
 extern s32 D_80137948;
@@ -1121,11 +1121,11 @@ void func_800FAF44(s32 arg0) {
             var_a1++;
         }
 
-        D_80137688 = D_8013768C = LOH(g_MenuNavigation.scrollEquipHand);
+        D_80137688 = D_8013768C = g_MenuNavigation.scrollEquipHand;
         return;
     }
     D_80137688 = D_8013768C =
-        LOH(((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4]);
+        ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
 
     for (i = 0; i < 90; i++) {
         if (D_800A7734[i].unk00 == D_801375D4) {

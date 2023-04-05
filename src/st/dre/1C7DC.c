@@ -50,8 +50,8 @@ void EntityEquipItemDrop(Entity* self) {
                 return;
             }
 
-            if (*(s16*)&self->unk94 != 0) {
-                temp_a0 = *(s16*)&self->unk94;
+            if (LOH(self->unk94) != 0) {
+                temp_a0 = LOH(self->unk94);
                 temp_a0--;
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
@@ -342,7 +342,7 @@ bool func_8019E9F4(Unkstruct6* arg0) {
         g_api.CheckCollision(posX, posY, &res, 0);
 
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
 
