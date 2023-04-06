@@ -71,7 +71,7 @@ void EntityPrizeDrop(Entity* self) {
             if (collider.unk0 & 5 && self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->posY.i.hi += LOH(collider.unk18);
+                self->posY.i.hi += collider.unk18;
                 self->unk80.modeS8.unk0 = 0xF0;
                 self->step++;
             } else {
@@ -79,7 +79,7 @@ void EntityPrizeDrop(Entity* self) {
             }
             func_801BD848(D_80181D9C, 2);
         } else if (collider.unk0 & 5) {
-            self->posY.i.hi += LOH(collider.unk18);
+            self->posY.i.hi += collider.unk18;
             self->unk80.modeS8.unk0 = 0x60;
             self->step++;
         } else {
@@ -163,7 +163,7 @@ void EntityPrizeDrop(Entity* self) {
             if (collider.unk0 & 5 && self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->posY.i.hi += LOH(collider.unk18);
+                self->posY.i.hi += collider.unk18;
                 self->unk2E++;
             } else {
                 FallEntity();
@@ -325,8 +325,8 @@ void EntityEquipItemDrop(Entity* self) {
                 return;
             }
 
-            if (*(s16*)&self->unk94 != 0) {
-                temp_a0 = *(s16*)&self->unk94;
+            if (LOH(self->unk94) != 0) {
+                temp_a0 = LOH(self->unk94);
                 temp_a0--;
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
@@ -396,7 +396,7 @@ void EntityEquipItemDrop(Entity* self) {
         if ((collider.unk0 & 5) && (self->accelerationY > 0)) {
             self->accelerationX = 0;
             self->accelerationY = 0;
-            self->posY.i.hi += *(u16*)&collider.unk18;
+            self->posY.i.hi += collider.unk18;
             self->unk80.modeS8.unk0 = 240;
             self->step++;
         } else {
@@ -626,7 +626,7 @@ bool func_801C0F38(Unkstruct6* unk) {
         posY += unk->y;
         g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
@@ -1214,7 +1214,7 @@ void func_801C6678(Entity* entity) {
     entity->zPriority = entity[-1].zPriority - 1;
     entity->animCurFrame = entity[-1].animCurFrame;
     entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.val - 0x14;
+    entity->posY.i.hi = entity[-1].posY.i.hi - 0x14;
 
     if (entity[-1].objectId != 0x2E) {
         DestroyEntity(entity);

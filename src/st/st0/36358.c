@@ -72,7 +72,7 @@ void EntityPrizeDrop(Entity* self) {
             if (collider.unk0 & 5 && self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->posY.i.hi += LOH(collider.unk18);
+                self->posY.i.hi += collider.unk18;
                 self->unk80.modeS8.unk0 = 0xF0;
                 self->step++;
             } else {
@@ -82,7 +82,7 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         if (collider.unk0 & 5) {
-            self->posY.i.hi += LOH(collider.unk18);
+            self->posY.i.hi += collider.unk18;
             self->unk80.modeS8.unk0 = 0x60;
             self->step++;
         } else {
@@ -160,7 +160,7 @@ void EntityPrizeDrop(Entity* self) {
             if (collider.unk0 & 5 && self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->posY.i.hi += LOH(collider.unk18);
+                self->posY.i.hi += collider.unk18;
                 self->unk2E++;
             } else {
                 FallEntity();
@@ -387,7 +387,7 @@ bool func_801B8338(Unkstruct6* unk) {
         posY += unk->y;
         g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
