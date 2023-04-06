@@ -69,7 +69,7 @@ void EntityPrizeDrop(Entity* self) {
             if (collider.unk0 & 5 && self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->posY.i.hi += LOH(collider.unk18);
+                self->posY.i.hi += collider.unk18;
                 self->unk80.modeS8.unk0 = 0xF0;
                 self->step++;
             } else {
@@ -77,7 +77,7 @@ void EntityPrizeDrop(Entity* self) {
             }
             func_801C5BC0(D_801824E8, 2);
         } else if (collider.unk0 & 5) {
-            self->posY.i.hi += LOH(collider.unk18);
+            self->posY.i.hi += collider.unk18;
             self->unk80.modeS8.unk0 = 0x60;
             self->step++;
         } else {
@@ -161,7 +161,7 @@ void EntityPrizeDrop(Entity* self) {
             if (collider.unk0 & 5 && self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->posY.i.hi += LOH(collider.unk18);
+                self->posY.i.hi += collider.unk18;
                 self->unk2E++;
             } else {
                 FallEntity();
@@ -320,8 +320,8 @@ void EntityEquipItemDrop(Entity* self) {
                 return;
             }
 
-            if (*(s16*)&self->unk94 != 0) {
-                temp_a0 = *(s16*)&self->unk94;
+            if (LOH(self->unk94) != 0) {
+                temp_a0 = LOH(self->unk94);
                 temp_a0--;
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
@@ -391,7 +391,7 @@ void EntityEquipItemDrop(Entity* self) {
         if ((collider.unk0 & 5) && (self->accelerationY > 0)) {
             self->accelerationX = 0;
             self->accelerationY = 0;
-            self->posY.i.hi += *(u16*)&collider.unk18;
+            self->posY.i.hi += collider.unk18;
             self->unk80.modeS8.unk0 = 240;
             self->step++;
         } else {
@@ -616,7 +616,7 @@ bool func_801C92B0(Unkstruct6* unk) {
         posY += unk->y;
         g_api.CheckCollision(posX, posY, &res, 0);
         if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += LOH(res.unk18);
+            g_CurrentEntity->posY.i.hi += res.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {
@@ -989,9 +989,9 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             poly->v1 = poly->v0 = 0;
             poly->u2 = poly->u0;
             poly->u3 = poly->u1;
-            *(s16*)&((POLY_GT4*)poly->tag)->r2 = 0x40;
-            *(s16*)&((POLY_GT4*)poly->tag)->b2 = 0x40;
-            *(s16*)&((POLY_GT4*)poly->tag)->u1 = 0;
+            LOH(((POLY_GT4*)poly->tag)->r2) = 0x40;
+            LOH(((POLY_GT4*)poly->tag)->b2) = 0x40;
+            LOH(((POLY_GT4*)poly->tag)->u1) = 0;
             ((POLY_GT4*)poly->tag)->b3 = 0x60;
             ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
             ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
@@ -1004,7 +1004,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         poly = *(s32*)&entity->unk7C.s;
         func_801D6880(poly);
         ((POLY_GT4*)poly->tag)->b3 += 252;
-        *(s16*)&((POLY_GT4*)poly->tag)->u1 -= 128;
+        LOH(((POLY_GT4*)poly->tag)->u1) -= 128;
         if (((POLY_GT4*)poly->tag)->b3 < 16) {
             poly->pad3 = 8;
         }
@@ -1082,7 +1082,7 @@ void EntityUnkId3D(Entity* self) {
         self->unk1C = 0x1A0;
         self->unk19 |= 3;
         self->unk84.S8.unk1 = 0x11;
-        self->unk84.S8.unk0 = *(s8*)&self->subId;
+        self->unk84.S8.unk0 = self->subId;
         self->unk19 |= 8;
         break;
 

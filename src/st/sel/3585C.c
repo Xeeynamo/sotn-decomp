@@ -375,7 +375,7 @@ void func_801B60D4(void) {
 
         D_801D6B24 = 0;
         D_801BD030 = 0;
-        g_EntityArray[8].subId = *(u16*)&D_800978B4 - 1;
+        g_EntityArray[8].subId = D_800978B4 - 1;
         g_api.func_800EA5E4(0x16);
         g_api.func_800EA5E4(0);
         g_api.func_800EA5E4(0x8005);
