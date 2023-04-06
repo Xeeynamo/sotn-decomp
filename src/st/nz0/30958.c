@@ -1644,7 +1644,7 @@ s16 func_801BCC5C(void) {
     return var_a0;
 }
 
-void MoveEntity(void) {
+void MoveEntity() {
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
     g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 }
