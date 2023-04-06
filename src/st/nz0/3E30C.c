@@ -945,7 +945,7 @@ void EntityEnemyBlood(Entity* self) {
                     prim->x0++;
                     prim->y0++;
                 }
-                prim->x2 = *(s32*)&prim->x2;
+                prim->x2 = *(s32*)&prim->y2;
             }
         }
     }
