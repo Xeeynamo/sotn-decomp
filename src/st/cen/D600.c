@@ -236,7 +236,7 @@ s16 func_801945D4(void) {
     return var_a0;
 }
 
-void func_80194618() {
+void MoveEntity() {
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
     g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 }
@@ -687,7 +687,7 @@ void EntityEnemyBlood(Entity* self) {
                 posX = self->posX.i.hi;
                 self->accelerationX += self->unk80.modeS32;
 
-                func_80194618(self); // argument pass necessary to match
+                MoveEntity(self); // argument pass necessary to match
 
                 posX -= self->posX.i.hi;
                 if (posX < 0) {
