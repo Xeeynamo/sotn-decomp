@@ -236,7 +236,7 @@ s16 func_801945D4(void) {
     return var_a0;
 }
 
-void func_80194618(void) {
+void func_80194618() {
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
     g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
 }
@@ -304,12 +304,12 @@ u8 func_80194CB0(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_80194D08(u16 slope, s16 speed) {
+void func_80194D08(s32 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;
 
-    moveX = rcos(slope) * speed;
+    moveX = rcos((u16)slope) * speed;
     entity = g_CurrentEntity;
 
     if (moveX < 0) {
@@ -318,7 +318,7 @@ void func_80194D08(u16 slope, s16 speed) {
 
     entity->accelerationX = moveX >> 4;
 
-    moveY = rsin(slope) * speed;
+    moveY = rsin((u16)slope) * speed;
     entity = g_CurrentEntity;
 
     if (moveY < 0) {
@@ -598,7 +598,150 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityAbsorbOrb);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityEnemyBlood);
+void EntityEnemyBlood(Entity* self) {
+    int fakeTemp; // !TODO: !FAKE
+    Primitive* prim;
+    s32 var_a0_2;
+    u16 subId;
+    s16 posX;
+    s32 rnd;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        i = g_api.func_800EDB58(17, 12);
+        if (i != -1) {
+            InitializeEntity(D_80180410);
+            prim = &g_PrimBuf[i];
+            self->firstPolygonIndex = i;
+            self->animSet = 0;
+            subId = self->subId;
+            self->unk3C = 1;
+            self->unk7C.s = 48;
+            self->hitboxHeight = 8;
+            self->zPriority = 0xC0;
+            self->hitboxWidth = 0;
+            self->flags |= FLAG_FREE_POLYGONS;
+
+            for (i = 12; i != 0;) {
+                prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
+                rnd = (Random() & 7) - 5;
+                prim->y0 = self->posY.i.hi + rnd;
+                *(s32*)&prim->r1 = 0;
+                *(s32*)&prim->x1 = 0;
+                prim->u0 = 4;
+                prim->v0 = 4;
+
+                if (subId != 0) {
+                    func_80194D08(0xCC0 + i * 64,
+                                  ((Random() & 0xF) * 0x10) + 0x180);
+                } else {
+                    func_80194D08(0xB40 - i * 64,
+                                  ((Random() & 0xF) * 0x10) + 0x180);
+                }
+
+                *(s32*)&prim->u1 = self->accelerationX;
+                *(s32*)&prim->r2 = self->accelerationY;
+
+                var_a0_2 = *(s32*)&prim->u1;
+                if (var_a0_2 <= -1) {
+                    var_a0_2 += 0x3F;
+                }
+
+                *(s32*)&prim->r3 = -(var_a0_2 >> 6);
+                *(s32*)&prim->x3 = -(*(s32*)&prim->r2 / 48) + 0xC00;
+
+                prim->x2 = prim->y2 = (Random() & 7) + 7;
+                prim->r0 = 128;
+                prim->b0 = 16;
+                prim->g0 = 0;
+                prim->priority = self->zPriority;
+                prim->blendMode = 2;
+                i--;
+                if (i != 0) {
+                    prim++;
+                }
+            }
+
+            if (subId != 0) {
+                self->accelerationX = 0x14000;
+                self->unk80.modeS32 = -0x200;
+            } else {
+                self->accelerationX = -0x14000;
+                self->unk80.modeS32 = 0x200;
+            }
+            self->accelerationY = 0;
+            break;
+        }
+        DestroyEntity(self);
+        break;
+
+    case 1:
+        if (!(--self->unk7C.u)) {
+            DestroyEntity(self);
+            break;
+        }
+
+        if (self->unk3C != 0) {
+            if (D_80072F20.unk0C & 0x02000000) {
+                posX = self->posX.i.hi;
+                self->accelerationX += self->unk80.modeS32;
+
+                func_80194618(self); // argument pass necessary to match
+
+                posX -= self->posX.i.hi;
+                if (posX < 0) {
+                    posX = -posX;
+                }
+
+                if (self->unk7C.u > 16) {
+                    self->unk7E.modeU16 += posX;
+                    self->hitboxWidth = self->unk7E.modeU16 / 2;
+                    self->hitboxHeight = (self->unk7E.modeU16 / 4) + 8;
+                } else {
+                    self->unk3C = 0;
+                }
+
+                if (self->unk48 != 0) {
+                    if (D_80072F20.unk56 == 0) {
+                        D_80072F20.unk56 = 1;
+                        D_80072F20.unk58 = 8;
+                        if (g_api.CheckEquipmentItemCount(0x3C, 4)) {
+                            D_80072F20.unk58 *= 2;
+                        }
+                    }
+                    D_80072F20.unk10++;
+                    self->unk3C = 0;
+                }
+            } else {
+                self->unk3C = 0;
+            }
+        }
+
+        prim = &g_PrimBuf[self->firstPolygonIndex];
+        for (i = 12; i != 0; i--, prim++) {
+            *(u16*)&prim->b1 = prim->x0;
+            prim->y1 = prim->y0;
+            *(s32*)&prim->u1 += *(s32*)&prim->r3;
+            *(s32*)&prim->r2 += *(s32*)&prim->x3;
+            *(s32*)&prim->r1 += *(s32*)&prim->u1;
+            *(s32*)&prim->x1 += *(s32*)&prim->r2;
+            *(s16*)&prim->x0 = *(s16*)&prim->b1;
+            prim->y0 = prim->y1;
+            prim->x2--;
+
+            if ((prim->x2 == 0) && (prim->u0 != 0)) {
+                prim->v0--;
+                prim->u0--;
+                if (!(prim->u0 & 1)) {
+                    prim->x0++;
+                    prim->y0++;
+                }
+                prim->x2 = *(s32*)&prim->y2;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId08);
 
