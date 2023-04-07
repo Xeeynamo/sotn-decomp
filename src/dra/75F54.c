@@ -854,18 +854,18 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
     y = baseY + g_CurrentEntity->posY.i.hi;
 
     CheckCollision(x, y, &res1, 0);
-    colRes1 = LOH(res1.unk0) & 0xF801;
-    CheckCollision(x, (s16)(y - 1 + LOH(res1.unk18)), &res2, 0);
-    y = baseY + (g_CurrentEntity->posY.i.hi + LOH(res1.unk18));
+    colRes1 = res1.unk0 & 0xF801;
+    CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
+    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
 
     if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
-        colRes2 = LOH(res2.unk0) & 0xF001;
-        if (!(LOH(res2.unk0) & 1)) {
+        colRes2 = res2.unk0 & 0xF001;
+        if (!((s16)res2.unk0 & 1)) {
             g_CurrentEntity->posY.i.hi = y;
             return 1;
         }
         if ((res2.unk0 & 0x8001) == 0x8001) {
-            g_CurrentEntity->posY.i.hi = y + (s16)(LOH(res2.unk18) - 1);
+            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
             return colRes2;
         }
     } else if ((colRes1 & 0x8001) == 0x8001) {
@@ -886,9 +886,9 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
                    g_CurrentEntity->posY.i.hi + arg0, &res, 0);
     if (g_CurrentEntity->accelerationX > 0) {
-        var_a1 = LOH(res.unk14);
+        var_a1 = res.unk14;
     } else {
-        var_a1 = LOH(res.unk1C);
+        var_a1 = res.unk1C;
     }
 
     if (res.unk0 & 2) {
@@ -1371,7 +1371,28 @@ bool func_8012C88C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CA64);
+void func_8012CA64(void) {
+    u32 var_a0;
+
+    PLAYER.unk2E = 1;
+    D_800B0914 = 0;
+
+    if (D_80072F20.pl_vram_flag & 0x20) {
+        var_a0 = 0xDF;
+    } else {
+        var_a0 = 0xDE;
+    }
+    func_8010DA48(var_a0);
+
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX /= 2;
+
+    D_800B0918 = 0x200;
+    if (D_80072F20.pl_vram_flag & 0x40) {
+        D_800B0914 = 1;
+        func_8010DA48(0xE9U);
+    }
+}
 
 void func_8012CB0C(void) {
     PLAYER.unkAC = 0xDE;
@@ -1780,8 +1801,8 @@ void func_80132500(u8 soundMode) {
     CdlATV audioVolume;
 
     switch (soundMode) {
-    case MONO:
-        if (D_801390A8 != 0) { // D_801390A8 fake symbol or part of another
+    case MONO_SOUND:
+        if (D_801390A8 != 0) {
             func_80021174();
             audioVolume.val2 = 128; // CD (R) --> SPU (R)
             audioVolume.val0 = 128; // CD (L) --> SPU (L)
@@ -1792,7 +1813,7 @@ void func_80132500(u8 soundMode) {
             D_801390A8 = 0;
         }
         break;
-    case STEREO:
+    case STEREO_SOUND:
         if (D_801390A8 != 1) {
             func_80021188();
             audioVolume.val2 = 224; // CD (R) --> SPU (R)
@@ -1815,7 +1836,7 @@ void func_801325D8(void) {
     D_8013AEEC = 1;
     SsInitHot();
     SsSetTickMode(1);
-    func_80132500(1);
+    func_80132500(STEREO_SOUND);
     SsSetReservedVoice(0x10);
     SsStart();
     func_800209B4(&D_80138460, 0x10, 1);

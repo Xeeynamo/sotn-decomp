@@ -535,7 +535,7 @@ void func_800F7244(void) {
     }
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F72BC);
 #else
 extern s32 D_80137948;
@@ -1103,8 +1103,12 @@ void func_800FAE98(void) {
     D_800978F8 = 0x40;
 }
 
-// DECOMP_ME_WIP func_800FAEC4 https://decomp.me/scratch/f40LU 91.22%
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FAEC4);
+void func_800FAEC4(u16 pad, u16 arg1, s32 arg2, s16 arg3, u16 arg4) {
+    g_IsSelectingEquipment = 0;
+    func_800FAC98();
+    func_800FAD34(arg2, arg1, arg3, arg4);
+    D_800978F8 += 1;
+}
 
 void func_800FAF44(s32 arg0) {
     s32 var_a0;
@@ -1121,11 +1125,11 @@ void func_800FAF44(s32 arg0) {
             var_a1++;
         }
 
-        D_80137688 = D_8013768C = LOH(g_MenuNavigation.scrollEquipHand);
+        D_80137688 = D_8013768C = g_MenuNavigation.scrollEquipHand;
         return;
     }
     D_80137688 = D_8013768C =
-        LOH(((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4]);
+        ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
 
     for (i = 0; i < 90; i++) {
         if (D_800A7734[i].unk00 == D_801375D4) {
