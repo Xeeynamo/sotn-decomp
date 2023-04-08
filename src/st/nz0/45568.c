@@ -238,7 +238,62 @@ void EntityBloodDrips(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/45568", func_801C5D20);
+void func_801C5D20(Entity* self) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BE0);
+        firstPrimIndex = g_api.AllocPrimitives(2, 1);
+        if (firstPrimIndex != -1) {
+            prim = &g_PrimBuf[firstPrimIndex];
+            self->firstPolygonIndex = firstPrimIndex;
+            self->unk3C = 0;
+            *(s32*)&self->unk7C = prim;
+            self->flags |= 0x800000;
+            while (prim != NULL) {
+                prim->x0 = prim->x1 = self->posX.i.hi;
+                prim->y0 = prim->y1 = self->posY.i.hi;
+                prim->r0 = 255;
+                prim->r1 = 32;
+                prim->g0 = 0;
+                prim->g1 = 0;
+                prim->b0 = 48;
+                prim->b1 = 16;
+                prim->priority = self->zPriority + 1;
+                prim->blendMode |= 0x37;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        prim = *(s32*)&self->unk7C;
+        if (func_801C070C(&D_801823C4, 0) != 0) {
+            prim->y1 += 2;
+            if (self->unk2E == 0) {
+                self->unk2E = 1;
+            }
+        } else {
+            self->accelerationY += 0x1800;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->firstPolygonIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 void func_801C5F2C(Entity* arg0) {
     if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
@@ -275,7 +330,7 @@ void func_801C6494(Entity* entity) {
         return;
     }
 
-    InitializeEntity(&D_80180C94);
+    InitializeEntity(D_80180C94);
     entity->unk19 = 4;
     entity->animCurFrame = entity->subId + 15;
 
@@ -302,7 +357,7 @@ void func_801C6574(Entity* entity) {
             DestroyEntity(entity);
         }
     } else {
-        InitializeEntity(&D_80180CA0);
+        InitializeEntity(D_80180CA0);
         entity->posY.val -= 0x1000;
         value = func_801BCBEC();
         value /= 32;
@@ -335,7 +390,7 @@ void func_801C6678(Entity* entity) {
     entity->zPriority = entity[-1].zPriority - 1;
     entity->animCurFrame = entity[-1].animCurFrame;
     entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.i.hi - 0x14;
+    entity->posY.i.hi = entity[-1].posY.i.hi - 20;
 
     if (entity[-1].objectId != 0x2E) {
         DestroyEntity(entity);

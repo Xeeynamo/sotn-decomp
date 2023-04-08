@@ -147,9 +147,9 @@ void EntityPrizeDrop(Entity* self) {
                 prim->u1 = prim->u3 = 0x20;
                 prim->v0 = prim->v1 = 0;
                 prim->u0 = prim->u2 = 0;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 128;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 128;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
                 prim->blendMode = 8;
                 prim->priority = self->zPriority + 1;
                 self->unk2E++;
@@ -1015,7 +1015,7 @@ void EntityFallingDebris(Entity* entity) {
         entity->step = 0;
         return;
     }
-    InitializeEntity(&D_80180C58);
+    InitializeEntity(D_80180C58);
     entity->unk19 = 4;
     entity->animCurFrame = *(u8*)&entity->subId + 16;
 
