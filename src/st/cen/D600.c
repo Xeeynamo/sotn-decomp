@@ -15,7 +15,15 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId01);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018DB18);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018DF0C);
+void func_8018DF0C(void) {
+    D_8019D384 = 2;
+    D_8019D382 = 2;
+    D_8019D386 = 0;
+    D_8019D38A = 0;
+    D_8019D38E = 0;
+    D_8019D38F = 8;
+    D_8019D37E = D_8019D380 + 0x14;
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018DF60);
 
