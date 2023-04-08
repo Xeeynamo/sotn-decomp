@@ -1113,6 +1113,3 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityBloodSplatter);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C53AC);
-
-// Unique
-// INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityBloodDrips);
