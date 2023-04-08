@@ -1058,7 +1058,7 @@ void func_801C4CC0(void) {
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {
-    s32 var_v0;
+    s32 accelerationX;
 
     if (entity->flags & 0x100) {
         func_801C29B0(0x66B);
@@ -1071,12 +1071,12 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         InitializeEntity(D_80180C70);
         entity->unk19 = 4;
         entity->accelerationY = D_801822C8[entity->subId];
-        var_v0 = D_801822BC[entity->subId];
+        accelerationX = D_801822BC[entity->subId];
 
         if (entity->facing == 0) {
-            entity->accelerationX = -var_v0;
+            entity->accelerationX = -accelerationX;
         } else {
-            entity->accelerationX = var_v0;
+            entity->accelerationX = accelerationX;
         }
 
         entity->unk7C.s = -0x40;
@@ -1091,11 +1091,10 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         func_801C4CC0();
         if ((u16)entity->unk7C.s < 0x20) {
             if (entity->facing != 0) {
-                var_v0 = entity->accelerationX - 0x2000;
+                entity->accelerationX -= 0x2000;
             } else {
-                var_v0 = entity->accelerationX + 0x2000;
+                entity->accelerationX += 0x2000;
             }
-            entity->accelerationX = var_v0;
         }
 
         entity->unk7C.s++;
