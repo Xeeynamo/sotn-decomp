@@ -13,6 +13,7 @@ void EntityBloodDrips(Entity* self) {
         func_801C29B0(0x748);
         func_801BD52C(6);
     }
+    
     if ((self->flags & 0x100) && (self->step < 8)) {
         func_801C29B0(0x747);
         self->unk3C = 0;
