@@ -336,6 +336,7 @@ typedef struct Entity {
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
         /* 0x8C */ struct Entity* entityPtr;
+        /* 0x8C */ struct Primitive* primPtr;
         /* 0x8C */ s32 modeS32;
         struct {
             /* 0x8C */ u16 unk0;
