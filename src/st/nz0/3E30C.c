@@ -147,9 +147,9 @@ void EntityPrizeDrop(Entity* self) {
                 prim->u1 = prim->u3 = 0x20;
                 prim->v0 = prim->v1 = 0;
                 prim->u0 = prim->u2 = 0;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 128;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 128;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
                 prim->blendMode = 8;
                 prim->priority = self->zPriority + 1;
                 self->unk2E++;
@@ -1015,7 +1015,7 @@ void EntityFallingDebris(Entity* entity) {
         entity->step = 0;
         return;
     }
-    InitializeEntity(&D_80180C58);
+    InitializeEntity(D_80180C58);
     entity->unk19 = 4;
     entity->animCurFrame = *(u8*)&entity->subId + 16;
 
@@ -1058,7 +1058,7 @@ void func_801C4CC0(void) {
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {
-    s32 var_v0;
+    s32 accelerationX;
 
     if (entity->flags & 0x100) {
         func_801C29B0(0x66B);
@@ -1071,12 +1071,12 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         InitializeEntity(D_80180C70);
         entity->unk19 = 4;
         entity->accelerationY = D_801822C8[entity->subId];
-        var_v0 = D_801822BC[entity->subId];
+        accelerationX = D_801822BC[entity->subId];
 
         if (entity->facing == 0) {
-            entity->accelerationX = -var_v0;
+            entity->accelerationX = -accelerationX;
         } else {
-            entity->accelerationX = var_v0;
+            entity->accelerationX = accelerationX;
         }
 
         entity->unk7C.s = -0x40;
@@ -1091,11 +1091,10 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         func_801C4CC0();
         if ((u16)entity->unk7C.s < 0x20) {
             if (entity->facing != 0) {
-                var_v0 = entity->accelerationX - 0x2000;
+                entity->accelerationX -= 0x2000;
             } else {
-                var_v0 = entity->accelerationX + 0x2000;
+                entity->accelerationX += 0x2000;
             }
-            entity->accelerationX = var_v0;
         }
 
         entity->unk7C.s++;
@@ -1113,110 +1112,3 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityBloodSplatter);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C53AC);
-
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityBloodDrips);
-
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C5D20);
-
-void func_801C5F2C(Entity* arg0) {
-    if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
-        arg0->posX.val -= arg0->accelerationX;
-    }
-
-    if (!(func_801BD720(&D_801824C0, 3) & 2)) {
-        if ((--arg0->unk7C.U8.unk0) == 0) {
-            func_801BD52C(4);
-        }
-    } else {
-        func_801BD52C(5);
-    }
-}
-
-// throws bones at you
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntitySkeleton);
-
-void func_801C6494(Entity* entity) {
-    if (entity->step) {
-        entity->unk88.S8.unk0--;
-        if (entity->unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_80182424[entity->subId];
-            FallEntity();
-            MoveEntity();
-            return;
-        }
-
-        entity->objectId = ENTITY_EXPLOSION;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-        entity->subId = 0;
-        entity->step = 0;
-        return;
-    }
-
-    InitializeEntity(&D_80180C94);
-    entity->unk19 = 4;
-    entity->animCurFrame = entity->subId + 15;
-
-    if (entity->facing != 0) {
-        entity->accelerationX = -entity->accelerationX;
-    }
-}
-
-void func_801C6574(Entity* entity) {
-    s32 var_a0;
-    u32 value;
-
-    if (entity->step) {
-        if (entity->flags & 0x100) {
-            func_801BD568(0, 0);
-            return;
-        }
-
-        entity->unk1E += 0x80;
-        entity->accelerationY += 0x2400;
-        MoveEntity();
-
-        if (entity->posY.i.hi > 240) {
-            DestroyEntity(entity);
-        }
-    } else {
-        InitializeEntity(&D_80180CA0);
-        entity->posY.val -= 0x1000;
-        value = func_801BCBEC();
-        value /= 32;
-        value = CLAMP_MAX(value, 7);
-        var_a0 = D_80182488[value];
-        value = entity->facing;
-
-        if (value > 0) {
-            var_a0 = -var_a0;
-        }
-
-        entity->accelerationY = -0x48000;
-        entity->accelerationX = var_a0;
-        entity->unk19 = 4;
-    }
-}
-
-void func_801C6678(Entity* entity) {
-    if (entity->step == 0) {
-        InitializeEntity(D_80180C88);
-        entity->unk1A = 0x120;
-        entity->unk1C = 0x200;
-        entity->unk6C = 0;
-        entity->unk3C = 0;
-        entity->unk19 = entity->unk19 | 0xB;
-        return;
-    }
-
-    entity->facing = entity[-1].facing;
-    entity->zPriority = entity[-1].zPriority - 1;
-    entity->animCurFrame = entity[-1].animCurFrame;
-    entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.i.hi - 0x14;
-
-    if (entity[-1].objectId != 0x2E) {
-        DestroyEntity(entity);
-    }
-}
