@@ -1212,7 +1212,7 @@ void EntityBloodSplatter(Entity* self) {
         } else {
             prim->clut = 0x16D;
         }
-        
+
         prim2 = prim->next;
         *(s32*)&prim2->r1 += 0xC00;
 
