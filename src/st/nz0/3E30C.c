@@ -610,7 +610,63 @@ void func_801C0C14(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C0D08);
+void func_801C0D08(Entity* self) {
+    s16 firstPolygonIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BE0);
+        firstPolygonIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (firstPolygonIndex != -1) {
+            prim = &g_PrimBuf[firstPolygonIndex];
+            self->firstPolygonIndex = firstPolygonIndex;
+            self->unk3C = 0;
+            *(s32*)&self->unk7C = prim;
+            self->flags |= FLAG_FREE_POLYGONS;
+            while (prim != NULL) {
+                prim->x0 = prim->x1 = self->posX.i.hi;
+                prim->y0 = prim->y1 = self->posY.i.hi;
+                prim->r0 = 64;
+                prim->r1 = 0;
+                prim->g0 = 64;
+                prim->g1 = 0;
+                prim->b0 = 255;
+                prim->b1 = 16;
+                prim->priority = self->zPriority + 1;
+                prim->blendMode |= 0x37;
+                prim = prim->next;
+            }
+        }
+        break;
+
+    case 1:
+        prim = (Primitive*)*(s32*)&self->unk7C.s;
+        if (func_801C070C(&D_80181F28, 0) & 255) {
+            prim->y1 += 2;
+            if (self->unk2E == 0) {
+                func_801C090C(self, 1, 2, 0, 0, 3, 0);
+                self->unk2E = 1;
+            }
+        } else {
+            self->accelerationY += 0x400;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->firstPolygonIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 bool func_801C0F38(Unkstruct6* unk) {
     Collider res;
