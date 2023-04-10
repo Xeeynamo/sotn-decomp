@@ -4,10 +4,7 @@
  * Description: All reverse warp rooms.
  */
 
-#include "stage.h"
-
-extern PfnEntityUpdate D_801803E0[];
-extern s16 D_80180A94[];
+#include "rwrp.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188DF0);
 
@@ -37,7 +34,6 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BF34);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C04C);
 
-extern LayoutObject* D_80195A30;
 void func_8018C098(s16 arg0) {
     while (true) {
         if ((D_80195A30->posX != 0xFFFF) &&
@@ -54,7 +50,6 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C1EC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C300);
 
-extern LayoutObject* D_80195A34;
 void func_8018C34C(s16 arg0) {
     while (true) {
         if ((D_80195A34->posY != 0xFFFF) &&
@@ -247,12 +242,8 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194590);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194924);
 
-extern u16 D_80180494[];
-extern ObjInit2 D_80181134[];
 void func_80194DD4(Entity* entity) {
-    ObjInit2* objInit;
-
-    objInit = &D_80181134[entity->subId];
+    ObjInit2* objInit = &D_80181134[entity->subId];
     if (entity->step == 0) {
         func_8018E290(D_80180494);
         entity->animSet = objInit->animSet;
