@@ -9,7 +9,8 @@ typedef enum {
     UNK_ENTITY_7,
     UNK_ENTITY_8,
     UNK_ENTITY_10 = 0x10,
-    UNK_ENTITY_13 = 0x13
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_51 = 0x51 // SubWeapons container falling liquid
 } EntityTypes;
 
 #define PLAYER g_EntityArray[PLAYER_CHARACTER]

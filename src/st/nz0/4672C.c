@@ -113,9 +113,144 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 // Unique
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntitySpittleBoneSpit);
 
-// probably the subweapons floating in the breakable containers
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntitySubwpnPickup);
+// SubWeapons floating in the breakable container
+void EntitySubWeaponContainer(Entity* self) {
+    SubWpnContDebris* glassPieceTBL;
+    Entity* newEntity;
+    Primitive* prim;
+    s16 firstPrimIndex;
+    s32 rnd;
+    s32 rndPosX;
+    s32 rndPosY;
+    s32 absRnd;
+    s32 i;
+    s32 pad[23];
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CE8);
+        self->blendMode = 0x10;
+        self->animCurFrame = 1;
+        self->zPriority = 0x70;
+        self->hitboxWidth = 14;
+        self->hitboxHeight = 32;
+        self->unk12 = -0x38;
+        self->unk10 = 0;
+        self->unk3C = 2;
+        self->palette += self->subId;
+        CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
+        self[1].posY.i.hi -= 72;
+        self[1].subId = D_801825CC[self->subId];
+        self[1].zPriority = self->zPriority - 2;
+
+        firstPrimIndex = g_api.AllocPrimitives(4, 2);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[firstPrimIndex];
+        *(s32*)&self->unk7C = prim;
+        self->flags |= FLAG_FREE_POLYGONS;
+        while (prim != NULL) {
+            prim->priority = self->zPriority + 0xFFFF;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        break;
+
+    case 1: // Spawn Liquid bubbles
+        if (!(g_blinkTimer & 0xF)) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3C, self, newEntity);
+                rnd = (Random() & 0x18) - 12;
+                newEntity->posX.i.hi += rnd;
+                newEntity->posY.i.hi -= 30;
+                newEntity->subId = Random() & 3;
+                if (newEntity->subId == 0) {
+                    absRnd = ABS(rnd);
+                    if (absRnd >= 9) {
+                        newEntity->subId = 1;
+                    }
+                }
+                newEntity->zPriority = self->zPriority - 1;
+            }
+        }
+
+        if (self->unk48 != 0) { // container was hit!
+            self->step++;
+        }
+        break;
+
+    case 2: // Break container into pieces
+        glassPieceTBL = &D_80182584;
+        i = 0;
+        g_api.FreePrimitives(self->firstPolygonIndex);
+        self->flags &= 0xFF7FFFFF;
+        g_api.PlaySfx(NA_SE_EV_BREAK_GLASS);
+        while (i < 9) { // Spawn falling glass pieces
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3A, self, newEntity);
+                newEntity->posX.i.hi += glassPieceTBL->posX;
+                newEntity->posY.i.hi += glassPieceTBL->posY;
+                newEntity->unk84.S16.unk0 = glassPieceTBL->posX;
+                newEntity->subId = glassPieceTBL->subId;
+                newEntity->facing = glassPieceTBL->facing;
+                newEntity->unk84.S16.unk2 = self->subId;
+            }
+            glassPieceTBL++;
+            i++;
+        }
+
+        for (i = 0; i < 96; i++) { // Spawn falling liquid
+            newEntity = AllocEntity(&g_EntityArray[UNK_ENTITY_51],
+                                    (Entity*)&D_8007EFD8);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3B, self, newEntity);
+                rndPosX = (Random() & 0x1F) - 16;
+                rndPosY = -(Random() & 0x3F) - 16;
+                newEntity->posX.i.hi += rndPosX;
+                newEntity->posY.i.hi += rndPosY;
+                newEntity->unk1E = ratan2(rndPosY, rndPosX);
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        func_801C29B0(0x61D); // related to sfx
+        self->unk3C = 0;
+        self->animCurFrame = 2;
+        self->step++;
+        break;
+
+    case 255:
+        /**
+         * Debug: Press SQUARE / CIRCLE on the second controller
+         * to advance/rewind current animation frame
+         */
+        FntPrint(&D_801B08C8, self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->subId == 0) {
+                newEntity->animCurFrame++;
+                self->subId |= 1;
+            } else {
+                break;
+            }
+        } else {
+            self->subId = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->unk2E == 0) {
+                newEntity->animCurFrame--;
+                self->unk2E |= 1;
+                return;
+            }
+        } else {
+            self->unk2E = 0;
+        }
+        break;
+    }
+}
 
 void func_801C7538(Entity* entity) {
     s32 new_var;

@@ -1,5 +1,12 @@
 #include "stage.h"
 
+typedef struct SubWpnContDebris {
+    u16 posX;
+    u16 posY;
+    u16 subId;
+    u16 facing;
+} SubWpnContDebris;
+
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
@@ -28,6 +35,7 @@ extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
+extern s16 D_80180CE8[];
 extern s32 D_80180EEC;
 extern u16 D_80180D00[];
 extern u16 D_80180D18[];
@@ -109,6 +117,8 @@ extern s16 D_801820E4[];
 extern const u16 D_80180C04[];
 extern s32 D_80182504[];
 extern u8 D_80182524;
+extern SubWpnContDebris D_80182584;
+extern s32 D_801825CC[]; // SubWeapons subId table
 extern u8 D_801825F0;
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
@@ -117,8 +127,9 @@ extern u32 D_801822BC[];
 extern u32 D_801822C8[];
 extern s32 D_8018238C;
 extern s32 D_801823A4;
-extern s8 D_801B058C; // "charal %x\n"
-extern s8 D_801B0598; // "charal %x\n"
+extern const char* D_801B058C; // "charal %x\n"
+extern const char* D_801B0598; // "charal %x\n"
+extern const char* D_801B08C8; // "charal %x\n"
 extern s16 D_801CB68E;
 extern u16 D_801CB690;
 extern s16 D_801CB692;
