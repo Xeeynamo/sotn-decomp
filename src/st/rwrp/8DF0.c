@@ -247,7 +247,30 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194590);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194924);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194DD4);
+extern u16 D_80180494[];
+extern ObjInit2 D_80181134[];
+void func_80194DD4(Entity* entity) {
+    ObjInit2* objInit;
+
+    objInit = &D_80181134[entity->subId];
+    if (entity->step == 0) {
+        func_8018E290(D_80180494);
+        entity->animSet = objInit->animSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.s;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->flags = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 = (u8)(entity->unk19 | 4);
+        }
+    }
+    func_8018D6B0(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194EC0);
 
