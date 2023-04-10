@@ -188,7 +188,7 @@ void EntitySubWeaponContainer(Entity* self) {
         i = 0;
         g_api.FreePrimitives(self->firstPolygonIndex);
         self->flags &= 0xFF7FFFFF;
-        g_api.PlaySfx(NA_SE_EV_BREAK_GLASS);
+        g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
         while (i < 9) { // Spawn falling glass pieces
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
