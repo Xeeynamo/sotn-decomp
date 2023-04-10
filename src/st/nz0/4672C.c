@@ -217,7 +217,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
-        func_801C29B0(0x61D); // related to sfx
+        func_801C29B0(NA_SE_EV_VASE_BREAK);
         self->unk3C = 0;
         self->animCurFrame = 2;
         self->step++;
