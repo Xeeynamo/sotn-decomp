@@ -618,25 +618,26 @@ void func_801C0D08(Entity* self) {
     case 0:
         InitializeEntity(D_80180BE0);
         firstPolygonIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
-        if (firstPolygonIndex != -1) {
-            prim = &g_PrimBuf[firstPolygonIndex];
-            self->firstPolygonIndex = firstPolygonIndex;
-            self->unk3C = 0;
-            *(s32*)&self->unk7C = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
-            while (prim != NULL) {
-                prim->x0 = prim->x1 = self->posX.i.hi;
-                prim->y0 = prim->y1 = self->posY.i.hi;
-                prim->r0 = 64;
-                prim->r1 = 0;
-                prim->g0 = 64;
-                prim->g1 = 0;
-                prim->b0 = 255;
-                prim->b1 = 16;
-                prim->priority = self->zPriority + 1;
-                prim->blendMode |= 0x37;
-                prim = prim->next;
-            }
+        if (firstPolygonIndex == -1) {
+            return;
+        }
+        prim = &g_PrimBuf[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        self->unk3C = 0;
+        *(s32*)&self->unk7C = prim;
+        self->flags |= FLAG_FREE_POLYGONS;
+        while (prim != NULL) {
+            prim->x0 = prim->x1 = self->posX.i.hi;
+            prim->y0 = prim->y1 = self->posY.i.hi;
+            prim->r0 = 64;
+            prim->r1 = 0;
+            prim->g0 = 64;
+            prim->g1 = 0;
+            prim->b0 = 255;
+            prim->b1 = 16;
+            prim->priority = self->zPriority + 1;
+            prim->blendMode |= 0x37;
+            prim = prim->next;
         }
         break;
 
