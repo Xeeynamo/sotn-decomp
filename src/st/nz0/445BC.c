@@ -2,8 +2,7 @@
 
 // green knight that throws axes
 // Unique
-//INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityAxeKnight);
-
+// INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityAxeKnight);
 
 extern u16 D_80180C64[];
 extern s32 D_80182180[];
@@ -29,7 +28,7 @@ void EntityAxeKnight(Entity* self) {
     s8* hitbox;
     s8* temp;
 
-    if ((self->flags & 0x100) ){
+    if ((self->flags & 0x100)) {
         if (self->step != 8) {
             func_801C29B0(0x767);
             func_801B3B78();
@@ -38,92 +37,92 @@ void EntityAxeKnight(Entity* self) {
             self->zPriority -= 0x10;
             func_801BD52C(8);
         }
-    } 
-        switch (self->step) {
-        case 0:
-            InitializeEntity(D_80180C64);
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180C64);
+        self->facing = (func_801BCC5C() & 1) ^ 1;
+        self->unk12 = 0xA;
+        self->unk7C.S8.unk1 = 0;
+        self->unk80.modeS16.unk2 = 0x200;
+
+    case 1:
+        if (func_801BCCFC(&D_80182188) & 1) {
             self->facing = (func_801BCC5C() & 1) ^ 1;
-            self->unk12 = 0xA;
-            self->unk7C.S8.unk1 = 0;
-            self->unk80.modeS16.unk2 = 0x200;
+            func_801BD52C(2);
+        }
+        break;
 
-        case 1:
-            if (func_801BCCFC(&D_80182188) & 1) {
-                self->facing = (func_801BCC5C() & 1) ^ 1;
-                func_801BD52C(2);
+    case 2:
+        if (self->unk2E == 0) {
+            if (self->facing == 0) {
+                self->accelerationX = -0x3000;
+            } else {
+                self->accelerationX = 0x3000;
             }
-            break;
+            self->unk2E++;
+        }
 
-        case 2:
-            if (self->unk2E == 0) {
-                if (self->facing == 0) {
-                    self->accelerationX = -0x3000;
-                } else {
-                    self->accelerationX = 0x3000;
-                }
-                self->unk2E++;
-            }
+        animStatus = AnimateEntity(&D_80182210, self);
+        if (self->animFrameDuration == 0) {
+            self->facing = (func_801BCC5C() & 1) ^ 1;
+        }
 
-            animStatus = AnimateEntity(&D_80182210, self);
-            if (self->animFrameDuration == 0) {
-                self->facing = (func_801BCC5C() & 1) ^ 1;
+        if (!(animStatus & 0xFF)) {
+            if (self->facing == 0) {
+                self->accelerationX = -0x3000;
+            } else {
+                self->accelerationX = 0x3000;
             }
-            
-            if (!(animStatus & 0xFF)) {
-                if (self->facing == 0) {
-                    self->accelerationX = -0x3000;
-                } else {
-                    self->accelerationX = 0x3000;
-                }
-                if (func_801BCBEC() < 0x60) {
-                    func_801BD52C(3);
-                    self->unk7C.S8.unk0 = 1;
-                }
+            if (func_801BCBEC() < 0x60) {
+                func_801BD52C(3);
+                self->unk7C.S8.unk0 = 1;
             }
-            if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
-                if (self->facing == 0) {
-                    self->accelerationX -= 0x300;
-                } else {
-                    self->accelerationX += 0x300;
-                }
-            } else if (self->facing != 0) {
+        }
+        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
+            if (self->facing == 0) {
                 self->accelerationX -= 0x300;
             } else {
                 self->accelerationX += 0x300;
             }
-            if (func_801BCF74(&D_80182180) & 0x60) {
-                self->posX.val -= self->accelerationX;
-                self->accelerationX = 0;
-            }
-            func_801C4550();
-            break;
+        } else if (self->facing != 0) {
+            self->accelerationX -= 0x300;
+        } else {
+            self->accelerationX += 0x300;
+        }
+        if (func_801BCF74(&D_80182180) & 0x60) {
+            self->posX.val -= self->accelerationX;
+            self->accelerationX = 0;
+        }
+        func_801C4550();
+        break;
 
-        case 3:
-            if (self->unk2E == 0) {
-                if (self->facing == 0) {
-                    self->accelerationX = 0x3000;
-                } else {
-                    self->accelerationX = -0x3000;
-                }
-                self->unk2E++;
+    case 3:
+        if (self->unk2E == 0) {
+            if (self->facing == 0) {
+                self->accelerationX = 0x3000;
+            } else {
+                self->accelerationX = -0x3000;
+            }
+            self->unk2E++;
+        }
+
+        animStatus = AnimateEntity(&D_80182210, self);
+        if (self->animFrameDuration == 0) {
+            self->facing = (func_801BCC5C() & 1) ^ 1;
+        }
+        if (!(animStatus != 0)) {
+            if (self->facing == 0) {
+                self->accelerationX = 0x3000;
+            } else {
+                self->accelerationX = -0x3000;
             }
 
-            animStatus = AnimateEntity(&D_80182210, self);
-            if (self->animFrameDuration == 0) {
-                self->facing = (func_801BCC5C() & 1) ^ 1;
+            if (func_801BCBEC() >= 0x51) {
+                func_801BD52C(2);
+                self->unk7C.S8.unk0 = 0;
             }
-            if (!(animStatus != 0)) {
-                if (self->facing == 0) {
-                    self->accelerationX = 0x3000;
-                } else {
-                    self->accelerationX = -0x3000;
-                }
-
-                if (func_801BCBEC() >= 0x51) {
-                    func_801BD52C(2);
-                    self->unk7C.S8.unk0 = 0;
-                }
-            }
+        }
 
             if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
                 if (self->facing == 0) {
@@ -203,26 +202,26 @@ label:
                 } else {
                 func_801BD52C(3);
                 self->unk7C.S8.unk0 = 1;
-                }
-                break;
-            }
-            
-            if ((temp_v0 & 0x80) && (self->animFrameIdx == 7)) {
-                func_801C29B0(0x766);
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
-                if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(0x2A, newEntity);
-                    newEntity->facing = self->facing;
-                    newEntity->subId = 2;
-                    newEntity->posY.i.hi -= 40;
-                    if (newEntity->facing != 0) {
-                        newEntity->posX.i.hi += 16;
-                    } else {
-                        newEntity->posX.i.hi -= 16;
-                    }
-                }
             }
             break;
+        }
+
+        if ((temp_v0 & 0x80) && (self->animFrameIdx == 7)) {
+            func_801C29B0(0x766);
+            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(0x2A, newEntity);
+                newEntity->facing = self->facing;
+                newEntity->subId = 2;
+                newEntity->posY.i.hi -= 40;
+                if (newEntity->facing != 0) {
+                    newEntity->posX.i.hi += 16;
+                } else {
+                    newEntity->posX.i.hi -= 16;
+                }
+            }
+        }
+        break;
 
         case 8:
             if (self->unk80.modeS16.unk0 != 0) {
@@ -259,7 +258,6 @@ label:
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
 }
-
 
 void func_801C4CC0(void) {
     if (g_CurrentEntity->subId != 0) {

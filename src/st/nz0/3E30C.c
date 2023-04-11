@@ -1098,5 +1098,3 @@ void func_801C4550(void) {
         g_CurrentEntity->unk80.modeS16.unk2 = 0x100;
     }
 }
-
-
