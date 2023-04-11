@@ -14,9 +14,9 @@ extern const char* D_80182210;
 extern const char* D_80182220;
 extern const char* D_80182244;
 extern const char* D_80182268;
-extern s8* D_80182274;
+extern s8 D_80182274[];
 extern u8 D_80182284[];
-
+extern Entity D_8007D858[];
 void EntityAxeKnight(Entity* self) {
     Entity* newEntity;
     s16 temp_s2;
@@ -27,7 +27,7 @@ void EntityAxeKnight(Entity* self) {
     s32 temp_v0_2;
     s32 var_v0;
     s8* hitbox;
-    s32 temp;
+    s8* temp;
 
     if ((self->flags & 0x100) ){
         if (self->step != 8) {
@@ -146,8 +146,8 @@ void EntityAxeKnight(Entity* self) {
         case 4:
             temp_v0 = AnimateEntity(&D_80182244, self);
             if (!(temp_v0 != NULL)) {
-block_49:
-                if (func_801BCBEC() < 0x59) {
+label:
+                if (func_801BCBEC() < 89) {
                     func_801BD52C(3);
                     self->unk7C.S8.unk0 = 1;
                 } else {
@@ -190,11 +190,8 @@ block_49:
                     }
                 }
             } else {
-                goto block_49;
+                goto label;
             }
-            break;
-            
-        case 6:
             break;
 
         case 7:
@@ -232,7 +229,7 @@ block_49:
                 temp_s2 = self->unk80.modeS16.unk0 - 1;
                 self->unk80.modeS16.unk0 = temp_s2;
                 if (!(temp_s2 & 7)) {
-                    newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                    newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(2, self, newEntity);
                         temp_a0 = ((s32) (temp_s2 << 0x10) >> 0x13);
@@ -254,7 +251,8 @@ block_49:
             }
             break;
         }
-        hitbox = D_80182284[self->animCurFrame] + &D_80182274;
+
+        hitbox = 4 * D_80182284[self->animCurFrame] + D_80182274 - 1; // Weird ?
         hitbox++;
         self->unk10 = *hitbox++;
         self->unk12 = *hitbox++;
