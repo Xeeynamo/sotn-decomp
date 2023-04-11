@@ -430,7 +430,7 @@ Primitive* func_801C9E98(Primitive* prim, u8 index) {
     loop_2:
         if (prim->p3 == 0) {
             Primitive* var_v0 = NULL;
-            Primitive* firstPoly = prim;
+            Primitive* firstPrim = prim;
             s32 i = 1;
             if (i < index_) {
                 do {
@@ -439,7 +439,7 @@ Primitive* func_801C9E98(Primitive* prim, u8 index) {
                         return NULL;
                 } while (prim->p3 == 0 && ++i < index);
             }
-            var_v0 = firstPoly;
+            var_v0 = firstPrim;
             if (i == index_)
                 return var_v0;
         }
