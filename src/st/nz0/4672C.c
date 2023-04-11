@@ -382,7 +382,7 @@ void func_801C7884(Entity* entity) {
         }
     }
 }
-
+// DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/O9yG0
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntityBloodSkeleton);
 
 s32 func_801C7CF0(Entity* e) {
