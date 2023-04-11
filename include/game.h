@@ -899,7 +899,7 @@ extern GameApi g_api;
 extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
-extern s32 g_blinkTimer;
+extern u32 g_blinkTimer;
 /* 0x8003C99C */ extern s32 D_8003C99C;
 /* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?

@@ -424,7 +424,32 @@ POLY_GT4* func_801C9E68(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C9E98);
+Primitive* func_801C9E98(Primitive* prim, u8 index) {
+    if (prim) {
+        s32 index_ = index;
+    loop_2:
+        if (prim->p3 == 0) {
+            Primitive* var_v0 = NULL;
+            Primitive* firstPoly = prim;
+            s32 i = 1;
+            if (i < index_) {
+                do {
+                    prim = prim->next;
+                    if (!prim)
+                        return NULL;
+                } while (prim->p3 == 0 && ++i < index);
+            }
+            var_v0 = firstPoly;
+            if (i == index_)
+                return var_v0;
+        }
+        prim = prim->next;
+        if (prim) {
+            goto loop_2;
+        }
+    }
+    return NULL;
+}
 
 POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
