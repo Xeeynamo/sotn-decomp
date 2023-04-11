@@ -80,7 +80,7 @@ segments:
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, rodata]
-      - [0x30834, .rodata, 445BC] # here
+      - [0x30834, .rodata, 445BC]
       - [0x30858, .rodata, 45568]
       - [0x30880, rodata]
       - [0x3089C, .rodata, 4672C]

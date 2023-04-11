@@ -1,32 +1,13 @@
 #include "nz0.h"
 
 // green knight that throws axes
-// Unique
-// INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityAxeKnight);
-
-extern u16 D_80180C64[];
-extern s32 D_80182180[];
-extern s32 D_80182188[];
-extern s32 D_80182198[];
-extern s32 D_8018219A[];
-extern const char* D_80182210;
-extern const char* D_80182220;
-extern const char* D_80182244;
-extern const char* D_80182268;
-extern s8 D_80182274[];
-extern u8 D_80182284[];
-extern Entity D_8007D858[];
 void EntityAxeKnight(Entity* self) {
     Entity* newEntity;
-    s16 temp_s2;
-    s16 temp_v0_5;
-    s32 temp_a0;
     u8 animStatus;
-    u8 temp_v0;
-    s32 temp_v0_2;
-    s32 var_v0;
     s8* hitbox;
-    s8* temp;
+    s16 temp_s2;
+    s32 temp_a0;
+    u8 temp_v0;
 
     if ((self->flags & 0x100)) {
         if (self->step != 8) {
