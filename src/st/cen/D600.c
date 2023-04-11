@@ -753,6 +753,7 @@ void EntityEnemyBlood(Entity* self) {
 
 void EntityUnkId08(Entity* entity) {
     ObjInit2* objInit = &D_8018125C[entity->subId];
+    
     if (entity->step == 0) {
         InitializeEntity(&D_80180458);
         entity->animSet = objInit->animSet;
