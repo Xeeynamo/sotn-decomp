@@ -7,7 +7,7 @@ void EntityAxeKnight(Entity* self) {
     s8* hitbox;
     s16 temp;
 
-    if ((self->flags & 0x100)) {
+    if (self->flags & 0x100) {
         if (self->step != 8) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
@@ -43,12 +43,12 @@ void EntityAxeKnight(Entity* self) {
             self->unk2E++;
         }
 
-        animStatus = AnimateEntity(&D_80182210, self);
+        animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
             self->facing = (func_801BCC5C() & 1) ^ 1;
         }
 
-        if (!(animStatus != 0)) {
+        if (animStatus == 0) {
             if (self->facing == 0) {
                 self->accelerationX = -0x3000;
             } else {
@@ -89,11 +89,11 @@ void EntityAxeKnight(Entity* self) {
             self->unk2E++;
         }
 
-        animStatus = AnimateEntity(&D_80182210, self);
+        animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
             self->facing = (func_801BCC5C() & 1) ^ 1;
         }
-        if (!(animStatus != 0)) {
+        if (animStatus == 0) {
             if (self->facing == 0) {
                 self->accelerationX = 0x3000;
             } else {
@@ -126,8 +126,8 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case 4:
-        animStatus = AnimateEntity(&D_80182244, self);
-        if (!(animStatus != NULL)) {
+        animStatus = AnimateEntity(D_80182244, self);
+        if (animStatus == 0) {
         label:
             if (func_801BCBEC() < 89) {
                 func_801BD52C(3);
@@ -153,7 +153,7 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case 5:
-        animStatus = AnimateEntity(&D_80182220, self);
+        animStatus = AnimateEntity(D_80182220, self);
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
                 func_801C29B0(0x766);
@@ -176,8 +176,8 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case 7:
-        animStatus = AnimateEntity(&D_80182244, self);
-        if (!(animStatus != 0)) {
+        animStatus = AnimateEntity(D_80182244, self);
+        if (animStatus == 0) {
             if (func_801BCBEC() >= 0x59) {
                 func_801BD52C(2);
                 self->unk7C.S8.unk0 = 0;
@@ -220,7 +220,7 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-        if (AnimateEntity(&D_80182268, self) == 0) {
+        if (AnimateEntity(D_80182268, self) == 0) {
             if (func_801C4198(self) != 0) {
                 DestroyEntity(self);
                 return;

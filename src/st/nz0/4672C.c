@@ -184,10 +184,10 @@ void EntitySubWeaponContainer(Entity* self) {
         break;
 
     case 2: // Break container into pieces
-        glassPieceTBL = &D_80182584;
+        glassPieceTBL = D_80182584;
         i = 0;
         g_api.FreePrimitives(self->firstPolygonIndex);
-        self->flags &= 0xFF7FFFFF;
+        self->flags &= ~FLAG_FREE_POLYGONS;
         g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
         while (i < 9) { // Spawn falling glass pieces
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -206,7 +206,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
         for (i = 0; i < 96; i++) { // Spawn falling liquid
             newEntity = AllocEntity(&g_EntityArray[UNK_ENTITY_51],
-                                    (Entity*)&D_8007EFD8);
+                                    &g_EntityArray[UNK_ENTITY_100]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3B, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;
@@ -243,7 +243,7 @@ void EntitySubWeaponContainer(Entity* self) {
             if (self->unk2E == 0) {
                 newEntity->animCurFrame--;
                 self->unk2E |= 1;
-                return;
+                break;
             }
         } else {
             self->unk2E = 0;
