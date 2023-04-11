@@ -244,7 +244,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194924);
 
 void func_80194DD4(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->subId];
-    
+
     if (entity->step == 0) {
         func_8018E290(D_80180494);
         entity->animSet = objInit->animSet;
