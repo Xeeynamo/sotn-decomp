@@ -105,42 +105,62 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-            if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
-                if (self->facing == 0) {
-                    self->accelerationX += 0x200;
-                } else {
-                    self->accelerationX -= 0x200;
-                }
-            } else if (self->facing != 0) {
+        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
+            if (self->facing == 0) {
                 self->accelerationX += 0x200;
             } else {
                 self->accelerationX -= 0x200;
             }
-            if (func_801BCF74(&D_80182180) & 0x60) {
-                self->posX.val -= self->accelerationX;
-                self->accelerationX = 0;
+        } else if (self->facing != 0) {
+            self->accelerationX += 0x200;
+        } else {
+            self->accelerationX -= 0x200;
+        }
+        if (func_801BCF74(&D_80182180) & 0x60) {
+            self->posX.val -= self->accelerationX;
+            self->accelerationX = 0;
+        }
+        func_801C4550();
+        break;
+
+    case 4:
+        temp_v0 = AnimateEntity(&D_80182244, self);
+        if (!(temp_v0 != NULL)) {
+        label:
+            if (func_801BCBEC() < 89) {
+                func_801BD52C(3);
+                self->unk7C.S8.unk0 = 1;
+            } else {
+                func_801BD52C(2);
+                self->unk7C.S8.unk0 = 0;
             }
-            func_801C4550();
-            break;
-            
-        case 4:
-            temp_v0 = AnimateEntity(&D_80182244, self);
-            if (!(temp_v0 != NULL)) {
-label:
-                if (func_801BCBEC() < 89) {
-                    func_801BD52C(3);
-                    self->unk7C.S8.unk0 = 1;
+        } else if ((temp_v0 & 0x80) && (self->animFrameIdx == 7)) {
+            func_801C29B0(0x766);
+            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(0x2A, newEntity);
+                newEntity->facing = self->facing;
+                newEntity->posY.i.hi -= 12;
+                if (newEntity->facing != 0) {
+                    newEntity->posX.i.hi += 8;
                 } else {
-                    func_801BD52C(2);
-                    self->unk7C.S8.unk0 = 0;
+                    newEntity->posX.i.hi -= 8;
                 }
-            } else if ((temp_v0 & 0x80) && (self->animFrameIdx == 7)) {
+            }
+        }
+        break;
+
+    case 5:
+        temp_v0 = AnimateEntity(&D_80182220, self);
+        if (temp_v0 != 0) {
+            if ((temp_v0 & 0x80) && (self->animFrameIdx == 6)) {
                 func_801C29B0(0x766);
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(0x2A, newEntity);
                     newEntity->facing = self->facing;
-                    newEntity->posY.i.hi -= 12;
+                    newEntity->subId = 1;
+                    newEntity->posY.i.hi += 12;
                     if (newEntity->facing != 0) {
                         newEntity->posX.i.hi += 8;
                     } else {
@@ -148,39 +168,18 @@ label:
                     }
                 }
             }
-            break;
+        } else {
+            goto label;
+        }
+        break;
 
-        case 5:
-            temp_v0 = AnimateEntity(&D_80182220, self);
-            if (temp_v0 != 0) {
-                if ((temp_v0 & 0x80) && (self->animFrameIdx == 6)) {
-                    func_801C29B0(0x766);
-                    newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
-                    if (newEntity != NULL) {
-                        CreateEntityFromCurrentEntity(0x2A, newEntity);
-                        newEntity->facing = self->facing;
-                        newEntity->subId = 1;
-                        newEntity->posY.i.hi += 12;
-                        if (newEntity->facing != 0) {
-                            newEntity->posX.i.hi += 8;
-                        } else {
-                            newEntity->posX.i.hi -= 8;
-                        }
-                        
-                    }
-                }
+    case 7:
+        temp_v0 = AnimateEntity(&D_80182244, self);
+        if (!(temp_v0 & 0xFF)) {
+            if (func_801BCBEC() >= 0x59) {
+                func_801BD52C(2);
+                self->unk7C.S8.unk0 = 0;
             } else {
-                goto label;
-            }
-            break;
-
-        case 7:
-            temp_v0 = AnimateEntity(&D_80182244, self);
-            if (!(temp_v0 & 0xFF)) {
-                if (func_801BCBEC() >= 0x59) {
-                    func_801BD52C(2);
-                    self->unk7C.S8.unk0 = 0;
-                } else {
                 func_801BD52C(3);
                 self->unk7C.S8.unk0 = 1;
             }
@@ -204,40 +203,40 @@ label:
         }
         break;
 
-        case 8:
-            if (self->unk80.modeS16.unk0 != 0) {
-                temp_s2 = self->unk80.modeS16.unk0 - 1;
-                self->unk80.modeS16.unk0 = temp_s2;
-                if (!(temp_s2 & 7)) {
-                    newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
-                    if (newEntity != NULL) {
-                        CreateEntityFromEntity(2, self, newEntity);
-                        temp_a0 = ((s32) (temp_s2 << 0x10) >> 0x13);
-                        newEntity->subId = 2;
-                        newEntity->posX.i.hi += D_80182198[temp_a0];
-                        newEntity->posY.i.hi += D_8018219A[temp_a0];
-                    }
+    case 8:
+        if (self->unk80.modeS16.unk0 != 0) {
+            temp_s2 = self->unk80.modeS16.unk0 - 1;
+            self->unk80.modeS16.unk0 = temp_s2;
+            if (!(temp_s2 & 7)) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(2, self, newEntity);
+                    temp_a0 = ((s32)(temp_s2 << 0x10) >> 0x13);
+                    newEntity->subId = 2;
+                    newEntity->posX.i.hi += D_80182198[temp_a0];
+                    newEntity->posY.i.hi += D_8018219A[temp_a0];
                 }
             }
-
-            if (AnimateEntity(&D_80182268, self) == 0) {
-                if (func_801C4198(self) != 0) {
-                    DestroyEntity(self);
-                    return;
-                }
-                if (self->unk2E < 16) {
-                    self->animCurFrame = 0;
-                }
-            }
-            break;
         }
 
-        hitbox = 4 * D_80182284[self->animCurFrame] + D_80182274 - 1; // Weird ?
-        hitbox++;
-        self->unk10 = *hitbox++;
-        self->unk12 = *hitbox++;
-        self->hitboxWidth = *hitbox++;
-        self->hitboxHeight = *hitbox++;
+        if (AnimateEntity(&D_80182268, self) == 0) {
+            if (func_801C4198(self) != 0) {
+                DestroyEntity(self);
+                return;
+            }
+            if (self->unk2E < 16) {
+                self->animCurFrame = 0;
+            }
+        }
+        break;
+    }
+
+    hitbox = 4 * D_80182284[self->animCurFrame] + D_80182274 - 1; // Weird ?
+    hitbox++;
+    self->unk10 = *hitbox++;
+    self->unk12 = *hitbox++;
+    self->hitboxWidth = *hitbox++;
+    self->hitboxHeight = *hitbox++;
 }
 
 void func_801C4CC0(void) {
