@@ -751,7 +751,27 @@ void EntityEnemyBlood(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId08);
+void EntityUnkId08(Entity* entity) {
+    ObjInit2* objInit = &D_8018125C[entity->subId];
+    
+    if (entity->step == 0) {
+        InitializeEntity(&D_80180458);
+        entity->animSet = objInit->animSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.s;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->flags = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 = (u8)(entity->unk19 | 4);
+        }
+    }
+    func_80194394(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019BBA4);
 
