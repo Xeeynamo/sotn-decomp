@@ -86,15 +86,15 @@ void EntityBloodSplatter(Entity* self) {
 
     case 1:
         firstPrimIndex = g_api.AllocPrimitives(4, 8);
-        if (firstPrimIndex != -1) {
-            self->firstPolygonIndex = firstPrimIndex;
-            prim = &g_PrimBuf[firstPrimIndex];
-            *(s32*)&self->unk7C = prim;
-            self->flags |= 0x800000;
-            self->step++;
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
             return;
         }
-        DestroyEntity(self);
+        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[firstPrimIndex];
+        *(s32*)&self->unk7C = prim;
+        self->flags |= 0x800000;
+        self->step++;
         break;
 
     case 2:
