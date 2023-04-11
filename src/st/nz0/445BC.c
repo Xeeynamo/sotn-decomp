@@ -5,11 +5,11 @@ void EntityAxeKnight(Entity* self) {
     Entity* newEntity;
     u8 animStatus;
     s8* hitbox;
-    s16 temp_s2;
+    s16 temp;
 
     if ((self->flags & 0x100)) {
         if (self->step != 8) {
-            func_801C29B0(0x767);
+            func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
             self->unk3C = 0;
             self->unk80.modeS16.unk0 = 0x41;
@@ -48,7 +48,7 @@ void EntityAxeKnight(Entity* self) {
             self->facing = (func_801BCC5C() & 1) ^ 1;
         }
 
-        if (!(animStatus & 0xFF)) {
+        if (!(animStatus != 0)) {
             if (self->facing == 0) {
                 self->accelerationX = -0x3000;
             } else {
@@ -59,6 +59,7 @@ void EntityAxeKnight(Entity* self) {
                 self->unk7C.S8.unk0 = 1;
             }
         }
+
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
             if (self->facing == 0) {
                 self->accelerationX -= 0x300;
@@ -70,6 +71,7 @@ void EntityAxeKnight(Entity* self) {
         } else {
             self->accelerationX += 0x300;
         }
+
         if (func_801BCF74(&D_80182180) & 0x60) {
             self->posX.val -= self->accelerationX;
             self->accelerationX = 0;
@@ -204,15 +206,15 @@ void EntityAxeKnight(Entity* self) {
 
     case 8:
         if (self->unk80.modeS16.unk0 != 0) {
-            temp_s2 = --self->unk80.modeS16.unk0;
-            if (!(temp_s2 & 7)) {
+            temp = --self->unk80.modeS16.unk0;
+            if (!(self->unk80.modeS16.unk0 & 7)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(2, self, newEntity);
-                    temp_s2 = (temp_s2 << 0x10) >> 0x13;
+                    temp >>= 3;
                     newEntity->subId = 2;
-                    newEntity->posX.i.hi += D_80182198[temp_s2];
-                    newEntity->posY.i.hi += D_8018219A[temp_s2];
+                    newEntity->posX.i.hi += D_80182198[temp];
+                    newEntity->posY.i.hi += D_8018219A[temp];
                 }
             }
         }
