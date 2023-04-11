@@ -117,7 +117,7 @@ void EntityAxeKnight(Entity* self) {
         } else {
             self->accelerationX -= 0x200;
         }
-        
+
         if (func_801BCF74(&D_80182180) & 0x60) {
             self->posX.val -= self->accelerationX;
             self->accelerationX = 0;
