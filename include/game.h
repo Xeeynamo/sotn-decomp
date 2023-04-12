@@ -49,7 +49,7 @@ typedef struct Primitive {
     /* 0x20 */ s16 x2;
     /* 0x22 */ s16 y2;
     /* 0x24 */ u8 u2; // TODO not verified
-    /* 0x24 */ u8 v2; // TODO not verified
+    /* 0x25 */ u8 v2; // TODO not verified
     /* 0x26 */ u16 priority;
     /* 0x28 */ u8 r3;
     /* 0x29 */ u8 g3;
@@ -284,14 +284,14 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 enemyId;
-    /* 0x3C */ u16 unk3C;
+    /* 0x3C */ u16 unk3C; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 unk48;
+    /* 0x48 */ u8 unk48; // 1 = took hit
     /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
@@ -336,6 +336,7 @@ typedef struct Entity {
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
         /* 0x8C */ struct Entity* entityPtr;
+        /* 0x8C */ struct Primitive* primPtr;
         /* 0x8C */ s32 modeS32;
         struct {
             /* 0x8C */ u16 unk0;
@@ -877,6 +878,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
 extern u8 D_8003BDEC[];
+extern u8 D_8003BE23;
 extern u8 D_8003BEEC[];
 extern u8 D_8003BF9C[];
 extern s32 D_8003C0EC[4];
@@ -898,7 +900,7 @@ extern GameApi g_api;
 extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
-extern s32 g_blinkTimer;
+extern u32 g_blinkTimer;
 /* 0x8003C99C */ extern s32 D_8003C99C;
 /* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
