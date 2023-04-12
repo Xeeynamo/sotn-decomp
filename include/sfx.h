@@ -14,6 +14,7 @@
  * IT = Item
  * EN = Enemy
  * VO = Voice
+ * BO = Boss
  * DR = Dracula
  * DE = Death
  * SH = Shaft
@@ -141,6 +142,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
 #define NA_SE_AL_BACKSLIDE 0x617
 #define NA_SE_EV_VASE_BREAK 0x61D
+#define NA_SE_PL_BT_ECHO 0x61F
 #define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
 #define NA_SE_PL_WARP 0x636
@@ -168,5 +170,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_WO_BARK 0x706
 #define NA_SE_VO_AXE_KNIGHT_THROW 0x766
 #define NA_SE_VO_AXE_KNIGHT_SCREAM 0x767
+#define NA_SE_BO_DEFEATED 0x7D2
 #define NA_SE_PL_TELEPORT 0x8BA
 #define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
