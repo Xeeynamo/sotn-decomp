@@ -5,8 +5,9 @@ void EntityZombie(Entity* self) {
     s32 temp_a0;
 
     if ((self->flags & 0x100) && (self->step < 4)) {
-        func_801C2598(0x65E);
+        func_801C2598(NA_SE_EN_ZOMBIE_EXPLODE);
         self->unk3C = 0;
+        // Spawn Zombie explosion
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(0x4D, self, newEntity);
@@ -20,7 +21,7 @@ void EntityZombie(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B08);
+        InitializeEntity(D_80180B08);
         self->hitboxWidth = 8;
         self->unk12 = 0x10;
         self->hitboxHeight = 0;
@@ -35,14 +36,14 @@ void EntityZombie(Entity* self) {
         break;
 
     case 1:
-        if (func_801BC8E4(&D_801825BC) & 1) {
+        if (func_801BC8E4(D_801825BC) & 1) {
             self->facing = (func_801BC844() & 1) ^ 1;
             self->step++;
         }
         break;
 
     case 2:
-        if (AnimateEntity(&D_80182594, self) == 0) {
+        if (AnimateEntity(D_80182594, self) == 0) {
             func_801BD114(3);
         }
         if (self->animFrameDuration == 0) {
@@ -52,7 +53,7 @@ void EntityZombie(Entity* self) {
         break;
 
     case 3:
-        AnimateEntity(&D_8018258C, self);
+        AnimateEntity(D_8018258C, self);
         temp_a0 = func_801BCB5C(&D_801825CC);
         if (self->facing != 0) {
             self->accelerationX = 0x8000;
@@ -67,7 +68,7 @@ void EntityZombie(Entity* self) {
         break;
 
     case 4:
-        if (AnimateEntity(&D_801825A8, self) == 0) {
+        if (AnimateEntity(D_801825A8, self) == 0) {
             DestroyEntity(self);
         }
         break;
