@@ -26,8 +26,6 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
-      - name: Debug context
-        run: echo '${{ toJSON(github) }}'
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo (PR)
