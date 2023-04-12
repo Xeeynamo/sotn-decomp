@@ -77,4 +77,4 @@ void EntityZombie(Entity* self) {
     }
 }
 
-const u8 rodataPadding_377CC[] = { 0, 0 };
+const u32 rodataPadding_377CC[] = { 0, 0 };
