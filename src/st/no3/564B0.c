@@ -1,7 +1,5 @@
 #include "no3.h"
 
-// INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
-
 void EntityZombie(Entity* self) {
     Entity* newEntity;
     s32 temp_a0;
