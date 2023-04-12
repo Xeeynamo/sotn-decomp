@@ -82,7 +82,7 @@ void EntityBloodSplatter(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A54);
-        return;
+        break;
 
     case 1:
         firstPrimIndex = g_api.AllocPrimitives(4, 8);
