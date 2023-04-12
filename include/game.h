@@ -49,7 +49,7 @@ typedef struct Primitive {
     /* 0x20 */ s16 x2;
     /* 0x22 */ s16 y2;
     /* 0x24 */ u8 u2; // TODO not verified
-    /* 0x24 */ u8 v2; // TODO not verified
+    /* 0x25 */ u8 v2; // TODO not verified
     /* 0x26 */ u16 priority;
     /* 0x28 */ u8 r3;
     /* 0x29 */ u8 g3;
