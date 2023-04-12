@@ -1058,11 +1058,9 @@ void func_801B69E8(Entity* self) {
 
     if ((prevEntity->animCurFrame - 32) < 3U) {
         self->animCurFrame = 0x26;
-    }else
-    if (prevEntity->animCurFrame == 35) {
+    } else if (prevEntity->animCurFrame == 35) {
         self->animCurFrame = 0x27;
-    }else
-    if ((prevEntity->animCurFrame - 36) < 2U) {
+    } else if ((prevEntity->animCurFrame - 36) < 2U) {
         self->animCurFrame = 0x28;
     }
 
