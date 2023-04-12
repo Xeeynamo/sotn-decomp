@@ -70,4 +70,3 @@ void EntityBat(Entity* entity) {
         break;
     }
 }
-
