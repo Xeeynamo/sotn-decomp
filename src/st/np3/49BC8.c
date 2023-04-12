@@ -1,17 +1,5 @@
 #include "np3.h"
 
-// INCLUDE_ASM("asm/us/st/np3/nonmatchings/49BC8", EntityZombie);
-
-//s32 func_801BC844();                                /* extern */
-//s32 func_801BC8E4(?*);                              /* extern */
-//? func_801BD114(?);                                 /* extern */
-extern u16 D_80180B08;
-extern u8 D_8018258C;
-extern u8 D_80182594;
-extern u8 D_801825A8;
-extern s32 D_801825BC;
-extern u16 D_801825CC;
-
 void EntityZombie(Entity* self) {
     Entity* newEntity;
     s32 temp_a0;
@@ -85,7 +73,6 @@ void EntityZombie(Entity* self) {
         break;
     }
 }
-
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/49BC8", EntityUnkId4D);
 
