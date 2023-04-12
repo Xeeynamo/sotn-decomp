@@ -610,7 +610,64 @@ void func_801C0C14(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C0D08);
+void func_801C0D08(Entity* self) {
+    s16 firstPolygonIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BE0);
+        firstPolygonIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (firstPolygonIndex == -1) {
+            return;
+        }
+        prim = &g_PrimBuf[firstPolygonIndex];
+        self->firstPolygonIndex = firstPolygonIndex;
+        self->unk3C = 0;
+        *(s32*)&self->unk7C = prim;
+        self->flags |= FLAG_FREE_POLYGONS;
+        while (prim != NULL) {
+            prim->x0 = prim->x1 = self->posX.i.hi;
+            prim->y0 = prim->y1 = self->posY.i.hi;
+            prim->r0 = 64;
+            prim->r1 = 0;
+            prim->g0 = 64;
+            prim->g1 = 0;
+            prim->b0 = 255;
+            prim->b1 = 16;
+            prim->priority = self->zPriority + 1;
+            prim->blendMode |= 0x37;
+            prim = prim->next;
+        }
+        break;
+
+    case 1:
+        prim = (Primitive*)*(s32*)&self->unk7C.s;
+        if (func_801C070C(&D_80181F28, 0) & 255) {
+            prim->y1 += 2;
+            if (self->unk2E == 0) {
+                func_801C090C(self, 1, 2, 0, 0, 3, 0);
+                self->unk2E = 1;
+            }
+        } else {
+            self->accelerationY += 0x400;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->firstPolygonIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 bool func_801C0F38(Unkstruct6* unk) {
     Collider res;
@@ -1040,118 +1097,5 @@ void func_801C4550(void) {
     } else {
         func_801BD52C(D_801822B4[(Random() & 7)]);
         g_CurrentEntity->unk80.modeS16.unk2 = 0x100;
-    }
-}
-
-// green knight that throws axes
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityAxeKnight);
-
-void func_801C4CC0(void) {
-    if (g_CurrentEntity->subId != 0) {
-        g_CurrentEntity->unk1E += 0x80;
-    } else {
-        g_CurrentEntity->unk1E -= 0x80;
-    }
-
-    g_CurrentEntity->unk1E &= 0xFFF;
-}
-
-void EntityAxeKnightThrowingAxe(Entity* entity) {
-    s32 accelerationX;
-
-    if (entity->flags & 0x100) {
-        func_801C29B0(0x66B);
-        func_801BD568(0, 0);
-        return;
-    }
-
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_80180C70);
-        entity->unk19 = 4;
-        entity->accelerationY = D_801822C8[entity->subId];
-        accelerationX = D_801822BC[entity->subId];
-
-        if (entity->facing == 0) {
-            entity->accelerationX = -accelerationX;
-        } else {
-            entity->accelerationX = accelerationX;
-        }
-
-        entity->unk7C.s = -0x40;
-
-        if (entity->subId == 2) {
-            entity->step++;
-            return;
-        }
-        break;
-
-    case 1:
-        func_801C4CC0();
-        if ((u16)entity->unk7C.s < 0x20) {
-            if (entity->facing != 0) {
-                entity->accelerationX -= 0x2000;
-            } else {
-                entity->accelerationX += 0x2000;
-            }
-        }
-
-        entity->unk7C.s++;
-        MoveEntity();
-        break;
-
-    case 2:
-        func_801C4CC0();
-        entity->accelerationY += 0x2000;
-        MoveEntity();
-        break;
-    }
-}
-
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityBloodSplatter);
-
-void func_801C53AC(Primitive* prim) {
-    switch (prim->next->u2) {
-    case 0:
-        prim->tpage = 0x12;
-        prim->clut = 0x16D;
-        prim->u0 = 80;
-        prim->u1 = 96;
-        prim->v1 = 239;
-        prim->v0 = 239;
-        prim->v3 = 255;
-        prim->v2 = 255;
-        prim->u2 = prim->u0;
-        prim->u3 = prim->u1;
-        *(s16*)&prim->next->r2 = 16;
-        *(s16*)&prim->next->b2 = 16;
-        prim->next->x1 = g_CurrentEntity->posX.i.hi;
-        prim->next->y0 = g_CurrentEntity->posY.i.hi;
-
-        if (g_CurrentEntity->facing != 0) {
-            prim->next->x1 -= 8;
-        } else {
-            prim->next->x1 += 8;
-        }
-        if (prim->next->r3 == 0) {
-            *(s32*)&prim->next->u0 = -0x4000;
-        } else {
-            *(s32*)&prim->next->u0 = 0x4000;
-        }
-        *(s32*)&prim->next->r1 = -0x20000;
-        prim->next->b3 = 0x80;
-        prim->priority = g_CurrentEntity->zPriority + 1;
-        prim->blendMode = 2;
-        prim->next->u2 = 1;
-        break;
-
-    case 1:
-        func_801C9930(prim);
-        *(s32*)&prim->next->r1 += 0x2000;
-        if (*(s32*)&prim->next->r1 > 0x20000) {
-            func_801CA0D0(prim);
-        }
-        break;
     }
 }

@@ -24,14 +24,16 @@ extern u16 D_80180BEC[];
 extern u16 D_80180BF8[];
 extern u16 D_80180C1C[];
 extern u16 D_80180C34[];
+extern u16 D_80180C64[];
 extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
-extern s32 D_80180EEC;
+extern s16 D_80180CE8[];
 extern u16 D_80180D00[];
 extern u16 D_80180D18[];
 extern u16 D_80180D24[];
+extern u16 D_80180D30[];
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];
@@ -69,6 +71,7 @@ extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
+extern s16* D_80181F28;
 extern s32* D_80180EB8;
 extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
@@ -76,6 +79,16 @@ extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
+extern s32 D_80182180[];
+extern s32 D_80182188[];
+extern s32 D_80182198[];
+extern s32 D_8018219A[];
+extern u8 D_80182210[];
+extern u8 D_80182220[];
+extern u8 D_80182244[];
+extern u8 D_80182268[];
+extern s8 D_80182274[];
+extern u8 D_80182284[];
 extern u8 D_801822B4[];
 extern u16 D_801822D4[];
 extern const u8 D_801822E4[];
@@ -108,14 +121,40 @@ extern s16 D_801820E4[];
 extern const u16 D_80180C04[];
 extern s32 D_80182504[];
 extern u8 D_80182524;
+
+// *** EntitySubWeaponContainer properties START ***
+
+#define ENTITY_SUBWPNCONT_DEBRIS_COUNT 9
+typedef enum {
+    SUBWPNCONT_INIT,
+    SUBWPNCONT_IDLE,
+    SUBWPNCONT_BREAK,
+    SUBWPNCONT_DEBUG = 255
+} SUBWPNCONT_STEPS;
+
+typedef struct SubWpnContDebris {
+    u16 posX;
+    u16 posY;
+    u16 subId;
+    u16 facing;
+} SubWpnContDebris;
+
+extern SubWpnContDebris D_80182584[ENTITY_SUBWPNCONT_DEBRIS_COUNT];
+
+// *** EntitySubWeaponContainer properties END ***
+
+extern s32 D_801825CC[]; // SubWeapons subId table
 extern u8 D_801825F0;
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];
 extern u32 D_801822BC[];
 extern u32 D_801822C8[];
-extern s8 D_801B058C; // "charal %x\n"
-extern s8 D_801B0598; // "charal %x\n"
+extern s32 D_8018238C;
+extern s32 D_801823A4;
+extern const char D_801B058C[]; // "charal %x\n"
+extern const char D_801B0598[]; // "charal %x\n"
+extern const char D_801B08C8[]; // "charal %x\n"
 extern s16 D_801CB68E;
 extern u16 D_801CB690;
 extern s16 D_801CB692;

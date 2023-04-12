@@ -113,9 +113,145 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 // Unique
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntitySpittleBoneSpit);
 
-// probably the subweapons floating in the breakable containers
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntitySubwpnPickup);
+// SubWeapons floating in the breakable container
+void EntitySubWeaponContainer(Entity* self) {
+    SubWpnContDebris* glassPieceTBL;
+    Entity* newEntity;
+    Primitive* prim;
+    s16 firstPrimIndex;
+    s32 rnd;
+    s32 rndPosX;
+    s32 rndPosY;
+    s32 absRnd;
+    s32 i;
+    s32 pad[23];
+
+    switch (self->step) {
+    case SUBWPNCONT_INIT:
+        InitializeEntity(D_80180CE8);
+        self->blendMode = 0x10;
+        self->animCurFrame = 1;
+        self->zPriority = 0x70;
+        self->hitboxWidth = 14;
+        self->hitboxHeight = 32;
+        self->unk12 = -0x38;
+        self->unk10 = 0;
+        self->unk3C = 2;
+        self->palette += self->subId;
+        CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
+        self[1].posY.i.hi -= 72;
+        self[1].subId = D_801825CC[self->subId];
+        self[1].zPriority = self->zPriority - 2;
+
+        firstPrimIndex = g_api.AllocPrimitives(4, 2);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[firstPrimIndex];
+        *(s32*)&self->unk7C = prim;
+        self->flags |= FLAG_FREE_POLYGONS;
+        while (prim != NULL) {
+            prim->priority = self->zPriority + 0xFFFF;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        break;
+
+    case SUBWPNCONT_IDLE: // Spawn Liquid bubbles
+        if (!(g_blinkTimer & 0xF)) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3C, self, newEntity);
+                rnd = (Random() & 0x18) - 12;
+                newEntity->posX.i.hi += rnd;
+                newEntity->posY.i.hi -= 30;
+                newEntity->subId = Random() & 3;
+                if (newEntity->subId == 0) {
+                    absRnd = ABS(rnd);
+                    if (absRnd >= 9) {
+                        newEntity->subId = 1;
+                    }
+                }
+                newEntity->zPriority = self->zPriority - 1;
+            }
+        }
+
+        if (self->unk48 != 0) { // container got hit!
+            self->step++;
+        }
+        break;
+
+    case SUBWPNCONT_BREAK: // Break container into pieces
+        // Spawn falling glass pieces
+        glassPieceTBL = D_80182584;
+        i = 0;
+        g_api.FreePrimitives(self->firstPolygonIndex);
+        self->flags &= ~FLAG_FREE_POLYGONS;
+        g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
+        while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3A, self, newEntity);
+                newEntity->posX.i.hi += glassPieceTBL->posX;
+                newEntity->posY.i.hi += glassPieceTBL->posY;
+                newEntity->unk84.S16.unk0 = glassPieceTBL->posX;
+                newEntity->subId = glassPieceTBL->subId;
+                newEntity->facing = glassPieceTBL->facing;
+                newEntity->unk84.S16.unk2 = self->subId;
+            }
+            glassPieceTBL++;
+            i++;
+        }
+
+        for (i = 0; i < 96; i++) { // Spawn falling liquid
+            newEntity = AllocEntity(&g_EntityArray[UNK_ENTITY_51],
+                                    &g_EntityArray[UNK_ENTITY_100]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x3B, self, newEntity);
+                rndPosX = (Random() & 0x1F) - 16;
+                rndPosY = -(Random() & 0x3F) - 16;
+                newEntity->posX.i.hi += rndPosX;
+                newEntity->posY.i.hi += rndPosY;
+                newEntity->unk1E = ratan2(rndPosY, rndPosX);
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        func_801C29B0(NA_SE_EV_VASE_BREAK);
+        self->unk3C = 0;
+        self->animCurFrame = 2;
+        self->step++;
+        break;
+
+    case SUBWPNCONT_DEBUG:
+        /**
+         * Debug: Press SQUARE / CIRCLE on the second controller
+         * to advance/rewind current animation frame
+         */
+        FntPrint(D_801B08C8, self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->subId == 0) {
+                newEntity->animCurFrame++;
+                self->subId |= 1;
+            } else {
+                break;
+            }
+        } else {
+            self->subId = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->unk2E == 0) {
+                newEntity->animCurFrame--;
+                self->unk2E |= 1;
+                break;
+            }
+        } else {
+            self->unk2E = 0;
+        }
+        break;
+    }
+}
 
 void func_801C7538(Entity* entity) {
     s32 new_var;
@@ -248,6 +384,7 @@ void func_801C7884(Entity* entity) {
     }
 }
 
+// DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/O9yG0
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntityBloodSkeleton);
 
 s32 func_801C7CF0(Entity* e) {
@@ -289,7 +426,32 @@ POLY_GT4* func_801C9E68(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C9E98);
+Primitive* func_801C9E98(Primitive* prim, u8 index) {
+    if (prim) {
+        s32 index_ = index;
+    loop_2:
+        if (prim->p3 == 0) {
+            Primitive* var_v0 = NULL;
+            Primitive* firstPrim = prim;
+            s32 i = 1;
+            if (i < index_) {
+                do {
+                    prim = prim->next;
+                    if (!prim)
+                        return NULL;
+                } while (prim->p3 == 0 && ++i < index);
+            }
+            var_v0 = firstPrim;
+            if (i == index_)
+                return var_v0;
+        }
+        prim = prim->next;
+        if (prim) {
+            goto loop_2;
+        }
+    }
+    return NULL;
+}
 
 POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;

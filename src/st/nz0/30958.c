@@ -1040,7 +1040,34 @@ void EntitySlograSpearProjectile(Entity* self) {
 // gaibon boss
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityGaibon);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B69E8);
+void func_801B69E8(Entity* self) {
+    Entity* prevEntity;
+    s16 animCurFrame;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180D30);
+        self->unk3C = 0;
+    }
+
+    prevEntity = &self[-1];
+    self->facing = prevEntity->facing;
+    self->palette = prevEntity->palette;
+    self->posX.i.hi = prevEntity->posX.i.hi;
+    self->posY.i.hi = prevEntity->posY.i.hi;
+    self->animCurFrame = 0;
+
+    if ((prevEntity->animCurFrame - 32) < 3U) {
+        self->animCurFrame = 0x26;
+    } else if (prevEntity->animCurFrame == 35) {
+        self->animCurFrame = 0x27;
+    } else if ((prevEntity->animCurFrame - 36) < 2U) {
+        self->animCurFrame = 0x28;
+    }
+
+    if (prevEntity->objectId != 0x43) {
+        DestroyEntity(self);
+    }
+}
 
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
@@ -1574,16 +1601,16 @@ s32 func_801BBC3C(Entity* e) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityRedDoor);
 
-void DestroyEntity(Entity* item) {
+void DestroyEntity(Entity* self) {
     s32 i;
     s32 length;
     u32* ptr;
 
-    if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(item->firstPolygonIndex);
+    if (self->flags & FLAG_FREE_POLYGONS) {
+        g_api.FreePrimitives(self->firstPolygonIndex);
     }
 
-    ptr = (u32*)item;
+    ptr = (u32*)self;
     length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
