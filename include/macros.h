@@ -10,7 +10,7 @@ typedef enum {
     UNK_ENTITY_8,
     UNK_ENTITY_10 = 0x10,
     UNK_ENTITY_13 = 0x13,
-    UNK_ENTITY_51 = 0x51,  // SubWeapons container falling liquid
+    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
 

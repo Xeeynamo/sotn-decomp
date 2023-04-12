@@ -190,7 +190,7 @@ void EntitySubWeaponContainer(Entity* self) {
         g_api.FreePrimitives(self->firstPolygonIndex);
         self->flags &= ~FLAG_FREE_POLYGONS;
         g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
-        while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) { 
+        while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3A, self, newEntity);
