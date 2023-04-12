@@ -127,7 +127,7 @@ void EntitySubWeaponContainer(Entity* self) {
     s32 pad[23];
 
     switch (self->step) {
-    case 0:
+    case SUBWPNCONT_INIT:
         InitializeEntity(D_80180CE8);
         self->blendMode = 0x10;
         self->animCurFrame = 1;
@@ -159,7 +159,7 @@ void EntitySubWeaponContainer(Entity* self) {
         }
         break;
 
-    case 1: // Spawn Liquid bubbles
+    case SUBWPNCONT_IDLE: // Spawn Liquid bubbles
         if (!(g_blinkTimer & 0xF)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -183,13 +183,14 @@ void EntitySubWeaponContainer(Entity* self) {
         }
         break;
 
-    case 2: // Break container into pieces
+    case SUBWPNCONT_BREAK: // Break container into pieces
+        // Spawn falling glass pieces
         glassPieceTBL = D_80182584;
         i = 0;
         g_api.FreePrimitives(self->firstPolygonIndex);
         self->flags &= ~FLAG_FREE_POLYGONS;
         g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
-        while (i < 9) { // Spawn falling glass pieces
+        while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) { 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3A, self, newEntity);
@@ -223,12 +224,12 @@ void EntitySubWeaponContainer(Entity* self) {
         self->step++;
         break;
 
-    case 255:
+    case SUBWPNCONT_DEBUG:
         /**
          * Debug: Press SQUARE / CIRCLE on the second controller
          * to advance/rewind current animation frame
          */
-        FntPrint(&D_801B08C8, self->animCurFrame);
+        FntPrint(D_801B08C8, self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->subId == 0) {
                 newEntity->animCurFrame++;

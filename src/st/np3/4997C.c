@@ -93,7 +93,7 @@ void EntityBloodSplatter(Entity* self) {
         self->firstPolygonIndex = firstPrimIndex;
         prim = &g_PrimBuf[firstPrimIndex];
         *(s32*)&self->unk7C = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         self->step++;
         break;
 
