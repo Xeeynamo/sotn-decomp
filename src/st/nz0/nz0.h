@@ -122,7 +122,7 @@ extern const u16 D_80180C04[];
 extern s32 D_80182504[];
 extern u8 D_80182524;
 
-// *** EntitySubWeaponContainer properties start ***
+// *** EntitySubWeaponContainer properties START ***
 
 #define ENTITY_SUBWPNCONT_DEBRIS_COUNT 9
 typedef enum {
@@ -140,6 +140,8 @@ typedef struct SubWpnContDebris {
 } SubWpnContDebris;
 
 extern SubWpnContDebris D_80182584[ENTITY_SUBWPNCONT_DEBRIS_COUNT];
+
+// *** EntitySubWeaponContainer properties END ***
 
 extern s32 D_801825CC[]; // SubWeapons subId table
 extern u8 D_801825F0;
