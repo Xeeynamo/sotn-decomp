@@ -1,6 +1,6 @@
 #include "no3.h"
 
-//INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
+// INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
 
 void EntityZombie(Entity* self) {
     Entity* newEntity;
@@ -77,4 +77,4 @@ void EntityZombie(Entity* self) {
     }
 }
 
-const u8 rodataPadding_377CC[] = { 0, 0 };
+const u8 rodataPadding_377CC[] = {0, 0};
