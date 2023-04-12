@@ -75,7 +75,7 @@ void EntityZombie(Entity* self) {
     }
 }
 
-const u32 rodataPadding_377CC[] = { 0, 0 };
+const u32 rodataPadding_377CC[] = {0, 0};
 
 void EntityUnkId4D(Entity* self) {
     s32 distCameraEntity;
