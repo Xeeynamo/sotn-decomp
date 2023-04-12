@@ -878,6 +878,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
 extern u8 D_8003BDEC[];
+extern u8 D_8003BE23;
 extern u8 D_8003BEEC[];
 extern u8 D_8003BF9C[];
 extern s32 D_8003C0EC[4];

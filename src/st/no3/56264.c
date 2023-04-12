@@ -147,7 +147,44 @@ void EntityZombie(Entity* self) {
     }
 }
 */
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityUnkId4D);
+
+void EntityUnkId4D(Entity* self) {
+    s32 distCameraEntity;
+    Entity* newEntity;
+    s32 rnd;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180AD0);
+        self->unk80.modeS16.unk0 = 1;
+        self->flags &= 0x2000;
+    }
+
+    if (D_8003BE23 != 0) {
+        self->posX.i.hi = 128;
+        if (--self->unk80.modeS16.unk0 == 0) {
+            newEntity = AllocEntity(D_8007A958, &D_8007A958[8]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(0x4C, self, newEntity);
+                rnd = (Random() & 0x3F) + 96;
+
+                if (self->unk88.unk != 0) {
+                    newEntity->posX.i.hi += rnd;
+                } else {
+                    newEntity->posX.i.hi -= rnd;
+                }
+                newEntity->posY.i.hi -= 48;
+                self->unk88.unk ^= 1;
+
+                distCameraEntity = g_Camera.posX.i.hi + newEntity->posX.i.hi;
+                if ((distCameraEntity < (g_CurrentRoom.x + 128)) ||
+                    ((g_CurrentRoom.width - 128) < distCameraEntity)) {
+                    DestroyEntity(newEntity);
+                }
+            }
+            self->unk80.modeS16.unk0 = (Random() & 0x3F) + 32;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", func_801D6880);
 
