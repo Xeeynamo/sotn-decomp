@@ -70,7 +70,11 @@ void EntityBat(Entity* entity) {
         break;
     }
 }
+
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
+
+// Needs a file split, problem with rodataPadding
+
 /*
 void EntityZombie(Entity* self) {
     Entity* newEntity;
