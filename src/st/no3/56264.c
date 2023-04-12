@@ -70,8 +70,8 @@ void EntityBat(Entity* entity) {
         break;
     }
 }
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
-/*
+//INCLUDE_ASM("asm/us/st/no3/nonmatchings/56264", EntityZombie);
+
 void EntityZombie(Entity* self) {
     Entity* newEntity;
     s32 temp_a0;
@@ -146,7 +146,6 @@ void EntityZombie(Entity* self) {
         break;
     }
 }
-*/
 
 void EntityUnkId4D(Entity* self) {
     s32 distCameraEntity;
