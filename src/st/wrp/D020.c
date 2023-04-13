@@ -285,6 +285,10 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
 
 extern u16 D_80194728[];
 
+#define ET_TIMER *(u16*)ET_RESERVED(self, 0)
+#define ET_EQUIPITEMDROP_UNK80 self->unk80.modeS8.unk0 // TODO
+#define ET_EQUIPITEMDROP_UNK8C *(s16*)ET_RESERVED(self, 16)
+#define ET_EQUIPITEMDROP_UNK94 *(s16*)ET_RESERVED(self, 24)
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->subId & 0x7FFF;
     s32 firstPolygonIndex;
@@ -317,7 +321,7 @@ void EntityEquipItemDrop(Entity* self) {
             return;
         }
         InitializeEntity(D_8018044C);
-        self->unk7C.s = 0;
+        ET_TIMER = 0;
         break;
 
     case 1:
@@ -335,8 +339,8 @@ void EntityEquipItemDrop(Entity* self) {
                 return;
             }
 
-            if (LOH(self->unk94) != 0) {
-                temp_a0 = LOH(self->unk94);
+            if (ET_EQUIPITEMDROP_UNK94 != 0) {
+                temp_a0 = ET_EQUIPITEMDROP_UNK94;
                 temp_a0--;
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
@@ -350,7 +354,7 @@ void EntityEquipItemDrop(Entity* self) {
             self->flags |= FLAG_FREE_POLYGONS;
             self->firstPolygonIndex = firstPolygonIndex;
             D_80194728[index] = 0x1E0;
-            self->unk8C.modeU16.unk0 = index;
+            ET_EQUIPITEMDROP_UNK8C = index;
 
             if (itemId < 169) {
                 g_api.func_800EB534(g_api.D_800A4B04[itemId].icon,
@@ -382,7 +386,7 @@ void EntityEquipItemDrop(Entity* self) {
             poly->pad2 = 0x80;
             poly->pad3 = 6;
 
-            self->unk7C.s = 128;
+            ET_TIMER = 128;
             self->step++;
             break;
         }
@@ -407,7 +411,7 @@ void EntityEquipItemDrop(Entity* self) {
             self->accelerationX = 0;
             self->accelerationY = 0;
             self->posY.i.hi += collider.unk18;
-            self->unk80.modeS8.unk0 = 240;
+            ET_EQUIPITEMDROP_UNK80 = 240;
             self->step++;
         } else {
             FallEntity();
@@ -419,8 +423,8 @@ void EntityEquipItemDrop(Entity* self) {
     case 3:
         func_8018CB34(1);
         if (!(self->subId & 0x8000)) {
-            if (!(--self->unk80.modeS8.unk0 & 255)) {
-                self->unk80.modeS8.unk0 = 0x50;
+            if (!(--ET_EQUIPITEMDROP_UNK80 & 255)) {
+                ET_EQUIPITEMDROP_UNK80 = 0x50;
                 self->step++;
             }
         } else {
@@ -430,9 +434,9 @@ void EntityEquipItemDrop(Entity* self) {
 
     case 4:
         func_8018CB34(1);
-        if (self->unk80.modeS8.unk0 += 255) {
+        if (ET_EQUIPITEMDROP_UNK80 += 255) {
             poly = &g_PrimBuf[self->firstPolygonIndex];
-            if (self->unk80.modeS8.unk0 & 2) {
+            if (ET_EQUIPITEMDROP_UNK80 & 2) {
                 poly->pad3 = 8;
             } else {
                 poly->pad3 = 2;

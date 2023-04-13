@@ -258,6 +258,8 @@ typedef struct {
     s8 hitboxHeight;
 } FrameProperty;
 
+#define ET_RESERVED(e, x) ((void*)(((u8*)&(e)->unk7C) + (x)))
+
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
