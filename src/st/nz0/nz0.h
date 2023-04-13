@@ -34,6 +34,8 @@ extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];
 extern s32 D_80180EB4;
+extern u16 D_80180ED4[];
+extern u16 D_80180EE0[];
 extern s32 D_80180EEC;
 extern u16 D_80180F10[];
 extern const u8 D_80180F1C[];

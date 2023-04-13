@@ -587,7 +587,46 @@ void EntityCannonShot(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
+void func_801B2978(Entity* self) {
+    u16* tileLayoutPtr;
+    s32 tilePos;
+    s32 cond;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+
+        cond = D_8003BE6F[0] != 0;
+        tileLayoutPtr = (-cond & 6) + &D_80180ED4[0];
+        for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            tilePos += 0x10;
+        }
+
+        if (D_8003BE6F[0] != 0) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        i = D_8003BE6F[0] != 0; // TODO: !FAKE:
+        if (i) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+
+        tileLayoutPtr = &D_80180EE0;
+        for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            tilePos += 0x10;
+        }
+        DestroyEntity(self);
+    }
+}
 
 void func_801B2AD8(Entity* self) {
     s16 firstPolygonIndex;
