@@ -257,24 +257,24 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
 }
 
 void func_80190608(LayoutObject* layoutObj) {
-    s16 xClose;
-    s16 xFar;
-    s16 posX;
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
     Entity* entity;
 
-    posX = g_Camera_posY_i_hi;
-    xClose = posX - 0x40;
-    xFar = posX + 0x120;
-    if (xClose < 0) {
-        xClose = 0;
+    posY = g_Camera_posY_i_hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
     }
 
-    posX = layoutObj->posY;
-    if (posX < xClose) {
+    posY = layoutObj->posY;
+    if (posY < yClose) {
         return;
     }
 
-    if (xFar < posX) {
+    if (yFar < posY) {
         return;
     }
 
