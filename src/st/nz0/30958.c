@@ -645,14 +645,14 @@ void func_801B2AD8(Entity* self) {
         CreateEntityFromEntity(0x26, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Camera.posY.i.hi;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C)) = poly;
+        *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         poly->tpage = 0xF;
         poly->clut = 9;
