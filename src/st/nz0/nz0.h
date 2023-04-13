@@ -3,7 +3,6 @@
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
-s32 func_801BB80C(s16);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
