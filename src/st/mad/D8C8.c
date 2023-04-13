@@ -294,7 +294,44 @@ void func_80190608(LayoutObject* layoutObj) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80190720);
+extern u16 g_Camera_posX_i_hi;
+void func_80190720(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera_posX_i_hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
 
 void func_80190838(s32 arg0) {
     s32 a1 = 0xFFFE;
