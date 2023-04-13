@@ -564,7 +564,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180BF8);
+        InitializeEntity(D_80180BF8);
         self->animSet = 2;
         self->animCurFrame = 1;
         self->palette = 0x81AF;
@@ -587,7 +587,46 @@ void EntityCannonShot(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2978);
+void EntityCannonWall(Entity* self) {
+    u16* tileLayoutPtr;
+    s32 tilePos;
+    s32 cond;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+
+        cond = D_8003BDEC[131] != 0;
+        tileLayoutPtr = (-cond & 6) + &D_80180ED4[0];
+        for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            tilePos += 0x10;
+        }
+
+        if (D_8003BDEC[131] != 0) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        i = D_8003BDEC[131] != 0; // TODO: !FAKE:
+        if (i) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+
+        tileLayoutPtr = &D_80180EE0;
+        for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            tilePos += 0x10;
+        }
+        DestroyEntity(self);
+    }
+}
 
 void func_801B2AD8(Entity* self) {
     s16 firstPolygonIndex;
@@ -606,14 +645,14 @@ void func_801B2AD8(Entity* self) {
         CreateEntityFromEntity(0x26, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Camera.posY.i.hi;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C)) = poly;
+        *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -1240,6 +1279,7 @@ void func_801B74CC(void) {
     D_801CB68E = D_801CB690 + 0x14;
 }
 
+// DECOMP_ME_WIP func_801B7520 https://decomp.me/scratch/6ZAIQ
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7520);
 
 void func_801B76E4(s16 arg0) {
@@ -1405,7 +1445,32 @@ void Update(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B9800);
+void func_801B9800(void) {
+    Entity* entity;
+    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+        if (!entity->pfnUpdate)
+            continue;
+
+        if (entity->step) {
+            if (!(entity->flags & FLAG_UNK_10000))
+                continue;
+            if (entity->flags & 0xF) {
+                entity->palette =
+                    D_80181574[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
+                    entity->palette = entity->unk6A;
+                    entity->unk6A = 0;
+                }
+            }
+        }
+
+        g_CurrentEntity = entity;
+        entity->pfnUpdate(entity);
+        entity->unk44 = 0;
+        entity->unk48 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", TestCollisions);
 
@@ -1517,9 +1582,57 @@ void func_801BB404(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB45C);
+void func_801BB45C(s16 arg0) {
+    s32 expected;
+    u8 flag;
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB558);
+    if (D_801CAA7C != 0) {
+        func_801BB3B8(arg0 - D_80097908);
+        D_801CAA7C = 0;
+    }
+
+    while (true) {
+        if ((D_801CAA74->posX == 0xFFFF) || (arg0 < D_801CAA74->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801CAA74->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801CAA74);
+        }
+        D_801CAA74++;
+    }
+}
+
+void func_801BB558(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_801CAA7C == 0) {
+        func_801BB404(arg0 - D_80097908);
+        D_801CAA7C = 1;
+    }
+
+    while (true) {
+        if ((D_801CAA74->posX == 0xFFFE) || (arg0 > D_801CAA74->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801CAA74->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801CAA74);
+        }
+        D_801CAA74--;
+    }
+}
 
 void func_801BB66C(s16 arg0) {
     while (true) {
@@ -1540,9 +1653,57 @@ void func_801BB6B8(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB710);
+void func_801BB710(s16 arg0) {
+    u8 flag;
+    s32 expected;
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB80C);
+    if (D_801CAA80 != 0) {
+        func_801BB66C(arg0 - D_8009790C);
+        D_801CAA80 = 0;
+    }
+
+    while (true) {
+        if ((D_801CAA78->posY == 0xFFFF) || (arg0 < D_801CAA78->posY)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801CAA78->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_801CAA78);
+        }
+        D_801CAA78++;
+    }
+}
+
+void func_801BB80C(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_801CAA80 == 0) {
+        func_801BB6B8(arg0 - D_8009790C);
+        D_801CAA80 = 1;
+    }
+
+    while (true) {
+        if ((D_801CAA78->posY == 0xFFFE) || (arg0 > D_801CAA78->posY)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801CAA78->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_801CAA78);
+        }
+        D_801CAA78--;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB920);
 

@@ -85,6 +85,7 @@ EntityMoveableBox = 0x801B20CC;
 EntityCannonLever = 0x801B23B4;
 EntityCannon = 0x801B25C4;
 EntityCannonShot = 0x801B2874;
+EntityCannonWall = 0x801B2978;
 EntityRedEyeBust = 0x801B11C0;
 EntityAxeKnight = 0x801C45BC;
 EntityAxeKnightThrowingAxe = 0x801C4D18;
