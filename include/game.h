@@ -380,6 +380,62 @@ typedef struct Entity {
     } unkB8;
 } Entity; // size = 0xBC
 
+typedef struct EntityBase {
+    /* 0x00 */ f32 posX;
+    /* 0x04 */ f32 posY;
+    /* 0x08 */ s32 accelerationX;
+    /* 0x0C */ s32 accelerationY;
+    /* 0x10 */ u16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ u16 facing;
+    /* 0x16 */ u16 palette;
+    /* 0x18 */ s8 blendMode;
+    /* 0x19 */ u8 unk19;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ s16 unk1C;
+    /* 0x1E */ s16 unk1E; // poly rotation angle
+    /* 0x20 */ s16 unk20; // poly / rotation origin x
+    /* 0x22 */ s16 unk22; // poly / rotation origin y
+    /* 0x24 */ u16 zPriority;
+    /* 0x26 */ u16 objectId;
+    /* 0x28 */ PfnEntityUpdate pfnUpdate;
+    /* 0x2C */ u16 step;
+    /* 0x2E */ u16 unk2E; // pl_step_s
+    /* 0x30 */ u16 subId;
+    /* 0x32 */ u16 objectRoomIndex;
+    /* 0x34 */ s32 flags;
+    /* 0x38 */ s16 unk38;
+    /* 0x3A */ s16 enemyId;
+    /* 0x3C */ u16 unk3C; // hitbox state
+    /* 0x3E */ s16 hitPoints;
+    /* 0x40 */ s16 attack;
+    /* 0x42 */ s16 attackElement;
+    /* 0x44 */ u16 unk44;
+    /* 0x46 */ u8 hitboxWidth;
+    /* 0x47 */ u8 hitboxHeight;
+    /* 0x48 */ u8 unk48; // 1 = took hit
+    /* 0x49 */ u8 unk49; // invincibility frames
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ AnimationFrame* unk4C;
+    /* 0x50 */ u16 animFrameIdx;
+    /* 0x52 */ s16 animFrameDuration;
+    /* 0x54 */ s16 animSet;
+    /* 0x56 */ s16 animCurFrame;
+    /* 0x58 */ s16 unk58;
+    /* 0x5A */ s16 unk5A;
+    /* 0x5C */ s32 unk5C;
+    /* 0x60 */ s32 unk60;
+    /* 0x64 */ s32 firstPolygonIndex;
+    /* 0x68 */ s16 unk68;
+    /* 0x6A */ u16 unk6A;
+    /* 0x6C */ u8 unk6C;
+    /* 0x6D */ s8 unk6D;
+    /* 0x6E */ s16 unk6E;
+    /* 0x70 */ s32 unk70;
+    /* 0x74 */ s32 unk74;
+    /* 0x78 */ s32 unk78;
+} EntityBase; // size = 0xBC
+
 typedef struct {
     /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;

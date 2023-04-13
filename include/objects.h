@@ -67,6 +67,24 @@ typedef enum {
     /* 0x15 */ ENTITY_15 = 0x15
 } SotnEntityIds;
 
+typedef struct {
+    EntityBase base;
+    u16 timer;
+    s16 unk7E;
+    u8 unk80;
+    s8 unk81;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+    s16 unk8C;
+    s16 unk8E;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+} ETEquipItemDrop;
+
 void EntityBreakable(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
@@ -76,7 +94,7 @@ void EntityIntenseExplosion(Entity*);
 void EntityAbsorbOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-void EntityEquipItemDrop(Entity*);
+void EntityEquipItemDrop(ETEquipItemDrop*);
 void EntityRelicOrb(Entity*);
 #ifndef MAD_H
 void EntityHeartDrop(Entity*);

@@ -285,8 +285,8 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
 
 extern u16 D_80194728[];
 
-void EntityEquipItemDrop(Entity* self) {
-    u16 itemId = self->subId & 0x7FFF;
+void EntityEquipItemDrop(ETEquipItemDrop* self) {
+    u16 itemId = self->base.subId & 0x7FFF;
     s32 firstPolygonIndex;
     Collider collider;
     POLY_GT4* poly;
@@ -302,26 +302,27 @@ void EntityEquipItemDrop(Entity* self) {
     s16 temp_a0;
     s32* unk;
 
-    if (((self->step - 2) < 3U) && (self->unk48 != 0)) {
-        self->step = 5;
+    if (((self->base.step - 2) < 3U) && (self->base.unk48 != 0)) {
+        self->base.step = 5;
     }
 
-    switch (self->step) {
+    switch (self->base.step) {
     case 0:
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-            self->pfnUpdate = EntityPrizeDrop;
-            self->subId = 0;
-            self->objectId = 3;
+            self->base.pfnUpdate = EntityPrizeDrop;
+            self->base.subId = 0;
+            self->base.objectId = 3;
             func_8018C240(0);
             EntityPrizeDrop(self);
             return;
         }
         InitializeEntity(D_8018044C);
-        self->unk7C.s = 0;
+        self->timer = 0;
         break;
 
     case 1:
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        g_api.CheckCollision(self->base.posX.i.hi, self->base.posY.i.hi,
+                             &collider, 0);
 
         if (!(collider.unk0 & 7)) {
             for (index = 0; index < 32; index++) {
@@ -335,8 +336,8 @@ void EntityEquipItemDrop(Entity* self) {
                 return;
             }
 
-            if (LOH(self->unk94) != 0) {
-                temp_a0 = LOH(self->unk94);
+            if (self->unk94 != 0) {
+                temp_a0 = self->unk94;
                 temp_a0--;
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
@@ -347,10 +348,10 @@ void EntityEquipItemDrop(Entity* self) {
                 return;
             }
 
-            self->flags |= FLAG_FREE_POLYGONS;
-            self->firstPolygonIndex = firstPolygonIndex;
+            self->base.flags |= FLAG_FREE_POLYGONS;
+            self->base.firstPolygonIndex = firstPolygonIndex;
             D_80194728[index] = 0x1E0;
-            self->unk8C.modeU16.unk0 = index;
+            self->unk8C = index;
 
             if (itemId < 169) {
                 g_api.func_800EB534(g_api.D_800A4B04[itemId].icon,
@@ -382,33 +383,33 @@ void EntityEquipItemDrop(Entity* self) {
             poly->pad2 = 0x80;
             poly->pad3 = 6;
 
-            self->unk7C.s = 128;
-            self->step++;
+            self->timer = 128;
+            self->base.step++;
             break;
         }
         DestroyEntity(self);
         break;
 
     case 2:
-        if (self->accelerationY < 0) {
-            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi - 7,
+        if (self->base.accelerationY < 0) {
+            g_api.CheckCollision(self->base.posX.i.hi, self->base.posY.i.hi - 7,
                                  &collider, 0);
             if (collider.unk0 & 5) {
-                self->accelerationY = 0;
+                self->base.accelerationY = 0;
             }
         }
 
         MoveEntity();
 
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
-                             0);
+        g_api.CheckCollision(self->base.posX.i.hi, self->base.posY.i.hi + 7,
+                             &collider, 0);
 
-        if ((collider.unk0 & 5) && (self->accelerationY > 0)) {
-            self->accelerationX = 0;
-            self->accelerationY = 0;
-            self->posY.i.hi += collider.unk18;
-            self->unk80.modeS8.unk0 = 240;
-            self->step++;
+        if ((collider.unk0 & 5) && (self->base.accelerationY > 0)) {
+            self->base.accelerationX = 0;
+            self->base.accelerationY = 0;
+            self->base.posY.i.hi += collider.unk18;
+            self->unk80 = 240;
+            self->base.step++;
         } else {
             FallEntity();
         }
@@ -418,21 +419,21 @@ void EntityEquipItemDrop(Entity* self) {
 
     case 3:
         func_8018CB34(1);
-        if (!(self->subId & 0x8000)) {
-            if (!(--self->unk80.modeS8.unk0 & 255)) {
-                self->unk80.modeS8.unk0 = 0x50;
-                self->step++;
+        if (!(self->base.subId & 0x8000)) {
+            if (!(--self->unk80 & 255)) {
+                self->unk80 = 0x50;
+                self->base.step++;
             }
         } else {
-            D_80194728[self->unk8C.modeS16.unk0] = 0x10;
+            D_80194728[self->unk8C] = 0x10;
         }
         break;
 
     case 4:
         func_8018CB34(1);
-        if (self->unk80.modeS8.unk0 += 255) {
-            poly = &g_PrimBuf[self->firstPolygonIndex];
-            if (self->unk80.modeS8.unk0 & 2) {
+        if (self->unk80 += 255) {
+            poly = &g_PrimBuf[self->base.firstPolygonIndex];
+            if (self->unk80 & 2) {
                 poly->pad3 = 8;
             } else {
                 poly->pad3 = 2;
@@ -465,11 +466,11 @@ void EntityEquipItemDrop(Entity* self) {
         break;
     }
 
-    if (self->step >= 2) {
-        if (self->unk7C.u != 0) {
-            self->unk7C.u--;
+    if (self->base.step >= 2) {
+        if (self->timer != 0) {
+            self->timer--;
         }
-        func_8018D990(self, self->unk7C.u);
+        func_8018D990(self, self->timer);
     }
 }
 
