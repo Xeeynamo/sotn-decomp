@@ -62,3 +62,4 @@ extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern u16 D_801A3F8C[];
+extern u16 g_Camera_posY_i_hi;
