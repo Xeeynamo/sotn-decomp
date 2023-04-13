@@ -1405,7 +1405,32 @@ void Update(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B9800);
+void func_801B9800(void) {
+    Entity* entity;
+    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+        if (!entity->pfnUpdate)
+            continue;
+
+        if (entity->step) {
+            if (!(entity->flags & FLAG_UNK_10000))
+                continue;
+            if (entity->flags & 0xF) {
+                entity->palette =
+                    D_80181574[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->flags--;
+                if ((entity->flags & 0xF) == 0) {
+                    entity->palette = entity->unk6A;
+                    entity->unk6A = 0;
+                }
+            }
+        }
+
+        g_CurrentEntity = entity;
+        entity->pfnUpdate(entity);
+        entity->unk44 = 0;
+        entity->unk48 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", TestCollisions);
 
