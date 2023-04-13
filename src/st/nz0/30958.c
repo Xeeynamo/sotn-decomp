@@ -1279,6 +1279,7 @@ void func_801B74CC(void) {
     D_801CB68E = D_801CB690 + 0x14;
 }
 
+// DECOMP_ME_WIP func_801B7520 https://decomp.me/scratch/6ZAIQ
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B7520);
 
 void func_801B76E4(s16 arg0) {
