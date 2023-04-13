@@ -103,7 +103,43 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityNumericDamage);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192A3C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192B00);
+void func_80192B00(LayoutObject* layoutObj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
+
+    posY = g_Camera_posY_i_hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
+    }
+
+    posY = layoutObj->posY;
+    if (posY < yClose) {
+        return;
+    }
+
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            func_80192A3C(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        func_80192A3C(entity, layoutObj);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192C18);
 
