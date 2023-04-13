@@ -141,7 +141,43 @@ void func_80192B00(LayoutObject* layoutObj) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192C18);
+void func_80192C18(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera_posX_i_hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            func_80192A3C(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        func_80192A3C(entity, layoutObj);
+        break;
+    }
+}
 
 void func_80192D30(s16 arg0) {
     while (1) {
