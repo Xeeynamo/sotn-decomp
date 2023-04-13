@@ -3,7 +3,7 @@
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
-s32 func_801BB45C(s16);
+//s32 func_801BB45C(s16);
 s32 func_801BB558(s16);
 s32 func_801BB710(s16);
 s32 func_801BB80C(s16);
@@ -79,6 +79,7 @@ extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
+extern u8 D_801CAA7C;
 extern s32 D_80182180[];
 extern s32 D_80182188[];
 extern s32 D_80182198[];

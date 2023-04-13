@@ -1517,7 +1517,29 @@ void func_801BB404(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB45C);
+void func_801BB45C(s16 arg0) {
+    s32 expected;
+    u8 flag;
+
+    if (D_801CAA7C != 0) {
+        func_801BB3B8(arg0 - D_80097908);
+        D_801CAA7C = 0;
+    }
+
+    while (true) {
+        if (D_801CAA74->posX == 0xFFFF || arg0 < D_801CAA74->posX) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801CAA74->objectRoomIndex >> 8) + 0xFF;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801CAA74);
+        }
+        D_801CAA74++;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BB558);
 
