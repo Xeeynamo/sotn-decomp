@@ -161,7 +161,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     }
 }
 
-void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
+void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
+                                 s32 tilePos) {
     Entity* newEntity;
     s32 flag;
     s32 i;
