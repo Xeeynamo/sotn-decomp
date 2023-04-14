@@ -94,7 +94,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->unk3C = 2;
 
         cond = D_8003BDEC[129] != 0;
-        tileLayoutPtr = (-cond & 0xC) + &D_80180E54;
+        tileLayoutPtr = &D_80180E54 + (-cond & 0xC);
+
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
@@ -117,7 +118,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     case LEFT_SECRET_ROOM_WALL_BREAK:
         self->unk84.unk++;
-        tileLayoutPtr = (self->unk84.unk * 0x4) + &D_80180E54;
+        tileLayoutPtr = &D_80180E54 + (self->unk84.unk * 0x4);
+
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
@@ -159,7 +161,74 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
+void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
+    Entity* newEntity;
+    s32 flag;
+    s32 i;
+
+    switch (self->step) {
+    case BOTTOM_SECRET_ROOM_FLOOR_INIT:
+        InitializeEntity(D_80180BF8);
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 16;
+        self->unk3C = 2;
+        flag = (D_8003BDEC[130] != 0);
+        tileLayoutPtr = &D_80180E94 + (-flag & 0x6);
+
+        tilePos = 0x2E7;
+        for (i = 0; i < 2; i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 1);
+            tileLayoutPtr += 2;
+            tilePos += 0x10;
+        }
+
+        if (D_8003BDEC[130] != 0) {
+            DestroyEntity(self);
+            break;
+        }
+
+    case BOTTOM_SECRET_ROOM_FLOOR_IDLE:
+        if (self->unk48 != 0) {
+            func_801C29B0(NA_SE_EN_ROCK_BREAK);
+            self->step++;
+        }
+        return;
+
+    case BOTTOM_SECRET_ROOM_FLOOR_BREAK:
+        self->unk84.unk++;
+        tileLayoutPtr = &D_80180E94 + (self->unk84.unk * 2);
+
+        tilePos = 0x2E7;
+        for (i = 0; i < 2; i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 1);
+            tileLayoutPtr += 2;
+            tilePos += 0x10;
+        }
+
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, self, newEntity);
+            newEntity->subId = 0x11;
+        }
+        self->unk80.modeS32 = 32;
+        self->step++;
+
+        if (self->unk84.unk == 3) {
+            D_8003BDEC[130] = 1;
+            g_api.func_800F1FC4(0x82);
+            DestroyEntity(self);
+        }
+        break;
+
+    case BOTTOM_SECRET_ROOM_FLOOR_CHECK:
+        if (--self->unk80.modeS32 == 0) {
+            self->step = BOTTOM_SECRET_ROOM_FLOOR_IDLE;
+        }
+        break;
+    }
+}
 
 void func_801B19A0(Entity* self) {
     Collider collider;

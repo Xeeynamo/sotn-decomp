@@ -34,6 +34,7 @@ extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];
 extern u16* D_80180E54;
+extern u16* D_80180E94;
 extern s32 D_80180EB4;
 extern u16 D_80180ED4[];
 extern u16 D_80180EE0[];
@@ -154,6 +155,17 @@ typedef enum {
 } LEFT_SECRET_ROOM_WALL_STEPS;
 
 // *** EntityLeftSecretRoomWall properties END ***
+
+// *** EntityBottomSecretRoomFloor properties START ***
+
+typedef enum {
+    BOTTOM_SECRET_ROOM_FLOOR_INIT,
+    BOTTOM_SECRET_ROOM_FLOOR_IDLE,
+    BOTTOM_SECRET_ROOM_FLOOR_BREAK,
+    BOTTOM_SECRET_ROOM_FLOOR_CHECK
+} BOTTOM_SECRET_ROOM_FLOOR_STEPS;
+
+// *** EntityBottomSecretRoomFloor properties END ***
 
 extern s32 D_801825CC[]; // SubWeapons subId table
 extern u8 D_801825F0;

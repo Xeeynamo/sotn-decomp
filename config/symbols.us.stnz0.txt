@@ -88,6 +88,7 @@ EntityCannonShot = 0x801B2874;
 EntityCannonWall = 0x801B2978;
 EntityRedEyeBust = 0x801B11C0;
 EntityLeftSecretRoomWall = 0x801B14C4;
+EntityBottomSecretRoomFloor = 0x801B1770;
 EntityAxeKnight = 0x801C45BC;
 EntityAxeKnightThrowingAxe = 0x801C4D18;
 EntityBloodDrips = 0x801C5568;
