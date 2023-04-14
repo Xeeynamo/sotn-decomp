@@ -85,4 +85,5 @@ extern s32 D_801826A4;
 extern PfnEntityUpdate PfnEntityUpdates[];
 LayoutObject* D_801D276C;
 extern u16 D_801D33F4[];
+extern u16 g_Camera_posX_i_hi;
 extern u16 g_Camera_posY_i_hi;
