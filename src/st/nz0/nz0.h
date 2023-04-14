@@ -33,10 +33,14 @@ extern u16 D_80180D30[];
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];
+extern u16* D_80180E54;
+extern u16* D_80180E94;
 extern s32 D_80180EB4;
 extern u16 D_80180ED4[];
 extern u16 D_80180EE0[];
 extern s32 D_80180EEC;
+extern const u8 D_80180EF0[];
+extern const u8 D_80180EF8[];
 extern u16 D_80180F10[];
 extern const u8 D_80180F1C[];
 extern u8 D_80180F30;
@@ -48,8 +52,6 @@ extern u16 D_80180F9C[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
-extern const u8 D_80180EF0[];
-extern const u8 D_80180EF8[];
 extern s32 D_80181010;
 extern const u8 D_80181160[];
 extern const u8 D_80181170[];
@@ -142,6 +144,28 @@ typedef struct SubWpnContDebris {
 extern SubWpnContDebris D_80182584[ENTITY_SUBWPNCONT_DEBRIS_COUNT];
 
 // *** EntitySubWeaponContainer properties END ***
+
+// *** EntityLeftSecretRoomWall properties START ***
+
+typedef enum {
+    LEFT_SECRET_ROOM_WALL_INIT,
+    LEFT_SECRET_ROOM_WALL_IDLE,
+    LEFT_SECRET_ROOM_WALL_BREAK,
+    LEFT_SECRET_ROOM_WALL_CHECK
+} LEFT_SECRET_ROOM_WALL_STEPS;
+
+// *** EntityLeftSecretRoomWall properties END ***
+
+// *** EntityBottomSecretRoomFloor properties START ***
+
+typedef enum {
+    BOTTOM_SECRET_ROOM_FLOOR_INIT,
+    BOTTOM_SECRET_ROOM_FLOOR_IDLE,
+    BOTTOM_SECRET_ROOM_FLOOR_BREAK,
+    BOTTOM_SECRET_ROOM_FLOOR_CHECK
+} BOTTOM_SECRET_ROOM_FLOOR_STEPS;
+
+// *** EntityBottomSecretRoomFloor properties END ***
 
 extern s32 D_801825CC[]; // SubWeapons subId table
 extern u8 D_801825F0;
