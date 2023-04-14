@@ -1388,7 +1388,7 @@ void func_801B6DE4(Entity* self) {
                 self->posY.i.hi =
                     (u16)(self->unk80.modeS16.unk0 - (g_Camera.posY.i.hi - 4));
                 self->step++;
-                func_801C29B0(0x676);
+                func_801C29B0(NA_SE_EV_SWITCH_CLICK);
                 D_801813A4 = self->subId;
             }
         }
