@@ -447,7 +447,43 @@ void func_801C3500(LayoutObject* layoutObj) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C3618);
+void func_801C3618(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera_posX_i_hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
 
 void func_801C3730(s16 arg0) {
     while (true) {
