@@ -25,6 +25,4 @@ extern s16 D_8019D38A;
 extern s8 D_8019D38E;
 extern s8 D_8019D38F;
 void func_80192A3C(Entity*, LayoutObject*);
-extern u16 g_Camera_posX_i_hi;
-extern u16 g_Camera_posY_i_hi;
 #endif
