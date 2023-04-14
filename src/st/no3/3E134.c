@@ -415,7 +415,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 posY;
     Entity* entity;
 
-    posY = g_Camera_posY_i_hi;
+    posY = g_Camera.posY.i.hi;
     yClose = posY - 0x40;
     yFar = posY + 0x120;
     if (yClose < 0) {
@@ -453,7 +453,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     s16 posX;
     Entity* entity;
 
-    posX = g_Camera_posX_i_hi;
+    posX = g_Camera.posX.i.hi;
     xClose = posX - 0x40;
     xFar = posX + 0x140;
     if (xClose < 0) {
