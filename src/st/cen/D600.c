@@ -103,7 +103,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityNumericDamage);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192A3C);
 
-void func_80192B00(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -141,7 +141,7 @@ void func_80192B00(LayoutObject* layoutObj) {
     }
 }
 
-void func_80192C18(LayoutObject* layoutObj) {
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
