@@ -78,9 +78,86 @@ void EntityRedEyeBust(Entity* self) {
     }
 }
 
+// DECOMPME_WIP func_801B12E8 https://decomp.me/scratch/3Sf68
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B12E8);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B14C4);
+void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
+    Entity* newEntity;
+    s32 cond;
+    s32 i;
+
+    switch (self->step) {
+    case LEFT_SECRET_ROOM_WALL_INIT:
+        InitializeEntity(D_80180BF8);
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 32;
+        self->unk3C = 2;
+
+        cond = D_8003BDEC[129] != 0;
+        tileLayoutPtr = (-cond & 0xC) + &D_80180E54;
+        tilePos = 0x260;
+        for (i = 0; i < 4; i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 1);
+            tilePos += 0x10;
+            tileLayoutPtr += 2;
+        }
+
+        if (D_8003BDEC[129] != 0) {
+            DestroyEntity(self);
+            break;
+        }
+
+    case LEFT_SECRET_ROOM_WALL_IDLE:
+        if (self->unk48 != 0) {
+            func_801C29B0(NA_SE_EN_ROCK_BREAK);
+            self->step++;
+        }
+        break;
+
+    case LEFT_SECRET_ROOM_WALL_BREAK:
+        self->unk84.unk++;
+        tileLayoutPtr = (self->unk84.unk * 0x4) + &D_80180E54;
+        tilePos = 0x260;
+        for (i = 0; i < 4; i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 1);
+            tileLayoutPtr += 2;
+            tilePos += 0x10;
+        }
+
+        newEntity = AllocEntity(&g_EntityArray[224], &g_EntityArray[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, self, newEntity);
+            newEntity->subId = 0x13;
+        }
+        self->unk80.modeS32 = 32;
+        self->step++;
+
+        if (self->unk84.unk == 3) {
+            D_8003BDEC[129] = 1;
+            g_api.func_800F1FC4(0x81);
+
+            for (i = 0; i < 8; i++) {
+                newEntity =
+                    AllocEntity(&g_EntityArray[224], &g_EntityArray[256]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x22, self, newEntity);
+                    newEntity->posX.i.hi += (Random() & 0xF);
+                    newEntity->posY.i.hi -= 0x20 - (Random() & 0x3F);
+                }
+            }
+            DestroyEntity(self);
+        }
+        break;
+
+    case LEFT_SECRET_ROOM_WALL_CHECK:
+        if (--self->unk80.modeS32 == 0) {
+            self->step = LEFT_SECRET_ROOM_WALL_IDLE;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B1770);
 
