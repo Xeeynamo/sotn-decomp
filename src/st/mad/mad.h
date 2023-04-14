@@ -67,7 +67,5 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
-extern u16 g_Camera_posX_i_hi;
-extern u16 g_Camera_posY_i_hi;
 
 #endif
