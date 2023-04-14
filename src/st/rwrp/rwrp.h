@@ -10,4 +10,6 @@ extern s16 D_80180A94[];
 extern ObjInit2 D_80181134[];
 extern LayoutObject* D_80195A30;
 extern LayoutObject* D_80195A34;
+void func_8018BD58(Entity*, LayoutObject*);
+extern u16 g_Camera_posY_i_hi;
 #endif
