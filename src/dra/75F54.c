@@ -330,6 +330,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
 
 void func_8011A4C8(Entity* entity) {}
 
+// https://decomp.me/scratch/0aMFT 94.19%
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A4D0);
 
 void func_8011A870(void) {
