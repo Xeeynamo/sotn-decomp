@@ -98,3 +98,4 @@ extern s32 D_801D7D64;
 extern u16 D_801D7DD8[];
 extern LayoutObject* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
+extern u16 g_Camera_posY_i_hi;
