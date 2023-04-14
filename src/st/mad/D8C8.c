@@ -256,7 +256,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 
-void func_80190608(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -294,8 +294,7 @@ void func_80190608(LayoutObject* layoutObj) {
     }
 }
 
-extern u16 g_Camera_posX_i_hi;
-void func_80190720(LayoutObject* layoutObj) {
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
