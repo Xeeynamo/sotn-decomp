@@ -66,7 +66,43 @@ void func_8018BE1C(LayoutObject* layoutObj) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BF34);
+void func_8018BF34(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera_posX_i_hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            func_8018BD58(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        func_8018BD58(entity, layoutObj);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C04C);
 
