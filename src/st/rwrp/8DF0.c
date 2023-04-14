@@ -28,7 +28,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018B6B4);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BD58);
 
-void func_8018BE1C(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -66,7 +66,7 @@ void func_8018BE1C(LayoutObject* layoutObj) {
     }
 }
 
-void func_8018BF34(LayoutObject* layoutObj) {
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
