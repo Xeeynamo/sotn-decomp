@@ -137,7 +137,7 @@ void EntityAxeKnight(Entity* self) {
                 self->unk7C.S8.unk0 = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
-            func_801C29B0(0x766);
+            func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x2A, newEntity);
@@ -156,7 +156,7 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(D_80182220, self);
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
-                func_801C29B0(0x766);
+                func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(0x2A, newEntity);
