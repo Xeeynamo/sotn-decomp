@@ -256,45 +256,81 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
 
-/**
- * Note: This function got too old to even compile
- * rework is needed to get it in compiling state
- */
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80190608);
-#else
-void func_80190608(LayoutObject* initDesc) {
-    s16 temp_a2;
-    s16 temp_v1_2;
-    s16 phi_a0;
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
     Entity* entity;
 
-    temp_a2 = g_Camera.posY.i.hi + 0x120;
-    phi_a0 = g_Camera.posY.i.hi - 0x40;
-    if (phi_a0 < 0) {
-        phi_a0 = 0;
+    posY = g_Camera.posY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
     }
 
-    temp_v1_2 = initDesc->posY;
-    if (temp_v1_2 >= phi_a0 && temp_a2 >= temp_v1_2 &&
-        (initDesc->objectId & 0xE000) != 0x8000) {
-        switch (initDesc->objectId & 0xE000) {
-        case 0x0:
-            entity = &D_800762D8[*(u8*)&->objectRoomIndex];
-            if (entity->objectId != 0) {
-                break;
-            }
-            CreateEntityFromLayout(entity, initDesc);
-            break;
-        case 0xA000:
-            CreateEntityFromLayout(&D_800762D8[->objectRoomIndex], initDesc);
-            break;
+    posY = layoutObj->posY;
+    if (posY < yClose) {
+        return;
+    }
+
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
         }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
     }
 }
-#endif
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80190720);
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera.posX.i.hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
 
 void func_80190838(s32 arg0) {
     s32 a1 = 0xFFFE;
