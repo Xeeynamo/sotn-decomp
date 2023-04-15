@@ -1019,26 +1019,26 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C6114);
-#else
-// matches with gcc 2.6.0 + aspsx 2.34
 void func_801C6114(void) {
     s32 temp_v1;
+    Entity* entity;
 
-    if (g_CurrentEntity->accelerationY >= 0) {
-        temp_v1 = g_CurrentEntity->unk88.S16.unk0 + g_CurrentEntity->unk84.unk;
-        g_CurrentEntity->unk84.unk = temp_v1;
-        g_CurrentEntity->accelerationX = temp_v1;
-        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
-            g_CurrentEntity->unk88.S16.unk0 = -g_CurrentEntity->unk88.S16.unk0;
+    entity = g_CurrentEntity;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
         }
+        entity = g_CurrentEntity;
     }
-    if (g_CurrentEntity->accelerationY < 0x4000) {
-        g_CurrentEntity->accelerationY += 0x2000;
+    NOP;
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
     }
 }
-#endif
 
 void func_801C6198(u16 arg0) {
     Collider res;
