@@ -24,4 +24,5 @@ extern s16 D_8019D386;
 extern s16 D_8019D38A;
 extern s8 D_8019D38E;
 extern s8 D_8019D38F;
+void func_80192A3C(Entity*, LayoutObject*);
 #endif
