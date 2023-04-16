@@ -1229,9 +1229,81 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BAD70);
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BAE88);
+    posY = g_Camera.posY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
+    }
+
+    posY = layoutObj->posY;
+    if (posY < yClose) {
+        return;
+    }
+
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
+
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera.posX.i.hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            CreateEntityFromLayout(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        CreateEntityFromLayout(entity, layoutObj);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BAFA0);
 
