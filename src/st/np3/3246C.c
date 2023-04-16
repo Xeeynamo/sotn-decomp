@@ -1683,7 +1683,26 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BD984);
+void func_801BD984(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+    NOP;
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDA08);
 

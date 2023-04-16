@@ -892,30 +892,26 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-// This function matches with PSYQ4.0 GCC 2.7.2 with -02 Optimization flag
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8019344C);
-#else
 void func_8019344C(void) {
     s32 temp_v1;
-    Entity* entity = g_CurrentEntity;
+    Entity* entity;
 
+    entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88 + entity->unk84.value;
-        entity->unk84.value = temp_v1;
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
-
-        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
-            entity->unk88 = -entity->unk88;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
+    NOP;
 
     if (entity->accelerationY < 0x00004000) {
         entity->accelerationY += 0x2000;
     }
 }
-#endif
 
 void func_801934D0(u16 arg0) {
     Collider res;

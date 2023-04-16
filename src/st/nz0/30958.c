@@ -2290,26 +2290,26 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-// aspatch skips a nop, ASPSX
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BDD9C);
-#else
 void func_801BDD9C(void) {
-    if (g_CurrentEntity->accelerationY >= 0) {
-        g_CurrentEntity->unk84.unk += g_CurrentEntity->unk88.S16.unk0;
-        g_CurrentEntity->accelerationX = g_CurrentEntity->unk84.unk;
+    s32 temp_v1;
+    Entity* entity;
 
-        if ((g_CurrentEntity->accelerationX == 0x10000) ||
-            (g_CurrentEntity->accelerationX == -0x10000)) {
-            g_CurrentEntity->unk88.U16.unk0 = -g_CurrentEntity->unk88.U16.unk0;
+    entity = g_CurrentEntity;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
         }
+        entity = g_CurrentEntity;
     }
+    NOP;
 
-    if (g_CurrentEntity->accelerationY < 0x4000) {
-        g_CurrentEntity->accelerationY += 0x2000;
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
     }
 }
-#endif
 
 void func_801BDE20(u16 arg0) {
     Collider res;

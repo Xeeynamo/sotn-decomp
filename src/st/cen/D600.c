@@ -541,7 +541,26 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195318);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019565C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195714);
+void func_80195714(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+    NOP;
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195798);
 
