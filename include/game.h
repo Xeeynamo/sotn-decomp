@@ -99,6 +99,8 @@ typedef struct Primitive {
 #define MaxEntityCount 32
 #define EQUIP_TYPE_COUNT 11
 
+#define CASTLE_MAP_PTR 0x801E0000
+
 #define STAGE_NO0 0x00
 #define STAGE_NO1 0x01
 #define STAGE_LIB 0x02
