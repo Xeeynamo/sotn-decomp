@@ -199,7 +199,29 @@ void func_80192D7C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192DD4);
+void func_80192DD4(s16 arg0) {
+    s32 expected;
+    u8 flag;
+
+    if (D_8019C76C != 0) {
+        func_80192D30(arg0 - D_80097908);
+        D_8019C76C = 0;
+    }
+
+    while (true) {
+        if ((D_8019C764->posX == 0xFFFF) || (arg0 < D_8019C764->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_8019C764->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_8019C764);
+        }
+        D_8019C764++;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192ED0);
 
@@ -223,7 +245,29 @@ void func_80193030(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193088);
+void func_80193088(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (D_8019C770 != 0) {
+        func_80192FE4(arg0 - D_8009790C);
+        D_8019C770 = 0;
+    }
+
+    while (true) {
+        if ((D_8019C768->posY == 0xFFFF) || (arg0 < D_8019C768->posY)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_8019C768->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_8019C768);
+        }
+        D_8019C768++;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193184);
 
