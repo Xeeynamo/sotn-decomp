@@ -78,8 +78,84 @@ void EntityRedEyeBust(Entity* self) {
     }
 }
 
+// DECOMPME_WIP func_801B12E8 https://decomp.me/scratch/K4Esm
 // DECOMPME_WIP func_801B12E8 https://decomp.me/scratch/3Sf68
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B12E8);
+#else
+void func_801B12E8(Entity* self) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+    f32 posX;
+    f32 posY;
+    s16 tempPosX;
+    s16 tempPosY;
+    s32 x, y;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(&D_80180BF8);
+        self->posX.i.hi = 0;
+        self->posY.i.hi = 0;
+        self->unk68 = 0x80;
+        firstPrimIndex = g_api.AllocPrimitives(4, 0xF);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[firstPrimIndex];
+        self->firstPolygonIndex = (s32) firstPrimIndex;
+        *(s32*)&self->unk7C = prim;
+        self->flags |= 0x800000;
+        if (prim != NULL) {
+            do {
+                prim->tpage = 0xF;
+                prim->clut = 4;
+                prim->u2 = 0x80;
+                prim->u0 = 0x80;
+                prim->u3 = 0xFF;
+                prim->u1 = 0xFF;
+                prim->v1 = 0x80;
+                prim->v0 = 0x80;
+                prim->v3 = 0xBF;
+                prim->v2 = 0xBF;
+                prim->priority = 0x20;
+                prim->blendMode = 2;
+                prim = prim->next;
+            } while (prim != NULL);
+        }
+    case 1:
+        prim = *(s32*)&self->unk7C;
+        posX = self->posX;
+        posY = self->posY;
+        for (y = 0; y < 5; y++) {
+            tempPosX = (posX.i.hi & 0x7F) - 0x80;
+            tempPosY = (posY.i.hi & 0x3F) - 0x40;
+           do {
+               for (x = 0; x < 3; x++) {
+                   tempPosX += 0x80;
+                   prim->x3 = tempPosX;
+                   prim->x1 = tempPosX;
+                   prim->x2 = tempPosX + 0x80;
+                   prim->x0 = tempPosX + 0x80;
+                   prim->y1 = tempPosY;
+                   prim->y0 = tempPosY;
+                   prim->y3 = tempPosY + 0x40;
+                   prim->y2 = prim->y3;
+                   prim->blendMode = 0;
+                   prim = prim->next;
+               }
+               tempPosY += 0x40;
+           } while (0);
+        }
+        
+        while (prim != NULL) {
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+    }
+}
+#endif
 
 void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     Entity* newEntity;
