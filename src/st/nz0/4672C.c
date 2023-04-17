@@ -432,14 +432,14 @@ void EntityBloodSkeleton(Entity* self) {
                 self->posX.i.hi -= D_80182624[self->animFrameIdx];
             }
         }
-        
+
         if ((AnimateEntity(&D_80182610, self) == 0) &&
-            (func_801BCC28() < 0x30) && (Random() % 4 ) == 0) {
+            (func_801BCC28() < 0x30) && (Random() % 4) == 0) {
             self->facing = func_801BCC5C() % 2 == 0;
         }
         /*
          * The need for the cast may indicate func_801C070C is in the same file.
-        */
+         */
         if ((u8)func_801C070C(&D_801826AC, self->facing) != 2) {
             self->facing ^= 1;
         }
