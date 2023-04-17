@@ -1,6 +1,6 @@
 /**
  * Custom Entity Subtypes
-*/
+ */
 
 #include "common.h"
 
@@ -22,8 +22,8 @@ typedef struct ET_LeftSecretRoomWall {
 } ET_EquipItemDrop;
 
 typedef union {
-        /* 0x7C */ ET_EquipItemDrop equipItemDrop;
-        /* 0x7C */ // ET_whatever2 whatever2; ...
-        /* 0x7C */ // ET_whatever3 whatever3; ...
-        /* 0x7C */ char stub[0x40];
+    /* 0x7C */ ET_EquipItemDrop equipItemDrop;
+    /* 0x7C */ // ET_whatever2 whatever2; ...
+    /* 0x7C */ // ET_whatever3 whatever3; ...
+    /* 0x7C */ char stub[0x40];
 } Ext;
