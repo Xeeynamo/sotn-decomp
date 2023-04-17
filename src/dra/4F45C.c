@@ -723,7 +723,22 @@ u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800F180C);
+void func_800F180C(s32 x, s32 y, u8* dst) {
+    s32 i, j;
+    u8 *start, *curSrc, *src;
+
+    start = CASTLE_MAP_PTR;
+    start += x * 2;
+    start += y * 4 * 128;
+    for (i = 0; i < 5; i++, start += 0x80) {
+        for (j = 0, src = start; j < 4; j++) {
+            do {
+                curSrc = src;
+            } while (0);
+            dst[4 * i + j] = curSrc[j];
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800F1868);
 

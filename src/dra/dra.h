@@ -454,7 +454,6 @@ void func_800F0334(s32);
 void func_800F0578(s32 arg0);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
-void func_800F180C(s32, s32, void*);
 void func_800F1868(s32, s32, void*);
 void func_800F18C4(s32, s32);
 void func_800F1954(s32, s32, s32);
