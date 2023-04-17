@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-typedef struct ET_LeftSecretRoomWall {
+typedef struct ET_EquipItemDrop {
     /* 0x00 */ u16 timer;
     /* 0x02 */ s16 unk7E;
     /* 0x04 */ u8 unk80;
