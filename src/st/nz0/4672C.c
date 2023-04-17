@@ -384,7 +384,7 @@ void func_801C7884(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/O9yG0
+// DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/rZ64F
 // instruction reorder, functionally equivalent, tested in-game
 #ifdef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntityBloodSkeleton);
