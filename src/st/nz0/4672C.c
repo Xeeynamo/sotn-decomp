@@ -384,8 +384,126 @@ void func_801C7884(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/O9yG0
+// DECOMP_ME_WIP EntityBloodSkeleton https://decomp.me/scratch/rZ64F
+// instruction reorder, functionally equivalent, tested in-game.
+// switch case rodata needs a file split.
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntityBloodSkeleton);
+#else
+extern u16 D_80180C40[];
+extern u8 D_80182610;
+extern s16 D_80182624[];
+extern u8 D_80182638;
+extern u8 D_80182654;
+extern u8 D_80182670;
+extern s32 D_80182694;
+extern s32 D_801826AC;
+extern s32* D_8003C808;
+
+void EntityBloodSkeleton(Entity* self) {
+    const char* animation;
+
+    if ((self->flags & 0x100) && (self->step < 3)) {
+        func_801C29B0(0x6CB);
+        self->unk3C = 0;
+        func_801BD52C(3);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180C40);
+        self->facing = (u32)Random() % 2;
+        self->animCurFrame = 1;
+        self->flags &= 0x1FFFFFFF;
+        self->palette += self->subId;
+        break;
+
+    case 1:
+        if (func_801BCCFC(&D_80182694) % 2) {
+            self->unk2E = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->animFrameDuration == 0) {
+            if (self->facing != 0) {
+                self->posX.i.hi += D_80182624[self->animFrameIdx];
+            } else {
+                self->posX.i.hi -= D_80182624[self->animFrameIdx];
+            }
+        }
+
+        if ((AnimateEntity(&D_80182610, self) == 0) &&
+            (func_801BCC28() < 0x30) && (Random() % 4) == 0) {
+            self->facing = func_801BCC5C() % 2 == 0;
+        }
+        /*
+         * The need for the cast may indicate func_801C070C is in the same file.
+         */
+        if ((u8)func_801C070C(&D_801826AC, self->facing) != 2) {
+            self->facing ^= 1;
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(&D_80182638, self) == 0) {
+            self->unk80.modeS16.unk0 = 0xF0;
+            self->flags &= ~0x100;
+            if (self->subId != 0) {
+                self->unk80.modeS16.unk0 = 4;
+            }
+            func_801BD52C(4);
+        }
+        break;
+
+    case 4:
+        switch (self->unk2E) {
+        case 0:
+            if (--self->unk80.modeS16.unk0 == 0) {
+                self->unk1E = 0;
+                self->unk19 |= 4;
+                func_801C29B0(0x6CC);
+                self->unk2E++;
+                return;
+            }
+            break;
+
+        case 1:
+            if ((g_blinkTimer % 3) == 0) {
+                self->unk80.modeS16.unk0++;
+                if (self->unk80.modeS16.unk0 % 2 != 0) {
+                    self->unk1E = 0x10;
+                } else {
+                    self->unk1E = -0x10;
+                }
+            }
+
+            if (self->unk80.modeS16.unk0 >= 9) {
+                self->unk19 = 0;
+                self->unk1E = 0;
+                self->unk2E++;
+            }
+            break;
+
+        case 2:
+            if (self->subId == 0) {
+                animation = &D_80182654;
+            } else {
+                animation = &D_80182670;
+            }
+
+            if (AnimateEntity(animation, self) == 0) {
+                self->hitPoints = 0;
+                self->unk3C = 3;
+                self->flags = D_8003C808[0x2c5] & 0x1FFFFFFF;
+                func_801BD52C(2);
+            }
+        }
+        break;
+    }
+}
+#endif
 
 s32 func_801C7CF0(Entity* e) {
     s16 diff;
