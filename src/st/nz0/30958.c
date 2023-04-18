@@ -88,12 +88,12 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180BF8);
+        InitializeEntity(D_80180BF8);
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
         // Composed of 15 primitives
-        firstPrimIndex = g_api.AllocPrimitives(4, 15);
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 15);
         if (firstPrimIndex == -1) {
             DestroyEntity(self);
             return;
@@ -102,18 +102,17 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         self->firstPolygonIndex = (s32)firstPrimIndex;
         *(s32*)&self->unk7C = prim;
         self->flags |= 0x800000;
-while (prim != NULL) {
-    prim->tpage = 0xF;
-    prim->clut = 4;
-    prim->u0 = prim->u2 = 0x80;
-    prim->u1 = prim->u3 = 0xFF;
-    prim->v0 = prim->v1 = 0x80;
-    prim->v2 = prim->v3 = 0xBF;
-    prim->priority = 0x20;
-    prim->blendMode = 2;
-    prim = prim->next;
-}
-            
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = 4;
+            prim->u0 = prim->u2 = 0x80;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xBF;
+            prim->priority = 0x20;
+            prim->blendMode = 2;
+            prim = prim->next;
+        }
 
     case 1:
         // Add a scrolling effect
