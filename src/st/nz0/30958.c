@@ -850,9 +850,9 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
 // Aspatch skips a nop. TODO: Fix compiler
 // Matching in decompme: https://decomp.me/scratch/Swhgi
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3294);
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityFloorSpikes);
 #else
-void func_801B3294(Entity* self) {
+void EntityFloorSpikes(Entity* self) {
     Primitive* prim;
     s16 firstPrimIndex;
     s32 var_v1;

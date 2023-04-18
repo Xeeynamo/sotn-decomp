@@ -97,6 +97,7 @@ EntitySkeleton = 0x801C5FC4;
 EntitySpittleBone = 0x801C672C;
 EntitySpittleBoneSpit = 0x801C6C6C;
 EntityTableWithGlobe = 0x801B3534;
+EntityFloorSpikes = 0x801B3294;
 EntitySubWeaponContainer = 0x801C7048;
 EntityCloseBossRoom = 0x801B3FCC;
 EntityBossRoomBlock = 0x801B4518;
