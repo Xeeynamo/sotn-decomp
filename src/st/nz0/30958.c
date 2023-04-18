@@ -875,7 +875,7 @@ void func_801B3294(Entity* self) {
         new_var = self->posY.i.hi - 4;
         new_var += g_Camera.posY.i.hi;
         tilePos = ((self->posX.i.hi - temp + g_Camera.posX.i.hi) >> 4) +
-              (((new_var >> 4) * g_CurrentRoom.hSize) * 16);
+                  (((new_var >> 4) * g_CurrentRoom.hSize) * 16);
 
         g_CurrentRoomTileLayout.fg[tilePos] = 0x102;
         g_CurrentRoomTileLayout.fg[tilePos + 1] = 0x103;
