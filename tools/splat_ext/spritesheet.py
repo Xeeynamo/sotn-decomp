@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+from math import ceil
 from typing import Optional
 from pathlib import Path
 import n64img.image
@@ -26,7 +27,7 @@ class PSXSegSpritesheet(N64Segment):
 
     def src_path(self) -> Optional[Path]:
         return options.opts.asset_path / self.dir / f"{self.name}.spritesheet.json"
-
+    
     def split(self, rom_bytes):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -36,29 +37,42 @@ class PSXSegSpritesheet(N64Segment):
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
-    def extract_sprite(self, output_file_name, data, w, h):
-        def generate_grey_palette():
-            def generate_grey_color(intensity: int):
-                return intensity, intensity, intensity, 255
+    def read_palette(self):
+        def read_color(f):
+            s = int.from_bytes(f.read(2), byteorder='little')
+
+            r = s & 0x1F
+            g = (s >> 5) & 0x1F
+            b = (s >> 10) & 0x1F
+            a = (s >> 15) * 0xFF
+            
+            r = ceil(0xFF * (r / 31))
+            g = ceil(0xFF * (g / 31))
+            b = ceil(0xFF * (b / 31))
+
+            return r, g, b, a
+        
+        src = self.args[0]
+        off = self.args[1]
+        with open(src, "rb") as f:
+            f.seek(off, 0)
             return [
-                generate_grey_color(0x00), generate_grey_color(0x11),
-                generate_grey_color(0x22), generate_grey_color(0x33),
-                generate_grey_color(0x44), generate_grey_color(0x55),
-                generate_grey_color(0x66), generate_grey_color(0x77),
-                generate_grey_color(0x88), generate_grey_color(0x99),
-                generate_grey_color(0xAA), generate_grey_color(0xBB),
-                generate_grey_color(0xCC), generate_grey_color(0xDD),
-                generate_grey_color(0xEE), generate_grey_color(0xFF),
+                read_color(f), read_color(f), read_color(f), read_color(f),
+                read_color(f), read_color(f), read_color(f), read_color(f),
+                read_color(f), read_color(f), read_color(f), read_color(f),
+                read_color(f), read_color(f), read_color(f), read_color(f),
             ]
 
+    def extract_sprite(self, output_file_name, data, w, h, pal):
         img: n64img.image.Image = n64img.image.CI4(data, w, h)
         img.little_endian = True
-        img.palette = generate_grey_palette()
+        img.palette = pal
         img.write(output_file_name)
 
     def parse_spritesheet(self, data: bytearray, rom: bytearray) -> list:
         i = 0
         items = []
+        pal = self.read_palette()
         while True:
             raw_off = utils.to_u32(data[i * 4:])
             if raw_off < self.vram_start:
@@ -73,7 +87,7 @@ class PSXSegSpritesheet(N64Segment):
             })
             i += 1
 
-            self.extract_sprite(name, sprite_data[4:], sprite_data[0], sprite_data[1])
+            self.extract_sprite(name, sprite_data[4:], sprite_data[0], sprite_data[1], pal)
         return items
 
 
