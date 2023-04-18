@@ -122,9 +122,9 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
     case 1:
         // Add a scrolling effect
         tempPosX = self->posX.i.hi;
-        tempPosY = self->posY.i.hi;
-        tempPosX = (tempPosX & 0x7F);
+        tempPosX = tempPosX & 0x7F;
         tempPosX = tempPosX - 0x80;
+        tempPosY = self->posY.i.hi;
         tempPosY = (tempPosY & 0x3F) - 0x40;
         prim = *((s32*)(&self->unk7C));
         // Primitives are laid out in a 5-tall by 3-wide grid
