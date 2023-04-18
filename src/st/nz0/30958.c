@@ -102,23 +102,19 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         self->firstPolygonIndex = (s32)firstPrimIndex;
         *(s32*)&self->unk7C = prim;
         self->flags |= 0x800000;
-        if (prim != NULL) {
-            do {
-                prim->tpage = 0xF;
-                prim->clut = 4;
-                prim->u2 = 0x80;
-                prim->u0 = 0x80;
-                prim->u3 = 0xFF;
-                prim->u1 = 0xFF;
-                prim->v1 = 0x80;
-                prim->v0 = 0x80;
-                prim->v3 = 0xBF;
-                prim->v2 = 0xBF;
-                prim->priority = 0x20;
-                prim->blendMode = 2;
-                prim = prim->next;
-            } while (prim != NULL);
-        }
+while (prim != NULL) {
+    prim->tpage = 0xF;
+    prim->clut = 4;
+    prim->u0 = prim->u2 = 0x80;
+    prim->u1 = prim->u3 = 0xFF;
+    prim->v0 = prim->v1 = 0x80;
+    prim->v2 = prim->v3 = 0xBF;
+    prim->priority = 0x20;
+    prim->blendMode = 2;
+    prim = prim->next;
+}
+            
+
     case 1:
         // Add a scrolling effect
         tempPosX = self->posX.i.hi;
