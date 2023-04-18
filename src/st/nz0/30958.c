@@ -78,7 +78,8 @@ void EntityRedEyeBust(Entity* self) {
     }
 }
 
-void func_801B12E8(Entity* self) {
+// A purplish-red brick background that scrolls behind the foreground layer
+void EntityPurpleBrickScrollingBackground(Entity* self) {
     Primitive* prim;
     s16 firstPrimIndex;
     s32 tempPosX;
@@ -91,6 +92,7 @@ void func_801B12E8(Entity* self) {
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
+        // Composed of 15 primitives
         firstPrimIndex = g_api.AllocPrimitives(4, 15);
         if (firstPrimIndex == -1) {
             DestroyEntity(self);
@@ -118,12 +120,14 @@ void func_801B12E8(Entity* self) {
             } while (prim != NULL);
         }
     case 1:
+        // Add a scrolling effect
         tempPosX = self->posX.i.hi;
         tempPosY = self->posY.i.hi;
         tempPosX = (tempPosX & 0x7F);
         tempPosX = tempPosX - 0x80;
         tempPosY = (tempPosY & 0x3F) - 0x40;
         prim = *((s32*)(&self->unk7C));
+        // Primitives are laid out in a 5-tall by 3-wide grid
         for (y = 0; y < 5; y++) {
             for (x = 0; x < 3; x++) {
                 prim->x0 = prim->x2 = tempPosX + (x * 0x80);
