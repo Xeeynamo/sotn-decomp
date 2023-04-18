@@ -97,7 +97,7 @@ void func_801B12E8(Entity* self) {
             return;
         }
         prim = &g_PrimBuf[firstPrimIndex];
-        self->firstPolygonIndex = (s32) firstPrimIndex;
+        self->firstPolygonIndex = (s32)firstPrimIndex;
         *(s32*)&self->unk7C = prim;
         self->flags |= 0x800000;
         if (prim != NULL) {
@@ -123,7 +123,7 @@ void func_801B12E8(Entity* self) {
         tempPosX = (tempPosX & 0x7F);
         tempPosX = tempPosX - 0x80;
         tempPosY = (tempPosY & 0x3F) - 0x40;
-        prim = *((s32*) (&self->unk7C));
+        prim = *((s32*)(&self->unk7C));
         for (y = 0; y < 5; y++) {
             for (x = 0; x < 3; x++) {
                 prim->x0 = prim->x2 = tempPosX + (x * 0x80);
@@ -134,7 +134,7 @@ void func_801B12E8(Entity* self) {
                 prim = prim->next;
             }
         }
-        
+
         while (prim != NULL) {
             prim->blendMode = 8;
             prim = prim->next;
