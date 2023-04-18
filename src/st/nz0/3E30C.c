@@ -1085,8 +1085,53 @@ void EntityFallingDebris(Entity* entity) {
     }
 }
 
-// Unique
+// aspatch skips a nop. TODO: fix compiler
+// matching in decomp.me: https://decomp.me/scratch/oDgqZ
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C3F9C);
+#else
+void func_801C3F9C(Primitive** self) {
+    Collider collider;
+    Entity* newEntity;
+
+    func_801C9930();
+    switch ((*self)->u2) {
+    case 0:
+        *(s32*)&(*self)->u0 = 0;
+        *(s32*)&(*self)->r1 = -0x10000;
+        (*self)->u2 = 1;
+        (*self)->x3 = 0x100;
+        break;
+
+    case 1:
+        g_api.CheckCollision((*self)->x1,
+                             (s16)((*self)->y0 + (*(s16*)&(*self)->b2 / 3)),
+                             &collider, 0);
+        if (collider.unk0 % 2) {
+            (*self)->y0 = (u16)(*self)->y0 + collider.unk18;
+            if (*(s32*)&(*self)->r1 < 0x4000) {
+                (*self)->x3 = 1;
+            }
+            *(s32*)&(*self)->r1 = -*(s32*)&(*self)->r1;
+            *(s32*)&(*self)->r1 -= (*(s32*)&(*self)->r1 / 2);
+        }
+        *(s32*)&(*self)->r1 += 0x1800;
+        (*self)->x3--;
+        if ((*self)->x3 == 0) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(2, newEntity);
+                newEntity->posX.i.hi = (*self)->x1;
+                newEntity->posY.i.hi = (*self)->y0;
+                newEntity->subId = 0;
+            }
+            func_801C29B0(0x655);
+            func_801CA0D0(self);
+        }
+        return;
+    }
+}
+#endif
 
 // Unique
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C4198);
