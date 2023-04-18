@@ -78,18 +78,11 @@ void EntityRedEyeBust(Entity* self) {
     }
 }
 
-// DECOMPME_WIP func_801B12E8 https://decomp.me/scratch/K4Esm
-// DECOMPME_WIP func_801B12E8 https://decomp.me/scratch/3Sf68
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B12E8);
-#else
 void func_801B12E8(Entity* self) {
     Primitive* prim;
     s16 firstPrimIndex;
-    f32 posX;
-    f32 posY;
-    s16 tempPosX;
-    s16 tempPosY;
+    s32 tempPosX;
+    s32 tempPosY;
     s32 x, y;
 
     switch (self->step) {
@@ -98,7 +91,7 @@ void func_801B12E8(Entity* self) {
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
-        firstPrimIndex = g_api.AllocPrimitives(4, 0xF);
+        firstPrimIndex = g_api.AllocPrimitives(4, 15);
         if (firstPrimIndex == -1) {
             DestroyEntity(self);
             return;
@@ -125,28 +118,21 @@ void func_801B12E8(Entity* self) {
             } while (prim != NULL);
         }
     case 1:
-        prim = *(s32*)&self->unk7C;
-        posX = self->posX;
-        posY = self->posY;
+        tempPosX = self->posX.i.hi;
+        tempPosY = self->posY.i.hi;
+        tempPosX = (tempPosX & 0x7F);
+        tempPosX = tempPosX - 0x80;
+        tempPosY = (tempPosY & 0x3F) - 0x40;
+        prim = *((s32*) (&self->unk7C));
         for (y = 0; y < 5; y++) {
-            tempPosX = (posX.i.hi & 0x7F) - 0x80;
-            tempPosY = (posY.i.hi & 0x3F) - 0x40;
-           do {
-               for (x = 0; x < 3; x++) {
-                   tempPosX += 0x80;
-                   prim->x3 = tempPosX;
-                   prim->x1 = tempPosX;
-                   prim->x2 = tempPosX + 0x80;
-                   prim->x0 = tempPosX + 0x80;
-                   prim->y1 = tempPosY;
-                   prim->y0 = tempPosY;
-                   prim->y3 = tempPosY + 0x40;
-                   prim->y2 = prim->y3;
-                   prim->blendMode = 0;
-                   prim = prim->next;
-               }
-               tempPosY += 0x40;
-           } while (0);
+            for (x = 0; x < 3; x++) {
+                prim->x0 = prim->x2 = tempPosX + (x * 0x80);
+                prim->x1 = prim->x3 = prim->x0 + 0x80;
+                prim->y0 = prim->y1 = tempPosY + (y * 0x40);
+                prim->y2 = prim->y3 = prim->y0 + 0x40;
+                prim->blendMode = 0;
+                prim = prim->next;
+            }
         }
         
         while (prim != NULL) {
@@ -155,7 +141,6 @@ void func_801B12E8(Entity* self) {
         }
     }
 }
-#endif
 
 void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     Entity* newEntity;
