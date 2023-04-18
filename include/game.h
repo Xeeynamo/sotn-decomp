@@ -11,6 +11,58 @@
 #include <psxsdk/libgte.h>
 #include <psxsdk/libsnd.h>
 
+typedef enum {
+    PRIM_NONE,
+    PRIM_TILE,
+    PRIM_LINE_G2,
+    PRIM_G4,
+    PRIM_GT4,
+    PRIM_GT3,
+    PRIM_SPRT,
+    PRIM_ENV,
+} PrimitiveType;
+
+typedef struct Primitive {
+    /* 0x00 */ struct Primitive* next;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 type; // PrimitiveType
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 u0;    // w for PrimitiveType::TILE
+    /* 0x0D */ u8 v0;    // h for PrimitiveType::TILE
+    /* 0x0E */ u16 clut; // TODO not verified
+    /* 0x10 */ u8 r1;
+    /* 0x11 */ u8 g1;
+    /* 0x12 */ u8 b1;
+    /* 0x13 */ u8 p1; // TODO not verified
+    /* 0x14 */ s16 x1;
+    /* 0x16 */ s16 y1;
+    /* 0x18 */ u8 u1;     // TODO not verified
+    /* 0x19 */ u8 v1;     // TODO not verified
+    /* 0x1A */ u16 tpage; // TODO not verified
+    /* 0x1C */ u8 r2;
+    /* 0x1D */ u8 g2;
+    /* 0x1E */ u8 b2;
+    /* 0x1F */ u8 p2; // TODO not verified
+    /* 0x20 */ s16 x2;
+    /* 0x22 */ s16 y2;
+    /* 0x24 */ u8 u2; // TODO not verified
+    /* 0x24 */ u8 v2; // TODO not verified
+    /* 0x26 */ u16 priority;
+    /* 0x28 */ u8 r3;
+    /* 0x29 */ u8 g3;
+    /* 0x2A */ u8 b3;
+    /* 0x2B */ u8 p3; // TODO not verified
+    /* 0x2C */ s16 x3;
+    /* 0x2E */ s16 y3;
+    /* 0x30 */ u8 u3; // TODO not verified
+    /* 0x31 */ u8 v3; // TODO not verified
+    /* 0x32 */ u16 blendMode;
+} Primitive; /* size=0x34 */
+
+#define BUTTON_COUNT 8
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
 #define PAD_R2 0x0002
@@ -41,6 +93,7 @@
 
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
+#define EQUIP_TYPE_COUNT 11
 
 #define STAGE_NO0 0x00
 #define STAGE_NO1 0x01
@@ -408,8 +461,7 @@ typedef struct {
     /* 80097BF8 */ u32 D_80097BF8;
     /* 80097BFC */ u32 D_80097BFC;
     /* 80097C00 */ u32 equipment[7];
-    /* 80097C1C */ u32 attackRightHand;
-    /* 80097C20 */ u32 attackLeftHand;
+    /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ u32 defenseEquip;
     /* 80097C28 */ u16 defenseElement;
     /* 80097C2A */ u16 D_80097C2A;
@@ -440,7 +492,8 @@ typedef struct {
     /* 80097C88 */ u32 D_80097C88;
     /* 80097C8C */ u32 D_80097C8C;
     /* 80097C90 */ u32 D_80097C90;
-} PlayerStatus; /* size=0x330 */
+    /* 80097C94 */ u32 D_80097C94;
+} PlayerStatus; /* size=0x334 */
 
 typedef struct {
     s32 hours;
@@ -450,180 +503,70 @@ typedef struct {
 } GameTimer;
 
 typedef struct {
-    /* 0x00 */ u32 unk0;
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
-} SaveData_Unk238;
+    /* 0x00, 8003C9A8 */ s32 cursorMain;
+    /* 0x04, 8003C9AC */ s32 cursorRelic;
+    /* 0x08, 8003C9B0 */ s32 cursorEquip;
+    /* 0x0C, 8003C9B4 */ s32 cursorEquipHand;
+    /* 0x10, 8003C9B8 */ s32 cursorEquipHead;
+    /* 0x14, 8003C9BC */ s32 cursorEquipBody;
+    /* 0x18, 8003C9C0 */ s32 cursorEquipCloak;
+    /* 0x1C, 8003C9C4 */ s32 cursorEquipOther;
+    /* 0x20, 8003C9C8 */ s32 scrollEquipHand;
+    /* 0x24, 8003C9D0 */ s32 scrollEquipAccessories[4];
+    /* 0x34, 8003C9DC */ s32 cursorSpells;
+    /* 0x38, 8003C9E0 */ s32 cursorSettings;
+    /* 0x3C, 8003C9E4 */ s32 cursorCloak;
+    /* 0x40, 8003C9E8 */ s32 cursorButtons;
+    /* 0x44, 8003C9EC */ s32 cursorWindowColors;
+    /* 0x48, 8003C9F0 */ s32 cursorTimeAttack;
+} MenuNavigation; /* size=0x4C */
 
 typedef struct {
-    /* 0x00 */ u32 unk0;
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
-} SaveData_Unk56C;
+    /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
+    /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
+    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[32];
+    /* 0x0B0, 0x8003CAA8 */ s32 cloakExteriorColors[3];
+    /* 0x0BC, 0x8003CAB4 */ s32 cloakLiningColors[3];
+    /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
+    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[EQUIP_TYPE_COUNT];
+    /* 0x100, 0x8003CAF8 */ s32 isCloakLingingReversed;
+    /* 0x104, 0x8003CAFC */ s32 isSoundMono;
+    /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
+    /* 0x10C, 0x8003CB04 */ s32 D_8003CB04;
+} GameSettings; /* size=0x110 */
 
 typedef struct {
-    /* 0x00 */ u32 unk0;
-    /* 0x04 */ u32 unk4;
-    /* 0x08 */ u32 unk8;
-    /* 0x0C */ u32 unkC;
-} SaveData_Unk5B8;
+    /* 0x00 */ u8 Magic[2];
+    /* 0x02 */ u8 Type;
+    /* 0x03 */ u8 BlockEntry;
+    /* 0x04 */ u8 Title[64];
+    /* 0x44 */ u8 reserve[28];
+    /* 0x60 */ u8 Clut[32];
+    /* 0x80 */ u8 Icon[3][128];
+} MemcardHeader; /* size=0x200 */
 
 typedef struct {
-    /* 0x000 */ u32 unk00;
-    /* 0x004 */ u32 unk04;
-    /* 0x008 */ u32 unk08;
-    /* 0x00C */ u32 unk0C;
-    /* 0x010 */ u32 unk10;
-    /* 0x014 */ u32 unk14;
-    /* 0x018 */ u32 unk18;
-    /* 0x01C */ u32 unk1C;
-    /* 0x020 */ u32 unk20;
-    /* 0x024 */ u32 unk24;
-    /* 0x028 */ u32 unk28;
-    /* 0x02C */ u32 unk2C;
-    /* 0x030 */ u32 unk30;
-    /* 0x034 */ u32 unk34;
-    /* 0x038 */ u32 unk38;
-    /* 0x03C */ u32 unk3C;
-    /* 0x040 */ u32 unk40;
-    /* 0x044 */ u32 unk44;
-    /* 0x048 */ u32 unk48;
-    /* 0x04C */ u32 unk4C;
-    /* 0x050 */ u32 unk50;
-    /* 0x054 */ u32 unk54;
-    /* 0x058 */ u32 unk58;
-    /* 0x05C */ u32 unk5C;
-    /* 0x060 */ u32 unk60;
-    /* 0x064 */ u32 unk64;
-    /* 0x068 */ u32 unk68;
-    /* 0x06C */ u32 unk6C;
-    /* 0x070 */ u32 unk70;
-    /* 0x074 */ u32 unk74;
-    /* 0x078 */ u32 unk78;
-    /* 0x07C */ u32 unk7C;
-    /* 0x080 */ u32 unk80;
-    /* 0x084 */ u32 unk84;
-    /* 0x088 */ u32 unk88;
-    /* 0x08C */ u32 unk8C;
-    /* 0x090 */ u32 unk90;
-    /* 0x094 */ u32 unk94;
-    /* 0x098 */ u32 unk98;
-    /* 0x09C */ u32 unk9C;
-    /* 0x0A0 */ u32 unkA0;
-    /* 0x0A4 */ u32 unkA4;
-    /* 0x0A8 */ u32 unkA8;
-    /* 0x0AC */ u32 unkAC;
-    /* 0x0B0 */ u32 unkB0;
-    /* 0x0B4 */ u32 unkB4;
-    /* 0x0B8 */ u32 unkB8;
-    /* 0x0BC */ u32 unkBC;
-    /* 0x0C0 */ u32 unkC0;
-    /* 0x0C4 */ u32 unkC4;
-    /* 0x0C8 */ u32 unkC8;
-    /* 0x0CC */ u32 unkCC;
-    /* 0x0D0 */ u32 unkD0;
-    /* 0x0D4 */ u32 unkD4;
-    /* 0x0D8 */ u32 unkD8;
-    /* 0x0DC */ u32 unkDC;
-    /* 0x0E0 */ u32 unkE0;
-    /* 0x0E4 */ u32 unkE4;
-    /* 0x0E8 */ u32 unkE8;
-    /* 0x0EC */ u32 unkEC;
-    /* 0x0F0 */ u32 unkF0;
-    /* 0x0F4 */ u32 unkF4;
-    /* 0x0F8 */ u32 unkF8;
-    /* 0x0FC */ u32 unkFC;
-    /* 0x100 */ u32 unk100;
-    /* 0x104 */ u32 unk104;
-    /* 0x108 */ u32 unk108;
-    /* 0x10C */ u32 unk10C;
-    /* 0x110 */ u32 unk110;
-    /* 0x114 */ u32 unk114;
-    /* 0x118 */ u32 unk118;
-    /* 0x11C */ u32 unk11C;
-    /* 0x120 */ u32 unk120;
-    /* 0x124 */ u32 unk124;
-    /* 0x128 */ u32 unk128;
-    /* 0x12C */ u32 unk12C;
-    /* 0x130 */ u32 unk130;
-    /* 0x134 */ u32 unk134;
-    /* 0x138 */ u32 unk138;
-    /* 0x13C */ u32 unk13C;
-    /* 0x140 */ u32 unk140;
-    /* 0x144 */ u32 unk144;
-    /* 0x148 */ u32 unk148;
-    /* 0x14C */ u32 unk14C;
-    /* 0x150 */ u32 unk150;
-    /* 0x154 */ u32 unk154;
-    /* 0x158 */ u32 unk158;
-    /* 0x15C */ u32 unk15C;
-    /* 0x160 */ u32 unk160;
-    /* 0x164 */ u32 unk164;
-    /* 0x168 */ u32 unk168;
-    /* 0x16C */ u32 unk16C;
-    /* 0x170 */ u32 unk170;
-    /* 0x174 */ u32 unk174;
-    /* 0x178 */ u32 unk178;
-    /* 0x17C */ u32 unk17C;
-    /* 0x180 */ u32 unk180;
-    /* 0x184 */ u32 unk184;
-    /* 0x188 */ u32 unk188;
-    /* 0x18C */ u32 unk18C;
-    /* 0x190 */ u32 unk190;
-    /* 0x194 */ u32 unk194;
-    /* 0x198 */ u32 unk198;
-    /* 0x19C */ u32 unk19C;
-    /* 0x1A0 */ u32 unk1A0;
-    /* 0x1A4 */ u32 unk1A4;
-    /* 0x1A8 */ u32 unk1A8;
-    /* 0x1AC */ u32 unk1AC;
-    /* 0x1B0 */ u32 unk1B0;
-    /* 0x1B4 */ u32 unk1B4;
-    /* 0x1B8 */ u32 unk1B8;
-    /* 0x1BC */ u32 unk1BC;
-    /* 0x1C0 */ u32 unk1C0;
-    /* 0x1C4 */ u32 unk1C4;
-    /* 0x1C8 */ u32 unk1C8;
-    /* 0x1CC */ u32 unk1CC;
-    /* 0x1D0 */ u32 unk1D0;
-    /* 0x1D4 */ u32 unk1D4;
-    /* 0x1D8 */ u32 unk1D8;
-    /* 0x1DC */ u32 unk1DC;
-    /* 0x1E0 */ u32 unk1E0;
-    /* 0x1E4 */ u32 unk1E4;
-    /* 0x1E8 */ u32 unk1E8;
-    /* 0x1EC */ u32 unk1EC;
-    /* 0x1F0 */ u32 unk1F0;
-    /* 0x1F4 */ u32 unk1F4;
-    /* 0x1F8 */ u32 unk1F8;
-    /* 0x1FC */ u32 unk1FC;
-    /* 0x200 */ u32 unk200;
-    /* 0x204 */ u32 unk204;
-    /* 0x208 */ u32 unk208;
+    /* 0x000 */ MemcardHeader header;
+    /* 0x200 */ u8 saveName[12];
     /* 0x20C */ u32 level;
     /* 0x210 */ u32 goldAmount;
     /* 0x214 */ u32 playTimeHours;
     /* 0x218 */ u32 playTimeMinutes;
     /* 0x21C */ u32 playTimeSeconds;
-    /* 0x220 */ u32 unk220;
-    /* 0x224 */ u32 isTimeAttackUnlocked; // g_IsTimeAttackUnlocked
+    /* 0x220 */ u32 memcardIcon;
+    /* 0x224 */ u32 isTimeAttackUnlocked;
     /* 0x228 */ s16 stageID;
     /* 0x22A */ u16 exploredRoomCount;
     /* 0x22C */ u16 roomX;
     /* 0x22E */ u16 roomY;
     /* 0x230 */ u32 playableCharacter;
     /* 0x234 */ u32 saveSize;
-    /* 0x238 */ SaveData_Unk238 unk238[51]; // relics and equip?
-    /* 0x568 */ u32 unk568;
-    /* 0x56C */ SaveData_Unk56C unk56C[16];
-    /* 0x5AC */ u32 unk5AC;
-    /* 0x5B0 */ u32 unk5B0;
-    /* 0x5B4 */ u32 unk5B4;
-    /* 0x5B8 */ SaveData_Unk5B8 unk5B8[17];
-    /* 0x6C4 */ u32 unk6C4;
-    /* 0x6C8 */ u8 unk[0x11CC - 0x6C8];
+    /* 0x238 */ PlayerStatus status;
+    /* 0x56C */ MenuNavigation menuNavigation;
+    /* 0x5B8 */ GameSettings settings;
+    /* 0x6C8 */ u8 castleFlags[0x300];
+    /* 0x6C8 */ u8 castleMap[0x800];
+    /* 0x11C8 */ s32 rng;
 } SaveData; /* size = 0x11CC */
 
 typedef struct {
@@ -805,11 +748,12 @@ typedef struct {
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
-    /* 8003C7D0 */ void (*func_800FE728)(s32, Equipment* res, s32 equipId);
+    /* 8003C7D0 */ void (*GetEquipProperties)(s32 handId, Equipment* res,
+                                              s32 equipId);
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
-    /* 8003C7E0 */ void* func_800EDB58;
+    /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* func_801027C4;
@@ -913,21 +857,14 @@ typedef struct {
     /* 80073104 */ u32 flags;
 } BgLayer;
 
-typedef struct {
-    u32 rightHand;
-    u32 leftHand;
-    u32 jump;
-    u32 dodge;
-} ConfigButtons;
-
 extern s32 D_8003925C;
-extern bool g_IsTimeAttackUnlocked;
+extern s32 g_IsTimeAttackUnlocked;
 
 // Holds flags that checks if certain switches are enabled to allow to have
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
-extern u8 D_8003BDEC[];
+extern u8 D_8003BDEC[0x300];
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -949,23 +886,11 @@ extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
 extern s32 g_blinkTimer;
-extern s32 D_8003C99C;
-extern s32 g_CurrentPlayableCharacter;
-extern s32 D_8003C9A4; // related to when player change stages?
-extern u16 D_8003C9C8;
-extern s16 D_8003C9CC[];
-extern s32 g_menuButtonSettingsCursorPos;
-extern ConfigButtons g_menuButtonSettingsConfig;
-extern s32 D_8003C9FC;
-extern s32 g_menuMainCursorIndex;
-extern s32 g_menuRelicsCursorIndex[];
-extern s32 g_SettingsCloakMode;
-extern s32 g_SettingsSoundMode;
-extern s32 D_8003CA28[]; // time attack checkpoints, also holds boss fought flag
-extern s32 D_8003CACC;
-extern s32 D_8003CB00[];
-extern s32 D_8003CB04;
-
+/* 0x8003C99C */ extern s32 D_8003C99C;
+/* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
+/* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
+/* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
+/* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer D_8003CB08;
 extern GpuBuffer D_800542FC;
 extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
@@ -975,6 +900,7 @@ extern const char g_MemcardSavePath[];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
+extern u8 D_8006BB74[0x800];
 extern s32 D_8006C374;
 extern s32 D_8006C378;
 extern GpuBuffer* D_8006C37C;
@@ -1126,6 +1052,7 @@ extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007C0D8[];
 extern Entity D_8007D858[];
+extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
@@ -1179,7 +1106,7 @@ extern s32 g_mapTilesetId; // 0x80097918
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
-extern s32 D_80097930[]; // confirmed array
+extern s32 g_GpuUsage_gt4[]; // confirmed array
 extern s32 D_80097934;
 extern u32 D_80097944;
 extern PlayerStatus g_Status;

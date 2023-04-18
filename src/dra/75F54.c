@@ -426,7 +426,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011AC3C);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
 
 void func_8011B334(Entity* entity) {
-    Equipment temp;
+    Equipment equip;
 
     if (PLAYER.unk2E != 0x70) {
         DestroyEntity(entity);
@@ -437,20 +437,20 @@ void func_8011B334(Entity* entity) {
     entity->facing = PLAYER.facing;
     entity->posY.i.hi = PLAYER.posY.i.hi;
     entity->posX.i.hi = PLAYER.posX.i.hi;
-    D_80072F60[2] &= 0xFF7F;
+    D_80072F60[2] &= ~0x80;
 
     if (entity->step == 0) {
-        func_800FE728(0, &temp, 0);
-        entity->attack = temp.attack;
-        entity->attackElement = temp.element;
-        entity->unk3C = temp.hitType;
-        entity->unk49 = temp.enemyInvincibilityFrames;
-        entity->unk58 = temp.stunFrames;
-        entity->unk6A = temp.hitEffect;
-        entity->objectRoomIndex = temp.criticalRate;
+        GetEquipProperties(0, &equip, 0);
+        entity->attack = equip.attack;
+        entity->attackElement = equip.element;
+        entity->unk3C = equip.hitType;
+        entity->unk49 = equip.enemyInvincibilityFrames;
+        entity->unk58 = equip.stunFrames;
+        entity->unk6A = equip.hitEffect;
+        entity->objectRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->unk10 = 9;
-        entity->unk12 = 0x15;
+        entity->unk12 = 21;
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 5;
         entity->step++;

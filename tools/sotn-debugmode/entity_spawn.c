@@ -310,11 +310,11 @@ void UpdateEntitySpawn(int variant) {
 
     switch (variant) {
     case 0:
-        FntPrint("* DRA entity (L2=spawn)\n");
+        FntPrint("L2=spawn\n");
         def = &g_DraEntities[0];
         break;
     case 1:
-        FntPrint("* ST entity (L2=spawn)\n");
+        FntPrint("L2=spawn\n");
         def = &g_StageEntities[g_StageId];
         break;
     }
@@ -329,7 +329,7 @@ void UpdateEntitySpawn(int variant) {
     FntPrint("alloc %d/%d\n", GetEntityAllocationCount(), MaxEntityCount);
     FntPrint("objID %02X\n", g_SpawnObjId + 1);
     FntPrint("subID %02X\n", g_SpawnSubId);
-    FntPrint("func %08X\n", entUpdate);
+    FntPrint("func  %08X\n", entUpdate);
     if (g_pads->tapped & PAD_LEFT) {
         if (g_SpawnObjId > 0) {
             g_SpawnObjId--;
@@ -369,9 +369,10 @@ void UpdateEntitySpawn(int variant) {
             e->hitboxHeight = 8;
         }
     }
-
-    FntFlush(-1);
 }
+
+void UpdateDraEntitySpawn() { UpdateEntitySpawn(0); }
+void UpdateStageEntitySpawn() { UpdateEntitySpawn(1); }
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;

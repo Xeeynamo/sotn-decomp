@@ -346,8 +346,8 @@ void entrypoint_sotn(void) {
     g_blinkTimer = 0;
     D_8003C99C = 0;
     D_800987B4 = 0;
-    D_8003CB00[0] = 0;
-    D_8003CB04 = 0;
+    g_Settings.D_8003CB00 = 0;
+    g_Settings.D_8003CB04 = 0;
     D_8006C37C = &D_8003CB08;
     func_80131ED8(0xB9B6);
     func_801325D8();
@@ -648,7 +648,7 @@ void func_800E451C(void) {
 }
 
 void func_800E493C(void) {
-    if (g_SettingsSoundMode == 0) { // Stereo / Mono ?
+    if (g_Settings.isSoundMono == 0) {
         PlaySfx(6);
     } else {
         PlaySfx(5);
@@ -704,7 +704,7 @@ void func_800E5358(void) {
 }
 
 void func_800E5498(void) {
-    POLY_GT4* poly = &D_8006C37C->polyGT4[D_80097930[0]];
+    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage_gt4[0]];
     GpuBuffer* buffer = D_8006C37C;
 
     setSemiTrans(poly, true);
@@ -715,7 +715,7 @@ void func_800E5498(void) {
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
     AddPrim(&buffer->_unk_0474[0x1FF], poly);
-    D_80097930[0]++;
+    g_GpuUsage_gt4[0]++;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5584);
