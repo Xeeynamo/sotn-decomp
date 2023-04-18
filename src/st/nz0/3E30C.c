@@ -1133,7 +1133,7 @@ void func_801C3F9C(Primitive** self) {
 }
 #endif
 
-// Unique
+// Called by EntityAxeKnight
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C4198);
 
 void func_801C4550(void) {
