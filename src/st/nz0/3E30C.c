@@ -1087,7 +1087,7 @@ void EntityFallingDebris(Entity* entity) {
 
 // aspatch skips a nop. TODO: fix compiler
 // matching in decomp.me: https://decomp.me/scratch/oDgqZ
-#ifdef NON_MATCHING
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C3F9C);
 #else
 void func_801C3F9C(Unkstruct_801C3F9C** self) {
