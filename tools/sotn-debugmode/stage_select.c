@@ -29,7 +29,7 @@ void UpdateStageSelect(void) {
     FntPrint("%02X %s (%s, %s)\n", g_StageIdCursor, lba->name, lba->ovlName,
              lba->gfxName);
     FntPrint("L2=Alucard\n");
-    FntPrint("L1=Ricther\n");
+    FntPrint("L1=Richter\n");
 
     if (g_pads->tapped & PAD_L2) {
         g_CurrentPlayableCharacter = 0;
