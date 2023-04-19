@@ -1087,42 +1087,42 @@ void EntityFallingDebris(Entity* entity) {
 
 // aspatch skips a nop. TODO: fix compiler
 // matching in decomp.me: https://decomp.me/scratch/oDgqZ
-#ifndef NON_MATCHING
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C3F9C);
 #else
-void func_801C3F9C(Primitive** self) {
+void func_801C3F9C(Unkstruct_801C3F9C** self) {
     Collider collider;
     Entity* newEntity;
+    s16 temp;
 
     func_801C9930();
-    switch ((*self)->u2) {
+    switch ((*self)->unk24) {
     case 0:
-        *(s32*)&(*self)->u0 = 0;
-        *(s32*)&(*self)->r1 = -0x10000;
-        (*self)->u2 = 1;
-        (*self)->x3 = 0x100;
+        (*self)->unk0C = 0;
+        (*self)->unk10 = -0x10000;
+        (*self)->unk24 = 1;
+        (*self)->unk2C = 0x100;
         break;
 
     case 1:
-        g_api.CheckCollision((*self)->x1,
-                             (s16)((*self)->y0 + (*(s16*)&(*self)->b2 / 3)),
-                             &collider, 0);
+        temp = (*self)->unk0A + ((*self)->unk1E / 3);
+        g_api.CheckCollision((*self)->unk14, (s16)(temp), &collider, 0);
         if (collider.unk0 % 2) {
-            (*self)->y0 = (u16)(*self)->y0 + collider.unk18;
-            if (*(s32*)&(*self)->r1 < 0x4000) {
-                (*self)->x3 = 1;
+            (*self)->unk0A = (u16)(*self)->unk0A + collider.unk18;
+            if ((*self)->unk10 < 0x4000) {
+                (*self)->unk2C = 1;
             }
-            *(s32*)&(*self)->r1 = -*(s32*)&(*self)->r1;
-            *(s32*)&(*self)->r1 -= (*(s32*)&(*self)->r1 / 2);
+            (*self)->unk10 = -(*self)->unk10;
+            (*self)->unk10 -= (*self)->unk10 / 2;
         }
-        *(s32*)&(*self)->r1 += 0x1800;
-        (*self)->x3--;
-        if ((*self)->x3 == 0) {
+        (*self)->unk10 += 0x1800;
+        (*self)->unk2C--;
+        if ((*self)->unk2C == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(2, newEntity);
-                newEntity->posX.i.hi = (*self)->x1;
-                newEntity->posY.i.hi = (*self)->y0;
+                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, newEntity);
+                newEntity->posX.i.hi = (*self)->unk14;
+                newEntity->posY.i.hi = (*self)->unk0A;
                 newEntity->subId = 0;
             }
             func_801C29B0(0x655);
