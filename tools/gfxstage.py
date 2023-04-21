@@ -72,7 +72,7 @@ def encode(input_base: str, output_file: str):
         if info["planes"] != 1 or info["bitdepth"] != 8:
             return f"'{file_name}' must be an indexed image"
         if len(palette) != 16:
-            return f"'{file_name}' palette must be of 16 colors but found {len(palette)} instead"
+            return f"'{file_name}' palette must be of 16 colors but found {len(palette)} colors instead"
 
         row_list = unroll_rows(rows)
         encode_quadrant(dst, (idx * 4 + 0) * 0x2000, row_list, 0)

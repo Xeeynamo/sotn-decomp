@@ -2,6 +2,7 @@
 
 import json
 import os
+import png
 import sys
 from math import ceil
 from typing import Optional
@@ -14,9 +15,56 @@ from util import options, log
 from segtypes.n64.segment import N64Segment
 import utils
 
-def serialize_spritesheet(content: str) -> bytearray:
-    raise Exception("to-do")
+max_width = 256
+max_height = 256
 
+def serialize_spritesheet(writer, name: str, content: str) -> str:
+    obj = json.loads(content)
+    
+    writer.write(".section .data\n")
+    writer.write(f".global D_8013C020\n") # TODO: symbol name hardcoded 🤮
+    writer.write(f"D_8013C020:\n")
+    for i in range(0, len(obj)):
+        writer.write(f".word {name}_{i}\n")
+
+    i = 0
+    for item in obj:
+        file_name = item["name"]
+        xPivot = item["x"]
+        yPivot = item["y"]
+        if not os.path.exists(file_name):
+            return f"the file '{file_name}' does not exist"
+        img = png.Reader(file_name).read()
+        width = img[0]
+        height = img[1]
+        rows = img[2]
+        info = img[3]
+        palette = info["palette"]
+        if width >= max_width or height >= max_height:
+            return f"size for '{file_name}' is {width}x{height} but it must be less than {max_width}x{max_height}"
+        if (width & 3) != 0:
+            return f"size for '{file_name}' is {width}x{height} but the width must be a multiple of 4"
+        if info["planes"] != 1 or info["bitdepth"] != 8:
+            return f"'{file_name}' must be an indexed image"
+        if len(palette) != 16:
+            return f"'{file_name}' palette must be of 16 colors but found {len(palette)} colors instead"
+
+        bytes_per_row = int(width / 2)
+        padding = 4 - (int((width * height + 1) / 2) & 3)
+        writer.write(f"{name}_{i}:\n")
+        writer.write(f".byte {width}\n")
+        writer.write(f".byte {height}\n")
+        writer.write(f".byte {xPivot}\n")
+        writer.write(f".byte {yPivot}\n")
+        for row in rows:
+            line = ""
+            for x in range(0, bytes_per_row):
+                c = (row[x * 2 + 0] & 0xF) | ((row[x * 2 + 1] & 0xF) << 4)
+                line += f",{c}"
+            writer.write(f".byte {line[1:]}\n")
+        if padding == 2:
+            writer.write(f".half 0\n")
+        i += 1
 
 class PSXSegSpritesheet(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
@@ -92,10 +140,20 @@ class PSXSegSpritesheet(N64Segment):
 
 
 if __name__ == "__main__":
+    def get_file_name(full_path):
+        file_name = os.path.basename(full_path)
+        exts = os.path.splitext(file_name)
+        if len(exts) > 1 and len(exts[1]) > 0:
+            return get_file_name(exts[0])
+        return exts[0]
+    
     input_file_name = sys.argv[1]
     output_file_name = sys.argv[2]
 
     with open(input_file_name, "r") as f_in:
-        data = serialize_spritesheet(f_in.read())
-        with open(output_file_name, "wb") as f_out:
-            f_out.write(data)
+        with open(output_file_name, "w") as f_out:
+            name = get_file_name(input_file_name)
+            err = serialize_spritesheet(f_out, name, f_in.read())
+            if err != None:
+                log.error(err)
+                raise Exception(err)
