@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import io, hashlib, hmac
 import json
 import os
 import png
@@ -20,20 +21,46 @@ max_height = 256
 
 def serialize_spritesheet(writer, name: str, content: str) -> str:
     obj = json.loads(content)
+    syms = []
+
+    # Generate a list of unique sprites, merging duplicates
+    i = 0
+    syms_hash = dict()
+    for item in obj:
+        file_name = item["name"]
+        if not os.path.exists(file_name):
+            return f"the file '{file_name}' does not exist"
+        with open(file_name, "rb") as f:
+            digest = hashlib.sha1(f.read(), usedforsecurity=False).digest()
+        symbol_name = syms_hash.get(digest)
+        if symbol_name == None:
+            symbol_name = f"{name}_{i}"
+            syms_hash[digest] = symbol_name
+        syms.append(symbol_name)
+        i += 1        
     
+    # Create a list of sprites
     writer.write(".section .data\n")
     writer.write(f".global D_8013C020\n") # TODO: symbol name hardcoded 🤮
     writer.write(f"D_8013C020:\n")
     for i in range(0, len(obj)):
-        writer.write(f".word {name}_{i}\n")
+        writer.write(f".word {syms[i]}\n")
 
+    # Write sprites
     i = 0
+    syms_written = set()
     for item in obj:
+        # Do not write duplicate sprites
+        symbol_name = syms[i]
+        i += 1
+        if symbol_name in syms_written:
+            continue
+        syms_written.add(symbol_name)
+
         file_name = item["name"]
         xPivot = item["x"]
         yPivot = item["y"]
-        if not os.path.exists(file_name):
-            return f"the file '{file_name}' does not exist"
+
         img = png.Reader(file_name).read()
         width = img[0]
         height = img[1]
@@ -51,7 +78,7 @@ def serialize_spritesheet(writer, name: str, content: str) -> str:
 
         bytes_per_row = int(width / 2)
         padding = 4 - (int((width * height + 1) / 2) & 3)
-        writer.write(f"{name}_{i}:\n")
+        writer.write(f"{symbol_name}:\n")
         writer.write(f".byte {width}\n")
         writer.write(f".byte {height}\n")
         writer.write(f".byte {xPivot}\n")
@@ -64,7 +91,6 @@ def serialize_spritesheet(writer, name: str, content: str) -> str:
             writer.write(f".byte {line[1:]}\n")
         if padding == 2:
             writer.write(f".half 0\n")
-        i += 1
 
 class PSXSegSpritesheet(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
