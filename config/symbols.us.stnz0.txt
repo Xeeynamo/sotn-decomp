@@ -108,3 +108,4 @@ EntityLargeGaibonProjectile = 0x801B6BBC;
 EntityLifeUpSpawn = 0x801CA160;
 EntityMagicallySealedDoor = 0x801C7D68;
 EntityMariaCutscene = 0x801B7D58;
+EntityPurpleBrickScrollingBackground = 0x801B12E8;
