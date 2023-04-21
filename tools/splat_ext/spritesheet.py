@@ -19,9 +19,58 @@ import utils
 max_width = 256
 max_height = 256
 
-def serialize_spritesheet(writer, name: str, content: str) -> str:
-    obj = json.loads(content)
+# Take account of duplciate sprites, but only when they are consecutive.
+# This is the closest to the original algorithm used by the developers.
+def make_syms_matching(obj):
     syms = []
+
+    # Generate a list of unique sprites, merging duplicates
+    i = 0
+    prev_hash = None
+    for item in obj:
+        file_name = item["name"]
+        if not os.path.exists(file_name):
+            return syms, f"the file '{file_name}' does not exist"
+        with open(file_name, "rb") as f:
+            digest = hashlib.sha1(f.read(), usedforsecurity=False).digest()
+        if digest == prev_hash:
+            symbol_name = prev_symbol
+        else:
+            symbol_name = f"{name}_{i}"
+            prev_hash = digest
+            prev_symbol = symbol_name
+        syms.append(symbol_name)
+        i += 1
+    return syms, None
+
+# Take account of duplicate sprites by analising all the PNGs to cross-reference
+# all of them. On RIC.BIN it saves around 4.3KB. This algorithm is not slower
+# than the original one.
+def make_syms_optimized(obj):
+    syms = []
+
+    # Generate a list of unique sprites, merging duplicates
+    i = 0
+    syms_hash = dict()
+    for item in obj:
+        file_name = item["name"]
+        if not os.path.exists(file_name):
+            return syms, f"the file '{file_name}' does not exist"
+        with open(file_name, "rb") as f:
+            digest = hashlib.sha1(f.read(), usedforsecurity=False).digest()
+        symbol_name = syms_hash.get(digest)
+        if symbol_name == None:
+            symbol_name = f"{name}_{i}"
+            syms_hash[digest] = symbol_name
+        syms.append(symbol_name)
+        i += 1
+    return syms, None
+
+def serialize_spritesheet(writer, name: str, content: str, optimized: bool) -> str:
+    obj = json.loads(content)
+    syms, err = make_syms_optimized(obj) if optimized == True else make_syms_matching(obj)
+    if err != None: # check if error
+        return err
 
     # Generate a list of unique sprites, merging duplicates
     i = 0
@@ -179,7 +228,7 @@ if __name__ == "__main__":
     with open(input_file_name, "r") as f_in:
         with open(output_file_name, "w") as f_out:
             name = get_file_name(input_file_name)
-            err = serialize_spritesheet(f_out, name, f_in.read())
+            err = serialize_spritesheet(f_out, name, f_in.read(), False)
             if err != None:
                 log.error(err)
                 raise Exception(err)
