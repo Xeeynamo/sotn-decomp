@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  extensions_path: tools/splat_ext
   section_order:
     - ".rodata"
     - ".text"
@@ -26,6 +27,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
+      - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
+      - [0x170AC, rodata]
       - [0x194B0, rodata]
       - [0x19B50, rodata]
       - [0x19BE0, rodata]
