@@ -67,6 +67,7 @@ def make_syms_optimized(obj):
     return syms, None
 
 def serialize_spritesheet(writer, name: str, content: str, optimized: bool) -> str:
+    sym_name = f"g_{name}_spritesheet"
     obj = json.loads(content)
     syms, err = make_syms_optimized(obj) if optimized == True else make_syms_matching(obj)
     if err != None: # check if error
@@ -90,8 +91,8 @@ def serialize_spritesheet(writer, name: str, content: str, optimized: bool) -> s
     
     # Create a list of sprites
     writer.write(".section .data\n")
-    writer.write(f".global D_8013C020\n") # TODO: symbol name hardcoded 🤮
-    writer.write(f"D_8013C020:\n")
+    writer.write(f".global {sym_name}\n")
+    writer.write(f"{sym_name}:\n")
     for i in range(0, len(obj)):
         writer.write(f".word {syms[i]}\n")
 
