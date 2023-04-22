@@ -139,7 +139,11 @@ def serialize_spritesheet(writer, name: str, content: str, optimized: bool) -> s
                 line += f",{c}"
             writer.write(f".byte {line[1:]}\n")
         if padding == 2:
-            writer.write(f".half 0\n")
+            if "padding" in item:
+                padding_data = item["padding"]
+            else:
+                padding_data = 0
+            writer.write(f".half {padding_data}\n")
 
 class PSXSegSpritesheet(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
@@ -193,24 +197,33 @@ class PSXSegSpritesheet(N64Segment):
         img.write(output_file_name)
 
     def parse_spritesheet(self, data: bytearray, rom: bytearray) -> list:
-        i = 0
         items = []
         pal = self.read_palette()
         while True:
-            raw_off = utils.to_u32(data[i * 4:])
+            raw_off = utils.to_u32(data[len(items) * 4:])
             if raw_off < self.vram_start:
                 break
             off = raw_off - self.vram_start
-            name = os.path.normpath(f"{self.out_path()}_{i}.png")
+            name = os.path.normpath(f"{self.out_path()}_{len(items)}.png")
             sprite_data = data[off:]
-            items.append({
+            w = sprite_data[0]
+            h = sprite_data[1]
+            item = {
                 "x": sprite_data[2],
                 "y": sprite_data[3],
                 "name": name
-            })
-            i += 1
+            }
 
-            self.extract_sprite(name, sprite_data[4:], sprite_data[0], sprite_data[1], pal)
+            sprite_byte_count = int((w * h + 1) / 2)
+            padding = 4 - (sprite_byte_count & 3)
+            if padding == 2:
+                padding_data = utils.to_u16(sprite_data[4+sprite_byte_count:])
+                if padding_data != 0:
+                    item["padding"] = padding_data
+
+            items.append(item)
+
+            self.extract_sprite(name, sprite_data[4:], w, h, pal)
         return items
 
 
