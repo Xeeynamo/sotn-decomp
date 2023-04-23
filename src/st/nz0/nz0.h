@@ -12,6 +12,7 @@ void func_801C29B0(s32);
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
+void EntityEquipItemDrop(Entity*);
 
 extern u8 D_8003BE6F[];
 extern PfnEntityUpdate D_80180A90[];

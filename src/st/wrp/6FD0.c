@@ -6,6 +6,8 @@
 
 #include "stage.h"
 
+void EntityEquipItemDrop(Entity* self);
+
 typedef struct {
     s16 x, y;
 } WarpCoord;

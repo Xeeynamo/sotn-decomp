@@ -16,6 +16,7 @@ Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
+void EntityEquipItemDrop(Entity*);
 
 extern u16 D_80180464[];
 extern u16 D_80180494[];

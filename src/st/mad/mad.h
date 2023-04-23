@@ -15,6 +15,7 @@ void ReplaceBreakableWithItemDrop(Entity*);
 void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2);
 void func_80198BC8(void* const, s32);
 void func_8019344C(void);
+void EntityEquipItemDrop(Entity*);
 
 // OFFSET FIXED
 extern u8 D_8003BEE8[];
