@@ -118,6 +118,9 @@ DebugMenu g_DebugMenus[] = {
 };
 
 int g_DebugMode;
+int g_FontDefault;
+int g_FontTitle;
+int g_FontContent;
 Primitive* g_PrimFirst;
 Primitive* g_PrimCur;
 
@@ -155,10 +158,17 @@ void Init() {
     for (i = 0; i < LEN(g_DebugMenus); i++) {
         g_DebugMenus[i].Init();
     }
+
+    g_FontDefault = 0;
+    g_FontTitle = FntOpen(160, 26, 256, 240, 0, 32);
+    g_FontContent = FntOpen(8, 48, 256, 240, 0, 512);
 }
 
 void Update(Entity* e) {
-    BeginFont();
+    Font[g_FontDefault].x = -255;
+    Font[g_FontDefault].y = -255;
+    FntFlush(g_FontDefault);
+
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
         if (g_DebugMode >= LEN(g_DebugMenus)) {
@@ -166,15 +176,24 @@ void Update(Entity* e) {
         }
     }
 
+    SetDumpFnt(g_FontContent);
+    SetFontCoord(8, 48);
+    g_DebugMenus[g_DebugMode].Update();
+    FntFlush(g_FontContent);
+
     if (g_DebugMenus[g_DebugMode].showMenu) {
         SHOW_PRIMS(0, 5);
-        SetFontCoord(160, 26);
+        SetDumpFnt(g_FontTitle);
         FntPrint(g_DebugMenus[g_DebugMode].name);
+        FntFlush(g_FontTitle);
     } else {
         HIDE_PRIMS(0, 5);
     }
-    // SetFontCoord(8, 48);
-    g_DebugMenus[g_DebugMode].Update();
 
-    EndFont();
+    SetDumpFnt(g_FontDefault);
+}
+
+void SetFontCoord(int x, int y) {
+    Font[g_FontContent].x = x;
+    Font[g_FontContent].y = y;
 }
