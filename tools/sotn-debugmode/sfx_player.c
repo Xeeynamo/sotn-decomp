@@ -6,10 +6,10 @@ void InitSfxPlayer(void) { g_SfxId = 1; }
 void UpdateSfxPlayer(void) {
     FntPrint("ID: %03X  L2=play\n", g_SfxId);
 
-    if (g_pads->repeat & PAD_UP) {
+    if (g_pads->pressed & PAD_UP) {
         g_SfxId--;
     }
-    if (g_pads->repeat & PAD_DOWN) {
+    if (g_pads->pressed & PAD_DOWN) {
         g_SfxId++;
     }
     if (g_pads->tapped & PAD_LEFT) {
