@@ -273,10 +273,6 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
     }
 }
 
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuRect);
-#else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
@@ -306,7 +302,6 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         func_800F53D4(0, temp_s2);
     }
 }
-#endif
 
 void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
                    s32 h, s32 yGap, s32 bColorMode) {
