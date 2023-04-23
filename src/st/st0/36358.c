@@ -705,12 +705,6 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityClockTower3D);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityCutscenePhotograph);
 
-#ifndef NON_MATCHING // TODO fix 'li' opcode with ASPATCH
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityCutscenePhotographFire);
-#else
-extern u16 D_801805D4[];
-extern u8 D_801824CC[];
-
 void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->step) {
     case 0:
@@ -737,7 +731,6 @@ void EntityCutscenePhotographFire(Entity* entity) {
         break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BC5C0);
 
