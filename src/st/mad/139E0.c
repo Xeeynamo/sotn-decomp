@@ -12,9 +12,6 @@ extern void (*D_8003C7B4)(s32);
 extern s16 (*D_8003C7B8)(s32 type, s32 count);
 extern void (*D_8003C7BC)(s32 x, s32 y, Collider* res, s32 unk);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityPrizeDrop);
-// #else
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -220,7 +217,6 @@ void EntityPrizeDrop(Entity* self) {
         break;
     }
 }
-// #endif
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
