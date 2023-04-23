@@ -685,7 +685,7 @@ s32 LoadSaveData(SaveData* save) {
 }
 
 void func_800EA48C(char* dstSaveName, s32 saveSlot) {
-    __builtin_memcpy(dstSaveName, aBaslus00067dra, 19);
+    __builtin_memcpy(dstSaveName, aBaslus00067dra, sizeof(aBaslus00067dra));
     dstSaveName[0x10] += saveSlot / 10;
     dstSaveName[0x11] += saveSlot % 10;
 }

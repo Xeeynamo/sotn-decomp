@@ -914,7 +914,7 @@ extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 extern const char g_MemcardSavePath[];
-extern const char aBaslus00067dra[];
+extern const char aBaslus00067dra[19];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
