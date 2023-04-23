@@ -164,6 +164,7 @@ extern const char aPbav_0[];
 extern const char aPbav_1[];
 extern const char aPbav_2[];
 extern s16 D_800BD07C[];
+extern s16 D_800BD19C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
 extern const char D_800DB524[];
@@ -319,9 +320,11 @@ extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
 extern s32 D_80138FB0;
+extern s16 D_80138FB8; // vol_l
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
 extern s16 g_sfxRingBufferPos1; // D_80139000
+extern s16 D_80139004;          // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern s8 D_80139014;
@@ -633,7 +636,7 @@ void func_80132C2C(s16);
 u8 func_80132028(u_char com, u_char* param, u_char* result);
 void func_8013271C(void);
 void func_80132760(void);
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance);
 void func_801337B4(void);
 bool func_80133940(void);

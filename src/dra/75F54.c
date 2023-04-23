@@ -1883,61 +1883,37 @@ void func_80132760(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801327B4);
 
-// DECOMP_ME_WIP func_80132A04 https://decomp.me/scratch/0X5YL
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132A04);
-#else
-void func_801327B4(s16, s16, s16, s16, s16, s16, s16, s16);
-extern s16 D_800BD19C[];
-extern s16 D_800BD19E[];
-extern s16 D_80138FB8; // vol_l
-extern s16 D_80139004; // vol_r
-
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
-                   s16 volume, s16 distance) {
-    s16 var_a0;
-    s16 var_a1;
-    volatile short pad;
-
-    if (distance == 0) {
-        D_80138FB8 = volume;
-        D_80139004 = volume;
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 arg5,
+                   s16 arg6) {
+    if (arg6 == 0) {
+        D_80138FB8 = (s16)arg5;
+        D_80139004 = (s16)arg5;
     } else {
-        D_80139004 = (volume * D_800BD19C[distance * 2]) >> 7;
-        D_80138FB8 = (volume * D_800BD19E[distance * 2]) >> 7;
+        D_80139004 = (((s16)arg5) * D_800BD19C[arg6 * 2]) >> 7;
+        D_80138FB8 = (((s16)arg5) * D_800BD19C[arg6 * 2 + 1]) >> 7;
     }
 
-    if (voice < 0x18) {
+    if (voice < 0x18U) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
-        SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8,
+        SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, D_80138FB8,
                    D_80139004);
         return;
     }
     switch (voice) {
     case 0x1E:
-        var_a0 = 0;
-        var_a1 = 4;
+        func_801327B4(0, 4, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x1F:
-        var_a0 = 4;
-        var_a1 = 8;
+        func_801327B4(4, 8, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x20:
-        var_a0 = 8;
-        var_a1 = 0xC;
+        func_801327B4(8, 12, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x21:
-        var_a0 = 0xE;
-        var_a1 = 0x12;
+        func_801327B4(14, 18, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
-    default:
-        return;
     }
-    func_801327B4(var_a0, var_a1, vabId, prog, tone, note, D_80138FB8,
-                  D_80139004);
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132C2C);
 
