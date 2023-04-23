@@ -251,10 +251,6 @@ bool func_800FE3A8(s32 arg0) {
     return (g_Status.relics[arg0] & temp) != 0;
 }
 
-// Matches with PSY-Q 3.5
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE3C4);
-#else
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
@@ -296,7 +292,6 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         return subweaponId;
     }
 }
-#endif
 
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalModRate;
