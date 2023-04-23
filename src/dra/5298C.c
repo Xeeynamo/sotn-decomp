@@ -228,8 +228,13 @@ void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F5AE4);
+void func_800F5AE4(MenuContext* context) {
+    s32 i, x;
 
+    for (i = 0, x = 72; i < 3; i++, x += 128)
+        func_800F5904(context, x, 201, 128, 16, (i & 1) << 7,
+                      func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
+}
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
@@ -273,10 +278,6 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
     }
 }
 
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuRect);
-#else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
@@ -306,7 +307,6 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         func_800F53D4(0, temp_s2);
     }
 }
-#endif
 
 void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
                    s32 h, s32 yGap, s32 bColorMode) {
@@ -812,12 +812,6 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-// Draw inventory in equip menu
-// does not match due to stack bigger than expected
-// matches in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8990);
-#else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     const s32 Cols = 2;
     const s32 Width = 168;
@@ -888,7 +882,6 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F6508(ctx, curX, curY);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8C98);
 
@@ -1204,11 +1197,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBC24);
 
-// Does not match due to cc1-26 using the wrong endian
-// the LOBU trick does not work
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FD39C);
-#else
 void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
                    s32 blend, s32 color) {
     GpuBuffer* gpuBuffer;
@@ -1229,7 +1217,6 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     AddPrim(&gpuBuffer->_unk_0474[0x1FF], sprt);
     g_GpuUsage.sp++;
 }
-#endif
 
 s32 func_800FD4C0(s32 bossId, s32 action) {
     s32 temp_v0;
