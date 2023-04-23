@@ -149,7 +149,7 @@ void Init() {
     g_PrimFirst = &D_80086FEC[e->firstPolygonIndex];
     DRAW_RESET();
     DRAW_RECT(159, 22, 90, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
-    FILL_RECT(159, 22, 90, 14, 0x00, 0x30, 0x60, 0x31);
+    FILL_RECT(159, 22, 90, 14, 0x50, 0x50, 0x30, 0x41);
 
     g_DebugMode = 0;
     for (i = 0; i < LEN(g_DebugMenus); i++) {
