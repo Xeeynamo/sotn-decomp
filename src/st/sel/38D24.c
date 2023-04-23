@@ -92,16 +92,11 @@ s32 LoadSaveData(SaveData* save) {
     return 0;
 }
 
-void func_801B9698(char* dstSaveName, s32 saveSlot);
-#ifdef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B9698);
-#else
 void func_801B9698(char* dstSaveName, s32 saveSlot) {
     __builtin_memcpy(dstSaveName, D_801A802C, sizeof(D_801A802C));
     dstSaveName[0x10] += saveSlot / 10;
     dstSaveName[0x11] += saveSlot % 10;
 }
-#endif
 
 s32 func_801B9744(void) {
     u8 res;
