@@ -173,7 +173,7 @@ void Update(Entity* e) {
     } else {
         HIDE_PRIMS(0, 5);
     }
-    SetFontCoord(8, 48);
+    // SetFontCoord(8, 48);
     g_DebugMenus[g_DebugMode].Update();
 
     EndFont();

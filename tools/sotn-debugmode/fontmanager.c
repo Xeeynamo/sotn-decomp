@@ -31,14 +31,14 @@ void InitFont() {
     g_FontCoordY = DefaultFontY;
 }
 
-void SetFontCoord(int x, int y) {
+void SetFontCoord(s16 x, s16 y) {
     if (g_FontCoordX == x && g_FontCoordY == y) {
         return;
     }
 
     FntFlush(g_FontStreamId);
-    Font[g_FontStreamId].x = g_FontCoordX = LOH(x);
-    Font[g_FontStreamId].y = g_FontCoordY = LOH(y);
+    Font[g_FontStreamId].x = g_FontCoordX = x;
+    Font[g_FontStreamId].y = g_FontCoordY = y;
 }
 
 void BeginFont() {
