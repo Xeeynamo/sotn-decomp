@@ -684,19 +684,11 @@ s32 LoadSaveData(SaveData* save) {
     return 0;
 }
 
-// This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
-// probably aspsx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA48C);
-#else
-extern const char aBaslus00067dra[];
-
 void func_800EA48C(char* dstSaveName, s32 saveSlot) {
     __builtin_memcpy(dstSaveName, aBaslus00067dra, 19);
     dstSaveName[0x10] += saveSlot / 10;
     dstSaveName[0x11] += saveSlot % 10;
 }
-#endif
 
 extern Unkstruct_8006C3CC D_8006C3CC[];
 
