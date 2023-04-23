@@ -807,12 +807,6 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-// Draw inventory in equip menu
-// does not match due to stack bigger than expected
-// matches in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8990);
-#else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     const s32 Cols = 2;
     const s32 Width = 168;
@@ -883,7 +877,6 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F6508(ctx, curX, curY);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8C98);
 
