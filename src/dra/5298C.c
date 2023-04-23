@@ -228,8 +228,13 @@ void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F5AE4);
+void func_800F5AE4(MenuContext* context) {
+    s32 i, x;
 
+    for (i = 0, x = 72; i < 3; i++, x += 128)
+        func_800F5904(context, x, 201, 128, 16, (i & 1) << 7,
+                      func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
+}
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
