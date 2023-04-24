@@ -435,7 +435,7 @@ void EntityBloodSkeleton(Entity* self) {
         }
 
         if ((AnimateEntity(&D_80182610, self) == 0) &&
-            (GetPlayerDistanceY() < 0x30) && (Random() % 4) == 0) {
+            (GetPlayerDistanceY() < 48) && (Random() % 4) == 0) {
             self->facing = GetPlayerSide() % 2 == 0;
         }
         /*
