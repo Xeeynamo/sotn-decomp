@@ -67,8 +67,8 @@ void EntityBloodDrips(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        entityFacing = func_801BCC5C() & 1;
-        if ((PLAYER.facing == entityFacing) && (func_801BCBEC() < 128)) {
+        entityFacing = GetPlayerSide() & 1;
+        if ((PLAYER.facing == entityFacing) && (GetPlayerDistanceX() < 128)) {
             self->facing = entityFacing ^ 1;
             func_801BD52C(3);
         }
@@ -76,7 +76,7 @@ void EntityBloodDrips(Entity* self) {
 
     case 3:
         if (AnimateEntity(D_8018237C, self) == 0) {
-            self->facing = (func_801BCC5C() & 1) ^ 1;
+            self->facing = (GetPlayerSide() & 1) ^ 1;
         }
 
         func_801BCF74(D_801822E4);
@@ -99,7 +99,7 @@ void EntityBloodDrips(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        if (func_801BCBEC() < 40) {
+        if (GetPlayerDistanceX() < 40) {
             func_801BD52C(4);
         }
         break;
@@ -120,7 +120,7 @@ void EntityBloodDrips(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2D, self, newEntity);
-                newEntity->facing = func_801BCC5C() & 1;
+                newEntity->facing = GetPlayerSide() & 1;
             }
             self->unk2E++;
         }

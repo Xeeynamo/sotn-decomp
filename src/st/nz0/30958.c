@@ -541,14 +541,14 @@ void EntityMoveableBox(Entity* self) {
         self->accelerationY = 0;
 
         if (var_s1 & 1) {
-            temp_s1 = func_801BCC5C();
+            temp_s1 = GetPlayerSide();
             if (temp_s1 & 1 && player->accelerationX > 0) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
                 self->accelerationX = 0x8000;
             }
-            temp_s1 = func_801BCC5C();
+            temp_s1 = GetPlayerSide();
             if (!(firstPolygonIndex = (temp_s1 & 1)) &&
                 (player->accelerationX < 0)) {
                 if (!(g_blinkTimer & 7)) {
@@ -2087,7 +2087,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BCAD4);
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
-s32 func_801BCBEC(void) {
+s32 GetPlayerDistanceX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -2099,7 +2099,7 @@ s32 func_801BCBEC(void) {
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
-s32 func_801BCC28(void) {
+s32 GetPlayerDistanceY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -2108,13 +2108,19 @@ s32 func_801BCC28(void) {
     return yDistance;
 }
 
-s16 func_801BCC5C(void) {
-    s16 facing = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+/**
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+*/
+s16 GetPlayerSide(void) {
+    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        facing |= 2;
+        side |= 2;
     }
-    return facing;
+    return side;
 }
 
 void MoveEntity() {

@@ -24,7 +24,7 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_UNK_2:
-        self->facing = (func_801BCC5C() & 1) ^ 1;
+        self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk80.modeS8.unk0 = self->facing;
         AnimateEntity(D_801823DC, self);
 
@@ -34,14 +34,14 @@ void EntitySkeleton(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (func_801BCBEC() < 76) {
+        if (GetPlayerDistanceX() < 76) {
             self->step = 3;
         }
         func_801C5F2C(self);
         break;
 
     case SKELETON_UNK_3:
-        self->facing = (func_801BCC5C() & 1) ^ 1;
+        self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk80.modeS8.unk0 = self->facing ^ 1;
         AnimateEntity(D_801823EC, self);
 
@@ -51,7 +51,7 @@ void EntitySkeleton(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (func_801BCBEC() > 92) {
+        if (GetPlayerDistanceX() > 92) {
             self->step = 2;
         }
         func_801C5F2C(self);
@@ -199,7 +199,7 @@ void func_801C6574(Entity* entity) {
     } else {
         InitializeEntity(D_80180CA0);
         entity->posY.val -= 0x1000;
-        value = func_801BCBEC();
+        value = GetPlayerDistanceX();
         value /= 32;
         value = CLAMP_MAX(value, 7);
         var_a0 = D_80182488[value];

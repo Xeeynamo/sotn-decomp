@@ -435,8 +435,8 @@ void EntityBloodSkeleton(Entity* self) {
         }
 
         if ((AnimateEntity(&D_80182610, self) == 0) &&
-            (func_801BCC28() < 0x30) && (Random() % 4) == 0) {
-            self->facing = func_801BCC5C() % 2 == 0;
+            (GetPlayerDistanceY() < 0x30) && (Random() % 4) == 0) {
+            self->facing = GetPlayerSide() % 2 == 0;
         }
         /*
          * The need for the cast may indicate func_801C070C is in the same file.
