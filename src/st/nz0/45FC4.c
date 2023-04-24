@@ -35,7 +35,7 @@ void EntitySkeleton(Entity* self) {
         }
 
         if (GetPlayerDistanceX() < 76) {
-            self->step = 3;
+            self->step = SKELETON_WALK_TOWARDS_PLAYER;
         }
         func_801C5F2C(self);
         break;
@@ -52,7 +52,7 @@ void EntitySkeleton(Entity* self) {
         }
 
         if (GetPlayerDistanceX() > 92) {
-            self->step = 2;
+            self->step = SKELETON_WALK_AWAY_FROM_PLAYER;
         }
         func_801C5F2C(self);
         break;
