@@ -60,7 +60,7 @@ void EntitySkeleton(Entity* self) {
     case SKELETON_UNK_4:
         animStatus = AnimateEntity(D_801823FC, self);
         if (!animStatus) {
-            func_801BD52C(3);
+            func_801BD52C(SKELETON_UNK_3);
             self->unk7C.S8.unk0 =
                 D_80182480[self->subId & 1][++self->unk84.S8.unk0 & 3];
             break;
@@ -70,7 +70,7 @@ void EntitySkeleton(Entity* self) {
             if (((u32)(((u16)self->posX.i.hi + 16) & 0xFFFF) <= 288) &&
                 ((u16)self->posY.i.hi <= 240)) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
-                if (newEntity != NULL) {
+                if (newEntity != NULL) { // Spawn bone
                     func_801C29B0(NA_SE_EN_SKELETON_THROW_BONE);
                     CreateEntityFromCurrentEntity(0x2F, newEntity);
                     if (self->facing != 0) {
@@ -122,7 +122,7 @@ void EntitySkeleton(Entity* self) {
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
                 self->unk2E = 0;
-                func_801BD52C(3);
+                func_801BD52C(SKELETON_UNK_3);
             }
         }
         break;

@@ -8,7 +8,7 @@ s32 func_801BCF74(s32*);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
 s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
-void func_801C29B0(s32); // sfx
+void func_801C29B0(s32 sfxId); // sfx
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
@@ -113,11 +113,11 @@ typedef enum {
     SKELETON_DESTROY
 } SKELETON_STEPS;
 
-extern u8 D_801823DC[];  // animation1
-extern u8 D_801823EC[];  // animation2
-extern u8 D_801823FC[];  // animation3
-extern u8 D_8018240C[];  // animation4
-extern u8 D_80182418[];  // animation5
+extern u8 D_801823DC[];  // animation: Walking Forward
+extern u8 D_801823EC[];  // animation: Walking Backwards
+extern u8 D_801823FC[];  // animation: Throwing bone
+extern u8 D_8018240C[];  // animation: Jumping?
+extern u8 D_80182418[];  // animation: Jumping?
 extern s8 D_80182430[];  // unk88
 extern s32 D_80182438[]; // accelerationX
 extern s32 D_80182450[]; // accelerationY
