@@ -23,7 +23,7 @@ void EntitySkeleton(Entity* self) {
         }
         break;
 
-    case SKELETON_UNK_2:
+    case SKELETON_WALK_AWAY_FROM_PLAYER:
         self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk80.modeS8.unk0 = self->facing;
         AnimateEntity(D_801823DC, self);
@@ -40,7 +40,7 @@ void EntitySkeleton(Entity* self) {
         func_801C5F2C(self);
         break;
 
-    case SKELETON_UNK_3:
+    case SKELETON_WALK_TOWARDS_PLAYER:
         self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk80.modeS8.unk0 = self->facing ^ 1;
         AnimateEntity(D_801823EC, self);
@@ -57,10 +57,10 @@ void EntitySkeleton(Entity* self) {
         func_801C5F2C(self);
         break;
 
-    case SKELETON_UNK_4:
+    case SKELETON_ATTACK:
         animStatus = AnimateEntity(D_801823FC, self);
         if (!animStatus) {
-            func_801BD52C(SKELETON_UNK_3);
+            func_801BD52C(SKELETON_WALK_TOWARDS_PLAYER);
             self->unk7C.S8.unk0 =
                 D_80182480[self->subId & 1][++self->unk84.S8.unk0 & 3];
             break;
@@ -85,7 +85,7 @@ void EntitySkeleton(Entity* self) {
         }
         break;
 
-    case SKELETON_UNK_5:
+    case SKELETON_JUMP:
         switch (self->unk2E) {
         case 0:
             if (!(AnimateEntity(D_8018240C, self) & 1)) {
@@ -122,7 +122,7 @@ void EntitySkeleton(Entity* self) {
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
                 self->unk2E = 0;
-                func_801BD52C(SKELETON_UNK_3);
+                func_801BD52C(SKELETON_WALK_TOWARDS_PLAYER);
             }
         }
         break;
@@ -180,8 +180,8 @@ void func_801C6494(Entity* entity) {
 }
 
 void func_801C6574(Entity* entity) {
-    s32 var_a0;
-    u32 value;
+    s32 accelerationX;
+    u32 xDistanceToPlayer;
 
     if (entity->step) {
         if (entity->flags & 0x100) {
@@ -199,18 +199,18 @@ void func_801C6574(Entity* entity) {
     } else {
         InitializeEntity(D_80180CA0);
         entity->posY.val -= 0x1000;
-        value = GetPlayerDistanceX();
-        value /= 32;
-        value = CLAMP_MAX(value, 7);
-        var_a0 = D_80182488[value];
-        value = entity->facing;
+        xDistanceToPlayer = GetPlayerDistanceX();
+        xDistanceToPlayer /= 32;
+        xDistanceToPlayer = CLAMP_MAX(xDistanceToPlayer, 7);
+        accelerationX = D_80182488[xDistanceToPlayer];
+        xDistanceToPlayer = entity->facing;
 
-        if (value > 0) {
-            var_a0 = -var_a0;
+        if (xDistanceToPlayer > 0) {
+            accelerationX = -accelerationX;
         }
 
         entity->accelerationY = -0x48000;
-        entity->accelerationX = var_a0;
+        entity->accelerationX = accelerationX;
         entity->unk19 = 4;
     }
 }
