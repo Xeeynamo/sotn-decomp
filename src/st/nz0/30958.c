@@ -2113,7 +2113,7 @@ s32 GetPlayerDistanceY(void) {
  * 0 = Player is on the right side
  * 1 = Player is on the left side
  * 2 = Player is above
-*/
+ */
 s16 GetPlayerSide(void) {
     s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
@@ -2268,7 +2268,7 @@ u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
 
 void func_801BD52C(u8 step) {
     Entity* entity = g_CurrentEntity;
-    
+
     entity->step = step;
     entity->unk2E = 0;
     entity->animFrameIdx = 0;
@@ -2276,9 +2276,8 @@ void func_801BD52C(u8 step) {
 }
 
 void func_801BD54C(u8 arg0) {
-    Entity* entity;
+    Entity* entity = g_CurrentEntity;
 
-    entity = g_CurrentEntity;
     entity->unk2E = arg0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
