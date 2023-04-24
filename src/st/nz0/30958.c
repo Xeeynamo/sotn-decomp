@@ -2267,9 +2267,8 @@ u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
 }
 
 void func_801BD52C(u8 step) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
+    Entity* entity = g_CurrentEntity;
+    
     entity->step = step;
     entity->unk2E = 0;
     entity->animFrameIdx = 0;
