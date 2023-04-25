@@ -782,7 +782,7 @@ typedef struct {
     /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
                                          Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
-    /* 8003C87C */ void* func_800FF494;
+    /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
     /* 8003C880 */ bool (*func_80133940)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
