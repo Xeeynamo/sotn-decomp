@@ -312,7 +312,16 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801942D0);
+void func_801942D0(s16 arg0) {
+    Entity* var_s0 = &g_EntityArray[arg0];
+
+    if ((u32)var_s0 < (u32)&D_8007EF1C) {
+        do {
+            DestroyEntity(var_s0);
+            var_s0++;
+        } while ((u32)var_s0 < (u32)&D_8007EF1C);
+    }
+}
 
 void func_8019434C(Entity* entity) {
     if (entity->objectRoomIndex) {
