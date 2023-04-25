@@ -290,6 +290,7 @@ void func_801C7538(Entity* entity) {
     }
 }
 
+// falling liquid from subweapons container
 void func_801C7654(Entity* entity) {
     Collider res;
 
