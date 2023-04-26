@@ -310,11 +310,11 @@ void UpdateEntitySpawn(int variant) {
 
     switch (variant) {
     case 0:
-        FntPrint("L2=spawn\n");
+        FntPrint("* DRA entity (L2=spawn)\n");
         def = &g_DraEntities[0];
         break;
     case 1:
-        FntPrint("L2=spawn\n");
+        FntPrint("* ST entity (L2=spawn)\n");
         def = &g_StageEntities[g_StageId];
         break;
     }
