@@ -1,6 +1,6 @@
 #include "np3.h"
 
-// INCLUDE_ASM("asm/us/st/np3/nonmatchings/4A654", func_801CA654);
+// INCLUDE_ASM("asm/us/st/np3/nonmatchings/4A654", EntityBloodyZombie);
 
 extern u16 D_80180B38[]; // Init
 extern s32 D_801825D4;
@@ -12,7 +12,7 @@ extern u8 D_80182634[]; // Animation:
 extern u8 D_8018267C[]; // Animation:
 
 // EntityBloodyZombie
-void func_801CA654(Entity* self) {
+void EntityBloodyZombie(Entity* self) {
     Primitive** primPtrPtr;
     Primitive* prim;
     Entity* newEntity;

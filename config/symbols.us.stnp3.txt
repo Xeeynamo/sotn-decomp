@@ -77,3 +77,4 @@ EntityBloodSplatter = 0x801C9F98;
 EntityBat = 0x801C997C;
 EntityZombie = 0x801C9BC8;
 EntityUnkId4D = 0x801C9E28;
+EntityBloodyZombie = 0x801CA654;
