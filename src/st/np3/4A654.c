@@ -1,17 +1,5 @@
 #include "np3.h"
 
-// INCLUDE_ASM("asm/us/st/np3/nonmatchings/4A654", EntityBloodyZombie);
-
-extern u16 D_80180B38[]; // Init
-extern s32 D_801825D4;
-extern u16 D_801825E4[];
-extern u8 D_801825EC[]; // Animation:
-extern u8 D_801825FC[]; // Animation:
-extern u8 D_80182620[]; // Animation:
-extern u8 D_80182634[]; // Animation:
-extern u8 D_8018267C[]; // Animation:
-
-// EntityBloodyZombie
 void EntityBloodyZombie(Entity* self) {
     Primitive** primPtrPtr;
     Primitive* prim;
@@ -20,36 +8,36 @@ void EntityBloodyZombie(Entity* self) {
     s32 animStatus;
     s32 facing;
 
-    if ((self->unk44 != 0) && (self->step & 1)) {
+    if ((self->unk44) && (self->step & 1)) {
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM);
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
-        func_801BD114(6);
+        func_801BD114(BLOODY_ZOMBIE_TAKE_HIT);
     }
 
     if ((self->flags & 0x100) && (self->step < 8)) {
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
         self->unk3C = 0;
         self->flags &= 0xDFFFFFFF;
-        func_801BD114(8);
+        func_801BD114(BLOODY_ZOMBIE_DYING);
     }
 
     switch (self->step) {
-    case 0:
+    case BLOODY_ZOMBIE_INIT:
         InitializeEntity(D_80180B38);
         self->unk10 = 1;
         self->unk12 = 4;
-        func_801BD114(2);
+        func_801BD114(BLOODY_ZOMBIE_UNK_2);
         break;
 
-    case 2:
+    case BLOODY_ZOMBIE_UNK_2:
         if (func_801BC8E4(&D_801825D4) & 1) {
-            func_801BD114(1);
+            func_801BD114(BLOODY_ZOMBIE_WALK);
         }
         break;
 
-    case 1:
+    case BLOODY_ZOMBIE_WALK:
         if (self->unk2E == 0) {
-            self->unk80.modeS16.unk0 = 0x80;
+            self->unk80.modeS16.unk0 = 128;
             self->unk2E++;
         }
 
@@ -63,11 +51,11 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (--self->unk80.modeS16.unk0 == 0) {
-            self->unk80.modeS16.unk0 = 0x80;
+            self->unk80.modeS16.unk0 = 128;
             self->facing ^= 1;
         }
 
-        if (!(Random() & 0x3F)) {
+        if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x49, self, newEntity);
@@ -82,15 +70,15 @@ void EntityBloodyZombie(Entity* self) {
         facing = (GetPlayerSide() & 1);
         if ((PLAYER.facing == facing) && (GetPlayerDistanceX() < 128)) {
             self->facing = facing ^ 1;
-            func_801BD114(3);
+            func_801BD114(BLOODY_ZOMBIE_CHASE);
         }
         break;
 
-    case 3:
+    case BLOODY_ZOMBIE_CHASE:
         if (AnimateEntity(D_8018267C, self) == 0) {
             facing = self->facing = (GetPlayerSide() & 1) ^ 1;
         }
-        func_801BCB5C(&D_801825E4);
+        func_801BCB5C(D_801825E4);
 
         if (self->facing != 0) {
             self->accelerationX = 0xC000;
@@ -98,7 +86,7 @@ void EntityBloodyZombie(Entity* self) {
             self->accelerationX = -0xC000;
         }
 
-        if (!(Random() % 64)) {
+        if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x49, self, newEntity);
@@ -112,22 +100,23 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (GetPlayerDistanceX() < 40) {
-            func_801BD114(4);
+            func_801BD114(BLOODY_ZOMBIE_ATTACK);
         }
         break;
 
-    case 4:
+    case BLOODY_ZOMBIE_ATTACK:
         animStatus = AnimateEntity(D_801825FC, self);
         if ((animStatus & 0x80) && (self->animFrameIdx == 10)) {
-            func_801C2598(0x60B);
+            func_801C2598(NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH);
         }
         if (animStatus == 0) {
-            func_801BD114(1);
+            func_801BD114(BLOODY_ZOMBIE_WALK);
         }
         break;
 
-    case 6:
+    case BLOODY_ZOMBIE_TAKE_HIT:
         if (self->unk2E == 0) {
+            // Splat blood
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x4A, self, newEntity);
@@ -137,14 +126,14 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (AnimateEntity(D_80182620, self) == 0) {
-            func_801BD114(1);
+            func_801BD114(BLOODY_ZOMBIE_WALK);
             self->unk2E++;
         }
         break;
 
-    case 8:
+    case BLOODY_ZOMBIE_DYING:
         if (self->unk2E == 0) {
-            firstPrimIndex = g_api.AllocPrimitives(4, 0x14);
+            firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
             if (firstPrimIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -152,13 +141,13 @@ void EntityBloodyZombie(Entity* self) {
             self->firstPolygonIndex = firstPrimIndex;
             prim = &g_PrimBuf[firstPrimIndex];
             *(s32*)&self->unk7C = prim;
-            self->flags |= 0x800000;
+            self->flags |= FLAG_FREE_POLYGONS;
             self->unk2E++;
         }
 
         if (self->animFrameIdx < 13) {
-            if (!(g_blinkTimer & 7)) {
-                func_801C2598(0x749);
+            if (!(g_blinkTimer % 8)) {
+                func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x4A, self, newEntity);
@@ -175,7 +164,7 @@ void EntityBloodyZombie(Entity* self) {
             self->unk80.modeS16.unk0 = 0;
         } else {
             if (self->unk80.modeS16.unk0 == 0) {
-                func_801C2598(0x749);
+                func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
             }
 
             self->unk80.modeS16.unk0++;
@@ -189,7 +178,7 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (self->flags & 0x800000) {
+        if (self->flags & FLAG_FREE_POLYGONS) {
             prim = *(s32*)&self->unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
@@ -211,15 +200,15 @@ void EntityBloodyZombie(Entity* self) {
                     newEntity->posX.i.hi += 8;
                 }
             }
-            self->unk80.modeS16.unk0 = 0x40;
+            self->unk80.modeS16.unk0 = 64;
             self->animCurFrame = 0;
-            func_801C2598(0x693);
+            func_801C2598(NA_SE_EN_EXPLOSIVE_DEATH);
             self->step++;
         }
         break;
 
-    case 9:
-        if (self->flags & 0x800000) {
+    case BLOODY_ZOMBIE_DESTROY:
+        if (self->flags & FLAG_FREE_POLYGONS) {
             prim = *(s32*)&self->unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {

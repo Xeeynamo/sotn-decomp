@@ -80,6 +80,33 @@ extern u8 D_80182594[];
 extern u8 D_801825A8[];
 extern u8 D_801825BC[];
 extern u16 D_801825CC;
+
+// *** EntityBloodyZombie properties START ***
+
+typedef enum {
+    BLOODY_ZOMBIE_INIT,
+    BLOODY_ZOMBIE_WALK,
+    BLOODY_ZOMBIE_UNK_2,
+    BLOODY_ZOMBIE_CHASE,
+    BLOODY_ZOMBIE_ATTACK,
+    BLOODY_ZOMBIE_TAKE_HIT = 6,
+    BLOODY_ZOMBIE_DYING = 8,
+    BLOODY_ZOMBIE_DESTROY
+} EntityBloodyZombieSteps;
+
+extern u16 D_80180B38[]; // InitProps
+extern s32 D_801825D4;
+extern u16 D_801825E4[];
+extern u8 D_801825EC[]; // Animation: Walking
+extern u8 D_801825FC[]; // Animation: Bloody Zombie sword slash
+extern u8 D_80182620[]; // Animation: Recoil from being hit
+extern u8 D_80182634[]; // Animation: Dying
+extern u8 D_8018267C[]; // Animation: Walking faster
+// unk80 Walking direction timer
+// unk84 BloodSplatter facing
+
+// *** EntityBloodyZombie properties END ***
+
 extern s32 D_8018268C;
 extern s32 D_801826A4;
 extern PfnEntityUpdate PfnEntityUpdates[];

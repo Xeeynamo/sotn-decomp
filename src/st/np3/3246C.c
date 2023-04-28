@@ -1478,12 +1478,12 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BCB5C);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
+
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
             return current;
         }
-
         current++;
     }
     return NULL;
@@ -1600,14 +1600,13 @@ void EntityDummy(Entity* arg0) {
 }
 
 s32 func_801BD308(u16* hitSensors, s16 sensorCount) {
+    s32 accelerationX = g_CurrentEntity->accelerationX;
     Collider collider;
-    s16 i;
-    s32 accelerationX;
     u16 temp_a1;
     s16 x;
     s16 y;
-
-    accelerationX = g_CurrentEntity->accelerationX;
+    s16 i;
+    
     if (accelerationX != 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
