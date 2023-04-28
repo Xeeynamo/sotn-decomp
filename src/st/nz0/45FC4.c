@@ -6,7 +6,7 @@ void EntitySkeleton(Entity* self) {
     u8 i;
 
     if (self->flags & 0x100) {
-        self->step = 6;
+        self->step = SKELETON_DESTROY;
     }
 
     switch (self->step) {
