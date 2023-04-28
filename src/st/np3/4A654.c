@@ -25,14 +25,14 @@ void func_801CA654(Entity* self) {
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
         func_801BD114(6);
     }
-    
+
     if ((self->flags & 0x100) && (self->step < 8)) {
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
         self->unk3C = 0;
         self->flags &= 0xDFFFFFFF;
         func_801BD114(8);
     }
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B38);
@@ -40,22 +40,22 @@ void func_801CA654(Entity* self) {
         self->unk12 = 4;
         func_801BD114(2);
         break;
-    
+
     case 2:
         if (func_801BC8E4(&D_801825D4) & 1) {
             func_801BD114(1);
         }
         break;
-        
+
     case 1:
         if (self->unk2E == 0) {
             self->unk80.modeS16.unk0 = 0x80;
             self->unk2E++;
         }
-        
+
         AnimateEntity(D_801825EC, self);
         func_801BCB5C(D_801825E4);
-        
+
         if (self->facing == 0) {
             self->accelerationX = -0x6000;
         } else {
@@ -66,7 +66,7 @@ void func_801CA654(Entity* self) {
             self->unk80.modeS16.unk0 = 0x80;
             self->facing ^= 1;
         }
-        
+
         if (!(Random() & 0x3F)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -79,19 +79,19 @@ void func_801CA654(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        facing = (func_801BC844() & 1);
-        if ((PLAYER.facing == facing) && (func_801BC7D4() < 128)) {
+        facing = (GetPlayerSide() & 1);
+        if ((PLAYER.facing == facing) && (GetPlayerDistanceX() < 128)) {
             self->facing = facing ^ 1;
             func_801BD114(3);
         }
         break;
-        
+
     case 3:
         if (AnimateEntity(D_8018267C, self) == 0) {
-            facing = self->facing = (func_801BC844() & 1) ^ 1;
+            facing = self->facing = (GetPlayerSide() & 1) ^ 1;
         }
         func_801BCB5C(&D_801825E4);
-        
+
         if (self->facing != 0) {
             self->accelerationX = 0xC000;
         } else {
@@ -110,12 +110,12 @@ void func_801CA654(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        
-        if (func_801BC7D4() < 40) {
+
+        if (GetPlayerDistanceX() < 40) {
             func_801BD114(4);
         }
         break;
-        
+
     case 4:
         animStatus = AnimateEntity(D_801825FC, self);
         if ((animStatus & 0x80) && (self->animFrameIdx == 10)) {
@@ -125,23 +125,23 @@ void func_801CA654(Entity* self) {
             func_801BD114(1);
         }
         break;
-        
+
     case 6:
         if (self->unk2E == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x4A, self, newEntity);
-                newEntity->facing = func_801BC844() & 1;
+                newEntity->facing = GetPlayerSide() & 1;
             }
             self->unk2E++;
         }
-        
+
         if (AnimateEntity(D_80182620, self) == 0) {
             func_801BD114(1);
             self->unk2E++;
         }
         break;
-        
+
     case 8:
         if (self->unk2E == 0) {
             firstPrimIndex = g_api.AllocPrimitives(4, 0x14);
@@ -150,13 +150,13 @@ void func_801CA654(Entity* self) {
                 return;
             }
             self->firstPolygonIndex = firstPrimIndex;
-            prim= &g_PrimBuf[firstPrimIndex];
+            prim = &g_PrimBuf[firstPrimIndex];
             *(s32*)&self->unk7C = prim;
             self->flags |= 0x800000;
             self->unk2E++;
         }
-        
-        if (self->animFrameIdx < 13) { 
+
+        if (self->animFrameIdx < 13) {
             if (!(g_blinkTimer & 7)) {
                 func_801C2598(0x749);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -170,14 +170,14 @@ void func_801CA654(Entity* self) {
                     }
                     newEntity->posY.i.hi += 4;
                 }
-                self->unk84.S8.unk0 ^= 1;
+                self->unk84.U8.unk0 ^= 1;
             }
             self->unk80.modeS16.unk0 = 0;
         } else {
             if (self->unk80.modeS16.unk0 == 0) {
                 func_801C2598(0x749);
             }
-            
+
             self->unk80.modeS16.unk0++;
             if (!(g_blinkTimer & 3)) {
                 primPtrPtr = func_801D24A0(*(s32*)&self->unk7C, 2);
@@ -185,10 +185,10 @@ void func_801CA654(Entity* self) {
                     func_801D2684(primPtrPtr);
                     (*primPtrPtr)->r3 = self->unk84.U8.unk0;
                 }
-                self->unk84.S8.unk0 ^= 1;
+                self->unk84.U8.unk0 ^= 1;
             }
         }
-        
+
         if (self->flags & 0x800000) {
             prim = *(s32*)&self->unk7C;
             while (prim != NULL) {
@@ -198,7 +198,7 @@ void func_801CA654(Entity* self) {
                 prim = prim->next;
             }
         }
-        
+
         if (AnimateEntity(D_80182634, self) == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -217,7 +217,7 @@ void func_801CA654(Entity* self) {
             self->step++;
         }
         break;
-        
+
     case 9:
         if (self->flags & 0x800000) {
             prim = *(s32*)&self->unk7C;
@@ -228,26 +228,25 @@ void func_801CA654(Entity* self) {
                 prim = prim->next;
             }
         }
-        
+
         if (--self->unk80.modeS16.unk0 == 0) {
             DestroyEntity(self);
         }
         break;
-        }
-    
-        if ((u32) ((u16) self->animCurFrame - 11) < 2) {
-            self->hitboxWidth = 18;
-            self->hitboxHeight = 12;
-            *(s16*)&self->unk10 = -12;
-            self->unk12 = -12;
-        } else {
-            self->hitboxWidth = 4;
-            self->hitboxHeight = 22;
-            self->unk10 = 1;
-            self->unk12 = 4;
+    }
+
+    if ((u32)((u16)self->animCurFrame - 11) < 2) {
+        self->hitboxWidth = 18;
+        self->hitboxHeight = 12;
+        *(s16*)&self->unk10 = -12;
+        self->unk12 = -12;
+    } else {
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 22;
+        self->unk10 = 1;
+        self->unk12 = 4;
     }
 }
-
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4A654", func_801CAE0C);
 

@@ -1425,7 +1425,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BC6BC);
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
-s32 func_801BC7D4(void) {
+s32 GetPlayerDistanceX(void) {
     s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (yDistance < 0) {
@@ -1437,7 +1437,7 @@ s32 func_801BC7D4(void) {
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
-s32 func_801BC810(void) {
+s32 GetPlayerDistanceY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -1452,7 +1452,7 @@ s32 func_801BC810(void) {
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-s16 func_801BC844(void) {
+s16 GetPlayerSide(void) {
     s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
