@@ -73,8 +73,22 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
 // Black layer that covers room interior and lights up when cutscene starts
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRoomDarkness);
 
-// Maria sprite
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityMaria);
+void EntityMaria(Entity* self) {
+    if (self->step == 0) {
+        /* Has player seen Maria Holy Glasses Cutscene? */
+        if (D_8003BDEC[216] != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(D_80180428);
+        self->flags = FLAG_UNK_08000000;
+        self->animSet = -0x7FFF;
+        self->animCurFrame = 10;
+        self->unk5A = 0x48;
+        self->palette = 0x210;
+        self->zPriority = 0x80;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
