@@ -1606,7 +1606,7 @@ s32 func_801BD308(u16* hitSensors, s16 sensorCount) {
     s16 x;
     s16 y;
     s16 i;
-    
+
     if (accelerationX != 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
