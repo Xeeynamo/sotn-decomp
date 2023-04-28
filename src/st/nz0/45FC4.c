@@ -23,7 +23,7 @@ void EntitySkeleton(Entity* self) {
         }
         break;
 
-    case SKELETON_WALK_AWAY_FROM_PLAYER:
+    case SKELETON_WALK_TOWARDS_PLAYER:
         self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk80.modeS8.unk0 = self->facing;
         AnimateEntity(D_801823DC, self);
@@ -35,12 +35,12 @@ void EntitySkeleton(Entity* self) {
         }
 
         if (GetPlayerDistanceX() < 76) {
-            self->step = SKELETON_WALK_TOWARDS_PLAYER;
+            self->step = SKELETON_WALK_AWAY_FROM_PLAYER;
         }
         func_801C5F2C(self);
         break;
 
-    case SKELETON_WALK_TOWARDS_PLAYER:
+    case SKELETON_WALK_AWAY_FROM_PLAYER:
         self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk80.modeS8.unk0 = self->facing ^ 1;
         AnimateEntity(D_801823EC, self);
@@ -52,7 +52,7 @@ void EntitySkeleton(Entity* self) {
         }
 
         if (GetPlayerDistanceX() > 92) {
-            self->step = SKELETON_WALK_AWAY_FROM_PLAYER;
+            self->step = SKELETON_WALK_TOWARDS_PLAYER;
         }
         func_801C5F2C(self);
         break;
@@ -60,7 +60,7 @@ void EntitySkeleton(Entity* self) {
     case SKELETON_ATTACK:
         animStatus = AnimateEntity(D_801823FC, self);
         if (!animStatus) {
-            func_801BD52C(SKELETON_WALK_TOWARDS_PLAYER);
+            func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
             self->unk7C.S8.unk0 =
                 D_80182480[self->subId & 1][++self->unk84.S8.unk0 & 3];
             break;
@@ -122,7 +122,7 @@ void EntitySkeleton(Entity* self) {
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
                 self->unk2E = 0;
-                func_801BD52C(SKELETON_WALK_TOWARDS_PLAYER);
+                func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;

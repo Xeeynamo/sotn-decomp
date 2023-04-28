@@ -106,15 +106,15 @@ extern s32 D_801823C4;
 typedef enum {
     SKELETON_INIT,
     SKELETON_IDLE,
-    SKELETON_WALK_AWAY_FROM_PLAYER,
     SKELETON_WALK_TOWARDS_PLAYER,
+    SKELETON_WALK_AWAY_FROM_PLAYER,
     SKELETON_ATTACK,
     SKELETON_JUMP,
     SKELETON_DESTROY
 } SKELETON_STEPS;
 
-extern u8 D_801823DC[];  // animation: Walking Backwards
-extern u8 D_801823EC[];  // animation: Walking Forward
+extern u8 D_801823DC[];  // animation: Walking Forward
+extern u8 D_801823EC[];  // animation: Walking Backwards
 extern u8 D_801823FC[];  // animation: Throwing bone
 extern u8 D_8018240C[];  // animation: Jumping?
 extern u8 D_80182418[];  // animation: Jumping?
