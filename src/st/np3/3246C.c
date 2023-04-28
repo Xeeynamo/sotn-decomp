@@ -1422,6 +1422,9 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BC6BC);
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
 s32 func_801BC7D4(void) {
     s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
@@ -1431,6 +1434,9 @@ s32 func_801BC7D4(void) {
     return yDistance;
 }
 
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
 s32 func_801BC810(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
@@ -1440,13 +1446,19 @@ s32 func_801BC810(void) {
     return yDistance;
 }
 
+/**
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+ */
 s16 func_801BC844(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+        side |= 2;
     }
-    return var_a0;
+    return side;
 }
 
 void MoveEntity(void) {
