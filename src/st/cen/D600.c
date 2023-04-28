@@ -92,7 +92,37 @@ void EntityMaria(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
+// DECOMP_ME_WIP https://decomp.me/scratch/rfUJj
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801904B8);
+#else
+s16 func_801904B8(Primitive* self, s16 arg1) {
+    s16 new_var2;
+    s32 new_var;
+    s16 temp_a1;
+    s16 temp_v0;
+    s16 temp_v1;
+
+    self->u0 = self->u2 = 0x50;
+    self->u1 = self->u3 = 0x60;
+    self->blendMode = 2;
+    self->x0 = self->x2 = g_CurrentEntity->posX.i.hi - 8;
+    new_var2 = self->y3 = arg1;
+    temp_a1 = g_CurrentEntity->posX.i.hi + 8;
+    self->y2 = new_var2;
+    new_var = temp_a1;
+    temp_v1 = new_var;
+    temp_a1 = arg1 - 0x20;
+    self->y1 = temp_a1;
+    self->v2 = self->v3 = 0x26;
+    self->y0 = temp_a1;
+    self->x3 = temp_v1;
+    self->x1 = temp_v1;
+    self->v1 = 6;
+    self->v0 = 6;
+    return temp_a1;
+}
+#endif
 
 // Elevator when not moving (ID 1A)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityElevatorStationary);
