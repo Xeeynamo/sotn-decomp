@@ -653,7 +653,14 @@ void func_80195714(void) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195798);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801958F4);
+void CollectHeart(u16 index) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_Status.hearts = D_80180FE8[index] + g_Status.hearts;
+    if (g_Status.heartsMax < g_Status.hearts) {
+        g_Status.hearts = g_Status.heartsMax;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195974);
 
@@ -662,7 +669,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195A50);
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195B68);
 
 void func_80195C0C(void) {
-    g_api.PlaySfx(0x67A);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
