@@ -7,7 +7,29 @@
 #include "cen.h"
 
 // background block of rock
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityBackgroundBlock);
+void EntityBackgroundBlock(Entity* self) {
+    ObjInit2* obj = &D_80180490[self->subId].animSet;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180458);
+        self->animSet = obj->animSet;
+        self->zPriority = obj->zPriority;
+        self->unk5A = obj->unk4.s;
+        self->palette = obj->palette;
+        self->unk19 = obj->unk8;
+        self->blendMode = obj->blendMode;
+
+        if (obj->unkC != 0) {
+            self->flags = obj->unkC;
+        }
+
+        if (self->subId == 1) {
+            self->unk1C = 0x200;
+            self->unk1A = 0x200;
+        }
+    }
+    func_80194394(obj->unk10, self);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
 
@@ -92,7 +114,19 @@ void EntityMaria(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801904B8);
+s16 func_801904B8(Primitive* prim, s16 arg1) {
+    prim->u0 = prim->u2 = 0x50;
+    prim->u1 = prim->u3 = 0x60;
+    prim->blendMode = 2;
+    prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
+    prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
+    prim->y2 = prim->y3 = arg1;
+    arg1 -= 32;
+    prim->v2 = prim->v3 = 38;
+    prim->v0 = prim->v1 = 6;
+    prim->y0 = prim->y1 = arg1;
+    return arg1;
+}
 
 // Elevator when not moving (ID 1A)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityElevatorStationary);
@@ -956,7 +990,7 @@ void EntityUnkId08(Entity* entity) {
     ObjInit2* objInit = &D_8018125C[entity->subId];
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180458);
+        InitializeEntity(D_80180458);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
