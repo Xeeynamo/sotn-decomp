@@ -21,14 +21,14 @@ void EntityAxeKnight(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180C64);
-        self->facing = (func_801BCC5C() & 1) ^ 1;
+        self->facing = (GetPlayerSide() & 1) ^ 1;
         self->unk12 = 0xA;
         self->unk7C.S8.unk1 = 0;
         self->unk80.modeS16.unk2 = 0x200;
 
     case 1:
         if (func_801BCCFC(&D_80182188) & 1) {
-            self->facing = (func_801BCC5C() & 1) ^ 1;
+            self->facing = (GetPlayerSide() & 1) ^ 1;
             func_801BD52C(2);
         }
         break;
@@ -45,7 +45,7 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (func_801BCC5C() & 1) ^ 1;
+            self->facing = (GetPlayerSide() & 1) ^ 1;
         }
 
         if (animStatus == 0) {
@@ -54,7 +54,7 @@ void EntityAxeKnight(Entity* self) {
             } else {
                 self->accelerationX = 0x3000;
             }
-            if (func_801BCBEC() < 0x60) {
+            if (GetPlayerDistanceX() < 0x60) {
                 func_801BD52C(3);
                 self->unk7C.S8.unk0 = 1;
             }
@@ -91,7 +91,7 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (func_801BCC5C() & 1) ^ 1;
+            self->facing = (GetPlayerSide() & 1) ^ 1;
         }
         if (animStatus == 0) {
             if (self->facing == 0) {
@@ -100,7 +100,7 @@ void EntityAxeKnight(Entity* self) {
                 self->accelerationX = -0x3000;
             }
 
-            if (func_801BCBEC() >= 0x51) {
+            if (GetPlayerDistanceX() >= 0x51) {
                 func_801BD52C(2);
                 self->unk7C.S8.unk0 = 0;
             }
@@ -129,7 +129,7 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
         label:
-            if (func_801BCBEC() < 89) {
+            if (GetPlayerDistanceX() < 89) {
                 func_801BD52C(3);
                 self->unk7C.S8.unk0 = 1;
             } else {
@@ -178,7 +178,7 @@ void EntityAxeKnight(Entity* self) {
     case 7:
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
-            if (func_801BCBEC() >= 0x59) {
+            if (GetPlayerDistanceX() >= 0x59) {
                 func_801BD52C(2);
                 self->unk7C.S8.unk0 = 0;
             } else {
