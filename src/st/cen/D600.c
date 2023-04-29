@@ -92,7 +92,19 @@ void EntityMaria(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801904B8);
+s16 func_801904B8(Primitive* prim, s16 arg1) {
+    prim->u0 = prim->u2 = 0x50;
+    prim->u1 = prim->u3 = 0x60;
+    prim->blendMode = 2;
+    prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
+    prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
+    prim->y2 = prim->y3 = arg1;
+    arg1 -= 32;
+    prim->v2 = prim->v3 = 38;
+    prim->v0 = prim->v1 = 6;
+    prim->y0 = prim->y1 = arg1;
+    return arg1;
+}
 
 // Elevator when not moving (ID 1A)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityElevatorStationary);
