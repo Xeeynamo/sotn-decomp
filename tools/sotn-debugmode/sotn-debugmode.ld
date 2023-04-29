@@ -12,6 +12,12 @@ SECTIONS
         ../../build/tools/sotn-debugmode/debugmode.o(.scommon);
         ../../build/tools/sotn-debugmode/debugmode.o(.sbss);
         ../../build/tools/sotn-debugmode/debugmode.o(.bss);
+        ../../build/tools/sotn-debugmode/fontmanager.o(.data);
+        ../../build/tools/sotn-debugmode/fontmanager.o(.rodata);
+        ../../build/tools/sotn-debugmode/fontmanager.o(.text);
+        ../../build/tools/sotn-debugmode/fontmanager.o(.scommon);
+        ../../build/tools/sotn-debugmode/fontmanager.o(.sbss);
+        ../../build/tools/sotn-debugmode/fontmanager.o(.bss);
         ../../build/tools/sotn-debugmode/entity_spawn.o(.data);
         ../../build/tools/sotn-debugmode/entity_spawn.o(.rodata);
         ../../build/tools/sotn-debugmode/entity_spawn.o(.text);
