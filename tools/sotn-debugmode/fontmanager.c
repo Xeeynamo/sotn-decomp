@@ -36,9 +36,11 @@ void SetFontCoord(int x, int y) {
         return;
     }
 
+#ifndef DISABLE_FONT_COORD
     FntFlush(g_FontStreamId);
     Font[g_FontStreamId].x = g_FontCoordX = LOH(x);
     Font[g_FontStreamId].y = g_FontCoordY = LOH(y);
+#endif
 }
 
 void BeginFont() {

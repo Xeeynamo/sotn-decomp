@@ -169,7 +169,7 @@ void Update(Entity* e) {
     if (g_DebugMenus[g_DebugMode].showMenu) {
         SHOW_PRIMS(0, 5);
         SetFontCoord(160, 26);
-        FntPrint(g_DebugMenus[g_DebugMode].name);
+        FntPrint("%s\n", g_DebugMenus[g_DebugMode].name);
     } else {
         HIDE_PRIMS(0, 5);
     }
