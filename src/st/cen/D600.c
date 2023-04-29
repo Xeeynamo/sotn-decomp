@@ -353,12 +353,11 @@ void DestroyEntity(Entity* entity) {
 void func_801942D0(s16 index) {
     Entity* entity = &g_EntityArray[index];
 
-    while (entity < &D_8007EF1C){ 
+    while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
         entity++;
     }
 }
-
 
 void func_8019434C(Entity* entity) {
     if (entity->objectRoomIndex) {
