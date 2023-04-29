@@ -85,11 +85,14 @@ segments:
       - [0x30880, .rodata, 45FC4] # EntitySkeleton data
       - [0x3089C, .rodata, 4672C]
       - [0x308B4, rodata]
+      - [0x308D4, .rodata, 47958] # EntityBloodSkeleron data
+      - [0x308E8, rodata]
       - [0x30958, c]
       - [0x3E30C, c]
       - [0x445BC, c]
       - [0x45568, c]
       - [0x45FC4, c] # EntitySkeleton code
       - [0x4672C, c]
+      - [0x47958, c] # EntityBloodSkeleron code
       - [0x4AA10, sbss]
   - [0x4B780]
