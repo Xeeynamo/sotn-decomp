@@ -403,7 +403,7 @@ typedef struct {
 typedef struct {
     /* 0x00000 */ void* unk0;
     /* 0x00004 */ DisplayBuffer buf;
-    /* 0x00074 */ char pad74[0x400];
+    /* 0x00074 */ DR_ENV env[0x10];
     /* 0x00474 */ u32 _unk_0474[0x200];
     /* 0x00474 */ DR_MODE drawModes[0x400];
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
