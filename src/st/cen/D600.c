@@ -318,7 +318,19 @@ void func_80193538(u16 objectId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801935B4);
+bool func_801935B4(Entity* self) {
+    s16 posX = PLAYER.posX.i.hi - self->posX.i.hi;
+    s16 posY;
+
+    posX = ABS(posX);
+
+    if (posX < 17) {
+        posY = PLAYER.posY.i.hi - self->posY.i.hi;
+        posY = ABS(posY);
+        return posY < 33;
+    }
+    return 0;
+}
 
 // Red door (ID 05)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRedDoor);
