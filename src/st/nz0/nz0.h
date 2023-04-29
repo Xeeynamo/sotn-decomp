@@ -8,7 +8,7 @@ s32 func_801BCF74(s32*);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
 s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
-void func_801C29B0(s32); // sfx
+void func_801C29B0(s32 sfxId); // sfx
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
@@ -100,6 +100,35 @@ extern const u8 D_80182320[];
 extern const u8 D_80182334[];
 extern const u8 D_8018237C[];
 extern s32 D_801823C4;
+
+// *** EntitySkeleton properties START ***
+
+typedef enum {
+    SKELETON_INIT,
+    SKELETON_IDLE,
+    SKELETON_WALK_TOWARDS_PLAYER,
+    SKELETON_WALK_AWAY_FROM_PLAYER,
+    SKELETON_ATTACK,
+    SKELETON_JUMP,
+    SKELETON_DESTROY
+} SKELETON_STEPS;
+
+extern u8 D_801823DC[];  // animation: Walking Forward
+extern u8 D_801823EC[];  // animation: Walking Backwards
+extern u8 D_801823FC[];  // animation: Throwing bone
+extern u8 D_8018240C[];  // animation: Jumping?
+extern u8 D_80182418[];  // animation: Jumping?
+extern s8 D_80182430[];  // unk88
+extern s32 D_80182438[]; // accelerationX
+extern s32 D_80182450[]; // accelerationY
+extern u16 D_80182468[]; // posX
+extern u16 D_80182474[]; // posY
+extern u8 D_80182480[2][4];
+extern s32 D_801824A8;
+extern s32 D_801824C0;
+
+// *** EntitySkeleton properties END ***
+
 extern s32 D_801824B8;
 extern s32 D_801824C0;
 extern s32 D_801824CC;
