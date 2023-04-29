@@ -1,6 +1,6 @@
 #include <game.h>
 
 void InitFont();
-void SetFontCoord(s16 x, s16 y);
+void SetFontCoord(int x, int y);
 void BeginFont();
 void EndFont();
