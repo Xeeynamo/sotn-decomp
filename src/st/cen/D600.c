@@ -7,7 +7,30 @@
 #include "cen.h"
 
 // background block of rock
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityBackgroundBlock);
+void EntityBackgroundBlock(Entity* self) {
+    ObjInit2* obj = &D_80180490[self->subId].animSet;
+    
+    if (self->step == 0) {
+        InitializeEntity(D_80180458);
+        self->animSet = obj->animSet;
+        self->zPriority = obj->zPriority;
+        self->unk5A =  obj->unk4.s;
+        self->palette = obj->palette;
+        self->unk19 = obj->unk8;
+        self->blendMode = obj->blendMode;
+
+        if (obj->unkC != 0) {
+            self->flags = obj->unkC;
+        }
+
+        if (self->subId == 1) {
+            self->unk1C = 0x200;
+            self->unk1A = 0x200;
+        }
+    }
+    func_80194394(obj->unk10, self);
+}
+
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
 
@@ -956,7 +979,7 @@ void EntityUnkId08(Entity* entity) {
     ObjInit2* objInit = &D_8018125C[entity->subId];
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180458);
+        InitializeEntity(D_80180458);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
