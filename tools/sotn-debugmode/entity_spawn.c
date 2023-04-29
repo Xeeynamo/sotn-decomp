@@ -353,7 +353,9 @@ void UpdateEntitySpawn(int variant) {
     }
 
     if (g_pads->tapped & PAD_L2 && entUpdate) {
-        Entity* e = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        Entity* start = &g_EntityArray[0x40];
+        Entity* end = &g_EntityArray[0x80];
+        Entity* e = AllocEntity(start, end);
         if (e != NULL) {
             DestroyEntity(e);
             e->objectId = g_SpawnObjId;
@@ -365,8 +367,6 @@ void UpdateEntitySpawn(int variant) {
             // of the camera, a bit far from Alucard.
             e->posX.i.hi = 176;
             e->posY.i.hi = 120;
-            e->hitboxWidth = 8;
-            e->hitboxHeight = 8;
         }
     }
 }
