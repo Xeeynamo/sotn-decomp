@@ -13,6 +13,7 @@ extern ObjInit2 D_8018125C[];
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
 extern LayoutObject* D_8019C768;
+extern u8 D_8019C76C;
 extern s16 D_8019D3B4;
 extern s16 D_8019D3B6;
 extern s32 D_8019D3B8;

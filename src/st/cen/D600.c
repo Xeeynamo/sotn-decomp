@@ -223,7 +223,33 @@ void func_80192DD4(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192ED0);
+void func_80192ED0(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_8019C76C == 0) {
+        func_80192D7C(arg0 - D_80097908);
+        D_8019C76C = 1;
+    }
+
+    while (true) {
+        if (D_8019C764->posX == 0xFFFE || arg0 > D_8019C764->posX) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_8019C764->objectRoomIndex >> 8) + 255;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_8019C764);
+        }
+        D_8019C764--;
+    }
+}
 
 void func_80192FE4(s16 arg0) {
     while (true) {
