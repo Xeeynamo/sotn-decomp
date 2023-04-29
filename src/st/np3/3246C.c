@@ -1422,7 +1422,10 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BC6BC);
 
-s32 func_801BC7D4(void) {
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
+s32 GetPlayerDistanceX(void) {
     s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (yDistance < 0) {
@@ -1431,7 +1434,10 @@ s32 func_801BC7D4(void) {
     return yDistance;
 }
 
-s32 func_801BC810(void) {
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
+s32 GetPlayerDistanceY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -1440,13 +1446,19 @@ s32 func_801BC810(void) {
     return yDistance;
 }
 
-s16 func_801BC844(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+/**
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+ */
+s16 GetPlayerSide(void) {
+    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+        side |= 2;
     }
-    return var_a0;
+    return side;
 }
 
 void MoveEntity(void) {
@@ -1466,12 +1478,12 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BCB5C);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
+
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
             return current;
         }
-
         current++;
     }
     return NULL;
@@ -1588,14 +1600,13 @@ void EntityDummy(Entity* arg0) {
 }
 
 s32 func_801BD308(u16* hitSensors, s16 sensorCount) {
+    s32 accelerationX = g_CurrentEntity->accelerationX;
     Collider collider;
-    s16 i;
-    s32 accelerationX;
     u16 temp_a1;
     s16 x;
     s16 y;
+    s16 i;
 
-    accelerationX = g_CurrentEntity->accelerationX;
     if (accelerationX != 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;

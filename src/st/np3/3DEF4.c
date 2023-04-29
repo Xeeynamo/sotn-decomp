@@ -1188,8 +1188,8 @@ void func_801C90E8(void) {
         return;
     }
     if ((g_CurrentEntity->unk7C.U8.unk0) == 0) {
-        if (func_801BC7D4() < 64) {
-            if (g_CurrentEntity->facing != (func_801BC844() & 1)) {
+        if (GetPlayerDistanceX() < 64) {
+            if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
                 func_801BD114(4);
             }
         }

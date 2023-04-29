@@ -1,6 +1,6 @@
 #include "nz0.h"
 
-void EntityBloodDrips(Entity* self) {
+void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
     Primitive** prim2;
     Entity* newEntity;
