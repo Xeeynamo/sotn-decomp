@@ -9,6 +9,7 @@ extern u16 D_80180410[];
 extern u16 D_80180458;
 extern u16 D_801805D8[];
 extern s16 D_80180BBC[];
+extern s8 D_80180FE8[];
 extern ObjInit2 D_8018125C[];
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
