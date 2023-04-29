@@ -7,7 +7,8 @@
 extern PfnEntityUpdate D_80180390[];
 extern u16 D_80180410[];
 extern u16 D_80180428[];
-extern u16 D_80180458;
+extern u16 D_80180458[];
+extern ObjInit2 D_80180490[];
 extern u16 D_801805D8[];
 extern s16 D_80180BBC[];
 extern s8 D_80180FE8[];
