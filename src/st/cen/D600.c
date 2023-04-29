@@ -9,12 +9,12 @@
 // background block of rock
 void EntityBackgroundBlock(Entity* self) {
     ObjInit2* obj = &D_80180490[self->subId].animSet;
-    
+
     if (self->step == 0) {
         InitializeEntity(D_80180458);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
-        self->unk5A =  obj->unk4.s;
+        self->unk5A = obj->unk4.s;
         self->palette = obj->palette;
         self->unk19 = obj->unk8;
         self->blendMode = obj->blendMode;
@@ -30,7 +30,6 @@ void EntityBackgroundBlock(Entity* self) {
     }
     func_80194394(obj->unk10, self);
 }
-
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
 
