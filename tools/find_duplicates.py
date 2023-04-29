@@ -76,28 +76,24 @@ def get_symbol_length(sym_name):
 
 # read instructions, returns tuple of 1 out of 4 utf8 decoded bytes, raw bits
 def get_symbol_bytes(offsets, function):
-    if function not in offsets or "start" not in offsets[function] or "end" not in offsets[function]:
+    fn = offsets.get(function, {})
+    if not all(k in fn for k in ("start", "end")):
         return None
-    bin = offsets[function]["bin"]
-    start = offsets[function]["start"]
-    end = offsets[function]["end"]
-    data_type = offsets[function]["data_type"]
+    
+    bin = fn.get("bin")
+    start = fn.get("start")
+    end = fn.get("end")
+    data_type = fn.get("data_type")
 
-    bytes_data = list(roms_bytes[bin][start:end])
+    bytes_data = roms_bytes[bin][start:end]
 
-    # removing zeros at the end
-    while len(bytes_data) > 0 and bytes_data[-1] == 0:
-        bytes_data.pop()
+    # remove zeros at the end
+    bytes_data = bytes_data.rstrip(b"\x00")
 
     # read one in 4 byte to only consider the mips opcode and immediates and regalloc https://student.cs.uwaterloo.ca/~isg/res/mips/opcodes
-    instructions = bytes_data[3::4]
+    instructions = map(lambda x: x >> 2, bytes_data[3::4])
 
-    result = []
-    for instruction in instructions:
-        # we alread read only 1 byte in 4 but in this byte, we need the 6 first bits only, discarding the 2 we dont want with this >> 2
-        result.append(instruction >> 2)
-
-    return bytes(result).decode('utf-8'), bytes_data, data_type
+    return bytes(instructions).decode('utf-8'), bytearray(bytes_data), data_type
 
 
 # returns list of syms[key,fn] = (bin, rom, cur_file, prev_sym, ram, data_type)
@@ -215,7 +211,7 @@ def get_matches(query):
 
     result = {}
     for symbol in map_offsets:
-        if symbol is not None and query != symbol:
+        if symbol and query != symbol:
             score = get_pair_score(query_bytes, symbol)
             if score >= args.threshold:
                 result[symbol] = score
