@@ -1915,9 +1915,45 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 arg5,
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132C2C);
+void func_80132C2C(s16 arg0) {
+    s32 i;
+    s32 isFound;
 
-extern s16 D_80139868[];
+    if (arg0 == 6) {
+        isFound = 0;
+        for (i = 0; i < D_801396F4; i++) {
+            if (D_80139868[i] == 0xC) {
+                isFound = 1;
+            }
+        }
+
+        if (isFound) {
+            D_800BD1C0++;
+            D_80139868[D_801396F4] = 0xE;
+            D_801396F4++;
+            if (D_801396F4 == 0x100) {
+                D_8013AEE8++;
+                for (i = 1; ((i + 1) - 1) < (0x100); i++) {
+                    D_80139868[i] = 0;
+                }
+
+                D_801396F4 = 1;
+                D_80139868[D_801396F4] = 0xE;
+                D_801396F4++;
+            }
+        }
+    }
+    D_80139868[D_801396F4] = arg0;
+    D_801396F4++;
+    if (D_801396F4 == 0x100) {
+        D_8013AEE8++;
+        for (i = 1; i < 0x100; i++) {
+            D_80139868[i] = 0;
+        }
+
+        D_801396F4 = 1;
+    }
+}
 
 u16 func_80132E38(void) {
     s32 i;
@@ -1925,9 +1961,7 @@ u16 func_80132E38(void) {
     for (i = 0; i < 255; i++) {
         D_80139868[i] = D_80139868[i + 1];
     }
-    D_801396F4--;
-
-    return D_801396F4;
+    return --D_801396F4;
 }
 
 void func_80132E90(u32 arg0, s8* arg1) {

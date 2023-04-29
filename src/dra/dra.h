@@ -348,7 +348,7 @@ extern Multi D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern s32 D_801396F0;
-extern u16 D_801396F4;
+extern volatile s16 D_801396F4;
 extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;
