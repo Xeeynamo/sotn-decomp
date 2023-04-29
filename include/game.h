@@ -290,10 +290,10 @@ typedef struct Entity {
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;
+    /* 0x44 */ u16 unk44; // 1 = Takes a hit
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 unk48; // 1 = took hit
+    /* 0x48 */ u8 unk48; // 1 = Takes a hit
     /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
@@ -782,7 +782,7 @@ typedef struct {
     /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
                                          Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
-    /* 8003C87C */ void* func_800FF494;
+    /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
     /* 8003C880 */ bool (*func_80133940)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);

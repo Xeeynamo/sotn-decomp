@@ -34,3 +34,4 @@ EntityRoomDarkness = 0x8019007C;
 EntityElevatorStationary = 0x80190540;
 EntityUnkId1B = 0x80190A78;
 EntityMovingElevator = 0x80190B64;
+CollectHeart = 0x801958F4;

@@ -1,6 +1,6 @@
 #include "nz0.h"
 
-void EntityBloodDrips(Entity* self) {
+void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
     Primitive** prim2;
     Entity* newEntity;
@@ -67,8 +67,8 @@ void EntityBloodDrips(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        entityFacing = func_801BCC5C() & 1;
-        if ((PLAYER.facing == entityFacing) && (func_801BCBEC() < 128)) {
+        entityFacing = GetPlayerSide() & 1;
+        if ((PLAYER.facing == entityFacing) && (GetPlayerDistanceX() < 128)) {
             self->facing = entityFacing ^ 1;
             func_801BD52C(3);
         }
@@ -76,7 +76,7 @@ void EntityBloodDrips(Entity* self) {
 
     case 3:
         if (AnimateEntity(D_8018237C, self) == 0) {
-            self->facing = (func_801BCC5C() & 1) ^ 1;
+            self->facing = (GetPlayerSide() & 1) ^ 1;
         }
 
         func_801BCF74(D_801822E4);
@@ -99,7 +99,7 @@ void EntityBloodDrips(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        if (func_801BCBEC() < 40) {
+        if (GetPlayerDistanceX() < 40) {
             func_801BD52C(4);
         }
         break;
@@ -120,7 +120,7 @@ void EntityBloodDrips(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2D, self, newEntity);
-                newEntity->facing = func_801BCC5C() & 1;
+                newEntity->facing = GetPlayerSide() & 1;
             }
             self->unk2E++;
         }
@@ -306,93 +306,5 @@ void func_801C5F2C(Entity* arg0) {
         }
     } else {
         func_801BD52C(5);
-    }
-}
-
-// throws bones at you
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/45568", EntitySkeleton);
-
-void func_801C6494(Entity* entity) {
-    if (entity->step) {
-        entity->unk88.S8.unk0--;
-        if (entity->unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_80182424[entity->subId];
-            FallEntity();
-            MoveEntity();
-            return;
-        }
-
-        entity->objectId = ENTITY_EXPLOSION;
-        entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-        entity->subId = 0;
-        entity->step = 0;
-        return;
-    }
-
-    InitializeEntity(D_80180C94);
-    entity->unk19 = 4;
-    entity->animCurFrame = entity->subId + 15;
-
-    if (entity->facing != 0) {
-        entity->accelerationX = -entity->accelerationX;
-    }
-}
-
-void func_801C6574(Entity* entity) {
-    s32 var_a0;
-    u32 value;
-
-    if (entity->step) {
-        if (entity->flags & 0x100) {
-            func_801BD568(0, 0);
-            return;
-        }
-
-        entity->unk1E += 0x80;
-        entity->accelerationY += 0x2400;
-        MoveEntity();
-
-        if (entity->posY.i.hi > 240) {
-            DestroyEntity(entity);
-        }
-    } else {
-        InitializeEntity(D_80180CA0);
-        entity->posY.val -= 0x1000;
-        value = func_801BCBEC();
-        value /= 32;
-        value = CLAMP_MAX(value, 7);
-        var_a0 = D_80182488[value];
-        value = entity->facing;
-
-        if (value > 0) {
-            var_a0 = -var_a0;
-        }
-
-        entity->accelerationY = -0x48000;
-        entity->accelerationX = var_a0;
-        entity->unk19 = 4;
-    }
-}
-
-void func_801C6678(Entity* entity) {
-    if (entity->step == 0) {
-        InitializeEntity(D_80180C88);
-        entity->unk1A = 0x120;
-        entity->unk1C = 0x200;
-        entity->unk6C = 0;
-        entity->unk3C = 0;
-        entity->unk19 = entity->unk19 | 0xB;
-        return;
-    }
-
-    entity->facing = entity[-1].facing;
-    entity->zPriority = entity[-1].zPriority - 1;
-    entity->animCurFrame = entity[-1].animCurFrame;
-    entity->posX.i.hi = entity[-1].posX.i.hi;
-    entity->posY.i.hi = entity[-1].posY.i.hi - 20;
-
-    if (entity[-1].objectId != 0x2E) {
-        DestroyEntity(entity);
     }
 }

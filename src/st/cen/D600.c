@@ -73,8 +73,22 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
 // Black layer that covers room interior and lights up when cutscene starts
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRoomDarkness);
 
-// Maria sprite
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityMaria);
+void EntityMaria(Entity* self) {
+    if (self->step == 0) {
+        /* Has player seen Maria Holy Glasses Cutscene? */
+        if (D_8003BDEC[216] != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(D_80180428);
+        self->flags = FLAG_UNK_08000000;
+        self->animSet = -0x7FFF;
+        self->animCurFrame = 10;
+        self->unk5A = 0x48;
+        self->palette = 0x210;
+        self->zPriority = 0x80;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
@@ -223,7 +237,33 @@ void func_80192DD4(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80192ED0);
+void func_80192ED0(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_8019C76C == 0) {
+        func_80192D7C(arg0 - D_80097908);
+        D_8019C76C = 1;
+    }
+
+    while (true) {
+        if (D_8019C764->posX == 0xFFFE || arg0 > D_8019C764->posX) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_8019C764->objectRoomIndex >> 8) + 255;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_8019C764);
+        }
+        D_8019C764--;
+    }
+}
 
 void func_80192FE4(s16 arg0) {
     while (true) {
@@ -292,7 +332,19 @@ void func_80193538(u16 objectId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801935B4);
+bool func_801935B4(Entity* self) {
+    s16 posX = PLAYER.posX.i.hi - self->posX.i.hi;
+    s16 posY;
+
+    posX = ABS(posX);
+
+    if (posX < 17) {
+        posY = PLAYER.posY.i.hi - self->posY.i.hi;
+        posY = ABS(posY);
+        return posY < 33;
+    }
+    return 0;
+}
 
 // Red door (ID 05)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRedDoor);
@@ -312,7 +364,14 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801942D0);
+void func_801942D0(s16 index) {
+    Entity* entity = &g_EntityArray[index];
+
+    while (entity < &D_8007EF1C) {
+        DestroyEntity(entity);
+        entity++;
+    }
+}
 
 void func_8019434C(Entity* entity) {
     if (entity->objectRoomIndex) {
@@ -608,7 +667,14 @@ void func_80195714(void) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195798);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801958F4);
+void CollectHeart(u16 index) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_Status.hearts = D_80180FE8[index] + g_Status.hearts;
+    if (g_Status.heartsMax < g_Status.hearts) {
+        g_Status.hearts = g_Status.heartsMax;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195974);
 
@@ -617,7 +683,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195A50);
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195B68);
 
 void func_80195C0C(void) {
-    g_api.PlaySfx(0x67A);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
