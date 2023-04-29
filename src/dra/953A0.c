@@ -4,7 +4,7 @@
 #include "sfx.h"
 
 void func_801353A0(void) {
-    if (D_801396F4 == 0)
+    if (*(u16*)&D_801396F4 == 0)
         return;
 
     switch (D_80139868[0]) {
