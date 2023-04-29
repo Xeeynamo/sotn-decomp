@@ -1,24 +1,11 @@
 #include "nz0.h"
 
-extern u16 D_80180C40[]; // InitProps
-extern u8 D_80182610[];  // Animation: Walking?
-extern s16 D_80182624[];
-extern u8 D_80182638[]; // Animation: Disassemble
-extern u8 D_80182654[]; // Animation: Reassemble
-extern u8 D_80182670[]; // Animation: Reassemble faster ?
-extern s32 D_80182694;
-extern s32 D_801826AC;
-
-#define NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES 0x6CB
-#define NA_SE_EN_BLOOD_SKELETON_REASSEMBLES 0x6CC
-
 typedef enum {
     BLOOD_SKELETON_INIT,
     BLOOD_SKELETON_IDLE,
-    BLOOD_SKELETON_UNK_2,
+    BLOOD_SKELETON_WALK,
     BLOOD_SKELETON_DISASSEMBLE,
     BLOOD_SKELETON_REASSEMBLE,
-    BLOOD_SKELETON_UNK_5,
 } BLOOD_SKELETON_STEPS;
 
 void EntityBloodSkeleton(Entity* self) {
@@ -46,7 +33,7 @@ void EntityBloodSkeleton(Entity* self) {
         }
         break;
 
-    case BLOOD_SKELETON_UNK_2:
+    case BLOOD_SKELETON_WALK:
         if (self->animFrameDuration == 0) {
             if (self->facing != 0) {
                 self->posX.i.hi += D_80182624[self->animFrameIdx];
@@ -118,7 +105,7 @@ void EntityBloodSkeleton(Entity* self) {
                 self->hitPoints = 0;
                 self->unk3C = 3;
                 self->flags = g_api.enemyDefs[70].unk24 & 0x1FFFFFFF;
-                func_801BD52C(BLOOD_SKELETON_UNK_2);
+                func_801BD52C(BLOOD_SKELETON_WALK);
             }
         }
         break;
