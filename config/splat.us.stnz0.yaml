@@ -80,6 +80,7 @@ segments:
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, rodata]
+      - [0x30814, .rodata, 43708] # EntityBoneScimitar data
       - [0x30834, .rodata, 445BC]
       - [0x30858, .rodata, 45568]
       - [0x30880, .rodata, 45FC4] # EntitySkeleton data
@@ -89,6 +90,7 @@ segments:
       - [0x308E8, rodata]
       - [0x30958, c]
       - [0x3E30C, c]
+      - [0x43708, c] # EntityBoneScimitar
       - [0x445BC, c]
       - [0x45568, c]
       - [0x45FC4, c] # EntitySkeleton code
