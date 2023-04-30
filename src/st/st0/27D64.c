@@ -394,7 +394,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
-        entity->unk2E = 0;
+        entity->step_s = 0;
         entity->subId = 1;
         return;
     }
@@ -1162,13 +1162,13 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 
 void func_801B5794(u8 state) {
     g_CurrentEntity->step = state;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801B57B4(u8 arg0) {
-    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->step_s = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -1196,7 +1196,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;

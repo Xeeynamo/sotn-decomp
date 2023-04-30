@@ -280,7 +280,7 @@ typedef struct Entity {
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
-    /* 0x2E */ u16 unk2E; // pl_step_s
+    /* 0x2E */ u16 step_s; // pl_step_s
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 flags;
