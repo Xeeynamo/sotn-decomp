@@ -1,32 +1,13 @@
 #include "nz0.h"
 
-void func_801C3708(void) {
-    s32 temp = func_801BCF74(&D_8018216C);
-    s32 temp2 = func_801BD720(&D_80182174, 3);
-
-    if ((temp == 128) || (temp2 & 2)) {
-        func_801BD52C(5);
-        return;
-    }
-
-    if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
-        if (GetPlayerDistanceX() < 64) {
-            if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
-                func_801BD52C(4);
-            }
-        }
-    } else {
-        g_CurrentEntity->unk7C.U8.unk0--;
-    }
-}
-
 extern u16 D_80180C4C[]; // Init
-extern s32 D_8018208C;   // Flag responsible for special bone scimitar to appear or not
+extern s32
+    D_8018208C; // Flag responsible for special bone scimitar to appear or not
 extern u8 D_80182090[];  // animation: Walking Forward
 extern u8 D_801820A0[];  // animation: Walking Backwards
 extern u8 D_801820B0[];  // animation: Swing Sword
-extern u8 D_801820CC[];  // animation:
-extern u8 D_801820D8[];  // animation:
+extern u8 D_801820CC[];  // animation: Jumping
+extern u8 D_801820D8[];  // animation: Landing
 extern s8 D_801820F4[];  // unk88
 extern s32 D_801820FC[]; // accelerationX
 extern s32 D_80182118[]; // accelerationY
@@ -59,6 +40,26 @@ typedef enum {
     BONE_SCIMITAR_WALK_LEFT
 } BoneScimitarSpecialSubSteps;
 
+void func_801C3708(void) {
+    s32 temp = func_801BCF74(&D_8018216C);
+    s32 temp2 = func_801BD720(&D_80182174, 3);
+
+    if ((temp == 128) || (temp2 & 2)) {
+        func_801BD52C(BONE_SCIMITAR_JUMP);
+        return;
+    }
+
+    if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
+        if (GetPlayerDistanceX() < 64) {
+            if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
+                func_801BD52C(BONE_SCIMITAR_ATTACK);
+            }
+        }
+    } else {
+        g_CurrentEntity->unk7C.U8.unk0--;
+    }
+}
+
 void EntityBoneScimitar(Entity* self) {
     Entity* newEntity;
     u8 animStatus;
@@ -81,7 +82,7 @@ void EntityBoneScimitar(Entity* self) {
             }
         }
         self->unk7C.S8.unk0 = 80;
-        self->unk80.modeS8.unk0 = 0;
+        self->unk80.modeS8.unk0 = 0; // Facing init
         self->unk84.S8.unk0 = 0;
         break;
 
@@ -229,7 +230,7 @@ void EntityBoneScimitar(Entity* self) {
             self->unk7C.U8.unk0--;
             return;
         }
-        
+
         if ((GetPlayerDistanceX() < 48) && (GetPlayerDistanceY() < 32)) {
             func_801BD52C(BONE_SCIMITAR_ATTACK);
         }
