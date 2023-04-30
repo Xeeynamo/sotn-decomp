@@ -118,6 +118,7 @@ extern const char* c_strALUCART;
 extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
+extern Unkstruct_801092E8 D_800A37D8;
 extern Lba D_800A3C40[]; // g_lba
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
@@ -135,6 +136,7 @@ extern RECT D_800ACD88[2];
 extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
 extern u8 D_800ACFB4[][4];
+extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?

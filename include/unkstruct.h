@@ -275,3 +275,8 @@ typedef struct Unkstruct_801C3F9C {
     /* 0x25 */ char pad25[0x7];
     /* 0x2C */ s16 unk2C;
 } Unkstruct_801C3F9C;
+
+typedef struct {
+    u16 D_800A37D8;
+    u16 D_800A37DA;
+} Unkstruct_801092E8;
