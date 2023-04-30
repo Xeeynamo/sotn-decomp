@@ -1370,7 +1370,38 @@ bool func_8012C88C(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
+void func_8012C97C(void) {
+    if (g_EntityArray[PLAYER_CHARACTER].unk2E == 0) {
+        return;
+    }
+    if (g_EntityArray[PLAYER_CHARACTER].unk2E >= 8 &&
+        g_EntityArray[PLAYER_CHARACTER].unk2E < 10) {
+        return;
+    }
+    if (D_8009744C < 13) {
+        return;
+    }
+    if (func_800FE3A8(14) == 0) {
+        return;
+    }
+    if (func_800FE3A8(6) == 0) {
+        return;
+    }
+    if (D_80072F20.pl_vram_flag & 1) {
+        return;
+    }
+    if (!(D_80072EE8 & 0x10)) {
+        return;
+    }
+    if (D_80138440 != 0) {
+        return;
+    }
+
+    PLAYER.unk2E = 9;
+    D_800B0914 = 0;
+    func_8010DA48(0xEC);
+    PLAYER.accelerationY = 0;
+}
 
 void func_8012CA64(void) {
     u32 var_a0;
@@ -1915,9 +1946,45 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 arg5,
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132C2C);
+void func_80132C2C(s16 arg0) {
+    s32 i;
+    s32 isFound;
 
-extern s16 D_80139868[];
+    if (arg0 == 6) {
+        isFound = 0;
+        for (i = 0; i < D_801396F4; i++) {
+            if (D_80139868[i] == 0xC) {
+                isFound = 1;
+            }
+        }
+
+        if (isFound) {
+            D_800BD1C0++;
+            D_80139868[D_801396F4] = 0xE;
+            D_801396F4++;
+            if (D_801396F4 == 0x100) {
+                D_8013AEE8++;
+                for (i = 1; i < 0x100; i++) {
+                    D_80139868[i] = 0;
+                }
+
+                D_801396F4 = 1;
+                D_80139868[D_801396F4] = 0xE;
+                D_801396F4++;
+            }
+        }
+    }
+    D_80139868[D_801396F4] = arg0;
+    D_801396F4++;
+    if (D_801396F4 == 0x100) {
+        D_8013AEE8++;
+        for (i = 1; i < 0x100; i++) {
+            D_80139868[i] = 0;
+        }
+
+        D_801396F4 = 1;
+    }
+}
 
 u16 func_80132E38(void) {
     s32 i;
@@ -1925,9 +1992,7 @@ u16 func_80132E38(void) {
     for (i = 0; i < 255; i++) {
         D_80139868[i] = D_80139868[i + 1];
     }
-    D_801396F4--;
-
-    return D_801396F4;
+    return --D_801396F4;
 }
 
 void func_80132E90(u32 arg0, s8* arg1) {

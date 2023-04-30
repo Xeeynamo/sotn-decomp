@@ -905,6 +905,7 @@ GetEquipProperties = 0x800FE728;
 HasEnoughMp = 0x800FE8B4;
 AddHearts = 0x800FE914;
 DestroyEntity = 0x80106590;
+DrawEntitiesHitbox = 0x80106670;
 DrawHudRichter = 0x80100750;
 SetPolyRect = 0x80107330;
 CopyMapOverlayCallback = 0x801074BC;
