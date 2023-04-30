@@ -1,5 +1,9 @@
 #include "stage.h"
 
+typedef enum {
+    E_BONE_SCIMITAR_HEAD = 0x28,
+} ObjectIds;
+
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
