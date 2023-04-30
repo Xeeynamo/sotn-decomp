@@ -27,7 +27,9 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, .data, 6FD0]
+      - [0x0, .data, header]
+      - [0xB8, layers, rooms]
+      - [0x1B8, .data, 6FD0]
       - [0x11AC, roomdef, g_Rooms]
       - [0x1228, layoutobj, D_80181228]
       - [0x1250, layoutobj, D_80181250]
@@ -73,11 +75,12 @@ segments:
       - [0x6E90, rodata] # EntityWarpSmallRocks
       - [0x6EA8, rodata] # EntityRedDoor
       - [0x6EC0, rodata] # CollectGold
-      - [0x6F10, rodata] # EntityPriceDrop
-      - [0x6F30, rodata] # EntityInventoryDrop
+      - [0x6F10, .rodata, D020]
+      - [0x6F30, .rodata, D020] # EntityEquipItemDrop
       - [0x6F48, rodata] # EntityRelicOrb
       - [0x6F80, rodata] # EntityUnkId0E
       - [0x6F94, rodata] # EntityStageNamePopup
       - [0x6FD0, c]
+      - [0xD020, c]
       - [0x13AA0, sbss] # bss?
   - [0x14768]

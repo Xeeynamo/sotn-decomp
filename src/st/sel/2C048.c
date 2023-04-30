@@ -34,10 +34,7 @@ void SetupFileChoose(void) {
     g_MemCardSelectorY = 0;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC084);
-#else
-// Those arrays are weird. They do not store s32 but they are used as such.
+// These arrays are weird. They do not store s32 but they are used as such.
 extern s32 D_80180068[];
 extern s32 D_80180088[];
 extern s32 D_801800A8[];
@@ -46,29 +43,27 @@ extern s32 D_801800E8[];
 extern s32 D_80180108[];
 
 void func_801AC084(s32 arg0, s32 ypos) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
+    Primitive* prim = &g_PrimBuf[D_801BAF18[arg0].unk0];
     s32 i;
-
     for (i = 0; i < 8; i++) {
-        poly->x0 = D_80180068[i] + 0x68;
-        poly->y0 = D_80180088[i] + 0x58 + ypos;
-        poly->u0 = D_801800A8[i];
-        poly->v0 = D_801800C8[i];
-        poly->u1 = D_801800E8[i];
-        poly->tpage = 0xC;
-        poly->clut = 0x200;
-        poly->pad2 = 0x11;
-        poly->pad3 = 8;
-        poly->v1 = D_80180108[i];
-        poly = (POLY_GT4*)poly->tag;
+        prim->x0 = D_80180068[i] + 0x68;
+        prim->y0 = D_80180088[i] + 0x58 + ypos;
+        prim->u0 = D_801800A8[i];
+        prim->v0 = D_801800C8[i];
+        prim->u1 = D_801800E8[i];
+        prim->v1 = D_80180108[i];
+        prim->tpage = 0xC;
+        prim->clut = 0x200;
+        prim->priority = 0x11;
+        prim->blendMode = 8;
+        prim = prim->next;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC174);
 
 void func_801ACBE4(s32 arg0, u16 arg1) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAF18[arg0].unk0];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0].unk0];
     while (poly != NULL) {
         poly->pad3 = arg1;
         poly = (POLY_GT4*)poly->tag;
@@ -87,8 +82,8 @@ void func_801ACC7C(void) {
     POLY_GT4* poly;
     s32 i;
 
-    firstPolygonIndex = g_api.AllocPolygons(4, 3);
-    poly = &D_80086FEC[firstPolygonIndex];
+    firstPolygonIndex = g_api.AllocPrimitives(4, 3);
+    poly = &g_PrimBuf[firstPolygonIndex];
     D_801BAFC0 = firstPolygonIndex;
 
     for (i = 0; i < 3; i++) {
@@ -100,8 +95,8 @@ void func_801ACC7C(void) {
         poly = (POLY_GT4*)poly->tag;
     }
 
-    firstPolygonIndex = g_api.AllocPolygons(1, 2);
-    poly = &D_80086FEC[firstPolygonIndex];
+    firstPolygonIndex = g_api.AllocPrimitives(1, 2);
+    poly = &g_PrimBuf[firstPolygonIndex];
     D_801BAFC4 = firstPolygonIndex;
 
     for (i = 0; poly != NULL; i++) {
@@ -116,7 +111,7 @@ void func_801ACC7C(void) {
 }
 
 s32 func_801ACDFC(void) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAFC4];
     s32 var_s1 = poly->r0;
 
     var_s1 -= 16;
@@ -129,7 +124,7 @@ s32 func_801ACDFC(void) {
 
     if (var_s1 == 0) {
         do {
-            poly = &D_80086FEC[D_801BAFC4];
+            poly = &g_PrimBuf[D_801BAFC4];
             poly->pad3 = 8;
         } while (0);
         poly = (POLY_GT4*)poly->tag;
@@ -140,7 +135,7 @@ s32 func_801ACDFC(void) {
 }
 
 s32 func_801ACEC0(void) {
-    POLY_GT4* poly = &D_80086FEC[D_801BAFC4];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAFC4];
     s32 var_s0 = poly->r0;
 
     var_s0 += 0x10;

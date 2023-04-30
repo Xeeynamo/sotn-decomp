@@ -88,33 +88,23 @@ typedef struct Unkstruct_80072F20 {
     /* 0x4E */ u16 unk4E;
     /* 0x50 */ u16 unk50;
     /* 0x52 */ u16 unk52;
-    /* 0x54 */ char pad54[0x8];
+    /* 0x54 */ char pad54[0x2];
+    /* 0x56 */ u16 unk56;
+    /* 0x58 */ u16 unk58;
+    /* 0x5A */ char pad5A[0x2];
     /* 0x5C */ u16 unk5C;
-    /* 0x62 */ char pad62[0x8];
+    /* 0x5E */ char pad5E[0x8];
     /* 0x66 */ u16 unk66;
     /* 0x68 */ u16 unk68;
-    /* 0x70 */ char pad70[0x8];
+    /* 0x6A */ char pad6A[0x8];
     /* 0x72 */ u16 unk72;
-    /* 0x78 */ char pad78[0x6];
+    /* 0x74 */ char pad74[0x6];
     /* 0x7A */ u16 unk7A;
 } Unkstruct_80072F20;
 
 typedef struct {
     /* 0x00 */ u8 unk0[0x278];
 } Unkstruct_8013B160; // size = 0x278
-
-typedef struct {
-    /* 0x00 */ s32 unk00[2];
-    /* 0x08 */ char pad8[0x28];
-} Unkstruct_800ECE2C_sub; // size = 0x30
-
-typedef struct Unkstruct_800ECE2C {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ char unk04[0x38];
-    /* 0x3C */ s32 unk3C;
-    /* 0x40 */ char unk40[0x14];
-    /* 0x54 */ Unkstruct_800ECE2C_sub unk54[16];
-} Unkstruct_800ECE2C;
 
 typedef struct {
     /* 0x00 */ u8 unk0;
@@ -210,9 +200,9 @@ typedef struct {
 
 // related to SFX
 typedef struct {
-    /* 0x00 */ u16 unk00;
+    /* 0x00 */ s16 unk00;
     /* 0x02 */ u16 unk02;
-    /* 0x04 */ u16 unk04;
+    /* 0x04 */ s16 unk04;
 } SfxRingBufferItem;
 
 typedef struct {
@@ -271,3 +261,17 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } Unkstruct_800FDB18;
+
+typedef struct Unkstruct_801C3F9C {
+    /* 0x00 */ char pad0[0xA];
+    /* 0x0A */ s16 unk0A;
+    /* 0x0C */ s32 unk0C;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ char pad16[0x8];
+    /* 0x1E */ s16 unk1E;
+    /* 0x20 */ char pad20[0x4];
+    /* 0x24 */ u8 unk24;
+    /* 0x25 */ char pad25[0x7];
+    /* 0x2C */ s16 unk2C;
+} Unkstruct_801C3F9C;

@@ -15,7 +15,7 @@ void DrawNavigationTips(NavigationTips mode) {
 
     func_801ACBE4(6, 8);
     imgs = &D_801803C4;
-    poly = &D_80086FEC[D_801BAF48];
+    poly = &g_PrimBuf[D_801BAF48];
 
     switch (mode) {
     case Tips_Generic:
@@ -86,7 +86,7 @@ void func_801AD490(void) {
     DrawString16x16("destiny", 232, 64, 1);
 
     for (i = 0; i < 5; i++) {
-        POLY_GT4* poly = &D_80086FEC[D_801BAF18[i + 1].unk0];
+        POLY_GT4* poly = &g_PrimBuf[D_801BAF18[i + 1].unk0];
         if (i == D_801D6B0C) {
             poly->clut = 0x203;
         } else {
@@ -182,9 +182,9 @@ void func_801AD78C(void) {
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
     DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
-    func_801B26A0(&D_80086FEC[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80,
+    func_801B26A0(&g_PrimBuf[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80,
                   0x48, 0x0F, 0x0F, 0xF0, 0xF0);
-    func_801B26A0(&D_80086FEC[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
+    func_801B26A0(&g_PrimBuf[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
                   (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_blinkTimer & 8) {
         func_801ACBE4(8, 0);
@@ -303,7 +303,7 @@ void func_801AE9A8(void) {
 
     for (i = 1; i < 5; i++) {
         func_801ACBE4(i + 1, 4);
-        func_801B26A0(&D_80086FEC[D_801BAF18[i + 1].unk0], (i * 64) - 32,
+        func_801B26A0(&g_PrimBuf[D_801BAF18[i + 1].unk0], (i * 64) - 32,
                       (i * 5) * 8, 127, 31, D_80180040[i], D_80180054[i]);
     }
 
@@ -322,10 +322,10 @@ void func_801AEA8C(s32 arg0) {
 
     if (arg0 == 0) {
         func_801ACBE4(1, 0);
-        func_801B2670(&D_80086FEC[D_801BAF20], 24, 24, 127, 31);
+        func_801B2670(&g_PrimBuf[D_801BAF20], 24, 24, 127, 31);
     } else {
         func_801ACBE4(3, 0);
-        func_801B2670(&D_80086FEC[D_801BAF30], 24, 24, 127, 31);
+        func_801B2670(&g_PrimBuf[D_801BAF30], 24, 24, 127, 31);
     }
 
     DrawNavigationTips(1);
@@ -751,12 +751,12 @@ void func_801B2CF8(POLY_GT4* poly) {
 
 void func_801B2D1C(void) {
     s32 i;
-    POLY_GT4* poly;
+    Primitive* prim;
 
-    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
-        func_801B2CF8((s32*)poly);
-        setcode(poly, 0);
-        poly++;
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
+        func_801B2CF8((s32*)prim);
+        prim->type = PRIM_NONE;
+        prim++;
     }
 }
 
@@ -979,7 +979,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(entity->firstPolygonIndex);
+        g_api.FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -1051,9 +1051,9 @@ void func_801B4DE0(void) {
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
         if (firstPolygonIndex != -1) {
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
             *(s32*)&unkEntity->unk7C = poly;
@@ -1108,9 +1108,9 @@ void func_801B4FFC(void) {
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPolygons(3, 1);
+        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
         if (firstPolygonIndex != -1) {
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
             *(s32*)&unkEntity->unk7C = poly;

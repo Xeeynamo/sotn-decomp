@@ -49,7 +49,7 @@ typedef struct Primitive {
     /* 0x20 */ s16 x2;
     /* 0x22 */ s16 y2;
     /* 0x24 */ u8 u2; // TODO not verified
-    /* 0x24 */ u8 v2; // TODO not verified
+    /* 0x25 */ u8 v2; // TODO not verified
     /* 0x26 */ u16 priority;
     /* 0x28 */ u8 r3;
     /* 0x29 */ u8 g3;
@@ -81,6 +81,10 @@ typedef struct Primitive {
 #define PAD_DOWN 0x4000
 #define PAD_LEFT 0x8000
 
+#define MAX_PRIM_COUNT 0x500
+#define MAX_PRIM_ALLOC_COUNT 0x400
+#define MAX_BG_LAYER_COUNT 16
+
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
@@ -94,6 +98,8 @@ typedef struct Primitive {
 #define TOTAL_ENTITY_COUNT 256
 #define MaxEntityCount 32
 #define EQUIP_TYPE_COUNT 11
+
+#define CASTLE_MAP_PTR 0x801E0000
 
 #define STAGE_NO0 0x00
 #define STAGE_NO1 0x01
@@ -281,14 +287,14 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ s16 enemyId;
-    /* 0x3C */ u16 unk3C;
+    /* 0x3C */ u16 unk3C; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;
+    /* 0x44 */ u16 unk44; // 1 = Takes a hit
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 unk48;
+    /* 0x48 */ u8 unk48; // 1 = Takes a hit
     /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
@@ -333,6 +339,7 @@ typedef struct Entity {
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
         /* 0x8C */ struct Entity* entityPtr;
+        /* 0x8C */ struct Primitive* primPtr;
         /* 0x8C */ s32 modeS32;
         struct {
             /* 0x8C */ u16 unk0;
@@ -389,25 +396,24 @@ typedef struct {
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
-typedef enum { MONO, STEREO } SoundMode;
-
 typedef struct {
     /* 0x00 */ DRAWENV draw; // drawing environment
     /* 0x58 */ DISPENV disp; // display environment
 } DisplayBuffer;
 
+#define GPU_MAX_TILE_COUNT 0x100
 typedef struct {
     /* 0x00000 */ void* unk0;
     /* 0x00004 */ DisplayBuffer buf;
-    /* 0x00074 */ char pad74[0x400];
-    /* 0x00474 */ u32 _unk_0474[0x200];
+    /* 0x00074 */ DR_ENV env[0x10];
+    /* 0x00474 */ u32 order[0x200];
     /* 0x00474 */ DR_MODE drawModes[0x400];
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
     /* 0x0D874 */ POLY_G4 polyG4[0x100];
     /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];
     /* 0x103F4 */ LINE_G2 lineG2[0x100];
     /* 0x117F4 */ SPRT_16 sprite16[0x280];
-    /* 0x13FF4 */ TILE tiles[0x100];
+    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT];
     /* 0x14FF4 */ SPRT sprite[0x200];
 } GpuBuffer; /* size = 0x177F4 */
 
@@ -581,14 +587,14 @@ typedef struct {
     /* 0x04 */ u32 top : 6;
     /* 0x08 */ u32 right : 6;
     /* 0x0C */ u32 bottom : 6;
-    /* 0x10 */ u32 flags : 8;
+    /* 0x10 */ u8 flags : 8;
 } LayoutRect; // size = 0x14
 
 typedef struct {
     /* 0x00 */ const u16* layout;
     /* 0x04 */ const TileDefinition* tileDef;
     /* 0x08 */ const LayoutRect rect;
-    /* 0x0C */ const u16 unkC;
+    /* 0x0C */ const u16 zPriority;
     /* 0x0E */ const u16 unkE;
 } LayerDef2; // size = 0x10
 
@@ -596,7 +602,7 @@ typedef struct {
     /* 0x00 */ const u16* layout;
     /* 0x04 */ const TileDefinition* tileDef;
     /* 0x08 */ const u32 rect;
-    /* 0x0C */ const u16 unkC;
+    /* 0x0C */ const u16 zPriority;
     /* 0x0E */ const u8 unkE;
     /* 0x0F */ const u8 unkF;
 } LayerDef; // size = 0x10
@@ -624,21 +630,6 @@ typedef struct {
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)();
 } Overlay;
-
-typedef struct RoomDimensions {
-    /* 0x00 */ s32 hSize;
-    /* 0x04 */ u16 vSize;
-    /* 0x06 */ u16 _padding06;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 left;
-    /* 0x10 */ s32 top;
-    /* 0x14 */ s32 right;
-    /* 0x18 */ s32 bottom;
-    /* 0x1C */ s32 x;
-    /* 0x20 */ s32 y;
-    /* 0x24 */ s32 width;
-    /* 0x28 */ s32 height;
-} RoomDimensions; /* size=0x2C */
 
 typedef struct Collider {
     /* 0x00 */ s32 unk0;
@@ -741,8 +732,8 @@ typedef struct {
 
 typedef struct {
     /* 8003C774 */ Overlay o;
-    /* 8003C7B4 */ void (*FreePolygons)(s32);
-    /* 8003C7B8 */ s16 (*AllocPolygons)(s32 primitives, s32 count);
+    /* 8003C7B4 */ void (*FreePrimitives)(s32);
+    /* 8003C7B8 */ s16 (*AllocPrimitives)(s32 primitives, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
@@ -793,7 +784,7 @@ typedef struct {
     /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
                                          Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
-    /* 8003C87C */ void* func_800FF494;
+    /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
     /* 8003C880 */ bool (*func_80133940)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
@@ -843,19 +834,45 @@ typedef struct {
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 typedef struct {
-    /* 800730D8 */ u16* layout;
-    /* 800730DC */ u32 tileDef;
-    /* 800730E0 */ f32 scrollX;
-    /* 800730E4 */ f32 scrollY;
-    /* 800730E8 */ u32 D_800730E8;
-    /* 800730EC */ u32 D_800730EC;
-    /* 800730F0 */ u32 D_800730F0;
-    /* 800730F4 */ u32 D_800730F4;
-    /* 800730F8 */ u32 w;
-    /* 800730FC */ u32 h;
-    /* 80073100 */ u32 D_80073100;
-    /* 80073104 */ u32 flags;
-} BgLayer;
+    /* 800730D8 0x00 */ u16* layout;
+    /* 800730DC 0x04 */ u32 tileDef;
+    /* 800730E0 0x08 */ f32 scrollX;
+    /* 800730E4 0x0C */ f32 scrollY;
+    /* 800730E8 0x10 */ u32 D_800730E8;
+    /* 800730EC 0x14 */ u32 D_800730EC;
+    /* 800730F0 0x18 */ u32 zPriority;
+    /* 800730F4 0x1C */ u32 D_800730F4;
+    /* 800730F8 0x20 */ u32 w;
+    /* 800730FC 0x24 */ u32 h;
+    /* 80073100 0x28 */ u32 D_80073100;
+    /* 80073104 0x2C */ u32 flags;
+} BgLayer; /* size=0x30 */
+
+typedef struct {
+    /* 800730A0 0x00 */ s32 unk00;
+    /* 800730A4 0x04 */ s32 hSize;
+    /* 800730A8 0x08 */ u16 vSize;
+    /* 800730AA 0x0A */ u16 _padding06;
+    /* 800730AC 0x0C */ s32 unk8;
+    /* 800730B0 0x10 */ s32 left;
+    /* 800730B4 0x14 */ s32 top;
+    /* 800730B8 0x18 */ s32 right;
+    /* 800730BC 0x1C */ s32 bottom;
+    /* 800730C0 0x20 */ s32 x;
+    /* 800730C4 0x24 */ s32 y;
+    /* 800730C8 0x28 */ s32 width;
+    /* 800730CC 0x2C */ s32 height;
+    /* 800730D0 0x30 */ s32 _padding30;
+    /* 800730D4 0x34 */ s32 D_800730D4;
+    /* 800730D8 0x38 */ BgLayer bg[MAX_BG_LAYER_COUNT];
+} RoomDimensions;
+
+typedef struct {
+    /* D_8003C708 */ u16 flags;
+    /* D_8003C70A */ u16 unk2;
+    /* D_8003C70C */ u16 unk4;
+    /* D_8003C70E */ u16 zPriority;
+} FgLayer; /* size=0x8 */
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
@@ -865,14 +882,16 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
 extern u8 D_8003BDEC[0x300];
-
+extern u8 D_8003BE23;
+extern u8 D_8003BEEC[];
+extern u8 D_8003BF9C[];
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
-extern u16 D_8003C708; // can save
+extern FgLayer D_8003C708;
 // extern u16 D_8003C710; // can warp
 extern s32 D_8003C728;
 extern s32 D_8003C730;
@@ -885,7 +904,7 @@ extern GameApi g_api;
 extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
 extern s32 g_roomCount;
-extern s32 g_blinkTimer;
+extern u32 g_blinkTimer;
 /* 0x8003C99C */ extern s32 D_8003C99C;
 /* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
@@ -897,6 +916,7 @@ extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 extern const char g_MemcardSavePath[];
+extern const char aBaslus00067dra[19];
 extern const char g_strMemcardRootPath[];
 extern s32 D_8006BAFC;
 extern s32 D_8006BB00;
@@ -923,6 +943,7 @@ extern s32 D_8006CBC4;
 extern u16 g_Clut[];
 extern u16 D_8006F3CC[];
 extern u16 D_8006F42C[];
+extern s16 D_800705CC[];
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
@@ -970,19 +991,8 @@ extern u32 D_80073078; // ev3
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
-extern Unkstruct_800ECE2C D_800730A0; // 4 bytes before 'g_CurrentRoom'
 extern RoomDimensions g_CurrentRoom;
-extern s32 g_CurrentRoomVSize;  // g_CurrentRoom.vSize
-extern s32 D_800730AC;          // g_CurrentRoom.unk8
-extern s32 g_CurrentRoomLeft;   // g_CurrentRoom.left
-extern s32 g_CurrentRoomTop;    // g_CurrentRoom.top
-extern s32 g_CurrentRoomRight;  // g_CurrentRoom.right
-extern s32 g_CurrentRoomBottom; // g_CurrentRoom.bottom
-extern s32 g_CurrentRoomX;      // g_CurrentRoom.x
-extern s32 g_CurrentRoomY;      // g_CurrentRoom.y
-extern s32 g_CurrentRoomWidth;  // g_CurrentRoom.width
-extern s32 g_CurrentRoomHeight; // g_CurrentRoom.height
-extern BgLayer D_800730D8[];
+extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
@@ -1064,7 +1074,7 @@ extern s32 D_80086FE4;  // ev13 NEW CARD
 extern s32* D_8007EFE4; // 'struct SaveData'?
 extern s32 D_80080FE4;  // maybe PixPattern[]?
 extern s8 D_80082FE4;
-extern POLY_GT4 D_80086FEC[]; // entity polygons
+extern Primitive g_PrimBuf[MAX_PRIM_COUNT]; // entity polygons
 extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
@@ -1106,9 +1116,6 @@ extern s32 g_mapTilesetId; // 0x80097918
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
-extern s32 g_GpuUsage_gt4[]; // confirmed array
-extern s32 D_80097934;
-extern u32 D_80097944;
 extern PlayerStatus g_Status;
 extern u8 D_80097B9C[];
 extern s32 g_player_total_con;

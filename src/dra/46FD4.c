@@ -16,8 +16,8 @@ void func_800E6FD4(void) {
                 D_8006C398 = 1;
                 D_8006BAFC = 0x18;
                 func_800E3618(0x140);
-                D_8013640C = AllocPolygons(4, 2);
-                poly = &D_80086FEC[D_8013640C];
+                D_8013640C = AllocPrimitives(4, 2);
+                poly = &g_PrimBuf[D_8013640C];
                 func_80107360(poly, 44, 96, 232, 32, 0, 0);
                 func_801072BC(poly);
                 poly->tpage = 0x1C;
@@ -34,7 +34,7 @@ void func_800E6FD4(void) {
             break;
 
         case 1:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             poly->p1--;
             if (poly->p1 == 0) {
                 D_80073060++;
@@ -42,7 +42,7 @@ void func_800E6FD4(void) {
             break;
 
         case 2:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             temp = poly->r0 + 1;
             func_80107250(poly, temp);
             if (temp == 96) {
@@ -55,7 +55,7 @@ void func_800E6FD4(void) {
             break;
 
         case 3:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             poly->p1--;
             if (poly->p1 == 0) {
                 D_80073060++;
@@ -63,7 +63,7 @@ void func_800E6FD4(void) {
             break;
 
         case 4:
-            poly = &D_80086FEC[D_8013640C];
+            poly = &g_PrimBuf[D_8013640C];
             temp = poly->r0 - 1;
             func_80107250(poly, temp);
             if (temp == 64) {
@@ -71,7 +71,7 @@ void func_800E6FD4(void) {
                 ((POLY_GT4*)poly->tag)->pad3 = 8;
             }
             if (temp == 0) {
-                FreePolygons(D_8013640C);
+                FreePrimitives(D_8013640C);
                 D_80073060++;
             }
             break;
@@ -97,17 +97,13 @@ void func_800E6FD4(void) {
     }
 }
 
-extern s32 g_mapTilesetId;
-s32 func_800E81FC(s32, s32);
-void func_800E4970(void);
-
 void nullsub_9(void) {}
 
 void func_800E738C(void) {
     if (D_80073060 == 1) {
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(6, 0) >= 0 &&
-             func_800E81FC(7, 0) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(6, FILETYPE_SYSTEM) >= 0 &&
+             func_800E81FC(7, FILETYPE_SYSTEM) >= 0)) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
@@ -136,7 +132,7 @@ void func_800E7458(void) {
         if (D_800978AC != 0 && D_8006C3B0 != 0)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(12, 0) >= 0) {
+        if (D_800978AC != 0 || func_800E81FC(12, FILETYPE_SYSTEM) >= 0) {
             D_80073060++;
         }
         break;
@@ -151,8 +147,8 @@ void func_800E7458(void) {
         if (D_800978AC != 0 && D_8006C3B0 != 0)
             break;
 
-        if (D_800978AC != 0 ||
-            func_800E81FC(0, 2) >= 0 && func_800E81FC(0, 3) >= 0) {
+        if (D_800978AC != 0 || func_800E81FC(0, FILETYPE_VH) >= 0 &&
+                                   func_800E81FC(0, FILETYPE_VB) >= 0) {
             D_80073060++;
         }
         break;
@@ -167,7 +163,7 @@ void func_800E7458(void) {
         if (D_800978AC != 0 && D_8006C3B0 != 0)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(0, 1) >= 0) {
+        if (D_800978AC != 0 || func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0) {
             D_8003C9A4 = 0;
             D_80073060++;
         }

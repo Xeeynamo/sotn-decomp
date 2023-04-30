@@ -14,6 +14,7 @@
  * IT = Item
  * EN = Enemy
  * VO = Voice
+ * BO = Boss
  * DR = Dracula
  * DE = Death
  * SH = Shaft
@@ -26,6 +27,12 @@
  * BT = Form of Bat
  * MU = Music
  */
+
+// playSfx flags
+typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
+
+#define SET_SOUNDMODE_MONO 5
+#define SET_SOUNDMODE_STEREO 6
 
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
@@ -133,12 +140,18 @@
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
+#define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
 #define NA_SE_AL_BACKSLIDE 0x617
+#define NA_SE_EV_VASE_BREAK 0x61D
+#define NA_SE_PL_BT_ECHO 0x61F
+#define NA_SE_EN_SKELETON_DESTROY 0x62B
+#define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
 #define NA_SE_PL_WARP 0x636
 #define NA_SE_EN_OPEN_DOOR 0x642
 #define NA_SE_EN_COG_CLICK 0x642
 #define NA_SE_EN_ROCK_BREAK 0x644
+#define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
 #define NA_SE_SECRET_STAIRS NA_SE_EN_ROCK_BREAK
 #define NA_SE_EV_SWITCH_CLICK 0x676
 #define NA_SE_PL_COLLECT_HEART 0x67A
@@ -148,8 +161,12 @@
 #define NA_SE_PL_BT_FIREBALL 0x680
 #define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
 #define NA_SE_BREAK_GLASS 0x68B
+#define NA_SE_EN_EXPLOSIVE_DEATH 0x693
 #define NA_SE_EV_CLOCK_TICK 0x6A1
 #define NA_SE_PL_COLLECT_GOLD 0x6A9
+#define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
+#define NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES 0x6CB
+#define NA_SE_EN_BLOOD_SKELETON_REASSEMBLES 0x6CC
 #define NA_SE_PL_RIC_UNK_6E2 0x6E2
 #define NA_SE_VO_AL_PUNCH 0x6F1
 #define NA_SE_VO_AL_WHAT 0x6F2
@@ -157,5 +174,12 @@
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F6
 #define NA_SE_VO_WO_BARK 0x706
+#define NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM 0x746
+#define NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM 0x747
+#define NA_SE_EN_BLOODY_ZOMBIE_INJURED 0x748
+#define NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE 0x749
+#define NA_SE_VO_AXE_KNIGHT_THROW 0x766
+#define NA_SE_VO_AXE_KNIGHT_SCREAM 0x767
+#define NA_SE_BO_DEFEATED 0x7D2
 #define NA_SE_PL_TELEPORT 0x8BA
 #define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE

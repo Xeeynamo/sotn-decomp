@@ -63,14 +63,14 @@ void func_80102EB8(void) {
     POLY_GT4 *poly1, *poly2, *poly3;
     s32 i;
 
-    D_80137E58 = AllocPolygons(4, 3);
-    poly1 = &D_80086FEC[D_80137E58];
+    D_80137E58 = AllocPrimitives(4, 3);
+    poly1 = &g_PrimBuf[D_80137E58];
 
-    D_80137E5C = AllocPolygons(3, 3);
-    poly2 = &D_80086FEC[D_80137E5C];
+    D_80137E5C = AllocPrimitives(3, 3);
+    poly2 = &g_PrimBuf[D_80137E5C];
 
-    D_80137E60 = AllocPolygons(2, 12);
-    poly3 = &D_80086FEC[D_80137E60];
+    D_80137E60 = AllocPrimitives(2, 12);
+    poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
         func_80107360(poly1, 98, 79, 96, 0, 0, 0);
@@ -165,9 +165,9 @@ void func_80103EAC(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103ED4);
 
 void func_8010427C(void) {
-    FreePolygons(D_80137E40);
-    FreePolygons(D_80137E44);
-    FreePolygons(D_80137E48);
+    FreePrimitives(D_80137E40);
+    FreePrimitives(D_80137E44);
+    FreePrimitives(D_80137E48);
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801042C4);
@@ -189,7 +189,7 @@ void DestroyEntity(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        FreePolygons(entity->firstPolygonIndex);
+        FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -206,123 +206,108 @@ void func_801065F4(s16 startIndex) {
         DestroyEntity(pItem);
 }
 
-// Print debug hitboxes
-void func_80106670(s32 blendMode);
-
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106670);
+// Not jumping into a 'nop'. Matching with PSY-Q 3.5.
+#ifndef NON_MATCHING
+void DrawEntitiesHitbox(s32 blendMode);
+INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", DrawEntitiesHitbox);
 #else
-extern u32 D_80097944; // tile count?
-
-// https://decomp.me/scratch/iTgjO
-void func_80106670(s32 blendMode) {
-    const int MaxPolyCount = 0x100;
-    int new_var2 = 4;
-    DR_MODE* sp20;
-    GpuBuffer* temp_a0;
-    s32 absX;
-    s32 absX_2;
-    s32 absY;
-    s32 absY_2;
+// DECOMP_ME_WIP DrawEntitiesHitbox https://decomp.me/scratch/QFSeC
+void DrawEntitiesHitbox(s32 blendMode) {
+    DR_MODE* drawMode;
     s32 polyCount;
-    s8* temp_s7;
+    s32* order;
     Entity* entity;
     TILE* tile;
-    u32* tileCount;
-    u32 var_s8 = 0x1F0;
-    s32 temp_var;
-    polyCount = 0;
-    temp_a0 = D_8006C37C;
-    entity = g_EntityArray;
-    temp_s7 = temp_a0->_unk_0474;
-    tile = &temp_a0->tiles[D_80097944];
-    sp20 = &temp_a0->drawModes[g_GpuUsage.drawModes];
-    while (polyCount < 0x40) {
-        if (entity->unk3C != 0) {
-            s32 var_a0_2;
-            if (D_80097944 >= MaxPolyCount) {
-                break;
-            }
-            absY = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-            absX = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-            if (entity->facing != 0) {
-                var_a0_2 = absX - (u16)entity->unk10;
-            } else {
-                var_a0_2 = (u16)entity->unk10 + absX;
-            }
-            temp_var = absY + (u16)entity->unk12;
-            tile->r0 = 0xFF;
+    u32 orderIdx;
+    u16 x;
+    u16 y;
+
+    order = D_8006C37C->order;
+    tile = &D_8006C37C->tiles[g_GpuUsage.tile];
+    drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+    orderIdx = 0x1F0;
+    for (polyCount = 0, entity = g_EntityArray; polyCount < 0x40;
+         polyCount++, entity++) {
+        if (entity->unk3C == 0)
+            continue;
+        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+            break;
+        }
+
+        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        if (entity->facing) {
+            x -= entity->unk10;
+        } else {
+            x += entity->unk10;
+        }
+        y += entity->unk12;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->unk3C == 2) {
+            tile->r0 = 0;
             tile->g0 = 0xFF;
+            tile->b0 = 0;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&order[orderIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
+    }
+
+    for (; polyCount < GPU_MAX_TILE_COUNT; polyCount++, entity++) {
+        if (entity->unk3C == 0)
+            continue;
+        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+            break;
+        }
+
+        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        if (entity->facing) {
+            x -= entity->unk10;
+        } else {
+            x += entity->unk10;
+        }
+        y += entity->unk12;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->unk3C == 1) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0;
+        }
+        if (entity->unk3C == 2) {
+            tile->r0 = 0;
+            tile->g0 = 0;
             tile->b0 = 0xFF;
-            if (entity->unk3C == 2) {
-                tile->r0 = 0;
-                tile->g0 = 0xFF;
-                tile->b0 = 0;
-            }
-            tile->x0 = var_a0_2 - entity->hitboxWidth;
-            tile->y0 = temp_var - entity->hitboxHeight;
-            tile->w = 2;
-            tile->w = entity->hitboxWidth * tile->w;
-            tile->h = entity->hitboxHeight * 2;
-            SetSemiTrans(tile, 1);
-            AddPrim(temp_s7 + var_s8 * 4, tile);
-            tile++;
-            D_80097944++;
         }
-        polyCount++;
-        entity++;
+        if (entity->unk3C == 3) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0xFF;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&order[orderIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
     }
 
-    if (polyCount < MaxPolyCount) {
-        while (polyCount < MaxPolyCount) {
-            if (entity->unk3C != 0) {
-                s32 var_a0_2;
-                if (D_80097944 >= MaxPolyCount) {
-                    break;
-                }
-                absY_2 = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-                absX_2 = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-                if (entity->facing != 0) {
-                    var_a0_2 = absX_2 - (u16)entity->unk10;
-                } else {
-                    var_a0_2 = (u16)entity->unk10 + absX_2;
-                }
-                temp_var = absY_2 + (u16)entity->unk12;
-                tile->r0 = 0xFF;
-                tile->g0 = 0xFF;
-                tile->b0 = 0xFF;
-                if (entity->unk3C == 1) {
-                    tile->r0 = 0xFF;
-                    tile->g0 = 0;
-                    tile->b0 = 0;
-                }
-                if (entity->unk3C == 2) {
-                    tile->r0 = 0;
-                    tile->g0 = 0;
-                    tile->b0 = 0xFF;
-                }
-                if (entity->unk3C == 3) {
-                    tile->r0 = 0xFF;
-                    tile->g0 = 0;
-                    tile->b0 = 0xFF;
-                }
-                tile->x0 = var_a0_2 - entity->hitboxWidth;
-                tile->y0 = temp_var - entity->hitboxHeight;
-                tile->w = entity->hitboxWidth * 2;
-                tile->h = entity->hitboxHeight * 2;
-                SetSemiTrans(tile, 1);
-                AddPrim(temp_s7 + (var_s8 * (new_var2 = 4)), tile);
-                tile++;
-                D_80097944++;
-            }
-            polyCount++;
-            entity++;
-        }
-    }
-
-    if (g_GpuUsage.drawModes < 0x400U) {
-        SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
-        AddPrim(temp_s7 + var_s8 * 4, sp20);
+    if (g_GpuUsage.drawModes < 0x400) {
+        SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
+        AddPrim(&order[orderIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }
@@ -335,7 +320,7 @@ bool func_8010715C(s32 mapTilesetId) {
         return false;
 
     if (D_800978AC == 0) {
-        if (func_800E81FC(mapTilesetId, 0xD) < 0) {
+        if (func_800E81FC(mapTilesetId, FILETYPE_MONSTER) < 0) {
             return false;
         }
     } else {
@@ -449,10 +434,10 @@ void func_80107460(void) {
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", CopyMapOverlayCallback);
-// https://decomp.me/scratch/1AWN1
+// DECOMP_ME_WIP CopyMapOverlayCallback https://decomp.me/scratch/1AWN1
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80107614);
-// https://decomp.me/scratch/U0IGY
+// DECOMP_ME_WIP func_80107614 https://decomp.me/scratch/U0IGY
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80107750);
 
@@ -496,7 +481,7 @@ bool func_801083F0(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80108448);
 
-// https://decomp.me/scratch/QZk8K
+// DECOMP_ME_WIP func_801092E8 https://decomp.me/scratch/QZk8K
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801092E8);
 
 void func_80109328(void) {
@@ -535,7 +520,7 @@ void func_80109990(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80109A44);
 
 // regalloc
-// https://decomp.me/scratch/rdeqb
+// DECOMP_ME_WIP func_8010A234 https://decomp.me/scratch/rdeqb
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A234);
 #else
@@ -585,7 +570,7 @@ void func_8010A234(s32 arg0) {
 
 // Matching in gcc 2.6.0 + aspsx 2.3.4
 // Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
-// https://decomp.me/scratch/oKHMJ
+// DECOMP_ME_WIP func_8010A3F0 https://decomp.me/scratch/oKHMJ
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A3F0);
 #else
@@ -732,7 +717,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &D_80086FEC[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
@@ -852,7 +837,7 @@ s32 func_8010E27C(void) {
     return 0;
 }
 
-// https://decomp.me/scratch/YvoMU
+// DECOMP_ME_WIP func_8010E334 https://decomp.me/scratch/YvoMU
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010E334);
 
 /*
@@ -1032,7 +1017,7 @@ void func_8010E9A4(void) {
     D_80072F20.unk4A = 0;
 }
 
-// https://decomp.me/scratch/9jKqU
+// DECOMP_ME_WIP func_8010EA54 https://decomp.me/scratch/9jKqU
 // matching in decomp.me, probably aspsx
 // TODO: aspatch div macro
 // https://discord.com/channels/710646040331681844/815529862604390411/1051628313073958992
@@ -1080,7 +1065,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010EB5C);
 
-// https://decomp.me/scratch/N8Srk
+// DECOMP_ME_WIP func_8010EC8C https://decomp.me/scratch/N8Srk
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010EC8C);
 
 void func_8010ED54(u8 arg0) {
@@ -1178,7 +1163,7 @@ void func_8010FD88(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010FDF8);
 s32 func_8010FDF8(/*?*/ s32);
 
-// https://decomp.me/scratch/Akstc 94.80%
+// DECOMP_ME_WIP func_80110394 https://decomp.me/scratch/Akstc 94.80%
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80110394);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801104D0);

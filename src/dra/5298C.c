@@ -66,13 +66,13 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
-void func_800F53D4(s32 tpage, s32 unkPrimIdx) {
-    u32* unkPrim = D_8006C37C->_unk_0474;
+void func_800F53D4(s32 tpage, s32 orderIdx) {
+    u32* order = D_8006C37C->order;
     DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
-        AddPrim(&unkPrim[unkPrimIdx], drawMode);
+        AddPrim(&order[orderIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }
@@ -228,19 +228,24 @@ void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F5AE4);
+void func_800F5AE4(MenuContext* context) {
+    s32 i, x;
 
+    for (i = 0, x = 72; i < 3; i++, x += 128)
+        func_800F5904(context, x, 201, 128, 16, (i & 1) << 7,
+                      func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
+}
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
-    u32* temp_s5 = D_8006C37C->_unk_0474;
-    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage_gt4[0]];
-    s32 var_s2 = context->unk18 + 2;
+    u32* order = D_8006C37C->order;
+    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
+    s32 orderIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
     if (context == &D_8013763A) {
-        var_s2--;
+        orderIdx--;
     }
 
     poly->code &= 0xFD;
@@ -267,22 +272,18 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             poly->x0 = poly->x2 = poly->x1;
             poly->x1 = poly->x3 = temp_polyx0;
         }
-        AddPrim(&temp_s5[var_s2], poly);
-        g_GpuUsage_gt4[0]++;
-        func_800F53D4(tpage, var_s2);
+        AddPrim(&order[orderIdx], poly);
+        g_GpuUsage.gt4++;
+        func_800F53D4(tpage, orderIdx);
     }
 }
 
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuRect);
-#else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    u32* temp_s1 = D_8006C37C->_unk_0474;
-    POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage_gt4[1]];
-    s32 temp_s2 = context->unk18 + 1;
+    u32* order = D_8006C37C->order;
+    POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage.g4];
+    s32 orderIdx = context->unk18 + 1;
     u32 temp;
 
     poly->x0 = posX;
@@ -301,12 +302,11 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
-        AddPrim(&temp_s1[temp_s2], poly);
-        g_GpuUsage_gt4[1]++;
-        func_800F53D4(0, temp_s2);
+        AddPrim(&order[orderIdx], poly);
+        g_GpuUsage.g4++;
+        func_800F53D4(0, orderIdx);
     }
 }
-#endif
 
 void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
                    s32 h, s32 yGap, s32 bColorMode) {
@@ -424,7 +424,7 @@ void DrawMenuChar(u8 ch, int x, int y, MenuContext* context) {
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuStr);
-// https://decomp.me/scratch/S4Dzb
+// DECOMP_ME_WIP DrawMenuStr https://decomp.me/scratch/S4Dzb
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     do {
@@ -535,7 +535,7 @@ void func_800F7244(void) {
     }
 }
 
-#ifndef NON_MATCHING
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F72BC);
 #else
 extern s32 D_80137948;
@@ -761,11 +761,11 @@ void func_800F86E4(void) {
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        FreePolygons(D_801377FC[i]);
+        FreePrimitives(D_801377FC[i]);
     }
 
-    FreePolygons(D_8013783C);
-    FreePolygons(D_80137840);
+    FreePrimitives(D_8013783C);
+    FreePrimitives(D_80137840);
 }
 
 void func_800F8754(MenuContext* context, s32 x, s32 y) {
@@ -812,12 +812,6 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-// Draw inventory in equip menu
-// does not match due to stack bigger than expected
-// matches in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8990);
-#else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     const s32 Cols = 2;
     const s32 Width = 168;
@@ -888,7 +882,6 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F6508(ctx, curX, curY);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8C98);
 
@@ -897,7 +890,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8E18);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8F28);
 
 void func_800F9690(void) {
-    POLY_GT4* poly = &D_80086FEC[D_8013783C];
+    POLY_GT4* poly = &g_PrimBuf[D_8013783C];
 
     if (D_80137608 != 0) {
         poly->pad3 = 0x80;
@@ -917,17 +910,17 @@ void func_800F96F4(void) { // !Fake:
     s32* new_var;
 
     new_var = D_80137848;
-    poly = &D_80086FEC[D_80137840];
+    poly = &g_PrimBuf[D_80137840];
     temp_a2 = D_80137692 == 0;
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
-        (&D_80086FEC[D_80137840])->pad3 = 0x80;
+        (&g_PrimBuf[D_80137840])->blendMode = 0x80;
         if (D_80137844[0] == 1) {
-            (&D_80086FEC[D_80137840])->clut = 0x188;
+            (&g_PrimBuf[D_80137840])->clut = 0x188;
         } else {
             D_80137844[0] -= 1;
-            (&D_80086FEC[D_80137840])->clut = 0x181;
+            (&g_PrimBuf[D_80137840])->clut = 0x181;
         }
     } else {
         poly->pad3 = 0x8;
@@ -1008,7 +1001,7 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-// https://decomp.me/scratch/VmuNt 99.46%
+// DECOMP_ME_WIP func_800F9E18 https://decomp.me/scratch/VmuNt 99.46%
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F9E18);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F9F40);
@@ -1019,7 +1012,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA3C4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 
-// https://decomp.me/scratch/JL0hI
+// DECOMP_ME_WIP func_800FA7E8 https://decomp.me/scratch/JL0hI
 // has some logic related to the weapon struct
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA7E8);
 
@@ -1103,8 +1096,12 @@ void func_800FAE98(void) {
     D_800978F8 = 0x40;
 }
 
-// https://decomp.me/scratch/f40LU 91.22%
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FAEC4);
+void func_800FAEC4(u16 pad, u16 arg1, s32 arg2, s16 arg3, u16 arg4) {
+    g_IsSelectingEquipment = 0;
+    func_800FAC98();
+    func_800FAD34(arg2, arg1, arg3, arg4);
+    D_800978F8 += 1;
+}
 
 void func_800FAF44(s32 arg0) {
     s32 var_a0;
@@ -1121,11 +1118,11 @@ void func_800FAF44(s32 arg0) {
             var_a1++;
         }
 
-        D_80137688 = D_8013768C = LOH(g_MenuNavigation.scrollEquipHand);
+        D_80137688 = D_8013768C = g_MenuNavigation.scrollEquipHand;
         return;
     }
     D_80137688 = D_8013768C =
-        LOH(((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4]);
+        ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
 
     for (i = 0; i < 90; i++) {
         if (D_800A7734[i].unk00 == D_801375D4) {
@@ -1169,7 +1166,15 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB160);
+void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
+    u8 swap;
+    u8* equipOrder;
+
+    equipOrder = func_800FD744(equipType);
+    swap = equipOrder[D_801375D8[arg0]];
+    equipOrder[D_801375D8[arg0]] = equipOrder[D_801375D8[arg1]];
+    equipOrder[D_801375D8[arg1]] = swap;
+}
 
 bool func_800FB1EC(s32 arg0) {
     if (D_801375CC.equipTypeFilter == 0) {
@@ -1192,7 +1197,26 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBC24);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FD39C);
+void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
+                   s32 blend, s32 color) {
+    GpuBuffer* gpuBuffer;
+    SPRT* sprt;
+
+    sprt = &D_8006C37C->sprite[g_GpuUsage.sp];
+    gpuBuffer = D_8006C37C;
+    SetSemiTrans(sprt, 0);
+    SetShadeTex(sprt, blend);
+    sprt->x0 = x;
+    sprt->y0 = y;
+    sprt->w = w;
+    sprt->h = h;
+    sprt->u0 = u;
+    sprt->v0 = v;
+    sprt->b0 = sprt->g0 = sprt->r0 = color;
+    sprt->clut = D_8003C104[pal];
+    AddPrim(&gpuBuffer->order[0x1FF], sprt);
+    g_GpuUsage.sp++;
+}
 
 s32 func_800FD4C0(s32 bossId, s32 action) {
     s32 temp_v0;

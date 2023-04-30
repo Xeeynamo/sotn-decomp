@@ -12,7 +12,7 @@ void func_80156C60(Entity* entity) {
     u32* ptr;
 
     if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePolygons(entity->firstPolygonIndex);
+        g_api.FreePrimitives(entity->firstPolygonIndex);
     }
 
     ptr = (u32*)entity;
@@ -31,7 +31,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801572A8);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157894);
 
-// https://decomp.me/scratch/hk5zb
+// DECOMP_ME_WIP func_80157A50 https://decomp.me/scratch/hk5zb
 // Almost matched, just a jump issue
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157A50);
 
@@ -283,7 +283,7 @@ void func_80159C04(void) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80159CE4);
 
-// https://decomp.me/scratch/1JWA0
+// DECOMP_ME_WIP func_8015A7D0 https://decomp.me/scratch/1JWA0
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A7D0);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A9B0);

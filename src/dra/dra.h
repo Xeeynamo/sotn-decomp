@@ -3,6 +3,30 @@
 
 #include "game.h"
 
+typedef enum {
+    FILETYPE_SYSTEM,
+    FILETYPE_STAGE_PRG,
+    FILETYPE_VH,
+    FILETYPE_VB,
+    FILETYPE_SEQ,
+    FILETYPE_STAGE_CHR,
+    FILETYPE_UNUSED_6,
+    FILETYPE_WEAPON0_PRG,
+    FILETYPE_WEAPON1_PRG,
+    FILETYPE_WEAPON0_CHR,
+    FILETYPE_WEAPON1_CHR,
+    FILETYPE_FAMILIAR_PRG,
+    FILETYPE_FAMILIAR_CHR,
+    FILETYPE_MONSTER,
+} FileType;
+
+typedef struct {
+    const char* path;
+    u8* addr;
+    s32 size;
+    s32 type;
+} OvlDesc;
+
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
@@ -22,6 +46,10 @@ extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
+extern s32 D_800A0248;
+extern OvlDesc D_800A024C[];
+extern OvlDesc D_800A036C[];
+extern OvlDesc D_800A04AC[];
 extern s32 D_800A04EC;
 extern s32 D_800A04F8;
 extern s32 D_800A0510[];
@@ -130,13 +158,21 @@ extern s32 D_800B07C8;
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern s32 D_800B0914;
+extern s32 D_800B0918;
+extern const char aPbav[];
+extern const char aPbav_0[];
+extern const char aPbav_1[];
+extern const char aPbav_2[];
 extern s16 D_800BD07C[];
+extern s16 D_800BD19C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
 extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
 extern const char aBlue;
+extern u8 g_GfxEquipIcon[][16 * 16 / 2];
+extern s16 g_PalEquipIcon[];
 extern const char aDr03x;
 extern const char aEff03x;
 extern const char aEnv03x;
@@ -172,6 +208,8 @@ extern s32 g_softResetTimer;
 extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern OvlDesc* D_8013644C;
+extern OvlDesc D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 D_80137460[]; // button timers
@@ -179,14 +217,14 @@ extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
 extern u16 D_801374B8[];
-extern s16 D_801374F8;
+extern u16 D_801374F8[];
+extern u16 D_80137538[];
 extern u8* g_DecSrcPtr;
 extern u8* g_DecDstPtr;
 extern s32 g_DecReadNibbleFlag;
 extern s32 g_DecWriteNibbleFlag;
 extern s32* D_80137590;
 extern RoomLoadDef* D_801375BC;
-extern s16 D_80137538;
 extern s32 D_801375C8;
 extern Unkstruct_800A2D98 D_801375CC;
 extern s32 D_801375D4;
@@ -282,9 +320,11 @@ extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
 extern s32 D_80138FB0;
+extern s16 D_80138FB8; // vol_l
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
 extern s16 g_sfxRingBufferPos1; // D_80139000
+extern s16 D_80139004;          // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern s8 D_80139014;
@@ -308,7 +348,7 @@ extern Multi D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern s32 D_801396F0;
-extern u16 D_801396F4;
+extern volatile s16 D_801396F4;
 extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;
@@ -391,7 +431,8 @@ void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void func_800E4124(s32 arg0);
-s32 func_800E81FC(s32 mapTilesetId, s32);
+void func_800E4970(void);
+s32 func_800E81FC(s32 id, FileType type);
 void func_800E8D24(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
@@ -405,18 +446,17 @@ void func_800EAD7C(void);
 void func_800EAEEC(void);
 void func_800EB534(s32 equipIcon, s32 palette, s32 index);
 void func_800ECE2C(void);
-void func_800EDA70(s32* arg0);
+void func_800EDA70(Primitive* prim);
 void func_800EDA94(void);
 void func_800EDAE4(void);
-s32 AllocPolygons(u8 primitives, s32 count);
+s32 AllocPrimitives(u8 primitives, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
 void func_800EFBF8(s32 arg0);
-void FreePolygons(s32 index);
+void FreePrimitives(s32 index);
 void func_800F0334(s32);
 void func_800F0578(s32 arg0);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
-void func_800F180C(s32, s32, void*);
 void func_800F1868(s32, s32, void*);
 void func_800F18C4(s32, s32);
 void func_800F1954(s32, s32, s32);
@@ -596,7 +636,7 @@ void func_80132C2C(s16);
 u8 func_80132028(u_char com, u_char* param, u_char* result);
 void func_8013271C(void);
 void func_80132760(void);
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance);
 void func_801337B4(void);
 bool func_80133940(void);

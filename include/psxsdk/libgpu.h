@@ -279,13 +279,13 @@ typedef struct {
 typedef struct {
     /* 0x00 */ RECT clip;     /* clip area */
     /* 0x08 */ short ofs[2];  /* drawing offset */
-    /* 0x0A */ RECT tw;       /* texture window */
-    /* 0x12 */ u_short tpage; /* texture page */
-    /* 0x14 */ u_char dtd;    /* dither flag (0:off, 1:on) */
-    /* 0x15 */ u_char dfe;    /* flag to draw on display area (0:off 1:on) */
-    /* 0x16 */ u_char isbg;   /* enable to auto-clear */
-    /* 0x17 */ u_char r0, g0, b0; /* initital background color */
-    /* 0x18 */ DR_ENV dr_env;     /* reserved */
+    /* 0x0C */ RECT tw;       /* texture window */
+    /* 0x14 */ u_short tpage; /* texture page */
+    /* 0x16 */ u_char dtd;    /* dither flag (0:off, 1:on) */
+    /* 0x17 */ u_char dfe;    /* flag to draw on display area (0:off 1:on) */
+    /* 0x18 */ u_char isbg;   /* enable to auto-clear */
+    /* 0x19 */ u_char r0, g0, b0; /* initital background color */
+    /* 0x1C */ DR_ENV dr_env;     /* reserved */
 } DRAWENV;                        /* size = 0x58 */
 
 typedef struct {
@@ -324,6 +324,8 @@ extern u_short LoadTPage(PixPattern* pix,  // Pointer to texture pattern start a
           int x, int y, // Destination frame buffer address
           int w, int h  // Texture pattern size
 );
+
+extern u_short LoadClut2(u_long *clut, int x, int y);
 
 // clang-format on
 

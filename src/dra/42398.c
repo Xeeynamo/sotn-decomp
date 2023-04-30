@@ -25,7 +25,6 @@ s32 func_800E3278(void);
 void func_800E385C(u32*);
 void func_800E7AEC(void);
 void func_800E7BB8(void);
-s32 func_800E81FC(s32, s32);
 void func_800E8EE4(void);
 void func_800EA7CC(void);
 void func_800EB314(void);
@@ -35,7 +34,7 @@ void func_800ECE58(void);
 void func_800EDEDC(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
-void func_80106670(s32 blendMode);
+void DrawEntitiesHitbox(s32 blendMode);
 void func_80108448(void);
 s32 func_8010E27C(void);
 void AccelerateX(s32);
@@ -165,7 +164,7 @@ void func_800E31C0(void) {
 }
 
 // TODO: fix branching
-// https://decomp.me/scratch/y3otf
+// DECOMP_ME_WIP func_800E3278 https://decomp.me/scratch/y3otf
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
 #else
@@ -304,7 +303,7 @@ void func_800E376C(void) {
     D_8003CB08.buf.disp.isrgb24 = 0;
 }
 
-// https://decomp.me/scratch/Ocshz
+// DECOMP_ME_WIP func_800E385C https://decomp.me/scratch/Ocshz
 // mips to c doesn't support this function very well
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
 
@@ -412,8 +411,8 @@ loop_5:
         temp_v1_2 = D_8006C37C->unk0;
         g_blinkTimer++;
         D_8006C37C = temp_v1_2;
-        D_801362CC = temp_v1_2->_unk_0474;
-        ClearOTag(temp_v1_2->_unk_0474, 0x200);
+        D_801362CC = temp_v1_2->order;
+        ClearOTag(temp_v1_2->order, 0x200);
         g_GpuUsage.drawModes = 0;
         g_GpuUsage.env = 0;
         g_GpuUsage.gt4 = 0;
@@ -431,7 +430,7 @@ loop_5:
             func_800EBBAC();
             if (D_8003C734 == 2 && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
-                    func_80106670(D_801362B0);
+                    DrawEntitiesHitbox(D_801362B0);
                 }
             }
         }
@@ -610,8 +609,8 @@ void func_800E451C(void) {
         break;
     case 1:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(2, 0) >= 0 &&
-             func_800E81FC(0, 0) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
+             func_800E81FC(0, FILETYPE_SYSTEM) >= 0)) {
             D_80073060++;
         }
         break;
@@ -630,7 +629,7 @@ void func_800E451C(void) {
         break;
     case 5:
         if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(0, 1) >= 0)) {
+            (D_800978AC == 0 && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
@@ -648,10 +647,10 @@ void func_800E451C(void) {
 }
 
 void func_800E493C(void) {
-    if (g_Settings.isSoundMono == 0) {
-        PlaySfx(6);
+    if (g_Settings.isSoundMono == false) {
+        PlaySfx(SET_SOUNDMODE_STEREO);
     } else {
-        PlaySfx(5);
+        PlaySfx(SET_SOUNDMODE_MONO);
     }
 }
 
@@ -678,7 +677,7 @@ void func_800E4A04(void) { s32 pad[3]; }
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
 
 void func_800E5358(void) {
-    POLY_GT4* poly = &D_80086FEC[D_8013640C];
+    POLY_GT4* poly = &g_PrimBuf[D_8013640C];
     s32 i;
 
     for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {
@@ -704,7 +703,7 @@ void func_800E5358(void) {
 }
 
 void func_800E5498(void) {
-    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage_gt4[0]];
+    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
     GpuBuffer* buffer = D_8006C37C;
 
     setSemiTrans(poly, true);
@@ -714,8 +713,8 @@ void func_800E5498(void) {
     func_801072BC(poly);
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
-    AddPrim(&buffer->_unk_0474[0x1FF], poly);
-    g_GpuUsage_gt4[0]++;
+    AddPrim(&buffer->order[0x1FF], poly);
+    g_GpuUsage.gt4++;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5584);
@@ -730,13 +729,13 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, 0xB) != 0)
+        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_PRG) != 0)
             ;
-        while (func_800E81FC(D_8006CBC4 - 1, 0xC) != 0)
+        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_CHR) != 0)
             ;
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8000, 2) != 0)
+        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, FILETYPE_VH) != 0)
             ;
-        while (func_800E81FC(((D_8006CBC4 + 2) * 2) + 0x8001, 3) != 0)
+        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, FILETYPE_VB) != 0)
             ;
     }
 }

@@ -56,7 +56,11 @@ segments:
       - [0x19A4, rodata]
       - [0x1D14, rodata]
       - [0xD794, rodata]
+      - [0xD83C, .rodata, 139E0]
+      - [0xD85C, rodata] # EntityEquipItemDrop
+      - [0xD874, rodata]
       - [0xD884, rodata]
       - [0xD8C8, c]
+      - [0x139E0, c]
       - [0x197D8, data]
   - [0x19E94]

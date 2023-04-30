@@ -4,10 +4,7 @@
  * Description: All reverse warp rooms.
  */
 
-#include "stage.h"
-
-extern PfnEntityUpdate D_801803E0[];
-extern s16 D_80180A94[];
+#include "rwrp.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188DF0);
 
@@ -31,13 +28,84 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018B6B4);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BD58);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BE1C);
+void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BF34);
+    posY = g_Camera.posY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
+    }
+
+    posY = layoutObj->posY;
+    if (posY < yClose) {
+        return;
+    }
+
+    if (yFar < posY) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            func_8018BD58(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        func_8018BD58(entity, layoutObj);
+        break;
+    }
+}
+
+void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+    s16 xClose;
+    s16 xFar;
+    s16 posX;
+    Entity* entity;
+
+    posX = g_Camera.posX.i.hi;
+    xClose = posX - 0x40;
+    xFar = posX + 0x140;
+    if (xClose < 0) {
+        xClose = 0;
+    }
+
+    posX = layoutObj->posX;
+    if (posX < xClose) {
+        return;
+    }
+
+    if (xFar < posX) {
+        return;
+    }
+
+    switch (layoutObj->objectId & 0xE000) {
+    case 0x0:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        if (entity->objectId == 0) {
+            func_8018BD58(entity, layoutObj);
+        }
+        break;
+    case 0x8000:
+        break;
+    case 0xA000:
+        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        func_8018BD58(entity, layoutObj);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C04C);
 
-extern LayoutObject* D_80195A30;
 void func_8018C098(s16 arg0) {
     while (true) {
         if ((D_80195A30->posX != 0xFFFF) &&
@@ -54,7 +122,6 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C1EC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C300);
 
-extern LayoutObject* D_80195A34;
 void func_8018C34C(s16 arg0) {
     while (true) {
         if ((D_80195A34->posY != 0xFFFF) &&
@@ -171,7 +238,26 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E634);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E978);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EA30);
+void func_8018EA30(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->accelerationY >= 0) {
+        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
+        entity->unk84.unk = temp_v1;
+        entity->accelerationX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+    NOP;
+
+    if (entity->accelerationY < 0x00004000) {
+        entity->accelerationY += 0x2000;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018EAB4);
 
@@ -247,7 +333,27 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194590);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194924);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194DD4);
+void func_80194DD4(Entity* entity) {
+    ObjInit2* objInit = &D_80181134[entity->subId];
+
+    if (entity->step == 0) {
+        func_8018E290(D_80180494);
+        entity->animSet = objInit->animSet;
+        entity->zPriority = objInit->zPriority;
+        entity->unk5A = objInit->unk4.s;
+        entity->palette = objInit->palette;
+        entity->unk19 = objInit->unk8;
+        entity->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            entity->flags = objInit->unkC;
+        }
+        if (entity->subId >= 5) {
+            entity->unk1E = 0x800;
+            entity->unk19 = (u8)(entity->unk19 | 4);
+        }
+    }
+    func_8018D6B0(objInit->unk10, entity);
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194EC0);
 

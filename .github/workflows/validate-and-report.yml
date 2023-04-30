@@ -14,6 +14,10 @@ on:
       - '**/*.md'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.job }}-${{ github.event_name }}-${{ github.number }}
+  cancel-in-progress: false
+
 jobs:
   build-and-test:
     strategy:
@@ -26,8 +30,6 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
-      - name: Debug context
-        run: echo '${{ toJSON(github) }}'
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo (PR)
@@ -163,11 +165,13 @@ jobs:
         run: python3 tools/find_duplicates.py -a
       - name: Rename output file into something more meaningful
         run: mv *_all_matches.txt gh-duplicates/duplicates.txt
+      - name: Generate function report
+        run: python3 tools/function_finder.py > gh-duplicates/functions.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 
             git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit -m 'Update duplicates' || true
+            git commit -m 'Update reports' || true
             git push
         working-directory: gh-duplicates

@@ -19,6 +19,7 @@ void func_800E7D08(void) {
 }
 
 #ifndef NON_MATCHING
+void LoadStageTileset(u8* pTilesetData, s32 y);
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
 #else
 void LoadStageTileset(u8* pTilesetData, s32 y) {
@@ -54,13 +55,12 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
 
 // Not matching due to case 2/11
 #ifndef NON_EQUIVALENT
+s32 func_800E7E08(u32);
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7E08);
 #else
-void LoadStageTileset(u32* pTilesetData, s16 y);
 extern u32 g_Clut;
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
-extern s32 D_800A0248;
 extern u32 D_800A04CC;
 extern RECT D_800ACDA8;
 extern RECT D_800ACDB8;
@@ -69,7 +69,7 @@ extern RECT D_800ACDD0;
 extern RECT D_800ACDD8;
 extern RECT D_800ACDE0;
 extern s32 D_800BD1C8[];
-extern s32* D_8013644C;
+extern s32* D_8013644C;      // this is now an OvlDesc!!
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
 extern s32* g_StageOverlay;
@@ -182,7 +182,171 @@ s32 func_800E7E08(u32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E81FC);
+s32 func_800E81FC(s32 fileId, FileType type) {
+    char buf[33];
+    s32 fid;
+
+    func_800E7D08();
+    D_800A04EC = 1;
+    D_8013644C = &D_800A024C[fileId];
+    if (type == FILETYPE_STAGE_PRG) {
+        STRCPY(buf, "sim:c:\\bin\\");
+        D_8013644C = &D_80136450;
+        strcat(buf, D_800A3C40[g_StageId].ovlName);
+        strcat(buf, ".bin");
+        D_8013644C->addr = (u8*)0x80180000;
+        D_8013644C->path = buf;
+        D_8013644C->size = 0x60000;
+        D_8013644C->type = 0;
+    }
+    if (type == FILETYPE_VH) {
+        if (fileId & 0x8000) {
+            D_8013644C = &D_800A036C[fileId & 0x7FFF];
+        } else {
+            STRCPY(buf, "sim:c:\\sound\\data\\sd_");
+            D_8013644C = &D_80136450;
+            strcat(buf, D_800A3C40[g_StageId].name);
+            strcat(buf, ".vh");
+            D_8013644C->addr = (u8*)aPbav_2;
+            D_8013644C->path = buf;
+            D_8013644C->size = D_800A3C40[g_StageId].vhLen;
+            D_8013644C->type = 4;
+        }
+        if (D_8013644C->addr == aPbav) {
+            D_800A0248 = 0;
+        }
+        if (D_8013644C->addr == aPbav_0) {
+            D_800A0248 = 1;
+        }
+        if (D_8013644C->addr == aPbav_2) {
+            D_800A0248 = 3;
+        }
+        if (D_8013644C->addr == aPbav_1) {
+            D_800A0248 = 2;
+        }
+        SsVabClose(D_800A0248);
+    }
+    if (type == FILETYPE_VB) {
+        if (fileId & 0x8000) {
+            D_8013644C = &D_800A036C[fileId & 0x7FFF];
+        } else {
+            D_8013644C = &D_80136450;
+            STRCPY(buf, "sim:c:\\sound\\data\\sd_");
+            strcat(buf, D_800A3C40[g_StageId].name);
+            strcat(buf, ".vb");
+            D_8013644C->addr = (u8*)0x80280000;
+            D_8013644C->path = buf;
+            D_8013644C->size = D_800A3C40[g_StageId].vbLen;
+            D_8013644C->type = 5;
+        }
+    }
+    if (type == FILETYPE_SEQ) {
+        D_8013644C = &D_800A04AC[fileId];
+    }
+    if (type == FILETYPE_STAGE_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\");
+        strcat(buf, D_800A3C40[g_StageId].gfxName);
+        strcat(buf, ".bin");
+        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->size = 0x40000;
+        D_8013644C->path = buf;
+        D_8013644C->type = 2;
+    }
+    if (type == FILETYPE_WEAPON0_PRG) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\w0_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->size = 0x3000;
+        D_8013644C->addr = (u8*)0x8017A000;
+        D_8013644C->type = 8;
+    }
+    if (type == FILETYPE_WEAPON1_PRG) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\w1_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x8017D000;
+        D_8013644C->size = 0x3000;
+        D_8013644C->type = 8;
+    }
+    if (type == FILETYPE_WEAPON0_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\f0_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)&D_8007EFE4;
+        D_8013644C->size = 0x4000;
+        D_8013644C->type = 9;
+    }
+    if (type == FILETYPE_WEAPON1_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\f1_000.bin");
+        buf[15] = ((fileId / 10) % 10) + '0';
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)&D_80082FE4;
+        D_8013644C->size = 0x4000;
+        D_8013644C->type = 10;
+    }
+    if (type == FILETYPE_FAMILIAR_PRG) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\tt_000.bin");
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x80170000;
+        D_8013644C->size = 0xA000;
+        D_8013644C->type = 18;
+    }
+    if (type == FILETYPE_FAMILIAR_CHR) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\ft_000.bin");
+        buf[16] = (fileId % 10) + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->size = 0x6000;
+        D_8013644C->type = 19;
+    }
+    if (type == FILETYPE_MONSTER) {
+        D_8013644C = &D_80136450;
+        STRCPY(buf, "sim:c:\\bin\\mo_000.bin");
+        buf[14] = fileId / 100 + '0';
+        buf[15] = fileId / 10 - fileId / 100 * 10 + '0';
+        buf[16] = fileId % 10 + '0';
+        D_8013644C->path = buf;
+        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->size = 0x5800;
+        D_8013644C->type = 20;
+    }
+
+    fid = open(D_8013644C->path, 1);
+    if (fid < 0) {
+        FntPrint("o err:%s\n", D_8013644C->path);
+        D_800A04EC = 0;
+        return -1;
+    }
+    if (read(fid, D_8013644C->addr, D_8013644C->size) < 0) {
+        FntPrint("r err\n");
+        D_800A04EC = 0;
+        return -1;
+    }
+    if (close(fid) < 0) {
+        FntPrint("cl err\n");
+        D_800A04EC = 0;
+        return -1;
+    }
+    if (func_800E7E08(D_8013644C->type) < 0) {
+        FntPrint("tr err\n");
+        D_800A04EC = 0;
+        return -1;
+    }
+    D_800A04EC = 0;
+    return 0;
+}
 
 void func_800E8D24(void) {
     s8* ptr;
@@ -520,19 +684,11 @@ s32 LoadSaveData(SaveData* save) {
     return 0;
 }
 
-// This function matches in PSY-Q 3.5: GCC 2.6.0 + aspsx 2.3.4
-// probably aspsx
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA48C);
-#else
-extern const char aBaslus00067dra[];
-
 void func_800EA48C(char* dstSaveName, s32 saveSlot) {
-    __builtin_memcpy(dstSaveName, aBaslus00067dra, 19);
+    __builtin_memcpy(dstSaveName, aBaslus00067dra, sizeof(aBaslus00067dra));
     dstSaveName[0x10] += saveSlot / 10;
     dstSaveName[0x11] += saveSlot % 10;
 }
-#endif
 
 extern Unkstruct_8006C3CC D_8006C3CC[];
 
@@ -684,14 +840,12 @@ void func_800EAEA4(void) {
     u16* ptr;
     s32 i;
 
-    for (ptr = &D_801374F8, i = 0; i < 32; i++) {
-        *ptr = ~0;
-        ptr++;
+    for (ptr = D_801374F8, i = 0; i < 32; i++) {
+        *ptr++ = ~0;
     }
 
-    for (ptr = &D_80137538, i = 0; i < 32; i++) {
-        *ptr = ~0;
-        ptr++;
+    for (ptr = D_80137538, i = 0; i < 32; i++) {
+        *ptr++ = ~0;
     }
 }
 
@@ -880,7 +1034,40 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB534);
+void func_800EB534(s32 equipIcon, s32 palette, s32 index) {
+    u8* iconGfx;
+    s32 vramX;
+    s32 var_t0;
+    s32 i;
+
+    if (D_801374F8[index] != equipIcon) {
+        iconGfx = g_GfxEquipIcon[equipIcon];
+        vramX = ((index & 7) * 4) + 0x280;
+        var_t0 = index;
+        if (index < 0) {
+            var_t0 = index + 7;
+        }
+
+        LoadTPage(iconGfx, 0, 0, vramX, (var_t0 >> 3) * 0x10 + 0x180, 16, 16);
+    }
+
+    if (D_80137538[index] != palette) {
+        for (i = 0; i < 16; i++) {
+            if (D_800705CC) { // FAKE
+            }
+            D_800705CC[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
+        }
+
+        LoadClut2(D_800705CC, 0, 0xFD);
+        LoadClut2(D_800705CC + 0x100, 0, 0xFE);
+    }
+    if (D_800973EC == 0) {
+        D_80137478[index] = equipIcon;
+        D_801374B8[index] = palette;
+    }
+    D_801374F8[index] = equipIcon;
+    D_80137538[index] = palette;
+}
 
 void func_800EB6B4(void) {
     s32 i;
@@ -1030,9 +1217,9 @@ void func_800ECBF8(void) {
 void func_800ECE2C(void) {
     s32 i;
 
-    D_800730A0.unk00 = 0;
-    for (i = 0; i < 16; i++) {
-        D_800730A0.unk54[i].unk00[0] = 0;
+    g_CurrentRoom.unk00 = 0;
+    for (i = 0; i < MAX_BG_LAYER_COUNT; i++) {
+        g_CurrentRoom.bg[i].D_800730F4 = 0;
     }
 }
 
@@ -1050,7 +1237,7 @@ extern s32 D_8013AED0;
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708 = 0;
     D_8013AED0 = 1;
-    D_800730A0.unk00 = 0;
+    g_CurrentRoom.unk00 = 0;
     D_80073088 = layerDef->tileDef;
     if (layerDef->tileDef != NULL) {
         g_CurrentRoomTileLayout.fg = layerDef->layout;
@@ -1070,18 +1257,18 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
             D_8007309C = 0x60;
             D_8013AED0 = 0;
         }
-        D_800730A0.unk00 = (s32)layerDef->unkE;
-        g_CurrentRoomLeft = layerDef->rect.left;
-        g_CurrentRoomTop = layerDef->rect.top;
-        g_CurrentRoomRight = layerDef->rect.right;
-        g_CurrentRoom.hSize = (g_CurrentRoomRight - g_CurrentRoomLeft) + 1;
-        g_CurrentRoomY = 0;
-        g_CurrentRoomX = 0;
-        g_CurrentRoomWidth = g_CurrentRoom.hSize << 8;
-        D_800730AC = 1;
-        g_CurrentRoomBottom = layerDef->rect.bottom;
-        g_CurrentRoomVSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
-        g_CurrentRoomHeight = g_CurrentRoomVSize << 8;
+        g_CurrentRoom.unk00 = (s32)layerDef->unkE;
+        g_CurrentRoom.left = layerDef->rect.left;
+        g_CurrentRoom.top = layerDef->rect.top;
+        g_CurrentRoom.right = layerDef->rect.right;
+        g_CurrentRoom.hSize = (g_CurrentRoom.right - g_CurrentRoom.left) + 1;
+        g_CurrentRoom.y = 0;
+        g_CurrentRoom.x = 0;
+        g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
+        g_CurrentRoom.D_800730AC = 1;
+        g_CurrentRoom.bottom = layerDef->rect.bottom;
+        g_CurrentRoom.vSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
+        g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
     }
 }
 #endif
@@ -1089,23 +1276,24 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
     u32 rect;
 
-    D_800730D8[index].D_800730F4 = 0;
-    D_800730D8[index].tileDef = layerDef->tileDef;
-    D_800730D8[index].layout = layerDef->layout;
-    if (D_800730D8[index].tileDef != 0) {
-        D_800730D8[index].D_800730F0 = layerDef->unkC;
-        D_800730D8[index].D_800730F4 = layerDef->unkE;
+    g_CurrentRoom.bg[index].D_800730F4 = 0;
+    g_CurrentRoom.bg[index].tileDef = layerDef->tileDef;
+    g_CurrentRoom.bg[index].layout = layerDef->layout;
+    if (g_CurrentRoom.bg[index].tileDef != 0) {
+        g_CurrentRoom.bg[index].zPriority = layerDef->zPriority;
+        g_CurrentRoom.bg[index].D_800730F4 = layerDef->unkE;
 #if 0 // matches with PSY-Q 3.5
-        D_800730D8[index].w = layerDef->rect.right - layerDef->rect.left + 1;
-        D_800730D8[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
+        g_CurrentRoom.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
+        g_CurrentRoom.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
 #else
         rect = *(u32*)&layerDef->rect;
-        D_800730D8[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
+        g_CurrentRoom.bg[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
         rect = *(u32*)&layerDef->rect;
-        D_800730D8[index].h = ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
+        g_CurrentRoom.bg[index].h =
+            ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
 #endif
-        D_800730D8[index].flags = layerDef->rect.flags;
-        D_800730D8[index].D_80073100 = 1;
+        g_CurrentRoom.bg[index].flags = layerDef->rect.flags;
+        g_CurrentRoom.bg[index].D_80073100 = 1;
     }
 }
 
@@ -1115,28 +1303,29 @@ void LoadRoomLayer(s32 arg0) {
     SetRoomForegroundLayer(g_api.o.tileLayers[arg0].fg);
     SetRoomBackgroundLayer(0, g_api.o.tileLayers[arg0].bg);
 
-    for (i = 1; i < 16; i++) {
-        D_800730A0.unk54[i].unk00[0] = 0;
+    for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
+        g_CurrentRoom.bg[i].D_800730F4 = 0;
     }
 }
 
-void func_800EDA70(s32* context) {
+void func_800EDA70(Primitive* prim) {
     s32 i;
     s32 n;
+    u32* primData = (u32*)prim;
 
-    for (n = 13, i = 0; i < n; i++) {
-        *context++ = 0;
+    for (n = sizeof(Primitive) / sizeof(*primData), i = 0; i < n; i++) {
+        *primData++ = 0;
     }
 }
 
 void func_800EDA94(void) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 i;
 
-    for (i = 0, poly = D_80086FEC; i < 0x500; i++) {
-        func_800EDA70((s32*)poly);
-        setcode(poly, 0);
-        poly++;
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
+        func_800EDA70(prim);
+        prim->type = PRIM_NONE;
+        prim++;
     }
 }
 
@@ -1157,7 +1346,7 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
         if (ptr->tag == 0) {
             ptr->tag = 1;
             setcode(poly, 7);
-            *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePolygons
+            *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePrimitives
             return ptr;
         }
     }
@@ -1165,39 +1354,86 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDB58);
+s16 func_800EDB58(u8 primType, s32 count) {
+    Primitive* prim;
+    Primitive* temp_v0;
+    bool isLooping;
+    s32 primStartIdx;
+    s32 var_s1;
+    s32 i;
+    s32 var_v1;
 
-s32 AllocPolygons(u8 primitives, s32 count) {
-    s32 polyIndex = 0;
-    POLY_GT4* poly = D_80086FEC;
-    u8* polyCode = &D_80086FEC->code;
+    var_v1 = count;
+    primStartIdx = 0;
+    i = 0;
+    prim = g_PrimBuf;
+    isLooping = 1;
+    while (isLooping) {
+        var_v1--;
+        if (prim->type != 0) {
+            var_v1 = i;
+            primStartIdx = var_v1 + 1;
+            var_v1 = count;
+        } else if (var_v1 == 0) {
+            break;
+        }
+        var_s1 = i + 1;
+        prim++;
+        i++;
+        isLooping = i < 0x400;
+        if (isLooping) {
+            continue;
+        }
+        if (var_v1 != 0) {
+            return -1;
+        }
+    }
+
+    for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
+        func_800EDA70(prim);
+        var_s1 = 0;
+        temp_v0 = &g_PrimBuf[i];
+        prim->type = primType;
+        prim->next = temp_v0;
+        prim->next = prim->next + primStartIdx + 1;
+    }
+    prim[-1].next = NULL;
+    prim[-1].type &= 0xEF;
+
+    return primStartIdx;
+}
+
+s32 AllocPrimitives(u8 primType, s32 count) {
+    s32 primIndex = 0;
+    Primitive* prim = g_PrimBuf;
+    u8* dstPrimType = &g_PrimBuf->type;
     s16 index;
 
-    while (polyIndex < 1024) {
-        if (*polyCode == 0) {
-            func_800EDA70(poly);
+    while (primIndex < MAX_PRIM_ALLOC_COUNT) {
+        if (*dstPrimType == 0) {
+            func_800EDA70(prim);
             if (count == 1) {
-                *polyCode = primitives;
-                poly->tag = 0;
-                if (D_800A2438 < polyIndex) {
-                    D_800A2438 = polyIndex;
+                *dstPrimType = primType;
+                prim->next = NULL;
+                if (D_800A2438 < primIndex) {
+                    D_800A2438 = primIndex;
                 }
             } else {
-                *polyCode = primitives;
-                index = AllocPolygons(primitives, count - 1);
+                *dstPrimType = primType;
+                index = AllocPrimitives(primType, count - 1);
                 if (index == -1) {
-                    *polyCode = 0;
+                    *dstPrimType = 0;
                     return -1;
                 }
-                poly->tag = &D_80086FEC[index];
+                prim->next = &g_PrimBuf[index];
             }
-            return (s16)polyIndex;
+            return (s16)primIndex;
         }
 
-        polyIndex++;
-        polyCode += sizeof(POLY_GT4);
-        poly++;
-        if (polyIndex >= 0x400) {
+        primIndex++;
+        dstPrimType += sizeof(Primitive);
+        prim++;
+        if (primIndex >= 0x400) {
             return -1;
         }
     }
@@ -1226,7 +1462,7 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
             } else {
                 *polyCode = primitives;
                 foundPolyIndex = func_800EDD9C(primitives, count - 1);
-                poly->tag = &D_80086FEC[foundPolyIndex];
+                poly->tag = &g_PrimBuf[foundPolyIndex];
             }
             foundPolyIndex = polyIndex;
             return foundPolyIndex;
@@ -1241,18 +1477,18 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
     return (s16)temp_v0;
 }
 
-void FreePolygons(s32 polygonIndex) {
-    POLY_GT4* poly = &D_80086FEC[polygonIndex];
+void FreePrimitives(s32 primitiveIndex) {
+    Primitive* prim = &g_PrimBuf[primitiveIndex];
 
-    if (poly) {
+    if (prim) {
         do {
-            if (poly->code == 7) {
-                *(*(s32**)&poly->r1) = 0; // does not make any sense?!
-                setcode(poly, 0);
+            if (prim->type == PRIM_ENV) {
+                *(*(s32**)&prim->r1) = 0;
+                prim->type = PRIM_NONE;
             } else
-                setcode(poly, 0);
-            poly = (POLY_GT4*)poly->tag;
-        } while (poly);
+                prim->type = PRIM_NONE;
+            prim = prim->next;
+        } while (prim);
     }
 }
 

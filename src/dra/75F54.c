@@ -330,6 +330,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
 
 void func_8011A4C8(Entity* entity) {}
 
+// https://decomp.me/scratch/0aMFT 94.19%
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A4D0);
 
 void func_8011A870(void) {
@@ -842,10 +843,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownDagger);
 // axe thrown when using subweapon
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnThrownAxe);
 
-// Matches perfectly on PSY-Q 3.5: https://decomp.me/scratch/dhDdI
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80125A30);
-#else
 s32 func_80125A30(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
@@ -864,7 +861,7 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
 
     if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
         colRes2 = res2.unk0 & 0xF001;
-        if (!(*(u16*)&res2.unk0 & 1)) {
+        if (!((s16)res2.unk0 & 1)) {
             g_CurrentEntity->posY.i.hi = y;
             return 1;
         }
@@ -878,7 +875,6 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
     }
     return 0;
 }
-#endif
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
     Collider res;
@@ -891,9 +887,9 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
                    g_CurrentEntity->posY.i.hi + arg0, &res, 0);
     if (g_CurrentEntity->accelerationX > 0) {
-        var_a1 = LOH(res.unk14);
+        var_a1 = res.unk14;
     } else {
-        var_a1 = LOH(res.unk1C);
+        var_a1 = res.unk1C;
     }
 
     if (res.unk0 & 2) {
@@ -1101,12 +1097,12 @@ void EntityExpandingCircle(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = AllocPolygons(4, 1);
+        firstPolygonIndex = AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->unk7C.s = 22;
             entity->unk7E.modeU16 = 26;
-            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->firstPolygonIndex];
             poly->u2 = 64;
             poly->u3 = 127;
             poly->u1 = 127;
@@ -1151,7 +1147,7 @@ void EntityExpandingCircle(Entity* entity) {
         break;
     }
 
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = entity->posX.i.hi - entity->unk7C.s;
     poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
     poly->x1 = entity->posX.i.hi + entity->unk7C.s;
@@ -1184,7 +1180,7 @@ void func_80127CC8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPolygons(3, 1);
+        ret = AllocPrimitives(3, 1);
         entity->firstPolygonIndex = ret;
 
         if (ret == -1) {
@@ -1194,7 +1190,7 @@ void func_80127CC8(Entity* entity) {
         }
 
         entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-        poly = &D_80086FEC[entity->firstPolygonIndex];
+        poly = &g_PrimBuf[entity->firstPolygonIndex];
         poly->r3 = 192;
         poly->r2 = 192;
         poly->r1 = 192;
@@ -1222,7 +1218,7 @@ void func_80127CC8(Entity* entity) {
     default:
         break;
     }
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = poly->x2 = entity->posX.i.hi - 3;
     poly->y0 = 0;
     poly->y1 = 0;
@@ -1299,11 +1295,11 @@ void func_8012B78C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPolygons(4, 1);
+        ret = AllocPrimitives(4, 1);
         entity->firstPolygonIndex = ret;
         if (entity->firstPolygonIndex != -1) {
             entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-            poly = &D_80086FEC[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->firstPolygonIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
             poly->u2 = 32;
@@ -1342,7 +1338,7 @@ void func_8012B78C(Entity* entity) {
     default:
         break;
     }
-    poly = &D_80086FEC[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
         poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
             entity->unk7E.modeU8.unk0;
@@ -1376,7 +1372,28 @@ bool func_8012C88C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CA64);
+void func_8012CA64(void) {
+    u32 var_a0;
+
+    PLAYER.unk2E = 1;
+    D_800B0914 = 0;
+
+    if (D_80072F20.pl_vram_flag & 0x20) {
+        var_a0 = 0xDF;
+    } else {
+        var_a0 = 0xDE;
+    }
+    func_8010DA48(var_a0);
+
+    PLAYER.accelerationY = 0;
+    PLAYER.accelerationX /= 2;
+
+    D_800B0918 = 0x200;
+    if (D_80072F20.pl_vram_flag & 0x40) {
+        D_800B0914 = 1;
+        func_8010DA48(0xE9U);
+    }
+}
 
 void func_8012CB0C(void) {
     PLAYER.unkAC = 0xDE;
@@ -1513,7 +1530,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801309B4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80130E94);
 
-// https://decomp.me/scratch/cu30D
+// DECOMP_ME_WIP func_8013136C https://decomp.me/scratch/cu30D
 // TODO: branching is wrong jpt_ needs a file split
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8013136C);
@@ -1785,8 +1802,8 @@ void func_80132500(u8 soundMode) {
     CdlATV audioVolume;
 
     switch (soundMode) {
-    case MONO:
-        if (D_801390A8 != 0) { // D_801390A8 fake symbol or part of another
+    case MONO_SOUND:
+        if (D_801390A8 != 0) {
             func_80021174();
             audioVolume.val2 = 128; // CD (R) --> SPU (R)
             audioVolume.val0 = 128; // CD (L) --> SPU (L)
@@ -1797,7 +1814,7 @@ void func_80132500(u8 soundMode) {
             D_801390A8 = 0;
         }
         break;
-    case STEREO:
+    case STEREO_SOUND:
         if (D_801390A8 != 1) {
             func_80021188();
             audioVolume.val2 = 224; // CD (R) --> SPU (R)
@@ -1820,7 +1837,7 @@ void func_801325D8(void) {
     D_8013AEEC = 1;
     SsInitHot();
     SsSetTickMode(1);
-    func_80132500(1);
+    func_80132500(STEREO_SOUND);
     SsSetReservedVoice(0x10);
     SsStart();
     func_800209B4(&D_80138460, 0x10, 1);
@@ -1866,65 +1883,77 @@ void func_80132760(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801327B4);
 
-// https://decomp.me/scratch/0X5YL
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132A04);
-#else
-void func_801327B4(s16, s16, s16, s16, s16, s16, s16, s16);
-extern s16 D_800BD19C[];
-extern s16 D_800BD19E[];
-extern s16 D_80138FB8; // vol_l
-extern s16 D_80139004; // vol_r
-
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
-                   s16 volume, s16 distance) {
-    s16 var_a0;
-    s16 var_a1;
-    volatile short pad;
-
-    if (distance == 0) {
-        D_80138FB8 = volume;
-        D_80139004 = volume;
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 arg5,
+                   s16 arg6) {
+    if (arg6 == 0) {
+        D_80138FB8 = (s16)arg5;
+        D_80139004 = (s16)arg5;
     } else {
-        D_80139004 = (volume * D_800BD19C[distance * 2]) >> 7;
-        D_80138FB8 = (volume * D_800BD19E[distance * 2]) >> 7;
+        D_80139004 = (((s16)arg5) * D_800BD19C[arg6 * 2]) >> 7;
+        D_80138FB8 = (((s16)arg5) * D_800BD19C[arg6 * 2 + 1]) >> 7;
     }
 
-    if (voice < 0x18) {
+    if (voice < 0x18U) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
-        SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8,
+        SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, D_80138FB8,
                    D_80139004);
         return;
     }
     switch (voice) {
     case 0x1E:
-        var_a0 = 0;
-        var_a1 = 4;
+        func_801327B4(0, 4, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x1F:
-        var_a0 = 4;
-        var_a1 = 8;
+        func_801327B4(4, 8, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x20:
-        var_a0 = 8;
-        var_a1 = 0xC;
+        func_801327B4(8, 12, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x21:
-        var_a0 = 0xE;
-        var_a1 = 0x12;
+        func_801327B4(14, 18, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
-    default:
-        return;
     }
-    func_801327B4(var_a0, var_a1, vabId, prog, tone, note, D_80138FB8,
-                  D_80139004);
 }
-#endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132C2C);
+void func_80132C2C(s16 arg0) {
+    s32 i;
+    s32 isFound;
 
-extern s16 D_80139868[];
+    if (arg0 == 6) {
+        isFound = 0;
+        for (i = 0; i < D_801396F4; i++) {
+            if (D_80139868[i] == 0xC) {
+                isFound = 1;
+            }
+        }
+
+        if (isFound) {
+            D_800BD1C0++;
+            D_80139868[D_801396F4] = 0xE;
+            D_801396F4++;
+            if (D_801396F4 == 0x100) {
+                D_8013AEE8++;
+                for (i = 1; i < 0x100; i++) {
+                    D_80139868[i] = 0;
+                }
+
+                D_801396F4 = 1;
+                D_80139868[D_801396F4] = 0xE;
+                D_801396F4++;
+            }
+        }
+    }
+    D_80139868[D_801396F4] = arg0;
+    D_801396F4++;
+    if (D_801396F4 == 0x100) {
+        D_8013AEE8++;
+        for (i = 1; i < 0x100; i++) {
+            D_80139868[i] = 0;
+        }
+
+        D_801396F4 = 1;
+    }
+}
 
 u16 func_80132E38(void) {
     s32 i;
@@ -1932,9 +1961,7 @@ u16 func_80132E38(void) {
     for (i = 0; i < 255; i++) {
         D_80139868[i] = D_80139868[i + 1];
     }
-    D_801396F4--;
-
-    return D_801396F4;
+    return --D_801396F4;
 }
 
 void func_80132E90(u32 arg0, s8* arg1) {

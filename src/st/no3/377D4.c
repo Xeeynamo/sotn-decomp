@@ -191,13 +191,13 @@ void EntityCavernDoor(Entity* self) {
             self->step = 128;
             self->animCurFrame = 0;
         } else {
-            firstPolygonIndex = g_api.AllocPolygons(1, 64);
+            firstPolygonIndex = g_api.AllocPrimitives(1, 64);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
 
-            poly = &D_80086FEC[firstPolygonIndex];
+            poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
             *(s32*)&self->unk7C = poly;
             self->flags |= FLAG_FREE_POLYGONS;
@@ -331,13 +331,13 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -407,12 +407,12 @@ void EntityPathBlockTallWeight(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPolygons(4, 8);
+        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
@@ -531,8 +531,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         tileLayoutPtr = &D_8018127C;
         tilePos = 0x1F1;
         for (i = 0; i < 3; i++) {
-            D_800730D8[0].layout[tilePos] = *tileLayoutPtr;
-            D_800730D8[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_CurrentRoom.bg[0].layout[tilePos] = *tileLayoutPtr;
+            g_CurrentRoom.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -626,8 +626,8 @@ void EntityMermanRockRightSide(Entity* self) {
         tileLayoutPtr = &D_801812B8;
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++) {
-            D_800730D8[0].layout[tilePos] = *tileLayoutPtr;
-            D_800730D8[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_CurrentRoom.bg[0].layout[tilePos] = *tileLayoutPtr;
+            g_CurrentRoom.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -731,7 +731,7 @@ void EntityUnkId26(Entity* self) {
         for (tileLayoutPtr = &D_8018131E, i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
-                D_800730D8[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                g_CurrentRoom.bg[0].layout[tileLayoutPos] = *tileLayoutPtr;
                 tileLayoutPos += 0x30;
             }
         }
@@ -782,7 +782,7 @@ void EntityFallingRock2(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
+            self->posY.i.hi = self->posY.i.hi + collider.unk18;
             temp_a0 = -self->accelerationY;
             self->accelerationY = -self->accelerationY;
             if (temp_a0 < 0) {
@@ -935,13 +935,13 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             break;
         }
 
-        firstPolygonIndex = g_api.AllocPolygons(1, 64);
+        firstPolygonIndex = g_api.AllocPrimitives(1, 64);
         if (firstPolygonIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &D_80086FEC[firstPolygonIndex];
+        poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
         *(s32*)&self->unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;

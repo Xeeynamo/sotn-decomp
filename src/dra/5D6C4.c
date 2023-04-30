@@ -207,7 +207,7 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
-// https://decomp.me/scratch/5ufgy
+// DECOMP_ME_WIP func_800FDCE0 https://decomp.me/scratch/5ufgy
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDCE0);
 
 bool func_800FDD44(s32 equipId) {
@@ -251,10 +251,6 @@ bool func_800FE3A8(s32 arg0) {
     return (g_Status.relics[arg0] & temp) != 0;
 }
 
-// Matches with PSY-Q 3.5
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE3C4);
-#else
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
@@ -296,7 +292,6 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         return subweaponId;
     }
 }
-#endif
 
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalModRate;
@@ -503,7 +498,7 @@ void func_800FF708(s32 arg0, s32 arg1) {
     g_Status.equipment[arg1 + 2] = rnd;
 }
 
-// https://decomp.me/scratch/Ti1u1
+// DECOMP_ME_WIP func_800FF7B8 https://decomp.me/scratch/Ti1u1
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF7B8);
 #else
@@ -999,7 +994,7 @@ void DrawHudRichter(void) {
     D_8013798C = 40000 / D_80137978;
     D_80137988 = 40000 / D_8013797C;
     D_80137970 = func_800EDD9C(4, 9);
-    poly = &D_80086FEC[D_80137970];
+    poly = &g_PrimBuf[D_80137970];
 
     func_80107360(poly, 2, 22, 32, 96, 0, 0);
     poly->tpage = 0x1B;
@@ -1066,7 +1061,7 @@ void DrawHudRichter(void) {
     poly->pad3 = 0x2000;
 
     D_80137974 = func_800EDD9C(4, 16);
-    poly = &D_80086FEC[D_80137974];
+    poly = &g_PrimBuf[D_80137974];
     if (poly != 0) {
         s32 phi_s1 = 0x20;
         s32 phi_s0 = 0xD8;
@@ -1125,7 +1120,7 @@ void func_8010189C(void) {
     }
 
     D_80137970 = func_800EDD9C(4, 14);
-    poly = &D_80086FEC[D_80137970];
+    poly = &g_PrimBuf[D_80137970];
 
     if (poly != NULL) {
         for (i = 0; poly != NULL; i++) {
@@ -1165,9 +1160,9 @@ void func_801024DC(void) {
     s32 temp_v0_2;
     s32 var_a0;
     u32 temp_v0;
-    temp_v0 = AllocPolygons(1, 4);
+    temp_v0 = AllocPrimitives(1, 4);
     D_8013799C = temp_v0;
-    var_v1 = &D_80086FEC[temp_v0];
+    var_v1 = &g_PrimBuf[temp_v0];
     var_a0 = 0;
     if (var_v1 != 0) {
         do {
@@ -1182,8 +1177,8 @@ void func_801024DC(void) {
     }
     D_801379A8 = 0;
     D_801379A4 = 0;
-    temp_v0_2 = AllocPolygons(4, 1);
-    temp_v1 = &D_80086FEC[temp_v0_2];
+    temp_v0_2 = AllocPrimitives(4, 1);
+    temp_v1 = &g_PrimBuf[temp_v0_2];
     D_801379A0 = temp_v0_2;
     temp_v1->u1 = 0xFF;
     temp_v1->v2 = 0xFF;
@@ -1209,7 +1204,7 @@ void func_80102628(s32 arg0) {
     s32 temp;
     s32 i = 0;
 
-    poly = &D_80086FEC[D_8013799C];
+    poly = &g_PrimBuf[D_8013799C];
 
     if (poly != NULL) {
         temp = arg0 / 2;
@@ -1230,7 +1225,7 @@ void func_80102628(s32 arg0) {
 }
 
 void func_801026BC(s32 arg0) {
-    POLY_GT4* poly = &D_80086FEC[D_801379A0];
+    POLY_GT4* poly = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
         poly->pad3 = 8;

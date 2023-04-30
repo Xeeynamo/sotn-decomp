@@ -7,9 +7,10 @@ MAIN            := main
 DRA             := dra
 
 # Compilers
+CC1PSX			:= ./bin/cc1-psx-26
 CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
-CC              := ./bin/cc1-26
+CC              := $(CC1PSX)
 LD              := $(CROSS)ld
 CPP				:= $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
@@ -90,7 +91,6 @@ clean:
 	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
-	git clean -fx --exclude=.vscode/settings.json
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
@@ -290,7 +290,13 @@ update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
+	git clean -fd bin/
 
+bin/%:
+	cd ./bin && wget https://github.com/Xeeynamo/sotn-decomp/releases/download/$*/$*.tar.gz
+	rm -f $*.tar.gz*
+	cd ./bin && sha256sum --check $*.tar.gz.sha256 && tar -xzf $*.tar.gz
+	rm -f $*.tar.gz*
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
 	git submodule update $(SPLAT_DIR)
@@ -315,7 +321,7 @@ $(SOTNDISK): $(GO)
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(ASPATCH)
+$(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets
@@ -325,8 +331,14 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 $(BUILD_DIR)/$(ASSETS_DIR)/%.roomdef.json.o: $(ASSETS_DIR)/%.roomdef.json
 	./tools/splat_ext/roomdef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.layers.json.o: $(ASSETS_DIR)/%.layers.json
+	./tools/splat_ext/layers.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
 	./tools/splat_ext/tiledef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
+	./tools/splat_ext/spritesheet.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spriteparts.json.o: $(ASSETS_DIR)/%.spriteparts.json
 	./tools/splat_ext/spriteparts.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
@@ -343,6 +355,8 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 # for now '.dec' files are ignored
+	touch $@
+$(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
 
 SHELL = /bin/bash -e -o pipefail
