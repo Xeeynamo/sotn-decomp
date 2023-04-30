@@ -1370,7 +1370,38 @@ bool func_8012C88C(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
+void func_8012C97C(void) {
+    if (g_EntityArray[PLAYER_CHARACTER].unk2E == 0) {
+        return;
+    }
+    if (g_EntityArray[PLAYER_CHARACTER].unk2E >= 8 &&
+        g_EntityArray[PLAYER_CHARACTER].unk2E < 10) {
+        return;
+    }
+    if (D_8009744C < 13) {
+        return;
+    }
+    if (func_800FE3A8(14) == 0) {
+        return;
+    }
+    if (func_800FE3A8(6) == 0) {
+        return;
+    }
+    if (D_80072F20.pl_vram_flag & 1) {
+        return;
+    }
+    if (!(D_80072EE8 & 0x10)) {
+        return;
+    }
+    if (D_80138440 != 0) {
+        return;
+    }
+
+    PLAYER.unk2E = 9;
+    D_800B0914 = 0;
+    func_8010DA48(0xEC);
+    PLAYER.accelerationY = 0;
+}
 
 void func_8012CA64(void) {
     u32 var_a0;
