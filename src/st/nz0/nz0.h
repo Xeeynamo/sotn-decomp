@@ -1,5 +1,9 @@
 #include "stage.h"
 
+typedef enum {
+    E_BONE_SCIMITAR_HEAD = 0x28,
+} ObjectIds;
+
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
@@ -33,6 +37,27 @@ extern s32 D_80182694;
 extern s32 D_801826AC;
 
 // *** EntityBloodSkeleton properties END ***
+
+// *** EntityBoneScimitar properties START ***
+
+extern u16 D_80180C4C[];    // Init
+extern s32 D_8018208C;      // Flag for special bone scimitar to appear or not
+extern u8 D_80182090[];     // animation: Walking Forward
+extern u8 D_801820A0[];     // animation: Walking Backwards
+extern u8 D_801820B0[];     // animation: Swing Sword
+extern u8 D_801820CC[];     // animation: Jumping
+extern u8 D_801820D8[];     // animation: Landing
+extern s8 D_801820F4[];     // Skeleton parts array selector
+extern s32 D_801820FC[];    // Skeleton parts accelerationX
+extern s32 D_80182118[];    // Skeleton parts accelerationY
+extern u16 D_80182134[];    // Skeleton parts posX
+extern u16 D_80182144[];    // Skeleton parts posY
+extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
+extern s32 D_8018215C;
+extern s32 D_8018216C;
+extern s32 D_80182174;
+
+// *** EntityBoneScimitar properties END ***
 
 extern u16 D_80180C64[];
 extern u16 D_80180C7C[];
