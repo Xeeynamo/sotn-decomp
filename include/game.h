@@ -400,18 +400,19 @@ typedef struct {
     /* 0x58 */ DISPENV disp; // display environment
 } DisplayBuffer;
 
+#define GPU_MAX_TILE_COUNT 0x100
 typedef struct {
     /* 0x00000 */ void* unk0;
     /* 0x00004 */ DisplayBuffer buf;
     /* 0x00074 */ DR_ENV env[0x10];
-    /* 0x00474 */ u32 _unk_0474[0x200];
+    /* 0x00474 */ u32 order[0x200];
     /* 0x00474 */ DR_MODE drawModes[0x400];
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
     /* 0x0D874 */ POLY_G4 polyG4[0x100];
     /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];
     /* 0x103F4 */ LINE_G2 lineG2[0x100];
     /* 0x117F4 */ SPRT_16 sprite16[0x280];
-    /* 0x13FF4 */ TILE tiles[0x100];
+    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT];
     /* 0x14FF4 */ SPRT sprite[0x200];
 } GpuBuffer; /* size = 0x177F4 */
 
