@@ -206,121 +206,108 @@ void func_801065F4(s16 startIndex) {
         DestroyEntity(pItem);
 }
 
-// Print debug hitboxes
-void func_80106670(s32 blendMode);
-
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106670);
+// Not jumping into a 'nop'. Matching with PSY-Q 3.5.
+#ifndef NON_MATCHING
+void DrawEntitiesHitbox(s32 blendMode);
+INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", DrawEntitiesHitbox);
 #else
-// DECOMP_ME_WIP func_80106670 https://decomp.me/scratch/iTgjO
-void func_80106670(s32 blendMode) {
-    const int MaxPolyCount = 0x100;
-    int new_var2 = 4;
-    DR_MODE* sp20;
-    GpuBuffer* temp_a0;
-    s32 absX;
-    s32 absX_2;
-    s32 absY;
-    s32 absY_2;
+// DECOMP_ME_WIP DrawEntitiesHitbox https://decomp.me/scratch/QFSeC
+void DrawEntitiesHitbox(s32 blendMode) {
+    DR_MODE* drawMode;
     s32 polyCount;
-    s8* temp_s7;
+    s32* order;
     Entity* entity;
     TILE* tile;
-    u32* tileCount;
-    u32 var_s8 = 0x1F0;
-    s32 temp_var;
-    polyCount = 0;
-    temp_a0 = D_8006C37C;
-    entity = g_EntityArray;
-    temp_s7 = temp_a0->_unk_0474;
-    tile = &temp_a0->tiles[g_GpuUsage.tile];
-    sp20 = &temp_a0->drawModes[g_GpuUsage.drawModes];
-    while (polyCount < 0x40) {
-        if (entity->unk3C != 0) {
-            s32 var_a0_2;
-            if (g_GpuUsage.tile >= MaxPolyCount) {
-                break;
-            }
-            absY = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-            absX = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-            if (entity->facing != 0) {
-                var_a0_2 = absX - (u16)entity->unk10;
-            } else {
-                var_a0_2 = (u16)entity->unk10 + absX;
-            }
-            temp_var = absY + (u16)entity->unk12;
-            tile->r0 = 0xFF;
+    u32 orderIdx;
+    u16 x;
+    u16 y;
+
+    order = D_8006C37C->order;
+    tile = &D_8006C37C->tiles[g_GpuUsage.tile];
+    drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+    orderIdx = 0x1F0;
+    for (polyCount = 0, entity = g_EntityArray; polyCount < 0x40;
+         polyCount++, entity++) {
+        if (entity->unk3C == 0)
+            continue;
+        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+            break;
+        }
+
+        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        if (entity->facing) {
+            x -= entity->unk10;
+        } else {
+            x += entity->unk10;
+        }
+        y += entity->unk12;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->unk3C == 2) {
+            tile->r0 = 0;
             tile->g0 = 0xFF;
+            tile->b0 = 0;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&order[orderIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
+    }
+
+    for (; polyCount < GPU_MAX_TILE_COUNT; polyCount++, entity++) {
+        if (entity->unk3C == 0)
+            continue;
+        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+            break;
+        }
+
+        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        if (entity->facing) {
+            x -= entity->unk10;
+        } else {
+            x += entity->unk10;
+        }
+        y += entity->unk12;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->unk3C == 1) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0;
+        }
+        if (entity->unk3C == 2) {
+            tile->r0 = 0;
+            tile->g0 = 0;
             tile->b0 = 0xFF;
-            if (entity->unk3C == 2) {
-                tile->r0 = 0;
-                tile->g0 = 0xFF;
-                tile->b0 = 0;
-            }
-            tile->x0 = var_a0_2 - entity->hitboxWidth;
-            tile->y0 = temp_var - entity->hitboxHeight;
-            tile->w = 2;
-            tile->w = entity->hitboxWidth * tile->w;
-            tile->h = entity->hitboxHeight * 2;
-            SetSemiTrans(tile, 1);
-            AddPrim(temp_s7 + var_s8 * 4, tile);
-            tile++;
-            g_GpuUsage.tile++;
         }
-        polyCount++;
-        entity++;
+        if (entity->unk3C == 3) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0xFF;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&order[orderIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
     }
 
-    if (polyCount < MaxPolyCount) {
-        while (polyCount < MaxPolyCount) {
-            if (entity->unk3C != 0) {
-                s32 var_a0_2;
-                if (g_GpuUsage.tile >= MaxPolyCount) {
-                    break;
-                }
-                absY_2 = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-                absX_2 = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-                if (entity->facing != 0) {
-                    var_a0_2 = absX_2 - (u16)entity->unk10;
-                } else {
-                    var_a0_2 = (u16)entity->unk10 + absX_2;
-                }
-                temp_var = absY_2 + (u16)entity->unk12;
-                tile->r0 = 0xFF;
-                tile->g0 = 0xFF;
-                tile->b0 = 0xFF;
-                if (entity->unk3C == 1) {
-                    tile->r0 = 0xFF;
-                    tile->g0 = 0;
-                    tile->b0 = 0;
-                }
-                if (entity->unk3C == 2) {
-                    tile->r0 = 0;
-                    tile->g0 = 0;
-                    tile->b0 = 0xFF;
-                }
-                if (entity->unk3C == 3) {
-                    tile->r0 = 0xFF;
-                    tile->g0 = 0;
-                    tile->b0 = 0xFF;
-                }
-                tile->x0 = var_a0_2 - entity->hitboxWidth;
-                tile->y0 = temp_var - entity->hitboxHeight;
-                tile->w = entity->hitboxWidth * 2;
-                tile->h = entity->hitboxHeight * 2;
-                SetSemiTrans(tile, 1);
-                AddPrim(temp_s7 + (var_s8 * (new_var2 = 4)), tile);
-                tile++;
-                g_GpuUsage.tile++;
-            }
-            polyCount++;
-            entity++;
-        }
-    }
-
-    if (g_GpuUsage.drawModes < 0x400U) {
-        SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
-        AddPrim(temp_s7 + var_s8 * 4, sp20);
+    if (g_GpuUsage.drawModes < 0x400) {
+        SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
+        AddPrim(&order[orderIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }

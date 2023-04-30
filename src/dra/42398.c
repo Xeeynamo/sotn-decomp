@@ -34,7 +34,7 @@ void func_800ECE58(void);
 void func_800EDEDC(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
-void func_80106670(s32 blendMode);
+void DrawEntitiesHitbox(s32 blendMode);
 void func_80108448(void);
 s32 func_8010E27C(void);
 void AccelerateX(s32);
@@ -411,8 +411,8 @@ loop_5:
         temp_v1_2 = D_8006C37C->unk0;
         g_blinkTimer++;
         D_8006C37C = temp_v1_2;
-        D_801362CC = temp_v1_2->_unk_0474;
-        ClearOTag(temp_v1_2->_unk_0474, 0x200);
+        D_801362CC = temp_v1_2->order;
+        ClearOTag(temp_v1_2->order, 0x200);
         g_GpuUsage.drawModes = 0;
         g_GpuUsage.env = 0;
         g_GpuUsage.gt4 = 0;
@@ -430,7 +430,7 @@ loop_5:
             func_800EBBAC();
             if (D_8003C734 == 2 && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
-                    func_80106670(D_801362B0);
+                    DrawEntitiesHitbox(D_801362B0);
                 }
             }
         }
@@ -713,7 +713,7 @@ void func_800E5498(void) {
     func_801072BC(poly);
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
-    AddPrim(&buffer->_unk_0474[0x1FF], poly);
+    AddPrim(&buffer->order[0x1FF], poly);
     g_GpuUsage.gt4++;
 }
 
