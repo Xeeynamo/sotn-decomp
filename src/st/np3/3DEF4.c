@@ -1201,7 +1201,7 @@ void func_801C90E8(void) {
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityBoneScimitar);
 
 // debris that rotates and falls down
-void EntityFallingDebris(Entity* entity) {
+void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->unk88.S8.unk0--;
         if (entity->unk88.S8.unk0 & 0xFF) {

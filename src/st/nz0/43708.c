@@ -1,23 +1,5 @@
 #include "nz0.h"
 
-extern u16 D_80180C4C[]; // Init
-extern s32
-    D_8018208C; // Flag responsible for special bone scimitar to appear or not
-extern u8 D_80182090[];  // animation: Walking Forward
-extern u8 D_801820A0[];  // animation: Walking Backwards
-extern u8 D_801820B0[];  // animation: Swing Sword
-extern u8 D_801820CC[];  // animation: Jumping
-extern u8 D_801820D8[];  // animation: Landing
-extern s8 D_801820F4[];  // Skeleton parts array selector
-extern s32 D_801820FC[]; // accelerationX
-extern s32 D_80182118[]; // accelerationY
-extern u16 D_80182134[]; // posX
-extern u16 D_80182144[]; // posY
-extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
-extern s32 D_8018215C;
-extern s32 D_8018216C;
-extern s32 D_80182174;
-
 typedef enum {
     BONE_SCIMITAR_INIT,
     BONE_SCIMITAR_IDLE,
@@ -81,9 +63,9 @@ void EntityBoneScimitar(Entity* self) {
                 return;
             }
         }
-        self->unk7C.S8.unk0 = 80; // Skeleton attack timer cycle
+        self->unk7C.S8.unk0 = 80;    // Skeleton attack timer cycle
         self->unk80.modeS8.unk0 = 0; // Facing init
-        self->unk84.S8.unk0 = 0;
+        self->unk84.S8.unk0 = 0;     // Skeleton attack timer selector
         break;
 
     case BONE_SCIMITAR_IDLE:
@@ -277,7 +259,7 @@ void EntityBoneScimitar(Entity* self) {
 }
 
 // debris that rotates and falls down
-void EntityFallingDebris(Entity* entity) {
+void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->unk88.S8.unk0--;
         if (entity->unk88.S8.unk0 & 0xFF) {
