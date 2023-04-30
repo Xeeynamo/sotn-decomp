@@ -21,10 +21,10 @@ void func_801C3708(void) {
 }
 
 extern u16 D_80180C4C[]; // Init
-extern s32 D_8018208C;   // subId
-extern u8 D_80182090[];  // animation:
-extern u8 D_801820A0[];  // animation:
-extern u8 D_801820B0[];  // animation:
+extern s32 D_8018208C;   // Flag responsible for special bone scimitar to appear or not
+extern u8 D_80182090[];  // animation: Walking Forward
+extern u8 D_801820A0[];  // animation: Walking Backwards
+extern u8 D_801820B0[];  // animation: Swing Sword
 extern u8 D_801820CC[];  // animation:
 extern u8 D_801820D8[];  // animation:
 extern s8 D_801820F4[];  // unk88
@@ -37,20 +37,39 @@ extern s32 D_8018215C;
 extern s32 D_8018216C;
 extern s32 D_80182174;
 
+typedef enum {
+    BONE_SCIMITAR_INIT,
+    BONE_SCIMITAR_IDLE,
+    BONE_SCIMITAR_WALK_TOWARDS_PLAYER,
+    BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER,
+    BONE_SCIMITAR_ATTACK,
+    BONE_SCIMITAR_JUMP,
+    BONE_SCIMITAR_SPECIAL,
+    BONE_SCIMITAR_DESTROY
+} BoneScimitarSteps;
+
+typedef enum {
+    BONE_SCIMITAR_JUMPING,
+    BONE_SCIMITAR_IN_AIR,
+    BONE_SCIMITAR_LAND
+} BoneScimitarJumpSubSteps;
+
+typedef enum {
+    BONE_SCIMITAR_WALK_RIGHT,
+    BONE_SCIMITAR_WALK_LEFT
+} BoneScimitarSpecialSubSteps;
+
 void EntityBoneScimitar(Entity* self) {
     Entity* newEntity;
-    Entity* new_var;
-    u16* var_s3;
     u8 animStatus;
-    s32 var_s4;
     s32 i;
 
     if (self->flags & 0x100) {
-        self->step = 7;
+        self->step = BONE_SCIMITAR_DESTROY;
     }
 
     switch (self->step) {
-    case 0:
+    case BONE_SCIMITAR_INIT:
         InitializeEntity(D_80180C4C);
         if (self->subId != 0) {
             self->palette += self->subId;
@@ -66,32 +85,34 @@ void EntityBoneScimitar(Entity* self) {
         self->unk84.S8.unk0 = 0;
         break;
 
-    case 1:
+    case BONE_SCIMITAR_IDLE:
         if (func_801BCCFC(&D_8018215C) != 0) {
             self->step++;
             if (self->subId != 0) {
-                func_801BD52C(6);
+                func_801BD52C(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
 
-    case 2:
+    case BONE_SCIMITAR_WALK_TOWARDS_PLAYER:
         if (AnimateEntity(D_80182090, self) == 0) {
             self->facing = (GetPlayerSide() & 1) ^ 1;
         }
         self->unk80.modeS8.unk0 = self->facing;
+
         if (self->unk80.modeS8.unk0 == 0) {
             self->accelerationX = -0x8000;
         } else {
             self->accelerationX = 0x8000;
         }
+
         if (GetPlayerDistanceX() < 76) {
-            self->step = 3;
+            self->step = BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER;
         }
         func_801C3708();
         break;
 
-    case 3:
+    case BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER:
         if (AnimateEntity(D_801820A0, self) == 0) {
             self->facing = (GetPlayerSide() & 1) ^ 1;
         }
@@ -104,12 +125,12 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if (GetPlayerDistanceX() >= 93) {
-            self->step = 2;
+            self->step = BONE_SCIMITAR_WALK_TOWARDS_PLAYER;
         }
         func_801C3708();
         break;
 
-    case 4:
+    case BONE_SCIMITAR_ATTACK:
         animStatus = AnimateEntity(D_801820B0, self);
         if (self->animCurFrame == 12) {
             self->hitboxWidth = 20;
@@ -124,22 +145,22 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if (*(s32*)&self->animFrameIdx == 7) {
-            func_801C29B0(0x66D);
+            func_801C29B0(NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH);
         }
 
         if (animStatus == 0) {
-            func_801BD52C(3);
+            func_801BD52C(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             self->unk7C.S8.unk0 =
                 D_80182154[self->subId % 2][(++self->unk84.S8.unk0) & 3];
             if (self->subId != 0) {
-                func_801BD52C(6);
+                func_801BD52C(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
 
-    case 5:
+    case BONE_SCIMITAR_JUMP:
         switch (self->unk2E) {
-        case 0:
+        case BONE_SCIMITAR_JUMPING:
             if (!(AnimateEntity(D_801820CC, self) & 1)) {
                 u8 facing_ = self->unk80.modeS8.unk0;
                 s32 facing;
@@ -163,21 +184,21 @@ void EntityBoneScimitar(Entity* self) {
             }
             break;
 
-        case 1:
+        case BONE_SCIMITAR_IN_AIR:
             if (func_801BCCFC(&D_8018215C) != 0) {
                 self->unk2E++;
             }
             func_801BD848(&D_80182174, 2);
             break;
 
-        case 2:
+        case BONE_SCIMITAR_LAND:
             if (AnimateEntity(D_801820D8, self) == 0) {
-                func_801BD52C(3);
+                func_801BD52C(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;
 
-    case 6:
+    case BONE_SCIMITAR_SPECIAL:
         self->facing = (GetPlayerSide() & 1) ^ 1;
         func_801BCF74(&D_8018216C);
         if (((((u32)self->accelerationX) >> 0x1F) ^ self->facing) != 0) {
@@ -187,33 +208,34 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         switch (self->unk2E) {
-        case 0:
+        case BONE_SCIMITAR_WALK_RIGHT:
             self->accelerationX = 0x8000;
             if (((s16)((g_Camera.posX.i.hi + self->posX.i.hi) -
-                       ((u16)self->unk9C))) >= 33) {
+                       ((u16)self->unk9C))) > 32) {
                 self->unk2E++;
             }
             break;
 
-        case 1:
+        case BONE_SCIMITAR_WALK_LEFT:
             self->accelerationX = -0x8000;
             if (((s16)((g_Camera.posX.i.hi + ((u16)self->posX.i.hi)) -
-                       ((u16)self->unk9C))) < (-0x20)) {
+                       ((u16)self->unk9C))) < -32) {
                 self->unk2E--;
             }
             break;
         }
 
-        if (self->unk7C.U8.unk0 != 0) {
+        if (self->unk7C.U8.unk0 != 0) { // Attack delay counter
             self->unk7C.U8.unk0--;
             return;
         }
+        
         if ((GetPlayerDistanceX() < 48) && (GetPlayerDistanceY() < 32)) {
-            func_801BD52C(4);
+            func_801BD52C(BONE_SCIMITAR_ATTACK);
         }
         break;
 
-    case 7:
+    case BONE_SCIMITAR_DESTROY:
         g_api.PlaySfx(NA_SE_EN_SKELETON_DESTROY);
         for (i = 0; i < 7; i++) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -237,6 +259,7 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         newEntity = &self[1];
+        // If he's one of the special ones from entrance (first visit)
         if (self->subId != 0) {
             CreateEntityFromEntity(ENTITY_INVENTORY_DROP, self, newEntity);
             if (!(self->subId & 1)) {
