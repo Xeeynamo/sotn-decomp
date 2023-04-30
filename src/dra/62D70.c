@@ -481,8 +481,11 @@ bool func_801083F0(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80108448);
 
-// DECOMP_ME_WIP func_801092E8 https://decomp.me/scratch/QZk8K
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801092E8);
+void func_801092E8(s32 arg0) {
+    D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
+    D_800A37D8.D_800A37DA = D_800ACE48[arg0 * 2 + 1];
+    D_8006EBE0 = D_800ACE48[arg0 * 2];
+}
 
 void func_80109328(void) {
     s16* player_unk1E = &PLAYER.unk1E;
