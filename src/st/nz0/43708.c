@@ -107,7 +107,7 @@ void EntityBoneScimitar(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() >= 93) {
+        if (GetPlayerDistanceX() > 92) {
             self->step = BONE_SCIMITAR_WALK_TOWARDS_PLAYER;
         }
         func_801C3708();
