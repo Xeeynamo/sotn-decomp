@@ -7,10 +7,10 @@ void func_8015C2A8(void) {
 
     FntPrint("pl_vram_flag:%04x\n", D_80072F20.pl_vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", D_80072F20.pl_high_jump_timer);
-    FntPrint("pl_step_s:%02x\n", PLAYER.unk2E);
+    FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
     D_80072F20.pl_high_jump_timer++;
 
-    switch (PLAYER.unk2E) {
+    switch (PLAYER.step_s) {
     case 0:
         if (D_80072EE8 & 0xA000) {
             if (PLAYER.facing == 0) {
@@ -28,16 +28,16 @@ void func_8015C2A8(void) {
         if (D_80072F20.pl_vram_flag & 2) {
             func_80158B04(3);
             D_80072F20.pl_high_jump_timer = 0;
-            PLAYER.unk2E = 2;
+            PLAYER.step_s = 2;
         } else if (D_80072F20.pl_high_jump_timer >= 0x1D) {
-            PLAYER.unk2E = 1;
+            PLAYER.step_s = 1;
             PLAYER.accelerationY = -0x60000;
         }
         break;
 
     case 1:
         if (D_80072F20.pl_vram_flag & 2) {
-            PLAYER.unk2E = 2;
+            PLAYER.step_s = 2;
             func_80158B04(3);
             D_80072F20.pl_high_jump_timer = 0;
         } else {
@@ -67,5 +67,5 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/202A8", func_8015C6D4);
 
 void func_8015C908(s32 step) {
     PLAYER.step = step;
-    PLAYER.unk2E = 0;
+    PLAYER.step_s = 0;
 }

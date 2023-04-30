@@ -28,7 +28,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     case BLOOD_SKELETON_IDLE:
         if (func_801BCCFC(&D_80182694) & 1) {
-            self->unk2E = 0;
+            self->step_s = 0;
             self->step++;
         }
         break;
@@ -64,13 +64,13 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_REASSEMBLE:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             if (--self->unk80.modeS16.unk0 == 0) {
                 self->unk1E = 0;
                 self->unk19 |= 4;
                 func_801C29B0(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
-                self->unk2E++;
+                self->step_s++;
                 return;
             }
             break;
@@ -88,7 +88,7 @@ void EntityBloodSkeleton(Entity* self) {
             if (self->unk80.modeS16.unk0 >= 9) {
                 self->unk19 = 0;
                 self->unk1E = 0;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 

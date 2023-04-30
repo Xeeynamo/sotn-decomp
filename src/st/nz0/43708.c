@@ -142,7 +142,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_JUMP:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case BONE_SCIMITAR_JUMPING:
             if (!(AnimateEntity(D_801820CC, self) & 1)) {
                 u8 facing_ = self->unk80.modeS8.unk0;
@@ -163,13 +163,13 @@ void EntityBoneScimitar(Entity* self) {
                 self->accelerationY = -0x30000;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
         case BONE_SCIMITAR_IN_AIR:
             if (func_801BCCFC(&D_8018215C) != 0) {
-                self->unk2E++;
+                self->step_s++;
             }
             func_801BD848(&D_80182174, 2);
             break;
@@ -190,12 +190,12 @@ void EntityBoneScimitar(Entity* self) {
             AnimateEntity(D_801820A0, self);
         }
 
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case BONE_SCIMITAR_WALK_RIGHT:
             self->accelerationX = 0x8000;
             if (((s16)((g_Camera.posX.i.hi + self->posX.i.hi) -
                        ((u16)self->unk9C))) > 32) {
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
@@ -203,7 +203,7 @@ void EntityBoneScimitar(Entity* self) {
             self->accelerationX = -0x8000;
             if (((s16)((g_Camera.posX.i.hi + ((u16)self->posX.i.hi)) -
                        ((u16)self->unk9C))) < -32) {
-                self->unk2E--;
+                self->step_s--;
             }
             break;
         }

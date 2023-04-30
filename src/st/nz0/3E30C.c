@@ -128,7 +128,7 @@ void EntityPrizeDrop(Entity* self) {
 
     case 6:
     case 7:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
             if (itemId > 13 && itemId < 23) {
@@ -152,7 +152,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
                 prim->blendMode = 8;
                 prim->priority = self->zPriority + 1;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
@@ -164,7 +164,7 @@ void EntityPrizeDrop(Entity* self) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->unk2E++;
+                self->step_s++;
             } else {
                 FallEntity();
             }
@@ -203,7 +203,7 @@ void EntityPrizeDrop(Entity* self) {
                 g_api.FreePrimitives(self->firstPolygonIndex);
                 self->unk80.modeS8.unk0 = 0xD0;
                 self->step = 3;
-                self->unk2E = 0;
+                self->step_s = 0;
                 self->flags &= ~0x800000;
             }
             break;
@@ -645,9 +645,9 @@ void func_801C0D08(Entity* self) {
         prim = (Primitive*)*(s32*)&self->unk7C.s;
         if (func_801C070C(&D_80181F28, 0) & 255) {
             prim->y1 += 2;
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 func_801C090C(self, 1, 2, 0, 0, 3, 0);
-                self->unk2E = 1;
+                self->step_s = 1;
             }
         } else {
             self->accelerationY += 0x400;

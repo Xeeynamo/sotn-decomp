@@ -587,7 +587,7 @@ void func_80194EA4(u8 step) {
     Entity* entity = g_CurrentEntity;
 
     entity->step = step;
-    entity->unk2E = 0;
+    entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -595,7 +595,7 @@ void func_80194EA4(u8 step) {
 void func_80194EC4(u8 arg0) {
     Entity* entity = g_CurrentEntity;
 
-    entity->unk2E = arg0;
+    entity->step_s = arg0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }

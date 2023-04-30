@@ -12,12 +12,12 @@ void func_80113AAC(void) {
         return;
     }
 
-    switch (PLAYER.unk2E) {
+    switch (PLAYER.step_s) {
     case 0:
         if (D_80072F20.pl_vram_flag & 2) {
             func_801139CC(3);
             if ((D_80072F6A[0]) >= 5) {
-                PLAYER.unk2E = 2;
+                PLAYER.step_s = 2;
                 PLAYER.unk1E = 0x800;
                 PLAYER.unk22 = 2;
                 PLAYER.unk20 = 0;
@@ -25,10 +25,10 @@ void func_80113AAC(void) {
                 PLAYER.facing = (PLAYER.facing + 1) & 1;
                 func_8010DA48(0x2B);
             } else {
-                PLAYER.unk2E = 3;
+                PLAYER.step_s = 3;
             }
         } else if (D_80072F6A[0] > 28) {
-            PLAYER.unk2E = 1;
+            PLAYER.step_s = 1;
             PLAYER.accelerationY = -0x60000;
             func_8010DA48(0x1B);
         }
@@ -36,7 +36,7 @@ void func_80113AAC(void) {
 
     case 1:
         if (D_80072F20.pl_vram_flag & 2) {
-            PLAYER.unk2E = 2;
+            PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
             PLAYER.accelerationY += 0x6000;
@@ -53,7 +53,7 @@ void func_80113AAC(void) {
         if (D_80072F6A[0] >= 0x39) {
             func_8010DA48(0x2D);
             PLAYER.unk1E = 0;
-            PLAYER.unk2E = 4;
+            PLAYER.step_s = 4;
             PLAYER.unk19 &= 0xFB;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
         }
@@ -79,7 +79,7 @@ void func_80113AAC(void) {
             func_8010DA48(0x1C);
         }
         PLAYER.palette = 0x8100;
-        PLAYER.unk2E = 1;
+        PLAYER.step_s = 1;
         PLAYER.step = 4;
     }
 }
@@ -103,7 +103,7 @@ s32 func_80113D7C(s16 arg0) {
         return 0;
     }
     step = PLAYER.step;
-    temp_s1 = PLAYER.unk2E;
+    temp_s1 = PLAYER.step_s;
     sp10[0] = 0;
     sp10[1] = 0;
     func_8010D584(0x10);

@@ -36,9 +36,9 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_WALK:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             self->unk80.modeS16.unk0 = 128;
-            self->unk2E++;
+            self->step_s++;
         }
 
         AnimateEntity(D_801825EC, self);
@@ -115,24 +115,24 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_TAKE_HIT:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             // Splat blood
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x4A, self, newEntity);
                 newEntity->facing = GetPlayerSide() & 1;
             }
-            self->unk2E++;
+            self->step_s++;
         }
 
         if (AnimateEntity(D_80182620, self) == 0) {
             func_801BD114(BLOODY_ZOMBIE_WALK);
-            self->unk2E++;
+            self->step_s++;
         }
         break;
 
     case BLOODY_ZOMBIE_DYING:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
             if (firstPrimIndex == -1) {
                 DestroyEntity(self);
@@ -142,7 +142,7 @@ void EntityBloodyZombie(Entity* self) {
             prim = &g_PrimBuf[firstPrimIndex];
             *(s32*)&self->unk7C = prim;
             self->flags |= FLAG_FREE_POLYGONS;
-            self->unk2E++;
+            self->step_s++;
         }
 
         if (self->animFrameIdx < 13) {
