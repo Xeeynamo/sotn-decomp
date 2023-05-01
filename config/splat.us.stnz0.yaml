@@ -80,23 +80,23 @@ segments:
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, rodata]
-      - [0x30814, .rodata, 43708] # EntityBoneScimitar data
-      - [0x30834, .rodata, 43F9C] # EntityAxeKnight data
-      - [0x30858, .rodata, 44EAC] # EntityBloodyZombie data
-      - [0x30880, .rodata, 45F2C] # EntitySkeleton data
-      - [0x3089C, .rodata, 4672C] # EntitySpittleBone data
+      - [0x30814, .rodata, 43708] # EntityBoneScimitar
+      - [0x30834, .rodata, 43F9C] # EntityAxeKnight
+      - [0x30858, .rodata, 44EAC] # EntityBloodyZombie
+      - [0x30880, .rodata, 45F2C] # EntitySkeleton
+      - [0x3089C, .rodata, 4672C] # EntitySpittleBone
       - [0x308B4, rodata]
-      - [0x308D4, .rodata, 47958] # EntityBloodSkeleton data
+      - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
       - [0x308E8, rodata]
       - [0x30958, c]
       - [0x3E30C, c]
       - [0x43708, c] # EntityBoneScimitar
       - [0x43F9C, c] # EntityAxeKnight
       - [0x44EAC, c] # EntityBloodyZombie
-      - [0x45F2C, c] # EntitySkeleton code
+      - [0x45F2C, c] # EntitySkeleton
       - [0x4672C, c] # EntitySpittleBone
       - [0x47048, c] # EntitySubWeaponContainer
-      - [0x47958, c] # EntityBloodSkeleron code
+      - [0x47958, c] # EntityBloodSkeleron
       - [0x47CF0, c] # EntityMagicallySealedDoor
       - [0x48ADC, c] # EntityStageNamePopup
       - [0x49930, c]
