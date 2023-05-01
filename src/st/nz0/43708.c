@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Bone Scimitar
+ */
+
 #include "nz0.h"
 
 typedef enum {
@@ -258,7 +263,7 @@ void EntityBoneScimitar(Entity* self) {
     }
 }
 
-// debris that rotates and falls down
+// Bone parts that rotate and fall down when killed
 void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->unk88.S8.unk0--;
@@ -284,65 +289,5 @@ void EntityBoneScimitarParts(Entity* entity) {
 
     if (entity->subId & 0xF00) {
         entity->palette += entity->subId / 256;
-    }
-}
-
-// aspatch skips a nop. TODO: fix compiler
-// matching in decomp.me: https://decomp.me/scratch/oDgqZ
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43708", func_801C3F9C);
-#else
-void func_801C3F9C(Unkstruct_801C3F9C** self) {
-    Collider collider;
-    Entity* newEntity;
-    s16 temp;
-
-    func_801C9930();
-    switch ((*self)->unk24) {
-    case 0:
-        (*self)->unk0C = 0;
-        (*self)->unk10 = -0x10000;
-        (*self)->unk24 = 1;
-        (*self)->unk2C = 0x100;
-        break;
-
-    case 1:
-        temp = (*self)->unk0A + ((*self)->unk1E / 3);
-        g_api.CheckCollision((*self)->unk14, temp, &collider, 0);
-        if (collider.unk0 % 2) {
-            (*self)->unk0A = (*self)->unk0A + collider.unk18;
-            if ((*self)->unk10 < 0x4000) {
-                (*self)->unk2C = 1;
-            }
-            (*self)->unk10 = -(*self)->unk10;
-            (*self)->unk10 -= (*self)->unk10 / 2;
-        }
-        (*self)->unk10 += 0x1800;
-        (*self)->unk2C--;
-        if ((*self)->unk2C == 0) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
-            if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, newEntity);
-                newEntity->posX.i.hi = (*self)->unk14;
-                newEntity->posY.i.hi = (*self)->unk0A;
-                newEntity->subId = 0;
-            }
-            func_801C29B0(0x655);
-            func_801CA0D0(self);
-        }
-        return;
-    }
-}
-#endif
-
-// Called by EntityAxeKnight
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43708", func_801C4198);
-
-void func_801C4550(void) {
-    if (g_CurrentEntity->unk80.modeS16.unk2 > 0) {
-        g_CurrentEntity->unk80.modeS16.unk2 -= 3;
-    } else {
-        func_801BD52C(D_801822B4[(Random() & 7)]);
-        g_CurrentEntity->unk80.modeS16.unk2 = 0x100;
     }
 }

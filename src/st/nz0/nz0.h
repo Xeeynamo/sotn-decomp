@@ -157,7 +157,7 @@ extern u8 D_801823EC[];  // animation: Walking Backwards
 extern u8 D_801823FC[];  // animation: Throwing bone
 extern u8 D_8018240C[];  // animation: Jumping?
 extern u8 D_80182418[];  // animation: Jumping?
-extern s8 D_80182430[];  // unk88
+extern s8 D_80182430[];  // skeleton pieces array selector
 extern s32 D_80182438[]; // accelerationX
 extern s32 D_80182450[]; // accelerationY
 extern u16 D_80182468[]; // posX
