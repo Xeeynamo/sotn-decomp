@@ -468,7 +468,6 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80194674);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801948EC);
 
-//INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", AllocEntity);
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
     
@@ -481,7 +480,6 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     }
     return NULL;
 }
-
 
 s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
