@@ -1,9 +1,8 @@
 #include "nz0.h"
 
 s32 func_801C7CF0(Entity* e) {
-    s16 diff;
-
-    diff = PLAYER.posX.i.hi - e->posX.i.hi;
+    s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
+    
     diff = ABS(diff);
 
     if (diff >= 25) {
@@ -13,7 +12,6 @@ s32 func_801C7CF0(Entity* e) {
         diff = ABS(diff);
         diff = diff < 33;
     }
-
     return diff;
 }
 

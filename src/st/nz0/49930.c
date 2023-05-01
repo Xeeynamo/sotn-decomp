@@ -4,10 +4,10 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/49930", func_801C9930);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/49930", func_801C9D18);
 
-POLY_GT4* func_801C9E68(POLY_GT4* poly) {
+Primitive* func_801C9E68(Primitive* poly) {
     while (poly != NULL) {
         if (poly->p3 != 0) {
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
         } else {
             return poly;
         }
@@ -42,8 +42,8 @@ Primitive* func_801C9E98(Primitive* prim, u8 index) {
     return NULL;
 }
 
-POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
-    POLY_GT4* poly;
+Primitive* func_801C9F14(Primitive* startPoly, s32 count) {
+    Primitive* poly;
     s8 unk;
     s32 i;
 
@@ -52,64 +52,65 @@ POLY_GT4* func_801C9F14(POLY_GT4* startPoly, s32 count) {
     } else {
         startPoly->p3 = 1;
     }
-
     poly = startPoly;
+
     for (i = 0; i < count; i++) {
         if (poly->p3) {
-            poly->pad3 &= ~8;
+            poly->blendMode &= ~8;
             unk = 0;
         } else {
-            poly->pad3 |= 8;
+            poly->blendMode |= 8;
             unk = 1;
         }
 
-        poly = (POLY_GT4*)poly->tag;
-        if (poly == NULL)
+        poly = poly->next;
+        if (poly == NULL) {
             return NULL;
+        }
         poly->p3 = unk;
     }
 
     return poly;
 }
 
-void func_801C9F9C(POLY_GT4* poly) {
+void func_801C9F9C(Primitive* poly) {
     poly->p1 = 0;
     poly->p2 = 0;
     poly->p3 = 0;
-    ((POLY_GT4*)poly->tag)->x1 = 0;
-    ((POLY_GT4*)poly->tag)->y1 = 0;
-    ((POLY_GT4*)poly->tag)->y0 = 0;
-    ((POLY_GT4*)poly->tag)->x0 = 0;
-    ((POLY_GT4*)poly->tag)->clut = 0;
-    *(u16*)&((POLY_GT4*)poly->tag)->u0 = 0;
-    *(u16*)&((POLY_GT4*)poly->tag)->b1 = 0;
-    *(u16*)&((POLY_GT4*)poly->tag)->r1 = 0;
-    *(u16*)&((POLY_GT4*)poly->tag)->u1 = 0;
-    ((POLY_GT4*)poly->tag)->tpage = 0;
-    *(u16*)&((POLY_GT4*)poly->tag)->r2 = 0;
-    *(u16*)&((POLY_GT4*)poly->tag)->b2 = 0;
-    ((POLY_GT4*)poly->tag)->u2 = 0;
-    ((POLY_GT4*)poly->tag)->v2 = 0;
-    ((POLY_GT4*)poly->tag)->r3 = 0;
-    ((POLY_GT4*)poly->tag)->b3 = 0;
-    ((POLY_GT4*)poly->tag)->x2 = 0;
-    ((POLY_GT4*)poly->tag)->y2 = 0;
+    poly->next->x1 = 0;
+    poly->next->y1 = 0;
+    poly->next->y0 = 0;
+    poly->next->x0 = 0;
+    poly->next->clut = 0;
+    *(u16*)&poly->next->u0 = 0;
+    *(u16*)&poly->next->b1 = 0;
+    *(u16*)&poly->next->r1 = 0;
+    *(u16*)&poly->next->u1 = 0;
+    poly->next->tpage = 0;
+    *(u16*)&poly->next->r2 = 0;
+    *(u16*)&poly->next->b2 = 0;
+    poly->next->u2 = 0;
+    poly->next->v2 = 0;
+    poly->next->r3 = 0;
+    poly->next->b3 = 0;
+    poly->next->x2 = 0;
+    poly->next->y2 = 0;
 }
 
-void func_801CA07C(POLY_GT4* poly) {
+void func_801CA07C(Primitive* poly) {
     func_801C9F9C(poly);
     poly->p3 = 8;
-    ((POLY_GT4*)poly->tag)->p3 = 1;
-    ((POLY_GT4*)poly->tag)->code = 2;
-    ((POLY_GT4*)poly->tag)->pad3 = 0xA;
+    poly->next->p3 = 1;
+    poly->next->type = 2;
+    poly->next->blendMode = 0xA;
 }
 
-void func_801CA0D0(POLY_GT4* poly) {
+void func_801CA0D0(Primitive* poly) {
     poly->p3 = 0;
-    poly->pad3 = 8;
-    ((POLY_GT4*)poly->tag)->p3 = 0;
-    ((POLY_GT4*)poly->tag)->code = 4;
-    ((POLY_GT4*)poly->tag)->pad3 = 8;
+    poly->blendMode = 8;
+    poly->next->p3 = 0;
+    poly->next->type = 4;
+    poly->next->blendMode = 8;
 }
 
 //! FAKE
