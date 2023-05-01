@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Axe Knight
+ */
+
 #include "nz0.h"
 
 // aspatch skips a nop. TODO: fix compiler
@@ -300,7 +305,7 @@ void EntityAxeKnight(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-void func_801C4CC0(void) {
+void func_801C4CC0(void) { // Axe rotation
     if (g_CurrentEntity->subId != 0) {
         g_CurrentEntity->unk1E += 0x80;
     } else {
