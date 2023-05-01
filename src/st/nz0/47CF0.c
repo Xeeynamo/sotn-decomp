@@ -1,6 +1,6 @@
 #include "nz0.h"
 
-s32 func_801C7CF0(Entity* e) { // EntityMagicallySealedDoor
+s32 func_801C7CF0(Entity* e) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - e->posX.i.hi;
