@@ -227,9 +227,9 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case 1:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             self->unk80.modeS16.unk0 = 128;
-            self->unk2E++;
+            self->step_s++;
         }
 
         AnimateEntity(D_801822EC, self);
@@ -307,23 +307,23 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case 6:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2D, self, newEntity);
                 newEntity->facing = GetPlayerSide() & 1;
             }
-            self->unk2E++;
+            self->step_s++;
         }
 
         if (AnimateEntity(D_80182320, self) == 0) {
             func_801BD52C(1);
-            self->unk2E++;
+            self->step_s++;
         }
         break;
 
     case 8:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             firstPrimIndex = g_api.AllocPrimitives(4, 0x14);
             if (firstPrimIndex == -1) {
                 DestroyEntity(self);
@@ -333,7 +333,7 @@ void EntityBloodyZombie(Entity* self) {
             prim = &g_PrimBuf[firstPrimIndex];
             *(s32*)&self->unk7C = prim;
             self->flags |= 0x800000;
-            self->unk2E++;
+            self->step_s++;
         }
 
         if (self->animFrameIdx < 13) {
@@ -465,8 +465,8 @@ void func_801C5D20(Entity* self) { // BloodDrips
         prim = *(s32*)&self->unk7C;
         if (func_801C070C(&D_801823C4, 0) != 0) {
             prim->y1 += 2;
-            if (self->unk2E == 0) {
-                self->unk2E = 1;
+            if (self->step_s == 0) {
+                self->step_s = 1;
             }
         } else {
             self->accelerationY += 0x1800;

@@ -100,7 +100,7 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_JUMP:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             if (!(AnimateEntity(D_8018240C, self) & 1)) {
                 u8 facing_ = self->unk80.modeS8.unk0;
@@ -122,20 +122,20 @@ void EntitySkeleton(Entity* self) {
                 self->accelerationY = -0x30000;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
         case 1:
             if (func_801BCCFC(&D_801824A8) != 0) {
-                self->unk2E++;
+                self->step_s++;
             }
             func_801BD848(&D_801824C0, 2);
             break;
 
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
-                self->unk2E = 0;
+                self->step_s = 0;
                 func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
             }
         }

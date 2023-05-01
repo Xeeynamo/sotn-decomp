@@ -94,13 +94,13 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case 2:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             if (self->facing == 0) {
                 self->accelerationX = -0x3000;
             } else {
                 self->accelerationX = 0x3000;
             }
-            self->unk2E++;
+            self->step_s++;
         }
 
         animStatus = AnimateEntity(D_80182210, self);
@@ -140,13 +140,13 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case 3:
-        if (self->unk2E == 0) {
+        if (self->step_s == 0) {
             if (self->facing == 0) {
                 self->accelerationX = 0x3000;
             } else {
                 self->accelerationX = -0x3000;
             }
-            self->unk2E++;
+            self->step_s++;
         }
 
         animStatus = AnimateEntity(D_80182210, self);
@@ -285,7 +285,7 @@ void EntityAxeKnight(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            if (self->unk2E < 16) {
+            if (self->step_s < 16) {
                 self->animCurFrame = 0;
             }
         }
