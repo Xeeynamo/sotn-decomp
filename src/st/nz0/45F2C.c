@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Skeleton
+ */
+
 #include "nz0.h"
 
 void func_801C5F2C(Entity* arg0) { // from skeleton
