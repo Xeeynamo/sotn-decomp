@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Spittle Bone
+ */
+
 #include "nz0.h"
 
 // moves around on walls and drips poison
