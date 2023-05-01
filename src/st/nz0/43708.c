@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Bone Scimitar
+ */
+
 #include "nz0.h"
 
 typedef enum {
