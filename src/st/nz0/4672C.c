@@ -112,5 +112,3 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 // spit projectile from spittle bone
 // Unique
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntitySpittleBoneSpit);
-
-

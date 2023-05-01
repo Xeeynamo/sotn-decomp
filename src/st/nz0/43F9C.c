@@ -361,4 +361,3 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         break;
     }
 }
-

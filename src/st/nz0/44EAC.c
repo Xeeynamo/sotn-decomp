@@ -485,5 +485,3 @@ void func_801C5D20(Entity* self) { // BloodDrips
         break;
     }
 }
-
-
