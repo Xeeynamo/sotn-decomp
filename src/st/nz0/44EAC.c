@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Bloody Zombie
+ */
+
 #include "nz0.h"
 
 void EntityBloodSplatter(Entity* self) {
