@@ -470,8 +470,8 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801948EC);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
-    
-    while(current < end){
+
+    while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
             return current;
