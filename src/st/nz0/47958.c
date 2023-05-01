@@ -110,7 +110,7 @@ void EntityBloodSkeleton(Entity* self) {
     }
 }
 
-s32 func_801C7CF0(Entity* e) {
+s32 func_801C7CF0(Entity* e) { // EntityMagicallySealedDoor
     s16 diff;
 
     diff = PLAYER.posX.i.hi - e->posX.i.hi;

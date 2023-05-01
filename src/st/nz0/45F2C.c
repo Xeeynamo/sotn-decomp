@@ -1,5 +1,19 @@
 #include "nz0.h"
 
+void func_801C5F2C(Entity* arg0) { // from skeleton
+    if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
+        arg0->posX.val -= arg0->accelerationX;
+    }
+
+    if (!(func_801BD720(&D_801824C0, 3) & 2)) {
+        if ((--arg0->unk7C.U8.unk0) == 0) {
+            func_801BD52C(4);
+        }
+    } else {
+        func_801BD52C(5);
+    }
+}
+
 void EntitySkeleton(Entity* self) {
     Entity* newEntity;
     u8 animStatus;
@@ -153,7 +167,7 @@ void EntitySkeleton(Entity* self) {
     }
 }
 
-void func_801C6494(Entity* entity) {
+void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
         entity->unk88.S8.unk0--;
         if (entity->unk88.S8.unk0 & 0xFF) {
@@ -179,7 +193,7 @@ void func_801C6494(Entity* entity) {
     }
 }
 
-void func_801C6574(Entity* entity) {
+void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
     s32 accelerationX;
     u32 xDistanceToPlayer;
 
@@ -215,7 +229,7 @@ void func_801C6574(Entity* entity) {
     }
 }
 
-void func_801C6678(Entity* entity) {
+void func_801C6678(Entity* entity) { // From Skeleton
     if (entity->step == 0) {
         InitializeEntity(D_80180C88);
         entity->unk1A = 0x120;
