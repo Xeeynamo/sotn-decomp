@@ -263,7 +263,7 @@ void EntityBoneScimitar(Entity* self) {
     }
 }
 
-// Bone parts that rotate and fall down when it's killed
+// Bone parts that rotate and fall down when killed
 void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->unk88.S8.unk0--;
