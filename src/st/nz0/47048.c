@@ -121,7 +121,7 @@ void EntitySubWeaponContainer(Entity* self) {
          * Debug: Press SQUARE / CIRCLE on the second controller
          * to advance/rewind current animation frame
          */
-        FntPrint(D_801B08C8, self->animCurFrame);
+        FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->subId == 0) {
                 newEntity->animCurFrame++;
