@@ -128,13 +128,13 @@ void EntitySubWeaponContainer(Entity* self) {
             self->subId = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 newEntity->animCurFrame--;
-                self->unk2E |= 1;
+                self->step_s |= 1;
                 break;
             }
         } else {
-            self->unk2E = 0;
+            self->step_s = 0;
         }
         break;
     }
