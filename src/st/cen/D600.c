@@ -600,7 +600,27 @@ void func_80194EC4(u8 arg0) {
     entity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80194EE0);
+void func_80194EE0(u16 arg0, u16 arg1) {
+    Entity* entity;
+    
+    if (arg1 != 0) {
+        func_8019A328(arg1);
+    }
+    if ((arg0) == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+    entity = g_CurrentEntity;
+    entity->unk19 = 0;
+    entity->objectId = 2;
+    entity->pfnUpdate = EntityExplosion;
+    entity->subId = arg0;
+    entity->animCurFrame = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
+
+
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", InitializeEntity);
 
