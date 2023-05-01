@@ -606,7 +606,7 @@ void func_80194EE0(u16 arg0, u16 arg1) {
     if (arg1 != 0) {
         func_8019A328(arg1);
     }
-    if ((arg0) == 0xFF) {
+    if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);
         return;
     }
