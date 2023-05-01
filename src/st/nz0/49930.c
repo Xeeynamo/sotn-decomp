@@ -141,5 +141,5 @@ s32 func_801CA0FC(s32 arg0, u8 arg1) {
 }
 
 // particle effect that spawns life up item
-// Unique
+// Probably it's own file
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/49930", EntityLifeUpSpawn);
