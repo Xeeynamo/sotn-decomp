@@ -84,7 +84,7 @@ segments:
       - [0x30834, .rodata, 43F9C] # EntityAxeKnight data
       - [0x30858, .rodata, 44EAC] # EntityBloodyZombie data
       - [0x30880, .rodata, 45F2C] # EntitySkeleton data
-      - [0x3089C, .rodata, 4672C] #
+      - [0x3089C, .rodata, 4672C] # EntitySpittleBone data
       - [0x308B4, rodata]
       - [0x308D4, .rodata, 47958] # EntityBloodSkeleton data
       - [0x308E8, rodata]
@@ -98,6 +98,7 @@ segments:
       - [0x47048, c] # EntitySubWeaponContainer
       - [0x47958, c] # EntityBloodSkeleron code
       - [0x47CF0, c] # EntityMagicallySealedDoor
-      ##- [0x48ADC, c] # EntityStageNamePopup
+      - [0x48ADC, c] # EntityStageNamePopup
+      - [0x49930, c]
       - [0x4AA10, sbss]
   - [0x4B780]
