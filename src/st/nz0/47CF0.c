@@ -7,7 +7,7 @@
 
 s32 func_801C7CF0(Entity* e) {
     s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
-    
+
     diff = ABS(diff);
 
     if (diff >= 25) {
@@ -22,6 +22,3 @@ s32 func_801C7CF0(Entity* e) {
 
 // sealed door that displays "Magically Sealed" prompt
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/47CF0", EntityMagicallySealedDoor);
-
-
-
