@@ -96,7 +96,7 @@ segments:
       - [0x45F2C, c] # EntitySkeleton
       - [0x4672C, c] # EntitySpittleBone
       - [0x47048, c] # EntitySubWeaponContainer
-      - [0x47958, c] # EntityBloodSkeleron
+      - [0x47958, c] # EntityBloodSkeleton
       - [0x47CF0, c] # EntityMagicallySealedDoor
       - [0x48ADC, c] # EntityStageNamePopup
       - [0x49930, c]
