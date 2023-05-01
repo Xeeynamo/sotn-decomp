@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Entity: Magically Sealed Door
+ */
+
 #include "nz0.h"
 
 s32 func_801C7CF0(Entity* e) {
