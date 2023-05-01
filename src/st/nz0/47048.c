@@ -1,3 +1,8 @@
+/*
+ * Overlay: NZ0
+ * Entity: SubWeapon container
+ */
+
 #include "nz0.h"
 
 // SubWeapons floating in the breakable container
