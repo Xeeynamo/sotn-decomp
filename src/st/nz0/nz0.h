@@ -1,7 +1,8 @@
 #include "stage.h"
 
 typedef enum {
-    E_BONE_SCIMITAR_HEAD = 0x28,
+    E_AXE_KNIGHT_AXE = 0x2A,
+    E_BONE_SCIMITAR_HEAD = 0x28
 } ObjectIds;
 
 void DestroyEntity(Entity* item);
@@ -59,7 +60,7 @@ extern s32 D_80182174;
 
 // *** EntityBoneScimitar properties END ***
 
-extern u16 D_80180C64[];
+extern u16 D_80180C64[]; // animation: 
 extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
@@ -124,11 +125,11 @@ extern s32 D_80182180[];
 extern s32 D_80182188[];
 extern s32 D_80182198[];
 extern s32 D_8018219A[];
-extern u8 D_80182210[];
-extern u8 D_80182220[];
-extern u8 D_80182244[];
-extern u8 D_80182268[];
-extern s8 D_80182274[];
+extern u8 D_80182210[]; // Animation: Walking
+extern u8 D_80182220[]; // Animation: Ducking Throw
+extern u8 D_80182244[]; // Animation: Standing Throw
+extern u8 D_80182268[]; // Animation: Dying
+extern u8 D_80182274[];
 extern u8 D_80182284[];
 extern u8 D_801822B4[];
 extern u16 D_801822D4[];
