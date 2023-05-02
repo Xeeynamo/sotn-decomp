@@ -285,7 +285,7 @@ typedef struct Entity {
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
-    /* 0x3A */ s16 enemyId;
+    /* 0x3A */ u16 enemyId;
     /* 0x3C */ u16 unk3C; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
@@ -649,10 +649,10 @@ typedef struct {
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
     /* 0x0C */ u16 unkC;
-    /* 0x0E */ s16 weaknesses;
-    /* 0x10 */ s16 strengths;
-    /* 0x12 */ s16 immunes;
-    /* 0x14 */ s16 absorbs;
+    /* 0x0E */ u16 weaknesses;
+    /* 0x10 */ u16 strengths;
+    /* 0x12 */ u16 immunes;
+    /* 0x14 */ u16 absorbs;
     /* 0x16 */ s16 level;
     /* 0x18 */ s16 exp;
     /* 0x1A */ s16 rareItemId;
@@ -761,7 +761,8 @@ typedef struct {
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
-    /* 8003C828 */ void* func_800FF128;
+    /* 8003C828 */ u16 (*func_800FF128)(Entity* enemyEntity,
+                                        Entity* weaponEntity);
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;
@@ -1103,7 +1104,7 @@ extern Pad g_pads[];
 extern u32 g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
-extern s32 D_800978AC;
+extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 D_800978F8;

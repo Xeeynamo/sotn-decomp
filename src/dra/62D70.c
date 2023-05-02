@@ -319,7 +319,7 @@ bool func_8010715C(s32 mapTilesetId) {
     if (D_8006C3B0 != 0)
         return false;
 
-    if (D_800978AC == 0) {
+    if (!g_UseDisk) {
         if (func_800E81FC(mapTilesetId, FILETYPE_MONSTER) < 0) {
             return false;
         }
