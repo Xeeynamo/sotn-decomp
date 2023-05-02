@@ -116,7 +116,32 @@ void func_801705EC(Entity* entity) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801706C0);
 
+// More correct version that doesn't match:
+// DECOMP_ME_WIP https://decomp.me/scratch/Laq1y
+// matching in decomp.me
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80170874);
+#else
+void func_80170874(s32 bufSize, s32 buf) {
+    s32 i;
+    s32* swapElement;
+    s32 temp;
+    s32* swapElementRandom;
+
+    i = bufSize - 1;
+    if (i > 0) {
+        swapElementRandom = (i * 4) + buf;
+        while (i > 0) {
+            i--;
+            swapElement = ((rand() % bufSize) * 4) + buf;
+            temp = *swapElementRandom;
+            *swapElementRandom = *swapElement;
+            *swapElement = temp;
+            swapElementRandom--;
+        }
+    }
+}
+#endif
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8017091C);
 

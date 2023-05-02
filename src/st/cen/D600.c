@@ -347,32 +347,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193184);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193298);
 
-// More correct version that doesn't match:
-// DECOMP_ME_WIP https://decomp.me/scratch/Laq1y
-// matching in decomp.me
-#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193410);
-#else
-void func_80170874(s32 bufSize, s32 buf) {
-    s32 i;
-    s32* swapElement;
-    s32 temp;
-    s32* swapElementRandom;
-
-    i = bufSize - 1;
-    if (i > 0) {
-        swapElementRandom = (i * 4) + buf;
-        while (i > 0) {
-            i--;
-            swapElement = ((rand() % bufSize) * 4) + buf;
-            temp = *swapElementRandom;
-            *swapElementRandom = *swapElement;
-            *swapElement = temp;
-            swapElementRandom--;
-        }
-    }
-}
-#endif
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
