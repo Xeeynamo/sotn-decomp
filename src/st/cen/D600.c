@@ -95,7 +95,7 @@ void func_8018F8EC(u16 index) {
     s32 j;
 
     for (i = 0; i < 2; i++) {
-        for(j = 0; j < 4; j++) {
+        for (j = 0; j < 4; j++) {
             t->fg[tilePos] = *tileLayoutPtr;
             tileLayoutPtr++;
             tilePos++;
