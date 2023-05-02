@@ -9,9 +9,11 @@ on:
       - '**/*.h'
   pull_request_target:
   workflow_dispatch:
+permissions:
+  contents: write
 
 jobs:
-  test:
+  format:
     runs-on: ubuntu-latest
     steps:
       - name: Install requirements
