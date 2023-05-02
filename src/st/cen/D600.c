@@ -349,6 +349,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193298);
 
 // More correct version that doesn't match:
 // DECOMP_ME_WIP https://decomp.me/scratch/Laq1y
+// matching in decomp.me
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193410);
 #else
