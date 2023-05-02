@@ -87,7 +87,22 @@ void func_8018F890(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F8EC);
+void func_8018F8EC(u16 index) {
+    Unkstruct8* t = &g_CurrentRoomTileLayout;
+    u16 tilePos = 0x5B6;
+    u16* tileLayoutPtr = &D_8018068C[index * 4];
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 2; i++) {
+        for(j = 0; j < 4; j++) {
+            t->fg[tilePos] = *tileLayoutPtr;
+            tileLayoutPtr++;
+            tilePos++;
+        }
+        tilePos += 0x2C;
+    }
+}
 
 // platform that lifts you into chamber, starts cutscene
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
