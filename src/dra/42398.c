@@ -560,7 +560,7 @@ void func_800E451C(void) {
         func_800EAEEC();
         func_800E3574();
         g_StageId = STAGE_SEL;
-        if (D_800978AC != 0) {
+        if (g_UseDisk) {
             if (D_8006C3B0 != 0) {
                 return;
             }
@@ -597,7 +597,7 @@ void func_800E451C(void) {
             ClearImage(&D_800ACDF0, 0, 0, 0);
             func_800E3574();
             g_StageId = 0x45;
-            if (D_800978AC != 0) {
+            if (g_UseDisk) {
                 if (D_8006C3B0 != 0) {
                     break;
                 }
@@ -608,8 +608,8 @@ void func_800E451C(void) {
         }
         break;
     case 1:
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
+        if ((g_UseDisk && D_8006C3B0 == 0) ||
+            (!g_UseDisk && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
              func_800E81FC(0, FILETYPE_SYSTEM) >= 0)) {
             D_80073060++;
         }
@@ -621,15 +621,15 @@ void func_800E451C(void) {
         D_80073060 = 4;
         break;
     case 4:
-        if (D_800978AC != 0) {
+        if (g_UseDisk) {
             D_8006C398 = 1;
             D_8006BAFC = 0x100;
         }
         D_80073060 = 5;
         break;
     case 5:
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
+        if ((g_UseDisk && D_8006C3B0 == 0) ||
+            (!g_UseDisk && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
