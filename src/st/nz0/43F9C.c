@@ -61,7 +61,7 @@ void func_801C4550(void) {
         g_CurrentEntity->unk80.modeS16.unk2 -= 3;
     } else {
         func_801BD52C(D_801822B4[(Random() & 7)]);
-        g_CurrentEntity->unk80.modeS16.unk2 = 0x100;
+        g_CurrentEntity->unk80.modeS16.unk2 = 256;
     }
 }
 
@@ -110,7 +110,7 @@ void EntityAxeKnight(Entity* self) {
         }
         break;
 
-    case AXE_KNIGHT_WALKING_TOWARDS_PLAYER: // Walking towards player
+    case AXE_KNIGHT_WALKING_TOWARDS_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
                 self->accelerationX = -0x3000;
@@ -156,7 +156,7 @@ void EntityAxeKnight(Entity* self) {
         func_801C4550();
         break;
 
-    case AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER: // Walking away from player
+    case AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
                 self->accelerationX = 0x3000;
@@ -202,7 +202,7 @@ void EntityAxeKnight(Entity* self) {
         func_801C4550();
         break;
 
-    case AXE_KNIGHT_STANDING_THROW: // Standing throw
+    case AXE_KNIGHT_STANDING_THROW:
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
         label:
