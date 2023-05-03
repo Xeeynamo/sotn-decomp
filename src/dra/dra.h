@@ -42,10 +42,22 @@ typedef struct {
     /* 0x1A */ s16 unk1A;
 } SpellDef;
 
+typedef struct {
+    void (*func_8017A000)(void);
+    void* unk04;
+    void* unk08;
+    void* unk0C;
+    void* unk10;
+    void* unk14;
+    void (*func_8017A018)(u8);
+    void (*func_8017A01C)(u8);
+} WeaponOvl;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
+extern u8 D_800A0170[];
 extern s32 D_800A0248;
 extern OvlDesc D_800A024C[];
 extern OvlDesc D_800A036C[];
@@ -126,6 +138,7 @@ extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
 extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
+extern u8 D_800A76F3;
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
@@ -210,6 +223,7 @@ extern s32 g_softResetTimer;
 extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern s32 D_80136414[];
 extern OvlDesc* D_8013644C;
 extern OvlDesc D_80136450;
 extern s16 D_80136460[];
@@ -408,9 +422,9 @@ extern s32 D_8013B694;
 extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
+extern WeaponOvl D_8017A000;
+extern WeaponOvl D_8017D000;
 extern void (*D_80170000)(void);
-extern s32 (*D_8017A018)();
-extern s32 (*D_8017D018)();
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
@@ -491,6 +505,7 @@ void DrawSettingsSound(MenuContext* context);
 void DrawPauseMenu(s32 arg0);
 void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
+void func_800FA7E8(void);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 void func_800FAF44(s32);
