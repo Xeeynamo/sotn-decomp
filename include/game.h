@@ -899,11 +899,12 @@ extern s32 D_8003C730;
 extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
+extern s32 g_roomCount;
 extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
 extern s32 D_8003C8B8;
 extern u32 D_8003C8C4;
-extern s32 g_roomCount;
+extern Unkstruct_8003C908 D_8003C908;
 extern u32 g_blinkTimer;
 /* 0x8003C99C */ extern s32 D_8003C99C;
 /* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
@@ -985,6 +986,7 @@ extern u16 D_80072F92;   // D_80072F20.unk72
 extern u16 D_80072F9A;   // D_80072F20.unk7A
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060; // set to 4 to reload stage from disk
+extern s32 D_80073064;
 extern u32 D_80073068; // ev0
 extern u32 D_8007306C; // ev1
 extern u32 D_80073070; // ev2

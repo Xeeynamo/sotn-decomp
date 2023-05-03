@@ -7,7 +7,7 @@ void func_800E6FD4(void) {
     POLY_GT4* poly;
     u8 temp;
 
-    if ((!(g_pads[0].tapped & 0x800)) || (!g_IsTimeAttackUnlocked)) {
+    if ((!(g_pads[0].tapped & PAD_START)) || (!g_IsTimeAttackUnlocked)) {
         switch (D_80073060) {
         case 0:
             if (D_8006C3B0 == 0) {

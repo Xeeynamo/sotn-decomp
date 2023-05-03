@@ -46,9 +46,7 @@ segments:
       - [0x3B524, rodata]
       - [0x3B530, rodata] # jpt_800E4A64
       - [0x3B560, rodata] # jpt_800E55C4
-      - [0x3B720, rodata]
-      - [0x3B790, rodata]
-      - [0x3B7A0, rodata] # jpt_800E63C4
+      - [0x3B720, .rodata, 46358]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
       - [0x3BD70, rodata] # jpt_800E7C28
