@@ -99,7 +99,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_INIT:
         InitializeEntity(D_80180C64);
         self->facing = (GetPlayerSide() & 1) ^ 1;
-        self->unk12 = 0xA;
+        self->unk12 = 10;
         self->unk7C.S8.unk1 = 0;
         self->unk80.modeS16.unk2 = 512;
 
