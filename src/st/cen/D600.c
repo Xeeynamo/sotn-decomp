@@ -87,7 +87,22 @@ void func_8018F890(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F8EC);
+void func_8018F8EC(u16 index) {
+    Unkstruct8* t = &g_CurrentRoomTileLayout;
+    u16 tilePos = 0x5B6;
+    u16* tileLayoutPtr = &D_8018068C[index * 4];
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            t->fg[tilePos] = *tileLayoutPtr;
+            tileLayoutPtr++;
+            tilePos++;
+        }
+        tilePos += 0x2C;
+    }
+}
 
 // platform that lifts you into chamber, starts cutscene
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
@@ -468,7 +483,18 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80194674);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801948EC);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", AllocEntity);
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
+
+    while (current < end) {
+        if (current->objectId == 0) {
+            DestroyEntity(current);
+            return current;
+        }
+        current++;
+    }
+    return NULL;
+}
 
 s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
@@ -600,7 +626,25 @@ void func_80194EC4(u8 arg0) {
     entity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80194EE0);
+void func_80194EE0(u16 arg0, u16 arg1) {
+    Entity* entity;
+
+    if (arg1 != 0) {
+        func_8019A328(arg1);
+    }
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+    entity = g_CurrentEntity;
+    entity->unk19 = 0;
+    entity->objectId = 2;
+    entity->pfnUpdate = EntityExplosion;
+    entity->subId = arg0;
+    entity->animCurFrame = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", InitializeEntity);
 

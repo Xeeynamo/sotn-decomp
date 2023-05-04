@@ -319,7 +319,7 @@ bool func_8010715C(s32 mapTilesetId) {
     if (D_8006C3B0 != 0)
         return false;
 
-    if (D_800978AC == 0) {
+    if (!g_UseDisk) {
         if (func_800E81FC(mapTilesetId, FILETYPE_MONSTER) < 0) {
             return false;
         }
@@ -530,7 +530,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A234);
 void func_8010A234(s32 arg0) {
     s32 temp;
     g_CurrentEntity = g_EntityArray;
-    temp = D_8017A018();
+    temp = D_8017A000.func_8017A018();
 
     do { // !FAKE
         if ((temp == 0x2D) && (CheckEquipmentItemCount(0x19, 2) != 0)) {
@@ -580,7 +580,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A3F0);
 void func_8010A3F0(void) {
     s32 temp = 0x38;
 
-    if ((D_8017A018() == temp) && (D_8017D018() == temp)) {
+    if ((D_8017A000.func_8017A018() == temp) &&
+        (D_8017D000.func_8017A018() == temp)) {
         if (D_80072F16[0] == 0) {
             func_801092E8(1);
         }
