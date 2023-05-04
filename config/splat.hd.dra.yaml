@@ -28,12 +28,14 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x3C4A8, .rodata, 52860]
+      - [0x3C4D0, rodata]
       - [0x42354, c, 42398_hd]
       - [0x46A0C, c, 46358_hd]
       - [0x47688, c, 46FD4_hd]
       - [0x48250, c, 47BB8_hd]
       - [0x4FAE0, c, 4F45C_hd]
-      - [0x52EE4, c, 52860_hd]
+      - [0x52EE4, c, 52860]
       - [0x53010, c, 5298C_hd]
       - [0x5D678, c, 5D6C4_hd]
       - [0x62654, c, 627C4_hd]
