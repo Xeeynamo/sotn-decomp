@@ -18,7 +18,7 @@ TOOLS_DIR       := ../../tools
 # Compilers
 CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
-CC              := $(BIN_DIR)/cc1-26
+CC              := $(BIN_DIR)/cc1-psx-26
 LD              := $(CROSS)ld
 CPP				:= $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
