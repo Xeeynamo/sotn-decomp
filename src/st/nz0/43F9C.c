@@ -230,7 +230,7 @@ void EntityAxeKnight(Entity* self) {
         }
         break;
 
-    case AXE_KNIGHT_DUCKING_THROW: // Ducking throw
+    case AXE_KNIGHT_DUCKING_THROW:
         animStatus = AnimateEntity(D_80182220, self);
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
@@ -256,7 +256,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_ARCING_THROW: // unused
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
-            if (GetPlayerDistanceX() >= 0x59) {
+            if (GetPlayerDistanceX() > 88) {
                 func_801BD52C(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
                 self->unk7C.S8.unk0 = 0;
             } else {
@@ -318,7 +318,7 @@ void EntityAxeKnight(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-void func_801C4CC0(void) { // Axe rotation
+void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->subId != 0) {
         g_CurrentEntity->unk1E += 0x80;
     } else {
@@ -359,7 +359,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         break;
 
     case 1:
-        func_801C4CC0();
+        EntityAxeKnightRotateAxe();
         if ((u16)entity->unk7C.s < 0x20) {
             if (entity->facing != 0) {
                 entity->accelerationX -= 0x2000;
@@ -373,7 +373,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         break;
 
     case 2:
-        func_801C4CC0();
+        EntityAxeKnightRotateAxe();
         entity->accelerationY += 0x2000;
         MoveEntity();
         break;

@@ -93,6 +93,7 @@ EntityRedEyeBust = 0x801B11C0;
 EntityLeftSecretRoomWall = 0x801B14C4;
 EntityBottomSecretRoomFloor = 0x801B1770;
 EntityAxeKnight = 0x801C45BC;
+EntityAxeKnightRotateAxe = 0x801C4CC0;
 EntityAxeKnightThrowingAxe = 0x801C4D18;
 EntityBloodyZombie = 0x801C5568;
 EntityBloodSplatter = 0x801C4EAC;
