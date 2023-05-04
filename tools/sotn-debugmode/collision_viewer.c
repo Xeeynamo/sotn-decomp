@@ -13,7 +13,7 @@ u8 GetColType(s32 x, s32 y) {
     absY = y + *cameraY;
     new_var = 0x10;
     if (absX < 0 || (u32)absX >= g_CurrentRoom.hSize << 8 || absY < 0 ||
-        (u32)absY >= g_CurrentRoomVSize << 8) {
+        (u32)absY >= g_CurrentRoom.vSize << 8) {
         colType = 0;
     } else {
 

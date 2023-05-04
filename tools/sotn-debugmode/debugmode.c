@@ -140,13 +140,13 @@ void Init() {
     e->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
 
     e->flags |= FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
-    e->firstPolygonIndex = g_api.AllocPolygons(PRIM_TILE, 5);
+    e->firstPolygonIndex = g_api.AllocPrimitives(PRIM_TILE, 5);
     if (e->firstPolygonIndex == -1) {
         g_PrimFirst = NULL;
         return;
     }
 
-    g_PrimFirst = &D_80086FEC[e->firstPolygonIndex];
+    g_PrimFirst = &g_PrimBuf[e->firstPolygonIndex];
     DRAW_RESET();
     DRAW_RECT(159, 22, 90, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
     FILL_RECT(159, 22, 90, 14, 0x50, 0x50, 0x30, 0x41);

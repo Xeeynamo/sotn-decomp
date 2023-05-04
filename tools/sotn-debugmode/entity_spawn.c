@@ -392,7 +392,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & 0x800000) {
-        g_api.FreePolygons(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->firstPolygonIndex);
     }
 
     ptr = (u32*)item;
