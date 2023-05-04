@@ -252,7 +252,7 @@ void EntityAxeKnight(Entity* self) {
         }
         break;
 
-    case AXE_KNIGHT_ARCING_THROW: // arcing throw
+    case AXE_KNIGHT_ARCING_THROW: // unused
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
             if (GetPlayerDistanceX() >= 0x59) {
