@@ -990,7 +990,7 @@ void DestroyEntity(Entity* entity) {
 
 void func_801B4B9C(Entity* entity, s16 step) {
     entity->step = step;
-    entity->unk2E = 0;
+    entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }

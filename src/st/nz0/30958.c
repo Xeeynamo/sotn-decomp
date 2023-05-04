@@ -67,12 +67,12 @@ void EntityRedEyeBust(Entity* self) {
         }
 
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 self->animCurFrame--;
-                self->unk2E |= 1;
+                self->step_s |= 1;
             }
         } else {
-            self->unk2E = 0;
+            self->step_s = 0;
         }
         break;
     }
@@ -1125,13 +1125,13 @@ void func_801B37C0(Entity* self) {
             self->subId = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 self->animCurFrame--;
-                self->unk2E |= 1;
+                self->step_s |= 1;
             }
         } else {
             newEntity = self;
-            newEntity->unk2E = 0;
+            newEntity->step_s = 0;
         }
         break;
     }
@@ -1300,7 +1300,7 @@ void func_801B54A8(Entity* self) {
         break;
 
     case 2:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->unk19 = 4;
             self->unk3C = 0;
@@ -1312,7 +1312,7 @@ void func_801B54A8(Entity* self) {
             self->accelerationY = -0x40000;
             self->animCurFrame = 0x23;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->unk2E++;
+            self->step_s++;
 
         case 1:
             MoveEntity();
@@ -2270,7 +2270,7 @@ void func_801BD52C(u8 step) {
     Entity* entity = g_CurrentEntity;
 
     entity->step = step;
-    entity->unk2E = 0;
+    entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -2278,7 +2278,7 @@ void func_801BD52C(u8 step) {
 void func_801BD54C(u8 arg0) {
     Entity* entity = g_CurrentEntity;
 
-    entity->unk2E = arg0;
+    entity->step_s = arg0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -2299,7 +2299,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
     g_CurrentEntity->animCurFrame = 0;
     g_CurrentEntity->unk19 = 0;
     g_CurrentEntity->step = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -2323,7 +2323,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
@@ -2369,27 +2369,29 @@ s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
 }
 
 void func_801BD848(u16* hitSensors, s16 sensorCount) {
+    s32 accelerationX = g_CurrentEntity->accelerationX;
     Collider collider;
+    s16 x, y;
     s16 i;
-    s32 accelerationX;
-    s16 x;
-    s16 y;
 
-    accelerationX = g_CurrentEntity->accelerationX;
-    if (accelerationX == 0)
+    if (accelerationX == 0) {
         return;
+    }
+
     x = g_CurrentEntity->posX.i.hi;
     y = g_CurrentEntity->posY.i.hi;
+
     for (i = 0; i < sensorCount; i++) {
         if (accelerationX < 0) {
-            x = x + *hitSensors++;
+            x += *hitSensors++;
         } else {
-            x = x - *hitSensors++;
+            x -= *hitSensors++;
         }
-
         y += *hitSensors++;
+
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+
+        if ((collider.unk0 & 2) && (!(collider.unk0 & 0x8000) || (i != 0))) {
             if (accelerationX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {

@@ -944,7 +944,7 @@ void func_801B75EC(Entity* self) {
         break;
 
     case 2:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->unk19 = 4;
             self->unk3C = 0;
@@ -956,7 +956,7 @@ void func_801B75EC(Entity* self) {
             self->accelerationY = -0x40000;
             self->animCurFrame = 0x23;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->unk2E++;
+            self->step_s++;
 
         case 1:
             MoveEntity();
@@ -1552,13 +1552,13 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BD0B4);
 
 void func_801BD114(u8 step) {
     g_CurrentEntity->step = step;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801BD134(u8 arg0) {
-    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->step_s = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -1586,7 +1586,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;

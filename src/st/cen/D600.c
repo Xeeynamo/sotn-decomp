@@ -7,7 +7,29 @@
 #include "cen.h"
 
 // background block of rock
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityBackgroundBlock);
+void EntityBackgroundBlock(Entity* self) {
+    ObjInit2* obj = &D_80180490[self->subId].animSet;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180458);
+        self->animSet = obj->animSet;
+        self->zPriority = obj->zPriority;
+        self->unk5A = obj->unk4.s;
+        self->palette = obj->palette;
+        self->unk19 = obj->unk8;
+        self->blendMode = obj->blendMode;
+
+        if (obj->unkC != 0) {
+            self->flags = obj->unkC;
+        }
+
+        if (self->subId == 1) {
+            self->unk1C = 0x200;
+            self->unk1A = 0x200;
+        }
+    }
+    func_80194394(obj->unk10, self);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
 
@@ -65,7 +87,22 @@ void func_8018F890(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018F8EC);
+void func_8018F8EC(u16 index) {
+    Unkstruct8* t = &g_CurrentRoomTileLayout;
+    u16 tilePos = 0x5B6;
+    u16* tileLayoutPtr = &D_8018068C[index * 4];
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            t->fg[tilePos] = *tileLayoutPtr;
+            tileLayoutPtr++;
+            tilePos++;
+        }
+        tilePos += 0x2C;
+    }
+}
 
 // platform that lifts you into chamber, starts cutscene
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
@@ -92,7 +129,19 @@ void EntityMaria(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019040C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801904B8);
+s16 func_801904B8(Primitive* prim, s16 arg1) {
+    prim->u0 = prim->u2 = 0x50;
+    prim->u1 = prim->u3 = 0x60;
+    prim->blendMode = 2;
+    prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
+    prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
+    prim->y2 = prim->y3 = arg1;
+    arg1 -= 32;
+    prim->v2 = prim->v3 = 38;
+    prim->v0 = prim->v1 = 6;
+    prim->y0 = prim->y1 = arg1;
+    return arg1;
+}
 
 // Elevator when not moving (ID 1A)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityElevatorStationary);
@@ -434,7 +483,18 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80194674);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_801948EC);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", AllocEntity);
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
+
+    while (current < end) {
+        if (current->objectId == 0) {
+            DestroyEntity(current);
+            return current;
+        }
+        current++;
+    }
+    return NULL;
+}
 
 s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
@@ -553,7 +613,7 @@ void func_80194EA4(u8 step) {
     Entity* entity = g_CurrentEntity;
 
     entity->step = step;
-    entity->unk2E = 0;
+    entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -561,12 +621,30 @@ void func_80194EA4(u8 step) {
 void func_80194EC4(u8 arg0) {
     Entity* entity = g_CurrentEntity;
 
-    entity->unk2E = arg0;
+    entity->step_s = arg0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80194EE0);
+void func_80194EE0(u16 arg0, u16 arg1) {
+    Entity* entity;
+
+    if (arg1 != 0) {
+        func_8019A328(arg1);
+    }
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+    entity = g_CurrentEntity;
+    entity->unk19 = 0;
+    entity->objectId = 2;
+    entity->pfnUpdate = EntityExplosion;
+    entity->subId = arg0;
+    entity->animCurFrame = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", InitializeEntity);
 
@@ -956,7 +1034,7 @@ void EntityUnkId08(Entity* entity) {
     ObjInit2* objInit = &D_8018125C[entity->subId];
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180458);
+        InitializeEntity(D_80180458);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;

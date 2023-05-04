@@ -1,4 +1,23 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Skeleton
+ */
+
 #include "nz0.h"
+
+void func_801C5F2C(Entity* arg0) { // from skeleton
+    if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
+        arg0->posX.val -= arg0->accelerationX;
+    }
+
+    if (!(func_801BD720(&D_801824C0, 3) & 2)) {
+        if ((--arg0->unk7C.U8.unk0) == 0) {
+            func_801BD52C(4);
+        }
+    } else {
+        func_801BD52C(5);
+    }
+}
 
 void EntitySkeleton(Entity* self) {
     Entity* newEntity;
@@ -86,7 +105,7 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_JUMP:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             if (!(AnimateEntity(D_8018240C, self) & 1)) {
                 u8 facing_ = self->unk80.modeS8.unk0;
@@ -108,20 +127,20 @@ void EntitySkeleton(Entity* self) {
                 self->accelerationY = -0x30000;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
         case 1:
             if (func_801BCCFC(&D_801824A8) != 0) {
-                self->unk2E++;
+                self->step_s++;
             }
             func_801BD848(&D_801824C0, 2);
             break;
 
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
-                self->unk2E = 0;
+                self->step_s = 0;
                 func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
             }
         }
@@ -153,7 +172,7 @@ void EntitySkeleton(Entity* self) {
     }
 }
 
-void func_801C6494(Entity* entity) {
+void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
         entity->unk88.S8.unk0--;
         if (entity->unk88.S8.unk0 & 0xFF) {
@@ -179,7 +198,7 @@ void func_801C6494(Entity* entity) {
     }
 }
 
-void func_801C6574(Entity* entity) {
+void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
     s32 accelerationX;
     u32 xDistanceToPlayer;
 
@@ -215,7 +234,7 @@ void func_801C6574(Entity* entity) {
     }
 }
 
-void func_801C6678(Entity* entity) {
+void func_801C6678(Entity* entity) { // From Skeleton
     if (entity->step == 0) {
         InitializeEntity(D_80180C88);
         entity->unk1A = 0x120;
