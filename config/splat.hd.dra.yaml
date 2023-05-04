@@ -43,8 +43,9 @@ segments:
       - [0x75A90, c, 75DA0_hd]
       - [0x75C44, c, 75F54_hd]
       - [0x94F7C, c, 953A0_hd]
+      - [0x95E88, sbss]
   - name: dra_data
     type: data
-    start: 0x9B27C
-    vram:  0x8013B27C
+    start: 0x9B270
+    vram:  0x8013B370
   - [0x115EDC]
