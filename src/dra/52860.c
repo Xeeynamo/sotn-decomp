@@ -22,9 +22,9 @@ void func_800F2860(void) {
         }
         break;
     case 3:
-#ifdef VERSION_us
+#if defined(VERSION_US)
         PlaySfx(0x33F);
-#elif VERSION_hd
+#elif defined(VERSION_HD)
         PlaySfx(0x33C);
 #endif
         D_801375C8++;
