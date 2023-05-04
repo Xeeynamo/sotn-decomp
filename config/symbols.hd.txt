@@ -1,0 +1,2 @@
+g_CurrentEntity = 0x8006C3B8;
+g_EntityArray = 0x800733D8;
