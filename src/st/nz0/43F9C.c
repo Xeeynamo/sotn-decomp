@@ -1,6 +1,7 @@
 /*
  * Overlay: NZ0
  * Enemy: Axe Knight
+ * Description: Low level Axe Knight
  */
 
 #include "nz0.h"
