@@ -258,7 +258,7 @@ void func_801C7884(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180BD4);
+        InitializeEntity(D_80180BD4);
         entity->unk3C = 0;
 
     case 1:
