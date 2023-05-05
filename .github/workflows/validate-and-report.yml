@@ -22,7 +22,7 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        version: ["us", "hd"]
+        version: ["us"]
         include:
           - dependency: us
             version: us
@@ -89,7 +89,7 @@ jobs:
   generate-progress-report:
     strategy:
       matrix:
-        version: ["us", "hd"]
+        version: ["us"]
         include:
           - dependency: us
             version: us
