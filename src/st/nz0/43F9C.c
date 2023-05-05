@@ -74,7 +74,7 @@ typedef enum {
     AXE_KNIGHT_STANDING_THROW,
     AXE_KNIGHT_DUCKING_THROW,
     AXE_KNIGHT_UNUSED, // Charge Attack missing step from the blue AxeKnight
-    AXE_KNIGHT_ARCING_THROW,
+    AXE_KNIGHT_ARCING_THROW, // Unused, present in the blue AxeKnight
     AXE_KNIGHT_DYING,
 } EntityAxeKnightSteps;
 
