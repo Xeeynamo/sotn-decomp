@@ -332,7 +332,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 accelerationX;
 
     if (entity->flags & 0x100) {
-        func_801C29B0(0x66B);
+        func_801C29B0(NA_SE_EN_AXE_KNIGHT_BREAK_AXE);
         func_801BD568(0, 0);
         return;
     }
