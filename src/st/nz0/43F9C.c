@@ -69,11 +69,11 @@ void func_801C4550(void) {
 typedef enum {
     AXE_KNIGHT_INIT,
     AXE_KNIGHT_IDLE,
-    AXE_KNIGHT_WALKING_TOWARDS_PLAYER,
-    AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER,
+    AXE_KNIGHT_WALK_TOWARDS_PLAYER,
+    AXE_KNIGHT_WALK_AWAY_FROM_PLAYER,
     AXE_KNIGHT_STANDING_THROW,
     AXE_KNIGHT_DUCKING_THROW,
-    AXE_KNIGHT_6,
+    AXE_KNIGHT_UNUSED, // Charge Attack missing step from the blue AxeKnight
     AXE_KNIGHT_ARCING_THROW,
     AXE_KNIGHT_DYING,
 } EntityAxeKnightSteps;
@@ -107,11 +107,11 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_IDLE:
         if (func_801BCCFC(&D_80182188) & 1) {
             self->facing = (GetPlayerSide() & 1) ^ 1;
-            func_801BD52C(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
+            func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
         break;
 
-    case AXE_KNIGHT_WALKING_TOWARDS_PLAYER:
+    case AXE_KNIGHT_WALK_TOWARDS_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
                 self->accelerationX = -0x3000;
@@ -132,8 +132,8 @@ void EntityAxeKnight(Entity* self) {
             } else {
                 self->accelerationX = 0x3000;
             }
-            if (GetPlayerDistanceX() < 0x60) {
-                func_801BD52C(AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER);
+            if (GetPlayerDistanceX() < 96) {
+                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->unk7C.S8.unk0 = 1;
             }
         }
@@ -157,7 +157,7 @@ void EntityAxeKnight(Entity* self) {
         func_801C4550();
         break;
 
-    case AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER:
+    case AXE_KNIGHT_WALK_AWAY_FROM_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
                 self->accelerationX = 0x3000;
@@ -179,7 +179,7 @@ void EntityAxeKnight(Entity* self) {
             }
 
             if (GetPlayerDistanceX() > 80) {
-                func_801BD52C(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
+                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->unk7C.S8.unk0 = 0;
             }
         }
@@ -208,10 +208,10 @@ void EntityAxeKnight(Entity* self) {
         if (animStatus == 0) {
         label:
             if (GetPlayerDistanceX() < 89) {
-                func_801BD52C(AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER);
+                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->unk7C.S8.unk0 = 1;
             } else {
-                func_801BD52C(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
+                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->unk7C.S8.unk0 = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
@@ -257,10 +257,10 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
             if (GetPlayerDistanceX() > 88) {
-                func_801BD52C(AXE_KNIGHT_WALKING_TOWARDS_PLAYER);
+                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->unk7C.S8.unk0 = 0;
             } else {
-                func_801BD52C(AXE_KNIGHT_WALKING_AWAY_FROM_PLAYER);
+                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->unk7C.S8.unk0 = 1;
             }
             break;
