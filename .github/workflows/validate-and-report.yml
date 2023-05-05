@@ -69,7 +69,7 @@ jobs:
         run: make -j extract
       - name: Split game data (DRA only)
         if: matrix.version != 'us'
-        run: make -j extract_dragit che
+        run: make -j extract_dra
       - name: Build binaries
         if: matrix.version == 'us'
         run: make -j build
