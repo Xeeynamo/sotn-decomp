@@ -5,17 +5,17 @@
 
 #include "nz0.h"
 
-void func_801C5F2C(Entity* arg0) { // from skeleton
+void func_801C5F2C(Entity* self) {
     if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
-        arg0->posX.val -= arg0->accelerationX;
+        self->posX.val -= self->accelerationX;
     }
 
     if (!(func_801BD720(&D_801824C0, 3) & 2)) {
-        if ((--arg0->unk7C.U8.unk0) == 0) {
+        if ((--self->unk7C.U8.unk0) == 0) {
             func_801BD52C(4);
         }
     } else {
-        func_801BD52C(5);
+        func_801BD52C(SKELETON_JUMP);
     }
 }
 

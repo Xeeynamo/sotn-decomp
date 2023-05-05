@@ -1,8 +1,6 @@
 #include "stage.h"
 
-typedef enum {
-    E_BONE_SCIMITAR_HEAD = 0x28,
-} ObjectIds;
+typedef enum { E_AXE_KNIGHT_AXE = 0x2A, E_BONE_SCIMITAR_HEAD = 0x28 } ObjectIds;
 
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
@@ -30,9 +28,9 @@ extern u16 D_80180C34[];
 extern u16 D_80180C40[]; // InitProps
 extern u8 D_80182610[];  // Animation: Walking?
 extern s16 D_80182624[];
-extern u8 D_80182638[]; // Animation: Disassemble
-extern u8 D_80182654[]; // Animation: Reassemble
-extern u8 D_80182670[]; // Animation: Reassemble faster ?
+extern u8 D_80182638[];  // Animation: Disassemble
+extern u8 D_80182654[];  // Animation: Reassemble
+extern u8 D_80182670[];  // Animation: Reassemble faster ?
 extern s32 D_80182694;
 extern s32 D_801826AC;
 
@@ -59,7 +57,6 @@ extern s32 D_80182174;
 
 // *** EntityBoneScimitar properties END ***
 
-extern u16 D_80180C64[];
 extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
@@ -120,16 +117,24 @@ extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
 extern u8 D_801CAA7C;
 extern u8 D_801CAA80;
+
+// *** EntityAxeKnight properties START ***
+
+extern u16 D_80180C64[]; // Init
 extern s32 D_80182180[];
 extern s32 D_80182188[];
+extern u8 D_80182210[]; // Animation: Walking
+extern u8 D_80182220[]; // Animation: Ducking Throw
+extern u8 D_80182244[]; // Animation: Standing Throw
+extern u8 D_80182268[]; // Animation: Dying
+extern s32 D_80182274[];
+extern u8 D_80182284[];
+
+// *** EntityAxeKnight properties END ***
+
 extern s32 D_80182198[];
 extern s32 D_8018219A[];
-extern u8 D_80182210[];
-extern u8 D_80182220[];
-extern u8 D_80182244[];
-extern u8 D_80182268[];
-extern s8 D_80182274[];
-extern u8 D_80182284[];
+
 extern u8 D_801822B4[];
 extern u16 D_801822D4[];
 extern const u8 D_801822E4[];
