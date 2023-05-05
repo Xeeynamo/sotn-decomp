@@ -21,8 +21,11 @@ parser.add_argument('--dry-run', dest="dryrun", default=False, required=False,
 args = parser.parse_args()
 
 
-def exiterr(msg: str):
+def printerr(msg: str):
     print(msg, file=sys.stderr)
+
+def exiterr(msg: str):
+    printerr(msg)
     exit(-1)
 
 
@@ -32,6 +35,7 @@ def get_git_commit_message() -> str:
 
 class DecompProgressStats:
     name: str
+    exists: bool
     code_matching: int
     code_total: int
     functions_matching: int
@@ -48,7 +52,10 @@ class DecompProgressStats:
 
         map_path = Path(f"build/{args.version}/{module_name}.map")
         if not os.path.exists(map_path):
-            exiterr(f"file '{map_path}' not found")
+            printerr(f"file '{map_path}' not found")
+            self.exists = False
+            return
+        self.exists = True
 
         map_file = mapfile_parser.MapFile()
         map_file.readMapFile(map_path)
@@ -116,6 +123,10 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
     def fetch_metrics(category, callback):
         api_base_url = os.getenv("FROGRESS_API_BASE_URL")
         r = requests.get(f"{api_base_url}/data/{slug}/{version}/{category}")
+        if r.status_code == 404:
+            for ovl in progress:
+                callback(ovl, 0)
+            return
         r.raise_for_status()
         res = r.json()
         if res == None or res[slug] == None or res[slug][version] == None or res[slug][version][category] == None:
@@ -154,6 +165,15 @@ def get_progress_entry(progresses: dict[str, DecompProgressStats]):
             obj[overlay_progress.name] = overlay_progress.functions_matching
             obj[f"{overlay_progress.name}/total"] = overlay_progress.functions_total
         return obj
+    
+    def remove_not_existing_overlays(progresses):
+        new_progresses = dict[str, DecompProgressStats]()
+        for key in progresses:
+            value = progresses[key]
+            if value.exists == True:
+                new_progresses[key] = value
+        return new_progresses
+    progresses = remove_not_existing_overlays(progresses)
 
     return {
         "timestamp": mapfile_parser.utils.getGitCommitTimestamp(),
@@ -180,7 +200,7 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
             funcs_diff = (stat.functions_matching -
                           stat.functions_prev) / stat.functions_total
             print(str.join(" ", [
-                f"{overlay.upper()}:",
+                f"{overlay.upper()} ({args.version}):",
                 f"coverage {coverage*100:.2f}%",
                 f"({coverage_diff*100:+.3f}%)",
                 f"funcs {funcs*100:.2f}%",
@@ -210,7 +230,7 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
             funcs = stat.functions_matching / stat.functions_total
             funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
             report += str.join(" ", [
-                f"**{overlay.upper()}**:",
+                f"**{overlay.upper()} ({args.version})**:",
                 f"coverage {coverage*100:.2f}%",
                 f"({coverage_diff*100:+.2f}%)",
                 f"funcs {funcs*100:.2f}%",
