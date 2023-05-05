@@ -115,6 +115,15 @@ class DecompProgressStats:
         self.code_total = totalStats.decompedSize + totalStats.undecompedSize
 
 
+def remove_not_existing_overlays(progresses):
+    new_progresses = dict[str, DecompProgressStats]()
+    for key in progresses:
+        value = progresses[key]
+        if value.exists == True:
+            new_progresses[key] = value
+    return new_progresses
+
+
 def get_progress(module_name: str, path: str) -> DecompProgressStats:
     return DecompProgressStats(module_name, path)
 
@@ -145,6 +154,7 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
     def set_func_prev(ovl_name, value):
         progresses[ovl_name].functions_prev = value
 
+    progress = remove_not_existing_overlays(progresses)
     fetch_metrics("code", set_code_prev)
     fetch_metrics("functions", set_func_prev)
 
@@ -165,15 +175,6 @@ def get_progress_entry(progresses: dict[str, DecompProgressStats]):
             obj[overlay_progress.name] = overlay_progress.functions_matching
             obj[f"{overlay_progress.name}/total"] = overlay_progress.functions_total
         return obj
-    
-    def remove_not_existing_overlays(progresses):
-        new_progresses = dict[str, DecompProgressStats]()
-        for key in progresses:
-            value = progresses[key]
-            if value.exists == True:
-                new_progresses[key] = value
-        return new_progresses
-    progresses = remove_not_existing_overlays(progresses)
 
     return {
         "timestamp": mapfile_parser.utils.getGitCommitTimestamp(),
@@ -268,6 +269,8 @@ if __name__ == "__main__":
     progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
 
     hydrate_previous_metrics(progress, args.version)
+    progress = remove_not_existing_overlays(progress)
+
     entry = get_progress_entry(progress)
     if args.dryrun == False:
         report_discord(progress)
