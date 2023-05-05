@@ -75,7 +75,7 @@ jobs:
         run: make -j build
       - name: Build binaries (DRA only)
         if: matrix.version != 'us'
-        run: make -j build
+        run: make -j dra
       - name: Check if they match
         run: make check
       - name: Remove clutter from build folder
