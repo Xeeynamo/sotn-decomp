@@ -250,8 +250,14 @@ context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-extract_disk: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$(VERSION).cue disks/$(VERSION)
+extract_disk: extract_disk_$(VERSION)
+extract_disk_us: extract_disk_ps1us
+extract_disk_hd: extract_disk_pspeu
+extract_disk_psp%:
+	mkdir -p disks/psp$*
+	7z x disks/sotn.psp$*.iso -odisks/psp$*/
+extract_disk_ps1%: $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
 disk: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
