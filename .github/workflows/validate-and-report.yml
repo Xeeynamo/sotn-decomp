@@ -26,8 +26,8 @@ jobs:
         include:
           - dependency: us
             version: us
-          - dependency: pspeu
-            version: hd
+          # - dependency: pspeu
+          #   version: hd
     # build-and-test cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -93,8 +93,8 @@ jobs:
         include:
           - dependency: us
             version: us
-          - dependency: pspeu
-            version: hd
+          # - dependency: pspeu
+          #   version: hd
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
