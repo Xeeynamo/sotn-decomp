@@ -127,7 +127,7 @@ extern u8 D_80182210[];  // Animation: Walking
 extern u8 D_80182220[];  // Animation: Ducking Throw
 extern u8 D_80182244[];  // Animation: Standing Throw
 extern u8 D_80182268[];  // Animation: Dying
-extern u8 D_80182274[];
+extern s32 D_80182274[];
 extern u8 D_80182284[];
 // *** EntityAxeKnight properties END ***
 

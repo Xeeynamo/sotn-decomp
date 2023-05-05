@@ -309,13 +309,13 @@ void EntityAxeKnight(Entity* self) {
         }
         break;
     }
-
-    hitbox = 4 * D_80182284[self->animCurFrame] + D_80182274 - 1; // Weird ?
+    hitbox = &D_80182284[self->animCurFrame][D_80182274];
     hitbox++;
+    hitbox--;
     self->unk10 = *hitbox++;
     self->unk12 = *hitbox++;
-    self->hitboxWidth = *hitbox++;
-    self->hitboxHeight = *hitbox++;
+    self->hitboxWidth = hitbox[0];
+    self->hitboxHeight = hitbox[1];
 }
 
 void EntityAxeKnightRotateAxe(void) {
