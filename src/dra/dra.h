@@ -138,7 +138,6 @@ extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
 extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
-extern u8 D_800A76F3;
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
