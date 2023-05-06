@@ -509,20 +509,20 @@ loop_5:
         D_801362D4 = (D_801362D4 + 0xFF) >> 8;
         D_8003C99C += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
-            g_GameTimer.frames += D_801362D4;
-            if (g_GameTimer.frames >= 60) {
-                g_GameTimer.frames -= 60;
-                g_GameTimer.seconds++;
-                if (g_GameTimer.seconds >= 60) {
-                    g_GameTimer.seconds -= 60;
-                    g_GameTimer.minutes++;
-                    if (g_GameTimer.minutes >= 60) {
-                        g_GameTimer.minutes -= 60;
-                        g_GameTimer.hours++;
-                        if (g_GameTimer.hours >= 100) {
-                            g_GameTimer.seconds = 59;
-                            g_GameTimer.minutes = 59;
-                            g_GameTimer.hours = 99;
+            g_Status.timerFrames += D_801362D4;
+            if (g_Status.timerFrames >= 60) {
+                g_Status.timerFrames -= 60;
+                g_Status.timerSeconds++;
+                if (g_Status.timerSeconds >= 60) {
+                    g_Status.timerSeconds -= 60;
+                    g_Status.timerMinutes++;
+                    if (g_Status.timerMinutes >= 60) {
+                        g_Status.timerMinutes -= 60;
+                        g_Status.timerHours++;
+                        if (g_Status.timerHours >= 100) {
+                            g_Status.timerSeconds = 59;
+                            g_Status.timerMinutes = 59;
+                            g_Status.timerHours = 99;
                         }
                     }
                 }

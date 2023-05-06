@@ -1099,7 +1099,7 @@ void CollectGold(u16 goldSize) {
     u16 goldSizeIndex;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_playerGold;
+    gold = &g_Status.gold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {
