@@ -95,7 +95,7 @@ clean:
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
-	./tools/symbols.py sort
+	$(PYTHON) ./tools/symbols.py sort
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
