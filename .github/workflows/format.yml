@@ -18,6 +18,10 @@ jobs:
     steps:
       - name: Install requirements
         run: sudo apt-get install clang-format
+      - name: Install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
       - name: Clone main repository
         uses: actions/checkout@v3
         with:
