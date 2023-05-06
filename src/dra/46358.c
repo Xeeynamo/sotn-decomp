@@ -64,7 +64,7 @@ void func_800E6358(void) {
         } else {
             FntPrint("load:c:\\bin\\%s.bin\n", D_800A3C40[g_StageId].ovlName);
         }
-        if (!(g_pads[0].tapped & 0x0800)) {
+        if (!(g_pads[0].tapped & PAD_START)) {
             break;
         }
         PlaySfx(0x63D);
@@ -253,7 +253,7 @@ void func_800E6358(void) {
                 var_s0 = 1;
             }
             if (g_Status.equipment[3] == 0x19) {
-                var_s0 = D_800A76F3;
+                var_s0 = D_800A4B04[0xD8].weaponId;
             }
             if (func_800E81FC(var_s0, 7) < 0) {
                 break;
@@ -266,7 +266,7 @@ void func_800E6358(void) {
                 var_s0 = 1;
             }
             if (g_Status.equipment[3] == 0x19) {
-                var_s0 = D_800A76F3;
+                var_s0 = D_800A4B04[0xD8].weaponId;
             }
             if (func_800E81FC(var_s0, 8) >= 0) {
                 D_8003C908.D_8003C910 = var_s0;
@@ -286,7 +286,7 @@ void func_800E6358(void) {
                 var_s0 = 1;
             }
             if (g_Status.equipment[3] == 0x19) {
-                var_s0 = D_800A76F3;
+                var_s0 = D_800A4B04[0xD8].weaponId;
             }
             D_8003C908.D_8003C910 = var_s0;
         }

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # tool to split jump tables into individual entries in splat yaml
 
 from pathlib import Path
