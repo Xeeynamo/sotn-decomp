@@ -3,8 +3,6 @@
 import argparse
 import os
 
-from click import command
-
 parser = argparse.ArgumentParser(description='Manage game symbols with various operations')
 parser.add_argument('--version', required=False, type=str, help='Game version')
 subparsers = parser.add_subparsers(dest='command')
