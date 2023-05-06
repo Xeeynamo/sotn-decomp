@@ -955,7 +955,6 @@ void func_801934D0(u16 arg0) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", CollectHeart);
 
-extern s32 g_playerGold; // g_playerGold?
 void* const D_80180D60[];
 const s32 D_80180D88[]; // c_GoldPrizes
 
@@ -964,7 +963,7 @@ void CollectGold(u16 goldSize) { // CollectGold
     u16 goldSizeIndex;
 
     g_api.PlaySfx(0x69D);
-    gold = &g_playerGold;
+    gold = &g_Status.gold;
     goldSizeIndex = goldSize - 2;
     *gold += D_80180D88[goldSizeIndex];
     if (*gold > MAX_GOLD) {

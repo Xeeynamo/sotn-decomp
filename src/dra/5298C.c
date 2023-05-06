@@ -1237,11 +1237,11 @@ s32 func_800FD4C0(s32 bossId, s32 action) {
             return g_Settings.timeAttackRecords[bossId];
         }
 
-        seconds = g_GameTimer.seconds;
+        seconds = g_Status.timerSeconds;
         g_Settings.timeAttackRecords[bossId] = seconds;
-        temp_v1 = (g_GameTimer.minutes * 100) + seconds;
+        temp_v1 = (g_Status.timerMinutes * 100) + seconds;
         g_Settings.timeAttackRecords[bossId] = temp_v1;
-        temp_v0 = (g_GameTimer.hours * 10000) + temp_v1;
+        temp_v0 = (g_Status.timerHours * 10000) + temp_v1;
         g_Settings.timeAttackRecords[bossId] = temp_v0;
         return temp_v0;
 
