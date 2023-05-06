@@ -32,7 +32,8 @@ void EntityPrizeDrop(Entity* self) {
             self->subId = 0;
             itemId = 0;
         }
-        if (itemId > 13 && itemId < 23 && itemId == D_80181DB0[D_80097BFC]) {
+        if (itemId > 13 && itemId < 23 &&
+            itemId == D_80181DB0[g_Status.D_80097BFC]) {
             self->subId = itemId = 1;
         }
         if (itemId == 0 || itemId == 2) {
@@ -135,7 +136,7 @@ void EntityPrizeDrop(Entity* self) {
         case 0:
             self->animCurFrame = 0;
             if (itemId > 13 && itemId < 23) {
-                if (itemId == D_80181DB0[D_80097BFC]) {
+                if (itemId == D_80181DB0[g_Status.D_80097BFC]) {
                     self->subId = itemId = 1;
                 }
             }

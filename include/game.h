@@ -472,10 +472,10 @@ typedef struct {
     /* 80097C2A */ u16 D_80097C2A;
     /* 80097C2C */ u16 D_80097C2C;
     /* 80097C2E */ u16 D_80097C2E;
-    /* 80097C30 */ u32 timerHours;
-    /* 80097C34 */ u32 timerMinutes;
-    /* 80097C38 */ u32 timerSeconds;
-    /* 80097C3C */ u32 timerFrames;
+    /* 80097C30 */ s32 timerHours;
+    /* 80097C34 */ s32 timerMinutes;
+    /* 80097C38 */ s32 timerSeconds;
+    /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
     /* 80097C44 */ u32 D_80097C44;
     /* 80097C48 */ u32 D_80097C48;
@@ -499,13 +499,6 @@ typedef struct {
     /* 80097C90 */ u32 D_80097C90;
     /* 80097C94 */ u32 D_80097C94;
 } PlayerStatus; /* size=0x334 */
-
-typedef struct {
-    s32 hours;
-    s32 minutes;
-    s32 seconds;
-    s32 frames;
-} GameTimer;
 
 typedef struct {
     /* 0x00, 8003C9A8 */ s32 cursorMain;
@@ -1121,18 +1114,10 @@ extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern u8 D_80097B9C[];
-extern s32 g_player_total_con;
-extern s32 g_player_total_int;   // total CON
-extern s32 g_player_total_lck[]; // total LCK
-extern s32 D_80097BFC;           // g_SubweaponId
-extern s32 g_playerLevel;
-extern s32 g_playerExp;
-extern s32 g_playerGold;
-extern s32 g_killCount;
+extern s32 D_80097BFC; // g_SubweaponId
 extern u8 g_SaveName[12] ALIGNED4;
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
-extern GameTimer g_GameTimer;
 extern s32 D_80097C98;
 extern s8 D_80097D37;
 extern u8 D_80097F3C;
