@@ -47,7 +47,11 @@ void func_801027C4(u32 arg0) {
     }
 }
 
+#if defined(VERSION_US)
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_801028AC);
+#elif defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/627C4", jpt_80102810);
+#endif
 
 void func_80102CD8(s32 arg0) {
     D_801379AC[0] = arg0;
@@ -55,7 +59,9 @@ void func_80102CD8(s32 arg0) {
     D_801379B0 = D_800A3194[arg0];
 }
 
+#if defined(VERSION_US)
 // DECOMP_ME_WIP func_80102D08 https://decomp.me/scratch/NNXbc
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_80102D08);
-
-// INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_80102D70);
+#elif defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/627C4", func_80102D08);
+#endif
