@@ -30,6 +30,7 @@ typedef union {
         u8 unk0, unk1;
     } U8;
 } Multi16;
+
 struct Entity;
 
 typedef struct ET_Generic {
@@ -119,8 +120,8 @@ typedef struct ET_EquipItemDrop {
 } ET_EquipItemDrop;
 
 typedef union {
-    /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_Generic generic;
+    /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ // ET_whatever2 whatever2; ...
     /* 0x7C */ // ET_whatever3 whatever3; ...
     /* 0x7C */ char stub[0x40];
