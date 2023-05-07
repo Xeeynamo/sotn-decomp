@@ -31,10 +31,8 @@ segments:
       - [0x3B5F8, rodata] # jtbl_800DB5F8
       - [0x3B618, rodata] # jtbl_800DB618
       - [0x3B648, rodata] # jtbl_800DB648
-      - [0x3B808, .rodata, 46358] # jtbl_800DB888
-      - [0x3B8D0, rodata] # jtbl_800DB8D0
-      - [0x3B8F0, rodata] # jtbl_800DB8F0
-      - [0x3B910, rodata] # jtbl_800DB910
+      - [0x3B808, .rodata, 46358]
+      - [0x3B8D0, .rodata, 46FD4]
       - [0x3B938, rodata]
       - [0x3BCF0, rodata] # jtbl_800DBCF0
       - [0x3BD08, rodata] # jtbl_800DBD08
@@ -158,7 +156,7 @@ segments:
       - [0x422B4, rodata]
       - [0x42354, c, 42398_hd]
       - [0x46A0C, c, 46358]
-      - [0x47688, c, 46FD4_hd]
+      - [0x47688, c, 46FD4]
       - [0x48250, c, 47BB8_hd]
       - [0x4FAE0, c, 4F45C_hd]
       - [0x52EE4, c, 52860]

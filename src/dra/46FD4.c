@@ -4,10 +4,11 @@
 #include "sfx.h"
 
 void func_800E6FD4(void) {
-    POLY_GT4* poly;
+    Primitive* prim;
     u8 temp;
+    s32 temp2;
 
-    if ((!(g_pads[0].tapped & PAD_START)) || (!g_IsTimeAttackUnlocked)) {
+    if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
         switch (D_80073060) {
         case 0:
             if (D_8006C3B0 == 0) {
@@ -16,59 +17,64 @@ void func_800E6FD4(void) {
                 D_8006C398 = 1;
                 D_8006BAFC = 0x18;
                 func_800E3618(0x140);
-                D_8013640C = AllocPrimitives(4, 2);
-                poly = &g_PrimBuf[D_8013640C];
-                func_80107360(poly, 44, 96, 232, 32, 0, 0);
-                func_801072BC(poly);
-                poly->tpage = 0x1C;
-                poly->pad3 = 4;
-                poly->p1 = 0x40;
-                poly = (POLY_G4*)poly->tag;
-                func_80107360(poly, 60, 208, 192, 16, 0, 32);
-                func_801072DC(poly);
-                poly->tpage = 0x1C;
-                poly->pad3 = 8;
+                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
+                prim = &g_PrimBuf[D_8013640C];
+                func_80107360(prim, 44, 96, 232, 32, 0, 0);
+                func_801072BC(prim);
+                prim->tpage = 0x1C;
+                prim->blendMode = 4;
+                prim->p1 = 0x40;
+                prim = prim->next;
+                func_80107360(prim, 60, 208, 192, 16, 0, 32);
+                func_801072DC(prim);
+                prim->tpage = 0x1C;
+                prim->blendMode = 8;
                 D_80073060++;
                 return;
             }
             break;
 
         case 1:
-            poly = &g_PrimBuf[D_8013640C];
-            poly->p1--;
-            if (poly->p1 == 0) {
+            prim = &g_PrimBuf[D_8013640C];
+            prim->p1--;
+            if (prim->p1 == 0) {
                 D_80073060++;
             }
             break;
 
         case 2:
-            poly = &g_PrimBuf[D_8013640C];
-            temp = poly->r0 + 1;
-            func_80107250(poly, temp);
+            temp2 = D_8013640C;
+            prim = &g_PrimBuf[temp2];
+            temp = prim->r0 + 1;
+            func_80107250(prim, temp);
             if (temp == 96) {
-                ((POLY_GT4*)poly->tag)->pad3 = 8;
+                temp2 = prim->next;
+#if defined(VERSION_US)
+                ((Primitive*)temp2)->blendMode = 8;
+#elif defined(VERSION_HD)
+                ((Primitive*)temp2)->blendMode = 0;
+#endif
             }
             if (temp == 128) {
-                poly->p1 = 128;
+                prim->p1 = 128;
                 D_80073060++;
             }
             break;
 
         case 3:
-            poly = &g_PrimBuf[D_8013640C];
-            poly->p1--;
-            if (poly->p1 == 0) {
+            prim = &g_PrimBuf[D_8013640C];
+            prim->p1--;
+            if (prim->p1 == 0) {
                 D_80073060++;
             }
             break;
 
         case 4:
-            poly = &g_PrimBuf[D_8013640C];
-            temp = poly->r0 - 1;
-            func_80107250(poly, temp);
+            prim = &g_PrimBuf[D_8013640C];
+            temp = prim->r0 - 1;
+            func_80107250(prim, temp);
             if (temp == 64) {
-
-                ((POLY_GT4*)poly->tag)->pad3 = 8;
+                ((Primitive*)prim->next)->blendMode = 8;
             }
             if (temp == 0) {
                 FreePrimitives(D_8013640C);
@@ -177,13 +183,19 @@ void func_800E7458(void) {
     }
 }
 
+#if defined(VERSION_US)
 INCLUDE_ASM("asm/us/dra/nonmatchings/46FD4", func_800E768C);
+#elif defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/46FD4", func_800E768C);
+#endif
 
 void func_800E7AEC(void) {
     switch (D_8003C734) {
     case 0:
     case 1:
+#if defined(VERSION_US)
     case 99:
+#endif
         func_800E451C();
         break;
     case 2:
