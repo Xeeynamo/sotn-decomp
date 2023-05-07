@@ -1,7 +1,7 @@
 #include "no3.h"
 
-void EntityZombie(Entity_*self) {
-    Entity_*newEntity;
+void EntityZombie(Entity* self) {
+    Entity* newEntity;
     s32 temp_a0;
 
     if ((self->flags & 0x100) && (self->step < 4)) {
@@ -77,9 +77,9 @@ void EntityZombie(Entity_*self) {
 
 const u32 rodataPadding_377CC[] = {0, 0};
 
-void EntityUnkId4D(Entity_*self) {
+void EntityUnkId4D(Entity* self) {
     s32 distCameraEntity;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 rnd;
 
     if (self->step == 0) {

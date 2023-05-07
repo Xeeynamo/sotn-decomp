@@ -1,11 +1,11 @@
 /*
  * Overlay: NZ0
- * Entity_: Magically Sealed Door
+ * Entity: Magically Sealed Door
  */
 
 #include "nz0.h"
 
-s32 func_801C7CF0(Entity_*e) {
+s32 func_801C7CF0(Entity* e) {
     s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
 
     diff = ABS(diff);

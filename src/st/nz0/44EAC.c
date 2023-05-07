@@ -5,7 +5,7 @@
 
 #include "nz0.h"
 
-void EntityBloodSplatter(Entity_*self) {
+void EntityBloodSplatter(Entity* self) {
     Primitive *prim, *prim2, *prim3;
     s16 firstPrimIndex;
 
@@ -196,10 +196,10 @@ void func_801C53AC(Primitive* prim) {
     }
 }
 
-void EntityBloodyZombie(Entity_*self) {
+void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
     Primitive** prim2;
-    Entity_*newEntity;
+    Entity* newEntity;
     s16 firstPrimIndex;
     s16 entityFacing;
     s32 animState;
@@ -434,7 +434,7 @@ void EntityBloodyZombie(Entity_*self) {
     }
 }
 
-void func_801C5D20(Entity_*self) { // BloodDrips
+void func_801C5D20(Entity* self) { // BloodDrips
     Primitive* prim;
     s16 firstPrimIndex;
 

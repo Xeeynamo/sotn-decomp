@@ -6,8 +6,8 @@
 #include "nz0.h"
 
 // moves around on walls and drips poison
-void EntitySpittleBone(Entity_*self) {
-    Entity_*newEntity;
+void EntitySpittleBone(Entity* self) {
+    Entity* newEntity;
     s32 i;
 
     if ((self->flags & 0x100) && (self->step < 3)) {
@@ -29,7 +29,8 @@ void EntitySpittleBone(Entity_*self) {
             self->ext.generic.unk7C.S8.unk0 = 0;
             CreateEntityFromEntity(0x32, self, newEntity);
             newEntity->facing = self->facing;
-            newEntity->ext.generic.unk7C.S8.unk0 = self->ext.generic.unk7C.S8.unk0;
+            newEntity->ext.generic.unk7C.S8.unk0 =
+                self->ext.generic.unk7C.S8.unk0;
             if (self->facing != 0) {
                 self->accelerationX = 0x10000;
                 newEntity->posX.i.hi += 16;
@@ -44,7 +45,8 @@ void EntitySpittleBone(Entity_*self) {
 
     case 2:
         AnimateEntity(&D_80182524, self);
-        self->ext.generic.unk7C.U8.unk0 = func_801C1034(self->ext.generic.unk7C.U8.unk0);
+        self->ext.generic.unk7C.U8.unk0 =
+            func_801C1034(self->ext.generic.unk7C.U8.unk0);
         if (self->ext.generic.unk80.modeS16.unk2 != 0) {
             self->unk1E += self->ext.generic.unk80.modeS16.unk0;
             self->ext.generic.unk80.modeS16.unk2--;
@@ -52,7 +54,8 @@ void EntitySpittleBone(Entity_*self) {
                 self->unk1E = self[1].unk1E;
             }
         }
-        if (((self->ext.generic.unk7C.U8.unk0 & 0x3F) == 1) && (!(Random() & 0x1F))) {
+        if (((self->ext.generic.unk7C.U8.unk0 & 0x3F) == 1) &&
+            (!(Random() & 0x1F))) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(0x33, self, newEntity);
@@ -78,7 +81,8 @@ void EntitySpittleBone(Entity_*self) {
                 newEntity->step = 4;
                 newEntity->accelerationX = D_80182504[i];
                 newEntity->accelerationY = 0xFFFD0000 - ((Random() & 3) << 0xF);
-                newEntity->ext.generic.unk80.modeS16.unk2 = D_801824E2[i + 0x3A];
+                newEntity->ext.generic.unk80.modeS16.unk2 =
+                    D_801824E2[i + 0x3A];
             }
         }
 

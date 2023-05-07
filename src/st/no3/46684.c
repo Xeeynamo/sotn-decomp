@@ -1,6 +1,6 @@
 #include "no3.h"
 
-void EntityPrizeDrop(Entity_*self) {
+void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 firstPrimIndex;
@@ -88,7 +88,8 @@ void EntityPrizeDrop(Entity_*self) {
 
     case 3:
         func_801C6198(itemId);
-        if (!(self->subId & 0x8000) && --self->ext.generic.unk80.modeS8.unk0 == 0) {
+        if (!(self->subId & 0x8000) &&
+            --self->ext.generic.unk80.modeS8.unk0 == 0) {
             self->ext.generic.unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
             self->step++;
         }
@@ -212,7 +213,7 @@ void EntityPrizeDrop(Entity_*self) {
     }
 }
 
-void EntityExplosion(Entity_*entity) {
+void EntityExplosion(Entity* entity) {
     u16 zPriority;
 
     if (entity->step == 0) {
@@ -240,7 +241,7 @@ void EntityExplosion(Entity_*entity) {
     }
 }
 
-void func_801C6FF4(Entity_*entity, s32 renderFlags) {
+void func_801C6FF4(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
@@ -271,7 +272,7 @@ void func_801C6FF4(Entity_*entity, s32 renderFlags) {
     }
 }
 
-void EntityEquipItemDrop(Entity_*self) {
+void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->subId & 0x7FFF;
     s32 firstPolygonIndex;
     Collider collider;
@@ -463,7 +464,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C7680);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityRelicOrb);
 
-void EntityHeartDrop(Entity_*self) {
+void EntityHeartDrop(Entity* self) {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 var_a0;
@@ -521,14 +522,15 @@ u8 func_801C8A84(s16* arg0, u8 facing) {
     return ret;
 }
 
-void EntityUnkId13(Entity_*entity) {
+void EntityUnkId13(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180AE8);
-        entity->ext.generic.unk8C.modeU16.unk0 = entity->ext.generic.unk80.entityPtr->objectId;
+        entity->ext.generic.unk8C.modeU16.unk0 =
+            entity->ext.generic.unk80.entityPtr->objectId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity_*newEntity =
+            Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
@@ -540,7 +542,8 @@ void EntityUnkId13(Entity_*entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId != entity->ext.generic.unk8C.modeU16.unk0) {
+        if (entity->ext.generic.unk80.entityPtr->objectId !=
+            entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
         break;
@@ -551,7 +554,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C8C84);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C8DB4);
 
-void EntityUnkId14(Entity_*entity) {
+void EntityUnkId14(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80182650[entity->ext.generic.unk94];
         entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
@@ -574,7 +577,7 @@ void EntityUnkId14(Entity_*entity) {
     }
 }
 
-void EntityUnkId15(Entity_*arg0) {
+void EntityUnkId15(Entity* arg0) {
     u16 temp_v0;
 
     if (arg0->step == 0) {
@@ -630,7 +633,7 @@ bool func_801C92B0(Unkstruct6* unk) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C93AC);
 
-void EntityIntenseExplosion(Entity_*entity) {
+void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
 
     if (entity->step == 0) {
@@ -663,7 +666,7 @@ void EntityIntenseExplosion(Entity_*entity) {
     }
 }
 
-void func_801903C8(Entity_*entity) {
+void func_801903C8(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180AC4);
         entity->unk6C = 0xF0;
@@ -687,7 +690,7 @@ void func_801903C8(Entity_*entity) {
     }
 }
 
-void func_801C9AF8(u16 objectId, Entity_*source, Entity_*entity) {
+void func_801C9AF8(u16 objectId, Entity* source, Entity* entity) {
     u16 palette;
 
     DestroyEntity(entity);
@@ -706,7 +709,7 @@ void func_801C9AF8(u16 objectId, Entity_*source, Entity_*entity) {
 }
 
 void func_801C9BC0(void) {
-    Entity_*entity;
+    Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
@@ -738,7 +741,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityStageNamePopup);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityAbsorbOrb);
 
-void EntityEnemyBlood(Entity_*self) {
+void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
     Primitive* prim;
     s32 var_a0_2;
@@ -837,7 +840,8 @@ void EntityEnemyBlood(Entity_*self) {
                 if (self->ext.generic.unk7C.u > 16) {
                     self->ext.generic.unk7E.modeU16 += posX;
                     self->hitboxWidth = self->ext.generic.unk7E.modeU16 / 2;
-                    self->hitboxHeight = (self->ext.generic.unk7E.modeU16 / 4) + 8;
+                    self->hitboxHeight =
+                        (self->ext.generic.unk7E.modeU16 / 4) + 8;
                 } else {
                     self->unk3C = 0;
                 }
@@ -883,7 +887,7 @@ void EntityEnemyBlood(Entity_*self) {
     }
 }
 
-void EntityRoomForeground(Entity_*entity) {
+void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80182764[entity->subId];
 
     if (entity->step == 0) {
@@ -911,7 +915,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CC6F8);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CC820);
 
-void func_801CC90C(Entity_*arg0) {
+void func_801CC90C(Entity* arg0) {
     s16 temp_v0_2;
     s16 temp_v1;
     s16 temp_v0;
@@ -954,7 +958,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityStrongWargDeathBeams);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CF438);
 
-void func_801CF58C(Entity_*self) {
+void func_801CF58C(Entity* self) {
     self->accelerationX = 0;
     self->ext.generic.unk84.S16.unk2 = 0x100;
     func_801C58A4(6);
@@ -962,7 +966,7 @@ void func_801CF58C(Entity_*self) {
     self->ext.generic.unk80.modeS16.unk0 = 0x20;
 }
 
-void func_801CF5E0(Entity_*self) {
+void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
     if (self->facing == func_801C4FD4()) {
@@ -975,7 +979,8 @@ void func_801CF5E0(Entity_*self) {
         return;
     }
 
-    temp_v0 = self->ext.generic.unk84.S16.unk0 - self->posX.i.hi - g_Camera.posX.i.hi;
+    temp_v0 =
+        self->ext.generic.unk84.S16.unk0 - self->posX.i.hi - g_Camera.posX.i.hi;
 
     if (temp_v0 > 16) {
         func_801C58A4(3);
@@ -1000,7 +1005,7 @@ void func_801CF5E0(Entity_*self) {
 }
 
 // duplicate of func_801CC90C in this file
-void func_801CF6D8(Entity_*arg0) {
+void func_801CF6D8(Entity* arg0) {
     s16 temp_v0_2;
     s16 temp_v1;
     s16 temp_v0;
@@ -1028,7 +1033,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityUnkId4B);
 extern u8 D_8018383C;
 
 // A single "puff" of the warg explosion animation, transparent
-void EntityWargExplosionPuffTransparent(Entity_*entity) {
+void EntityWargExplosionPuffTransparent(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
@@ -1080,7 +1085,7 @@ s32 func_801D2D40(s16 yVector) {
     s16 newY = yVector + g_CurrentEntity->posY.i.hi;
     s32 expectedResult = 0;
     Collider collider;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 res;
 
     g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
@@ -1105,7 +1110,7 @@ s32 func_801D2D40(s16 yVector) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman3);
 
 // some sort of explosion
-void EntityExplosion2(Entity_*entity, s32 arg1) {
+void EntityExplosion2(Entity* entity, s32 arg1) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
@@ -1165,8 +1170,8 @@ void EntityExplosion2(Entity_*entity, s32 arg1) {
 }
 
 // medium sized water splash used with merman
-void EntityMediumWaterSplash(Entity_*entity) {
-    Entity_*newEntity;
+void EntityMediumWaterSplash(Entity* entity) {
+    Entity* newEntity;
 
     if (entity->step == 0) {
         InitializeEntity(D_80180B54);
@@ -1194,7 +1199,7 @@ void EntityMediumWaterSplash(Entity_*entity) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityLargeWaterSplash);
 
 // some kind of falling object
-void EntityFallingObject2(Entity_*self) {
+void EntityFallingObject2(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B48);
         self->animCurFrame = 0;
@@ -1209,7 +1214,7 @@ void EntityFallingObject2(Entity_*self) {
     }
 }
 
-void EntityUnkId3D(Entity_*self) {
+void EntityUnkId3D(Entity* self) {
     s8 temp; // probably !FAKE
 
     switch (self->step) {
@@ -1269,7 +1274,7 @@ void EntityUnkId3D(Entity_*self) {
 }
 
 // falling object, larger
-void EntityLargeFallingObject(Entity_*self) {
+void EntityLargeFallingObject(Entity* self) {
     u8 temp_v0;
 
     if (self->step == 0) {
@@ -1299,8 +1304,8 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman2);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman);
 
 // fireball shot by merman
-void EntityMermanFireball(Entity_*self) {
-    Entity_*entity;
+void EntityMermanFireball(Entity* self) {
+    Entity* entity;
 
     if (self->step == 0) {
         InitializeEntity(&D_80180B6C);
@@ -1348,7 +1353,7 @@ extern u16 D_80180B60;
 extern u8 D_80183B04;
 
 // some sort of falling object
-void EntityFallingObject(Entity_*arg0) {
+void EntityFallingObject(Entity* arg0) {
     if (arg0->step == 0) {
         InitializeEntity(&D_80180B60);
         arg0->animCurFrame = 0;
@@ -1392,7 +1397,7 @@ void func_801D59D0(void) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityBoneScimitar);
 
 // debris that rotates and falls down
-void EntityBoneScimitarParts(Entity_*entity) {
+void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {

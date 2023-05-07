@@ -47,8 +47,8 @@ void func_801C3708(void) {
     }
 }
 
-void EntityBoneScimitar(Entity_*self) {
-    Entity_*newEntity;
+void EntityBoneScimitar(Entity* self) {
+    Entity* newEntity;
     u8 animStatus;
     s32 i;
 
@@ -70,7 +70,7 @@ void EntityBoneScimitar(Entity_*self) {
         }
         self->ext.generic.unk7C.S8.unk0 = 80;    // Skeleton attack timer cycle
         self->ext.generic.unk80.modeS8.unk0 = 0; // Facing init
-        self->ext.generic.unk84.S8.unk0 = 0;     // Skeleton attack timer selector
+        self->ext.generic.unk84.S8.unk0 = 0; // Skeleton attack timer selector
         break;
 
     case BONE_SCIMITAR_IDLE:
@@ -139,7 +139,8 @@ void EntityBoneScimitar(Entity_*self) {
         if (animStatus == 0) {
             func_801BD52C(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
-                D_80182154[self->subId % 2][(++self->ext.generic.unk84.S8.unk0) & 3];
+                D_80182154[self->subId % 2]
+                          [(++self->ext.generic.unk84.S8.unk0) & 3];
             if (self->subId != 0) {
                 func_801BD52C(BONE_SCIMITAR_SPECIAL);
             }
@@ -264,7 +265,7 @@ void EntityBoneScimitar(Entity_*self) {
 }
 
 // Bone parts that rotate and fall down when killed
-void EntityBoneScimitarParts(Entity_*entity) {
+void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {

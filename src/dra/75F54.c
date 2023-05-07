@@ -143,8 +143,8 @@ void func_801186EC(void) {
     }
 }
 
-Entity_*GetFreeDraEntity(s16 start, s16 end) {
-    Entity_*entity = &g_EntityArray[start];
+Entity* GetFreeDraEntity(s16 start, s16 end) {
+    Entity* entity = &g_EntityArray[start];
     s16 i;
 
     for (i = start; i < end; i++, entity++) {
@@ -161,7 +161,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118894);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118970);
 
-s32 func_80118B18(Entity_*ent1, Entity_*ent2, s32 arg2) {
+s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     s16 var_a1;
     s16 posX;
     s16 posY;
@@ -218,7 +218,7 @@ void func_80118C28(s32 arg0) {
 }
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
-    Entity_*entity = GetFreeDraEntity(0x38, 0x40);
+    Entity* entity = GetFreeDraEntity(0x38, 0x40);
 
     if (entity != NULL) {
         DestroyEntity(entity);
@@ -238,7 +238,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityNumberMovesToHpMeter);
 // "Guard" text displays on screen
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityGuardText);
 
-void func_80119D3C(Entity_* entity) {
+void func_80119D3C(Entity* entity) {
     s32 temp;
     s32 cos;
 
@@ -262,7 +262,8 @@ void func_80119D3C(Entity_* entity) {
         }
         entity->posY.val += entity->accelerationY;
         cos = rcos(entity->ext.generic.unk7C.s);
-        entity->ext.generic.unk7C.s = entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
+        entity->ext.generic.unk7C.s =
+            entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
         temp = cos * 8;
 
         if (!(D_8003C8C4 & 3)) {
@@ -281,7 +282,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119E78);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119F70);
 
-void func_8011A290(Entity_*entity) {
+void func_8011A290(Entity* entity) {
     SubweaponDef subwpn;
 
     func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
@@ -296,7 +297,7 @@ void func_8011A290(Entity_*entity) {
     func_80118894(entity);
 }
 
-void func_8011A328(Entity_*entity, s32 arg1) {
+void func_8011A328(Entity* entity, s32 arg1) {
     SpellDef spell;
 
     func_800FD9D4(&spell, arg1);
@@ -310,7 +311,7 @@ void func_8011A328(Entity_*entity, s32 arg1) {
     func_80118894(entity);
 }
 
-void func_8011A3AC(Entity_*arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
+void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
     SpellDef spell;
 
     *arg3 = D_80097C38[D_8006CBC4];
@@ -328,13 +329,13 @@ void func_8011A3AC(Entity_*arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
     }
 }
 
-void func_8011A4C8(Entity_*entity) {}
+void func_8011A4C8(Entity* entity) {}
 
 // https://decomp.me/scratch/0aMFT 94.19%
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A4D0);
 
 void func_8011A870(void) {
-    Entity_*entity = g_CurrentEntity = &g_EntityArray[UNK_ENTITY_4];
+    Entity* entity = g_CurrentEntity = &g_EntityArray[UNK_ENTITY_4];
     u16 objectId;
     s32 i = 4;
 
@@ -378,8 +379,8 @@ label:
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A9D8);
 
-Entity_*func_8011AAFC(Entity_*self, u32 flags, s32 arg2) {
-    Entity_*entity;
+Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
+    Entity* entity;
     s16 temp = arg2;
 
     entity = GetFreeDraEntity(8, 16);
@@ -426,7 +427,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011AC3C);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
 
-void func_8011B334(Entity_*entity) {
+void func_8011B334(Entity* entity) {
     Equipment equip;
 
     if (PLAYER.step_s != 0x70) {
@@ -462,7 +463,7 @@ void func_8011B334(Entity_*entity) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B480);
 
-void func_8011B530(Entity_*entity) {
+void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
@@ -477,11 +478,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B5A4);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011BBE0);
 
 // same as RIC/func_80162E9C
-bool func_8011BD48(Entity_*entity) {
+bool func_8011BD48(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;
     s16 subId = entity->subId;
-    Entity_*e = &g_EntityArray[i];
+    Entity* e = &g_EntityArray[i];
     for (; i < 0x40; i++, e++) {
         if (objId == (s32)e->objectId && subId == (s32)e->subId &&
             e != entity) {
@@ -498,7 +499,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityPlayerBlinkWhite);
 // blue outline around player when mp refills
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityMpReplenished);
 
-void func_8011E0E4(Entity_*entity) {}
+void func_8011E0E4(Entity* entity) {}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011E0EC);
 
@@ -506,12 +507,12 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011E390);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011E4BC);
 
-void func_8011EDA0(Entity_*entity) {}
+void func_8011EDA0(Entity* entity) {}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011EDA8);
 
 // same as RIC/func_801601DC
-void func_8011F074(Entity_*entity) {
+void func_8011F074(Entity* entity) {
     s16 posX;
     s16 posY;
 
@@ -595,8 +596,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80123788);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801238CC);
 
-void func_80123A60(Entity_*entity) {
-    Entity_*player = &PLAYER;
+void func_80123A60(Entity* entity) {
+    Entity* player = &PLAYER;
 
     if (!(D_80072F2C & 0x01000000)) {
         DestroyEntity(entity);
@@ -632,7 +633,7 @@ void func_80123A60(Entity_*entity) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80123B40);
 
-void func_80123F78(Entity_*entity) {
+void func_80123F78(Entity* entity) {
     if (D_800973FC == 0) {
         D_80097F3F = 0;
         DestroyEntity(entity);
@@ -802,7 +803,7 @@ void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
 // teleport effect like when using library card (ID 0x42)
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityTeleport);
 
-void func_80124A8C(Entity_*entity) {
+void func_80124A8C(Entity* entity) {
 #ifdef PSY_Q_3_5
     if (PLAYER.step != 0 ||
         PLAYER.step_s != 4) { // REAL: Matches with PSY-Q 3.5
@@ -902,7 +903,7 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     return 0;
 }
 
-void EntityHolyWater(Entity_*entity) {
+void EntityHolyWater(Entity* entity) {
     s16 temp3;
     s32 temp;
     s32 temp2;
@@ -991,7 +992,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnCrashCrossParticles);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80126ECC);
 
-void func_801274DC(Entity_*entity) {
+void func_801274DC(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->subId == 0) {
@@ -1036,7 +1037,7 @@ void func_801274DC(Entity_*entity) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012768C);
 
-void func_80127840(Entity_*entity) {
+void func_80127840(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->subId != 0) {
@@ -1085,7 +1086,7 @@ void func_80127840(Entity_*entity) {
 }
 
 // circle expands out of player
-void EntityExpandingCircle(Entity_*entity) {
+void EntityExpandingCircle(Entity* entity) {
     POLY_GT4* poly;
     s32 firstPolygonIndex;
 
@@ -1168,7 +1169,7 @@ void EntityExpandingCircle(Entity_*entity) {
     }
 }
 
-void func_80127CC8(Entity_*entity) {
+void func_80127CC8(Entity* entity) {
     POLY_GT4* poly;
     s32 ret;
 
@@ -1235,7 +1236,8 @@ void func_80127CC8(Entity_*entity) {
 }
 
 void func_80127EAC(s16 arg0) {
-    g_CurrentEntity->ext.generic.unk7C.s = (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
+    g_CurrentEntity->ext.generic.unk7C.s =
+        (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
@@ -1244,7 +1246,8 @@ void func_80127EAC(s16 arg0) {
 
 void func_80127EF0(s16 arg0) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk7C.s = (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
+        g_CurrentEntity->ext.generic.unk7C.s =
+            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
         g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
     }
@@ -1287,10 +1290,10 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySummonSpirit);
 // expanding circle effect when activating stopwatch
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityStopWatchExpandingCircle);
 
-// stopwatch subweapon effect. stops enemies (Dra Entity_ 0x2A)
+// stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityStopWatch);
 
-void func_8012B78C(Entity_*entity) {
+void func_8012B78C(Entity* entity) {
     POLY_GT4* poly;
     s32 ret;
 
@@ -1572,7 +1575,7 @@ extern u16 D_8007412E;
 extern s32 D_800741CC;
 extern s32 D_800741D0;
 
-void func_8013136C(Entity_*entity) {
+void func_8013136C(Entity* entity) {
     if (!(D_80072F2C & 4)) {
         DestroyEntity(entity);
         return;

@@ -40,8 +40,8 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
 
-Entity_*func_8015F8F8(s16 entityIndex, s16 arg1) {
-    Entity_*entity = &g_EntityArray[entityIndex];
+Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
+    Entity* entity = &g_EntityArray[entityIndex];
     s16 var_a0 = entityIndex;
 
     if (entityIndex < arg1) {
@@ -67,7 +67,7 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-void func_8015FAB8(Entity_*entity) {
+void func_8015FAB8(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
 
@@ -96,7 +96,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FDB0);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FEA8);
 
 // same as DRA/func_8011F074
-void func_801601DC(Entity_*entity) {
+void func_801601DC(Entity* entity) {
     s16 posX;
     s16 posY;
 
@@ -147,12 +147,12 @@ void func_801603BC(void) {}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801603C4);
 
-Entity_*func_801606BC(Entity_*srcEntity, u32 arg1, s32 arg2) {
+Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
     /**
      * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
      */
-    Entity_*entity = func_8015F8F8(8, 0x10);
+    Entity* entity = func_8015F8F8(8, 0x10);
 
     if (entity != NULL) {
         func_80156C60(entity);
@@ -176,7 +176,7 @@ Entity_*func_801606BC(Entity_*srcEntity, u32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160788);
 
-void func_80160C38(Entity_*entity) {
+void func_80160C38(Entity* entity) {
     if (PLAYER.step != 23) {
         func_80156C60(entity);
     } else {
@@ -209,7 +209,7 @@ void func_80160C38(Entity_*entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160D2C);
 #else
-void func_80160D2C(Entity_*self) {
+void func_80160D2C(Entity* self) {
     if (PLAYER.step != 26) {
         func_80156C60(self);
         return;
@@ -245,7 +245,7 @@ void func_80160D2C(Entity_*self) {
 }
 #endif
 
-void func_80160E4C(Entity_*self) {
+void func_80160E4C(Entity* self) {
     if (PLAYER.step != 24) {
         func_80156C60(self);
     } else {
@@ -268,7 +268,7 @@ void func_80160E4C(Entity_*self) {
     }
 }
 
-void func_80160F0C(Entity_*self) {
+void func_80160F0C(Entity* self) {
     if (PLAYER.step != 8) {
         func_80156C60(self);
         return;
@@ -298,7 +298,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161EF8);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161FF0);
 
-void func_801623E0(Entity_*entity) {
+void func_801623E0(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
@@ -360,7 +360,7 @@ void func_801623E0(Entity_*entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162604);
 #else
-void func_80162604(Entity_*entity) {
+void func_80162604(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
@@ -450,7 +450,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162C84);
 extern s32 D_80154ED4;
 extern s32 D_80154EF8;
 
-void func_80162C84(Entity_*entity) {
+void func_80162C84(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags =
@@ -477,7 +477,8 @@ void func_80162C84(Entity_*entity) {
         }
 
         entity->posX.val += entity->accelerationX;
-        if (((s16)entity->ext.generic.unk7E.modeU16 == 0) && (entity->posX.i.hi < 256)) {
+        if (((s16)entity->ext.generic.unk7E.modeU16 == 0) &&
+            (entity->posX.i.hi < 256)) {
             g_api.PlaySfx(0x87D);
             entity->ext.generic.unk7E.modeU16++;
         }
@@ -513,11 +514,11 @@ void func_80162C84(Entity_*entity) {
 #endif
 
 // same as DRA/func_8011BD48
-bool func_80162E9C(Entity_*entity) {
+bool func_80162E9C(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;
     s16 subId = entity->subId;
-    Entity_*e = &g_EntityArray[i];
+    Entity* e = &g_EntityArray[i];
     for (; i < 0x40; i++, e++) {
         if (objId == (s32)e->objectId && subId == (s32)e->subId &&
             e != entity) {
@@ -530,7 +531,7 @@ bool func_80162E9C(Entity_*entity) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162EF8);
 
-void func_801641A0(Entity_*entity) {
+void func_801641A0(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
@@ -726,7 +727,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166060);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166784);
 
-void func_8016779C(Entity_*entity) {
+void func_8016779C(Entity* entity) {
     if (D_80072F66 == 0) {
         func_80156C60(entity);
         return;
@@ -767,10 +768,10 @@ void func_8016779C(Entity_*entity) {
  * TODO: !FAKE
  * Needs to be refactored
  */
-void func_80167964(Entity_*entity) {
+void func_80167964(Entity* entity) {
     /**
      * 0x5E was originally 0xBC in mips2c output
-     * suggesting the size of the Entity_ struct
+     * suggesting the size of the Entity struct
      */
     if (D_80072F66 != 0) {
         if (entity->step == 0) {
@@ -836,7 +837,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169470);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169704);
 
-void func_80169C10(Entity_*entity) {
+void func_80169C10(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
     s32 PosX = 8;
@@ -878,14 +879,15 @@ void func_80169C10(Entity_*entity) {
     }
 }
 
-void func_80169D74(Entity_*entity) {
+void func_80169D74(Entity* entity) {
     Multi temp;
     s16* ptr;
 
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->ext.generic.unk84.unk = entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk =
+            entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
         entity->animSet = -0x7FEF;
         entity->animCurFrame = D_80155E68[entity->subId];
         entity->unk5A = 0x66;
@@ -919,7 +921,8 @@ void func_80169D74(Entity_*entity) {
     ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
     entity->posX.i.hi = ptr[0] - g_Camera.posX.i.hi;
     entity->posY.i.hi = ptr[1] - g_Camera.posY.i.hi;
-    entity->ext.generic.unk80.modeS16.unk0 = (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
+    entity->ext.generic.unk80.modeS16.unk0 =
+        (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169F04);
@@ -931,7 +934,8 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016A974);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    g_CurrentEntity->ext.generic.unk7C.s = (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
+    g_CurrentEntity->ext.generic.unk7C.s =
+        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
@@ -940,7 +944,8 @@ void func_8016B8E8(s32 arg0) {
 
 void func_8016B92C(s16 arg0) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk7C.s = (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
+        g_CurrentEntity->ext.generic.unk7C.s =
+            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
         g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
     }
@@ -974,7 +979,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016C734);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016CC74);
 
-void func_8016D328(Entity_*entity) {
+void func_8016D328(Entity* entity) {
     s16 firstPolygonIndex;
     s32 acceleration;
 
@@ -984,9 +989,12 @@ void func_8016D328(Entity_*entity) {
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
-            entity->posX.val = entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-            entity->posY.val = entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
-            entity->facing = entity->ext.generic.unk8C.entityPtr->ext.generic.unk8C.modeU16.unk0;
+            entity->posX.val =
+                entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
+            entity->posY.val =
+                entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
+            entity->facing = entity->ext.generic.unk8C.entityPtr->ext.generic
+                                 .unk8C.modeU16.unk0;
             entity->ext.generic.unkB0 = 0x18;
             func_8015FAB8(entity);
             entity->unk5A = 0x79;
@@ -1021,7 +1029,7 @@ void func_8016D328(Entity_*entity) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016D4D8);
 
-void func_8016D920(Entity_*entity) {
+void func_8016D920(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000;

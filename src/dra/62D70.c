@@ -183,7 +183,7 @@ void func_80105408(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105428);
 
-void DestroyEntity(Entity_*entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -193,13 +193,13 @@ void DestroyEntity(Entity_*entity) {
     }
 
     ptr = (u32*)entity;
-    length = sizeof(Entity_) / sizeof(u32);
+    length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = NULL;
 }
 
 void func_801065F4(s16 startIndex) {
-    Entity_*pItem;
+    Entity* pItem;
 
     for (pItem = &g_EntityArray[startIndex];
          pItem < &g_EntityArray[TOTAL_ENTITY_COUNT]; pItem++)
@@ -216,7 +216,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
     DR_MODE* drawMode;
     s32 polyCount;
     s32* order;
-    Entity_*entity;
+    Entity* entity;
     TILE* tile;
     u32 orderIdx;
     u16 x;
@@ -742,20 +742,20 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 }
 
 void func_8010E0A8(void) {
-    Entity_*entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
     entity->ext.generic.unk7E.modeU8.unk0 = 0;
 }
 
 void func_8010E0B8(void) {
-    Entity_*entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
     entity->ext.generic.unk7C.U8.unk1 = 0;
     entity->ext.generic.unk7C.U8.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
-    Entity_*entity;
+    Entity* entity;
 
     if (arg0 == 1) {
         entity = func_8011AAFC(g_EntityArray, 0x47002C, 0);
@@ -845,7 +845,7 @@ s32 func_8010E27C(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010E334);
 
 /*
- * Updates the Entity_ acceleration in the X Axis
+ * Updates the Entity acceleration in the X Axis
  */
 void AccelerateX(s32 accelerationX) {
     if (g_CurrentEntity->facing == 1) {
@@ -1042,7 +1042,7 @@ void func_8010EA54(s32 arg0) {
 #endif
 
 s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity_*entity = &g_EntityArray[0x20];
+    Entity* entity = &g_EntityArray[0x20];
     s32 i;
     s32 var_a2;
     s32 ret;

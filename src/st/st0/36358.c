@@ -7,7 +7,7 @@ u16 D_80181D74[];
 
 // if self->subId & 0x8000 then the item will not disappear
 // self->ext.generic.unk80.modeS8.unk0: frames left before the prize disappear
-void EntityPrizeDrop(Entity_*self) {
+void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 firstPrimIndex;
@@ -93,7 +93,8 @@ void EntityPrizeDrop(Entity_*self) {
 
     case 3:
         func_801B5F4C(itemId);
-        if (!(self->subId & 0x8000) && --self->ext.generic.unk80.modeS8.unk0 == 0) {
+        if (!(self->subId & 0x8000) &&
+            --self->ext.generic.unk80.modeS8.unk0 == 0) {
             self->ext.generic.unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
             self->step++;
         }
@@ -211,7 +212,7 @@ void EntityPrizeDrop(Entity_*self) {
 }
 // #endif
 
-void EntityExplosion(Entity_*entity) {
+void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
         u32 zPriority;
 
@@ -241,7 +242,7 @@ void EntityExplosion(Entity_*entity) {
     }
 }
 
-void func_801B6C5C(Entity_*entity) {
+void func_801B6C5C(Entity* entity) {
     if (entity->step != 0) {
         if (entity->posY.i.hi >= 0xF1) {
             DestroyEntity(entity);
@@ -254,8 +255,10 @@ void func_801B6C5C(Entity_*entity) {
 
     InitializeEntity(D_80180574);
     entity->animCurFrame = entity->ext.generic.unk7C.U8.unk0;
-    entity->accelerationX = D_80181E3C[entity->ext.generic.unk80.modeS8.unk0 * 2];
-    entity->accelerationY = D_80181E3E[entity->ext.generic.unk80.modeS8.unk0 * 2];
+    entity->accelerationX =
+        D_80181E3C[entity->ext.generic.unk80.modeS8.unk0 * 2];
+    entity->accelerationY =
+        D_80181E3E[entity->ext.generic.unk80.modeS8.unk0 * 2];
 
     if (entity->subId != 0) {
         entity->zPriority -= 1;
@@ -288,14 +291,15 @@ u8 func_801B7B0C(s16* arg0, u8 facing) {
     return ret;
 }
 
-void func_801B7BFC(Entity_*entity) {
+void func_801B7BFC(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_801805A4);
-        entity->ext.generic.unk8C.modeU16.unk0 = entity->ext.generic.unk80.entityPtr->objectId;
+        entity->ext.generic.unk8C.modeU16.unk0 =
+            entity->ext.generic.unk80.entityPtr->objectId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity_*newEntity =
+            Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
@@ -307,7 +311,8 @@ void func_801B7BFC(Entity_*entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId != entity->ext.generic.unk8C.modeU16.unk0) {
+        if (entity->ext.generic.unk80.entityPtr->objectId !=
+            entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
         break;
@@ -318,7 +323,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7D0C);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7E3C);
 
-void func_801B7F24(Entity_*entity) {
+void func_801B7F24(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181ED8[entity->ext.generic.unk94];
         entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
@@ -341,7 +346,7 @@ void func_801B7F24(Entity_*entity) {
     }
 }
 
-void func_801B8014(Entity_*entity) {
+void func_801B8014(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 
@@ -403,7 +408,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B8434);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityIntenseExplosion);
 
-void func_801B8AB4(Entity_*entity) {
+void func_801B8AB4(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_8018058C);
         entity->unk6C = 0xF0;
@@ -427,7 +432,7 @@ void func_801B8AB4(Entity_*entity) {
     }
 }
 
-void func_801B8B80(u16 objectId, Entity_*source, Entity_*entity) {
+void func_801B8B80(u16 objectId, Entity* source, Entity* entity) {
     u16 palette;
 
     DestroyEntity(entity);
@@ -449,7 +454,7 @@ void func_801B8B80(u16 objectId, Entity_*source, Entity_*entity) {
 void func_801B8C48(void) {
     s32 temp_s3;
     s8 temp_s4;
-    Entity_*entity;
+    Entity* entity;
     s32 i;
 
     temp_s4 = Random() & 3;
@@ -466,7 +471,7 @@ void func_801B8C48(void) {
     }
 }
 
-void func_801B8D00(Entity_*self) {
+void func_801B8D00(Entity* self) {
     s32 accelerationX;
     s32 accelerationY;
     s32 temp;
@@ -489,14 +494,16 @@ void func_801B8D00(Entity_*self) {
             break;
 
         case 2:
-            self->ext.generic.unk80.modeS16.unk0 += self->ext.generic.unk84.U8.unk1 * 192;
+            self->ext.generic.unk80.modeS16.unk0 +=
+                self->ext.generic.unk84.U8.unk1 * 192;
             break;
         }
 
         self->unk1E = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
         temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
         self->accelerationX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
-        self->accelerationY = -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
+        self->accelerationY =
+            -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
     }
 
     if (self->animFrameIdx >= 13) {
@@ -530,7 +537,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B9DB0);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityAbsorbOrb);
 
-void EntityEnemyBlood(Entity_*self) {
+void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
     Primitive* prim;
     s32 var_a0_2;
@@ -629,7 +636,8 @@ void EntityEnemyBlood(Entity_*self) {
                 if (self->ext.generic.unk7C.u > 16) {
                     self->ext.generic.unk7E.modeU16 += posX;
                     self->hitboxWidth = self->ext.generic.unk7E.modeU16 / 2;
-                    self->hitboxHeight = (self->ext.generic.unk7E.modeU16 / 4) + 8;
+                    self->hitboxHeight =
+                        (self->ext.generic.unk7E.modeU16 / 4) + 8;
                 } else {
                     self->unk3C = 0;
                 }
@@ -676,7 +684,7 @@ void EntityEnemyBlood(Entity_*self) {
 }
 
 extern ObjInit2 D_80181FE8[];
-void EntityRoomForeground(Entity_*entity) {
+void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181FE8[entity->subId];
 
     if (entity->step == 0) {
@@ -706,7 +714,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityClockTower3D);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityCutscenePhotograph);
 
-void EntityCutscenePhotographFire(Entity_*entity) {
+void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_801805D4);

@@ -6,7 +6,7 @@
 
 #include "np3.h"
 
-void func_801B246C(Entity_*self) {
+void func_801B246C(Entity* self) {
     ObjInit2* temp_s0 = &D_80180C10[self->subId];
 
     if (self->step == 0) {
@@ -34,12 +34,12 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
-void EntityBreakable(Entity_*entity) {
+void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity_*entityDropItem;
+            Entity* entityDropItem;
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
@@ -59,7 +59,7 @@ void EntityBreakable(Entity_*entity) {
     }
 }
 
-void func_801B2830(Entity_*self) {
+void func_801B2830(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180A60);
@@ -92,7 +92,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B39CC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B3D24);
 
-void EntityCavernDoorLever(Entity_*entity) {
+void EntityCavernDoorLever(Entity* entity) {
     s32 posX;
     s32 posY;
 
@@ -132,8 +132,8 @@ void EntityCavernDoorLever(Entity_*entity) {
 }
 
 // platform attached to lever at cavern door
-void EntityCavernDoorPlatform(Entity_*self) {
-    Entity_*player;
+void EntityCavernDoorPlatform(Entity* self) {
+    Entity* player;
     s32 temp;
     s32 temp2;
 
@@ -161,10 +161,10 @@ void EntityCavernDoorPlatform(Entity_*self) {
     }
 }
 
-void func_801B40F8(Entity_*self) {
+void func_801B40F8(Entity* self) {
     s16 firstPolygonIndex;
     u16* tileLayoutPtr;
-    Entity_*entity;
+    Entity* entity;
     POLY_GT4* poly;
     s32 tilePos;
     s32 i;
@@ -284,9 +284,9 @@ void func_801B40F8(Entity_*self) {
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B44B4);
 
 // switch that clicks when you step on it
-void EntityClickSwitch(Entity_*entity) {
+void EntityClickSwitch(Entity* entity) {
     s32 temp_a0 = func_801BD588(entity, 8, 4, 4);
-    Entity_*player = &PLAYER;
+    Entity* player = &PLAYER;
 
     switch (entity->step) {
     case 0:
@@ -315,7 +315,7 @@ void EntityClickSwitch(Entity_*entity) {
 }
 
 // smaller weight blocking path near cube of zoe
-void EntityPathBlockSmallWeight(Entity_*self) {
+void EntityPathBlockSmallWeight(Entity* self) {
     s16 firstPolygonIndex;
     POLY_GT4* poly;
     s32 var_a1;
@@ -383,7 +383,7 @@ void EntityPathBlockSmallWeight(Entity_*self) {
     }
 
     if ((self->step < 3) && (func_801BD588(self, 16, 16, 5) & 4)) {
-        Entity_*player = &PLAYER;
+        Entity* player = &PLAYER;
 
         player->posY.i.hi++;
     }
@@ -391,7 +391,7 @@ void EntityPathBlockSmallWeight(Entity_*self) {
 }
 
 // taller weight blocking path near cube of zoe
-void EntityPathBlockTallWeight(Entity_*self) {
+void EntityPathBlockTallWeight(Entity* self) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
     s32 temp_a2;
@@ -473,7 +473,7 @@ void EntityPathBlockTallWeight(Entity_*self) {
     }
 }
 
-void EntityTrapDoor(Entity_*entity) {
+void EntityTrapDoor(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180AA8);
@@ -513,9 +513,9 @@ void EntityTrapDoor(Entity_*entity) {
 }
 
 // left side of the breakable rock, drops pot roast
-void EntityMermanRockLeftSide(Entity_*self) {
+void EntityMermanRockLeftSide(Entity* self) {
     u16* tileLayoutPtr;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 tilePos;
     u8* subId;
     s32 i;
@@ -608,9 +608,9 @@ void EntityMermanRockLeftSide(Entity_*self) {
 }
 
 // right side of the merman room rock, breaks when hit
-void EntityMermanRockRightSide(Entity_*self) {
+void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 tilePos;
     u8* subId;
     s32 i;
@@ -698,7 +698,7 @@ void EntityMermanRockRightSide(Entity_*self) {
     }
 }
 
-void func_801B5488(Entity_*self) {
+void func_801B5488(Entity* self) {
     u16* tileLayoutPtr;
     s32 tileLayoutPos;
     s32 i;
@@ -742,10 +742,10 @@ void func_801B5488(Entity_*self) {
     }
 }
 
-void EntityFallingRock2(Entity_*self) {
+void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;
     Collider collider;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 temp_a0;
     s32 var_a1;
     s32 new_var2;
@@ -796,10 +796,10 @@ void EntityFallingRock2(Entity_*self) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5790);
 
-void EntityFallingRock(Entity_*self) {
+void EntityFallingRock(Entity* self) {
     s32 animFrame = self->subId & 0xF;
     Collider collider;
-    Entity_*newEntity;
+    Entity* newEntity;
     s16 rndAngle;
     s32 rnd;
 
@@ -841,7 +841,7 @@ void EntityFallingRock(Entity_*self) {
     }
 }
 
-void func_801B5DE8(Entity_*self) {
+void func_801B5DE8(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x2A;
@@ -854,7 +854,7 @@ void func_801B5DE8(Entity_*self) {
     }
 }
 
-void func_801B5E98(Entity_*self) {
+void func_801B5E98(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x29;
@@ -874,7 +874,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntitySwitch);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6084);
 
-void EntityUnkId49(Entity_*self) {
+void EntityUnkId49(Entity* self) {
     u16 temp;
 
     switch (self->step) {
@@ -900,7 +900,7 @@ void EntityUnkId49(Entity_*self) {
 }
 
 void func_801B653C(void) {
-    Entity_*entity;
+    Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
@@ -921,7 +921,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B65FC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6990);
 
-void func_801B75EC(Entity_*self) {
+void func_801B75EC(Entity* self) {
     s8* hitbox;
 
     switch (self->step) {
@@ -970,8 +970,8 @@ void func_801B75EC(Entity_*self) {
 }
 
 // projectile fired from slogra's spear
-void EntitySlograSpearProjectile(Entity_*self) {
-    Entity_*entity;
+void EntitySlograSpearProjectile(Entity* self) {
+    Entity* entity;
 
     if (self->flags & 0x100) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -1007,8 +1007,8 @@ void EntitySlograSpearProjectile(Entity_*self) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B78BC);
 
-void func_801B8CC0(Entity_*self) {
-    Entity_*prevEntity;
+void func_801B8CC0(Entity* self) {
+    Entity* prevEntity;
     s16 animCurFrame;
 
     if (self->step == 0) {
@@ -1037,7 +1037,7 @@ void func_801B8CC0(Entity_*self) {
 }
 
 // small red projectile from gaibon
-void EntitySmallGaibonProjectile(Entity_*self) {
+void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->unk19 = 0;
@@ -1066,8 +1066,8 @@ void EntitySmallGaibonProjectile(Entity_*self) {
     }
 }
 
-void EntityLargeGaibonProjectile(Entity_*self) {
-    Entity_*newEntity;
+void EntityLargeGaibonProjectile(Entity* self) {
+    Entity* newEntity;
 
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
@@ -1133,7 +1133,7 @@ s32 Random(void) {
 
 void Update(void) {
     s16 i;
-    Entity_*entity;
+    Entity* entity;
     s32* unk;
 
     for (i = 0; i < 0x20; i++) {
@@ -1218,7 +1218,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B94F0);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityNumericDamage);
 
-void CreateEntityFromLayout(Entity_*entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
@@ -1233,7 +1233,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
-    Entity_*entity;
+    Entity* entity;
 
     posY = g_Camera.posY.i.hi;
     yClose = posY - 0x40;
@@ -1271,7 +1271,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
-    Entity_*entity;
+    Entity* entity;
 
     posX = g_Camera.posX.i.hi;
     xClose = posX - 0x40;
@@ -1350,7 +1350,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", InitRoomEntities);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB680);
 
-void CreateEntityFromCurrentEntity(u16 objectId, Entity_*entity) {
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -1358,7 +1358,7 @@ void CreateEntityFromCurrentEntity(u16 objectId, Entity_*entity) {
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 objectId, Entity_*source, Entity_*entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = PfnEntityUpdates[objectId];
@@ -1366,7 +1366,7 @@ void CreateEntityFromEntity(u16 objectId, Entity_*source, Entity_*entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-s32 func_801BB824(Entity_*e) {
+s32 func_801BB824(Entity* e) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - e->posX.i.hi;
@@ -1385,7 +1385,7 @@ s32 func_801BB824(Entity_*e) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityRedDoor);
 
-void DestroyEntity(Entity_*item) {
+void DestroyEntity(Entity* item) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -1395,13 +1395,13 @@ void DestroyEntity(Entity_*item) {
     }
 
     ptr = (u32*)item;
-    length = sizeof(Entity_) / sizeof(s32);
+    length = sizeof(Entity) / sizeof(s32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity_*entity = &g_EntityArray[index];
+    Entity* entity = &g_EntityArray[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -1409,7 +1409,7 @@ void DestroyEntityFromIndex(s16 index) {
     }
 }
 
-void PreventEntityFromRespawning(Entity_*entity) {
+void PreventEntityFromRespawning(Entity* entity) {
     if (entity->objectRoomIndex) {
         u32 value = (entity->objectRoomIndex - 1);
         u16 index = value / 32;
@@ -1476,8 +1476,8 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BC8E4);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BCB5C);
 
-Entity_*AllocEntity(Entity_*start, Entity_*end) {
-    Entity_*current = start;
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
 
     while (current < end) {
         if (current->objectId == 0) {
@@ -1500,7 +1500,7 @@ void func_801BCDEC(s32 arg0, s16 arg1) {
 
 u8 func_801BCE58(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
 
-u8 func_801BCE90(Entity_*a, Entity_*b) {
+u8 func_801BCE90(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
     s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
     return func_801BCE58(diffX, diffY);
@@ -1515,7 +1515,7 @@ u8 func_801BCED8(s32 x, s32 y) {
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BCF20);
 
 void func_801BCF78(u16 slope, s16 speed) {
-    Entity_*entity;
+    Entity* entity;
     s32 moveX;
     s32 moveY;
 
@@ -1536,7 +1536,7 @@ void func_801BCF78(u16 slope, s16 speed) {
 
 u16 func_801BD004(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 func_801BD034(Entity_*a, Entity_*b) {
+u16 func_801BD034(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
@@ -1593,7 +1593,7 @@ void InitializeEntity(u16 arg0[]) {
     }
 }
 
-void EntityDummy(Entity_*arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->step++;
     }
@@ -1664,7 +1664,7 @@ void func_801BD430(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BD588);
 
-void ReplaceBreakableWithItemDrop(Entity_*self) {
+void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 subId;
 
     PreventEntityFromRespawning(self);
@@ -1696,15 +1696,17 @@ void ReplaceBreakableWithItemDrop(Entity_*self) {
 
 void func_801BD984(void) {
     s32 temp_v1;
-    Entity_*entity;
+    Entity* entity;
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
         entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 = -entity->ext.generic.unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

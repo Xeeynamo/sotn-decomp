@@ -2,8 +2,6 @@
  * These are to be merged later on
  */
 
-
-
 typedef struct {
     /* 0x0 */ char pad0[0xA];
     /* 0xA */ s16 unkA;

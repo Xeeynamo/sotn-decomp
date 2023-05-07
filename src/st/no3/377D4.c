@@ -7,7 +7,7 @@
 #include "no3.h"
 
 // vase in the room with the door to the caverns
-void EntityCavernDoorVase(Entity_*arg0) {
+void EntityCavernDoorVase(Entity* arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
 
@@ -37,12 +37,12 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
-void EntityBreakable(Entity_*entity) {
+void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity_*entityDropItem;
+            Entity* entityDropItem;
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
@@ -62,7 +62,7 @@ void EntityBreakable(Entity_*entity) {
     }
 }
 
-void EntityUnkId16(Entity_*self) {
+void EntityUnkId16(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180AD0);
@@ -101,7 +101,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityTransparentWater);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B94F0);
 
 // lever and platform to open caverns door
-void EntityCavernDoorLever(Entity_*entity) {
+void EntityCavernDoorLever(Entity* entity) {
     s32 posX;
     s32 posY;
 
@@ -141,8 +141,8 @@ void EntityCavernDoorLever(Entity_*entity) {
 }
 
 // platform attached to lever at cavern door
-void EntityCavernDoorPlatform(Entity_*self) {
-    Entity_*player;
+void EntityCavernDoorPlatform(Entity* self) {
+    Entity* player;
     s32 temp;
     s32 temp2;
 
@@ -169,10 +169,10 @@ void EntityCavernDoorPlatform(Entity_*self) {
 }
 
 // door blocking way to the Underground Caverns
-void EntityCavernDoor(Entity_*self) {
+void EntityCavernDoor(Entity* self) {
     s16 firstPolygonIndex;
     u16* tileLayoutPtr;
-    Entity_*entity;
+    Entity* entity;
     POLY_GT4* poly;
     s32 tilePos;
     s32 i;
@@ -288,9 +288,9 @@ void EntityCavernDoor(Entity_*self) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B9C44);
 
 // switch that clicks when you step on it
-void EntityClickSwitch(Entity_*entity) {
+void EntityClickSwitch(Entity* entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
-    Entity_*player = &PLAYER;
+    Entity* player = &PLAYER;
 
     switch (entity->step) {
     case 0:
@@ -319,7 +319,7 @@ void EntityClickSwitch(Entity_*entity) {
 }
 
 // smaller weight blocking path near cube of zoe
-void EntityPathBlockSmallWeight(Entity_*self) {
+void EntityPathBlockSmallWeight(Entity* self) {
     s16 firstPolygonIndex;
     POLY_GT4* poly;
     s32 var_a1;
@@ -384,7 +384,7 @@ void EntityPathBlockSmallWeight(Entity_*self) {
     }
 
     if ((self->step < 3) && (func_801C5D18(self, 16, 16, 5) & 4)) {
-        Entity_*player = &PLAYER;
+        Entity* player = &PLAYER;
 
         player->posY.i.hi++;
     }
@@ -392,7 +392,7 @@ void EntityPathBlockSmallWeight(Entity_*self) {
 }
 
 // taller weight blocking path near cube of zoe
-void EntityPathBlockTallWeight(Entity_*self) {
+void EntityPathBlockTallWeight(Entity* self) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
     s32 temp_a2;
@@ -475,7 +475,7 @@ void EntityPathBlockTallWeight(Entity_*self) {
 
 // trap door that leads to underground garden in saturn version.
 // also opens the one leading to the save room
-void EntityTrapDoor(Entity_*entity) {
+void EntityTrapDoor(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B18);
@@ -514,9 +514,9 @@ void EntityTrapDoor(Entity_*entity) {
 }
 
 // left side of the breakable rock, drops pot roast
-void EntityMermanRockLeftSide(Entity_*self) {
+void EntityMermanRockLeftSide(Entity* self) {
     u16* tileLayoutPtr;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 tilePos;
     u8* subId;
     s32 i;
@@ -609,9 +609,9 @@ void EntityMermanRockLeftSide(Entity_*self) {
 }
 
 // right side of the merman room rock, breaks when hit
-void EntityMermanRockRightSide(Entity_*self) {
+void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 tilePos;
     u8* subId;
     s32 i;
@@ -699,7 +699,7 @@ void EntityMermanRockRightSide(Entity_*self) {
     }
 }
 
-void EntityUnkId26(Entity_*self) {
+void EntityUnkId26(Entity* self) {
     u16* tileLayoutPtr;
     s32 tileLayoutPos;
     s32 i;
@@ -744,10 +744,10 @@ void EntityUnkId26(Entity_*self) {
 }
 
 // falling rock that breaks into dust
-void EntityFallingRock2(Entity_*self) {
+void EntityFallingRock2(Entity* self) {
     s32 animFrame = self->subId & 0xF;
     Collider collider;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 temp_a0;
     s32 var_a1;
     s32 new_var2;
@@ -800,10 +800,10 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
-void EntityFallingRock(Entity_*self) {
+void EntityFallingRock(Entity* self) {
     s32 animFrame = self->subId & 0xF;
     Collider collider;
-    Entity_*newEntity;
+    Entity* newEntity;
     s16 rndAngle;
     s32 rnd;
 
@@ -850,7 +850,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 // sky animation during death cutscene
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
 
-void EntityUnkId29(Entity_*self) {
+void EntityUnkId29(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B18);
         self->zPriority = 0x2A;
@@ -863,7 +863,7 @@ void EntityUnkId29(Entity_*self) {
     }
 }
 
-void EntityUnkId2A(Entity_*entity) {
+void EntityUnkId2A(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
@@ -880,9 +880,9 @@ void EntityUnkId2A(Entity_*entity) {
 }
 
 // switch that goes downwards when you stand on it
-void EntitySwitch(Entity_*entity) {
+void EntitySwitch(Entity* entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
-    Entity_*player = &PLAYER;
+    Entity* player = &PLAYER;
 
     switch (entity->step) {
     case 0:
@@ -911,9 +911,9 @@ void EntitySwitch(Entity_*entity) {
 }
 
 // door preventing access to warp room / heart
-void EntityHeartRoomGoldDoor(Entity_*self) {
+void EntityHeartRoomGoldDoor(Entity* self) {
     s16 firstPolygonIndex;
-    Entity_*newEntity;
+    Entity* newEntity;
     POLY_GT4* poly;
     s32 tilePos;
     s32 temp;
@@ -1024,7 +1024,7 @@ void EntityHeartRoomGoldDoor(Entity_*self) {
     }
 }
 
-void EntityUnkId49(Entity_*entity) {
+void EntityUnkId49(Entity* entity) {
     u16 temp;
 
     switch (entity->step) {

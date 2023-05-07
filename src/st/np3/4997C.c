@@ -1,7 +1,7 @@
 #include "np3.h"
 
-void EntityBat(Entity_*entity) {
-    Entity_*newEntity;
+void EntityBat(Entity* entity) {
+    Entity* newEntity;
     s16 xDistance;
     s16 yDistance;
 
@@ -64,7 +64,8 @@ void EntityBat(Entity_*entity) {
         AnimateEntity(&D_80182554, entity);
         MoveEntity();
         if ((u32)(entity->accelerationY + 0x10000) > 0x20000U) {
-            *(s32*)&entity->ext.generic.unk7C.s = (s32) - *(s32*)&entity->ext.generic.unk7C.s;
+            *(s32*)&entity->ext.generic.unk7C.s =
+                (s32) - *(s32*)&entity->ext.generic.unk7C.s;
         }
         entity->accelerationY += *(s32*)&entity->ext.generic.unk7C.u;
         break;

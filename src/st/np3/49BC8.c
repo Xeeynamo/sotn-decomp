@@ -1,7 +1,7 @@
 #include "np3.h"
 
-void EntityZombie(Entity_*self) {
-    Entity_*newEntity;
+void EntityZombie(Entity* self) {
+    Entity* newEntity;
     s32 temp_a0;
 
     if ((self->flags & 0x100) && (self->step < 4)) {
@@ -75,9 +75,9 @@ void EntityZombie(Entity_*self) {
     }
 }
 
-void EntityUnkId4D(Entity_*self) {
+void EntityUnkId4D(Entity* self) {
     s32 distCameraEntity;
-    Entity_*newEntity;
+    Entity* newEntity;
     s32 rnd;
 
     if (self->step == 0) {
@@ -113,7 +113,7 @@ void EntityUnkId4D(Entity_*self) {
     }
 }
 
-void EntityBloodSplatter(Entity_*self) {
+void EntityBloodSplatter(Entity* self) {
     Primitive *prim, *prim2, *prim3;
     s16 firstPrimIndex;
 

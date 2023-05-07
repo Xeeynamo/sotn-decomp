@@ -13,7 +13,7 @@ typedef enum {
     BLOOD_SKELETON_REASSEMBLE,
 } BLOOD_SKELETON_STEPS;
 
-void EntityBloodSkeleton(Entity_*self) {
+void EntityBloodSkeleton(Entity* self) {
     u8* animation;
 
     if ((self->flags & 0x100) && (self->step < 3)) {

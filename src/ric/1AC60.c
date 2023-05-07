@@ -6,7 +6,7 @@
 
 #include "ric.h"
 
-void func_80156C60(Entity_*entity) {
+void func_80156C60(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -16,7 +16,7 @@ void func_80156C60(Entity_*entity) {
     }
 
     ptr = (u32*)entity;
-    length = sizeof(Entity_) / sizeof(u32);
+    length = sizeof(Entity) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
@@ -243,7 +243,7 @@ void func_80159BC8(void) {
 }
 
 void func_80159C04(void) {
-    Entity_*entity = PLAYER.ext.generic.unkB8.entityPtr;
+    Entity* entity = PLAYER.ext.generic.unkB8.entityPtr;
     s16 temp_v0;
     s32 var_a0;
     s32 var_a2;

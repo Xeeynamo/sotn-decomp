@@ -1,9 +1,9 @@
 #include "np3.h"
 
-void EntityBloodyZombie(Entity_*self) {
+void EntityBloodyZombie(Entity* self) {
     Primitive** primPtrPtr;
     Primitive* prim;
-    Entity_*newEntity;
+    Entity* newEntity;
     s16 firstPrimIndex;
     s32 animStatus;
     s32 facing;

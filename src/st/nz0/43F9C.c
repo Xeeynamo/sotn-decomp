@@ -13,7 +13,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43F9C", func_801C3F9C);
 #else
 void func_801C3F9C(Unkstruct_801C3F9C** self) {
     Collider collider;
-    Entity_*newEntity;
+    Entity* newEntity;
     s16 temp;
 
     func_801C9930();
@@ -79,8 +79,8 @@ typedef enum {
 } EntityAxeKnightSteps;
 
 // green knight that throws axes
-void EntityAxeKnight(Entity_*self) {
-    Entity_*newEntity;
+void EntityAxeKnight(Entity* self) {
+    Entity* newEntity;
     u8 animStatus;
     s8* hitbox;
     s16 temp;
@@ -328,7 +328,7 @@ void EntityAxeKnightRotateAxe(void) {
     g_CurrentEntity->unk1E &= 0xFFF;
 }
 
-void EntityAxeKnightThrowingAxe(Entity_*entity) {
+void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 accelerationX;
 
     if (entity->flags & 0x100) {

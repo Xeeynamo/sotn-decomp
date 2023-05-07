@@ -1,14 +1,14 @@
 /*
  * Overlay: NZ0
- * Entity_: SubWeapon container
+ * Entity: SubWeapon container
  */
 
 #include "nz0.h"
 
 // SubWeapons floating in the breakable container
-void EntitySubWeaponContainer(Entity_*self) {
+void EntitySubWeaponContainer(Entity* self) {
     SubWpnContDebris* glassPieceTBL;
-    Entity_*newEntity;
+    Entity* newEntity;
     Primitive* prim;
     s16 firstPrimIndex;
     s32 rnd;
@@ -146,7 +146,7 @@ void EntitySubWeaponContainer(Entity_*self) {
 }
 
 // Subweapon container falling glass pieces
-void func_801C7538(Entity_*entity) {
+void func_801C7538(Entity* entity) {
     s32 new_var;
     s16 var_v0;
 
@@ -184,7 +184,7 @@ void func_801C7538(Entity_*entity) {
 }
 
 // falling liquid from subweapons container
-void func_801C7654(Entity_*entity) {
+void func_801C7654(Entity* entity) {
     Collider res;
 
     switch (entity->step) {
@@ -225,7 +225,7 @@ void func_801C7654(Entity_*entity) {
 }
 
 // Liquid bubbles from the Subweapon container
-void func_801C77B8(Entity_*entity) {
+void func_801C77B8(Entity* entity) {
     s16 temp_v1_2;
 
     switch (entity->step) {
@@ -253,7 +253,7 @@ void func_801C77B8(Entity_*entity) {
     }
 }
 
-void func_801C7884(Entity_*entity) {
+void func_801C7884(Entity* entity) {
     u16 subId = entity->subId;
 
     switch (entity->step) {

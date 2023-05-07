@@ -143,7 +143,7 @@ void func_80113EE0(void) {
 }
 
 void func_80113F7C(void) {
-    Entity_*entity = PLAYER.ext.generic.unkB8.entityPtr;
+    Entity* entity = PLAYER.ext.generic.unkB8.entityPtr;
     s16 posX;
     s32 var_a0;
     s32 var_a2;

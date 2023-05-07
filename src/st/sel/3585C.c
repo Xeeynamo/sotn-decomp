@@ -1,6 +1,6 @@
 #include "sel.h"
 
-void func_801B4B9C(Entity_*entity, s16 step);
+void func_801B4B9C(Entity* entity, s16 step);
 extern u16 D_800737B0;  // g_EntityArray[5].step
 extern u16 D_800737D4;  // g_EntityArray[5].animFrameIdx
 extern u8 D_80180538[]; // animation frames
@@ -8,7 +8,7 @@ extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
 
 void func_801B585C(u16 arg0) {
-    Entity_*e = &g_EntityArray[UNK_ENTITY_5];
+    Entity* e = &g_EntityArray[UNK_ENTITY_5];
 
     switch (e->step) {
     case 0:
@@ -78,7 +78,7 @@ extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
 
 void func_801B5A7C(void) {
-    Entity_*e = &g_EntityArray[8];
+    Entity* e = &g_EntityArray[8];
 
     switch (e->subId) {
     case 0:
@@ -334,8 +334,8 @@ void func_801B5A7C(void) {
 }
 
 void func_801B60D4(void) {
-    Entity_*ent;
-    Entity_*ent4;
+    Entity* ent;
+    Entity* ent4;
     s32 i;
     s32 var_v1;
 
@@ -397,7 +397,8 @@ void func_801B60D4(void) {
             if (var_v1 < 0) {
                 var_v1 += 0xFFFF;
             }
-            ent->posX.i.hi = (s16)(var_v1 >> 0x10) + ent->ext.generic.unk80.modeS16.unk2;
+            ent->posX.i.hi =
+                (s16)(var_v1 >> 0x10) + ent->ext.generic.unk80.modeS16.unk2;
             ent++;
         }
 

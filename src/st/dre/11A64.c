@@ -7,7 +7,7 @@
 #include "dre.h"
 
 // puts garbled hp max up text on screen
-void EntityUnkId11(Entity_*entity) {
+void EntityUnkId11(Entity* entity) {
     ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
 
     if (entity->step == 0) {
@@ -32,7 +32,7 @@ void EntityUnkId11(Entity_*entity) {
     AnimateEntity(obj->unk10, entity);
 }
 
-void func_80191B44(Entity_*entity) {
+void func_80191B44(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
     u16 temp_s1 = entity->subId;
@@ -94,8 +94,8 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
-void EntityBreakable(Entity_*entity) {
-    Entity_*temp_v0;
+void EntityBreakable(Entity* entity) {
+    Entity* temp_v0;
     u16 temp_s0 = entity->subId >> 0xC;
 
     if (entity->step != 0) {
@@ -128,7 +128,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityMother);
 // Petal projectile shot by succubus ID 0x1A
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusPetal);
 
-void EntityUnkId1B(Entity_*entity) {
+void EntityUnkId1B(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_801804E8);
     }

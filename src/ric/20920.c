@@ -110,7 +110,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
 }
 
 void func_8015CC28(void) {
-    Entity_*entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
     entity->ext.generic.unk7E.modeU8.unk1 = 0;
     entity->ext.generic.unk7E.modeU8.unk0 = 0;

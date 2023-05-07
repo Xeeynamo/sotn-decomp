@@ -30,7 +30,7 @@ typedef union {
         u8 unk0, unk1;
     } U8;
 } Multi16;
-struct Entity_;
+struct Entity;
 
 typedef struct ET_Generic {
     /* 0x7C */ Multi16 unk7C; // posX
@@ -43,7 +43,7 @@ typedef struct ET_Generic {
     } unk7E; // posY
     union {
         /* 0x80 */ s32 modeS32;
-        /* 0x80 */ struct Entity_* entityPtr;
+        /* 0x80 */ struct Entity* entityPtr;
         struct {
             /* 0x80 */ s16 unk0;
             /* 0x82 */ s16 unk2;
@@ -56,7 +56,7 @@ typedef struct ET_Generic {
     /* 0x84 */ Multi unk84;
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
-        /* 0x8C */ struct Entity_* entityPtr;
+        /* 0x8C */ struct Entity* entityPtr;
         /* 0x8C */ struct Primitive* primPtr;
         /* 0x8C */ s32 modeS32;
         struct {
@@ -74,7 +74,7 @@ typedef struct ET_Generic {
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity_* unk9C;
+    /* 0x9C */ struct Entity* unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
@@ -90,8 +90,8 @@ typedef struct ET_Generic {
     /* 0xB4 */ s16 unkB4;
     /* 0xB6 */ s16 unkB6;
     union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity_*);
-        /* 0xB8 */ struct Entity_* entityPtr;
+        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
+        /* 0xB8 */ struct Entity* entityPtr;
         struct {
             /* 0xB8 */ u8 unk0;
             /* 0xB9 */ u8 unk1;

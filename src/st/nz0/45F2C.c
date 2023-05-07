@@ -5,7 +5,7 @@
 
 #include "nz0.h"
 
-void func_801C5F2C(Entity_*self) {
+void func_801C5F2C(Entity* self) {
     if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
         self->posX.val -= self->accelerationX;
     }
@@ -19,8 +19,8 @@ void func_801C5F2C(Entity_*self) {
     }
 }
 
-void EntitySkeleton(Entity_*self) {
-    Entity_*newEntity;
+void EntitySkeleton(Entity* self) {
+    Entity* newEntity;
     u8 animStatus;
     u8 i;
 
@@ -81,7 +81,8 @@ void EntitySkeleton(Entity_*self) {
         if (!animStatus) {
             func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
-                D_80182480[self->subId & 1][++self->ext.generic.unk84.S8.unk0 & 3];
+                D_80182480[self->subId & 1]
+                          [++self->ext.generic.unk84.S8.unk0 & 3];
             break;
         }
 
@@ -172,7 +173,7 @@ void EntitySkeleton(Entity_*self) {
     }
 }
 
-void func_801C6494(Entity_*entity) { // From skeleton death explosion
+void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
@@ -198,7 +199,7 @@ void func_801C6494(Entity_*entity) { // From skeleton death explosion
     }
 }
 
-void func_801C6574(Entity_*entity) { // Bone Projectile from Skeleton
+void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
     s32 accelerationX;
     u32 xDistanceToPlayer;
 
@@ -234,7 +235,7 @@ void func_801C6574(Entity_*entity) { // Bone Projectile from Skeleton
     }
 }
 
-void func_801C6678(Entity_*entity) { // From Skeleton
+void func_801C6678(Entity* entity) { // From Skeleton
     if (entity->step == 0) {
         InitializeEntity(D_80180C88);
         entity->unk1A = 0x120;

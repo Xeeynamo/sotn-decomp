@@ -1021,7 +1021,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA8C4);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA9DC);
 
 void func_800FAB1C(void) {
-    Entity_*entity = &g_EntityArray[UNK_ENTITY_4];
+    Entity* entity = &g_EntityArray[UNK_ENTITY_4];
     s32 i;
 
     for (i = 4; i < 64; i++) {

@@ -1,6 +1,6 @@
 #include "ric.h"
 
-void func_8016E324(Entity_*entity) {
+void func_8016E324(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = 0x20000 | FLAG_UNK_04000000;
@@ -47,7 +47,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F198);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F6F0);
 
-void func_80170548(Entity_*entity) {
+void func_80170548(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
@@ -76,9 +76,9 @@ void func_80170548(Entity_*entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801705EC);
 #else
-void func_80156C60(Entity_*entity);
+void func_80156C60(Entity* entity);
 
-void func_801705EC(Entity_*entity) {
+void func_801705EC(Entity* entity) {
     u16 temp;
 
     switch (entity->step) {
@@ -126,7 +126,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8017161C);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801719A4);
 
-void func_80172AE8(Entity_*entity) {
+void func_80172AE8(Entity* entity) {
     POLY_GT4* poly;
     s32 ret;
 

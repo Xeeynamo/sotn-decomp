@@ -154,9 +154,9 @@ typedef struct Primitive {
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
-struct Entity_;
+struct Entity;
 
-typedef void (*PfnEntityUpdate)(struct Entity_*);
+typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef union {
     s32 val;
@@ -255,14 +255,13 @@ typedef struct {
 } AnimationFrame;
 
 typedef struct {
-    s8 unk0; // Entity_::unk10
-    s8 unk2; // Entity_::unk12
+    s8 unk0; // Entity::unk10
+    s8 unk2; // Entity::unk12
     s8 hitboxWidth;
     s8 hitboxHeight;
 } FrameProperty;
 
-
-typedef struct Entity_ {
+typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
@@ -317,7 +316,7 @@ typedef struct Entity_ {
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
-} Entity_; // size = 0xBC
+} Entity; // size = 0xBC
 
 typedef struct {
     /* 0x00 */ u16 animSet;
@@ -667,7 +666,7 @@ typedef struct {
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
-    /* 8003C7CC */ Entity_*(*GetFreeDraEntity)(s16 start, s16 end);
+    /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(s32 handId, Equipment* res,
                                               s32 equipId);
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
@@ -678,11 +677,11 @@ typedef struct {
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* func_801027C4;
     /* 8003C7F0 */ void* func_800EB758;
-    /* 8003C7F4 */ Entity_*(*func_8011AAFC)(Entity_*self, u32 flags, s32 arg2);
+    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
-    /* 8003C804 */ void (*func_80118894)(Entity_*);
+    /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
@@ -691,8 +690,8 @@ typedef struct {
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
-    /* 8003C828 */ u16 (*func_800FF128)(Entity_*enemyEntity,
-                                        Entity_*weaponEntity);
+    /* 8003C828 */ u16 (*func_800FF128)(Entity* enemyEntity,
+                                        Entity* weaponEntity);
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;
@@ -711,7 +710,7 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void* func_800F2288;
-    /* 8003C874 */ void (*func_8011A3AC)(Entity_*entity, s32 arg1, s32 arg2,
+    /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
                                          Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
@@ -868,7 +867,7 @@ extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 D_8006C3B0;
-extern Entity_*g_CurrentEntity;
+extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern u16 g_Clut[];
@@ -928,7 +927,7 @@ extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 
 // Beginning of Player Character offset = 0x800733D8
-extern Entity_ g_EntityArray[TOTAL_ENTITY_COUNT];
+extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
 // g_EntityArray PLAYER
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
@@ -987,18 +986,18 @@ extern s16 D_80073662; // g_EntityArray[3].animCurFrame
 // D_80074C08 g_EntityArray[20]
 
 // *** ENTITY DIRECT ACCESS PROPERTIES START ***
-extern Entity_ D_80074C08[];
+extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
-extern Entity_ D_800762D8[]; // g_EntityArray[64]
+extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
-extern Entity_ D_8007A958[];
-extern Entity_ D_8007C0D8[];
-extern Entity_ D_8007D858[];
-extern Entity_ D_8007DE38[];
+extern Entity D_8007A958[];
+extern Entity D_8007C0D8[];
+extern Entity D_8007D858[];
+extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
-extern Entity_ D_8007EF1C;
+extern Entity D_8007EF1C;
 extern unsigned long D_8007EFD8; // ev10 IOE
 extern s32 D_8007EFDC;           // ev11 ERROR
 extern s32 D_8007EFE0;           // ev12 TIMEOUT
