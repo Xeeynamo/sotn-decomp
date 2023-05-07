@@ -67,22 +67,22 @@ typedef enum {
     /* 0x15 */ ENTITY_15 = 0x15
 } SotnEntityIds;
 
-void EntityBreakable(Entity*);
-void EntityExplosion(Entity*);
-void EntityPrizeDrop(Entity*);
-void EntityNumericDamage(Entity*);
-void EntityRedDoor(Entity*);
-void EntityIntenseExplosion(Entity*);
-void EntityAbsorbOrb(Entity*);
-void EntityRoomForeground(Entity*);
-void EntityStageNamePopup(Entity*);
+void EntityBreakable(Entity_*);
+void EntityExplosion(Entity_*);
+void EntityPrizeDrop(Entity_*);
+void EntityNumericDamage(Entity_*);
+void EntityRedDoor(Entity_*);
+void EntityIntenseExplosion(Entity_*);
+void EntityAbsorbOrb(Entity_*);
+void EntityRoomForeground(Entity_*);
+void EntityStageNamePopup(Entity_*);
 //void EntityEquipItemDrop(Entity_*);
-void EntityRelicOrb(Entity*);
+void EntityRelicOrb(Entity_*);
 #ifndef MAD_H
-void EntityHeartDrop(Entity*);
+void EntityHeartDrop(Entity_*);
 #else
-void EntityHeartDrop(Entity* entity, u32 arg1);
+void EntityHeartDrop(Entity_*entity, u32 arg1);
 #endif
-void EntityEnemyBlood(Entity*);
-void EntityUnkId0E(Entity*);
-void EntityDummy(Entity*);
+void EntityEnemyBlood(Entity_*);
+void EntityUnkId0E(Entity_*);
+void EntityDummy(Entity_*);

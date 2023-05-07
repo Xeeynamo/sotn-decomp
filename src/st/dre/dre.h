@@ -1,22 +1,22 @@
 #include "stage.h"
 
-void ReplaceBreakableWithItemDrop(Entity* arg0);
-void DestroyEntity(Entity* entity);
+void ReplaceBreakableWithItemDrop(Entity_*arg0);
+void DestroyEntity(Entity_*entity);
 void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
 void func_801A046C(u16);
 s32 func_8019AC78(u8, s16);
-void PreventEntityFromRespawning(Entity* entity);
+void PreventEntityFromRespawning(Entity_*entity);
 void FallEntity(void);
 void func_8019B858(void);
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
-Entity* AllocEntity(Entity*, Entity*);
+void CreateEntityFromCurrentEntity(u16 objectId, Entity_*entity);
+Entity_*AllocEntity(Entity_*, Entity_*);
 void func_8019A78C(void);
-Entity* func_8019AC18(Entity*, Entity*);
-void func_8019E5E0(Entity* entity);
-void EntityEquipItemDrop(Entity*);
+Entity_*func_8019AC18(Entity_*, Entity_*);
+void func_8019E5E0(Entity_*entity);
+void EntityEquipItemDrop(Entity_*);
 
 extern u16 D_80180464[];
 extern u16 D_80180494[];

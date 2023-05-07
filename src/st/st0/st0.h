@@ -15,12 +15,12 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
+void CreateEntityFromEntity(u16 objectId, Entity_*source, Entity_*entity);
 s16 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
-void EntityExplosion(Entity*);
-void EntityEquipItemDrop(Entity* self);
+void EntityExplosion(Entity_*);
+void EntityEquipItemDrop(Entity_*self);
 
 extern u16 D_80180574[];
 extern u16 D_8018058C[];

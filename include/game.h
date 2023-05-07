@@ -154,9 +154,9 @@ typedef struct Primitive {
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
-struct Entity;
+struct Entity_;
 
-typedef void (*PfnEntityUpdate)(struct Entity*);
+typedef void (*PfnEntityUpdate)(struct Entity_*);
 
 typedef union {
     s32 val;
@@ -255,133 +255,12 @@ typedef struct {
 } AnimationFrame;
 
 typedef struct {
-    s8 unk0; // Entity::unk10
-    s8 unk2; // Entity::unk12
+    s8 unk0; // Entity_::unk10
+    s8 unk2; // Entity_::unk12
     s8 hitboxWidth;
     s8 hitboxHeight;
 } FrameProperty;
 
-typedef struct Entity {
-    /* 0x00 */ f32 posX;
-    /* 0x04 */ f32 posY;
-    /* 0x08 */ s32 accelerationX;
-    /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ u16 unk10; // Hitbox X Offset
-    /* 0x12 */ s16 unk12; // Hitbox Y Offset
-    /* 0x14 */ u16 facing;
-    /* 0x16 */ u16 palette;
-    /* 0x18 */ s8 blendMode;
-    /* 0x19 */ u8 unk19;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E; // poly rotation angle
-    /* 0x20 */ s16 unk20; // poly / rotation origin x
-    /* 0x22 */ s16 unk22; // poly / rotation origin y
-    /* 0x24 */ u16 zPriority;
-    /* 0x26 */ u16 objectId;
-    /* 0x28 */ PfnEntityUpdate pfnUpdate;
-    /* 0x2C */ u16 step;
-    /* 0x2E */ u16 step_s;
-    /* 0x30 */ u16 subId;
-    /* 0x32 */ u16 objectRoomIndex;
-    /* 0x34 */ s32 flags;
-    /* 0x38 */ s16 unk38;
-    /* 0x3A */ u16 enemyId;
-    /* 0x3C */ u16 unk3C; // hitbox state
-    /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 attack;
-    /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44; // 1 = Takes a hit
-    /* 0x46 */ u8 hitboxWidth;
-    /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 unk48; // 1 = Takes a hit
-    /* 0x49 */ u8 unk49; // invincibility frames
-    /* 0x4A */ s16 unk4A;
-    /* 0x4C */ AnimationFrame* unk4C;
-    /* 0x50 */ u16 animFrameIdx;
-    /* 0x52 */ s16 animFrameDuration;
-    /* 0x54 */ s16 animSet;
-    /* 0x56 */ s16 animCurFrame;
-    /* 0x58 */ s16 unk58;
-    /* 0x5A */ s16 unk5A;
-    /* 0x5C */ s32 unk5C;
-    /* 0x60 */ s32 unk60;
-    /* 0x64 */ s32 firstPolygonIndex;
-    /* 0x68 */ s16 unk68;
-    /* 0x6A */ u16 unk6A;
-    /* 0x6C */ u8 unk6C;
-    /* 0x6D */ s8 unk6D;
-    /* 0x6E */ s16 unk6E;
-    /* 0x70 */ s32 unk70;
-    /* 0x74 */ s32 unk74;
-    /* 0x78 */ s32 unk78;
-    /* 0x7C */ Multi16 unk7C; // posX
-    union {
-        /* 0x7E */ u16 modeU16;
-        struct {
-            /* 0x7E */ u8 unk0;
-            /* 0x7F */ u8 unk1;
-        } modeU8;
-    } unk7E; // posY
-    union {
-        /* 0x80 */ s32 modeS32;
-        /* 0x80 */ struct Entity* entityPtr;
-        struct {
-            /* 0x80 */ s16 unk0;
-            /* 0x82 */ s16 unk2;
-        } modeS16;
-        struct {
-            /* 0x80 */ u8 unk0;
-            /* 0x81 */ u8 unk1;
-        } modeS8;
-    } unk80; // size = 0x4
-    /* 0x84 */ Multi unk84;
-    /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
-    union {
-        /* 0x8C */ struct Entity* entityPtr;
-        /* 0x8C */ struct Primitive* primPtr;
-        /* 0x8C */ s32 modeS32;
-        struct {
-            /* 0x8C */ u16 unk0;
-            /* 0x8E */ u16 unk2;
-        } modeU16;
-        struct {
-            /* 0x8C */ s16 unk0;
-            /* 0x8E */ s16 unk2;
-        } modeS16;
-    } unk8C; // size = 0x4
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
-    /* 0x94 */ u8 unk94;
-    /* 0x95 */ u8 unk95;
-    /* 0x96 */ s16 unk96;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity* unk9C;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
-    /* 0xAA */ s16 unkAA;
-    /* 0xAC */ u8 unkAC;
-    /* 0xAD */ s8 unkAD;
-    /* 0xAE */ s8 unkAE;
-    /* 0xAF */ s8 unkAF;
-    /* 0xB0 */ s16 unkB0;
-    /* 0xB2 */ s16 unkB2;
-    /* 0xB4 */ s16 unkB4;
-    /* 0xB6 */ s16 unkB6;
-    union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
-        /* 0xB8 */ struct Entity* entityPtr;
-        struct {
-            /* 0xB8 */ u8 unk0;
-            /* 0xB9 */ u8 unk1;
-            /* 0xBA */ u8 unk2;
-            /* 0xBB */ u8 unk3;
-        } modeU8;
-    } unkB8;
-} Entity; // size = 0xBC
 
 typedef struct Entity_ {
     /* 0x00 */ f32 posX;
@@ -403,7 +282,7 @@ typedef struct Entity_ {
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
-    /* 0x2E */ u16 unk2E; // pl_step_s
+    /* 0x2E */ u16 step_s; // pl_step_s
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 flags;
@@ -788,7 +667,7 @@ typedef struct {
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
-    /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
+    /* 8003C7CC */ Entity_*(*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(s32 handId, Equipment* res,
                                               s32 equipId);
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
@@ -799,11 +678,11 @@ typedef struct {
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* func_801027C4;
     /* 8003C7F0 */ void* func_800EB758;
-    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+    /* 8003C7F4 */ Entity_*(*func_8011AAFC)(Entity_*self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
-    /* 8003C804 */ void (*func_80118894)(Entity*);
+    /* 8003C804 */ void (*func_80118894)(Entity_*);
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
@@ -812,8 +691,8 @@ typedef struct {
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
-    /* 8003C828 */ u16 (*func_800FF128)(Entity* enemyEntity,
-                                        Entity* weaponEntity);
+    /* 8003C828 */ u16 (*func_800FF128)(Entity_*enemyEntity,
+                                        Entity_*weaponEntity);
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;
@@ -832,7 +711,7 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void* func_800F2288;
-    /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
+    /* 8003C874 */ void (*func_8011A3AC)(Entity_*entity, s32 arg1, s32 arg2,
                                          Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
@@ -989,7 +868,7 @@ extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 D_8006C3B0;
-extern Entity* g_CurrentEntity;
+extern Entity_*g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern u16 g_Clut[];
@@ -1049,7 +928,7 @@ extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 
 // Beginning of Player Character offset = 0x800733D8
-extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
+extern Entity_ g_EntityArray[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
 // g_EntityArray PLAYER
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
@@ -1078,7 +957,7 @@ extern s16 D_8007342C;  // PLAYER.animSet
 extern u16 D_8007342E;  // PLAYER.animCurFrame
 extern s16 D_80073432;  // PLAYER.unk5A
 extern s16 D_8007347C;  // PLAYER.unkA4
-extern u8 D_80073484;   // PLAYER.unkAC
+extern u8 D_80073484;   // PLAYER.ext.generic.unkAC
 // End of Player Character offset = 0x80073494
 
 // D_80073494 g_EntityArray[1]
@@ -1108,18 +987,18 @@ extern s16 D_80073662; // g_EntityArray[3].animCurFrame
 // D_80074C08 g_EntityArray[20]
 
 // *** ENTITY DIRECT ACCESS PROPERTIES START ***
-extern Entity D_80074C08[];
+extern Entity_ D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
-extern Entity D_800762D8[]; // g_EntityArray[64]
+extern Entity_ D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
-extern Entity D_8007A958[];
-extern Entity D_8007C0D8[];
-extern Entity D_8007D858[];
-extern Entity D_8007DE38[];
+extern Entity_ D_8007A958[];
+extern Entity_ D_8007C0D8[];
+extern Entity_ D_8007D858[];
+extern Entity_ D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
-extern Entity D_8007EF1C;
+extern Entity_ D_8007EF1C;
 extern unsigned long D_8007EFD8; // ev10 IOE
 extern s32 D_8007EFDC;           // ev11 ERROR
 extern s32 D_8007EFE0;           // ev12 TIMEOUT

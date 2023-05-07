@@ -1,4 +1,4 @@
-s32 AnimateEntity(const u8 frames[], Entity* entity) {
+s32 AnimateEntity(const u8 frames[], Entity_*entity) {
     s32 flag = 0;
     u16 currentFrameIndex = entity->animFrameIdx * 2;
     u8* currentFrame = frames + currentFrameIndex;

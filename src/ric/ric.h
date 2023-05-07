@@ -5,7 +5,7 @@
 #include "sfx.h"
 
 extern void func_80159C04(void);
-extern void func_80156C60(Entity* entity);
+extern void func_80156C60(Entity_*entity);
 extern void func_8015BB80(void);
 extern void func_8015C178(void);
 extern void func_8015C908(s32 step);
@@ -21,15 +21,15 @@ extern void func_8015CF08(void);
 extern void func_8015D020(void);
 extern bool func_8015DBB0(s32);
 extern void func_8015E380(const char* str);
-extern void func_8015F9F0(Entity* entity);
-extern void func_8015FAB8(Entity*);
+extern void func_8015F9F0(Entity_*entity);
+extern void func_8015FAB8(Entity_*);
 extern s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY);
-extern Entity* func_801606BC(Entity* entity, u32 arg1, s32 arg2);
-extern void func_80162604(Entity* entity);
-extern void func_80167964(Entity* entity);
+extern Entity_*func_801606BC(Entity_*entity, u32 arg1, s32 arg2);
+extern void func_80162604(Entity_*entity);
+extern void func_80167964(Entity_*entity);
 extern s32 func_8016840C(s16 x, s16 y);
-extern void func_80169C10(Entity* entity);
-extern void func_80169D74(Entity* entity);
+extern void func_80169C10(Entity_*entity);
+extern void func_80169D74(Entity_*entity);
 
 extern s32 D_80154570;
 extern s32 D_8015459C;

@@ -973,7 +973,7 @@ void InitRoomEntities(s32 objLayoutId) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", TestCollisions);
 
-void DestroyEntity(Entity* entity) {
+void DestroyEntity(Entity_*entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -983,19 +983,19 @@ void DestroyEntity(Entity* entity) {
     }
 
     ptr = (u32*)entity;
-    length = sizeof(Entity) / sizeof(u32);
+    length = sizeof(Entity_) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
 
-void func_801B4B9C(Entity* entity, s16 step) {
+void func_801B4B9C(Entity_*entity, s16 step) {
     entity->step = step;
     entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
 
-s32 AnimateEntity(const u8 frames[], Entity* entity) {
+s32 AnimateEntity(const u8 frames[], Entity_*entity) {
     s32 flag = 0;
     u16 currentFrameIndex = entity->animFrameIdx * 2;
     u8* currentFrame = frames + currentFrameIndex;
@@ -1031,13 +1031,13 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4C68);
 
 void func_801B4D78(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_3];
+    Entity_*e = &g_EntityArray[UNK_ENTITY_3];
 
     if (e->step == 0) {
         e->animSet = -0x7FFF;
         e->animCurFrame = 1;
         e->palette = 0x200;
-        e->unk80.modeS32 = 0x5C0000;
+        e->ext.generic.unk80.modeS32 = 0x5C0000;
         e->posY.i.hi = 208;
         e->zPriority = 0x80;
         e->step = 1;
@@ -1045,7 +1045,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    Entity_*unkEntity = &g_EntityArray[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1056,7 +1056,7 @@ void func_801B4DE0(void) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
-            *(s32*)&unkEntity->unk7C = poly;
+            *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 255;
             poly->y0 = poly->y1 = 4;
@@ -1075,7 +1075,7 @@ void func_801B4DE0(void) {
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1088,7 +1088,7 @@ void func_801B4DE0(void) {
         break;
 
     case 2:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1102,7 +1102,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    Entity_*unkEntity = &g_EntityArray[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1113,7 +1113,7 @@ void func_801B4FFC(void) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
-            *(s32*)&unkEntity->unk7C = poly;
+            *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 384;
             poly->y0 = poly->y1 = 4;
@@ -1131,7 +1131,7 @@ void func_801B4FFC(void) {
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1150,13 +1150,13 @@ void func_801B4FFC(void) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B519C);
 
 void func_801B5350(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_5];
+    Entity_*entity = &g_EntityArray[UNK_ENTITY_5];
 
     switch (entity->step) {
     case 0:
         entity->animSet = 1;
         entity->animCurFrame = 142;
-        entity->unk80.modeS32 = 0x800000;
+        entity->ext.generic.unk80.modeS32 = 0x800000;
         entity->posY.i.hi = 159;
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
@@ -1172,13 +1172,13 @@ void func_801B5350(void) {
         if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
             func_801B4B9C(entity, 3);
         }
-        entity->unk80.modeS32 += 0xFFFE8000;
+        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
         break;
 
     case 3:
         AnimateEntity(D_80180504, entity);
-        entity->unk80.modeS32 += 0xFFFE8000;
-        if (entity->unk80.modeS16.unk2 < 0x40) {
+        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        if (entity->ext.generic.unk80.modeS16.unk2 < 0x40) {
             entity->step = 255;
         }
         break;
@@ -1186,14 +1186,14 @@ void func_801B5350(void) {
 }
 
 void func_801B54C8(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+    Entity_*e = &g_EntityArray[UNK_ENTITY_7];
 
     if (e->step == 0) {
         e->animSet = -0x7FFE;
         e->animCurFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
-        e->unk80.modeS32 = 0x780000;
+        e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
@@ -1202,13 +1202,13 @@ void func_801B54C8(void) {
 }
 
 void func_801B5548(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+    Entity_*e = &g_EntityArray[UNK_ENTITY_7];
 
     if (e->step == 0) {
         e->animSet = -0x7FFE;
         e->animCurFrame = 7;
         e->unk5A = 0xF;
-        e->unk80.modeS32 = 0x780000;
+        e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;

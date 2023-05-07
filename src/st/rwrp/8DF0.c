@@ -32,7 +32,7 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
-    Entity* entity;
+    Entity_*entity;
 
     posY = g_Camera.posY.i.hi;
     yClose = posY - 0x40;
@@ -70,7 +70,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
-    Entity* entity;
+    Entity_*entity;
 
     posX = g_Camera.posX.i.hi;
     xClose = posX - 0x40;
@@ -142,7 +142,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C72C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C7E0);
 
-void func_8018C854(u16 objectId, Entity* source, Entity* entity) {
+void func_8018C854(u16 objectId, Entity_*source, Entity_*entity) {
     func_8018D580(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = D_801803E0[objectId];
@@ -240,15 +240,15 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E978);
 
 void func_8018EA30(void) {
     s32 temp_v1;
-    Entity* entity;
+    Entity_*entity;
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 = entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 = -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -333,7 +333,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194590);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80194924);
 
-void func_80194DD4(Entity* entity) {
+void func_80194DD4(Entity_*entity) {
     ObjInit2* objInit = &D_80181134[entity->subId];
 
     if (entity->step == 0) {

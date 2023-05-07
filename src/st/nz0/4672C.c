@@ -6,8 +6,8 @@
 #include "nz0.h"
 
 // moves around on walls and drips poison
-void EntitySpittleBone(Entity* self) {
-    Entity* newEntity;
+void EntitySpittleBone(Entity_*self) {
+    Entity_*newEntity;
     s32 i;
 
     if ((self->flags & 0x100) && (self->step < 3)) {
@@ -26,10 +26,10 @@ void EntitySpittleBone(Entity* self) {
     case 1:
         if (func_801BCCFC(&D_801824CC) & 1) {
             newEntity = &self[1];
-            self->unk7C.S8.unk0 = 0;
+            self->ext.generic.unk7C.S8.unk0 = 0;
             CreateEntityFromEntity(0x32, self, newEntity);
             newEntity->facing = self->facing;
-            newEntity->unk7C.S8.unk0 = self->unk7C.S8.unk0;
+            newEntity->ext.generic.unk7C.S8.unk0 = self->ext.generic.unk7C.S8.unk0;
             if (self->facing != 0) {
                 self->accelerationX = 0x10000;
                 newEntity->posX.i.hi += 16;
@@ -44,19 +44,19 @@ void EntitySpittleBone(Entity* self) {
 
     case 2:
         AnimateEntity(&D_80182524, self);
-        self->unk7C.U8.unk0 = func_801C1034(self->unk7C.U8.unk0);
-        if (self->unk80.modeS16.unk2 != 0) {
-            self->unk1E += self->unk80.modeS16.unk0;
-            self->unk80.modeS16.unk2--;
-            if (self->unk80.modeS16.unk2 == 0) {
+        self->ext.generic.unk7C.U8.unk0 = func_801C1034(self->ext.generic.unk7C.U8.unk0);
+        if (self->ext.generic.unk80.modeS16.unk2 != 0) {
+            self->unk1E += self->ext.generic.unk80.modeS16.unk0;
+            self->ext.generic.unk80.modeS16.unk2--;
+            if (self->ext.generic.unk80.modeS16.unk2 == 0) {
                 self->unk1E = self[1].unk1E;
             }
         }
-        if (((self->unk7C.U8.unk0 & 0x3F) == 1) && (!(Random() & 0x1F))) {
+        if (((self->ext.generic.unk7C.U8.unk0 & 0x3F) == 1) && (!(Random() & 0x1F))) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(0x33, self, newEntity);
-                newEntity->unk84.unk = self;
+                newEntity->ext.generic.unk84.unk = self;
                 newEntity->posY.i.hi += 24;
             }
         }
@@ -78,7 +78,7 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->step = 4;
                 newEntity->accelerationX = D_80182504[i];
                 newEntity->accelerationY = 0xFFFD0000 - ((Random() & 3) << 0xF);
-                newEntity->unk80.modeS16.unk2 = D_801824E2[i + 0x3A];
+                newEntity->ext.generic.unk80.modeS16.unk2 = D_801824E2[i + 0x3A];
             }
         }
 
@@ -96,8 +96,8 @@ void EntitySpittleBone(Entity* self) {
     case 4:
         MoveEntity();
         self->accelerationY += 0x2800;
-        self->unk80.modeS16.unk2--;
-        if (self->unk80.modeS16.unk2 == 0) {
+        self->ext.generic.unk80.modeS16.unk2--;
+        if (self->ext.generic.unk80.modeS16.unk2 == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(2, self, newEntity);

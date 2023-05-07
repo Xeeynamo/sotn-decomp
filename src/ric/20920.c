@@ -91,7 +91,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
 
     FntPrint("op disable\n");
     if (arg0 != 0) {
-        g_EntityArray[UNK_ENTITY_1].unk7C.S8.unk1 = 1;
+        g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.S8.unk1 = 1;
         g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
@@ -102,20 +102,20 @@ void func_8015CB58(s32 arg0, s32 arg1) {
             poly = (POLY_GT4*)poly->tag;
         }
     }
-    g_EntityArray[UNK_ENTITY_1].unk7C.S8.unk0 = 1;
-    g_EntityArray[UNK_ENTITY_1].unk7E.modeU8.unk0 = 0xA;
+    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
+    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
     if (arg1 != 0) {
         D_80072F1E = 4;
     }
 }
 
 void func_8015CC28(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity_*entity = &g_EntityArray[UNK_ENTITY_1];
 
-    entity->unk7E.modeU8.unk1 = 0;
-    entity->unk7E.modeU8.unk0 = 0;
-    entity->unk7C.U8.unk1 = 0;
-    entity->unk7C.U8.unk0 = 0;
+    entity->ext.generic.unk7E.modeU8.unk1 = 0;
+    entity->ext.generic.unk7E.modeU8.unk0 = 0;
+    entity->ext.generic.unk7C.U8.unk1 = 0;
+    entity->ext.generic.unk7C.U8.unk0 = 0;
 }
 
 void func_8015CC50() { func_8015C908(0xF0); }

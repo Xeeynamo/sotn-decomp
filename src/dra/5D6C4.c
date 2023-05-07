@@ -401,7 +401,7 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
-u16 func_800FF128(Entity* enemyEntity, Entity* arg1);
+u16 func_800FF128(Entity_*enemyEntity, Entity_*arg1);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF128);
 
 s32 func_800FF460(s32 arg0) {

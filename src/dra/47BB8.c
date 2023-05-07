@@ -1097,7 +1097,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
 // clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
     s8* byte;
-    Entity* entity = &g_EntityArray[0];
+    Entity_*entity = &g_EntityArray[0];
     s32 i;
     u32 j;
 

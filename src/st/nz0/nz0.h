@@ -2,19 +2,19 @@
 
 typedef enum { E_AXE_KNIGHT_AXE = 0x2A, E_BONE_SCIMITAR_HEAD = 0x28 } ObjectIds;
 
-void DestroyEntity(Entity* item);
-void func_8018F928(Entity*);
+void DestroyEntity(Entity_*item);
+void func_8018F928(Entity_*);
 void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BCF74(s32*);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
-s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
-void EntityExplosion(Entity*);
+s32 func_801BD9A0(Entity_*entity, s32 arg1, s32 arg2, s32 arg3);
+void EntityExplosion(Entity_*);
 void func_801C29B0(s32 sfxId); // sfx
 void func_801C33D8(const u32*, s32);
-void func_801C0B24(Entity* entity);
+void func_801C0B24(Entity_*entity);
 void func_801C4CC0(void);
-void EntityEquipItemDrop(Entity*);
+void EntityEquipItemDrop(Entity_*);
 
 extern u8 D_8003BE6F[];
 extern PfnEntityUpdate D_80180A90[];
@@ -88,7 +88,7 @@ extern u8 D_80180F88[];
 extern u16 D_80180F9C[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
-extern Entity* g_CurrentEntity;
+extern Entity_*g_CurrentEntity;
 extern s32 D_80181010;
 extern const u8 D_80181160[];
 extern const u8 D_80181170[];

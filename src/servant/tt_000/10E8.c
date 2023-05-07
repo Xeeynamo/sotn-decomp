@@ -10,8 +10,8 @@ Collider D_80174AD8;
 s32 D_80174D3C;
 
 void func_80171ED4(s32 arg0);
-void func_80172120(Entity* self);
-void func_80172C30(Entity* self);
+void func_80172120(Entity_*self);
+void func_80172C30(Entity_*self);
 void func_8017339C(void);
 void func_801733A4(void);
 void func_801733AC(void);
@@ -19,12 +19,12 @@ void func_801733B4(void);
 void func_801733BC(void);
 void func_801733C4(void);
 void func_801733CC(void);
-void func_801733D4(Entity* self);
+void func_801733D4(Entity_*self);
 void func_80173C0C(void);
 void func_80173C14(void);
 void func_80173C1C(void);
 void func_80173C24(void);
-void func_80173C2C(Entity* self);
+void func_80173C2C(Entity_*self);
 
 ServantDesc g_ServantDesc = {
     func_80171ED4, func_80172120, func_80172C30, func_8017339C,
@@ -33,10 +33,10 @@ ServantDesc g_ServantDesc = {
     func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
 };
 
-void func_80174210(Entity* self, s32 arg1);
+void func_80174210(Entity_*self, s32 arg1);
 s32 func_80174864(void);
 
-void func_801710E8(Entity* entity, s32* arg1) {
+void func_801710E8(Entity_*entity, s32* arg1) {
     if (entity->unk4C != arg1) {
         entity->unk4C = arg1;
         entity->animFrameIdx = 0;
@@ -46,7 +46,7 @@ void func_801710E8(Entity* entity, s32* arg1) {
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_8017110C);
 
-s32 func_801713C8(Entity* entity) {
+s32 func_801713C8(Entity_*entity) {
     if (entity->unk3C == 0)
         return 0;
     if (entity->posX.i.hi < -16)
@@ -88,8 +88,8 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 
 void func_80171560(void) {}
 
-void func_80171568(Entity* self) {
-    Entity* entity;
+void func_80171568(Entity_*self) {
+    Entity_*entity;
     s32 i;
 
     for (i = 0; i < 3; i++) {
@@ -108,12 +108,12 @@ init_entity:
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
-    entity->unk8C.entityPtr = self;
+    entity->ext.generic.unk8C.entityPtr = self;
 }
 
 void func_8017160C(s32 amount, s32 objectId) {
     s32 i;
-    Entity* entity;
+    Entity_*entity;
     s16 facing;
 
     if (amount > 3) {
@@ -135,12 +135,12 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->subId = i + 1;
             entity->facing = facing;
         }
-        *((s16*)(&entity->unkAC)) = g_Camera.posX.i.hi;
-        *((s16*)(&entity->unkAE)) = g_Camera.posY.i.hi;
+        *((s16*)(&entity->ext.generic.unkAC)) = g_Camera.posX.i.hi;
+        *((s16*)(&entity->ext.generic.unkAE)) = g_Camera.posY.i.hi;
     }
 }
 
-void func_8017170C(Entity* entity, s32 frameIndex) {
+void func_8017170C(Entity_*entity, s32 frameIndex) {
     POLY_GT4* poly;
     s32 tpage;
     s32 x;
@@ -178,7 +178,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     poly->pad3 = 0x102;
 }
 
-void func_801718A0(Entity* entity) {
+void func_801718A0(Entity_*entity) {
     POLY_GT4* poly;
     s32 frame;
     s32 y;
@@ -192,8 +192,8 @@ void func_801718A0(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->unk8C.modeS16.unk0 << 7) * 8) >> 12;
-    y -= entity->unk8C.modeS16.unk0 / 2;
+    x += (rsin(entity->ext.generic.unk8C.modeS16.unk0 << 7) * 8) >> 12;
+    y -= entity->ext.generic.unk8C.modeS16.unk0 / 2;
 
     poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = poly->x2 = x - D_80170608[frame].x;
@@ -211,7 +211,7 @@ void func_80171ED4(s32 arg0) {
     u16* spriteBanks;
     s16* src;
     s16* dst;
-    Entity* e;
+    Entity_*e;
 
     if (arg0 == 1 || arg0 == 3)
         func_80174210(0, 1);
@@ -257,7 +257,7 @@ void func_80171ED4(s32 arg0) {
         e->posX.val = 0x800000;
         e->posY.val = 0xFFE00000;
     } else {
-        Entity* p;
+        Entity_*p;
         e->objectId = 0xD1;
         if (D_8003C708.flags & 0x20) {
             if (func_80174864() != 0) {
@@ -277,8 +277,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&e->unkAC = g_Camera.posX.i.hi;
-    *(u16*)&e->unkAE = g_Camera.posY.i.hi;
+    *(u16*)&e->ext.generic.unkAC = g_Camera.posX.i.hi;
+    *(u16*)&e->ext.generic.unkAE = g_Camera.posY.i.hi;
 }
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -309,7 +309,7 @@ void func_80173C1C(void) {}
 
 void func_80173C24(void) {}
 
-void func_80173C2C(Entity* entity) {
+void func_80173C2C(Entity_*entity) {
     if (entity->subId == 0xF) {
         D_80174D3C = 1;
     }
@@ -321,7 +321,7 @@ void func_80173C2C(Entity* entity) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80173C64);
 #else
-s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
+s32 func_80173C64(Entity_*self, u8* hitboxFrames, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s8 new_var;
     u16 new_var2;
@@ -373,7 +373,7 @@ s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
 }
 #endif
 
-void DestroyEntity(Entity* entity) {
+void DestroyEntity(Entity_*entity) {
     s32 i;
     s32 length;
     u32* ptr;
@@ -383,7 +383,7 @@ void DestroyEntity(Entity* entity) {
     }
 
     ptr = (u32*)entity;
-    length = sizeof(Entity) / sizeof(u32);
+    length = sizeof(Entity_) / sizeof(u32);
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
@@ -404,11 +404,11 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
     return arg0;
 }
 
-Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
+Entity_*func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
     s16 start = D_80171094[rangeIndex].start;
     s16 end = D_80171094[rangeIndex].end;
-    Entity* entity = &g_EntityArray[start];
+    Entity_*entity = &g_EntityArray[start];
     s32 i;
 
     for (i = start; end >= i; i++, entity++) {
@@ -420,7 +420,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     return NULL;
 }
 
-s32 func_80173F30(Entity* entity, s16 x, s16 y) {
+s32 func_80173F30(Entity_*entity, s16 x, s16 y) {
     s16 diffx = x - entity->posX.i.hi;
     return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
 }
@@ -450,7 +450,7 @@ s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
     return res & 0xFFF;
 }
 
-s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
+s32 func_80173FE8(Entity_*entity, s32 x, s32 y) {
     s32 diffX = x - entity->posX.i.hi;
     s32 diffY = y - entity->posY.i.hi;
 
@@ -461,7 +461,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174038);
 #else
-void func_80174038(Entity* entity) {
+void func_80174038(Entity_*entity) {
     switch (entity->step) {
     case 0:
         entity->flags = 0x20000 | FLAG_UNK_04000000;
@@ -554,7 +554,7 @@ extern s32 D_801710A0;
 extern s32 D_801710A4;
 extern s32 D_801710A8;
 
-void func_80174210(Entity* self, s32 arg1) {
+void func_80174210(Entity_*self, s32 arg1) {
     Unkstruct_80174210* temp_s0;
     Unkstruct_80174210** var_s1_2;
     Unkstruct_80174210* temp_v1_5;
@@ -653,8 +653,8 @@ void func_80174210(Entity* self, s32 arg1) {
 }
 #endif
 
-void func_801745E4(Entity* entityParent, s32 objectId, s32 subId) {
-    Entity* entity;
+void func_801745E4(Entity_*entityParent, s32 objectId, s32 subId) {
+    Entity_*entity;
     s32 i;
 
     for (i = 0; i < 3; i++) {
@@ -673,7 +673,7 @@ init_entity:
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = entityParent->posX.val;
     entity->posY.val = entityParent->posY.val;
-    entity->unk8C.entityPtr = entityParent;
+    entity->ext.generic.unk8C.entityPtr = entityParent;
     entity->subId = subId;
 }
 
@@ -718,7 +718,7 @@ s32 func_801746A0(s32 arg0) {
 }
 
 s32 func_801747B8(void) {
-    Entity* entity;
+    Entity_*entity;
     s32 i;
 
     entity = &D_800762D8;

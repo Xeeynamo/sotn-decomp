@@ -1,6 +1,6 @@
 #include "sel.h"
 
-void func_801B4B9C(Entity* entity, s16 step);
+void func_801B4B9C(Entity_*entity, s16 step);
 extern u16 D_800737B0;  // g_EntityArray[5].step
 extern u16 D_800737D4;  // g_EntityArray[5].animFrameIdx
 extern u8 D_80180538[]; // animation frames
@@ -8,7 +8,7 @@ extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
 
 void func_801B585C(u16 arg0) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_5];
+    Entity_*e = &g_EntityArray[UNK_ENTITY_5];
 
     switch (e->step) {
     case 0:
@@ -17,7 +17,7 @@ void func_801B585C(u16 arg0) {
         e->zPriority = 0xC0;
         e->animCurFrame = 0;
         e->unk5A = 0;
-        e->unk80.entityPtr = NULL;
+        e->ext.generic.unk80.entityPtr = NULL;
         e->palette = 0x8100;
         e->step++;
         break;
@@ -31,8 +31,8 @@ void func_801B585C(u16 arg0) {
 
     case 2:
         AnimateEntity(D_80180504, e);
-        e->unk80.modeS32 += 0x18000;
-        if (e->unk80.modeS16.unk2 >= 0x49) {
+        e->ext.generic.unk80.modeS32 += 0x18000;
+        if (e->ext.generic.unk80.modeS16.unk2 >= 0x49) {
             func_801B4B9C(e, 3);
         }
         break;
@@ -55,14 +55,14 @@ void func_801B585C(u16 arg0) {
         if (!(AnimateEntity(D_80180528, e) & 0xFF)) {
             func_801B4B9C(e, 6);
         }
-        e->unk80.modeS32 += 0xFFFE8000;
+        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
         break;
 
     case 6:
         AnimateEntity(D_80180504, e);
-        e->unk80.modeS32 += 0xFFFE8000;
-        if (arg0 && e->unk80.modeS16.unk2 < 0x20 ||
-            !arg0 && e->unk80.modeS16.unk2 < -0x10) {
+        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        if (arg0 && e->ext.generic.unk80.modeS16.unk2 < 0x20 ||
+            !arg0 && e->ext.generic.unk80.modeS16.unk2 < -0x10) {
             e->step = 255;
         }
         break;
@@ -78,7 +78,7 @@ extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
 
 void func_801B5A7C(void) {
-    Entity* e = &g_EntityArray[8];
+    Entity_*e = &g_EntityArray[8];
 
     switch (e->subId) {
     case 0:
@@ -252,13 +252,13 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
                 break;
             }
-            *(s32*)&e->unk8C.entityPtr = 0x80;
+            *(s32*)&e->ext.generic.unk8C.entityPtr = 0x80;
             e->step++;
             break;
 
         case 4:
-            (*((s32*)&e->unk8C.entityPtr))--;
-            if (*(s32*)&e->unk8C.entityPtr == 0) {
+            (*((s32*)&e->ext.generic.unk8C.entityPtr))--;
+            if (*(s32*)&e->ext.generic.unk8C.entityPtr == 0) {
                 D_801BC3E8 |= 1;
                 e->step++;
             }
@@ -334,8 +334,8 @@ void func_801B5A7C(void) {
 }
 
 void func_801B60D4(void) {
-    Entity* ent;
-    Entity* ent4;
+    Entity_*ent;
+    Entity_*ent4;
     s32 i;
     s32 var_v1;
 
@@ -397,7 +397,7 @@ void func_801B60D4(void) {
             if (var_v1 < 0) {
                 var_v1 += 0xFFFF;
             }
-            ent->posX.i.hi = (s16)(var_v1 >> 0x10) + ent->unk80.modeS16.unk2;
+            ent->posX.i.hi = (s16)(var_v1 >> 0x10) + ent->ext.generic.unk80.modeS16.unk2;
             ent++;
         }
 

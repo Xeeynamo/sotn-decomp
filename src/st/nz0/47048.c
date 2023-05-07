@@ -1,14 +1,14 @@
 /*
  * Overlay: NZ0
- * Entity: SubWeapon container
+ * Entity_: SubWeapon container
  */
 
 #include "nz0.h"
 
 // SubWeapons floating in the breakable container
-void EntitySubWeaponContainer(Entity* self) {
+void EntitySubWeaponContainer(Entity_*self) {
     SubWpnContDebris* glassPieceTBL;
-    Entity* newEntity;
+    Entity_*newEntity;
     Primitive* prim;
     s16 firstPrimIndex;
     s32 rnd;
@@ -42,7 +42,7 @@ void EntitySubWeaponContainer(Entity* self) {
         }
         self->firstPolygonIndex = firstPrimIndex;
         prim = &g_PrimBuf[firstPrimIndex];
-        *(s32*)&self->unk7C = prim;
+        *(s32*)&self->ext.generic.unk7C = prim;
         self->flags |= FLAG_FREE_POLYGONS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
@@ -88,10 +88,10 @@ void EntitySubWeaponContainer(Entity* self) {
                 CreateEntityFromEntity(0x3A, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->posX;
                 newEntity->posY.i.hi += glassPieceTBL->posY;
-                newEntity->unk84.S16.unk0 = glassPieceTBL->posX;
+                newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
                 newEntity->subId = glassPieceTBL->subId;
                 newEntity->facing = glassPieceTBL->facing;
-                newEntity->unk84.S16.unk2 = self->subId;
+                newEntity->ext.generic.unk84.S16.unk2 = self->subId;
             }
             glassPieceTBL++;
             i++;
@@ -146,7 +146,7 @@ void EntitySubWeaponContainer(Entity* self) {
 }
 
 // Subweapon container falling glass pieces
-void func_801C7538(Entity* entity) {
+void func_801C7538(Entity_*entity) {
     s32 new_var;
     s16 var_v0;
 
@@ -155,8 +155,8 @@ void func_801C7538(Entity* entity) {
         InitializeEntity(&D_80180CF4);
         entity->unk19 = 4;
         entity->animCurFrame = entity->subId;
-        entity->palette += entity->unk84.S16.unk2;
-        entity->accelerationX = entity->unk84.S16.unk0 << 12;
+        entity->palette += entity->ext.generic.unk84.S16.unk2;
+        entity->accelerationX = entity->ext.generic.unk84.S16.unk0 << 12;
         entity->accelerationX += 0x8000 - (Random() << 8);
         entity->accelerationY -= (Random() & 0x1F) << 12;
         break;
@@ -184,7 +184,7 @@ void func_801C7538(Entity* entity) {
 }
 
 // falling liquid from subweapons container
-void func_801C7654(Entity* entity) {
+void func_801C7654(Entity_*entity) {
     Collider res;
 
     switch (entity->step) {
@@ -225,7 +225,7 @@ void func_801C7654(Entity* entity) {
 }
 
 // Liquid bubbles from the Subweapon container
-void func_801C77B8(Entity* entity) {
+void func_801C77B8(Entity_*entity) {
     s16 temp_v1_2;
 
     switch (entity->step) {
@@ -253,7 +253,7 @@ void func_801C77B8(Entity* entity) {
     }
 }
 
-void func_801C7884(Entity* entity) {
+void func_801C7884(Entity_*entity) {
     u16 subId = entity->subId;
 
     switch (entity->step) {

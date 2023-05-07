@@ -7,7 +7,7 @@
 #include "no3.h"
 
 // vase in the room with the door to the caverns
-void EntityCavernDoorVase(Entity* arg0) {
+void EntityCavernDoorVase(Entity_*arg0) {
     s32 temp_v0;
     ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
 
@@ -37,12 +37,12 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
-void EntityBreakable(Entity* entity) {
+void EntityBreakable(Entity_*entity) {
     u16 breakableType = entity->subId >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
-            Entity* entityDropItem;
+            Entity_*entityDropItem;
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
@@ -62,21 +62,21 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-void EntityUnkId16(Entity* self) {
+void EntityUnkId16(Entity_*self) {
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180AD0);
-        self->unk7C.S8.unk0 = 16;
-        self->unk7C.S8.unk1 = 8;
-        self->unk7E.modeU8.unk0 = 56;
+        self->ext.generic.unk7C.S8.unk0 = 16;
+        self->ext.generic.unk7C.S8.unk1 = 8;
+        self->ext.generic.unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB08.buf.draw.r0 = self->unk7C.S8.unk0;
-        D_8003CB08.buf.draw.g0 = self->unk7C.S8.unk1;
-        D_8003CB08.buf.draw.b0 = self->unk7E.modeU8.unk0;
-        D_800542FC.buf.draw.r0 = self->unk7C.S8.unk0;
-        D_800542FC.buf.draw.g0 = self->unk7C.S8.unk1;
-        D_800542FC.buf.draw.b0 = self->unk7E.modeU8.unk0;
+        D_8003CB08.buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
+        D_8003CB08.buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
+        D_8003CB08.buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
+        D_800542FC.buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
+        D_800542FC.buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
+        D_800542FC.buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
         break;
     }
 }
@@ -101,7 +101,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityTransparentWater);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B94F0);
 
 // lever and platform to open caverns door
-void EntityCavernDoorLever(Entity* entity) {
+void EntityCavernDoorLever(Entity_*entity) {
     s32 posX;
     s32 posY;
 
@@ -117,7 +117,7 @@ void EntityCavernDoorLever(Entity* entity) {
         }
 
     case 1:
-        if (entity[1].unk84.S8.unk0 != 0) {
+        if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
             entity->unk1E += 4;
             if (entity->unk1E > 0) {
                 entity->unk1E = 0;
@@ -141,8 +141,8 @@ void EntityCavernDoorLever(Entity* entity) {
 }
 
 // platform attached to lever at cavern door
-void EntityCavernDoorPlatform(Entity* self) {
-    Entity* player;
+void EntityCavernDoorPlatform(Entity_*self) {
+    Entity_*player;
     s32 temp;
     s32 temp2;
 
@@ -150,29 +150,29 @@ void EntityCavernDoorPlatform(Entity* self) {
     case 0:
         InitializeEntity(D_80180B18);
         self->animCurFrame = 17;
-        self->unk88.unk = self->posX.val;
-        self->unk88.unk = self->posX.val; // ? WTF
+        self->ext.generic.unk88.unk = self->posX.val;
+        self->ext.generic.unk88.unk = self->posX.val; // ? WTF
 
     case 1:
         player = &PLAYER;
-        self->unk84.S8.unk0 = temp2 = func_801C5D18(self, 6, 5, 4);
+        self->ext.generic.unk84.S8.unk0 = temp2 = func_801C5D18(self, 6, 5, 4);
 
         if (temp2 != 0) {
             temp = self->posX.i.hi;
-            temp -= self->unk88.S16.unk2;
+            temp -= self->ext.generic.unk88.S16.unk2;
             player->posX.i.hi += temp;
             player->posY.i.hi++;
         }
-        self->unk88.unk = self->posX.val;
-        self->unk8C.modeS32 = self->posY.val;
+        self->ext.generic.unk88.unk = self->posX.val;
+        self->ext.generic.unk8C.modeS32 = self->posY.val;
     }
 }
 
 // door blocking way to the Underground Caverns
-void EntityCavernDoor(Entity* self) {
+void EntityCavernDoor(Entity_*self) {
     s16 firstPolygonIndex;
     u16* tileLayoutPtr;
-    Entity* entity;
+    Entity_*entity;
     POLY_GT4* poly;
     s32 tilePos;
     s32 i;
@@ -199,7 +199,7 @@ void EntityCavernDoor(Entity* self) {
 
             poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
-            *(s32*)&self->unk7C = poly;
+            *(s32*)&self->ext.generic.unk7C = poly;
             self->flags |= FLAG_FREE_POLYGONS;
             while (poly != NULL) {
                 poly->u0 = poly->v0 = 1;
@@ -229,7 +229,7 @@ void EntityCavernDoor(Entity* self) {
 
     case 2:
         self->posY.val += 0x6000;
-        if (++self->unk80.modeS32 & 1) {
+        if (++self->ext.generic.unk80.modeS32 & 1) {
             self->posX.i.hi++;
         } else {
             self->posX.i.hi--;
@@ -254,7 +254,7 @@ void EntityCavernDoor(Entity* self) {
         }
 
         if (!(g_blinkTimer & 1)) {
-            poly = func_801D6DB8((POLY_GT4*)(*(s32*)&self->unk7C));
+            poly = func_801D6DB8((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
@@ -276,7 +276,7 @@ void EntityCavernDoor(Entity* self) {
     }
 
     if (self->flags & FLAG_FREE_POLYGONS) {
-        for (poly = *(s32*)&self->unk7C; poly != NULL;
+        for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
              poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
                 func_801B94F0(poly);
@@ -288,9 +288,9 @@ void EntityCavernDoor(Entity* self) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B9C44);
 
 // switch that clicks when you step on it
-void EntityClickSwitch(Entity* entity) {
+void EntityClickSwitch(Entity_*entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
-    Entity* player = &PLAYER;
+    Entity_*player = &PLAYER;
 
     switch (entity->step) {
     case 0:
@@ -319,7 +319,7 @@ void EntityClickSwitch(Entity* entity) {
 }
 
 // smaller weight blocking path near cube of zoe
-void EntityPathBlockSmallWeight(Entity* self) {
+void EntityPathBlockSmallWeight(Entity_*self) {
     s16 firstPolygonIndex;
     POLY_GT4* poly;
     s32 var_a1;
@@ -339,7 +339,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
         while (poly != NULL) {
@@ -384,7 +384,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
     }
 
     if ((self->step < 3) && (func_801C5D18(self, 16, 16, 5) & 4)) {
-        Entity* player = &PLAYER;
+        Entity_*player = &PLAYER;
 
         player->posY.i.hi++;
     }
@@ -392,7 +392,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 }
 
 // taller weight blocking path near cube of zoe
-void EntityPathBlockTallWeight(Entity* self) {
+void EntityPathBlockTallWeight(Entity_*self) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
     s32 temp_a2;
@@ -414,7 +414,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
         while (poly != NULL) {
@@ -475,7 +475,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
 // trap door that leads to underground garden in saturn version.
 // also opens the one leading to the save room
-void EntityTrapDoor(Entity* entity) {
+void EntityTrapDoor(Entity_*entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B18);
@@ -514,9 +514,9 @@ void EntityTrapDoor(Entity* entity) {
 }
 
 // left side of the breakable rock, drops pot roast
-void EntityMermanRockLeftSide(Entity* self) {
+void EntityMermanRockLeftSide(Entity_*self) {
     u16* tileLayoutPtr;
-    Entity* newEntity;
+    Entity_*newEntity;
     s32 tilePos;
     u8* subId;
     s32 i;
@@ -553,7 +553,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 1:
         if (self->unk48 != 0) {
-            tileLayoutPtr = &D_80181258[self->unk84.S16.unk0 * 6];
+            tileLayoutPtr = &D_80181258[self->ext.generic.unk84.S16.unk0 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
                 g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
@@ -569,11 +569,11 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(2, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi += self->unk84.S16.unk0 * 16;
+                newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_80181344[self->unk84.S16.unk0 * 3];
+            subId = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -585,10 +585,10 @@ void EntityMermanRockLeftSide(Entity* self) {
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
-            self->unk84.S16.unk0++;
+            self->ext.generic.unk84.S16.unk0++;
         }
 
-        if (self->unk84.S16.unk0 >= 2) {
+        if (self->ext.generic.unk84.S16.unk0 >= 2) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0xA, self, newEntity);
@@ -609,9 +609,9 @@ void EntityMermanRockLeftSide(Entity* self) {
 }
 
 // right side of the merman room rock, breaks when hit
-void EntityMermanRockRightSide(Entity* self) {
+void EntityMermanRockRightSide(Entity_*self) {
     u16* tileLayoutPtr;
-    Entity* newEntity;
+    Entity_*newEntity;
     s32 tilePos;
     u8* subId;
     s32 i;
@@ -648,7 +648,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 1:
         if (self->unk48 != 0) {
-            tileLayoutPtr = &D_80181294[(self->unk84.S16.unk0 * 6)];
+            tileLayoutPtr = &D_80181294[(self->ext.generic.unk84.S16.unk0 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
                 g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
@@ -664,11 +664,11 @@ void EntityMermanRockRightSide(Entity* self) {
                 CreateEntityFromEntity(2, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi -= self->unk84.S16.unk0 * 16;
+                newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_80181344[self->unk84.S16.unk0 * 3];
+            subId = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -681,10 +681,10 @@ void EntityMermanRockRightSide(Entity* self) {
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
-            self->unk84.S16.unk0++;
+            self->ext.generic.unk84.S16.unk0++;
         }
 
-        if (self->unk84.S16.unk0 >= 2) {
+        if (self->ext.generic.unk84.S16.unk0 >= 2) {
             D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
             self->unk3C = 1;
             self->step++;
@@ -699,7 +699,7 @@ void EntityMermanRockRightSide(Entity* self) {
     }
 }
 
-void EntityUnkId26(Entity* self) {
+void EntityUnkId26(Entity_*self) {
     u16* tileLayoutPtr;
     s32 tileLayoutPos;
     s32 i;
@@ -744,10 +744,10 @@ void EntityUnkId26(Entity* self) {
 }
 
 // falling rock that breaks into dust
-void EntityFallingRock2(Entity* self) {
+void EntityFallingRock2(Entity_*self) {
     s32 animFrame = self->subId & 0xF;
     Collider collider;
-    Entity* newEntity;
+    Entity_*newEntity;
     s32 temp_a0;
     s32 var_a1;
     s32 new_var2;
@@ -800,10 +800,10 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
-void EntityFallingRock(Entity* self) {
+void EntityFallingRock(Entity_*self) {
     s32 animFrame = self->subId & 0xF;
     Collider collider;
-    Entity* newEntity;
+    Entity_*newEntity;
     s16 rndAngle;
     s32 rnd;
 
@@ -850,7 +850,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 // sky animation during death cutscene
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
 
-void EntityUnkId29(Entity* self) {
+void EntityUnkId29(Entity_*self) {
     if (self->step == 0) {
         InitializeEntity(D_80180B18);
         self->zPriority = 0x2A;
@@ -863,7 +863,7 @@ void EntityUnkId29(Entity* self) {
     }
 }
 
-void EntityUnkId2A(Entity* entity) {
+void EntityUnkId2A(Entity_*entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
@@ -871,18 +871,18 @@ void EntityUnkId2A(Entity* entity) {
         entity->animCurFrame = entity->subId + 0x22;
         entity->posX.i.hi = D_8018139C[entity->subId << 1];
         entity->posY.i.hi = D_8018139E[entity->subId << 1];
-        entity->unk80.modeS16.unk0 = 5;
+        entity->ext.generic.unk80.modeS16.unk0 = 5;
     }
-    entity->unk80.modeS16.unk0--;
-    if ((entity->unk80.modeS16.unk0 << 0x10) == 0) {
+    entity->ext.generic.unk80.modeS16.unk0--;
+    if ((entity->ext.generic.unk80.modeS16.unk0 << 0x10) == 0) {
         DestroyEntity(entity);
     }
 }
 
 // switch that goes downwards when you stand on it
-void EntitySwitch(Entity* entity) {
+void EntitySwitch(Entity_*entity) {
     s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
-    Entity* player = &PLAYER;
+    Entity_*player = &PLAYER;
 
     switch (entity->step) {
     case 0:
@@ -911,9 +911,9 @@ void EntitySwitch(Entity* entity) {
 }
 
 // door preventing access to warp room / heart
-void EntityHeartRoomGoldDoor(Entity* self) {
+void EntityHeartRoomGoldDoor(Entity_*self) {
     s16 firstPolygonIndex;
-    Entity* newEntity;
+    Entity_*newEntity;
     POLY_GT4* poly;
     s32 tilePos;
     s32 temp;
@@ -943,7 +943,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         while (poly != NULL) {
             poly->v0 = 1;
@@ -972,7 +972,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     case 2:
         self->posY.val += 0x6000;
-        if (++self->unk80.modeS32 & 1) {
+        if (++self->ext.generic.unk80.modeS32 & 1) {
             self->posX.i.hi++;
         } else {
             self->posX.i.hi--;
@@ -994,7 +994,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         }
 
         if (!(g_blinkTimer & 1)) {
-            poly = func_801D6DB8((POLY_GT4*)(*(s32*)&self->unk7C));
+            poly = func_801D6DB8((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
@@ -1015,7 +1015,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
     }
 
     if (self->flags & FLAG_FREE_POLYGONS) {
-        for (poly = *(s32*)&self->unk7C; poly != NULL;
+        for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
              poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
                 func_801B94F0(poly);
@@ -1024,7 +1024,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
     }
 }
 
-void EntityUnkId49(Entity* entity) {
+void EntityUnkId49(Entity_*entity) {
     u16 temp;
 
     switch (entity->step) {

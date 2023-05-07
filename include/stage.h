@@ -16,14 +16,14 @@ typedef struct {
 
 s32 Random();
 void Update(void);
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc);
-void DestroyEntity(Entity*);
+void CreateEntityFromEntity(u16 objectId, Entity_*source, Entity_*entity);
+void CreateEntityFromLayout(Entity_*entity, LayoutObject* initDesc);
+void DestroyEntity(Entity_*);
 void DestroyEntityFromIndex(s16 index);
-s32 AnimateEntity(const u8 frames[], Entity* entity);
+s32 AnimateEntity(const u8 frames[], Entity_*entity);
 void MoveEntity();
 void FallEntity(void);
-Entity* AllocEntity(Entity* start, Entity* end);
+Entity_*AllocEntity(Entity_*start, Entity_*end);
 void InitializeEntity(u16 arg0[]);
 
 #endif
