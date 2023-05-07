@@ -266,8 +266,8 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ u16 unk10;
-    /* 0x12 */ s16 unk12;
+    /* 0x10 */ u16 unk10; // Hitbox X Offset
+    /* 0x12 */ s16 unk12; // Hitbox Y Offset
     /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
@@ -281,12 +281,12 @@ typedef struct Entity {
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
-    /* 0x2E */ u16 step_s; // pl_step_s
+    /* 0x2E */ u16 step_s;
     /* 0x30 */ u16 subId;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
-    /* 0x3A */ s16 enemyId;
+    /* 0x3A */ u16 enemyId;
     /* 0x3C */ u16 unk3C; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;

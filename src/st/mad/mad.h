@@ -12,14 +12,14 @@ void func_80190C78(s16);
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void ReplaceBreakableWithItemDrop(Entity*);
-void CreateEntityFromEntity(u16 objectId, Entity*ent1, Entity*ent2);
+void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2);
 void func_80198BC8(void* const, s32);
 void func_8019344C(void);
 void EntityEquipItemDrop(Entity*);
 
 // OFFSET FIXED
 extern u8 D_8003BEE8[];
-extern Entity*g_CurrentEntity;
+extern Entity* g_CurrentEntity;
 extern Entity g_EntityArray[];
 extern Entity D_8007D858[];
 extern Entity D_8007EF1C;

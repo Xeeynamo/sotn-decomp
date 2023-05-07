@@ -76,7 +76,7 @@ void EntityIntenseExplosion(Entity*);
 void EntityAbsorbOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
-// void EntityEquipItemDrop(Entity*);
+void EntityEquipItemDrop(Entity*);
 void EntityRelicOrb(Entity*);
 #ifndef MAD_H
 void EntityHeartDrop(Entity*);
