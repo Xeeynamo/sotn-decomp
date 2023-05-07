@@ -108,7 +108,7 @@ init_entity:
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
-    entity->unk8C.entityPtr = self;
+    entity->ext.generic.unk8C.entityPtr = self;
 }
 
 void func_8017160C(s32 amount, s32 objectId) {
@@ -135,8 +135,8 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->subId = i + 1;
             entity->facing = facing;
         }
-        *((s16*)(&entity->unkAC)) = g_Camera.posX.i.hi;
-        *((s16*)(&entity->unkAE)) = g_Camera.posY.i.hi;
+        *((s16*)(&entity->ext.generic.unkAC)) = g_Camera.posX.i.hi;
+        *((s16*)(&entity->ext.generic.unkAE)) = g_Camera.posY.i.hi;
     }
 }
 
@@ -192,8 +192,8 @@ void func_801718A0(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->unk8C.modeS16.unk0 << 7) * 8) >> 12;
-    y -= entity->unk8C.modeS16.unk0 / 2;
+    x += (rsin(entity->ext.generic.unk8C.modeS16.unk0 << 7) * 8) >> 12;
+    y -= entity->ext.generic.unk8C.modeS16.unk0 / 2;
 
     poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = poly->x2 = x - D_80170608[frame].x;
@@ -277,8 +277,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&e->unkAC = g_Camera.posX.i.hi;
-    *(u16*)&e->unkAE = g_Camera.posY.i.hi;
+    *(u16*)&e->ext.generic.unkAC = g_Camera.posX.i.hi;
+    *(u16*)&e->ext.generic.unkAE = g_Camera.posY.i.hi;
 }
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -673,7 +673,7 @@ init_entity:
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = entityParent->posX.val;
     entity->posY.val = entityParent->posY.val;
-    entity->unk8C.entityPtr = entityParent;
+    entity->ext.generic.unk8C.entityPtr = entityParent;
     entity->subId = subId;
 }
 

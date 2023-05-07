@@ -37,7 +37,7 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_WALK:
         if (self->step_s == 0) {
-            self->unk80.modeS16.unk0 = 128;
+            self->ext.generic.unk80.modeS16.unk0 = 128;
             self->step_s++;
         }
 
@@ -50,8 +50,8 @@ void EntityBloodyZombie(Entity* self) {
             self->accelerationX = 0x6000;
         }
 
-        if (--self->unk80.modeS16.unk0 == 0) {
-            self->unk80.modeS16.unk0 = 128;
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+            self->ext.generic.unk80.modeS16.unk0 = 128;
             self->facing ^= 1;
         }
 
@@ -140,7 +140,7 @@ void EntityBloodyZombie(Entity* self) {
             }
             self->firstPolygonIndex = firstPrimIndex;
             prim = &g_PrimBuf[firstPrimIndex];
-            *(s32*)&self->unk7C = prim;
+            *(s32*)&self->ext.generic.unk7C = prim;
             self->flags |= FLAG_FREE_POLYGONS;
             self->step_s++;
         }
@@ -151,7 +151,7 @@ void EntityBloodyZombie(Entity* self) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x4A, self, newEntity);
-                    newEntity->facing = self->unk84.U8.unk0;
+                    newEntity->facing = self->ext.generic.unk84.U8.unk0;
                     if (self->facing != 0) {
                         newEntity->posX.i.hi -= 4;
                     } else {
@@ -159,27 +159,27 @@ void EntityBloodyZombie(Entity* self) {
                     }
                     newEntity->posY.i.hi += 4;
                 }
-                self->unk84.U8.unk0 ^= 1;
+                self->ext.generic.unk84.U8.unk0 ^= 1;
             }
-            self->unk80.modeS16.unk0 = 0;
+            self->ext.generic.unk80.modeS16.unk0 = 0;
         } else {
-            if (self->unk80.modeS16.unk0 == 0) {
+            if (self->ext.generic.unk80.modeS16.unk0 == 0) {
                 func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
             }
 
-            self->unk80.modeS16.unk0++;
+            self->ext.generic.unk80.modeS16.unk0++;
             if (!(g_blinkTimer & 3)) {
-                primPtrPtr = func_801D24A0(*(s32*)&self->unk7C, 2);
+                primPtrPtr = func_801D24A0(*(s32*)&self->ext.generic.unk7C, 2);
                 if (primPtrPtr != NULL) {
                     func_801D2684(primPtrPtr);
-                    (*primPtrPtr)->r3 = self->unk84.U8.unk0;
+                    (*primPtrPtr)->r3 = self->ext.generic.unk84.U8.unk0;
                 }
-                self->unk84.U8.unk0 ^= 1;
+                self->ext.generic.unk84.U8.unk0 ^= 1;
             }
         }
 
         if (self->flags & FLAG_FREE_POLYGONS) {
-            prim = *(s32*)&self->unk7C;
+            prim = *(s32*)&self->ext.generic.unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
                     func_801CA498(prim);
@@ -200,7 +200,7 @@ void EntityBloodyZombie(Entity* self) {
                     newEntity->posX.i.hi += 8;
                 }
             }
-            self->unk80.modeS16.unk0 = 64;
+            self->ext.generic.unk80.modeS16.unk0 = 64;
             self->animCurFrame = 0;
             func_801C2598(NA_SE_EN_EXPLOSIVE_DEATH);
             self->step++;
@@ -209,7 +209,7 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_DESTROY:
         if (self->flags & FLAG_FREE_POLYGONS) {
-            prim = *(s32*)&self->unk7C;
+            prim = *(s32*)&self->ext.generic.unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
                     func_801CA498(prim);
@@ -218,7 +218,7 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (--self->unk80.modeS16.unk0 == 0) {
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             DestroyEntity(self);
         }
         break;

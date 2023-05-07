@@ -63,17 +63,17 @@ void func_801B2830(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(&D_80180A60);
-        self->unk7C.S8.unk0 = 16;
-        self->unk7C.S8.unk1 = 8;
-        self->unk7E.modeU8.unk0 = 56;
+        self->ext.generic.unk7C.S8.unk0 = 16;
+        self->ext.generic.unk7C.S8.unk1 = 8;
+        self->ext.generic.unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB08.buf.draw.r0 = self->unk7C.S8.unk0;
-        D_8003CB08.buf.draw.g0 = self->unk7C.S8.unk1;
-        D_8003CB08.buf.draw.b0 = self->unk7E.modeU8.unk0;
-        D_800542FC.buf.draw.r0 = self->unk7C.S8.unk0;
-        D_800542FC.buf.draw.g0 = self->unk7C.S8.unk1;
-        D_800542FC.buf.draw.b0 = self->unk7E.modeU8.unk0;
+        D_8003CB08.buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
+        D_8003CB08.buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
+        D_8003CB08.buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
+        D_800542FC.buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
+        D_800542FC.buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
+        D_800542FC.buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
         break;
     }
 }
@@ -108,7 +108,7 @@ void EntityCavernDoorLever(Entity* entity) {
         }
 
     case 1:
-        if (entity[1].unk84.S8.unk0 != 0) {
+        if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
             entity->unk1E += 4;
             if (entity->unk1E > 0) {
                 entity->unk1E = 0;
@@ -141,23 +141,23 @@ void EntityCavernDoorPlatform(Entity* self) {
     case 0:
         InitializeEntity(D_80180AA8);
         self->animCurFrame = 17;
-        self->unk88.unk = self->posX.val;
-        self->unk88.unk = self->posX.val; // ? WTF
+        self->ext.generic.unk88.unk = self->posX.val;
+        self->ext.generic.unk88.unk = self->posX.val; // ? WTF
 
     case 1:
         player = &PLAYER;
-        self->unk84.S8.unk0 = temp2 = func_801BD588(self, 6, 5, 4);
+        self->ext.generic.unk84.S8.unk0 = temp2 = func_801BD588(self, 6, 5, 4);
 
         if (temp2 != 0) {
             temp = self->posX.i.hi;
-            temp -= self->unk88.S16.unk2;
+            temp -= self->ext.generic.unk88.S16.unk2;
             player->posX.i.hi += temp;
             player->posY.i.hi++;
             D_8009748A[0] += temp;
             D_8009748A[2] += 1;
         }
-        self->unk88.unk = self->posX.val;
-        self->unk8C.modeS32 = self->posY.val;
+        self->ext.generic.unk88.unk = self->posX.val;
+        self->ext.generic.unk8C.modeS32 = self->posY.val;
     }
 }
 
@@ -191,7 +191,7 @@ void func_801B40F8(Entity* self) {
 
             poly = &g_PrimBuf[firstPolygonIndex];
             self->firstPolygonIndex = firstPolygonIndex;
-            *((s32*)(&self->unk7C)) = poly;
+            *((s32*)(&self->ext.generic.unk7C)) = poly;
             self->flags |= FLAG_FREE_POLYGONS;
             while (poly != NULL) {
                 poly->u0 = poly->v0 = 1;
@@ -221,7 +221,7 @@ void func_801B40F8(Entity* self) {
 
     case 2:
         self->posY.val += 0x6000;
-        if (++self->unk80.modeS32 & 1) {
+        if (++self->ext.generic.unk80.modeS32 & 1) {
             self->posX.i.hi++;
         } else {
             self->posX.i.hi--;
@@ -240,7 +240,7 @@ void func_801B40F8(Entity* self) {
             self->step = 3;
         }
 
-        if (!(self->unk80.modeS32 & 15)) {
+        if (!(self->ext.generic.unk80.modeS32 & 15)) {
             g_api.PlaySfx(NA_SE_EV_HEAVY_BLOCK_DRAG);
         }
 
@@ -250,7 +250,7 @@ void func_801B40F8(Entity* self) {
         }
 
         if (!(g_blinkTimer & 1)) {
-            poly = func_801D2470((POLY_GT4*)(*(s32*)&self->unk7C));
+            poly = func_801D2470((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
@@ -272,7 +272,7 @@ void func_801B40F8(Entity* self) {
     }
 
     if (self->flags & FLAG_FREE_POLYGONS) {
-        for (poly = *(s32*)&self->unk7C; poly != NULL;
+        for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
              poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
                 func_801B3D24(poly);
@@ -335,7 +335,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
         while (poly != NULL) {
@@ -414,7 +414,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
 
         while (poly != NULL) {
@@ -552,7 +552,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 1:
         if (self->unk48 != 0) {
-            tileLayoutPtr = &D_80181120[self->unk84.S16.unk0 * 6];
+            tileLayoutPtr = &D_80181120[self->ext.generic.unk84.S16.unk0 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
                 g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
@@ -568,11 +568,11 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(2, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi += self->unk84.S16.unk0 * 16;
+                newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_8018120C[self->unk84.S16.unk0 * 3];
+            subId = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -584,10 +584,10 @@ void EntityMermanRockLeftSide(Entity* self) {
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
-            self->unk84.S16.unk0++;
+            self->ext.generic.unk84.S16.unk0++;
         }
 
-        if (self->unk84.S16.unk0 >= 2) {
+        if (self->ext.generic.unk84.S16.unk0 >= 2) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0xA, self, newEntity);
@@ -647,7 +647,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 1:
         if (self->unk48 != 0) {
-            tileLayoutPtr = &D_8018115C[(self->unk84.S16.unk0 * 6)];
+            tileLayoutPtr = &D_8018115C[(self->ext.generic.unk84.S16.unk0 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
                 g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
@@ -663,11 +663,11 @@ void EntityMermanRockRightSide(Entity* self) {
                 CreateEntityFromEntity(2, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
-                newEntity->posX.i.hi -= self->unk84.S16.unk0 * 16;
+                newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_8018120C[self->unk84.S16.unk0 * 3];
+            subId = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -680,10 +680,10 @@ void EntityMermanRockRightSide(Entity* self) {
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
-            self->unk84.S16.unk0++;
+            self->ext.generic.unk84.S16.unk0++;
         }
 
-        if (self->unk84.S16.unk0 >= 2) {
+        if (self->ext.generic.unk84.S16.unk0 >= 2) {
             D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
             self->unk3C = 1;
             self->step++;
@@ -862,10 +862,10 @@ void func_801B5E98(Entity* self) {
         self->animCurFrame = self->subId + 0x22;
         self->posX.i.hi = D_80181220[self->subId][0];
         self->posY.i.hi = D_80181220[self->subId][1];
-        self->unk80.modeS16.unk0 = 5;
+        self->ext.generic.unk80.modeS16.unk0 = 5;
     }
 
-    if (--self->unk80.modeS16.unk0 == 0) {
+    if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
         DestroyEntity(self);
     }
 }
@@ -910,9 +910,9 @@ void func_801B653C(void) {
         if (entity != NULL) {
             CreateEntityFromEntity(0x4D, g_CurrentEntity, entity);
             entity->subId = 2;
-            entity->unk88.U8.unk1 = 6 - i;
-            entity->unk84.S16.unk0 = temp_s3;
-            entity->unk88.U8.unk0 = temp_s4;
+            entity->ext.generic.unk88.U8.unk1 = 6 - i;
+            entity->ext.generic.unk84.S16.unk0 = temp_s3;
+            entity->ext.generic.unk88.U8.unk0 = temp_s4;
         }
     }
 }
@@ -938,7 +938,7 @@ void func_801B75EC(Entity* self) {
         self->unk12 = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (self[-1].unk84.U8.unk2 != 0) {
+        if (self[-1].ext.generic.unk84.U8.unk2 != 0) {
             self->step++;
         }
         break;
@@ -1700,11 +1700,13 @@ void func_801BD984(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

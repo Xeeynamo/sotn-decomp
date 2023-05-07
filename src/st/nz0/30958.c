@@ -100,7 +100,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         }
         prim = &g_PrimBuf[firstPrimIndex];
         self->firstPolygonIndex = (s32)firstPrimIndex;
-        *(s32*)&self->unk7C = prim;
+        *(s32*)&self->ext.generic.unk7C = prim;
         self->flags |= 0x800000;
         while (prim != NULL) {
             prim->tpage = 0xF;
@@ -121,7 +121,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         tempPosX = tempPosX - 0x80;
         tempPosY = self->posY.i.hi;
         tempPosY = (tempPosY & 0x3F) - 0x40;
-        prim = *((s32*)(&self->unk7C));
+        prim = *((s32*)(&self->ext.generic.unk7C));
         // Primitives are laid out in a 5-tall by 3-wide grid
         for (y = 0; y < 5; y++) {
             for (x = 0; x < 3; x++) {
@@ -177,8 +177,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_BREAK:
-        self->unk84.unk++;
-        tileLayoutPtr = &D_80180E54 + (self->unk84.unk * 0x4);
+        self->ext.generic.unk84.unk++;
+        tileLayoutPtr = &D_80180E54 + (self->ext.generic.unk84.unk * 0x4);
 
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
@@ -193,10 +193,10 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             CreateEntityFromEntity(2, self, newEntity);
             newEntity->subId = 0x13;
         }
-        self->unk80.modeS32 = 32;
+        self->ext.generic.unk80.modeS32 = 32;
         self->step++;
 
-        if (self->unk84.unk == 3) {
+        if (self->ext.generic.unk84.unk == 3) {
             D_8003BDEC[129] = 1;
             g_api.func_800F1FC4(0x81);
 
@@ -214,7 +214,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_CHECK:
-        if (--self->unk80.modeS32 == 0) {
+        if (--self->ext.generic.unk80.modeS32 == 0) {
             self->step = LEFT_SECRET_ROOM_WALL_IDLE;
         }
         break;
@@ -257,8 +257,8 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
         return;
 
     case BOTTOM_SECRET_ROOM_FLOOR_BREAK:
-        self->unk84.unk++;
-        tileLayoutPtr = &D_80180E94 + (self->unk84.unk * 2);
+        self->ext.generic.unk84.unk++;
+        tileLayoutPtr = &D_80180E94 + (self->ext.generic.unk84.unk * 2);
 
         tilePos = 0x2E7;
         for (i = 0; i < 2; i++) {
@@ -273,10 +273,10 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
             CreateEntityFromEntity(2, self, newEntity);
             newEntity->subId = 0x11;
         }
-        self->unk80.modeS32 = 32;
+        self->ext.generic.unk80.modeS32 = 32;
         self->step++;
 
-        if (self->unk84.unk == 3) {
+        if (self->ext.generic.unk84.unk == 3) {
             D_8003BDEC[130] = 1;
             g_api.func_800F1FC4(0x82);
             DestroyEntity(self);
@@ -284,7 +284,7 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
         break;
 
     case BOTTOM_SECRET_ROOM_FLOOR_CHECK:
-        if (--self->unk80.modeS32 == 0) {
+        if (--self->ext.generic.unk80.modeS32 == 0) {
             self->step = BOTTOM_SECRET_ROOM_FLOOR_IDLE;
         }
         break;
@@ -383,7 +383,7 @@ void func_801B1C18(Entity* self) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C)) = poly;
+        *((s32*)(&self->ext.generic.unk7C)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
@@ -424,7 +424,7 @@ void func_801B1C18(Entity* self) {
         }
         break;
     }
-    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
     poly->x0 = self->posX.i.hi - 8;
     poly->y0 = self->posY.i.hi - 8;
 }
@@ -450,7 +450,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C)) = poly;
+        *((s32*)(&self->ext.generic.unk7C)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
@@ -464,10 +464,10 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
 
         if (self->subId & D_80180EB4) {
             self->posY.i.hi = 480 - g_Camera.posY.i.hi;
-            self->unk88.S8.unk0 = 1;
+            self->ext.generic.unk88.S8.unk0 = 1;
         } else {
             self->posY.i.hi = 452 - g_Camera.posY.i.hi;
-            self->unk88.S8.unk0 = 0;
+            self->ext.generic.unk88.S8.unk0 = 0;
         }
 
     case 1:
@@ -488,13 +488,13 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
             var_v1 = 0;
         }
 
-        if (self->unk88.U8.unk0 != var_v1) {
-            self->unk88.U8.unk0 = var_v1;
+        if (self->ext.generic.unk88.U8.unk0 != var_v1) {
+            self->ext.generic.unk88.U8.unk0 = var_v1;
             func_801C29B0(0x69D);
         }
     }
 
-    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
     poly->x0 = self->posX.i.hi - 16;
     poly->y0 = self->posY.i.hi - 16;
     temp = 480 - (g_Camera.posY.i.hi + self->posY.i.hi);
@@ -523,7 +523,7 @@ void EntityMoveableBox(Entity* self) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C.s)) = poly;
+        *((s32*)(&self->ext.generic.unk7C.s)) = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
         poly->tpage = 0xF;
@@ -570,11 +570,12 @@ void EntityMoveableBox(Entity* self) {
             if (var_v0 < 24) {
                 var_s1 = 2;
             }
-            if ((self->unk84.unk == 0) && ((s16)D_801CB736[var_s1] != 0)) {
+            if ((self->ext.generic.unk84.unk == 0) &&
+                ((s16)D_801CB736[var_s1] != 0)) {
                 var_s1 = 0;
                 self->posX.val -= self->accelerationX;
             }
-            self->unk84.unk = var_s1;
+            self->ext.generic.unk84.unk = var_s1;
             if (var_s1 != 0) {
                 self->posY.i.hi =
                     (448 - D_801CB736[var_s1]) - g_Camera.posY.i.hi;
@@ -582,7 +583,7 @@ void EntityMoveableBox(Entity* self) {
         }
         break;
     }
-    poly = (POLY_GT4*)(*(s32*)(&self->unk7C.s));
+    poly = (POLY_GT4*)(*(s32*)(&self->ext.generic.unk7C.s));
     new_var = ((u16)self->posX.i.hi) - 16;
     poly->x0 = new_var;
     poly->y0 = ((u16)self->posY.i.hi) - 16;
@@ -596,7 +597,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
 #else
 void EntityCannonLever(Entity* self) {
     /** TODO: !FAKE
-     * self->unk7C should be a POLY_G4*
+     * self->ext.generic.unk7C should be a POLY_G4*
      */
     POLY_GT4* poly;
     s16 firstPolygonIndex;
@@ -618,7 +619,7 @@ void EntityCannonLever(Entity* self) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
 
         self->flags |= FLAG_FREE_POLYGONS;
         poly->code = 6;
@@ -666,7 +667,7 @@ void EntityCannonLever(Entity* self) {
     if (D_8003BE6F != 0) {
         self->unk3C = 0;
     }
-    poly = (POLY_GT4*)*(s32*)&self->unk7C.s;
+    poly = (POLY_GT4*)*(s32*)&self->ext.generic.unk7C.s;
     poly->x0 = self->posX.i.hi - 4;
     poly->y0 = self->posY.i.hi - 20;
 }
@@ -692,7 +693,7 @@ void EntityCannon(Entity* self) {
 
         self->firstPolygonIndex = firstPrimIndex;
         prim = &g_PrimBuf[firstPrimIndex];
-        *(s32*)&self->unk7C = prim;
+        *(s32*)&self->ext.generic.unk7C = prim;
         self->flags |= 0x800000;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
@@ -738,7 +739,7 @@ void EntityCannon(Entity* self) {
         break;
 
     case 2:
-        prim = *(s32*)&self->unk7C;
+        prim = *(s32*)&self->ext.generic.unk7C;
         prim = prim->next;
         self->posX.i.hi = prim->x0 + 8;
         self->posX.i.lo = 0;
@@ -760,7 +761,7 @@ void EntityCannon(Entity* self) {
         break;
     }
 
-    prim = *(s32*)&self->unk7C;
+    prim = *(s32*)&self->ext.generic.unk7C;
     prim->x0 = self->posX.i.hi - 24;
     prim->y0 = self->posY.i.hi - 16;
 }
@@ -859,7 +860,7 @@ void func_801B2AD8(Entity* self) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *(s32*)&self->unk7C = poly;
+        *(s32*)&self->ext.generic.unk7C = poly;
         self->flags |= FLAG_FREE_POLYGONS;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -896,7 +897,7 @@ void func_801B2AD8(Entity* self) {
         }
 
     default:
-        poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+        poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
         poly->x0 = self->posX.i.hi - 8;
         poly->y0 = self->posY.i.hi - 8;
     }
@@ -929,7 +930,7 @@ void EntityFloorSpikes(Entity* self) {
         self->attackElement = 1;
         self->attack = 7;
         self->unk3C = 1;
-        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
+        self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
 
         temp = 4;
         new_var = self->posY.i.hi - 4;
@@ -946,7 +947,7 @@ void EntityFloorSpikes(Entity* self) {
         }
         prim = &g_PrimBuf[firstPrimIndex];
         self->firstPolygonIndex = firstPrimIndex;
-        *((s32*)(&self->unk7C)) = prim;
+        *((s32*)(&self->ext.generic.unk7C)) = prim;
         self->flags |= 0x800000;
         prim->type = 6;
         prim->tpage = 0xF;
@@ -960,28 +961,29 @@ void EntityFloorSpikes(Entity* self) {
 
     case 1:
         self->unk3C = 1;
-        if (self->unk84.unk != 0) {
+        if (self->ext.generic.unk84.unk != 0) {
             self->posY.val += 0x10000;
             new_var = g_Camera.posY.i.hi + self->posY.i.hi;
             var_v1 = g_Camera.posY.i.hi;
-            if (new_var > self->unk80.modeS32) {
+            if (new_var > self->ext.generic.unk80.modeS32) {
                 self->unk3C = 0;
-                self->posY.i.hi = self->unk80.modeS16.unk0 - var_v1;
+                self->posY.i.hi = self->ext.generic.unk80.modeS16.unk0 - var_v1;
             }
         } else {
             self->posY.val += 0xFFFF0000;
             new_var = g_Camera.posY.i.hi + self->posY.i.hi;
             var_v1 = g_Camera.posY.i.hi;
-            if (new_var < (self->unk80.modeS32 - 28)) {
-                self->posY.i.hi = self->unk80.modeS16.unk0 - 28 - var_v1;
+            if (new_var < (self->ext.generic.unk80.modeS32 - 28)) {
+                self->posY.i.hi =
+                    self->ext.generic.unk80.modeS16.unk0 - 28 - var_v1;
             }
         }
     }
-    if (self->unk88.U8.unk0 != 0) {
+    if (self->ext.generic.unk88.U8.unk0 != 0) {
         func_801C29B0(0x69D);
-        self->unk88.S8.unk0 = 0;
+        self->ext.generic.unk88.S8.unk0 = 0;
     }
-    prim = *((s32*)(&self->unk7C));
+    prim = *((s32*)(&self->ext.generic.unk7C));
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
 }
@@ -1179,9 +1181,9 @@ void func_801B3B78() {
         if (entity != NULL) {
             CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
             entity->subId = 2;
-            entity->unk88.S8.unk1 = 6 - i;
-            entity->unk84.S16.unk0 = temp_s3;
-            entity->unk88.S8.unk0 = temp_s4;
+            entity->ext.generic.unk88.S8.unk1 = 6 - i;
+            entity->ext.generic.unk84.S16.unk0 = temp_s3;
+            entity->ext.generic.unk88.S8.unk0 = temp_s4;
         }
     }
 }
@@ -1206,7 +1208,7 @@ void EntityBossRoomBlock(Entity* self) {
 
     case 1:
         if (D_80181010 & 1) {
-            self->unk80.modeS16.unk0 = 0x10;
+            self->ext.generic.unk80.modeS16.unk0 = 0x10;
             self->step++;
         }
         break;
@@ -1222,7 +1224,7 @@ void EntityBossRoomBlock(Entity* self) {
         if (!(g_blinkTimer & 3)) {
             g_api.PlaySfx(0x608);
         }
-        if (--self->unk80.modeS16.unk0) {
+        if (--self->ext.generic.unk80.modeS16.unk0) {
             break;
         }
         self->step++;
@@ -1294,7 +1296,7 @@ void func_801B54A8(Entity* self) {
         self->unk12 = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (self[-1].unk84.U8.unk2 != 0) {
+        if (self[-1].ext.generic.unk84.U8.unk2 != 0) {
             self->step++;
         }
         break;
@@ -1493,7 +1495,7 @@ void func_801B6DE4(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
+        self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
         self->hitboxHeight = 8;
         self->unk12 = -0x16;
         self->hitboxWidth = 6;
@@ -1506,7 +1508,7 @@ void func_801B6DE4(Entity* self) {
         }
         poly = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        *((s32*)(&self->unk7C)) = poly;
+        *((s32*)(&self->ext.generic.unk7C)) = poly;
 
         self->flags |= FLAG_FREE_POLYGONS;
         poly->tpage = 0xF;
@@ -1523,9 +1525,9 @@ void func_801B6DE4(Entity* self) {
         if (temp_s1 != 0) {
             self->posY.val += 0x10000;
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
-            if ((self->unk80.modeS32 + 4) < temp) {
-                self->posY.i.hi =
-                    (u16)(self->unk80.modeS16.unk0 - (g_Camera.posY.i.hi - 4));
+            if ((self->ext.generic.unk80.modeS32 + 4) < temp) {
+                self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0 -
+                                        (g_Camera.posY.i.hi - 4));
                 self->step++;
                 func_801C29B0(NA_SE_EV_SWITCH_CLICK);
                 D_801813A4 = self->subId;
@@ -1537,16 +1539,16 @@ void func_801B6DE4(Entity* self) {
         if (temp_s1 == 0) {
             self->posY.val += 0xFFFF0000;
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
-            if (temp < self->unk80.modeS32) {
-                self->posY.i.hi =
-                    (u16)(self->unk80.modeS16.unk0) - g_Camera.posY.i.hi;
+            if (temp < self->ext.generic.unk80.modeS32) {
+                self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0) -
+                                  g_Camera.posY.i.hi;
                 self->step = 1;
             }
         }
         break;
     }
 
-    poly = (POLY_GT4*)(*((s32*)(&self->unk7C)));
+    poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
     poly->x0 = self->posX.i.hi - 8;
     poly->y0 = self->posY.i.hi;
     poly->y0 = poly->y0 - 8;
@@ -2440,11 +2442,13 @@ void func_801BDD9C(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

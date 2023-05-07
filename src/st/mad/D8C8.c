@@ -898,11 +898,13 @@ void func_8019344C(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

@@ -29,13 +29,13 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 1:
         if (entity->posX.i.hi < 224) {
-            entity->unk7C.s = 0;
+            entity->ext.generic.unk7C.s = 0;
             entity->step++;
         }
         break;
 
     case 2:
-        if (!(entity->unk7C.s++ & 7)) {
+        if (!(entity->ext.generic.unk7C.s++ & 7)) {
             g_api.PlaySfx(0x7A4);
         }
         if (entity->posX.i.hi < 192) {
@@ -221,8 +221,8 @@ void EntityUnkId5B(Entity* entity) {
         break;
 
     case 1:
-        if (entity->unk7C.u != 0) {
-            switch (entity->unk7C.u) {
+        if (entity->ext.generic.unk7C.u != 0) {
+            switch (entity->ext.generic.unk7C.u) {
             case 1:
                 AnimateEntity(&D_80181B40, entity);
                 break;
@@ -244,7 +244,7 @@ void EntityUnkId5B(Entity* entity) {
             entity->animCurFrame = 0;
         }
     }
-    entity->unk7C.s = 0;
+    entity->ext.generic.unk7C.s = 0;
 }
 
 void EntityUnkId5E(Entity* entity) {
@@ -260,17 +260,17 @@ void EntityUnkId5E(Entity* entity) {
         entity->unk5A = 0x44;
         if (entity->subId != 0) {
             entity->unk19 = 8;
-            entity->unk84.U16.unk0 = 0x40;
+            entity->ext.generic.unk84.U16.unk0 = 0x40;
         } else {
             entity->unk19 = 0xC;
-            entity->unk84.U16.unk0 = 0x20;
+            entity->ext.generic.unk84.U16.unk0 = 0x20;
         }
         entity->unk6C = 0x40;
         entity->blendMode = 0x30;
         break;
 
     case 1:
-        if (!(--entity->unk84.U16.unk0)) {
+        if (!(--entity->ext.generic.unk84.U16.unk0)) {
             DestroyEntity(entity);
             break;
         }
@@ -296,9 +296,9 @@ void func_801C13F8() {
         if (entity != NULL) {
             CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
             entity->subId = 2;
-            entity->unk88.S8.unk1 = 6 - i;
-            entity->unk84.S16.unk0 = temp_s3;
-            entity->unk88.S8.unk0 = temp_s4;
+            entity->ext.generic.unk88.S8.unk1 = 6 - i;
+            entity->ext.generic.unk84.S16.unk0 = temp_s3;
+            entity->ext.generic.unk88.S8.unk0 = temp_s4;
         }
     }
 }
@@ -1025,11 +1025,13 @@ void func_801C6114(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

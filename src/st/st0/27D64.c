@@ -57,7 +57,7 @@ void EntityLockCamera(Entity* entity) {
         temp_v1 = temp_s1 & 0xFFFF;
         entity->unk3C = 1;
         temp_v0 = D_80180660[temp_v1];
-        entity->unk7C.modeU16 = temp_v0;
+        entity->ext.generic.unk7C.modeU16 = temp_v0;
         if (temp_v0) {
             entity->hitboxWidth = D_8018065C[temp_v1];
             entity->hitboxHeight = 20;
@@ -79,7 +79,7 @@ void EntityLockCamera(Entity* entity) {
 
     if (func_801A7E2C(entity)) {
         temp_v0_2 = func_801B4C78();
-        if (entity->unk7C.modeU16) {
+        if (entity->ext.generic.unk7C.modeU16) {
             phi_v1 = (temp_v0_2 & 2) * 2;
         } else {
             phi_v1 = (temp_v0_2 & 1) * 4;
@@ -367,13 +367,13 @@ void EntityDraculaFireball(Entity* entity) {
         if (entity->subId == 2) {
             entity->accelerationY = 0x8000;
         }
-        entity->unk8C.modeU16.unk0 = 0x28;
+        entity->ext.generic.unk8C.modeU16.unk0 = 0x28;
 
     case 1:
         AnimateEntity(D_8018097C, entity);
         MoveEntity();
-        temp_v0 = entity->unk8C.modeU16.unk0 - 1;
-        entity->unk8C.modeU16.unk0 = temp_v0;
+        temp_v0 = entity->ext.generic.unk8C.modeU16.unk0 - 1;
+        entity->ext.generic.unk8C.modeU16.unk0 = temp_v0;
 
         if ((temp_v0 << 0x10) == 0) {
             entity->accelerationY = 0;
@@ -1311,11 +1311,13 @@ void func_801B5EC8(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

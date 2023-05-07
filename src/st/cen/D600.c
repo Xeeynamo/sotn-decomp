@@ -728,11 +728,13 @@ void func_80195714(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -787,7 +789,7 @@ void EntityHeartDrop(Entity* self) {
 
     if (self->step == 0) {
         temp_a0 = self->subId + 0xC0;
-        self->unkB4 = temp_a0;
+        self->ext.generic.unkB4 = temp_a0;
         if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
             DestroyEntity(self);
             return;
@@ -795,23 +797,23 @@ void EntityHeartDrop(Entity* self) {
         temp_a0_2 = temp_a0 - 0xC0;
         var_a0 = D_801805D8[temp_a0_2];
         if (var_a0 < 128) {
-            self->unkB8.unkFuncB8 = EntityPrizeDrop;
+            self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
         } else {
-            self->unkB8.unkFuncB8 = EntityEquipItemDrop;
+            self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
             var_a0 -= 128;
         }
         self->subId = var_a0 + 0x8000;
     } else {
-        temp_a0_2 = self->unkB4;
+        temp_a0_2 = self->ext.generic.unkB4;
         if (self->step < 5) {
             if (self->unk48 != 0) {
-                var_a0 = self->unkB4;
+                var_a0 = self->ext.generic.unkB4;
                 D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
                 self->step = 5;
             }
         }
     }
-    self->unkB8.unkFuncB8(self);
+    self->ext.generic.unkB8.unkFuncB8(self);
 }
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId0E);
@@ -823,9 +825,10 @@ void EntityUnkId13(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180440);
-        entity->unk8C.modeU16.unk0 = entity->unk80.entityPtr->objectId;
+        entity->ext.generic.unk8C.modeU16.unk0 =
+            entity->ext.generic.unk80.entityPtr->objectId;
     case 1:
-        if (entity->unk7C.U8.unk0++ >= 5) {
+        if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
@@ -834,11 +837,12 @@ void EntityUnkId13(Entity* entity) {
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }
-            entity->unk7C.U8.unk0 = 0;
+            entity->ext.generic.unk7C.U8.unk0 = 0;
         }
-        entity->posX.i.hi = entity->unk80.entityPtr->posX.i.hi;
-        entity->posY.i.hi = entity->unk80.entityPtr->posY.i.hi;
-        if (entity->unk80.entityPtr->objectId != entity->unk8C.modeU16.unk0) {
+        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
+        if (entity->ext.generic.unk80.entityPtr->objectId !=
+            entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
         break;
@@ -904,7 +908,7 @@ void EntityEnemyBlood(Entity* self) {
             self->animSet = 0;
             subId = self->subId;
             self->unk3C = 1;
-            self->unk7C.s = 48;
+            self->ext.generic.unk7C.s = 48;
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
             self->hitboxWidth = 0;
@@ -952,10 +956,10 @@ void EntityEnemyBlood(Entity* self) {
 
             if (subId != 0) {
                 self->accelerationX = 0x14000;
-                self->unk80.modeS32 = -0x200;
+                self->ext.generic.unk80.modeS32 = -0x200;
             } else {
                 self->accelerationX = -0x14000;
-                self->unk80.modeS32 = 0x200;
+                self->ext.generic.unk80.modeS32 = 0x200;
             }
             self->accelerationY = 0;
             break;
@@ -964,7 +968,7 @@ void EntityEnemyBlood(Entity* self) {
         break;
 
     case 1:
-        if (!(--self->unk7C.u)) {
+        if (!(--self->ext.generic.unk7C.u)) {
             DestroyEntity(self);
             break;
         }
@@ -972,7 +976,7 @@ void EntityEnemyBlood(Entity* self) {
         if (self->unk3C != 0) {
             if (D_80072F20.unk0C & 0x02000000) {
                 posX = self->posX.i.hi;
-                self->accelerationX += self->unk80.modeS32;
+                self->accelerationX += self->ext.generic.unk80.modeS32;
 
                 MoveEntity(self); // argument pass necessary to match
 
@@ -981,10 +985,11 @@ void EntityEnemyBlood(Entity* self) {
                     posX = -posX;
                 }
 
-                if (self->unk7C.u > 16) {
-                    self->unk7E.modeU16 += posX;
-                    self->hitboxWidth = self->unk7E.modeU16 / 2;
-                    self->hitboxHeight = (self->unk7E.modeU16 / 4) + 8;
+                if (self->ext.generic.unk7C.u > 16) {
+                    self->ext.generic.unk7E.modeU16 += posX;
+                    self->hitboxWidth = self->ext.generic.unk7E.modeU16 / 2;
+                    self->hitboxHeight =
+                        (self->ext.generic.unk7E.modeU16 / 4) + 8;
                 } else {
                     self->unk3C = 0;
                 }

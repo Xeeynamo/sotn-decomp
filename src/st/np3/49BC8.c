@@ -82,25 +82,25 @@ void EntityUnkId4D(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180A60);
-        self->unk80.modeS16.unk0 = 1;
+        self->ext.generic.unk80.modeS16.unk0 = 1;
         self->flags &= 0x2000;
     }
 
     if (D_8003BE23 != 0) {
         self->posX.i.hi = 128;
-        if (--self->unk80.modeS16.unk0 == 0) {
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[8]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x42, self, newEntity);
                 rnd = (Random() & 0x3F) + 96;
 
-                if (self->unk88.unk != 0) {
+                if (self->ext.generic.unk88.unk != 0) {
                     newEntity->posX.i.hi += rnd;
                 } else {
                     newEntity->posX.i.hi -= rnd;
                 }
                 newEntity->posY.i.hi -= 48;
-                self->unk88.unk ^= 1;
+                self->ext.generic.unk88.unk ^= 1;
 
                 distCameraEntity = g_Camera.posX.i.hi + newEntity->posX.i.hi;
                 if ((distCameraEntity < (g_CurrentRoom.x + 128)) ||
@@ -108,7 +108,7 @@ void EntityUnkId4D(Entity* self) {
                     DestroyEntity(newEntity);
                 }
             }
-            self->unk80.modeS16.unk0 = (Random() & 0x3F) + 32;
+            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x3F) + 32;
         }
     }
 }
@@ -130,15 +130,15 @@ void EntityBloodSplatter(Entity* self) {
         }
         self->firstPolygonIndex = firstPrimIndex;
         prim = &g_PrimBuf[firstPrimIndex];
-        *(s32*)&self->unk7C = prim;
+        *(s32*)&self->ext.generic.unk7C = prim;
         self->flags |= FLAG_FREE_POLYGONS;
         self->step++;
         break;
 
     case 2:
-        prim = func_801D24A0(*(s32*)&self->unk7C, 2);
+        prim = func_801D24A0(*(s32*)&self->ext.generic.unk7C, 2);
         if (prim != NULL) {
-            self->unk8C.primPtr = prim;
+            self->ext.generic.unk8C.primPtr = prim;
             func_801D2684(prim);
             prim->v0 = 0x30;
             prim->tpage = 0x1A;
@@ -170,9 +170,9 @@ void EntityBloodSplatter(Entity* self) {
             prim->blendMode = 6;
         }
 
-        prim = func_801D24A0(*(s32*)&self->unk7C, 2);
+        prim = func_801D24A0(*(s32*)&self->ext.generic.unk7C, 2);
         if (prim != NULL) {
-            *(s32*)&self->unk90 = prim;
+            *(s32*)&self->ext.generic.unk90 = prim;
             func_801D2684(prim);
             prim->v1 = 0x40;
             prim->tpage = 0x1A;
@@ -204,7 +204,7 @@ void EntityBloodSplatter(Entity* self) {
         break;
 
     case 3:
-        prim = self->unk8C.entityPtr;
+        prim = self->ext.generic.unk8C.entityPtr;
         func_801D1F38(prim);
 
         if (g_blinkTimer & 1) {
@@ -232,7 +232,7 @@ void EntityBloodSplatter(Entity* self) {
             func_801D26D8(prim);
         }
 
-        prim = *(s32*)&self->unk90;
+        prim = *(s32*)&self->ext.generic.unk90;
         func_801D1F38(prim);
         prim3 = prim->next;
         *(u16*)&prim3->r2 = *(u16*)&prim3->r2 + 2;
@@ -252,7 +252,7 @@ void EntityBloodSplatter(Entity* self) {
             func_801D26D8(prim);
         }
 
-        if (self->unk80.modeS16.unk0++ > 128) {
+        if (self->ext.generic.unk80.modeS16.unk0++ > 128) {
             DestroyEntity(self);
         }
         break;

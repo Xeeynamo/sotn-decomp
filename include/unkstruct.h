@@ -2,34 +2,6 @@
  * These are to be merged later on
  */
 
-typedef union {
-    s32 unk;
-    void* ptr;
-    struct {
-        s8 unk0, unk1, unk2, unk3;
-    } S8;
-    struct {
-        u8 unk0, unk1, unk2, unk3;
-    } U8;
-    struct {
-        s16 unk0, unk2;
-    } S16;
-    struct {
-        u16 unk0, unk2;
-    } U16;
-} Multi;
-
-typedef union {
-    s16 s;
-    u16 u;
-    struct {
-        s8 unk0, unk1;
-    } S8;
-    struct {
-        u8 unk0, unk1;
-    } U8;
-} Multi16;
-
 typedef struct {
     /* 0x0 */ char pad0[0xA];
     /* 0xA */ s16 unkA;

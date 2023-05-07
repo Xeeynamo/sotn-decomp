@@ -118,7 +118,7 @@ s16 func_80113E68(void) {
     s32 var_a1;
 
     temp_v0 = rnd;
-    PLAYER.unkAC = (rnd % 3) + 0x2E;
+    PLAYER.ext.generic.unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -143,7 +143,7 @@ void func_80113EE0(void) {
 }
 
 void func_80113F7C(void) {
-    Entity* entity = PLAYER.unkB8.entityPtr;
+    Entity* entity = PLAYER.ext.generic.unkB8.entityPtr;
     s16 posX;
     s32 var_a0;
     s32 var_a2;

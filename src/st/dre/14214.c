@@ -26,8 +26,8 @@ void EntityPinkBallProjectile(Entity* self) {
         }
         AnimateEntity(D_80180794, self);
 
-        entity = self->unk9C;
-        if (entity->unk84.U8.unk1 != 0) {
+        entity = self->ext.generic.unk9C;
+        if (entity->ext.generic.unk84.U8.unk1 != 0) {
             self->unk19 = 0;
             self->step++;
         }
@@ -40,24 +40,24 @@ void EntityPinkBallProjectile(Entity* self) {
         temp_s0 = (self->subId << 0xA) + 0x200;
         self->accelerationX = rcos(temp_s0) * 0x38;
         self->accelerationY = rsin(temp_s0) * 0x38;
-        self->unkA2 = temp_s0;
-        self->unk80.modeS16.unk0 = 128;
+        self->ext.generic.unkA2 = temp_s0;
+        self->ext.generic.unk80.modeS16.unk0 = 128;
         self->step++;
 
     case 3:
         AnimateEntity(D_80180794, self);
         MoveEntity();
         temp_v0 = func_8019AF08(self, g_EntityArray);
-        temp_s0 = func_8019AF88(0x10, self->unkA2, temp_v0);
+        temp_s0 = func_8019AF88(0x10, self->ext.generic.unkA2, temp_v0);
         self->accelerationX = rcos(temp_s0) * 0x38;
         self->accelerationY = rsin(temp_s0) * 0x38;
-        self->unkA2 = temp_s0;
+        self->ext.generic.unkA2 = temp_s0;
 
         if (self->unk48 & 0x80) {
             self->step = 4;
         }
 
-        if (--self->unk80.modeS16.unk0 == 0) {
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             self->step = 4;
         }
         break;
@@ -95,7 +95,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         self[1].unk1E = self->unk1E;
 
     case 1:
-        if (self->unk9C->unk84.U8.unk1 != 0) {
+        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
             self->step++;
         }
         break;
@@ -107,7 +107,7 @@ void EntitySuccubusWingSpike(Entity* self) {
             self->unk1A = 0x600;
         }
 
-        if (self->unk9C->unk84.U8.unk1 == 0) {
+        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 == 0) {
             self->step++;
         }
         break;
@@ -924,12 +924,14 @@ void func_8019B858(void) {
     Entity* entity = g_CurrentEntity;
 
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk84.unk + entity->unk88.S16.unk0;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk84.unk + entity->ext.generic.unk88.S16.unk0;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
 
         if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
-            entity->unk88.U16.unk0 = -entity->unk88.U16.unk0;
+            entity->ext.generic.unk88.U16.unk0 =
+                -entity->ext.generic.unk88.U16.unk0;
         }
         entity = g_CurrentEntity;
     }

@@ -1037,7 +1037,7 @@ void func_801B4D78(void) {
         e->animSet = -0x7FFF;
         e->animCurFrame = 1;
         e->palette = 0x200;
-        e->unk80.modeS32 = 0x5C0000;
+        e->ext.generic.unk80.modeS32 = 0x5C0000;
         e->posY.i.hi = 208;
         e->zPriority = 0x80;
         e->step = 1;
@@ -1056,7 +1056,7 @@ void func_801B4DE0(void) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
-            *(s32*)&unkEntity->unk7C = poly;
+            *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 255;
             poly->y0 = poly->y1 = 4;
@@ -1075,7 +1075,7 @@ void func_801B4DE0(void) {
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1088,7 +1088,7 @@ void func_801B4DE0(void) {
         break;
 
     case 2:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1113,7 +1113,7 @@ void func_801B4FFC(void) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
-            *(s32*)&unkEntity->unk7C = poly;
+            *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 384;
             poly->y0 = poly->y1 = 4;
@@ -1131,7 +1131,7 @@ void func_801B4FFC(void) {
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1156,7 +1156,7 @@ void func_801B5350(void) {
     case 0:
         entity->animSet = 1;
         entity->animCurFrame = 142;
-        entity->unk80.modeS32 = 0x800000;
+        entity->ext.generic.unk80.modeS32 = 0x800000;
         entity->posY.i.hi = 159;
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
@@ -1172,13 +1172,13 @@ void func_801B5350(void) {
         if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
             func_801B4B9C(entity, 3);
         }
-        entity->unk80.modeS32 += 0xFFFE8000;
+        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
         break;
 
     case 3:
         AnimateEntity(D_80180504, entity);
-        entity->unk80.modeS32 += 0xFFFE8000;
-        if (entity->unk80.modeS16.unk2 < 0x40) {
+        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        if (entity->ext.generic.unk80.modeS16.unk2 < 0x40) {
             entity->step = 255;
         }
         break;
@@ -1193,7 +1193,7 @@ void func_801B54C8(void) {
         e->animCurFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
-        e->unk80.modeS32 = 0x780000;
+        e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
@@ -1208,7 +1208,7 @@ void func_801B5548(void) {
         e->animSet = -0x7FFE;
         e->animCurFrame = 7;
         e->unk5A = 0xF;
-        e->unk80.modeS32 = 0x780000;
+        e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;

@@ -61,7 +61,7 @@ void func_80191B44(Entity* entity) {
 
         if (entity->unk44 != 0) {
             ret = func_8019A718();
-            phi_v1 = entity->unk7C.s;
+            phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;
             } else {
@@ -77,8 +77,8 @@ void func_80191B44(Entity* entity) {
         }
     } else {
         InitializeEntity(D_801804A0);
-        entity->unk7C.s = D_80180588[temp_s1];
-        if (entity->unk7C.s != 0) {
+        entity->ext.generic.unk7C.s = D_80180588[temp_s1];
+        if (entity->ext.generic.unk7C.s != 0) {
             entity->hitboxWidth = D_80180580[temp_s1];
             entity->hitboxHeight = 16;
         } else {

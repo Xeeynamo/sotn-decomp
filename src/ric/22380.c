@@ -69,7 +69,7 @@ void func_8015FA5C(s32 arg0) {
 
 void func_8015FAB8(Entity* entity) {
     u16 attack;
-    SubweaponDef* subwpn = &D_80154688[entity->unkB0];
+    SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
 
     if ((*D_80072F1A) != NULL) {
         attack = subwpn->attack * 2;
@@ -157,13 +157,13 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
     if (entity != NULL) {
         func_80156C60(entity);
         entity->objectId = ENTITY_BREAKABLE;
-        entity->unk8C.entityPtr = srcEntity;
+        entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
         entity->posY.val = srcEntity->posY.val;
         entity->facing = srcEntity->facing;
         entity->zPriority = srcEntity->zPriority;
         entity->subId = arg1 & 0xFFF;
-        entity->unkA0 = (arg1 >> 8) & 0xFF00;
+        entity->ext.generic.unkA0 = (arg1 >> 8) & 0xFF00;
 
         if (srcEntity->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
@@ -189,12 +189,12 @@ void func_80160C38(Entity* entity) {
             entity->unk12 = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
-            entity->unkB0 = 0x12;
+            entity->ext.generic.unkB0 = 0x12;
             func_8015FAB8(entity);
-            entity->unk7C.s = entity->unk3C;
+            entity->ext.generic.unk7C.s = entity->unk3C;
             entity->step++;
         }
-        entity->unk3C = entity->unk7C.s;
+        entity->unk3C = entity->ext.generic.unk7C.s;
         if (PLAYER.animFrameIdx < 2) {
             entity->unk3C = 0;
         }
@@ -223,7 +223,7 @@ void func_80160D2C(Entity* self) {
         self->unk10 = 0x14;
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
-        self->unkB0 = 0x17;
+        self->ext.generic.unkB0 = 0x17;
         func_8015FAB8(self);
         self->step++;
     }
@@ -258,7 +258,7 @@ void func_80160E4C(Entity* self) {
             self->hitboxWidth = 20;
             self->unk12 = 0;
             self->unk10 = 0;
-            self->unkB0 = 0x11;
+            self->ext.generic.unkB0 = 0x11;
             func_8015FAB8(self);
             self->step++;
         }
@@ -282,7 +282,7 @@ void func_80160F0C(Entity* self) {
         self->unk12 = -0x1A;
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        self->unkB0 = 0x16;
+        self->ext.generic.unkB0 = 0x16;
         func_8015FAB8(self);
         self->step++;
     }
@@ -312,8 +312,8 @@ void func_801623E0(Entity* entity) {
             func_80156C60(entity);
             return;
         }
-        entity->unk7E.modeU16 = 32;
-        entity->unk7C.s = 32;
+        entity->ext.generic.unk7E.modeU16 = 32;
+        entity->ext.generic.unk7C.s = 32;
         poly = &g_PrimBuf[entity->firstPolygonIndex];
         poly->u2 = 64;
         poly->u0 = 64;
@@ -332,9 +332,9 @@ void func_801623E0(Entity* entity) {
         break;
 
     case 1:
-        entity->unk7C.s++;
-        entity->unk7E.modeU16++;
-        if (entity->unk7C.s >= 45) {
+        entity->ext.generic.unk7C.s++;
+        entity->ext.generic.unk7E.modeU16++;
+        if (entity->ext.generic.unk7C.s >= 45) {
             func_80156C60(entity);
             return;
         }
@@ -342,14 +342,14 @@ void func_801623E0(Entity* entity) {
     }
 
     poly = &g_PrimBuf[entity->firstPolygonIndex];
-    poly->x0 = entity->posX.i.hi - entity->unk7C.s;
-    poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
-    poly->x1 = entity->posX.i.hi + entity->unk7C.s;
-    poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
-    poly->x2 = entity->posX.i.hi - entity->unk7C.s;
-    poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
-    poly->x3 = entity->posX.i.hi + entity->unk7C.s;
-    poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
+    poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+    poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+    poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+    poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+    poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+    poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+    poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
     poly->clut = (LOH(g_blinkTimer) & 1) + 0x13E;
 }
 
@@ -371,8 +371,8 @@ void func_80162604(Entity* entity) {
         firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != (-1)) {
-            entity->unk7E.modeU16 = 0;
-            entity->unk7C.s = 0;
+            entity->ext.generic.unk7E.modeU16 = 0;
+            entity->ext.generic.unk7C.s = 0;
             poly = &g_PrimBuf[entity->firstPolygonIndex];
             poly->v1 = 192;
             poly->v0 = 192;
@@ -395,9 +395,9 @@ void func_80162604(Entity* entity) {
         }
 
     case 1:
-        entity->unk7C.s += 8;
-        entity->unk7E.modeU16 += 8;
-        if (entity->unk7C.s < 0x20) {
+        entity->ext.generic.unk7C.s += 8;
+        entity->ext.generic.unk7E.modeU16 += 8;
+        if (entity->ext.generic.unk7C.s < 0x20) {
             goto def;
         }
 
@@ -406,9 +406,9 @@ void func_80162604(Entity* entity) {
         goto def;
 
     case 3:
-        entity->unk7C.s -= 8;
-        entity->unk7E.modeU16 -= 8;
-        if (entity->unk7C.s >= 5) {
+        entity->ext.generic.unk7C.s -= 8;
+        entity->ext.generic.unk7E.modeU16 -= 8;
+        if (entity->ext.generic.unk7C.s >= 5) {
             goto def;
         } else {
 
@@ -419,14 +419,14 @@ void func_80162604(Entity* entity) {
     def:
     default:
         poly = &g_PrimBuf[entity->firstPolygonIndex];
-        poly->x0 = entity->posX.i.hi - entity->unk7C.s;
-        poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
-        poly->x1 = entity->posX.i.hi + entity->unk7C.s;
-        poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
-        poly->x2 = entity->posX.i.hi - entity->unk7C.s;
-        poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
-        poly->x3 = entity->posX.i.hi + entity->unk7C.s;
-        poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
+        poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
         break;
     }
 }
@@ -464,7 +464,7 @@ void func_80162C84(Entity* entity) {
         entity->accelerationX = -0x1C000;
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
-        entity->unk7E.modeU16 = 0;
+        entity->ext.generic.unk7E.modeU16 = 0;
         entity->step++;
         break;
 
@@ -477,9 +477,10 @@ void func_80162C84(Entity* entity) {
         }
 
         entity->posX.val += entity->accelerationX;
-        if (((s16)entity->unk7E.modeU16 == 0) && (entity->posX.i.hi < 256)) {
+        if (((s16)entity->ext.generic.unk7E.modeU16 == 0) &&
+            (entity->posX.i.hi < 256)) {
             g_api.PlaySfx(0x87D);
-            entity->unk7E.modeU16++;
+            entity->ext.generic.unk7E.modeU16++;
         }
         if (entity->posX.i.hi < 0xE0) {
             func_8015C920(&D_80154EF8);
@@ -491,14 +492,14 @@ void func_80162C84(Entity* entity) {
     case 2:
         if (entity->animFrameIdx == 16) {
             g_api.PlaySfx(0x87E);
-            entity->unk7C.s = 0x80;
+            entity->ext.generic.unk7C.s = 0x80;
             entity->step++;
         }
         break;
 
     case 3:
-        entity->unk7C.s--;
-        if ((entity->unk7C.s) == 0) {
+        entity->ext.generic.unk7C.s--;
+        if ((entity->ext.generic.unk7C.s) == 0) {
             func_801606BC(entity, 0x1E, 0);
             entity->step++;
         }
@@ -541,8 +542,8 @@ void func_801641A0(Entity* entity) {
         firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
-            entity->unk7C.s = 16;
-            entity->unk7E.modeU16 = 12;
+            entity->ext.generic.unk7C.s = 16;
+            entity->ext.generic.unk7E.modeU16 = 12;
             poly = &g_PrimBuf[entity->firstPolygonIndex];
             poly->u2 = 64;
             poly->u0 = 64;
@@ -577,9 +578,9 @@ void func_801641A0(Entity* entity) {
         }
 
     case 1:
-        entity->unk7C.s += 2;
-        entity->unk7E.modeU16 += 2;
-        if (entity->unk7C.s >= 57) {
+        entity->ext.generic.unk7C.s += 2;
+        entity->ext.generic.unk7E.modeU16 += 2;
+        if (entity->ext.generic.unk7C.s >= 57) {
             func_80156C60(entity);
             break;
         }
@@ -587,14 +588,14 @@ void func_801641A0(Entity* entity) {
     default:
     def:
         poly = &g_PrimBuf[entity->firstPolygonIndex];
-        poly->x0 = entity->posX.i.hi - entity->unk7C.s;
-        poly->y0 = entity->posY.i.hi - entity->unk7E.modeU16;
-        poly->x1 = entity->posX.i.hi + entity->unk7C.s;
-        poly->y1 = entity->posY.i.hi - entity->unk7E.modeU16;
-        poly->x2 = entity->posX.i.hi - entity->unk7C.s;
-        poly->y2 = entity->posY.i.hi + entity->unk7E.modeU16;
-        poly->x3 = entity->posX.i.hi + entity->unk7C.s;
-        poly->y3 = entity->posY.i.hi + entity->unk7E.modeU16;
+        poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
         if (poly->b3 >= 12) {
             poly->b3 += 244;
         }
@@ -780,7 +781,7 @@ void func_80167964(Entity* entity) {
             *(&PLAYER.palette +
               (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
         }
-        *(&PLAYER.unkA4 +
+        *(&PLAYER.ext.generic.unkA4 +
           (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
@@ -885,7 +886,8 @@ void func_80169D74(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->unk84.unk = entity->unk8C.entityPtr->unk84.unk;
+        entity->ext.generic.unk84.unk =
+            entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
         entity->animSet = -0x7FEF;
         entity->animCurFrame = D_80155E68[entity->subId];
         entity->unk5A = 0x66;
@@ -900,26 +902,27 @@ void func_80169D74(Entity* entity) {
 
     case 1:
         entity->unk1E -= 0x80;
-        if (entity->unk8C.entityPtr->step == 7) {
+        if (entity->ext.generic.unk8C.entityPtr->step == 7) {
             entity->step++;
-            entity->unk7C.s = (entity->subId + 1) * 4;
+            entity->ext.generic.unk7C.s = (entity->subId + 1) * 4;
         }
         break;
 
     case 2:
         entity->unk1E -= 0x80;
-        entity->unk7C.s--;
-        if (entity->unk7C.s == 0) {
+        entity->ext.generic.unk7C.s--;
+        if (entity->ext.generic.unk7C.s == 0) {
             func_80156C60(entity);
             return;
         }
         break;
     }
-    temp = entity->unk84;
-    ptr = temp.unk + ((u16)entity->unk80.modeS16.unk0 * 4);
+    temp = entity->ext.generic.unk84;
+    ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
     entity->posX.i.hi = ptr[0] - g_Camera.posX.i.hi;
     entity->posY.i.hi = ptr[1] - g_Camera.posY.i.hi;
-    entity->unk80.modeS16.unk0 = (entity->unk80.modeS16.unk0 + 1) & 0x3F;
+    entity->ext.generic.unk80.modeS16.unk0 =
+        (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169F04);
@@ -931,18 +934,20 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016A974);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
-    g_CurrentEntity->unk7C.s = (arg0 << 0x10 >> 0xF) - g_CurrentEntity->unk7C.s;
-    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->unk80.modeS16.unk0++;
-        g_CurrentEntity->unk80.modeS16.unk2++;
+    g_CurrentEntity->ext.generic.unk7C.s =
+        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
+    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
+        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
     }
 }
 
 void func_8016B92C(s16 arg0) {
-    if (g_CurrentEntity->unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->unk7C.s = (arg0 * 2) - g_CurrentEntity->unk7C.s;
-        g_CurrentEntity->unk80.modeS16.unk0++;
-        g_CurrentEntity->unk80.modeS16.unk2++;
+    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
+        g_CurrentEntity->ext.generic.unk7C.s =
+            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
+        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
+        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
     }
 }
 
@@ -984,10 +989,13 @@ void func_8016D328(Entity* entity) {
         entity->firstPolygonIndex = firstPolygonIndex;
         if (firstPolygonIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
-            entity->posX.val = entity->unk8C.entityPtr->unk84.unk;
-            entity->posY.val = entity->unk8C.entityPtr->unk88.unk;
-            entity->facing = entity->unk8C.entityPtr->unk8C.modeU16.unk0;
-            entity->unkB0 = 0x18;
+            entity->posX.val =
+                entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
+            entity->posY.val =
+                entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
+            entity->facing = entity->ext.generic.unk8C.entityPtr->ext.generic
+                                 .unk8C.modeU16.unk0;
+            entity->ext.generic.unkB0 = 0x18;
             func_8015FAB8(entity);
             entity->unk5A = 0x79;
             entity->animSet = 0xE;
@@ -1009,7 +1017,7 @@ void func_8016D328(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.s >= 39) {
+        if (++entity->ext.generic.unk7C.s >= 39) {
             func_80156C60(entity);
         } else {
             entity->posX.val += entity->accelerationX;
@@ -1025,7 +1033,7 @@ void func_8016D920(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
-        entity->unkB0 = 0x19;
+        entity->ext.generic.unkB0 = 0x19;
         func_8015FAB8(entity);
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 4;
@@ -1033,7 +1041,7 @@ void func_8016D920(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.s >= 4) {
+        if (++entity->ext.generic.unk7C.s >= 4) {
             func_80156C60(entity);
         }
         break;

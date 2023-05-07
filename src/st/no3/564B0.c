@@ -84,25 +84,25 @@ void EntityUnkId4D(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180AD0);
-        self->unk80.modeS16.unk0 = 1;
+        self->ext.generic.unk80.modeS16.unk0 = 1;
         self->flags &= 0x2000;
     }
 
     if (D_8003BE23 != 0) {
         self->posX.i.hi = 128;
-        if (--self->unk80.modeS16.unk0 == 0) {
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[8]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x4C, self, newEntity);
                 rnd = (Random() & 0x3F) + 96;
 
-                if (self->unk88.unk != 0) {
+                if (self->ext.generic.unk88.unk != 0) {
                     newEntity->posX.i.hi += rnd;
                 } else {
                     newEntity->posX.i.hi -= rnd;
                 }
                 newEntity->posY.i.hi -= 48;
-                self->unk88.unk ^= 1;
+                self->ext.generic.unk88.unk ^= 1;
 
                 distCameraEntity = g_Camera.posX.i.hi + newEntity->posX.i.hi;
                 if ((distCameraEntity < (g_CurrentRoom.x + 128)) ||
@@ -110,7 +110,7 @@ void EntityUnkId4D(Entity* self) {
                     DestroyEntity(newEntity);
                 }
             }
-            self->unk80.modeS16.unk0 = (Random() & 0x3F) + 32;
+            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x3F) + 32;
         }
     }
 }
