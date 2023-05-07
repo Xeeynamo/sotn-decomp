@@ -10,7 +10,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80116208);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80116408);
 
 void func_801166A4(void) {
-    switch (PLAYER.unk2E) {
+    switch (PLAYER.step_s) {
     case 0:
         func_80113EE0();
         D_80072F60[0] = 0x8166;
@@ -20,7 +20,7 @@ void func_801166A4(void) {
         PLAYER.unkAC = 0x33;
         func_8011AAFC(g_CurrentEntity, 0, 0);
         func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
-        PLAYER.unk2E++;
+        PLAYER.step_s++;
         break;
 
     case 1:
@@ -49,7 +49,7 @@ void func_801167D0(void) {
     *accelerationX = 0;
     if (D_80072EF6 != 2) {
         PLAYER.step = 0x28;
-        PLAYER.unk2E = 0;
+        PLAYER.step_s = 0;
         PLAYER.accelerationY = 0;
         *accelerationX = 0;
         PLAYER.unkAC = 0xCF;
@@ -59,7 +59,7 @@ void func_801167D0(void) {
 }
 
 bool func_80116838(void) {
-    if ((g_EntityArray->unk2E != 0) &&
+    if ((g_EntityArray->step_s != 0) &&
         ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
@@ -131,11 +131,11 @@ void func_80118670(void) {
 }
 
 void func_801186EC(void) {
-    if (PLAYER.unk2E == 0) {
+    if (PLAYER.step_s == 0) {
         if (g_EntityArray[UNK_ENTITY_10].objectId == 0) {
             D_80138008 = 0x10;
             func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
-            PLAYER.unk2E++;
+            PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {
         PLAYER.palette = 0x8100;
@@ -429,7 +429,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
 void func_8011B334(Entity* entity) {
     Equipment equip;
 
-    if (PLAYER.unk2E != 0x70) {
+    if (PLAYER.step_s != 0x70) {
         DestroyEntity(entity);
         return;
     }
@@ -804,7 +804,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityTeleport);
 
 void func_80124A8C(Entity* entity) {
 #ifdef PSY_Q_3_5
-    if (PLAYER.step != 0 || PLAYER.unk2E != 4) { // REAL: Matches with PSY-Q 3.5
+    if (PLAYER.step != 0 ||
+        PLAYER.step_s != 4) { // REAL: Matches with PSY-Q 3.5
 #else
     if (*(s32*)&PLAYER.step != 0x40000) { // !FAKE: Probably ASPSX
 #endif
@@ -1353,7 +1354,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityBatEcho);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C600);
 
 bool func_8012C88C(void) {
-    if ((PLAYER.unk2E != 0) && (PLAYER.unk2E != 8)) {
+    if ((PLAYER.step_s != 0) && (PLAYER.step_s != 8)) {
         if (((D_8009744C != 0) && (func_800FE3A8(0xE) == 0)) ||
             (D_80072EEC & 2) || (func_800FEEA4(2, 1) < 0)) {
             func_8010D584(25);
@@ -1370,12 +1371,43 @@ bool func_8012C88C(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C97C);
+void func_8012C97C(void) {
+    if (g_EntityArray[PLAYER_CHARACTER].step_s == 0) {
+        return;
+    }
+    if (g_EntityArray[PLAYER_CHARACTER].step_s >= 8 &&
+        g_EntityArray[PLAYER_CHARACTER].step_s < 10) {
+        return;
+    }
+    if (D_8009744C < 13) {
+        return;
+    }
+    if (func_800FE3A8(14) == 0) {
+        return;
+    }
+    if (func_800FE3A8(6) == 0) {
+        return;
+    }
+    if (D_80072F20.pl_vram_flag & 1) {
+        return;
+    }
+    if (!(D_80072EE8 & 0x10)) {
+        return;
+    }
+    if (D_80138440 != 0) {
+        return;
+    }
+
+    PLAYER.step_s = 9;
+    D_800B0914 = 0;
+    func_8010DA48(0xEC);
+    PLAYER.accelerationY = 0;
+}
 
 void func_8012CA64(void) {
     u32 var_a0;
 
-    PLAYER.unk2E = 1;
+    PLAYER.step_s = 1;
     D_800B0914 = 0;
 
     if (D_80072F20.pl_vram_flag & 0x20) {
@@ -1401,7 +1433,7 @@ void func_8012CB0C(void) {
     D_800B0914 = 0;
     PLAYER.animFrameIdx = 0;
     PLAYER.animFrameDuration = 0;
-    PLAYER.unk2E = 7;
+    PLAYER.step_s = 7;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CB4C);
@@ -1411,7 +1443,7 @@ void func_8012CC30(s32 arg0) {
         D_80138444 = 1;
         if ((D_80138FC4 == 255) && (func_800FE3A8(6)) && (func_800FDC94(4))) {
             func_8010E27C();
-            PLAYER.unk2E = 2;
+            PLAYER.step_s = 2;
             D_800B0914 = 4;
             AccelerateX(0x50000);
             g_CurrentEntity->accelerationY = 0;
@@ -1426,7 +1458,7 @@ void func_8012CC30(s32 arg0) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CCE4);
 
 void func_8012CED4(void) {
-    if ((PLAYER.unk2E == 2) && (D_800B0914 == PLAYER.unk2E)) {
+    if ((PLAYER.step_s == 2) && (D_800B0914 == PLAYER.step_s)) {
         func_8010DA48(0xE7);
         D_800B0914 = 1;
     } else {
@@ -1439,7 +1471,7 @@ void func_8012CED4(void) {
             PLAYER.animFrameDuration = 1;
         }
     }
-    PLAYER.unk2E = 5;
+    PLAYER.step_s = 5;
     D_80072F0A[0] = 8;
     PLAYER.accelerationY = 0;
     D_80138430 -= 0x100;
@@ -1447,14 +1479,14 @@ void func_8012CED4(void) {
 
 void func_8012CFA8(void) {
     func_8010DA48(0xEA);
-    PLAYER.unk2E = 6;
+    PLAYER.step_s = 6;
     D_800B0914 = 0;
     PLAYER.accelerationX = 0;
     D_80072F0A[0] = 8;
 }
 
 void func_8012CFF0(void) {
-    PLAYER.unk2E = 3;
+    PLAYER.step_s = 3;
     func_8010DA48(0xE3);
     D_800B0914 = 0;
 }
@@ -1567,7 +1599,7 @@ void func_8013136C(Entity* entity) {
     }
     entity->posY.i.hi += 3;
     entity->unk1E = g_EntityArray[UNK_ENTITY_13].unk1E;
-    switch (PLAYER.unk2E - 1) {
+    switch (PLAYER.step_s - 1) {
     case 1:
     case 3:
     case 4:
@@ -1883,65 +1915,77 @@ void func_80132760(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801327B4);
 
-// DECOMP_ME_WIP func_80132A04 https://decomp.me/scratch/0X5YL
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132A04);
-#else
-void func_801327B4(s16, s16, s16, s16, s16, s16, s16, s16);
-extern s16 D_800BD19C[];
-extern s16 D_800BD19E[];
-extern s16 D_80138FB8; // vol_l
-extern s16 D_80139004; // vol_r
-
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
-                   s16 volume, s16 distance) {
-    s16 var_a0;
-    s16 var_a1;
-    volatile short pad;
-
-    if (distance == 0) {
-        D_80138FB8 = volume;
-        D_80139004 = volume;
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 arg5,
+                   s16 arg6) {
+    if (arg6 == 0) {
+        D_80138FB8 = (s16)arg5;
+        D_80139004 = (s16)arg5;
     } else {
-        D_80139004 = (volume * D_800BD19C[distance * 2]) >> 7;
-        D_80138FB8 = (volume * D_800BD19E[distance * 2]) >> 7;
+        D_80139004 = (((s16)arg5) * D_800BD19C[arg6 * 2]) >> 7;
+        D_80138FB8 = (((s16)arg5) * D_800BD19C[arg6 * 2 + 1]) >> 7;
     }
 
-    if (voice < 0x18) {
+    if (voice < 0x18U) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
-        SsUtKeyOnV(voice + 1, vabId, prog, 1 + tone, note, 0, D_80138FB8,
+        SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, D_80138FB8,
                    D_80139004);
         return;
     }
     switch (voice) {
     case 0x1E:
-        var_a0 = 0;
-        var_a1 = 4;
+        func_801327B4(0, 4, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x1F:
-        var_a0 = 4;
-        var_a1 = 8;
+        func_801327B4(4, 8, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x20:
-        var_a0 = 8;
-        var_a1 = 0xC;
+        func_801327B4(8, 12, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
     case 0x21:
-        var_a0 = 0xE;
-        var_a1 = 0x12;
+        func_801327B4(14, 18, vabId, prog, tone, note, D_80138FB8, D_80139004);
         break;
-    default:
-        return;
     }
-    func_801327B4(var_a0, var_a1, vabId, prog, tone, note, D_80138FB8,
-                  D_80139004);
 }
-#endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80132C2C);
+void func_80132C2C(s16 arg0) {
+    s32 i;
+    s32 isFound;
 
-extern s16 D_80139868[];
+    if (arg0 == 6) {
+        isFound = 0;
+        for (i = 0; i < D_801396F4; i++) {
+            if (D_80139868[i] == 0xC) {
+                isFound = 1;
+            }
+        }
+
+        if (isFound) {
+            D_800BD1C0++;
+            D_80139868[D_801396F4] = 0xE;
+            D_801396F4++;
+            if (D_801396F4 == 0x100) {
+                D_8013AEE8++;
+                for (i = 1; i < 0x100; i++) {
+                    D_80139868[i] = 0;
+                }
+
+                D_801396F4 = 1;
+                D_80139868[D_801396F4] = 0xE;
+                D_801396F4++;
+            }
+        }
+    }
+    D_80139868[D_801396F4] = arg0;
+    D_801396F4++;
+    if (D_801396F4 == 0x100) {
+        D_8013AEE8++;
+        for (i = 1; i < 0x100; i++) {
+            D_80139868[i] = 0;
+        }
+
+        D_801396F4 = 1;
+    }
+}
 
 u16 func_80132E38(void) {
     s32 i;
@@ -1949,9 +1993,7 @@ u16 func_80132E38(void) {
     for (i = 0; i < 255; i++) {
         D_80139868[i] = D_80139868[i + 1];
     }
-    D_801396F4--;
-
-    return D_801396F4;
+    return --D_801396F4;
 }
 
 void func_80132E90(u32 arg0, s8* arg1) {

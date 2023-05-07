@@ -1,5 +1,7 @@
 #include "stage.h"
 
+typedef enum { E_AXE_KNIGHT_AXE = 0x2A, E_BONE_SCIMITAR_HEAD = 0x28 } ObjectIds;
+
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
@@ -8,7 +10,7 @@ s32 func_801BCF74(s32*);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
 s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
-void func_801C29B0(s32);
+void func_801C29B0(s32 sfxId); // sfx
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
@@ -21,7 +23,41 @@ extern u16 D_80180BEC[];
 extern u16 D_80180BF8[];
 extern u16 D_80180C1C[];
 extern u16 D_80180C34[];
-extern u16 D_80180C64[];
+
+// *** EntityBloodSkeleton properties START ***
+
+extern u16 D_80180C40[]; // InitProps
+extern u8 D_80182610[];  // Animation: Walking?
+extern s16 D_80182624[];
+extern u8 D_80182638[];  // Animation: Disassemble
+extern u8 D_80182654[];  // Animation: Reassemble
+extern u8 D_80182670[];  // Animation: Reassemble faster ?
+extern s32 D_80182694;
+extern s32 D_801826AC;
+
+// *** EntityBloodSkeleton properties END ***
+
+// *** EntityBoneScimitar properties START ***
+
+extern u16 D_80180C4C[];    // Init
+extern s32 D_8018208C;      // Flag for special bone scimitar to appear or not
+extern u8 D_80182090[];     // animation: Walking Forward
+extern u8 D_801820A0[];     // animation: Walking Backwards
+extern u8 D_801820B0[];     // animation: Swing Sword
+extern u8 D_801820CC[];     // animation: Jumping
+extern u8 D_801820D8[];     // animation: Landing
+extern s8 D_801820F4[];     // Skeleton parts array selector
+extern s32 D_801820FC[];    // Skeleton parts accelerationX
+extern s32 D_80182118[];    // Skeleton parts accelerationY
+extern u16 D_80182134[];    // Skeleton parts posX
+extern u16 D_80182144[];    // Skeleton parts posY
+extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
+extern s32 D_8018215C;
+extern s32 D_8018216C;
+extern s32 D_80182174;
+
+// *** EntityBoneScimitar properties END ***
+
 extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
@@ -82,16 +118,24 @@ extern LayoutObject* D_801CAA74;
 extern LayoutObject* D_801CAA78;
 extern u8 D_801CAA7C;
 extern u8 D_801CAA80;
+
+// *** EntityAxeKnight properties START ***
+
+extern u16 D_80180C64[]; // Init
 extern s32 D_80182180[];
 extern s32 D_80182188[];
+extern u8 D_80182210[]; // Animation: Walking
+extern u8 D_80182220[]; // Animation: Ducking Throw
+extern u8 D_80182244[]; // Animation: Standing Throw
+extern u8 D_80182268[]; // Animation: Dying
+extern s32 D_80182274[];
+extern u8 D_80182284[];
+
+// *** EntityAxeKnight properties END ***
+
 extern s32 D_80182198[];
 extern s32 D_8018219A[];
-extern u8 D_80182210[];
-extern u8 D_80182220[];
-extern u8 D_80182244[];
-extern u8 D_80182268[];
-extern s8 D_80182274[];
-extern u8 D_80182284[];
+
 extern u8 D_801822B4[];
 extern u16 D_801822D4[];
 extern const u8 D_801822E4[];
@@ -101,6 +145,35 @@ extern const u8 D_80182320[];
 extern const u8 D_80182334[];
 extern const u8 D_8018237C[];
 extern s32 D_801823C4;
+
+// *** EntitySkeleton properties START ***
+
+typedef enum {
+    SKELETON_INIT,
+    SKELETON_IDLE,
+    SKELETON_WALK_TOWARDS_PLAYER,
+    SKELETON_WALK_AWAY_FROM_PLAYER,
+    SKELETON_ATTACK,
+    SKELETON_JUMP,
+    SKELETON_DESTROY
+} SKELETON_STEPS;
+
+extern u8 D_801823DC[];  // animation: Walking Forward
+extern u8 D_801823EC[];  // animation: Walking Backwards
+extern u8 D_801823FC[];  // animation: Throwing bone
+extern u8 D_8018240C[];  // animation: Jumping?
+extern u8 D_80182418[];  // animation: Jumping?
+extern s8 D_80182430[];  // skeleton pieces array selector
+extern s32 D_80182438[]; // accelerationX
+extern s32 D_80182450[]; // accelerationY
+extern u16 D_80182468[]; // posX
+extern u16 D_80182474[]; // posY
+extern u8 D_80182480[2][4];
+extern s32 D_801824A8;
+extern s32 D_801824C0;
+
+// *** EntitySkeleton properties END ***
+
 extern s32 D_801824B8;
 extern s32 D_801824C0;
 extern s32 D_801824CC;

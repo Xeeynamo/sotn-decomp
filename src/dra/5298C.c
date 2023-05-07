@@ -66,13 +66,13 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
-void func_800F53D4(s32 tpage, s32 unkPrimIdx) {
-    u32* unkPrim = D_8006C37C->_unk_0474;
+void func_800F53D4(s32 tpage, s32 orderIdx) {
+    u32* order = D_8006C37C->order;
     DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
-        AddPrim(&unkPrim[unkPrimIdx], drawMode);
+        AddPrim(&order[orderIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }
@@ -228,19 +228,24 @@ void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F5AE4);
+void func_800F5AE4(MenuContext* context) {
+    s32 i, x;
 
+    for (i = 0, x = 72; i < 3; i++, x += 128)
+        func_800F5904(context, x, 201, 128, 16, (i & 1) << 7,
+                      func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
+}
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
-    u32* temp_s5 = D_8006C37C->_unk_0474;
+    u32* order = D_8006C37C->order;
     POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
-    s32 var_s2 = context->unk18 + 2;
+    s32 orderIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
     if (context == &D_8013763A) {
-        var_s2--;
+        orderIdx--;
     }
 
     poly->code &= 0xFD;
@@ -267,22 +272,18 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             poly->x0 = poly->x2 = poly->x1;
             poly->x1 = poly->x3 = temp_polyx0;
         }
-        AddPrim(&temp_s5[var_s2], poly);
+        AddPrim(&order[orderIdx], poly);
         g_GpuUsage.gt4++;
-        func_800F53D4(tpage, var_s2);
+        func_800F53D4(tpage, orderIdx);
     }
 }
 
-// Matches with gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuRect);
-#else
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    u32* temp_s1 = D_8006C37C->_unk_0474;
+    u32* order = D_8006C37C->order;
     POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage.g4];
-    s32 temp_s2 = context->unk18 + 1;
+    s32 orderIdx = context->unk18 + 1;
     u32 temp;
 
     poly->x0 = posX;
@@ -301,12 +302,11 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
-        AddPrim(&temp_s1[temp_s2], poly);
+        AddPrim(&order[orderIdx], poly);
         g_GpuUsage.g4++;
-        func_800F53D4(0, temp_s2);
+        func_800F53D4(0, orderIdx);
     }
 }
-#endif
 
 void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
                    s32 h, s32 yGap, s32 bColorMode) {
@@ -812,12 +812,6 @@ void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
                   ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-// Draw inventory in equip menu
-// does not match due to stack bigger than expected
-// matches in gcc 2.6.0 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8990);
-#else
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     const s32 Cols = 2;
     const s32 Width = 168;
@@ -888,7 +882,6 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F6508(ctx, curX, curY);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8C98);
 
@@ -1204,11 +1197,6 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBC24);
 
-// Does not match due to cc1-26 using the wrong endian
-// the LOBU trick does not work
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FD39C);
-#else
 void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
                    s32 blend, s32 color) {
     GpuBuffer* gpuBuffer;
@@ -1226,10 +1214,9 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     sprt->v0 = v;
     sprt->b0 = sprt->g0 = sprt->r0 = color;
     sprt->clut = D_8003C104[pal];
-    AddPrim(&gpuBuffer->_unk_0474[0x1FF], sprt);
+    AddPrim(&gpuBuffer->order[0x1FF], sprt);
     g_GpuUsage.sp++;
 }
-#endif
 
 s32 func_800FD4C0(s32 bossId, s32 action) {
     s32 temp_v0;
@@ -1250,11 +1237,11 @@ s32 func_800FD4C0(s32 bossId, s32 action) {
             return g_Settings.timeAttackRecords[bossId];
         }
 
-        seconds = g_GameTimer.seconds;
+        seconds = g_Status.timerSeconds;
         g_Settings.timeAttackRecords[bossId] = seconds;
-        temp_v1 = (g_GameTimer.minutes * 100) + seconds;
+        temp_v1 = (g_Status.timerMinutes * 100) + seconds;
         g_Settings.timeAttackRecords[bossId] = temp_v1;
-        temp_v0 = (g_GameTimer.hours * 10000) + temp_v1;
+        temp_v0 = (g_Status.timerHours * 10000) + temp_v1;
         g_Settings.timeAttackRecords[bossId] = temp_v0;
         return temp_v0;
 

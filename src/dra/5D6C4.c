@@ -139,7 +139,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
-    spell->attack += (g_player_total_int * 2 + (rand() % 12)) / 10;
+    spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(0x15, 2) != 0) {
         spell->attack = spell->attack + spell->attack / 2;
     }
@@ -156,14 +156,14 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
 
     switch (arg0) {
     case 0:
-        temp_v0 = arg1 - (g_player_total_con * 0x10);
+        temp_v0 = arg1 - (g_Status.statsTotal[1] * 0x10);
         // asm volatile("move $16, $2");
         if (temp_v0 < 0x100) {
             ret = 0x100;
         }
         break;
     case 1:
-        temp_v0 = arg1 - (g_player_total_con * 4);
+        temp_v0 = arg1 - (g_Status.statsTotal[1] * 4);
         // asm volatile("move $16, $2");
         if (temp_v0 < 0x40) {
             ret = 0x40;
@@ -171,7 +171,7 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
         break;
     case 2:
         ret = arg1;
-        var_v1 = (((rand() % 12) + g_player_total_con) - 9) / 10;
+        var_v1 = (((rand() % 12) + g_Status.statsTotal[1]) - 9) / 10;
         if (var_v1 < 0) {
             var_v1 = 0;
         }
@@ -181,7 +181,7 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
         ret = ret - var_v1;
         break;
     case 3:
-        ret = arg1 + (g_player_total_int * 4);
+        ret = arg1 + (g_Status.statsTotal[2] * 4);
         break;
     case 4:
     case 5:
@@ -251,15 +251,11 @@ bool func_800FE3A8(s32 arg0) {
     return (g_Status.relics[arg0] & temp) != 0;
 }
 
-// Matches with PSY-Q 3.5
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE3C4);
-#else
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
-        *subwpn = g_Subweapons[D_80097BFC];
+        *subwpn = g_Subweapons[g_Status.D_80097BFC];
         accessoryCount = CheckEquipmentItemCount(0x4D, 4);
         if (accessoryCount == 1) {
             subwpn->unk2 = subwpn->unk2 / 2;
@@ -274,7 +270,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             if (useHearts) {
                 g_Status.hearts -= subwpn->unk2;
             }
-            return D_80097BFC;
+            return g_Status.D_80097BFC;
         } else {
             return 0;
         }
@@ -292,11 +288,10 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
                 subwpn->attack *= 3;
             }
         }
-        subwpn->attack += ((g_player_total_int * 2) + (rand() % 12)) / 10;
+        subwpn->attack += ((g_Status.statsTotal[2] * 2) + (rand() % 12)) / 10;
         return subweaponId;
     }
 }
-#endif
 
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalModRate;
@@ -406,13 +401,14 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
+u16 func_800FF128(Entity* enemyEntity, Entity* arg1);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF128);
 
 s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
         return 0;
     }
-    return arg0 + ((u32)(arg0 * g_player_total_lck[0]) >> 7);
+    return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
 }
 
 // Determine what type of item to drop
@@ -423,7 +419,7 @@ s32 func_800FF494(EnemyDef* arg0) {
     s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
-    rnd -= ((rand() & 0x1F) + g_player_total_lck[0]) / 20;
+    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
 
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
@@ -437,7 +433,7 @@ s32 func_800FF494(EnemyDef* arg0) {
         if (ringOfArcanaCount != 0) {
             rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
         }
-        rnd -= ((rand() & 0x1F) + g_player_total_lck[0]) / 20;
+        rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
 
         if (rnd >= arg0->uncommonItemDropRate) {
             rnd = rand() % 28;
@@ -616,9 +612,9 @@ void func_800FF7B8(s32 arg0) {
         }
 
         var_s0_3 = 0;
-        g_playerExp = 0;
-        g_playerLevel = 1;
-        g_killCount = 0;
+        g_Status.exp = 0;
+        g_Status.level = 1;
+        g_Status.killCount = 0;
         do {
             D_80097C44[var_s0_3].level = 1;
             D_80097C44[var_s0_3].exp = 0;
@@ -692,7 +688,7 @@ void func_800FF7B8(s32 arg0) {
             g_Status.equipment[4] = 0x30;
             g_Status.equipment[5] = 0x39;
             D_80097C18 = 0x39;
-            g_playerGold = 0;
+            g_Status.gold = 0;
             g_Status.equipment[0] = 0;
             g_Status.equipment[1] = 0;
             g_Status.equipment[3] = 0;
@@ -703,7 +699,7 @@ void func_800FF7B8(s32 arg0) {
                 func_800FD4C0(14, 1);
                 func_800FD4C0(12, 1);
             }
-            g_GameTimer.hours = 0;
+            g_Status.timerHours = 0;
             D_80097C34 = 0;
             D_80097C38->unk0 = 0;
             D_80097C3C = 0;
@@ -713,7 +709,7 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.statCon = 6;
                 g_Status.statInt = 6;
                 g_Status.statLck = 6;
-                g_playerGold = 0;
+                g_Status.gold = 0;
                 var_v0_2 = thingPtr;
                 var_v0_2 -= 0x21B;
                 for (var_s0_10 = 0x1D; var_s0_10 >= 0; var_s0_10--) {
@@ -867,17 +863,17 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.hpMax = 70;
                 g_Status.hp = 70;
                 g_Status.hearts = 10;
-                g_playerGold = 500000;
+                g_Status.gold = 500000;
                 g_Status.heartsMax = 50;
                 g_Status.mp = 20;
                 g_Status.mpMax = 20;
                 g_Status.hearts = 1234;
                 g_Status.heartsMax = 2000;
-                g_playerExp = 11000;
-                g_playerLevel = 20;
+                g_Status.exp = 11000;
+                g_Status.level = 20;
                 var_s0_9 = 0x10;
                 if (g_StageId & 0x20) {
-                    g_playerExp = 110000;
+                    g_Status.exp = 110000;
                 }
 
                 new_var = 3;
@@ -914,10 +910,10 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.equipment[4] = 0x30;
                 g_Status.equipment[5] = 0x39;
                 D_80097C18 = 0x39;
-                g_GameTimer.hours = 0;
-                g_GameTimer.minutes = 0;
-                g_GameTimer.seconds = 0;
-                g_GameTimer.frames = 0;
+                g_Status.timerHours = 0;
+                g_Status.timerMinutes = 0;
+                g_Status.timerSeconds = 0;
+                g_Status.timerFrames = 0;
                 D_80097BFC.subWeapon = 0;
                 g_Status.relics[10] = 3;
                 (&g_Status.relics[10])[1] = 3;

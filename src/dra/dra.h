@@ -42,10 +42,22 @@ typedef struct {
     /* 0x1A */ s16 unk1A;
 } SpellDef;
 
+typedef struct {
+    void (*func_8017A000)(void);
+    void* unk04;
+    void* unk08;
+    void* unk0C;
+    void* unk10;
+    void* unk14;
+    void (*func_8017A018)(u8);
+    void (*func_8017A01C)(u8);
+} WeaponOvl;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
+extern u8 D_800A0170[];
 extern s32 D_800A0248;
 extern OvlDesc D_800A024C[];
 extern OvlDesc D_800A036C[];
@@ -118,6 +130,7 @@ extern const char* c_strALUCART;
 extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
+extern Unkstruct_801092E8 D_800A37D8;
 extern Lba D_800A3C40[]; // g_lba
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
@@ -135,6 +148,7 @@ extern RECT D_800ACD88[2];
 extern RECT D_800ACD90;
 extern RECT D_800ACDF0;
 extern u8 D_800ACFB4[][4];
+extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
@@ -164,6 +178,7 @@ extern const char aPbav_0[];
 extern const char aPbav_1[];
 extern const char aPbav_2[];
 extern s16 D_800BD07C[];
+extern s16 D_800BD19C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
 extern const char D_800DB524[];
@@ -207,6 +222,7 @@ extern s32 g_softResetTimer;
 extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern s32 D_80136414[];
 extern OvlDesc* D_8013644C;
 extern OvlDesc D_80136450;
 extern s16 D_80136460[];
@@ -306,6 +322,7 @@ extern s32 D_8013808C;
 extern s32 D_8013841C;
 extern s32 D_80138430;
 extern s32 D_80138438;
+extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
 extern s32 D_80138460;
@@ -319,9 +336,11 @@ extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
 extern s32 D_80138FB0;
+extern s16 D_80138FB8; // vol_l
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
 extern s16 g_sfxRingBufferPos1; // D_80139000
+extern s16 D_80139004;          // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern s8 D_80139014;
@@ -345,7 +364,7 @@ extern Multi D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern s32 D_801396F0;
-extern u16 D_801396F4;
+extern volatile s16 D_801396F4;
 extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;
@@ -402,10 +421,9 @@ extern s32 D_8013B694;
 extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
+extern WeaponOvl D_8017A000;
+extern WeaponOvl D_8017D000;
 extern void (*D_80170000)(void);
-extern void (*D_8017A000)(void);
-extern s32 (*D_8017A018)();
-extern s32 (*D_8017D018)();
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern s32 D_801EC000[];
@@ -454,7 +472,7 @@ void func_800F0334(s32);
 void func_800F0578(s32 arg0);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
-void func_800F1868(s32, s32, void*);
+void func_800F1868(s32, s32, u8*);
 void func_800F18C4(s32, s32);
 void func_800F1954(s32, s32, s32);
 void func_800F1EB0(s32, s32, s32);
@@ -486,6 +504,7 @@ void DrawSettingsSound(MenuContext* context);
 void DrawPauseMenu(s32 arg0);
 void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
+void func_800FA7E8(void);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 void func_800FAF44(s32);
@@ -633,7 +652,7 @@ void func_80132C2C(s16);
 u8 func_80132028(u_char com, u_char* param, u_char* result);
 void func_8013271C(void);
 void func_80132760(void);
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, u16 note,
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance);
 void func_801337B4(void);
 bool func_80133940(void);

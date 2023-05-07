@@ -261,3 +261,28 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } Unkstruct_800FDB18;
+
+typedef struct Unkstruct_801C3F9C {
+    /* 0x00 */ char pad0[0xA];
+    /* 0x0A */ s16 unk0A;
+    /* 0x0C */ s32 unk0C;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ char pad16[0x8];
+    /* 0x1E */ s16 unk1E;
+    /* 0x20 */ char pad20[0x4];
+    /* 0x24 */ u8 unk24;
+    /* 0x25 */ char pad25[0x7];
+    /* 0x2C */ s16 unk2C;
+} Unkstruct_801C3F9C;
+
+typedef struct {
+    u16 D_800A37D8;
+    u16 D_800A37DA;
+} Unkstruct_801092E8;
+
+typedef struct {
+    s32 D_8003C908;
+    s32 D_8003C90C;
+    s32 D_8003C910;
+} Unkstruct_8003C908;

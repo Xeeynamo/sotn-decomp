@@ -32,7 +32,8 @@ void EntityPrizeDrop(Entity* self) {
             self->subId = 0;
             itemId = 0;
         }
-        if (itemId > 13 && itemId < 23 && itemId == D_80181DB0[D_80097BFC]) {
+        if (itemId > 13 && itemId < 23 &&
+            itemId == D_80181DB0[g_Status.D_80097BFC]) {
             self->subId = itemId = 1;
         }
         if (itemId == 0 || itemId == 2) {
@@ -131,11 +132,11 @@ void EntityPrizeDrop(Entity* self) {
 
     case 6:
     case 7:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
             if (itemId > 13 && itemId < 23) {
-                if (itemId == D_80181DB0[D_80097BFC]) {
+                if (itemId == D_80181DB0[g_Status.D_80097BFC]) {
                     self->subId = itemId = 1;
                 }
             }
@@ -155,7 +156,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
                 prim->blendMode = 8;
                 prim->priority = self->zPriority + 1;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
@@ -167,7 +168,7 @@ void EntityPrizeDrop(Entity* self) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->unk2E++;
+                self->step_s++;
             } else {
                 FallEntity();
             }
@@ -206,7 +207,7 @@ void EntityPrizeDrop(Entity* self) {
                 g_api.FreePrimitives(self->firstPolygonIndex);
                 self->unk80.modeS8.unk0 = 0xD0;
                 self->step = 3;
-                self->unk2E = 0;
+                self->step_s = 0;
                 self->flags &= ~0x800000;
             }
             break;
@@ -593,9 +594,9 @@ void func_801C08F0(Entity* self) {
         prim = (Primitive*)*(s32*)&self->unk7C.s;
         if (func_801C02F4(&D_80182000, 0) & 255) {
             prim->y1 += 2;
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 func_801C04F4(self, 1, 2, 0, 0, 3, 0);
-                self->unk2E = 1;
+                self->step_s = 1;
             }
         } else {
             self->accelerationY += 0x400;
@@ -1188,8 +1189,8 @@ void func_801C90E8(void) {
         return;
     }
     if ((g_CurrentEntity->unk7C.U8.unk0) == 0) {
-        if (func_801BC7D4() < 64) {
-            if (g_CurrentEntity->facing != (func_801BC844() & 1)) {
+        if (GetPlayerDistanceX() < 64) {
+            if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
                 func_801BD114(4);
             }
         }
@@ -1201,7 +1202,7 @@ void func_801C90E8(void) {
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityBoneScimitar);
 
 // debris that rotates and falls down
-void EntityFallingDebris(Entity* entity) {
+void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->unk88.S8.unk0--;
         if (entity->unk88.S8.unk0 & 0xFF) {

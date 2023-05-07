@@ -944,7 +944,7 @@ void func_801B75EC(Entity* self) {
         break;
 
     case 2:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->unk19 = 4;
             self->unk3C = 0;
@@ -956,7 +956,7 @@ void func_801B75EC(Entity* self) {
             self->accelerationY = -0x40000;
             self->animCurFrame = 0x23;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->unk2E++;
+            self->step_s++;
 
         case 1:
             MoveEntity();
@@ -1422,7 +1422,10 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BC6BC);
 
-s32 func_801BC7D4(void) {
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
+s32 GetPlayerDistanceX(void) {
     s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (yDistance < 0) {
@@ -1431,7 +1434,10 @@ s32 func_801BC7D4(void) {
     return yDistance;
 }
 
-s32 func_801BC810(void) {
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
+s32 GetPlayerDistanceY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -1440,13 +1446,19 @@ s32 func_801BC810(void) {
     return yDistance;
 }
 
-s16 func_801BC844(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+/**
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+ */
+s16 GetPlayerSide(void) {
+    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+        side |= 2;
     }
-    return var_a0;
+    return side;
 }
 
 void MoveEntity(void) {
@@ -1466,12 +1478,12 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BCB5C);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
+
     while (current < end) {
         if (current->objectId == 0) {
             DestroyEntity(current);
             return current;
         }
-
         current++;
     }
     return NULL;
@@ -1540,13 +1552,13 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BD0B4);
 
 void func_801BD114(u8 step) {
     g_CurrentEntity->step = step;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801BD134(u8 arg0) {
-    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->step_s = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -1574,7 +1586,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
@@ -1588,14 +1600,13 @@ void EntityDummy(Entity* arg0) {
 }
 
 s32 func_801BD308(u16* hitSensors, s16 sensorCount) {
+    s32 accelerationX = g_CurrentEntity->accelerationX;
     Collider collider;
-    s16 i;
-    s32 accelerationX;
     u16 temp_a1;
     s16 x;
     s16 y;
+    s16 i;
 
-    accelerationX = g_CurrentEntity->accelerationX;
     if (accelerationX != 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;

@@ -67,19 +67,79 @@ void EntityRedEyeBust(Entity* self) {
         }
 
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 self->animCurFrame--;
-                self->unk2E |= 1;
+                self->step_s |= 1;
             }
         } else {
-            self->unk2E = 0;
+            self->step_s = 0;
         }
         break;
     }
 }
 
-// DECOMPME_WIP func_801B12E8 https://decomp.me/scratch/3Sf68
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B12E8);
+// A purplish-red brick background that scrolls behind the foreground layer
+void EntityPurpleBrickScrollingBackground(Entity* self) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+    s32 tempPosX;
+    s32 tempPosY;
+    s32 x, y;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->posX.i.hi = 0;
+        self->posY.i.hi = 0;
+        self->unk68 = 0x80;
+        // Composed of 15 primitives
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 15);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[firstPrimIndex];
+        self->firstPolygonIndex = (s32)firstPrimIndex;
+        *(s32*)&self->unk7C = prim;
+        self->flags |= 0x800000;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = 4;
+            prim->u0 = prim->u2 = 0x80;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xBF;
+            prim->priority = 0x20;
+            prim->blendMode = 2;
+            prim = prim->next;
+        }
+
+    case 1:
+        // Add a scrolling effect
+        tempPosX = self->posX.i.hi;
+        tempPosX = tempPosX & 0x7F;
+        tempPosX = tempPosX - 0x80;
+        tempPosY = self->posY.i.hi;
+        tempPosY = (tempPosY & 0x3F) - 0x40;
+        prim = *((s32*)(&self->unk7C));
+        // Primitives are laid out in a 5-tall by 3-wide grid
+        for (y = 0; y < 5; y++) {
+            for (x = 0; x < 3; x++) {
+                prim->x0 = prim->x2 = tempPosX + (x * 0x80);
+                prim->x1 = prim->x3 = prim->x0 + 0x80;
+                prim->y0 = prim->y1 = tempPosY + (y * 0x40);
+                prim->y2 = prim->y3 = prim->y0 + 0x40;
+                prim->blendMode = 0;
+                prim = prim->next;
+            }
+        }
+
+        while (prim != NULL) {
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+    }
+}
 
 void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     Entity* newEntity;
@@ -481,14 +541,14 @@ void EntityMoveableBox(Entity* self) {
         self->accelerationY = 0;
 
         if (var_s1 & 1) {
-            temp_s1 = func_801BCC5C();
+            temp_s1 = GetPlayerSide();
             if (temp_s1 & 1 && player->accelerationX > 0) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
                 self->accelerationX = 0x8000;
             }
-            temp_s1 = func_801BCC5C();
+            temp_s1 = GetPlayerSide();
             if (!(firstPolygonIndex = (temp_s1 & 1)) &&
                 (player->accelerationX < 0)) {
                 if (!(g_blinkTimer & 7)) {
@@ -847,7 +907,85 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3294);
+// Aspatch skips a nop. TODO: Fix compiler
+// Matching in decompme: https://decomp.me/scratch/Swhgi
+#ifndef NON_MATCHING
+INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityFloorSpikes);
+#else
+void EntityFloorSpikes(Entity* self) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+    s32 var_v1;
+    s32 tilePos;
+    s32 new_var;
+    u8 temp; // !FAKE
+    volatile int pad[3];
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->attackElement = 1;
+        self->attack = 7;
+        self->unk3C = 1;
+        self->unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
+
+        temp = 4;
+        new_var = self->posY.i.hi - 4;
+        new_var += g_Camera.posY.i.hi;
+        tilePos = ((self->posX.i.hi - temp + g_Camera.posX.i.hi) >> 4) +
+                  (((new_var >> 4) * g_CurrentRoom.hSize) * 16);
+
+        g_CurrentRoomTileLayout.fg[tilePos] = 0x102;
+        g_CurrentRoomTileLayout.fg[tilePos + 1] = 0x103;
+        firstPrimIndex = g_api.AllocPrimitives(4, 1);
+        if (firstPrimIndex == (-1)) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[firstPrimIndex];
+        self->firstPolygonIndex = firstPrimIndex;
+        *((s32*)(&self->unk7C)) = prim;
+        self->flags |= 0x800000;
+        prim->type = 6;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 0x28;
+        prim->v0 = 0xC8;
+        prim->v1 = prim->u1 = 0x20;
+        prim->priority = 0x5F;
+        prim->blendMode = 2;
+        self->posY.i.hi -= 28;
+
+    case 1:
+        self->unk3C = 1;
+        if (self->unk84.unk != 0) {
+            self->posY.val += 0x10000;
+            new_var = g_Camera.posY.i.hi + self->posY.i.hi;
+            var_v1 = g_Camera.posY.i.hi;
+            if (new_var > self->unk80.modeS32) {
+                self->unk3C = 0;
+                self->posY.i.hi = self->unk80.modeS16.unk0 - var_v1;
+            }
+        } else {
+            self->posY.val += 0xFFFF0000;
+            new_var = g_Camera.posY.i.hi + self->posY.i.hi;
+            var_v1 = g_Camera.posY.i.hi;
+            if (new_var < (self->unk80.modeS32 - 28)) {
+                self->posY.i.hi = self->unk80.modeS16.unk0 - 28 - var_v1;
+            }
+        }
+    }
+    if (self->unk88.U8.unk0 != 0) {
+        func_801C29B0(0x69D);
+        self->unk88.S8.unk0 = 0;
+    }
+    prim = *((s32*)(&self->unk7C));
+    prim->x0 = self->posX.i.hi - 16;
+    prim->y0 = self->posY.i.hi - 16;
+}
+#endif
 
 // table with globe on it that can be broken
 void EntityTableWithGlobe(Entity* self) {
@@ -987,13 +1125,13 @@ void func_801B37C0(Entity* self) {
             self->subId = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 self->animCurFrame--;
-                self->unk2E |= 1;
+                self->step_s |= 1;
             }
         } else {
             newEntity = self;
-            newEntity->unk2E = 0;
+            newEntity->step_s = 0;
         }
         break;
     }
@@ -1162,7 +1300,7 @@ void func_801B54A8(Entity* self) {
         break;
 
     case 2:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->unk19 = 4;
             self->unk3C = 0;
@@ -1174,7 +1312,7 @@ void func_801B54A8(Entity* self) {
             self->accelerationY = -0x40000;
             self->animCurFrame = 0x23;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->unk2E++;
+            self->step_s++;
 
         case 1:
             MoveEntity();
@@ -1949,7 +2087,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801BCAD4);
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
-s32 func_801BCBEC(void) {
+s32 GetPlayerDistanceX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -1961,7 +2099,7 @@ s32 func_801BCBEC(void) {
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
-s32 func_801BCC28(void) {
+s32 GetPlayerDistanceY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -1970,13 +2108,19 @@ s32 func_801BCC28(void) {
     return yDistance;
 }
 
-s16 func_801BCC5C(void) {
-    s16 facing = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+/**
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+ */
+s16 GetPlayerSide(void) {
+    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        facing |= 2;
+        side |= 2;
     }
-    return facing;
+    return side;
 }
 
 void MoveEntity() {
@@ -2123,20 +2267,18 @@ u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
 }
 
 void func_801BD52C(u8 step) {
-    Entity* entity;
+    Entity* entity = g_CurrentEntity;
 
-    entity = g_CurrentEntity;
     entity->step = step;
-    entity->unk2E = 0;
+    entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
 
 void func_801BD54C(u8 arg0) {
-    Entity* entity;
+    Entity* entity = g_CurrentEntity;
 
-    entity = g_CurrentEntity;
-    entity->unk2E = arg0;
+    entity->step_s = arg0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -2157,7 +2299,7 @@ void func_801BD568(u16 arg0, u16 arg1) {
     g_CurrentEntity->animCurFrame = 0;
     g_CurrentEntity->unk19 = 0;
     g_CurrentEntity->step = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -2181,7 +2323,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
@@ -2227,27 +2369,29 @@ s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
 }
 
 void func_801BD848(u16* hitSensors, s16 sensorCount) {
+    s32 accelerationX = g_CurrentEntity->accelerationX;
     Collider collider;
+    s16 x, y;
     s16 i;
-    s32 accelerationX;
-    s16 x;
-    s16 y;
 
-    accelerationX = g_CurrentEntity->accelerationX;
-    if (accelerationX == 0)
+    if (accelerationX == 0) {
         return;
+    }
+
     x = g_CurrentEntity->posX.i.hi;
     y = g_CurrentEntity->posY.i.hi;
+
     for (i = 0; i < sensorCount; i++) {
         if (accelerationX < 0) {
-            x = x + *hitSensors++;
+            x += *hitSensors++;
         } else {
-            x = x - *hitSensors++;
+            x -= *hitSensors++;
         }
-
         y += *hitSensors++;
+
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+
+        if ((collider.unk0 & 2) && (!(collider.unk0 & 0x8000) || (i != 0))) {
             if (accelerationX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
@@ -2367,7 +2511,7 @@ void CollectGold(u16 goldSize) {
     u16 goldSizeIndex;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_playerGold;
+    gold = &g_Status.gold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {

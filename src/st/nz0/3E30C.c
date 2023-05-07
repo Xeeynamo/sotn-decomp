@@ -30,7 +30,8 @@ void EntityPrizeDrop(Entity* self) {
             self->subId = 0;
             itemId = 0;
         }
-        if (itemId > 13 && itemId < 23 && itemId == D_80181CD8[D_80097BFC]) {
+        if (itemId > 13 && itemId < 23 &&
+            itemId == D_80181CD8[g_Status.D_80097BFC]) {
             self->subId = itemId = 1;
         }
         if (itemId == 0 || itemId == 2) {
@@ -128,11 +129,11 @@ void EntityPrizeDrop(Entity* self) {
 
     case 6:
     case 7:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
             if (itemId > 13 && itemId < 23) {
-                if (itemId == D_80181CD8[D_80097BFC]) {
+                if (itemId == D_80181CD8[g_Status.D_80097BFC]) {
                     self->subId = itemId = 1;
                 }
             }
@@ -152,7 +153,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
                 prim->blendMode = 8;
                 prim->priority = self->zPriority + 1;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
@@ -164,7 +165,7 @@ void EntityPrizeDrop(Entity* self) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->unk2E++;
+                self->step_s++;
             } else {
                 FallEntity();
             }
@@ -203,7 +204,7 @@ void EntityPrizeDrop(Entity* self) {
                 g_api.FreePrimitives(self->firstPolygonIndex);
                 self->unk80.modeS8.unk0 = 0xD0;
                 self->step = 3;
-                self->unk2E = 0;
+                self->step_s = 0;
                 self->flags &= ~0x800000;
             }
             break;
@@ -645,9 +646,9 @@ void func_801C0D08(Entity* self) {
         prim = (Primitive*)*(s32*)&self->unk7C.s;
         if (func_801C070C(&D_80181F28, 0) & 255) {
             prim->y1 += 2;
-            if (self->unk2E == 0) {
+            if (self->step_s == 0) {
                 func_801C090C(self, 1, 2, 0, 0, 3, 0);
-                self->unk2E = 1;
+                self->step_s = 1;
             }
         } else {
             self->accelerationY += 0x400;
@@ -1033,69 +1034,3 @@ void EntityRoomForeground(Entity* entity) {
 }
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C33D8);
-
-void func_801C3708(void) {
-    s32 temp = func_801BCF74(&D_8018216C);
-    s32 temp2 = func_801BD720(&D_80182174, 3);
-
-    if ((temp == 128) || (temp2 & 2)) {
-        func_801BD52C(5);
-        return;
-    }
-
-    if (g_CurrentEntity->unk7C.U8.unk0 == 0) {
-        if (func_801BCBEC() < 64) {
-            if (g_CurrentEntity->facing != (func_801BCC5C() & 1)) {
-                func_801BD52C(4);
-            }
-        }
-    } else {
-        g_CurrentEntity->unk7C.U8.unk0--;
-    }
-}
-
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityBoneScimitar);
-
-// debris that rotates and falls down
-void EntityFallingDebris(Entity* entity) {
-    if (entity->step) {
-        entity->unk88.S8.unk0--;
-        if (entity->unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_801820E4[entity->subId];
-            FallEntity();
-            MoveEntity();
-            return;
-        }
-        entity->objectId = ENTITY_EXPLOSION;
-        entity->pfnUpdate = EntityExplosion;
-        entity->subId = 0;
-        entity->step = 0;
-        return;
-    }
-    InitializeEntity(D_80180C58);
-    entity->unk19 = 4;
-    entity->animCurFrame = *(u8*)&entity->subId + 16;
-
-    if (entity->facing != 0) {
-        entity->accelerationX = -entity->accelerationX;
-    }
-
-    if (entity->subId & 0xF00) {
-        entity->palette += entity->subId / 256;
-    }
-}
-
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C3F9C);
-
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C4198);
-
-void func_801C4550(void) {
-    if (g_CurrentEntity->unk80.modeS16.unk2 > 0) {
-        g_CurrentEntity->unk80.modeS16.unk2 -= 3;
-    } else {
-        func_801BD52C(D_801822B4[(Random() & 7)]);
-        g_CurrentEntity->unk80.modeS16.unk2 = 0x100;
-    }
-}

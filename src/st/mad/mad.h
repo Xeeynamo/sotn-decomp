@@ -19,7 +19,6 @@ void EntityEquipItemDrop(Entity*);
 
 // OFFSET FIXED
 extern u8 D_8003BEE8[];
-extern s32 g_pfnInitRoomEntities; // It's 8003C8C4!
 extern Entity* g_CurrentEntity;
 extern Entity g_EntityArray[];
 extern Entity D_8007D858[];

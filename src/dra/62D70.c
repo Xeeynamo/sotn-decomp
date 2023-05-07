@@ -206,121 +206,108 @@ void func_801065F4(s16 startIndex) {
         DestroyEntity(pItem);
 }
 
-// Print debug hitboxes
-void func_80106670(s32 blendMode);
-
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106670);
+// Not jumping into a 'nop'. Matching with PSY-Q 3.5.
+#ifndef NON_MATCHING
+void DrawEntitiesHitbox(s32 blendMode);
+INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", DrawEntitiesHitbox);
 #else
-// DECOMP_ME_WIP func_80106670 https://decomp.me/scratch/iTgjO
-void func_80106670(s32 blendMode) {
-    const int MaxPolyCount = 0x100;
-    int new_var2 = 4;
-    DR_MODE* sp20;
-    GpuBuffer* temp_a0;
-    s32 absX;
-    s32 absX_2;
-    s32 absY;
-    s32 absY_2;
+// DECOMP_ME_WIP DrawEntitiesHitbox https://decomp.me/scratch/QFSeC
+void DrawEntitiesHitbox(s32 blendMode) {
+    DR_MODE* drawMode;
     s32 polyCount;
-    s8* temp_s7;
+    s32* order;
     Entity* entity;
     TILE* tile;
-    u32* tileCount;
-    u32 var_s8 = 0x1F0;
-    s32 temp_var;
-    polyCount = 0;
-    temp_a0 = D_8006C37C;
-    entity = g_EntityArray;
-    temp_s7 = temp_a0->_unk_0474;
-    tile = &temp_a0->tiles[g_GpuUsage.tile];
-    sp20 = &temp_a0->drawModes[g_GpuUsage.drawModes];
-    while (polyCount < 0x40) {
-        if (entity->unk3C != 0) {
-            s32 var_a0_2;
-            if (g_GpuUsage.tile >= MaxPolyCount) {
-                break;
-            }
-            absY = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-            absX = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-            if (entity->facing != 0) {
-                var_a0_2 = absX - (u16)entity->unk10;
-            } else {
-                var_a0_2 = (u16)entity->unk10 + absX;
-            }
-            temp_var = absY + (u16)entity->unk12;
-            tile->r0 = 0xFF;
+    u32 orderIdx;
+    u16 x;
+    u16 y;
+
+    order = D_8006C37C->order;
+    tile = &D_8006C37C->tiles[g_GpuUsage.tile];
+    drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+    orderIdx = 0x1F0;
+    for (polyCount = 0, entity = g_EntityArray; polyCount < 0x40;
+         polyCount++, entity++) {
+        if (entity->unk3C == 0)
+            continue;
+        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+            break;
+        }
+
+        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        if (entity->facing) {
+            x -= entity->unk10;
+        } else {
+            x += entity->unk10;
+        }
+        y += entity->unk12;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->unk3C == 2) {
+            tile->r0 = 0;
             tile->g0 = 0xFF;
+            tile->b0 = 0;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&order[orderIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
+    }
+
+    for (; polyCount < GPU_MAX_TILE_COUNT; polyCount++, entity++) {
+        if (entity->unk3C == 0)
+            continue;
+        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+            break;
+        }
+
+        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
+        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        if (entity->facing) {
+            x -= entity->unk10;
+        } else {
+            x += entity->unk10;
+        }
+        y += entity->unk12;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->unk3C == 1) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0;
+        }
+        if (entity->unk3C == 2) {
+            tile->r0 = 0;
+            tile->g0 = 0;
             tile->b0 = 0xFF;
-            if (entity->unk3C == 2) {
-                tile->r0 = 0;
-                tile->g0 = 0xFF;
-                tile->b0 = 0;
-            }
-            tile->x0 = var_a0_2 - entity->hitboxWidth;
-            tile->y0 = temp_var - entity->hitboxHeight;
-            tile->w = 2;
-            tile->w = entity->hitboxWidth * tile->w;
-            tile->h = entity->hitboxHeight * 2;
-            SetSemiTrans(tile, 1);
-            AddPrim(temp_s7 + var_s8 * 4, tile);
-            tile++;
-            g_GpuUsage.tile++;
         }
-        polyCount++;
-        entity++;
+        if (entity->unk3C == 3) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0xFF;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&order[orderIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
     }
 
-    if (polyCount < MaxPolyCount) {
-        while (polyCount < MaxPolyCount) {
-            if (entity->unk3C != 0) {
-                s32 var_a0_2;
-                if (g_GpuUsage.tile >= MaxPolyCount) {
-                    break;
-                }
-                absY_2 = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-                absX_2 = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-                if (entity->facing != 0) {
-                    var_a0_2 = absX_2 - (u16)entity->unk10;
-                } else {
-                    var_a0_2 = (u16)entity->unk10 + absX_2;
-                }
-                temp_var = absY_2 + (u16)entity->unk12;
-                tile->r0 = 0xFF;
-                tile->g0 = 0xFF;
-                tile->b0 = 0xFF;
-                if (entity->unk3C == 1) {
-                    tile->r0 = 0xFF;
-                    tile->g0 = 0;
-                    tile->b0 = 0;
-                }
-                if (entity->unk3C == 2) {
-                    tile->r0 = 0;
-                    tile->g0 = 0;
-                    tile->b0 = 0xFF;
-                }
-                if (entity->unk3C == 3) {
-                    tile->r0 = 0xFF;
-                    tile->g0 = 0;
-                    tile->b0 = 0xFF;
-                }
-                tile->x0 = var_a0_2 - entity->hitboxWidth;
-                tile->y0 = temp_var - entity->hitboxHeight;
-                tile->w = entity->hitboxWidth * 2;
-                tile->h = entity->hitboxHeight * 2;
-                SetSemiTrans(tile, 1);
-                AddPrim(temp_s7 + (var_s8 * (new_var2 = 4)), tile);
-                tile++;
-                g_GpuUsage.tile++;
-            }
-            polyCount++;
-            entity++;
-        }
-    }
-
-    if (g_GpuUsage.drawModes < 0x400U) {
-        SetDrawMode(sp20, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
-        AddPrim(temp_s7 + var_s8 * 4, sp20);
+    if (g_GpuUsage.drawModes < 0x400) {
+        SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &D_800ACD80);
+        AddPrim(&order[orderIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }
@@ -332,7 +319,7 @@ bool func_8010715C(s32 mapTilesetId) {
     if (D_8006C3B0 != 0)
         return false;
 
-    if (D_800978AC == 0) {
+    if (!g_UseDisk) {
         if (func_800E81FC(mapTilesetId, FILETYPE_MONSTER) < 0) {
             return false;
         }
@@ -494,8 +481,11 @@ bool func_801083F0(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80108448);
 
-// DECOMP_ME_WIP func_801092E8 https://decomp.me/scratch/QZk8K
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801092E8);
+void func_801092E8(s32 arg0) {
+    D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
+    D_800A37D8.D_800A37DA = D_800ACE48[arg0 * 2 + 1];
+    D_8006EBE0 = D_800ACE48[arg0 * 2];
+}
 
 void func_80109328(void) {
     s16* player_unk1E = &PLAYER.unk1E;
@@ -540,7 +530,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A234);
 void func_8010A234(s32 arg0) {
     s32 temp;
     g_CurrentEntity = g_EntityArray;
-    temp = D_8017A018();
+    temp = D_8017A000.func_8017A018();
 
     do { // !FAKE
         if ((temp == 0x2D) && (CheckEquipmentItemCount(0x19, 2) != 0)) {
@@ -590,7 +580,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A3F0);
 void func_8010A3F0(void) {
     s32 temp = 0x38;
 
-    if ((D_8017A018() == temp) && (D_8017D018() == temp)) {
+    if ((D_8017A000.func_8017A018() == temp) &&
+        (D_8017D000.func_8017A018() == temp)) {
         if (D_80072F16[0] == 0) {
             func_801092E8(1);
         }
@@ -631,7 +622,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010D2C8);
 
 void func_8010D584(s16 step) {
     PLAYER.step = step;
-    PLAYER.unk2E = 0;
+    PLAYER.step_s = 0;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010D59C);
@@ -881,7 +872,7 @@ void func_8010E3E0(void) {
 }
 
 void func_8010E42C(u16 arg0) {
-    PLAYER.unk2E = arg0;
+    PLAYER.step_s = arg0;
     PLAYER.step = 18;
 
     if (!(arg0 & 1)) {
@@ -895,7 +886,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
     PLAYER.step = 2;
-    PLAYER.unk2E = D_800ACF4C[arg0 * 2 + 0];
+    PLAYER.step_s = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
 
@@ -1003,7 +994,7 @@ void func_8010E83C(s32 arg0) {
 void func_8010E940(void) {
     D_80072F20.unk44 |= 0x21;
     func_8010DA48(0x20);
-    PLAYER.unk2E = 0;
+    PLAYER.step_s = 0;
     PLAYER.accelerationY = -0x44000;
     if (D_80072F20.unk72 != 0) {
         PLAYER.accelerationY = 0;
@@ -1164,7 +1155,7 @@ void func_8010FD24(void) {
 
 void func_8010FD88(void) {
     PLAYER.step = 0;
-    PLAYER.unk2E = 3;
+    PLAYER.step_s = 3;
     AccelerateX(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;
     func_8010DA48(0xDB);

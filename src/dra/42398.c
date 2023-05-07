@@ -34,7 +34,7 @@ void func_800ECE58(void);
 void func_800EDEDC(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
-void func_80106670(s32 blendMode);
+void DrawEntitiesHitbox(s32 blendMode);
 void func_80108448(void);
 s32 func_8010E27C(void);
 void AccelerateX(s32);
@@ -411,8 +411,8 @@ loop_5:
         temp_v1_2 = D_8006C37C->unk0;
         g_blinkTimer++;
         D_8006C37C = temp_v1_2;
-        D_801362CC = temp_v1_2->_unk_0474;
-        ClearOTag(temp_v1_2->_unk_0474, 0x200);
+        D_801362CC = temp_v1_2->order;
+        ClearOTag(temp_v1_2->order, 0x200);
         g_GpuUsage.drawModes = 0;
         g_GpuUsage.env = 0;
         g_GpuUsage.gt4 = 0;
@@ -430,7 +430,7 @@ loop_5:
             func_800EBBAC();
             if (D_8003C734 == 2 && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
-                    func_80106670(D_801362B0);
+                    DrawEntitiesHitbox(D_801362B0);
                 }
             }
         }
@@ -509,20 +509,20 @@ loop_5:
         D_801362D4 = (D_801362D4 + 0xFF) >> 8;
         D_8003C99C += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
-            g_GameTimer.frames += D_801362D4;
-            if (g_GameTimer.frames >= 60) {
-                g_GameTimer.frames -= 60;
-                g_GameTimer.seconds++;
-                if (g_GameTimer.seconds >= 60) {
-                    g_GameTimer.seconds -= 60;
-                    g_GameTimer.minutes++;
-                    if (g_GameTimer.minutes >= 60) {
-                        g_GameTimer.minutes -= 60;
-                        g_GameTimer.hours++;
-                        if (g_GameTimer.hours >= 100) {
-                            g_GameTimer.seconds = 59;
-                            g_GameTimer.minutes = 59;
-                            g_GameTimer.hours = 99;
+            g_Status.timerFrames += D_801362D4;
+            if (g_Status.timerFrames >= 60) {
+                g_Status.timerFrames -= 60;
+                g_Status.timerSeconds++;
+                if (g_Status.timerSeconds >= 60) {
+                    g_Status.timerSeconds -= 60;
+                    g_Status.timerMinutes++;
+                    if (g_Status.timerMinutes >= 60) {
+                        g_Status.timerMinutes -= 60;
+                        g_Status.timerHours++;
+                        if (g_Status.timerHours >= 100) {
+                            g_Status.timerSeconds = 59;
+                            g_Status.timerMinutes = 59;
+                            g_Status.timerHours = 99;
                         }
                     }
                 }
@@ -560,7 +560,7 @@ void func_800E451C(void) {
         func_800EAEEC();
         func_800E3574();
         g_StageId = STAGE_SEL;
-        if (D_800978AC != 0) {
+        if (g_UseDisk) {
             if (D_8006C3B0 != 0) {
                 return;
             }
@@ -597,7 +597,7 @@ void func_800E451C(void) {
             ClearImage(&D_800ACDF0, 0, 0, 0);
             func_800E3574();
             g_StageId = 0x45;
-            if (D_800978AC != 0) {
+            if (g_UseDisk) {
                 if (D_8006C3B0 != 0) {
                     break;
                 }
@@ -608,8 +608,8 @@ void func_800E451C(void) {
         }
         break;
     case 1:
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
+        if ((g_UseDisk && D_8006C3B0 == 0) ||
+            (!g_UseDisk && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
              func_800E81FC(0, FILETYPE_SYSTEM) >= 0)) {
             D_80073060++;
         }
@@ -621,15 +621,15 @@ void func_800E451C(void) {
         D_80073060 = 4;
         break;
     case 4:
-        if (D_800978AC != 0) {
+        if (g_UseDisk) {
             D_8006C398 = 1;
             D_8006BAFC = 0x100;
         }
         D_80073060 = 5;
         break;
     case 5:
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
+        if ((g_UseDisk && D_8006C3B0 == 0) ||
+            (!g_UseDisk && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
@@ -713,7 +713,7 @@ void func_800E5498(void) {
     func_801072BC(poly);
     poly->tpage = 0x5A;
     poly->clut = D_8003C3C2[0];
-    AddPrim(&buffer->_unk_0474[0x1FF], poly);
+    AddPrim(&buffer->order[0x1FF], poly);
     g_GpuUsage.gt4++;
 }
 

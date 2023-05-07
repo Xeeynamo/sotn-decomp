@@ -23,17 +23,17 @@ void EntityBat(Entity* entity) {
         break;
 
     case 1:
-        xDistance = func_801BC7D4();
-        yDistance = func_801BC810();
+        xDistance = GetPlayerDistanceX();
+        yDistance = GetPlayerDistanceY();
         if ((xDistance < 0x60) && (yDistance < 0x60) &&
-            !(func_801BC844() & 2)) {
+            !(GetPlayerSide() & 2)) {
             entity->step++;
         }
         break;
 
     case 2:
         if (AnimateEntity(&D_80182570, entity) == 0) {
-            entity->facing = (func_801BC844() & 1) ^ 1;
+            entity->facing = (GetPlayerSide() & 1) ^ 1;
             entity->accelerationY = 0xE000;
             if (entity->facing != 0) {
                 entity->accelerationX = 0x4000;
@@ -49,7 +49,7 @@ void EntityBat(Entity* entity) {
     case 3:
         AnimateEntity(&D_80182554, entity);
         MoveEntity();
-        if (func_801BC810() < 0x20) {
+        if (GetPlayerDistanceY() < 0x20) {
             if (entity->facing == 0) {
                 entity->accelerationX = -0x10000;
             } else {

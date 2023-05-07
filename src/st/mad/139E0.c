@@ -12,9 +12,6 @@ extern void (*D_8003C7B4)(s32);
 extern s16 (*D_8003C7B8)(s32 type, s32 count);
 extern void (*D_8003C7BC)(s32 x, s32 y, Collider* res, s32 unk);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", EntityPrizeDrop);
-// #else
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -44,7 +41,8 @@ void EntityPrizeDrop(Entity* self) {
             self->subId = 0;
             itemId = 0;
         }
-        if (itemId > 13 && itemId < 23 && itemId == D_80180D4C[D_80097BFC]) {
+        if (itemId > 13 && itemId < 23 &&
+            itemId == D_80180D4C[g_Status.D_80097BFC]) {
             self->subId = itemId = 1;
         }
         if (itemId == 0 || itemId == 2) {
@@ -138,11 +136,11 @@ void EntityPrizeDrop(Entity* self) {
         break;
 
     case 7:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
             if (itemId > 13 && itemId < 23) {
-                if (itemId == D_80180D4C[D_80097BFC]) {
+                if (itemId == D_80180D4C[g_Status.D_80097BFC]) {
                     self->subId = itemId = 1;
                 }
             }
@@ -162,7 +160,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
                 prim->blendMode = 8;
                 prim->priority = self->zPriority + 1;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
         case 1:
@@ -173,7 +171,7 @@ void EntityPrizeDrop(Entity* self) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->unk2E++;
+                self->step_s++;
             } else {
                 FallEntity();
             }
@@ -212,7 +210,7 @@ void EntityPrizeDrop(Entity* self) {
                 g_api.FreePrimitives(self->firstPolygonIndex);
                 self->unk80.modeS8.unk0 = 0xD0;
                 self->step = 3;
-                self->unk2E = 0;
+                self->step_s = 0;
                 self->flags &= ~0x800000;
             }
             break;
@@ -220,7 +218,6 @@ void EntityPrizeDrop(Entity* self) {
         break;
     }
 }
-// #endif
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
