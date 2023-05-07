@@ -20,7 +20,6 @@ s16 func_801B4C78();
 void MoveEntity();
 void func_801B5794(u8);
 void EntityExplosion(Entity*);
-void EntityEquipItemDrop(Entity* self);
 
 extern u16 D_80180574[];
 extern u16 D_8018058C[];
