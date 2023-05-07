@@ -30,7 +30,6 @@ extern s16 D_8019D38A;
 extern s8 D_8019D38E;
 extern s8 D_8019D38F;
 void func_80192A3C(Entity*, LayoutObject*);
-void EntityEquipItemDrop(Entity* self);
 extern u8 D_8019C76C;
 extern u8 D_8019C770;
 #endif
