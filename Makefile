@@ -99,6 +99,7 @@ format:
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
+	mkdir -p expected
 	rm -rf expected/build
 	cp -r build expected/
 
