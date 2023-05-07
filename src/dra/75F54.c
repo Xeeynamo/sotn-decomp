@@ -238,7 +238,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityNumberMovesToHpMeter);
 // "Guard" text displays on screen
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityGuardText);
 
-void func_80119D3C(Entity* entity) {
+void func_80119D3C(Entity_* entity) {
     s32 temp;
     s32 cos;
 
@@ -246,31 +246,31 @@ void func_80119D3C(Entity* entity) {
     case 0:
         entity->posY.i.hi -= 16;
         entity->zPriority = PLAYER.zPriority - 2;
-        entity->unk7C.s = 0;
+        entity->ext.generic.unk7C.s = 0;
         entity->step++;
         entity->accelerationY = -0x8000;
-        entity->unk7E.modeU16 = 0x40;
+        entity->ext.generic.unk7E.modeU16 = 0x40;
         entity->animCurFrame = 0xE;
         entity->animSet = 3;
-        entity->unk80.modeS16.unk0 = 0x80;
+        entity->ext.generic.unk80.modeS16.unk0 = 0x80;
         entity->flags = FLAG_UNK_08000000;
         break;
 
     case 1:
-        if (entity->unk80.modeS16.unk0 < 32) {
+        if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
             entity->unk19 = 128;
         }
         entity->posY.val += entity->accelerationY;
-        cos = rcos(entity->unk7C.s);
-        entity->unk7C.s = entity->unk7C.s + entity->unk7E.modeU16;
+        cos = rcos(entity->ext.generic.unk7C.s);
+        entity->ext.generic.unk7C.s = entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
         temp = cos * 8;
 
         if (!(D_8003C8C4 & 3)) {
-            entity->unk7E.modeU16--;
+            entity->ext.generic.unk7E.modeU16--;
         }
         entity->posX.val += temp;
-        entity->unk80.modeS16.unk0--;
-        if (entity->unk80.modeS16.unk0 == 0) {
+        entity->ext.generic.unk80.modeS16.unk0--;
+        if (entity->ext.generic.unk80.modeS16.unk0 == 0) {
             DestroyEntity(entity);
         }
         break;

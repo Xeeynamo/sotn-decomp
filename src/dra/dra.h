@@ -564,7 +564,7 @@ void func_80118894(Entity*);
 void func_80118C28(s32 arg0);
 void func_80118D0C(Entity* entity);
 void func_80119588(Entity* entity);
-void func_80119D3C(Entity* entity);
+void func_80119D3C(Entity_* entity);
 void func_80119F70(Entity* entity);
 void func_8011A3AC(Entity* entity, s32 arg1, s32 arg2,
                    Unkstruct_8011A3AC* arg3);
