@@ -55,7 +55,7 @@ void EntityBat(Entity* entity) {
             } else {
                 entity->accelerationX = 0x10000;
             }
-            *(s32*)&entity->unk7C.s = 0x800;
+            *(s32*)&entity->ext.generic.unk7C.s = 0x800;
             entity->step++;
         }
         break;
@@ -64,9 +64,10 @@ void EntityBat(Entity* entity) {
         AnimateEntity(&D_80183C44, entity);
         MoveEntity();
         if ((u32)(entity->accelerationY + 0x10000) > 0x20000U) {
-            *(s32*)&entity->unk7C.s = (s32) - *(s32*)&entity->unk7C.s;
+            *(s32*)&entity->ext.generic.unk7C.s =
+                (s32) - *(s32*)&entity->ext.generic.unk7C.s;
         }
-        entity->accelerationY += *(s32*)&entity->unk7C.u;
+        entity->accelerationY += *(s32*)&entity->ext.generic.unk7C.u;
         break;
     }
 }

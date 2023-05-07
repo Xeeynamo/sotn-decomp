@@ -636,7 +636,7 @@ void func_8010DA2C(s32* arg0) {
 }
 
 void func_8010DA48(u32 arg0) {
-    g_CurrentEntity->unkAC = arg0;
+    g_CurrentEntity->ext.generic.unkAC = arg0;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
@@ -702,7 +702,7 @@ void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
 void func_8010DF70(void) {
     g_CurrentEntity = &PLAYER;
 
-    switch (PLAYER.unkAC) {
+    switch (PLAYER.ext.generic.unkAC) {
     case 0xBA:
     case 0xBB:
     case 0xBE:
@@ -717,7 +717,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
     s32 i;
 
     if (arg0 != 0) {
-        g_EntityArray[UNK_ENTITY_1].unk7C.U8.unk1 = 1;
+        g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.U8.unk1 = 1;
         g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
         g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
@@ -729,8 +729,8 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    g_EntityArray[UNK_ENTITY_1].unk7C.U8.unk0 = 1;
-    g_EntityArray[UNK_ENTITY_1].unk7E.modeU8.unk0 = 10;
+    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.U8.unk0 = 1;
+    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 10;
 
     if (arg1 != 0) {
         if (arg1 < 4) {
@@ -744,14 +744,14 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 void func_8010E0A8(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
-    entity->unk7E.modeU8.unk0 = 0;
+    entity->ext.generic.unk7E.modeU8.unk0 = 0;
 }
 
 void func_8010E0B8(void) {
     Entity* entity = &g_EntityArray[UNK_ENTITY_1];
 
-    entity->unk7C.U8.unk1 = 0;
-    entity->unk7C.U8.unk0 = 0;
+    entity->ext.generic.unk7C.U8.unk1 = 0;
+    entity->ext.generic.unk7C.U8.unk0 = 0;
 }
 
 void func_8010E0D0(s32 arg0) {
@@ -922,7 +922,7 @@ void func_8010E6AC(s32 arg0) {
     func_8010D584(1);
 
     if (arg0 != 0) {
-        if (PLAYER.unkAC != 0xD) {
+        if (PLAYER.ext.generic.unkAC != 0xD) {
             func_8010DA48(0xD);
         }
     } else {
@@ -931,10 +931,10 @@ void func_8010E6AC(s32 arg0) {
     }
 
     if (D_80072F20.unk4C != 0) {
-        PLAYER.unkAC = 9;
+        PLAYER.ext.generic.unkAC = 9;
     }
 
-    if ((PLAYER.unkAC == 7) && (condition)) {
+    if ((PLAYER.ext.generic.unkAC == 7) && (condition)) {
         PLAYER.animFrameIdx = 1;
     }
 
@@ -1052,8 +1052,8 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
             ret++;
         }
 
-        if (entity->unkB0 != 0) {
-            if (entity->unkB0 == arg0) {
+        if (entity->ext.generic.unkB0 != 0) {
+            if (entity->ext.generic.unkB0 == arg0) {
                 var_a2++;
             }
         }

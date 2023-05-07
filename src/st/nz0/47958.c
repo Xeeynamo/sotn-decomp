@@ -59,10 +59,10 @@ void EntityBloodSkeleton(Entity* self) {
 
     case BLOOD_SKELETON_DISASSEMBLE:
         if (AnimateEntity(D_80182638, self) == 0) {
-            self->unk80.modeS16.unk0 = 0xF0;
+            self->ext.generic.unk80.modeS16.unk0 = 0xF0;
             self->flags &= ~0x100;
             if (self->subId != 0) {
-                self->unk80.modeS16.unk0 = 4;
+                self->ext.generic.unk80.modeS16.unk0 = 4;
             }
             func_801BD52C(BLOOD_SKELETON_REASSEMBLE);
         }
@@ -71,7 +71,7 @@ void EntityBloodSkeleton(Entity* self) {
     case BLOOD_SKELETON_REASSEMBLE:
         switch (self->step_s) {
         case 0:
-            if (--self->unk80.modeS16.unk0 == 0) {
+            if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->unk1E = 0;
                 self->unk19 |= 4;
                 func_801C29B0(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
@@ -82,15 +82,15 @@ void EntityBloodSkeleton(Entity* self) {
 
         case 1:
             if ((g_blinkTimer % 3) == 0) {
-                self->unk80.modeS16.unk0++;
-                if (self->unk80.modeS16.unk0 % 2) {
+                self->ext.generic.unk80.modeS16.unk0++;
+                if (self->ext.generic.unk80.modeS16.unk0 % 2) {
                     self->unk1E = 0x10;
                 } else {
                     self->unk1E = -0x10;
                 }
             }
 
-            if (self->unk80.modeS16.unk0 >= 9) {
+            if (self->ext.generic.unk80.modeS16.unk0 >= 9) {
                 self->unk19 = 0;
                 self->unk1E = 0;
                 self->step_s++;

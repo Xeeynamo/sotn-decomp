@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 #include "common.h"
+#include "entity.h"
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
 #include <psxsdk/libc.h>
@@ -290,10 +291,10 @@ typedef struct Entity {
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44; // 1 = Takes a hit
+    /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 unk48; // 1 = Takes a hit
+    /* 0x48 */ u8 unk48; // 1 = took hit
     /* 0x49 */ u8 unk49; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
@@ -314,72 +315,7 @@ typedef struct Entity {
     /* 0x70 */ s32 unk70;
     /* 0x74 */ s32 unk74;
     /* 0x78 */ s32 unk78;
-    /* 0x7C */ Multi16 unk7C; // posX
-    union {
-        /* 0x7E */ u16 modeU16;
-        struct {
-            /* 0x7E */ u8 unk0;
-            /* 0x7F */ u8 unk1;
-        } modeU8;
-    } unk7E; // posY
-    union {
-        /* 0x80 */ s32 modeS32;
-        /* 0x80 */ struct Entity* entityPtr;
-        struct {
-            /* 0x80 */ s16 unk0;
-            /* 0x82 */ s16 unk2;
-        } modeS16;
-        struct {
-            /* 0x80 */ u8 unk0;
-            /* 0x81 */ u8 unk1;
-        } modeS8;
-    } unk80; // size = 0x4
-    /* 0x84 */ Multi unk84;
-    /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
-    union {
-        /* 0x8C */ struct Entity* entityPtr;
-        /* 0x8C */ struct Primitive* primPtr;
-        /* 0x8C */ s32 modeS32;
-        struct {
-            /* 0x8C */ u16 unk0;
-            /* 0x8E */ u16 unk2;
-        } modeU16;
-        struct {
-            /* 0x8C */ s16 unk0;
-            /* 0x8E */ s16 unk2;
-        } modeS16;
-    } unk8C; // size = 0x4
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
-    /* 0x94 */ u8 unk94;
-    /* 0x95 */ u8 unk95;
-    /* 0x96 */ s16 unk96;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity* unk9C;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
-    /* 0xAA */ s16 unkAA;
-    /* 0xAC */ u8 unkAC;
-    /* 0xAD */ s8 unkAD;
-    /* 0xAE */ s8 unkAE;
-    /* 0xAF */ s8 unkAF;
-    /* 0xB0 */ s16 unkB0;
-    /* 0xB2 */ s16 unkB2;
-    /* 0xB4 */ s16 unkB4;
-    /* 0xB6 */ s16 unkB6;
-    union {
-        /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
-        /* 0xB8 */ struct Entity* entityPtr;
-        struct {
-            /* 0xB8 */ u8 unk0;
-            /* 0xB9 */ u8 unk1;
-            /* 0xBA */ u8 unk2;
-            /* 0xBB */ u8 unk3;
-        } modeU8;
-    } unkB8;
+    /* 0x7C */ Ext ext;
 } Entity; // size = 0xBC
 
 typedef struct {
@@ -1020,7 +956,7 @@ extern s16 D_8007342C;  // PLAYER.animSet
 extern u16 D_8007342E;  // PLAYER.animCurFrame
 extern s16 D_80073432;  // PLAYER.unk5A
 extern s16 D_8007347C;  // PLAYER.unkA4
-extern u8 D_80073484;   // PLAYER.unkAC
+extern u8 D_80073484;   // PLAYER.ext.generic.unkAC
 // End of Player Character offset = 0x80073494
 
 // D_80073494 g_EntityArray[1]
