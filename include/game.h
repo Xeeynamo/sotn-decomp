@@ -196,7 +196,7 @@ typedef struct {
     /* 20 */ const char* ovlName;
     /* 24 */ const char* name;
     /* 28 */ u8 unk28;
-    /* 29 */ u8 unk29;
+    /* 29 */ s8 unk29;
     /* 2A */ u16 unk2A;
 } Lba; /* size=0x2C */
 
@@ -866,7 +866,7 @@ extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;
 extern s32 D_8006C390;
-extern s32 D_8006C398;
+extern u32 D_8006C398;
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
