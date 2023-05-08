@@ -98,8 +98,8 @@ void EntitySubWeaponContainer(Entity* self) {
         }
 
         for (i = 0; i < 96; i++) { // Spawn falling liquid
-            newEntity = AllocEntity(&g_EntityArray[UNK_ENTITY_51],
-                                    &g_EntityArray[UNK_ENTITY_100]);
+            newEntity = AllocEntity(&g_Entities[UNK_ENTITY_51],
+                                    &g_Entities[UNK_ENTITY_100]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3B, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;

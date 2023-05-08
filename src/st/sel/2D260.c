@@ -1031,7 +1031,7 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4C68);
 
 void func_801B4D78(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_3];
+    Entity* e = &g_Entities[UNK_ENTITY_3];
 
     if (e->step == 0) {
         e->animSet = -0x7FFF;
@@ -1045,7 +1045,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1102,7 +1102,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1150,7 +1150,7 @@ void func_801B4FFC(void) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B519C);
 
 void func_801B5350(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_5];
+    Entity* entity = &g_Entities[UNK_ENTITY_5];
 
     switch (entity->step) {
     case 0:
@@ -1186,7 +1186,7 @@ void func_801B5350(void) {
 }
 
 void func_801B54C8(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+    Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
         e->animSet = -0x7FFE;
@@ -1202,7 +1202,7 @@ void func_801B54C8(void) {
 }
 
 void func_801B5548(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+    Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
         e->animSet = -0x7FFE;

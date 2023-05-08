@@ -41,7 +41,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
 
 Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
-    Entity* entity = &g_EntityArray[entityIndex];
+    Entity* entity = &g_Entities[entityIndex];
     s16 var_a0 = entityIndex;
 
     if (entityIndex < arg1) {
@@ -302,7 +302,7 @@ void func_801623E0(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
-    entity->posX.val = g_EntityArray->posX.val;
+    entity->posX.val = g_Entities->posX.val;
     entity->posY.val = PLAYER.posY.val;
     switch (entity->step) {
     case 0:
@@ -364,7 +364,7 @@ void func_80162604(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
 
-    entity->posX.val = g_EntityArray->posX.val;
+    entity->posX.val = g_Entities->posX.val;
     entity->posY.val = PLAYER.posY.val;
     switch (entity->step) {
     case 0:
@@ -518,7 +518,7 @@ bool func_80162E9C(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;
     s16 subId = entity->subId;
-    Entity* e = &g_EntityArray[i];
+    Entity* e = &g_Entities[i];
     for (; i < 0x40; i++, e++) {
         if (objId == (s32)e->objectId && subId == (s32)e->subId &&
             e != entity) {
@@ -760,7 +760,7 @@ void func_8016779C(Entity* entity) {
         entity->animCurFrame = D_80155D08[D_80175080];
     }
 
-    entity->posX.val = g_EntityArray->posX.val;
+    entity->posX.val = g_Entities->posX.val;
     entity->posY.val = PLAYER.posY.val;
 }
 

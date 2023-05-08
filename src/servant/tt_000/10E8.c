@@ -93,7 +93,7 @@ void func_80171568(Entity* self) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        entity = &g_EntityArray[5 + i];
+        entity = &g_Entities[5 + i];
         if (entity->objectId == 0) {
             goto init_entity;
         }
@@ -121,7 +121,7 @@ void func_8017160C(s32 amount, s32 objectId) {
     }
 
     for (i = 0; i < amount; i++) {
-        entity = &g_EntityArray[5 + i];
+        entity = &g_Entities[5 + i];
         if (entity->objectId == objectId) {
             entity->step = 0;
         } else {
@@ -130,8 +130,8 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->palette = 0x140;
             entity->objectId = objectId;
             entity->animSet = 0x8014;
-            entity->zPriority = g_EntityArray[0].zPriority - 2;
-            facing = (g_EntityArray[0].facing + 1) & 1;
+            entity->zPriority = g_Entities[0].zPriority - 2;
+            facing = (g_Entities[0].facing + 1) & 1;
             entity->subId = i + 1;
             entity->facing = facing;
         }
@@ -242,7 +242,7 @@ void func_80171ED4(s32 arg0) {
     spriteBanks = D_80170040;
     g_api.o.spriteBanks[0x14] = spriteBanks;
 
-    e = &g_EntityArray[4];
+    e = &g_Entities[4];
     DestroyEntity(e);
     e->unk5A = 0x6C;
     e->palette = 0x140;
@@ -408,7 +408,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
     s16 start = D_80171094[rangeIndex].start;
     s16 end = D_80171094[rangeIndex].end;
-    Entity* entity = &g_EntityArray[start];
+    Entity* entity = &g_Entities[start];
     s32 i;
 
     for (i = start; end >= i; i++, entity++) {
@@ -658,7 +658,7 @@ void func_801745E4(Entity* entityParent, s32 objectId, s32 subId) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        entity = &g_EntityArray[5 + i];
+        entity = &g_Entities[5 + i];
         if (entity->objectId == 0) {
             goto init_entity;
         }
@@ -721,7 +721,7 @@ s32 func_801747B8(void) {
     Entity* entity;
     s32 i;
 
-    entity = &D_800762D8;
+    entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 0x80; i++, entity++) {
         if (entity->objectId == 0)
             continue;

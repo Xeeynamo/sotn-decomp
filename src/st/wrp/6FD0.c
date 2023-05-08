@@ -1818,7 +1818,8 @@ void Update(void) {
         }
     }
 
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -1883,7 +1884,8 @@ void Update(void) {
 
 void func_80188514(void) {
     Entity* entity;
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -1949,7 +1951,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1957,7 +1960,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -1987,7 +1991,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1995,7 +2000,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -2223,7 +2229,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_EntityArray[index];
+    Entity* entity = &g_Entities[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);

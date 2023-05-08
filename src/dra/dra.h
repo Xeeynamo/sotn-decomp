@@ -54,6 +54,7 @@ typedef struct {
 } WeaponOvl;
 
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
+extern s32 D_800A0144[];
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];

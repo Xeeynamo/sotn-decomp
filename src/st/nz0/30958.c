@@ -188,7 +188,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             tilePos += 0x10;
         }
 
-        newEntity = AllocEntity(&g_EntityArray[224], &g_EntityArray[256]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(2, self, newEntity);
             newEntity->subId = 0x13;
@@ -201,8 +201,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             g_api.func_800F1FC4(0x81);
 
             for (i = 0; i < 8; i++) {
-                newEntity =
-                    AllocEntity(&g_EntityArray[224], &g_EntityArray[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x22, self, newEntity);
                     newEntity->posX.i.hi += (Random() & 0xF);
@@ -1669,7 +1668,8 @@ void Update(void) {
         }
     }
 
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -1734,7 +1734,8 @@ void Update(void) {
 
 void func_801B9800(void) {
     Entity* entity;
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -1798,7 +1799,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1806,7 +1808,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -1836,7 +1839,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1844,7 +1848,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -2065,7 +2070,7 @@ void DestroyEntity(Entity* self) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_EntityArray[index];
+    Entity* entity = &g_Entities[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
