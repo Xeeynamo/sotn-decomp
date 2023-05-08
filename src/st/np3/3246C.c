@@ -1347,7 +1347,29 @@ void func_801BB2A0(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB2F8);
+void func_801BB2F8(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (D_801D2774 != 0) {
+        func_801BB254(arg0 - D_8009790C);
+        D_801D2774 = 0;
+    }
+
+    while (true) {
+        if ((D_801D276C->posY == 0xFFFF) || (arg0 < D_801D276C->posY)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D276C->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_801D276C);
+        }
+        D_801D276C++;
+    }
+}
 
 void func_801BB3F4(s16 arg0) {
     u8 flag;
