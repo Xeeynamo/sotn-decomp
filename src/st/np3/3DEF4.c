@@ -1118,8 +1118,7 @@ void EntityMerman2(Entity* self) {
             temp_s0 = temp_s0_2 - 64;
             if (temp_s0 <= 0x280) {
                 temp2 = 496;
-                newEntity =
-                    AllocEntity(&g_EntityArray[160], &g_EntityArray[170]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[170]);
                 if (newEntity != 0) {
                     if (Random() & 1) {
                         CreateEntityFromCurrentEntity(0x32, newEntity);

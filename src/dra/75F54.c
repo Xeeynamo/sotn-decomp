@@ -59,16 +59,16 @@ void func_801167D0(void) {
 }
 
 bool func_80116838(void) {
-    if ((g_EntityArray->step_s != 0) &&
+    if ((g_Entities->step_s != 0) &&
         ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
         D_800AFDA6 = 6;
-        g_EntityArray->palette = 0x810D;
+        g_Entities->palette = 0x810D;
         D_80072F86 = 0;
         D_80072F88 = 0;
         func_8011AAFC(g_CurrentEntity, 0x21002C, 0);
-        g_EntityArray->accelerationY = g_EntityArray->accelerationY >> 1;
+        g_Entities->accelerationY = g_Entities->accelerationY >> 1;
         return true;
     }
     return false;
@@ -132,7 +132,7 @@ void func_80118670(void) {
 
 void func_801186EC(void) {
     if (PLAYER.step_s == 0) {
-        if (g_EntityArray[UNK_ENTITY_10].objectId == 0) {
+        if (g_Entities[UNK_ENTITY_10].objectId == 0) {
             D_80138008 = 0x10;
             func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
             PLAYER.step_s++;
@@ -144,7 +144,7 @@ void func_801186EC(void) {
 }
 
 Entity* GetFreeDraEntity(s16 start, s16 end) {
-    Entity* entity = &g_EntityArray[start];
+    Entity* entity = &g_Entities[start];
     s16 i;
 
     for (i = start; i < end; i++, entity++) {
@@ -335,7 +335,7 @@ void func_8011A4C8(Entity* entity) {}
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A4D0);
 
 void func_8011A870(void) {
-    Entity* entity = g_CurrentEntity = &g_EntityArray[UNK_ENTITY_4];
+    Entity* entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
     u16 objectId;
     s32 i = 4;
 
@@ -482,7 +482,7 @@ bool func_8011BD48(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;
     s16 subId = entity->subId;
-    Entity* e = &g_EntityArray[i];
+    Entity* e = &g_Entities[i];
     for (; i < 0x40; i++, e++) {
         if (objId == (s32)e->objectId && subId == (s32)e->subId &&
             e != entity) {
@@ -1375,11 +1375,11 @@ bool func_8012C88C(void) {
 }
 
 void func_8012C97C(void) {
-    if (g_EntityArray[PLAYER_CHARACTER].step_s == 0) {
+    if (g_Entities[PLAYER_CHARACTER].step_s == 0) {
         return;
     }
-    if (g_EntityArray[PLAYER_CHARACTER].step_s >= 8 &&
-        g_EntityArray[PLAYER_CHARACTER].step_s < 10) {
+    if (g_Entities[PLAYER_CHARACTER].step_s >= 8 &&
+        g_Entities[PLAYER_CHARACTER].step_s < 10) {
         return;
     }
     if (D_8009744C < 13) {
@@ -1591,8 +1591,8 @@ void func_8013136C(Entity* entity) {
     }
     entity->animCurFrame = 80;
     entity->facing = PLAYER.facing;
-    entity->posX.val = g_EntityArray[UNK_ENTITY_13].posX.val; // D_800741CC
-    entity->posY.val = g_EntityArray[UNK_ENTITY_13].posY.val; // D_800741D0
+    entity->posX.val = g_Entities[UNK_ENTITY_13].posX.val; // D_800741CC
+    entity->posY.val = g_Entities[UNK_ENTITY_13].posY.val; // D_800741D0
     if (PLAYER.facing == 0) {
         entity->zPriority = PLAYER.zPriority - 5;
         entity->posX.i.hi += 8;
@@ -1601,7 +1601,7 @@ void func_8013136C(Entity* entity) {
         entity->posX.i.hi -= 8;
     }
     entity->posY.i.hi += 3;
-    entity->unk1E = g_EntityArray[UNK_ENTITY_13].unk1E;
+    entity->unk1E = g_Entities[UNK_ENTITY_13].unk1E;
     switch (PLAYER.step_s - 1) {
     case 1:
     case 3:

@@ -533,10 +533,10 @@ s32 func_800F0CD8(s32 arg0) {
     if (D_80097418 == 0) {
         if (D_80097C98 == 2) {
             var_v0 = SetNextRoomToLoad(
-                (g_EntityArray[0].posX.i.hi >> 8) + g_CurrentRoom.left,
-                (g_EntityArray[0].posY.i.hi >> 8) + g_CurrentRoom.top);
-            D_801375C0 = (u8)g_EntityArray[0].posX.i.hi;
-            D_801375C4 = (u8)g_EntityArray[0].posY.i.hi;
+                (g_Entities[0].posX.i.hi >> 8) + g_CurrentRoom.left,
+                (g_Entities[0].posY.i.hi >> 8) + g_CurrentRoom.top);
+            D_801375C0 = (u8)g_Entities[0].posX.i.hi;
+            D_801375C4 = (u8)g_Entities[0].posY.i.hi;
             return var_v0;
         }
         if (arg0 == 0) {
@@ -547,11 +547,11 @@ s32 func_800F0CD8(s32 arg0) {
                                        (playerY >> 8) + g_CurrentRoom.top);
             if (var_v0) {
                 D_80072F98 = 1;
-                D_801375C0 = g_EntityArray[0].posX.i.hi + 0x100;
-                D_801375C4 = g_EntityArray[0].posY.i.hi;
+                D_801375C0 = g_Entities[0].posX.i.hi + 0x100;
+                D_801375C4 = g_Entities[0].posY.i.hi;
                 return var_v0;
             }
-            g_EntityArray[0].posX.i.hi = 0;
+            g_Entities[0].posX.i.hi = 0;
             playerX = g_CurrentRoom.x;
         }
         if (playerX >= g_CurrentRoom.width) {
@@ -559,11 +559,11 @@ s32 func_800F0CD8(s32 arg0) {
                                        (playerY >> 8) + g_CurrentRoom.top);
             if (var_v0) {
                 D_80072F98 = 1;
-                D_801375C0 = g_EntityArray[0].posX.i.hi - 0x100;
-                D_801375C4 = g_EntityArray[0].posY.i.hi;
+                D_801375C0 = g_Entities[0].posX.i.hi - 0x100;
+                D_801375C4 = g_Entities[0].posY.i.hi;
                 return var_v0;
             }
-            g_EntityArray[0].posX.i.hi = 0xFF;
+            g_Entities[0].posX.i.hi = 0xFF;
             playerX = g_CurrentRoom.width - 1;
         }
     }
@@ -573,12 +573,12 @@ s32 func_800F0CD8(s32 arg0) {
                                         g_CurrentRoom.top - 1);
             if (temp_v0 != false) {
                 D_80072F98 = 2;
-                D_801375C0 = g_EntityArray[0].posX.i.hi;
-                D_801375C4 = g_EntityArray[0].posY.i.hi + 0xD0;
+                D_801375C0 = g_Entities[0].posX.i.hi;
+                D_801375C4 = g_Entities[0].posY.i.hi + 0xD0;
                 playerY -= 0x80;
                 return temp_v0;
             }
-            g_EntityArray[0].posY.i.hi = 0;
+            g_Entities[0].posY.i.hi = 0;
             playerY = g_CurrentRoom.y + 4;
         }
         var_s0 = 0x30;
@@ -590,13 +590,13 @@ s32 func_800F0CD8(s32 arg0) {
                                         g_CurrentRoom.bottom + 1);
             if (temp_v0 != false) {
                 D_80072F98 = 2;
-                D_801375C0 = g_EntityArray[0].posX.i.hi;
-                D_801375C4 = g_EntityArray[0].posY.i.hi - 0x100;
+                D_801375C0 = g_Entities[0].posX.i.hi;
+                D_801375C4 = g_Entities[0].posY.i.hi - 0x100;
                 D_801375C4 = D_801375C4 + var_s0;
                 playerY += 0x80;
                 return temp_v0;
             }
-            g_EntityArray[0].posY.i.hi = 0x10F - var_s0;
+            g_Entities[0].posY.i.hi = 0x10F - var_s0;
             playerY = g_CurrentRoom.height - var_s0 + 0x13;
         }
     }
@@ -606,8 +606,8 @@ block_25:
     if (playerX < temp_a1) {
         if (arg0 != 0 && g_CurrentRoom.hSize != 1 &&
             temp_a1 < playerX + D_801375A4) {
-            g_EntityArray[0].posX.i.hi =
-                (u16)g_EntityArray[0].posX.i.hi +
+            g_Entities[0].posX.i.hi =
+                (u16)g_Entities[0].posX.i.hi +
                 (playerX + D_801375A4 - (g_CurrentRoom.x + *D_8009740C));
         }
         g_Camera.posX.i.hi = g_CurrentRoom.x;
@@ -616,26 +616,26 @@ block_25:
         if (temp_a1_2 < playerX) {
             if (arg0 != 0 && g_CurrentRoom.hSize != 1 &&
                 playerX + D_801375A4 < temp_a1_2) {
-                g_EntityArray[0].posX.i.hi =
-                    ((u16)g_EntityArray[0].posX.i.hi) +
+                g_Entities[0].posX.i.hi =
+                    ((u16)g_Entities[0].posX.i.hi) +
                     (((playerX + D_801375A4) + 0x100) -
                      (g_CurrentRoom.width + (*D_8009740C)));
             }
             g_Camera.posX.i.hi = g_CurrentRoom.width - 0x100;
         } else {
             g_Camera.posX.i.hi = playerX - (*D_8009740C);
-            g_EntityArray[0].posX.i.hi = *D_8009740C;
+            g_Entities[0].posX.i.hi = *D_8009740C;
         }
     }
     if (D_8009741C != 0) {
         if (playerY < g_CurrentRoom.y + 0x8C) {
             g_Camera.posY.i.hi = g_CurrentRoom.y + 4;
-            g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
+            g_Entities[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
         } else if (g_CurrentRoom.height - 0x74 < playerY) {
             g_Camera.posY.i.hi = g_CurrentRoom.height - 0xFC;
-            g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
+            g_Entities[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
         } else {
-            g_EntityArray[0].posY.i.hi = 0x88;
+            g_Entities[0].posY.i.hi = 0x88;
             g_Camera.posY.i.hi = playerY - 0x88;
         }
     } else {
@@ -644,25 +644,25 @@ block_25:
             if (g_Camera.posY.i.hi + new_var2 - playerY >= 4 &&
                 g_CurrentRoom.y + 8 < g_Camera.posY.i.hi) {
                 g_Camera.posY.i.hi -= 4;
-                g_EntityArray[0].posY.i.hi += 4;
+                g_Entities[0].posY.i.hi += 4;
             } else if (g_Camera.posY.i.hi < g_CurrentRoom.y &&
                        g_CurrentRoom.y != 0) {
                 g_Camera.posY.i.hi += 4;
-                g_EntityArray[0].posY.i.hi -= 4;
+                g_Entities[0].posY.i.hi -= 4;
             } else {
                 g_Camera.posY.i.hi = g_CurrentRoom.y + 4;
-                g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
+                g_Entities[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
             }
         } else {
-            g_EntityArray[0].posY.i.hi = g_Camera.posY.i.hi;
+            g_Entities[0].posY.i.hi = g_Camera.posY.i.hi;
             if (g_CurrentRoom.height - 0x74 < playerY) {
                 g_Camera.posY.i.hi = g_CurrentRoom.height - 0xFC;
-                g_EntityArray[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
+                g_Entities[0].posY.i.hi = playerY - g_Camera.posY.i.hi;
             } else if (g_Camera.posY.i.hi + new_var2 - playerY >= 4) {
                 g_Camera.posY.i.hi -= 4;
-                g_EntityArray[0].posY.i.hi += 4;
+                g_Entities[0].posY.i.hi += 4;
             } else {
-                g_EntityArray[0].posY.i.hi = 0x88;
+                g_Entities[0].posY.i.hi = 0x88;
                 g_Camera.posY.i.hi = playerY - 0x88;
             }
         }

@@ -12,6 +12,8 @@
 #include <psxsdk/libgte.h>
 #include <psxsdk/libsnd.h>
 
+typedef long Event;
+
 typedef enum {
     PRIM_NONE,
     PRIM_TILE,
@@ -99,6 +101,7 @@ typedef struct Primitive {
 #define FALL_TERMINAL_VELOCITY 0x60000
 
 #define TOTAL_ENTITY_COUNT 256
+#define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
 #define EQUIP_TYPE_COUNT 11
 
@@ -919,10 +922,10 @@ extern u16 D_80072F9A;   // D_80072F20.unk7A
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060; // set to 4 to reload stage from disk
 extern s32 D_80073064;
-extern u32 D_80073068; // ev0
-extern u32 D_8007306C; // ev1
-extern u32 D_80073070; // ev2
-extern u32 D_80073078; // ev3
+extern Event g_EvSwCardEnd;
+extern Event g_EvSwCardErr;
+extern Event g_EvSwCardTmo;
+extern Event g_EvSwCardNew;
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
@@ -930,9 +933,9 @@ extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 
 // Beginning of Player Character offset = 0x800733D8
-extern Entity g_EntityArray[TOTAL_ENTITY_COUNT];
+extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 // dictionary of direct accesses
-// g_EntityArray PLAYER
+// g_Entities PLAYER
 extern s16 D_800733DA;  // PLAYER.posX.i.hi
 extern s16 D_800733DC;  // PLAYER.posY.val
 extern s16 D_800733DE;  // PLAYER.posY.i.hi
@@ -962,37 +965,36 @@ extern s16 D_8007347C;  // PLAYER.unkA4
 extern u8 D_80073484;   // PLAYER.ext.generic.unkAC
 // End of Player Character offset = 0x80073494
 
-// D_80073494 g_EntityArray[1]
-extern s32 D_800734F8; // g_EntityArray[1].firstPolygonIndex
-extern s16 D_800734EA; // g_EntityArray[1].animCurFrame
-extern s8 D_80073510;  // g_EntityArray[1].unk7C.S8.unk0
-extern s8 D_80073511;  // g_EntityArray[1].unk7C.S8.unk1
-extern s8 D_80073512;  // g_EntityArray[1].unk7E.modeU8.unk0
+// D_80073494 g_Entities[1]
+extern s32 D_800734F8; // g_Entities[1].firstPolygonIndex
+extern s16 D_800734EA; // g_Entities[1].animCurFrame
+extern s8 D_80073510;  // g_Entities[1].unk7C.S8.unk0
+extern s8 D_80073511;  // g_Entities[1].unk7C.S8.unk1
+extern s8 D_80073512;  // g_Entities[1].unk7E.modeU8.unk0
 
-// D_80073550 g_EntityArray[2]
-extern u16 D_8007357C;       // g_EntityArray[2].step
-extern s32 D_80073584;       // g_EntityArray[2].unk34
-extern s32 D_800735B4;       // g_EntityArray[2].firstPolygonIndex
-extern POLY_GT4* D_800735CC; // *(s32*)g_EntityArray[2].unk7C
+// D_80073550 g_Entities[2]
+extern u16 D_8007357C;       // g_Entities[2].step
+extern s32 D_80073584;       // g_Entities[2].unk34
+extern s32 D_800735B4;       // g_Entities[2].firstPolygonIndex
+extern POLY_GT4* D_800735CC; // *(s32*)g_Entities[2].unk7C
 
-// D_80073550 g_EntityArray[2]
-extern s16 D_800735A6; // g_EntityArray[2].animCurFrame
+// D_80073550 g_Entities[2]
+extern s16 D_800735A6; // g_Entities[2].animCurFrame
 
-// D_8007360C g_EntityArray[3]
-extern s16 D_80073662; // g_EntityArray[3].animCurFrame
+// D_8007360C g_Entities[3]
+extern s16 D_80073662; // g_Entities[3].animCurFrame
 
-// D_800736C8 g_EntityArray[4]
-// D_80073784 g_EntityArray[5]
-// D_800739B8 g_EntityArray[8]
-// D_80073F98 g_EntityArray[16]
-// D_800741CC g_EntityArray[19]
-// D_80074C08 g_EntityArray[20]
+// D_800736C8 g_Entities[4]
+// D_80073784 g_Entities[5]
+// D_800739B8 g_Entities[8]
+// D_80073F98 g_Entities[16]
+// D_800741CC g_Entities[19]
+// D_80074C08 g_Entities[20]
 
 // *** ENTITY DIRECT ACCESS PROPERTIES START ***
 extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
-extern Entity D_800762D8[]; // g_EntityArray[64]
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[];
 extern Entity D_8007C0D8[];
@@ -1001,11 +1003,11 @@ extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
-extern unsigned long D_8007EFD8; // ev10 IOE
-extern s32 D_8007EFDC;           // ev11 ERROR
-extern s32 D_8007EFE0;           // ev12 TIMEOUT
+extern Event g_EvHwCardEnd;
+extern Event g_EvHwCardErr;
+extern Event g_EvHwCardTmo;
 extern s32 D_80084FE4[];
-extern s32 D_80086FE4;  // ev13 NEW CARD
+extern Event g_EvHwCardNew;
 extern s32* D_8007EFE4; // 'struct SaveData'?
 extern s32 D_80080FE4;  // maybe PixPattern[]?
 extern s8 D_80082FE4;

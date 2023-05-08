@@ -191,7 +191,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             func_80192A3C(entity, layoutObj);
         }
@@ -199,7 +200,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         func_80192A3C(entity, layoutObj);
         break;
     }
@@ -229,7 +231,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             func_80192A3C(entity, layoutObj);
         }
@@ -237,7 +240,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         func_80192A3C(entity, layoutObj);
         break;
     }
@@ -415,7 +419,7 @@ void DestroyEntity(Entity* entity) {
 }
 
 void func_801942D0(s16 index) {
-    Entity* entity = &g_EntityArray[index];
+    Entity* entity = &g_Entities[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
