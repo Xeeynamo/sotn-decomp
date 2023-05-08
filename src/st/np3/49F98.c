@@ -1,3 +1,8 @@
+/*
+ * Overlay: NP3
+ * Enemy: Bloody Zombie
+ */
+
 #include "np3.h"
 
 typedef enum {
