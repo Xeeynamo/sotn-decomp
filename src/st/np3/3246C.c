@@ -82,9 +82,9 @@ void func_801B2540(Entity* entity) {
     }
 }
 
-
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->subId >> 0xC;
+
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
@@ -147,7 +147,7 @@ void EntityCavernDoorLever(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AA8);
+        InitializeEntity(D_80180AA8);
         entity->animCurFrame = 18;
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
@@ -342,7 +342,7 @@ void EntityClickSwitch(Entity* entity) {
         InitializeEntity(D_80180AA8);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
-        if (D_8003BDEC[0x31] != 0) {
+        if (D_8003BDEC[49] != 0) {
             entity->step = 2;
             entity->posY.i.hi += 4;
         }
@@ -1034,7 +1034,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B5C);
+        InitializeEntity(D_80180B5C);
         if (self->facing == 0) {
             self->accelerationX = -0x40000;
         } else {
@@ -1129,7 +1129,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B80);
+        InitializeEntity(D_80180B80);
         if (self->subId == 0) {
             self->animSet = 2;
             self->unk19 = 4;
@@ -1153,7 +1153,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(&D_801815EC, self);
+        AnimateEntity(D_801815EC, self);
         if (!(g_blinkTimer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -1168,7 +1168,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 2:
         self->unk6C += 0xFE;
         self->unk1A -= 4;
-        if (AnimateEntity(&D_801815FC, self) == 0) {
+        if (AnimateEntity(D_801815FC, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -1306,14 +1306,11 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
 }
 
 void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
-    s16 yClose;
-    s16 yFar;
-    s16 posY;
     Entity* entity;
+    s16 posY = g_Camera.posY.i.hi;
+    s16 yClose = posY - 64;
+    s16 yFar = posY + 288;
 
-    posY = g_Camera.posY.i.hi;
-    yClose = posY - 0x40;
-    yFar = posY + 0x120;
     if (yClose < 0) {
         yClose = 0;
     }
@@ -1346,14 +1343,11 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 }
 
 void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
-    s16 xClose;
-    s16 xFar;
-    s16 posX;
     Entity* entity;
+    s16 posX = g_Camera.posX.i.hi;
+    s16 xClose = posX - 64;
+    s16 xFar = posX + 320;
 
-    posX = g_Camera.posX.i.hi;
-    xClose = posX - 0x40;
-    xFar = posX + 0x140;
     if (xClose < 0) {
         xClose = 0;
     }
@@ -1890,17 +1884,18 @@ s32 func_801BD308(u16* hitSensors, s16 sensorCount) {
 }
 
 void func_801BD430(u16* hitSensors, s16 sensorCount) {
+    s32 accelerationX = g_CurrentEntity->accelerationX;
     Collider collider;
-    s16 i;
-    s32 accelerationX;
     s16 x;
     s16 y;
-
-    accelerationX = g_CurrentEntity->accelerationX;
+    s16 i;
+    
     if (accelerationX == 0)
         return;
+
     x = g_CurrentEntity->posX.i.hi;
     y = g_CurrentEntity->posY.i.hi;
+    
     for (i = 0; i < sensorCount; i++) {
         if (accelerationX < 0) {
             x = x + *hitSensors++;
