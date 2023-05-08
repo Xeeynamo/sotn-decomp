@@ -536,7 +536,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 1) { /* 0 0 0 0 0 0 0 1 = Half broken */
+        if (D_8003BDEC[51] & 1) { /* 0 0 0 0 0 0 0 1 = Broken */
             tileLayoutPtr = &D_8018112C;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -593,7 +593,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(0xA, self, newEntity);
                 newEntity->subId = 0x43;
             }
-            D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Half broken */
+            D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
             self->unk3C = 1;
             self->step++;
         }
@@ -601,7 +601,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
-            D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
+            D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Wolf form collision */
         }
         break;
     }
@@ -631,7 +631,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 = Half broken */
+        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 = Broken */
             tileLayoutPtr = &D_80181168;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -684,7 +684,7 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
-            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
+            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Broken */
             self->unk3C = 1;
             self->step++;
         }
@@ -692,7 +692,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 2:
         if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
-            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
+            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Bat form collision */
         }
         break;
     }
