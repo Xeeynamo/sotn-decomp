@@ -83,17 +83,6 @@ extern u16 D_801825CC;
 
 // *** EntityBloodyZombie properties START ***
 
-typedef enum {
-    BLOODY_ZOMBIE_INIT,
-    BLOODY_ZOMBIE_WALK,
-    BLOODY_ZOMBIE_UNK_2,
-    BLOODY_ZOMBIE_CHASE,
-    BLOODY_ZOMBIE_ATTACK,
-    BLOODY_ZOMBIE_TAKE_HIT = 6,
-    BLOODY_ZOMBIE_DYING = 8,
-    BLOODY_ZOMBIE_DESTROY
-} EntityBloodyZombieSteps;
-
 extern u16 D_80180B38[]; // InitProps
 extern s32 D_801825D4;
 extern u16 D_801825E4[];

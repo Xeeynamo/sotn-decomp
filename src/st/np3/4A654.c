@@ -1,5 +1,16 @@
 #include "np3.h"
 
+typedef enum {
+    BLOODY_ZOMBIE_INIT,
+    BLOODY_ZOMBIE_WALK,
+    BLOODY_ZOMBIE_UNK_2,
+    BLOODY_ZOMBIE_CHASE,
+    BLOODY_ZOMBIE_ATTACK,
+    BLOODY_ZOMBIE_TAKE_HIT = 6,
+    BLOODY_ZOMBIE_DYING = 8,
+    BLOODY_ZOMBIE_DESTROY
+} EntityBloodyZombieSteps;
+
 void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
     Entity* newEntity;
