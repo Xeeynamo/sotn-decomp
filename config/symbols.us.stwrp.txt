@@ -100,6 +100,7 @@ EntityRelicOrb = 0x8018E2CC;
 EntityHeartDrop = 0x8018ED9C;
 EntityUnkId0E = 0x8018EEC4;
 EntityIntenseExplosion = 0x801902C8;
+ClutLerp = 0x801914CC;
 EntityStageNamePopup = 0x8019198C;
 EntityAbsorbOrb = 0x80192610;
 EntityEnemyBlood = 0x801929A4;
