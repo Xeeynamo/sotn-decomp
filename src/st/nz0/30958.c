@@ -2290,9 +2290,9 @@ void func_801BD54C(u8 arg0) {
     entity->animFrameDuration = 0;
 }
 
-void func_801BD568(u16 arg0, u16 arg1) {
-    if (arg1 != 0) {
-        func_801C29B0(arg1);
+void func_801BD568(u16 arg0, u16 sfxId) {
+    if (sfxId != 0) {
+        func_801C29B0(sfxId);
     }
 
     if (arg0 == 0xFF) {

@@ -1568,7 +1568,24 @@ void func_801BD134(u8 arg0) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BD150);
+void func_801BD150(u16 arg0, u16 sfxId) {
+    if (sfxId != 0) {
+        func_801C2598(sfxId);
+    }
+
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+
+    g_CurrentEntity->objectId = ENTITY_EXPLOSION;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->subId = arg0;
+    g_CurrentEntity->animCurFrame = 0;
+    g_CurrentEntity->unk19 = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 
 void InitializeEntity(u16 arg0[]) {
     u16 enemyId;

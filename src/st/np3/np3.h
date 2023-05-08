@@ -6,7 +6,6 @@ extern s32 func_801BCB5C(u16* arg0);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
 extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
 extern s32 GetPlayerDistanceX(void);
-extern void func_801C2598(s16 arg0);
 extern s32 func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
