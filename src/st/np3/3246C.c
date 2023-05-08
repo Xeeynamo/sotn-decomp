@@ -1005,7 +1005,7 @@ void EntitySlograSpearProjectile(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B78BC);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityGaibon);
 
 void func_801B8CC0(Entity* self) {
     Entity* prevEntity;
