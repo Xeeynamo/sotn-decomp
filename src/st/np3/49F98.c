@@ -162,7 +162,50 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/49F98", func_801CA498);
+void func_801CA498(Primitive* prim) {
+    switch (prim->next->u2) {
+    case 0:
+        prim->tpage = 0x12;
+        prim->clut = 0x16D;
+        prim->u0 = 80;
+        prim->u1 = 96;
+        prim->v1 = 239;
+        prim->v0 = 239;
+        prim->v3 = 255;
+        prim->v2 = 255;
+        prim->u2 = prim->u0;
+        prim->u3 = prim->u1;
+        *(s16*)&prim->next->r2 = 16;
+        *(s16*)&prim->next->b2 = 16;
+        prim->next->x1 = g_CurrentEntity->posX.i.hi;
+        prim->next->y0 = g_CurrentEntity->posY.i.hi;
+
+        if (g_CurrentEntity->facing != 0) {
+            prim->next->x1 -= 8;
+        } else {
+            prim->next->x1 += 8;
+        }
+        if (prim->next->r3 == 0) {
+            *(s32*)&prim->next->u0 = -0x4000;
+        } else {
+            *(s32*)&prim->next->u0 = 0x4000;
+        }
+        *(s32*)&prim->next->r1 = -0x20000;
+        prim->next->b3 = 0x80;
+        prim->priority = g_CurrentEntity->zPriority + 1;
+        prim->blendMode = 2;
+        prim->next->u2 = 1;
+        break;
+
+    case 1:
+        func_801D1F38(prim);
+        *(s32*)&prim->next->r1 += 0x2000;
+        if (*(s32*)&prim->next->r1 > 0x20000) {
+            func_801D26D8(prim);
+        }
+        break;
+    }
+}
 
 void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
