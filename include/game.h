@@ -63,6 +63,8 @@ typedef struct Primitive {
     /* 0x32 */ u16 blendMode;
 } Primitive; /* size=0x34 */
 
+#define COLORS_PER_PAL 16
+
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
