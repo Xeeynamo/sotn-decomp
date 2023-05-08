@@ -16,7 +16,10 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_801891C0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80189E9C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018A168);
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", Update);
 

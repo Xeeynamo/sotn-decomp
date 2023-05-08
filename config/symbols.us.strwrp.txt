@@ -1,5 +1,6 @@
 g_SpriteBanks = 0x80180040;
 g_Rooms = 0x801811AC;
+Random = 0x8018A168;
 Update = 0x8018A198;
 CreateEntityWhenInVerticalRange = 0x8018BE1C;
 CreateEntityWhenInHorizontalRange = 0x8018BF34;
