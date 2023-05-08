@@ -1722,7 +1722,42 @@ void func_801BD984(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BDA08);
+void func_801BDA08(u16 arg0) {
+    Collider res;
+
+    if (g_CurrentEntity->accelerationX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
+        if (res.unk0 & 5) {
+            g_CurrentEntity->accelerationY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
+
+    if (arg0) {
+        if (!(res.unk0 & 5)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->accelerationX = 0;
+        g_CurrentEntity->accelerationY = 0;
+
+        if (res.unk0 & 4) {
+            g_CurrentEntity->posY.val += 0x2000;
+        } else {
+            g_CurrentEntity->posY.i.hi += res.unk18;
+        }
+    } else {
+        if (!(res.unk0 & 5)) {
+            MoveEntity();
+            func_801BD984();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", CollectHeart);
 
