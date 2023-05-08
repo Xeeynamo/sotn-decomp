@@ -42,7 +42,7 @@ segments:
       - [0x2217C, rodata]
       - [0x227B0, rodata]
       - [0x3B3B0, rodata]
-      - [0x3B44C, .rodata, 42398]
+      - [0x3B430, .rodata, 42398]
       - [0x3B524, rodata]
       - [0x3B530, rodata] # jpt_800E4A64
       - [0x3B560, rodata] # jpt_800E55C4
