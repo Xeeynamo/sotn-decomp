@@ -18,7 +18,7 @@ void EntityBat(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AFC);
+        InitializeEntity(D_80180AFC);
         entity->animCurFrame = 31;
         break;
 
