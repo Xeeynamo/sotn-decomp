@@ -193,9 +193,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DC08);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DDF0);
 
-s32 func_8018DE50(u8 arg0, s16 arg1) {
-    return D_80180A94[arg0] * arg1;
-}
+s32 func_8018DE50(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 
 s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
