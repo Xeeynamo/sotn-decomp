@@ -1336,7 +1336,6 @@ void func_801BB254(s16 arg0) {
     }
 }
 
-extern LayoutObject* D_801D276C;
 void func_801BB2A0(s16 arg0) {
     while (true) {
         if ((D_801D276C->posY != 0xFFFF) &&
