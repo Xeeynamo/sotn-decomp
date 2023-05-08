@@ -69,7 +69,88 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E249C);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2824);
 
+// reg swap
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2B00);
+#else
+extern const char D_800DB430[];
+extern const char D_800DB440[];
+void func_800E2B00(void) {
+    DR_MODE* drMode;
+    SPRT* sprite;
+    u32 new_var;
+    u16 color_fake;
+    TILE* tile;
+    TILE* var_s1;
+    s32 i;
+    u16 var_s7;
+    u32 color;
+    u16* palette;
+
+    drMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+    sprite = &D_8006C37C->sprite[g_GpuUsage.sp];
+    tile = &D_8006C37C->tiles[g_GpuUsage.tile];
+    FntPrint(D_800DB430, D_801362B4, g_DebugCurPal);
+    FntPrint(D_800DB440, D_800A0144[D_801362C8]);
+    if (D_801362C8 == 0) {
+        SetSemiTrans(sprite, 0);
+        var_s7 = 0;
+    } else {
+        SetSemiTrans(sprite, 1);
+        var_s7 = (((u16)D_801362C8) << 5) - 0x20;
+    }
+    SetShadeTex(sprite, 1);
+    sprite->r0 = 0;
+    sprite->g0 = 0;
+    sprite->b0 = 0;
+    sprite->x0 = 112;
+    sprite->u0 = (D_801362B4 & 1) << (new_var = 7);
+    sprite->y0 = 80;
+    sprite->v0 = (D_801362B4 & 2) << (new_var = 6);
+    sprite->w = 128;
+    sprite->h = 128;
+    sprite->clut = D_8003C104[g_DebugCurPal];
+    AddPrim(&D_801362CC[0x1FE], sprite);
+    g_GpuUsage.sp++;
+    SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &D_800ACD80);
+    i = 0;
+    AddPrim(&D_801362CC[0x1FE], drMode++);
+    palette = g_Clut + g_DebugCurPal * 16;
+    g_GpuUsage.drawModes++;
+    var_s1 = tile;
+    while (i < 0x10) {
+        SetSemiTrans(tile, 0);
+        color = *palette;
+        color_fake = *palette;
+        var_s1->r0 = (color_fake & 0x1F) * 8;
+        var_s1->g0 = (color >> 2) & 0xF8;
+        var_s1->b0 = (color_fake >> 7) & 0xF8;
+        if (i == g_DebugPalIdx) {
+            var_s1->x0 = (i * 15) + 8;
+            var_s1->y0 = 0xD4;
+        } else {
+            var_s1->x0 = (i * 15) + 10;
+            var_s1->y0 = 0xD6;
+        }
+        if (i == g_DebugPalIdx) {
+            var_s1->w = 14;
+            var_s1->h = 15;
+        } else {
+            var_s1->w = 10;
+            var_s1->h = 11;
+        }
+        AddPrim(&D_801362CC[0x1FE], tile++);
+        var_s1++;
+        palette++;
+        i++;
+        g_GpuUsage.tile++;
+    }
+
+    SetDrawMode(drMode, 0, 0, 0, &D_800ACD80);
+    AddPrim(&D_801362CC[0x1FE], drMode);
+    g_GpuUsage.drawModes++;
+}
+#endif
 
 void func_800E2E98(s32 colorAdd) {
     s32 newColorChannel;
