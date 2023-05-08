@@ -90,6 +90,9 @@ extern u16 D_801825CC;
 // *** EntityBloodyZombie properties START ***
 
 extern u16 D_80180B38[]; // InitProps
+extern u8 D_801D2774;
+extern LayoutObject* D_801D276C;
+extern u16 D_801D33F4[];
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking
@@ -106,5 +109,3 @@ extern s32 D_8018268C;
 extern s32 D_801826A4;
 extern s32 D_801826C4;
 extern PfnEntityUpdate PfnEntityUpdates[];
-LayoutObject* D_801D276C;
-extern u16 D_801D33F4[];
