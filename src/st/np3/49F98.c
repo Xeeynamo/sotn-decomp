@@ -157,7 +157,7 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/49BC8", func_801CA498);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/49F98", func_801CA498);
 
 void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
