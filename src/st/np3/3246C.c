@@ -1325,7 +1325,33 @@ void func_801BAFEC(s16 arg0) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB044);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB140);
+void func_801BB140(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_801D2770 == 0) {
+        func_801BAFEC(arg0 - D_80097908);
+        D_801D2770 = 1;
+    }
+
+    while (true) {
+        if ((D_801D2768->posX == 0xFFFE) || (arg0 > D_801D2768->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D2768->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801D2768);
+        }
+        D_801D2768--;
+    }
+}
 
 void func_801BB254(s16 arg0) {
     while (true) {
