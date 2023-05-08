@@ -12,6 +12,8 @@
 #include <psxsdk/libgte.h>
 #include <psxsdk/libsnd.h>
 
+typedef long Event;
+
 typedef enum {
     PRIM_NONE,
     PRIM_TILE,
@@ -918,10 +920,10 @@ extern u16 D_80072F9A;   // D_80072F20.unk7A
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 D_80073060; // set to 4 to reload stage from disk
 extern s32 D_80073064;
-extern u32 D_80073068; // ev0
-extern u32 D_8007306C; // ev1
-extern u32 D_80073070; // ev2
-extern u32 D_80073078; // ev3
+extern Event g_EvSwCardEnd;
+extern Event g_EvSwCardErr;
+extern Event g_EvSwCardTmo;
+extern Event g_EvSwCardNew;
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
@@ -999,11 +1001,11 @@ extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
-extern unsigned long D_8007EFD8; // ev10 IOE
-extern s32 D_8007EFDC;           // ev11 ERROR
-extern s32 D_8007EFE0;           // ev12 TIMEOUT
+extern Event g_EvHwCardEnd;
+extern Event g_EvHwCardErr;
+extern Event g_EvHwCardTmo;
 extern s32 D_80084FE4[];
-extern s32 D_80086FE4;  // ev13 NEW CARD
+extern Event g_EvHwCardNew;
 extern s32* D_8007EFE4; // 'struct SaveData'?
 extern s32 D_80080FE4;  // maybe PixPattern[]?
 extern s8 D_80082FE4;
