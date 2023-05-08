@@ -1,14 +1,14 @@
 #include "sel.h"
 
 void func_801B4B9C(Entity* entity, s16 step);
-extern u16 D_800737B0;  // g_EntityArray[5].step
-extern u16 D_800737D4;  // g_EntityArray[5].animFrameIdx
+extern u16 D_800737B0;  // g_Entities[5].step
+extern u16 D_800737D4;  // g_Entities[5].animFrameIdx
 extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
 
 void func_801B585C(u16 arg0) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_5];
+    Entity* e = &g_Entities[UNK_ENTITY_5];
 
     switch (e->step) {
     case 0:
@@ -78,7 +78,7 @@ extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
 
 void func_801B5A7C(void) {
-    Entity* e = &g_EntityArray[8];
+    Entity* e = &g_Entities[8];
 
     switch (e->subId) {
     case 0:
@@ -112,8 +112,8 @@ void func_801B5A7C(void) {
                 D_800737B0 = 2;
                 D_800737D4 = 0;
             } while (0);
-            g_EntityArray[5].animFrameDuration = 0;
-            g_EntityArray[5].facing = 1;
+            g_Entities[5].animFrameDuration = 0;
+            g_Entities[5].facing = 1;
             e->step++;
             break;
 
@@ -367,7 +367,7 @@ void func_801B60D4(void) {
         break;
 
     case 2:
-        ent = g_EntityArray;
+        ent = g_Entities;
         for (i = 0; i < 9; i++) {
             DestroyEntity(ent);
             ent++;
@@ -375,7 +375,7 @@ void func_801B60D4(void) {
 
         D_801D6B24 = 0;
         D_801BD030 = 0;
-        g_EntityArray[8].subId = D_800978B4 - 1;
+        g_Entities[8].subId = D_800978B4 - 1;
         g_api.func_800EA5E4(0x16);
         g_api.func_800EA5E4(0);
         g_api.func_800EA5E4(0x8005);
@@ -384,7 +384,7 @@ void func_801B60D4(void) {
         break;
 
     case 3:
-        ent4 = &g_EntityArray[4];
+        ent4 = &g_Entities[4];
         func_801B5A7C();
         func_801B69F8(ent4);
         func_801B4C68();
@@ -403,7 +403,7 @@ void func_801B60D4(void) {
         }
 
         if (D_801BD030 != 0) {
-            ent = g_EntityArray;
+            ent = g_Entities;
             for (i = 0; i < 9; i++) {
                 DestroyEntity(ent);
                 ent++;
@@ -434,9 +434,9 @@ void func_801B60D4(void) {
         break;
 
     case 7:
-        ent4 = &g_EntityArray[4];
+        ent4 = &g_Entities[4];
         if (func_801B79D4(ent4) != 0) {
-            g_EntityArray[1].step = 0;
+            g_Entities[1].step = 0;
             D_801BC3E4 = 1;
             D_8003C9A4++;
         }

@@ -201,8 +201,8 @@ void DestroyEntity(Entity* entity) {
 void func_801065F4(s16 startIndex) {
     Entity* pItem;
 
-    for (pItem = &g_EntityArray[startIndex];
-         pItem < &g_EntityArray[TOTAL_ENTITY_COUNT]; pItem++)
+    for (pItem = &g_Entities[startIndex];
+         pItem < &g_Entities[TOTAL_ENTITY_COUNT]; pItem++)
         DestroyEntity(pItem);
 }
 
@@ -226,7 +226,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
     tile = &D_8006C37C->tiles[g_GpuUsage.tile];
     drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
     orderIdx = 0x1F0;
-    for (polyCount = 0, entity = g_EntityArray; polyCount < 0x40;
+    for (polyCount = 0, entity = g_Entities; polyCount < 0x40;
          polyCount++, entity++) {
         if (entity->unk3C == 0)
             continue;
@@ -529,7 +529,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A234);
 #else
 void func_8010A234(s32 arg0) {
     s32 temp;
-    g_CurrentEntity = g_EntityArray;
+    g_CurrentEntity = g_Entities;
     temp = D_8017A000.func_8017A018();
 
     do { // !FAKE
@@ -548,14 +548,14 @@ void func_8010A234(s32 arg0) {
                 }
             }
         } else if (*(s32*)&D_80072F2C & 0x01000000) {
-            g_EntityArray[PLAYER_CHARACTER].palette = 0x8100;
-            g_EntityArray[PLAYER_CHARACTER].animSet = 1;
-            g_EntityArray[PLAYER_CHARACTER].unk5A = 0;
-            g_EntityArray[PLAYER_CHARACTER].unk1E = 0;
-            g_EntityArray[PLAYER_CHARACTER].unk19 &= 0xF3;
+            g_Entities[PLAYER_CHARACTER].palette = 0x8100;
+            g_Entities[PLAYER_CHARACTER].animSet = 1;
+            g_Entities[PLAYER_CHARACTER].unk5A = 0;
+            g_Entities[PLAYER_CHARACTER].unk1E = 0;
+            g_Entities[PLAYER_CHARACTER].unk19 &= 0xF3;
             func_8010FAF4();
-            g_EntityArray[PLAYER_CHARACTER].unk22 = 0;
-            g_EntityArray[PLAYER_CHARACTER].unk20 = 0;
+            g_Entities[PLAYER_CHARACTER].unk22 = 0;
+            g_Entities[PLAYER_CHARACTER].unk20 = 0;
             if (D_80072F20.pl_vram_flag & 1) {
                 func_8010E570(0);
             } else {
@@ -717,11 +717,11 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
     s32 i;
 
     if (arg0 != 0) {
-        g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.U8.unk1 = 1;
-        g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
-        g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
-        g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &g_PrimBuf[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
+        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk1 = 1;
+        g_Entities[UNK_ENTITY_3].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_2].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_1].animCurFrame = 0;
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
@@ -729,8 +729,8 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         }
     }
 
-    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.U8.unk0 = 1;
-    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 10;
+    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.U8.unk0 = 1;
+    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 10;
 
     if (arg1 != 0) {
         if (arg1 < 4) {
@@ -742,13 +742,13 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 }
 
 void func_8010E0A8(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity = &g_Entities[UNK_ENTITY_1];
 
     entity->ext.generic.unk7E.modeU8.unk0 = 0;
 }
 
 void func_8010E0B8(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity = &g_Entities[UNK_ENTITY_1];
 
     entity->ext.generic.unk7C.U8.unk1 = 0;
     entity->ext.generic.unk7C.U8.unk0 = 0;
@@ -758,13 +758,13 @@ void func_8010E0D0(s32 arg0) {
     Entity* entity;
 
     if (arg0 == 1) {
-        entity = func_8011AAFC(g_EntityArray, 0x47002C, 0);
+        entity = func_8011AAFC(g_Entities, 0x47002C, 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
 
-        entity = func_8011AAFC(g_EntityArray, 0x40002C, 0);
+        entity = func_8011AAFC(g_Entities, 0x40002C, 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
@@ -866,7 +866,7 @@ void func_8010E3B8(s32 accelerationX) {
 
 void func_8010E3E0(void) {
     if (D_80072F20.unk48 != 0) {
-        DestroyEntity(&g_EntityArray[16]);
+        DestroyEntity(&g_Entities[16]);
         D_80072F20.unk48 = 0;
     }
 }
@@ -1042,7 +1042,7 @@ void func_8010EA54(s32 arg0) {
 #endif
 
 s32 func_8010EADC(s16 arg0, s16 arg1) {
-    Entity* entity = &g_EntityArray[0x20];
+    Entity* entity = &g_Entities[0x20];
     s32 i;
     s32 var_a2;
     s32 ret;
@@ -1084,7 +1084,7 @@ void func_8010ED54(u8 arg0) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010EDB8);
 
 void func_8010FAF4(void) {
-    DestroyEntity(&g_EntityArray[UNK_ENTITY_10]);
+    DestroyEntity(&g_Entities[UNK_ENTITY_10]);
     D_80072F66 = 0;
 }
 

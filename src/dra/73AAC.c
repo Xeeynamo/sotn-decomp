@@ -137,7 +137,7 @@ void func_80113EE0(void) {
     D_80072F66 = 0;
     PLAYER.unk1E = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
-    if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
+    if (g_Entities[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }
 }

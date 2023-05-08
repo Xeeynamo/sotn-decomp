@@ -91,26 +91,26 @@ void func_8015CB58(s32 arg0, s32 arg1) {
 
     FntPrint("op disable\n");
     if (arg0 != 0) {
-        g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.S8.unk1 = 1;
-        g_EntityArray[UNK_ENTITY_3].animCurFrame = 0;
-        g_EntityArray[UNK_ENTITY_2].animCurFrame = 0;
-        g_EntityArray[UNK_ENTITY_1].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk1 = 1;
+        g_Entities[UNK_ENTITY_3].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_2].animCurFrame = 0;
+        g_Entities[UNK_ENTITY_1].animCurFrame = 0;
 
-        poly = &g_PrimBuf[g_EntityArray[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
         while (poly != NULL) {
             poly->x1 = 0;
             poly = (POLY_GT4*)poly->tag;
         }
     }
-    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
-    g_EntityArray[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
+    g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
+    g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
     if (arg1 != 0) {
         D_80072F1E = 4;
     }
 }
 
 void func_8015CC28(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_1];
+    Entity* entity = &g_Entities[UNK_ENTITY_1];
 
     entity->ext.generic.unk7E.modeU8.unk1 = 0;
     entity->ext.generic.unk7E.modeU8.unk0 = 0;

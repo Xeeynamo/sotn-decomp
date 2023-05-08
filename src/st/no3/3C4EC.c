@@ -8,7 +8,7 @@ void EntityPushAlucard(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(&D_80180AD0);
-        g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
+        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
         *D_80072EF4 = 0;
         D_80072EFC = 255;
         player->posX.i.hi = 0;
@@ -20,7 +20,7 @@ void EntityPushAlucard(Entity* entity) {
     case 1:
         player->posX.val += 0x60000;
         if (roomLayout->unkA > 0x800) {
-            g_EntityArray[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 0;
+            g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 0;
             *D_80072EF4 = 0x2000;
             entity->step++;
         }
@@ -97,7 +97,7 @@ void EntityUnkId53(Entity* entity) {
             return;
         }
         InitializeEntity(&D_80180AD0);
-        g_EntityArray[1].unk7C.S8.unk0 = 1;
+        g_Entities[1].unk7C.S8.unk0 = 1;
         *D_80072EF4 = 0x2000;
         D_80072EFC = 0xFF;
         player->posX.i.hi = 8;

@@ -19,12 +19,11 @@ void func_8019344C(void);
 // OFFSET FIXED
 extern u8 D_8003BEE8[];
 extern Entity* g_CurrentEntity;
-extern Entity g_EntityArray[];
+extern Entity g_Entities[];
 extern Entity D_8007D858[];
 extern Entity D_8007EF1C;
 extern s32 D_80097410;
 extern s32 D_80097414;
-extern Entity D_800762D8[];
 extern s32 D_800973FC;
 
 // TODO FIX

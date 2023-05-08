@@ -14,7 +14,7 @@ typedef enum {
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
 
-#define PLAYER g_EntityArray[PLAYER_CHARACTER]
+#define PLAYER g_Entities[PLAYER_CHARACTER]
 
 #define SQ(x) ((x) * (x))
 #define ABS(x) ((x) < 0 ? -(x) : (x))
