@@ -1353,7 +1353,25 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB3F4);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", InitRoomEntities);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BB680);
+void func_801BB680(void) {
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+
+    if (D_80097908 != 0) {
+        s16 tmp = g_Camera.posX.i.hi;
+        if (D_80097908 > 0)
+            func_801BB044(tmp + 320);
+        else
+            func_801BB140(tmp - 64);
+    }
+
+    if (D_8009790C != 0) {
+        s16 tmp = currentRoomTileLayout->unkE;
+        if (D_8009790C > 0)
+            func_801BB2F8(currentRoomTileLayout->unkE + 288);
+        else
+            func_801BB3F4(tmp - 64);
+    }
+}
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
