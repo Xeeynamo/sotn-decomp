@@ -285,7 +285,35 @@ void EntityCavernDoor(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B9C44);
+void func_801B9C44(s32 arg0) {
+    s32 posY = g_CurrentEntity->posY.i.hi;
+    s32 posX = g_CurrentEntity->posX.i.hi;
+    Primitive* prim;
+
+    if (arg0 != 0) {
+        posY -= 64;
+    } else {
+        posY -= 16;
+    }
+
+    prim = *(s32*)&g_CurrentEntity->ext.generic.unk7C;
+
+    while (posY > 0) {
+        prim->y2 = prim->y3 = posY;
+        prim->x0 = prim->x2 = posX - 8;
+        prim->x1 = prim->x3 = posX + 8;
+        posY -= 32;
+        prim->y0 = prim->y1 = posY;
+        prim->blendMode = 2;
+        prim = prim->next;
+    }
+    posY -= 32;
+
+    while (prim != 0) {
+        prim->blendMode = 8;
+        prim = prim->next;
+    }
+}
 
 // switch that clicks when you step on it
 void EntityClickSwitch(Entity* entity) {
