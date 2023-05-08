@@ -75,7 +75,7 @@ void EntityZombie(Entity* self) {
     }
 }
 
-void EntityUnkId4D(Entity* self) {
+void EntityZombieExplosion(Entity* self) {
     s32 distCameraEntity;
     Entity* newEntity;
     s32 rnd;
