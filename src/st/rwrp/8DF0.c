@@ -16,7 +16,10 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_801891C0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80189E9C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018A168);
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", Update);
 
@@ -179,15 +182,20 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D8F0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D934);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D964);
-
+void FallEntity(void) {
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
+    }
+}
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D990);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DC08);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DDF0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DE50);
+s32 func_8018DE50(u8 arg0, s16 arg1) {
+    return D_80180A94[arg0] * arg1;
+}
 
 s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
