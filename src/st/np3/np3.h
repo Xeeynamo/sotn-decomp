@@ -2,6 +2,7 @@
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
+extern void func_801BAFA0(s16);
 extern void func_801BB044(s16);
 extern void func_801BB140(s16);
 extern void func_801BB2F8(s16);
@@ -92,6 +93,7 @@ extern u16 D_801825CC;
 extern u16 D_80180B38[]; // InitProps
 extern u8 D_801D2770;
 extern u8 D_801D2774;
+extern LayoutObject* D_801D2768;
 extern LayoutObject* D_801D276C;
 extern u16 D_801D33F4[];
 extern s32 D_801825D4;
