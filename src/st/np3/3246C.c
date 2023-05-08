@@ -1517,7 +1517,28 @@ u8 func_801BCED8(s32 x, s32 y) {
     return func_801BCE58(diffX, diffY);
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801BCF20);
+u8 func_801BCF20(u8 arg0, u8 arg1, u8 arg2) {
+    u8 var_v0;
+    s8 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 < 0) {
+        var_v0 = -temp_a2;
+    } else {
+        var_v0 = temp_a2;
+    }
+
+    if (var_v0 > arg0) {
+        if (temp_a2 < 0) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+
+        return var_v0;
+    }
+
+    return arg2;
+}
 
 void func_801BCF78(u16 slope, s16 speed) {
     Entity* entity;
