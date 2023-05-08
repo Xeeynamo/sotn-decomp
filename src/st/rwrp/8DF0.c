@@ -182,8 +182,11 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D8F0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D934);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D964);
-
+void FallEntity(void) {
+    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->accelerationY += FALL_GRAVITY;
+    }
+}
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D990);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018DC08);

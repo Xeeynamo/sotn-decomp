@@ -4,4 +4,5 @@ Random = 0x8018A168;
 Update = 0x8018A198;
 CreateEntityWhenInVerticalRange = 0x8018BE1C;
 CreateEntityWhenInHorizontalRange = 0x8018BF34;
+FallEntity = 0x8018D964;
 func_801951F0 = 0x801951F0;
