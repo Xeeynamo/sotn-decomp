@@ -109,6 +109,7 @@ extern u8 D_8018267C[]; // Animation: Walking faster
 
 extern s32 D_8018268C;
 extern s32 D_801826A4;
+extern s32 D_801826C4;
 extern PfnEntityUpdate PfnEntityUpdates[];
 LayoutObject* D_801D276C;
 extern u16 D_801D33F4[];

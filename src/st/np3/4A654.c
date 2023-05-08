@@ -236,7 +236,62 @@ void EntityBloodyZombie(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4A654", func_801CAE0C);
+void func_801CAE0C(Entity* self) { // BloodDrips
+    Primitive* prim;
+    s16 firstPrimIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A54);
+        firstPrimIndex = g_api.AllocPrimitives(2, 1);
+        if (firstPrimIndex != -1) {
+            prim = &g_PrimBuf[firstPrimIndex];
+            self->firstPolygonIndex = firstPrimIndex;
+            self->unk3C = 0;
+            *(s32*)&self->ext.generic.unk7C = prim;
+            self->flags |= 0x800000;
+            while (prim != NULL) {
+                prim->x0 = prim->x1 = self->posX.i.hi;
+                prim->y0 = prim->y1 = self->posY.i.hi;
+                prim->r0 = 255;
+                prim->r1 = 32;
+                prim->g0 = 0;
+                prim->g1 = 0;
+                prim->b0 = 48;
+                prim->b1 = 16;
+                prim->priority = self->zPriority + 1;
+                prim->blendMode |= 0x37;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 1:
+        prim = *(s32*)&self->ext.generic.unk7C;
+        if (func_801C02F4(&D_801826C4, 0) != 0) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                self->step_s = 1;
+            }
+        } else {
+            self->accelerationY += 0x1800;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->firstPolygonIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4A654", func_801CB018);
 
