@@ -79,7 +79,7 @@ extern const u8 D_80180EF0[];
 extern const u8 D_80180EF8[];
 extern u16 D_80180F10[];
 extern const u8 D_80180F1C[];
-extern u8 D_80180F30;
+extern u8 D_80180F30[];
 extern u16 D_80180F4C[];
 extern const u8 D_80180F50[];
 extern const u8 D_80180F74[];
@@ -102,6 +102,7 @@ extern u16 D_80181574[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
+extern u8 D_80181DD0[];
 extern u8 D_80181DD0[];
 extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
@@ -178,24 +179,25 @@ extern s32 D_801824C0;
 extern s32 D_801824CC;
 extern u8 D_801824E2[];
 extern u8 D_80181F30[];
-extern const u16* D_80180CF4;
+extern u8 D_80180CF4[];
 extern s32 D_80182600[];
 extern s32 D_8018216C;
 extern s32 D_80182174;
 extern u16 D_80180BD4[];
 extern u16 D_80181CD8[];
 extern u8* D_80181D3C[];
-extern const u16 D_80180C94[];
+extern u16 D_80180C94[];
 extern u16 D_80182424[];
-extern const u32* D_80181CEC[];
-extern const s32 c_GoldPrizes[];
-extern const u16 D_80180CA0[];
+extern u32* D_80181CEC[];
+extern s32 c_GoldPrizes[];
+extern u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern u16 D_80180C58[];
+extern u16 D_80180C58[];
 extern s16 D_801820E4[];
-extern const u16 D_80180C04[];
+extern u16 D_80180C04[];
 extern s32 D_80182504[];
-extern u8 D_80182524;
+extern u8 D_80182524[];
 
 // *** EntitySubWeaponContainer properties START ***
 
@@ -241,7 +243,7 @@ typedef enum {
 // *** EntityBottomSecretRoomFloor properties END ***
 
 extern s32 D_801825CC[]; // SubWeapons subId table
-extern u8 D_801825F0;
+extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];

@@ -1170,7 +1170,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C7954);
 
 void func_801C7D80(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(&D_80180AB4);
+        InitializeEntity(D_80180AB4);
         self->animCurFrame = 0;
         self->unk3C = 0;
         self->flags |= 0x2000;
@@ -1178,7 +1178,7 @@ void func_801C7D80(Entity* self) {
     }
     MoveEntity();
     self->accelerationY += 0x2800;
-    if (AnimateEntity(&D_801822B8, self) == 0) {
+    if (AnimateEntity(D_801822B8, self) == 0) {
         DestroyEntity(self);
     }
 }
@@ -1188,7 +1188,7 @@ void func_801C7E18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180A54);
+        InitializeEntity(D_80180A54);
         self->animSet = 2;
         self->accelerationY = -0x50000;
         self->palette = 0x8162;
@@ -1214,7 +1214,7 @@ void func_801C7E18(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(&D_801822C0, self);
+        AnimateEntity(D_801822C0, self);
         MoveEntity();
         self->accelerationY += 0x4000;
         self->unk1A += 6;
@@ -1229,7 +1229,7 @@ void func_801C7E18(Entity* self) {
         break;
 
     case 3:
-        if (AnimateEntity(&D_801822C0, self) == 0) {
+        if (AnimateEntity(D_801822C0, self) == 0) {
             MoveEntity();
             self->accelerationY += 0x4000;
             self->unk1A += 6;
@@ -1246,7 +1246,7 @@ void EntityLargeFallingObject(Entity* self) {
     u8 temp_v0;
 
     if (self->step == 0) {
-        InitializeEntity(&D_80180AB4);
+        InitializeEntity(D_80180AB4);
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
         self->unk3C = 0;
@@ -1311,7 +1311,7 @@ void func_801C8DF0(Entity* self) {
     Entity* entity;
 
     if (self->step == 0) {
-        InitializeEntity(&D_80180AD8);
+        InitializeEntity(D_80180AD8);
         self->hitboxWidth = 6;
         self->animCurFrame = 0;
         self->hitboxHeight = 3;
@@ -1334,7 +1334,7 @@ void func_801C8DF0(Entity* self) {
             entity->unk1C = entity->unk1A = 192;
         }
     } else {
-        AnimateEntity(&D_80182400, self);
+        AnimateEntity(D_80182400, self);
         MoveEntity();
 
         if (self->unk1A < 0x100) {
@@ -1355,7 +1355,7 @@ void func_801C8DF0(Entity* self) {
 // some kind of falling object
 void func_801C8F54(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(&D_80180ACC);
+        InitializeEntity(D_80180ACC);
         self->animCurFrame = 0;
         self->unk3C = 0;
         self->zPriority += 4;
@@ -1363,14 +1363,14 @@ void func_801C8F54(Entity* self) {
     }
     MoveEntity();
     self->accelerationY += 0x2800;
-    if (AnimateEntity(&D_80182414, self) == 0) {
+    if (AnimateEntity(D_80182414, self) == 0) {
         DestroyEntity(self);
     }
 }
 
 void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(&D_80180A54);
+        InitializeEntity(D_80180A54);
         self->palette = 0x82BB;
         self->animSet = 2;
         self->animCurFrame = D_80182454[self->subId];

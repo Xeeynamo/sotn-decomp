@@ -404,7 +404,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180AA8);
+        InitializeEntity(D_80180AA8);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
@@ -1074,14 +1074,14 @@ void EntitySlograSpearProjectile(Entity* self) {
         }
 
     case 1:
-        if (AnimateEntity(&D_801813D4, self) == 0) {
+        if (AnimateEntity(D_801813D4, self) == 0) {
             func_801BD114(2);
         }
         break;
 
     case 2:
         MoveEntity();
-        AnimateEntity(&D_801813E4, self);
+        AnimateEntity(D_801813E4, self);
         break;
     }
 }

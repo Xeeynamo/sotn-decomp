@@ -1030,8 +1030,6 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityWarg);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityUnkId4B);
 
-extern u8 D_8018383C;
-
 // A single "puff" of the warg explosion animation, transparent
 void EntityWargExplosionPuffTransparent(Entity* entity) {
     u32 temp_v0;
@@ -1054,7 +1052,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         return;
     }
     entity->posY.val += entity->accelerationY;
-    if (AnimateEntity(&D_8018383C, entity) == 0) {
+    if (AnimateEntity(D_8018383C, entity) == 0) {
         DestroyEntity(entity);
     }
 }
@@ -1209,7 +1207,7 @@ void EntityFallingObject2(Entity* self) {
     }
     MoveEntity();
     self->accelerationY += 0x2800;
-    if (AnimateEntity(&D_801839A8, self) == 0) {
+    if (AnimateEntity(D_801839A8, self) == 0) {
         DestroyEntity(self);
     }
 }
@@ -1219,7 +1217,7 @@ void EntityUnkId3D(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180AC4);
+        InitializeEntity(D_80180AC4);
         self->animSet = 2;
         self->accelerationY = -0x50000;
         self->palette = 0x8162;
@@ -1245,7 +1243,7 @@ void EntityUnkId3D(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(&D_801839B0, self);
+        AnimateEntity(D_801839B0, self);
         MoveEntity();
         self->accelerationY += 0x4000;
         self->unk1A += 6;
@@ -1260,7 +1258,7 @@ void EntityUnkId3D(Entity* self) {
         break;
 
     case 3:
-        if (AnimateEntity(&D_801839B0, self) == 0) {
+        if (AnimateEntity(D_801839B0, self) == 0) {
             MoveEntity();
             self->accelerationY += 0x4000;
             self->unk1A += 6;
@@ -1278,7 +1276,7 @@ void EntityLargeFallingObject(Entity* self) {
     u8 temp_v0;
 
     if (self->step == 0) {
-        InitializeEntity(&D_80180B48);
+        InitializeEntity(D_80180B48);
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
         self->unk3C = 0;
@@ -1308,7 +1306,7 @@ void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
     if (self->step == 0) {
-        InitializeEntity(&D_80180B6C);
+        InitializeEntity(D_80180B6C);
         self->hitboxWidth = 6;
         self->animCurFrame = 0;
         self->hitboxHeight = 3;
@@ -1331,7 +1329,7 @@ void EntityMermanFireball(Entity* self) {
             entity->unk1C = entity->unk1A = 192;
         }
     } else {
-        AnimateEntity(&D_80183AF0, self);
+        AnimateEntity(D_80183AF0, self);
         MoveEntity();
 
         if (self->unk1A < 0x100) {
@@ -1349,13 +1347,10 @@ void EntityMermanFireball(Entity* self) {
     }
 }
 
-extern u16 D_80180B60;
-extern u8 D_80183B04;
-
 // some sort of falling object
 void EntityFallingObject(Entity* arg0) {
     if (arg0->step == 0) {
-        InitializeEntity(&D_80180B60);
+        InitializeEntity(D_80180B60);
         arg0->animCurFrame = 0;
         arg0->unk3C = 0;
         arg0->zPriority += 4;
@@ -1363,7 +1358,7 @@ void EntityFallingObject(Entity* arg0) {
     }
     MoveEntity();
     arg0->accelerationY += 0x2800;
-    if (AnimateEntity(&D_80183B04, arg0) == 0) {
+    if (AnimateEntity(D_80183B04, arg0) == 0) {
         DestroyEntity(arg0);
     }
 }
@@ -1412,7 +1407,7 @@ void EntityBoneScimitarParts(Entity* entity) {
         entity->step = 0;
         return;
     }
-    InitializeEntity(&D_80180B84);
+    InitializeEntity(D_80180B84);
     entity->unk19 = 4;
     entity->animCurFrame = *(u8*)&entity->subId + 16;
 

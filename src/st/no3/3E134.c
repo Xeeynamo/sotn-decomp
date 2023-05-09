@@ -9,7 +9,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animSet = -0x7FFF;
         entity->animCurFrame = 56;
         if (entity->subId != 0) {
@@ -59,10 +59,10 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 3:
         if (entity->subId != 0) {
-            animFlag = AnimateEntity(&D_801819DC, entity);
+            animFlag = AnimateEntity(D_801819DC, entity);
             entity->accelerationY -= 0xA00;
         } else {
-            animFlag = AnimateEntity(&D_801819D0, entity);
+            animFlag = AnimateEntity(D_801819D0, entity);
             if (entity->accelerationY > (s32)0xFFFE0000) {
                 entity->accelerationY -= 0x800;
             }
@@ -82,7 +82,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         if (entity->accelerationY > (s32)0xFFFE0000) {
             entity->accelerationY -= 0x800;
         }
-        animFlag = AnimateEntity(&D_801819D0, entity);
+        animFlag = AnimateEntity(D_801819D0, entity);
         MoveEntity();
         if (entity->unk6C < 0x78) {
             entity->unk6C += 2;
@@ -105,7 +105,7 @@ void EntityFallingLeaf(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animSet = -0x7FFF;
         entity->animCurFrame = (entity->subId & 1) + 63;
         entity->zPriority = 0xC1;
@@ -213,7 +213,7 @@ void EntityUnkId5B(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animSet = -0x7FF8;
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
@@ -224,13 +224,13 @@ void EntityUnkId5B(Entity* entity) {
         if (entity->ext.generic.unk7C.u != 0) {
             switch (entity->ext.generic.unk7C.u) {
             case 1:
-                AnimateEntity(&D_80181B40, entity);
+                AnimateEntity(D_80181B40, entity);
                 break;
             case 2:
-                AnimateEntity(&D_80181B4C, entity);
+                AnimateEntity(D_80181B4C, entity);
                 break;
             case 3:
-                AnimateEntity(&D_80181B4C, entity);
+                AnimateEntity(D_80181B4C, entity);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity == NULL) {
                     break;
@@ -253,7 +253,7 @@ void EntityUnkId5E(Entity* entity) {
     switch (entity->step) {
     case 0:
         animCurFrame = entity->animCurFrame;
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animCurFrame = animCurFrame;
         entity->animSet = -0x7FF8;
         entity->palette = 0x2D6;

@@ -224,7 +224,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180508);
+        InitializeEntity(D_80180508);
         entity->animSet = 2;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -450,7 +450,7 @@ void EntityIntenseExplosion(Entity* entity) {
     u32 zPriority;
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180508);
+        InitializeEntity(D_80180508);
         entity->palette = 0x8170;
         entity->animSet = 5;
         entity->animCurFrame = 1;
@@ -483,7 +483,7 @@ void EntityIntenseExplosion(Entity* entity) {
 
 void func_801965E4(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(&D_80180508);
+        InitializeEntity(D_80180508);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
@@ -503,7 +503,7 @@ void func_801965E4(Entity* entity) {
 
     MoveEntity();
 
-    if (!AnimateEntity(&D_80181010, entity)) {
+    if (!AnimateEntity(D_80181010, entity)) {
         DestroyEntity(entity);
     }
 }
