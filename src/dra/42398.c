@@ -6,10 +6,9 @@
 
 #include "common.h"
 #include "dra.h"
+#include "game.h"
 #include "objects.h"
 #include "sfx.h"
-
-#define COLORS_PER_PAL 16
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
