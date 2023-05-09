@@ -7,7 +7,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CBF18);
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CC2E0);
 
 void func_801CD540(Entity* self) {
-    u8* hitbox;
+    s8* hitbox;
     s32 diff;
 
     if (self->step == 0) {
@@ -26,8 +26,8 @@ void func_801CD540(Entity* self) {
     }
 
     hitbox += diff * 4;
-    self->unk10 = (s8)*hitbox++;
-    self->unk12 = (s8)*hitbox++;
+    self->unk10 = *hitbox++;
+    self->unk12 = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
     if (self[-1].objectId != 0x44) {
