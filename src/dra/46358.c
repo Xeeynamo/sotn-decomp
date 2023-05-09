@@ -62,7 +62,7 @@ void func_800E6358(void) {
         } else if (g_StageId == STAGE_HAGI_LOAD) {
             FntPrint("hagi load\n");
         } else {
-            FntPrint("load:c:\\bin\\%s.bin\n", D_800A3C40[g_StageId].ovlName);
+            FntPrint("load:c:\\bin\\%s.bin\n", g_StagesLba[g_StageId].ovlName);
         }
         if (!(g_pads[0].tapped & PAD_START)) {
             break;
@@ -100,37 +100,37 @@ void func_800E6358(void) {
             break;
         }
         if (g_UseDisk) {
-            D_8006C398 = 1;
+            g_CdStep = CdStep_LoadInit;
             D_8006BAFC = 2;
         } else {
             var_s0 = STAGE_ST0;
             if (g_StageId == var_s0 ||
                 g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-                if (func_800E81FC(5, FILETYPE_SYSTEM) < 0) {
+                if (func_800E81FC(5, SimFileType_System) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8002, FILETYPE_VH) < 0) {
+                if (func_800E81FC(0x8002, SimFileType_Vh) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8003, FILETYPE_VB) < 0) {
+                if (func_800E81FC(0x8003, SimFileType_Vb) < 0) {
                     break;
                 }
                 if (g_StageId == var_s0) {
-                    if (func_800E81FC(0x8004, FILETYPE_VH) < 0) {
+                    if (func_800E81FC(0x8004, SimFileType_Vh) < 0) {
                         break;
                     }
-                    if (func_800E81FC(0x8005, FILETYPE_VB) < 0) {
+                    if (func_800E81FC(0x8005, SimFileType_Vb) < 0) {
                         break;
                     }
                 }
             } else {
-                if (func_800E81FC(4, FILETYPE_SYSTEM) < 0) {
+                if (func_800E81FC(4, SimFileType_System) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8000, FILETYPE_VH) < 0) {
+                if (func_800E81FC(0x8000, SimFileType_Vh) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8001, FILETYPE_VB) < 0) {
+                if (func_800E81FC(0x8001, SimFileType_Vb) < 0) {
                     break;
                 }
             }
@@ -158,8 +158,8 @@ void func_800E6358(void) {
         break;
     case 4:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 3;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageChr;
             g_mapTilesetId = g_StageId;
         }
         D_80073060++;
@@ -175,8 +175,8 @@ void func_800E6358(void) {
         break;
     case 6:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0xD;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageSfx;
         }
         D_80073060++;
         break;
@@ -193,8 +193,8 @@ void func_800E6358(void) {
         break;
     case 8:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0x100;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StagePrg;
         }
         D_80073060++;
         break;
@@ -203,7 +203,7 @@ void func_800E6358(void) {
             if (func_800E81FC(0, 1) < 0) {
                 break;
             }
-            var_a0 = D_800A3C40[g_StageId].unk29;
+            var_a0 = g_StagesLba[g_StageId].seqIdx;
             if (var_a0 >= 0 && func_800E81FC(var_a0, 4) < 0) {
                 break;
             }
@@ -225,8 +225,8 @@ void func_800E6358(void) {
             D_80073060 = 0x10;
         } else {
             if (g_UseDisk) {
-                D_8006C398 = 1;
-                D_8006BAFC = 0x11;
+                g_CdStep = CdStep_LoadInit;
+                D_8006BAFC = CdFileType_17;
                 var_s0 = D_800A4B04[g_Status.equipment[0]].weaponId;
                 if (var_s0 == 0xFF) {
                     var_s0 = 1;
@@ -279,8 +279,8 @@ void func_800E6358(void) {
         break;
     case 12:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0x12;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_18;
             var_s0 = D_800A4B04[g_Status.equipment[1]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
@@ -299,10 +299,10 @@ void func_800E6358(void) {
             }
             pfnWeapon = D_8017D000.func_8017A01C;
             pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
-        } else if ((func_800E81FC(D_8003C908.D_8003C90C, FILETYPE_WEAPON0_CHR) <
-                    0) ||
-                   (func_800E81FC(D_8003C908.D_8003C910, FILETYPE_WEAPON1_CHR) <
-                    0)) {
+        } else if ((func_800E81FC(D_8003C908.D_8003C90C,
+                                  SimFileType_Weapon0Chr) < 0) ||
+                   (func_800E81FC(D_8003C908.D_8003C910,
+                                  SimFileType_Weapon1Chr) < 0)) {
             break;
         }
         func_800FA7E8();
@@ -314,8 +314,8 @@ void func_800E6358(void) {
             D_80073060 += 2;
         } else {
             if (g_UseDisk) {
-                D_8006C398 = 1;
-                D_8006BAFC = 0x1B;
+                g_CdStep = CdStep_LoadInit;
+                D_8006BAFC = CdFileType_Servant;
                 g_mapTilesetId = D_8006CBC4 - 1;
             }
             D_80073060++;
@@ -335,10 +335,10 @@ void func_800E6358(void) {
     case 16:
         func_800E5D30(var_s1, 0x40, 0x70, 1);
         if (((s32)g_StageId) >= 0x35) {
-            D_8006C374 = D_800A3C40[g_StageId].unk28;
+            D_8006C374 = g_StagesLba[g_StageId].unk28;
         } else {
             D_8006C374 =
-                D_800A3C40[g_StageId & (u8)~STAGE_INVERTEDCASTLE_FLAG].unk28;
+                g_StagesLba[g_StageId & (u8)~STAGE_INVERTEDCASTLE_FLAG].unk28;
         }
         if (g_StageId == STAGE_NO3 &&
             g_CurrentPlayableCharacter != PLAYER_ALUCARD) {

@@ -45,6 +45,54 @@ typedef struct {
 #define CdlSeekP 0x16
 #define CdlReadS 0x1B
 
+/*
+ * CD-ROM Mode (used int CdlSetmode)
+ */
+// Normal Streaming
+#define CdlModeStream 0x100
+// SUB HEADER information includes
+#define CdlModeStream2 0x120
+// normal speed	1: double speed
+#define CdlModeSpeed 0x80
+// 0: ADPCM off		1: ADPCM on
+#define CdlModeRT 0x40
+// 2048 byte		1: 2340byte
+#define CdlModeSize1 0x20
+// 0: -			1: 2328byte
+#define CdlModeSize0 0x10
+// 0: Channel off	1: Channel on
+#define CdlModeSF 0x08
+// 0: Report off	1: Report on
+#define CdlModeRept 0x04
+// AutoPause off	1: AutoPause on
+#define CdlModeAP 0x02
+// 0: CD-DA off		1: CD-DA on
+#define CdlModeDA 0x01
+
+#define CdlModeSpeedNormal 0
+#define CdlModeSpeedDouble 1
+
+/*
+ * Status Contents
+ */
+#define CdlStatPlay 0x80      /* playing CD-DA */
+#define CdlStatSeek 0x40      /* seeking */
+#define CdlStatRead 0x20      /* reading data sectors */
+#define CdlStatShellOpen 0x10 /* once shell open */
+#define CdlStatSeekError 0x04 /* seek error detected */
+#define CdlStatStandby 0x02   /* spindle motor rotating */
+#define CdlStatError 0x01     /* command error detected */
+
+/*
+ * Interrupts
+ */
+#define CdlNoIntr 0x00      /* No interrupt */
+#define CdlDataReady 0x01   /* Data Ready */
+#define CdlComplete 0x02    /* Command Complete */
+#define CdlAcknowledge 0x03 /* Acknowledge (reserved) */
+#define CdlDataEnd 0x04     /* End of Data Detected */
+#define CdlDiskError 0x05   /* Error Detected */
+
 typedef struct {
     CdlLOC pos;    /* file location */
     u_long size;   /* file size */
@@ -67,6 +115,8 @@ int CdSync(int mode, u_char* result);
 int CdReady(int mode, u_char* result);
 CdlCB CdSyncCallback(CdlCB func);
 CdlCB CdReadyCallback(CdlCB func);
+
+// Issues direct primitive commands to the CD-ROM subsystem
 int CdControl(u_char com, u_char* param, u_char* result);
 int CdControlB(u_char com, u_char* param, u_char* result);
 int CdControlF(u_char com, u_char* param);

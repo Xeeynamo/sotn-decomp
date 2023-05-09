@@ -3,6 +3,7 @@
 
 #include "include_asm.h"
 #include "macros.h"
+#include "settings.h"
 #include "types.h"
 
 #if defined(_internal_version_us)

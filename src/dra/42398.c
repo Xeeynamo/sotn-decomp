@@ -110,7 +110,8 @@ void func_800E2B00(void) {
     sprite->clut = D_8003C104[g_DebugCurPal];
     AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
-    SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &D_800ACD80);
+    SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7,
+                &g_Vram.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
@@ -156,7 +157,7 @@ void func_800E2B00(void) {
         i++;
     }
 
-    SetDrawMode(drMode, 0, 0, 0, &D_800ACD80);
+    SetDrawMode(drMode, 0, 0, 0, &g_Vram.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode);
     g_GpuUsage.drawModes++;
 }
@@ -446,8 +447,8 @@ void entrypoint_sotn(void) {
     GsInitVcount();
     g_GpuBuffers[0].other = &g_GpuBuffers[1];
     g_GpuBuffers[1].other = &g_GpuBuffers[0];
-    ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
-    ClearImage(&D_800ACD88[1], 0, 0, 0);
+    ClearImage(&g_Vram.D_800ACD88, 0x5A, 0x50, 0x46);
+    ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
     for (i = 0; i < 0x50; i++) {
         ((void**)&g_api)[i] = (&D_800A0004)[i];
     }
@@ -504,7 +505,7 @@ loop_5:
     D_8003C704 = 0;
     D_800973EC = 0;
     D_800974A4 = 0;
-    D_8006C398 = 0;
+    g_CdStep = CdStep_None;
     D_80097928 = 0;
     D_80097910 = 0;
     D_80097904 = 0;
@@ -647,7 +648,7 @@ void func_800E4124(s32 context) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E414C);
 
-void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
+void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
 
 void func_800E451C(void) {
     void (*callback)(void);
@@ -670,8 +671,8 @@ void func_800E451C(void) {
             if (D_8006C3B0 != 0) {
                 return;
             }
-            D_8006C398 = 1;
-            D_8006BAFC = 1;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_1;
         }
         D_80073060++;
         break;
@@ -700,23 +701,23 @@ void func_800E451C(void) {
     case 101:
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
-            ClearImage(&D_800ACDF0, 0, 0, 0);
+            ClearImage(&g_Vram.D_800ACDF0, 0, 0, 0);
             func_800E3574();
             g_StageId = 0x45;
             if (g_UseDisk) {
                 if (D_8006C3B0 != 0) {
                     break;
                 }
-                D_8006C398 = 1;
-                D_8006BAFC = 1;
+                g_CdStep = CdStep_LoadInit;
+                D_8006BAFC = CdFileType_1;
             }
             D_80073060 = 1;
         }
         break;
     case 1:
         if ((g_UseDisk && D_8006C3B0 == 0) ||
-            (!g_UseDisk && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
-             func_800E81FC(0, FILETYPE_SYSTEM) >= 0)) {
+            (!g_UseDisk && func_800E81FC(2, SimFileType_System) >= 0 &&
+             func_800E81FC(0, SimFileType_System) >= 0)) {
             D_80073060++;
         }
         break;
@@ -728,14 +729,14 @@ void func_800E451C(void) {
         break;
     case 4:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0x100;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StagePrg;
         }
         D_80073060 = 5;
         break;
     case 5:
         if ((g_UseDisk && D_8006C3B0 == 0) ||
-            (!g_UseDisk && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
+            (!g_UseDisk && func_800E81FC(0, SimFileType_StagePrg) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;
         }
@@ -835,13 +836,15 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_PRG) != 0)
+        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
             ;
-        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_CHR) != 0)
+        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
             ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, FILETYPE_VH) != 0)
+        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) !=
+               0)
             ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, FILETYPE_VB) != 0)
+        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) !=
+               0)
             ;
     }
 }
