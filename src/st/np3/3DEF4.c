@@ -733,7 +733,30 @@ void EntityIntenseExplosion(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C129C);
+void func_801C129C(Entity* entity) {
+    if (entity->step == 0) {
+        InitializeEntity(D_80180A54);
+        entity->unk6C = 0xF0;
+        entity->unk1A = 0x1A0;
+        entity->unk1C = 0x1A0;
+        entity->animSet = 8;
+        entity->animCurFrame = 1;
+        entity->zPriority += 0x10;
+
+        if (entity->subId != 0) {
+            entity->palette = entity->subId;
+        } else {
+            entity->palette = 0x8160;
+        }
+
+        entity->step++;
+    } else {
+        MoveEntity();
+        if (!AnimateEntity(&D_80182008, entity)) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C1368);
 
