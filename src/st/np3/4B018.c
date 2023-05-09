@@ -122,7 +122,32 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D2320);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D2470);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D24A0);
+Primitive* func_801D24A0(Primitive* prim, u8 index) {
+    if (prim) {
+        s32 index_ = index;
+    loop_2:
+        if (prim->p3 == 0) {
+            Primitive* var_v0 = NULL;
+            Primitive* firstPrim = prim;
+            s32 i = 1;
+            if (i < index_) {
+                do {
+                    prim = prim->next;
+                    if (!prim)
+                        return NULL;
+                } while (prim->p3 == 0 && ++i < index);
+            }
+            var_v0 = firstPrim;
+            if (i == index_)
+                return var_v0;
+        }
+        prim = prim->next;
+        if (prim) {
+            goto loop_2;
+        }
+    }
+    return NULL;
+}
 
 POLY_GT4* func_801D251C(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
