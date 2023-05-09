@@ -478,6 +478,7 @@ rsin_tbl = 0x8002D3CC;
 SQRT = 0x8002DBE0;
 aThisFunctionIs = 0x8002E1EA;
 rcossin_tbl = 0x8002E210;
+g_AtanTable = 0x80032210;
 CD_cbsync = 0x80032AA4;
 CD_cbready = 0x80032AA8;
 CD_status = 0x80032AB4;

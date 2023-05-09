@@ -5,4 +5,5 @@ Update = 0x8018A198;
 CreateEntityWhenInVerticalRange = 0x8018BE1C;
 CreateEntityWhenInHorizontalRange = 0x8018BF34;
 FallEntity = 0x8018D964;
+ClutLerp = 0x8019344C;
 func_801951F0 = 0x801951F0;

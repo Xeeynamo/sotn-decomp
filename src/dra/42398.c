@@ -8,8 +8,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-
-#define COLORS_PER_PAL 16
+#include "game.h"
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
