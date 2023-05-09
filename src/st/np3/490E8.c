@@ -230,7 +230,7 @@ void EntityBoneScimitar(Entity* self) {
             if (newEntity == NULL) {
                 break;
             }
-            CreateEntityFromCurrentEntity(0x3f, newEntity);
+            CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_HEAD, newEntity);
             newEntity->facing = self->facing;
             newEntity->subId = i;
             newEntity->ext.generic.unk88.S8.unk0 = D_801824C8[i];

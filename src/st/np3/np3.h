@@ -1,5 +1,7 @@
 #include "stage.h"
 
+typedef enum { E_BONE_SCIMITAR_HEAD = 0x3F } ObjectIds;
+
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern void func_801BAFA0(s16);
