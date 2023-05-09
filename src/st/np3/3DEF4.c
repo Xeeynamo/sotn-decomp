@@ -778,7 +778,25 @@ void func_801C1368(u16 objectId, Entity* src, Entity* dst) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C1430);
+void func_801C1848(void) {
+    s32 temp_s3;
+    s8 temp_s4;
+    Entity* entity;
+    s32 i;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(ENTITY_EXPLOSION, g_CurrentEntity, entity);
+            entity->ext.generic.unk84.U8.unk1 = 6 - i;
+            entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
+            entity->ext.generic.unk84.U8.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C14E8);
 
