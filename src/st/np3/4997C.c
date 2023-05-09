@@ -18,7 +18,7 @@ void EntityBat(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AFC);
+        InitializeEntity(D_80180AFC);
         entity->animCurFrame = 31;
         break;
 
@@ -32,7 +32,7 @@ void EntityBat(Entity* entity) {
         break;
 
     case 2:
-        if (AnimateEntity(&D_80182570, entity) == 0) {
+        if (AnimateEntity(D_80182570, entity) == 0) {
             entity->facing = (GetPlayerSide() & 1) ^ 1;
             entity->accelerationY = 0xE000;
             if (entity->facing != 0) {
@@ -47,7 +47,7 @@ void EntityBat(Entity* entity) {
         break;
 
     case 3:
-        AnimateEntity(&D_80182554, entity);
+        AnimateEntity(D_80182554, entity);
         MoveEntity();
         if (GetPlayerDistanceY() < 0x20) {
             if (entity->facing == 0) {
@@ -61,7 +61,7 @@ void EntityBat(Entity* entity) {
         break;
 
     case 4:
-        AnimateEntity(&D_80182554, entity);
+        AnimateEntity(D_80182554, entity);
         MoveEntity();
         if ((u32)(entity->accelerationY + 0x10000) > 0x20000U) {
             *(s32*)&entity->ext.generic.unk7C.s =

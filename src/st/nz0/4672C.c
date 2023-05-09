@@ -44,7 +44,7 @@ void EntitySpittleBone(Entity* self) {
         break;
 
     case 2:
-        AnimateEntity(&D_80182524, self);
+        AnimateEntity(D_80182524, self);
         self->ext.generic.unk7C.U8.unk0 =
             func_801C1034(self->ext.generic.unk7C.U8.unk0);
         if (self->ext.generic.unk80.modeS16.unk2 != 0) {

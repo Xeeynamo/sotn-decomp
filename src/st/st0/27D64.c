@@ -108,7 +108,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_801805BC);
+        InitializeEntity(D_801805BC);
         entity->animSet = 2;
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;
@@ -412,7 +412,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         }
         break;
     case 2:
-        AnimateEntity(&D_80180990, entity);
+        AnimateEntity(D_80180990, entity);
         MoveEntity();
         entity->unk1E += 4;
         speedX = 0x1000;
