@@ -466,10 +466,6 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019F594);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019FB74);
 
-// ASPSX aspatch div fix not working
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", ClutLerp);
-#else
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
     RECT bufRect;
@@ -506,7 +502,6 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
         D_8003C104[offset + i] = GetClut(bufRect.x, bufRect.y);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A046C);
 
