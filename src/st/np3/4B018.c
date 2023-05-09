@@ -8,7 +8,11 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CC2E0);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD540);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD620);
+void func_801CD620(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(D_80180A6C);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD658);
 
