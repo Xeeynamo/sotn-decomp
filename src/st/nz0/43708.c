@@ -252,9 +252,9 @@ void EntityBoneScimitar(Entity* self) {
         if (self->subId != 0) {
             CreateEntityFromEntity(ENTITY_INVENTORY_DROP, self, newEntity);
             if (!(self->subId & 1)) {
-                self[1].subId = 0x1A; // Red rust
+                self[1].subId = ITEM_RED_RUST;
             } else {
-                self[1].subId = 0x13; // Short sword
+                self[1].subId = ITEM_SHORT_SWORD;
             }
             newEntity->subId |= 0x8000;
             D_8018208C |= self->subId;
