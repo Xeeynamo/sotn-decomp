@@ -1021,13 +1021,6 @@ void func_8010E9A4(void) {
     D_80072F20.unk4A = 0;
 }
 
-// DECOMP_ME_WIP func_8010EA54 https://decomp.me/scratch/9jKqU
-// matching in decomp.me, probably aspsx
-// TODO: aspatch div macro
-// https://discord.com/channels/710646040331681844/815529862604390411/1051628313073958992
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010EA54);
-#else
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
 
@@ -1039,7 +1032,6 @@ void func_8010EA54(s32 arg0) {
         }
     }
 }
-#endif
 
 s32 func_8010EADC(s16 arg0, s16 arg1) {
     Entity* entity = &g_Entities[0x20];
