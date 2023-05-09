@@ -580,15 +580,15 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_8010A3F0);
 void func_8010A3F0(void) {
     s32 temp = 0x38;
 
-    if ((D_8017A000.func_8017A018() == temp) &&
-        (D_8017D000.func_8017A018() == temp)) {
+    if (D_8017A000.func_8017A018() == temp &&
+        D_8017D000.func_8017A018() == temp) {
         if (D_80072F16[0] == 0) {
             func_801092E8(1);
         }
         D_80072F16[0] = 0x20;
         temp = D_80072F30 != 0;
-        if (temp && (D_80097C40[0] < -1)) {
-            D_80097C40[0]++;
+        if (temp && g_Status.D_80097C40 < -1) {
+            g_Status.D_80097C40++;
         }
     }
     D_80072F30 = 0;

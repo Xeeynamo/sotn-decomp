@@ -1,5 +1,6 @@
 #include "sel.h"
 
+// reg swap and missing move
 s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B8D24);
