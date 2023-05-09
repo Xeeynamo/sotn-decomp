@@ -87,6 +87,41 @@ func TestPatchLoadWordWithPointer(t *testing.T) {
 	)
 }
 
+func TestPatchRemWithAspsxDiv(t *testing.T) {
+	assertPatch(t,
+		"\trem	$4,$2,$3\n",
+
+		"\t.set\tnoat\n",
+		"\tdiv\t$0,$2,$3\n",
+		"\tbnez\t$3,.L_NOT_DIV_BY_ZERO\n",
+		"\tbreak\t0x7\n",
+		".L_NOT_DIV_BY_ZERO:\n",
+		"\taddiu\t$1,$0,-1\n",
+		"\tbne\t$3,$1,.L_DIV_BY_POSITIVE_SIGN\n",
+		"\tlui\t$1,0x8000\n",
+		"\tbne\t$2,$1,.L_DIV_BY_POSITIVE_SIGN\n",
+		"\tbreak\t0x6\n",
+		".L_DIV_BY_POSITIVE_SIGN:\n",
+		"\tmfhi\t$4\n",
+		"\tnop\n",
+		"\t.set\tat\n",
+	)
+}
+
+func TestPatchRemWithAspsxDivu(t *testing.T) {
+	assertPatch(t,
+		"\tdivu	$4,$2,$3\n",
+
+		"\t.set\tnoat\n",
+		"\tdivu\t$0,$2,$3\n",
+		"\tbnez\t$3,.L_NOT_DIV_BY_ZERO\n",
+		"\tbreak\t0x7\n",
+		".L_NOT_DIV_BY_ZERO:\n",
+		"\tmflo\t$4\n",
+		"\t.set\tat\n",
+	)
+}
+
 func assertPatch(t *testing.T, in string, out ...string) {
 	buf := new(bytes.Buffer)
 	writer := bufio.NewWriter(buf)
