@@ -741,7 +741,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
@@ -1057,7 +1057,7 @@ void EntitySlograSpearProjectile(Entity* self) {
     if (self->flags & 0x100) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(ENTITY_EXPLOSION, self, entity);
             entity->subId = 1;
         }
         DestroyEntity(self);

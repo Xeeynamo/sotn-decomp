@@ -18,7 +18,7 @@ extern s32 GetPlayerDistanceX(void);
 extern s32 func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
-extern POLY_GT4* func_801D2470(POLY_GT4* poly);
+extern Primitive* func_801D2470(Primitive* poly);
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];

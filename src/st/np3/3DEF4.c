@@ -1159,7 +1159,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     if (entity->flags & 0x100) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, entity, newEntity);
+            CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
             newEntity->subId = 0;
         }
         DestroyEntity(entity);
@@ -1344,7 +1344,7 @@ void func_801C8DF0(Entity* self) {
         if (self->flags & 0x100) {
             entity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, self, entity);
                 entity->subId = 0;
             }
             DestroyEntity(self);
