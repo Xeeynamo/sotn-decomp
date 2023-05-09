@@ -330,12 +330,17 @@ void func_801B40F8(Entity* self) {
     }
 }
 
-void func_801B44B4(s32 arg0) {
+typedef enum {
+    WEIGHT_SMALL,
+    WEIGHT_TALL
+} WeightSelect;
+
+void func_801B44B4(WeightSelect weightSelect) {
     s32 posY = g_CurrentEntity->posY.i.hi;
     s32 posX = g_CurrentEntity->posX.i.hi;
     Primitive* prim;
 
-    if (arg0 != 0) {
+    if (weightSelect != WEIGHT_SMALL) {
         posY -= 64;
     } else {
         posY -= 16;
@@ -464,7 +469,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
         player->posY.i.hi++;
     }
-    func_801B44B4(0);
+    func_801B44B4(WEIGHT_SMALL);
 }
 
 // taller weight blocking path near cube of zoe
@@ -528,7 +533,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         break;
     }
 
-    func_801B44B4(1);
+    func_801B44B4(WEIGHT_TALL);
     do {
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
     } while (0);
