@@ -6,7 +6,34 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CBF18);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CC2E0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD540);
+void func_801CD540(Entity* self) {
+    u8* hitbox;
+    s32 diff;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180B20);
+    }
+
+    self->facing = self[-1].facing;
+    self->posX.i.hi = self[-1].posX.i.hi;
+    self->posY.i.hi = self[-1].posY.i.hi;
+    hitbox = D_80182914;
+    diff = D_80182935[self[-1].animCurFrame];
+
+    diff -= 4;
+    if (diff < 0) {
+        diff = 0;
+    }
+
+    hitbox += diff * 4;
+    self->unk10 = (s8)*hitbox++;
+    self->unk12 = (s8)*hitbox++;
+    self->hitboxWidth = hitbox[0];
+    self->hitboxHeight = hitbox[1];
+    if (self[-1].objectId != 0x44) {
+        DestroyEntity(self);
+    }
+}
 
 void func_801CD620(Entity* self) {
     if (self->step == 0) {
