@@ -85,7 +85,6 @@ segments:
       - [0x30858, .rodata, 44EAC] # EntityBloodyZombie
       - [0x30880, .rodata, 45F2C] # EntitySkeleton
       - [0x3089C, .rodata, 4672C] # EntitySpittleBone
-      - [0x308B4, rodata]
       - [0x308C8, .rodata, 47048] # EntitySubWeaponContainer
       - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
       - [0x308E8, rodata]

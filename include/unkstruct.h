@@ -151,7 +151,7 @@ typedef struct {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ s16 unk0; /* D_800ACEC6 */
+    /* 0x00 */ s16 unk0;  /* D_800ACEC6 */
     /* 0x02 */ char pad2[0xE];
     /* 0x10 */ s16 unk10; /* D_800ACED6 */
     /* 0x12 */ char pad12[0x8];
@@ -258,3 +258,20 @@ typedef struct {
     s32 D_8003C90C;
     s32 D_8003C910;
 } Unkstruct_8003C908;
+
+typedef struct Unkstruct_801C6C6C {
+    union {
+        struct {
+            u16 w;
+            u16 x;
+        } c;
+        s32 p;
+    } x;
+    union {
+        struct {
+            u16 h;
+            u16 y;
+        } c;
+        s32 p;
+    } y;
+} Unkstruct_801C6C6C;
