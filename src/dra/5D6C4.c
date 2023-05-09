@@ -976,12 +976,8 @@ void func_800FF7B8(s32 arg0) {
 }
 #endif
 
-// matches with ASPSX
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", DrawHudRichter);
-#else
 void DrawHudRichter(void) {
-    POLY_GT4* poly;
+    Primitive* prim;
 
     D_80137978 = 400;
     D_8013797C = 400;
@@ -995,93 +991,92 @@ void DrawHudRichter(void) {
     D_8013798C = 40000 / D_80137978;
     D_80137988 = 40000 / D_8013797C;
     D_80137970 = func_800EDD9C(4, 9);
-    poly = &g_PrimBuf[D_80137970];
+    prim = &g_PrimBuf[D_80137970];
 
-    func_80107360(poly, 2, 22, 32, 96, 0, 0);
-    poly->tpage = 0x1B;
-    poly->clut = 0x101;
-    poly->pad2 = 0x1EF;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, 2, 22, 32, 96, 0, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x101;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, D_80137980 + 216, 22, 32, 96, 32, 0);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x100;
-    poly->pad2 = 0x1EF;
-    poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    func_80107360(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x100;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 4, 112, 9, 3, 64, 89);
-    poly->tpage = 0x1B;
-    poly->clut = 0x105;
-    poly->pad2 = 0x1F0;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, 4, 112, 9, 3, 64, 89);
+    prim->tpage = 0x1B;
+    prim->clut = 0x105;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, D_80137980 + 228, 112, 9, 3, 64, 89);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x103U;
-    poly->pad2 = 0x1F0U;
-    poly->pad3 = 0x2000U;
-    poly->p1 = 0;
-    poly->p2 = 6;
-    poly = poly->tag;
+    func_80107360(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim->p1 = 0;
+    prim->p2 = 6;
+    prim = prim->next;
 
-    func_80107360(poly, D_80137980 + 236, 112, 9, 3, 64, 89);
-    poly->tpage = 0x1B;
-    poly->clut = 0x103;
-    poly->pad2 = 0x1F0;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, D_80137980 + 236, 112, 9, 3, 64, 89);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 14, 27, 8, 8, 0, 96);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x103U;
-    poly->pad2 = 0x1F0U;
-    poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    func_80107360(prim, 14, 27, 8, 8, 0, 96);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 22, 27, 8, 8, 0, 96);
-    poly->tpage = 0x1B;
-    poly->clut = 0x103;
-    poly->pad2 = 0x1F0;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, 22, 27, 8, 8, 0, 96);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 18, 38, 8, 8, 0, 0);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x102;
-    poly->pad2 = 0x1F0U;
-    poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    func_80107360(prim, 18, 38, 8, 8, 0, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x102;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 33, 20, 64, 24, 64, 40);
-    poly->tpage = 0x1B;
-    poly->clut = 0x103;
-    poly->pad2 = 0x1EF;
-    poly->pad3 = 0x2000;
+    func_80107360(prim, 33, 20, 64, 24, 64, 40);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0x2000;
 
     D_80137974 = func_800EDD9C(4, 16);
-    poly = &g_PrimBuf[D_80137974];
-    if (poly != 0) {
-        s32 phi_s1 = 0x20;
-        s32 phi_s0 = 0xD8;
+    prim = &g_PrimBuf[D_80137974];
+    if (prim != 0) {
+        s32 u = 32;
+        s32 x = 216;
         do {
-            func_80107360(poly, phi_s0, 22, 2, 96, phi_s1, 0);
-            func_801072DC(poly);
-            poly->tpage = 0x1B;
-            poly->clut = 0x100;
-            poly->pad2 = 0x1EE;
-            poly->pad3 = 8;
-            poly->p1 = (rand() & 0x3F) + 1;
-            poly->p2 = 0;
-            poly = poly->tag;
-            phi_s1 += 2;
-            phi_s0 += 2;
-        } while (poly != 0);
+            func_80107360(prim, x, 22, 2, 96, u, 0);
+            func_801072DC(prim);
+            prim->tpage = 0x1B;
+            prim->clut = 0x100;
+            prim->priority = 0x1EE;
+            prim->blendMode = 8;
+            prim->p1 = (rand() & 0x3F) + 1;
+            prim->p2 = 0;
+            prim = prim->next;
+            u += 2;
+            x += 2;
+        } while (prim != 0);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80100B50);
 
