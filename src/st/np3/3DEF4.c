@@ -1141,7 +1141,30 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C7880);
+void EntityMediumWaterSplash(Entity* entity) {
+    Entity* newEntity;
+
+    if (entity->step == 0) {
+        InitializeEntity(D_80180AC0);
+        entity->animCurFrame = 0;
+        if (entity->facing != 0) {
+            entity->accelerationX = 0x20000;
+            return;
+        }
+        entity->accelerationX = -0x20000;
+        return;
+    }
+    AnimateEntity(D_801822A4, entity);
+    MoveEntity();
+    if (entity->flags & 0x100) {
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(2, entity, newEntity);
+            newEntity->subId = 0;
+        }
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C7954);
 

@@ -70,6 +70,7 @@ EntityAbsorbOrb = 0x801C34E4;
 EntityEnemyBlood = 0x801C3878;
 EntityRoomForeground = 0x801C3D28;
 EntityExplosion2 = 0x801C7650;
+EntityMediumWaterSplash = 0x801C7880;
 EntityLargeFallingObject = 0x801C8010;
 EntityMerman2 = 0x801C80DC;
 EntityMerman = 0x801C8238;
