@@ -862,6 +862,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C1AD8);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C20B8);
 
+// ASPSX aspatch div fix not working
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", ClutLerp);
 #else

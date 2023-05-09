@@ -49,7 +49,7 @@ typedef struct {
     void* unk0C;
     void* unk10;
     void* unk14;
-    void (*func_8017A018)(u8);
+    s32 (*func_8017A018)();
     void (*func_8017A01C)(u8);
 } WeaponOvl;
 

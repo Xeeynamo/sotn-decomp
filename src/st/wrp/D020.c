@@ -840,6 +840,7 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_801907EC);
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_80190DCC);
 
+// ASPSX aspatch div fix not working
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", ClutLerp);
 #else
@@ -1059,7 +1060,8 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-#ifndef NON_MATCHING
+// reg swaps
+#ifdef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_80192F40);
 #else
 void func_80192F40(u8* arg0, u8 arg1) {

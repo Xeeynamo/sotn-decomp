@@ -860,7 +860,7 @@ void func_800EAEEC(void) {
     func_800EAEA4();
 }
 
-// ASPSX
+// ASPSX jump to 'nop'
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EAF28);
 #else
@@ -872,7 +872,7 @@ void func_800EAF28(s32 arg0) {
     unkstruct_80072FA0* var_a0;
 
     if (arg0 & 0x8000) {
-        var_a1 = D_8003C798[arg0 & 0x7FFF];
+        var_a1 = g_api.o.entityGfxs[arg0 & 0x7FFF];
     } else {
         var_a1 = D_800A3B5C[arg0];
     }
