@@ -73,6 +73,7 @@ extern const u32* D_80181DC4[];
 extern const s32 c_GoldPrizes[];
 extern u16 D_80181E74[];
 extern s8 c_HeartPrizes[];
+extern u8 D_80181EA8[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
 extern s16 D_80181FB4[];

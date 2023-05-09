@@ -798,7 +798,61 @@ void func_801C1848(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C14E8);
+void func_801C14E8(Entity* self) {
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 temp;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180A54);
+        self->animSet = 2;
+        self->palette = 0x81B6;
+        self->unk6C = 0x70;
+        self->zPriority = 192;
+        self->unk19 |= 0xC;
+        self->blendMode |= 0x30;
+
+        switch (self->ext.generic.unk84.U8.unk0) {
+        case 1:
+            if (self->ext.generic.unk84.U8.unk1 >= 4) {
+                self->ext.generic.unk84.U8.unk1 += 253;
+                self->ext.generic.unk80.modeS16.unk0 -= 0x800;
+            }
+            break;
+
+        case 2:
+            self->ext.generic.unk80.modeS16.unk0 +=
+                self->ext.generic.unk84.U8.unk1 * 192;
+            break;
+        }
+
+        self->unk1E = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
+        temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
+        self->accelerationX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
+        self->accelerationY =
+            -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
+    }
+
+    if (self->animFrameIdx >= 13) {
+        accelerationX = self->accelerationX;
+        if (accelerationX < 0) {
+            accelerationX += 3;
+        }
+
+        accelerationY = self->accelerationY;
+        self->accelerationX = (accelerationX >> 2) * 3;
+        if (accelerationY < 0) {
+            accelerationY += 3;
+        }
+        self->accelerationY = (accelerationY >> 2) * 3;
+    }
+
+    MoveEntity();
+
+    if (AnimateEntity(D_80181EA8, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C16C0);
 

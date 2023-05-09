@@ -852,7 +852,7 @@ void func_801C1900(Entity* self) {
 
     MoveEntity();
 
-    if (AnimateEntity(&D_80181DD0, self) == 0) {
+    if (AnimateEntity(D_80181DD0, self) == 0) {
         DestroyEntity(self);
     }
 }
