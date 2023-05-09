@@ -1,6 +1,9 @@
 #include "stage.h"
 
-typedef enum { E_AXE_KNIGHT_AXE = 0x2A, E_BONE_SCIMITAR_HEAD = 0x28 } ObjectIds;
+typedef enum {
+    E_AXE_KNIGHT_AXE = 0x2A,
+    E_BONE_SCIMITAR_HEAD = 0x28,
+} ObjectIds;
 
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
@@ -28,9 +31,9 @@ extern u16 D_80180C34[];
 extern u16 D_80180C40[]; // InitProps
 extern u8 D_80182610[];  // Animation: Walking?
 extern s16 D_80182624[];
-extern u8 D_80182638[]; // Animation: Disassemble
-extern u8 D_80182654[]; // Animation: Reassemble
-extern u8 D_80182670[]; // Animation: Reassemble faster ?
+extern u8 D_80182638[];  // Animation: Disassemble
+extern u8 D_80182654[];  // Animation: Reassemble
+extern u8 D_80182670[];  // Animation: Reassemble faster ?
 extern s32 D_80182694;
 extern s32 D_801826AC;
 
@@ -102,6 +105,7 @@ extern u16 D_80181574[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
+extern u8 D_80181DD0[];
 extern u8 D_80181DD0[];
 extern const u8* D_80181E54[];
 extern u8 D_80181F1C[];
@@ -191,6 +195,7 @@ extern u32* D_80181CEC[];
 extern s32 c_GoldPrizes[];
 extern u16 D_80180CA0[];
 extern u32 D_80182488[];
+extern u16 D_80180C58[];
 extern u16 D_80180C58[];
 extern s16 D_801820E4[];
 extern u16 D_80180C04[];

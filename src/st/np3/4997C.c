@@ -8,7 +8,7 @@ void EntityBat(Entity* entity) {
     if (entity->flags & 0x100) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, entity, newEntity);
+            CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
             newEntity->subId = 1;
         }
         func_801C2598(0x69C);
@@ -25,7 +25,7 @@ void EntityBat(Entity* entity) {
     case 1:
         xDistance = GetPlayerDistanceX();
         yDistance = GetPlayerDistanceY();
-        if ((xDistance < 0x60) && (yDistance < 0x60) &&
+        if ((xDistance < 96) && (yDistance < 96) &&
             !(GetPlayerSide() & 2)) {
             entity->step++;
         }
