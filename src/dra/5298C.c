@@ -71,7 +71,7 @@ void func_800F53D4(s32 tpage, s32 orderIdx) {
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
-        SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
+        SetDrawMode(drawMode, 0, 0, tpage, &g_Vram.D_800ACD80);
         AddPrim(&order[orderIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
@@ -1054,8 +1054,8 @@ void func_800FAC30(void) {
 }
 
 void func_800FAC48(void) {
-    ClearImage(&D_800ACD90, 0, 0, 0);
-    ClearImage(&D_800ACD90 + 7, 0, 0, 0);
+    ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
+    ClearImage(&g_Vram.D_800ACDC8, 0, 0, 0);
 }
 
 void func_800FAC98(void) { func_800F9808(2); }

@@ -1,24 +1,24 @@
 #include "game.h"
 
-extern Lba D_800A3C40[];        // g_lba
-extern u32 D_800A3C44;          // D_800A3C40.unk4
-extern u32 D_800A3C48;          // D_800A3C40.unk8
-extern u32 D_800A3C4C;          // D_800A3C40.unkC
-extern u32 D_800A3C50;          // D_800A3C40.unk10
-extern u32 D_800A3C54;          // D_800A3C40.unk14
-extern u32 D_800A3C58;          // D_800A3C40.unk18
-extern const char D_800A3C5C[]; // D_800A3C40.unk1C
-extern const char D_800A3C60[]; // D_800A3C40.unk20
-extern const char D_800A3C64[]; // D_800A3C40.unk24
-extern u8 D_800A3C68;           // D_800A3C40.unk28
-extern u8 D_800A3C69;           // D_800A3C40.unk29
+extern Lba g_StagesLba[];       // g_lba
+extern u32 D_800A3C44;          // g_StagesLba.unk4
+extern u32 D_800A3C48;          // g_StagesLba.unk8
+extern u32 D_800A3C4C;          // g_StagesLba.unkC
+extern u32 D_800A3C50;          // g_StagesLba.unk10
+extern u32 D_800A3C54;          // g_StagesLba.unk14
+extern u32 D_800A3C58;          // g_StagesLba.unk18
+extern const char D_800A3C5C[]; // g_StagesLba.unk1C
+extern const char D_800A3C60[]; // g_StagesLba.unk20
+extern const char D_800A3C64[]; // g_StagesLba.unk24
+extern u8 D_800A3C68;           // g_StagesLba.unk28
+extern u8 D_800A3C69;           // g_StagesLba.unk29
 
 const char aFNo0[];
 const char D_800DD17C[];
 const char D_800DD178[];
 
 #if 0
-Lba D_800A3C40[] = { // g_lba
+Lba g_StagesLba[] = { // g_lba
     { 0x7E5D, 0x7F16, 0x5F58C, 0x7EDD, 0x1A20, 0x1A3A0, 0x30D, aFNo0, "NO0", "rou", 0x16, 0xFF, 0x0000, },
     { 0x7FD6, 0x808E, 0x57064, 0x8056, 0x1A20, 0x19CA0, 0x313, "F_NO1", "NO1", "tou", 0x02, 0xFF, 0x0000, },
     { 0x7C0E, 0x7CBF, 0x552CC, 0x7C8E, 0x1A20, 0x16250, 0x309, "F_LIB", "LIB", "lib", 0x29, 0x00, 0x0000, },

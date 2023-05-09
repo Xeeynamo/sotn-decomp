@@ -14,8 +14,8 @@ void func_800E6FD4(void) {
             if (D_8006C3B0 == 0) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
-                D_8006C398 = 1;
-                D_8006BAFC = 0x18;
+                g_CdStep = CdStep_LoadInit;
+                D_8006BAFC = CdFileType_24;
                 func_800E3618(0x140);
                 D_8013640C = AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
@@ -108,8 +108,8 @@ void nullsub_9(void) {}
 void func_800E738C(void) {
     if (D_80073060 == 1) {
         if ((g_UseDisk && D_8006C3B0 == 0) ||
-            (!g_UseDisk && func_800E81FC(6, FILETYPE_SYSTEM) >= 0 &&
-             func_800E81FC(7, FILETYPE_SYSTEM) >= 0)) {
+            (!g_UseDisk && func_800E81FC(6, SimFileType_System) >= 0 &&
+             func_800E81FC(7, SimFileType_System) >= 0)) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
@@ -128,8 +128,8 @@ void func_800E7458(void) {
     case 0:
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 3;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageChr;
             g_mapTilesetId = STAGE_SEL;
         }
         D_80073060++;
@@ -138,14 +138,14 @@ void func_800E7458(void) {
         if (g_UseDisk && D_8006C3B0 != 0)
             break;
 
-        if (g_UseDisk || func_800E81FC(12, FILETYPE_SYSTEM) >= 0) {
+        if (g_UseDisk || func_800E81FC(12, SimFileType_System) >= 0) {
             D_80073060++;
         }
         break;
     case 2:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0xD;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageSfx;
         }
         D_80073060++;
         break;
@@ -153,15 +153,15 @@ void func_800E7458(void) {
         if (g_UseDisk && D_8006C3B0 != 0)
             break;
 
-        if (g_UseDisk || func_800E81FC(0, FILETYPE_VH) >= 0 &&
-                             func_800E81FC(0, FILETYPE_VB) >= 0) {
+        if (g_UseDisk || func_800E81FC(0, SimFileType_Vh) >= 0 &&
+                             func_800E81FC(0, SimFileType_Vb) >= 0) {
             D_80073060++;
         }
         break;
     case 4:
         if (g_UseDisk) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0x100;
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StagePrg;
         }
         D_80073060++;
         break;
@@ -169,7 +169,7 @@ void func_800E7458(void) {
         if (g_UseDisk && D_8006C3B0 != 0)
             break;
 
-        if (g_UseDisk || func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0) {
+        if (g_UseDisk || func_800E81FC(0, SimFileType_StagePrg) >= 0) {
             D_8003C9A4 = 0;
             D_80073060++;
         }

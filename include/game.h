@@ -149,6 +149,7 @@ typedef struct Primitive {
 #define STAGE_TE5 0x4A
 #define STAGE_TOP_ALT 0x4B
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
+#define STAGE_EU_WARNING 0x70 // EU piracy legal message thing
 #define STAGE_ENDING 0xFE
 #define STAGE_MEMORYCARD 0xFF
 
@@ -199,7 +200,7 @@ typedef struct {
     /* 20 */ const char* ovlName;
     /* 24 */ const char* name;
     /* 28 */ u8 unk28;
-    /* 29 */ s8 unk29;
+    /* 29 */ s8 seqIdx; // index of D_800ACCF8
     /* 2A */ u16 unk2A;
 } Lba; /* size=0x2C */
 
@@ -872,7 +873,7 @@ extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;
 extern s32 D_8006C390;
-extern u32 D_8006C398;
+extern u32 g_CdStep; // CdStep
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
@@ -1100,9 +1101,9 @@ void func_800202E0(s16);
 void func_80020F44(s16);
 void func_80021174(void);
 void func_80021188(void);
-s32 func_80021350(const char* str, s32, s32);
+s16 func_80021350(const char* str, s32, s32);
 s32 func_80021880(s32*, s32, s32);
-s32 func_800219E0(s32);
+s16 func_800219E0(s32);
 void func_80021F6C(s16, s16);
 void func_8002A024(s32, s32);
 
