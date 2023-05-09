@@ -89,6 +89,35 @@ func patchLine(w *bufio.Writer, line string) error {
 		default:
 			return fmt.Errorf("unable to parse '%s': len(tokens)=%d", line, len(tokens))
 		}
+	case "rem":
+		srcReg1 := tokens[4] + tokens[5]
+		srcReg2 := tokens[7] + tokens[8]
+		dstReg := tokens[1] + tokens[2]
+		w.WriteString("\t.set\tnoat\n")
+		w.WriteString(fmt.Sprintf("\tdiv\t$0,%s,%s\n", srcReg1, srcReg2))
+		w.WriteString(fmt.Sprintf("\tbnez\t%s,.L_NOT_DIV_BY_ZERO\n", srcReg2))
+		w.WriteString("\tbreak\t0x7\n")
+		w.WriteString(".L_NOT_DIV_BY_ZERO:\n")
+		w.WriteString("\taddiu\t$1,$0,-1\n")
+		w.WriteString(fmt.Sprintf("\tbne\t%s,$1,.L_DIV_BY_POSITIVE_SIGN\n", srcReg2))
+		w.WriteString("\tlui\t$1,0x8000\n")
+		w.WriteString(fmt.Sprintf("\tbne\t%s,$1,.L_DIV_BY_POSITIVE_SIGN\n", srcReg1))
+		w.WriteString("\tbreak\t0x6\n")
+		w.WriteString(".L_DIV_BY_POSITIVE_SIGN:\n")
+		w.WriteString(fmt.Sprintf("\tmfhi\t%s\n", dstReg))
+		w.WriteString("\tnop\n")
+		w.WriteString("\t.set\tat\n")
+	case "divu":
+		srcReg1 := tokens[4] + tokens[5]
+		srcReg2 := tokens[7] + tokens[8]
+		dstReg := tokens[1] + tokens[2]
+		w.WriteString("\t.set\tnoat\n")
+		w.WriteString(fmt.Sprintf("\tdivu\t$0,%s,%s\n", srcReg1, srcReg2))
+		w.WriteString(fmt.Sprintf("\tbnez\t%s,.L_NOT_DIV_BY_ZERO\n", srcReg2))
+		w.WriteString("\tbreak\t0x7\n")
+		w.WriteString(".L_NOT_DIV_BY_ZERO:\n")
+		w.WriteString(fmt.Sprintf("\tmflo\t%s\n", dstReg))
+		w.WriteString("\t.set\tat\n")
 	default:
 		w.WriteString(line)
 	}
