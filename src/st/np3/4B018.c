@@ -120,7 +120,16 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D1F38);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D2320);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D2470);
+Primitive* func_801D2470(Primitive* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = poly->next;
+        } else {
+            return poly;
+        }
+    }
+    return NULL;
+}
 
 Primitive* func_801D24A0(Primitive* prim, u8 index) {
     if (prim) {
