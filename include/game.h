@@ -65,6 +65,8 @@ typedef struct Primitive {
     /* 0x32 */ u16 blendMode;
 } Primitive; /* size=0x34 */
 
+#define COLORS_PER_PAL 16
+
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
@@ -806,6 +808,9 @@ typedef struct {
     /* D_8003C70C */ u16 unk4;
     /* D_8003C70E */ u16 zPriority;
 } FgLayer; /* size=0x8 */
+
+
+extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
