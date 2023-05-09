@@ -285,7 +285,40 @@ void EntityCavernDoor(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B9C44);
+typedef enum {
+    WEIGHT_SMALL,
+    WEIGHT_TALL
+} WeightSelect;
+
+void func_801B9C44(WeightSelect weight) {
+    s32 posY = g_CurrentEntity->posY.i.hi;
+    s32 posX = g_CurrentEntity->posX.i.hi;
+    Primitive* prim;
+
+    if (weight != WEIGHT_SMALL) {
+        posY -= 64;
+    } else {
+        posY -= 16;
+    }
+
+    prim = *(s32*)&g_CurrentEntity->ext.generic.unk7C;
+
+    while (posY > 0) {
+        prim->y2 = prim->y3 = posY;
+        prim->x0 = prim->x2 = posX - 8;
+        prim->x1 = prim->x3 = posX + 8;
+        posY -= 32;
+        prim->y0 = prim->y1 = posY;
+        prim->blendMode = 2;
+        prim = prim->next;
+    }
+    posY -= 32;
+
+    while (prim != 0) {
+        prim->blendMode = 8;
+        prim = prim->next;
+    }
+}
 
 // switch that clicks when you step on it
 void EntityClickSwitch(Entity* entity) {
@@ -388,7 +421,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
         player->posY.i.hi++;
     }
-    func_801B9C44(0);
+    func_801B9C44(WEIGHT_SMALL);
 }
 
 // taller weight blocking path near cube of zoe
@@ -451,7 +484,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         break;
     }
 
-    func_801B9C44(1);
+    func_801B9C44(WEIGHT_TALL);
     do {
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
     } while (0);
