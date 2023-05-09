@@ -581,7 +581,36 @@ void func_801C070C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C07FC);
+void func_801C07FC(Entity* entity) {
+    u16 temp_v0;
+    u32 temp2;
+
+    if (entity->step == 0) {
+        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->palette = 0x8195;
+        entity->animSet = 5;
+        entity->animCurFrame = 1;
+        entity->blendMode = 0x10;
+        entity->unk19 = 3;
+        temp_v0 = D_80181FB4[entity->subId];
+        entity->unk1A = temp_v0;
+        entity->unk1C = temp_v0;
+        temp2 = D_80181FC4[entity->subId];
+        entity->step += 1;
+        entity->accelerationY = temp2;
+    } else {
+        entity->animFrameDuration++;
+        entity->posY.val -= entity->accelerationY;
+
+        if (!(entity->animFrameDuration & 1)) {
+            entity->animCurFrame++;
+        }
+
+        if (entity->animFrameDuration >= 0x25) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 void func_801C08F0(Entity* self) {
     s16 firstPolygonIndex;
