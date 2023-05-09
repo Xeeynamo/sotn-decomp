@@ -25,8 +25,7 @@ void EntityBat(Entity* entity) {
     case 1:
         xDistance = GetPlayerDistanceX();
         yDistance = GetPlayerDistanceY();
-        if ((xDistance < 96) && (yDistance < 96) &&
-            !(GetPlayerSide() & 2)) {
+        if ((xDistance < 96) && (yDistance < 96) && !(GetPlayerSide() & 2)) {
             entity->step++;
         }
         break;

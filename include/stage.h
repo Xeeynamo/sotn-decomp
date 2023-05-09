@@ -3,8 +3,8 @@
 
 #include "common.h"
 #include "game.h"
-#include "objects.h"
 #include "items.h"
+#include "objects.h"
 #include "sfx.h"
 
 typedef struct {
