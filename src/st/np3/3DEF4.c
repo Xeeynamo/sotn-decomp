@@ -670,7 +670,30 @@ void func_801C08F0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C0B20);
+bool func_801C0B20(Unkstruct6* unk) {
+    Collider res;
+
+    FallEntity();
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
+
+    if (g_CurrentEntity->accelerationY >= 0) {
+        s16 posX = g_CurrentEntity->posX.i.hi;
+        s16 posY = g_CurrentEntity->posY.i.hi;
+        posX += unk->x;
+        posY += unk->y;
+        g_api.CheckCollision(posX, posY, &res, 0);
+        if (res.unk0 & 1) {
+            g_CurrentEntity->posY.i.hi += res.unk18;
+            g_CurrentEntity->accelerationY =
+                -g_CurrentEntity->accelerationY / 2;
+            if (g_CurrentEntity->accelerationY > -0x10000) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C0C1C);
 
