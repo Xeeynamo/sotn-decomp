@@ -1,5 +1,5 @@
-#include "stage.h"
 #include "game.h"
+#include "stage.h"
 
 PfnEntityUpdate PfnEntityUpdates[];
 
@@ -863,13 +863,15 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
         factor = i * 4096 / steps;
         for (j = 0; j < COLORS_PER_PAL; j++) {
             r = (palA[j] & 0x1F) * (4096 - factor) + (palB[j] & 0x1F) * factor;
-            g = ((palA[j] >> 5) & 0x1F) * (4096 - factor) + ((palB[j] >> 5) & 0x1F) * factor;
-            b = ((palA[j] >> 10) & 0x1F) * (4096 - factor) + ((palB[j] >> 10) & 0x1F) * factor;
-            
+            g = ((palA[j] >> 5) & 0x1F) * (4096 - factor) +
+                ((palB[j] >> 5) & 0x1F) * factor;
+            b = ((palA[j] >> 10) & 0x1F) * (4096 - factor) +
+                ((palB[j] >> 10) & 0x1F) * factor;
+
             t = palA[j] & 0x8000;
             t |= palB[j] & 0x8000;
-            
-            buf[j] =  t | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
+
+            buf[j] = t | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
         }
 
         bufRect.y = rect->y + i;
@@ -878,7 +880,6 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 #endif
-
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_801916C4);
 

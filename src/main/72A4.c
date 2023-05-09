@@ -180,7 +180,6 @@ long ratan2(long dx, long dy) {
     bool flag1;
     s32 lookup;
 
-
     flag0 = false;
     flag1 = false;
     if (dy < 0) {
@@ -209,8 +208,10 @@ long ratan2(long dx, long dy) {
         }
         ret = 0x400 - g_AtanTable[lookup];
     }
-    if (flag0) ret = 0x800 - ret;
-    if (flag1) ret = -ret;
+    if (flag0)
+        ret = 0x800 - ret;
+    if (flag1)
+        ret = -ret;
     return ret;
 }
 #endif

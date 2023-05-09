@@ -809,7 +809,6 @@ typedef struct {
     /* D_8003C70E */ u16 zPriority;
 } FgLayer; /* size=0x8 */
 
-
 extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
