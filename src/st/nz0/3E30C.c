@@ -598,7 +598,7 @@ void func_801C0C14(Entity* entity) {
         entity->unk1A = temp_v0;
         entity->unk1C = temp_v0;
         temp2 = D_80181EEC[entity->subId];
-        entity->step += 1;
+        entity->step++;
         entity->accelerationY = temp2;
     } else {
         entity->animFrameDuration++;
