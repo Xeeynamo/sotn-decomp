@@ -7,7 +7,7 @@ void EntityPushAlucard(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AD0);
+        InitializeEntity(D_80180AD0);
         g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
         *D_80072EF4 = 0;
         D_80072EFC = 255;
@@ -96,7 +96,7 @@ void EntityUnkId53(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        InitializeEntity(&D_80180AD0);
+        InitializeEntity(D_80180AD0);
         g_Entities[1].unk7C.S8.unk0 = 1;
         *D_80072EF4 = 0x2000;
         D_80072EFC = 0xFF;
@@ -155,7 +155,7 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AD0);
+        InitializeEntity(D_80180AD0);
         firstPolygonIndex = g_api.AllocPrimitives(4, 9);
         if (firstPolygonIndex == 0) {
             DestroyEntity(entity);

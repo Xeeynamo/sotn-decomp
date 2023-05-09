@@ -62,7 +62,7 @@ void EntityBreakable(Entity* entity) {
 void func_801B2830(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180A60);
+        InitializeEntity(D_80180A60);
         self->ext.generic.unk7C.S8.unk0 = 16;
         self->ext.generic.unk7C.S8.unk1 = 8;
         self->ext.generic.unk7E.modeU8.unk0 = 56;
@@ -98,7 +98,7 @@ void EntityCavernDoorLever(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180AA8);
+        InitializeEntity(D_80180AA8);
         entity->animCurFrame = 18;
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
@@ -323,7 +323,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180AA8);
+        InitializeEntity(D_80180AA8);
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
@@ -985,7 +985,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B5C);
+        InitializeEntity(D_80180B5C);
         if (self->facing == 0) {
             self->accelerationX = -0x40000;
         } else {
@@ -993,14 +993,14 @@ void EntitySlograSpearProjectile(Entity* self) {
         }
 
     case 1:
-        if (AnimateEntity(&D_801813D4, self) == 0) {
+        if (AnimateEntity(D_801813D4, self) == 0) {
             func_801BD114(2);
         }
         break;
 
     case 2:
         MoveEntity();
-        AnimateEntity(&D_801813E4, self);
+        AnimateEntity(D_801813E4, self);
         break;
     }
 }
@@ -1080,7 +1080,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180B80);
+        InitializeEntity(D_80180B80);
         if (self->subId == 0) {
             self->animSet = 2;
             self->unk19 = 4;
@@ -1104,7 +1104,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(&D_801815EC, self);
+        AnimateEntity(D_801815EC, self);
         if (!(g_blinkTimer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -1119,7 +1119,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 2:
         self->unk6C += 0xFE;
         self->unk1A -= 4;
-        if (AnimateEntity(&D_801815FC, self) == 0) {
+        if (AnimateEntity(D_801815FC, self) == 0) {
             DestroyEntity(self);
         }
         break;

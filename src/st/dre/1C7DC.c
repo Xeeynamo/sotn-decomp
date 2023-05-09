@@ -417,7 +417,7 @@ void func_8019F170(Entity* entity) {
 
     MoveEntity();
 
-    if (!AnimateEntity(&D_80181338, entity)) {
+    if (!AnimateEntity(D_80181338, entity)) {
         DestroyEntity(entity);
     }
 }

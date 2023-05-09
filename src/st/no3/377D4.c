@@ -65,7 +65,7 @@ void EntityBreakable(Entity* entity) {
 void EntityUnkId16(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180AD0);
+        InitializeEntity(D_80180AD0);
         self->ext.generic.unk7C.S8.unk0 = 16;
         self->ext.generic.unk7C.S8.unk1 = 8;
         self->ext.generic.unk7E.modeU8.unk0 = 56;
@@ -107,7 +107,7 @@ void EntityCavernDoorLever(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B18);
+        InitializeEntity(D_80180B18);
         entity->animCurFrame = 18;
         entity->unk1E = -0x200;
         entity->unk19 |= 4;
@@ -294,7 +294,7 @@ void EntityClickSwitch(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B18);
+        InitializeEntity(D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
         if (D_8003BDEC[0x31] != 0) {
@@ -509,7 +509,7 @@ void EntityTrapDoor(Entity* entity) {
         break;
 
     case 2:
-        AnimateEntity(&D_80181240, entity);
+        AnimateEntity(D_80181240, entity);
     }
 }
 
@@ -886,7 +886,7 @@ void EntitySwitch(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B18);
+        InitializeEntity(D_80180B18);
         entity->animCurFrame = 9;
         entity->zPriority = 0x5E;
         if (D_8003BDEC[0x32] != 0) {

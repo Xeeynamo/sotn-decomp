@@ -152,7 +152,7 @@ void func_801C7538(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180CF4);
+        InitializeEntity(D_80180CF4);
         entity->unk19 = 4;
         entity->animCurFrame = entity->subId;
         entity->palette += entity->ext.generic.unk84.S16.unk2;
@@ -189,7 +189,7 @@ void func_801C7654(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180BE0);
+        InitializeEntity(D_80180BE0);
         entity->animSet = 2;
         entity->palette = 0x816D;
         entity->blendMode = 0x70;
@@ -198,7 +198,7 @@ void func_801C7654(Entity* entity) {
         break;
 
     case 1:
-        AnimateEntity(&D_801825F0, entity);
+        AnimateEntity(D_801825F0, entity);
         MoveEntity();
         entity->accelerationY += 0x2000;
 
@@ -230,7 +230,7 @@ void func_801C77B8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180CF4);
+        InitializeEntity(D_80180CF4);
         entity->unk19 = 3;
         entity->unk1C = 0x100;
         entity->unk1A = 0x100;

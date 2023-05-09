@@ -10,7 +10,7 @@ void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->subId];
 
     if (self->step == 0) {
-        InitializeEntity(&D_80180C1C);
+        InitializeEntity(D_80180C1C);
         self->animSet = temp_s0->animSet;
         self->zPriority = temp_s0->zPriority;
         self->unk5A = temp_s0->unk4.u;
@@ -46,7 +46,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
 void EntityRedEyeBust(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180C34);
+        InitializeEntity(D_80180C34);
         self->animCurFrame = 7;
         self->zPriority = 0x70;
         break;
@@ -435,7 +435,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180BF8);
+        InitializeEntity(D_80180BF8);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -514,7 +514,7 @@ void EntityMoveableBox(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180BF8);
+        InitializeEntity(D_80180BF8);
         firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == (-1)) {
             DestroyEntity(self);
@@ -606,7 +606,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180BF8);
+        InitializeEntity(D_80180BF8);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->unk3C = 2;
@@ -1040,7 +1040,7 @@ void func_801B3648(Entity* self) {
         break;
 
     case 2:
-        if (AnimateEntity(&D_80180F30, self) == 0) {
+        if (AnimateEntity(D_80180F30, self) == 0) {
             CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
             self[1].subId = D_80180F4C[self->subId];
             newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
@@ -1439,7 +1439,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_80180D48);
+        InitializeEntity(D_80180D48);
         if (self->subId == 0) {
             self->animSet = 2;
             self->unk19 = 4;
