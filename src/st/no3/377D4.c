@@ -285,10 +285,7 @@ void EntityCavernDoor(Entity* self) {
     }
 }
 
-typedef enum {
-    WEIGHT_SMALL,
-    WEIGHT_TALL
-} WeightSelect;
+typedef enum { WEIGHT_SMALL, WEIGHT_TALL } WeightSelect;
 
 void func_801B9C44(WeightSelect weight) {
     s32 posY = g_CurrentEntity->posY.i.hi;
