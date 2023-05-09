@@ -1390,4 +1390,3 @@ void EntityMermanExplosion(Entity* self) {
         DestroyEntity(self);
     }
 }
-

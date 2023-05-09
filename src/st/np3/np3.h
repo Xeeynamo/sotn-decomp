@@ -124,6 +124,25 @@ extern u8 D_8018267C[]; // Animation: Walking faster
 
 // *** EntityBloodyZombie properties END ***
 
+// *** EntityBoneScimitar properties START ***
+
+extern u16 D_80180AE4[];    // Init
+extern s32 D_80182460;      // Flag for special bone scimitar to appear or not
+extern u8 D_80182464[];     // animation: Walking Forward
+extern u8 D_80182474[];     // animation: Walking Backwards
+extern u8 D_80182484[];     // animation: Swing Sword
+extern u8 D_801824A0[];     // animation: Jumping
+extern u8 D_801824AC[];     // animation: Landing
+extern s8 D_801824C8[];     // Skeleton parts array selector
+extern s32 D_801824D0[];    // Skeleton parts accelerationX
+extern s32 D_801824EC[];    // Skeleton parts accelerationY
+extern u16 D_80182508[];    // Skeleton parts posX
+extern u16 D_80182518[];    // Skeleton parts posY
+extern s8 D_80182528[2][4]; // Skeleton attack timer cycle
+extern s32 D_80182530;
+
+// *** EntityBoneScimitar properties END ***
+
 extern s32 D_8018268C;
 extern s32 D_801826A4;
 extern s32 D_801826C4;
