@@ -504,7 +504,27 @@ void EntityHeartDrop(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityUnkId0E);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C02F4);
+u8 func_801C02F4(s16* arg0, u8 facing) {
+    u8 ret = 0;
+    Collider res;
+    s16 posX, posY;
+
+    while (*arg0 != 0xFF) {
+        ret <<= 1;
+
+        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
+                      : (g_CurrentEntity->posX.i.hi - *arg0++);
+        posY = g_CurrentEntity->posY.i.hi + *arg0++;
+
+        g_api.CheckCollision(posX, posY, &res, 0);
+
+        if (res.unk0 & 1) {
+            ret |= 1;
+        }
+    }
+
+    return ret;
+}
 
 void func_801C03E4(Entity* entity) {
     switch (entity->step) {

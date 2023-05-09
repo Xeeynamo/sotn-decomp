@@ -32,6 +32,7 @@ void func_801B2540(Entity* entity) {
     u16 temp_s1 = entity->subId;
     u16 phi_v1;
     u16 unk;
+    
     entity->unk6D = 0;
 
     if (entity->step != 0) {
@@ -164,7 +165,7 @@ void EntityCavernDoorLever(Entity* entity) {
                 if (D_8003BDEC[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
-                D_8003BDEC[0x30] = 1;
+                D_8003BDEC[48] = 1;
             } else if (!(g_blinkTimer & 0xF)) {
                 g_api.PlaySfx(0x675);
             }
@@ -307,7 +308,8 @@ void func_801B40F8(Entity* self) {
             if (!(g_blinkTimer & 15)) {
                 entity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(6, self, entity);
+                    CreateEntityFromEntity(ENTITY_INTENSE_EXPLOSION, self,
+                                           entity);
                     entity->posY.i.hi = 156;
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
@@ -330,17 +332,14 @@ void func_801B40F8(Entity* self) {
     }
 }
 
-typedef enum {
-    WEIGHT_SMALL,
-    WEIGHT_TALL
-} WeightSelect;
+typedef enum { WEIGHT_SMALL, WEIGHT_TALL } WeightSelect;
 
-void func_801B44B4(WeightSelect weightSelect) {
+void func_801B44B4(WeightSelect weight) {
     s32 posY = g_CurrentEntity->posY.i.hi;
     s32 posX = g_CurrentEntity->posX.i.hi;
     Primitive* prim;
 
-    if (weightSelect != WEIGHT_SMALL) {
+    if (weight != WEIGHT_SMALL) {
         posY -= 64;
     } else {
         posY -= 16;
@@ -388,7 +387,7 @@ void EntityClickSwitch(Entity* entity) {
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
-                D_8003BDEC[0x31] = 1;
+                D_8003BDEC[49] = 1;
                 entity->step++;
             }
         }
@@ -647,7 +646,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
@@ -853,7 +852,7 @@ void EntityFallingRock2(Entity* self) {
             if (self->accelerationY > 0x40000) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(2, self, newEntity);
+                    CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
                     newEntity->subId = 0x11;
                     if (animFrame == 0) {
                         newEntity->subId = 0x13;
