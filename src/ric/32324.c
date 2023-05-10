@@ -122,23 +122,17 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801706C0);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80170874);
 #else
-void func_80170874(s32 bufSize, s32 buf) {
-    s32 i;
-    s32* swapElement;
-    s32 temp;
-    s32* swapElementRandom;
+void func_80170874(s32 bufSize, s32* buf) {
+    s32 i, idx, swapTemp;
 
-    i = bufSize - 1;
-    if (i > 0) {
-        swapElementRandom = (i * 4) + buf;
-        while (i > 0) {
-            i--;
-            swapElement = ((rand() % bufSize) * 4) + buf;
-            temp = *swapElementRandom;
-            *swapElementRandom = *swapElement;
-            *swapElement = temp;
-            swapElementRandom--;
-        }
+    for(i = bufSize - 1; i > 0; i--) {
+        // Pick random index
+        idx = rand() % bufSize;
+
+        // Hold swap value temporarily
+        swapTemp = buf[i];
+        buf[i] = buf[idx];
+        buf[idx] = swapTemp;
     }
 }
 #endif
