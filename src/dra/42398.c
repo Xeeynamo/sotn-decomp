@@ -108,10 +108,10 @@ void func_800E2B00(void) {
     sprite->w = 128;
     sprite->h = 128;
     sprite->clut = D_8003C104[g_DebugCurPal];
-    AddPrim(&D_801362CC[0x1FE], sprite);
+    AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
     SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &D_800ACD80);
-    AddPrim(&D_801362CC[0x1FE], drMode++);
+    AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
     palette = g_Clut + g_DebugCurPal * 16;
@@ -148,7 +148,7 @@ void func_800E2B00(void) {
             curTile->w = 10;
             curTile->h = 11;
         }
-        AddPrim(&D_801362CC[0x1FE], tile);
+        AddPrim(&g_CurrentOT[0x1FE], tile);
         g_GpuUsage.tile++;
         curTile++;
         tile++;
@@ -157,7 +157,7 @@ void func_800E2B00(void) {
     }
 
     SetDrawMode(drMode, 0, 0, 0, &D_800ACD80);
-    AddPrim(&D_801362CC[0x1FE], drMode);
+    AddPrim(&g_CurrentOT[0x1FE], drMode);
     g_GpuUsage.drawModes++;
 }
 
@@ -416,11 +416,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
         if (D_800A0158 >= 0x24) {
-            D_801390D4->buf.disp.screen.x = 0;
-            PutDispEnv(&D_801390D4->buf.disp);
+            g_BackBuffer->buf.disp.screen.x = 0;
+            PutDispEnv(&g_BackBuffer->buf.disp);
         } else {
-            D_801390D4->buf.disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
-            PutDispEnv(&D_801390D4->buf.disp);
+            g_BackBuffer->buf.disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
+            PutDispEnv(&g_BackBuffer->buf.disp);
             D_800A0158++;
             SetRCnt(0xF2000001, 6, 0x1000);
         }
@@ -511,14 +511,11 @@ loop_5:
     D_800978C4 = 1;
 
     while (true) {
-        GpuBuffer* temp_v1_2;
-
-        D_801390D4 = g_CurrentBuffer;
-        temp_v1_2 = g_CurrentBuffer->other;
+        g_BackBuffer = g_CurrentBuffer;
+        g_CurrentBuffer = g_CurrentBuffer->other;
         g_blinkTimer++;
-        g_CurrentBuffer = temp_v1_2;
-        D_801362CC = temp_v1_2->order;
-        ClearOTag(temp_v1_2->order, 0x200);
+        g_CurrentOT = g_CurrentBuffer->order;
+        ClearOTag(g_CurrentOT, ORDERING_TABLE_ENTRIES);
         g_GpuUsage.drawModes = 0;
         g_GpuUsage.env = 0;
         g_GpuUsage.gt4 = 0;
@@ -542,7 +539,7 @@ loop_5:
         }
         func_800EDEDC();
         func_80108448();
-        func_800E385C(D_801362CC);
+        func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
         VSync(D_8003C73C);
@@ -575,7 +572,7 @@ loop_5:
         }
         PutDrawEnv(&g_CurrentBuffer->buf.draw);
         PutDispEnv(&g_CurrentBuffer->buf.disp);
-        DrawOTag(D_801362CC);
+        DrawOTag(g_CurrentOT);
         func_800EA7CC();
         func_801361F8();
         if (func_80131F28() >= 0x385) {

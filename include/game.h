@@ -66,6 +66,7 @@ typedef struct Primitive {
 } Primitive; /* size=0x34 */
 
 #define COLORS_PER_PAL 16
+#define ORDERING_TABLE_ENTRIES 0x200
 
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
@@ -349,7 +350,7 @@ typedef struct GpuBuffer {
     /* 0x00000 */ struct GpuBuffer* other;
     /* 0x00004 */ DisplayBuffer buf;
     /* 0x00074 */ DR_ENV env[0x10];
-    /* 0x00474 */ u32 order[0x200];
+    /* 0x00474 */ u32 order[ORDERING_TABLE_ENTRIES];
     /* 0x00474 */ DR_MODE drawModes[0x400];
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
     /* 0x0D874 */ POLY_G4 polyG4[0x100];
