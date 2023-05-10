@@ -343,8 +343,10 @@ typedef struct {
 } DisplayBuffer;
 
 #define GPU_MAX_TILE_COUNT 0x100
-typedef struct {
-    /* 0x00000 */ void* unk0;
+
+struct GpuBuffer;
+typedef struct GpuBuffer {
+    /* 0x00000 */ struct GpuBuffer* other;
     /* 0x00004 */ DisplayBuffer buf;
     /* 0x00074 */ DR_ENV env[0x10];
     /* 0x00474 */ u32 order[0x200];
@@ -849,7 +851,7 @@ extern u32 g_blinkTimer;
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer g_GpuBuffers[2];
-extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
+//extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
 extern const char g_MemcardSavePath[];

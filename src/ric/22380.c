@@ -2,7 +2,7 @@
 
 // same as func_800E2398
 void func_8015E380(const char* str) {
-    g_CurrentBuffer = (GpuBuffer*)g_CurrentBuffer->unk0;
+    g_CurrentBuffer = g_CurrentBuffer->other;
     FntPrint(str);
     if (D_80174F7C++ & 4) {
         FntPrint("\no\n");
