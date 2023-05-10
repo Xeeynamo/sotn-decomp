@@ -592,7 +592,11 @@ void func_801B01C0(void) {
 void func_801B01F8(s32 arg0) {
     g_GpuBuffers[0].buf.draw.clip.y = 0x0014;
     g_GpuBuffers[0].buf.draw.clip.h = 0x00CF;
-    D_80054302 = arg0 == 0 ? 0x0014 : 0x0114;
+#ifndef NON_MATCHING
+    g_GpuBuffers_1_buf_draw_clip_y = arg0 == 0 ? 0x0014 : 0x0114;
+#else
+    g_GpuBuffers[1].buf.draw.clip.y = 0x0014;
+#endif
     g_GpuBuffers[1].buf.draw.clip.h = 0x00CF;
     g_GpuBuffers[1].buf.draw.isbg = 1;
     g_GpuBuffers[0].buf.draw.isbg = 1;
@@ -608,7 +612,7 @@ void func_801B0280(void) {
                   DISP_STAGE_H);
     SetDefDispEnv(&g_GpuBuffers[0].buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_801B01F8(0);
 }
 
@@ -616,7 +620,7 @@ void func_801B0324(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
     g_GpuBuffers[1].buf.draw.clip.y = DISP_UNK2_W / 2;
     g_GpuBuffers[1].buf.draw.clip.h = DISP_UNK2_H;
     g_GpuBuffers[0].buf.draw.clip.h = DISP_UNK2_H;
