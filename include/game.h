@@ -848,8 +848,7 @@ extern u32 g_blinkTimer;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
-extern GpuBuffer D_8003CB08;
-extern GpuBuffer D_800542FC;
+extern GpuBuffer g_GpuBuffers[2];
 extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
 extern DISPENV D_8005435C; // TODO overlap, hard to remove
 
@@ -861,7 +860,7 @@ extern s32 D_8006BB00;
 extern u8 D_8006BB74[0x800];
 extern s32 D_8006C374;
 extern s32 D_8006C378;
-extern GpuBuffer* D_8006C37C;
+extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
 extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;
