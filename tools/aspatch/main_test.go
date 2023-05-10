@@ -156,10 +156,7 @@ func TestPatchRemWithAspsxDivu(t *testing.T) {
 
 func assertPatch(t *testing.T, in string, out ...string) {
 	buf := new(bytes.Buffer)
-	writer := bufio.NewWriter(buf)
-	reader := bufio.NewReader(strings.NewReader(in))
-
-	err := patch(writer, reader)
+	err := initPatcher(strings.NewReader(in), buf).patch()
 
 	assert := require.New(t)
 	assert.NoError(err)
