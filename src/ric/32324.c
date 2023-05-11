@@ -125,7 +125,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80170874);
 void func_80170874(s32 bufSize, s32* buf) {
     s32 i, idx, swapTemp;
 
-    for(i = bufSize - 1; i > 0; i--) {
+    for (i = bufSize - 1; i > 0; i--) {
         // Pick random index
         idx = rand() % bufSize;
 
