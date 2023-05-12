@@ -118,12 +118,12 @@ void func_801B2830(Entity* self) {
         self->ext.generic.unk7E.modeU8.unk0 = 56;
 
     case 1:
-        D_8003CB08.buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
-        D_8003CB08.buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
-        D_8003CB08.buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
-        D_800542FC.buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
-        D_800542FC.buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
-        D_800542FC.buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
+        g_GpuBuffers[0].buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
+        g_GpuBuffers[0].buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
+        g_GpuBuffers[0].buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
+        g_GpuBuffers[1].buf.draw.r0 = self->ext.generic.unk7C.S8.unk0;
+        g_GpuBuffers[1].buf.draw.g0 = self->ext.generic.unk7C.S8.unk1;
+        g_GpuBuffers[1].buf.draw.b0 = self->ext.generic.unk7E.modeU8.unk0;
         break;
     }
 }

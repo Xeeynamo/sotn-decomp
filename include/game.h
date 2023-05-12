@@ -66,6 +66,7 @@ typedef struct Primitive {
 } Primitive; /* size=0x34 */
 
 #define COLORS_PER_PAL 16
+#define ORDERING_TABLE_ENTRIES 0x200
 
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
@@ -343,11 +344,13 @@ typedef struct {
 } DisplayBuffer;
 
 #define GPU_MAX_TILE_COUNT 0x100
-typedef struct {
-    /* 0x00000 */ void* unk0;
+
+struct GpuBuffer;
+typedef struct GpuBuffer {
+    /* 0x00000 */ struct GpuBuffer* other;
     /* 0x00004 */ DisplayBuffer buf;
     /* 0x00074 */ DR_ENV env[0x10];
-    /* 0x00474 */ u32 order[0x200];
+    /* 0x00474 */ u32 order[ORDERING_TABLE_ENTRIES];
     /* 0x00474 */ DR_MODE drawModes[0x400];
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
     /* 0x0D874 */ POLY_G4 polyG4[0x100];
@@ -848,10 +851,8 @@ extern u32 g_blinkTimer;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
-extern GpuBuffer D_8003CB08;
-extern GpuBuffer D_800542FC;
-extern s16 D_80054302;     // member of D_800542FC, TODO overlap, hard to remove
-extern DISPENV D_8005435C; // TODO overlap, hard to remove
+extern GpuBuffer g_GpuBuffers[2];
+extern s16 g_GpuBuffers_1_buf_draw_clip_y;     // member of D_800542FC, TODO overlap, hard to remove
 
 extern const char g_MemcardSavePath[];
 extern const char aBaslus00067dra[19];
@@ -861,7 +862,7 @@ extern s32 D_8006BB00;
 extern u8 D_8006BB74[0x800];
 extern s32 D_8006C374;
 extern s32 D_8006C378;
-extern GpuBuffer* D_8006C37C;
+extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
 extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;

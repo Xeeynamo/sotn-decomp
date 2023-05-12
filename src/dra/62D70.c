@@ -222,9 +222,9 @@ void DrawEntitiesHitbox(s32 blendMode) {
     u16 x;
     u16 y;
 
-    order = D_8006C37C->order;
-    tile = &D_8006C37C->tiles[g_GpuUsage.tile];
-    drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+    order = g_CurrentBuffer->order;
+    tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
+    drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
     orderIdx = 0x1F0;
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40;
          polyCount++, entity++) {

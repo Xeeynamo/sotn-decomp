@@ -45,15 +45,15 @@ s32 func_80136010(void);
 extern const char* aO;
 
 void func_800E2398(const char* str) {
-    D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
+    g_CurrentBuffer = g_CurrentBuffer->other;
     FntPrint(str);
     if (D_80136300++ & 4) {
         FntPrint(&aO); // TODO: rodata split
     }
     DrawSync(0);
     VSync(0);
-    PutDrawEnv(&D_8006C37C->buf.draw);
-    PutDispEnv(&D_8006C37C->buf.disp);
+    PutDrawEnv(&g_CurrentBuffer->buf.draw);
+    PutDispEnv(&g_CurrentBuffer->buf.disp);
     FntFlush(-1);
 }
 
@@ -83,9 +83,9 @@ void func_800E2B00(void) {
     u16 color_fake;
     u16 new_var4;
 
-    drMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
-    sprite = &D_8006C37C->sprite[g_GpuUsage.sp];
-    tile = &D_8006C37C->tiles[g_GpuUsage.tile];
+    drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    sprite = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
     FntPrint("file:%02x,%03x\n", D_801362B4, g_DebugCurPal);
     FntPrint("half:%s\n", D_800A0144[D_801362C8]);
 
@@ -108,10 +108,10 @@ void func_800E2B00(void) {
     sprite->w = 128;
     sprite->h = 128;
     sprite->clut = D_8003C104[g_DebugCurPal];
-    AddPrim(&D_801362CC[0x1FE], sprite);
+    AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
     SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &D_800ACD80);
-    AddPrim(&D_801362CC[0x1FE], drMode++);
+    AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
     palette = g_Clut + g_DebugCurPal * 16;
@@ -148,7 +148,7 @@ void func_800E2B00(void) {
             curTile->w = 10;
             curTile->h = 11;
         }
-        AddPrim(&D_801362CC[0x1FE], tile);
+        AddPrim(&g_CurrentOT[0x1FE], tile);
         g_GpuUsage.tile++;
         curTile++;
         tile++;
@@ -157,7 +157,7 @@ void func_800E2B00(void) {
     }
 
     SetDrawMode(drMode, 0, 0, 0, &D_800ACD80);
-    AddPrim(&D_801362CC[0x1FE], drMode);
+    AddPrim(&g_CurrentOT[0x1FE], drMode);
     g_GpuUsage.drawModes++;
 }
 
@@ -328,80 +328,85 @@ s32 func_800E3278(void) {
 #endif
 
 void func_800E346C(void) {
-    D_8003CB08.buf.draw.r0 = 0;
-    D_8003CB08.buf.draw.g0 = 0;
-    D_8003CB08.buf.draw.b0 = 0;
-    D_800542FC.buf.draw.r0 = 0;
-    D_800542FC.buf.draw.g0 = 0;
-    D_800542FC.buf.draw.b0 = 0;
+    g_GpuBuffers[0].buf.draw.r0 = 0;
+    g_GpuBuffers[0].buf.draw.g0 = 0;
+    g_GpuBuffers[0].buf.draw.b0 = 0;
+    g_GpuBuffers[1].buf.draw.r0 = 0;
+    g_GpuBuffers[1].buf.draw.g0 = 0;
+    g_GpuBuffers[1].buf.draw.b0 = 0;
 }
 
 void func_800E34A4(s8 arg0) {
-    D_8003CB08.buf.draw.r0 = arg0;
-    D_8003CB08.buf.draw.g0 = arg0;
-    D_8003CB08.buf.draw.b0 = arg0;
-    D_800542FC.buf.draw.r0 = arg0;
-    D_800542FC.buf.draw.g0 = arg0;
-    D_800542FC.buf.draw.b0 = arg0;
+    g_GpuBuffers[0].buf.draw.r0 = arg0;
+    g_GpuBuffers[0].buf.draw.g0 = arg0;
+    g_GpuBuffers[0].buf.draw.b0 = arg0;
+    g_GpuBuffers[1].buf.draw.r0 = arg0;
+    g_GpuBuffers[1].buf.draw.g0 = arg0;
+    g_GpuBuffers[1].buf.draw.b0 = arg0;
 }
 
 void func_800E34DC(s32 arg0) {
-    D_8003CB08.buf.draw.clip.y = 0x0014;
-    D_8003CB08.buf.draw.clip.h = 0x00CF;
-    D_80054302 = arg0 == 0 ? 0x0014 : 0x0114;
-    D_800542FC.buf.draw.clip.h = 0x00CF;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+
+    g_GpuBuffers[0].buf.draw.clip.y = 0x0014;
+    g_GpuBuffers[0].buf.draw.clip.h = 0x00CF;
+#ifndef NON_MATCHING
+    g_GpuBuffers_1_buf_draw_clip_y = arg0 == 0 ? 0x0014 : 0x0114;
+#else
+    g_GpuBuffers[1].buf.draw.clip.y = 0x0014;
+#endif
+    g_GpuBuffers[1].buf.draw.clip.h = 0x00CF;
+    g_GpuBuffers[1].buf.draw.isbg = 1;
+    g_GpuBuffers[0].buf.draw.isbg = 1;
     func_800E346C();
-    D_800542FC.buf.draw.dtd = 0;
-    D_8003CB08.buf.draw.dtd = 0;
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].buf.draw.dtd = 0;
+    g_GpuBuffers[0].buf.draw.dtd = 0;
+    g_GpuBuffers[1].buf.disp.isrgb24 = 0;
+    g_GpuBuffers[0].buf.disp.isrgb24 = 0;
 }
 
 // Set stage display buffer
 void func_800E3574(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDispEnv(&g_GpuBuffers[0].buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_800E34DC(0);
 }
 
 // Set CGI display buffer?
 void func_800E3618(s32 width) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, width, DISP_ALL_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, width, DISP_ALL_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, width, DISP_ALL_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, width, DISP_ALL_H);
     func_800E34DC(1);
 }
 
 // Set menu display buffer
 void func_800E36C8(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
     func_800E34DC(1);
 }
 
 void func_800E376C(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    D_800542FC.buf.draw.clip.y = DISP_UNK2_W / 2;
-    D_800542FC.buf.draw.clip.h = DISP_UNK2_H;
-    D_8003CB08.buf.draw.clip.h = DISP_UNK2_H;
-    D_8003CB08.buf.draw.clip.y = 0;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    g_GpuBuffers[1].buf.draw.clip.y = DISP_UNK2_W / 2;
+    g_GpuBuffers[1].buf.draw.clip.h = DISP_UNK2_H;
+    g_GpuBuffers[0].buf.draw.clip.h = DISP_UNK2_H;
+    g_GpuBuffers[0].buf.draw.clip.y = 0;
+    g_GpuBuffers[1].buf.draw.isbg = 1;
+    g_GpuBuffers[0].buf.draw.isbg = 1;
     func_800E346C();
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].buf.disp.isrgb24 = 0;
+    g_GpuBuffers[0].buf.disp.isrgb24 = 0;
 }
 
 // DECOMP_ME_WIP func_800E385C https://decomp.me/scratch/Ocshz
@@ -411,11 +416,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
         if (D_800A0158 >= 0x24) {
-            D_801390D4->buf.disp.screen.x = 0;
-            PutDispEnv(&D_801390D4->buf.disp);
+            g_BackBuffer->buf.disp.screen.x = 0;
+            PutDispEnv(&g_BackBuffer->buf.disp);
         } else {
-            D_801390D4->buf.disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
-            PutDispEnv(&D_801390D4->buf.disp);
+            g_BackBuffer->buf.disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
+            PutDispEnv(&g_BackBuffer->buf.disp);
             D_800A0158++;
             SetRCnt(0xF2000001, 6, 0x1000);
         }
@@ -436,8 +441,8 @@ void entrypoint_sotn(void) {
     SetGraphDebug(0);
     InitGeom();
     GsInitVcount();
-    D_8003CB08.unk0 = &D_800542FC;
-    D_800542FC.unk0 = &D_8003CB08;
+    g_GpuBuffers[0].other = &g_GpuBuffers[1];
+    g_GpuBuffers[1].other = &g_GpuBuffers[0];
     ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
     ClearImage(&D_800ACD88[1], 0, 0, 0);
     for (i = 0; i < 0x50; i++) {
@@ -448,7 +453,7 @@ void entrypoint_sotn(void) {
     D_800987B4 = 0;
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
-    D_8006C37C = &D_8003CB08;
+    g_CurrentBuffer = &g_GpuBuffers[0];
     func_80131ED8(0xB9B6);
     func_801325D8();
     while (func_800E3278() < 0)
@@ -506,14 +511,11 @@ loop_5:
     D_800978C4 = 1;
 
     while (true) {
-        GpuBuffer* temp_v1_2;
-
-        D_801390D4 = D_8006C37C;
-        temp_v1_2 = D_8006C37C->unk0;
+        g_BackBuffer = g_CurrentBuffer;
+        g_CurrentBuffer = g_CurrentBuffer->other;
         g_blinkTimer++;
-        D_8006C37C = temp_v1_2;
-        D_801362CC = temp_v1_2->order;
-        ClearOTag(temp_v1_2->order, 0x200);
+        g_CurrentOT = g_CurrentBuffer->order;
+        ClearOTag(g_CurrentOT, ORDERING_TABLE_ENTRIES);
         g_GpuUsage.drawModes = 0;
         g_GpuUsage.env = 0;
         g_GpuUsage.gt4 = 0;
@@ -537,7 +539,7 @@ loop_5:
         }
         func_800EDEDC();
         func_80108448();
-        func_800E385C(D_801362CC);
+        func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
         VSync(D_8003C73C);
@@ -568,9 +570,9 @@ loop_5:
             func_800E4124(1);
             goto loop_5;
         }
-        PutDrawEnv(&D_8006C37C->buf.draw);
-        PutDispEnv(&D_8006C37C->buf.disp);
-        DrawOTag(D_801362CC);
+        PutDrawEnv(&g_CurrentBuffer->buf.draw);
+        PutDispEnv(&g_CurrentBuffer->buf.disp);
+        DrawOTag(g_CurrentOT);
         func_800EA7CC();
         func_801361F8();
         if (func_80131F28() >= 0x385) {
@@ -683,10 +685,10 @@ void func_800E451C(void) {
             sp18.y = 0x100;
             LoadImage(&sp18, (u32*)0x80180014);
 
-            SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, 0x280, 0x100);
-            SetDefDrawEnv(&D_800542FC.buf.draw, 0, 0x100, 0x280, 0x100);
-            SetDefDispEnv(&D_8003CB08.buf.disp, 0, 0x100, 0x280, 0x100);
-            SetDefDispEnv(&D_8005435C, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, 0x280, 0x100);
             SetDispMask(0);
             D_8013640C = 0x6E;
             D_80073060++;
@@ -804,8 +806,8 @@ void func_800E5358(void) {
 }
 
 void func_800E5498(void) {
-    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
-    GpuBuffer* buffer = D_8006C37C;
+    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    GpuBuffer* buffer = g_CurrentBuffer;
 
     setSemiTrans(poly, true);
     setShadeTex(poly, false);

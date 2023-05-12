@@ -2,15 +2,15 @@
 
 // same as func_800E2398
 void func_8015E380(const char* str) {
-    D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
+    g_CurrentBuffer = g_CurrentBuffer->other;
     FntPrint(str);
     if (D_80174F7C++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);
-    PutDrawEnv(&D_8006C37C->buf.draw);
-    PutDispEnv(&D_8006C37C->buf.disp);
+    PutDrawEnv(&g_CurrentBuffer->buf.draw);
+    PutDispEnv(&g_CurrentBuffer->buf.disp);
     FntFlush(-1);
 }
 

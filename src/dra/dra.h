@@ -214,7 +214,7 @@ extern s32 D_801362BC;
 extern s32 g_DebugPalIdx;
 extern u32 D_801362C4;
 extern s32 D_801362C8;
-extern u32* D_801362CC;
+extern u32* g_CurrentOT;
 extern s32 D_801362D0[];
 extern s32 D_801362D4;
 extern s32 D_801362D8;
@@ -357,7 +357,7 @@ extern u8 D_801390A8;
 extern s16 D_801390AC[];
 extern s32 D_801390B4[];
 extern s8 D_801390C4;
-extern GpuBuffer* D_801390D4;
+extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
 extern u16 D_801396E4;
