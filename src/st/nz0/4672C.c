@@ -119,5 +119,122 @@ const u32 rodataPadding_801B08B0 = 0;
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 
 // spit projectile from spittle bone
-// Unique
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", EntitySpittleBoneSpit);
+void EntitySpittleBoneSpit(Entity* self) {
+    Collider collider;
+    Unkstruct_801C6C6C test;
+    s16 firstPrimIndex;
+    Primitive* prim;
+    Entity* entity;
+    s32 u0, v0, r0, b0, blendMode;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180CB8);
+        self->ext.generic.unk80.modeS16.unk2 = 0;
+        self->unk1A = 0;
+        self->unk1C = 0;
+        return;
+
+    case 1:
+        entity = self->ext.generic.unk84.unk;
+        if ((entity->unk1E & 0xFFF) == 0x800) {
+            if (entity->facing != 0) {
+                self->posX.i.hi = entity->posX.i.hi - 3;
+            } else {
+                self->posX.i.hi = entity->posX.i.hi + 3;
+            }
+            self->posY.i.hi = entity->posY.i.hi + 27;
+            self->unk1A += 16;
+            self->unk1C += 20;
+            if (++self->ext.generic.unk80.modeS16.unk2 > 16) {
+                self->ext.generic.unk80.modeS16.unk2 = 0;
+                self->step++;
+            }
+            return;
+        }
+        self->unk1C = 0x140;
+        self->unk1A = 0x100;
+        self->step++;
+        return;
+
+    case 2:
+        AnimateEntity(D_80182534, self);
+        MoveEntity();
+        self->accelerationY += 0x1000;
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.unk0 != 0) {
+            func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
+            func_801C090C(self, 1, 2, 0, 0, 5, 0);
+            self->animCurFrame = 0;
+            self->unk3C = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        firstPrimIndex = g_api.AllocPrimitives(1, 9);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            break;
+        }
+        prim = &g_PrimBuf[firstPrimIndex];
+        self->firstPolygonIndex = firstPrimIndex;
+        self->ext.generic.unk84.unk = prim;
+        self->flags |= 0x800000;
+        if (prim != NULL) {
+            for (u0 = 1, v0 = 2, r0 = 0x20, b0 = 0xc0, blendMode = 0x33, i = 0;
+                 prim != NULL; i += 8) {
+                prim->u0 = u0;
+                prim->v0 = v0;
+                prim->x0 = self->posX.i.hi;
+                prim->y0 = self->posY.i.hi;
+                prim->r0 = r0;
+                prim->g0 = r0;
+                prim->b0 = b0;
+                *(s32*)&prim->x2 = *(s32*)&D_8018253C[i];
+                *(s32*)&prim->x3 = *(s32*)&D_80182540[i];
+                prim->priority = self->zPriority;
+                prim->blendMode = blendMode;
+                prim = prim->next;
+            }
+        }
+        self->ext.generic.unk80.modeS16.unk2 = 0x30;
+        self->step++;
+        break;
+
+    case 4:
+        self->unk1C -= 0x14;
+        if (self->unk1C < 0) {
+            self->unk1C = 0;
+        }
+
+        prim = *(s32*)&self->ext.generic.unk84.unk;
+        while (prim != NULL) {
+            test.x.c.x = prim->x0;
+            test.x.c.w = prim->x1;
+            test.y.c.y = prim->y0;
+            test.y.c.h = prim->y1;
+            test.x.p += *(s32*)&prim->x2;
+            test.y.p += *(s32*)&prim->x3;
+            prim->x0 = test.x.c.x;
+            prim->x1 = test.x.c.w;
+            prim->y0 = test.y.c.y;
+            prim->y1 = test.y.c.h;
+            *(s32*)&prim->x3 += 0x1800;
+            if (*(s32*)&prim->x3 > 0) {
+                g_api.CheckCollision(prim->x0, (s16)(prim->y0 + 16), &collider,
+                                     0);
+                if (collider.unk0 != 0) {
+                    prim->blendMode = 8;
+                }
+            }
+            prim = prim->next;
+        }
+
+        if (--self->ext.generic.unk80.modeS16.unk2 == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
