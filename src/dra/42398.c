@@ -387,8 +387,10 @@ void func_800E3618(s32 width) {
 // Set menu display buffer
 void func_800E36C8(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].buf.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
-    SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].buf.draw, 128, 256, DISP_MENU_W,
+                  DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[0].buf.disp, 128, 256, DISP_MENU_W,
+                  DISP_MENU_H);
     SetDefDispEnv(&g_GpuBuffers[1].buf.disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
     func_800E34DC(1);
 }
@@ -419,7 +421,8 @@ void func_800E38CC(void) {
             g_BackBuffer->buf.disp.screen.x = 0;
             PutDispEnv(&g_BackBuffer->buf.disp);
         } else {
-            g_BackBuffer->buf.disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
+            g_BackBuffer->buf.disp.screen.x =
+                D_80136308[D_800A0158 + D_800A04F8];
             PutDispEnv(&g_BackBuffer->buf.disp);
             D_800A0158++;
             SetRCnt(0xF2000001, 6, 0x1000);

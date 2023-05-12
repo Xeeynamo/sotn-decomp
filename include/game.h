@@ -852,7 +852,8 @@ extern u32 g_blinkTimer;
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer g_GpuBuffers[2];
-extern s16 g_GpuBuffers_1_buf_draw_clip_y;     // member of D_800542FC, TODO overlap, hard to remove
+extern s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
+                                           // overlap, hard to remove
 
 extern const char g_MemcardSavePath[];
 extern const char aBaslus00067dra[19];
