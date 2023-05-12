@@ -1026,6 +1026,7 @@ void func_8010EA54(s32 arg0) {
 
     if (arg0 != 0) {
         temp_hi = rand() % arg0;
+        NOP;
 
         if (temp_hi < 4) {
             PlaySfx(D_800ACF60[temp_hi]);

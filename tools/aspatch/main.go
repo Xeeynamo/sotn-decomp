@@ -151,7 +151,6 @@ func (p *patcher) patchLine(line string) error {
 		p.write("\tbreak\t0x6\n")
 		p.write(fmt.Sprintf(".L_DIV_BY_POSITIVE_SIGN_%d:\n", p.nLine))
 		p.write(fmt.Sprintf("\tmfhi\t%s\n", dstReg))
-		p.write("\tnop\n")
 		p.write("\t.set\tat\n")
 		p.write("\t.set\tmacro\n")
 		p.write("\t.set\treorder\n")

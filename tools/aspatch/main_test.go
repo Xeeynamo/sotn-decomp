@@ -107,7 +107,6 @@ func TestPatchRemWithAspsxRem(t *testing.T) {
 		"\tbreak\t0x6\n",
 		".L_DIV_BY_POSITIVE_SIGN_1:\n",
 		"\tmfhi\t$4\n",
-		"\tnop\n",
 		"\t.set\tat\n",
 		"\t.set\tmacro\n",
 		"\t.set\treorder\n",
