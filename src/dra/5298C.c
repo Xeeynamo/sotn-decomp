@@ -67,8 +67,8 @@ void func_800F53A4(void) {
 }
 
 void func_800F53D4(s32 tpage, s32 orderIdx) {
-    u32* order = D_8006C37C->order;
-    DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+    u32* order = g_CurrentBuffer->order;
+    DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
@@ -238,8 +238,8 @@ void func_800F5AE4(MenuContext* context) {
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
-    u32* order = D_8006C37C->order;
-    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
+    u32* order = g_CurrentBuffer->order;
+    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     s32 orderIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
@@ -281,8 +281,8 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    u32* order = D_8006C37C->order;
-    POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage.g4];
+    u32* order = g_CurrentBuffer->order;
+    POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     s32 orderIdx = context->unk18 + 1;
     u32 temp;
 
@@ -1202,8 +1202,8 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     GpuBuffer* gpuBuffer;
     SPRT* sprt;
 
-    sprt = &D_8006C37C->sprite[g_GpuUsage.sp];
-    gpuBuffer = D_8006C37C;
+    sprt = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    gpuBuffer = g_CurrentBuffer;
     SetSemiTrans(sprt, 0);
     SetShadeTex(sprt, blend);
     sprt->x0 = x;
