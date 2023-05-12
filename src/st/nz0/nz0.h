@@ -245,6 +245,15 @@ typedef enum {
 
 // *** EntityBottomSecretRoomFloor properties END ***
 
+// *** EntitySpittleBoneSpit properties START ***
+
+extern u16 D_80180CB8[]; // Init
+extern u8 D_80182534[];  // animation:
+extern u8 D_8018253C[];
+extern u8 D_80182540[];
+
+// *** EntitySpittleBoneSpit properties END ***
+
 extern s32 D_801825CC[]; // SubWeapons subId table
 extern u8 D_801825F0[];
 extern u16 D_80180C70[];
