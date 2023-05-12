@@ -151,7 +151,7 @@ typedef struct {
 } Unkstruct_8006C3CC; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ s16 unk0;  /* D_800ACEC6 */
+    /* 0x00 */ s16 unk0; /* D_800ACEC6 */
     /* 0x02 */ char pad2[0xE];
     /* 0x10 */ s16 unk10; /* D_800ACED6 */
     /* 0x12 */ char pad12[0x8];
