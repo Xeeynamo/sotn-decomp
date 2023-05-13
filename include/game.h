@@ -66,7 +66,8 @@ typedef struct Primitive {
 } Primitive; /* size=0x34 */
 
 #define COLORS_PER_PAL 16
-#define ORDERING_TABLE_ENTRIES 0x200
+#define OTSIZE 0x200
+#define MAXSPRT16 0x280
 
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
@@ -340,27 +341,25 @@ typedef struct {
 } ObjInit2; // size = 0x14
 
 typedef struct {
-    /* 0x00 */ DRAWENV draw; // drawing environment
-    /* 0x58 */ DISPENV disp; // display environment
 } DisplayBuffer;
 
 #define GPU_MAX_TILE_COUNT 0x100
 
-struct GpuBuffer;
-typedef struct GpuBuffer {
-    /* 0x00000 */ struct GpuBuffer* other;
-    /* 0x00004 */ DisplayBuffer buf;
-    /* 0x00074 */ DR_ENV env[0x10];
-    /* 0x00474 */ u32 order[ORDERING_TABLE_ENTRIES];
-    /* 0x00474 */ DR_MODE drawModes[0x400];
-    /* 0x03C74 */ POLY_GT4 polyGT4[0x300];
-    /* 0x0D874 */ POLY_G4 polyG4[0x100];
-    /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];
-    /* 0x103F4 */ LINE_G2 lineG2[0x100];
-    /* 0x117F4 */ SPRT_16 sprite16[0x280];
-    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT];
-    /* 0x14FF4 */ SPRT sprite[0x200];
-} GpuBuffer; /* size = 0x177F4 */
+typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
+    /* 0x00000 */ struct GpuBuffer* next;         // next chained buffer
+    /* 0x00005 */ DRAWENV draw;                   // drawing environment
+    /* 0x0005C */ DISPENV disp;                   // display environment
+    /* 0x00074 */ DR_ENV env[0x10];               // packed drawing environment
+    /* 0x00474 */ u_long ot[OTSIZE];              // ordering table
+    /* 0x00474 */ DR_MODE drawModes[0x400];       // draw modes
+    /* 0x03C74 */ POLY_GT4 polyGT4[0x300];        // textured quads
+    /* 0x0D874 */ POLY_G4 polyG4[0x100];          // untextured quads
+    /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];         // textured triangles
+    /* 0x103F4 */ LINE_G2 lineG2[0x100];          // lines
+    /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];    // 16x16 fixed-size sprites
+    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT]; // squared sprites
+    /* 0x14FF4 */ SPRT sprite[0x200];             // dynamic-size sprites
+} GpuBuffer;                                      /* size = 0x177F4 */
 
 typedef struct {
     /* 0x00 */ u32 drawModes;

@@ -66,13 +66,13 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
-void func_800F53D4(s32 tpage, s32 orderIdx) {
-    u32* order = g_CurrentBuffer->order;
+void func_800F53D4(s32 tpage, s32 otIdx) {
+    u32* ot = g_CurrentBuffer->ot;
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
         SetDrawMode(drawMode, 0, 0, tpage, &g_Vram.D_800ACD80);
-        AddPrim(&order[orderIdx], drawMode);
+        AddPrim(&ot[otIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }
@@ -238,14 +238,14 @@ void func_800F5AE4(MenuContext* context) {
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
-    u32* order = g_CurrentBuffer->order;
+    u32* ot = g_CurrentBuffer->ot;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
-    s32 orderIdx = context->unk18 + 2;
+    s32 otIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
     if (context == &D_8013763A) {
-        orderIdx--;
+        otIdx--;
     }
 
     poly->code &= 0xFD;
@@ -272,18 +272,18 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             poly->x0 = poly->x2 = poly->x1;
             poly->x1 = poly->x3 = temp_polyx0;
         }
-        AddPrim(&order[orderIdx], poly);
+        AddPrim(&ot[otIdx], poly);
         g_GpuUsage.gt4++;
-        func_800F53D4(tpage, orderIdx);
+        func_800F53D4(tpage, otIdx);
     }
 }
 
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    u32* order = g_CurrentBuffer->order;
+    u32* ot = g_CurrentBuffer->ot;
     POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
-    s32 orderIdx = context->unk18 + 1;
+    s32 otIdx = context->unk18 + 1;
     u32 temp;
 
     poly->x0 = posX;
@@ -302,9 +302,9 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
-        AddPrim(&order[orderIdx], poly);
+        AddPrim(&ot[otIdx], poly);
         g_GpuUsage.g4++;
-        func_800F53D4(0, orderIdx);
+        func_800F53D4(0, otIdx);
     }
 }
 
@@ -1214,7 +1214,7 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     sprt->v0 = v;
     sprt->b0 = sprt->g0 = sprt->r0 = color;
     sprt->clut = D_8003C104[pal];
-    AddPrim(&gpuBuffer->order[0x1FF], sprt);
+    AddPrim(&gpuBuffer->ot[0x1FF], sprt);
     g_GpuUsage.sp++;
 }
 
