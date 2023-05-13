@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "items.h"
 
 typedef enum {
     // most common block type
@@ -406,7 +407,197 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800EFBF8);
+void func_800EFBF8(s32 arg0) {
+    s32 i;
+
+    if (arg0 != 2) {
+        if (g_StageId == STAGE_NZ0) {
+            g_StageId = 0x13;
+        }
+        if (g_StageId == STAGE_NZ1) {
+            g_StageId = 0x14;
+        }
+        if (g_StageId == STAGE_LIB) {
+            g_StageId = 0x15;
+        }
+        if (g_StageId == (STAGE_NZ1 | STAGE_INVERTEDCASTLE_FLAG)) {
+            g_StageId = 0x35;
+        }
+    } else {
+        D_80137594 = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
+        g_StageId = D_800A243C[D_80137594];
+    }
+
+    func_800FF7B8(0);
+    if (g_StageId != STAGE_ST0) {
+        g_Status.level = 99;
+        for (i = 0; i < 18; i++) {
+            g_Status.relics[i] = 3;
+        }
+        for (; i < 30; i++) {
+            g_Status.relics[i] = 1;
+        }
+        g_Status.relics[9] = 1;
+        g_Status.hp = 80;
+        g_Status.hpMax = 80;
+        g_Status.D_80097BFC = 0;
+        g_Status.hearts = 30;
+        g_Status.heartsMax = 99;
+        g_Status.mpMax = 20;
+        g_Status.mp = 20;
+        g_Status.statsBase[0] = 10;
+        g_Status.statsBase[1] = 10;
+        g_Status.statsBase[2] = 10;
+        g_Status.statsBase[3] = 10;
+        g_Status.equipment[0] = ITEM_BEKATOWA;
+        g_Status.equipment[1] = ITEM_LEATHER_SHIELD;
+        g_Status.equipment[2] = 0x1A;
+        g_Status.equipment[3] = 2;
+        g_Status.equipment[4] = 0x30;
+        g_Status.equipment[5] = 0x39;
+        g_Status.equipment[6] = 0x39;
+        if (g_StageId == STAGE_UNK_13) {
+            g_Status.D_80097BFC = 2;
+            g_Status.equipment[0] = ITEM_SHORT_SWORD;
+        }
+        if (g_StageId == STAGE_BO4) {
+            g_Status.D_80097BFC = 3;
+            g_Status.equipment[0] = ITEM_SHORT_SWORD;
+        }
+        if (g_StageId == STAGE_BO5) {
+            g_Status.equipment[0] = ITEM_GLADIUS;
+        }
+        if (g_StageId == STAGE_BO3) {
+            g_Status.D_80097BFC = 3;
+            g_Status.equipment[0] = ITEM_GLADIUS;
+            g_Status.relics[14] = 1;
+            g_Status.hearts = 60;
+        }
+        if (g_StageId == STAGE_BO2) {
+            g_Status.equipment[0] = ITEM_CUTLASS;
+        }
+        if (g_StageId == STAGE_UNK_15) {
+            g_Status.equipment[0] = ITEM_CUTLASS;
+            g_Status.statsBase[0] = 15;
+        }
+        if (g_StageId == STAGE_BO0) {
+            g_Status.hearts = 60;
+            g_Status.equipment[0] = ITEM_CLAYMORE;
+            g_Status.D_80097BFC = 2;
+            g_Status.mpMax = 50;
+            g_Status.mp = 50;
+            g_Status.statsBase[0] = 20;
+            g_Status.statsBase[2] = 20;
+            g_Status.equipment[3] = 0xA;
+        }
+        if (g_StageId == STAGE_BO7) {
+            g_Status.D_80097BFC = 3;
+            g_Status.equipment[0] = ITEM_DAMASCUS_SWORD;
+        }
+        if (g_StageId == STAGE_BO1) {
+            g_Status.equipment[0] = ITEM_ICEBRAND;
+        }
+        if (g_StageId == STAGE_DRE) {
+            g_Status.equipment[0] = ITEM_CLAYMORE;
+        }
+        if (g_StageId == STAGE_UNK_14) {
+            g_Status.equipment[0] = ITEM_FALCHION;
+            g_Status.equipment[1] = ITEM_IRON_SHIELD;
+            g_Status.statsBase[0] = 20;
+            g_Status.statsBase[2] = 20;
+            g_Status.D_80097BFC = 8;
+            g_Status.hearts = 30;
+        }
+        if (g_StageId == STAGE_BO6) {
+            g_Status.equipment[0] = ITEM_MORMEGIL;
+            g_Status.equipment[1] = ITEM_IRON_SHIELD;
+            g_Status.D_80097BFC = 9;
+            g_Status.statsBase[0] = 10;
+        }
+        if (g_StageId == STAGE_UNK_38) {
+            g_Status.mpMax = 80;
+            g_Status.mp = 80;
+        }
+        if (g_StageId == STAGE_UNK_37) {
+            g_Status.equipment[3] = 25;
+        }
+        if (g_StageId == STAGE_UNK_3D) {
+            g_Status.D_80097BFC = 2;
+            g_Status.equipment[0] = ITEM_CLAYMORE;
+            g_Status.equipment[2] = 0x29;
+            g_Status.statsBase[0] = 25;
+            g_Status.statsBase[2] = 35;
+            g_Status.hearts = 70;
+        }
+        if (g_StageId == STAGE_UNK_36) {
+            g_Status.equipment[0] = 4;
+            g_Status.equipment[1] = ITEM_SKULL_SHIELD;
+            g_Status.equipment[2] = 0x2A;
+            g_Status.statsBase[0] = 60;
+            g_Status.mpMax = 200;
+            g_Status.mp = 200;
+        }
+        if (g_StageId == STAGE_UNK_35) {
+            g_Status.D_80097BFC = 2;
+            g_Status.statsBase[0] = 25;
+            g_Status.statsBase[2] = 35;
+            g_Status.hearts = 70;
+        }
+        if (g_StageId == STAGE_UNK_3A) {
+            g_Status.equipment[0] = ITEM_CLAYMORE;
+            g_Status.statsBase[0] = 25;
+        }
+        if (g_StageId == STAGE_UNK_3C) {
+            g_Status.equipment[0] = ITEM_CLAYMORE;
+            g_Status.statsBase[0] = 25;
+            g_Status.statsBase[2] = 40;
+            g_Status.equipment[3] = 15;
+            g_Status.D_80097BFC = 9;
+            g_Status.hearts = 80;
+        }
+        if (g_StageId == STAGE_UNK_28) {
+            g_Status.D_80097BFC = 2;
+            g_Status.equipment[0] = ITEM_ALUCARD_SWORD;
+            g_Status.equipment[1] = ITEM_ALUCARD_SHIELD;
+            g_Status.statsBase[0] = 25;
+            g_Status.statsBase[2] = 35;
+            g_Status.hearts = 70;
+            g_Status.mpMax = 80;
+            g_Status.mp = 80;
+        }
+        if (g_StageId == STAGE_UNK_39) {
+            g_Status.equipment[0] = ITEM_SWORD_OF_HADOR;
+            g_Status.equipment[1] = ITEM_IRON_SHIELD;
+            g_Status.D_80097BFC = 8;
+            g_Status.statsBase[0] = 30;
+            g_Status.statsBase[2] = 35;
+            g_Status.heartsMax = 99;
+        }
+        if (g_StageId == STAGE_UNK_3B) {
+            g_Status.equipment[0] = ITEM_FALCHION;
+            g_Status.equipment[1] = ITEM_IRON_SHIELD;
+            g_Status.D_80097BFC = 3;
+            g_Status.statsBase[0] = 30;
+            g_Status.statsBase[2] = 30;
+            g_Status.heartsMax = 99;
+        }
+        if (g_StageId == STAGE_UNK_3E) {
+            g_Status.equipment[0] = ITEM_BASTARD_SWORD;
+            g_Status.equipment[1] = ITEM_IRON_SHIELD;
+            g_Status.equipment[3] = 15;
+            g_Status.D_80097BFC = 2;
+            g_Status.statsBase[0] = 30;
+            g_Status.statsBase[2] = 35;
+            g_Status.heartsMax = 40;
+        }
+        g_Status.timerHours = 0;
+        g_Status.timerMinutes = 0;
+        g_Status.timerSeconds = 0;
+        g_Status.timerFrames = 0;
+        func_800F53A4();
+    }
+}
+// #endif
 
 // TODO inline those three strings and remove them from their rodata assembly
 extern const char aSimCBinDemoKey[24] ALIGNED4; // "sim:c:\\bin\\demo_key.bin"

@@ -179,6 +179,7 @@ extern s32 D_800A0510[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
 extern s32 D_800A2438;
+extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
 extern s32 D_800A2D68;
 extern s32 D_800A2D6C;
