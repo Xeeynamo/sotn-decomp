@@ -107,7 +107,13 @@ typedef struct Primitive {
 #define MaxEntityCount 32
 #define EQUIP_TYPE_COUNT 11
 
+#define RIC_PRG_PTR 0x8013C000
+#define FAMILIAR_PTR 0x80170000
+#define WEAPON0_PTR 0x8017A000
+#define WEAPON1_PTR 0x8017D000
+#define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
+#define UNK_PTR 0x801E8000
 
 #define STAGE_NO0 0x00
 #define STAGE_NO1 0x01

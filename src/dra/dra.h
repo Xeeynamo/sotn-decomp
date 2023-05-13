@@ -86,7 +86,7 @@ typedef enum {
     CdCallback_12,       // func_801078C4
     CdCallback_13,       // func_801078C4
     CdCallback_14,       // func_80107B04
-    CdCallback_15,       // func_801078C4
+    CdCallback_Familiar, // func_801078C4
     CdCallback_16,       // func_80107DB4
     CdCallback_17,       // func_80107C6C
     CdCallback_Seq,      // func_80107DB4
