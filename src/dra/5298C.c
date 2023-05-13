@@ -1016,16 +1016,43 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 // has some logic related to the weapon struct
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA7E8);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA8C4);
+bool LoadWeaponPrg(s32 equipIndex) {
+    s32 equipId;
+    s32 weaponId;
+
+    equipId = g_Status.equipment[equipIndex];
+    if (g_Status.equipment[3] == 0x19) {
+        equipId = 0xD8;
+    }
+    weaponId = D_800A4B04[equipId].weaponId;
+    if (weaponId == D_8003C90C[equipIndex] || weaponId == 0xFF) {
+        return 1;
+    }
+    if (g_UseDisk) {
+        if (D_8006C3B0 != 0) {
+            return 0;
+        }
+        g_CdStep = CdStep_LoadInit;
+        D_8006BAFC = CdFileType_Weapon0 + equipIndex;
+    } else {
+        if (func_800E81FC(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
+            func_800E81FC(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
+            return 0;
+        }
+    }
+    D_8003C90C[equipIndex] = weaponId;
+    return 1;
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA9DC);
 
 void func_800FAB1C(void) {
-    Entity* entity = &g_Entities[UNK_ENTITY_4];
+    const int START = 4;
+    Entity* entity;
     s32 i;
 
-    for (i = 4; i < 64; i++) {
-        if ((u32)((entity->objectId + 0xFF30) & 0xFFFF) < 16) {
+    for (entity = g_Entities + START, i = START; i < 64; i++) {
+        if (entity->objectId >= 208 && entity->objectId < 224) {
             DestroyEntity(entity);
         }
         entity++;
