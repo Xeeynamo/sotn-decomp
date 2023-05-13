@@ -66,6 +66,9 @@ typedef enum {
     CdFileType_Servant = 27,
     CdFileType_28,
     CdFileType_ServantPrg = 29,
+    CdFileType_30,
+    CdFileType_31,
+    CdFileType_DemoKey,
     CdFileType_NoNext = 0xFF,
     CdFileType_StagePrg = 0x100,
 } CdFileType;
@@ -308,8 +311,6 @@ extern const char aRgb02x02x02x;
 extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
-extern s32 D_800DC4C0;
-extern s8 D_800DC4C4;
 extern Unkstruct_800BF554 D_800BF554[];
 extern s32 D_801362AC;
 extern s32 D_801362B0;
@@ -345,6 +346,7 @@ extern u8* g_DecDstPtr;
 extern s32 g_DecReadNibbleFlag;
 extern s32 g_DecWriteNibbleFlag;
 extern s32* D_80137590;
+extern s32 D_80137594; // g_DemoKeyIdx
 extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
 extern Unkstruct_800A2D98 D_801375CC;

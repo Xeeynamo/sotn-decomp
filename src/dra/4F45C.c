@@ -408,33 +408,54 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800EFBF8);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800F0334);
+// TODO inline those three strings and remove them from their rodata assembly
+extern const char aSimCBinDemoKey[24] ALIGNED4; // "sim:c:\\bin\\demo_key.bin"
+extern const char aSimCBinDk000Bi[22] ALIGNED4; // "sim:c:\\bin\\dk_000.bin"
+extern const char D_800DC4C0[5] ALIGNED4;       // "  OK"
+void func_800F0334(s32 arg0) {
+    char fileName[0x100];
+    long fd;
 
-extern Unkstruct_aSimCBinDemoKey aSimCBinDemoKey;
+    if (g_UseDisk) {
+        g_CdStep = CdStep_LoadInit;
+        D_8006BAFC = CdFileType_DemoKey;
+        g_mapTilesetId = D_80137594;
+        return;
+    }
+    if (arg0 == 0) {
+        __builtin_memcpy(fileName, aSimCBinDemoKey, sizeof(aSimCBinDemoKey));
+    } else {
+        __builtin_memcpy(fileName, aSimCBinDk000Bi, sizeof(aSimCBinDk000Bi));
+        fileName[15] = '0' + (D_80137594 / 10 % 10);
+        fileName[16] = '0' + (D_80137594 % 10);
+    }
+    fd = open(fileName, 1);
+    if (fd < 0) {
+        return;
+    }
+    read(fd, DEMO_KEY_PTR, 0x2000);
+    close(fd);
+}
 
 void func_800F04A4(void) {
-    Unkstruct_aSimCBinDemoKey sp10[10];
-    char pad[12]; // !FAKE: Intentional padding to fix the stack pointer
-    s32 temp;
-    s32 device;
+    char fileName[0x100];
+    long fd;
 
-    sp10[0] = aSimCBinDemoKey;
-
-    device = open((char*)&sp10, 0x200);
-
-    if (device >= 0) {
-        if (write(device, (void*)0x801E8000, 0x2000) < 0) {
-            close(device);
-            return;
-        } else if (close(device) >= 0) {
-            // !FAKE:
-            sp10[0].unk0 = D_800DC4C0;
-            sp10[0].unk4 = (temp = D_800DC4C4);
-            do {
-                func_800E2438((const char*)&sp10);
-            } while (0);
-        }
+    __builtin_memcpy(fileName, aSimCBinDemoKey, sizeof(aSimCBinDemoKey));
+    fd = open(fileName, 0x200);
+    if (fd < 0) {
+        return;
     }
+    if (write(fd, DEMO_KEY_PTR, 0x2000) < 0) {
+        close(fd);
+        return;
+    }
+    if (close(fd) < 0) {
+        return;
+    }
+
+    __builtin_memcpy(fileName, D_800DC4C0, sizeof(D_800DC4C0));
+    func_800E2438(fileName);
 }
 
 void func_800F0578(s32 arg0) {

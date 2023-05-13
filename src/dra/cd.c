@@ -112,7 +112,7 @@ void CopyStageOvlCallback(void) {
         len = g_Cd.overlayLastBlockSize;
     }
     if (g_CdCallback == CdCallback_4) {
-        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + UNK_PTR;
+        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + DEMO_KEY_PTR;
     } else {
         g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + STAGE_PRG_PTR;
     }
