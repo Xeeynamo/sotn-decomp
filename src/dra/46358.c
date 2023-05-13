@@ -226,7 +226,7 @@ void func_800E6358(void) {
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_17;
+                D_8006BAFC = CdFileType_Weapon0;
                 var_s0 = D_800A4B04[g_Status.equipment[0]].weaponId;
                 if (var_s0 == 0xFF) {
                     var_s0 = 1;
@@ -280,7 +280,7 @@ void func_800E6358(void) {
     case 12:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_18;
+            D_8006BAFC = CdFileType_Weapon1;
             var_s0 = D_800A4B04[g_Status.equipment[1]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
