@@ -341,7 +341,7 @@ void func_801B60D4(void) {
 
     switch (D_8003C9A4) {
     case 0:
-        if (D_8006C3B0 == 0) {
+        if (!g_IsUsingCd) {
             D_8003C728 = 1;
             if (D_800978B4 == 0) {
                 D_8003C100 = 2;

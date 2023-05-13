@@ -753,7 +753,7 @@ void func_800E451C(void) {
         func_800E3574();
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
-            if (D_8006C3B0 != 0) {
+            if (g_IsUsingCd) {
                 return;
             }
             g_CdStep = CdStep_LoadInit;
@@ -762,7 +762,7 @@ void func_800E451C(void) {
         D_80073060++;
         break;
     case 100:
-        if (D_8006C3B0 == 0) {
+        if (!g_IsUsingCd) {
             RECT sp18;
             sp18.x = 0;
             sp18.y = 0;
@@ -790,7 +790,7 @@ void func_800E451C(void) {
             func_800E3574();
             g_StageId = 0x45;
             if (g_UseDisk) {
-                if (D_8006C3B0 != 0) {
+                if (g_IsUsingCd) {
                     break;
                 }
                 g_CdStep = CdStep_LoadInit;
@@ -800,7 +800,7 @@ void func_800E451C(void) {
         }
         break;
     case 1:
-        if ((g_UseDisk && D_8006C3B0 == 0) ||
+        if ((g_UseDisk && !g_IsUsingCd) ||
             (!g_UseDisk && func_800E81FC(2, SimFileType_System) >= 0 &&
              func_800E81FC(0, SimFileType_System) >= 0)) {
             D_80073060++;
@@ -820,7 +820,7 @@ void func_800E451C(void) {
         D_80073060 = 5;
         break;
     case 5:
-        if ((g_UseDisk && D_8006C3B0 == 0) ||
+        if ((g_UseDisk && !g_IsUsingCd) ||
             (!g_UseDisk && func_800E81FC(0, SimFileType_StagePrg) >= 0)) {
             D_8003C9A4 = 0;
             D_80073060++;

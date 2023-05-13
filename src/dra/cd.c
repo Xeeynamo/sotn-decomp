@@ -455,7 +455,7 @@ void func_80108448(void) {
         return;
     }
     pCdFileSize = &D_8006BAFC;
-    D_8006C3B0 = g_CdStep;
+    g_IsUsingCd = g_CdStep;
     if (D_8006BAFC == CdFileType_StagePrg) {
         cdFile = &D_800ACC34;
         if (g_StageId == STAGE_EU_WARNING) {

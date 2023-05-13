@@ -569,7 +569,7 @@ typedef struct {
     /* 8003C7A4 */ void* unk30;
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
-    /* 8003C7B0 */ void (*unk3C)();
+    /* 8003C7B0 */ void (*unk3C)(void);
 } Overlay;
 
 typedef struct Collider {
@@ -840,7 +840,6 @@ extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-extern s32 D_8003C730;
 extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
@@ -882,7 +881,7 @@ extern u32 g_CdStep; // CdStep
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
-extern s32 D_8006C3B0;
+extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3CC D_8006C3C4[32];
 extern s32 D_8006CBC4;
@@ -892,6 +891,7 @@ extern u16 D_8006EBE0;
 extern u16 D_8006F3CC[];
 extern u16 D_8006F42C[];
 extern s16 D_800705CC[];
+extern u32 D_80070BCC;
 extern Unkstruct4 D_80072B34;
 extern s32 D_80072EE8;
 extern s32 D_80072EEC;
