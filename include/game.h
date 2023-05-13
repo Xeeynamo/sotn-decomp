@@ -134,6 +134,9 @@ typedef struct Primitive {
 #define STAGE_NO1_ALT 0x0F
 #define STAGE_NO0_ALT 0x10
 #define STAGE_DRE 0x12
+#define STAGE_UNK_13 0x13
+#define STAGE_UNK_14 0x14
+#define STAGE_UNK_15 0x15
 #define STAGE_BO7 0x16
 #define STAGE_MAR 0x17
 #define STAGE_BO6 0x18
@@ -144,6 +147,17 @@ typedef struct Primitive {
 #define STAGE_BO1 0x1D
 #define STAGE_BO0 0x1E
 #define STAGE_ST0 0x1F
+#define STAGE_UNK_28 (STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG)
+#define STAGE_UNK_35 0x35
+#define STAGE_UNK_36 0x36
+#define STAGE_UNK_37 0x37
+#define STAGE_UNK_38 0x38
+#define STAGE_UNK_39 0x39
+#define STAGE_UNK_3A 0x3A
+#define STAGE_UNK_3B 0x3B
+#define STAGE_UNK_3C 0x3C
+#define STAGE_UNK_3D 0x3D
+#define STAGE_UNK_3E 0x3E
 #define STAGE_MAD 0x40
 #define STAGE_NO3 0x41
 #define STAGE_IWA_LOAD 0x42
@@ -156,6 +170,7 @@ typedef struct Primitive {
 #define STAGE_TE4 0x49
 #define STAGE_TE5 0x4A
 #define STAGE_TOP_ALT 0x4B
+#define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_EU_WARNING 0x70 // EU piracy legal message thing
 #define STAGE_ENDING 0xFE
