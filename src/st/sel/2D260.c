@@ -950,7 +950,7 @@ void InitRoomEntities(s32 objLayoutId) {
 
     switch (temp_s0) {
     case 0:
-        if (D_8006C3B0 == 0) {
+        if (!g_IsUsingCd) {
             g_IsTimeAttackUnlocked = true;
             D_8003C728 = 1;
             D_8003C100 = 0;

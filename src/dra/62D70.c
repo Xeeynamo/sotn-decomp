@@ -316,7 +316,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106A28);
 
 bool func_8010715C(s32 mapTilesetId) {
-    if (D_8006C3B0 != 0)
+    if (g_IsUsingCd)
         return false;
 
     if (!g_UseDisk) {

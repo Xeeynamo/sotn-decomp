@@ -96,7 +96,7 @@ void func_800E6358(void) {
         break;
     case 2:
         D_800978C4 = 0;
-        if (D_8006C3B0 != 0) {
+        if (g_IsUsingCd) {
             break;
         }
         if (g_UseDisk) {
@@ -141,7 +141,7 @@ void func_800E6358(void) {
         break;
     case 3:
         if (g_UseDisk) {
-            if (D_8006C3B0 == 0) {
+            if (!g_IsUsingCd) {
                 D_80073060++;
             }
         } else {
@@ -169,7 +169,7 @@ void func_800E6358(void) {
             if (func_800E81FC(0, 5) >= 0) {
                 D_80073060++;
             }
-        } else if (D_8006C3B0 == 0) {
+        } else if (!g_IsUsingCd) {
             D_80073060++;
         }
         break;
@@ -187,7 +187,7 @@ void func_800E6358(void) {
                     D_80073060++;
                 }
             }
-        } else if (D_8006C3B0 == 0) {
+        } else if (!g_IsUsingCd) {
             D_80073060++;
         }
         break;
@@ -208,7 +208,7 @@ void func_800E6358(void) {
                 break;
             }
             D_80073060++;
-        } else if (D_8006C3B0 == 0) {
+        } else if (!g_IsUsingCd) {
             D_80073060++;
         }
         break;
@@ -241,7 +241,7 @@ void func_800E6358(void) {
         break;
     case 11:
         if (g_UseDisk) {
-            if (D_8006C3B0 != 0) {
+            if (g_IsUsingCd) {
                 break;
             }
             pfnWeapon = D_8017A000.func_8017A01C;
@@ -294,7 +294,7 @@ void func_800E6358(void) {
         break;
     case 13:
         if (g_UseDisk) {
-            if (D_8006C3B0 != 0) {
+            if (g_IsUsingCd) {
                 break;
             }
             pfnWeapon = D_8017D000.func_8017A01C;
@@ -323,7 +323,7 @@ void func_800E6358(void) {
         break;
     case 15:
         if (g_UseDisk) {
-            if (D_8006C3B0 != 0) {
+            if (g_IsUsingCd) {
                 break;
             }
         } else {

@@ -1029,7 +1029,7 @@ bool LoadWeaponPrg(s32 equipIndex) {
         return 1;
     }
     if (g_UseDisk) {
-        if (D_8006C3B0 != 0) {
+        if (g_IsUsingCd) {
             return 0;
         }
         g_CdStep = CdStep_LoadInit;

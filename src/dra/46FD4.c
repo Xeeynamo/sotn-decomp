@@ -11,7 +11,7 @@ void func_800E6FD4(void) {
     if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
         switch (D_80073060) {
         case 0:
-            if (D_8006C3B0 == 0) {
+            if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
                 g_CdStep = CdStep_LoadInit;
@@ -83,7 +83,7 @@ void func_800E6FD4(void) {
             break;
 
         case 5:
-            if (D_8006C3B0 == 0) {
+            if (!g_IsUsingCd) {
                 D_8003C728 = 1;
                 D_8003C100 = 1;
                 D_80073060++;
@@ -107,7 +107,7 @@ void nullsub_9(void) {}
 
 void func_800E738C(void) {
     if (D_80073060 == 1) {
-        if ((g_UseDisk && D_8006C3B0 == 0) ||
+        if ((g_UseDisk && !g_IsUsingCd) ||
             (!g_UseDisk && func_800E81FC(6, SimFileType_System) >= 0 &&
              func_800E81FC(7, SimFileType_System) >= 0)) {
             if (func_80131F68() != 0) {
@@ -135,7 +135,7 @@ void func_800E7458(void) {
         D_80073060++;
         break;
     case 1:
-        if (g_UseDisk && D_8006C3B0 != 0)
+        if (g_UseDisk && g_IsUsingCd)
             break;
 
         if (g_UseDisk || func_800E81FC(12, SimFileType_System) >= 0) {
@@ -150,7 +150,7 @@ void func_800E7458(void) {
         D_80073060++;
         break;
     case 3:
-        if (g_UseDisk && D_8006C3B0 != 0)
+        if (g_UseDisk && g_IsUsingCd)
             break;
 
         if (g_UseDisk || func_800E81FC(0, SimFileType_Vh) >= 0 &&
@@ -166,7 +166,7 @@ void func_800E7458(void) {
         D_80073060++;
         break;
     case 5:
-        if (g_UseDisk && D_8006C3B0 != 0)
+        if (g_UseDisk && g_IsUsingCd)
             break;
 
         if (g_UseDisk || func_800E81FC(0, SimFileType_StagePrg) >= 0) {
@@ -183,11 +183,133 @@ void func_800E7458(void) {
     }
 }
 
+void func_800E768C(void) {
+    RECT* temp_s0;
+    RECT* temp_s1;
+    u32 var_a0;
+    u32 var_v0;
+
+    switch (D_80073060) {
+    case 0:
+        func_801065F4(0);
+        func_800EA538(0);
+        func_800EAEEC();
+        func_800EDA94();
+        func_800EDAE4();
+        func_800ECE2C();
+        func_800EAD7C();
+        ClearBackbuffer();
+        func_800E3574();
+        g_StageId = STAGE_SEL;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_31;
+        }
+        D_80073060++;
+        break;
+    case 1:
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            LoadImage(&g_Vram.D_800ACDE0, 0x80180000);
+            LoadImage(&g_Vram.D_800ACDD8, 0x80182000);
+            LoadImage(&g_Vram.D_800ACDB8, 0x80192000);
+            StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
+            LoadImage(&g_Vram.D_800ACDA8, 0x80194000);
+            StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
+            LoadClut2(g_Clut, 0x200, 0xF0);
+        } else {
+            if (func_800E81FC(14, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(15, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(16, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(17, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(4, SimFileType_System) < 0) {
+                break;
+            }
+            LoadClut2(g_Clut, 0x200, 0xF0);
+        }
+        D_80073060++;
+        break;
+    case 2:
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StagePrg;
+        }
+        D_80073060 = 3;
+        break;
+    case 3:
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+                break;
+            }
+        }
+        D_8003C9A4 = 0;
+        D_80073060++;
+        break;
+    case 5:
+        D_80073060 = 6;
+        D_800978F8 = 0;
+        break;
+    case 6:
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_19;
+        }
+        D_80073060 = 7;
+        if (D_800978B4 != 3 && D_800978B4 != 5) {
+            D_80073060 = 8;
+        }
+        break;
+    case 7:
+        g_api.o.unk3C();
+        break;
+    case 8:
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                return;
+            }
+        } else {
+            if (func_800E81FC(4, SimFileType_System) < 0) {
+                break;
+            }
+        }
+        D_80073060++;
+        break;
+    case 4:
+    case 9:
+        g_api.o.unk28();
+        break;
+    case 10:
 #if defined(VERSION_US)
-INCLUDE_ASM("asm/us/dra/nonmatchings/46FD4", func_800E768C);
-#elif defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/46FD4", func_800E768C);
+        PlaySfx(18);
+        PlaySfx(11);
+        func_80132760();
 #endif
+        func_800E4124(0);
+        return;
+    case 256:
+        g_StageId = STAGE_TOP_ALT;
+        D_8003C730 = 3;
+        func_800E4970();
+        break;
+    }
+}
 
 void func_800E7AEC(void) {
     switch (D_8003C734) {
