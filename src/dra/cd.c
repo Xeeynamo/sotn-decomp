@@ -15,9 +15,6 @@
 extern u16 D_800A04CC[]; // palette?
 extern s16 D_800AC998[];
 extern u32* D_801EE000;
-extern s32 D_8003C90C;
-extern s32 D_8003C910;
-extern u32 D_8006EBCC;
 extern s32 D_800AC9F8;
 extern s8 D_800ACA06;
 extern s32 D_800ACAB8;
@@ -45,6 +42,7 @@ extern s32 D_800ACD7C;
 extern s32 D_800BD1C8[];
 extern u8 D_80137F96;
 extern s32 D_80137FA0;
+extern s16 D_80137FA8;
 extern s32 D_80137FAC;
 extern s32 D_80137FB0;
 extern const char aPqes_1[];
@@ -177,8 +175,34 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_801078C4);
 // 101
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
 
-// 93
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107C6C);
+void func_80107C6C(void) {
+    s32 len;
+
+    if (g_Cd.D_80137F74 != 0 && func_800219E0(0) != 1) {
+        func_801073C0();
+        g_Cd.D_80137F78 = -1;
+        return;
+    }
+    g_Cd.overlayCopySrc = (g_Cd.D_80137F70 << 0xB) + D_801EC000;
+    if (g_Cd.overlayBlockCount != 0) {
+        len = 0x800;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    D_80137FA8 = func_80021880(g_Cd.overlayCopySrc, len, (s32)D_80137F94);
+    if (D_80137FA8 == -1) {
+        CdDataCallback(NULL);
+        g_Cd.D_80137F78 = -3;
+    }
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
+        CdDataCallback(NULL);
+        g_Cd.D_80137F78 = 1;
+    }
+}
 
 void func_80107DB4(void) {
     s32 i;
@@ -201,7 +225,7 @@ void func_80107DB4(void) {
     }
 #endif
     g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
-    g_Cd.D_80137F74 += 1;
+    g_Cd.D_80137F74++;
     g_Cd.overlayBlockCount--;
     if (g_Cd.overlayBlockCount < 0 ||
         (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
@@ -490,10 +514,12 @@ void func_80108448(void) {
                 func_800219E0(0) == 1) {
                 CdIntToPos(cdFile->loc, &g_CdLoc);
                 if (g_CdCallback == CdCallback_12) {
-                    CdIntToPos(D_8003C90C * 14 + cdFile->loc, &g_CdLoc);
+                    CdIntToPos(D_8003C908.D_8003C90C * 14 + cdFile->loc,
+                               &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_13) {
-                    CdIntToPos(D_8003C910 * 14 + cdFile->loc, &g_CdLoc);
+                    CdIntToPos(D_8003C908.D_8003C910 * 14 + cdFile->loc,
+                               &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_14) {
                     CdIntToPos(g_mapTilesetId * 11 + cdFile->loc, &g_CdLoc);
