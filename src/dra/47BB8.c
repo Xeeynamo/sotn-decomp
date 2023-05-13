@@ -241,7 +241,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         STRCPY(buf, "sim:c:\\bin\\");
         strcat(buf, g_StagesLba[g_StageId].gfxName);
         strcat(buf, ".bin");
-        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->addr = DEBUG_PTR;
         D_8013644C->size = 0x40000;
         D_8013644C->path = buf;
         D_8013644C->type = 2;
@@ -253,7 +253,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
         D_8013644C->size = 0x3000;
-        D_8013644C->addr = (u8*)0x8017A000;
+        D_8013644C->addr = WEAPON0_PTR;
         D_8013644C->type = 8;
     }
     if (type == SimFileType_Weapon1Prg) {
@@ -262,7 +262,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x8017D000;
+        D_8013644C->addr = WEAPON1_PTR;
         D_8013644C->size = 0x3000;
         D_8013644C->type = 8;
     }
@@ -291,7 +291,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         STRCPY(buf, "sim:c:\\bin\\tt_000.bin");
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x80170000;
+        D_8013644C->addr = FAMILIAR_PTR;
         D_8013644C->size = 0xA000;
         D_8013644C->type = 18;
     }
@@ -300,7 +300,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         STRCPY(buf, "sim:c:\\bin\\ft_000.bin");
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->addr = DEBUG_PTR;
         D_8013644C->size = 0x6000;
         D_8013644C->type = 19;
     }
@@ -311,7 +311,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         buf[15] = fileId / 10 - fileId / 100 * 10 + '0';
         buf[16] = fileId % 10 + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->addr = DEBUG_PTR;
         D_8013644C->size = 0x5800;
         D_8013644C->type = 20;
     }

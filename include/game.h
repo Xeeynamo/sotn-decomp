@@ -114,6 +114,7 @@ typedef struct Primitive {
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
 #define UNK_PTR 0x801E8000
+#define DEBUG_PTR 0x80280000
 
 #define STAGE_NO0 0x00
 #define STAGE_NO1 0x01
@@ -1016,8 +1017,8 @@ extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
 extern s32 D_80084FE4[];
 extern Event g_EvHwCardNew;
-extern s32* D_8007EFE4; // 'struct SaveData'?
-extern s32 D_80080FE4;  // maybe PixPattern[]?
+extern PixPattern D_8007EFE4;
+extern s32 D_80080FE4; // maybe PixPattern[]?
 extern s8 D_80082FE4;
 extern Primitive g_PrimBuf[MAX_PRIM_COUNT]; // entity polygons
 extern s32 playerX;

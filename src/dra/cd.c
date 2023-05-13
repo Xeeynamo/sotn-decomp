@@ -207,8 +207,59 @@ void CopySupportOvlCallback(void) {
     }
 }
 
-// 159
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_801078C4);
+void func_801078C4(void) {
+    s32 i;
+    s32 len;
+    s32 var_a3;
+    s32 var_v0;
+    s32** var_a0;
+    u8** temp_a0;
+
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + (u8*)&D_8007EFE4;
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0) {
+        if (g_CdCallback == CdCallback_Familiar) {
+            // Copy familiar graphics in the VRAM
+            g_Cd.overlayBlockCount = 20;
+            g_Cd.overlayLastBlockSize = 0;
+        } else {
+            // Copy weapon graphics in the VRAM
+            g_Cd.overlayBlockCount = 6;
+            g_Cd.overlayLastBlockSize = 0;
+        }
+        g_Cd.D_80137F74 = 0;
+        CdDataCallback(CopySupportOvlCallback);
+        if (g_CdCallback == CdCallback_12) {
+            PixPattern* p = &D_8007EFE4;
+            LoadTPage(p, 0, 0, 0x240, 0x100, 0x100, 0x80);
+        } else if (g_CdCallback == CdCallback_13) {
+            PixPattern* p = &D_8007EFE4;
+            LoadTPage(p, 0, 0, 0x240, 0x180, 0x100, 0x80);
+        } else {
+            PixPattern* p = &D_8007EFE4;
+            LoadTPage(p, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+            LoadTPage(p + 0x1000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        }
+    }
+}
 
 // 101
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
