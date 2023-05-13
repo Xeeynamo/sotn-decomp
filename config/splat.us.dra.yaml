@@ -63,8 +63,6 @@ segments:
       - [0x3C228, rodata]
       - [0x3C238, rodata] # jpt_800EE2FC
       - [0x3C290, .rodata, 4F45C]
-      - [0x3C490, rodata]
-      - [0x3C500, rodata] # jpt_800F0658
       - [0x3C514, rodata] # jpt_800F096C
       - [0x3C534, .rodata, 52860] # jpt_800F288C
       - [0x3C55C, rodata] # jpt_800F3684

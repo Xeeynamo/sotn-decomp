@@ -74,7 +74,7 @@ void func_800E6358(void) {
             func_800E4124(9);
         } else {
             __builtin_memcpy(g_Status.saveName, "alucard ", sizeof("alucard "));
-            D_80097914 = 0;
+            g_DemoMode = Demo_None;
             if (D_80098850 != 0) {
                 if (g_pads[1].pressed & PAD_UP) {
                     __builtin_memcpy(g_Status.saveName, "richter ",
@@ -86,9 +86,9 @@ void func_800E6358(void) {
                     g_IsTimeAttackUnlocked = false;
                 }
                 if (g_pads[1].pressed & PAD_CIRCLE) {
-                    func_800F0578(1);
+                    DemoInit(1);
                 } else if (g_pads[1].pressed & PAD_CROSS) {
-                    func_800F0578(0);
+                    DemoInit(0);
                 }
             }
             D_80073060++;
@@ -213,7 +213,7 @@ void func_800E6358(void) {
         }
         break;
     case 10:
-        if (D_80097914 == 0) {
+        if (g_DemoMode == Demo_None) {
             func_800FF7B8(0);
         }
         D_8003C908.D_8003C90C = -1;
