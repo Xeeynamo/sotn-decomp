@@ -813,7 +813,7 @@ typedef struct {
     /* D_8003C708 */ u16 flags;
     /* D_8003C70A */ u16 unk2;
     /* D_8003C70C */ u16 unk4;
-    /* D_8003C70E */ u16 zPriority;
+    /* D_8003C70E */ s16 zPriority;
 } FgLayer; /* size=0x8 */
 
 extern const s16 g_AtanTable[0x400];
@@ -836,7 +836,8 @@ extern u16 D_8003C104[];
 extern u16 D_8003C3C2[]; // confirmed array
 extern s32 D_8003C704;
 extern FgLayer D_8003C708;
-// extern u16 D_8003C710; // can warp
+extern s16 D_8003C710;
+extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern s32 D_8003C730;

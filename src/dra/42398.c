@@ -643,7 +643,95 @@ void func_800E4124(s32 context) {
     g_backbufferY = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E414C);
+void func_800E414C(void) {
+    RoomTeleport* temp_a1;
+    s32 temp_a0;
+
+    if (!(D_8003C708.flags & 0x40)) {
+        return;
+    }
+
+    func_8010DFF0(1, 1);
+    if (D_8003C708.unk2 != 0 && !(D_800733DA >= 8 && D_800733DA < 249)) {
+        return;
+    }
+
+    switch (D_8003C708.unk2) {
+    case 0:
+        func_800EA538(1);
+        temp_a1 = &D_800A245C[D_8003C708.zPriority];
+        temp_a0 = g_StageId & STAGE_INVERTEDCASTLE_FLAG;
+        D_8003C710 = temp_a1->stageId;
+        if (temp_a0 != 0) {
+            D_8003C710 ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        D_8003C712 = temp_a1->unk6;
+        if (temp_a0 != 0) {
+            D_8003C712 ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        PlaySfx(0x80);
+        D_80097928 = 1;
+        if (D_8003C708.flags == 0x40) {
+            D_80072EFC = 0x18;
+            *D_80072EF4 = 0x8000;
+        } else {
+            D_80072EFC = 0x18;
+            *D_80072EF4 = 0x2000;
+        }
+        D_8003C708.unk2++;
+        return;
+    case 1:
+        if (!func_80131F68()) {
+            if (g_UseDisk != 0) {
+                g_CdStep = CdStep_LoadInit;
+                D_8006BAFC = CdFileType_StageChr | 0x8000;
+            }
+            g_mapTilesetId = D_8003C710;
+            D_8003C708.unk2++;
+            return;
+        }
+        break;
+    case 2:
+        if (!g_UseDisk) {
+            break;
+        }
+        if (D_8003C708.flags == 0x40 && D_800733DA < 0x78) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageChr;
+            g_mapTilesetId = D_8003C710;
+            D_8003C708.unk2++;
+        }
+        if (D_8003C708.flags == 0x41 && D_800733DA >= 0x89) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageChr;
+            g_mapTilesetId = D_8003C710;
+            D_8003C708.unk2++;
+            return;
+        }
+        break;
+    case 3:
+        if (!g_UseDisk) {
+            break;
+        }
+        if (D_8003C708.flags == 0x40 && D_800733DA >= 0x89) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            D_8006BAFC = CdFileType_StageChr;
+            g_mapTilesetId = D_8003C712;
+            D_8003C708.unk2 = 2;
+        }
+        if (D_8003C708.flags == 0x41 && D_800733DA < 0x78) {
+            func_801073C0();
+            g_CdStep = 1;
+            D_8006BAFC = CdFileType_StageChr;
+            g_mapTilesetId = D_8003C712;
+            D_8003C708.unk2 = 2;
+        }
+        break;
+    }
+}
 
 void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
 
