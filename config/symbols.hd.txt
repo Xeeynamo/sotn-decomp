@@ -1,4 +1,4 @@
-CdLastCom = 0x8001944;
+CdLastCom = 0x80019444;
 aDraBin1 = 0x80010040;
 aFMapBin1 = 0x8001004C;
 a0123456789abcd = 0x8001005C;

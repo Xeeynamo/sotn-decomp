@@ -81,7 +81,7 @@ typedef enum {
     CdCallback_7,        // func_801080DC
     CdCallback_StagePrg, // CopyMapOverlayCallback
     CdCallback_9,        // CopyMapOverlayCallback
-    CdCallback_10,       // func_80107614
+    CdCallback_Ric,      // func_80107614
     CdCallback_11,       // func_801080DC
     CdCallback_12,       // func_801078C4
     CdCallback_13,       // func_801078C4
@@ -532,7 +532,7 @@ extern WeaponOvl D_8017D000;
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
-extern s32 D_801EC000[];
+extern u8 D_801EC000[];
 
 void InitializePads(void);
 void ReadPads(void);
@@ -540,7 +540,6 @@ void ClearBackbuffer(void);
 void SetRoomForegroundLayer(LayerDef2* layerDef);
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
-s32 func_80019444(void);
 void func_800209B4(s32*, s32, s32);
 void func_80021E38(s32);
 void func_80021EEC(void);

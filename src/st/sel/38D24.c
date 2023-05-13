@@ -101,20 +101,19 @@ void func_801B9698(char* dstSaveName, s32 saveSlot) {
 
 s32 func_801B9744(void) {
     u8 res;
+    int ret;
 
-    if (CdSync(1, &res) == 0) {
-        D_801BC344 = 0;
-        return 0;
+    if (CdSync(1, &res) == CdlNoIntr) {
+        return D_801BC344 = 0;
     }
 
-    if (func_80019444() - 0x10 < 2U || !(res & 0x10)) {
+    ret = CdLastCom();
+    if (ret >= CdlGetlocL && ret <= CdlGetlocP || !(res & CdlStatShellOpen)) {
         CdControlF(1, NULL);
-        D_801BC344 = 0;
-        return 0;
+        return D_801BC344 = 0;
     }
 
-    D_801BC344 = 1;
-    return 1;
+    return D_801BC344 = 1;
 }
 
 s32 func_801B97BC(s32*);

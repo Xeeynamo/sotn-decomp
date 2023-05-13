@@ -404,31 +404,3 @@ void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
     poly->u3 = u + width;
     poly->v3 = v + height;
 }
-
-void func_801073C0(void) {
-    CdReadyCallback(NULL);
-    CdDataCallback(NULL);
-}
-
-s32 func_801073E8(void) {
-    u8 sp10;
-
-    if (CdSync(1, &sp10) == 0) {
-        D_80137F9C = 0;
-        return D_80137F9C;
-    } else {
-        if (((u32)(func_80019444() - 0x10) < 2) || (!(sp10 & 0x10))) {
-            CdControlF(1, 0);
-            D_80137F9C = 0;
-            return D_80137F9C;
-        }
-        D_80137F9C = 1;
-        return D_80137F9C;
-    }
-}
-
-void func_80107460(void) {
-    D_80137F7C = &D_801EC000[D_80137F6C << 0x9];
-    CdGetSector(D_80137F7C, 0x200);
-    D_80137F6C = (D_80137F6C + 1) & 7;
-}
