@@ -8,6 +8,10 @@
 #define CDL_MODE_SPEED CdlModeSpeedDouble
 #endif
 
+#define _CD_BLOCK 11 // 2048 (0x800) bytes per sector
+#define CD_BLOCK_LEN (1 << (_CD_BLOCK))
+#define TO_CD_BLOCK(x) ((x) << (_CD_BLOCK))
+
 extern u16 D_800A04CC[]; // palette?
 extern s16 D_800AC998[];
 extern u32* D_801EE000;
@@ -49,11 +53,12 @@ typedef struct {
     RECT dstRect;
     s32 D_80137F68;
     s32 D_80137F6C;
-    s32 overlayCopySrcIndex;
-    s32 overlayCopyDstIndex;
+    s32 D_80137F70;
+    s32 D_80137F74;
     s32 D_80137F78;
-    u32* overlayCopySrc;
-    s32* overlayCopyDst;
+    s32 D_80137F7C;
+    u8* overlayCopySrc;
+    u8* overlayCopyDst;
     s8* D_80137F88;
     s32 overlayBlockCount;
     s32 overlayLastBlockSize;
@@ -63,33 +68,92 @@ typedef struct {
 CdCallbacks g_CdCallback;
 extern CdThing g_Cd;
 extern CdlLOC g_CdLoc;
-extern s32 D_80137F68;
-extern s32 g_OverlayCopySrcIndex;
-extern s32 g_OverlayCopyDstIndex;
-extern s32 D_80137F78[];
-extern u32* g_OverlayCopySrc;
-extern s32* g_OverlayCopyDst;
-extern s8* D_80137F88;
-extern s32 g_OverlayBlockCount;
-extern s32 g_OverlayLastBlockSize;
+extern s32 g_Cd_D_80137F68;
+extern s32 g_Cd_D_80137F70;
+extern s32 g_Cd_D_80137F74;
+extern s32 g_Cd_D_80137F78[];
+extern s8* g_Cd_D_80137F88;
+extern s32 g_Cd_overlayBlockCount;
+extern s32 g_Cd_overlayLastBlockSize;
 extern s16 D_80137F94;
 
+void func_801073C0(void) {
+    CdReadyCallback(NULL);
+    CdDataCallback(NULL);
+}
+
+s32 func_801073E8(void) {
+    u8 res;
+    s32 ret;
+
+    if (CdSync(1, &res) == CdlNoIntr) {
+        return D_80137F9C = 0;
+    }
+
+    ret = CdLastCom();
+    if (ret >= CdlGetlocL && ret <= CdlGetlocP || !(res & CdlStatShellOpen)) {
+        CdControlF(1, 0);
+        return D_80137F9C = 0;
+    }
+    return D_80137F9C = 1;
+}
+
+void func_80107460(void) {
+    g_Cd.D_80137F7C = &D_801EC000[TO_CD_BLOCK(D_80137F6C)];
+    CdGetSector(g_Cd.D_80137F7C, 0x200);
+    g_Cd.D_80137F6C = (g_Cd.D_80137F6C + 1) & 7;
+}
+
+// 99
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", CopyMapOverlayCallback);
 // DECOMP_ME_WIP CopyMapOverlayCallback https://decomp.me/scratch/1AWN1
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107614);
-// DECOMP_ME_WIP func_80107614 https://decomp.me/scratch/U0IGY
+void func_80107614(void) {
+    s32 i;
+    s32 len;
 
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + 0x8013C000;
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0) {
+        g_Cd.D_80137F78 = 1;
+        CdDataCallback(NULL);
+    }
+}
+
+// 106
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107750);
 
+// 159
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_801078C4);
 
+// 101
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
 
+// 93
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107C6C);
 
+// 90
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107DB4);
 
+// 138
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107EF0);
 
 void func_801080DC(void) {
@@ -98,21 +162,20 @@ void func_801080DC(void) {
     RECT* r;
 
     new_var2 = 6;
-    if (g_Cd.overlayCopySrcIndex == 3 || g_Cd.overlayCopySrcIndex == 7) {
+    if (g_Cd.D_80137F70 == 3 || g_Cd.D_80137F70 == 7) {
         switch (g_CdCallback) {
         case CdCallback_1:
-            g_Cd.dstRect.x = D_800AC958[g_OverlayCopyDstIndex];
-            g_Cd.dstRect.y =
-                ((g_OverlayCopyDstIndex << new_var2) & 0x80) + 0x100;
+            g_Cd.dstRect.x = D_800AC958[g_Cd_D_80137F74];
+            g_Cd.dstRect.y = ((g_Cd_D_80137F74 << new_var2) & 0x80) + 0x100;
             g_Cd.dstRect.w = 0x20;
             g_Cd.dstRect.h = 0x80;
-            if (g_OverlayCopyDstIndex == 0x1A) {
+            if (g_Cd_D_80137F74 == 0x1A) {
                 g_Cd.dstRect.y = 0x181;
                 g_Cd.dstRect.h = 0x7F;
-                if (!g_OverlayCopyDstIndex && !g_OverlayCopyDstIndex) {
+                if (!g_Cd_D_80137F74 && !g_Cd_D_80137F74) {
                 }
             }
-            if (g_OverlayCopyDstIndex == 0x20) {
+            if (g_Cd_D_80137F74 == 0x20) {
                 g_Cd.dstRect.x = 0;
                 g_Cd.dstRect.y = 0xF0;
                 g_Cd.dstRect.w = 0x100;
@@ -122,10 +185,10 @@ void func_801080DC(void) {
         case CdCallback_0:
         case CdCallback_2:
         case CdCallback_6:
-            g_Cd.dstRect.x = D_800AC998[g_OverlayCopyDstIndex & 0x1F];
-            new_var = g_OverlayCopyDstIndex;
+            g_Cd.dstRect.x = D_800AC998[g_Cd.D_80137F74 & 0x1F];
+            new_var = g_Cd.D_80137F74;
             g_Cd.dstRect.y = (new_var << 6) & 0x80;
-            if (g_OverlayCopyDstIndex >= 0x20) {
+            if (g_Cd.D_80137F74 >= 0x20) {
                 g_Cd.dstRect.y += 0x100;
             }
             g_Cd.dstRect.w = 0x20;
@@ -139,18 +202,18 @@ void func_801080DC(void) {
             break;
         }
 
-        if (g_Cd.overlayCopySrcIndex == 7) {
-            g_OverlayCopySrc = &D_801EE000;
-            LoadImage(&g_Cd.dstRect, g_OverlayCopySrc);
-            g_OverlayCopyDstIndex++;
+        if (g_Cd.D_80137F70 == 7) {
+            g_Cd.overlayCopySrc = &D_801EE000;
+            LoadImage(&g_Cd.dstRect, g_Cd.overlayCopySrc);
+            g_Cd.D_80137F74++;
         }
-        if (g_Cd.overlayCopySrcIndex == 3) {
-            g_OverlayCopyDst = D_801EC000;
-            LoadImage(&g_Cd.dstRect, g_OverlayCopyDst);
-            g_OverlayCopyDstIndex++;
+        if (g_Cd.D_80137F70 == 3) {
+            g_Cd.overlayCopyDst = D_801EC000;
+            LoadImage(&g_Cd.dstRect, g_Cd.overlayCopyDst);
+            g_Cd.D_80137F74++;
         }
-        if (g_OverlayCopyDstIndex >= g_Cd.D_80137F68) {
-            D_80137F78[0] = 1;
+        if (g_Cd.D_80137F74 >= g_Cd.D_80137F68) {
+            g_Cd.D_80137F78 = 1;
             if (g_CdCallback == CdCallback_1) {
                 g_Cd.dstRect.x = 0x380;
                 g_Cd.dstRect.y = 0x180;
@@ -158,10 +221,10 @@ void func_801080DC(void) {
                 g_Cd.dstRect.h = 1;
                 LoadImage(&g_Cd.dstRect, D_800A04CC);
             }
-            CdDataCallback(0);
+            CdDataCallback(NULL);
         }
     }
-    g_Cd.overlayCopySrcIndex = (g_Cd.overlayCopySrcIndex + 1) & 7;
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
 }
 
 void func_8010838C(s32 cdStep) {
@@ -287,7 +350,7 @@ void func_80108448(void) {
         }
 
         func_801073C0();
-        if (CdSync(1, 0) == CdlNoIntr) {
+        if (CdSync(1, NULL) == CdlNoIntr) {
             break;
         }
 
@@ -300,7 +363,7 @@ void func_80108448(void) {
             break;
         }
 
-        if (CdSync(1, 0) == CdlDiskError) {
+        if (CdSync(1, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -308,7 +371,7 @@ void func_80108448(void) {
         break;
 
     case CdStep_SetSpeed:
-        if (CdSync(1, 0) == CdlNoIntr) {
+        if (CdSync(1, NULL) == CdlNoIntr) {
             break;
         }
         setModeArg[0] = CdlModeSpeed;
@@ -316,7 +379,7 @@ void func_80108448(void) {
             break;
         }
 
-        if (CdSync(1, 0) == CdlDiskError) {
+        if (CdSync(1, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -324,7 +387,7 @@ void func_80108448(void) {
         break;
 
     case CdStep_SetPos:
-        if (CdSync(1, 0) == CdlNoIntr) {
+        if (CdSync(1, NULL) == CdlNoIntr) {
             break;
         }
         cd = &g_CdCallback;
@@ -334,14 +397,14 @@ void func_80108448(void) {
         if (cdFileSize < 0) {
             cdFileSize += 0x1FFF;
         }
-        D_80137F68 = cdFileSize >> 13;
+        g_Cd_D_80137F68 = cdFileSize >> 13;
         temp_a0 = cdFile->unkC;
         D_80137F94 = temp_a0;
         var_v0_3 = *pCdFileSize;
         if (var_v0_3 < 0) {
             var_v0_3 += 0x7FF;
         }
-        g_OverlayBlockCount = var_v0_3 >> 11;
+        g_Cd_overlayBlockCount = var_v0_3 >> 11;
         temp_v1_2 = (var_v0_4 = *pCdFileSize);
         if (temp_v1_2 < 0) {
             var_v0_4 += 0x7FF;
@@ -349,13 +412,13 @@ void func_80108448(void) {
 
         // how many bytes long will be the last block to read?
         // eg. if the file is 0x820 long, then the value will be 0x20
-        g_OverlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
+        g_Cd_overlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
         D_80137F96 = cdFile->unkF;
-        D_80137F88 = D_800ACD10[cdFile->unkD];
+        g_Cd_D_80137F88 = D_800ACD10[cdFile->unkD];
         D_80137F6C = 0;
-        D_80137F78[0] = 0;
-        g_OverlayCopySrcIndex = 0;
-        g_OverlayCopyDstIndex = 0;
+        g_Cd_D_80137F78[0] = 0;
+        g_Cd_D_80137F70 = 0;
+        g_Cd_D_80137F74 = 0;
         if (D_8006BAFC & 0x8000) {
             CdIntToPos(cdFile->loc, &cd->loc);
             if (CdControl(CdlSeekL, &cd->loc, 0) != 0) {
@@ -382,7 +445,7 @@ void func_80108448(void) {
                     CdIntToPos(g_mapTilesetId * 4 + cdFile->loc, &g_CdLoc);
                 }
                 if (CdControl(CdlSetloc, &g_CdLoc, 0) != 0) {
-                    if (CdSync(1, 0) != 5) {
+                    if (CdSync(1, NULL) != 5) {
                         g_CdStep++;
                     } else {
                         func_8010838C(CdStep_DiskErr);
@@ -393,14 +456,14 @@ void func_80108448(void) {
         break;
 
     case CdStep_Seek:
-        if (CdSync(1, 0) == CdlNoIntr) {
+        if (CdSync(1, NULL) == CdlNoIntr) {
             break;
         }
         CdReadyCallback(func_80107460);
         CdDataCallback(g_CdCallbacks[g_CdCallback]);
         if (CdControl(CdlReadN, &g_CdLoc, 0) == 0) {
             func_801073C0();
-        } else if (CdSync(1, 0) == CdlDiskError) {
+        } else if (CdSync(1, NULL) == CdlDiskError) {
             func_801073C0();
             func_8010838C(CdStep_DiskErr);
         } else {
@@ -409,20 +472,20 @@ void func_80108448(void) {
         break;
 
     case CdStep_5:
-        if (CdSync(1, 0) == CdlDiskError) {
+        if (CdSync(1, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
-        if (D_80137F78[0] == -1) {
+        if (g_Cd.D_80137F78 == -1) {
             func_8010838C(CdStep_DmaErr);
         }
-        if (D_80137F78[0] == -3) {
+        if (g_Cd.D_80137F78 == -3) {
             func_8010838C(CdStep_DmaErr);
         }
-        if (D_80137F78[0] == -2) {
+        if (g_Cd.D_80137F78 == -2) {
             func_8010838C(CdStep_SdHeaderErr);
         }
-        if (D_80137F78[0] == 1) {
+        if (g_Cd.D_80137F78 == 1) {
             func_801073C0();
             if (CdControl(CdlPause, 0, 0) != 0) {
                 g_CdStep++;
@@ -431,7 +494,7 @@ void func_80108448(void) {
         break;
 
     case CdStep_6:
-        if (CdSync(1, 0) == CdlDiskError) {
+        if (CdSync(1, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -471,8 +534,8 @@ void func_80108448(void) {
             break;
 
         case CdCallback_16:
-            D_80137FB0 =
-                func_80021350(D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
+            D_80137FB0 = func_80021350(g_Cd.D_80137F88, D_80137F94,
+                                       D_800BD1C8[D_80137F94]);
             break;
 
         case CdCallback_17:
@@ -501,9 +564,9 @@ void func_80108448(void) {
         break;
 
     case CdStep_Complete:
-        if (CdSync(1, 0) == CdlDiskError) {
+        if (CdSync(1, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
-        } else if (CdSync(1, 0) == CdlComplete) {
+        } else if (CdSync(1, NULL) == CdlComplete) {
             D_8006BAFC = CdFileType_None;
             g_CdStep = CdStep_None;
             D_80137FA0 = 0;
