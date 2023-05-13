@@ -946,7 +946,7 @@ void func_800F96F4(void) { // !Fake:
 }
 
 void func_800F97DC(void) {
-    D_8013794C = (s8*)&D_8007EFE4;
+    D_8013794C = &D_8007EFE4;
     D_80137950 = 0x180;
     D_80137954 = 0;
 }
