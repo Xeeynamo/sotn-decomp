@@ -113,7 +113,7 @@ typedef struct Primitive {
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
-#define UNK_PTR 0x801E8000
+#define DEMO_KEY_PTR 0x801E8000
 #define DEBUG_PTR 0x80280000
 
 #define STAGE_NO0 0x00
