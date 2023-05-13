@@ -599,11 +599,7 @@ void func_800EFBF8(s32 arg0) {
 }
 // #endif
 
-// TODO inline those three strings and remove them from their rodata assembly
-extern const char aSimCBinDemoKey[24] ALIGNED4; // "sim:c:\\bin\\demo_key.bin"
-extern const char aSimCBinDk000Bi[22] ALIGNED4; // "sim:c:\\bin\\dk_000.bin"
-extern const char D_800DC4C0[5] ALIGNED4;       // "  OK"
-void func_800F0334(s32 arg0) {
+void DemoOpenFile(s32 arg0) {
     char fileName[0x100];
     long fd;
 
@@ -614,9 +610,11 @@ void func_800F0334(s32 arg0) {
         return;
     }
     if (arg0 == 0) {
-        __builtin_memcpy(fileName, aSimCBinDemoKey, sizeof(aSimCBinDemoKey));
+        __builtin_memcpy(fileName, "sim:c:\\bin\\demo_key.bin",
+                         sizeof("sim:c:\\bin\\demo_key.bin"));
     } else {
-        __builtin_memcpy(fileName, aSimCBinDk000Bi, sizeof(aSimCBinDk000Bi));
+        __builtin_memcpy(fileName, "sim:c:\\bin\\dk_000.bin",
+                         sizeof("sim:c:\\bin\\dk_000.bin"));
         fileName[15] = '0' + (D_80137594 / 10 % 10);
         fileName[16] = '0' + (D_80137594 % 10);
     }
@@ -628,12 +626,13 @@ void func_800F0334(s32 arg0) {
     close(fd);
 }
 
-void func_800F04A4(void) {
-    char fileName[0x100];
+void DemoSaveFile(void) {
+    char buf[0x100];
     long fd;
 
-    __builtin_memcpy(fileName, aSimCBinDemoKey, sizeof(aSimCBinDemoKey));
-    fd = open(fileName, 0x200);
+    __builtin_memcpy(buf, "sim:c:\\bin\\demo_key.bin",
+                     sizeof("sim:c:\\bin\\demo_key.bin"));
+    fd = open(buf, 0x200);
     if (fd < 0) {
         return;
     }
@@ -645,32 +644,100 @@ void func_800F04A4(void) {
         return;
     }
 
-    __builtin_memcpy(fileName, D_800DC4C0, sizeof(D_800DC4C0));
-    func_800E2438(fileName);
+    __builtin_memcpy(buf, "  OK", sizeof("  OK"));
+    func_800E2438(buf);
 }
 
-void func_800F0578(s32 arg0) {
-    D_80137590 = (s32*)0x801E8000;
-    *((s32*)0x801E8000) = 0;
+void DemoInit(s32 arg0) {
+    D_80137590 = DEMO_KEY_PTR;
+    *((s32*)DEMO_KEY_PTR) = 0;
 
     func_800EFBF8(arg0);
 
     switch (arg0) {
     case 0:
     case 2:
-        func_800F0334(arg0);
-        D_80097914 = arg0 == 0 ? 1 : 4;
+        DemoOpenFile(arg0);
+        g_DemoMode = arg0 == 0 ? Demo_PlaybackInit : Demo_Playback;
         break;
 
     case 1:
-        D_80097914 = 2;
+        g_DemoMode = Demo_Recording;
 
     default:
         break;
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/4F45C", func_800F0608);
+#define DEMO_KEY_LEN 3
+#define DEMO_MAX_LEN 0x2000
+void DemoUpdate(void) {
+    u8 curBtnLo;
+    u8 curBtnHi;
+    u8 frameCount;
+    u8 btnHi;
+    u8 btnLo;
+    s32 demoOffset;
+
+    btnLo = D_80137590[0];
+    btnHi = D_80137590[1];
+    frameCount = D_80137590[2];
+    switch (g_DemoMode) {
+    case Demo_None:
+    case Demo_End:
+        return;
+    case Demo_PlaybackInit:
+    case Demo_Playback:
+        FntPrint("demonstration\n");
+        if (frameCount == 0) {
+            D_80137590 += DEMO_KEY_LEN;
+            btnLo = D_80137590[0];
+            btnHi = D_80137590[1];
+        }
+
+        // Check if end of playback
+        if ((btnLo == 0xFF && btnHi == 0xFF) || g_pads[0].tapped & PAD_START) {
+            if (g_DemoMode == Demo_Playback) {
+                g_DemoMode = Demo_End;
+            } else {
+                g_DemoMode = Demo_None;
+            }
+        } else {
+            g_pads->pressed = btnLo + (btnHi << 8);
+            g_pads[0].tapped = 0;
+            D_80137590[2]--;
+        }
+        break;
+    case Demo_Recording:
+        demoOffset = D_80137590 - DEMO_KEY_PTR;
+        FntPrint("demo key in:%04x/%04x\n", demoOffset, DEMO_MAX_LEN);
+        if ((s32)(D_80137590 - DEMO_KEY_PTR) >= DEMO_MAX_LEN - DEMO_KEY_LEN) {
+            FntPrint("demo overflow\n");
+            return;
+        }
+
+        if (g_pads[1].tapped & PAD_CIRCLE) {
+            D_80137590 += DEMO_KEY_LEN;
+            D_80137590[0] = 0xFF;
+            D_80137590[1] = 0xFF;
+            DemoSaveFile();
+            g_DemoMode = Demo_None;
+        }
+        curBtnLo = g_pads[0].pressed;
+        curBtnHi = g_pads->pressed >> 8;
+        if (frameCount != 0xFF && btnLo == curBtnLo && btnHi == curBtnHi) {
+            D_80137590[2]++;
+        } else {
+            if (D_80137590[2] != 0) {
+                D_80137590 += DEMO_KEY_LEN;
+            }
+            D_80137590[0] = curBtnLo;
+            D_80137590[1] = curBtnHi;
+            D_80137590[2] = 1;
+        }
+        break;
+    }
+}
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;

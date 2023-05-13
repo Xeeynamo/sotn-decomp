@@ -831,6 +831,14 @@ typedef struct {
     /* D_8003C70E */ s16 zPriority;
 } FgLayer; /* size=0x8 */
 
+typedef enum {
+    Demo_None,
+    Demo_PlaybackInit,
+    Demo_Recording,
+    Demo_End,
+    Demo_Playback,
+} DemoMode;
+
 extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
@@ -1074,7 +1082,7 @@ extern s32 D_80097904;
 extern s32 D_80097908;
 extern s32 D_8009790C;
 extern s32 D_80097910;
-extern s32 D_80097914;
+extern DemoMode g_DemoMode;
 extern s32 g_mapTilesetId; // 0x80097918
 extern s32 D_80097924;
 extern s32 D_80097928;
