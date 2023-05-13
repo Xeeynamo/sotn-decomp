@@ -112,9 +112,9 @@ void CopyStageOvlCallback(void) {
         len = g_Cd.overlayLastBlockSize;
     }
     if (g_CdCallback == CdCallback_4) {
-        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + 0x801E8000;
+        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + UNK_PTR;
     } else {
-        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + 0x80180000;
+        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + STAGE_PRG_PTR;
     }
     g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
 #if USE_MICRO_OPTIMIZATIONS == 1
@@ -145,7 +145,7 @@ void CopyRicOvlCallback(void) {
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
-    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + 0x8013C000;
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + RIC_PRG_PTR;
     g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
 #if USE_MICRO_OPTIMIZATIONS == 1
     MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
@@ -166,8 +166,46 @@ void CopyRicOvlCallback(void) {
     }
 }
 
-// 106
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107750);
+void CopySupportOvlCallback(void) {
+    s32 temp_v1;
+    s32 i;
+    s32 len;
+    u8* var_v0;
+    u8** temp_a0;
+
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+
+    if (g_CdCallback == CdCallback_Familiar) {
+        g_Cd.overlayCopyDst = FAMILIAR_PTR;
+    } else if (D_80137F96 == 0) {
+        g_Cd.overlayCopyDst = WEAPON0_PTR;
+    } else {
+        g_Cd.overlayCopyDst = WEAPON1_PTR;
+    }
+    g_Cd.overlayCopyDst += TO_CD_BLOCK(g_Cd.D_80137F74);
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0) {
+        g_Cd.D_80137F78 = 1;
+        CdDataCallback(NULL);
+    }
+}
 
 // 159
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_801078C4);
@@ -185,7 +223,7 @@ void func_80107C6C(void) {
     }
     g_Cd.overlayCopySrc = (g_Cd.D_80137F70 << 0xB) + D_801EC000;
     if (g_Cd.overlayBlockCount != 0) {
-        len = 0x800;
+        len = CD_BLOCK_LEN;
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
