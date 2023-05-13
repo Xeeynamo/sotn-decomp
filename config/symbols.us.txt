@@ -1,4 +1,3 @@
-CdLastCom = 0x80019444;
 aDraBin1 = 0x80010040;
 aFMapBin1 = 0x8001004C;
 a0123456789abcd = 0x8001005C;
@@ -329,6 +328,7 @@ def_cbread = 0x800193EC;
 DeliverEvent = 0x80019414;
 CdStatus = 0x80019424;
 CdMode = 0x80019434;
+CdLastCom = 0x80019444;
 CdLastPos = 0x80019454;
 CdReset = 0x80019464;
 CdFlush = 0x800194D0;
