@@ -215,17 +215,17 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", DrawEntitiesHitbox);
 void DrawEntitiesHitbox(s32 blendMode) {
     DR_MODE* drawMode;
     s32 polyCount;
-    s32* order;
+    s32* ot;
     Entity* entity;
     TILE* tile;
-    u32 orderIdx;
+    u32 otIdx;
     u16 x;
     u16 y;
 
-    order = g_CurrentBuffer->order;
+    ot = g_CurrentBuffer->ot;
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
     drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
-    orderIdx = 0x1F0;
+    otIdx = 0x1F0;
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40;
          polyCount++, entity++) {
         if (entity->unk3C == 0)
@@ -256,7 +256,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
         tile->w = entity->hitboxWidth * 2;
         tile->h = entity->hitboxHeight * 2;
         SetSemiTrans(tile, 1);
-        AddPrim(&order[orderIdx], tile);
+        AddPrim(&ot[otIdx], tile);
         tile++;
         g_GpuUsage.tile++;
     }
@@ -300,14 +300,14 @@ void DrawEntitiesHitbox(s32 blendMode) {
         tile->w = entity->hitboxWidth * 2;
         tile->h = entity->hitboxHeight * 2;
         SetSemiTrans(tile, 1);
-        AddPrim(&order[orderIdx], tile);
+        AddPrim(&ot[otIdx], tile);
         tile++;
         g_GpuUsage.tile++;
     }
 
     if (g_GpuUsage.drawModes < 0x400) {
         SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &g_Vram.D_800ACD80);
-        AddPrim(&order[orderIdx], drawMode);
+        AddPrim(&ot[otIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }

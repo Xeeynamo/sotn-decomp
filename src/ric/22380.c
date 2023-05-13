@@ -2,15 +2,15 @@
 
 // same as func_800E2398
 void func_8015E380(const char* str) {
-    g_CurrentBuffer = g_CurrentBuffer->other;
+    g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(str);
     if (D_80174F7C++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);
-    PutDrawEnv(&g_CurrentBuffer->buf.draw);
-    PutDispEnv(&g_CurrentBuffer->buf.disp);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
     FntFlush(-1);
 }
 
