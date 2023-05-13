@@ -105,9 +105,13 @@ func (p *patcher) patchLine(line string) error {
 		switch len(tokens) {
 		case 5: // variant without pointer
 			p.write(line)
+		case 6: // variant lw	$2,$LC2
+			p.write(line)
+		case 8: // variant lw	$2,$LC2+4
+			p.write(line)
 		case 9: // variant with pointer
 			if tokens[3] != "," || tokens[5] != "(" || tokens[8] != ")" {
-				return p.makeError(fmt.Errorf("unable to parse '%s': token keys not recognised", line))
+				return fmt.Errorf("unable to parse '%s': token keys not recognised", line)
 			}
 
 			op := tokens[0]
@@ -129,7 +133,7 @@ func (p *patcher) patchLine(line string) error {
 		case 10: // variant with label
 			p.write(line)
 		default:
-			return p.makeError(fmt.Errorf("unable to parse '%s': len(tokens)=%d", line, len(tokens)))
+			return fmt.Errorf("unable to parse '%s': len(tokens)=%d", line, len(tokens))
 		}
 	case "rem":
 		srcReg1 := tokens[4] + tokens[5]
