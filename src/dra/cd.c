@@ -180,8 +180,35 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
 // 93
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107C6C);
 
-// 90
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107DB4);
+void func_80107DB4(void) {
+    s32 i;
+    s32 len;
+
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Cd.D_80137F88;
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74 += 1;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
+        g_Cd.D_80137F78 = 1;
+        CdDataCallback(NULL);
+    }
+}
 
 // 138
 INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107EF0);
