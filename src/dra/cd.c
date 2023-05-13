@@ -104,11 +104,41 @@ void func_80107460(void) {
     g_Cd.D_80137F6C = (g_Cd.D_80137F6C + 1) & 7;
 }
 
-// 99
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", CopyMapOverlayCallback);
-// DECOMP_ME_WIP CopyMapOverlayCallback https://decomp.me/scratch/1AWN1
+void CopyStageOvlCallback(void) {
+    s32 i;
+    s32 len;
 
-void func_80107614(void) {
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    if (g_CdCallback == CdCallback_4) {
+        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + 0x801E8000;
+    } else {
+        g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + 0x80180000;
+    }
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
+        g_Cd.D_80137F78 = 1;
+        CdDataCallback(NULL);
+    }
+}
+
+void CopyRicOvlCallback(void) {
     s32 i;
     s32 len;
 

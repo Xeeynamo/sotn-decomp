@@ -75,13 +75,13 @@ typedef enum {
     CdCallback_1,        // func_801080DC
     CdCallback_2,        // func_801080DC
     CdCallback_3,        // func_801080DC
-    CdCallback_4,        // CopyMapOverlayCallback
+    CdCallback_4,        // CopyStageOvlCallback
     CdCallback_5,        // func_801080DC
     CdCallback_6,        // func_801080DC
     CdCallback_7,        // func_801080DC
-    CdCallback_StagePrg, // CopyMapOverlayCallback
-    CdCallback_9,        // CopyMapOverlayCallback
-    CdCallback_Ric,      // func_80107614
+    CdCallback_StagePrg, // CopyStageOvlCallback
+    CdCallback_9,        // CopyStageOvlCallback
+    CdCallback_Ric,      // CopyRicOvlCallback
     CdCallback_11,       // func_801080DC
     CdCallback_12,       // func_801078C4
     CdCallback_13,       // func_801078C4
