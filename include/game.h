@@ -340,9 +340,6 @@ typedef struct {
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
-typedef struct {
-} DisplayBuffer;
-
 #define GPU_MAX_TILE_COUNT 0x100
 
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
