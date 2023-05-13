@@ -8,17 +8,12 @@
 #define CDL_MODE_SPEED CdlModeSpeedDouble
 #endif
 
-void func_80107460(void);
-
-void PlaySfx(s32);
-void SsVabClose(short);
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/dra/nonmatchings/68448", func_80108448);
-// #else
+extern u16 D_800A04CC[]; // palette?
+extern s16 D_800AC998[];
+extern u32* D_801EE000;
 extern s32 D_8003C90C;
 extern s32 D_8003C910;
 extern u32 D_8006EBCC;
-extern u32 D_800A04CC;
 extern s32 D_800AC9F8;
 extern s8 D_800ACA06;
 extern s32 D_800ACAB8;
@@ -44,21 +39,161 @@ extern s32 D_800ACD10[];
 extern void (*g_CdCallbacks[])(void);
 extern s32 D_800ACD7C;
 extern s32 D_800BD1C8[];
-extern CdlLOC g_CdLoc;
-extern s32 D_80137F68;
-extern s32 D_80137F78[];
-extern s8* D_80137F88;
-extern s16 D_80137F94;
 extern u8 D_80137F96;
 extern s32 D_80137FA0;
 extern s32 D_80137FAC;
 extern s32 D_80137FB0;
-extern const char aDmaError[];
 extern const char aPqes_1[];
-extern s32 g_OverlayBlockCount;
-extern s32 g_OverlayCopyDstIndex;
+
+typedef struct {
+    RECT dstRect;
+    s32 D_80137F68;
+    s32 D_80137F6C;
+    s32 overlayCopySrcIndex;
+    s32 overlayCopyDstIndex;
+    s32 D_80137F78;
+    u32* overlayCopySrc;
+    s32* overlayCopyDst;
+    s8* D_80137F88;
+    s32 overlayBlockCount;
+    s32 overlayLastBlockSize;
+    s16 D_80137F94;
+} CdThing;
+
+CdCallbacks g_CdCallback;
+extern CdThing g_Cd;
+extern CdlLOC g_CdLoc;
+extern s32 D_80137F68;
 extern s32 g_OverlayCopySrcIndex;
+extern s32 g_OverlayCopyDstIndex;
+extern s32 D_80137F78[];
+extern u32* g_OverlayCopySrc;
+extern s32* g_OverlayCopyDst;
+extern s8* D_80137F88;
+extern s32 g_OverlayBlockCount;
 extern s32 g_OverlayLastBlockSize;
+extern s16 D_80137F94;
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", CopyMapOverlayCallback);
+// DECOMP_ME_WIP CopyMapOverlayCallback https://decomp.me/scratch/1AWN1
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107614);
+// DECOMP_ME_WIP func_80107614 https://decomp.me/scratch/U0IGY
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107750);
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_801078C4);
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107C6C);
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107DB4);
+
+INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107EF0);
+
+void func_801080DC(void) {
+    int new_var2;
+    s32 new_var;
+    RECT* r;
+
+    new_var2 = 6;
+    if (g_Cd.overlayCopySrcIndex == 3 || g_Cd.overlayCopySrcIndex == 7) {
+        switch (g_CdCallback) {
+        case CdCallback_1:
+            g_Cd.dstRect.x = D_800AC958[g_OverlayCopyDstIndex];
+            g_Cd.dstRect.y =
+                ((g_OverlayCopyDstIndex << new_var2) & 0x80) + 0x100;
+            g_Cd.dstRect.w = 0x20;
+            g_Cd.dstRect.h = 0x80;
+            if (g_OverlayCopyDstIndex == 0x1A) {
+                g_Cd.dstRect.y = 0x181;
+                g_Cd.dstRect.h = 0x7F;
+                if (!g_OverlayCopyDstIndex && !g_OverlayCopyDstIndex) {
+                }
+            }
+            if (g_OverlayCopyDstIndex == 0x20) {
+                g_Cd.dstRect.x = 0;
+                g_Cd.dstRect.y = 0xF0;
+                g_Cd.dstRect.w = 0x100;
+                g_Cd.dstRect.h = 0x10;
+            }
+            break;
+        case CdCallback_0:
+        case CdCallback_2:
+        case CdCallback_6:
+            g_Cd.dstRect.x = D_800AC998[g_OverlayCopyDstIndex & 0x1F];
+            new_var = g_OverlayCopyDstIndex;
+            g_Cd.dstRect.y = (new_var << 6) & 0x80;
+            if (g_OverlayCopyDstIndex >= 0x20) {
+                g_Cd.dstRect.y += 0x100;
+            }
+            g_Cd.dstRect.w = 0x20;
+            g_Cd.dstRect.h = 0x80;
+            break;
+        case CdCallback_3:
+            g_Cd.dstRect.x = 0x100;
+            g_Cd.dstRect.y = 0x100;
+            g_Cd.dstRect.w = 0x40;
+            g_Cd.dstRect.h = 0x40;
+            break;
+        }
+
+        if (g_Cd.overlayCopySrcIndex == 7) {
+            g_OverlayCopySrc = &D_801EE000;
+            LoadImage(&g_Cd.dstRect, g_OverlayCopySrc);
+            g_OverlayCopyDstIndex++;
+        }
+        if (g_Cd.overlayCopySrcIndex == 3) {
+            g_OverlayCopyDst = D_801EC000;
+            LoadImage(&g_Cd.dstRect, g_OverlayCopyDst);
+            g_OverlayCopyDstIndex++;
+        }
+        if (g_OverlayCopyDstIndex >= g_Cd.D_80137F68) {
+            D_80137F78[0] = 1;
+            if (g_CdCallback == CdCallback_1) {
+                g_Cd.dstRect.x = 0x380;
+                g_Cd.dstRect.y = 0x180;
+                g_Cd.dstRect.w = 0x10;
+                g_Cd.dstRect.h = 1;
+                LoadImage(&g_Cd.dstRect, D_800A04CC);
+            }
+            CdDataCallback(0);
+        }
+    }
+    g_Cd.overlayCopySrcIndex = (g_Cd.overlayCopySrcIndex + 1) & 7;
+}
+
+void func_8010838C(s32 cdStep) {
+    func_801073C0();
+    g_CdStep = cdStep;
+}
+
+void func_801083BC(void) {
+    g_CdStep = CdStep_LoadInit;
+    D_8006BAFC = CdFileType_25;
+    D_8013AE9C = 10;
+    D_800ACC64[0] = 0;
+}
+
+bool func_801083F0(void) {
+    g_CdStep = CdStep_LoadInit;
+    D_8006BAFC = CdFileType_25;
+
+    if (D_8013AE9C == 0) {
+        return false;
+    } else {
+        D_8013AE9C--;
+        D_800ACC64[0] += 4;
+    }
+
+    return true;
+}
+
+void func_80107460(void);
+
+void PlaySfx(s32);
+void SsVabClose(short);
 
 void func_80108448(void) {
     unsigned char result[8];
@@ -377,7 +512,7 @@ void func_80108448(void) {
 
     case CdStep_DmaErr:
         if (g_blinkTimer & 4) {
-            FntPrint(aDmaError);
+            FntPrint("DMA error\n");
         } else {
             FntPrint("\n");
         }

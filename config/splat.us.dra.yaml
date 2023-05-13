@@ -93,9 +93,7 @@ segments:
       - [0x3CD10, rodata]
       - [0x3CDC0, rodata] # jpt_80103F08
       - [0x3CDDC, rodata]
-      - [0x40D38, rodata] # jpt_8010812C
-      - [0x40D54, rodata] # To be merged with 40D38
-      - [0x40D60, .rodata, 68448] # To be merged with 40D38
+      - [0x40D38, .rodata, cd] # To be merged with 40D38
       - [0x40E28, rodata]
       - [0x40E48, rodata] # jpt_8010A86C
       - [0x40E88, rodata] # jpt_8010AA30
@@ -184,7 +182,7 @@ segments:
       - [0x5D6C4, c, 5D6C4]
       - [0x627C4, c, 627C4]
       - [0x62D70, c, 62D70]
-      - [0x68448, c, 68448]
+      - [0x67460, c, cd]
       - [0x692E8, c, 692E8]
       - [0x71830, c, 71830]
       - [0x73AAC, c, 73AAC]

@@ -115,7 +115,6 @@ typedef struct {
     CdCallbacks cb;
     CdlLOC loc;
 } CdMgr;
-extern CdCallbacks g_CdCallback;
 
 typedef struct {
     RECT D_800ACD80;
@@ -413,10 +412,10 @@ extern s32 D_80137E4C;
 extern s32 D_80137E50;
 extern s32 D_80137E58;
 extern s32 D_80137E5C;
-extern s32 D_80137E60;
-extern s32 D_80137E64;
-extern s32 D_80137E68;
-extern s32 D_80137F6C;
+extern s32 D_80137E60; // most likely part of the g_Cd struct
+extern s32 D_80137E64; // most likely part of the g_Cd struct
+extern s32 D_80137E68; // most likely part of the g_Cd struct
+extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;

@@ -981,6 +981,7 @@ g_StatusDefenseEquip = 0x80137934;
 g_StatusPlayerStatsTotal = 0x80137938;
 g_CdCallback = 0x80137F58;
 g_CdLoc = 0x80137F5C;
+g_Cd = 0x80137F60;
 g_OverlayCopySrcIndex = 0x80137F70;
 g_OverlayCopyDstIndex = 0x80137F74;
 g_OverlayCopySrc = 0x80137F80;
