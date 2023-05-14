@@ -689,7 +689,7 @@ typedef struct {
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
-    /* 8003C7B8 */ s16 (*AllocPrimitives)(s32 primitives, s32 count);
+    /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);

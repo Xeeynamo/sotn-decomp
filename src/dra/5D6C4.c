@@ -1151,44 +1151,38 @@ void func_8010189C(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80101A80);
 
 void func_801024DC(void) {
-    POLY_GT4* temp_v1;
-    POLY_GT4* var_v1;
-    s32 temp_v0_2;
-    s32 var_a0;
-    u32 temp_v0;
-    temp_v0 = AllocPrimitives(1, 4);
-    D_8013799C = temp_v0;
-    var_v1 = &g_PrimBuf[temp_v0];
-    var_a0 = 0;
-    if (var_v1 != 0) {
-        do {
-            var_v1->x0 = (var_a0 & 1) << 7;
-            var_v1->u0 = 0x80;
-            var_v1->v0 = 0xF0;
-            var_v1->pad2 = 0x1FD;
-            var_v1->pad3 = 8;
-            var_v1 = (POLY_GT4*)var_v1->tag;
-            var_a0 += 1;
-        } while (var_v1 != 0);
+    Primitive* prim;
+    Primitive* prim2;
+    s32 x;
+
+    D_8013799C = AllocPrimitives(PRIM_TILE, 4);
+    prim = &g_PrimBuf[D_8013799C];
+    for (x = 0; prim != 0; x++) {
+        prim->x0 = (x & 1) << 7;
+        prim->u0 = 0x80;
+        prim->v0 = 0xF0;
+        prim->priority = 0x1FD;
+        prim->blendMode = 8;
+        prim = prim->next;
     }
     D_801379A8 = 0;
     D_801379A4 = 0;
-    temp_v0_2 = AllocPrimitives(4, 1);
-    temp_v1 = &g_PrimBuf[temp_v0_2];
-    D_801379A0 = temp_v0_2;
-    temp_v1->u1 = 0xFF;
-    temp_v1->v2 = 0xFF;
-    temp_v1->u3 = 0xFF;
-    temp_v1->v3 = 0xFF;
-    temp_v1->tpage = 0x1D;
-    temp_v1->clut = 0x1C0;
-    temp_v1->pad2 = 0x1FE;
-    temp_v1->u0 = 0;
-    temp_v1->v0 = 0;
-    var_v1 = temp_v1;
-    var_v1->v1 = 0;
-    var_v1->u2 = 0;
-    var_v1->pad3 = 8;
+
+    D_801379A0 = AllocPrimitives(PRIM_GT4, 1);
+    prim2 = &g_PrimBuf[D_801379A0];
+    prim2->u1 = 0xFF;
+    prim2->v2 = 0xFF;
+    prim2->u3 = 0xFF;
+    prim2->v3 = 0xFF;
+    prim2->tpage = 0x1D;
+    prim2->clut = 0x1C0;
+    prim2->priority = 0x1FE;
+    prim2->u0 = 0;
+    prim2->v0 = 0;
+    prim = prim2;
+    prim->v1 = 0;
+    prim->u2 = 0;
+    prim->blendMode = 8;
 }
 
 extern Unkstruct_80086FFA D_80086FFA[];
