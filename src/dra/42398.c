@@ -837,7 +837,7 @@ void func_800E451C(void) {
                 break;
             }
         }
-            D_8003C9A4 = 0;
+        D_8003C9A4 = 0;
         g_GameStep++;
         break;
     case 6:
@@ -881,82 +881,3 @@ void func_800E4970(void) {
 void func_800E4A04(void) { s32 pad[3]; }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
-
-void func_800E5358(void) {
-    POLY_GT4* poly = &g_PrimBuf[D_8013640C];
-    s32 i;
-
-    for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {
-        if ((i >= 0) && (poly->y0 <= 256)) {
-            if (poly->p1 != 0) {
-                poly->p1--;
-            } else {
-                if ((poly->p2 < 10) && (rand() & 1)) {
-                    poly->p2++;
-                } else {
-                    if (!(rand() & 3)) {
-                        poly->y0++;
-                        poly->y1++;
-                    }
-                    poly->y0++;
-                    poly->y1++;
-                }
-                poly->y2++;
-                poly->y3++;
-            }
-        }
-    }
-}
-
-void func_800E5498(void) {
-    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
-    GpuBuffer* buffer = g_CurrentBuffer;
-
-    setSemiTrans(poly, true);
-    setShadeTex(poly, false);
-    SetPolyRect(poly, 0, 0, 256, 256);
-    setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
-    func_801072BC(poly);
-    poly->tpage = 0x5A;
-    poly->clut = D_8003C3C2[0];
-    AddPrim(&buffer->ot[0x1FF], poly);
-    g_GpuUsage.gt4++;
-}
-
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5584);
-
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5D30);
-
-void func_800E6218(void) {
-    if (D_8006CBC4 != 0) {
-        D_80170000();
-    }
-}
-
-void func_800E6250(void) {
-    if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
-            ;
-        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
-            ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) !=
-               0)
-            ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) !=
-               0)
-            ;
-    }
-}
-
-extern unkStruct_800A872C D_800A872C[];
-
-s32 func_800E6300(void) {
-    s32 i;
-
-    for (i = 0; i < 30; i++) {
-        if ((D_800A872C[i].unk0 > 0) && (g_Status.relics[i] & 2)) {
-            return D_800A872C[i].unk0;
-        }
-    }
-    return 0;
-}
