@@ -45,7 +45,7 @@ segments:
       - [0x3B430, .rodata, 42398]
       - [0x3B524, rodata]
       - [0x3B530, rodata] # jpt_800E4A64
-      - [0x3B560, rodata] # jpt_800E55C4
+      - [0x3B560, rodata] # jump table for func_800E5D30
       - [0x3B720, .rodata, 46358]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
@@ -171,7 +171,7 @@ segments:
       - [0x420B4, rodata] # jpt_80135058
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
-      - [0x45498, c, 45498]
+      - [0x45358, c, 45358]
       - [0x46358, c, 46358]
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]

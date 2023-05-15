@@ -388,7 +388,7 @@ typedef struct {
 
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
     /* 0x00000 */ struct GpuBuffer* next;         // next chained buffer
-    /* 0x00005 */ DRAWENV draw;                   // drawing environment
+    /* 0x00004 */ DRAWENV draw;                   // drawing environment
     /* 0x0005C */ DISPENV disp;                   // display environment
     /* 0x00074 */ DR_ENV env[0x10];               // packed drawing environment
     /* 0x00474 */ u_long ot[OTSIZE];              // ordering table
