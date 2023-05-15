@@ -379,7 +379,7 @@ void func_801B17C8(void) {
     switch (D_800978F8) {
     case 0:
         if (D_80097924 == -1 || D_8006C378 == -1) {
-            D_80073060++;
+            g_GameStep++;
         } else {
             D_800978C4 = 0;
             D_800978F8++;
@@ -395,15 +395,15 @@ void func_801B17C8(void) {
         D_800978C4 = 0;
         if (func_801B3A94(1) != 0) {
             D_800978C4 = 1;
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     }
 }
 
-void func_801B18CC(s32 arg0) {
-    D_8003C734 = arg0;
-    D_80073060 = 0;
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
@@ -946,27 +946,27 @@ void func_801B3F7C(s32 arg0) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3F94);
 
 void InitRoomEntities(s32 objLayoutId) {
-    s32 temp_s0 = D_8003C9A4;
-
-    switch (temp_s0) {
+    switch (D_8003C9A4) {
     case 0:
-        if (!g_IsUsingCd) {
-            g_IsTimeAttackUnlocked = true;
-            D_8003C728 = 1;
-            D_8003C100 = 0;
-            D_8003C9A4 = 1;
+        if (g_IsUsingCd) {
+            break;
         }
+        g_IsTimeAttackUnlocked = true;
+        D_8003C728 = 1;
+        D_8003C100 = 0;
+        D_8003C9A4 = 1;
         break;
 
     case 1:
         func_801B9C80();
-        if (D_8003C728 == 0) {
-            g_IsTimeAttackUnlocked = false;
-            D_8003C100 = 0;
-            func_801B18F4();
-            D_8003C734 = temp_s0;
-            D_8003C9A4 = 0;
+        if (D_8003C728) {
+            break;
         }
+        g_IsTimeAttackUnlocked = false;
+        D_8003C100 = 0;
+        func_801B18F4();
+        g_GameState = Game_Title;
+        D_8003C9A4 = 0;
         break;
     }
 }

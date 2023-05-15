@@ -547,9 +547,9 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF6D0);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF774);
 
-void func_801B0030(s32 arg0) {
-    D_8003C734 = arg0;
-    D_80073060 = 0;
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }

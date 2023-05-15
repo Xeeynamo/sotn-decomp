@@ -22,6 +22,7 @@ EntityDraculaGlass = 0x801AD8C0;
 EntityDraculaFinalForm = 0x801ADD60;
 EntityDraculaMegaFireball = 0x801AEFD8;
 EntityDraculaRainAttack = 0x801AF154;
+SetGameState = 0x801B0030;
 Random = 0x801B186C;
 Update = 0x801B189C;
 EntityNumericDamage = 0x801B2A3C;

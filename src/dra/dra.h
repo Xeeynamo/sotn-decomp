@@ -49,7 +49,7 @@ typedef enum {
 
 typedef enum {
     CdFileType_None,
-    CdFileType_1,
+    CdFileType_Sel,
     CdFileType_GameChr,
     CdFileType_StageChr,
     CdFileType_4,
@@ -63,9 +63,10 @@ typedef enum {
     CdFileType_19,
     CdFileType_24 = 24,
     CdFileType_25,
-    CdFileType_Servant = 27,
+    CdFileType_26,
+    CdFileType_Servant,
     CdFileType_28,
-    CdFileType_ServantPrg = 29,
+    CdFileType_ServantPrg,
     CdFileType_30,
     CdFileType_31,
     CdFileType_DemoKey,
@@ -555,7 +556,7 @@ void func_8002ABF4(s32);
 void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
-void func_800E4124(s32 arg0);
+void SetGameState(GameState gameState);
 void func_800E4970(void);
 s32 func_800E81FC(s32 id, SimFileType type);
 void func_800E8D24(void);
