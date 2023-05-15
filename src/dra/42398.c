@@ -22,7 +22,7 @@
 void func_800E2398(const char* str);
 s32 func_800E3278(void);
 void func_800E385C(u32*);
-void func_800E7AEC(void);
+void UpdateGame(void);
 void func_800E7BB8(void);
 void func_800E8EE4(void);
 void func_800EA7CC(void);
@@ -463,7 +463,7 @@ void entrypoint_sotn(void) {
     FntLoad(0x380, 0x100);
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
-    func_800E4124(0);
+    SetGameState(Game_Init);
 
     g_GpuMaxUsage.drawModes = 0;
     g_GpuMaxUsage.gt4 = 0;
@@ -527,12 +527,12 @@ loop_5:
         g_GpuUsage.tile = 0;
         g_GpuUsage.sp = 0;
         if (nullsub_8() != 0) {
-            func_800E7AEC();
+            UpdateGame();
         }
         if (D_8003C0F8 == 0 && D_800973EC == 0) {
             func_800ECE58();
             func_800EBBAC();
-            if (D_8003C734 == 2 && D_800BD1C0 != 0) {
+            if (g_GameState == Game_Play && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
                     DrawEntitiesHitbox(D_801362B0);
                 }
@@ -568,7 +568,7 @@ loop_5:
             func_801361F8();
             VSync(D_8003C73C);
             func_80132760();
-            func_800E4124(1);
+            SetGameState(Game_Title);
             goto loop_5;
         }
         PutDrawEnv(&g_CurrentBuffer->draw);
@@ -636,9 +636,9 @@ loop_5:
     }
 }
 
-void func_800E4124(s32 context) {
-    D_8003C734 = context;
-    D_80073060 = 0;
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
@@ -738,7 +738,7 @@ void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
 void func_800E451C(void) {
     void (*callback)(void);
 
-    switch (D_80073060) {
+    switch (g_GameStep) {
     case 0:
         ClearBackbuffer();
         func_800ECBF8();
@@ -757,30 +757,30 @@ void func_800E451C(void) {
                 return;
             }
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_1;
+            D_8006BAFC = CdFileType_Sel;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 100:
         if (!g_IsUsingCd) {
-            RECT sp18;
-            sp18.x = 0;
-            sp18.y = 0;
-            sp18.w = 0x280;
-            sp18.h = 0x100;
-            LoadImage(&sp18, (u32*)0x80180014);
+            RECT rect;
+            rect.x = 0;
+            rect.y = 0;
+            rect.w = 0x280;
+            rect.h = 0x100;
+            LoadImage(&rect, (u32*)0x80180014);
 
-            sp18.x = 0;
-            sp18.y = 0x100;
-            LoadImage(&sp18, (u32*)0x80180014);
+            rect.x = 0;
+            rect.y = 0x100;
+            LoadImage(&rect, (u32*)0x80180014);
 
             SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 0x280, 0x100);
             SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0x100, 0x280, 0x100);
             SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 0x280, 0x100);
             SetDispMask(0);
-            D_8013640C = 0x6E;
-            D_80073060++;
+            D_8013640C = 110;
+            g_GameStep++;
         }
         break;
     case 101:
@@ -788,46 +788,60 @@ void func_800E451C(void) {
         if (D_8013640C == 0 || --D_8013640C == 0) {
             ClearImage(&g_Vram.D_800ACDF0, 0, 0, 0);
             func_800E3574();
-            g_StageId = 0x45;
+            g_StageId = STAGE_SEL;
             if (g_UseDisk) {
                 if (g_IsUsingCd) {
                     break;
                 }
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_1;
+                D_8006BAFC = CdFileType_Sel;
             }
-            D_80073060 = 1;
+            g_GameStep = 1;
         }
         break;
     case 1:
-        if ((g_UseDisk && !g_IsUsingCd) ||
-            (!g_UseDisk && func_800E81FC(2, SimFileType_System) >= 0 &&
-             func_800E81FC(0, SimFileType_System) >= 0)) {
-            D_80073060++;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (func_800E81FC(2, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(0, SimFileType_System) < 0) {
+                break;
+            }
         }
+        g_GameStep++;
         break;
     case 2:
-        D_80073060 = 3;
+        g_GameStep = 3;
         break;
     case 3:
-        D_80073060 = 4;
+        g_GameStep = 4;
         break;
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             D_8006BAFC = CdFileType_StagePrg;
         }
-        D_80073060 = 5;
+        g_GameStep = 5;
         break;
     case 5:
-        if ((g_UseDisk && !g_IsUsingCd) ||
-            (!g_UseDisk && func_800E81FC(0, SimFileType_StagePrg) >= 0)) {
-            D_8003C9A4 = 0;
-            D_80073060++;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+                break;
+            }
         }
+            D_8003C9A4 = 0;
+        g_GameStep++;
         break;
     case 6:
-        if (D_8003C734 == 1) {
+        if (g_GameState == Game_Title) {
             callback = g_api.o.TestCollisions;
         } else {
             callback = g_api.o.InitRoomEntities;
@@ -847,8 +861,8 @@ void func_800E493C(void) {
 }
 
 void func_800E4970(void) {
-    func_800E4124(4);
-    D_80073060 = 2;
+    SetGameState(Game_NowLoading);
+    g_GameStep = 2;
     ClearBackbuffer();
     func_800E3574();
     func_800EAD7C();

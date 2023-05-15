@@ -13,17 +13,17 @@ void func_800E6358(void) {
     s32* var_s1;
 
     var_s1 = D_80136414;
-    if (D_80073060 >= 3 && D_80073060 < 16) {
+    if (g_GameStep >= 3 && g_GameStep < 16) {
         func_800E5D30(var_s1, 0x40, 0x70, 0);
     }
-    switch (D_80073060) {
+    switch (g_GameStep) {
     case 0:
         D_8003C730 = 0;
         D_80097924 = -1;
         ClearBackbuffer();
         func_800E3574();
         D_8003C9A4 = 0;
-        D_80073060++;
+        g_GameStep++;
         break;
     case 1:
         if (g_pads[0].repeat & PAD_RIGHT) {
@@ -69,9 +69,9 @@ void func_800E6358(void) {
         }
         PlaySfx(0x63D);
         if (g_StageId == STAGE_MEMORYCARD) {
-            func_800E4124(8);
+            SetGameState(Game_MainMenu);
         } else if (g_StageId == STAGE_ENDING) {
-            func_800E4124(9);
+            SetGameState(Game_Ending);
         } else {
             __builtin_memcpy(g_Status.saveName, "alucard ", sizeof("alucard "));
             g_DemoMode = Demo_None;
@@ -91,7 +91,7 @@ void func_800E6358(void) {
                     DemoInit(0);
                 }
             }
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 2:
@@ -137,12 +137,12 @@ void func_800E6358(void) {
         }
         var_s1[0] = 0;
         func_800E5D30(var_s1, 0x40, 0x70, 0);
-        D_80073060++;
+        g_GameStep++;
         break;
     case 3:
         if (g_UseDisk) {
             if (!g_IsUsingCd) {
-                D_80073060++;
+                g_GameStep++;
             }
         } else {
             if (g_StageId == STAGE_ST0 ||
@@ -153,7 +153,7 @@ void func_800E6358(void) {
             } else if (func_800E81FC(1, 0) < 0) {
                 break;
             }
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 4:
@@ -162,15 +162,15 @@ void func_800E6358(void) {
             D_8006BAFC = CdFileType_StageChr;
             g_mapTilesetId = g_StageId;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 5:
         if (!g_UseDisk) {
             if (func_800E81FC(0, 5) >= 0) {
-                D_80073060++;
+                g_GameStep++;
             }
         } else if (!g_IsUsingCd) {
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 6:
@@ -178,17 +178,17 @@ void func_800E6358(void) {
             g_CdStep = CdStep_LoadInit;
             D_8006BAFC = CdFileType_StageSfx;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 7:
         if (!g_UseDisk) {
             if (func_800E81FC(0, 2) >= 0) {
                 if (func_800E81FC(0, 3) >= 0) {
-                    D_80073060++;
+                    g_GameStep++;
                 }
             }
         } else if (!g_IsUsingCd) {
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 8:
@@ -196,7 +196,7 @@ void func_800E6358(void) {
             g_CdStep = CdStep_LoadInit;
             D_8006BAFC = CdFileType_StagePrg;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 9:
         if (!g_UseDisk) {
@@ -207,9 +207,9 @@ void func_800E6358(void) {
             if (var_a0 >= 0 && func_800E81FC(var_a0, 4) < 0) {
                 break;
             }
-            D_80073060++;
+            g_GameStep++;
         } else if (!g_IsUsingCd) {
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 10:
@@ -222,7 +222,7 @@ void func_800E6358(void) {
         D_80073064 = 0;
         if (g_StageId == STAGE_ST0 ||
             g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-            D_80073060 = 0x10;
+            g_GameStep = 0x10;
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
@@ -236,7 +236,7 @@ void func_800E6358(void) {
                 }
                 D_8003C908.D_8003C90C = var_s0;
             }
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 11:
@@ -273,7 +273,7 @@ void func_800E6358(void) {
                 pfnWeapon = D_8017D000.func_8017A01C;
                 pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
             block_102:
-                D_80073060++;
+                g_GameStep++;
             }
         }
         break;
@@ -290,7 +290,7 @@ void func_800E6358(void) {
             }
             D_8003C908.D_8003C910 = var_s0;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 13:
         if (g_UseDisk) {
@@ -306,19 +306,19 @@ void func_800E6358(void) {
             break;
         }
         func_800FA7E8();
-        D_80073060++;
+        g_GameStep++;
         break;
     case 14:
         D_8006CBC4 = func_800E6300();
         if (D_8006CBC4 == 0) {
-            D_80073060 += 2;
+            g_GameStep += 2;
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
                 D_8006BAFC = CdFileType_Servant;
                 g_mapTilesetId = D_8006CBC4 - 1;
             }
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 15:
@@ -330,7 +330,7 @@ void func_800E6358(void) {
             func_800E6250();
         }
         D_80073064 = D_8006CBC4;
-        D_80073060++;
+        g_GameStep++;
         break;
     case 16:
         func_800E5D30(var_s1, 0x40, 0x70, 1);
@@ -346,7 +346,7 @@ void func_800E6358(void) {
             D_8003BDEC[0x34] = 1;
         }
         D_800978C4 = 1;
-        func_800E4124(2);
+        SetGameState(Game_Play);
         break;
     }
 }

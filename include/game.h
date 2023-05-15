@@ -185,6 +185,28 @@ typedef struct Primitive {
 #define FLAG_UNK_20000000 0x20000000
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 
+typedef enum {
+    Game_Init,
+    Game_Title,
+    Game_Play,
+    Game_GameOver,
+    Game_NowLoading,
+    Game_VideoPlayback,
+    Game_Unk6,
+    Game_PrologueEnd,
+    Game_MainMenu,
+    Game_Ending,
+    Game_99 = 99,
+} GameState;
+
+typedef enum {
+    Demo_None,
+    Demo_PlaybackInit,
+    Demo_Recording,
+    Demo_End,
+    Demo_Playback,
+} DemoMode;
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -831,14 +853,6 @@ typedef struct {
     /* D_8003C70E */ s16 zPriority;
 } FgLayer; /* size=0x8 */
 
-typedef enum {
-    Demo_None,
-    Demo_PlaybackInit,
-    Demo_Recording,
-    Demo_End,
-    Demo_Playback,
-} DemoMode;
-
 extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
@@ -863,7 +877,7 @@ extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
-extern s32 D_8003C734; // game status. InGame = 0x2, MainMenu = 0x8, etc.
+extern GameState g_GameState;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern s32 g_roomCount;
@@ -954,7 +968,7 @@ extern u16 D_80072F88;   // D_80072F20.unk68
 extern u16 D_80072F92;   // D_80072F20.unk72
 extern u16 D_80072F9A;   // D_80072F20.unk7A
 extern unkstruct_80072FA0 D_80072FA0[];
-extern u32 D_80073060; // set to 4 to reload stage from disk
+extern u32 g_GameStep; // set to 4 to reload stage from disk
 extern s32 D_80073064;
 extern Event g_EvSwCardEnd;
 extern Event g_EvSwCardErr;

@@ -359,9 +359,9 @@ void func_801B60D4(void) {
             func_801B18F4();
         }
         if (D_800978B4 != 0) {
-            D_80073060++;
+            g_GameStep++;
         } else {
-            D_80073060 = 0x100;
+            g_GameStep = 0x100;
         }
         D_8003C9A4++;
         break;
@@ -445,7 +445,7 @@ void func_801B60D4(void) {
     case 8:
         func_801B4FFC();
         if (D_801BC3E4 == 0) {
-            D_80073060 += 1;
+            g_GameStep++;
         }
         break;
     }
