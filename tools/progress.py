@@ -14,15 +14,28 @@ from mapfile_parser import ProgressStats
 slug = "sotn"
 
 parser = argparse.ArgumentParser(description="Report decompilation progress")
-parser.add_argument('--version', metavar='version', default='us', required=False,
-                    type=str, help='Game version')
-parser.add_argument('--dry-run', dest="dryrun", default=False, required=False,
-                    action="store_true", help='Print the request instead of posting it to the server')
+parser.add_argument(
+    "--version",
+    metavar="version",
+    default="us",
+    required=False,
+    type=str,
+    help="Game version",
+)
+parser.add_argument(
+    "--dry-run",
+    dest="dryrun",
+    default=False,
+    required=False,
+    action="store_true",
+    help="Print the request instead of posting it to the server",
+)
 args = parser.parse_args()
 
 
 def printerr(msg: str):
     print(msg, file=sys.stderr)
+
 
 def exiterr(msg: str):
     printerr(msg)
@@ -30,7 +43,11 @@ def exiterr(msg: str):
 
 
 def get_git_commit_message() -> str:
-    return subprocess.check_output(['git', 'show', '-s', '--format=%s']).decode('utf-8').rstrip()
+    return (
+        subprocess.check_output(["git", "show", "-s", "--format=%s"])
+        .decode("utf-8")
+        .rstrip()
+    )
 
 
 class DecompProgressStats:
@@ -70,11 +87,14 @@ class DecompProgressStats:
 
         depth = 4 + path.count("/")
 
-        self.calculate_progress(map_file.filterBySegmentType(
-            ".text"), asm_path, nonmatchings, depth)
+        self.calculate_progress(
+            map_file.filterBySegmentType(".text"), asm_path, nonmatchings, depth
+        )
 
     # modified version of mapfile_parser.MapFile.getProgress
-    def calculate_progress(self, map_file: MapFile, asmPath: Path, nonmatchings: Path, pathIndex: int):
+    def calculate_progress(
+        self, map_file: MapFile, asmPath: Path, nonmatchings: Path, pathIndex: int
+    ):
         totalStats = ProgressStats()
         progressPerFolder: dict[str, ProgressStats] = dict()
 
@@ -97,8 +117,7 @@ class DecompProgressStats:
 
             for func in file.symbols:
                 self.functions_total += 1
-                funcAsmPath = nonmatchings / \
-                    extensionlessFilePath / f"{func.name}.s"
+                funcAsmPath = nonmatchings / extensionlessFilePath / f"{func.name}.s"
 
                 if wholeFileIsUndecomped:
                     totalStats.undecompedSize += func.size
@@ -138,15 +157,23 @@ def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version
             return
         r.raise_for_status()
         res = r.json()
-        if res == None or res[slug] == None or res[slug][version] == None or res[slug][version][category] == None:
+        if (
+            res == None
+            or res[slug] == None
+            or res[slug][version] == None
+            or res[slug][version][category] == None
+        ):
             return progress
         last_measures = res[slug][version][category][0]["measures"]
-        assert (last_measures != None)
+        assert last_measures != None
 
         for ovl in progress:
-            last_measure = last_measures[ovl]
-            if last_measure != None:
-                callback(ovl, last_measure)
+            if ovl in last_measures:
+                last_measure = last_measures[ovl]
+                if last_measure != None:
+                    callback(ovl, last_measure)
+            else:
+                callback(ovl, 0)
 
     def set_code_prev(ovl_name, value):
         progresses[ovl_name].code_matching_prev = value
@@ -182,7 +209,7 @@ def get_progress_entry(progresses: dict[str, DecompProgressStats]):
         "categories": {
             "code": as_code(progresses),
             "functions": as_functions(progresses),
-        }
+        },
     }
 
 
@@ -195,18 +222,25 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
         stat = progresses[overlay]
         if stat.code_matching != stat.code_matching_prev:
             coverage = stat.code_matching / stat.code_total
-            coverage_diff = (stat.code_matching -
-                             stat.code_matching_prev) / stat.code_total
+            coverage_diff = (
+                stat.code_matching - stat.code_matching_prev
+            ) / stat.code_total
             funcs = stat.functions_matching / stat.functions_total
-            funcs_diff = (stat.functions_matching -
-                          stat.functions_prev) / stat.functions_total
-            print(str.join(" ", [
-                f"{overlay.upper()} ({args.version}):",
-                f"coverage {coverage*100:.2f}%",
-                f"({coverage_diff*100:+.3f}%)",
-                f"funcs {funcs*100:.2f}%",
-                f"({funcs_diff*100:+.3f}%)",
-            ]))
+            funcs_diff = (
+                stat.functions_matching - stat.functions_prev
+            ) / stat.functions_total
+            print(
+                str.join(
+                    " ",
+                    [
+                        f"{overlay.upper()} ({args.version}):",
+                        f"coverage {coverage*100:.2f}%",
+                        f"({coverage_diff*100:+.3f}%)",
+                        f"funcs {funcs*100:.2f}%",
+                        f"({funcs_diff*100:+.3f}%)",
+                    ],
+                )
+            )
         else:
             print(f"{overlay.upper()} no new progress")
 
@@ -214,10 +248,9 @@ def report_human_readable_dryrun(progresses: dict[str, DecompProgressStats]):
 def report_frogress(entry, version):
     api_base_url = os.getenv("FROGRESS_API_BASE_URL")
     url = f"{api_base_url}/data/{slug}/{version}/"
-    requests.post(url, json={
-        "api_key": os.getenv("FROGRESS_API_SECRET"),
-        "entries": [entry]
-    }).raise_for_status()
+    requests.post(
+        url, json={"api_key": os.getenv("FROGRESS_API_SECRET"), "entries": [entry]}
+    ).raise_for_status()
 
 
 def report_discord(progresses: dict[str, DecompProgressStats]):
@@ -226,17 +259,22 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
         stat = progresses[overlay]
         if stat.code_matching != stat.code_matching_prev:
             coverage = stat.code_matching / stat.code_total
-            coverage_diff = coverage - \
-                (stat.code_matching_prev / stat.code_total)
+            coverage_diff = coverage - (stat.code_matching_prev / stat.code_total)
             funcs = stat.functions_matching / stat.functions_total
             funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
-            report += str.join(" ", [
-                f"**{overlay.upper()} ({args.version})**:",
-                f"coverage {coverage*100:.2f}%",
-                f"({coverage_diff*100:+.2f}%)",
-                f"funcs {funcs*100:.2f}%",
-                f"({funcs_diff*100:+.2f}%)",
-            ]) + "\n"
+            report += (
+                str.join(
+                    " ",
+                    [
+                        f"**{overlay.upper()} ({args.version})**:",
+                        f"coverage {coverage*100:.2f}%",
+                        f"({coverage_diff*100:+.2f}%)",
+                        f"funcs {funcs*100:.2f}%",
+                        f"({funcs_diff*100:+.2f}%)",
+                    ],
+                )
+                + "\n"
+            )
     if len(report) == 0:
         # nothing to report, do not send any message to Discord
         return
@@ -244,10 +282,12 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
     url = os.getenv("DISCORD_PROGRESS_WEBHOOK")
     data = {
         "username": "Progress",
-        "embeds": [{
-            "title": get_git_commit_message(),
-            "description": report,
-        }],
+        "embeds": [
+            {
+                "title": get_git_commit_message(),
+                "description": report,
+            }
+        ],
     }
     requests.post(url, json=data).raise_for_status()
 
@@ -273,7 +313,7 @@ if __name__ == "__main__":
 
     entry = get_progress_entry(progress)
     if args.dryrun == False:
-        report_discord(progress)
+        # report_discord(progress)
         report_frogress(entry, args.version)
     else:
         report_stdout(entry)
