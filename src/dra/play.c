@@ -29,4 +29,8 @@ void func_800E4970(void) {
 
 void func_800E4A04(void) { s32 pad[3]; }
 
+#if defined(VERSION_US)
 INCLUDE_ASM("asm/us/dra/nonmatchings/play", HandlePlay);
+#elif defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/play", HandlePlay);
+#endif
