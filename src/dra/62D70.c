@@ -325,7 +325,7 @@ bool func_8010715C(s32 mapTilesetId) {
         }
     } else {
         g_CdStep = CdStep_LoadInit;
-        D_8006BAFC = CdFileType_28;
+        g_LoadFile = CdFile_28;
         g_mapTilesetId = mapTilesetId;
     }
     return true;

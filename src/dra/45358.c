@@ -91,9 +91,9 @@ void func_800E5498(void) {
 
 // Jump to 'nop' due to ASPSX missing
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/45358", func_800E5584);
+INCLUDE_ASM("asm/us/dra/nonmatchings/45358", HandleGameOver);
 #else
-void func_800E5584(void) {
+void HandleGameOver(void) {
     Primitive* prim;
     u8 var_s0;
     s32 i;
@@ -193,7 +193,7 @@ void func_800E5584(void) {
         }
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_26;
+            g_LoadFile = CdFile_26;
         }
         g_GameStep++;
         break;

@@ -684,7 +684,7 @@ void func_800E414C(void) {
         if (!func_80131F68()) {
             if (g_UseDisk != 0) {
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_StageChr | 0x8000;
+                g_LoadFile = CdFile_StageChr | 0x8000;
             }
             g_mapTilesetId = D_8003C710;
             D_8003C708.unk2++;
@@ -698,14 +698,14 @@ void func_800E414C(void) {
         if (D_8003C708.flags == 0x40 && D_800733DA < 0x78) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageChr;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C710;
             D_8003C708.unk2++;
         }
         if (D_8003C708.flags == 0x41 && D_800733DA >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageChr;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C710;
             D_8003C708.unk2++;
             return;
@@ -718,14 +718,14 @@ void func_800E414C(void) {
         if (D_8003C708.flags == 0x40 && D_800733DA >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageChr;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C712;
             D_8003C708.unk2 = 2;
         }
         if (D_8003C708.flags == 0x41 && D_800733DA < 0x78) {
             func_801073C0();
             g_CdStep = 1;
-            D_8006BAFC = CdFileType_StageChr;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C712;
             D_8003C708.unk2 = 2;
         }
@@ -735,7 +735,7 @@ void func_800E414C(void) {
 
 void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
 
-void func_800E451C(void) {
+void HandleTitle(void) {
     void (*callback)(void);
 
     switch (g_GameStep) {
@@ -757,7 +757,7 @@ void func_800E451C(void) {
                 return;
             }
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_Sel;
+            g_LoadFile = CdFile_Sel;
         }
         g_GameStep++;
         break;
@@ -794,7 +794,7 @@ void func_800E451C(void) {
                     break;
                 }
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_Sel;
+                g_LoadFile = CdFile_Sel;
             }
             g_GameStep = 1;
         }
@@ -823,7 +823,7 @@ void func_800E451C(void) {
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StagePrg;
+            g_LoadFile = CdFile_StagePrg;
         }
         g_GameStep = 5;
         break;
@@ -880,4 +880,4 @@ void func_800E4970(void) {
 
 void func_800E4A04(void) { s32 pad[3]; }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
+INCLUDE_ASM("asm/us/dra/nonmatchings/42398", HandlePlay);
