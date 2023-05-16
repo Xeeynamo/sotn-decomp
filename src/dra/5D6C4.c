@@ -255,7 +255,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
-        *subwpn = g_Subweapons[g_Status.D_80097BFC];
+        *subwpn = g_Subweapons[g_Status.subWeapon];
         accessoryCount = CheckEquipmentItemCount(0x4D, 4);
         if (accessoryCount == 1) {
             subwpn->unk2 = subwpn->unk2 / 2;
@@ -270,7 +270,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             if (useHearts) {
                 g_Status.hearts -= subwpn->unk2;
             }
-            return g_Status.D_80097BFC;
+            return g_Status.subWeapon;
         } else {
             return 0;
         }
@@ -508,7 +508,7 @@ typedef struct {
     // part of a larger struct, maybe part of PlayerStats?
     s32 subWeapon;
 } Unkstruct_80097BFC;
-extern Unkstruct_80097BFC D_80097BFC; // g_SubWeapon
+extern Unkstruct_80097BFC subWeapon; // g_SubWeapon
 extern s32 D_800A872C[];
 
 void func_800FF7B8(s32 arg0) {
@@ -669,9 +669,9 @@ void func_800FF7B8(s32 arg0) {
 
             g_Settings.D_8003CB00 = 0;
             g_Settings.D_8003CB04 = 0;
-            D_80097BFC.subWeapon = 0;
+            subWeapon.subWeapon = 0;
             if (g_StageId != STAGE_ST0 && g_StageId != STAGE_NO3) {
-                D_80097BFC.subWeapon = (rand() % 9) + 1;
+                subWeapon.subWeapon = (rand() % 9) + 1;
             }
 
             g_Status.hp = 50;
@@ -754,12 +754,12 @@ void func_800FF7B8(s32 arg0) {
                     g_Status.statStr++;
                 }
 
-                if (D_80097BFC.subWeapon == 4) {
+                if (subWeapon.subWeapon == 4) {
                     if (var_s0_11 < 3) {
                         g_Status.heartsMax += 5;
                         g_Status.mpMax += 5;
                     }
-                } else if (D_80097BFC.subWeapon == 3) {
+                } else if (subWeapon.subWeapon == 3) {
                     if (var_s0_11 < 2) {
                         g_Status.heartsMax += 5;
                         player_stat_int++;
@@ -805,7 +805,7 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.equipment[3] = 0xF;
                 g_Status.equipment[4] = 0x38;
                 g_Status.equipment[5] = 0x4E;
-                D_80097BFC.subWeapon = 0;
+                subWeapon.subWeapon = 0;
                 D_80097C18 = 0x39;
                 g_Status.hp = g_Status.hpMax;
                 g_Status.mp = g_Status.mpMax;
@@ -914,7 +914,7 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.timerMinutes = 0;
                 g_Status.timerSeconds = 0;
                 g_Status.timerFrames = 0;
-                D_80097BFC.subWeapon = 0;
+                subWeapon.subWeapon = 0;
                 g_Status.relics[10] = 3;
                 (&g_Status.relics[10])[1] = 3;
                 D_80097973 = 3;

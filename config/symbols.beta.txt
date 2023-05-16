@@ -89,7 +89,7 @@ g_Status_hearts = 0x80097654;
 g_Status_heartsMax = 0x80097658;
 g_Status_gold = 0x8009769C;
 g_Status_killCount = 0x800976A0;
-D_80097BFC = 0x800976A8;
+subWeapon = 0x800976A8;
 
 D_8003BE1E = 0x8003BE1E;
 D_8003BF28 = 0x8003BF28;

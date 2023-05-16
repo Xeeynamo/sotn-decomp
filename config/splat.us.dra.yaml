@@ -44,8 +44,8 @@ segments:
       - [0x3B3B0, rodata]
       - [0x3B430, .rodata, 42398]
       - [0x3B524, rodata]
-      - [0x3B530, rodata] # jpt_800E4A64
-      - [0x3B560, rodata] # jump table for func_800E5D30
+      - [0x3B530, rodata, play]
+      - [0x3B560, rodata, gameover]
       - [0x3B720, .rodata, 46358]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
@@ -62,7 +62,8 @@ segments:
       - [0x3C1E8, rodata] # jpt_800EB120
       - [0x3C228, rodata]
       - [0x3C238, rodata] # jpt_800EE2FC
-      - [0x3C290, .rodata, 4F45C]
+      - [0x3C290, .rodata, collider]
+      - [0x3C490, .rodata, demo]
       - [0x3C514, rodata] # jpt_800F096C
       - [0x3C534, .rodata, 52860] # jpt_800F288C
       - [0x3C55C, rodata] # jpt_800F3684
@@ -171,11 +172,14 @@ segments:
       - [0x420B4, rodata] # jpt_80135058
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
-      - [0x45358, c, 45358]
+      - [0x4493C, c, play]
+      - [0x45358, c, gameover]
       - [0x46358, c, 46358]
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
-      - [0x4F45C, c, 4F45C]
+      - [0x4F45C, c, collider]
+      - [0x4FBF8, c, demo]
+      - [0x5087C, c, 5087C]
       - [0x52860, c, 52860]
       - [0x5298C, c, 5298C]
       - [0x5D6C4, c, 5D6C4]
