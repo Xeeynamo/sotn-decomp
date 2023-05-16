@@ -450,7 +450,7 @@ typedef struct {
     /* 80097BF0 */ u32 gold;
     /* 80097BF4 */ u32 killCount;
     /* 80097BF8 */ u32 D_80097BF8;
-    /* 80097BFC */ u32 D_80097BFC;
+    /* 80097BFC */ u32 subWeapon;
     /* 80097C00 */ u32 equipment[7];
     /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ u32 defenseEquip;
@@ -1103,7 +1103,7 @@ extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern u8 D_80097B9C[];
-extern s32 D_80097BFC; // g_SubweaponId
+extern s32 subWeapon; // g_SubweaponId
 extern u8 g_SaveName[12] ALIGNED4;
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];

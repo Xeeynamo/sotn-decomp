@@ -91,7 +91,7 @@ void func_800E5498(void) {
 
 // Jump to 'nop' due to ASPSX missing
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/45358", HandleGameOver);
+INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", HandleGameOver);
 #else
 void HandleGameOver(void) {
     Primitive* prim;
@@ -324,7 +324,7 @@ void HandleGameOver(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/45358", func_800E5D30);
+INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", func_800E5D30);
 
 void func_800E6218(void) {
     if (D_8006CBC4 != 0) {

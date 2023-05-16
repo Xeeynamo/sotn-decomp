@@ -577,7 +577,7 @@ void func_800EDA94(void);
 void func_800EDAE4(void);
 s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
-void func_800EFBF8(s32 arg0);
+void DemoGameInit(s32 arg0);
 void FreePrimitives(s32 index);
 void DemoOpenFile(s32);
 void DemoInit(s32 arg0);
