@@ -310,7 +310,7 @@ if __name__ == "__main__":
 
     entry = get_progress_entry(progress)
     if args.dryrun == False:
-        # report_discord(progress)
+        report_discord(progress)
         report_frogress(entry, args.version)
     else:
         report_stdout(entry)
