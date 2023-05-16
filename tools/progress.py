@@ -14,14 +14,7 @@ from mapfile_parser import ProgressStats
 slug = "sotn"
 
 parser = argparse.ArgumentParser(description="Report decompilation progress")
-parser.add_argument(
-    "--version",
-    metavar="version",
-    default="us",
-    required=False,
-    type=str,
-    help="Game version",
-)
+parser.add_argument("--version", required=False, type=str, help="Game version")
 parser.add_argument(
     "--dry-run",
     dest="dryrun",
@@ -31,6 +24,10 @@ parser.add_argument(
     help="Print the request instead of posting it to the server",
 )
 args = parser.parse_args()
+if args.version == None:
+    args.version = os.getenv("VERSION")
+    if args.version == None:
+        args.version = "us"
 
 
 def printerr(msg: str):
