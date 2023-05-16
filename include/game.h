@@ -147,17 +147,17 @@ typedef struct Primitive {
 #define STAGE_BO1 0x1D
 #define STAGE_BO0 0x1E
 #define STAGE_ST0 0x1F
-#define STAGE_UNK_28 (STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG)
-#define STAGE_UNK_35 0x35
-#define STAGE_UNK_36 0x36
-#define STAGE_UNK_37 0x37
-#define STAGE_UNK_38 0x38
-#define STAGE_UNK_39 0x39
-#define STAGE_UNK_3A 0x3A
-#define STAGE_UNK_3B 0x3B
-#define STAGE_UNK_3C 0x3C
-#define STAGE_UNK_3D 0x3D
-#define STAGE_UNK_3E 0x3E
+#define STAGE_RCEN (STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG)
+#define STAGE_RNZ1 0x35
+#define STAGE_RBO8 0x36
+#define STAGE_RBO7 0x37
+#define STAGE_RBO6 0x38
+#define STAGE_RBO5 0x39
+#define STAGE_RBO4 0x3A
+#define STAGE_RBO3 0x3B
+#define STAGE_RBO2 0x3C
+#define STAGE_RBO1 0x3D
+#define STAGE_RBO0 0x3E
 #define STAGE_MAD 0x40
 #define STAGE_NO3 0x41
 #define STAGE_IWA_LOAD 0x42
