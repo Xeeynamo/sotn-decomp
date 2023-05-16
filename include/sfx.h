@@ -138,16 +138,23 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
 
 #if defined(VERSION_US)
-#define NA_VO_MA_IF_YOU_WEAR 0x3CE // Maria: If you wear these, you can see beyond evil illusions.
+#define NA_VO_MA_IF_YOU_WEAR                                                   \
+    0x3CE // Maria: If you wear these, you can see beyond evil illusions.
 
-#define NA_VO_RI_IMPRESSIVE_WHIP 0x3DA // Richter: Impressive, you were able to avoid my whip. Let's see how you like this!
-#define NA_VO_RI_IMPRESSIVE_ESCAPE 0x3DB // Richter: Impressive, but you can't escape this.
-#define NA_VO_RI_ONLY_THE_COUNT 0x3DC // Richter: Hah, I knew it. Only the count is a true match for me.
+#define NA_VO_RI_IMPRESSIVE_WHIP                                               \
+    0x3DA // Richter: Impressive, you were able to avoid my whip. Let's see how
+          // you like this!
+#define NA_VO_RI_IMPRESSIVE_ESCAPE                                             \
+    0x3DB // Richter: Impressive, but you can't escape this.
+#define NA_VO_RI_ONLY_THE_COUNT                                                \
+    0x3DC // Richter: Hah, I knew it. Only the count is a true match for me.
 
-#define NA_VO_AL_DEATH_DREAM_WORLD 0x391 // Alucard: Death in the dream world will set your soul wandering for eternity, demon.
+#define NA_VO_AL_DEATH_DREAM_WORLD                                             \
+    0x391 // Alucard: Death in the dream world will set your soul wandering for
+          // eternity, demon.
 
-#define JP_VO_SH_GROAN 0x52E // Shaft groans
-#define JP_VO_SH_SCREAM 0x52F // Shaft screams
+#define JP_VO_SH_GROAN 0x52E      // Shaft groans
+#define JP_VO_SH_SCREAM 0x52F     // Shaft screams
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
