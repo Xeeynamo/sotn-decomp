@@ -2311,7 +2311,33 @@ void func_8013493C(s16 arg0, s16 arg1) {
     D_8013B628[arg1] = D_801390B4[arg0];
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801349F4);
+void func_801349F4(void) {
+    s16 i;
+
+    for (i = 0; i < 4; i++) {
+        if (D_8013AE84[i] == 0) {
+            continue;
+        }
+        if (D_8013B5EC[i] == 5) {
+            continue;
+        }
+        D_8013B678[i] = D_8013AE84[i];
+        D_801390AC[i] = D_8013B620[i];
+        D_80139058[i] = D_8013B614[i];
+        D_80139814[i] = D_8013B66C[i];
+        D_80139018[i] = D_8013B5EC[i];
+        D_801390B4[i] = D_8013B628[i];
+        D_8013AE84[i] = 0;
+        D_8013B620[i] = 0;
+        D_8013B614[i] = 0;
+        D_8013B66C[i] = 0;
+        D_8013B5EC[i] = 0;
+        D_8013B628[i] = 0;
+        D_8013B648[i] = 0;
+        D_8013AEA0[i] = 0;
+    }
+    D_8013B690 = 1;
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134B48);
 

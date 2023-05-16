@@ -511,7 +511,7 @@ extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
 extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
 extern s32 D_8013B5E8;
-extern s8 D_8013B5EC[];
+extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];
 extern s8 D_8013B618;
 extern s32 D_8013B61C;
