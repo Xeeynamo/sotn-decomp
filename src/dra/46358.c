@@ -6,7 +6,7 @@ void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3);
 void func_800E6250(void);
 s32 func_800E6300(void);
 
-void func_800E6358(void) {
+void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);
     s8 var_a0;
     s32 var_s0;
@@ -101,7 +101,7 @@ void func_800E6358(void) {
         }
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = 2;
+            g_LoadFile = 2;
         } else {
             var_s0 = STAGE_ST0;
             if (g_StageId == var_s0 ||
@@ -159,7 +159,7 @@ void func_800E6358(void) {
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageChr;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = g_StageId;
         }
         g_GameStep++;
@@ -176,7 +176,7 @@ void func_800E6358(void) {
     case 6:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageSfx;
+            g_LoadFile = CdFile_StageSfx;
         }
         g_GameStep++;
         break;
@@ -194,7 +194,7 @@ void func_800E6358(void) {
     case 8:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StagePrg;
+            g_LoadFile = CdFile_StagePrg;
         }
         g_GameStep++;
         break;
@@ -226,7 +226,7 @@ void func_800E6358(void) {
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_Weapon0;
+                g_LoadFile = CdFile_Weapon0;
                 var_s0 = D_800A4B04[g_Status.equipment[0]].weaponId;
                 if (var_s0 == 0xFF) {
                     var_s0 = 1;
@@ -280,7 +280,7 @@ void func_800E6358(void) {
     case 12:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_Weapon1;
+            g_LoadFile = CdFile_Weapon1;
             var_s0 = D_800A4B04[g_Status.equipment[1]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
@@ -315,7 +315,7 @@ void func_800E6358(void) {
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_Servant;
+                g_LoadFile = CdFile_Servant;
                 g_mapTilesetId = D_8006CBC4 - 1;
             }
             g_GameStep++;

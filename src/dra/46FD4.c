@@ -3,7 +3,7 @@
 #include "objects.h"
 #include "sfx.h"
 
-void func_800E6FD4(void) {
+void HandleVideoPlayback(void) {
     Primitive* prim;
     u8 temp;
     s32 temp2;
@@ -15,7 +15,7 @@ void func_800E6FD4(void) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
                 g_CdStep = CdStep_LoadInit;
-                D_8006BAFC = CdFileType_24;
+                g_LoadFile = CdFile_24;
                 func_800E3618(0x140);
                 D_8013640C = AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
@@ -105,7 +105,7 @@ void func_800E6FD4(void) {
 
 void nullsub_9(void) {}
 
-void func_800E738C(void) {
+void HandlePrologueEnd(void) {
     if (g_GameStep == 1) {
         if ((g_UseDisk && !g_IsUsingCd) ||
             (!g_UseDisk && func_800E81FC(6, SimFileType_System) >= 0 &&
@@ -121,7 +121,7 @@ void func_800E738C(void) {
     g_api.o.unk3C();
 }
 
-void func_800E7458(void) {
+void HandleMainMenu(void) {
     s32 pad[0x40];
 
     switch (g_GameStep) {
@@ -129,7 +129,7 @@ void func_800E7458(void) {
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageChr;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = STAGE_SEL;
         }
         g_GameStep++;
@@ -145,7 +145,7 @@ void func_800E7458(void) {
     case 2:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StageSfx;
+            g_LoadFile = CdFile_StageSfx;
         }
         g_GameStep++;
         break;
@@ -161,7 +161,7 @@ void func_800E7458(void) {
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StagePrg;
+            g_LoadFile = CdFile_StagePrg;
         }
         g_GameStep++;
         break;
@@ -183,7 +183,7 @@ void func_800E7458(void) {
     }
 }
 
-void func_800E768C(void) {
+void HandleEnding(void) {
     RECT* temp_s0;
     RECT* temp_s1;
     u32 var_a0;
@@ -206,7 +206,7 @@ void func_800E768C(void) {
                 break;
             }
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_31;
+            g_LoadFile = CdFile_31;
         }
         g_GameStep++;
         break;
@@ -245,7 +245,7 @@ void func_800E768C(void) {
     case 2:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_StagePrg;
+            g_LoadFile = CdFile_StagePrg;
         }
         g_GameStep = 3;
         break;
@@ -269,7 +269,7 @@ void func_800E768C(void) {
     case 6:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            D_8006BAFC = CdFileType_19;
+            g_LoadFile = CdFile_19;
         }
         g_GameStep = 7;
         if (D_800978B4 != 3 && D_800978B4 != 5) {
@@ -318,31 +318,31 @@ void UpdateGame(void) {
 #if defined(VERSION_US)
     case Game_99:
 #endif
-        func_800E451C();
+        HandleTitle();
         break;
     case Game_Play:
-        func_800E4A14();
+        HandlePlay();
         break;
     case Game_GameOver:
-        func_800E5584();
+        HandleGameOver();
         break;
     case Game_NowLoading:
-        func_800E6358();
+        HandleNowLoading();
         break;
     case Game_VideoPlayback:
-        func_800E6FD4();
+        HandleVideoPlayback();
         break;
     case Game_Unk6:
         nullsub_9();
         break;
     case Game_PrologueEnd:
-        func_800E738C();
+        HandlePrologueEnd();
         break;
     case Game_MainMenu:
-        func_800E7458();
+        HandleMainMenu();
         break;
     case Game_Ending:
-        func_800E768C();
+        HandleEnding();
         break;
     }
 }

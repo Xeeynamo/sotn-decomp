@@ -900,7 +900,7 @@ extern s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
 extern const char g_MemcardSavePath[];
 extern const char aBaslus00067dra[19];
 extern const char g_strMemcardRootPath[];
-extern s32 D_8006BAFC;
+extern s32 g_LoadFile;
 extern s32 D_8006BB00;
 extern u8 D_8006BB74[0x800];
 extern s32 D_8006C374;
