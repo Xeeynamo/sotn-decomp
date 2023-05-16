@@ -108,14 +108,14 @@ void DemoGameInit(s32 arg0) {
             g_Status.subWeapon = 9;
             g_Status.statsBase[0] = 10;
         }
-        if (g_StageId == STAGE_UNK_38) {
+        if (g_StageId == STAGE_RBO6) {
             g_Status.mpMax = 80;
             g_Status.mp = 80;
         }
-        if (g_StageId == STAGE_UNK_37) {
+        if (g_StageId == STAGE_RBO7) {
             g_Status.equipment[3] = 25;
         }
-        if (g_StageId == STAGE_UNK_3D) {
+        if (g_StageId == STAGE_RBO1) {
             g_Status.subWeapon = 2;
             g_Status.equipment[0] = ITEM_CLAYMORE;
             g_Status.equipment[2] = 0x29;
@@ -123,7 +123,7 @@ void DemoGameInit(s32 arg0) {
             g_Status.statsBase[2] = 35;
             g_Status.hearts = 70;
         }
-        if (g_StageId == STAGE_UNK_36) {
+        if (g_StageId == STAGE_RBO8) {
             g_Status.equipment[0] = 4;
             g_Status.equipment[1] = ITEM_SKULL_SHIELD;
             g_Status.equipment[2] = 0x2A;
@@ -131,17 +131,17 @@ void DemoGameInit(s32 arg0) {
             g_Status.mpMax = 200;
             g_Status.mp = 200;
         }
-        if (g_StageId == STAGE_UNK_35) {
+        if (g_StageId == STAGE_RNZ1) {
             g_Status.subWeapon = 2;
             g_Status.statsBase[0] = 25;
             g_Status.statsBase[2] = 35;
             g_Status.hearts = 70;
         }
-        if (g_StageId == STAGE_UNK_3A) {
+        if (g_StageId == STAGE_RBO4) {
             g_Status.equipment[0] = ITEM_CLAYMORE;
             g_Status.statsBase[0] = 25;
         }
-        if (g_StageId == STAGE_UNK_3C) {
+        if (g_StageId == STAGE_RBO2) {
             g_Status.equipment[0] = ITEM_CLAYMORE;
             g_Status.statsBase[0] = 25;
             g_Status.statsBase[2] = 40;
@@ -149,7 +149,7 @@ void DemoGameInit(s32 arg0) {
             g_Status.subWeapon = 9;
             g_Status.hearts = 80;
         }
-        if (g_StageId == STAGE_UNK_28) {
+        if (g_StageId == STAGE_RCEN) {
             g_Status.subWeapon = 2;
             g_Status.equipment[0] = ITEM_ALUCARD_SWORD;
             g_Status.equipment[1] = ITEM_ALUCARD_SHIELD;
@@ -159,7 +159,7 @@ void DemoGameInit(s32 arg0) {
             g_Status.mpMax = 80;
             g_Status.mp = 80;
         }
-        if (g_StageId == STAGE_UNK_39) {
+        if (g_StageId == STAGE_RBO5) {
             g_Status.equipment[0] = ITEM_SWORD_OF_HADOR;
             g_Status.equipment[1] = ITEM_IRON_SHIELD;
             g_Status.subWeapon = 8;
@@ -167,7 +167,7 @@ void DemoGameInit(s32 arg0) {
             g_Status.statsBase[2] = 35;
             g_Status.heartsMax = 99;
         }
-        if (g_StageId == STAGE_UNK_3B) {
+        if (g_StageId == STAGE_RBO3) {
             g_Status.equipment[0] = ITEM_FALCHION;
             g_Status.equipment[1] = ITEM_IRON_SHIELD;
             g_Status.subWeapon = 3;
@@ -175,7 +175,7 @@ void DemoGameInit(s32 arg0) {
             g_Status.statsBase[2] = 30;
             g_Status.heartsMax = 99;
         }
-        if (g_StageId == STAGE_UNK_3E) {
+        if (g_StageId == STAGE_RBO0) {
             g_Status.equipment[0] = ITEM_BASTARD_SWORD;
             g_Status.equipment[1] = ITEM_IRON_SHIELD;
             g_Status.equipment[3] = 15;

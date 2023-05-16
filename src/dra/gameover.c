@@ -90,8 +90,13 @@ void func_800E5498(void) {
 }
 
 // Jump to 'nop' due to ASPSX missing
+// HD version needs some tweaking at 'Gameover_4'
 #ifndef NON_MATCHING
+#if defined(VERSION_US)
 INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", HandleGameOver);
+#elif defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", HandleGameOver);
+#endif
 #else
 void HandleGameOver(void) {
     Primitive* prim;
@@ -222,7 +227,55 @@ void HandleGameOver(void) {
                 break;
             }
         }
+#if defined(VERSION_US)
         PlaySfx(MU_LAND_OF_BENEDICTION);
+#elif defined(VERSION_HD)
+        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+            if (g_StageId == STAGE_BO6) {
+                switch (rand() % 3) {
+                case 0:
+                    PlaySfx(0x3DA);
+                    break;
+                case 1:
+                    PlaySfx(0x3DB);
+                    break;
+                case 2:
+                    PlaySfx(0x3DC);
+                    break;
+                }
+            } else {
+                if (g_StageId == STAGE_DRE) {
+                    PlaySfx(0x391);
+                } else {
+                    if (g_StageId == STAGE_RBO2) {
+                        switch (rand() % 3) {
+                        case 0:
+                            PlaySfx(0x52E);
+                            break;
+                        case 1:
+                            PlaySfx(0x52F);
+                            break;
+                        case 2:
+                            PlaySfx(0x530);
+                            break;
+                        }
+                    } else {
+                        if (func_800FD4C0(0x1A, 0)) {
+                            if (!(rand() & 7)) {
+                                PlaySfx(0x3CE);
+                            } else {
+                                PlaySfx(0x33B);
+                            }
+                        } else {
+                            PlaySfx(0x33B);
+                        }
+                    }
+                }
+            }
+        } else {
+            PlaySfx(0x33B);
+        }
+#endif
         g_GameStep++;
         break;
     case Gameover_5:
@@ -324,7 +377,11 @@ void HandleGameOver(void) {
 }
 #endif
 
+#if defined(VERSION_US)
 INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", func_800E5D30);
+#elif defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", func_800E5D30);
+#endif
 
 void func_800E6218(void) {
     if (D_8006CBC4 != 0) {
