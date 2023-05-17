@@ -71,7 +71,7 @@ void func_8015FAB8(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
 
-    if ((*D_80072F1A) != NULL) {
+    if ((g_Player.D_80072F1A) != NULL) {
         attack = subwpn->attack * 2;
     } else {
         attack = subwpn->attack;
@@ -237,9 +237,9 @@ void func_80160D2C(Entity* self) {
     }
 
     if (self->unk48 != 0) {
-        D_80072F20.unk44 |= 0x80;
+        g_Player.unk44 |= 0x80;
     } else {
-        D_80072F20.unk44 &= 0xFF7F;
+        g_Player.unk44 &= 0xFF7F;
     }
     self->unk48 = 0;
 }
@@ -728,7 +728,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166060);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166784);
 
 void func_8016779C(Entity* entity) {
-    if (D_80072F66 == 0) {
+    if (g_Player.unk46 == 0) {
         func_80156C60(entity);
         return;
     }
@@ -773,7 +773,7 @@ void func_80167964(Entity* entity) {
      * 0x5E was originally 0xBC in mips2c output
      * suggesting the size of the Entity struct
      */
-    if (D_80072F66 != 0) {
+    if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
             entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_UNK_10000;
         }

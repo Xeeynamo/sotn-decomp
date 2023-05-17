@@ -1601,28 +1601,28 @@ void func_801B8E0C(Entity* self) {
         InitializeEntity(D_80180BEC);
         D_8003C8B8 = 0;
         *D_80097400 = 1;
-        *D_80072EF4 = 0x8000;
-        if (D_80072F2C & 4) {
-            *D_80072EF4 = 2;
+        g_Player.D_80072EF4 = 0x8000;
+        if (g_Player.unk0C & 4) {
+            g_Player.D_80072EF4 = 2;
         }
-        D_80072EFC = 1;
+        g_Player.D_80072EFC = 1;
         break;
 
     case 1:
         if (PLAYER.posX.i.hi < 176) {
-            *D_80072EF4 = 0;
+            g_Player.D_80072EF4 = 0;
             self->step++;
         } else {
-            *D_80072EF4 = 0;
-            if (D_80072F2C & 4) {
+            g_Player.D_80072EF4 = 0;
+            if (g_Player.unk0C & 4) {
                 if (g_blinkTimer & 1) {
-                    *D_80072EF4 = 2;
+                    g_Player.D_80072EF4 = 2;
                 }
             } else {
-                *D_80072EF4 = 0x8000;
+                g_Player.D_80072EF4 = 0x8000;
             }
         }
-        D_80072EFC = 1;
+        g_Player.D_80072EFC = 1;
         break;
 
     case 2:
@@ -1633,8 +1633,8 @@ void func_801B8E0C(Entity* self) {
             }
             DestroyEntity(self);
         }
-        *D_80072EF4 = 0;
-        D_80072EFC = 1;
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
         break;
     }
 }
@@ -1642,8 +1642,6 @@ void func_801B8E0C(Entity* self) {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B8F94);
 
 s32 Random(void) {
-    // Linear congruential generator algorithm
-
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return g_randomNext >> 0x18;
 }

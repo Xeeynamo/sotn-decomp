@@ -177,8 +177,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80104790);
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105078);
 
 void func_80105408(void) {
-    *D_80072EF4 = 0x1000;
-    D_80072EFC = 1;
+    g_Player.D_80072EF4 = 0x1000;
+    g_Player.D_80072EFC = 1;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105428);

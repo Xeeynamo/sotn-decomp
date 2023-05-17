@@ -681,7 +681,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
+        if ((self->unk48 != 0) && (g_Player.unk0C & 4)) {
             D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Wolf form collision */
         }
         break;
@@ -772,7 +772,7 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
+        if ((self->unk48 != 0) && (g_Player.unk0C & 1)) {
             D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Bat form collision */
         }
         break;

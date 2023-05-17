@@ -11,8 +11,8 @@ void func_80115DA0(void) {
      */
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    *D_80072EF4 = 0;
-    D_80072EFC = 4;
+    g_Player.D_80072EF4 = 0;
+    g_Player.D_80072EFC = 4;
 
     switch (PLAYER.step_s) {
     case 0:
@@ -53,7 +53,7 @@ void func_80115DA0(void) {
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
-        if (D_80072F3C != 0) {
+        if (g_Player.unk1C != 0) {
             func_8010E570(0);
         }
         break;

@@ -681,7 +681,7 @@ s32 func_801746A0(s32 arg0) {
     s32 tmp;
 
     if (D_800733E4 < 0) {
-        if (!(D_80072F20.pl_vram_flag & 1)) {
+        if (!(g_Player.pl_vram_flag & 1)) {
             return 1;
         }
     }
@@ -689,32 +689,32 @@ s32 func_801746A0(s32 arg0) {
     tmp = D_800733E4;
     NOP;
     if (tmp > 0) {
-        if (!(D_80072F20.pl_vram_flag & 2)) {
+        if (!(g_Player.pl_vram_flag & 2)) {
             return 1;
         }
     }
 
-    if (D_800733E0 < 0 && !(D_80072F20.pl_vram_flag & 8))
+    if (D_800733E0 < 0 && !(g_Player.pl_vram_flag & 8))
         return 1;
 
     tmp = D_800733E0;
     NOP;
-    if (D_800733E0 > 0 && !(D_80072F20.pl_vram_flag & 4))
+    if (D_800733E0 > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
     if (arg0 == 0)
         return 0;
 
-    if (D_80072F70 != D_80073404)
+    if (g_Player.unk50 != D_80073404)
         return 1;
 
-    if (D_80072F70 != 0)
+    if (g_Player.unk50 != 0)
         return 1;
 
-    if (D_80072F72 != D_80073406)
+    if (g_Player.unk52 != D_80073406)
         return 1;
 
-    return D_80072F72 != 0 && D_80072F72 != 4;
+    return g_Player.unk52 != 0 && g_Player.unk52 != 4;
 }
 
 s32 func_801747B8(void) {

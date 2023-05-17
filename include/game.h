@@ -853,6 +853,71 @@ typedef struct {
     /* D_8003C70E */ s16 zPriority;
 } FgLayer; /* size=0x8 */
 
+typedef struct {
+    /* 80072EE8 */ s32 g_Player;
+    /* 80072EEC */ s32 D_80072EEC;
+    /* 80072EF0 */ s32 D_80072EF0;
+    /* 80072EF4 */ s32 D_80072EF4;
+    /* 80072EF8 */ s32 D_80072EF8;
+    /* 80072EFC */ s32 D_80072EFC; // stun timer
+    /* 80072F00 */ s16 D_80072F00; // poison timer
+    /* 80072F02 */ s16 D_80072F02; // curse timer
+    /* 80072F04 */ s16 D_80072F04; // visual effect timer stoned/hit
+    /* 80072F06 */ s16 D_80072F06;
+    /* 80072F08 */ s16 D_80072F08;
+    /* 80072F0A */ s16 D_80072F0A;
+    /* 80072F0C */ s16 D_80072F0C;
+    /* 80072F0E */ s16 D_80072F0E;
+    /* 80072F10 */ s16 D_80072F10;
+    /* 80072F12 */ s16 D_80072F12;
+    /* 80072F14 */ s16 D_80072F14;
+    /* 80072F16 */ s16 D_80072F16;
+    /* 80072F18 */ s16 D_80072F18;
+    /* 80072F1A */ s16 D_80072F1A; // invincibility timer
+    /* 80072F1C */ s16 D_80072F1C; // invincibility timer from consumables
+    /* 80072F1E */ s16 D_80072F1E;
+    /* 80072F20 */ s32 pl_vram_flag;
+    /* 80072F24 */ s32 unk04;
+    /* 80072F28 */ s32 unk08;
+    /* 80072F2C */ u32 unk0C;
+    /* 80072F30 */ s32 unk10;
+    /* 80072F34 */ s32 unk14;
+    /* 80072F38 */ s32 unk18;
+    /* 80072F3C */ s32 unk1C;
+    /* 80072F40 */ s32 unk20[8];
+    /* 80072F60 */ u16 unk40;
+    /* 80072F62 */ u16 pl_high_jump_timer;
+    /* 80072F64 */ u16 unk44;
+    /* 80072F66 */ u16 unk46;
+    /* 80072F68 */ u16 unk48;
+    /* 80072F6A */ s16 unk4A;
+    /* 80072F6C */ u16 unk4C;
+    /* 80072F6E */ u16 unk4E;
+    /* 80072F70 */ u16 unk50;
+    /* 80072F72 */ u16 unk52;
+    /* 80072F74 */ u16 unk54;
+    /* 80072F76 */ u16 unk56;
+    /* 80072F78 */ u16 unk58;
+    /* 80072F7A */ u16 unk5A;
+    /* 80072F7C */ u16 unk5C;
+    /* 80072F7E */ u16 unk5E;
+    /* 80072F80 */ u16 unk60;
+    /* 80072F82 */ u16 unk62;
+    /* 80072F84 */ u16 unk64;
+    /* 80072F86 */ u16 unk66;
+    /* 80072F88 */ u16 unk68;
+    /* 80072F8A */ u16 unk6A;
+    /* 80072F8C */ u16 unk6C;
+    /* 80072F8E */ u16 unk6E;
+    /* 80072F90 */ u16 unk70;
+    /* 80072F92 */ u16 unk72;
+    /* 80072F94 */ u32 unk74;
+    /* 80072F98 */ u16 unk78;
+    /* 80072F9A */ u16 unk7A;
+    /* 80072F9C */ u16 unk7C;
+    /* 80072F9E */ u16 unk7E;
+} PlayerState;
+
 extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
@@ -930,43 +995,11 @@ extern u16 D_8006F42C[];
 extern s16 D_800705CC[];
 extern u32 D_80070BCC;
 extern Unkstruct4 D_80072B34;
-extern s32 D_80072EE8;
-extern s32 D_80072EEC;
-extern s32 D_80072EF4[];
-extern u16 D_80072EF6;
-extern s32 D_80072EFC;   // stun timer
-extern s16 D_80072F00[]; // poison timer
-extern s16 D_80072F02[]; // curse timer
-extern s16 D_80072F04;   // visual effect timer stoned/hit
-extern s16 D_80072F0A[];
-extern s16 D_80072F0C;
-extern s16 D_80072F10;
-extern s16 D_80072F14[]; // could be an array or a struct
-extern s16 D_80072F16[];
-extern s16 D_80072F18;
-extern s16 D_80072F1A[]; // invincibility timer
-extern s16 D_80072F1C[]; // invincibility timer from consumables
-extern s16 D_80072F1E;
-extern Unkstruct_80072F20 D_80072F20;
-extern s32 D_80072F24;   // D_80072F20.unk04
-extern u32 D_80072F2C;   // D_80072F20.unk0C
-extern s32 D_80072F30;   // D_80072F20.unk10
-extern s32 D_80072F3C;   // D_80072F20.unk18
-extern u16 D_80072F60[]; // D_80072F20.unk40
-extern u16 D_80072F62;   // D_80072F20.pl_high_jump_timer
-extern u16 D_80072F64;   // D_80072F20.unk44
-extern u16 D_80072F66;   // D_80072F20.unk46
-extern u16 D_80072F68;   // D_80072F20.unk48
-extern s16 D_80072F6A[]; // D_80072F20.unk4A
-extern u16 D_80072F6C;   // D_80072F20.unk4C
-extern u16 D_80072F6E;   // D_80072F20.unk4E
-extern u16 D_80072F70;   // D_80072F20.unk50
-extern u16 D_80072F72;   // D_80072F20.unk52
-extern u16 D_80072F7C;   // D_80072F20.unk5C
-extern u16 D_80072F86;   // D_80072F20.unk66
-extern u16 D_80072F88;   // D_80072F20.unk68
-extern u16 D_80072F92;   // D_80072F20.unk72
-extern u16 D_80072F9A;   // D_80072F20.unk7A
+
+extern PlayerState g_Player;
+extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
+extern u32 g_Player_unk0C;      // TODO merge with g_Player
+
 extern unkstruct_80072FA0 D_80072FA0[];
 extern u32 g_GameStep; // set to 4 to reload stage from disk
 extern s32 D_80073064;

@@ -26,7 +26,7 @@ bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     s32 res;
     RoomHeader* room;
 
-    if (D_80072F2C & 0x40000) {
+    if (g_Player.unk0C & 0x40000) {
         return false;
     }
 
@@ -122,7 +122,7 @@ s32 func_800F0CD8(s32 arg0) {
             playerY = g_CurrentRoom.y + 4;
         }
         var_s0 = 0x30;
-        if ((!(*D_80072F20 & 1)) && !(D_80072F2C & 3)) {
+        if ((!(*g_Player.pl_vram_flag & 1)) && !(g_Player.unk0C & 3)) {
             var_s0 = 0x18;
         }
         if (playerY >= ((g_CurrentRoom.height - var_s0) + 0x14)) {

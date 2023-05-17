@@ -413,7 +413,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         break;
     }
 
-    if ((self->step < 3) && (func_801C5D18(self, 16, 16, 5) & 4)) {
+    if (self->step < 3 && func_801C5D18(self, 16, 16, 5) & 4) {
         Entity* player = &PLAYER;
 
         player->posY.i.hi++;
@@ -631,7 +631,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (D_80072F20.unk0C & 4)) {
+        if ((self->unk48 != 0) && (g_Player.unk0C & 4)) {
             D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
         }
         break;
@@ -722,7 +722,7 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (D_80072F20.unk0C & 1)) {
+        if ((self->unk48 != 0) && (g_Player.unk0C & 1)) {
             D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
         }
         break;

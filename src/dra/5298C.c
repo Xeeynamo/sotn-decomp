@@ -630,13 +630,13 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuInt(g_Status.level, 304, 40, ctx);
         DrawMenuStr(c_strSTATUS, 248, 56, ctx);
         i = 37;
-        if (D_80072F2C & 0x8000) {
+        if (g_Player.unk0C & 0x8000) {
             i = 40;
         }
-        if (D_80072F2C & 0x4000) {
+        if (g_Player.unk0C & 0x4000) {
             i = 38;
         }
-        if (D_80072F2C & 0x80) {
+        if (g_Player.unk0C & 0x80) {
             i = 39;
         }
         if (IsAlucart()) {
