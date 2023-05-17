@@ -2384,7 +2384,16 @@ void func_80134D14(void) {
     func_80026D4C(0x17, g_VolL, g_VolR);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134E64);
+void func_80134E64(void) {
+    u16 volume;
+
+    volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
+    volume = volume * D_8013AEE0 >> 7;
+    g_VolR = (volume * D_800BD19C[D_8013AE94 * 2 + 0]) >> 8;
+    g_VolL = (volume * D_800BD19C[D_8013AE94 * 2 + 1]) >> 8;
+    func_80026D4C(0x16, g_VolL, g_VolR);
+    func_80026D4C(0x17, g_VolL, g_VolR);
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134F50);
 void func_80134F50();
