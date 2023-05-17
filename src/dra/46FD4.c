@@ -269,7 +269,7 @@ void HandleEnding(void) {
     case 6:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            g_LoadFile = CdFile_19;
+            g_LoadFile = CdFile_AlucardPrg;
         }
         g_GameStep = 7;
         if (D_800978B4 != 3 && D_800978B4 != 5) {
