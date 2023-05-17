@@ -448,13 +448,13 @@ void func_80108448(void) {
     u32* var_a1;
     u16* clutAddr;
 
-    s32* pCdFileSize;
+    s32* pLoadFile;
     CdMgr* cd;
 
     if (D_8003C728 != 0) {
         return;
     }
-    pCdFileSize = &g_LoadFile;
+    pLoadFile = &g_LoadFile;
     g_IsUsingCd = g_CdStep;
     if (g_LoadFile == CdFile_StagePrg) {
         cdFile = &D_800ACC34;
@@ -484,17 +484,17 @@ void func_80108448(void) {
             D_800ACAD0 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vhLen);
             D_800ACAE0 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vbLen);
         }
-        if (*pCdFileSize == CdFile_GameChr) {
+        if (*pLoadFile == CdFile_GameChr) {
             if (g_StageId == STAGE_ST0 ||
                 g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
                 D_800AC9F8 = OFF_BIN_FGAME2;
-                D_800ACA06 = 5;
+                D_800ACA06 = CdFile_RichterPrg;
             } else {
                 D_800AC9F8 = OFF_BIN_FGAME;
-                D_800ACA06 = 0x13;
+                D_800ACA06 = CdFile_AlucardPrg;
             }
         }
-        if (g_LoadFile == CdFile_Servant) {
+        if (g_LoadFile == CdFile_ServantChr) {
             // SERVANT/FT_xxx.BIN
             D_800ACBD4 = *(temp_s0 = &D_800ACB48[g_mapTilesetId]);
 
@@ -562,20 +562,20 @@ void func_80108448(void) {
         }
         cd = &g_CdCallback;
         cd->cb = cdFile->cb;
-        pCdFileSize = &cdFile->size;
-        cdFileSize = *pCdFileSize;
+        pLoadFile = &cdFile->size;
+        cdFileSize = *pLoadFile;
         if (cdFileSize < 0) {
             cdFileSize += 0x1FFF;
         }
         g_Cd_D_80137F68 = cdFileSize >> 13;
         temp_a0 = cdFile->unkC;
         D_80137F94 = temp_a0;
-        var_v0_3 = *pCdFileSize;
+        var_v0_3 = *pLoadFile;
         if (var_v0_3 < 0) {
             var_v0_3 += 0x7FF;
         }
         g_Cd_overlayBlockCount = var_v0_3 >> 11;
-        temp_v1_2 = (var_v0_4 = *pCdFileSize);
+        temp_v1_2 = (var_v0_4 = *pLoadFile);
         if (temp_v1_2 < 0) {
             var_v0_4 += 0x7FF;
         }

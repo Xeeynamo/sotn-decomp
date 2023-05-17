@@ -315,7 +315,7 @@ void HandleNowLoading(void) {
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
-                g_LoadFile = CdFile_Servant;
+                g_LoadFile = CdFile_ServantChr;
                 g_mapTilesetId = D_8006CBC4 - 1;
             }
             g_GameStep++;
