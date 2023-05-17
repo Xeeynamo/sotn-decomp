@@ -2339,7 +2339,28 @@ void func_801349F4(void) {
     D_8013B690 = 1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134B48);
+void func_80134B48(void) {
+    s16 i;
+    s16 j;
+
+    for (i = 0; i < 3; i++) {
+        if (D_8013B678[i]) {
+            for (j = 0; j < 3; j++) {
+                if (D_8013B648[j] == 0) {
+                    func_8013493C(i, j);
+                    break;
+                }
+            }
+            D_8013B678[i] = 0;
+        }
+    }
+
+    if (D_8013B678[3] != 0 && D_8013B648[3] == 0) {
+        func_8013493C(3, 3);
+        D_8013B678[3] = 0;
+    }
+    D_8013B690 = 0;
+}
 
 void func_80134C60(void) {
     u16 temp = (D_8013AE7C * D_800BF554[D_8013B664].volume) >> 7;
