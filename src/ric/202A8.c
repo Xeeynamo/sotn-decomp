@@ -57,7 +57,7 @@ void func_8015C2A8(void) {
 
     if (loadAnim) {
         func_8015C920(&D_80155534);
-        func_8015C908(4);
+        SetPlayerStep(4);
     }
 }
 
@@ -65,7 +65,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/202A8", func_8015C4AC);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/202A8", func_8015C6D4);
 
-void func_8015C908(s32 step) {
+void SetPlayerStep(PlayerSteps step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }

@@ -62,7 +62,7 @@ bool func_80116838(void) {
     if ((g_Entities->step_s != 0) &&
         ((D_8009744C != 0) || (g_Player.D_80072EEC & 8) ||
          (func_800FEEA4(0, 1) < 0))) {
-        func_8010D584(9);
+        SetPlayerStep(9);
         func_8010DA48(0xCA);
         D_800AFDA6 = 6;
         g_Entities->palette = 0x810D;
@@ -1366,7 +1366,7 @@ bool func_8012C88C(void) {
     }
     if (D_8009744C != 0 && func_800FE3A8(0xE) == 0 || g_Player.D_80072EEC & 2 ||
         func_800FEEA4(2, 1) < 0) {
-        func_8010D584(25);
+        SetPlayerStep(25);
         func_8010DA48(0xCA);
         D_800AFDA6 = 1;
         PLAYER.palette = 0x810D;
