@@ -66,13 +66,13 @@ void func_800F53A4(void) {
     func_800F4FD0();
 }
 
-void func_800F53D4(s32 tpage, s32 orderIdx) {
-    u32* order = D_8006C37C->order;
-    DR_MODE* drawMode = &D_8006C37C->drawModes[g_GpuUsage.drawModes];
+void func_800F53D4(s32 tpage, s32 otIdx) {
+    u32* ot = g_CurrentBuffer->ot;
+    DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
-        SetDrawMode(drawMode, 0, 0, tpage, &D_800ACD80);
-        AddPrim(&order[orderIdx], drawMode);
+        SetDrawMode(drawMode, 0, 0, tpage, &g_Vram.D_800ACD80);
+        AddPrim(&ot[otIdx], drawMode);
         g_GpuUsage.drawModes++;
     }
 }
@@ -238,14 +238,14 @@ void func_800F5AE4(MenuContext* context) {
 void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
                     s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
                     s32 colorIntensity, s32 argB) {
-    u32* order = D_8006C37C->order;
-    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
-    s32 orderIdx = context->unk18 + 2;
+    u32* ot = g_CurrentBuffer->ot;
+    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    s32 otIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
     if (context == &D_8013763A) {
-        orderIdx--;
+        otIdx--;
     }
 
     poly->code &= 0xFD;
@@ -272,18 +272,18 @@ void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
             poly->x0 = poly->x2 = poly->x1;
             poly->x1 = poly->x3 = temp_polyx0;
         }
-        AddPrim(&order[orderIdx], poly);
+        AddPrim(&ot[otIdx], poly);
         g_GpuUsage.gt4++;
-        func_800F53D4(tpage, orderIdx);
+        func_800F53D4(tpage, otIdx);
     }
 }
 
 // NOTE: used to draw the menu cursor
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    u32* order = D_8006C37C->order;
-    POLY_G4* poly = &D_8006C37C->polyG4[g_GpuUsage.g4];
-    s32 orderIdx = context->unk18 + 1;
+    u32* ot = g_CurrentBuffer->ot;
+    POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
+    s32 otIdx = context->unk18 + 1;
     u32 temp;
 
     poly->x0 = posX;
@@ -302,9 +302,9 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
-        AddPrim(&order[orderIdx], poly);
+        AddPrim(&ot[otIdx], poly);
         g_GpuUsage.g4++;
-        func_800F53D4(0, orderIdx);
+        func_800F53D4(0, otIdx);
     }
 }
 
@@ -630,13 +630,13 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuInt(g_Status.level, 304, 40, ctx);
         DrawMenuStr(c_strSTATUS, 248, 56, ctx);
         i = 37;
-        if (D_80072F2C & 0x8000) {
+        if (g_Player.unk0C & 0x8000) {
             i = 40;
         }
-        if (D_80072F2C & 0x4000) {
+        if (g_Player.unk0C & 0x4000) {
             i = 38;
         }
-        if (D_80072F2C & 0x80) {
+        if (g_Player.unk0C & 0x80) {
             i = 39;
         }
         if (IsAlucart()) {
@@ -946,7 +946,7 @@ void func_800F96F4(void) { // !Fake:
 }
 
 void func_800F97DC(void) {
-    D_8013794C = (s8*)&D_8007EFE4;
+    D_8013794C = &D_8007EFE4;
     D_80137950 = 0x180;
     D_80137954 = 0;
 }
@@ -1016,16 +1016,43 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 // has some logic related to the weapon struct
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA7E8);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA8C4);
+bool LoadWeaponPrg(s32 equipIndex) {
+    s32 equipId;
+    s32 weaponId;
+
+    equipId = g_Status.equipment[equipIndex];
+    if (g_Status.equipment[3] == 0x19) {
+        equipId = 0xD8;
+    }
+    weaponId = D_800A4B04[equipId].weaponId;
+    if (weaponId == D_8003C90C[equipIndex] || weaponId == 0xFF) {
+        return 1;
+    }
+    if (g_UseDisk) {
+        if (g_IsUsingCd) {
+            return 0;
+        }
+        g_CdStep = CdStep_LoadInit;
+        g_LoadFile = CdFile_Weapon0 + equipIndex;
+    } else {
+        if (func_800E81FC(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
+            func_800E81FC(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
+            return 0;
+        }
+    }
+    D_8003C90C[equipIndex] = weaponId;
+    return 1;
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA9DC);
 
 void func_800FAB1C(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_4];
+    const int START = 4;
+    Entity* entity;
     s32 i;
 
-    for (i = 4; i < 64; i++) {
-        if ((u32)((entity->objectId + 0xFF30) & 0xFFFF) < 16) {
+    for (entity = g_Entities + START, i = START; i < 64; i++) {
+        if (entity->objectId >= 208 && entity->objectId < 224) {
             DestroyEntity(entity);
         }
         entity++;
@@ -1054,8 +1081,8 @@ void func_800FAC30(void) {
 }
 
 void func_800FAC48(void) {
-    ClearImage(&D_800ACD90, 0, 0, 0);
-    ClearImage(&D_800ACD90 + 7, 0, 0, 0);
+    ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
+    ClearImage(&g_Vram.D_800ACDC8, 0, 0, 0);
 }
 
 void func_800FAC98(void) { func_800F9808(2); }
@@ -1202,8 +1229,8 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     GpuBuffer* gpuBuffer;
     SPRT* sprt;
 
-    sprt = &D_8006C37C->sprite[g_GpuUsage.sp];
-    gpuBuffer = D_8006C37C;
+    sprt = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    gpuBuffer = g_CurrentBuffer;
     SetSemiTrans(sprt, 0);
     SetShadeTex(sprt, blend);
     sprt->x0 = x;
@@ -1214,7 +1241,7 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     sprt->v0 = v;
     sprt->b0 = sprt->g0 = sprt->r0 = color;
     sprt->clut = D_8003C104[pal];
-    AddPrim(&gpuBuffer->order[0x1FF], sprt);
+    AddPrim(&gpuBuffer->ot[0x1FF], sprt);
     g_GpuUsage.sp++;
 }
 
@@ -1237,11 +1264,11 @@ s32 func_800FD4C0(s32 bossId, s32 action) {
             return g_Settings.timeAttackRecords[bossId];
         }
 
-        seconds = g_GameTimer.seconds;
+        seconds = g_Status.timerSeconds;
         g_Settings.timeAttackRecords[bossId] = seconds;
-        temp_v1 = (g_GameTimer.minutes * 100) + seconds;
+        temp_v1 = (g_Status.timerMinutes * 100) + seconds;
         g_Settings.timeAttackRecords[bossId] = temp_v1;
-        temp_v0 = (g_GameTimer.hours * 10000) + temp_v1;
+        temp_v0 = (g_Status.timerHours * 10000) + temp_v1;
         g_Settings.timeAttackRecords[bossId] = temp_v0;
         return temp_v0;
 

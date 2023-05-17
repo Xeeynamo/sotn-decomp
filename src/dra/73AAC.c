@@ -7,17 +7,17 @@ void func_80113AAC(void) {
     s32 var_s1 = 0;
     s32 temp;
 
-    D_80072F6A[0]++;
+    g_Player.unk4A++;
     if (func_8010FDF8(2) != 0) {
         return;
     }
 
-    switch (PLAYER.unk2E) {
+    switch (PLAYER.step_s) {
     case 0:
-        if (D_80072F20.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & 2) {
             func_801139CC(3);
-            if ((D_80072F6A[0]) >= 5) {
-                PLAYER.unk2E = 2;
+            if ((g_Player.unk4A) >= 5) {
+                PLAYER.step_s = 2;
                 PLAYER.unk1E = 0x800;
                 PLAYER.unk22 = 2;
                 PLAYER.unk20 = 0;
@@ -25,18 +25,18 @@ void func_80113AAC(void) {
                 PLAYER.facing = (PLAYER.facing + 1) & 1;
                 func_8010DA48(0x2B);
             } else {
-                PLAYER.unk2E = 3;
+                PLAYER.step_s = 3;
             }
-        } else if (D_80072F6A[0] > 28) {
-            PLAYER.unk2E = 1;
+        } else if (g_Player.unk4A > 28) {
+            PLAYER.step_s = 1;
             PLAYER.accelerationY = -0x60000;
             func_8010DA48(0x1B);
         }
         break;
 
     case 1:
-        if (D_80072F20.pl_vram_flag & 2) {
-            PLAYER.unk2E = 2;
+        if (g_Player.pl_vram_flag & 2) {
+            PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
             PLAYER.accelerationY += 0x6000;
@@ -50,17 +50,17 @@ void func_80113AAC(void) {
         D_800733F8 = 0;    // TODO: !FAKE: symbol should be PLAYER.unk20
         D_800733FA = 2;    // TODO: !FAKE: symbol should be PLAYER.unk22
         PLAYER.unk19 |= 4; // But it doesn't match with them for some reason
-        if (D_80072F6A[0] >= 0x39) {
+        if (g_Player.unk4A >= 0x39) {
             func_8010DA48(0x2D);
             PLAYER.unk1E = 0;
-            PLAYER.unk2E = 4;
+            PLAYER.step_s = 4;
             PLAYER.unk19 &= 0xFB;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
         }
         break;
 
     case 3:
-        if (D_80072F6A[0] > 20) {
+        if (g_Player.unk4A > 20) {
             var_s1 = 1;
         }
         break;
@@ -79,7 +79,7 @@ void func_80113AAC(void) {
             func_8010DA48(0x1C);
         }
         PLAYER.palette = 0x8100;
-        PLAYER.unk2E = 1;
+        PLAYER.step_s = 1;
         PLAYER.step = 4;
     }
 }
@@ -94,8 +94,8 @@ s32 func_80113D7C(s16 arg0) {
     func_80118C84(sp10[2], 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
-        D_80072F04 = 4;
-        *D_80072F60 = 0x8166;
+        g_Player.D_80072F04 = 4;
+        g_Player.unk40 = 0x8166;
         sfx = D_800ACF8A[(rand() & 1)];
         PlaySfx(sfx);
         if (step && step) // TODO: !FAKE
@@ -103,7 +103,7 @@ s32 func_80113D7C(s16 arg0) {
         return 0;
     }
     step = PLAYER.step;
-    temp_s1 = PLAYER.unk2E;
+    temp_s1 = PLAYER.step_s;
     sp10[0] = 0;
     sp10[1] = 0;
     func_8010D584(0x10);
@@ -118,7 +118,7 @@ s16 func_80113E68(void) {
     s32 var_a1;
 
     temp_v0 = rnd;
-    PLAYER.unkAC = (rnd % 3) + 0x2E;
+    PLAYER.ext.generic.unkAC = (rnd % 3) + 0x2E;
     var_a1 = rnd;
     if (rnd < 0) {
         var_a1 = rnd + 0xF;
@@ -133,17 +133,17 @@ void func_80113EE0(void) {
     PLAYER.animFrameIdx = 0;
     PLAYER.objectId = 0;
     PLAYER.blendMode = 0;
-    D_80072F64 = 0;
-    D_80072F66 = 0;
+    g_Player.unk44 = 0;
+    g_Player.unk46 = 0;
     PLAYER.unk1E = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
-    if (g_EntityArray[UNK_ENTITY_10].objectId == 0x22) {
+    if (g_Entities[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
     }
 }
 
 void func_80113F7C(void) {
-    Entity* entity = PLAYER.unkB8.entityPtr;
+    Entity* entity = PLAYER.ext.generic.unkB8.entityPtr;
     s16 posX;
     s32 var_a0;
     s32 var_a2;
@@ -196,7 +196,7 @@ void func_80115BB0(void) {
     PLAYER.animFrameDuration = 4;
 
     if (D_80097420[0] == 0) {
-        if (D_80072F20.pl_vram_flag & 1) {
+        if (g_Player.pl_vram_flag & 1) {
             func_8010E570(0);
         } else {
             func_8010E7AC();

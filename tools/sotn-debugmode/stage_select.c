@@ -39,8 +39,8 @@ void UpdateStageSelect(void) {
     }
 
     if (g_pads->tapped & (PAD_L2 || PAD_L1)) {
-        D_8003C734 = 4;
-        D_80073060 = 2;
+        g_GameState = Game_NowLoading;
+        g_GameStep = 2;
         g_StageId = g_StageIdCursor;
         g_IsTimeAttackUnlocked = 1;
     }

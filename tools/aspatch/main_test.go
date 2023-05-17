@@ -87,12 +87,75 @@ func TestPatchLoadWordWithPointer(t *testing.T) {
 	)
 }
 
+func TestPatchRemWithAspsxRem(t *testing.T) {
+	assertPatch(t,
+		"\trem	$4,$2,$3\n",
+
+		"\t.set\tnoreorder\n",
+		"\t.set\tnomacro\n",
+		"\t.set\tnoat\n",
+		"\tdiv\t$0,$2,$3\n",
+		"\tbnez\t$3,.L_NOT_DIV_BY_ZERO_1\n",
+		"\tnop\n",
+		"\tbreak\t0x7\n",
+		".L_NOT_DIV_BY_ZERO_1:\n",
+		"\taddiu\t$1,$0,-1\n",
+		"\tbne\t$3,$1,.L_DIV_BY_POSITIVE_SIGN_1\n",
+		"\tlui\t$1,0x8000\n",
+		"\tbne\t$2,$1,.L_DIV_BY_POSITIVE_SIGN_1\n",
+		"\tnop\n",
+		"\tbreak\t0x6\n",
+		".L_DIV_BY_POSITIVE_SIGN_1:\n",
+		"\tmfhi\t$4\n",
+		"\t.set\tat\n",
+		"\t.set\tmacro\n",
+		"\t.set\treorder\n",
+	)
+}
+
+func TestPatchRemWithAspsxDiv(t *testing.T) {
+	assertPatch(t,
+		"\tdiv	$4,$2,$3\n",
+
+		"\t.set\tnoreorder\n",
+		"\t.set\tnomacro\n",
+		"\t.set\tnoat\n",
+		"\tdiv\t$0,$2,$3\n",
+		"\tbnez\t$3,.L_NOT_DIV_BY_ZERO_1\n",
+		"\tnop\n",
+		"\tbreak\t0x7\n",
+		".L_NOT_DIV_BY_ZERO_1:\n",
+		"\taddiu\t$1,$0,-1\n",
+		"\tbne\t$3,$1,.L_DIV_BY_POSITIVE_SIGN_1\n",
+		"\tlui\t$1,0x8000\n",
+		"\tbne\t$2,$1,.L_DIV_BY_POSITIVE_SIGN_1\n",
+		"\tnop\n",
+		"\tbreak\t0x6\n",
+		".L_DIV_BY_POSITIVE_SIGN_1:\n",
+		"\tmflo\t$4\n",
+		"\t.set\tat\n",
+		"\t.set\tmacro\n",
+		"\t.set\treorder\n",
+	)
+}
+
+func TestPatchRemWithAspsxDivu(t *testing.T) {
+	assertPatch(t,
+		"\tdivu $4,$2,$3\n",
+
+		"\t.set\tnoat\n",
+		"\tdivu\t$0,$2,$3\n",
+		"\tbnez\t$3,.L_NOT_DIV_BY_ZERO_1\n",
+		"\tbreak\t0x7\n",
+		".L_NOT_DIV_BY_ZERO_1:\n",
+		"\tmflo\t$4\n",
+		"\t.set\tat\n",
+	)
+}
+
 func assertPatch(t *testing.T, in string, out ...string) {
 	buf := new(bytes.Buffer)
-	writer := bufio.NewWriter(buf)
-	reader := bufio.NewReader(strings.NewReader(in))
-
-	err := patch(writer, reader)
+	err := initPatcher(strings.NewReader(in), buf).patch()
 
 	assert := require.New(t)
 	assert.NoError(err)

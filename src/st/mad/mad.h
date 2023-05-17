@@ -18,14 +18,12 @@ void func_8019344C(void);
 
 // OFFSET FIXED
 extern u8 D_8003BEE8[];
-extern s32 g_pfnInitRoomEntities; // It's 8003C8C4!
 extern Entity* g_CurrentEntity;
-extern Entity g_EntityArray[];
+extern Entity g_Entities[];
 extern Entity D_8007D858[];
 extern Entity D_8007EF1C;
 extern s32 D_80097410;
 extern s32 D_80097414;
-extern Entity D_800762D8[];
 extern s32 D_800973FC;
 
 // TODO FIX
@@ -47,9 +45,9 @@ extern s32 D_80180FE4[];
 extern u8 D_80180FFC[];
 extern u16 D_80181000[];
 extern ObjInit2 D_801810F4[];
-extern u16 D_80180508;
+extern u16 D_80180508[];
 extern s16 D_801809EC[];
-extern u8 D_80181010;
+extern u8 D_80181010[];
 extern RoomHeader g_rooms[];
 extern LayoutObject* g_pStObjLayout[];
 extern LayoutObject** D_801803C8[];

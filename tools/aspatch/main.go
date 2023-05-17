@@ -10,43 +10,85 @@ import (
 	"unicode"
 )
 
-func main() {
-	writer := bufio.NewWriter(os.Stdout)
-	reader := bufio.NewReader(os.Stdin)
+type patcher struct {
+	r     *bufio.Reader
+	w     *bufio.Writer
+	nLine int
+}
 
-	err := patch(writer, reader)
+func main() {
+	err := initPatcher(os.Stdin, os.Stdout).patch()
 	if err != nil {
 		panic(err)
 	}
 }
 
-func patch(w *bufio.Writer, r *bufio.Reader) error {
-	nLine := 0
-	for {
-		line, err := r.ReadString('\n')
-		nLine += 1
+func initPatcher(r io.Reader, w io.Writer) *patcher {
+	return &patcher{
+		r:     bufio.NewReader(r),
+		w:     bufio.NewWriter(w),
+		nLine: 0,
+	}
+}
+
+func (p *patcher) readLine() (string, error) {
+	line, err := p.r.ReadString('\n')
+	p.nLine += 1
+	if err == io.EOF {
+		err = p.w.Flush()
+		if err == nil {
+			return "", io.EOF
+		}
+	}
+	if err != nil {
 		if err != nil {
-			if err != io.EOF {
-				return err
+			return "", err
+		}
+	}
+
+	return line, nil
+}
+
+func (p *patcher) write(str string) {
+	p.w.WriteString(str)
+}
+
+func (p *patcher) makeError(err error) error {
+	return fmt.Errorf("line %d: %s", p.nLine, err.Error())
+}
+
+func (p *patcher) patch() error {
+	for {
+		line, err := p.readLine()
+		if err != nil {
+			if err == io.EOF {
+				return nil
 			}
-			return w.Flush()
+			return err
 		}
 
-		err = patchLine(w, line)
+		err = p.patchLine(line)
 		if err != nil {
-			return fmt.Errorf("%s at line %d", err, nLine)
+			if err == io.EOF {
+				return nil
+			}
+			return p.makeError(err)
 		}
 	}
 }
 
-func patchLine(w *bufio.Writer, line string) error {
+func (p *patcher) isLabel(tokens []string) bool {
+	return len(tokens) >= 2 && tokens[0] == "$" && tokens[2] == ":"
+}
+
+func (p *patcher) patchLine(line string) error {
 	tokens, err := tokenize(line)
 	if err != nil {
-		return err
+		return p.makeError(err)
 	}
 
 	if len(tokens) == 0 {
-		w.WriteString(line) // passtrough comments
+		p.write(line) // passtrough comments
 		return nil
 	}
 
@@ -62,7 +104,11 @@ func patchLine(w *bufio.Writer, line string) error {
 	case "lw":
 		switch len(tokens) {
 		case 5: // variant without pointer
-			w.WriteString(line)
+			p.write(line)
+		case 6: // variant lw	$2,$LC2
+			p.write(line)
+		case 8: // variant lw	$2,$LC2+4
+			p.write(line)
 		case 9: // variant with pointer
 			if tokens[3] != "," || tokens[5] != "(" || tokens[8] != ")" {
 				return fmt.Errorf("unable to parse '%s': token keys not recognised", line)
@@ -75,80 +121,124 @@ func patchLine(w *bufio.Writer, line string) error {
 
 			iAddr, err := strconv.Atoi(addr) // check if it's a digit or identifier
 			if err != nil || iAddr > 0x10000 {
-				w.WriteString("\t.set\tnoat\n")
-				w.WriteString(fmt.Sprintf("\tlui\t$1,%%hi(%s)\n", addr))
-				w.WriteString(fmt.Sprintf("\taddu\t$1,$1,%s\n", ptrReg))
-				w.WriteString(fmt.Sprintf("\t%s\t%s,%%lo(%s)($1)\n", op, dstReg, addr))
-				w.WriteString("\t.set\tat\n")
+				p.write("\t.set\tnoat\n")
+				p.write(fmt.Sprintf("\tlui\t$1,%%hi(%s)\n", addr))
+				p.write(fmt.Sprintf("\taddu\t$1,$1,%s\n", ptrReg))
+				p.write(fmt.Sprintf("\t%s\t%s,%%lo(%s)($1)\n", op, dstReg, addr))
+				p.write("\t.set\tat\n")
 			} else {
 				// fallback
-				w.WriteString(line)
+				p.write(line)
 			}
 		case 10: // variant with label
-			w.WriteString(line)
+			p.write(line)
 		default:
 			return fmt.Errorf("unable to parse '%s': len(tokens)=%d", line, len(tokens))
 		}
+	case "rem":
+		srcReg1 := tokens[4] + tokens[5]
+		srcReg2 := tokens[7] + tokens[8]
+		dstReg := tokens[1] + tokens[2]
+		p.write("\t.set\tnoreorder\n")
+		p.write("\t.set\tnomacro\n")
+		p.write("\t.set\tnoat\n")
+		p.write(fmt.Sprintf("\tdiv\t$0,%s,%s\n", srcReg1, srcReg2))
+		p.write(fmt.Sprintf("\tbnez\t%s,.L_NOT_DIV_BY_ZERO_%d\n", srcReg2, p.nLine))
+		p.write("\tnop\n")
+		p.write("\tbreak\t0x7\n")
+		p.write(fmt.Sprintf(".L_NOT_DIV_BY_ZERO_%d:\n", p.nLine))
+		p.write("\taddiu\t$1,$0,-1\n")
+		p.write(fmt.Sprintf("\tbne\t%s,$1,.L_DIV_BY_POSITIVE_SIGN_%d\n", srcReg2, p.nLine))
+		p.write("\tlui\t$1,0x8000\n")
+		p.write(fmt.Sprintf("\tbne\t%s,$1,.L_DIV_BY_POSITIVE_SIGN_%d\n", srcReg1, p.nLine))
+		p.write("\tnop\n")
+		p.write("\tbreak\t0x6\n")
+		p.write(fmt.Sprintf(".L_DIV_BY_POSITIVE_SIGN_%d:\n", p.nLine))
+		p.write(fmt.Sprintf("\tmfhi\t%s\n", dstReg))
+		p.write("\t.set\tat\n")
+		p.write("\t.set\tmacro\n")
+		p.write("\t.set\treorder\n")
+	case "div":
+		srcReg1 := tokens[4] + tokens[5]
+		srcReg2 := tokens[7] + tokens[8]
+		dstReg := tokens[1] + tokens[2]
+		p.write("\t.set\tnoreorder\n")
+		p.write("\t.set\tnomacro\n")
+		p.write("\t.set\tnoat\n")
+		p.write(fmt.Sprintf("\tdiv\t$0,%s,%s\n", srcReg1, srcReg2))
+		p.write(fmt.Sprintf("\tbnez\t%s,.L_NOT_DIV_BY_ZERO_%d\n", srcReg2, p.nLine))
+		p.write("\tnop\n")
+		p.write("\tbreak\t0x7\n")
+		p.write(fmt.Sprintf(".L_NOT_DIV_BY_ZERO_%d:\n", p.nLine))
+		p.write("\taddiu\t$1,$0,-1\n")
+		p.write(fmt.Sprintf("\tbne\t%s,$1,.L_DIV_BY_POSITIVE_SIGN_%d\n", srcReg2, p.nLine))
+		p.write("\tlui\t$1,0x8000\n")
+		p.write(fmt.Sprintf("\tbne\t%s,$1,.L_DIV_BY_POSITIVE_SIGN_%d\n", srcReg1, p.nLine))
+		p.write("\tnop\n")
+		p.write("\tbreak\t0x6\n")
+		p.write(fmt.Sprintf(".L_DIV_BY_POSITIVE_SIGN_%d:\n", p.nLine))
+		p.write(fmt.Sprintf("\tmflo\t%s\n", dstReg))
+		p.write("\t.set\tat\n")
+		p.write("\t.set\tmacro\n")
+		p.write("\t.set\treorder\n")
+	case "divu":
+		srcReg1 := tokens[4] + tokens[5]
+		srcReg2 := tokens[7] + tokens[8]
+		dstReg := tokens[1] + tokens[2]
+		p.write("\t.set\tnoat\n")
+		p.write(fmt.Sprintf("\tdivu\t$0,%s,%s\n", srcReg1, srcReg2))
+		p.write(fmt.Sprintf("\tbnez\t%s,.L_NOT_DIV_BY_ZERO_%d\n", srcReg2, p.nLine))
+		p.write("\tbreak\t0x7\n")
+		p.write(fmt.Sprintf(".L_NOT_DIV_BY_ZERO_%d:\n", p.nLine))
+		p.write(fmt.Sprintf("\tmflo\t%s\n", dstReg))
+		p.write("\t.set\tat\n")
 	default:
-		w.WriteString(line)
+		p.write(line)
 	}
 
 	return nil
 }
 
 func tokenize(line string) ([]string, error) {
-	tokens := make([]string, 0)
-	token := ""
+	var tokens []string
+	var token string
+	r := strings.NewReader(line)
 
 	flush := func() {
-		if len(token) > 0 {
+		if token != "" {
 			tokens = append(tokens, token)
 			token = ""
 		}
 	}
 
-	r := strings.NewReader(line)
 	for {
-		ch, size, _ := r.ReadRune()
-		if size == 0 {
+		ch, _, err := r.ReadRune()
+		if err != nil {
+			flush()
 			return tokens, nil
 		}
 
 		switch {
-		case unicode.IsSpace(ch):
-			if len(token) > 0 {
-				flush()
-			}
+		case ch == ' ' || ch == '\t' || ch == '\n':
+			flush()
 		case unicode.IsLetter(ch) || unicode.IsDigit(ch) || ch == '_' || ch == '+' || ch == '-':
 			token += string(ch)
 		case ch == '"':
-			token += "\""
+			flush()
+			token += string(ch)
 			for {
-				ch, size, _ = r.ReadRune()
-				if size == 0 {
+				ch, _, err = r.ReadRune()
+				if err != nil {
 					return tokens, fmt.Errorf("unexpected end of string")
 				}
+				token += string(ch)
 				if ch == '"' {
-					token += "\""
 					break
 				}
-
-				token += string(ch)
 			}
-		case ch == '$':
-			fallthrough
-		case ch == '(':
-			fallthrough
-		case ch == ')':
-			fallthrough
-		case ch == ':':
-			fallthrough
-		case ch == '.':
-			fallthrough
-		case ch == ',':
+		case ch == '$', ch == '(', ch == ')', ch == ':', ch == '.', ch == ',':
 			flush()
-			token = string(ch)
-			flush()
+			tokens = append(tokens, string(ch))
 		case ch == '#':
 			flush()
 			return tokens, nil

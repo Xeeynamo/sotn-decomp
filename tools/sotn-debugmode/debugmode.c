@@ -127,7 +127,7 @@ void Init() {
     int i;
 
     // forces to make the game think that the Familiar is actually active
-    e = &g_EntityArray[4];
+    e = &g_Entities[4];
     DestroyEntity(e);
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;

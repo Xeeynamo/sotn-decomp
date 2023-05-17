@@ -58,18 +58,10 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
 s32 func_800E7E08(u32);
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7E08);
 #else
-extern u32 g_Clut;
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
 extern u32 D_800A04CC;
-extern RECT D_800ACDA8;
-extern RECT D_800ACDB8;
-extern RECT D_800ACDC0;
-extern RECT D_800ACDD0;
-extern RECT D_800ACDD8;
-extern RECT D_800ACDE0;
 extern s32 D_800BD1C8[];
-extern s32* D_8013644C;      // this is now an OvlDesc!!
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
 extern s32* g_StageOverlay;
@@ -109,7 +101,7 @@ s32 func_800E7E08(u32 arg0) {
         LoadImage(&rect + 2, (u32*)0x801C0000);
         while (DrawSync(1))
             ;
-        StoreImage(&D_800ACDA8, &D_8006EBCC);
+        StoreImage(&g_Vram.D_800ACDA8, &D_8006EBCC);
         break;
     default:
         break;
@@ -117,11 +109,11 @@ s32 func_800E7E08(u32 arg0) {
     case 11: // .rodata+0x8,0x2c
         LoadStageTileset(0x80280000, 0);
         DrawSync(0);
-        StoreImage(&D_800ACDB8, &g_Clut);
+        StoreImage(&g_Vram.D_800ACDB8, g_Clut);
         if (arg0 == 0xB) {
-            StoreImage(&D_800ACDB8, &g_Clut + 0x4000);
+            StoreImage(&g_Vram.D_800ACDB8, g_Clut + 0x4000);
             DrawSync(0);
-            LoadImage(&D_800ACDB8 - 8, &g_Clut + 0x4000);
+            LoadImage(&g_Vram.D_800ACDB0, g_Clut + 0x4000);
             break;
         }
         break;
@@ -136,13 +128,14 @@ s32 func_800E7E08(u32 arg0) {
     case 4:
         while (func_800219E0(0) != 1)
             ;
-        if (func_80021350(D_8013644C[1], D_800A0248, D_800BD1C8[D_800A0248]) <
-            0) {
+        if (func_80021350(D_8013644C->addr, D_800A0248,
+                          D_800BD1C8[D_800A0248]) < 0) {
             return -1;
         }
         break;
     case 5:
-        if (func_80021880((s32*)0x80280000, D_8013644C[2], D_800A0248) == -1) {
+        if (func_80021880((s32*)0x80280000, D_8013644C->size, D_800A0248) ==
+            -1) {
             return -1;
         }
         while (func_800219E0(0) != 1)
@@ -157,24 +150,24 @@ s32 func_800E7E08(u32 arg0) {
         }
         break;
     case 6:
-        LoadImage(&D_800ACDC0, (u32*)0x80180000);
+        LoadImage(&g_Vram.D_800ACDC0, (u32*)0x80180000);
         break;
     case 14:
-        LoadImage(&D_800ACDD0, (u32*)0x80280000);
+        LoadImage(&g_Vram.D_800ACDD0, (u32*)0x80280000);
         break;
     case 21:
-        LoadImage(&D_800ACDE0, (u32*)0x80280000);
+        LoadImage(&g_Vram.D_800ACDE0, (u32*)0x80280000);
         break;
     case 15:
-        LoadImage(&D_800ACDD8, (u32*)0x80280000);
+        LoadImage(&g_Vram.D_800ACDD8, (u32*)0x80280000);
         break;
     case 16:
-        LoadImage(&D_800ACDB8, (u32*)0x80280000);
-        StoreImage(&D_800ACDB8, &D_80070BCC);
+        LoadImage(&g_Vram.D_800ACDB8, (u32*)0x80280000);
+        StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
         break;
     case 17:
-        LoadImage(&D_800ACDA8, (u32*)0x80280000);
-        StoreImage(&D_800ACDA8, &g_Clut);
+        LoadImage(&g_Vram.D_800ACDA8, (u32*)0x80280000);
+        StoreImage(&g_Vram.D_800ACDA8, &g_Clut);
         break;
     }
 
@@ -182,34 +175,34 @@ s32 func_800E7E08(u32 arg0) {
 }
 #endif
 
-s32 func_800E81FC(s32 fileId, FileType type) {
+s32 func_800E81FC(s32 fileId, SimFileType type) {
     char buf[33];
     s32 fid;
 
     func_800E7D08();
     D_800A04EC = 1;
     D_8013644C = &D_800A024C[fileId];
-    if (type == FILETYPE_STAGE_PRG) {
+    if (type == SimFileType_StagePrg) {
         STRCPY(buf, "sim:c:\\bin\\");
         D_8013644C = &D_80136450;
-        strcat(buf, D_800A3C40[g_StageId].ovlName);
+        strcat(buf, g_StagesLba[g_StageId].ovlName);
         strcat(buf, ".bin");
         D_8013644C->addr = (u8*)0x80180000;
         D_8013644C->path = buf;
         D_8013644C->size = 0x60000;
         D_8013644C->type = 0;
     }
-    if (type == FILETYPE_VH) {
+    if (type == SimFileType_Vh) {
         if (fileId & 0x8000) {
             D_8013644C = &D_800A036C[fileId & 0x7FFF];
         } else {
             STRCPY(buf, "sim:c:\\sound\\data\\sd_");
             D_8013644C = &D_80136450;
-            strcat(buf, D_800A3C40[g_StageId].name);
+            strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vh");
             D_8013644C->addr = (u8*)aPbav_2;
             D_8013644C->path = buf;
-            D_8013644C->size = D_800A3C40[g_StageId].vhLen;
+            D_8013644C->size = g_StagesLba[g_StageId].vhLen;
             D_8013644C->type = 4;
         }
         if (D_8013644C->addr == aPbav) {
@@ -226,54 +219,54 @@ s32 func_800E81FC(s32 fileId, FileType type) {
         }
         SsVabClose(D_800A0248);
     }
-    if (type == FILETYPE_VB) {
+    if (type == SimFileType_Vb) {
         if (fileId & 0x8000) {
             D_8013644C = &D_800A036C[fileId & 0x7FFF];
         } else {
             D_8013644C = &D_80136450;
             STRCPY(buf, "sim:c:\\sound\\data\\sd_");
-            strcat(buf, D_800A3C40[g_StageId].name);
+            strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vb");
             D_8013644C->addr = (u8*)0x80280000;
             D_8013644C->path = buf;
-            D_8013644C->size = D_800A3C40[g_StageId].vbLen;
+            D_8013644C->size = g_StagesLba[g_StageId].vbLen;
             D_8013644C->type = 5;
         }
     }
-    if (type == FILETYPE_SEQ) {
+    if (type == SimFileType_Seq) {
         D_8013644C = &D_800A04AC[fileId];
     }
-    if (type == FILETYPE_STAGE_CHR) {
+    if (type == SimFileType_StageChr) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\");
-        strcat(buf, D_800A3C40[g_StageId].gfxName);
+        strcat(buf, g_StagesLba[g_StageId].gfxName);
         strcat(buf, ".bin");
-        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->addr = DEBUG_PTR;
         D_8013644C->size = 0x40000;
         D_8013644C->path = buf;
         D_8013644C->type = 2;
     }
-    if (type == FILETYPE_WEAPON0_PRG) {
+    if (type == SimFileType_Weapon0Prg) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\w0_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
         D_8013644C->size = 0x3000;
-        D_8013644C->addr = (u8*)0x8017A000;
+        D_8013644C->addr = WEAPON0_PTR;
         D_8013644C->type = 8;
     }
-    if (type == FILETYPE_WEAPON1_PRG) {
+    if (type == SimFileType_Weapon1Prg) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\w1_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x8017D000;
+        D_8013644C->addr = WEAPON1_PTR;
         D_8013644C->size = 0x3000;
         D_8013644C->type = 8;
     }
-    if (type == FILETYPE_WEAPON0_CHR) {
+    if (type == SimFileType_Weapon0Chr) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\f0_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
@@ -283,7 +276,7 @@ s32 func_800E81FC(s32 fileId, FileType type) {
         D_8013644C->size = 0x4000;
         D_8013644C->type = 9;
     }
-    if (type == FILETYPE_WEAPON1_CHR) {
+    if (type == SimFileType_Weapon1Chr) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\f1_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
@@ -293,32 +286,32 @@ s32 func_800E81FC(s32 fileId, FileType type) {
         D_8013644C->size = 0x4000;
         D_8013644C->type = 10;
     }
-    if (type == FILETYPE_FAMILIAR_PRG) {
+    if (type == SimFileType_FamiliarPrg) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\tt_000.bin");
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x80170000;
+        D_8013644C->addr = FAMILIAR_PTR;
         D_8013644C->size = 0xA000;
         D_8013644C->type = 18;
     }
-    if (type == FILETYPE_FAMILIAR_CHR) {
+    if (type == SimFileType_FamiliarChr) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\ft_000.bin");
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->addr = DEBUG_PTR;
         D_8013644C->size = 0x6000;
         D_8013644C->type = 19;
     }
-    if (type == FILETYPE_MONSTER) {
+    if (type == SimFileType_Monster) {
         D_8013644C = &D_80136450;
         STRCPY(buf, "sim:c:\\bin\\mo_000.bin");
         buf[14] = fileId / 100 + '0';
         buf[15] = fileId / 10 - fileId / 100 * 10 + '0';
         buf[16] = fileId % 10 + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)0x80280000;
+        D_8013644C->addr = DEBUG_PTR;
         D_8013644C->size = 0x5800;
         D_8013644C->type = 20;
     }
@@ -420,33 +413,33 @@ void ReadPads(void) {
 
 void func_800E8EE4(void) {
     EnterCriticalSection();
-    D_80073068 = OpenEvent(0xF4000001U, 4, 0x2000, NULL);
-    D_8007306C = OpenEvent(0xF4000001U, 0x8000, 0x2000, NULL);
-    D_80073070 = OpenEvent(0xF4000001U, 0x100, 0x2000, NULL);
-    D_80073078 = OpenEvent(0xF4000001U, 0x2000, 0x2000, NULL);
-    D_8007EFD8 = OpenEvent(0xF0000011U, 4, 0x2000, NULL);
-    D_8007EFDC = OpenEvent(0xF0000011U, 0x8000, 0x2000, NULL);
-    D_8007EFE0 = OpenEvent(0xF0000011U, 0x100, 0x2000, NULL);
-    D_80086FE4 = OpenEvent(0xF0000011U, 0x2000, 0x2000, NULL);
+    g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    g_EvSwCardErr = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    g_EvSwCardTmo = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    g_EvSwCardNew = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
+    g_EvHwCardEnd = OpenEvent(HwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    g_EvHwCardErr = OpenEvent(HwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    g_EvHwCardTmo = OpenEvent(HwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    g_EvHwCardNew = OpenEvent(HwCARD, EvSpNEW, EvMdNOINTR, NULL);
     ExitCriticalSection();
-    EnableEvent((s32)D_80073068);
-    EnableEvent((s32)D_8007306C);
-    EnableEvent((s32)D_80073070);
-    EnableEvent((s32)D_80073078);
-    EnableEvent((s32)D_8007EFD8);
-    EnableEvent(D_8007EFDC);
-    EnableEvent(D_8007EFE0);
-    EnableEvent(D_80086FE4);
+    EnableEvent(g_EvSwCardEnd);
+    EnableEvent(g_EvSwCardErr);
+    EnableEvent(g_EvSwCardTmo);
+    EnableEvent(g_EvSwCardNew);
+    EnableEvent(g_EvHwCardEnd);
+    EnableEvent(g_EvHwCardErr);
+    EnableEvent(g_EvHwCardTmo);
+    EnableEvent(g_EvHwCardNew);
 }
 
 s32 func_800E908C(void) {
-    if (TestEvent(D_80073068) == 1) {
+    if (TestEvent(g_EvSwCardEnd) == 1) {
         return 1;
-    } else if (TestEvent(D_8007306C) == 1) {
+    } else if (TestEvent(g_EvSwCardErr) == 1) {
         return 2;
-    } else if (TestEvent(D_80073070) == 1) {
+    } else if (TestEvent(g_EvSwCardTmo) == 1) {
         return 3;
-    } else if (TestEvent(D_80073078) == 1) {
+    } else if (TestEvent(g_EvSwCardNew) == 1) {
         return 4;
     } else if (D_80137470-- < 0) {
         return 2;
@@ -455,44 +448,44 @@ s32 func_800E908C(void) {
 }
 
 s32 func_800E912C(void) {
-    if (TestEvent(D_80073068) == 1) {
+    if (TestEvent(g_EvSwCardEnd) == 1) {
         return 1;
-    } else if (TestEvent(D_8007306C) == 1) {
+    } else if (TestEvent(g_EvSwCardErr) == 1) {
         return 2;
-    } else if (TestEvent(D_80073070) == 1) {
+    } else if (TestEvent(g_EvSwCardTmo) == 1) {
         return 3;
-    } else if (TestEvent(D_80073078) == 1) {
+    } else if (TestEvent(g_EvSwCardNew) == 1) {
         return 4;
     }
     return 0;
 }
 
 void func_800E91B0(void) {
-    TestEvent(D_80073068);
-    TestEvent(D_8007306C);
-    TestEvent(D_80073070);
-    TestEvent(D_80073078);
+    TestEvent(g_EvSwCardEnd);
+    TestEvent(g_EvSwCardErr);
+    TestEvent(g_EvSwCardTmo);
+    TestEvent(g_EvSwCardNew);
 }
 
 s32 func_800E9208(void) {
     while (true) {
-        if (TestEvent(D_8007EFD8) == 1) {
+        if (TestEvent(g_EvHwCardEnd) == 1) {
             return 1;
-        } else if (TestEvent(D_8007EFDC) == 1) {
+        } else if (TestEvent(g_EvHwCardErr) == 1) {
             return 2;
-        } else if (TestEvent(D_8007EFE0) == 1) {
+        } else if (TestEvent(g_EvHwCardTmo) == 1) {
             return 3;
-        } else if (TestEvent(D_80086FE4) == 1) {
+        } else if (TestEvent(g_EvHwCardNew) == 1) {
             return 4;
         }
     }
 }
 
 void func_800E928C(void) {
-    TestEvent(D_8007EFD8);
-    TestEvent(D_8007EFDC);
-    TestEvent(D_8007EFE0);
-    TestEvent(D_80086FE4);
+    TestEvent(g_EvHwCardEnd);
+    TestEvent(g_EvHwCardErr);
+    TestEvent(g_EvHwCardTmo);
+    TestEvent(g_EvHwCardNew);
 }
 
 void func_800E92E4(void) { D_8013B660 = 0; }
@@ -806,8 +799,8 @@ s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(7);
     func_800EA5E4(8);
 
-    if ((g_CurrentPlayableCharacter == PLAYER_ALUCARD) &&
-        (g_StageId != STAGE_ST0)) {
+    if (g_CurrentPlayableCharacter == PLAYER_ALUCARD &&
+        g_StageId != STAGE_ST0) {
         func_800EA5E4(0x17);
     }
 }
@@ -860,7 +853,7 @@ void func_800EAEEC(void) {
     func_800EAEA4();
 }
 
-// ASPSX
+// ASPSX jump to 'nop'
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EAF28);
 #else
@@ -872,7 +865,7 @@ void func_800EAF28(s32 arg0) {
     unkstruct_80072FA0* var_a0;
 
     if (arg0 & 0x8000) {
-        var_a1 = D_8003C798[arg0 & 0x7FFF];
+        var_a1 = g_api.o.entityGfxs[arg0 & 0x7FFF];
     } else {
         var_a1 = D_800A3B5C[arg0];
     }
@@ -1097,11 +1090,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
 // clears out each entity struct 1 byte at a time
 void func_800EBB70(void) {
     s8* byte;
-    Entity* entity = &g_EntityArray[0];
+    Entity* entity = &g_Entities[0];
     s32 i;
     u32 j;
 
-    for (i = 0; i < ARRAY_COUNT(g_EntityArray); i++) {
+    for (i = 0; i < ARRAY_COUNT(g_Entities); i++) {
         byte = (s8*)entity;
         for (j = 0; j < 188; j++) {
             byte[0] = 0;

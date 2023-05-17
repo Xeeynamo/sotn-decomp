@@ -1,15 +1,4 @@
-/*
- * File: 42398.c
- * Overlay: DRA
- * Description: Game engine.
- */
-
-#include "common.h"
 #include "dra.h"
-#include "objects.h"
-#include "sfx.h"
-
-#define COLORS_PER_PAL 16
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -23,7 +12,7 @@
 void func_800E2398(const char* str);
 s32 func_800E3278(void);
 void func_800E385C(u32*);
-void func_800E7AEC(void);
+void UpdateGame(void);
 void func_800E7BB8(void);
 void func_800E8EE4(void);
 void func_800EA7CC(void);
@@ -46,15 +35,15 @@ s32 func_80136010(void);
 extern const char* aO;
 
 void func_800E2398(const char* str) {
-    D_8006C37C = (GpuBuffer*)D_8006C37C->unk0;
+    g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(str);
     if (D_80136300++ & 4) {
         FntPrint(&aO); // TODO: rodata split
     }
     DrawSync(0);
     VSync(0);
-    PutDrawEnv(&D_8006C37C->buf.draw);
-    PutDispEnv(&D_8006C37C->buf.disp);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
     FntFlush(-1);
 }
 
@@ -69,7 +58,99 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E249C);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2824);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2B00);
+void func_800E2B00(void) {
+    DR_MODE* drMode;
+    SPRT* sprite;
+    TILE* tile;
+    TILE* curTile;
+    s32 i;
+    u16 var_s7;
+    u16* palette;
+    u32 new_var;
+
+    u32 color;
+    u32 new_var3;
+    u16 color_fake;
+    u16 new_var4;
+
+    drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    sprite = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
+    FntPrint("file:%02x,%03x\n", D_801362B4, g_DebugCurPal);
+    FntPrint("half:%s\n", D_800A0144[D_801362C8]);
+
+    if (D_801362C8 == 0) {
+        SetSemiTrans(sprite, 0);
+        var_s7 = 0;
+    } else {
+        SetSemiTrans(sprite, 1);
+        var_s7 = (((u16)D_801362C8) << 5) - 0x20;
+    }
+
+    SetShadeTex(sprite, 1);
+    sprite->r0 = 0;
+    sprite->g0 = 0;
+    sprite->b0 = 0;
+    sprite->x0 = 112;
+    sprite->u0 = (D_801362B4 & 1) << (new_var = 7);
+    sprite->y0 = 80;
+    sprite->v0 = (D_801362B4 & 2) << (new_var = 6);
+    sprite->w = 128;
+    sprite->h = 128;
+    sprite->clut = D_8003C104[g_DebugCurPal];
+    AddPrim(&g_CurrentOT[0x1FE], sprite);
+    g_GpuUsage.sp++;
+    SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7,
+                &g_Vram.D_800ACD80);
+    AddPrim(&g_CurrentOT[0x1FE], drMode++);
+
+    i = 0;
+    palette = g_Clut + g_DebugCurPal * 16;
+    curTile = tile;
+    g_GpuUsage.drawModes++;
+    while (i < 0x10) {
+        SetSemiTrans(tile, 0);
+
+        color = *palette;
+        color_fake = *palette;
+        new_var4 = (color_fake & 0x1F) << 3;
+        curTile->r0 = new_var4;
+
+        color_fake = color;
+        new_var4 = color_fake >> 2;
+        curTile->g0 = new_var4 & 0xF8;
+
+        color_fake = color;
+        new_var3 = color_fake >> 7;
+        curTile->b0 = new_var3 & 0xF8;
+
+        if (i == g_DebugPalIdx) {
+            color_fake = (i * 15) + 8;
+            curTile->x0 = (i * 15) + 8;
+            curTile->y0 = 0xD4;
+        } else {
+            curTile->x0 = (i * 15) + 10;
+            curTile->y0 = 0xD6;
+        }
+        if (i == g_DebugPalIdx) {
+            curTile->w = 14;
+            curTile->h = 15;
+        } else {
+            curTile->w = 10;
+            curTile->h = 11;
+        }
+        AddPrim(&g_CurrentOT[0x1FE], tile);
+        g_GpuUsage.tile++;
+        curTile++;
+        tile++;
+        palette++;
+        i++;
+    }
+
+    SetDrawMode(drMode, 0, 0, 0, &g_Vram.D_800ACD80);
+    AddPrim(&g_CurrentOT[0x1FE], drMode);
+    g_GpuUsage.drawModes++;
+}
 
 void func_800E2E98(s32 colorAdd) {
     s32 newColorChannel;
@@ -176,131 +257,147 @@ extern s32 D_8013B6A0;
 extern s32 D_8017D350;
 extern s32 D_8018B4E0;
 extern s32 D_801A9C80;
-extern const char* aPbav;
-extern const char* aPbav_0;
-extern const char* aPbav_1;
-extern const char* aPbav_2;
-extern const char* aPqes;
-extern const char* aPqes_0;
-extern const char* aPqes_1;
+extern const char aPqes[];
+extern const char aPqes_0[];
+extern const char aPqes_1[];
 void SsVabClose(short vab_id);
 s32 func_800E3278(void) {
     SsVabClose(0);
     while (func_800219E0(0) != 1)
         ;
 
-    if ((func_80021350(&aPbav, 0, D_800BD1C8) >= 0) &&
-        (func_80021880(&D_8013B6A0, 0x41CB0, 0) >= 0)) {
-        while (func_800219E0(0) != 1)
-            ;
-        SsVabClose(1);
-        while (func_800219E0(0) != 1)
-            ;
-        if ((func_80021350(&aPbav_0, 1, D_800BD1CC) >= 0) &&
-            (func_80021880(&D_8017D350, 0xE190, 1) >= 0)) {
-            while (func_800219E0(0) != 1)
-                ;
-            SsVabClose(2);
-            while (func_800219E0(0) != 1)
-                ;
-            if ((func_80021350(&aPbav_1, 2, D_800BD1D0) >= 0) &&
-                (func_80021880(&D_801A9C80, 0xFBF0, 2) >= 0)) {
-                while (func_800219E0(0) != 1)
-                    ;
-                SsVabClose(3);
-                while (func_800219E0(0) != 1)
-                    ;
-                if ((func_80021350(&aPbav_2, 3, D_800BD1D4) < 0) ||
-                    (func_80021880(&D_8018B4E0, 0x1A610, 3) < 0)) {
-                    return -1;
-                }
-                while (func_800219E0(0) != 1)
-                    ;
-                func_80131EBC(&aPqes, 0x618);
-                func_80131EBC(&aPqes_0, 0x201);
-                func_80131EBC(&aPqes_1, 0x205);
-                return 0;
-            }
-        }
+    if (func_80021350(&aPbav, 0, D_800BD1C8) < 0) {
+        return;
     }
+    if (func_80021880(&D_8013B6A0, 0x41CB0, 0) < 0) {
+        return;
+    }
+
+    while (func_800219E0(0) != 1)
+        ;
+    SsVabClose(1);
+    while (func_800219E0(0) != 1)
+        ;
+
+    if (func_80021350(&aPbav_0, 1, D_800BD1CC) < 0) {
+        return;
+    }
+    if (func_80021880(&D_8017D350, 0xE190, 1) < 0) {
+        return;
+    }
+
+    while (func_800219E0(0) != 1)
+        ;
+    SsVabClose(2);
+    while (func_800219E0(0) != 1)
+        ;
+
+    if (func_80021350(&aPbav_1, 2, D_800BD1D0) < 0) {
+        return;
+    }
+    if (func_80021880(&D_801A9C80, 0xFBF0, 2) < 0) {
+        return;
+    }
+
+    while (func_800219E0(0) != 1)
+        ;
+    SsVabClose(3);
+    while (func_800219E0(0) != 1)
+        ;
+
+    if (func_80021350(&aPbav_2, 3, D_800BD1D4) < 0 ||
+        func_80021880(&D_8018B4E0, 0x1A610, 3) < 0) {
+        return -1;
+    }
+    while (func_800219E0(0) != 1)
+        ;
+    func_80131EBC(&aPqes, 0x618);
+    func_80131EBC(&aPqes_0, 0x201);
+    func_80131EBC(&aPqes_1, 0x205);
+    return 0;
 }
 #endif
 
 void func_800E346C(void) {
-    D_8003CB08.buf.draw.r0 = 0;
-    D_8003CB08.buf.draw.g0 = 0;
-    D_8003CB08.buf.draw.b0 = 0;
-    D_800542FC.buf.draw.r0 = 0;
-    D_800542FC.buf.draw.g0 = 0;
-    D_800542FC.buf.draw.b0 = 0;
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
 }
 
 void func_800E34A4(s8 arg0) {
-    D_8003CB08.buf.draw.r0 = arg0;
-    D_8003CB08.buf.draw.g0 = arg0;
-    D_8003CB08.buf.draw.b0 = arg0;
-    D_800542FC.buf.draw.r0 = arg0;
-    D_800542FC.buf.draw.g0 = arg0;
-    D_800542FC.buf.draw.b0 = arg0;
+    g_GpuBuffers[0].draw.r0 = arg0;
+    g_GpuBuffers[0].draw.g0 = arg0;
+    g_GpuBuffers[0].draw.b0 = arg0;
+    g_GpuBuffers[1].draw.r0 = arg0;
+    g_GpuBuffers[1].draw.g0 = arg0;
+    g_GpuBuffers[1].draw.b0 = arg0;
 }
 
 void func_800E34DC(s32 arg0) {
-    D_8003CB08.buf.draw.clip.y = 0x0014;
-    D_8003CB08.buf.draw.clip.h = 0x00CF;
-    D_80054302 = arg0 == 0 ? 0x0014 : 0x0114;
-    D_800542FC.buf.draw.clip.h = 0x00CF;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+
+    g_GpuBuffers[0].draw.clip.y = 0x0014;
+    g_GpuBuffers[0].draw.clip.h = 0x00CF;
+#ifndef NON_MATCHING
+    g_GpuBuffers_1_buf_draw_clip_y = arg0 == 0 ? 0x0014 : 0x0114;
+#else
+    g_GpuBuffers[1].draw.clip.y = 0x0014;
+#endif
+    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_800E346C();
-    D_800542FC.buf.draw.dtd = 0;
-    D_8003CB08.buf.draw.dtd = 0;
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].draw.dtd = 0;
+    g_GpuBuffers[0].draw.dtd = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 // Set stage display buffer
 void func_800E3574(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_800E34DC(0);
 }
 
 // Set CGI display buffer?
 void func_800E3618(s32 width) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, width, DISP_ALL_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, width, DISP_ALL_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, width, DISP_ALL_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, width, DISP_ALL_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, width, DISP_ALL_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, width, DISP_ALL_H);
     func_800E34DC(1);
 }
 
 // Set menu display buffer
 void func_800E36C8(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_MENU_W, DISP_MENU_H);
     func_800E34DC(1);
 }
 
 void func_800E376C(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    D_800542FC.buf.draw.clip.y = DISP_UNK2_W / 2;
-    D_800542FC.buf.draw.clip.h = DISP_UNK2_H;
-    D_8003CB08.buf.draw.clip.h = DISP_UNK2_H;
-    D_8003CB08.buf.draw.clip.y = 0;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_UNK2_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_UNK2_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_UNK2_H;
+    g_GpuBuffers[0].draw.clip.y = 0;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_800E346C();
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 // DECOMP_ME_WIP func_800E385C https://decomp.me/scratch/Ocshz
@@ -310,11 +407,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
         if (D_800A0158 >= 0x24) {
-            D_801390D4->buf.disp.screen.x = 0;
-            PutDispEnv(&D_801390D4->buf.disp);
+            g_BackBuffer->disp.screen.x = 0;
+            PutDispEnv(&g_BackBuffer->disp);
         } else {
-            D_801390D4->buf.disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
-            PutDispEnv(&D_801390D4->buf.disp);
+            g_BackBuffer->disp.screen.x = D_80136308[D_800A0158 + D_800A04F8];
+            PutDispEnv(&g_BackBuffer->disp);
             D_800A0158++;
             SetRCnt(0xF2000001, 6, 0x1000);
         }
@@ -335,10 +432,10 @@ void entrypoint_sotn(void) {
     SetGraphDebug(0);
     InitGeom();
     GsInitVcount();
-    D_8003CB08.unk0 = &D_800542FC;
-    D_800542FC.unk0 = &D_8003CB08;
-    ClearImage(&D_800ACD88[0], 0x5A, 0x50, 0x46);
-    ClearImage(&D_800ACD88[1], 0, 0, 0);
+    g_GpuBuffers[0].next = &g_GpuBuffers[1];
+    g_GpuBuffers[1].next = &g_GpuBuffers[0];
+    ClearImage(&g_Vram.D_800ACD88, 0x5A, 0x50, 0x46);
+    ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
     for (i = 0; i < 0x50; i++) {
         ((void**)&g_api)[i] = (&D_800A0004)[i];
     }
@@ -347,7 +444,7 @@ void entrypoint_sotn(void) {
     D_800987B4 = 0;
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
-    D_8006C37C = &D_8003CB08;
+    g_CurrentBuffer = &g_GpuBuffers[0];
     func_80131ED8(0xB9B6);
     func_801325D8();
     while (func_800E3278() < 0)
@@ -356,7 +453,7 @@ void entrypoint_sotn(void) {
     FntLoad(0x380, 0x100);
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
-    func_800E4124(0);
+    SetGameState(Game_Init);
 
     g_GpuMaxUsage.drawModes = 0;
     g_GpuMaxUsage.gt4 = 0;
@@ -391,11 +488,11 @@ loop_5:
     D_801362C4 = 0;
     D_801362C8 = 0;
     D_801362D8 = 0;
-    D_80097914 = 0;
+    g_DemoMode = Demo_None;
     D_8003C704 = 0;
     D_800973EC = 0;
     D_800974A4 = 0;
-    D_8006C398 = 0;
+    g_CdStep = CdStep_None;
     D_80097928 = 0;
     D_80097910 = 0;
     D_80097904 = 0;
@@ -405,14 +502,11 @@ loop_5:
     D_800978C4 = 1;
 
     while (true) {
-        GpuBuffer* temp_v1_2;
-
-        D_801390D4 = D_8006C37C;
-        temp_v1_2 = D_8006C37C->unk0;
+        g_BackBuffer = g_CurrentBuffer;
+        g_CurrentBuffer = g_CurrentBuffer->next;
         g_blinkTimer++;
-        D_8006C37C = temp_v1_2;
-        D_801362CC = temp_v1_2->order;
-        ClearOTag(temp_v1_2->order, 0x200);
+        g_CurrentOT = g_CurrentBuffer->ot;
+        ClearOTag(g_CurrentOT, OTSIZE);
         g_GpuUsage.drawModes = 0;
         g_GpuUsage.env = 0;
         g_GpuUsage.gt4 = 0;
@@ -423,12 +517,12 @@ loop_5:
         g_GpuUsage.tile = 0;
         g_GpuUsage.sp = 0;
         if (nullsub_8() != 0) {
-            func_800E7AEC();
+            UpdateGame();
         }
         if (D_8003C0F8 == 0 && D_800973EC == 0) {
             func_800ECE58();
             func_800EBBAC();
-            if (D_8003C734 == 2 && D_800BD1C0 != 0) {
+            if (g_GameState == Game_Play && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
                     DrawEntitiesHitbox(D_801362B0);
                 }
@@ -436,7 +530,7 @@ loop_5:
         }
         func_800EDEDC();
         func_80108448();
-        func_800E385C(D_801362CC);
+        func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
         VSync(D_8003C73C);
@@ -464,12 +558,12 @@ loop_5:
             func_801361F8();
             VSync(D_8003C73C);
             func_80132760();
-            func_800E4124(1);
+            SetGameState(Game_Title);
             goto loop_5;
         }
-        PutDrawEnv(&D_8006C37C->buf.draw);
-        PutDispEnv(&D_8006C37C->buf.disp);
-        DrawOTag(D_801362CC);
+        PutDrawEnv(&g_CurrentBuffer->draw);
+        PutDispEnv(&g_CurrentBuffer->disp);
+        DrawOTag(g_CurrentOT);
         func_800EA7CC();
         func_801361F8();
         if (func_80131F28() >= 0x385) {
@@ -509,20 +603,20 @@ loop_5:
         D_801362D4 = (D_801362D4 + 0xFF) >> 8;
         D_8003C99C += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
-            g_GameTimer.frames += D_801362D4;
-            if (g_GameTimer.frames >= 60) {
-                g_GameTimer.frames -= 60;
-                g_GameTimer.seconds++;
-                if (g_GameTimer.seconds >= 60) {
-                    g_GameTimer.seconds -= 60;
-                    g_GameTimer.minutes++;
-                    if (g_GameTimer.minutes >= 60) {
-                        g_GameTimer.minutes -= 60;
-                        g_GameTimer.hours++;
-                        if (g_GameTimer.hours >= 100) {
-                            g_GameTimer.seconds = 59;
-                            g_GameTimer.minutes = 59;
-                            g_GameTimer.hours = 99;
+            g_Status.timerFrames += D_801362D4;
+            if (g_Status.timerFrames >= 60) {
+                g_Status.timerFrames -= 60;
+                g_Status.timerSeconds++;
+                if (g_Status.timerSeconds >= 60) {
+                    g_Status.timerSeconds -= 60;
+                    g_Status.timerMinutes++;
+                    if (g_Status.timerMinutes >= 60) {
+                        g_Status.timerMinutes -= 60;
+                        g_Status.timerHours++;
+                        if (g_Status.timerHours >= 100) {
+                            g_Status.timerSeconds = 59;
+                            g_Status.timerMinutes = 59;
+                            g_Status.timerHours = 99;
                         }
                     }
                 }
@@ -532,21 +626,109 @@ loop_5:
     }
 }
 
-void func_800E4124(s32 context) {
-    D_8003C734 = context;
-    D_80073060 = 0;
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E414C);
+void func_800E414C(void) {
+    RoomTeleport* temp_a1;
+    s32 temp_a0;
 
-void ClearBackbuffer(void) { ClearImage(&c_backbufferClear, 0, 0, 0); }
+    if (!(D_8003C708.flags & 0x40)) {
+        return;
+    }
 
-void func_800E451C(void) {
+    func_8010DFF0(1, 1);
+    if (D_8003C708.unk2 != 0 && !(D_800733DA >= 8 && D_800733DA < 249)) {
+        return;
+    }
+
+    switch (D_8003C708.unk2) {
+    case 0:
+        func_800EA538(1);
+        temp_a1 = &D_800A245C[D_8003C708.zPriority];
+        temp_a0 = g_StageId & STAGE_INVERTEDCASTLE_FLAG;
+        D_8003C710 = temp_a1->stageId;
+        if (temp_a0 != 0) {
+            D_8003C710 ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        D_8003C712 = temp_a1->unk6;
+        if (temp_a0 != 0) {
+            D_8003C712 ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        PlaySfx(0x80);
+        D_80097928 = 1;
+        if (D_8003C708.flags == 0x40) {
+            g_Player.D_80072EFC = 0x18;
+            g_Player.D_80072EF4 = 0x8000;
+        } else {
+            g_Player.D_80072EFC = 0x18;
+            g_Player.D_80072EF4 = 0x2000;
+        }
+        D_8003C708.unk2++;
+        return;
+    case 1:
+        if (!func_80131F68()) {
+            if (g_UseDisk != 0) {
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_StageChr | 0x8000;
+            }
+            g_mapTilesetId = D_8003C710;
+            D_8003C708.unk2++;
+            return;
+        }
+        break;
+    case 2:
+        if (!g_UseDisk) {
+            break;
+        }
+        if (D_8003C708.flags == 0x40 && D_800733DA < 0x78) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_mapTilesetId = D_8003C710;
+            D_8003C708.unk2++;
+        }
+        if (D_8003C708.flags == 0x41 && D_800733DA >= 0x89) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_mapTilesetId = D_8003C710;
+            D_8003C708.unk2++;
+            return;
+        }
+        break;
+    case 3:
+        if (!g_UseDisk) {
+            break;
+        }
+        if (D_8003C708.flags == 0x40 && D_800733DA >= 0x89) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_mapTilesetId = D_8003C712;
+            D_8003C708.unk2 = 2;
+        }
+        if (D_8003C708.flags == 0x41 && D_800733DA < 0x78) {
+            func_801073C0();
+            g_CdStep = 1;
+            g_LoadFile = CdFile_StageChr;
+            g_mapTilesetId = D_8003C712;
+            D_8003C708.unk2 = 2;
+        }
+        break;
+    }
+}
+
+void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
+
+void HandleTitle(void) {
     void (*callback)(void);
 
-    switch (D_80073060) {
+    switch (g_GameStep) {
     case 0:
         ClearBackbuffer();
         func_800ECBF8();
@@ -560,82 +742,96 @@ void func_800E451C(void) {
         func_800EAEEC();
         func_800E3574();
         g_StageId = STAGE_SEL;
-        if (D_800978AC != 0) {
-            if (D_8006C3B0 != 0) {
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
                 return;
             }
-            D_8006C398 = 1;
-            D_8006BAFC = 1;
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_Sel;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 100:
-        if (D_8006C3B0 == 0) {
-            RECT sp18;
-            sp18.x = 0;
-            sp18.y = 0;
-            sp18.w = 0x280;
-            sp18.h = 0x100;
-            LoadImage(&sp18, (u32*)0x80180014);
+        if (!g_IsUsingCd) {
+            RECT rect;
+            rect.x = 0;
+            rect.y = 0;
+            rect.w = 0x280;
+            rect.h = 0x100;
+            LoadImage(&rect, (u32*)0x80180014);
 
-            sp18.x = 0;
-            sp18.y = 0x100;
-            LoadImage(&sp18, (u32*)0x80180014);
+            rect.x = 0;
+            rect.y = 0x100;
+            LoadImage(&rect, (u32*)0x80180014);
 
-            SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, 0x280, 0x100);
-            SetDefDrawEnv(&D_800542FC.buf.draw, 0, 0x100, 0x280, 0x100);
-            SetDefDispEnv(&D_8003CB08.buf.disp, 0, 0x100, 0x280, 0x100);
-            SetDefDispEnv(&D_8005435C, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 0x280, 0x100);
             SetDispMask(0);
-            D_8013640C = 0x6E;
-            D_80073060++;
+            D_8013640C = 110;
+            g_GameStep++;
         }
         break;
     case 101:
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
-            ClearImage(&D_800ACDF0, 0, 0, 0);
+            ClearImage(&g_Vram.D_800ACDF0, 0, 0, 0);
             func_800E3574();
-            g_StageId = 0x45;
-            if (D_800978AC != 0) {
-                if (D_8006C3B0 != 0) {
+            g_StageId = STAGE_SEL;
+            if (g_UseDisk) {
+                if (g_IsUsingCd) {
                     break;
                 }
-                D_8006C398 = 1;
-                D_8006BAFC = 1;
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_Sel;
             }
-            D_80073060 = 1;
+            g_GameStep = 1;
         }
         break;
     case 1:
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(2, FILETYPE_SYSTEM) >= 0 &&
-             func_800E81FC(0, FILETYPE_SYSTEM) >= 0)) {
-            D_80073060++;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (func_800E81FC(2, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(0, SimFileType_System) < 0) {
+                break;
+            }
         }
+        g_GameStep++;
         break;
     case 2:
-        D_80073060 = 3;
+        g_GameStep = 3;
         break;
     case 3:
-        D_80073060 = 4;
+        g_GameStep = 4;
         break;
     case 4:
-        if (D_800978AC != 0) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0x100;
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StagePrg;
         }
-        D_80073060 = 5;
+        g_GameStep = 5;
         break;
     case 5:
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0)) {
-            D_8003C9A4 = 0;
-            D_80073060++;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+                break;
+            }
         }
+        D_8003C9A4 = 0;
+        g_GameStep++;
         break;
     case 6:
-        if (D_8003C734 == 1) {
+        if (g_GameState == Game_Title) {
             callback = g_api.o.TestCollisions;
         } else {
             callback = g_api.o.InitRoomEntities;
@@ -644,111 +840,4 @@ void func_800E451C(void) {
         callback();
         break;
     }
-}
-
-void func_800E493C(void) {
-    if (g_Settings.isSoundMono == false) {
-        PlaySfx(SET_SOUNDMODE_STEREO);
-    } else {
-        PlaySfx(SET_SOUNDMODE_MONO);
-    }
-}
-
-void func_800E4970(void) {
-    func_800E4124(4);
-    D_80073060 = 2;
-    ClearBackbuffer();
-    func_800E3574();
-    func_800EAD7C();
-    func_801065F4(0);
-    func_800EDA94();
-    func_800EA538(0);
-    func_800ECE2C();
-    func_800EAEEC();
-    func_800EDAE4();
-    PlaySfx(0x12);
-    PlaySfx(0xB);
-    func_80132760();
-    func_800E493C();
-}
-
-void func_800E4A04(void) { s32 pad[3]; }
-
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E4A14);
-
-void func_800E5358(void) {
-    POLY_GT4* poly = &g_PrimBuf[D_8013640C];
-    s32 i;
-
-    for (i = -3; i < 256; i++, poly = (POLY_GT4*)poly->tag) {
-        if ((i >= 0) && (poly->y0 <= 256)) {
-            if (poly->p1 != 0) {
-                poly->p1--;
-            } else {
-                if ((poly->p2 < 10) && (rand() & 1)) {
-                    poly->p2++;
-                } else {
-                    if (!(rand() & 3)) {
-                        poly->y0++;
-                        poly->y1++;
-                    }
-                    poly->y0++;
-                    poly->y1++;
-                }
-                poly->y2++;
-                poly->y3++;
-            }
-        }
-    }
-}
-
-void func_800E5498(void) {
-    POLY_GT4* poly = &D_8006C37C->polyGT4[g_GpuUsage.gt4];
-    GpuBuffer* buffer = D_8006C37C;
-
-    setSemiTrans(poly, true);
-    setShadeTex(poly, false);
-    SetPolyRect(poly, 0, 0, 256, 256);
-    setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
-    func_801072BC(poly);
-    poly->tpage = 0x5A;
-    poly->clut = D_8003C3C2[0];
-    AddPrim(&buffer->order[0x1FF], poly);
-    g_GpuUsage.gt4++;
-}
-
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5584);
-
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E5D30);
-
-void func_800E6218(void) {
-    if (D_8006CBC4 != 0) {
-        D_80170000();
-    }
-}
-
-void func_800E6250(void) {
-    if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_PRG) != 0)
-            ;
-        while (func_800E81FC(D_8006CBC4 - 1, FILETYPE_FAMILIAR_CHR) != 0)
-            ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, FILETYPE_VH) != 0)
-            ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, FILETYPE_VB) != 0)
-            ;
-    }
-}
-
-extern unkStruct_800A872C D_800A872C[];
-
-s32 func_800E6300(void) {
-    s32 i;
-
-    for (i = 0; i < 30; i++) {
-        if ((D_800A872C[i].unk0 > 0) && (g_Status.relics[i] & 2)) {
-            return D_800A872C[i].unk0;
-        }
-    }
-    return 0;
 }

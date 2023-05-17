@@ -1,14 +1,14 @@
 #include "sel.h"
 
 void func_801B4B9C(Entity* entity, s16 step);
-extern u16 D_800737B0;  // g_EntityArray[5].step
-extern u16 D_800737D4;  // g_EntityArray[5].animFrameIdx
+extern u16 D_800737B0;  // g_Entities[5].step
+extern u16 D_800737D4;  // g_Entities[5].animFrameIdx
 extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
 
 void func_801B585C(u16 arg0) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_5];
+    Entity* e = &g_Entities[UNK_ENTITY_5];
 
     switch (e->step) {
     case 0:
@@ -17,7 +17,7 @@ void func_801B585C(u16 arg0) {
         e->zPriority = 0xC0;
         e->animCurFrame = 0;
         e->unk5A = 0;
-        e->unk80.entityPtr = NULL;
+        e->ext.generic.unk80.entityPtr = NULL;
         e->palette = 0x8100;
         e->step++;
         break;
@@ -31,8 +31,8 @@ void func_801B585C(u16 arg0) {
 
     case 2:
         AnimateEntity(D_80180504, e);
-        e->unk80.modeS32 += 0x18000;
-        if (e->unk80.modeS16.unk2 >= 0x49) {
+        e->ext.generic.unk80.modeS32 += 0x18000;
+        if (e->ext.generic.unk80.modeS16.unk2 >= 0x49) {
             func_801B4B9C(e, 3);
         }
         break;
@@ -55,14 +55,14 @@ void func_801B585C(u16 arg0) {
         if (!(AnimateEntity(D_80180528, e) & 0xFF)) {
             func_801B4B9C(e, 6);
         }
-        e->unk80.modeS32 += 0xFFFE8000;
+        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
         break;
 
     case 6:
         AnimateEntity(D_80180504, e);
-        e->unk80.modeS32 += 0xFFFE8000;
-        if (arg0 && e->unk80.modeS16.unk2 < 0x20 ||
-            !arg0 && e->unk80.modeS16.unk2 < -0x10) {
+        e->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        if (arg0 && e->ext.generic.unk80.modeS16.unk2 < 0x20 ||
+            !arg0 && e->ext.generic.unk80.modeS16.unk2 < -0x10) {
             e->step = 255;
         }
         break;
@@ -78,7 +78,7 @@ extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
 
 void func_801B5A7C(void) {
-    Entity* e = &g_EntityArray[8];
+    Entity* e = &g_Entities[8];
 
     switch (e->subId) {
     case 0:
@@ -112,8 +112,8 @@ void func_801B5A7C(void) {
                 D_800737B0 = 2;
                 D_800737D4 = 0;
             } while (0);
-            g_EntityArray[5].animFrameDuration = 0;
-            g_EntityArray[5].facing = 1;
+            g_Entities[5].animFrameDuration = 0;
+            g_Entities[5].facing = 1;
             e->step++;
             break;
 
@@ -252,13 +252,13 @@ void func_801B5A7C(void) {
                 D_801D6B24 += 0x4000;
                 break;
             }
-            *(s32*)&e->unk8C.entityPtr = 0x80;
+            *(s32*)&e->ext.generic.unk8C.entityPtr = 0x80;
             e->step++;
             break;
 
         case 4:
-            (*((s32*)&e->unk8C.entityPtr))--;
-            if (*(s32*)&e->unk8C.entityPtr == 0) {
+            (*((s32*)&e->ext.generic.unk8C.entityPtr))--;
+            if (*(s32*)&e->ext.generic.unk8C.entityPtr == 0) {
                 D_801BC3E8 |= 1;
                 e->step++;
             }
@@ -341,7 +341,7 @@ void func_801B60D4(void) {
 
     switch (D_8003C9A4) {
     case 0:
-        if (D_8006C3B0 == 0) {
+        if (!g_IsUsingCd) {
             D_8003C728 = 1;
             if (D_800978B4 == 0) {
                 D_8003C100 = 2;
@@ -359,15 +359,15 @@ void func_801B60D4(void) {
             func_801B18F4();
         }
         if (D_800978B4 != 0) {
-            D_80073060++;
+            g_GameStep++;
         } else {
-            D_80073060 = 0x100;
+            g_GameStep = 0x100;
         }
         D_8003C9A4++;
         break;
 
     case 2:
-        ent = g_EntityArray;
+        ent = g_Entities;
         for (i = 0; i < 9; i++) {
             DestroyEntity(ent);
             ent++;
@@ -375,7 +375,7 @@ void func_801B60D4(void) {
 
         D_801D6B24 = 0;
         D_801BD030 = 0;
-        g_EntityArray[8].subId = D_800978B4 - 1;
+        g_Entities[8].subId = D_800978B4 - 1;
         g_api.func_800EA5E4(0x16);
         g_api.func_800EA5E4(0);
         g_api.func_800EA5E4(0x8005);
@@ -384,7 +384,7 @@ void func_801B60D4(void) {
         break;
 
     case 3:
-        ent4 = &g_EntityArray[4];
+        ent4 = &g_Entities[4];
         func_801B5A7C();
         func_801B69F8(ent4);
         func_801B4C68();
@@ -397,12 +397,13 @@ void func_801B60D4(void) {
             if (var_v1 < 0) {
                 var_v1 += 0xFFFF;
             }
-            ent->posX.i.hi = (s16)(var_v1 >> 0x10) + ent->unk80.modeS16.unk2;
+            ent->posX.i.hi =
+                (s16)(var_v1 >> 0x10) + ent->ext.generic.unk80.modeS16.unk2;
             ent++;
         }
 
         if (D_801BD030 != 0) {
-            ent = g_EntityArray;
+            ent = g_Entities;
             for (i = 0; i < 9; i++) {
                 DestroyEntity(ent);
                 ent++;
@@ -433,9 +434,9 @@ void func_801B60D4(void) {
         break;
 
     case 7:
-        ent4 = &g_EntityArray[4];
+        ent4 = &g_Entities[4];
         if (func_801B79D4(ent4) != 0) {
-            g_EntityArray[1].step = 0;
+            g_Entities[1].step = 0;
             D_801BC3E4 = 1;
             D_8003C9A4++;
         }
@@ -444,7 +445,7 @@ void func_801B60D4(void) {
     case 8:
         func_801B4FFC();
         if (D_801BC3E4 == 0) {
-            D_80073060 += 1;
+            g_GameStep++;
         }
         break;
     }

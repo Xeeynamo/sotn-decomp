@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "game.h"
+#include "items.h"
 #include "objects.h"
 #include "sfx.h"
 

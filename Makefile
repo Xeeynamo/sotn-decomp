@@ -18,6 +18,7 @@ AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 CC_FLAGS        += -mcpu=3000 -quiet -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float
 CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
+CPP_FLAGS       += -D_internal_version_$(VERSION)
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
@@ -94,9 +95,11 @@ clean:
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
+	$(PYTHON) ./tools/symbols.py sort
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
+	mkdir -p expected
 	rm -rf expected/build
 	cp -r build expected/
 
@@ -249,8 +252,14 @@ context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-extract_disk: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$(VERSION).cue disks/$(VERSION)
+extract_disk: extract_disk_$(VERSION)
+extract_disk_us: extract_disk_ps1us
+extract_disk_hd: extract_disk_pspeu
+extract_disk_psp%:
+	mkdir -p disks/psp$*
+	7z x disks/sotn.psp$*.iso -odisks/psp$*/
+extract_disk_ps1%: $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)

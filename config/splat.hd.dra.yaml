@@ -1,0 +1,184 @@
+options:
+  platform:     psx
+  basename:     dra
+  base_path:    ..
+  build_path:   build/hd
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/dra.bin
+  asm_path:     asm/hd/dra
+  asset_path:   assets/dra
+  src_path:     src/dra
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.hd.dra.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.dra.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.hd.dra.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  extensions_path: tools/splat_ext
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+segments:
+  - name: dra
+    type: code
+    start: 0x00000000
+    vram:  0x800A0000
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x3B5F8, rodata] # jtbl_800DB5F8
+      - [0x3B618, rodata, play] # jtbl_800DB618
+      - [0x3B648, 
+      rodata, gameover] # jtbl_800DB648
+      - [0x3B808, .rodata, 46358]
+      - [0x3B8D0, .rodata, 46FD4]
+      - [0x3B938, rodata]
+      - [0x3BCF0, rodata] # jtbl_800DBCF0
+      - [0x3BD08, rodata] # jtbl_800DBD08
+      - [0x3BD60, rodata]
+      - [0x3BE78, rodata] # jtbl_800DBE78
+      - [0x3BE90, rodata] # jtbl_800DBE90
+      - [0x3BEA8, rodata] # jtbl_800DBEA8
+      - [0x3BEBC, rodata]
+      - [0x3C11C, rodata] # jtbl_800DC11C
+      - [0x3C15C, rodata] # jtbl_800DC15C
+      - [0x3C19C, rodata]
+      - [0x3C1AC, rodata] # jtbl_800DC1AC
+      - [0x3C204, rodata] # jtbl_800DC204
+      - [0x3C404, rodata]
+      - [0x3C474, rodata] # jtbl_800DC474
+      - [0x3C488, rodata] # jtbl_800DC488
+      - [0x3C4A8, .rodata, 52860]
+      - [0x3C4D0, rodata] # jtbl_800DC4D0
+      - [0x3C4F0, rodata] # jtbl_800DC4F0
+      - [0x3C510, rodata] # jtbl_800DC510
+      - [0x3C528, rodata] # jtbl_800DC528
+      - [0x3C548, rodata]
+      - [0x3C6F8, rodata] # jtbl_800DC6F8
+      - [0x3C718, rodata] # jtbl_800DC718
+      - [0x3C758, rodata]
+      - [0x3C788, rodata] # jtbl_800DC788
+      - [0x3C7A0, rodata]
+      - [0x3C7C8, rodata] # jtbl_800DC7C8
+      - [0x3CBE8, rodata] # jtbl_800DCBE8
+      - [0x3CC00, rodata] # jtbl_800DCC00
+      - [0x3CC18, rodata] # jtbl_800DCC18
+      - [0x3CC30, rodata] # jtbl_800DCC30
+      - [0x3CC48, rodata] # jtbl_800DCC48
+      - [0x3CC60, rodata]
+      - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
+      - [0x3CC98, rodata] # jtbl_800DCC98
+      - [0x3CCC0, rodata] # jtbl_800DCCC0
+      - [0x3CCDC, rodata]
+      - [0x3CED4, rodata] # jtbl_800DCED4
+      - [0x3CEF0, rodata]
+      - [0x40C74, rodata] # jtbl_800E0C74
+      - [0x40C90, rodata]
+      - [0x40D14, rodata] # jtbl_800E0D14
+      - [0x40D64, rodata] # jtbl_800E0D64
+      - [0x40DA4, rodata] # jtbl_800E0DA4
+      - [0x40DE4, rodata] # jtbl_800E0DE4
+      - [0x40E0C, rodata] # jtbl_800E0E0C
+      - [0x40EDC, rodata] # jtbl_800E0EDC
+      - [0x40FA8, rodata] # jtbl_800E0FA8
+      - [0x411C8, rodata] # jtbl_800E11C8
+      - [0x411E0, rodata] # jtbl_800E11E0
+      - [0x411F8, rodata] # jtbl_800E11F8
+      - [0x41210, rodata] # jtbl_800E1210
+      - [0x41224, rodata] # jtbl_800E1224
+      - [0x4123C, rodata] # jtbl_800E123C
+      - [0x41250, rodata]
+      - [0x41264, rodata] # jtbl_800E1264
+      - [0x4127C, rodata] # jtbl_800E127C
+      - [0x4129C, rodata] # jtbl_800E129C
+      - [0x412BC, rodata]
+      - [0x412DC, rodata] # jtbl_800E12DC
+      - [0x4131C, rodata]
+      - [0x4132C, rodata] # jtbl_800E132C
+      - [0x414A4, rodata] # jtbl_800E14A4
+      - [0x4166C, rodata] # jtbl_800E166C
+      - [0x417E4, rodata] # jtbl_800E17E4
+      - [0x417FC, rodata] # jtbl_800E17FC
+      - [0x41810, rodata]
+      - [0x41824, rodata] # jtbl_800E1824
+      - [0x41864, rodata] # jtbl_800E1864
+      - [0x418AC, rodata] # jtbl_800E18AC
+      - [0x418CC, rodata] # jtbl_800E18CC
+      - [0x418EC, .rodata, 75DA0]
+      - [0x41904, rodata] # jtbl_800E1904
+      - [0x4191C, rodata] # jtbl_800E191C
+      - [0x4193C, rodata] # jtbl_800E193C
+      - [0x41954, rodata]
+      - [0x41960, rodata] # jtbl_800E1960
+      - [0x41990, rodata]
+      - [0x419A0, rodata] # jtbl_800E19A0
+      - [0x419C0, rodata]
+      - [0x419D0, rodata] # jtbl_800E19D0
+      - [0x419F0, rodata] # jtbl_800E19F0
+      - [0x41A10, rodata] # jtbl_800E1A10
+      - [0x41A60, rodata] # jtbl_800E1A60
+      - [0x41A90, rodata] # jtbl_800E1A90
+      - [0x41AB0, rodata] # jtbl_800E1AB0
+      - [0x41B10, rodata] # jtbl_800E1B10
+      - [0x41B70, rodata] # jtbl_800E1B70
+      - [0x41BD0, rodata] # jtbl_800E1BD0
+      - [0x41C00, rodata] # jtbl_800E1C00
+      - [0x41C38, rodata] # jtbl_800E1C38
+      - [0x41C68, rodata] # jtbl_800E1C68
+      - [0x41CA0, rodata] # jtbl_800E1CA0
+      - [0x41CC0, rodata] # jtbl_800E1CC0
+      - [0x41CD8, rodata] # jtbl_800E1CD8
+      - [0x41CF0, rodata] # jtbl_800E1CF0
+      - [0x41D50, rodata] # jtbl_800E1D50
+      - [0x41D64, rodata]
+      - [0x41D78, rodata] # jtbl_800E1D78
+      - [0x41D98, rodata] # jtbl_800E1D98
+      - [0x41DAC, rodata] # jtbl_800E1DAC
+      - [0x41DCC, rodata] # jtbl_800E1DCC
+      - [0x41DE4, rodata] # jtbl_800E1DE4
+      - [0x41E0C, rodata] # jtbl_800E1E0C
+      - [0x41E34, rodata] # jtbl_800E1E34
+      - [0x41E4C, rodata] # jtbl_800E1E4C
+      - [0x41E74, rodata] # jtbl_800E1E74
+      - [0x41E8C, rodata] # jtbl_800E1E8C
+      - [0x41EB4, rodata] # jtbl_800E1EB4
+      - [0x41ECC, rodata] # jtbl_800E1ECC
+      - [0x41EF4, rodata] # jtbl_800E1EF4
+      - [0x41F1C, rodata] # jtbl_800E1F1C
+      - [0x41F48, rodata]
+      - [0x41F50, rodata] # jtbl_800E1F50
+      - [0x41F78, rodata] # jtbl_800E1F78
+      - [0x41F90, rodata] # jtbl_800E1F90
+      - [0x41FA8, rodata] # jtbl_800E1FA8
+      - [0x41FD0, rodata] # jtbl_800E1FD0
+      - [0x42270, rodata] # jtbl_800E2270
+      - [0x422B4, rodata]
+      - [0x42354, c, 42398_hd]
+      - [0x44EC8, c, play]
+      - [0x458E4, c, gameover]
+      - [0x46A0C, c, 46358]
+      - [0x47688, c, 46FD4]
+      - [0x48250, c, 47BB8_hd]
+      - [0x4FAE0, c, collider_hd]
+      - [0x5027C, c, demo_hd]
+      - [0x50F00, c, 5087C_hd]
+      - [0x52EE4, c, 52860]
+      - [0x53010, c, 5298C_hd]
+      - [0x5D678, c, 5D6C4_hd]
+      - [0x62654, c, 627C4]
+      - [0x62C00, c, 62D70_hd]
+      - [0x67200, c, cd_hd]
+      - [0x69100, c, 692E8_hd]
+      - [0x71574, c, 71830_hd]
+      - [0x7379C, c, 73AAC_hd]
+      - [0x75A90, c, 75DA0]
+      - [0x75C44, c, 75F54_hd]
+      - [0x94F7C, c, 953A0_hd]
+      - [0x95E88, sbss]  
+  - name: dra_data
+    type: data
+    start: 0x9B270
+    vram:  0x8013B370
+  - [0x115EDC]

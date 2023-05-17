@@ -54,33 +54,33 @@ INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B79D4);
 
 void func_801B80F0(void) {
     EnterCriticalSection();
-    D_80073068 = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
-    D_8007306C = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
-    D_80073070 = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
-    D_80073078 = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
-    D_8007EFD8 = OpenEvent(HwCARD, EvSpIOE, EvMdNOINTR, NULL);
-    D_8007EFDC = OpenEvent(HwCARD, EvSpERROR, EvMdNOINTR, NULL);
-    D_8007EFE0 = OpenEvent(HwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
-    D_80086FE4 = OpenEvent(HwCARD, EvSpNEW, EvMdNOINTR, NULL);
+    g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    g_EvSwCardErr = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    g_EvSwCardTmo = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    g_EvSwCardNew = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, NULL);
+    g_EvHwCardEnd = OpenEvent(HwCARD, EvSpIOE, EvMdNOINTR, NULL);
+    g_EvHwCardErr = OpenEvent(HwCARD, EvSpERROR, EvMdNOINTR, NULL);
+    g_EvHwCardTmo = OpenEvent(HwCARD, EvSpTIMOUT, EvMdNOINTR, NULL);
+    g_EvHwCardNew = OpenEvent(HwCARD, EvSpNEW, EvMdNOINTR, NULL);
     ExitCriticalSection();
-    EnableEvent(D_80073068);
-    EnableEvent(D_8007306C);
-    EnableEvent(D_80073070);
-    EnableEvent(D_80073078);
-    EnableEvent(D_8007EFD8);
-    EnableEvent(D_8007EFDC);
-    EnableEvent(D_8007EFE0);
-    EnableEvent(D_80086FE4);
+    EnableEvent(g_EvSwCardEnd);
+    EnableEvent(g_EvSwCardErr);
+    EnableEvent(g_EvSwCardTmo);
+    EnableEvent(g_EvSwCardNew);
+    EnableEvent(g_EvHwCardEnd);
+    EnableEvent(g_EvHwCardErr);
+    EnableEvent(g_EvHwCardTmo);
+    EnableEvent(g_EvHwCardNew);
 }
 
 s32 _peek_event_with_retry(void) {
-    if (TestEvent(D_80073068) == 1) {
+    if (TestEvent(g_EvSwCardEnd) == 1) {
         return 1;
-    } else if (TestEvent(D_8007306C) == 1) {
+    } else if (TestEvent(g_EvSwCardErr) == 1) {
         return 2;
-    } else if (TestEvent(D_80073070) == 1) {
+    } else if (TestEvent(g_EvSwCardTmo) == 1) {
         return 3;
-    } else if (TestEvent(D_80073078) == 1) {
+    } else if (TestEvent(g_EvSwCardNew) == 1) {
         return 4;
     } else if (D_801BC2F8-- < 0) {
         return 2;
@@ -89,44 +89,44 @@ s32 _peek_event_with_retry(void) {
 }
 
 s32 _peek_event(void) {
-    if (TestEvent(D_80073068) == 1) {
+    if (TestEvent(g_EvSwCardEnd) == 1) {
         return 1;
-    } else if (TestEvent(D_8007306C) == 1) {
+    } else if (TestEvent(g_EvSwCardErr) == 1) {
         return 2;
-    } else if (TestEvent(D_80073070) == 1) {
+    } else if (TestEvent(g_EvSwCardTmo) == 1) {
         return 3;
-    } else if (TestEvent(D_80073078) == 1) {
+    } else if (TestEvent(g_EvSwCardNew) == 1) {
         return 4;
     }
     return 0;
 }
 
 void _clear_event(void) {
-    TestEvent(D_80073068);
-    TestEvent(D_8007306C);
-    TestEvent(D_80073070);
-    TestEvent(D_80073078);
+    TestEvent(g_EvSwCardEnd);
+    TestEvent(g_EvSwCardErr);
+    TestEvent(g_EvSwCardTmo);
+    TestEvent(g_EvSwCardNew);
 }
 
 s32 _card_event_x(void) {
     while (1) {
-        if (TestEvent(D_8007EFD8) == 1) {
+        if (TestEvent(g_EvHwCardEnd) == 1) {
             return 1;
-        } else if (TestEvent((u32)D_8007EFDC) == 1) {
+        } else if (TestEvent((u32)g_EvHwCardErr) == 1) {
             return 2;
-        } else if (TestEvent((u32)D_8007EFE0) == 1) {
+        } else if (TestEvent((u32)g_EvHwCardTmo) == 1) {
             return 3;
-        } else if (TestEvent((u32)D_80086FE4) == 1) {
+        } else if (TestEvent((u32)g_EvHwCardNew) == 1) {
             return 4;
         }
     }
 }
 
 void _clear_event_x(void) {
-    TestEvent(D_8007EFD8);
-    TestEvent(D_8007EFDC);
-    TestEvent(D_8007EFE0);
-    TestEvent(D_80086FE4);
+    TestEvent(g_EvHwCardEnd);
+    TestEvent(g_EvHwCardErr);
+    TestEvent(g_EvHwCardTmo);
+    TestEvent(g_EvHwCardNew);
 }
 
 void func_801B84F0(void) { D_801D6B20 = 0; }

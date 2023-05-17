@@ -42,13 +42,11 @@ segments:
       - [0x2217C, rodata]
       - [0x227B0, rodata]
       - [0x3B3B0, rodata]
-      - [0x3B44C, .rodata, 42398]
+      - [0x3B430, .rodata, 42398]
       - [0x3B524, rodata]
-      - [0x3B530, rodata] # jpt_800E4A64
-      - [0x3B560, rodata] # jpt_800E55C4
-      - [0x3B720, rodata]
-      - [0x3B790, rodata]
-      - [0x3B7A0, rodata] # jpt_800E63C4
+      - [0x3B530, rodata, play]
+      - [0x3B560, rodata, gameover]
+      - [0x3B720, .rodata, 46358]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
       - [0x3BD70, rodata] # jpt_800E7C28
@@ -64,9 +62,8 @@ segments:
       - [0x3C1E8, rodata] # jpt_800EB120
       - [0x3C228, rodata]
       - [0x3C238, rodata] # jpt_800EE2FC
-      - [0x3C290, .rodata, 4F45C]
-      - [0x3C490, rodata]
-      - [0x3C500, rodata] # jpt_800F0658
+      - [0x3C290, .rodata, collider]
+      - [0x3C490, .rodata, demo]
       - [0x3C514, rodata] # jpt_800F096C
       - [0x3C534, .rodata, 52860] # jpt_800F288C
       - [0x3C55C, rodata] # jpt_800F3684
@@ -95,9 +92,7 @@ segments:
       - [0x3CD10, rodata]
       - [0x3CDC0, rodata] # jpt_80103F08
       - [0x3CDDC, rodata]
-      - [0x40D38, rodata] # jpt_8010812C
-      - [0x40D54, rodata]
-      - [0x40DD8, rodata] # jpt_80108CFC
+      - [0x40D38, .rodata, cd] # To be merged with 40D38
       - [0x40E28, rodata]
       - [0x40E48, rodata] # jpt_8010A86C
       - [0x40E88, rodata] # jpt_8010AA30
@@ -177,15 +172,21 @@ segments:
       - [0x420B4, rodata] # jpt_80135058
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
+      - [0x4493C, c, play]
+      - [0x45358, c, gameover]
       - [0x46358, c, 46358]
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
-      - [0x4F45C, c, 4F45C]
+      - [0x4F45C, c, collider]
+      - [0x4FBF8, c, demo]
+      - [0x5087C, c, 5087C]
       - [0x52860, c, 52860]
       - [0x5298C, c, 5298C]
       - [0x5D6C4, c, 5D6C4]
       - [0x627C4, c, 627C4]
       - [0x62D70, c, 62D70]
+      - [0x673C0, c, cd]
+      - [0x692E8, c, 692E8]
       - [0x71830, c, 71830]
       - [0x73AAC, c, 73AAC]
       - [0x75DA0, c, 75DA0]

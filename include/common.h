@@ -3,7 +3,17 @@
 
 #include "include_asm.h"
 #include "macros.h"
+#include "settings.h"
 #include "types.h"
+
+#if defined(_internal_version_us)
+#define VERSION_US
+#elif defined(_internal_version_hd)
+#define VERSION_HD
+#else
+#warning "Version not specified. Falling back to the US version."
+#define VERSION_US
+#endif
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 #define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))

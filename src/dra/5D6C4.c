@@ -139,7 +139,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
-    spell->attack += (g_player_total_int * 2 + (rand() % 12)) / 10;
+    spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(0x15, 2) != 0) {
         spell->attack = spell->attack + spell->attack / 2;
     }
@@ -156,14 +156,14 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
 
     switch (arg0) {
     case 0:
-        temp_v0 = arg1 - (g_player_total_con * 0x10);
+        temp_v0 = arg1 - (g_Status.statsTotal[1] * 0x10);
         // asm volatile("move $16, $2");
         if (temp_v0 < 0x100) {
             ret = 0x100;
         }
         break;
     case 1:
-        temp_v0 = arg1 - (g_player_total_con * 4);
+        temp_v0 = arg1 - (g_Status.statsTotal[1] * 4);
         // asm volatile("move $16, $2");
         if (temp_v0 < 0x40) {
             ret = 0x40;
@@ -171,7 +171,7 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
         break;
     case 2:
         ret = arg1;
-        var_v1 = (((rand() % 12) + g_player_total_con) - 9) / 10;
+        var_v1 = (((rand() % 12) + g_Status.statsTotal[1]) - 9) / 10;
         if (var_v1 < 0) {
             var_v1 = 0;
         }
@@ -181,7 +181,7 @@ s16 func_800FDB18(s32 arg0, s32 arg1) {
         ret = ret - var_v1;
         break;
     case 3:
-        ret = arg1 + (g_player_total_int * 4);
+        ret = arg1 + (g_Status.statsTotal[2] * 4);
         break;
     case 4:
     case 5:
@@ -255,7 +255,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
-        *subwpn = g_Subweapons[D_80097BFC];
+        *subwpn = g_Subweapons[g_Status.subWeapon];
         accessoryCount = CheckEquipmentItemCount(0x4D, 4);
         if (accessoryCount == 1) {
             subwpn->unk2 = subwpn->unk2 / 2;
@@ -270,7 +270,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             if (useHearts) {
                 g_Status.hearts -= subwpn->unk2;
             }
-            return D_80097BFC;
+            return g_Status.subWeapon;
         } else {
             return 0;
         }
@@ -288,7 +288,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
                 subwpn->attack *= 3;
             }
         }
-        subwpn->attack += ((g_player_total_int * 2) + (rand() % 12)) / 10;
+        subwpn->attack += ((g_Status.statsTotal[2] * 2) + (rand() % 12)) / 10;
         return subweaponId;
     }
 }
@@ -321,9 +321,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     damageScale = D_800A4B04[equipId].damageScale;
     if (damageScale != 6 && damageScale != 10) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
-        do {
-        } while (0); // FAKE
-        if (D_80072F2C & 0x4000) {
+        if (g_Player.unk0C & 0x4000) {
             res->attack >>= 1;
         }
     }
@@ -351,7 +349,7 @@ void AddHearts(s32 value) {
         if (g_Status.heartsMax < g_Status.hearts) {
             g_Status.hearts = g_Status.heartsMax;
         }
-        func_8011AAFC(g_EntityArray, 99, 0);
+        func_8011AAFC(g_Entities, 99, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }
@@ -401,13 +399,14 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
+u16 func_800FF128(Entity* enemyEntity, Entity* arg1);
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF128);
 
 s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
         return 0;
     }
-    return arg0 + ((u32)(arg0 * g_player_total_lck[0]) >> 7);
+    return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
 }
 
 // Determine what type of item to drop
@@ -418,7 +417,7 @@ s32 func_800FF494(EnemyDef* arg0) {
     s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
     s32 rnd = rand() & 0xFF;
 
-    rnd -= ((rand() & 0x1F) + g_player_total_lck[0]) / 20;
+    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
 
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
@@ -432,7 +431,7 @@ s32 func_800FF494(EnemyDef* arg0) {
         if (ringOfArcanaCount != 0) {
             rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
         }
-        rnd -= ((rand() & 0x1F) + g_player_total_lck[0]) / 20;
+        rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
 
         if (rnd >= arg0->uncommonItemDropRate) {
             rnd = rand() % 28;
@@ -507,7 +506,7 @@ typedef struct {
     // part of a larger struct, maybe part of PlayerStats?
     s32 subWeapon;
 } Unkstruct_80097BFC;
-extern Unkstruct_80097BFC D_80097BFC; // g_SubWeapon
+extern Unkstruct_80097BFC subWeapon; // g_SubWeapon
 extern s32 D_800A872C[];
 
 void func_800FF7B8(s32 arg0) {
@@ -611,9 +610,9 @@ void func_800FF7B8(s32 arg0) {
         }
 
         var_s0_3 = 0;
-        g_playerExp = 0;
-        g_playerLevel = 1;
-        g_killCount = 0;
+        g_Status.exp = 0;
+        g_Status.level = 1;
+        g_Status.killCount = 0;
         do {
             D_80097C44[var_s0_3].level = 1;
             D_80097C44[var_s0_3].exp = 0;
@@ -668,9 +667,9 @@ void func_800FF7B8(s32 arg0) {
 
             g_Settings.D_8003CB00 = 0;
             g_Settings.D_8003CB04 = 0;
-            D_80097BFC.subWeapon = 0;
+            subWeapon.subWeapon = 0;
             if (g_StageId != STAGE_ST0 && g_StageId != STAGE_NO3) {
-                D_80097BFC.subWeapon = (rand() % 9) + 1;
+                subWeapon.subWeapon = (rand() % 9) + 1;
             }
 
             g_Status.hp = 50;
@@ -687,7 +686,7 @@ void func_800FF7B8(s32 arg0) {
             g_Status.equipment[4] = 0x30;
             g_Status.equipment[5] = 0x39;
             D_80097C18 = 0x39;
-            g_playerGold = 0;
+            g_Status.gold = 0;
             g_Status.equipment[0] = 0;
             g_Status.equipment[1] = 0;
             g_Status.equipment[3] = 0;
@@ -698,7 +697,7 @@ void func_800FF7B8(s32 arg0) {
                 func_800FD4C0(14, 1);
                 func_800FD4C0(12, 1);
             }
-            g_GameTimer.hours = 0;
+            g_Status.timerHours = 0;
             D_80097C34 = 0;
             D_80097C38->unk0 = 0;
             D_80097C3C = 0;
@@ -708,7 +707,7 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.statCon = 6;
                 g_Status.statInt = 6;
                 g_Status.statLck = 6;
-                g_playerGold = 0;
+                g_Status.gold = 0;
                 var_v0_2 = thingPtr;
                 var_v0_2 -= 0x21B;
                 for (var_s0_10 = 0x1D; var_s0_10 >= 0; var_s0_10--) {
@@ -753,12 +752,12 @@ void func_800FF7B8(s32 arg0) {
                     g_Status.statStr++;
                 }
 
-                if (D_80097BFC.subWeapon == 4) {
+                if (subWeapon.subWeapon == 4) {
                     if (var_s0_11 < 3) {
                         g_Status.heartsMax += 5;
                         g_Status.mpMax += 5;
                     }
-                } else if (D_80097BFC.subWeapon == 3) {
+                } else if (subWeapon.subWeapon == 3) {
                     if (var_s0_11 < 2) {
                         g_Status.heartsMax += 5;
                         player_stat_int++;
@@ -804,7 +803,7 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.equipment[3] = 0xF;
                 g_Status.equipment[4] = 0x38;
                 g_Status.equipment[5] = 0x4E;
-                D_80097BFC.subWeapon = 0;
+                subWeapon.subWeapon = 0;
                 D_80097C18 = 0x39;
                 g_Status.hp = g_Status.hpMax;
                 g_Status.mp = g_Status.mpMax;
@@ -862,17 +861,17 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.hpMax = 70;
                 g_Status.hp = 70;
                 g_Status.hearts = 10;
-                g_playerGold = 500000;
+                g_Status.gold = 500000;
                 g_Status.heartsMax = 50;
                 g_Status.mp = 20;
                 g_Status.mpMax = 20;
                 g_Status.hearts = 1234;
                 g_Status.heartsMax = 2000;
-                g_playerExp = 11000;
-                g_playerLevel = 20;
+                g_Status.exp = 11000;
+                g_Status.level = 20;
                 var_s0_9 = 0x10;
                 if (g_StageId & 0x20) {
-                    g_playerExp = 110000;
+                    g_Status.exp = 110000;
                 }
 
                 new_var = 3;
@@ -909,11 +908,11 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.equipment[4] = 0x30;
                 g_Status.equipment[5] = 0x39;
                 D_80097C18 = 0x39;
-                g_GameTimer.hours = 0;
-                g_GameTimer.minutes = 0;
-                g_GameTimer.seconds = 0;
-                g_GameTimer.frames = 0;
-                D_80097BFC.subWeapon = 0;
+                g_Status.timerHours = 0;
+                g_Status.timerMinutes = 0;
+                g_Status.timerSeconds = 0;
+                g_Status.timerFrames = 0;
+                subWeapon.subWeapon = 0;
                 g_Status.relics[10] = 3;
                 (&g_Status.relics[10])[1] = 3;
                 D_80097973 = 3;
@@ -975,12 +974,8 @@ void func_800FF7B8(s32 arg0) {
 }
 #endif
 
-// matches with ASPSX
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", DrawHudRichter);
-#else
 void DrawHudRichter(void) {
-    POLY_GT4* poly;
+    Primitive* prim;
 
     D_80137978 = 400;
     D_8013797C = 400;
@@ -994,93 +989,92 @@ void DrawHudRichter(void) {
     D_8013798C = 40000 / D_80137978;
     D_80137988 = 40000 / D_8013797C;
     D_80137970 = func_800EDD9C(4, 9);
-    poly = &g_PrimBuf[D_80137970];
+    prim = &g_PrimBuf[D_80137970];
 
-    func_80107360(poly, 2, 22, 32, 96, 0, 0);
-    poly->tpage = 0x1B;
-    poly->clut = 0x101;
-    poly->pad2 = 0x1EF;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, 2, 22, 32, 96, 0, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x101;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, D_80137980 + 216, 22, 32, 96, 32, 0);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x100;
-    poly->pad2 = 0x1EF;
-    poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    func_80107360(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x100;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 4, 112, 9, 3, 64, 89);
-    poly->tpage = 0x1B;
-    poly->clut = 0x105;
-    poly->pad2 = 0x1F0;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, 4, 112, 9, 3, 64, 89);
+    prim->tpage = 0x1B;
+    prim->clut = 0x105;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, D_80137980 + 228, 112, 9, 3, 64, 89);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x103U;
-    poly->pad2 = 0x1F0U;
-    poly->pad3 = 0x2000U;
-    poly->p1 = 0;
-    poly->p2 = 6;
-    poly = poly->tag;
+    func_80107360(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim->p1 = 0;
+    prim->p2 = 6;
+    prim = prim->next;
 
-    func_80107360(poly, D_80137980 + 236, 112, 9, 3, 64, 89);
-    poly->tpage = 0x1B;
-    poly->clut = 0x103;
-    poly->pad2 = 0x1F0;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, D_80137980 + 236, 112, 9, 3, 64, 89);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 14, 27, 8, 8, 0, 96);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x103U;
-    poly->pad2 = 0x1F0U;
-    poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    func_80107360(prim, 14, 27, 8, 8, 0, 96);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 22, 27, 8, 8, 0, 96);
-    poly->tpage = 0x1B;
-    poly->clut = 0x103;
-    poly->pad2 = 0x1F0;
-    poly->pad3 = 0x2000;
-    poly = poly->tag;
+    func_80107360(prim, 22, 27, 8, 8, 0, 96);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 18, 38, 8, 8, 0, 0);
-    poly->tpage = 0x1BU;
-    poly->clut = 0x102;
-    poly->pad2 = 0x1F0U;
-    poly->pad3 = 0x2000U;
-    poly = poly->tag;
+    func_80107360(prim, 18, 38, 8, 8, 0, 0);
+    prim->tpage = 0x1B;
+    prim->clut = 0x102;
+    prim->priority = 0x1F0;
+    prim->blendMode = 0x2000;
+    prim = prim->next;
 
-    func_80107360(poly, 33, 20, 64, 24, 64, 40);
-    poly->tpage = 0x1B;
-    poly->clut = 0x103;
-    poly->pad2 = 0x1EF;
-    poly->pad3 = 0x2000;
+    func_80107360(prim, 33, 20, 64, 24, 64, 40);
+    prim->tpage = 0x1B;
+    prim->clut = 0x103;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0x2000;
 
     D_80137974 = func_800EDD9C(4, 16);
-    poly = &g_PrimBuf[D_80137974];
-    if (poly != 0) {
-        s32 phi_s1 = 0x20;
-        s32 phi_s0 = 0xD8;
+    prim = &g_PrimBuf[D_80137974];
+    if (prim != 0) {
+        s32 u = 32;
+        s32 x = 216;
         do {
-            func_80107360(poly, phi_s0, 22, 2, 96, phi_s1, 0);
-            func_801072DC(poly);
-            poly->tpage = 0x1B;
-            poly->clut = 0x100;
-            poly->pad2 = 0x1EE;
-            poly->pad3 = 8;
-            poly->p1 = (rand() & 0x3F) + 1;
-            poly->p2 = 0;
-            poly = poly->tag;
-            phi_s1 += 2;
-            phi_s0 += 2;
-        } while (poly != 0);
+            func_80107360(prim, x, 22, 2, 96, u, 0);
+            func_801072DC(prim);
+            prim->tpage = 0x1B;
+            prim->clut = 0x100;
+            prim->priority = 0x1EE;
+            prim->blendMode = 8;
+            prim->p1 = (rand() & 0x3F) + 1;
+            prim->p2 = 0;
+            prim = prim->next;
+            u += 2;
+            x += 2;
+        } while (prim != 0);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80100B50);
 
@@ -1155,44 +1149,38 @@ void func_8010189C(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80101A80);
 
 void func_801024DC(void) {
-    POLY_GT4* temp_v1;
-    POLY_GT4* var_v1;
-    s32 temp_v0_2;
-    s32 var_a0;
-    u32 temp_v0;
-    temp_v0 = AllocPrimitives(1, 4);
-    D_8013799C = temp_v0;
-    var_v1 = &g_PrimBuf[temp_v0];
-    var_a0 = 0;
-    if (var_v1 != 0) {
-        do {
-            var_v1->x0 = (var_a0 & 1) << 7;
-            var_v1->u0 = 0x80;
-            var_v1->v0 = 0xF0;
-            var_v1->pad2 = 0x1FD;
-            var_v1->pad3 = 8;
-            var_v1 = (POLY_GT4*)var_v1->tag;
-            var_a0 += 1;
-        } while (var_v1 != 0);
+    Primitive* prim;
+    Primitive* prim2;
+    s32 x;
+
+    D_8013799C = AllocPrimitives(PRIM_TILE, 4);
+    prim = &g_PrimBuf[D_8013799C];
+    for (x = 0; prim != 0; x++) {
+        prim->x0 = (x & 1) << 7;
+        prim->u0 = 0x80;
+        prim->v0 = 0xF0;
+        prim->priority = 0x1FD;
+        prim->blendMode = 8;
+        prim = prim->next;
     }
     D_801379A8 = 0;
     D_801379A4 = 0;
-    temp_v0_2 = AllocPrimitives(4, 1);
-    temp_v1 = &g_PrimBuf[temp_v0_2];
-    D_801379A0 = temp_v0_2;
-    temp_v1->u1 = 0xFF;
-    temp_v1->v2 = 0xFF;
-    temp_v1->u3 = 0xFF;
-    temp_v1->v3 = 0xFF;
-    temp_v1->tpage = 0x1D;
-    temp_v1->clut = 0x1C0;
-    temp_v1->pad2 = 0x1FE;
-    temp_v1->u0 = 0;
-    temp_v1->v0 = 0;
-    var_v1 = temp_v1;
-    var_v1->v1 = 0;
-    var_v1->u2 = 0;
-    var_v1->pad3 = 8;
+
+    D_801379A0 = AllocPrimitives(PRIM_GT4, 1);
+    prim2 = &g_PrimBuf[D_801379A0];
+    prim2->u1 = 0xFF;
+    prim2->v2 = 0xFF;
+    prim2->u3 = 0xFF;
+    prim2->v3 = 0xFF;
+    prim2->tpage = 0x1D;
+    prim2->clut = 0x1C0;
+    prim2->priority = 0x1FE;
+    prim2->u0 = 0;
+    prim2->v0 = 0;
+    prim = prim2;
+    prim->v1 = 0;
+    prim->u2 = 0;
+    prim->blendMode = 8;
 }
 
 extern Unkstruct_80086FFA D_80086FFA[];

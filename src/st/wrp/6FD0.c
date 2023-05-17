@@ -1245,7 +1245,7 @@ void func_801870B0(Entity* entity) {
 
         if (entity->unk44 != 0) {
             ret = func_8018B970();
-            phi_v1 = entity->unk7C.s;
+            phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;
             } else {
@@ -1261,8 +1261,8 @@ void func_801870B0(Entity* entity) {
         }
     } else {
         InitializeEntity(D_80180488);
-        entity->unk7C.s = D_80180530[temp_s1];
-        if (entity->unk7C.s != 0) {
+        entity->ext.generic.unk7C.s = D_80180530[temp_s1];
+        if (entity->ext.generic.unk7C.s != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
         } else {
@@ -1305,7 +1305,7 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC[];
 extern s32 D_8003C8B8;
-extern s32 D_80072EFC;
+extern s32 g_Player.D_80072EFC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
 extern s32 D_80193AA8;
@@ -1378,7 +1378,7 @@ void EntityWarpRoom(Entity* entity) {
         temp_s5 = entity->posY.i.hi; // must not be lhu but lh
         temp_s4 = entity->posX.i.hi; // must not be lhu but lh
         entity->firstPolygonIndex = firstPolyIndex;
-        *(u32*)&entity->unk7C.s = poly;
+        *(u32*)&entity->ext.generic.unk7C.s = poly;
         temp_s7 = temp_s4;
         temp_s6 = temp_s5;
         entity->flags |= FLAG_FREE_POLYGONS;
@@ -1411,7 +1411,7 @@ void EntityWarpRoom(Entity* entity) {
             var_s1 = var_s0 << 8;
         }
 
-        entity->unk84.unk = poly; // store next polygon?
+        entity->ext.generic.unk84.unk = poly; // store next polygon?
         setcode(poly, 1);
         poly->u0 = 0x40;
         poly->v0 = 0x50;
@@ -1455,8 +1455,8 @@ void EntityWarpRoom(Entity* entity) {
         newtmp_a0[0] |= 1;
         newtmp_a0[0] |= 1 << entity->subId;
         if ((u32)(newtmp_1 - 0x61) < 0x3F) {
-            D_80072EFC = 0x10;
-            *D_80072EF4 = 0;
+            g_Player.D_80072EFC = 0x10;
+            g_Player.D_80072EF4 = 0;
             D_8003C8B8 = 0;
             entity->step = 5;
             D_80180648 = 1;
@@ -1466,9 +1466,9 @@ void EntityWarpRoom(Entity* entity) {
     case 1:
         // Wait for player to press the UP button
         if (entity->unk48 != 0 && (g_pads->pressed & 0x1000) &&
-            !(D_80072F2C & 0xC5CF3EF7)) {
-            D_8003C8B8 = (*D_80072EF4 = 0);
-            D_80072EFC = 0x80;
+            !(g_Player.unk0C & 0xC5CF3EF7)) {
+            D_8003C8B8 = (g_Player.D_80072EF4 = 0);
+            g_Player.D_80072EFC = 0x80;
             PLAYER.accelerationX = 0;
             PLAYER.accelerationY = 0;
             entity->step++;
@@ -1477,11 +1477,11 @@ void EntityWarpRoom(Entity* entity) {
 
     case 2:
         // Move Alucard in the background and fade him to white
-        D_80072EFC = 0x80;
+        g_Player.D_80072EFC = 0x80;
         PLAYER.zPriority = 0x5C;
-        *D_80072EF4 = 0;
+        g_Player.D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
-        poly = (POLY_GT4*)(*&entity->unk84.unk);
+        poly = (POLY_GT4*)(*&entity->ext.generic.unk84.unk);
         D_8003C8B8 = 0;
         poly->g0 = poly->b0 = poly->r0 += 2;
         poly->pad3 = 0x31;
@@ -1494,11 +1494,11 @@ void EntityWarpRoom(Entity* entity) {
 
     case 3:
         // Fade the entire room into white
-        D_80072EFC = 0x80;
+        g_Player.D_80072EFC = 0x80;
         PLAYER.zPriority = 0x5C;
-        *D_80072EF4 = 0;
+        g_Player.D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
-        poly = (POLY_GT4*)(*&entity->unk84.unk);
+        poly = (POLY_GT4*)(*&entity->ext.generic.unk84.unk);
         D_8003C8B8 = 0;
         poly->pad3 = 0x31;
         if (poly->r0 < 0xF0) {
@@ -1545,9 +1545,9 @@ void EntityWarpRoom(Entity* entity) {
 
     case 5:
         // .rodata+0x20
-        *D_80072EF4 = 0;
-        D_80072EFC = 0x10;
-        temp_s2_4 = (POLY_GT4*)entity->unk84.unk;
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 0x10;
+        temp_s2_4 = (POLY_GT4*)entity->ext.generic.unk84.unk;
         D_8003C8B8 = 0;
         temp_s2_4->pad3 = 8;
         temp_s2_4->r0 = 0;
@@ -1568,9 +1568,9 @@ void EntityWarpRoom(Entity* entity) {
     case 6:
         // Finalize warp by fading in from white
         // .rodata+0x24
-        *D_80072EF4 = 0;
-        D_80072EFC = 0x10;
-        new_var = (POLY_GT4*)*&entity->unk84.unk;
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 0x10;
+        new_var = (POLY_GT4*)*&entity->ext.generic.unk84.unk;
         var_s2_3 = new_var->tag;
         D_8003C8B8 = 0;
         fadeIn = var_s2_3->r0 - 4;
@@ -1610,7 +1610,7 @@ void EntityWarpRoom(Entity* entity) {
     if (D_80193AAC >= 0x100) {
         D_80193AAC = 0xFF;
     }
-    poly = (POLY_GT4*)&entity->unk7C.s;
+    poly = (POLY_GT4*)&entity->ext.generic.unk7C.s;
     D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
     for (i3 = 0; i3 < 0x10; i3++) {
         var_v0_2 = i3;
@@ -1726,15 +1726,16 @@ void EntityWarpSmallRocks(Entity* entity) {
 
     case 1:
         if (*D_80180648 != 0) {
-            *(u32*)(&entity->unk88) = Random() & 0x3F;
+            *(u32*)(&entity->ext.generic.unk88) = Random() & 0x3F;
             entity->accelerationY = -0x40000;
             entity->step++;
         }
         break;
 
     case 2:
-        if (*(u32*)&entity->unk88 != 0) {
-            *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
+        if (*(u32*)&entity->ext.generic.unk88 != 0) {
+            *(u32*)&entity->ext.generic.unk88 =
+                *(u32*)&entity->ext.generic.unk88 - 1;
         } else {
             MoveEntity();
             entity->accelerationY += 0x4000;
@@ -1770,15 +1771,16 @@ void EntityWarpSmallRocks(Entity* entity) {
         entity->unk1E += 0x20;
         entity->accelerationY = rsin(entity->unk1E) * 4;
         if (*unk == 0) {
-            *(u32*)&entity->unk88 = 0x10;
+            *(u32*)&entity->ext.generic.unk88 = 0x10;
             entity->step++;
         }
         break;
 
     case 5:
         y_unk = &g_Camera.posY.i.hi;
-        *(u32*)&entity->unk88 = *(u32*)&entity->unk88 - 1;
-        if (*(u32*)&entity->unk88 == 0) {
+        *(u32*)&entity->ext.generic.unk88 =
+            *(u32*)&entity->ext.generic.unk88 - 1;
+        if (*(u32*)&entity->ext.generic.unk88 == 0) {
             func_801916C4(0x644);
         }
         MoveEntity();
@@ -1816,7 +1818,8 @@ void Update(void) {
         }
     }
 
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -1881,7 +1884,8 @@ void Update(void) {
 
 void func_80188514(void) {
     Entity* entity;
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -1947,7 +1951,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1955,7 +1960,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -1985,7 +1991,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -1993,7 +2000,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -2221,7 +2229,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_EntityArray[index];
+    Entity* entity = &g_Entities[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -2471,13 +2479,13 @@ u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
 
 void func_8018C240(u8 step) {
     g_CurrentEntity->step = step;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_8018C260(u8 arg0) {
-    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->step_s = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -2500,7 +2508,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity->subId = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -2524,7 +2532,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
@@ -2639,11 +2647,13 @@ void func_8018CAB0(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -2712,7 +2722,7 @@ void CollectGold(u16 goldSize) {
     u16 goldSizeIndex;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_playerGold;
+    gold = &g_Status.gold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {

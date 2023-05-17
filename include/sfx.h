@@ -137,6 +137,27 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_VO_DR_IT_WAS_NOT 0x359  // Dracula says "It was not by my hand ..."
 #define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
 
+#if defined(VERSION_US)
+#define NA_VO_MA_IF_YOU_WEAR                                                   \
+    0x3CE // Maria: If you wear these, you can see beyond evil illusions.
+
+#define NA_VO_RI_IMPRESSIVE_WHIP                                               \
+    0x3DA // Richter: Impressive, you were able to avoid my whip. Let's see how
+          // you like this!
+#define NA_VO_RI_IMPRESSIVE_ESCAPE                                             \
+    0x3DB // Richter: Impressive, but you can't escape this.
+#define NA_VO_RI_ONLY_THE_COUNT                                                \
+    0x3DC // Richter: Hah, I knew it. Only the count is a true match for me.
+
+#define NA_VO_AL_DEATH_DREAM_WORLD                                             \
+    0x391 // Alucard: Death in the dream world will set your soul wandering for
+          // eternity, demon.
+
+#define JP_VO_SH_GROAN 0x52E      // Shaft groans
+#define JP_VO_SH_SCREAM 0x52F     // Shaft screams
+#define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
+#endif
+
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
@@ -151,8 +172,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_OPEN_DOOR 0x642
 #define NA_SE_EN_COG_CLICK 0x642
 #define NA_SE_EN_ROCK_BREAK 0x644
-#define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
 #define NA_SE_SECRET_STAIRS NA_SE_EN_ROCK_BREAK
+#define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
+#define NA_SE_EN_AXE_KNIGHT_BREAK_AXE 0x66B
+#define NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH 0x66D
 #define NA_SE_EV_SWITCH_CLICK 0x676
 #define NA_SE_PL_COLLECT_HEART 0x67A
 #define NA_SE_SY_MOVE_MENU_CURSOR 0x67B
@@ -174,6 +197,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F6
 #define NA_SE_VO_WO_BARK 0x706
+#define NA_SE_EN_SPITTLEBONE_ACID_SPLAT 0x73C
 #define NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM 0x746
 #define NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM 0x747
 #define NA_SE_EN_BLOODY_ZOMBIE_INJURED 0x748

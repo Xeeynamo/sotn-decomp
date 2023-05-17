@@ -1,4 +1,23 @@
+/*
+ * Overlay: NZ0
+ * Enemy: Skeleton
+ */
+
 #include "nz0.h"
+
+void func_801C5F2C(Entity* self) {
+    if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
+        self->posX.val -= self->accelerationX;
+    }
+
+    if (!(func_801BD720(&D_801824C0, 3) & 2)) {
+        if ((--self->ext.generic.unk7C.U8.unk0) == 0) {
+            func_801BD52C(4);
+        }
+    } else {
+        func_801BD52C(SKELETON_JUMP);
+    }
+}
 
 void EntitySkeleton(Entity* self) {
     Entity* newEntity;
@@ -12,9 +31,9 @@ void EntitySkeleton(Entity* self) {
     switch (self->step) {
     case SKELETON_INIT:
         InitializeEntity(D_80180C88);
-        self->unk7C.S8.unk0 = 0x50;
-        self->unk80.modeS8.unk0 = 0;
-        self->unk84.S8.unk0 = 0;
+        self->ext.generic.unk7C.S8.unk0 = 0x50;
+        self->ext.generic.unk80.modeS8.unk0 = 0;
+        self->ext.generic.unk84.S8.unk0 = 0;
         break;
 
     case SKELETON_IDLE: // Wait for player to be close enough
@@ -25,10 +44,10 @@ void EntitySkeleton(Entity* self) {
 
     case SKELETON_WALK_TOWARDS_PLAYER:
         self->facing = (GetPlayerSide() & 1) ^ 1;
-        self->unk80.modeS8.unk0 = self->facing;
+        self->ext.generic.unk80.modeS8.unk0 = self->facing;
         AnimateEntity(D_801823DC, self);
 
-        if (self->unk80.modeS8.unk0 == 0) {
+        if (self->ext.generic.unk80.modeS8.unk0 == 0) {
             self->accelerationX = -0x8000;
         } else {
             self->accelerationX = 0x8000;
@@ -42,10 +61,10 @@ void EntitySkeleton(Entity* self) {
 
     case SKELETON_WALK_AWAY_FROM_PLAYER:
         self->facing = (GetPlayerSide() & 1) ^ 1;
-        self->unk80.modeS8.unk0 = self->facing ^ 1;
+        self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
         AnimateEntity(D_801823EC, self);
 
-        if (self->unk80.modeS8.unk0 == 0) {
+        if (self->ext.generic.unk80.modeS8.unk0 == 0) {
             self->accelerationX = -0x8000;
         } else {
             self->accelerationX = 0x8000;
@@ -61,8 +80,9 @@ void EntitySkeleton(Entity* self) {
         animStatus = AnimateEntity(D_801823FC, self);
         if (!animStatus) {
             func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
-            self->unk7C.S8.unk0 =
-                D_80182480[self->subId & 1][++self->unk84.S8.unk0 & 3];
+            self->ext.generic.unk7C.S8.unk0 =
+                D_80182480[self->subId & 1]
+                          [++self->ext.generic.unk84.S8.unk0 & 3];
             break;
         }
 
@@ -86,10 +106,10 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_JUMP:
-        switch (self->unk2E) {
+        switch (self->step_s) {
         case 0:
             if (!(AnimateEntity(D_8018240C, self) & 1)) {
-                u8 facing_ = self->unk80.modeS8.unk0;
+                u8 facing_ = self->ext.generic.unk80.modeS8.unk0;
                 s32 facing;
 
                 if (Random() % 4) {
@@ -108,20 +128,20 @@ void EntitySkeleton(Entity* self) {
                 self->accelerationY = -0x30000;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                self->unk2E++;
+                self->step_s++;
             }
             break;
 
         case 1:
             if (func_801BCCFC(&D_801824A8) != 0) {
-                self->unk2E++;
+                self->step_s++;
             }
             func_801BD848(&D_801824C0, 2);
             break;
 
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
-                self->unk2E = 0;
+                self->step_s = 0;
                 func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
             }
         }
@@ -135,7 +155,7 @@ void EntitySkeleton(Entity* self) {
                 CreateEntityFromCurrentEntity(0x30, newEntity);
                 newEntity->facing = self->facing;
                 newEntity->subId = i;
-                newEntity->unk88.S8.unk0 = D_80182430[i];
+                newEntity->ext.generic.unk88.S8.unk0 = D_80182430[i];
                 if (self->facing != 0) {
                     newEntity->posX.i.hi -= D_80182468[i];
                 } else {
@@ -153,10 +173,10 @@ void EntitySkeleton(Entity* self) {
     }
 }
 
-void func_801C6494(Entity* entity) {
+void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
-        entity->unk88.S8.unk0--;
-        if (entity->unk88.S8.unk0 & 0xFF) {
+        entity->ext.generic.unk88.S8.unk0--;
+        if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
             entity->unk1E += D_80182424[entity->subId];
             FallEntity();
             MoveEntity();
@@ -179,7 +199,7 @@ void func_801C6494(Entity* entity) {
     }
 }
 
-void func_801C6574(Entity* entity) {
+void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
     s32 accelerationX;
     u32 xDistanceToPlayer;
 
@@ -215,7 +235,7 @@ void func_801C6574(Entity* entity) {
     }
 }
 
-void func_801C6678(Entity* entity) {
+void func_801C6678(Entity* entity) { // From Skeleton
     if (entity->step == 0) {
         InitializeEntity(D_80180C88);
         entity->unk1A = 0x120;

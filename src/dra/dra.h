@@ -4,28 +4,139 @@
 #include "game.h"
 
 typedef enum {
-    FILETYPE_SYSTEM,
-    FILETYPE_STAGE_PRG,
-    FILETYPE_VH,
-    FILETYPE_VB,
-    FILETYPE_SEQ,
-    FILETYPE_STAGE_CHR,
-    FILETYPE_UNUSED_6,
-    FILETYPE_WEAPON0_PRG,
-    FILETYPE_WEAPON1_PRG,
-    FILETYPE_WEAPON0_CHR,
-    FILETYPE_WEAPON1_CHR,
-    FILETYPE_FAMILIAR_PRG,
-    FILETYPE_FAMILIAR_CHR,
-    FILETYPE_MONSTER,
-} FileType;
+    SimFileType_System,
+    SimFileType_StagePrg,
+    SimFileType_Vh,
+    SimFileType_Vb,
+    SimFileType_Seq,
+    SimFileType_StageChr,
+    SimFileType_Unused6,
+    SimFileType_Weapon0Prg,
+    SimFileType_Weapon1Prg,
+    SimFileType_Weapon0Chr,
+    SimFileType_Weapon1Chr,
+    SimFileType_FamiliarPrg,
+    SimFileType_FamiliarChr,
+    SimFileType_Monster,
+} SimFileType;
 
 typedef struct {
-    const char* path;
-    u8* addr;
+    const char* path; // file name
+    u8* addr;         // where to load the file to
+    s32 size;         // file size
+    s32 type;         // file type
+} SimFile;
+
+typedef enum {
+    CdStep_None,
+    CdStep_LoadInit,
+    CdStep_SetSpeed,
+    CdStep_SetPos,
+    CdStep_Seek,
+    CdStep_5,
+    CdStep_6,
+    CdStep_Complete = 10,
+    CdStep_DmaErr = 0xC0,
+    CdStep_SdHeaderErr = 0xC1,
+    CdStep_DiskErr = 0xC2,
+    CdStep_Retry = 0xD0,
+    CdStep_RetryXa = 0xD1,
+    CdStep_CdShellOpenErr = 0xF0,
+    CdStep_F1 = 0xF1,
+    CdStep_F2 = 0xF2,
+    CdStep_F3 = 0xF3,
+} CdStep;
+
+typedef enum {
+    CdFile_None,
+    CdFile_Sel,
+    CdFile_GameChr,
+    CdFile_StageChr,
+    CdFile_4,
+    CdFile_Seq = 12,
+    CdFile_StageSfx,
+    CdFile_14,
+    CdFile_15,
+    CdFile_16,
+    CdFile_Weapon0,
+    CdFile_Weapon1,
+    CdFile_19,
+    CdFile_24 = 24,
+    CdFile_25,
+    CdFile_26,
+    CdFile_Servant,
+    CdFile_28,
+    CdFile_ServantPrg,
+    CdFile_30,
+    CdFile_31,
+    CdFile_DemoKey,
+    CdFile_NoNext = 0xFF,
+    CdFile_StagePrg = 0x100,
+} CdFileType;
+
+typedef enum {
+    CdCallback_0,        // func_801080DC
+    CdCallback_1,        // func_801080DC
+    CdCallback_2,        // func_801080DC
+    CdCallback_3,        // func_801080DC
+    CdCallback_4,        // CopyStageOvlCallback
+    CdCallback_5,        // func_801080DC
+    CdCallback_6,        // func_801080DC
+    CdCallback_7,        // func_801080DC
+    CdCallback_StagePrg, // CopyStageOvlCallback
+    CdCallback_9,        // CopyStageOvlCallback
+    CdCallback_Ric,      // CopyRicOvlCallback
+    CdCallback_11,       // func_801080DC
+    CdCallback_12,       // func_801078C4
+    CdCallback_13,       // func_801078C4
+    CdCallback_14,       // func_80107B04
+    CdCallback_Familiar, // func_801078C4
+    CdCallback_16,       // func_80107DB4
+    CdCallback_17,       // func_80107C6C
+    CdCallback_Seq,      // func_80107DB4
+    CdCallback_Vh,       // func_80107EF0
+} CdCallbacks;
+
+// Info necessary to load a file from the Cd in func_80108448
+typedef struct {
+    s32 loc;        // lba offset, might be a s32
+    CdCallbacks cb; // sets g_CdCallback
+    s32 size;       // file size
+    u8 unkC;        // index for D_800BD1C8, between 0 and 5?
+    u8 unkD;        // index for D_800ACD10, between 0 and 6?
+    u8 nextCdFileType;
+    u8 unkF;
+} CdFile;
+
+// Used for SEQ_LIB.SEQ and SEQ_DAI.SEQ
+typedef struct {
+    s32 loc;
     s32 size;
-    s32 type;
-} OvlDesc;
+    u32 unk8;
+} CdFileSeq;
+
+typedef struct {
+    CdCallbacks cb;
+    CdlLOC loc;
+} CdMgr;
+
+typedef struct {
+    RECT D_800ACD80;
+    RECT D_800ACD88;
+    RECT D_800ACD90;
+    RECT D_800ACD98;
+    RECT D_800ACDA0;
+    RECT D_800ACDA8;
+    RECT D_800ACDB0;
+    RECT D_800ACDB8;
+    RECT D_800ACDC0;
+    RECT D_800ACDC8;
+    RECT D_800ACDD0;
+    RECT D_800ACDD8;
+    RECT D_800ACDE0;
+    RECT D_800ACDE8;
+    RECT D_800ACDF0;
+} Vram;
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -42,20 +153,34 @@ typedef struct {
     /* 0x1A */ s16 unk1A;
 } SpellDef;
 
+typedef struct {
+    void (*func_8017A000)(void);
+    void* unk04;
+    void* unk08;
+    void* unk0C;
+    void* unk10;
+    void* unk14;
+    s32 (*func_8017A018)();
+    void (*func_8017A01C)(u8);
+} WeaponOvl;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
+extern s32 D_800A0144[];
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
+extern u8 D_800A0170[];
 extern s32 D_800A0248;
-extern OvlDesc D_800A024C[];
-extern OvlDesc D_800A036C[];
-extern OvlDesc D_800A04AC[];
+extern SimFile D_800A024C[];
+extern SimFile D_800A036C[];
+extern SimFile D_800A04AC[];
 extern s32 D_800A04EC;
 extern s32 D_800A04F8;
 extern s32 D_800A0510[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
 extern s32 D_800A2438;
+extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
 extern s32 D_800A2D68;
 extern s32 D_800A2D6C;
@@ -118,7 +243,8 @@ extern const char* c_strALUCART;
 extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
-extern Lba D_800A3C40[]; // g_lba
+extern Unkstruct_801092E8 D_800A37D8;
+extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
 extern SpellDef g_SpellDefs[];
@@ -130,11 +256,10 @@ extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
-extern RECT D_800ACD80;
-extern RECT D_800ACD88[2];
-extern RECT D_800ACD90;
-extern RECT D_800ACDF0;
+extern Vram g_Vram;
+extern CdFile* D_800ACC74[];
 extern u8 D_800ACFB4[][4];
+extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
@@ -188,8 +313,6 @@ extern const char aRgb02x02x02x;
 extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
-extern s32 D_800DC4C0;
-extern s8 D_800DC4C4;
 extern Unkstruct_800BF554 D_800BF554[];
 extern s32 D_801362AC;
 extern s32 D_801362B0;
@@ -199,7 +322,7 @@ extern s32 D_801362BC;
 extern s32 g_DebugPalIdx;
 extern u32 D_801362C4;
 extern s32 D_801362C8;
-extern u32* D_801362CC;
+extern u32* g_CurrentOT;
 extern s32 D_801362D0[];
 extern s32 D_801362D4;
 extern s32 D_801362D8;
@@ -208,8 +331,9 @@ extern s32 g_softResetTimer;
 extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
-extern OvlDesc* D_8013644C;
-extern OvlDesc D_80136450;
+extern s32 D_80136414[];
+extern SimFile* D_8013644C;
+extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 D_80137460[]; // button timers
@@ -223,7 +347,8 @@ extern u8* g_DecSrcPtr;
 extern u8* g_DecDstPtr;
 extern s32 g_DecReadNibbleFlag;
 extern s32 g_DecWriteNibbleFlag;
-extern s32* D_80137590;
+extern u8* D_80137590;
+extern s32 D_80137594; // g_DemoKeyIdx
 extern RoomLoadDef* D_801375BC;
 extern s32 D_801375C8;
 extern Unkstruct_800A2D98 D_801375CC;
@@ -291,10 +416,10 @@ extern s32 D_80137E4C;
 extern s32 D_80137E50;
 extern s32 D_80137E58;
 extern s32 D_80137E5C;
-extern s32 D_80137E60;
-extern s32 D_80137E64;
-extern s32 D_80137E68;
-extern s32 D_80137F6C;
+extern s32 D_80137E60; // most likely part of the g_Cd struct
+extern s32 D_80137E64; // most likely part of the g_Cd struct
+extern s32 D_80137E68; // most likely part of the g_Cd struct
+extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;
@@ -307,6 +432,7 @@ extern s32 D_8013808C;
 extern s32 D_8013841C;
 extern s32 D_80138430;
 extern s32 D_80138438;
+extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
 extern s32 D_80138460;
@@ -320,14 +446,14 @@ extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
 extern s32 D_80138FB0;
-extern s16 D_80138FB8; // vol_l
+extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
 extern s16 g_sfxRingBufferPos1; // D_80139000
-extern s16 D_80139004;          // vol_r
+extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
-extern s8 D_80139014;
+extern u8 D_80139014;
 extern s8 D_80139018[];
 extern s32 g_DebugCurPal;
 extern s16 D_8013901C;
@@ -340,7 +466,7 @@ extern u8 D_801390A8;
 extern s16 D_801390AC[];
 extern s32 D_801390B4[];
 extern s8 D_801390C4;
-extern GpuBuffer* D_801390D4;
+extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
 extern u16 D_801396E4;
@@ -376,7 +502,7 @@ extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
-extern s16 D_8013AEE0;
+extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 D_8013AEEC;
 extern s16 D_8013AEF0;
@@ -385,7 +511,7 @@ extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
 extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
 extern s32 D_8013B5E8;
-extern s8 D_8013B5EC[];
+extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];
 extern s8 D_8013B618;
 extern s32 D_8013B61C;
@@ -405,13 +531,12 @@ extern s32 D_8013B694;
 extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
+extern WeaponOvl D_8017A000;
+extern WeaponOvl D_8017D000;
 extern void (*D_80170000)(void);
-extern void (*D_8017A000)(void);
-extern s32 (*D_8017A018)();
-extern s32 (*D_8017D018)();
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
-extern s32 D_801EC000[];
+extern u8 D_801EC000[];
 
 void InitializePads(void);
 void ReadPads(void);
@@ -419,7 +544,8 @@ void ClearBackbuffer(void);
 void SetRoomForegroundLayer(LayerDef2* layerDef);
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
-s32 func_80019444(void);
+void DemoInit(s32 arg0);
+void DemoUpdate(void);
 void func_800209B4(s32*, s32, s32);
 void func_80021E38(s32);
 void func_80021EEC(void);
@@ -430,9 +556,9 @@ void func_8002ABF4(s32);
 void func_800E346C(void);
 void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
-void func_800E4124(s32 arg0);
+void SetGameState(GameState gameState);
 void func_800E4970(void);
-s32 func_800E81FC(s32 id, FileType type);
+s32 func_800E81FC(s32 id, SimFileType type);
 void func_800E8D24(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
@@ -449,15 +575,15 @@ void func_800ECE2C(void);
 void func_800EDA70(Primitive* prim);
 void func_800EDA94(void);
 void func_800EDAE4(void);
-s32 AllocPrimitives(u8 primitives, s32 count);
+s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
-void func_800EFBF8(s32 arg0);
+void DemoGameInit(s32 arg0);
 void FreePrimitives(s32 index);
-void func_800F0334(s32);
-void func_800F0578(s32 arg0);
+void DemoOpenFile(s32);
+void DemoInit(s32 arg0);
 s32 func_800F087C(u32, u32);
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY);
-void func_800F1868(s32, s32, void*);
+void func_800F1868(s32, s32, u8*);
 void func_800F18C4(s32, s32);
 void func_800F1954(s32, s32, s32);
 void func_800F1EB0(s32, s32, s32);
@@ -489,6 +615,7 @@ void DrawSettingsSound(MenuContext* context);
 void DrawPauseMenu(s32 arg0);
 void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
+void func_800FA7E8(void);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 void func_800FAF44(s32);
@@ -619,7 +746,8 @@ void func_801309B4(Entity* entity);
 void func_80130E94(Entity* entity);
 void func_8013136C(Entity* entity);
 void func_801315F8(Entity* entity);
-void func_80131EBC(const char* str, s16 arg1);
+// commented as a requirement for func_80108448 to match
+// void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);
 void func_80131F04(void);

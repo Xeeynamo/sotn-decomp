@@ -9,7 +9,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animSet = -0x7FFF;
         entity->animCurFrame = 56;
         if (entity->subId != 0) {
@@ -29,13 +29,13 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 1:
         if (entity->posX.i.hi < 224) {
-            entity->unk7C.s = 0;
+            entity->ext.generic.unk7C.s = 0;
             entity->step++;
         }
         break;
 
     case 2:
-        if (!(entity->unk7C.s++ & 7)) {
+        if (!(entity->ext.generic.unk7C.s++ & 7)) {
             g_api.PlaySfx(0x7A4);
         }
         if (entity->posX.i.hi < 192) {
@@ -59,10 +59,10 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 3:
         if (entity->subId != 0) {
-            animFlag = AnimateEntity(&D_801819DC, entity);
+            animFlag = AnimateEntity(D_801819DC, entity);
             entity->accelerationY -= 0xA00;
         } else {
-            animFlag = AnimateEntity(&D_801819D0, entity);
+            animFlag = AnimateEntity(D_801819D0, entity);
             if (entity->accelerationY > (s32)0xFFFE0000) {
                 entity->accelerationY -= 0x800;
             }
@@ -82,7 +82,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         if (entity->accelerationY > (s32)0xFFFE0000) {
             entity->accelerationY -= 0x800;
         }
-        animFlag = AnimateEntity(&D_801819D0, entity);
+        animFlag = AnimateEntity(D_801819D0, entity);
         MoveEntity();
         if (entity->unk6C < 0x78) {
             entity->unk6C += 2;
@@ -105,7 +105,7 @@ void EntityFallingLeaf(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animSet = -0x7FFF;
         entity->animCurFrame = (entity->subId & 1) + 63;
         entity->zPriority = 0xC1;
@@ -187,7 +187,7 @@ void func_801BECCC(Entity* entity) {
         gameApi = &g_api;
         (*gameApi).PlaySfx(0xA);
         entity->step = 1;
-        entity->unk2E = 0;
+        entity->step_s = 0;
     }
 }
 
@@ -213,7 +213,7 @@ void EntityUnkId5B(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animSet = -0x7FF8;
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
@@ -221,16 +221,16 @@ void EntityUnkId5B(Entity* entity) {
         break;
 
     case 1:
-        if (entity->unk7C.u != 0) {
-            switch (entity->unk7C.u) {
+        if (entity->ext.generic.unk7C.u != 0) {
+            switch (entity->ext.generic.unk7C.u) {
             case 1:
-                AnimateEntity(&D_80181B40, entity);
+                AnimateEntity(D_80181B40, entity);
                 break;
             case 2:
-                AnimateEntity(&D_80181B4C, entity);
+                AnimateEntity(D_80181B4C, entity);
                 break;
             case 3:
-                AnimateEntity(&D_80181B4C, entity);
+                AnimateEntity(D_80181B4C, entity);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity == NULL) {
                     break;
@@ -244,7 +244,7 @@ void EntityUnkId5B(Entity* entity) {
             entity->animCurFrame = 0;
         }
     }
-    entity->unk7C.s = 0;
+    entity->ext.generic.unk7C.s = 0;
 }
 
 void EntityUnkId5E(Entity* entity) {
@@ -253,24 +253,24 @@ void EntityUnkId5E(Entity* entity) {
     switch (entity->step) {
     case 0:
         animCurFrame = entity->animCurFrame;
-        InitializeEntity(&D_80180B00);
+        InitializeEntity(D_80180B00);
         entity->animCurFrame = animCurFrame;
         entity->animSet = -0x7FF8;
         entity->palette = 0x2D6;
         entity->unk5A = 0x44;
         if (entity->subId != 0) {
             entity->unk19 = 8;
-            entity->unk84.U16.unk0 = 0x40;
+            entity->ext.generic.unk84.U16.unk0 = 0x40;
         } else {
             entity->unk19 = 0xC;
-            entity->unk84.U16.unk0 = 0x20;
+            entity->ext.generic.unk84.U16.unk0 = 0x20;
         }
         entity->unk6C = 0x40;
         entity->blendMode = 0x30;
         break;
 
     case 1:
-        if (!(--entity->unk84.U16.unk0)) {
+        if (!(--entity->ext.generic.unk84.U16.unk0)) {
             DestroyEntity(entity);
             break;
         }
@@ -296,9 +296,9 @@ void func_801C13F8() {
         if (entity != NULL) {
             CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
             entity->subId = 2;
-            entity->unk88.S8.unk1 = 6 - i;
-            entity->unk84.S16.unk0 = temp_s3;
-            entity->unk88.S8.unk0 = temp_s4;
+            entity->ext.generic.unk88.S8.unk1 = 6 - i;
+            entity->ext.generic.unk84.S16.unk0 = temp_s3;
+            entity->ext.generic.unk88.S8.unk0 = temp_s4;
         }
     }
 }
@@ -329,7 +329,8 @@ void Update(void) {
         }
     }
 
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -433,7 +434,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -441,7 +443,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -471,7 +474,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -479,7 +483,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -662,7 +667,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_EntityArray[index];
+    Entity* entity = &g_Entities[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -857,13 +862,13 @@ u16 func_801C5844(u16 arg0, u16 arg1, u16 arg2) {
 
 void func_801C58A4(u8 state) {
     g_CurrentEntity->step = state;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801C58C4(u8 state) {
-    g_CurrentEntity->unk2E = state;
+    g_CurrentEntity->step_s = state;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -886,7 +891,7 @@ void func_801C58E0(u16 arg0, u16 arg1) {
     entity->subId = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
 }
 
 void InitializeEntity(u16 arg0[]) {
@@ -910,7 +915,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
@@ -1025,11 +1030,13 @@ void func_801C6114(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -1099,7 +1106,7 @@ void CollectGold(u16 goldSize) {
     u16 goldSizeIndex;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_playerGold;
+    gold = &g_Status.gold;
     goldSizeIndex = goldSize - 2;
     *gold += c_GoldPrizes[goldSizeIndex];
     if (*gold > MAX_GOLD) {

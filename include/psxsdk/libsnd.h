@@ -79,4 +79,9 @@ short SsUtKeyOnV(
     short volr   // Volume, right (0-127)
 );
 
+/*
+ * Not known
+ */
+void func_80026D4C(s16, short voll, short volr);
+
 #endif

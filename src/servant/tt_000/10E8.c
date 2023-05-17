@@ -93,7 +93,7 @@ void func_80171568(Entity* self) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        entity = &g_EntityArray[5 + i];
+        entity = &g_Entities[5 + i];
         if (entity->objectId == 0) {
             goto init_entity;
         }
@@ -108,7 +108,7 @@ init_entity:
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
-    entity->unk8C.entityPtr = self;
+    entity->ext.generic.unk8C.entityPtr = self;
 }
 
 void func_8017160C(s32 amount, s32 objectId) {
@@ -121,7 +121,7 @@ void func_8017160C(s32 amount, s32 objectId) {
     }
 
     for (i = 0; i < amount; i++) {
-        entity = &g_EntityArray[5 + i];
+        entity = &g_Entities[5 + i];
         if (entity->objectId == objectId) {
             entity->step = 0;
         } else {
@@ -130,13 +130,13 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->palette = 0x140;
             entity->objectId = objectId;
             entity->animSet = 0x8014;
-            entity->zPriority = g_EntityArray[0].zPriority - 2;
-            facing = (g_EntityArray[0].facing + 1) & 1;
+            entity->zPriority = g_Entities[0].zPriority - 2;
+            facing = (g_Entities[0].facing + 1) & 1;
             entity->subId = i + 1;
             entity->facing = facing;
         }
-        *((s16*)(&entity->unkAC)) = g_Camera.posX.i.hi;
-        *((s16*)(&entity->unkAE)) = g_Camera.posY.i.hi;
+        *((s16*)(&entity->ext.generic.unkAC)) = g_Camera.posX.i.hi;
+        *((s16*)(&entity->ext.generic.unkAE)) = g_Camera.posY.i.hi;
     }
 }
 
@@ -192,8 +192,8 @@ void func_801718A0(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->unk8C.modeS16.unk0 << 7) * 8) >> 12;
-    y -= entity->unk8C.modeS16.unk0 / 2;
+    x += (rsin(entity->ext.generic.unk8C.modeS16.unk0 << 7) * 8) >> 12;
+    y -= entity->ext.generic.unk8C.modeS16.unk0 / 2;
 
     poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->x0 = poly->x2 = x - D_80170608[frame].x;
@@ -242,7 +242,7 @@ void func_80171ED4(s32 arg0) {
     spriteBanks = D_80170040;
     g_api.o.spriteBanks[0x14] = spriteBanks;
 
-    e = &g_EntityArray[4];
+    e = &g_Entities[4];
     DestroyEntity(e);
     e->unk5A = 0x6C;
     e->palette = 0x140;
@@ -277,8 +277,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&e->unkAC = g_Camera.posX.i.hi;
-    *(u16*)&e->unkAE = g_Camera.posY.i.hi;
+    *(u16*)&e->ext.generic.unkAC = g_Camera.posX.i.hi;
+    *(u16*)&e->ext.generic.unkAE = g_Camera.posY.i.hi;
 }
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -408,7 +408,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     volatile u32 pad; // fake?
     s16 start = D_80171094[rangeIndex].start;
     s16 end = D_80171094[rangeIndex].end;
-    Entity* entity = &g_EntityArray[start];
+    Entity* entity = &g_Entities[start];
     s32 i;
 
     for (i = start; end >= i; i++, entity++) {
@@ -658,7 +658,7 @@ void func_801745E4(Entity* entityParent, s32 objectId, s32 subId) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        entity = &g_EntityArray[5 + i];
+        entity = &g_Entities[5 + i];
         if (entity->objectId == 0) {
             goto init_entity;
         }
@@ -673,7 +673,7 @@ init_entity:
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = entityParent->posX.val;
     entity->posY.val = entityParent->posY.val;
-    entity->unk8C.entityPtr = entityParent;
+    entity->ext.generic.unk8C.entityPtr = entityParent;
     entity->subId = subId;
 }
 
@@ -681,7 +681,7 @@ s32 func_801746A0(s32 arg0) {
     s32 tmp;
 
     if (D_800733E4 < 0) {
-        if (!(D_80072F20.pl_vram_flag & 1)) {
+        if (!(g_Player.pl_vram_flag & 1)) {
             return 1;
         }
     }
@@ -689,39 +689,39 @@ s32 func_801746A0(s32 arg0) {
     tmp = D_800733E4;
     NOP;
     if (tmp > 0) {
-        if (!(D_80072F20.pl_vram_flag & 2)) {
+        if (!(g_Player.pl_vram_flag & 2)) {
             return 1;
         }
     }
 
-    if (D_800733E0 < 0 && !(D_80072F20.pl_vram_flag & 8))
+    if (D_800733E0 < 0 && !(g_Player.pl_vram_flag & 8))
         return 1;
 
     tmp = D_800733E0;
     NOP;
-    if (D_800733E0 > 0 && !(D_80072F20.pl_vram_flag & 4))
+    if (D_800733E0 > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
     if (arg0 == 0)
         return 0;
 
-    if (D_80072F70 != D_80073404)
+    if (g_Player.unk50 != D_80073404)
         return 1;
 
-    if (D_80072F70 != 0)
+    if (g_Player.unk50 != 0)
         return 1;
 
-    if (D_80072F72 != D_80073406)
+    if (g_Player.unk52 != D_80073406)
         return 1;
 
-    return D_80072F72 != 0 && D_80072F72 != 4;
+    return g_Player.unk52 != 0 && g_Player.unk52 != 4;
 }
 
 s32 func_801747B8(void) {
     Entity* entity;
     s32 i;
 
-    entity = &D_800762D8;
+    entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 0x80; i++, entity++) {
         if (entity->objectId == 0)
             continue;

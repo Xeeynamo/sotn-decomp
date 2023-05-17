@@ -3,84 +3,90 @@
 #include "objects.h"
 #include "sfx.h"
 
-void func_800E6FD4(void) {
-    POLY_GT4* poly;
+void HandleVideoPlayback(void) {
+    Primitive* prim;
     u8 temp;
+    s32 temp2;
 
-    if ((!(g_pads[0].tapped & 0x800)) || (!g_IsTimeAttackUnlocked)) {
-        switch (D_80073060) {
+    if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
+        switch (g_GameStep) {
         case 0:
-            if (D_8006C3B0 == 0) {
+            if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
-                D_8006C398 = 1;
-                D_8006BAFC = 0x18;
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_24;
                 func_800E3618(0x140);
-                D_8013640C = AllocPrimitives(4, 2);
-                poly = &g_PrimBuf[D_8013640C];
-                func_80107360(poly, 44, 96, 232, 32, 0, 0);
-                func_801072BC(poly);
-                poly->tpage = 0x1C;
-                poly->pad3 = 4;
-                poly->p1 = 0x40;
-                poly = (POLY_G4*)poly->tag;
-                func_80107360(poly, 60, 208, 192, 16, 0, 32);
-                func_801072DC(poly);
-                poly->tpage = 0x1C;
-                poly->pad3 = 8;
-                D_80073060++;
+                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
+                prim = &g_PrimBuf[D_8013640C];
+                func_80107360(prim, 44, 96, 232, 32, 0, 0);
+                func_801072BC(prim);
+                prim->tpage = 0x1C;
+                prim->blendMode = 4;
+                prim->p1 = 0x40;
+                prim = prim->next;
+                func_80107360(prim, 60, 208, 192, 16, 0, 32);
+                func_801072DC(prim);
+                prim->tpage = 0x1C;
+                prim->blendMode = 8;
+                g_GameStep++;
                 return;
             }
             break;
 
         case 1:
-            poly = &g_PrimBuf[D_8013640C];
-            poly->p1--;
-            if (poly->p1 == 0) {
-                D_80073060++;
+            prim = &g_PrimBuf[D_8013640C];
+            prim->p1--;
+            if (prim->p1 == 0) {
+                g_GameStep++;
             }
             break;
 
         case 2:
-            poly = &g_PrimBuf[D_8013640C];
-            temp = poly->r0 + 1;
-            func_80107250(poly, temp);
+            temp2 = D_8013640C;
+            prim = &g_PrimBuf[temp2];
+            temp = prim->r0 + 1;
+            func_80107250(prim, temp);
             if (temp == 96) {
-                ((POLY_GT4*)poly->tag)->pad3 = 8;
+                temp2 = prim->next;
+#if defined(VERSION_US)
+                ((Primitive*)temp2)->blendMode = 8;
+#elif defined(VERSION_HD)
+                ((Primitive*)temp2)->blendMode = 0;
+#endif
             }
             if (temp == 128) {
-                poly->p1 = 128;
-                D_80073060++;
+                prim->p1 = 128;
+                g_GameStep++;
             }
             break;
 
         case 3:
-            poly = &g_PrimBuf[D_8013640C];
-            poly->p1--;
-            if (poly->p1 == 0) {
-                D_80073060++;
+            prim = &g_PrimBuf[D_8013640C];
+            prim->p1--;
+            if (prim->p1 == 0) {
+                g_GameStep++;
             }
             break;
 
         case 4:
-            poly = &g_PrimBuf[D_8013640C];
-            temp = poly->r0 - 1;
-            func_80107250(poly, temp);
+            prim = &g_PrimBuf[D_8013640C];
+            temp = prim->r0 - 1;
+            func_80107250(prim, temp);
             if (temp == 64) {
-
-                ((POLY_GT4*)poly->tag)->pad3 = 8;
+                ((Primitive*)prim->next)->blendMode = 8;
             }
             if (temp == 0) {
                 FreePrimitives(D_8013640C);
-                D_80073060++;
+                g_GameStep++;
             }
             break;
 
         case 5:
-            if (D_8006C3B0 == 0) {
+            if (!g_IsUsingCd) {
                 D_8003C728 = 1;
                 D_8003C100 = 1;
-                D_80073060++;
+                g_GameStep++;
             }
             break;
 
@@ -99,73 +105,73 @@ void func_800E6FD4(void) {
 
 void nullsub_9(void) {}
 
-void func_800E738C(void) {
-    if (D_80073060 == 1) {
-        if ((D_800978AC != 0 && D_8006C3B0 == 0) ||
-            (D_800978AC == 0 && func_800E81FC(6, FILETYPE_SYSTEM) >= 0 &&
-             func_800E81FC(7, FILETYPE_SYSTEM) >= 0)) {
+void HandlePrologueEnd(void) {
+    if (g_GameStep == 1) {
+        if ((g_UseDisk && !g_IsUsingCd) ||
+            (!g_UseDisk && func_800E81FC(6, SimFileType_System) >= 0 &&
+             func_800E81FC(7, SimFileType_System) >= 0)) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
             func_800E346C();
-            D_80073060++;
+            g_GameStep++;
             return;
         }
     }
     g_api.o.unk3C();
 }
 
-void func_800E7458(void) {
+void HandleMainMenu(void) {
     s32 pad[0x40];
 
-    switch (D_80073060) {
+    switch (g_GameStep) {
     case 0:
         g_StageId = STAGE_SEL;
-        if (D_800978AC != 0) {
-            D_8006C398 = 1;
-            D_8006BAFC = 3;
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = STAGE_SEL;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 1:
-        if (D_800978AC != 0 && D_8006C3B0 != 0)
+        if (g_UseDisk && g_IsUsingCd)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(12, FILETYPE_SYSTEM) >= 0) {
-            D_80073060++;
+        if (g_UseDisk || func_800E81FC(12, SimFileType_System) >= 0) {
+            g_GameStep++;
         }
         break;
     case 2:
-        if (D_800978AC != 0) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0xD;
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageSfx;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 3:
-        if (D_800978AC != 0 && D_8006C3B0 != 0)
+        if (g_UseDisk && g_IsUsingCd)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(0, FILETYPE_VH) >= 0 &&
-                                   func_800E81FC(0, FILETYPE_VB) >= 0) {
-            D_80073060++;
+        if (g_UseDisk || func_800E81FC(0, SimFileType_Vh) >= 0 &&
+                             func_800E81FC(0, SimFileType_Vb) >= 0) {
+            g_GameStep++;
         }
         break;
     case 4:
-        if (D_800978AC != 0) {
-            D_8006C398 = 1;
-            D_8006BAFC = 0x100;
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StagePrg;
         }
-        D_80073060++;
+        g_GameStep++;
         break;
     case 5:
-        if (D_800978AC != 0 && D_8006C3B0 != 0)
+        if (g_UseDisk && g_IsUsingCd)
             break;
 
-        if (D_800978AC != 0 || func_800E81FC(0, FILETYPE_STAGE_PRG) >= 0) {
+        if (g_UseDisk || func_800E81FC(0, SimFileType_StagePrg) >= 0) {
             D_8003C9A4 = 0;
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     case 6:
@@ -177,38 +183,166 @@ void func_800E7458(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/46FD4", func_800E768C);
+void HandleEnding(void) {
+    RECT* temp_s0;
+    RECT* temp_s1;
+    u32 var_a0;
+    u32 var_v0;
 
-void func_800E7AEC(void) {
-    switch (D_8003C734) {
+    switch (g_GameStep) {
     case 0:
+        func_801065F4(0);
+        func_800EA538(0);
+        func_800EAEEC();
+        func_800EDA94();
+        func_800EDAE4();
+        func_800ECE2C();
+        func_800EAD7C();
+        ClearBackbuffer();
+        func_800E3574();
+        g_StageId = STAGE_SEL;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_31;
+        }
+        g_GameStep++;
+        break;
     case 1:
-    case 99:
-        func_800E451C();
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            LoadImage(&g_Vram.D_800ACDE0, 0x80180000);
+            LoadImage(&g_Vram.D_800ACDD8, 0x80182000);
+            LoadImage(&g_Vram.D_800ACDB8, 0x80192000);
+            StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
+            LoadImage(&g_Vram.D_800ACDA8, 0x80194000);
+            StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
+            LoadClut2(g_Clut, 0x200, 0xF0);
+        } else {
+            if (func_800E81FC(14, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(15, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(16, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(17, SimFileType_System) < 0) {
+                break;
+            }
+            if (func_800E81FC(4, SimFileType_System) < 0) {
+                break;
+            }
+            LoadClut2(g_Clut, 0x200, 0xF0);
+        }
+        g_GameStep++;
         break;
     case 2:
-        func_800E4A14();
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StagePrg;
+        }
+        g_GameStep = 3;
         break;
     case 3:
-        func_800E5584();
-        break;
-    case 4:
-        func_800E6358();
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+                break;
+            }
+        }
+        D_8003C9A4 = 0;
+        g_GameStep++;
         break;
     case 5:
-        func_800E6FD4();
+        g_GameStep = 6;
+        D_800978F8 = 0;
         break;
     case 6:
-        nullsub_9();
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_19;
+        }
+        g_GameStep = 7;
+        if (D_800978B4 != 3 && D_800978B4 != 5) {
+            g_GameStep = 8;
+        }
         break;
     case 7:
-        func_800E738C();
+        g_api.o.unk3C();
         break;
     case 8:
-        func_800E7458();
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                return;
+            }
+        } else {
+            if (func_800E81FC(4, SimFileType_System) < 0) {
+                break;
+            }
+        }
+        g_GameStep++;
         break;
+    case 4:
     case 9:
-        func_800E768C();
+        g_api.o.unk28();
+        break;
+    case 10:
+#if defined(VERSION_US)
+        PlaySfx(18);
+        PlaySfx(11);
+        func_80132760();
+#endif
+        SetGameState(Game_Init);
+        return;
+    case 256:
+        g_StageId = STAGE_TOP_ALT;
+        D_8003C730 = 3;
+        func_800E4970();
+        break;
+    }
+}
+
+void UpdateGame(void) {
+    switch (g_GameState) {
+    case Game_Init:
+    case Game_Title:
+#if defined(VERSION_US)
+    case Game_99:
+#endif
+        HandleTitle();
+        break;
+    case Game_Play:
+        HandlePlay();
+        break;
+    case Game_GameOver:
+        HandleGameOver();
+        break;
+    case Game_NowLoading:
+        HandleNowLoading();
+        break;
+    case Game_VideoPlayback:
+        HandleVideoPlayback();
+        break;
+    case Game_Unk6:
+        nullsub_9();
+        break;
+    case Game_PrologueEnd:
+        HandlePrologueEnd();
+        break;
+    case Game_MainMenu:
+        HandleMainMenu();
+        break;
+    case Game_Ending:
+        HandleEnding();
         break;
     }
 }

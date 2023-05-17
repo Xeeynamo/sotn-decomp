@@ -4,12 +4,12 @@ void func_8016E324(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = 0x20000 | FLAG_UNK_04000000;
-        entity->unk7C.s = 0x14;
+        entity->ext.generic.unk7C.s = 0x14;
         entity->step++;
 
     case 1:
-        entity->unk7C.s--;
-        if ((entity->unk7C.s) == 0) {
+        entity->ext.generic.unk7C.s--;
+        if ((entity->ext.generic.unk7C.s) == 0) {
         case 3:
         case 5:
             func_801606BC(entity, 0x39, 0);
@@ -17,9 +17,9 @@ void func_8016E324(Entity* entity) {
         case 2:
         case 4:
         case 6:
-            entity->unk7C.s++;
-            if (entity->unk7C.s >= 11) {
-                entity->unk7C.s = 0;
+            entity->ext.generic.unk7C.s++;
+            if (entity->ext.generic.unk7C.s >= 11) {
+                entity->ext.generic.unk7C.s = 0;
                 entity->posX.val = 0x800000;
                 entity->posY.val = 0;
                 func_801606BC(entity, 0x10004, 0);
@@ -29,10 +29,10 @@ void func_8016E324(Entity* entity) {
         break;
 
     case 7:
-        entity->unk7C.s++;
-        if (entity->unk7C.s >= 16) {
+        entity->ext.generic.unk7C.s++;
+        if (entity->ext.generic.unk7C.s >= 16) {
             func_80156C60(entity);
-            D_80072F6E = 1;
+            g_Player.unk4E = 1;
             func_801606BC(entity, 0x3A, 0);
         }
         break;
@@ -51,7 +51,7 @@ void func_80170548(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
-        entity->unkB0 = 0x1E;
+        entity->ext.generic.unkB0 = 0x1E;
         func_8015FAB8(entity);
         entity->hitboxWidth = 8;
         entity->hitboxHeight = 8;
@@ -59,7 +59,7 @@ void func_80170548(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.s >= 5) {
+        if (++entity->ext.generic.unk7C.s >= 5) {
             func_80156C60(entity);
         }
         break;
@@ -84,25 +84,25 @@ void func_801705EC(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
-        entity->unk7E.modeU16 = 0;
+        entity->ext.generic.unk7E.modeU16 = 0;
         entity->step++;
 
     case 1:
     case 3:
     case 5:
     case 7:
-        temp = entity->unk7E.modeU16 + 1;
-        entity->unk7E.modeU16 = temp;
+        temp = entity->ext.generic.unk7E.modeU16 + 1;
+        entity->ext.generic.unk7E.modeU16 = temp;
         func_801606BC(entity, (temp << 0x10) | 0x3F, 0);
-        entity->unk7C.s = 0;
+        entity->ext.generic.unk7C.s = 0;
         entity->step++;
         break;
 
     case 2:
     case 4:
     case 6:
-        entity->unk7C.s++;
-        if (entity->unk7C.s >= 16) {
+        entity->ext.generic.unk7C.s++;
+        if (entity->ext.generic.unk7C.s >= 16) {
             entity->step++;
         }
         break;
@@ -116,7 +116,19 @@ void func_801705EC(Entity* entity) {
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_801706C0);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80170874);
+void func_80170874(s32 bufSize, s32* buf) {
+    s32 i, idx, swapTemp;
+
+    for (i = bufSize - 1; i > 0; i--) {
+        // Pick random index
+        idx = rand() % bufSize;
+
+        // Hold swap value temporarily
+        swapTemp = buf[i];
+        buf[i] = buf[idx];
+        buf[idx] = swapTemp;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8017091C);
 
@@ -153,7 +165,7 @@ void func_80172AE8(Entity* entity) {
             poly->y2 = poly->y3 = entity->posY.i.hi + 8;
             poly->pad2 = entity->zPriority;
             poly->pad3 = 0x115;
-            entity->unk7E.modeU16 = 0x60U;
+            entity->ext.generic.unk7E.modeU16 = 0x60U;
             entity->step++;
         } else {
             func_80156C60(entity);
@@ -162,10 +174,10 @@ void func_80172AE8(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->unk7C.s > 5) {
+        if (++entity->ext.generic.unk7C.s > 5) {
             entity->step++;
         }
-        entity->unk7E.modeU16 -= 8;
+        entity->ext.generic.unk7E.modeU16 -= 8;
         break;
 
     case 2:
@@ -178,7 +190,7 @@ void func_80172AE8(Entity* entity) {
     poly = &g_PrimBuf[entity->firstPolygonIndex];
     poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
         poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-            entity->unk7E.modeU8.unk0;
+            entity->ext.generic.unk7E.modeU8.unk0;
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_80172D00);

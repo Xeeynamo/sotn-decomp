@@ -38,7 +38,7 @@ extern s32 D_801811B0[];
 extern u32 D_8018125C[];
 extern s16 D_801812E4[];
 extern u32 D_801812F4[];
-extern u8 D_80181338;
+extern u8 D_80181338[];
 extern PfnEntityUpdate D_801803C4[];
 extern u16 D_801804E8[];
 extern u16 D_8018050C[];

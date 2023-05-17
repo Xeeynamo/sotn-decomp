@@ -379,7 +379,7 @@ void func_801B17C8(void) {
     switch (D_800978F8) {
     case 0:
         if (D_80097924 == -1 || D_8006C378 == -1) {
-            D_80073060++;
+            g_GameStep++;
         } else {
             D_800978C4 = 0;
             D_800978F8++;
@@ -395,15 +395,15 @@ void func_801B17C8(void) {
         D_800978C4 = 0;
         if (func_801B3A94(1) != 0) {
             D_800978C4 = 1;
-            D_80073060++;
+            g_GameStep++;
         }
         break;
     }
 }
 
-void func_801B18CC(s32 arg0) {
-    D_8003C734 = arg0;
-    D_80073060 = 0;
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
@@ -411,72 +411,72 @@ void func_801B18CC(s32 arg0) {
 void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
 
 void func_801B1924(void) {
-    D_8003CB08.buf.draw.r0 = 0;
-    D_8003CB08.buf.draw.g0 = 0;
-    D_8003CB08.buf.draw.b0 = 0;
-    D_800542FC.buf.draw.r0 = 0;
-    D_800542FC.buf.draw.g0 = 0;
-    D_800542FC.buf.draw.b0 = 0;
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
 }
 
 void func_801B195C(s32 arg0) {
-    D_8003CB08.buf.draw.clip.y = 20;
-    D_8003CB08.buf.draw.clip.h = 207;
+    g_GpuBuffers[0].draw.clip.y = 20;
+    g_GpuBuffers[0].draw.clip.h = 207;
     if (arg0 == 0) {
-        D_800542FC.buf.draw.clip.y = 20;
+        g_GpuBuffers[1].draw.clip.y = 20;
     } else {
-        D_800542FC.buf.draw.clip.y = 276;
+        g_GpuBuffers[1].draw.clip.y = 276;
     }
-    D_800542FC.buf.draw.clip.h = 207;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    g_GpuBuffers[1].draw.clip.h = 207;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_801B1924();
-    D_800542FC.buf.draw.dtd = 0;
-    D_8003CB08.buf.draw.dtd = 0;
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].draw.dtd = 0;
+    g_GpuBuffers[0].draw.dtd = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 void func_801B19F4(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_801B195C(0);
 }
 
 void func_801B1A98(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_W, DISP_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_W, DISP_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, DISP_W, DISP_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_W, DISP_H);
-    D_800542FC.buf.draw.clip.y = DISP_W / 2;
-    D_800542FC.buf.draw.clip.h = DISP_H;
-    D_8003CB08.buf.draw.clip.h = DISP_H;
-    D_8003CB08.buf.draw.clip.y = 0;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_W, DISP_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_W, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_W, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_W, DISP_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.y = 0;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_801B1924();
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 void func_801B1B88(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, 384, DISP_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, 384, DISP_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, 384, DISP_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, 384, DISP_H);
-    D_800542FC.buf.draw.clip.y = 256;
-    D_800542FC.buf.draw.clip.h = DISP_H;
-    D_8003CB08.buf.draw.clip.h = DISP_H;
-    D_8003CB08.buf.draw.clip.y = 0;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 384, DISP_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 384, DISP_H);
+    g_GpuBuffers[1].draw.clip.y = 256;
+    g_GpuBuffers[1].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.y = 0;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_801B1924();
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
@@ -946,27 +946,27 @@ void func_801B3F7C(s32 arg0) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3F94);
 
 void InitRoomEntities(s32 objLayoutId) {
-    s32 temp_s0 = D_8003C9A4;
-
-    switch (temp_s0) {
+    switch (D_8003C9A4) {
     case 0:
-        if (D_8006C3B0 == 0) {
-            g_IsTimeAttackUnlocked = true;
-            D_8003C728 = 1;
-            D_8003C100 = 0;
-            D_8003C9A4 = 1;
+        if (g_IsUsingCd) {
+            break;
         }
+        g_IsTimeAttackUnlocked = true;
+        D_8003C728 = 1;
+        D_8003C100 = 0;
+        D_8003C9A4 = 1;
         break;
 
     case 1:
         func_801B9C80();
-        if (D_8003C728 == 0) {
-            g_IsTimeAttackUnlocked = false;
-            D_8003C100 = 0;
-            func_801B18F4();
-            D_8003C734 = temp_s0;
-            D_8003C9A4 = 0;
+        if (D_8003C728) {
+            break;
         }
+        g_IsTimeAttackUnlocked = false;
+        D_8003C100 = 0;
+        func_801B18F4();
+        g_GameState = Game_Title;
+        D_8003C9A4 = 0;
         break;
     }
 }
@@ -990,7 +990,7 @@ void DestroyEntity(Entity* entity) {
 
 void func_801B4B9C(Entity* entity, s16 step) {
     entity->step = step;
-    entity->unk2E = 0;
+    entity->step_s = 0;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -1031,13 +1031,13 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B4C68);
 
 void func_801B4D78(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_3];
+    Entity* e = &g_Entities[UNK_ENTITY_3];
 
     if (e->step == 0) {
         e->animSet = -0x7FFF;
         e->animCurFrame = 1;
         e->palette = 0x200;
-        e->unk80.modeS32 = 0x5C0000;
+        e->ext.generic.unk80.modeS32 = 0x5C0000;
         e->posY.i.hi = 208;
         e->zPriority = 0x80;
         e->step = 1;
@@ -1045,7 +1045,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1056,7 +1056,7 @@ void func_801B4DE0(void) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
-            *(s32*)&unkEntity->unk7C = poly;
+            *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 255;
             poly->y0 = poly->y1 = 4;
@@ -1075,7 +1075,7 @@ void func_801B4DE0(void) {
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1088,7 +1088,7 @@ void func_801B4DE0(void) {
         break;
 
     case 2:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1102,7 +1102,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* unkEntity = &g_EntityArray[UNK_ENTITY_2];
+    Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
     s16 firstPolygonIndex;
     POLY_GT4* poly;
 
@@ -1113,7 +1113,7 @@ void func_801B4FFC(void) {
             poly = &g_PrimBuf[firstPolygonIndex];
             unkEntity->firstPolygonIndex = firstPolygonIndex;
             unkEntity->flags |= FLAG_FREE_POLYGONS;
-            *(s32*)&unkEntity->unk7C = poly;
+            *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 384;
             poly->y0 = poly->y1 = 4;
@@ -1131,7 +1131,7 @@ void func_801B4FFC(void) {
         break;
 
     case 1:
-        poly = *(s32*)&unkEntity->unk7C;
+        poly = *(s32*)&unkEntity->ext.generic.unk7C;
         if (D_801BC3E4 != 0) {
             poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
                 poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
@@ -1150,13 +1150,13 @@ void func_801B4FFC(void) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B519C);
 
 void func_801B5350(void) {
-    Entity* entity = &g_EntityArray[UNK_ENTITY_5];
+    Entity* entity = &g_Entities[UNK_ENTITY_5];
 
     switch (entity->step) {
     case 0:
         entity->animSet = 1;
         entity->animCurFrame = 142;
-        entity->unk80.modeS32 = 0x800000;
+        entity->ext.generic.unk80.modeS32 = 0x800000;
         entity->posY.i.hi = 159;
         entity->zPriority = 0xC0;
         entity->unk5A = 0;
@@ -1172,13 +1172,13 @@ void func_801B5350(void) {
         if (!(AnimateEntity(D_80180528, entity) & 0xFF)) {
             func_801B4B9C(entity, 3);
         }
-        entity->unk80.modeS32 += 0xFFFE8000;
+        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
         break;
 
     case 3:
         AnimateEntity(D_80180504, entity);
-        entity->unk80.modeS32 += 0xFFFE8000;
-        if (entity->unk80.modeS16.unk2 < 0x40) {
+        entity->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        if (entity->ext.generic.unk80.modeS16.unk2 < 0x40) {
             entity->step = 255;
         }
         break;
@@ -1186,14 +1186,14 @@ void func_801B5350(void) {
 }
 
 void func_801B54C8(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+    Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
         e->animSet = -0x7FFE;
         e->animCurFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
-        e->unk80.modeS32 = 0x780000;
+        e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
@@ -1202,13 +1202,13 @@ void func_801B54C8(void) {
 }
 
 void func_801B5548(void) {
-    Entity* e = &g_EntityArray[UNK_ENTITY_7];
+    Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
         e->animSet = -0x7FFE;
         e->animCurFrame = 7;
         e->unk5A = 0xF;
-        e->unk80.modeS32 = 0x780000;
+        e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;

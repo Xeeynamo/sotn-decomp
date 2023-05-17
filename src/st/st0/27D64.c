@@ -57,7 +57,7 @@ void EntityLockCamera(Entity* entity) {
         temp_v1 = temp_s1 & 0xFFFF;
         entity->unk3C = 1;
         temp_v0 = D_80180660[temp_v1];
-        entity->unk7C.modeU16 = temp_v0;
+        entity->ext.generic.unk7C.modeU16 = temp_v0;
         if (temp_v0) {
             entity->hitboxWidth = D_8018065C[temp_v1];
             entity->hitboxHeight = 20;
@@ -79,7 +79,7 @@ void EntityLockCamera(Entity* entity) {
 
     if (func_801A7E2C(entity)) {
         temp_v0_2 = func_801B4C78();
-        if (entity->unk7C.modeU16) {
+        if (entity->ext.generic.unk7C.modeU16) {
             phi_v1 = (temp_v0_2 & 2) * 2;
         } else {
             phi_v1 = (temp_v0_2 & 1) * 4;
@@ -108,7 +108,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_801805BC);
+        InitializeEntity(D_801805BC);
         entity->animSet = 2;
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;
@@ -367,13 +367,13 @@ void EntityDraculaFireball(Entity* entity) {
         if (entity->subId == 2) {
             entity->accelerationY = 0x8000;
         }
-        entity->unk8C.modeU16.unk0 = 0x28;
+        entity->ext.generic.unk8C.modeU16.unk0 = 0x28;
 
     case 1:
         AnimateEntity(D_8018097C, entity);
         MoveEntity();
-        temp_v0 = entity->unk8C.modeU16.unk0 - 1;
-        entity->unk8C.modeU16.unk0 = temp_v0;
+        temp_v0 = entity->ext.generic.unk8C.modeU16.unk0 - 1;
+        entity->ext.generic.unk8C.modeU16.unk0 = temp_v0;
 
         if ((temp_v0 << 0x10) == 0) {
             entity->accelerationY = 0;
@@ -394,7 +394,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         entity->objectId = ENTITY_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
-        entity->unk2E = 0;
+        entity->step_s = 0;
         entity->subId = 1;
         return;
     }
@@ -412,7 +412,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         }
         break;
     case 2:
-        AnimateEntity(&D_80180990, entity);
+        AnimateEntity(D_80180990, entity);
         MoveEntity();
         entity->unk1E += 4;
         speedX = 0x1000;
@@ -547,9 +547,9 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF6D0);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AF774);
 
-void func_801B0030(s32 arg0) {
-    D_8003C734 = arg0;
-    D_80073060 = 0;
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
@@ -581,51 +581,55 @@ void func_801B0058(void) {
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0180);
 
 void func_801B01C0(void) {
-    D_8003CB08.buf.draw.r0 = 0;
-    D_8003CB08.buf.draw.g0 = 0;
-    D_8003CB08.buf.draw.b0 = 0;
-    D_800542FC.buf.draw.r0 = 0;
-    D_800542FC.buf.draw.g0 = 0;
-    D_800542FC.buf.draw.b0 = 0;
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
 }
 
 void func_801B01F8(s32 arg0) {
-    D_8003CB08.buf.draw.clip.y = 0x0014;
-    D_8003CB08.buf.draw.clip.h = 0x00CF;
-    D_80054302 = arg0 == 0 ? 0x0014 : 0x0114;
-    D_800542FC.buf.draw.clip.h = 0x00CF;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    g_GpuBuffers[0].draw.clip.y = 0x0014;
+    g_GpuBuffers[0].draw.clip.h = 0x00CF;
+#ifndef NON_MATCHING
+    g_GpuBuffers_1_buf_draw_clip_y = arg0 == 0 ? 0x0014 : 0x0114;
+#else
+    g_GpuBuffers[1].draw.clip.y = 0x0014;
+#endif
+    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_801B01C0();
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 // Set stage display buffer
 void func_801B0280(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
                   DISP_STAGE_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_801B01F8(0);
 }
 
 void func_801B0324(void) {
-    SetDefDrawEnv(&D_8003CB08.buf.draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDrawEnv(&D_800542FC.buf.draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8003CB08.buf.disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&D_8005435C, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    D_800542FC.buf.draw.clip.y = DISP_UNK2_W / 2;
-    D_800542FC.buf.draw.clip.h = DISP_UNK2_H;
-    D_8003CB08.buf.draw.clip.h = DISP_UNK2_H;
-    D_8003CB08.buf.draw.clip.y = 0;
-    D_800542FC.buf.draw.isbg = 1;
-    D_8003CB08.buf.draw.isbg = 1;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_UNK2_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_UNK2_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_UNK2_H;
+    g_GpuBuffers[0].draw.clip.y = 0;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
     func_801B01C0();
-    D_800542FC.buf.disp.isrgb24 = 0;
-    D_8003CB08.buf.disp.isrgb24 = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B0414);
@@ -671,7 +675,8 @@ void Update(void) {
         }
     }
 
-    for (entity = D_800762D8; entity < &D_8007EFD8; entity++) {
+    for (entity = &g_Entities[STAGE_ENTITY_START];
+         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
             continue;
 
@@ -775,7 +780,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -783,7 +789,8 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -813,7 +820,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
     switch (layoutObj->objectId & 0xE000) {
     case 0x0:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         if (entity->objectId == 0) {
             CreateEntityFromLayout(entity, layoutObj);
         }
@@ -821,7 +829,8 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
     case 0x8000:
         break;
     case 0xA000:
-        entity = &D_800762D8[(u8)layoutObj->objectRoomIndex];
+        entity =
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -945,7 +954,7 @@ void DestroyEntity(Entity* item) {
 }
 
 void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_EntityArray[index];
+    Entity* entity = &g_Entities[index];
 
     while (entity < &D_8007EF1C) {
         DestroyEntity(entity);
@@ -1131,10 +1140,10 @@ u16 func_801B56F4(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
+// minor reg swap
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801B573C);
 #else
-// very minor reg swap
 u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0 = arg1;
@@ -1162,13 +1171,13 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 
 void func_801B5794(u8 state) {
     g_CurrentEntity->step = state;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801B57B4(u8 arg0) {
-    g_CurrentEntity->unk2E = arg0;
+    g_CurrentEntity->step_s = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -1196,7 +1205,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
     g_CurrentEntity->unk12 = 0;
-    g_CurrentEntity->unk2E = 0;
+    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
@@ -1311,11 +1320,13 @@ void func_801B5EC8(void) {
 
     entity = g_CurrentEntity;
     if (entity->accelerationY >= 0) {
-        temp_v1 = entity->unk88.S16.unk0 + entity->unk84.unk;
-        entity->unk84.unk = temp_v1;
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
         entity->accelerationX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->unk88.S16.unk0 = -entity->unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }

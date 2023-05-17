@@ -353,8 +353,8 @@ void UpdateEntitySpawn(int variant) {
     }
 
     if (g_pads->tapped & PAD_L2 && entUpdate) {
-        Entity* start = &g_EntityArray[0x40];
-        Entity* end = &g_EntityArray[0x80];
+        Entity* start = &g_Entities[0x40];
+        Entity* end = &g_Entities[0x80];
         Entity* e = AllocEntity(start, end);
         if (e != NULL) {
             DestroyEntity(e);
