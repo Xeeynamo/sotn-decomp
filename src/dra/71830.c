@@ -73,10 +73,10 @@ void func_8011197C(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801119C4);
 
 void func_80111CC0(void) {
-    if (D_80072F00[1] != 0) {
+    if (g_Player.D_80072F02 != 0) {
         func_8011AAFC(g_CurrentEntity, 0x17002C, 0);
     }
-    if (D_80072F00[0] != 0) {
+    if (g_Player.D_80072F00 != 0) {
         func_8011AAFC(g_CurrentEntity, 0x16002C, 0);
     }
 }
@@ -120,7 +120,7 @@ bool func_8011203C(void) {
         return false;
     } else if (g_Entities[UNK_ENTITY_10].step <= 2) {
         if (g_Entities[UNK_ENTITY_10].step != 0) {
-            D_80072F66 = 0;
+            g_Player.unk46 = 0;
             g_Entities[UNK_ENTITY_10].step = 3;
         }
     }
@@ -141,7 +141,7 @@ void func_80112B64(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_80112BB0);
 
 void func_80113148(void) {
-    if ((D_80072F0A[0] != 0) && (D_80072EEC & 0x40)) {
+    if (g_Player.D_80072F0A != 0 && g_Player.D_80072EEC & 0x40) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         func_8010E1EC(0x1000);

@@ -988,7 +988,7 @@ void EntityEnemyBlood(Entity* self) {
         }
 
         if (self->unk3C != 0) {
-            if (D_80072F20.unk0C & 0x02000000) {
+            if (g_Player.unk0C & 0x02000000) {
                 posX = self->posX.i.hi;
                 self->accelerationX += self->ext.generic.unk80.modeS32;
 
@@ -1009,14 +1009,14 @@ void EntityEnemyBlood(Entity* self) {
                 }
 
                 if (self->unk48 != 0) {
-                    if (D_80072F20.unk56 == 0) {
-                        D_80072F20.unk56 = 1;
-                        D_80072F20.unk58 = 8;
+                    if (g_Player.unk56 == 0) {
+                        g_Player.unk56 = 1;
+                        g_Player.unk58 = 8;
                         if (g_api.CheckEquipmentItemCount(0x3C, 4)) {
-                            D_80072F20.unk58 *= 2;
+                            g_Player.unk58 *= 2;
                         }
                     }
-                    D_80072F20.unk10++;
+                    g_Player.unk10++;
                     self->unk3C = 0;
                 }
             } else {

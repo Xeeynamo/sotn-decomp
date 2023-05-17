@@ -24,7 +24,7 @@ typedef struct {
     /* 0x4 */ u16 unk4;
     /* 0x6 */ s16 unk6;
     /* 0x8 */ s16 unk8;
-    /* 0xA */ char padA[2];
+    /* 0xA */ s16 unkA;
 } unkstruct_80072FA0; // size = 0xC
 
 typedef struct {
@@ -40,39 +40,6 @@ typedef struct {
     /* 0xC */ u16 unkC;
     /* 0xE */ u16 unkE;
 } Unkstruct8; // size = 0x10
-
-typedef struct Unkstruct_80072F20 {
-    /* 0x00 */ s32 pl_vram_flag;
-    /* 0x04 */ s32 unk04;
-    /* 0x08 */ char pad08[0x4];
-    /* 0x0C */ s32 unk0C;
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ char pad14[0x4];
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ char pad1C[0x24];
-    /* 0x40 */ s16 unk40;
-    /* 0x42 */ u16 pl_high_jump_timer;
-    /* 0x44 */ u16 unk44;
-    /* 0x46 */ u16 unk46;
-    /* 0x48 */ u16 unk48;
-    /* 0x4A */ u16 unk4A;
-    /* 0x4C */ u16 unk4C;
-    /* 0x4E */ u16 unk4E;
-    /* 0x50 */ u16 unk50;
-    /* 0x52 */ u16 unk52;
-    /* 0x54 */ char pad54[0x2];
-    /* 0x56 */ u16 unk56;
-    /* 0x58 */ u16 unk58;
-    /* 0x5A */ char pad5A[0x2];
-    /* 0x5C */ u16 unk5C;
-    /* 0x5E */ char pad5E[0x8];
-    /* 0x66 */ u16 unk66;
-    /* 0x68 */ u16 unk68;
-    /* 0x6A */ char pad6A[0x8];
-    /* 0x72 */ u16 unk72;
-    /* 0x74 */ char pad74[0x6];
-    /* 0x7A */ u16 unk7A;
-} Unkstruct_80072F20;
 
 typedef struct {
     /* 0x00 */ u8 unk0[0x278];

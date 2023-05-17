@@ -321,9 +321,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     damageScale = D_800A4B04[equipId].damageScale;
     if (damageScale != 6 && damageScale != 10) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
-        do {
-        } while (0); // FAKE
-        if (D_80072F2C & 0x4000) {
+        if (g_Player.unk0C & 0x4000) {
             res->attack >>= 1;
         }
     }

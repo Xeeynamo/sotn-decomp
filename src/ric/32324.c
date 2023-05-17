@@ -32,7 +32,7 @@ void func_8016E324(Entity* entity) {
         entity->ext.generic.unk7C.s++;
         if (entity->ext.generic.unk7C.s >= 16) {
             func_80156C60(entity);
-            D_80072F6E = 1;
+            g_Player.unk4E = 1;
             func_801606BC(entity, 0x3A, 0);
         }
         break;

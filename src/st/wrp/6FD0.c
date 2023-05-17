@@ -1305,7 +1305,7 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC[];
 extern s32 D_8003C8B8;
-extern s32 D_80072EFC;
+extern s32 g_Player.D_80072EFC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
 extern s32 D_80193AA8;
@@ -1455,8 +1455,8 @@ void EntityWarpRoom(Entity* entity) {
         newtmp_a0[0] |= 1;
         newtmp_a0[0] |= 1 << entity->subId;
         if ((u32)(newtmp_1 - 0x61) < 0x3F) {
-            D_80072EFC = 0x10;
-            *D_80072EF4 = 0;
+            g_Player.D_80072EFC = 0x10;
+            g_Player.D_80072EF4 = 0;
             D_8003C8B8 = 0;
             entity->step = 5;
             D_80180648 = 1;
@@ -1466,9 +1466,9 @@ void EntityWarpRoom(Entity* entity) {
     case 1:
         // Wait for player to press the UP button
         if (entity->unk48 != 0 && (g_pads->pressed & 0x1000) &&
-            !(D_80072F2C & 0xC5CF3EF7)) {
-            D_8003C8B8 = (*D_80072EF4 = 0);
-            D_80072EFC = 0x80;
+            !(g_Player.unk0C & 0xC5CF3EF7)) {
+            D_8003C8B8 = (g_Player.D_80072EF4 = 0);
+            g_Player.D_80072EFC = 0x80;
             PLAYER.accelerationX = 0;
             PLAYER.accelerationY = 0;
             entity->step++;
@@ -1477,9 +1477,9 @@ void EntityWarpRoom(Entity* entity) {
 
     case 2:
         // Move Alucard in the background and fade him to white
-        D_80072EFC = 0x80;
+        g_Player.D_80072EFC = 0x80;
         PLAYER.zPriority = 0x5C;
-        *D_80072EF4 = 0;
+        g_Player.D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
         poly = (POLY_GT4*)(*&entity->ext.generic.unk84.unk);
         D_8003C8B8 = 0;
@@ -1494,9 +1494,9 @@ void EntityWarpRoom(Entity* entity) {
 
     case 3:
         // Fade the entire room into white
-        D_80072EFC = 0x80;
+        g_Player.D_80072EFC = 0x80;
         PLAYER.zPriority = 0x5C;
-        *D_80072EF4 = 0;
+        g_Player.D_80072EF4 = 0;
         g_zEntityCenter.unk = 0x5C;
         poly = (POLY_GT4*)(*&entity->ext.generic.unk84.unk);
         D_8003C8B8 = 0;
@@ -1545,8 +1545,8 @@ void EntityWarpRoom(Entity* entity) {
 
     case 5:
         // .rodata+0x20
-        *D_80072EF4 = 0;
-        D_80072EFC = 0x10;
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 0x10;
         temp_s2_4 = (POLY_GT4*)entity->ext.generic.unk84.unk;
         D_8003C8B8 = 0;
         temp_s2_4->pad3 = 8;
@@ -1568,8 +1568,8 @@ void EntityWarpRoom(Entity* entity) {
     case 6:
         // Finalize warp by fading in from white
         // .rodata+0x24
-        *D_80072EF4 = 0;
-        D_80072EFC = 0x10;
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 0x10;
         new_var = (POLY_GT4*)*&entity->ext.generic.unk84.unk;
         var_s2_3 = new_var->tag;
         D_8003C8B8 = 0;

@@ -13,8 +13,8 @@ void func_801166A4(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_80113EE0();
-        D_80072F60[0] = 0x8166;
-        D_80072F04 = 6;
+        g_Player.unk40 = 0x8166;
+        g_Player.D_80072F04 = 6;
         PLAYER.accelerationX = 0;
         PLAYER.accelerationY = 0;
         PLAYER.ext.generic.unkAC = 0x33;
@@ -38,7 +38,7 @@ void func_801166A4(void) {
 void func_8011678C(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    if (D_80072EF6 != 2) {
+    if (g_Player_D_80072EF6 != 2) {
         func_8010E570(0);
     }
 }
@@ -47,7 +47,7 @@ void func_801167D0(void) {
     s32* accelerationX = &PLAYER.accelerationX;
     PLAYER.accelerationY = 0;
     *accelerationX = 0;
-    if (D_80072EF6 != 2) {
+    if (g_Player_D_80072EF6 != 2) {
         PLAYER.step = 0x28;
         PLAYER.step_s = 0;
         PLAYER.accelerationY = 0;
@@ -60,13 +60,14 @@ void func_801167D0(void) {
 
 bool func_80116838(void) {
     if ((g_Entities->step_s != 0) &&
-        ((D_8009744C != 0) || (D_80072EEC & 8) || (func_800FEEA4(0, 1) < 0))) {
+        ((D_8009744C != 0) || (g_Player.D_80072EEC & 8) ||
+         (func_800FEEA4(0, 1) < 0))) {
         func_8010D584(9);
         func_8010DA48(0xCA);
         D_800AFDA6 = 6;
         g_Entities->palette = 0x810D;
-        D_80072F86 = 0;
-        D_80072F88 = 0;
+        g_Player.unk66 = 0;
+        g_Player.unk68 = 0;
         func_8011AAFC(g_CurrentEntity, 0x21002C, 0);
         g_Entities->accelerationY = g_Entities->accelerationY >> 1;
         return true;
@@ -439,7 +440,7 @@ void func_8011B334(Entity* entity) {
     entity->facing = PLAYER.facing;
     entity->posY.i.hi = PLAYER.posY.i.hi;
     entity->posX.i.hi = PLAYER.posX.i.hi;
-    D_80072F60[2] &= ~0x80;
+    g_Player.unk44 &= ~0x80;
 
     if (entity->step == 0) {
         GetEquipProperties(0, &equip, 0);
@@ -457,7 +458,7 @@ void func_8011B334(Entity* entity) {
         entity->hitboxHeight = 5;
         entity->step++;
     } else if (entity->unk48 == 1) {
-        D_80072F60[2] |= 0x80;
+        g_Player.unk44 |= 0x80;
     }
 }
 
@@ -599,7 +600,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801238CC);
 void func_80123A60(Entity* entity) {
     Entity* player = &PLAYER;
 
-    if (!(D_80072F2C & 0x01000000)) {
+    if (!(g_Player.unk0C & 0x01000000)) {
         DestroyEntity(entity);
         return;
     }
@@ -920,7 +921,7 @@ void EntityHolyWater(Entity* entity) {
         func_8011A290(entity);
         entity->hitboxHeight = 4;
         entity->hitboxWidth = 4;
-        D_80072F14[0] = 4;
+        g_Player.D_80072F14 = 4;
         entity->step++;
         break;
 
@@ -1187,7 +1188,7 @@ void func_80127CC8(Entity* entity) {
 
         if (ret == -1) {
             DestroyEntity(entity);
-            D_80072F20.unk5C = 0xFFFF;
+            g_Player.unk5C = 0xFFFF;
             return;
         }
 
@@ -1357,19 +1358,23 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityBatEcho);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012C600);
 
 bool func_8012C88C(void) {
-    if ((PLAYER.step_s != 0) && (PLAYER.step_s != 8)) {
-        if (((D_8009744C != 0) && (func_800FE3A8(0xE) == 0)) ||
-            (D_80072EEC & 2) || (func_800FEEA4(2, 1) < 0)) {
-            func_8010D584(25);
-            func_8010DA48(0xCA);
-            D_800AFDA6 = 1;
-            PLAYER.palette = 0x810D;
-            D_80072F86 = 0;
-            D_80072F88 = 0;
-            func_8011AAFC(g_CurrentEntity, 0x24002C, 0);
-            PLAYER.accelerationY >>= 1;
-            return true;
-        }
+    if (PLAYER.step_s == 0) {
+        return false;
+    }
+    if (PLAYER.step_s == 8) {
+        return false;
+    }
+    if (D_8009744C != 0 && func_800FE3A8(0xE) == 0 || g_Player.D_80072EEC & 2 ||
+        func_800FEEA4(2, 1) < 0) {
+        func_8010D584(25);
+        func_8010DA48(0xCA);
+        D_800AFDA6 = 1;
+        PLAYER.palette = 0x810D;
+        g_Player.unk66 = 0;
+        g_Player.unk68 = 0;
+        func_8011AAFC(g_CurrentEntity, 0x24002C, 0);
+        PLAYER.accelerationY >>= 1;
+        return true;
     }
     return false;
 }
@@ -1391,10 +1396,10 @@ void func_8012C97C(void) {
     if (func_800FE3A8(6) == 0) {
         return;
     }
-    if (D_80072F20.pl_vram_flag & 1) {
+    if (g_Player.pl_vram_flag & 1) {
         return;
     }
-    if (!(D_80072EE8 & 0x10)) {
+    if (!(g_Player.g_Player & 0x10)) {
         return;
     }
     if (D_80138440 != 0) {
@@ -1413,7 +1418,7 @@ void func_8012CA64(void) {
     PLAYER.step_s = 1;
     D_800B0914 = 0;
 
-    if (D_80072F20.pl_vram_flag & 0x20) {
+    if (g_Player.pl_vram_flag & 0x20) {
         var_a0 = 0xDF;
     } else {
         var_a0 = 0xDE;
@@ -1424,7 +1429,7 @@ void func_8012CA64(void) {
     PLAYER.accelerationX /= 2;
 
     D_800B0918 = 0x200;
-    if (D_80072F20.pl_vram_flag & 0x40) {
+    if (g_Player.pl_vram_flag & 0x40) {
         D_800B0914 = 1;
         func_8010DA48(0xE9U);
     }
@@ -1475,7 +1480,7 @@ void func_8012CED4(void) {
         }
     }
     PLAYER.step_s = 5;
-    D_80072F0A[0] = 8;
+    g_Player.D_80072F0A = 8;
     PLAYER.accelerationY = 0;
     D_80138430 -= 0x100;
 }
@@ -1485,7 +1490,7 @@ void func_8012CFA8(void) {
     PLAYER.step_s = 6;
     D_800B0914 = 0;
     PLAYER.accelerationX = 0;
-    D_80072F0A[0] = 8;
+    g_Player.D_80072F0A = 8;
 }
 
 void func_8012CFF0(void) {
@@ -1499,26 +1504,23 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012D024);
 void func_8012D178(void) {
     s32 var_v0;
 
-    if (D_80072EEC & 0x40) {
+    if (g_Player.D_80072EEC & 0x40) {
         func_8012CCE4();
-        return;
-    } else if (!(D_80072F20.pl_vram_flag & 1)) {
+    } else if (!(g_Player.pl_vram_flag & 1)) {
         func_8012CFA8();
-        return;
-    } else if (PLAYER.facing != 0) {
-        var_v0 = D_80072EE8 & 0x8000;
     } else {
-        var_v0 = D_80072EE8 & 0x2000;
-    }
-
-    if (var_v0 != 0) {
-        func_8012CB4C();
-        return;
-    } else if (D_80072F20.unk04 & 0x40) {
-        func_8012CA64();
-        return;
-    } else if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {
-        func_8011AAFC(g_CurrentEntity, 0x10045, 0);
+        if (PLAYER.facing != 0) {
+            var_v0 = g_Player.g_Player & 0x8000;
+        } else {
+            var_v0 = g_Player.g_Player & 0x2000;
+        }
+        if (var_v0 != 0) {
+            func_8012CB4C();
+        } else if (g_Player.unk04 & 0x40) {
+            func_8012CA64();
+        } else if (D_8003C8C4 == (D_8003C8C4 / 6) * 6) {
+            func_8011AAFC(g_CurrentEntity, 0x10045, 0);
+        }
     }
 }
 
@@ -1576,7 +1578,7 @@ extern s32 D_800741CC;
 extern s32 D_800741D0;
 
 void func_8013136C(Entity* entity) {
-    if (!(D_80072F2C & 4)) {
+    if (!(g_Player.unk0C & 4)) {
         DestroyEntity(entity);
         return;
     }

@@ -5,18 +5,18 @@ void func_8015C2A8(void) {
     bool loadAnim = 0;
     s32 temp;
 
-    FntPrint("pl_vram_flag:%04x\n", D_80072F20.pl_vram_flag);
-    FntPrint("pl_high_jump_timer:%04x\n", D_80072F20.pl_high_jump_timer);
+    FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
+    FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
-    D_80072F20.pl_high_jump_timer++;
+    g_Player.pl_high_jump_timer++;
 
     switch (PLAYER.step_s) {
     case 0:
-        if (D_80072EE8 & 0xA000) {
+        if (g_Player.g_Player & 0xA000) {
             if (PLAYER.facing == 0) {
-                temp = D_80072EE8 & 0x2000;
+                temp = g_Player.g_Player & 0x2000;
             } else {
-                temp = D_80072EE8 & 0x8000;
+                temp = g_Player.g_Player & 0x8000;
             }
             if (temp == 0) {
                 func_8015C93C(0x1000);
@@ -25,21 +25,21 @@ void func_8015C2A8(void) {
             func_8015C93C(0x1000);
         }
 
-        if (D_80072F20.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & 2) {
             func_80158B04(3);
-            D_80072F20.pl_high_jump_timer = 0;
+            g_Player.pl_high_jump_timer = 0;
             PLAYER.step_s = 2;
-        } else if (D_80072F20.pl_high_jump_timer >= 0x1D) {
+        } else if (g_Player.pl_high_jump_timer >= 0x1D) {
             PLAYER.step_s = 1;
             PLAYER.accelerationY = -0x60000;
         }
         break;
 
     case 1:
-        if (D_80072F20.pl_vram_flag & 2) {
+        if (g_Player.pl_vram_flag & 2) {
             PLAYER.step_s = 2;
             func_80158B04(3);
-            D_80072F20.pl_high_jump_timer = 0;
+            g_Player.pl_high_jump_timer = 0;
         } else {
             PLAYER.accelerationY += 0x6000;
             if (PLAYER.accelerationY > 0x8000) {
@@ -49,7 +49,7 @@ void func_8015C2A8(void) {
         break;
 
     case 2:
-        if (D_80072F20.pl_high_jump_timer >= 5) {
+        if (g_Player.pl_high_jump_timer >= 5) {
             loadAnim = true;
         }
         break;
