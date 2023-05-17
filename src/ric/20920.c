@@ -118,7 +118,7 @@ void func_8015CC28(void) {
     entity->ext.generic.unk7C.U8.unk0 = 0;
 }
 
-void func_8015CC50() { func_8015C908(0xF0); }
+void func_8015CC50() { SetPlayerStep(0xF0); }
 
 void func_8015CC70(s16 arg0) {
     PLAYER.step_s = arg0;
@@ -133,7 +133,7 @@ void func_8015CC70(s16 arg0) {
 }
 
 void func_8015CCC8(s32 arg0, s32 accelerationX) {
-    func_8015C908(2);
+    SetPlayerStep(2);
     func_8015C920(&D_801554C0);
     PLAYER.accelerationX = accelerationX;
     PLAYER.accelerationY = 0;
@@ -155,7 +155,7 @@ void func_8015CD98(s32 accelerationX) {
     PLAYER.accelerationX = accelerationX;
     PLAYER.accelerationY = 0;
     g_Player.unk44 = 0;
-    func_8015C908(0);
+    SetPlayerStep(0);
     func_8015C920(&D_801553BC);
 }
 
@@ -169,7 +169,7 @@ void func_8015CDE0(s32 arg0) {
     g_Player.D_80072F10 = 0xC;
     g_Player.D_80072F02 = 0xC;
     g_Player.unk44 = 0;
-    func_8015C908(1);
+    SetPlayerStep(1);
     func_8015C920(&D_80155488);
     func_8015CA84(0x14000);
     PLAYER.accelerationY = 0;
@@ -180,7 +180,7 @@ void func_8015CE7C(void) {
         func_8015CDE0(0);
     } else {
         g_Player.unk44 = 0;
-        func_8015C908(0x19);
+        SetPlayerStep(0x19);
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
         g_Player.D_80072F16 = 0x28;
@@ -208,7 +208,7 @@ block_6:
     block_7:
         g_Player.unk44 = 0x10;
     }
-    func_8015C908(3);
+    SetPlayerStep(3);
     PLAYER.accelerationY = 0x20000;
     g_Player.D_80072F0A = 8;
     g_Player.D_80072F0C = 8;
@@ -248,7 +248,7 @@ void func_8015D020(void) {
         g_Player.unk44 = temp;
     }
 
-    func_8015C908(4);
+    SetPlayerStep(4);
 
     if (D_80154570 != 0) {
         PLAYER.accelerationY = -0x4B000;
@@ -258,7 +258,7 @@ void func_8015D020(void) {
 }
 
 void func_8015D120(void) {
-    func_8015C908(8);
+    SetPlayerStep(8);
     PLAYER.accelerationX = 0;
     func_8015CA84(0x14000);
     PLAYER.accelerationY = -0x78000;
@@ -282,11 +282,11 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D3CC);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D678);
 
-void func_8015D9B4() { func_8015C908(22); }
+void func_8015D9B4() { SetPlayerStep(22); }
 
 void func_8015D9D4(void) {
     func_8015C9CC();
-    func_8015C908(0x17);
+    SetPlayerStep(0x17);
     func_8015C920(&D_80155750);
     g_CurrentEntity->accelerationY = 0;
     func_8015CA84(0x58000);
@@ -298,7 +298,7 @@ void func_8015D9D4(void) {
 
 void func_8015DA60(void) {
     g_Player.unk44 = 0;
-    func_8015C908(0x1A);
+    SetPlayerStep(0x1A);
     func_8015C920(&D_8015577C);
     g_CurrentEntity->accelerationY = -0x20000;
     func_8015CA84(0x58000);
@@ -310,7 +310,7 @@ void func_8015DA60(void) {
 }
 
 void func_8015DB04(void) {
-    func_8015C908(0x18);
+    SetPlayerStep(0x18);
     func_8015C920(&D_801557D8);
     g_CurrentEntity->accelerationY = 0;
     func_8015CA84(0x58000);

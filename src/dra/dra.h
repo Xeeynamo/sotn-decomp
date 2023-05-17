@@ -97,6 +97,26 @@ typedef enum {
     CdCallback_Vh,       // func_80107EF0
 } CdCallbacks;
 
+typedef enum {
+    Stand,
+    Walk,
+    Crouch,
+    Unk3,
+    Jump,
+    MorphBat,
+    Unk_6,
+    MorphMist,
+    Hit = 10,
+    StatusStone = 11,
+    KillWater = 13,
+    SpellDarkMetamorphosis = 32,
+    SpellSummonSpirit,
+    SpellHellfire,
+    SpellTetraSpirit,
+    Spell36,
+    SpellSoulSteal,
+} PlayerSteps;
+
 // Info necessary to load a file from the Cd in func_80108448
 typedef struct {
     s32 loc;        // lba offset, might be a s32
@@ -648,7 +668,7 @@ void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
 void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
-void func_8010D584(s16 arg0);
+void SetPlayerStep(PlayerSteps step);
 void UpdateAnim(FrameProperty* frameProps, s32*);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);

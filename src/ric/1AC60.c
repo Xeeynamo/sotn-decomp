@@ -297,7 +297,7 @@ void func_8015AFE0(void) {
         }
     } else if (g_Player.unk4E != 0) {
         g_Player.unk46 = 0;
-        func_8015C908(4);
+        SetPlayerStep(4);
         func_8015C920(&D_80155528);
         g_Player.unk44 = 0;
     }

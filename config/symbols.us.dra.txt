@@ -947,6 +947,7 @@ CopyStageOvlCallback = 0x801074BC;
 CopyRicOvlCallback = 0x80107614;
 CopySupportOvlCallback = 0x80107750;
 UpdateEntityAlucard = 0x8010A5BC;
+SetPlayerStep = 0x8010D584;
 UpdateAnim = 0x8010DDA0;
 AccelerateX = 0x8010E390;
 GetFreeDraEntity = 0x8011879C;

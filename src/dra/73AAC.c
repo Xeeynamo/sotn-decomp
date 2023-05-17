@@ -106,7 +106,7 @@ s32 func_80113D7C(s16 arg0) {
     temp_s1 = PLAYER.step_s;
     sp10[0] = 0;
     sp10[1] = 0;
-    func_8010D584(0x10);
+    SetPlayerStep(0x10);
     func_80115394(&sp10[0], step, temp_s1);
     return -1;
 }
