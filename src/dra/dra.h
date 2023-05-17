@@ -453,7 +453,7 @@ extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
-extern s8 D_80139014;
+extern u8 D_80139014;
 extern s8 D_80139018[];
 extern s32 g_DebugCurPal;
 extern s16 D_8013901C;
