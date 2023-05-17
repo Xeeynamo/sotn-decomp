@@ -446,11 +446,11 @@ extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
 extern s32 D_80138FB0;
-extern s16 D_80138FB8; // vol_l
+extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern s16 D_80138FC4;
 extern s16 g_sfxRingBufferPos1; // D_80139000
-extern s16 D_80139004;          // vol_r
+extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern s8 D_80139014;
@@ -502,7 +502,7 @@ extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
-extern s16 D_8013AEE0;
+extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 D_8013AEEC;
 extern s16 D_8013AEF0;

@@ -1918,34 +1918,34 @@ void func_80132760(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801327B4);
 
-void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 arg5,
-                   s16 arg6) {
-    if (arg6 == 0) {
-        D_80138FB8 = (s16)arg5;
-        D_80139004 = (s16)arg5;
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
+                   s16 volume, s16 distance) {
+    if (distance == 0) {
+        g_VolL = volume;
+        g_VolR = volume;
     } else {
-        D_80139004 = (((s16)arg5) * D_800BD19C[arg6 * 2]) >> 7;
-        D_80138FB8 = (((s16)arg5) * D_800BD19C[arg6 * 2 + 1]) >> 7;
+        g_VolR = (volume * D_800BD19C[distance * 2 + 0]) >> 7;
+        g_VolL = (volume * D_800BD19C[distance * 2 + 1]) >> 7;
     }
 
-    if (voice < 0x18U) {
-        SsUtKeyOnV(voice, vabId, prog, tone, note, 0, D_80138FB8, D_80139004);
-        SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, D_80138FB8,
-                   D_80139004);
+    if (voice >= 0 && voice < 0x18) {
+        SsUtKeyOnV(voice, vabId, prog, tone, note, 0, g_VolL, g_VolR);
+        SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, g_VolL, g_VolR);
         return;
     }
+
     switch (voice) {
     case 0x1E:
-        func_801327B4(0, 4, vabId, prog, tone, note, D_80138FB8, D_80139004);
+        func_801327B4(0, 4, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
     case 0x1F:
-        func_801327B4(4, 8, vabId, prog, tone, note, D_80138FB8, D_80139004);
+        func_801327B4(4, 8, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
     case 0x20:
-        func_801327B4(8, 12, vabId, prog, tone, note, D_80138FB8, D_80139004);
+        func_801327B4(8, 12, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
     case 0x21:
-        func_801327B4(14, 18, vabId, prog, tone, note, D_80138FB8, D_80139004);
+        func_801327B4(14, 18, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
     }
 }
@@ -2370,7 +2370,19 @@ void func_80134C60(void) {
                   D_80139010);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134D14);
+void func_80134D14(void) {
+    u16 volume;
+
+    volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
+    volume = volume * D_8013AEE0 >> 7;
+    func_80132A04(0x16, D_800BF554[D_80139804].vabid,
+                  D_800BF554[D_80139804].prog, D_800BF554[D_80139804].tone,
+                  D_800BF554[D_80139804].note, volume, D_8013AE94);
+    g_VolR = (volume * D_800BD19C[D_8013AE94 * 2 + 0]) >> 8;
+    g_VolL = (volume * D_800BD19C[D_8013AE94 * 2 + 1]) >> 8;
+    func_80026D4C(0x16, g_VolL, g_VolR);
+    func_80026D4C(0x17, g_VolL, g_VolR);
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134E64);
 
