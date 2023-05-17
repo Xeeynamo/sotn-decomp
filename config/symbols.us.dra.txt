@@ -1021,3 +1021,5 @@ g_volumeR = 0x8013B698;
 g_imgUnk8013C200 = 0x8013C200;
 g_imgUnk8013C270 = 0x8013C270;
 g_StageOverlay = 0x80180000;
+g_VolL = 0x80138FB8;
+g_VolR = 0x80139004;
