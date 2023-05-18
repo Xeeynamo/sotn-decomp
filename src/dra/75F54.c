@@ -48,7 +48,7 @@ void func_801167D0(void) {
     PLAYER.accelerationY = 0;
     *accelerationX = 0;
     if (g_Player_D_80072EF6 != 2) {
-        PLAYER.step = 0x28;
+        PLAYER.step = Player_Unk40;
         PLAYER.step_s = 0;
         PLAYER.accelerationY = 0;
         *accelerationX = 0;
@@ -59,10 +59,11 @@ void func_801167D0(void) {
 }
 
 bool func_80116838(void) {
-    if ((g_Entities->step_s != 0) &&
-        ((D_8009744C != 0) || (g_Player.D_80072EEC & 8) ||
-         (func_800FEEA4(0, 1) < 0))) {
-        SetPlayerStep(9);
+    if (g_Entities->step_s == 0) {
+        return false;
+    }
+    if (D_8009744C || g_Player.padTapped & PAD_R1 || func_800FEEA4(0, 1) < 0) {
+        SetPlayerStep(Player_Unk9);
         func_8010DA48(0xCA);
         D_800AFDA6 = 6;
         g_Entities->palette = 0x810D;
@@ -76,18 +77,16 @@ bool func_80116838(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    s16* player_unk1E = &PLAYER.unk1E;
-
-    if (*player_unk1E < arg0) {
-        *player_unk1E += 16;
-        if (arg0 < *player_unk1E) {
-            *player_unk1E = arg0;
+    if (PLAYER.unk1E < arg0) {
+        PLAYER.unk1E += 16;
+        if (arg0 < PLAYER.unk1E) {
+            PLAYER.unk1E = arg0;
         }
     }
-    if (arg0 < *player_unk1E) {
-        *player_unk1E -= 16;
-        if (*player_unk1E < arg0) {
-            *player_unk1E = arg0;
+    if (arg0 < PLAYER.unk1E) {
+        PLAYER.unk1E -= 16;
+        if (PLAYER.unk1E < arg0) {
+            PLAYER.unk1E = arg0;
         }
     }
 }
@@ -1364,9 +1363,9 @@ bool func_8012C88C(void) {
     if (PLAYER.step_s == 8) {
         return false;
     }
-    if (D_8009744C != 0 && func_800FE3A8(0xE) == 0 || g_Player.D_80072EEC & 2 ||
-        func_800FEEA4(2, 1) < 0) {
-        SetPlayerStep(25);
+    if (D_8009744C != 0 && func_800FE3A8(0xE) == 0 ||
+        g_Player.padTapped & PAD_R2 || func_800FEEA4(2, 1) < 0) {
+        SetPlayerStep(Player_Unk25);
         func_8010DA48(0xCA);
         D_800AFDA6 = 1;
         PLAYER.palette = 0x810D;
@@ -1399,7 +1398,7 @@ void func_8012C97C(void) {
     if (g_Player.pl_vram_flag & 1) {
         return;
     }
-    if (!(g_Player.g_Player & 0x10)) {
+    if (!(g_Player.padPressed & PAD_TRIANGLE)) {
         return;
     }
     if (D_80138440 != 0) {
@@ -1504,15 +1503,15 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012D024);
 void func_8012D178(void) {
     s32 var_v0;
 
-    if (g_Player.D_80072EEC & 0x40) {
+    if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
     } else if (!(g_Player.pl_vram_flag & 1)) {
         func_8012CFA8();
     } else {
         if (PLAYER.facing != 0) {
-            var_v0 = g_Player.g_Player & 0x8000;
+            var_v0 = g_Player.padPressed & PAD_LEFT;
         } else {
-            var_v0 = g_Player.g_Player & 0x2000;
+            var_v0 = g_Player.padPressed & PAD_RIGHT;
         }
         if (var_v0 != 0) {
             func_8012CB4C();

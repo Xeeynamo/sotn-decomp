@@ -51,7 +51,7 @@ void func_8015BCD0(void) {
 }
 
 void func_8015BE84(void) {
-    if (g_Player.g_Player & 0x80 && g_Player.unk44 & 0x80) {
+    if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
         PLAYER.step = 4;
         func_8015C920(&D_8015555C);
         func_8015CA84(-0x18000);
@@ -80,7 +80,7 @@ void func_8015BE84(void) {
     }
 
     if (PLAYER.accelerationX < 0) {
-        if (g_Player.g_Player & 0x2000) {
+        if (g_Player.padPressed & PAD_RIGHT) {
             func_8015C93C(0x2000);
         }
         if ((PLAYER.accelerationX > (s32)0xFFFD0000) ||
@@ -95,7 +95,7 @@ void func_8015BE84(void) {
     }
 
     if (PLAYER.accelerationX > 0) {
-        if (g_Player.g_Player & 0x8000) {
+        if (g_Player.padPressed & PAD_LEFT) {
             func_8015C93C(0x2000);
         }
         if ((PLAYER.accelerationX <= 0x2FFFF) || (g_Player.pl_vram_flag & 4)) {

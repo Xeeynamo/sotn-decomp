@@ -34,31 +34,27 @@ void func_8015C984(s32 speed) {
 }
 
 s32 func_8015C9CC(void) {
-    u16* facing;
-
     if (g_Player.unk44 & 2) {
         return 0;
     }
 
-    facing = &PLAYER.facing;
-    if (*facing == 1) {
-        if (g_Player.g_Player & 0x2000) {
-            *facing = 0;
+    if (PLAYER.facing == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facing = 0;
             g_Player.unk4C = 1;
             return -1;
-        } else if (g_Player.g_Player & 0x8000) {
+        } else if (g_Player.padPressed & PAD_LEFT) {
             return 1;
         }
     } else {
-        if (!(g_Player.g_Player & 0x2000)) {
-            if (g_Player.g_Player & 0x8000) {
-                *facing = 1;
-                g_Player.unk4C = 1;
-                return -1;
-            }
-            return 0;
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
         }
-        return 1;
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facing = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
     }
     return 0;
 }
@@ -231,7 +227,7 @@ void func_8015D020(void) {
         return;
     }
 
-    if ((func_8015C9CC() != 0) || (PLAYER.step == 0x17)) {
+    if (func_8015C9CC() != 0 || PLAYER.step == 0x17) {
         func_8015C920(&D_8015550C);
         if (PLAYER.step == 0x19) {
             func_8015CA84(0x24000);
