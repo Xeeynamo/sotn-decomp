@@ -242,3 +242,7 @@ typedef struct Unkstruct_801C6C6C {
         s32 p;
     } y;
 } Unkstruct_801C6C6C;
+
+typedef struct {
+    s16 x, y;
+} Unkstruct_80138FC0;

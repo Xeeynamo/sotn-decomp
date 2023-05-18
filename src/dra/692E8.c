@@ -24,9 +24,116 @@ void func_80109328(void) {
     PLAYER.blendMode = 0;
 }
 
+void func_801093C4(Primitive*);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801093C4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80109594);
+void func_80109594(void) {
+    Entity* e;
+    Primitive* prim;
+    s32 radius;
+    s32 intensity;
+    s32 firstPrimIndex;
+    s32 i;
+    s32 val;
+    s32 memset_len;
+    s32* memset_ptr;
+    s32 (*weapon)(void);
+
+    g_Player.unk6A = 0;
+    g_CurrentEntity = g_Entities;
+    DestroyEntity(g_CurrentEntity);
+    PLAYER.posX.val = 0x200000;
+    PLAYER.posY.val = 0x200000;
+    PLAYER.animSet = 1;
+    PLAYER.palette = 0x8100;
+    PLAYER.facing = 0;
+    PLAYER.unk1A = 0x100;
+    PLAYER.unk1C = 0x100;
+    PLAYER.zPriority = (u16)g_zEntityCenter.S16.unk0;
+
+    memset_len = sizeof(PlayerState) / sizeof(s32);
+    memset_ptr = &g_Player;
+    for (i = 0; i < memset_len; i++) {
+        *memset_ptr++ = 0;
+    }
+
+    for (i = 0; i < 0x10; i++) {
+        D_80138FC0[i].x = 0;
+        D_80138FC0[i].y = 0;
+    }
+
+    g_Player.unk04 = 1;
+    g_Player.pl_vram_flag = 1;
+    func_8010E570(0);
+
+    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+        DestroyEntity(e);
+        e->animSet = 1;
+        e->unk5A = i + 1;
+        e->palette = 0x8100;
+        e->flags = 0x08020000;
+    }
+
+    firstPrimIndex = AllocPrimitives(PRIM_TILE, 8);
+    prim = &g_PrimBuf[firstPrimIndex];
+    g_Entities[1].firstPolygonIndex = firstPrimIndex;
+    g_Entities[1].flags |= 0x800000;
+    for (i = 0; i < 6; i++) {
+        prim->blendMode = 0x10A;
+        prim = prim->next;
+    }
+    func_801093C4(prim);
+    g_Player.unk20[0] = 0x10;
+    g_Player.D_80072EFC = 0x10;
+    g_Player.D_80072EF4 = 0;
+    D_80137FB8 = 0;
+    D_80137FBC = 1;
+    if (g_Status.mp != g_Status.mpMax) {
+        D_80137FB4 = 0;
+    } else {
+        D_80137FB4 = 1;
+    }
+    D_80097D37 = 0;
+    func_800EA5E4(0x16);
+    func_801092E8(0);
+    for (i = 0; i < 0x20; i++) {
+        radius = (rand() & 0x3FF) + 0x100;
+        intensity = (rand() & 0xFF) + 0x100;
+        val = rcos(radius) * 0x10;
+        D_801396F8[i] = +((val * intensity) >> 8);
+        val = rsin(radius) * 0x10;
+        D_80139778[i] = -((val * intensity) >> 7);
+    }
+    func_80111928();
+    if (D_80097C98 == 6) {
+        func_8011AAFC(g_CurrentEntity, 0x10079, 0);
+        func_8010E42C(1);
+    }
+    if (D_80097C98 == 4) {
+        func_8011AAFC(g_CurrentEntity, 0x30079, 0);
+        func_8010E42C(3);
+    }
+    if (D_80097C98 == 5) {
+        func_8011AAFC(g_CurrentEntity, 0x50079, 0);
+        func_8010E42C(5);
+    }
+
+    g_CurrentEntity = g_Entities;
+    weapon = D_8017A000.func_8017A018;
+    if (weapon() != 0x2D) {
+        return;
+    }
+    if (CheckEquipmentItemCount(0x19, 2) == 0) {
+        return;
+    }
+    func_8010FAF4();
+
+    weapon = D_8017A000.func_8017A000;
+    weapon();
+    g_Player.unk0C |= 0x01000000;
+    func_8010DFF0(1, 10);
+    func_80109328();
+}
 
 void func_80109990(void) {
     if (D_80137FB4 == 0) {

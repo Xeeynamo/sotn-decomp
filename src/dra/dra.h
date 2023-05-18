@@ -456,6 +456,8 @@ extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+extern s32 D_80137FBC;
 extern s32 D_80138008;
 extern u8 D_8013803C;
 extern u8 D_80138040;
@@ -481,7 +483,7 @@ extern s16 D_80138FAC;
 extern s32 D_80138FB0;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
-extern s16 D_80138FC4;
+extern Unkstruct_80138FC0 D_80138FC0[0x10];
 extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
@@ -508,6 +510,8 @@ extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern s32 D_801396F0;
 extern volatile s16 D_801396F4;
+extern s32 D_801396F8[0x20];
+extern s32 D_80139778[0x20];
 extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;

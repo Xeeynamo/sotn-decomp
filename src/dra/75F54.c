@@ -1448,7 +1448,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CB4C);
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
-        if ((D_80138FC4 == 255) && (func_800FE3A8(6)) && (func_800FDC94(4))) {
+        if (D_80138FC0[1].x == 255 && func_800FE3A8(6) && func_800FDC94(4)) {
             func_8010E27C();
             PLAYER.step_s = 2;
             D_800B0914 = 4;
@@ -1465,7 +1465,7 @@ void func_8012CC30(s32 arg0) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CCE4);
 
 void func_8012CED4(void) {
-    if ((PLAYER.step_s == 2) && (D_800B0914 == PLAYER.step_s)) {
+    if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
         func_8010DA48(0xE7);
         D_800B0914 = 1;
     } else {
