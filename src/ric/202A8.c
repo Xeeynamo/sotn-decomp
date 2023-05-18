@@ -12,11 +12,11 @@ void func_8015C2A8(void) {
 
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.g_Player & 0xA000) {
+        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
             if (PLAYER.facing == 0) {
-                temp = g_Player.g_Player & 0x2000;
+                temp = g_Player.padPressed & PAD_RIGHT;
             } else {
-                temp = g_Player.g_Player & 0x8000;
+                temp = g_Player.padPressed & PAD_LEFT;
             }
             if (temp == 0) {
                 func_8015C93C(0x1000);

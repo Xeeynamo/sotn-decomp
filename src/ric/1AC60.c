@@ -108,7 +108,7 @@ void func_80158BFC(void) {
         switch (PLAYER.step_s) {
         case 0:
             if (func_8015C9CC() == 0) {
-                if (g_Player.g_Player & 0x1000) {
+                if (g_Player.padPressed & PAD_UP) {
                     func_8015C920(&D_80155394);
                     PLAYER.step_s = 1;
                     break;
@@ -122,7 +122,7 @@ void func_80158BFC(void) {
             if (func_8015C9CC() != 0) {
                 func_8015CDE0(0);
                 break;
-            } else if (g_Player.g_Player & 0x1000) {
+            } else if (g_Player.padPressed & PAD_UP) {
                 break;
             } else {
                 func_8015CD98(0);
@@ -133,7 +133,7 @@ void func_80158BFC(void) {
             func_8015CB58(1, 1);
             if (PLAYER.animFrameIdx < 3) {
                 func_8015C9CC();
-                if (g_Player.g_Player & 0x4000) {
+                if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
                     PLAYER.unk4C = &D_801555A8;
                     break;
@@ -141,7 +141,7 @@ void func_80158BFC(void) {
             }
 
             if (PLAYER.animFrameDuration < 0) {
-                if (g_Player.g_Player & 0x80) {
+                if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
                     func_8015C920(&D_80155730);
@@ -155,7 +155,7 @@ void func_80158BFC(void) {
 
         case 65:
             func_8015CB58(1, 1);
-            if (g_Player.g_Player & 0x80) {
+            if (g_Player.padPressed & PAD_SQUARE) {
                 break;
             }
             g_Player.unk46 = 0;
@@ -225,7 +225,7 @@ void func_801595D8(void) {
     if (PLAYER.step_s != 0) {
         return;
     }
-    if (g_Player.D_80072F0A != 0 && g_Player.D_80072EEC & 0x40) {
+    if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8015D020();
     } else if (func_8015C9CC() != 0) {
         func_8015CA84(0xC000);
@@ -364,7 +364,7 @@ void func_8015B244(void) {
             g_Player.unk4E = 1;
         }
     }
-    if (g_Player.D_80072EEC & 0x40) {
+    if (g_Player.padTapped & PAD_CROSS) {
         func_8015D020();
         g_Player.unk46 = 0;
         g_Player.unk4E = 1;

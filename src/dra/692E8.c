@@ -340,16 +340,16 @@ s32 func_8010E27C(void) {
 
     facing = &PLAYER.facing;
     if (*facing == 1) {
-        if (g_Player.g_Player & 0x2000) {
+        if (g_Player.padPressed & PAD_RIGHT) {
             *facing = 0;
             g_Player.unk4C = 1;
             return -1;
-        } else if (g_Player.g_Player & 0x8000) {
+        } else if (g_Player.padPressed & PAD_LEFT) {
             return 1;
         }
     } else {
-        if (!(g_Player.g_Player & 0x2000)) {
-            if (g_Player.g_Player & 0x8000) {
+        if (!(g_Player.padPressed & PAD_RIGHT)) {
+            if (g_Player.padPressed & PAD_LEFT) {
                 *facing = 1;
                 g_Player.unk4C = 1;
                 return -1;
@@ -393,7 +393,7 @@ void func_8010E3E0(void) {
 
 void func_8010E42C(u16 arg0) {
     PLAYER.step_s = arg0;
-    PLAYER.step = 18;
+    PLAYER.step = Player_Unk18;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -405,7 +405,7 @@ void func_8010E42C(u16 arg0) {
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
-    PLAYER.step = 2;
+    PLAYER.step = Player_Crouch;
     PLAYER.step_s = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
@@ -421,7 +421,7 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         PLAYER.accelerationY = 0;
         PLAYER.accelerationX = 0;
-        SetPlayerStep(6);
+        SetPlayerStep(Player_Unk_6);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
         return;
@@ -439,7 +439,7 @@ void func_8010E6AC(s32 arg0) {
     condition = ((g_Player.pl_vram_flag & 0x20) != condition);
     AccelerateX(0x18000);
     PLAYER.accelerationY = 0;
-    SetPlayerStep(1);
+    SetPlayerStep(Player_Walk);
 
     if (arg0 != 0) {
         if (PLAYER.ext.generic.unkAC != 0xD) {
@@ -464,7 +464,7 @@ void func_8010E6AC(s32 arg0) {
 }
 
 void func_8010E7AC(void) {
-    SetPlayerStep(3);
+    SetPlayerStep(Player_Unk3);
 
     if (g_Player.unk50 != 1) {
         func_8010DA48(0x1C);
@@ -498,7 +498,7 @@ void func_8010E83C(s32 arg0) {
     }
 
     PLAYER.accelerationY = 0xFFFB0000 | 0x2000;
-    SetPlayerStep(4);
+    SetPlayerStep(Player_Jump);
 
     if (g_Player.unk50 == 1) {
         g_Player.unk44 |= 0x10;
@@ -535,7 +535,7 @@ void func_8010E9A4(void) {
     }
 
     func_8011AAFC(g_CurrentEntity, 2, 0);
-    SetPlayerStep(8);
+    SetPlayerStep(Player_Unk8);
     PLAYER.accelerationY = -0xC0000;
     func_8010DA48(0x21);
     g_Player.unk4A = 0;
@@ -588,7 +588,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EC8C);
 void func_8010ED54(u8 arg0) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0xF);
+    SetPlayerStep(Player_Unk15);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
     g_Player.unk48 = 0;
@@ -604,7 +604,7 @@ void func_8010FAF4(void) {
 void func_8010FB24(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0x22);
+    SetPlayerStep(Player_SpellHellfire);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
@@ -612,7 +612,7 @@ void func_8010FB24(void) {
 void func_8010FB68(void) { // Related to Dark Methamorphosis
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0x20);
+    SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
     func_8010DA48(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
@@ -626,7 +626,7 @@ void func_8010FB68(void) { // Related to Dark Methamorphosis
 void func_8010FBF4(void) { // Related to Soul Steal spell
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0x25);
+    SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
     func_8010DA48(0xDA);
     PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
@@ -637,7 +637,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
 void func_8010FC50(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0x21);
+    SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x75, 0);
     func_8010DA48(0xF0);
@@ -648,7 +648,7 @@ void func_8010FC50(void) {
 void func_8010FCB8(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0x23);
+    SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x10075, 0);
     func_8010DA48(0xF1);
@@ -659,7 +659,7 @@ void func_8010FCB8(void) {
 void func_8010FD24(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    SetPlayerStep(0x27);
+    SetPlayerStep(Player_Unk39);
     func_8010E3E0();
     func_8010DA48(0xF1);
     func_8011AAFC(g_CurrentEntity, 0x170028, 0);
@@ -667,7 +667,7 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    PLAYER.step = 0;
+    PLAYER.step = Player_Stand;
     PLAYER.step_s = 3;
     AccelerateX(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;

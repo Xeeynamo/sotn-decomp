@@ -854,9 +854,10 @@ typedef struct {
 } FgLayer; /* size=0x8 */
 
 typedef struct {
-    /* 80072EE8 */ s32 g_Player;
-    /* 80072EEC */ s32 D_80072EEC;
-    /* 80072EF0 */ s32 D_80072EF0;
+    /* 80072BD0 */ s32 D_80072BD0[198];
+    /* 80072EE8 */ s32 padPressed;
+    /* 80072EEC */ s32 padTapped;
+    /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ s32 D_80072EF4;
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
