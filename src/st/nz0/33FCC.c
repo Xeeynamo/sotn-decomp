@@ -542,7 +542,7 @@ void EntitySlogra(Entity* self) {
                 self->ext.GS_Props.nearDeath = 1;
             }
             self->ext.GS_Props.timer = 64;
-            func_801C29B0(0x697); // Slogra Death explosion / Gaibon rapid fire
+            func_801C29B0(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
