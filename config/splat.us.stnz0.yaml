@@ -77,6 +77,7 @@ segments:
       - [0x20E5C, raw, D_801A0E5C] # tiledef
       - [0x24E6C, raw, D_801A4E6C] # tiledef
       - [0x26E7C, raw, D_801A6E7C] # tiledef
+      - [0x305A4, rodata]
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, rodata]
@@ -89,6 +90,8 @@ segments:
       - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
       - [0x308E8, rodata]
       - [0x30958, c]
+      - [0x33FCC, c] # Slogra & Gaibon Boss
+      - [0x36DE4, c]
       - [0x3E30C, c]
       - [0x43708, c] # EntityBoneScimitar
       - [0x43F9C, c] # EntityAxeKnight
