@@ -149,6 +149,7 @@ s32 EntitySlograSpecialCollision(u16* unused) {
 }
 
 // assembler skips a NOP
+// matching in decomp.me https://decomp.me/scratch/vaRJR
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntitySlogra);
 #else

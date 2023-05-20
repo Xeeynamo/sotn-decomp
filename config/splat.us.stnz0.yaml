@@ -78,7 +78,7 @@ segments:
       - [0x24E6C, raw, D_801A4E6C] # tiledef
       - [0x26E7C, raw, D_801A6E7C] # tiledef
       - [0x305A4, rodata]
-      - [0x305FC, .rodata, 33FCC] # EntityGaibon
+      - [0x305FC, rodata] # EntityGaibon
       - [0x30618, rodata]
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
