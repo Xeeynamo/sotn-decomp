@@ -559,7 +559,7 @@ void EntitySlograSpear(Entity* self) {
         self->unk12 = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (self[-1].ext.generic.unk84.U8.unk2 != 0) {
+        if (self[-1].ext.GS_Props.nearDeath != 0) {
             self->step++;
         }
         break;
