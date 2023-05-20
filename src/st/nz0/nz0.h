@@ -3,8 +3,12 @@
 typedef enum {
     E_AXE_KNIGHT_AXE = 0x2A,
     E_BONE_SCIMITAR_HEAD = 0x28,
+    E_FIRE = 0x38,
     E_SLOGRA_SPEAR = 0x41,
     E_SLOGRA_SPEAR_PROJECTILE = 0x42,
+    E_GAIBON = 0x43,
+    E_GAIBON_SMALL_FIREBALL = 0x45,
+    E_GAIBON_BIG_FIREBALL = 0x46,
 } ObjectIds;
 
 void DestroyEntity(Entity* item);
@@ -96,7 +100,27 @@ extern u8 D_801811B8[];
 
 extern u16 D_80180D18[];
 extern u16 D_80180D24[];
+
+// *** EntityGaibon properties START ***
+
 extern u16 D_80180D30[];
+extern u16 D_80180D36;
+extern s32 D_80181240;
+extern u8 D_80181250[];
+extern u8 D_80181264[];
+extern u8 D_80181298[];
+extern u8 D_801812AC[];
+extern u8 D_801812C0[];
+extern u8 D_801812CC[];
+extern u8 D_801812DC[];
+extern u8 D_801812F0[];
+extern u8 D_801812FC[];
+extern u8 D_80181304[];
+extern s32 D_80181310[];
+extern u8 D_80181340[];
+
+// *** EntityGaibon properties END ***
+
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];

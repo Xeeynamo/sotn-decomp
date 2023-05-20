@@ -124,7 +124,7 @@ typedef struct {
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ u8 attackMode;
-    /* 0x85 */ u8 flag; // Slogra's moveMode / Gaibon's palette
+    /* 0x85 */ u8 flag;      // Slogra's moveMode / Gaibon's palette
     /* 0x86 */ u8 nearDeath; // Slogra loses spear, Gaibon in rage mode
     /* 0x88 */ s32 speed;
     /* 0x8C */ s16 angle;
