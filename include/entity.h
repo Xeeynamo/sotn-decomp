@@ -119,8 +119,23 @@ typedef struct ET_EquipItemDrop {
     /* 0x18 */ s16 unk94;
 } ET_EquipItemDrop;
 
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ u8 attackMode;
+    /* 0x85 */ u8 flag; // Slogra's moveMode / Gaibon's palette
+    /* 0x86 */ u8 nearDeath; // Slogra loses spear, Gaibon in rage mode
+    /* 0x88 */ s32 speed;
+    /* 0x8C */ s16 angle;
+    /* 0x8E */ char pad8E[0xE];
+    /* 0x9C */ u8 pickupFlag;
+    /* 0x9D */ u8 grabedAscending;
+} ET_GaibonSlogra;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
+    /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ char stub[0x40];
 } Ext;

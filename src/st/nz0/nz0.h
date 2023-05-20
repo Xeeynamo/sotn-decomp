@@ -3,6 +3,8 @@
 typedef enum {
     E_AXE_KNIGHT_AXE = 0x2A,
     E_BONE_SCIMITAR_HEAD = 0x28,
+    E_SLOGRA_SPEAR = 0x41,
+    E_SLOGRA_SPEAR_PROJECTILE = 0x42,
 } ObjectIds;
 
 void DestroyEntity(Entity* item);
@@ -66,6 +68,32 @@ extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
 extern s16 D_80180CE8[];
 extern u16 D_80180D00[];
+
+// *** EntitySlogra properties START ***
+
+extern u16 D_80180D0C[]; // Init
+extern u16 D_8018105C[];
+extern s32 D_8018106C;
+extern u8 D_80181074[]; // Animation
+extern u8 D_80181080[]; // Animation: Taunt
+extern u8 D_8018108C[]; // Animation: Firing projectiles
+extern u8 D_8018109C[]; // Animation
+extern u8 D_801810A8[]; // Animation
+extern u8 D_801810B4[]; // Animation
+extern u8 D_801810D4[]; // Animation
+extern u8 D_801810E8[]; // Animation
+extern u8 D_801810FC[]; // Animation
+extern u8 D_80181108[]; // Animation
+extern u8 D_80181114[]; // Animation
+extern u8 D_80181128[]; // Animation
+extern u8 D_80181140[]; // Animation
+extern u8 D_80181150[]; // Animation
+extern u8 D_80181158[]; // Animation
+extern s32 D_80181178[];
+extern u8 D_801811B8[];
+
+// *** EntitySlogra properties END ***
+
 extern u16 D_80180D18[];
 extern u16 D_80180D24[];
 extern u16 D_80180D30[];
@@ -91,7 +119,7 @@ extern u16 D_80180F9C[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
-extern s32 g_BossFlag; // beri_flag
+extern s32 g_BossFlag; // original names: boss_flag / beri_flag
 extern const u8 D_80181160[];
 extern const u8 D_80181170[];
 extern s8 D_801811E0[];

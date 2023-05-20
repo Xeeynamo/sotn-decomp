@@ -58,6 +58,7 @@ EntityCloseBossRoom = 0x801B3FCC;
 EntityBossRoomBlock = 0x801B4518;
 EntitySlograSpecialCollision = 0x801B4690;
 EntitySlogra = 0x801B4778;
+EntitySlograSpear = 0x801B54A8;
 EntitySlograSpearProjectile = 0x801B5654;
 EntityGaibon = 0x801B5778;
 EntitySmallGaibonProjectile = 0x801B6AAC;
