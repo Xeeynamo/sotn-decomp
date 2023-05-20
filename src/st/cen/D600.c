@@ -1157,7 +1157,7 @@ Primitive* func_8019C4B8(Primitive* prim, s32 count) {
 
     for (i = 0; i < count; i++) {
         if (prim->p3 != 0) {
-            prim->blendMode &= -9;
+            prim->blendMode &= ~8;
             p3 = 0;
         } else {
             prim->blendMode |= 8;
