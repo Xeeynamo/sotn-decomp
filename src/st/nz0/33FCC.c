@@ -442,7 +442,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_TAUNT_WITHOUT_SPEAR:
-        if (!AnimateEntity(D_80181108, self)) {
+        if (AnimateEntity(D_80181108, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         break;
