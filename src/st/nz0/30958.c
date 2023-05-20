@@ -1007,7 +1007,7 @@ void EntityTableWithGlobe(Entity* self) {
             self->unk3C = 0;
             CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
             self[1].subId = D_80180F10[self->subId];
-            func_801BD52C(2);
+            SetStep(2);
         }
         break;
 
@@ -1035,7 +1035,7 @@ void func_801B3648(Entity* self) {
         if (self->unk48 != 0) {
             func_801C29B0(0x619);
             self->unk3C = 0;
-            func_801BD52C(2);
+            SetStep(2);
         }
         break;
 
@@ -1087,7 +1087,7 @@ void func_801B37C0(Entity* self) {
         AnimateEntity(D_80180F50, self);
         if (self->unk48 != 0) {
             self->unk3C = 0;
-            func_801BD52C(2);
+            SetStep(2);
         }
         break;
 
@@ -1154,7 +1154,7 @@ void func_801B3A50(Entity* self) {
         if (self->unk48 != 0) {
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             self->unk3C = 0;
-            func_801BD52C(2);
+            SetStep(2);
         }
         break;
 
@@ -1351,7 +1351,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     case 1:
         if (AnimateEntity(D_80181160, self) == 0) {
-            func_801BD52C(2);
+            SetStep(2);
         }
         break;
 
@@ -2271,7 +2271,7 @@ u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_801BD52C(u8 step) {
+void SetStep(u8 step) {
     Entity* entity = g_CurrentEntity;
 
     entity->step = step;
@@ -2280,10 +2280,10 @@ void func_801BD52C(u8 step) {
     entity->animFrameDuration = 0;
 }
 
-void func_801BD54C(u8 arg0) {
+void SetSubStep(u8 step_s) {
     Entity* entity = g_CurrentEntity;
 
-    entity->step_s = arg0;
+    entity->step_s = step_s;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
