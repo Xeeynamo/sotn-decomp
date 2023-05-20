@@ -195,15 +195,15 @@ s32 EntitySlograSpecialCollision(u16* unused) {
     g_CurrentEntity->accelerationY += 0x4000;
     slograPosX = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.hi;
 
-    if ((g_CurrentEntity->accelerationX > 0) && (slograPosX > 896)) {
+    if (g_CurrentEntity->accelerationX > 0 && slograPosX > 896) {
         g_CurrentEntity->posX.i.hi = 896 - g_Camera.posX.i.hi;
     }
 
-    if ((g_CurrentEntity->accelerationX < 0) && (slograPosX < 64)) {
+    if (g_CurrentEntity->accelerationX < 0 && slograPosX < 64) {
         g_CurrentEntity->posX.i.hi = 64 - g_Camera.posX.i.hi;
     }
 
-    if ((g_CurrentEntity->posY.i.hi + g_Camera.posY.i.hi) > 416) {
+    if (g_CurrentEntity->posY.i.hi + g_Camera.posY.i.hi > 416) {
         ret = 1;
         g_CurrentEntity->posY.i.hi = 416 - g_Camera.posY.i.hi;
         g_CurrentEntity->accelerationX = 0;
@@ -312,11 +312,8 @@ void EntitySlogra(Entity* self) {
                     self->ext.GS_Props.flag ^= 1;
                 }
             }
-            if (self->ext.GS_Props.flag != 0) {
-                goto block_63;
-            }
-        } else {
-        block_63:
+        }
+        if (self->ext.GS_Props.flag != 0) {
             if (GetPlayerDistanceX() > 112) {
                 if (self->ext.GS_Props.attackMode != 0) {
                     self->ext.GS_Props.timer = 1;
@@ -388,6 +385,7 @@ void EntitySlogra(Entity* self) {
             if (AnimateEntity(D_801810A8, self) == 0) {
                 SetStep(SLOGRA_WALKING_WITH_SPEAR);
             }
+            break;
         }
         break;
 
@@ -410,7 +408,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_KNOCKBACK_ARC:
-            if ((0x10000 | 0x7FFF) >= self->accelerationY) {
+            if (0x18000 > self->accelerationY) {
                 self->ext.GS_Props.pickupFlag = 1;
             }
             entityOnFloor = EntitySlograSpecialCollision(D_8018105C);
@@ -420,7 +418,7 @@ void EntitySlogra(Entity* self) {
             } else {
                 animation = &D_801810D4;
             }
-            if ((AnimateEntity(animation, self) == 0) && (entityOnFloor & 1)) {
+            if (AnimateEntity(animation, self) == 0 && entityOnFloor & 1) {
                 SetStep(SLOGRA_WALKING_WITH_SPEAR);
                 if (self->ext.GS_Props.nearDeath != 0) {
                     SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
@@ -714,29 +712,22 @@ void EntityGaibon(Entity* self) {
     s32 step; // !FAKE
     s32 var_s3;
 
-    if ((self->step != GAIBON_INIT) && (self->ext.GS_Props.nearDeath == 0)) {
+    if (self->step != GAIBON_INIT && self->ext.GS_Props.nearDeath == 0) {
         hitPoints = g_api.enemyDefs[254].hitPoints;
-        if (self->hitPoints < (hitPoints /= 2)) {
+        if (self->hitPoints < hitPoints / 2) {
             self->ext.GS_Props.grabedAscending = 0;
             self->ext.GS_Props.nearDeath = 1;
             SetStep(GAIBON_NEAR_DEATH);
         }
     }
 
-    if (self->flags & 0x100) {
-        step = GAIBON_NEAR_DEATH;
-        if (self->step < GAIBON_NEAR_DEATH) {
-            self->ext.GS_Props.grabedAscending = 0;
-            self->unk3C = 0;
-            goto label;
-        }
-    }
-
-    if (SLOGRA.ext.GS_Props.pickupFlag != 0) {
-        step = GAIBON_PICKUP_SLOGRA;
+    if (self->flags & 0x100 && self->step < GAIBON_NEAR_DEATH) {
+        self->ext.GS_Props.grabedAscending = 0;
+        self->unk3C = 0;
+        SetStep(GAIBON_NEAR_DEATH);
+    } else if (SLOGRA.ext.GS_Props.pickupFlag != 0) {
         if (self->step < GAIBON_LANDING_AFTER_SHOOTING) {
-        label:
-            SetStep(step);
+            SetStep(GAIBON_PICKUP_SLOGRA);
         }
     }
 
@@ -797,7 +788,7 @@ void EntityGaibon(Entity* self) {
             }
             self->facing = (GetPlayerSide() & 1) ^ 1;
             self->ext.GS_Props.timer--;
-            if (!(self->ext.GS_Props.timer)) {
+            if (self->ext.GS_Props.timer == 0) {
                 self->step_s++;
             }
             break;
@@ -827,9 +818,9 @@ void EntityGaibon(Entity* self) {
             } else {
                 var_s3 -= 0x60;
             }
-            self->ext.GS_Props.angle = ratan2(
-                (newEntity[PLAYER_CHARACTER].posY.i.hi - 128) - self->posY.i.hi,
-                var_s3 - self->posX.i.hi);
+            self->ext.GS_Props.angle =
+                ratan2(newEntity->posY.i.hi - 128 - self->posY.i.hi,
+                       var_s3 - self->posX.i.hi);
             self->ext.GS_Props.speed = 0;
             self->ext.GS_Props.timer = 0x50;
             if (self->ext.GS_Props.nearDeath != 0) {
@@ -1086,7 +1077,8 @@ void EntityGaibon(Entity* self) {
             SLOGRA.posX.i.hi = self->posX.i.hi;
             SLOGRA.posY.i.hi = self->posY.i.hi + 28;
             if (self->posY.i.hi < 16) {
-                self->accelerationY = (self->accelerationX = 0);
+                self->accelerationX = 0;
+                self->accelerationY = 0;
                 self->ext.GS_Props.timer = 0x60;
                 self->step_s++;
             }
@@ -1173,8 +1165,6 @@ void EntityGaibon(Entity* self) {
             if (animStatus == 0) {
                 self->ext.GS_Props.timer = 0x60;
                 self->animCurFrame = 31;
-                do {
-                } while (0);
                 self->flags &= ~0xF;
                 do {
                 } while (0);
@@ -1185,7 +1175,7 @@ void EntityGaibon(Entity* self) {
             break;
 
         case GAIBON_DYING_TURN_INTO_BONES:
-            if (!(self->ext.GS_Props.timer % 8)) {
+            if ((self->ext.GS_Props.timer % 8) == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAME);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
