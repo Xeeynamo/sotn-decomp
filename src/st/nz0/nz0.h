@@ -91,7 +91,7 @@ extern u16 D_80180F9C[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
-extern s32 D_80181010;
+extern s32 g_BossFlag; // beri_flag
 extern const u8 D_80181160[];
 extern const u8 D_80181170[];
 extern s8 D_801811E0[];

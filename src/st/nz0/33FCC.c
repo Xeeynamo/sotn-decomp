@@ -1,5 +1,11 @@
 #include "nz0.h"
 
+#define BOSS_FLAG_DOORS_CLOSED (1 << 0)
+#define BOSS_FLAG_DOORS_OPEN (1 << 1)
+#define BOSS_FLAG_BOSS_FIGHT_BEGIN (1 << 2)
+#define BOSS_FLAG_GAIBON_DEAD (1 << 3)
+#define BOSS_FLAG_SLOGRA_DEAD (1 << 4)
+
 // DECOMP_ME_WIP EntityCloseBossRoom https://decomp.me/scratch/bqgN9 95.04 %
 // figuring out D_80181014 struct might help
 // trigger to stop music and close slogra/gaibon room
@@ -17,7 +23,7 @@ void EntityBossRoomBlock(Entity* self) {
         self->animCurFrame = 8;
 
     case 1:
-        if (D_80181010 & 1) {
+        if (g_BossFlag & 1) {
             self->ext.generic.unk80.modeS16.unk0 = 0x10;
             self->step++;
         }
@@ -42,7 +48,7 @@ void EntityBossRoomBlock(Entity* self) {
 
     case 3:
         func_801BD9A0(self, 8, 8, 5);
-        if (D_80181010 & 2) {
+        if (g_BossFlag & BOSS_FLAG_DOORS_OPEN) {
             self->step++;
         }
         break;
@@ -60,19 +66,24 @@ void EntityBossRoomBlock(Entity* self) {
 }
 #endif
 
-s32 func_801B4690(void) {
+s32 EntitySlograSpecialCollision(u16* unused) {
+    /**
+     * This function keeps Slogra between safe
+     * boundaries of the room when the player hits him.
+     * EntitySlogra passes D_8018105C to this function but it's unused
+     */
     s32 ret = 0;
-    s32 temp;
+    s32 slograPosX;
 
     MoveEntity();
     g_CurrentEntity->accelerationY += 0x4000;
-    temp = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.hi;
+    slograPosX = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.hi;
 
-    if ((g_CurrentEntity->accelerationX > 0) && (temp > 896)) {
+    if ((g_CurrentEntity->accelerationX > 0) && (slograPosX > 896)) {
         g_CurrentEntity->posX.i.hi = 896 - g_Camera.posX.i.hi;
     }
 
-    if ((g_CurrentEntity->accelerationX < 0) && (temp < 64)) {
+    if ((g_CurrentEntity->accelerationX < 0) && (slograPosX < 64)) {
         g_CurrentEntity->posX.i.hi = 64 - g_Camera.posX.i.hi;
     }
 
