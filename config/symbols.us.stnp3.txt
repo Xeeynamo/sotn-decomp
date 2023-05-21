@@ -80,6 +80,6 @@ EntityBoneScimitar = 0x801C91C4;
 EntityBoneScimitarParts = 0x801C9874;
 EntityBat = 0x801C997C;
 EntityZombie = 0x801C9BC8;
-EntityZombieExplosion = 0x801C9E28;
+EntityZombieSpawner = 0x801C9E28;
 EntityBloodSplatter = 0x801C9F98;
 EntityBloodyZombie = 0x801CA654;
