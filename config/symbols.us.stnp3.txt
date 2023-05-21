@@ -25,6 +25,7 @@ EntityFallingRock2 = 0x801B560C;
 EntityFallingRock = 0x801B5C5C;
 EntitySwitch = 0x801B5F60;
 EntityUnkId49 = 0x801B644C;
+EntitySlogra = 0x801B6990;
 EntitySlograSpearProjectile = 0x801B7798;
 EntityGaibon = 0x801B78BC;
 EntitySmallGaibonProjectile = 0x801B8D84;

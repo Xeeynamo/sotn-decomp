@@ -1000,7 +1000,7 @@ void func_801B653C(void) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B65FC);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6990);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntitySlogra);
 
 void func_801B75EC(Entity* self) {
     s8* hitbox;
