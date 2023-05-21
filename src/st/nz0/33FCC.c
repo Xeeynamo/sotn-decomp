@@ -229,7 +229,7 @@ void EntitySlogra(Entity* self) {
 
     FntPrint("beri_flag %x\n", g_BossFlag);
 
-    if (self->step >= 3) {
+    if (self->step >= SLOGRA_TAUNT_WITH_SPEAR) {
         if ((self->unk48 & 3) && (self->step != SLOGRA_KNOCKBACK)) {
             SetStep(SLOGRA_KNOCKBACK);
         }
