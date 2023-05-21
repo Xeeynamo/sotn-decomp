@@ -1222,14 +1222,14 @@ void EntityGaibon(Entity* self) {
         slograGaibonDistX = self->posX.i.hi + g_Camera.posX.i.hi;
         slograGaibonDistY = self->posY.i.hi + g_Camera.posY.i.hi;
 
-        if ((self->accelerationX > 0) && (slograGaibonDistX > 784)) {
+        if (self->accelerationX > 0 && slograGaibonDistX > 784) {
             self->posX.i.hi = 784 - g_Camera.posX.i.hi;
         }
 
-        if ((self->accelerationX < 0) && (slograGaibonDistX < 96)) {
+        if (self->accelerationX < 0 && slograGaibonDistX < 96) {
             self->posX.i.hi = 96 - g_Camera.posX.i.hi;
         }
-        if ((self->accelerationY > 0) && (slograGaibonDistY > 420)) {
+        if (self->accelerationY > 0 && slograGaibonDistY > 420) {
             self->posY.i.hi = 420 - g_Camera.posY.i.hi;
         }
 
