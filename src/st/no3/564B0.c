@@ -77,7 +77,7 @@ void EntityZombie(Entity* self) {
 
 const u32 rodataPadding_377CC[] = {0, 0};
 
-/** An invisible entity that is responsible for spawning the "floor 
+/** An invisible entity that is responsible for spawning the "floor
  * zombies" that come up from the ground and swarm the player.
  * Every 32 to 95 frames, it will alternate spawning a zombie
  * on the right side or left side of the screen.
