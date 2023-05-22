@@ -77,12 +77,12 @@ void EntityZombie(Entity* self) {
 
 const u32 rodataPadding_377CC[] = {0, 0};
 
-// The zombie spawner is created inside the first room of the castle.
-// It is responsible for spawning the "floor zombies" that rise up
-// from the ground and swarm Alucard.
-// Every 32 to 95 frames, it will alternate spawning a zombie
-// on the right side or left side of the screen.
-// The exact position a zombie is spawned in is also randomized.
+/** An invisible entity that is responsible for spawning the "floor 
+ * zombies" that come up from the ground and swarm the player.
+ * Every 32 to 95 frames, it will alternate spawning a zombie
+ * on the right side or left side of the screen.
+ * The exact position a zombie is spawned in is also randomized.
+ */
 void EntityZombieSpawner(Entity* self) {
     s32 distCameraEntity;
     Entity* newEntity;
