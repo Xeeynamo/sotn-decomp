@@ -75,7 +75,14 @@ void EntityZombie(Entity* self) {
     }
 }
 
-void EntityZombieExplosion(Entity* self) {
+/*
+ * An invisible entity that is responsible for spawning the "floor
+ * zombies" that come up from the ground and swarm the player.
+ * Every 32 to 95 frames, it will alternate spawning a zombie
+ * on the right side or left side of the screen.
+ * The exact position a zombie is spawned in is also randomized.
+ */
+void EntityZombieSpawner(Entity* self) {
     s32 distCameraEntity;
     Entity* newEntity;
     s32 rnd;
@@ -102,6 +109,8 @@ void EntityZombieExplosion(Entity* self) {
                 newEntity->posY.i.hi -= 48;
                 self->ext.generic.unk88.unk ^= 1;
 
+                // Zombies are prevented from spawning too close to the
+                // edges of the room.
                 distCameraEntity = g_Camera.posX.i.hi + newEntity->posX.i.hi;
                 if ((distCameraEntity < (g_CurrentRoom.x + 128)) ||
                     ((g_CurrentRoom.width - 128) < distCameraEntity)) {
