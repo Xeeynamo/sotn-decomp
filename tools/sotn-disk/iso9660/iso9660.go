@@ -11,7 +11,8 @@ type TrackMode int
 
 const (
 	TrackMode1_2048 = TrackMode(0x800)
-	TrackMode2_2352 = TrackMode(0x930)
+	TrackMode1_2352 = TrackMode(0x930) // The 2352 bytes consist of 2048 data bytes, 288 bytes of error correction code (ECC), and 16 bytes of sub-channel data.
+	TrackMode2_2352 = TrackMode(0x930) 
 )
 
 var (

@@ -32,6 +32,8 @@ func performCueAction(cuePath string, action imageAction) error {
 	switch mainTrack.mode {
 	case "MODE1/2048":
 		mode = iso9660.TrackMode1_2048
+	case "MODE1/2352":
+		mode = iso9660.TrackMode1_2352
 	case "MODE2/2352":
 		mode = iso9660.TrackMode2_2352
 	default:
@@ -100,6 +102,12 @@ func parseTracks(cuePath string) ([]cueTrack, error) {
 
 			track.id = tokens[1]
 			track.mode = tokens[2]
+
+			// need to append here since there's multiple tracks in the same file
+			if track != nil {
+				tracks = append(tracks, *track)
+			}
+
 		}
 	}
 
