@@ -5,6 +5,7 @@ package iso9660
 import (
 	"errors"
 	"io"
+	"fmt"
 )
 
 type TrackMode int
@@ -52,11 +53,21 @@ func (img *Image) RootDir() File {
 	}
 }
 
+func assert(condition bool) {
+	if !condition {
+		panic("mismatch")
+	}
+}
+
 func (file File) GetChildren() ([]File, error) {
 	const secSize = 0x800
 	const bufSafe = 0x20
 
 	chloc := file.ExtentLocation.LSB
+
+	assert(file.ExtentLocation.LSB == file.ExtentLocation.MSB)
+	assert(file.DataLength.LSB == file.DataLength.MSB)
+	assert(file.VolumeSequenceNumber.LSB == file.VolumeSequenceNumber.MSB)
 
 	files := make([]File, 0)
 	offset := secSize
@@ -71,6 +82,8 @@ func (file File) GetChildren() ([]File, error) {
 			data = []byte(sec)
 			offset = 0
 			chloc++
+		} else {
+			fmt.Print("rejected sector ", "offset ", offset, " secSize ", secSize, " offset+bufSafe ", offset+bufSafe, " chloc ", chloc, "\n")
 		}
 
 		f := File{
