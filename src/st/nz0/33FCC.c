@@ -822,7 +822,7 @@ void EntityGaibon(Entity* self) {
                 ratan2(newEntity->posY.i.hi - 128 - self->posY.i.hi,
                        var_s3 - self->posX.i.hi);
             self->ext.GS_Props.speed = 0;
-            self->ext.GS_Props.timer = 0x50;
+            self->ext.GS_Props.timer = 80;
             if (self->ext.GS_Props.nearDeath != 0) {
                 self->ext.GS_Props.timer = 40;
             }
@@ -1079,7 +1079,7 @@ void EntityGaibon(Entity* self) {
             if (self->posY.i.hi < 16) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
-                self->ext.GS_Props.timer = 0x60;
+                self->ext.GS_Props.timer = 96;
                 self->step_s++;
             }
             break;
@@ -1163,7 +1163,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_DYING_REACT:
             animStatus = AnimateEntity(D_80181304, self);
             if (animStatus == 0) {
-                self->ext.GS_Props.timer = 0x60;
+                self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 31;
                 self->flags &= ~0xF;
                 do {
