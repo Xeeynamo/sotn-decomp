@@ -508,7 +508,7 @@ void EntitySlograSpear(Entity* self) {
         self->unk12 = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
-        if (self[-1].ext.generic.unk84.U8.unk2 != 0) {
+        if (self[-1].ext.GS_Props.nearDeath != 0) {
             self->step++;
         }
         break;
@@ -1274,7 +1274,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
         if (!(g_blinkTimer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x54, self, newEntity);
+                CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
                 newEntity->subId = 1;
                 newEntity->unk1E = self->unk1E;
                 newEntity->zPriority = self->zPriority + 1;
