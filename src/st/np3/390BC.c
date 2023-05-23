@@ -611,14 +611,14 @@ u16 func_801BD0B4(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_801BD114(u8 step) {
+void SetStep(u8 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_801BD134(u8 arg0) {
+void SetSubStep(u8 arg0) {
     g_CurrentEntity->step_s = arg0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;

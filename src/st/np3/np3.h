@@ -2,6 +2,10 @@
 
 typedef enum {
     E_BONE_SCIMITAR_HEAD = 0x3F,
+    E_SLOGRA_SPEAR = 0x4F,
+    E_SLOGRA_SPEAR_PROJECTILE = 0x50,
+    E_GAIBON_SMALL_FIREBALL = 0x53,
+    E_GAIBON_BIG_FIREBALL = 0x54,
 } ObjectIds;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -63,6 +67,54 @@ extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
 extern u16 D_80181204[];
+
+// *** EntitySlogra properties START ***
+
+extern u16 D_80180B44[]; // Init
+extern s32 D_801812CC; // killed in entrance local flag
+extern s32 D_801812D0; // some collision data
+extern u16 D_801812E0; // some collision data
+extern u8 D_801812E8[]; // animation
+extern u8 D_801812F4[]; // animation
+extern u8 D_80181300[]; // animation
+extern u8 D_80181310[]; // animation
+extern u8 D_8018131C[]; // animation
+extern u8 D_80181328[]; // animation
+extern u8 D_80181348[]; // animation
+extern u8 D_8018135C[]; // animation
+extern u8 D_80181370[]; // animation
+extern u8 D_8018137C[]; // animation
+extern u8 D_80181388[]; // animation
+extern u8 D_8018139C[]; // animation
+extern u8 D_801813B4[]; // animation
+extern u8 D_801813C4[]; // animation
+extern u8 D_801813CC[]; // animation
+extern s32 D_801813EC[];
+extern u8 D_8018142C[];
+
+// *** EntitySlogra properties END ***
+
+// *** EntityGaibon properties START ***
+
+extern u16 D_80180B68[]; // Init
+extern u16 D_80180B6E; // Gaibon's palette data
+extern s32 D_801812CC; // killed in entrance local flag
+extern s32 D_801814B4; // Some collision data
+extern u8 D_801814C4; // Animation
+extern u8 D_801814D8; // Animation
+extern u8 D_8018150C; // Animation
+extern u8 D_80181520; // Animation
+extern u8 D_80181534; // Animation
+extern u8 D_80181540; // Animation
+extern u8 D_80181550; // Animation
+extern u8 D_80181564; // Animation
+extern u8 D_80181570; // Animation
+extern u8 D_80181578; // Animation
+extern s32 D_80181584[]; // Hitbox related
+extern u8 D_801815B4[]; // Hitbox related
+
+// *** EntityGaibon properties END ***
+
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];

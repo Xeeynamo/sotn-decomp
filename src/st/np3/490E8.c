@@ -32,13 +32,13 @@ void func_801C90E8(void) {
     s16 temp2 = func_801BD308(&D_80182548, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
-        func_801BD114(BONE_SCIMITAR_JUMP);
+        SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
     if ((g_CurrentEntity->ext.generic.unk7C.U8.unk0) == 0) {
         if (GetPlayerDistanceX() < 64) {
             if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
-                func_801BD114(BONE_SCIMITAR_ATTACK);
+                SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
     } else {
@@ -76,7 +76,7 @@ void EntityBoneScimitar(Entity* self) {
         if (func_801BC8E4(&D_80182530) != 0) {
             self->step++;
             if (self->subId != 0) {
-                func_801BD114(BONE_SCIMITAR_SPECIAL);
+                SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
@@ -136,12 +136,12 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if (animStatus == 0) {
-            func_801BD114(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+            SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
                 D_80182528[self->subId % 2]
                           [(++self->ext.generic.unk84.S8.unk0) & 3];
             if (self->subId != 0) {
-                func_801BD114(BONE_SCIMITAR_SPECIAL);
+                SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
@@ -181,7 +181,7 @@ void EntityBoneScimitar(Entity* self) {
 
         case BONE_SCIMITAR_LAND:
             if (AnimateEntity(D_801824AC, self) == 0) {
-                func_801BD114(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+                SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;
@@ -219,7 +219,7 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if ((GetPlayerDistanceX() < 48) && (GetPlayerDistanceY() < 32)) {
-            func_801BD114(BONE_SCIMITAR_ATTACK);
+            SetStep(BONE_SCIMITAR_ATTACK);
         }
         break;
 
