@@ -1,3 +1,8 @@
+/*
+ * Overlay: NP3
+ * Enemy: Slogra & Gaibon Boss
+ */
+
 #include "np3.h"
 
 #define GAIBON self[8]
