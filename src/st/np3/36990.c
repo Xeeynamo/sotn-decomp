@@ -1202,7 +1202,7 @@ void func_801B8CC0(Entity* self) {
         self->animCurFrame = 0x28;
     }
 
-    if (prevEntity->objectId != 0x51) {
+    if (prevEntity->objectId != E_GAIBON) {
         DestroyEntity(self);
     }
 }

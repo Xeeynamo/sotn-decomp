@@ -4,6 +4,7 @@ typedef enum {
     E_BONE_SCIMITAR_HEAD = 0x3F,
     E_SLOGRA_SPEAR = 0x4F,
     E_SLOGRA_SPEAR_PROJECTILE = 0x50,
+    E_GAIBON = 0x51,
     E_GAIBON_SMALL_FIREBALL = 0x53,
     E_GAIBON_BIG_FIREBALL = 0x54,
 } ObjectIds;
