@@ -680,7 +680,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     case 1:
         if (AnimateEntity(D_80181160, self) == 0) {
-            SetStep(2);
+            SetStep(SLOGRA_IDLE);
         }
         break;
 
