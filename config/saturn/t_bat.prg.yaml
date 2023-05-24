@@ -1,0 +1,23 @@
+options:
+  target_path:  disks/saturn/T_BAT.PRG
+  asm_path:     asm/saturn/t_bat
+  src_path:     src/saturn/t_bat
+segments:
+  - name: t_bat
+    type: code
+    start: 0x00000000
+    vram:  0x060CF000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: 60
+        end: 0x5F
+      - start: 0x60
+        type: c
+        file: 60
+        end: 0x2857
+      - start: 0x2858
+        type: data
+        file: 60
+        end: 0x7000
