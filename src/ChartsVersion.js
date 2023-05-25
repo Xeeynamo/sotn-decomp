@@ -7,10 +7,9 @@ export const ChartsVersion = ({
     labels,
     overlays,
 }) => {
-    const renderOvlChart = function (name, history, ovlCode, ovlFuncs) {
+    const renderOvlChart = function (overlayId, history, ovlCode, ovlFuncs) {
         const wholeTimeline = history.map(x => x.timestamp);
         const length = Math.min(Math.min(ovlCode.length, ovlFuncs.length), wholeTimeline.length);
-        console.log(`${name}: ${ovlCode.length}, ${ovlFuncs.length}, ${wholeTimeline.length}`)
 
         if (length === 0) {
             return;
@@ -29,13 +28,18 @@ export const ChartsVersion = ({
             }
         }
 
+        const ovlMeta = overlays[overlayId];
         const data = [
             timeline,
             funcs,
             code,
         ]
         return (
-            <Chart moduleName={name} data={data} />
+            <div>
+                <p className="chartOvlTitle">{ovlMeta.name}</p>
+                <span className="chartOvlDesc">{ovlMeta.desc}</span>
+                <Chart data={data} />
+            </div>
         )
     }
 
@@ -56,13 +60,16 @@ export const ChartsVersion = ({
                 timestamp: x.timestamp,
                 gitHash: x.git_hash,
             }))
-            const overlays = Object.keys(src[0].measures)
-                .map(x => x.split('/')[0])
-                .filter((v, idx, a) => a.indexOf(v) === idx)
+
+            // This piece of code used to obtain the list of overlays from the
+            // server rather than from the game metadata
+            // const overlays = Object.keys(src[0].measures)
+            //     .map(x => x.split('/')[0])
+            //     .filter((v, idx, a) => a.indexOf(v) === idx)
 
             return {
                 timeline: timeline,
-                overlays: overlays.map(ovl => ({
+                overlays: version.overlays.map(ovl => ({
                     name: ovl,
                     percentage: src.map(x => getEntryProgress(ovl, x.measures))
                 }))
@@ -81,7 +88,7 @@ export const ChartsVersion = ({
             progressFuncs ?? fetchProgress(labelFunctions, setProgressFuncs);
         }
     }, [
-        gameId, versionId,
+        gameId, versionId, version,
         labelCode, labelFunctions,
         progressCode, progressFuncs,
         progressFetchingRef
@@ -89,6 +96,7 @@ export const ChartsVersion = ({
 
     const progressCharts = ((progressCode || progressFuncs) &&
         (progressCode ?? progressFuncs).overlays.map(ovl => {
+            console.log(ovl);
             const timeline = (progressCode ?? progressFuncs).timeline
             const code = progressCode != null ? progressCode.overlays
                 .filter(x => x.name === ovl.name)[0].percentage : [];
@@ -98,7 +106,7 @@ export const ChartsVersion = ({
         }))
 
     return (
-        <div>
+        <div className="ChartsVersion">
             <h2>Progress for {version.name}</h2>
             <center>{progressCharts}</center>
         </div>)

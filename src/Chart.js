@@ -4,37 +4,35 @@ import UplotReact from 'uplot-react';
 import 'uplot/dist/uPlot.min.css';
 
 export const Chart = ({
-    moduleName,
     data,
 }) => {
-    const toPercent = function(x) {
-        return x ? x.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2}) : "--" 
+    const toPercent = function (x) {
+        return x ? x.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 }) : "--"
     }
 
     const options = {
-        title: moduleName,
         width: 800,
         height: 400,
         series: [
-          {
-            label: "Date"
-          },
-          {
-            label: "Functions",
-            points: { show: true },
-            width: 1.5,
-            stroke: "rgba(255, 255, 0, 1)",
-            fill: "rgba(255, 255, 0, 0.3)",
-            value: (self, value) => toPercent(value)
-          },
-          {
-            label: "Code",
-            points: { show: true },
-            width: 1.5,
-            stroke: "rgba(255, 0, 0, 1)",
-            fill: "#FF2D24A0",
-            value: (self, value) => toPercent(value)
-          },
+            {
+                label: "Date"
+            },
+            {
+                label: "Functions",
+                points: { show: true },
+                width: 1.5,
+                stroke: "rgba(255, 255, 0, 1)",
+                fill: "rgba(255, 255, 0, 0.3)",
+                value: (self, value) => toPercent(value)
+            },
+            {
+                label: "Code",
+                points: { show: true },
+                width: 1.5,
+                stroke: "rgba(255, 0, 0, 1)",
+                fill: "#FF2D24A0",
+                value: (self, value) => toPercent(value)
+            },
         ],
         scales: {
             x: {
@@ -66,17 +64,17 @@ export const Chart = ({
                     width: 1 / devicePixelRatio,
                     stroke: "#2c3235",
                 },
-                values: (self, ticks) => ticks.map(x => x*100 + "%"),
+                values: (self, ticks) => ticks.map(x => x * 100 + "%"),
             },
         ]
     }
-    const target = null   
+    const target = null
 
     return (<UplotReact
         options={options}
         data={data}
         target={target}
-        onCreate={(chart) => {}}
-        onDelete={(chart) => {}}
+        onCreate={(chart) => { }}
+        onDelete={(chart) => { }}
     />);
 }

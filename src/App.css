@@ -38,6 +38,18 @@ a.header-link {
   font-weight: bold;
 }
 
+.ChartsVersion {
+  margin-top: 4em;
+}
+
+.chartOvlTitle {
+  font-size: 1.15em;
+  font-weight: bold;
+  margin-top: 2em;
+  margin-bottom: 0em;
+  padding: 0;
+};
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
