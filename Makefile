@@ -59,6 +59,8 @@ GOPATH			:= $(HOME)/go
 ASPATCH			:= $(GOPATH)/bin/aspatch
 SOTNDISK		:= $(GOPATH)/bin/sotn-disk
 GFXSTAGE		:= $(PYTHON) $(TOOLS_DIR)/gfxstage.py
+SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -248,6 +250,10 @@ extract_tt_%: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
+extract_saturn: $(SATURN_SPLITTER_APP)
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
+
 context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
@@ -260,6 +266,9 @@ extract_disk_psp%:
 	7z x disks/sotn.psp$*.iso -odisks/psp$*/
 extract_disk_ps1%: $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
+extract_disk_saturn:
+	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
+	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/
 disk: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
@@ -321,6 +330,11 @@ $(ASPATCH): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 $(SOTNDISK): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
+
+$(SATURN_SPLITTER_APP):
+	git submodule init $(SATURN_SPLITTER_DIR)
+	git submodule update $(SATURN_SPLITTER_DIR)
+	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
