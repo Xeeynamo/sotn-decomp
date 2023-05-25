@@ -266,6 +266,9 @@ extract_disk_psp%:
 	7z x disks/sotn.psp$*.iso -odisks/psp$*/
 extract_disk_ps1%: $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
+extract_disk_saturn:
+	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
+	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/
 disk: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)

@@ -1,7 +1,8 @@
 options:
   target_path:  disks/saturn/T_BAT.PRG
   asm_path:     asm/saturn/t_bat
-  src_path:     src/saturn/t_bat
+  src_path:     src/saturn
+  decomp_empty_funcs: true
 segments:
   - name: t_bat
     type: code
