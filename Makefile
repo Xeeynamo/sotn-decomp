@@ -341,6 +341,61 @@ $(BUILD_DIR)/%.s.o: %.s
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
+build_saturn_toolchain:
+	# get GCCSH
+	wget -nc https://github.com/sozud/saturn-compilers/archive/refs/heads/main.zip
+	unzip -n main.zip
+	rm -rf ./tools/saturn_toolchain/GCCSH
+	mv saturn-compilers-main/cygnus-2.7-96Q3-bin ./tools/saturn_toolchain/GCCSH
+	rm -rf main.zip
+	rm -rf saturn-compilers-main
+
+	# build dockerfiles
+	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile . 
+	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .
+
+SATURN_BUILD_DIR := build/saturn
+# absolute path for docker mounts
+SATURN_BUILD_ABS := $(realpath $(SATURN_BUILD_DIR))
+SATURN_DISK_DIR := disks/saturn
+# absolute path for docker mounts
+SATURN_DISK_ABS := $(realpath $(SATURN_DISK_DIR))
+
+build_saturn:
+	# copy everything into same directory since dosemu is hard to use otherwise
+	rm -rf $(SATURN_BUILD_DIR)
+	mkdir -p $(SATURN_BUILD_DIR)
+	cp -r ./tools/saturn_toolchain/GCCSH/* $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/inc_asm.h $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/macro.inc $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/game.c $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/t_bat.c $(SATURN_BUILD_DIR)
+	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
+	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
+	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game
+	cp -r ./asm/saturn/t_bat $(SATURN_BUILD_DIR)/asm/saturn/t_bat
+	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
+	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
+
+	# execute in docker
+	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
+	docker run --rm -e FILENAME=t_bat -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
+
+check_saturn:
+	# dump binaries using sh binutils container
+	chmod +x tools/saturn_toolchain/strip.sh
+	cp tools/saturn_toolchain/strip.sh $(SATURN_BUILD_DIR)
+	docker run --rm -e INPUT_FILENAME=game.o -e OUTPUT_FILENAME=GAME.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
+	docker run --rm -e INPUT_FILENAME=t_bat.o -e OUTPUT_FILENAME=T_BAT.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
+	# check hashes
+	sha1sum --check config/saturn/check.game.prg.sha
+	sha1sum --check config/saturn/check.t_bat.prg.sha
+
+diff_saturn:
+	chmod +x tools/saturn_toolchain/diff.sh
+	cp tools/saturn_toolchain/diff.sh $(SATURN_BUILD_DIR)
+	docker run --rm -e FILENAME=$(FILENAME) -v $(SATURN_DISK_ABS):/theirs -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./diff.sh
+
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
