@@ -7,34 +7,32 @@ export const ChartsVersion = ({
     labels,
     overlays,
 }) => {
-    const getEntryProgress = function (name, entry) {
-        return entry[name] / entry[`${name}/total`]
-    }
+    const renderOvlChart = function (name, history, ovlCode, ovlFuncs) {
+        const wholeTimeline = history.map(x => x.timestamp);
+        const length = Math.min(Math.min(ovlCode.length, ovlFuncs.length), wholeTimeline.length);
+        console.log(`${name}: ${ovlCode.length}, ${ovlFuncs.length}, ${wholeTimeline.length}`)
 
-    const normaliseData = function (data, slug, ver, type) {
-        const src = data[slug][ver][type]
-        const timeline = src.map(x => ({
-            timestamp: x.timestamp,
-            gitHash: x.git_hash,
-        }))
-        const overlays = Object.keys(src[0].measures)
-            .map(x => x.split('/')[0])
-            .filter((v, idx, a) => a.indexOf(v) === idx)
-
-        return {
-            timeline: timeline,
-            overlays: overlays.map(ovl => ({
-                name: ovl,
-                percentage: src.map(x => getEntryProgress(ovl, x.measures))
-            }))
+        if (length === 0) {
+            return;
         }
-    }
 
-    const renderOvlChart = function (name, timeline, ovlCode, ovlFuncs) {
+        const timeline = [wholeTimeline[0]];
+        const funcs = [ovlFuncs[0]];
+        const code = [ovlCode[0]];
+        var prevFuncs = funcs[0];
+        for (var i = 1; i < length; i++) {
+            if (prevFuncs !== ovlFuncs[i]) {
+                prevFuncs = ovlFuncs[i]
+                timeline.push(wholeTimeline[i])
+                funcs.push(ovlFuncs[i])
+                code.push(ovlCode[i])
+            }
+        }
+
         const data = [
-            timeline.map(x => x.timestamp),
-            ovlFuncs,
-            ovlCode,
+            timeline,
+            funcs,
+            code,
         ]
         return (
             <Chart moduleName={name} data={data} />
@@ -49,6 +47,27 @@ export const ChartsVersion = ({
 
     const progressFetchingRef = useRef(false);
     useEffect(() => {
+        const getEntryProgress = function (name, entry) {
+            return entry[name] / entry[`${name}/total`]
+        }
+        const normaliseData = function (data, slug, ver, type) {
+            const src = data[slug][ver][type]
+            const timeline = src.map(x => ({
+                timestamp: x.timestamp,
+                gitHash: x.git_hash,
+            }))
+            const overlays = Object.keys(src[0].measures)
+                .map(x => x.split('/')[0])
+                .filter((v, idx, a) => a.indexOf(v) === idx)
+
+            return {
+                timeline: timeline,
+                overlays: overlays.map(ovl => ({
+                    name: ovl,
+                    percentage: src.map(x => getEntryProgress(ovl, x.measures))
+                }))
+            }
+        }
         const fetchProgress = async (type, setter) => {
             const host = "https://progress.deco.mp"
             const url = `${host}/data/${gameId}/${versionId}/${type}/?mode=all`
@@ -65,8 +84,7 @@ export const ChartsVersion = ({
         gameId, versionId,
         labelCode, labelFunctions,
         progressCode, progressFuncs,
-        progressFetchingRef,
-        normaliseData
+        progressFetchingRef
     ]);
 
     const progressCharts = ((progressCode || progressFuncs) &&
