@@ -7,3 +7,6 @@
 [submodule "tools/m2c"]
 	path = tools/m2c
 	url = https://github.com/matt-kempster/m2c.git
+[submodule "tools/saturn-splitter"]
+	path = tools/saturn-splitter
+	url = https://github.com/sozud/saturn-splitter.git
