@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Chart } from './Chart';
 
 export const ChartsVersion = ({
-    gameVersion,
-    name,
+    gameId,
+    version,
+    labels,
+    overlays,
 }) => {
-    const getEntryProgress = function(name, entry) {
+    const getEntryProgress = function (name, entry) {
         return entry[name] / entry[`${name}/total`]
     }
 
-    const normaliseData = function(data, slug, ver, type) {
+    const normaliseData = function (data, slug, ver, type) {
         const src = data[slug][ver][type]
         const timeline = src.map(x => ({
-                timestamp: x.timestamp,
-                gitHash: x.git_hash,
-            }))
+            timestamp: x.timestamp,
+            gitHash: x.git_hash,
+        }))
         const overlays = Object.keys(src[0].measures)
             .map(x => x.split('/')[0])
             .filter((v, idx, a) => a.indexOf(v) === idx)
@@ -28,46 +30,58 @@ export const ChartsVersion = ({
         }
     }
 
-    const renderOvlChart = function(name, timeline, ovlCode, ovlFuncs)  {
+    const renderOvlChart = function (name, timeline, ovlCode, ovlFuncs) {
         const data = [
             timeline.map(x => x.timestamp),
             ovlFuncs,
             ovlCode,
-          ]
+        ]
         return (
-            <Chart moduleName={name} data={data}/>
+            <Chart moduleName={name} data={data} />
         )
     }
 
+    const labelCode = labels[0].id;
+    const labelFunctions = labels[1].id;
+    const versionId = version.id
     const [progressCode, setProgressCode] = useState(undefined)
     const [progressFuncs, setProgressFuncs] = useState(undefined)
 
-    const fetchProgress = async (type, setter) => {
-      const host = "https://progress.deco.mp"
-      const url = `${host}/data/sotn/${gameVersion}/${type}/?mode=all`
-      const response = await fetch(url);
-        const data = await response.json();
-        return setter(normaliseData(data, "sotn", gameVersion, type));
-    }
-  
+    const progressFetchingRef = useRef(false);
     useEffect(() => {
-        fetchProgress('code', setProgressCode);
-        fetchProgress('functions', setProgressFuncs);
-    },[fetchProgress])
+        const fetchProgress = async (type, setter) => {
+            const host = "https://progress.deco.mp"
+            const url = `${host}/data/${gameId}/${versionId}/${type}/?mode=all`
+            const response = await fetch(url);
+            const data = await response.json();
+            return setter(normaliseData(data, gameId, versionId, type));
+        }
+        if (progressFetchingRef.current !== true) {
+            progressFetchingRef.current = true;
+            progressCode ?? fetchProgress(labelCode, setProgressCode);
+            progressFuncs ?? fetchProgress(labelFunctions, setProgressFuncs);
+        }
+    }, [
+        gameId, versionId,
+        labelCode, labelFunctions,
+        progressCode, progressFuncs,
+        progressFetchingRef,
+        normaliseData
+    ]);
 
-    const progressCharts = (progressCode && progressFuncs &&
-        progressCode.overlays.map(ovl => {
-            const timeline = progressCode.timeline
-            const code = progressCode.overlays
-                .filter(x => x.name === ovl.name)[0].percentage
-            const funcs = progressFuncs.overlays
-                .filter(x => x.name === ovl.name)[0].percentage
+    const progressCharts = ((progressCode || progressFuncs) &&
+        (progressCode ?? progressFuncs).overlays.map(ovl => {
+            const timeline = (progressCode ?? progressFuncs).timeline
+            const code = progressCode != null ? progressCode.overlays
+                .filter(x => x.name === ovl.name)[0].percentage : [];
+            const funcs = progressFuncs != null ? progressFuncs.overlays
+                .filter(x => x.name === ovl.name)[0].percentage : []
             return renderOvlChart(ovl.name, timeline, code, funcs)
         }))
 
     return (
         <div>
-            <h2>Progress for {name}</h2>
+            <h2>Progress for {version.name}</h2>
             <center>{progressCharts}</center>
         </div>)
 }

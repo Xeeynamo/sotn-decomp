@@ -2,16 +2,28 @@ import './App.css';
 import './Chart'
 import React from 'react';
 import { ChartsVersion } from './ChartsVersion';
+import gameMetadata from './gamemeta'
 
 function App() {
   return (
     <div className="App">
-      <h2>Castlevania: Symphony of the Night decompilation</h2>
-      <div >
-        <p>GitHub repo: <a href="https://github.com/xeeynamo/sotn-decomp" target="_blank" rel="noopener noreferrer">github.com/xeeynamo/sotn-decomp</a></p>
-        <p>Discord server: <a href="https://sotn-discord.xee.dev/" target="_blank" rel="noopener noreferrer">sotn-discord.xee.dev</a></p>
+      <h1>{gameMetadata.name} decompilation</h1>
+      <div>
+        {gameMetadata.links.map(l =>
+          <a className="header-link" target="_blank" rel="noopener noreferrer"
+            href={l.url}>{l.name}</a>
+        )}
       </div>
-      <ChartsVersion name="PS1 US" gameVersion="us"/>
+      <div>
+        {gameMetadata.versions.map(v =>
+          <ChartsVersion
+            gameId={gameMetadata.id}
+            version={v}
+            labels={gameMetadata.labels}
+            overlays={gameMetadata.overlays}
+          />
+        )}
+      </div>
     </div>
   );
 }
