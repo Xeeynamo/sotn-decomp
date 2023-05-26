@@ -55,6 +55,7 @@ segments:
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, rodata]
       - [0x31FB0, rodata]
+      - [0x32044, rodata] # EntityMerman .rodata, 3DEF4
       - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C]
       - [0x320A0, .rodata, 49BC8]
