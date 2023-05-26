@@ -1145,7 +1145,34 @@ POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019C4B8);
+Primitive* func_8019C4B8(Primitive* prim, s32 count) {
+    s32 i;
+    u8 p3;
+
+    if (prim->p3 != 0) {
+        prim->p3 = 0;
+    } else {
+        prim->p3 = 1;
+    }
+
+    for (i = 0; i < count; i++) {
+        if (prim->p3 != 0) {
+            prim->blendMode &= ~8;
+            p3 = 0;
+        } else {
+            prim->blendMode |= 8;
+            p3 = 1;
+        }
+
+        prim = prim->next;
+
+        if (prim == NULL) {
+            return NULL;
+        }
+        prim->p3 = p3;
+    }
+    return prim;
+}
 
 void func_8019C540(POLY_GT4* poly) {
     poly->p1 = 0;
