@@ -512,7 +512,7 @@ void EntitySlogra(Entity* self) {
 
             MoveEntity();
             self->accelerationY += 0x4000;
-            if ((self->posY.i.hi + g_Camera.posY.i.hi) > 416) {
+            if (self->posY.i.hi + g_Camera.posY.i.hi > 416) {
                 self->posY.i.hi = 416 - g_Camera.posY.i.hi;
                 func_801C29B0(NA_SE_EN_SLOGRA_FLOOR_STOMP);
                 g_api.func_80102CD8(1);
