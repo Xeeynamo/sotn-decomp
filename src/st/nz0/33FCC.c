@@ -854,7 +854,7 @@ void EntityGaibon(Entity* self) {
             } else {
                 shootSpeed = 15;
             }
-            if (!(self->ext.GS_Props.timer & shootSpeed)) {
+            if (self->ext.GS_Props.timer & shootSpeed == 0) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_GAIBON_SMALL_FIREBALL, self,
