@@ -1107,26 +1107,11 @@ void func_800EBB70(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EBBAC);
 
 // The loop at the end is weird, the rest is matching
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECBF8);
 #else
 typedef struct {
-    s16 unk00, unk02;
-    u16 unk04, unk06;
-    u16 unk08, unk0A;
-    u16 unk0c, unk0E;
-    u16 unk10, unk12;
-    u16 unk14, unk16;
-    u16 unk18, unk1A;
-    u16 unk1c;
-    u8 unk1E, unk1F;
-    u16 unk20;
-    u8 unk22, unk23;
-    u16 unk24, unk26;
-} Unkstruct_800ECBF8_1; /* size = 0x28 */
-
-typedef struct {
-    s16 unk0, unk4;
+    s16 unk0, unk2;
 } Unkstruct_800ECBF8_2; /* size = 0x4 */
 
 extern POLY_GT4 D_8004077C[0x300]; // TODO D_8003CB08.polyGT4
@@ -1156,55 +1141,81 @@ void func_800ECBF8(void) {
     SPRT *f1, *f2;
     POLY_GT3 *g1, *g2;
 
+    s16* new_var4;
+    int new_var5;
+    int new_var2;
     Unkstruct_800ECBF8_1* var_v1;
-    Unkstruct_800ECBF8_2 *var_a2, *var_a0;
+    s16* new_var;
+    s16* var_a2;
+    s16* var_a0;
 
-    for (a1 = D_8004077C, a2 = D_80057F70, i = 0; i < 0x300; i++, a1++, a2++) {
+    a1 = g_GpuBuffers[0].polyGT4;
+    a2 = g_GpuBuffers[1].polyGT4;
+    for (i = 0; i < 0x300; i++, a1++, a2++) {
         SetPolyGT4(a1);
         SetPolyGT4(a2);
     }
 
-    for (b1 = D_8004E2FC, b2 = D_80065AF0, i = 0; i < 0x280; i++, b1++, b2++) {
+    b1 = g_GpuBuffers[0].sprite16;
+    b2 = g_GpuBuffers[1].sprite16;
+    for (i = 0; i < 0x280; i++, b1++, b2++) {
         SetSprt16(b1);
         SetSprt16(b2);
     }
 
-    for (c1 = D_80050AFC, c2 = D_800682F0, i = 0; i < 0x100; i++, c1++, c2++) {
+    c1 = g_GpuBuffers[0].tiles;
+    c2 = g_GpuBuffers[1].tiles;
+    for (i = 0; i < 0x100; i++, c1++, c2++) {
         SetTile(c1);
         SetTile(c2);
     }
 
-    for (d1 = D_8004CEFC, d2 = D_800646F0, i = 0; i < 0x100; i++, d1++, d2++) {
+    d1 = g_GpuBuffers[0].lineG2;
+    d2 = g_GpuBuffers[1].lineG2;
+    for (i = 0; i < 0x100; i++, d1++, d2++) {
         SetLineG2(d1);
         SetLineG2(d2);
     }
 
-    for (e1 = D_8004A37C, e2 = D_80061B70, i = 0; i < 0x100; i++, e1++, e2++) {
+    e1 = g_GpuBuffers[0].polyG4;
+    e2 = g_GpuBuffers[1].polyG4;
+    for (i = 0; i < 0x100; i++, e1++, e2++) {
         SetPolyG4(e1);
         SetPolyG4(e2);
     }
 
-    for (f1 = D_80051AFC, f2 = D_800692F0, i = 0; i < 0x200; i++, f1++, f2++) {
+    f1 = g_GpuBuffers[0].sprite;
+    f2 = g_GpuBuffers[1].sprite;
+    for (i = 0; i < 0x200; i++, f1++, f2++) {
         SetSprt(f1);
         SetSprt(f2);
     }
 
-    for (g1 = D_8004C77C, g2 = D_80063F70, i = 0; i < 0x30; i++, g1++, g2++) {
+    g1 = g_GpuBuffers[0].polyGT3;
+    g2 = g_GpuBuffers[1].polyGT3;
+    for (i = 0; i < 0x30; i++, g1++, g2++) {
         SetPolyGT3(g1);
         SetPolyGT3(g2);
     }
 
     var_v1 = &D_80097D1C;
-    var_a0 = &D_800A21B8;
     i = 0;
-    var_a2 = &D_800A21B8;
-    for (; i < 16; var_a2++, i++, var_a0++, var_v1++) {
-        var_v1->unk00 = var_a2->unk0;
-        var_v1->unk02 = var_a0->unk4 & 0x1FF;
-        var_v1->unk23 = (var_a0->unk4 >> 8) & ~1;
-        var_v1->unk1F = (var_v1->unk00 >> 6) + 0x10;
+    new_var5 = -2;
+    new_var4 = &D_800A21B8->unk0;
+    var_a0 = &D_800A21B8->unk0 + 1;
+    var_a2 = new_var4;
+    for (; i < 16;) {
+        var_v1->unk00 = *var_a2;
+        var_v1->unk02 = (*var_a0) & 0x1FF;
+        var_v1->unk23 = ((*var_a0) >> 8) & new_var5;
+        var_v1->unk1F = (var_v1->unk00 >> 6) - (-0x10);
+        var_a2 += 2;
+        i++;
+        var_a0 += 2;
+        var_v1++;
     }
 }
+
 #endif
 
 void func_800ECE2C(void) {

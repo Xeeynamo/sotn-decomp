@@ -94,11 +94,7 @@ segments:
       - [0x3CDDC, rodata]
       - [0x40D38, .rodata, cd] # To be merged with 40D38
       - [0x40E28, rodata]
-      - [0x40E48, rodata] # jpt_8010A86C
-      - [0x40E88, rodata] # jpt_8010AA30
-      - [0x40EC8, rodata] # jpt_8010AE88
-      - [0x40EF0, rodata] # jpt_8010B3B4
-      - [0x40FC0, rodata] # jpt_8010B658
+      - [0x40E48, rodata] # UpdateEntityAlucard jump table
       - [0x4108C, rodata] # jpt_8010F424
       - [0x412AC, rodata] # jpt_8010F48C
       - [0x412C4, rodata] # jpt_8010F75C
