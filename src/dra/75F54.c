@@ -3,7 +3,88 @@
 #include "objects.h"
 #include "sfx.h"
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80115F54);
+void func_80115F54(void) {
+    Unkstruct_800ECBF8_1* temp_s0;
+    bool var_s2;
+    u8 var_v0;
+    u8 var_v1;
+
+    var_s2 = false;
+    PLAYER.unk19 = 4;
+    temp_s0 = D_80097D1C;
+    if (*D_80097420 == 0xFFF && PLAYER.step_s != 0) {
+        SetPlayerStep(Player_Unk17);
+        PLAYER.accelerationY = 0;
+        PLAYER.accelerationX = 0;
+        return;
+    }
+
+    switch (PLAYER.step_s) {
+    case 0:
+        var_s2 = true;
+        PLAYER.accelerationY = 0;
+        PLAYER.accelerationX = 0;
+        PlaySfx(NA_SE_VO_AL_DYING);
+        func_80113EE0();
+        PLAYER.accelerationY = -0x1A000;
+        PLAYER.ext.generic.unkAC = 0xC1;
+        PLAYER.blendMode = 0x30;
+        PLAYER.unk1E = 0x200;
+        func_80118C28(1);
+        func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
+        func_8011AAFC(g_CurrentEntity, 0x60031, 0);
+        temp_s0->unk25 = 0x80;
+        temp_s0->unk26 = 0x80;
+        temp_s0->unk24 = 0x80;
+        temp_s0->unk21 = 0x80;
+        temp_s0->unk22 = 0x80;
+        temp_s0->unk20 = 0x80;
+        temp_s0->unk1D = 0x80;
+        temp_s0->unk1E = 0x80;
+        temp_s0->unk1C = 0x80;
+        temp_s0->unk19 = 0x80;
+        temp_s0->unk1A = 0x80;
+        temp_s0->unk18 = 0x80;
+        temp_s0->unk1B = 1;
+        PLAYER.step_s++;
+        break;
+    case 1:
+        if (temp_s0->unk19 < 0xF8) {
+            temp_s0->unk19++;
+        }
+        if (temp_s0->unk18 >= 9) {
+            temp_s0->unk18--;
+        }
+        var_v1 = temp_s0->unk18;
+        var_v0 = temp_s0->unk19;
+        temp_s0->unk1D = var_v0;
+        temp_s0->unk21 = var_v0;
+        temp_s0->unk25 = var_v0;
+        temp_s0->unk24 = var_v1;
+        temp_s0->unk26 = var_v1;
+        temp_s0->unk20 = var_v1;
+        temp_s0->unk22 = var_v1;
+        temp_s0->unk1C = var_v1;
+        temp_s0->unk1E = var_v1;
+        temp_s0->unk1A = var_v1;
+        PLAYER.accelerationY += 0x1000;
+        if (PLAYER.accelerationY > 0x4000) {
+            PLAYER.accelerationY = 0x1000;
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            StoreImage(&D_800AE130, &D_80139A7C);
+            PLAYER.step = 0x10;
+            D_80137FE4 = 0;
+            D_80137FE8 = 0x40;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    }
+
+    if (var_s2 && g_Player.unk72) {
+        PLAYER.accelerationY = 0;
+    }
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80116208);
 

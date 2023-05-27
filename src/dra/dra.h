@@ -298,6 +298,7 @@ extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern s32 D_800ADC44;
+extern RECT D_800AE130;
 extern s32 D_800AE270[];
 extern AnimationFrame* D_800AE294;
 extern s16 D_800AFDA6;
@@ -458,6 +459,8 @@ extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;
+extern s32 D_80137FE4;
+extern s32 D_80137FE8;
 extern s32 D_80138008;
 extern u8 D_8013803C;
 extern u8 D_80138040;
@@ -527,6 +530,7 @@ extern s16 D_80139A6C;
 extern s16 g_sfxRingBufferPos2; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
+extern u_long* D_80139A7C;
 extern u16 D_8013AE7C;
 extern volatile unsigned char D_8013AE80;
 extern s16 D_8013AE84[];
