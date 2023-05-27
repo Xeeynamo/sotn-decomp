@@ -268,7 +268,7 @@ void func_80171ED4(s32 arg0) {
             e->posX.val = x;
             e->posY.val = 0xA00000;
         } else {
-            if (D_800733EC == 0) {
+            if (PLAYER.facing == 0) {
                 e->posX.val = PLAYER.posX.val - 0x120000;
             } else {
                 e->posX.val = PLAYER.posX.val + 0x120000;
@@ -680,13 +680,13 @@ init_entity:
 s32 func_801746A0(s32 arg0) {
     s32 tmp;
 
-    if (D_800733E4 < 0) {
+    if (PLAYER.accelerationY < 0) {
         if (!(g_Player.pl_vram_flag & 1)) {
             return 1;
         }
     }
 
-    tmp = D_800733E4;
+    tmp = PLAYER.accelerationY;
     NOP;
     if (tmp > 0) {
         if (!(g_Player.pl_vram_flag & 2)) {
@@ -694,24 +694,24 @@ s32 func_801746A0(s32 arg0) {
         }
     }
 
-    if (D_800733E0 < 0 && !(g_Player.pl_vram_flag & 8))
+    if (PLAYER.accelerationX < 0 && !(g_Player.pl_vram_flag & 8))
         return 1;
 
-    tmp = D_800733E0;
+    tmp = PLAYER.accelerationX;
     NOP;
-    if (D_800733E0 > 0 && !(g_Player.pl_vram_flag & 4))
+    if (PLAYER.accelerationX > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
     if (arg0 == 0)
         return 0;
 
-    if (g_Player.unk50 != D_80073404)
+    if (g_Player.unk50 != PLAYER.step)
         return 1;
 
     if (g_Player.unk50 != 0)
         return 1;
 
-    if (g_Player.unk52 != D_80073406)
+    if (g_Player.unk52 != PLAYER.step_s)
         return 1;
 
     return g_Player.unk52 != 0 && g_Player.unk52 != 4;

@@ -469,10 +469,10 @@ void func_80162C84(Entity* entity) {
         break;
 
     case 1:
-        if (*(s32*)&entity->animFrameIdx == 0x10000) {
+        if (LOW(entity->animFrameIdx) == 0x10000) {
             g_api.PlaySfx(0x882);
         }
-        if (*(s32*)&entity->animFrameIdx == 0x10004) {
+        if (LOW(entity->animFrameIdx) == 0x10004) {
             g_api.PlaySfx(0x883);
         }
 
