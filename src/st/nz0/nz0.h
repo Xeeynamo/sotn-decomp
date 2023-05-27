@@ -3,6 +3,12 @@
 typedef enum {
     E_AXE_KNIGHT_AXE = 0x2A,
     E_BONE_SCIMITAR_HEAD = 0x28,
+    E_FIRE = 0x38,
+    E_SLOGRA_SPEAR = 0x41,
+    E_SLOGRA_SPEAR_PROJECTILE = 0x42,
+    E_GAIBON = 0x43,
+    E_GAIBON_SMALL_FIREBALL = 0x45,
+    E_GAIBON_BIG_FIREBALL = 0x46,
 } ObjectIds;
 
 void DestroyEntity(Entity* item);
@@ -66,9 +72,55 @@ extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
 extern s16 D_80180CE8[];
 extern u16 D_80180D00[];
+
+// *** EntitySlogra properties START ***
+
+extern u16 D_80180D0C[]; // Init
+extern u16 D_8018105C[];
+extern s32 D_8018106C;
+extern u8 D_80181074[]; // Animation
+extern u8 D_80181080[]; // Animation: Taunt
+extern u8 D_8018108C[]; // Animation: Firing projectiles
+extern u8 D_8018109C[]; // Animation
+extern u8 D_801810A8[]; // Animation
+extern u8 D_801810B4[]; // Animation
+extern u8 D_801810D4[]; // Animation
+extern u8 D_801810E8[]; // Animation
+extern u8 D_801810FC[]; // Animation
+extern u8 D_80181108[]; // Animation
+extern u8 D_80181114[]; // Animation
+extern u8 D_80181128[]; // Animation
+extern u8 D_80181140[]; // Animation
+extern u8 D_80181150[]; // Animation
+extern u8 D_80181158[]; // Animation
+extern s32 D_80181178[];
+extern u8 D_801811B8[];
+
+// *** EntitySlogra properties END ***
+
 extern u16 D_80180D18[];
 extern u16 D_80180D24[];
+
+// *** EntityGaibon properties START ***
+
 extern u16 D_80180D30[];
+extern u16 D_80180D36;
+extern s32 D_80181240;
+extern u8 D_80181250[];
+extern u8 D_80181264[];
+extern u8 D_80181298[];
+extern u8 D_801812AC[];
+extern u8 D_801812C0[];
+extern u8 D_801812CC[];
+extern u8 D_801812DC[];
+extern u8 D_801812F0[];
+extern u8 D_801812FC[];
+extern u8 D_80181304[];
+extern s32 D_80181310[];
+extern u8 D_80181340[];
+
+// *** EntityGaibon properties END ***
+
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];
@@ -91,7 +143,7 @@ extern u16 D_80180F9C[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
-extern s32 D_80181010;
+extern s32 g_BossFlag; // original names: boss_flag / beri_flag
 extern const u8 D_80181160[];
 extern const u8 D_80181170[];
 extern s8 D_801811E0[];

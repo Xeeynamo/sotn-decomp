@@ -44,7 +44,7 @@ void EntityZombie(Entity* self) {
 
     case 2:
         if (AnimateEntity(D_80182594, self) == 0) {
-            func_801BD114(3);
+            SetStep(3);
         }
         if (self->animFrameDuration == 0) {
             self->unk12 -= 2;
@@ -63,7 +63,7 @@ void EntityZombie(Entity* self) {
 
         if (temp_a0 & 0xC0) {
             self->unk3C = 0;
-            func_801BD114(4);
+            SetStep(4);
         }
         break;
 

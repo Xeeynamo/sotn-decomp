@@ -1034,7 +1034,7 @@ extern u16 D_800733FA;  // PLAYER.unk22
 extern u16 D_800733FC;  // PLAYER.zPriority
 extern s16 D_800733FE;  // PLAYER.objectId
 extern u16 D_80073404;  // PLAYER.step
-extern u16 D_80073406;  // PLAYER.unk2E
+extern u16 D_80073406;  // PLAYER.step_s
 extern u16 D_8007340A;  // PLAYER.objectRoomIndex
 extern u16 D_8007341C;  // PLAYER.unk44
 extern s32* D_80073424; // PLAYER.unk4C

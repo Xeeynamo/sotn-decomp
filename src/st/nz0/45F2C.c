@@ -12,10 +12,10 @@ void func_801C5F2C(Entity* self) {
 
     if (!(func_801BD720(&D_801824C0, 3) & 2)) {
         if ((--self->ext.generic.unk7C.U8.unk0) == 0) {
-            func_801BD52C(4);
+            SetStep(4);
         }
     } else {
-        func_801BD52C(SKELETON_JUMP);
+        SetStep(SKELETON_JUMP);
     }
 }
 
@@ -79,7 +79,7 @@ void EntitySkeleton(Entity* self) {
     case SKELETON_ATTACK:
         animStatus = AnimateEntity(D_801823FC, self);
         if (!animStatus) {
-            func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
+            SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
                 D_80182480[self->subId & 1]
                           [++self->ext.generic.unk84.S8.unk0 & 3];
@@ -142,7 +142,7 @@ void EntitySkeleton(Entity* self) {
         case 2:
             if (AnimateEntity(D_80182418, self) & 1) {
                 self->step_s = 0;
-                func_801BD52C(SKELETON_WALK_AWAY_FROM_PLAYER);
+                SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;

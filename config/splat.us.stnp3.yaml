@@ -49,6 +49,9 @@ segments:
       - [0x3A7C, roomdef, g_Rooms]
       - [0x3B68, rodata]
       - [0x31EA0, rodata]
+      - [0x31ED0, rodata] # EntitySlogra .rodata, 36990
+      - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
+      - [0x31F00, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, rodata]
       - [0x31FB0, rodata]
@@ -59,6 +62,8 @@ segments:
       - [0x320DC, rodata]
       - [0x32360, rodata]
       - [0x3246C, c]
+      - [0x36990, c] # Gaibon & Slogra boss
+      - [0x390BC, c]
       - [0x3DEF4, c]
       - [0x490E8, c] # EntityBoneScimitar
       - [0x4997C, c]

@@ -19,7 +19,7 @@ void EntityBloodSkeleton(Entity* self) {
     if ((self->flags & 0x100) && (self->step < 3)) {
         func_801C29B0(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
         self->unk3C = 0;
-        func_801BD52C(BLOOD_SKELETON_DISASSEMBLE);
+        SetStep(BLOOD_SKELETON_DISASSEMBLE);
     }
 
     switch (self->step) {
@@ -64,7 +64,7 @@ void EntityBloodSkeleton(Entity* self) {
             if (self->subId != 0) {
                 self->ext.generic.unk80.modeS16.unk0 = 4;
             }
-            func_801BD52C(BLOOD_SKELETON_REASSEMBLE);
+            SetStep(BLOOD_SKELETON_REASSEMBLE);
         }
         break;
 
@@ -108,7 +108,7 @@ void EntityBloodSkeleton(Entity* self) {
                 self->hitPoints = 0;
                 self->unk3C = 3;
                 self->flags = g_api.enemyDefs[70].unk24 & 0x1FFFFFFF;
-                func_801BD52C(BLOOD_SKELETON_WALK);
+                SetStep(BLOOD_SKELETON_WALK);
             }
         }
         break;

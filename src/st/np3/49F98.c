@@ -217,14 +217,14 @@ void EntityBloodyZombie(Entity* self) {
     if (self->unk44 && self->step & 1) {
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_INJURED_SCREAM);
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_INJURED);
-        func_801BD114(BLOODY_ZOMBIE_TAKE_HIT);
+        SetStep(BLOODY_ZOMBIE_TAKE_HIT);
     }
 
     if (self->flags & 0x100 && self->step < 8) {
         func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
         self->unk3C = 0;
         self->flags &= ~FLAG_UNK_20000000;
-        func_801BD114(BLOODY_ZOMBIE_DYING);
+        SetStep(BLOODY_ZOMBIE_DYING);
     }
 
     switch (self->step) {
@@ -232,12 +232,12 @@ void EntityBloodyZombie(Entity* self) {
         InitializeEntity(D_80180B38);
         self->unk10 = 1;
         self->unk12 = 4;
-        func_801BD114(BLOODY_ZOMBIE_UNK_2);
+        SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
 
     case BLOODY_ZOMBIE_UNK_2:
         if (func_801BC8E4(&D_801825D4) & 1) {
-            func_801BD114(BLOODY_ZOMBIE_WALK);
+            SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
 
@@ -276,7 +276,7 @@ void EntityBloodyZombie(Entity* self) {
         facing = GetPlayerSide() & 1;
         if (PLAYER.facing == facing && GetPlayerDistanceX() < 128) {
             self->facing = facing ^ 1;
-            func_801BD114(BLOODY_ZOMBIE_CHASE);
+            SetStep(BLOODY_ZOMBIE_CHASE);
         }
         break;
 
@@ -306,7 +306,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (GetPlayerDistanceX() < 40) {
-            func_801BD114(BLOODY_ZOMBIE_ATTACK);
+            SetStep(BLOODY_ZOMBIE_ATTACK);
         }
         break;
 
@@ -316,7 +316,7 @@ void EntityBloodyZombie(Entity* self) {
             func_801C2598(NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH);
         }
         if (animStatus == 0) {
-            func_801BD114(BLOODY_ZOMBIE_WALK);
+            SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
 
@@ -332,7 +332,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (AnimateEntity(D_80182620, self) == 0) {
-            func_801BD114(BLOODY_ZOMBIE_WALK);
+            SetStep(BLOODY_ZOMBIE_WALK);
             self->step_s++;
         }
         break;

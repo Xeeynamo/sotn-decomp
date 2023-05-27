@@ -61,7 +61,7 @@ void func_801C4550(void) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2 -= 3;
     } else {
-        func_801BD52C(D_801822B4[(Random() & 7)]);
+        SetStep(D_801822B4[(Random() & 7)]);
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2 = 256;
     }
 }
@@ -92,7 +92,7 @@ void EntityAxeKnight(Entity* self) {
             self->unk3C = 0;
             self->ext.generic.unk80.modeS16.unk0 = 65;
             self->zPriority -= 0x10;
-            func_801BD52C(AXE_KNIGHT_DYING);
+            SetStep(AXE_KNIGHT_DYING);
         }
     }
 
@@ -107,7 +107,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_IDLE:
         if (func_801BCCFC(&D_80182188) & 1) {
             self->facing = (GetPlayerSide() & 1) ^ 1;
-            func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
         break;
 
@@ -133,7 +133,7 @@ void EntityAxeKnight(Entity* self) {
                 self->accelerationX = 0x3000;
             }
             if (GetPlayerDistanceX() < 96) {
-                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             }
         }
@@ -179,7 +179,7 @@ void EntityAxeKnight(Entity* self) {
             }
 
             if (GetPlayerDistanceX() > 80) {
-                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             }
         }
@@ -208,10 +208,10 @@ void EntityAxeKnight(Entity* self) {
         if (animStatus == 0) {
         label:
             if (GetPlayerDistanceX() < 89) {
-                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             } else {
-                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
@@ -257,10 +257,10 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
             if (GetPlayerDistanceX() > 88) {
-                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             } else {
-                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             }
             break;
