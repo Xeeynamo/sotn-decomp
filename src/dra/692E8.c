@@ -147,6 +147,7 @@ void func_80109990(void) {
     }
 }
 
+void func_80109A44(s32 arg0);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80109A44);
 
 // regalloc
@@ -222,6 +223,7 @@ void func_8010A3F0(void) {
 }
 #endif
 
+s32 func_8010A4A4(void);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A4A4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateEntityAlucard);

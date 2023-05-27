@@ -1142,6 +1142,7 @@ extern u8 g_SaveName[12] ALIGNED4;
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern s32 D_80097C98;
+extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
 extern s8 D_80097D37;
 extern u8 D_80097F3C;
 extern u8 D_80097F3D;
