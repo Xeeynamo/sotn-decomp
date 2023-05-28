@@ -1114,7 +1114,7 @@ s32 func_801C6458(s16 yVector) {
     return res;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C6564);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityMerman2);
 
 // some sort of explosion
 void EntityExplosion2(Entity* entity, s32 arg1) {
