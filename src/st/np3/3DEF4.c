@@ -1302,7 +1302,7 @@ void EntityLargeFallingObject(Entity* self) {
     }
 }
 
-void EntityMerman2(Entity* self) {
+void EntityMermanSpawner(Entity* self) {
     Entity* newEntity;
     u16 temp_s0_2;
     u16 temp_s0;

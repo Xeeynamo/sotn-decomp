@@ -1332,7 +1332,7 @@ void EntityLargeFallingObject(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman2);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMermanSpawner);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman);
 
