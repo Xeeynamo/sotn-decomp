@@ -512,7 +512,11 @@ void EntitySlogra(Entity* self) {
 
             MoveEntity();
             self->accelerationY += 0x4000;
+<<<<<<< HEAD
             if ((self->posY.i.hi + g_Camera.posY.i.hi) > 416) {
+=======
+            if (self->posY.i.hi + g_Camera.posY.i.hi > 416) {
+>>>>>>> 7d76b15c802fdff1e7abfd70252665d9e41d76f3
                 self->posY.i.hi = 416 - g_Camera.posY.i.hi;
                 func_801C29B0(NA_SE_EN_SLOGRA_FLOOR_STOMP);
                 g_api.func_80102CD8(1);
@@ -854,7 +858,7 @@ void EntityGaibon(Entity* self) {
             } else {
                 shootSpeed = 15;
             }
-            if (!(self->ext.GS_Props.timer & shootSpeed)) {
+            if (self->ext.GS_Props.timer & shootSpeed == 0) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_GAIBON_SMALL_FIREBALL, self,
