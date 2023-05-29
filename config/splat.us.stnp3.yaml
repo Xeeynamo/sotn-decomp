@@ -55,6 +55,8 @@ segments:
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, rodata]
       - [0x31FB0, rodata]
+      - [0x3200C, rodata] # EntityStageNamePopup .rodata,
+      - [0x32020, rodata] # EntityMerman2 .rodata, 3DEF4
       - [0x32044, rodata] # EntityMerman .rodata, 3DEF4
       - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C]
@@ -65,7 +67,7 @@ segments:
       - [0x3246C, c]
       - [0x36990, c] # Gaibon & Slogra boss
       - [0x390BC, c]
-      - [0x3DEF4, c]
+      - [0x3DEF4, c] # MERMAN
       - [0x490E8, c] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]
