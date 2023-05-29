@@ -804,8 +804,7 @@ typedef struct {
     /* 10 */ s16 top;
     /* 12 */ s16 right;
     /* 14 */ s16 bottom;
-    /* 16 */ s16 padding;
-} SpritePart; /* size=0x18 */
+} SpritePart; /* size=0x16 */
 
 typedef struct {
     /* 00 */ u16 count;

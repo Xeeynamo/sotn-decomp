@@ -2611,6 +2611,8 @@ void func_8018C55C(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
+void EntityPrizeDrop(Entity*);
+void EntityEquipItemDrop(Entity*);
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 subId;
 

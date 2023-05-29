@@ -1,3 +1,4 @@
+#ifndef USE_STDC
 extern void exit();
 extern void puts(char*);
 // setjmp
@@ -16,3 +17,4 @@ extern void* malloc(size_t // Size of memory block to be allocated
 );
 extern void free(void*);
 int printf(char*, ...);
+#endif

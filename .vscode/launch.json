@@ -5,6 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "SOTN simulator",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tools/simulator/simulator",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tools/simulator",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "build-simulator",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
             "name": "Debug sotn-disk (extract)",
             "type": "go",
             "request": "launch",

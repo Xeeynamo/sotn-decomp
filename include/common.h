@@ -32,6 +32,8 @@
 #define NOP
 #endif
 
+#ifndef USE_STDC
 int sprintf(char* dst, const char* fmt, ...);
+#endif
 
 #endif

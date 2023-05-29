@@ -1,6 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#ifndef USE_STDC
 typedef char int8_t;
 typedef short int16_t;
 typedef int int32_t;
@@ -9,10 +10,13 @@ typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 typedef unsigned long long uint64_t;
+typedef unsigned int size_t;
+#endif
+
+typedef long unsigned int u_long;
 typedef unsigned char u_char;
 typedef unsigned short u_short;
-typedef unsigned int u_long;
-typedef unsigned int size_t;
+
 typedef signed char s8;
 typedef signed short s16;
 typedef signed int s32;
