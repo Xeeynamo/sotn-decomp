@@ -1123,7 +1123,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityMerman2);
 
 // some sort of explosion: ID 0x36
 void EntityExplosion2(Entity* entity, s32 arg1) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s16 firstPolygonIndex;
 
     if (entity->step == 0) {
@@ -1132,7 +1132,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->unk3C = 0;
         entity->zPriority += 4;
         if (entity->subId != 0) {
-            firstPolygonIndex = g_api.AllocPrimitives(4, 2);
+            firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(entity);
                 return;
@@ -1150,24 +1150,24 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             poly->v1 = poly->v0 = 0;
             poly->u2 = poly->u0;
             poly->u3 = poly->u1;
-            LOH(((POLY_GT4*)poly->tag)->r2) = 0x40;
-            LOH(((POLY_GT4*)poly->tag)->b2) = 0x40;
-            LOH(((POLY_GT4*)poly->tag)->u1) = 0;
-            ((POLY_GT4*)poly->tag)->b3 = 0x60;
-            ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
-            ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
-            poly->pad2 = entity->zPriority - 4;
-            poly->pad3 = 6;
+            LOH(poly->next->r2) = 0x40;
+            LOH(poly->next->b2) = 0x40;
+            LOH(poly->next->u1) = 0;
+            poly->next->b3 = 0x60;
+            poly->next->x1 = entity->posX.i.hi;
+            poly->next->y0 = entity->posY.i.hi;
+            poly->priority = entity->zPriority - 4;
+            poly->blendMode = 6;
         }
     }
 
     if (entity->subId != 0) {
         poly = *(s32*)&entity->ext.generic.unk7C.s;
         func_801D1F38(poly);
-        ((POLY_GT4*)poly->tag)->b3 += 252;
-        LOH(((POLY_GT4*)poly->tag)->u1) -= 128;
-        if (((POLY_GT4*)poly->tag)->b3 < 16) {
-            poly->pad3 = 8;
+        ((POLY_GT4*)poly->next)->b3 += 252;
+        LOH(poly->next->u1) -= 128;
+        if (poly->next->b3 < 16) {
+            poly->blendMode = 8;
         }
     }
 
