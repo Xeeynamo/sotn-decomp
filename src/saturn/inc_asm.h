@@ -8,13 +8,15 @@
 
 #ifndef INCLUDE_ASM
 
-#define INCLUDE_ASM(FOLDER, NAME)                                              \
+
+#define INCLUDE_ASM(FOLDER, NAME, LABEL)                                              \
     __asm__(".text\n"                                                 \
             "\t.align\t2\n"                                                    \
-            "\t.global\t" #NAME "\n"                                            \
+            "\t.global\t _" #LABEL "\n"                                            \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
 #endif
 
+// omit .global
 __asm__(".include \"macro.inc\"\n");
 
 #else

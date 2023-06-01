@@ -253,6 +253,7 @@ $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
 
 context:
 	$(M2CTX) $(SOURCE)
@@ -370,26 +371,40 @@ build_saturn:
 	cp  ./src/saturn/macro.inc $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/game.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/t_bat.c $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/zero.c $(SATURN_BUILD_DIR)
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game
 	cp -r ./asm/saturn/t_bat $(SATURN_BUILD_DIR)/asm/saturn/t_bat
+	cp -r ./asm/saturn/zero $(SATURN_BUILD_DIR)/asm/saturn/zero
 	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
 	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
 	# execute in docker
 	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=t_bat -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
+	docker run --rm -e FILENAME=zero -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
+
+	# link
+	cat ./config/saturn/game_syms.txt > ./build/saturn/all_syms.txt
+	cat ./config/saturn/t_bat_syms.txt >> ./build/saturn/all_syms.txt
+	cat ./config/saturn/zero_syms.txt >> ./build/saturn/all_syms.txt
+	cp ./config/saturn/*.ld ./build/saturn
+	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -verbose zero.o --no-check-sections -nostdlib -s"
+	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
+	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -verbose game.o --no-check-sections -nostdlib -s"
 
 check_saturn:
 	# dump binaries using sh binutils container
 	chmod +x tools/saturn_toolchain/strip.sh
 	cp tools/saturn_toolchain/strip.sh $(SATURN_BUILD_DIR)
-	docker run --rm -e INPUT_FILENAME=game.o -e OUTPUT_FILENAME=GAME.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
-	docker run --rm -e INPUT_FILENAME=t_bat.o -e OUTPUT_FILENAME=T_BAT.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
+	docker run --rm -e INPUT_FILENAME=game_li.o -e OUTPUT_FILENAME=GAME.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
+	docker run --rm -e INPUT_FILENAME=t_bat_li.o -e OUTPUT_FILENAME=T_BAT.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
+	docker run --rm -e INPUT_FILENAME=zero_li.o -e OUTPUT_FILENAME=0.BIN -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	# check hashes
 	sha1sum --check config/saturn/check.game.prg.sha
 	sha1sum --check config/saturn/check.t_bat.prg.sha
+	sha1sum --check config/saturn/check.zero.bin.sha
 
 diff_saturn:
 	chmod +x tools/saturn_toolchain/diff.sh

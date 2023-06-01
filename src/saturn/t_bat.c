@@ -1,34 +1,52 @@
 #include "inc_asm.h"
 
-typedef int s32;
+typedef signed char s8;
+typedef signed short s16;
+typedef signed int s32;
+typedef signed long long s64;
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef unsigned long long u64;
 
-INCLUDE_ASM("asm/saturn/t_bat", d_00000);
-INCLUDE_ASM("asm/saturn/t_bat", f_00060);
-INCLUDE_ASM("asm/saturn/t_bat", f_00294);
-INCLUDE_ASM("asm/saturn/t_bat", f_002E8);
-INCLUDE_ASM("asm/saturn/t_bat", f_00410);
-INCLUDE_ASM("asm/saturn/t_bat", f_005F4);
-INCLUDE_ASM("asm/saturn/t_bat", f_006B4);
-INCLUDE_ASM("asm/saturn/t_bat", f_00B00);
-INCLUDE_ASM("asm/saturn/t_bat", f_00C48);
-INCLUDE_ASM("asm/saturn/t_bat", f_01490);
-void f_01938() {}
-void f_01944() {}
-void f_01950() {}
-void f_0195C() {}
-INCLUDE_ASM("asm/saturn/t_bat", f_01968);
-void f_01A4C() {}
-void f_01A58() {}
-INCLUDE_ASM("asm/saturn/t_bat", f_01A64);
-void f_02010() {}
-void f_0201C() {}
-void f_02028() {}
-void f_02034() {}
-INCLUDE_ASM("asm/saturn/t_bat", f_02040);
-INCLUDE_ASM("asm/saturn/t_bat", f_02070);
+// entity layout is different somehow
+typedef struct Entity {
+    s16 temp;
+    s16 pad1;
+    s16 posx;
+    s16 pad3;
+    s16 posy;
+} Entity;
+
+INCLUDE_ASM("asm/saturn/t_bat", d60CF000, d_060CF000);
+INCLUDE_ASM("asm/saturn/t_bat", f60CF060, func_060CF060);
+INCLUDE_ASM("asm/saturn/t_bat", f60CF294, func_060CF294);
+INCLUDE_ASM("asm/saturn/t_bat", f60CF2E8, func_060CF2E8);
+INCLUDE_ASM("asm/saturn/t_bat", f60CF410, func_060CF410);
+INCLUDE_ASM("asm/saturn/t_bat", f60CF5F4, func_060CF5F4);
+INCLUDE_ASM("asm/saturn/t_bat", f60CF6B4, func_060CF6B4);
+INCLUDE_ASM("asm/saturn/t_bat", f60CFB00, func_060CFB00);
+INCLUDE_ASM("asm/saturn/t_bat", f60CFC48, func_060CFC48);
+INCLUDE_ASM("asm/saturn/t_bat", f60D0490, func_060D0490);
+
+
+void f60D0938() {}
+void f60D0944() {}
+void f60D0950() {}
+void f60D095C() {}
+INCLUDE_ASM("asm/saturn/t_bat", f60D0968, func_060D0968);
+void f60D0A4C() {}
+void f60D0A58() {}
+INCLUDE_ASM("asm/saturn/t_bat", f60D0A64, func_060D0A64);
+void f60D1010() {}
+void f60D101C() {}
+void f60D1028() {}
+void f60D1034() {}
+INCLUDE_ASM("asm/saturn/t_bat", f60D1040, func_060D1040);
+INCLUDE_ASM("asm/saturn/t_bat", f60D1070, func_060D1070);
 
 // PSX: TT_000:func_80173E78
-// SAT: T_BAT:f_021B8
+// SAT: T_BAT:f_021B8 / func_060D11B8
 s32 func_80173E78(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
         arg0 += arg1;
@@ -45,14 +63,22 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
     return arg0;
 }
 
-INCLUDE_ASM("asm/saturn/t_bat", f_021DC);
-INCLUDE_ASM("asm/saturn/t_bat", f_02224);
-INCLUDE_ASM("asm/saturn/t_bat", f_0225C);
-INCLUDE_ASM("asm/saturn/t_bat", f_022AC);
-INCLUDE_ASM("asm/saturn/t_bat", f_022DC);
-INCLUDE_ASM("asm/saturn/t_bat", f_0241C);
-INCLUDE_ASM("asm/saturn/t_bat", f_02640);
-INCLUDE_ASM("asm/saturn/t_bat", f_026D0);
-INCLUDE_ASM("asm/saturn/t_bat", f_02784);
-INCLUDE_ASM("asm/saturn/t_bat", f_02808);
-INCLUDE_ASM("asm/saturn/t_bat", d_02858);
+INCLUDE_ASM("asm/saturn/t_bat", f60D11DC, func_060D11DC);
+
+// PSX: func_80173F30
+// SAT: func_060D1224
+s32 func_80173F30(Entity* entity, s16 x, s16 y) {
+    s16 diffx = x - entity->posx; //was entity->posX.i.hi
+    // not the same implementation as ratan2
+    return func_0600EE88(-(s16)(y - entity->posy), diffx) & 0xFFF; // was entity->posY.i.hi
+}
+
+INCLUDE_ASM("asm/saturn/t_bat", f60D125C, func_060D125C);
+INCLUDE_ASM("asm/saturn/t_bat", f60D12AC, func_060D12AC);
+INCLUDE_ASM("asm/saturn/t_bat", f60D12DC, func_060D12DC);
+INCLUDE_ASM("asm/saturn/t_bat", f60D141C, func_060D141C);
+INCLUDE_ASM("asm/saturn/t_bat", f60D1640, func_060D1640);
+INCLUDE_ASM("asm/saturn/t_bat", f60D16D0, func_060D16D0);
+INCLUDE_ASM("asm/saturn/t_bat", f60D1784, func_060D1784);
+INCLUDE_ASM("asm/saturn/t_bat", f60D1808, func_060D1808);
+INCLUDE_ASM("asm/saturn/t_bat", d60D1858, d_060D1858);

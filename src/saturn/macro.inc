@@ -1,4 +1,4 @@
 .macro glabel label
     .global \label
-    \label:
+    _\label:
 .endm
