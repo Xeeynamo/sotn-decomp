@@ -74,9 +74,6 @@ segments:
       - [0x2065C, tilelayout, D_801A065C]
       - [0x2085C, tilelayout, D_801A085C]
       - [0x20A5C, data]
-      - [0x20E5C, raw, D_801A0E5C] # tiledef
-      - [0x24E6C, raw, D_801A4E6C] # tiledef
-      - [0x26E7C, raw, D_801A6E7C] # tiledef
       - [0x305A4, rodata]
       - [0x305FC, rodata] # EntitySlogra .rodata, 33FCC
       - [0x30618, rodata] # EntityGaibon .rodata, 33FCC
