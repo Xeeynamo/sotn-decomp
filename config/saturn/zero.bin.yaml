@@ -37,4 +37,15 @@ segments:
       - start: 0xb8ec
         type: data
         file: zero
+        end: 0xbf37
+
+      # DestroyEntity
+      - start: 0xBf38
+        type: c
+        file: zero
+        end: 0xbf87
+
+      - start: 0xbf88
+        type: data
+        file: zero
         end: 0x4C560

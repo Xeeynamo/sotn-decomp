@@ -389,9 +389,11 @@ build_saturn:
 	cat ./config/saturn/game_syms.txt > ./build/saturn/all_syms.txt
 	cat ./config/saturn/t_bat_syms.txt >> ./build/saturn/all_syms.txt
 	cat ./config/saturn/zero_syms.txt >> ./build/saturn/all_syms.txt
+	cp ./config/saturn/t_bat_user_syms.txt ./build/saturn/
+
 	cp ./config/saturn/*.ld ./build/saturn
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -verbose zero.o --no-check-sections -nostdlib -s"
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
+	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -verbose game.o --no-check-sections -nostdlib -s"
 
 check_saturn:

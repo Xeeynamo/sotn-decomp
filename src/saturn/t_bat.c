@@ -16,6 +16,8 @@ typedef struct Entity {
     s16 posx;
     s16 pad3;
     s16 posy;
+    s8 pad[0x25];
+    u16 subId;
 } Entity;
 
 INCLUDE_ASM("asm/saturn/t_bat", d60CF000, d_060CF000);
@@ -41,7 +43,20 @@ void f60D1010() {}
 void f60D101C() {}
 void f60D1028() {}
 void f60D1034() {}
-INCLUDE_ASM("asm/saturn/t_bat", f60D1040, func_060D1040);
+
+extern s32 D_80174D3C; // 0x060D1DFCh
+
+void DestroyEntity(Entity*); // func_0600FFB8h
+
+// PSX: func_80173C2C
+// SAT: func_060D1040
+void func_80173C2C(Entity* entity) {
+    if (entity->subId == 0xF) {
+        D_80174D3C = 1;
+    }
+    func_0600FFB8(entity); // DestroyEntity
+}
+
 INCLUDE_ASM("asm/saturn/t_bat", f60D1070, func_060D1070);
 
 // PSX: TT_000:func_80173E78
