@@ -8,7 +8,7 @@ void EntityBat(Entity* entity) {
     if (entity->flags & 0x100) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
             newEntity->subId = 1;
         }
         func_801C2598(0x69C);

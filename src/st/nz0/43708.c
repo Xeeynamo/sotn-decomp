@@ -250,7 +250,7 @@ void EntityBoneScimitar(Entity* self) {
         newEntity = &self[1];
         // If he's one of the special ones from entrance (first visit)
         if (self->subId != 0) {
-            CreateEntityFromEntity(ENTITY_INVENTORY_DROP, self, newEntity);
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
             if (!(self->subId & 1)) {
                 self[1].subId = ITEM_RED_RUST;
             } else {
@@ -274,7 +274,7 @@ void EntityBoneScimitarParts(Entity* entity) {
             MoveEntity();
             return;
         }
-        entity->objectId = ENTITY_EXPLOSION;
+        entity->objectId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->subId = 0;
         entity->step = 0;

@@ -227,7 +227,7 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
     s16 i;
 
     for (i = start; i < end; i++, entity++) {
-        if (entity->objectId == ENTITY_UNALLOCATED) {
+        if (entity->objectId == E_NONE) {
             return entity;
         }
     }
