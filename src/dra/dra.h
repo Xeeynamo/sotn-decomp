@@ -99,6 +99,13 @@ typedef enum {
 } CdCallbacks;
 
 typedef enum {
+    E_NONE,
+    E_UNK_1,
+
+    ENTITY_13 = 0x13,
+} EntityIDs;
+
+typedef enum {
     Player_Stand,
     Player_Walk,
     Player_Crouch,

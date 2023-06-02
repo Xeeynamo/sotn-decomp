@@ -269,7 +269,7 @@ void func_801C7884(Entity* entity) {
         entity->unk1E += 0x20;
 
         if (entity[-1].step != 1) {
-            entity->objectId = ENTITY_PRICE_DROP;
+            entity->objectId = E_PRIZE_DROP;
             entity->pfnUpdate = EntityPrizeDrop;
             entity->animFrameDuration = 0;
             entity->animFrameIdx = 0;

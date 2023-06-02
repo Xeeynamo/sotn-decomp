@@ -786,7 +786,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
 
     entity = g_CurrentEntity;
     entity->unk19 = 0;
-    entity->objectId = ENTITY_EXPLOSION;
+    entity->objectId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->subId = arg0;
     entity->animCurFrame = 0;
@@ -909,13 +909,13 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     subId = self->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        self->objectId = ENTITY_PRICE_DROP;
+        self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
         subId -= 0x80;
-        self->objectId = ENTITY_INVENTORY_DROP;
+        self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 

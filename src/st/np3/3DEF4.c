@@ -537,8 +537,8 @@ void func_801C03E4(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
-                newEntity->objectId = ENTITY_EXPLOSION;
+                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+                newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }
@@ -790,7 +790,7 @@ void func_801C1848(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
             entity->ext.generic.unk84.U8.unk1 = 6 - i;
             entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
             entity->ext.generic.unk84.U8.unk0 = temp_s4;
@@ -1194,7 +1194,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     if (entity->flags & 0x100) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
             newEntity->subId = 0;
         }
         DestroyEntity(entity);
@@ -1362,7 +1362,7 @@ void func_801C8DF0(Entity* self) {
 
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(ENTITY_15, self, entity);
+            CreateEntityFromEntity(E_UNK_15, self, entity);
             entity->ext.generic.unk94 = 4;
             entity->unk19 = 3;
             entity->zPriority = self->zPriority + 8;
@@ -1379,7 +1379,7 @@ void func_801C8DF0(Entity* self) {
         if (self->flags & 0x100) {
             entity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (entity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->subId = 0;
             }
             DestroyEntity(self);

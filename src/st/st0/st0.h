@@ -7,6 +7,26 @@
 #define DISP_UNK2_W 512
 #define DISP_UNK2_H DISP_ALL_H
 
+typedef enum {
+    E_NONE,
+    E_BREAKABLE,
+    E_EXPLOSION,
+    E_PRIZE_DROP,
+    E_NUMERIC_DAMAGE,
+    E_RED_DOOR,
+    E_INTENSE_EXPLOSION,
+    E_ABSORB_ORB,
+    E_ROOM_FOREGROUND,
+    E_DUMMY_09,
+    E_EQUIP_ITEM_DROP,
+    E_DUMMY_0B,
+    E_DUMMY_0C,
+    E_DUMMY_0D,
+    E_DUMMY_0E,
+    E_DUMMY_0F,
+    E_DUMMY_10,
+} EntityIDs;
+
 extern const char* D_801A7984;
 extern const char* D_801A7990;
 extern const char* D_801A799C;

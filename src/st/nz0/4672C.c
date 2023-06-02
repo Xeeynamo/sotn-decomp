@@ -88,7 +88,7 @@ void EntitySpittleBone(Entity* self) {
 
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->subId = 1;
             newEntity->posX.i.hi += -(rsin(self->unk1E) * 0x10) >> 0xC;
             newEntity->posY.i.hi += -(rcos(self->unk1E) * 0x10) >> 0xC;
@@ -104,7 +104,7 @@ void EntitySpittleBone(Entity* self) {
         if (self->ext.generic.unk80.modeS16.unk2 == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 0;
             }
             DestroyEntity(self);

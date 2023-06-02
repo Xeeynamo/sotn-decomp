@@ -1,5 +1,4 @@
-#include "game.h"
-#include "stage.h"
+#include "wrp.h"
 
 PfnEntityUpdate PfnEntityUpdates[];
 
@@ -550,8 +549,8 @@ void func_8018F510(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
-                newEntity->objectId = ENTITY_EXPLOSION;
+                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+                newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }
@@ -771,7 +770,7 @@ void func_8019055C(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
             entity->ext.generic.unk84.U8.unk1 = 6 - i;
             entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
             entity->ext.generic.unk84.U8.unk0 = temp_s4;

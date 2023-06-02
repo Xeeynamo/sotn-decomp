@@ -341,8 +341,8 @@ void func_8019572C(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
-                newEntity->objectId = ENTITY_EXPLOSION;
+                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+                newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }

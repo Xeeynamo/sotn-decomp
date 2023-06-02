@@ -549,7 +549,7 @@ void EntitySlogra(Entity* self) {
             if (!(g_blinkTimer % 4)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     newEntity->posX.i.hi -= 16 - (Random() & 31);
                     newEntity->posY.i.hi -= 16 - (Random() & 31);
                     newEntity->zPriority = self->zPriority + 1;
@@ -565,7 +565,7 @@ void EntitySlogra(Entity* self) {
         case SLOGRA_DYING_END:
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 3;
                 newEntity->posY.i.hi += 16;
             }
@@ -662,7 +662,7 @@ void EntitySlograSpearProjectile(Entity* self) {
     if (self->flags & 0x100) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->subId = 1;
         }
         DestroyEntity(self);

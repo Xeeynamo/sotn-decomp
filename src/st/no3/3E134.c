@@ -1009,13 +1009,13 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     subId = self->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        self->objectId = ENTITY_PRICE_DROP;
+        self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
         subId -= 0x80;
-        self->objectId = ENTITY_INVENTORY_DROP;
+        self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 

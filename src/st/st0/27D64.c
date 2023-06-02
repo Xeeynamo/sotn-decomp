@@ -391,7 +391,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     s32 speedX;
 
     if (g_isDraculaFirstFormDefeated) {
-        entity->objectId = ENTITY_EXPLOSION;
+        entity->objectId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
         entity->step_s = 0;
@@ -1299,13 +1299,13 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     subId = self->subId &= 0xFFF;
 
     if (subId < 0x80) {
-        self->objectId = ENTITY_PRICE_DROP;
+        self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
         subId -= 0x80;
-        self->objectId = ENTITY_INVENTORY_DROP;
+        self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 

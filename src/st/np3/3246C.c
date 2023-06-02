@@ -94,7 +94,7 @@ void EntityBreakable(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, entityDropItem);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
                 entityDropItem->subId =
                     g_eBreakableExplosionTypes[breakableType];
             }
@@ -308,8 +308,7 @@ void func_801B40F8(Entity* self) {
             if (!(g_blinkTimer & 15)) {
                 entity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(ENTITY_INTENSE_EXPLOSION, self,
-                                           entity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->posY.i.hi = 156;
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
@@ -646,7 +645,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
@@ -741,7 +740,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
@@ -852,7 +851,7 @@ void EntityFallingRock2(Entity* self) {
             if (self->accelerationY > 0x40000) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     newEntity->subId = 0x11;
                     if (animFrame == 0) {
                         newEntity->subId = 0x13;

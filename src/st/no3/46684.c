@@ -533,8 +533,8 @@ void EntityUnkId13(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, entity, newEntity);
-                newEntity->objectId = ENTITY_EXPLOSION;
+                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+                newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }
@@ -1357,7 +1357,7 @@ void EntityMermanFireball(Entity* self) {
 
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(ENTITY_15, self, entity);
+            CreateEntityFromEntity(E_UNK_15, self, entity);
             entity->ext.generic.unk94 = 4;
             entity->unk19 = 3;
             entity->zPriority = self->zPriority + 8;
@@ -1436,7 +1436,7 @@ void EntityBoneScimitarParts(Entity* entity) {
             MoveEntity();
             return;
         }
-        entity->objectId = ENTITY_EXPLOSION;
+        entity->objectId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->subId = 0;
         entity->step = 0;
