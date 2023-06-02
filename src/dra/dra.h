@@ -462,7 +462,7 @@ extern s32 D_80137FBC;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;
 extern s32 D_80138008;
-extern s32 D_8013800C[8];
+extern s32 D_8013800C[];
 extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;

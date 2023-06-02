@@ -249,11 +249,11 @@ void func_80118894(Entity* self) {
         return;
     }
     // It appears we're looping over elements of the 8013800C array.
-    // If the pointer to arg0 comes before the 16th entry of the 73F98 array,
+    // If the pointer to arg0 comes before the 32nd (0x20th) g_Entities,
     // we iterate through the 8013800C array, starting from element 3 and going
     // as high as 7, searching for our enemy ID. Otherwise we do the same, but
-    // starting from element 7 and going up to 11. This code should therefore be
-    // refactored. Duplicate code could be replaced.
+    // starting from element 7 and going up to 11. 8013800C therefore must have 10 elements.
+    // It may be possible to refactor this code to remove the duplication.
 
     search_value = 0;
     if (self < &g_Entities[UNK_ENTITY_20]) {
