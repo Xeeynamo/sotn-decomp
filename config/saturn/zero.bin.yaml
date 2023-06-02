@@ -1,0 +1,40 @@
+options:
+  target_path:  disks/saturn/0.BIN
+  asm_path:     asm/saturn/zero
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: false
+segments:
+  - name: zero
+    type: code
+    start: 0x00000000
+    vram:  0x06004080
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: zero
+        end: 0xae07
+
+      # ratan2
+      - start: 0xae08
+        type: c
+        file: zero
+        end: 0xaf3b
+
+      - start: 0xaf3c
+        type: data
+        file: zero
+        end: 0xb893
+
+      # squareroot12
+      - start: 0xB894
+        type: c
+        file: zero
+        end: 0xb8eb
+
+      - start: 0xb8ec
+        type: data
+        file: zero
+        end: 0x4C560

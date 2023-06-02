@@ -74,7 +74,19 @@ s32 func_80173F30(Entity* entity, s16 x, s16 y) {
 }
 
 INCLUDE_ASM("asm/saturn/t_bat", f60D125C, func_060D125C);
-INCLUDE_ASM("asm/saturn/t_bat", f60D12AC, func_060D12AC);
+
+s32 func_0600F914(s32, s32);
+
+// SAT: func_060D12AC
+// PSX: func_80173FE8
+s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
+    s32 diffX = x - entity->posx;
+    s32 diffY = y - entity->posy;
+
+    // not shifted by 12
+    return func_0600F914((diffX * diffX + diffY * diffY), diffX); // SquareRoot12
+}
+
 INCLUDE_ASM("asm/saturn/t_bat", f60D12DC, func_060D12DC);
 INCLUDE_ASM("asm/saturn/t_bat", f60D141C, func_060D141C);
 INCLUDE_ASM("asm/saturn/t_bat", f60D1640, func_060D1640);
