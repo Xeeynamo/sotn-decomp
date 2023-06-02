@@ -84,7 +84,8 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     s32 diffY = y - entity->posy;
 
     // not shifted by 12
-    return func_0600F914((diffX * diffX + diffY * diffY), diffX); // SquareRoot12
+    return func_0600F914((diffX * diffX + diffY * diffY),
+                         diffX); // SquareRoot12
 }
 
 INCLUDE_ASM("asm/saturn/t_bat", f60D12DC, func_060D12DC);
