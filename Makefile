@@ -405,9 +405,7 @@ check_saturn:
 	docker run --rm -e INPUT_FILENAME=t_bat_li.o -e OUTPUT_FILENAME=T_BAT.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	docker run --rm -e INPUT_FILENAME=zero_li.o -e OUTPUT_FILENAME=0.BIN -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	# check hashes
-	sha1sum --check config/saturn/check.game.prg.sha
-	sha1sum --check config/saturn/check.t_bat.prg.sha
-	sha1sum --check config/saturn/check.zero.bin.sha
+	sha1sum --check config/saturn/check.saturn.sha
 
 diff_saturn:
 	chmod +x tools/saturn_toolchain/diff.sh
