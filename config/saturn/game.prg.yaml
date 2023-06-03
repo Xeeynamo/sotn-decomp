@@ -2,6 +2,8 @@ options:
   target_path:  disks/saturn/GAME.PRG
   asm_path:     asm/saturn/game
   src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
   # some sort of alignment issues
   decomp_empty_funcs: false
 segments:

@@ -1,0 +1,1 @@
+_g_randomNext = 0x0605D748;
