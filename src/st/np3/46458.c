@@ -510,7 +510,7 @@ void EntityMerman2(Entity* self) {
         }
         break;
 
-    case 7:
+    case MERMAN2_7:
         if (self->step_s == 0) {
             self->flags |= 0xC0000000;
             self->step_s++;
