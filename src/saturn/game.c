@@ -223,7 +223,23 @@ INCLUDE_ASM("asm/saturn/game", f607B1C8, func_0607B1C8);
 INCLUDE_ASM("asm/saturn/game", f607B218, func_0607B218);
 INCLUDE_ASM("asm/saturn/game", f607B240, func_0607B240);
 INCLUDE_ASM("asm/saturn/game", f607B264, func_0607B264);
-INCLUDE_ASM("asm/saturn/game", f607B2F4, func_0607B2F4);
+
+typedef signed char s8;
+typedef signed short s16;
+typedef signed int s32;
+typedef signed long long s64;
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef unsigned long long u64;
+extern u32 g_randomNext;
+
+// SAT: func_0607B2F4
+s32 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
+
 INCLUDE_ASM("asm/saturn/game", f607B318, func_0607B318);
 INCLUDE_ASM("asm/saturn/game", f607B374, func_0607B374);
 INCLUDE_ASM("asm/saturn/game", f607B3D0, func_0607B3D0);
