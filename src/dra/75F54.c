@@ -235,16 +235,16 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
 }
 
 Entity* func_80118810(s16 arg0, s16 arg1) {
-    Entity* var_v1;
+    Entity* entity;
 
-    var_v1 = &g_Entities[arg1 - 1];
+    entity = &g_Entities[arg1 - 1];
     arg1--;
 
     while (arg1 >= arg0) {
-        if (var_v1->objectId == 0) {
-            return var_v1;
+        if (entity->objectId == 0) {
+            return entity;
         }
-        var_v1--;
+        entity--;
         arg1--;
     }
     return 0;

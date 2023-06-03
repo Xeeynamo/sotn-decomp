@@ -56,7 +56,21 @@ Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F96C);
+Entity* func_8015F96C(s16 arg0, s16 arg1) {
+    Entity* entity;
+
+    entity = &g_Entities[arg1 - 1];
+    arg1--;
+
+    while (arg1 >= arg0) {
+        if (entity->objectId == 0) {
+            return entity;
+        }
+        entity--;
+        arg1--;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F9F0);
 
