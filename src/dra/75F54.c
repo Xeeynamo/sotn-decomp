@@ -234,7 +234,21 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118810);
+Entity* func_80118810(s16 arg0, s16 arg1) {
+    Entity* var_v1;
+
+    var_v1 = &g_Entities[arg1 - 1];
+    arg1--;
+
+    while (arg1 >= arg0) {
+        if (var_v1->objectId == 0) {
+            return var_v1;
+        }
+        var_v1--;
+        arg1--;
+    }
+    return 0;
+}
 
 void func_80118894(Entity* self) {
     s32 i;
