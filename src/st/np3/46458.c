@@ -5,6 +5,48 @@
 
 #include "np3.h"
 
+typedef enum {
+    MERMAN_INIT,
+    MERMAN_SWIMMING_UP,
+    MERMAN_SWIMMING = 3,
+    MERMAN_JUMPING,
+    MERMAN_WALKING_TOWARDS_PLAYER,
+    MERMAN_SPIT_FIRE,
+    MERMAN_LUNGE,
+    MERMAN_FALLING,
+    MERMAN_DYING,
+} MermanSteps;
+
+typedef enum {
+    MERMAN_JUMPING_SETUP,
+    MERMAN_JUMPING_UNDERWATER,
+    MERMAN_JUMPING_IN_AIR,
+    MERMAN_JUMPING_LANDING,
+} MermanJumpingSubSteps;
+
+typedef enum {
+    MERMAN_WALKING_TOWARDS_START,
+    MERMAN_WALKING_TOWARDS_PLAYER_WALKING,
+} MermanWalkingTowardsPlayerSubSteps;
+
+typedef enum {
+    MERMAN_SPIT_FIRE_FACE_PLAYER,
+    MERMAN_SPIT_FIRE_ATTACK,
+} MermanSpitFireSubSteps;
+
+typedef enum {
+    MERMAN_LUNGE_START,
+    MERMAN_LUNGE_SETUP,
+    MERMAN_LUNGE_TOWARDS_PLAYER,
+    MERMAN_LUNGE_STANDING,
+} MermanLungeSubSteps;
+
+typedef enum {
+    MERMAN_DYING_SETUP,
+    MERMAN_DYING_KNOCKEDBACK,
+    MERMAN_DYING_END,
+} MermanDyingSubSteps;
+
 s32 func_801C6458(s16 yVector) {
     s16 newY = yVector + g_CurrentEntity->posY.i.hi;
     s32 expectedResult = 0;
@@ -30,23 +72,10 @@ s32 func_801C6458(s16 yVector) {
     return res;
 }
 
+// Matching, assembler skips a NOP
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", EntityMerman2);
 #else
-#define NA_SE_EV_WATER_SPLASH 0x7C2
-
-extern u16 D_80181230[]; // pos TBL
-extern s32 D_80182224[]; // accel_x TBL
-extern s32 D_80182228[]; // accel_y TBL
-extern u8 D_80182244[];  // timers
-extern s32 D_80182248;   // Collision data
-extern s32 D_80182258;   // Collision data
-extern u16 D_80182268;   // Collision data
-extern u8 D_80182270[];  // Animation
-extern u8 D_8018227C[];  // Animation
-extern u8 D_80182294[];  // Animation
-extern u8 D_8018229C[];  // Animation
-
 void EntityMerman2(Entity* self) {
     s32 firstPrimIndex;
     Collider collider;
@@ -70,23 +99,26 @@ void EntityMerman2(Entity* self) {
     u16 var_v0_11;
     s32 res;
     s32 index;
-    unsigned int temp;
-    if (self->ext.merman2.ignoreCol && (self->step < 7)) {
+    u32 temp;
+
+    if (self->ext.merman2.ignoreCol && self->step < 7) {
         SetStep(7);
     }
+    
     if ((self->flags & 0x100) && (self->step < 8)) {
         func_801C2598(0x71D);
         self->unk19 = 0;
-        if (self->flags & 0x00800000) {
+        if (self->flags & FLAG_FREE_POLYGONS) {
             g_api.FreePrimitives(self->firstPolygonIndex);
-            self->flags &= ~0x00800000;
+            self->flags &= ~FLAG_FREE_POLYGONS;
         }
         self->unk3C = 0;
-        self->flags &= ~0x20000000;
+        self->flags &= ~FLAG_UNK_20000000;
         SetStep(8);
     }
+    
     switch (self->step) {
-    case 0:
+    case 0: // init
         InitializeEntity(D_80180AB4);
         self->unk12 = 8;
         self->zPriority = 0xA9;
@@ -95,8 +127,8 @@ void EntityMerman2(Entity* self) {
         }
         self->accelerationY = -0x10000;
         break;
-
-    case 1:
+        
+    case 1: // swimming up
         AnimateEntity(D_8018229C, self);
         MoveEntity();
         posY = self->posY.i.hi - 24;
@@ -106,7 +138,7 @@ void EntityMerman2(Entity* self) {
             break;
         }
 
-    case 3:
+    case 3: // swimming
         if (self->step_s == 0) {
             rnd = (Random() & 3) * 2;
             self->accelerationX = D_80182224[rnd];
@@ -125,34 +157,35 @@ void EntityMerman2(Entity* self) {
             self->accelerationY = 0x8000;
         }
         index = (self->subId >> 8) & 1;
-        pos = &D_80181230;
+        pos = &D_80181230; // !TODO: regalloc
         pos += index;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
-            self->posY.i.hi = (pos[4] - g_Camera.posY.i.hi) - 24;
+            self->posY.i.hi = pos[4] - g_Camera.posY.i.hi - 24;
         }
-        if (((u8)(self->ext.merman2.timer++)) > 32) {
+
+        if ((u8)self->ext.merman2.timer++ > 32) {
             self->ext.merman2.timer = 0;
             self->step_s = 0;
-            if ((GetPlayerDistanceX() >= 48) && (!(Random() & 1))) {
+            if ((GetPlayerDistanceX() >= 48) && !(Random() & 1)) {
                 SetStep(4);
             }
         }
         break;
-
-    case 4:
+        
+    case 4: // jumping
         switch (self->step_s) {
-        case 0:
+        case 0: // setup
             self->accelerationX = 0;
             self->accelerationY = -0x88000;
             self->step_s++;
             firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (firstPrimIndex != (-1)) {
+            if (firstPrimIndex != -1) {
                 prim = &g_PrimBuf[firstPrimIndex];
                 self->animCurFrame = 0;
                 self->firstPolygonIndex = firstPrimIndex;
                 self->ext.merman2.prim = prim;
-                self->flags |= 0x00800000;
+                self->flags |= FLAG_FREE_POLYGONS;
                 prim->tpage = 0x12;
                 prim->clut = 0x28C;
                 if (self->subId & 1) {
@@ -160,12 +193,13 @@ void EntityMerman2(Entity* self) {
                 }
                 prim->u0 = 0;
                 prim->u1 = 0x20;
-                prim->v1 = (prim->v0 = 0x38);
+                prim->v1 = prim->v0 = 0x38;
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
                 v0 = prim->v0 + 0x38;
                 prim->v2 = v0;
                 prim->v3 = v0;
+
                 if (self->facing != 0) {
                     temp_v0_5 = self->posX.i.hi;
                     prim->x0 = temp_v0_5 + 0xF;
@@ -179,12 +213,15 @@ void EntityMerman2(Entity* self) {
                     prim->x2 = prim->x0;
                     prim->x3 = prim->x1;
                 }
-                prim->y0 = (prim->y1 = self->posY.i.hi - 0x11);
-                prim->r0 = 64, prim->g0 = 64, prim->b0 = 160;
-                *((s32*)(&prim->r1)) = *((s32*)(&prim->r0));
-                *((s32*)(&prim->r2)) = *((s32*)(&prim->r0));
-                *((s32*)(&prim->r3)) = *((s32*)(&prim->r0));
-                prim->y3 = (prim->y2 = prim->y0 + 0x38);
+                prim->y0 = prim->y1 = self->posY.i.hi - 0x11;
+
+                setRGB0(prim, 64, 64, 160);
+                
+                *(s32*)&prim->r1 = *(s32*)&prim->r0;
+                *(s32*)&prim->r2 = *(s32*)&prim->r0;
+                *(s32*)&prim->r3 = *(s32*)&prim->r0;
+                
+                prim->y3 = prim->y2 = prim->y0 + 0x38;
                 prim->priority = self->zPriority;
                 prim->blendMode = 6;
                 return;
@@ -192,8 +229,8 @@ void EntityMerman2(Entity* self) {
             self->animCurFrame = 17;
             DestroyEntity(self);
             break;
-
-        case 1:
+            
+        case 1: // underwater
             MoveEntity();
             index = (self->subId >> 8) & 1;
             pos = &D_80181230;
@@ -202,9 +239,9 @@ void EntityMerman2(Entity* self) {
             posY -= 24;
             camY = g_Camera.posY.i.hi + posY;
             if (camY < pos[3]) {
-                g_api.PlaySfx(0x7C2);
+                g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
-                if (newEntity != 0) {
+                if (newEntity != NULL) {
                     CreateEntityFromEntity(0x33, self, newEntity);
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
@@ -214,10 +251,10 @@ void EntityMerman2(Entity* self) {
                 self->step_s++;
             }
             break;
-
-        case 2:
+            
+        case 2: // in air
             prim = self->ext.merman2.prim;
-            if (self->accelerationY > ((s32)0xFFFF4000)) {
+            if (self->accelerationY > (s32)0xFFFF4000) {
                 prim->blendMode = 8;
                 self->animCurFrame = 18;
                 self->hitboxHeight = 8;
@@ -229,33 +266,29 @@ void EntityMerman2(Entity* self) {
                     prim->x1 = temp_v0_9 - 0x11;
                     prim->x2 = prim->x0;
                     prim->x3 = prim->x1;
-                    prim->y1 = (prim->y0 = self->posY.i.hi - 0x11);
-                    prim->y3 = (prim->y2 = prim->y0 + 0x38);
+                    prim->y1 = prim->y0 = self->posY.i.hi - 0x11;
+                    prim->y3 = prim->y2 = prim->y0 + 0x38;
                 } else {
                     temp_v0_10 = self->posX.i.hi;
                     prim->x0 = temp_v0_10 - 0xF;
                     prim->x1 = temp_v0_10 + 0x11;
                     prim->x2 = prim->x0;
                     prim->x3 = prim->x1;
-                    prim->y1 = (prim->y0 = self->posY.i.hi - 0x11);
-                    prim->y3 = (prim->y2 = prim->y0 + 0x38);
+                    prim->y1 = prim->y0 = self->posY.i.hi - 0x11;
+                    prim->y3 = prim->y2 = prim->y0 + 0x38;
                 }
-                temp_v0_12 = ((u32)(((((self->accelerationY < 0)
-                                           ? (-self->accelerationY)
-                                           : (self->accelerationY)) >>
-                                      0xC) -
-                                     0xA) &
-                                    0xFF)) >>
-                             1;
-                prim->r0 = 128 - temp_v0_12, prim->g0 = 128 - temp_v0_12,
-                prim->b0 = temp_v0_12 + 192;
-                *((s32*)(&prim->r1)) = *((s32*)(&prim->r0));
-                *((s32*)(&prim->r2)) = *((s32*)(&prim->r0));
-                *((s32*)(&prim->r3)) = *((s32*)(&prim->r0));
+
+                temp_v0_12 = (u32) (((ABS(self->accelerationY) >> 0xC) - 0xA) & 0xFF) >> 1;
+                
+                setRGB0(prim, 128 - temp_v0_12, 128 - temp_v0_12, temp_v0_12 + 192);
+                
+                *(s32*)&prim->r1 = *(s32*)&prim->r0;
+                *(s32*)&prim->r2 = *(s32*)&prim->r0;
+                *(s32*)&prim->r3 = *(s32*)&prim->r0;
             }
             if (self->accelerationY < 0) {
                 newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
-                if (newEntity != 0) {
+                if (newEntity != NULL) {
                     CreateEntityFromEntity(0x38, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
                     newEntity->zPriority = self->zPriority + 1;
@@ -268,7 +301,7 @@ void EntityMerman2(Entity* self) {
                 if (func_801BC8E4(&D_80182248) & 1) {
                     g_api.FreePrimitives(self->firstPolygonIndex);
                     self->hitboxHeight = 21;
-                    self->flags &= ~0x00800000;
+                    self->flags &= ~FLAG_FREE_POLYGONS;
                     self->unk19 &= 0xFB;
                     SetStep(5);
                     return;
@@ -279,26 +312,25 @@ void EntityMerman2(Entity* self) {
                 self->accelerationY += 0x4000;
             }
         }
-
         break;
-
-    case 5:
+        
+    case 5: //walk towards player
         switch (self->step_s) {
-        case 0:
+        case 0: // setup
             if (AnimateEntity(D_80182294, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
             }
             break;
-
-        case 1:
+            
+        case 1: // face player
             self->facing = (GetPlayerSide() & 1) ^ 1;
             self->ext.merman2.timer = D_80182244[Random() & 3];
             self->step_s++;
             break;
-
-        case 2:
+            
+        case 2: // walking
             AnimateEntity(D_80182270, self);
             colRes = func_801BCB5C(&D_80182268);
             if (colRes == 0xFF) {
@@ -309,11 +341,12 @@ void EntityMerman2(Entity* self) {
             } else {
                 self->accelerationX = 0x6000;
             }
+
             if (colRes & 0x80) {
                 self->posX.val += self->accelerationX;
             }
-            if ((!(self->subId & 1)) ||
-                ((self->accelerationX *= 2, !(self->subId & 1)))) {
+            
+            if (!(self->subId & 1) || (self->accelerationX *= 2, !(self->subId & 1))) {
                 if (!(self->posX.i.hi & 0xFF00)) {
                     self->ext.merman2.timer--;
                     if ((self->ext.merman2.timer & 0xFF) == 0) {
@@ -335,22 +368,21 @@ void EntityMerman2(Entity* self) {
                 }
             }
         }
-
         break;
-
-    case 6:
+        
+    case 6: // spit fire
         switch (self->step_s) {
-        case 0:
+        case 0: // face player
             self->facing = (GetPlayerSide() & 1) ^ 1;
             self->step_s++;
             return;
-
-        case 1:
+            
+        case 1: // attack
             if (AnimateEntity(D_8018227C, self) == 0) {
                 func_801C2598(0x662);
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 i = 0;
-                if (newEntity != 0) {
+                if (newEntity != NULL) {
                     CreateEntityFromEntity(0x34, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facing = self->facing;
@@ -358,12 +390,12 @@ void EntityMerman2(Entity* self) {
                 temp_s4 = &D_8007A958[64];
                 for (offset = 0; i < 3; i++, offset += 8) {
                     newEntity = AllocEntity(temp_s4, &temp_s4[32]);
-                    if (newEntity != 0) {
+                    if (newEntity != NULL) {
                         CreateEntityFromEntity(0x36, self, newEntity);
                         if (self->facing != 0) {
                             newEntity->posX.i.hi += 8 + offset;
                         } else {
-                            newEntity->posX.i.hi += (-8) - offset;
+                            newEntity->posX.i.hi += -8 - offset;
                         }
                         newEntity->posY.i.hi -= 12;
                         newEntity->facing = self->facing;
@@ -372,10 +404,9 @@ void EntityMerman2(Entity* self) {
                         }
                     }
                 }
-
                 self->ext.merman2.rotation = 1;
                 self->unk1E = 0;
-                self->unk19 = self->unk19 | 4;
+                self->unk19 |= 4;
                 if (self->facing != 0) {
                     self->accelerationX = -0x60000;
                 } else {
@@ -386,7 +417,7 @@ void EntityMerman2(Entity* self) {
                 self->step_s++;
             }
             break;
-
+            
         case 2:
             if ((self->ext.merman2.rotation < 0x100) && (g_blinkTimer & 1)) {
                 self->ext.merman2.rotation *= 2;
@@ -411,6 +442,7 @@ void EntityMerman2(Entity* self) {
             }
             self->unk1E += self->ext.merman2.rotation;
             self->accelerationY -= 0x2000;
+            
             if (func_801BC8E4(&D_80182248) & 1) {
                 if (self->facing == 0) {
                     self->accelerationX = 0x28000;
@@ -424,10 +456,10 @@ void EntityMerman2(Entity* self) {
             func_801C6458(0x1B);
             res = self->ext.merman2.isUnderwater;
             if (res != 0) {
-                self->ext.merman2.ignoreCol = 1;
-            }
+                    self->ext.merman2.ignoreCol = 1;
+                }
             break;
-
+            
         case 3:
             posY = self->posY.i.hi + 8;
             posX = self->posX.i.hi;
@@ -448,11 +480,10 @@ void EntityMerman2(Entity* self) {
                 SetStep(5);
             }
             res = func_801C6458(0x1B);
-            if (res != 0) {
-                self->ext.merman2.ignoreCol = 1;
-            }
+                if (res != 0) {
+                    self->ext.merman2.ignoreCol = 1;
+                }
         }
-
         break;
 
     case 7:
@@ -462,12 +493,12 @@ void EntityMerman2(Entity* self) {
         }
         MoveEntity();
         self->accelerationY += 0x4000;
-        if ((!func_801C6458(0x1B)) && (!self->ext.merman2.isUnderwater)) {
+        if (!(func_801C6458(0x1B)) && !(self->ext.merman2.isUnderwater)) {
             self->ext.merman2.ignoreCol = 0;
             SetStep(5);
         }
         break;
-
+        
     case 8:
         switch (self->step_s) {
         case 0:
@@ -481,7 +512,7 @@ void EntityMerman2(Entity* self) {
             self->accelerationY = -0x10000;
             self->step_s++;
             firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-            if (firstPrimIndex != (-1)) {
+            if (firstPrimIndex != -1) {
                 prim = &g_PrimBuf[firstPrimIndex];
                 self->firstPolygonIndex = firstPrimIndex;
                 self->ext.merman2.prim = prim;
@@ -493,24 +524,31 @@ void EntityMerman2(Entity* self) {
                     prim->clut = 0x293;
                 }
                 if (self->facing != 0) {
-                    var_v0_11 = 0x1C8;
-                    prim->u0 = 0xF0;
-                    prim->u1 = var_v0_11;
+                    var_v0_11 = 0x1C8;  
+                    prim->u0 = 0xF0; // 0x0C
+                    prim->u1 = var_v0_11; // 0x18 
                 } else {
-                    prim->u0 = 0xC8;
-                    prim->u1 = 0xF0;
+                    prim->u0 = 0xC8; // 0x0C 
+                    prim->u1 = 0xF0; // 0x18 
                 }
-                prim->v0 = (prim->v1 = 0);
-                temp = prim->v0;
-                prim->u2 = prim->u0;
-                prim->u3 = prim->u1;
-                temp = prim->v0 + 0x30;
-                prim->v2 = temp;
-                prim->v3 = temp;
+                prim->v0 = prim->v1 = 0; // sb zero, 0xd(s1) 
+                //prim->v1 = 0; // sb zero, 0x19 (s1)
+                
+                temp = prim->v0; // lbu v0, 0xd(s1)
+                
+                prim->u2 = prim->u0; // sb v1,0x24(s1)
+                
+                prim->u3 = prim->u1; // sb a0,0x30(s1)
+
+                temp = prim->v0 +  0x30; // addiu v0, v0, 0x30 MISSING
+                prim->v2 = temp;/* 0x25 */
+                prim->v3 = temp;/* 0x31 */
+                        //prim->v0; /* 0x0D */
+                
                 prim->priority = self->zPriority + 1;
                 prim->blendMode = 2;
-                *((s16*)(&prim->next->r2)) = 0x28;
-                *((s16*)(&prim->next->b2)) = 0x30;
+                *(s16*)&prim->next->r2 = 0x28;
+                *(s16*)&prim->next->b2 = 0x30;
                 prim->next->b3 = 0x80;
                 if (self->facing != 0) {
                     prim->next->x1 = self->posX.i.hi - 3;
@@ -521,10 +559,10 @@ void EntityMerman2(Entity* self) {
             }
             func_801D1F38(prim);
             break;
-
+            
         case 1:
             func_801BC8E4(&D_80182258);
-            prim = *((s32*)(&self->ext.merman2.prim));
+            prim = self->ext.merman2.prim;
             self->accelerationY -= 0x3000;
             if (self->facing != 0) {
                 prim->next->x1 = self->posX.i.hi - 3;
@@ -540,7 +578,7 @@ void EntityMerman2(Entity* self) {
                     self->step_s++;
                 } else {
                     newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
-                    if (newEntity != 0) {
+                    if (newEntity != NULL) {
                         CreateEntityFromEntity(0x37, self, newEntity);
                         newEntity->facing = self->facing;
                         newEntity->subId = prim->clut;
@@ -550,13 +588,12 @@ void EntityMerman2(Entity* self) {
             }
             func_801C6458(0x1B);
             return;
-
+            
         case 2:
             func_801C2598(0x65B);
             func_801B653C();
             DestroyEntity(self);
         }
-
         break;
     }
 }
@@ -787,69 +824,10 @@ void EntityMermanSpawner(Entity* self) {
     }
 }
 
+// Matching, assembler skips a NOP
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", EntityMerman);
 #else
-extern u16 D_80181230[];
-extern s32 D_80182338[];
-extern s32 D_8018233C[];
-extern u8 D_80182358[];
-extern u16 D_8018235C;
-extern u16 D_8018236C;
-extern u16 D_8018237C;
-extern u16 D_8018238C;
-extern u8 D_80182394[]; // animation
-extern u8 D_801823AC[]; // animation
-extern u8 D_801823BC[]; // animation
-extern u8 D_801823D0[]; // animation
-extern u8 D_801823DC[]; // animation
-extern u8 D_801823EC[]; // animation
-extern s32 D_80182418[];
-
-typedef enum {
-    MERMAN_INIT,
-    MERMAN_SWIMMING_UP,
-    MERMAN_SWIMMING = 3,
-    MERMAN_JUMPING,
-    MERMAN_WALKING_TOWARDS_PLAYER,
-    MERMAN_SPIT_FIRE,
-    MERMAN_LUNGE,
-    MERMAN_FALLING,
-    MERMAN_DYING,
-} MermanSteps;
-
-typedef enum {
-    MERMAN_JUMPING_SETUP,
-    MERMAN_JUMPING_UNDERWATER,
-    MERMAN_JUMPING_IN_AIR,
-    MERMAN_JUMPING_LANDING,
-} MermanJumpingSubSteps;
-
-typedef enum {
-    MERMAN_WALKING_TOWARDS_START,
-    MERMAN_WALKING_TOWARDS_PLAYER_WALKING,
-} MermanWalkingTowardsPlayerSubSteps;
-
-typedef enum {
-    MERMAN_SPIT_FIRE_FACE_PLAYER,
-    MERMAN_SPIT_FIRE_ATTACK,
-} MermanSpitFireSubSteps;
-
-typedef enum {
-    MERMAN_LUNGE_START,
-    MERMAN_LUNGE_SETUP,
-    MERMAN_LUNGE_TOWARDS_PLAYER,
-    MERMAN_LUNGE_STANDING,
-} MermanLungeSubSteps;
-
-typedef enum {
-    MERMAN_DYING_SETUP,
-    MERMAN_DYING_KNOCKEDBACK,
-    MERMAN_DYING_END,
-} MermanDyingSubSteps;
-
-#define NA_SE_EV_WATER_SPLASH 0x7C2
-
 void EntityMerman(Entity* self) {
     Entity* newEntity;
     Collider collider;
