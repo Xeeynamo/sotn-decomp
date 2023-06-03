@@ -254,6 +254,13 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
 
+# Force to extract all the assembly code regardless if a function is already decompiled
+force_extract:
+	mv src src_tmp
+	make extract -j
+	rm -rf src/
+	mv src_tmp src
+
 context:
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.

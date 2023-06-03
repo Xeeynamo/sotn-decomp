@@ -183,7 +183,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
             return;
         }
 
-        entity->objectId = ENTITY_EXPLOSION;
+        entity->objectId = E_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         entity->subId = 0;
         entity->step = 0;

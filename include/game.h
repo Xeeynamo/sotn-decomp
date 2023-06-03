@@ -804,8 +804,7 @@ typedef struct {
     /* 10 */ s16 top;
     /* 12 */ s16 right;
     /* 14 */ s16 bottom;
-    /* 16 */ s16 padding;
-} SpritePart; /* size=0x18 */
+} SpritePart; /* size=0x16 */
 
 typedef struct {
     /* 00 */ u16 count;
@@ -1016,55 +1015,6 @@ extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
-// dictionary of direct accesses
-// g_Entities PLAYER
-extern s16 D_800733DA;  // PLAYER.posX.i.hi
-extern s16 D_800733DC;  // PLAYER.posY.val
-extern s16 D_800733DE;  // PLAYER.posY.i.hi
-extern s32 D_800733E0;  // PLAYER.accelerationX
-extern s32 D_800733E4;  // PLAYER.accelerationY
-extern s32 D_800733E8;  // PLAYER.unk10
-extern u16 D_800733EC;  // PLAYER.facing
-extern u16 D_800733EE;  // PLAYER.palette
-extern s8 D_800733F0;   // PLAYER.blendMode
-extern u8 D_800733F1;   // PLAYER.unk19
-extern s16 D_800733F6;  // PLAYER.unk1E
-extern s16 D_800733F8;  // PLAYER.unk20
-extern u16 D_800733FA;  // PLAYER.unk22
-extern u16 D_800733FC;  // PLAYER.zPriority
-extern s16 D_800733FE;  // PLAYER.objectId
-extern u16 D_80073404;  // PLAYER.step
-extern u16 D_80073406;  // PLAYER.step_s
-extern u16 D_8007340A;  // PLAYER.objectRoomIndex
-extern u16 D_8007341C;  // PLAYER.unk44
-extern s32* D_80073424; // PLAYER.unk4C
-extern s32 D_80073428;  // PLAYER.animFrameIdx
-extern s16 D_8007342A;  // PLAYER.animFrameDuration
-extern s16 D_8007342C;  // PLAYER.animSet
-extern u16 D_8007342E;  // PLAYER.animCurFrame
-extern s16 D_80073432;  // PLAYER.unk5A
-extern s16 D_8007347C;  // PLAYER.unkA4
-extern u8 D_80073484;   // PLAYER.ext.generic.unkAC
-// End of Player Character offset = 0x80073494
-
-// D_80073494 g_Entities[1]
-extern s32 D_800734F8; // g_Entities[1].firstPolygonIndex
-extern s16 D_800734EA; // g_Entities[1].animCurFrame
-extern s8 D_80073510;  // g_Entities[1].unk7C.S8.unk0
-extern s8 D_80073511;  // g_Entities[1].unk7C.S8.unk1
-extern s8 D_80073512;  // g_Entities[1].unk7E.modeU8.unk0
-
-// D_80073550 g_Entities[2]
-extern u16 D_8007357C;       // g_Entities[2].step
-extern s32 D_80073584;       // g_Entities[2].unk34
-extern s32 D_800735B4;       // g_Entities[2].firstPolygonIndex
-extern POLY_GT4* D_800735CC; // *(s32*)g_Entities[2].unk7C
-
-// D_80073550 g_Entities[2]
-extern s16 D_800735A6; // g_Entities[2].animCurFrame
-
-// D_8007360C g_Entities[3]
-extern s16 D_80073662; // g_Entities[3].animCurFrame
 
 // D_800736C8 g_Entities[4]
 // D_80073784 g_Entities[5]

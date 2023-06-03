@@ -1,6 +1,24 @@
 #include "stage.h"
 
 typedef enum {
+    E_NONE,
+    E_BREAKABLE,
+    E_EXPLOSION,
+    E_PRIZE_DROP,
+    E_NUMERIC_DAMAGE,
+    E_RED_DOOR,
+    E_INTENSE_EXPLOSION,
+    E_ABSORB_ORB,
+    E_ROOM_FOREGROUND,
+    E_STAGE_NAME_POPUP,
+    E_EQUIP_ITEM_DROP,
+    E_RELIC_ORB,
+    E_HEART_DROP,
+    E_ENEMY_BLOOD,
+    E_SAVE_GAME_POPUP,
+    E_DUMMY_0F,
+    E_DUMMY_10,
+
     E_AXE_KNIGHT_AXE = 0x2A,
     E_BONE_SCIMITAR_HEAD = 0x28,
     E_FIRE = 0x38,
@@ -9,7 +27,7 @@ typedef enum {
     E_GAIBON = 0x43,
     E_GAIBON_SMALL_FIREBALL = 0x45,
     E_GAIBON_BIG_FIREBALL = 0x46,
-} ObjectIds;
+} EntityIDs;
 
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
@@ -37,9 +55,9 @@ extern u16 D_80180C34[];
 extern u16 D_80180C40[]; // InitProps
 extern u8 D_80182610[];  // Animation: Walking?
 extern s16 D_80182624[];
-extern u8 D_80182638[];  // Animation: Disassemble
-extern u8 D_80182654[];  // Animation: Reassemble
-extern u8 D_80182670[];  // Animation: Reassemble faster ?
+extern u8 D_80182638[]; // Animation: Disassemble
+extern u8 D_80182654[]; // Animation: Reassemble
+extern u8 D_80182670[]; // Animation: Reassemble faster ?
 extern s32 D_80182694;
 extern s32 D_801826AC;
 

@@ -199,9 +199,7 @@ void func_80118640(void) {
 }
 
 void func_80118670(void) {
-    s32* animFrameIdx = (s32*)&PLAYER.animFrameIdx;
-
-    if (*animFrameIdx == 0x10007) {
+    if (LOW(PLAYER.animFrameIdx) == 0x10007) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(NA_SE_PL_MP_GAUGE);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
@@ -229,7 +227,7 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
     s16 i;
 
     for (i = start; i < end; i++, entity++) {
-        if (entity->objectId == ENTITY_UNALLOCATED) {
+        if (entity->objectId == E_NONE) {
             return entity;
         }
     }
@@ -238,7 +236,51 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118810);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118894);
+void func_80118894(Entity* self) {
+    s32 i;
+    s32 search_value;
+
+    if (self == &g_Entities[UNK_ENTITY_10]) {
+        if (!(self->subId & 0x8000)) {
+            self->enemyId = 1;
+            return;
+        }
+        self->enemyId = 2;
+        return;
+    }
+    // It appears we're looping over elements of the 8013800C array.
+    // If the pointer to arg0 comes before the 32nd (0x20th) g_Entities,
+    // we iterate through the 8013800C array, starting from element 3 and going
+    // as high as 7, searching for our enemy ID. Otherwise we do the same, but
+    // starting from element 7 and going up to 11. 8013800C therefore must have
+    // 11 elements. It may be possible to refactor this code to remove the
+    // duplication.
+
+    search_value = 0;
+    if (self < &g_Entities[UNK_ENTITY_20]) {
+        while (1) {
+            for (i = 3; i < 7; i++) {
+                if (D_8013800C[i] == search_value) {
+                    D_8013800C[i]++;
+                    self->enemyId = i;
+                    return;
+                }
+            }
+            search_value++;
+        }
+    } else {
+        while (1) {
+            for (i = 7; i < 11; i++) {
+                if (D_8013800C[i] == search_value) {
+                    D_8013800C[i]++;
+                    self->enemyId = i;
+                    return;
+                }
+            }
+            search_value++;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118970);
 

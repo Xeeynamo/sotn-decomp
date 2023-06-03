@@ -20,6 +20,8 @@
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 
 #define LOH(x) (*(s16*)&(x))
+#define LOW(x) (*(s32*)&(x))
+
 #if defined(HACKS) && !defined(PERMUTER)
 // The following hacks are required to get a matching decompilation. If removed
 // they will still logically match the original function.

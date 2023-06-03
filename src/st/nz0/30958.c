@@ -190,7 +190,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->subId = 0x13;
         }
         self->ext.generic.unk80.modeS32 = 32;
@@ -269,7 +269,7 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
 
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->subId = 0x11;
         }
         self->ext.generic.unk80.modeS32 = 32;
@@ -351,7 +351,7 @@ void func_801B19A0(Entity* self) {
                 newEntity =
                     AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(ENTITY_INTENSE_EXPLOSION, self,
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self,
                                            newEntity);
                     newEntity->subId = 0x10;
                 }
@@ -729,7 +729,7 @@ void EntityCannon(Entity* self) {
             self->accelerationX = 0x80000;
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != 0) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 0x13;
             }
             CreateEntityFromEntity(0x1E, self, &self[1]);
@@ -784,7 +784,7 @@ void EntityCannonShot(Entity* self) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 3;
             }
             D_8003BE6F[0] = 1;
@@ -1005,7 +1005,7 @@ void EntityTableWithGlobe(Entity* self) {
         if (self->unk48 != 0) {
             func_801C29B0(0x61D);
             self->unk3C = 0;
-            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].subId = D_80180F10[self->subId];
             SetStep(2);
         }
@@ -1041,11 +1041,11 @@ void func_801B3648(Entity* self) {
 
     case 2:
         if (AnimateEntity(D_80180F30, self) == 0) {
-            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].subId = D_80180F4C[self->subId];
             newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 2;
                 newEntity->posY.i.hi -= 8;
             }
@@ -1093,9 +1093,9 @@ void func_801B37C0(Entity* self) {
 
     case 2:
         if (self->subId > 0x1) {
-            CreateEntityFromEntity(ENTITY_RELIC_ORB, self, &self[1]);
+            CreateEntityFromEntity(E_RELIC_ORB, self, &self[1]);
         } else {
-            CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
         }
 
         self[1].subId = D_80180F9C[self->subId];
@@ -1103,7 +1103,7 @@ void func_801B37C0(Entity* self) {
         } while (0);
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->subId = 2;
             newEntity->posY.i.hi -= 8;
         }
@@ -1159,7 +1159,7 @@ void func_801B3A50(Entity* self) {
         break;
 
     case 2:
-        CreateEntityFromEntity(ENTITY_HEART_DROP, self, &self[1]);
+        CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
         self[1].subId = D_80180F9C[self->subId];
         self->step++;
 

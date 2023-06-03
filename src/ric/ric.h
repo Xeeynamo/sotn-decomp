@@ -5,6 +5,11 @@
 #include "sfx.h"
 
 typedef enum {
+    E_NONE,
+    E_UNK_1,
+} EntityIDs;
+
+typedef enum {
     Dummy,
 } PlayerSteps;
 

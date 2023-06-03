@@ -837,8 +837,8 @@ void EntityUnkId13(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_80193538(ENTITY_EXPLOSION, entity, newEntity);
-                newEntity->objectId = ENTITY_EXPLOSION;
+                func_80193538(E_EXPLOSION, entity, newEntity);
+                newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->subId = entity->subId;
             }

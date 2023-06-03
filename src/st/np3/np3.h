@@ -1,13 +1,33 @@
 #include "stage.h"
 
 typedef enum {
+    E_NONE,
+    E_BREAKABLE,
+    E_EXPLOSION,
+    E_PRIZE_DROP,
+    E_NUMERIC_DAMAGE,
+    E_RED_DOOR,
+    E_INTENSE_EXPLOSION,
+    E_ABSORB_ORB,
+    E_ROOM_FOREGROUND,
+    E_STAGE_NAME_POPUP,
+    E_EQUIP_ITEM_DROP,
+    E_RELIC_ORB,
+    E_HEART_DROP,
+    E_ENEMY_BLOOD,
+    E_SAVE_GAME_POPUP,
+    E_DUMMY_0F,
+    E_DUMMY_10,
+
+    E_UNK_15 = 0x15,
+
     E_BONE_SCIMITAR_HEAD = 0x3F,
     E_SLOGRA_SPEAR = 0x4F,
     E_SLOGRA_SPEAR_PROJECTILE = 0x50,
     E_GAIBON = 0x51,
     E_GAIBON_SMALL_FIREBALL = 0x53,
     E_GAIBON_BIG_FIREBALL = 0x54,
-} ObjectIds;
+} EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);

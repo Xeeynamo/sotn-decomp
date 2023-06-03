@@ -642,7 +642,8 @@ void func_800E414C(void) {
     }
 
     func_8010DFF0(1, 1);
-    if (D_8003C708.unk2 != 0 && !(D_800733DA >= 8 && D_800733DA < 249)) {
+    if (D_8003C708.unk2 != 0 &&
+        !(PLAYER.posX.i.hi >= 8 && PLAYER.posX.i.hi < 249)) {
         return;
     }
 
@@ -685,14 +686,14 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && D_800733DA < 0x78) {
+        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C710;
             D_8003C708.unk2++;
         }
-        if (D_8003C708.flags == 0x41 && D_800733DA >= 0x89) {
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -705,14 +706,14 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && D_800733DA >= 0x89) {
+        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C712;
             D_8003C708.unk2 = 2;
         }
-        if (D_8003C708.flags == 0x41 && D_800733DA < 0x78) {
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = 1;
             g_LoadFile = CdFile_StageChr;

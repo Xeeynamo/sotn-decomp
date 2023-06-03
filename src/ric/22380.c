@@ -46,7 +46,7 @@ Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
 
     if (entityIndex < arg1) {
         while (var_a0 < arg1) {
-            if (entity->objectId == ENTITY_UNALLOCATED) {
+            if (entity->objectId == E_NONE) {
                 return entity;
             }
             var_a0++;
@@ -156,7 +156,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
     if (entity != NULL) {
         func_80156C60(entity);
-        entity->objectId = ENTITY_BREAKABLE;
+        entity->objectId = E_UNK_1;
         entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
         entity->posY.val = srcEntity->posY.val;
@@ -469,10 +469,10 @@ void func_80162C84(Entity* entity) {
         break;
 
     case 1:
-        if (*(s32*)&entity->animFrameIdx == 0x10000) {
+        if (LOW(entity->animFrameIdx) == 0x10000) {
             g_api.PlaySfx(0x882);
         }
-        if (*(s32*)&entity->animFrameIdx == 0x10004) {
+        if (LOW(entity->animFrameIdx) == 0x10004) {
             g_api.PlaySfx(0x883);
         }
 
