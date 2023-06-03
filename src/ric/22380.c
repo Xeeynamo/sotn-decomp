@@ -40,36 +40,28 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
 
-Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
-    Entity* entity = &g_Entities[entityIndex];
-    s16 var_a0 = entityIndex;
+Entity* func_8015F8F8(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-    if (entityIndex < arg1) {
-        while (var_a0 < arg1) {
-            if (entity->objectId == E_NONE) {
-                return entity;
-            }
-            var_a0++;
-            entity++;
+    for (i = start; i < end; i++, entity++) {
+        if (entity->objectId == E_NONE) {
+            return entity;
         }
     }
     return NULL;
 }
 
-Entity* func_8015F96C(s16 arg0, s16 arg1) {
-    Entity* entity;
-
-    entity = &g_Entities[arg1 - 1];
-    arg1--;
-
-    while (arg1 >= arg0) {
-        if (entity->objectId == 0) {
+Entity* func_8015F96C(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    end--;
+    for (i = end; i >= start; i--, entity--) {
+        if (entity->objectId == E_NONE) {
             return entity;
         }
-        entity--;
-        arg1--;
     }
-    return 0;
+    return NULL;
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F9F0);
