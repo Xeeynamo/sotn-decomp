@@ -73,6 +73,7 @@ s32 func_801C6458(s16 yVector) {
 }
 
 // Matching, assembler skips a NOP
+// https://decomp.me/scratch/8wa56
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", EntityMerman2);
 #else
@@ -157,7 +158,7 @@ void EntityMerman2(Entity* self) {
             self->accelerationY = 0x8000;
         }
         index = (self->subId >> 8) & 1;
-        pos = &D_80181230; // !TODO: regalloc
+        pos = &D_80181230;
         pos += index;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
@@ -825,6 +826,7 @@ void EntityMermanSpawner(Entity* self) {
 }
 
 // Matching, assembler skips a NOP
+// https://decomp.me/scratch/pjVr0
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", EntityMerman);
 #else
