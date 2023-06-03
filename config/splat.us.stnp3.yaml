@@ -56,7 +56,7 @@ segments:
       - [0x31FA0, rodata]
       - [0x31FB0, rodata]
       - [0x3200C, rodata] # EntityStageNamePopup .rodata,
-      - [0x32020, .rodata, 3DEF4] # EntityMerman2 
+      - [0x32020, rodata] # EntityMerman2 .rodata, 3DEF4
       - [0x32044, rodata] # EntityMerman .rodata, 3DEF4
       - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C]

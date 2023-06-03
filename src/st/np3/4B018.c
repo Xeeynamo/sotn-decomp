@@ -92,18 +92,25 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE3FC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE4CC);
 
+// EntityHammer
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE69C);
 
+// DECOMP_ME_WIP https://decomp.me/scratch/EpZEL // switch ordering
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF254);
 
+// EntityHammerHammer
+// https://decomp.me/scratch/RYIJM Matching
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF5B8);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF778);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
 
+// EntityGurkha
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF94C);
 
+// EntityGurkhaSword
+// https://decomp.me/scratch/BBAHS Matching
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0730);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0A00);
