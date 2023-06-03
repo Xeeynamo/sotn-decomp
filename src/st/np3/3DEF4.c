@@ -1093,7 +1093,3 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5F58);
 
 // EntityWaterDrop ID 0x31
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C61B4);
-
-
- 
- 
