@@ -55,8 +55,7 @@ Entity* func_8015F8F8(s16 start, s16 end) {
 Entity* func_8015F96C(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
-    end--;
-    for (i = end; i >= start; i--, entity--) {
+    for (i = end - 1; i >= start; i--, entity--) {
         if (entity->objectId == E_NONE) {
             return entity;
         }
