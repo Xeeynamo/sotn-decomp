@@ -99,10 +99,9 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E82EC, func_060E82EC);
 s32 arr_0605C140[];
 
 // not seeing an obvious PSX equivalent
-void func_060e8330(void)
-{
-  arr_0605C140[0xEF] = 0x1000;
-  arr_0605C140[0xF1] = 1;
+void func_060e8330(void) {
+    arr_0605C140[0xEF] = 0x1000;
+    arr_0605C140[0xF1] = 1;
 }
 
 INCLUDE_ASM("asm/saturn/stage_02", f60E8350, func_060E8350);
