@@ -106,9 +106,8 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkha);
 
-// EntityGurkhaSword
 // https://decomp.me/scratch/BBAHS Matching
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0730);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkhaSword);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0A00);
 
