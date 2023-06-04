@@ -49,8 +49,7 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E1C08, func_060E1C08);
 INCLUDE_ASM("asm/saturn/stage_02", f60E1CA8, func_060E1CA8);
 INCLUDE_ASM("asm/saturn/stage_02", f60E1D48, func_060E1D48);
 
-struct Unk
-{
+struct Unk {
     u8 pad[0x38];
     u16 unk_38;
     u16 unk_3a;
@@ -60,8 +59,7 @@ struct Unk
 extern struct Unk DAT_060e2014; // 060F5044h
 
 // maybe func_801B797C?
-void func_060e1ff8(s32 param_1)
-{
+void func_060e1ff8(s32 param_1) {
     DAT_060e2014.unk_3c = param_1;
     DAT_060e2014.unk_3a = 0;
     DAT_060e2014.unk_38 = 1;
