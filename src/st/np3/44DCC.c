@@ -76,19 +76,19 @@ typedef enum {
 } Merman2SpitFireSubSteps;
 
 // EntitySplashWater ID 0x2D
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C4DCC);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C4DCC);
 
 // EntitySurfacingWater ID 0x2E
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C56D8);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C56D8);
 
 // EntitySideWaterSplash ID 0x2F
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5BC4);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C5BC4);
 
 // EntitySmallWaterDrop ID 0x30
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5F58);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C5F58);
 
 // EntityWaterDrop ID 0x31
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C61B4);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C61B4);
 
 s32 func_801C6458(s16 yVector) {
     s16 newY = yVector + g_CurrentEntity->posY.i.hi;
@@ -118,7 +118,7 @@ s32 func_801C6458(s16 yVector) {
 // Matching, assembler skips a NOP
 // https://decomp.me/scratch/8wa56
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", EntityMerman2);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntityMerman2);
 #else
 void EntityMerman2(Entity* self) {
     s32 firstPrimIndex;
@@ -718,7 +718,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", func_801C7954);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C7954);
 
 void func_801C7D80(Entity* self) {
     if (self->step == 0) {
@@ -861,7 +861,7 @@ void EntityMermanSpawner(Entity* self) {
 // Matching, assembler skips a NOP
 // https://decomp.me/scratch/pjVr0
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/46458", EntityMerman);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntityMerman);
 #else
 void EntityMerman(Entity* self) {
     Entity* newEntity;
