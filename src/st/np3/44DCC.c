@@ -1,6 +1,6 @@
 /*
  * Overlay: NP3
- * Enemy: Merman
+ * Description: Merman Room
  */
 
 #include "np3.h"
@@ -74,6 +74,21 @@ typedef enum {
     MERMAN2_SPIT_FIRE_FACE_PLAYER,
     MERMAN2_SPIT_FIRE_ATTACK,
 } Merman2SpitFireSubSteps;
+
+// EntitySplashWater ID 0x2D
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C4DCC);
+
+// EntitySurfacingWater ID 0x2E
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C56D8);
+
+// EntitySideWaterSplash ID 0x2F
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5BC4);
+
+// EntitySmallWaterDrop ID 0x30
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5F58);
+
+// EntityWaterDrop ID 0x31
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C61B4);
 
 s32 func_801C6458(s16 yVector) {
     s16 newY = yVector + g_CurrentEntity->posY.i.hi;

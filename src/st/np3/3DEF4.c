@@ -1078,18 +1078,3 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C4144);
 
 // ID 0x2C
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C424C);
-
-// EntitySplashWater ID 0x2D
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C4DCC);
-
-// EntitySurfacingWater ID 0x2E
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C56D8);
-
-// EntitySideWaterSplash ID 0x2F
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5BC4);
-
-// EntitySmallWaterDrop ID 0x30
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C5F58);
-
-// EntityWaterDrop ID 0x31
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C61B4);

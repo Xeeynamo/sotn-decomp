@@ -68,7 +68,7 @@ segments:
       - [0x36990, c] # Gaibon & Slogra boss
       - [0x390BC, c]
       - [0x3DEF4, c]
-      - [0x46458, c] # Merman Entities
+      - [0x44DCC, c] # Merman Entities
       - [0x490E8, c] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]
