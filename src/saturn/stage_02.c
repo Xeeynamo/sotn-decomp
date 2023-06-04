@@ -95,7 +95,16 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E73CC, func_060E73CC);
 INCLUDE_ASM("asm/saturn/stage_02", f60E7508, func_060E7508);
 INCLUDE_ASM("asm/saturn/stage_02", f60E81D4, func_060E81D4);
 INCLUDE_ASM("asm/saturn/stage_02", f60E82EC, func_060E82EC);
-INCLUDE_ASM("asm/saturn/stage_02", f60E8330, func_060E8330);
+
+s32 arr_0605C140[];
+
+// not seeing an obvious PSX equivalent
+void func_060e8330(void)
+{
+  arr_0605C140[0xEF] = 0x1000;
+  arr_0605C140[0xF1] = 1;
+}
+
 INCLUDE_ASM("asm/saturn/stage_02", f60E8350, func_060E8350);
 INCLUDE_ASM("asm/saturn/stage_02", f60E837C, func_060E837C);
 INCLUDE_ASM("asm/saturn/stage_02", f60E8780, func_060E8780);
