@@ -931,7 +931,113 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019A420);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityStageNamePopup);
 
+// DECOMP_ME_WIP EntityAbsorbOrb https://decomp.me/scratch/vhe5I 99.52%
+// WIP
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityAbsorbOrb);
+#else
+void func_80194394(u8*, Entity*);                       /* extern */
+extern u16 D_8008701E[];
+extern u16 D_801811C8[];
+extern u16 D_801811D8[];
+extern u8 D_80181238;
+extern u16 D_80180410[];
+extern s16 PLAYER_posX_i_hi;
+extern u16 g_Player_unk56;
+extern s16 g_Player_unk58;
+extern s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
+// extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
+// void func_80194D08(s32 slope, u16 speed);
+
+// The white flying orbs of energy that Alucard summons as part of the Soul Steal spel
+void EntityAbsorbOrb(Entity* arg0) {
+    Primitive* prim;
+    s32 firstPrimIndex;
+    s32 temp_a;
+    s32 temp_b;
+    u16 temp_c;
+    u16* temp_d;
+    u16* temp_e;
+
+    switch (arg0->step) {                              /* irregular */
+    case 0:
+        firstPrimIndex = g_api.AllocPrimitives(4, 1);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(arg0);
+            return;
+        }
+        InitializeEntity(D_80180410);
+        D_8008701E[firstPrimIndex * 0x1a] = 8;
+        arg0->firstPolygonIndex = firstPrimIndex;
+        arg0->animSet = 0;
+        arg0->flags |= 0x800000;
+        temp_c = func_80194DC4(arg0, &g_Entities);
+        temp_a = arg0->posY.i.hi < 0x71;
+        temp_b = temp_a ^ 1;
+        if (arg0->posX.i.hi < PLAYER_posX_i_hi) {
+            temp_b = temp_a;
+        }
+        if (0xFFFF & temp_b) {
+            arg0->ext.generic.unk7C.s = temp_c - D_801811C8[Random() & 7];
+        } else {
+            temp_c += D_801811C8[Random() & 7];
+            arg0->ext.generic.unk7C.s = temp_c;
+        }
+        arg0->ext.generic.unk80.modeS16.unk0 = 0x400;
+        arg0->ext.generic.unk7E.modeU16 = 0;
+        arg0->unk3C = 0;
+        return;
+    case 1:
+        arg0->ext.generic.unk80.modeS16.unk2 += 1;
+        if (arg0->ext.generic.unk80.modeS16.unk2 == 0x10) {
+            arg0->unk3C = 1;
+        }
+        if (arg0->unk48 != 0) {
+            if (g_Player.unk56 == 0) {
+                g_Player.unk56 = 1;
+                g_Player_unk58 = 8;
+            }
+            DestroyEntity(arg0);
+            return;
+        }
+        if (arg0->unk1A < 0x100) {
+            arg0->unk1A = (arg0->unk1C += 0x10);
+        }
+        if (arg0->ext.generic.unk7E.modeU16 < 0x200U) {
+            arg0->ext.generic.unk7E.modeU16 += 2;
+        }
+        if (arg0->ext.generic.unk80.modeS16.unk0 < 0x800U) {
+            arg0->ext.generic.unk80.modeS16.unk0 += 4;
+        }
+        arg0->ext.generic.unk7C.s = func_80194E44(
+            arg0->ext.generic.unk7E.modeU16,
+            arg0->ext.generic.unk7C.s,
+            func_80194DC4(arg0, &g_Entities)
+        );
+        func_80194D08(
+            arg0->ext.generic.unk7C.s & 0xFFFF,
+            arg0->ext.generic.unk80.modeS16.unk0
+        );
+        MoveEntity(arg0);
+        prim = &g_PrimBuf[arg0->firstPolygonIndex];
+        func_80194394(&D_80181238, arg0);
+        prim->tpage = 0x18;
+        prim->clut = 0x194;
+        temp_d = &D_801811D8[(u16) ((8 * (u16) arg0->animCurFrame) - 8)];
+        prim->x0 = prim->x2 = arg0->posX.i.hi + *(temp_d++);
+        prim->y0 = prim->y1 = arg0->posY.i.hi + *(temp_d++);
+        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
+        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
+        prim->u0 = prim->u2 = *(temp_d++);
+        prim->v0 = prim->v1 = *(temp_d++);
+        prim->u1 = prim->u3 = *(temp_d++);
+        prim->v2 = prim->v3 = *(temp_d++);
+        prim->priority = arg0->zPriority;
+        prim->blendMode = 0;
+        return;
+    }
+}
+#endif
 
 void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
