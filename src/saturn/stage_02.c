@@ -114,8 +114,7 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E8ADC, func_060E8ADC);
 void func_060E8E1C(s32, s32);
 void func_060E8EEC(s32, s32, s32);
 
-void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2)
-{
+void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2) {
     func_060E8E1C(arg1, arg2);
     func_060E8EEC(arg0, arg1, arg2);
 }
