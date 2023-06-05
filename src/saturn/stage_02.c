@@ -121,16 +121,14 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E92D8, func_060E92D8);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9770, func_060E9770);
 
 // seems to saturn-only. param_1 is probably a struct?
-void func_060e97c4(u16 **param_1)
-{
-    
-  if (*(u16 *)(param_1 + 6) != 0) {
-      **param_1 = **param_1 | 0x10;
+void func_060e97c4(u16** param_1) {
 
-  }
-  else {
-    **param_1 = **param_1 & 0xffef;
-  }
+    if (*(u16*)(param_1 + 6) != 0) {
+        **param_1 = **param_1 | 0x10;
+
+    } else {
+        **param_1 = **param_1 & 0xffef;
+    }
 }
 
 INCLUDE_ASM("asm/saturn/stage_02", f60E97F0, func_060E97F0);
