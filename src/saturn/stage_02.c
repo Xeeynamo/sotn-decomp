@@ -116,7 +116,22 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9058, func_060E9058);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9220, func_060E9220);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9270, func_060E9270);
-INCLUDE_ASM("asm/saturn/stage_02", f60E92A8, func_060E92A8);
+
+// dupe of func_060e97c4
+void func_060E92A8(u16** param_1) {
+
+    if (*(u16*)(param_1 + 6) != 0) {
+        **param_1 = **param_1 | 0x10;
+
+    } else {
+        **param_1 = **param_1 & 0xffef;
+    }
+}
+
+// not sure what these are
+const u16 pad_060e92d4 = 0xAAAA;
+const u16 pad_060e92d6 = 0xAAAB;
+
 INCLUDE_ASM("asm/saturn/stage_02", f60E92D8, func_060E92D8);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9770, func_060E9770);
 
