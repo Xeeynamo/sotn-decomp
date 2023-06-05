@@ -936,7 +936,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityStageNamePopup);
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityAbsorbOrb);
 #else
-void func_80194394(u8*, Entity*);                       /* extern */
+void func_80194394(u8*, Entity*); /* extern */
 extern u16 D_8008701E[];
 extern u16 D_801811C8[];
 extern u16 D_801811D8[];
@@ -946,10 +946,9 @@ extern s16 PLAYER_posX_i_hi;
 extern u16 g_Player_unk56;
 extern s16 g_Player_unk58;
 extern s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
-// extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
-// void func_80194D08(s32 slope, u16 speed);
 
-// The white flying orbs of energy that Alucard summons as part of the Soul Steal spel
+// The white flying orbs of energy that Alucard summons as part of the
+// Soul Steal spell
 void EntityAbsorbOrb(Entity* arg0) {
     Primitive* prim;
     s32 firstPrimIndex;
@@ -959,7 +958,7 @@ void EntityAbsorbOrb(Entity* arg0) {
     u16* temp_d;
     u16* temp_e;
 
-    switch (arg0->step) {                              /* irregular */
+    switch (arg0->step) { /* irregular */
     case 0:
         firstPrimIndex = g_api.AllocPrimitives(4, 1);
         if (firstPrimIndex == -1) {
@@ -1010,20 +1009,16 @@ void EntityAbsorbOrb(Entity* arg0) {
             arg0->ext.generic.unk80.modeS16.unk0 += 4;
         }
         arg0->ext.generic.unk7C.s = func_80194E44(
-            arg0->ext.generic.unk7E.modeU16,
-            arg0->ext.generic.unk7C.s,
-            func_80194DC4(arg0, &g_Entities)
-        );
-        func_80194D08(
-            arg0->ext.generic.unk7C.s & 0xFFFF,
-            arg0->ext.generic.unk80.modeS16.unk0
-        );
+            arg0->ext.generic.unk7E.modeU16, arg0->ext.generic.unk7C.s,
+            func_80194DC4(arg0, &g_Entities));
+        func_80194D08(arg0->ext.generic.unk7C.s & 0xFFFF,
+                      arg0->ext.generic.unk80.modeS16.unk0);
         MoveEntity(arg0);
         prim = &g_PrimBuf[arg0->firstPolygonIndex];
         func_80194394(&D_80181238, arg0);
         prim->tpage = 0x18;
         prim->clut = 0x194;
-        temp_d = &D_801811D8[(u16) ((8 * (u16) arg0->animCurFrame) - 8)];
+        temp_d = &D_801811D8[(u16)((8 * (u16)arg0->animCurFrame) - 8)];
         prim->x0 = prim->x2 = arg0->posX.i.hi + *(temp_d++);
         prim->y0 = prim->y1 = arg0->posY.i.hi + *(temp_d++);
         prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
