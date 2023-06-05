@@ -111,8 +111,7 @@ void func_060E87D0(s32, s32);
 void func_060E8990(s32, s32, s32);
 void func_060E8ADC(s32, s32, s32);
 
-void func_060E8780(s32 param_1, s32 param_2, s32 param_3, s32 param_4)
-{
+void func_060E8780(s32 param_1, s32 param_2, s32 param_3, s32 param_4) {
     func_060E87D0(param_2, param_4);
     func_060E8990(param_2, param_3, param_4);
     func_060E8ADC(param_1, param_2, param_4);
