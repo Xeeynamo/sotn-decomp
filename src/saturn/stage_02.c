@@ -119,7 +119,20 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E9270, func_060E9270);
 INCLUDE_ASM("asm/saturn/stage_02", f60E92A8, func_060E92A8);
 INCLUDE_ASM("asm/saturn/stage_02", f60E92D8, func_060E92D8);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9770, func_060E9770);
-INCLUDE_ASM("asm/saturn/stage_02", f60E97C4, func_060E97C4);
+
+// seems to saturn-only. param_1 is probably a struct?
+void func_060e97c4(u16 **param_1)
+{
+    
+  if (*(u16 *)(param_1 + 6) != 0) {
+      **param_1 = **param_1 | 0x10;
+
+  }
+  else {
+    **param_1 = **param_1 & 0xffef;
+  }
+}
+
 INCLUDE_ASM("asm/saturn/stage_02", f60E97F0, func_060E97F0);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9828, func_060E9828);
 INCLUDE_ASM("asm/saturn/stage_02", f60EA058, func_060EA058);
