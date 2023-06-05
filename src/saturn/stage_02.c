@@ -110,7 +110,16 @@ INCLUDE_ASM("asm/saturn/stage_02", f60E8780, func_060E8780);
 INCLUDE_ASM("asm/saturn/stage_02", f60E87D0, func_060E87D0);
 INCLUDE_ASM("asm/saturn/stage_02", f60E8990, func_060E8990);
 INCLUDE_ASM("asm/saturn/stage_02", f60E8ADC, func_060E8ADC);
-INCLUDE_ASM("asm/saturn/stage_02", f60E8DE0, func_060E8DE0);
+
+void func_060E8E1C(s32, s32);
+void func_060E8EEC(s32, s32, s32);
+
+void func_060E8DE0(s32 arg0, s32 arg1, s32 arg2)
+{
+    func_060E8E1C(arg1, arg2);
+    func_060E8EEC(arg0, arg1, arg2);
+}
+
 INCLUDE_ASM("asm/saturn/stage_02", f60E8E1C, func_060E8E1C);
 INCLUDE_ASM("asm/saturn/stage_02", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02", f60E9058, func_060E9058);
