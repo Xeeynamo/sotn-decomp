@@ -137,14 +137,12 @@ INCLUDE_ASM("asm/saturn/stage_02", f60EA058, func_060EA058);
 INCLUDE_ASM("asm/saturn/stage_02", f60EA1E0, func_060EA1E0);
 
 // dupe of func_060e97c4
-void func_060EA234(u16 **param_1)
-{
-  if (*(u16 *)(param_1 + 6) != 0) {
-      **param_1 = **param_1 | 0x10;
-  }
-  else {
-    **param_1 = **param_1 & 0xffef;
-  }
+void func_060EA234(u16** param_1) {
+    if (*(u16*)(param_1 + 6) != 0) {
+        **param_1 = **param_1 | 0x10;
+    } else {
+        **param_1 = **param_1 & 0xffef;
+    }
 }
 
 // not sure what these are
