@@ -1576,7 +1576,25 @@ void func_8012CB0C(void) {
     PLAYER.step_s = 7;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CB4C);
+void func_8012CB4C(void) {
+    PLAYER.step_s = 2;
+    if ((PLAYER.facing != 0 && g_Player.padPressed & PAD_RIGHT) ||
+        (PLAYER.facing == 0 && g_Player.padPressed & PAD_LEFT)) {
+        func_8010DA48(0xE1);
+        D_800B0914 = 0;
+        D_8013842C = 0;
+        return;
+    } else if (D_8013842C != 0) {
+        func_8010DA48(0xE2);
+        D_800B0914 = 2;
+        AccelerateX(0x20000);
+        return;
+    } else {
+        func_8010DA48(0xE0);
+        D_800B0914 = 1;
+        D_8013842C = 0xC;
+    }
+}
 
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
