@@ -76,7 +76,32 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDF1C);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDFD8);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE04C);
+void func_801CE04C(Entity* entity, Collider* collider) {
+    s16 var_s0 = 0;
+
+    g_api.CheckCollision(entity->posX.i.hi,
+                         (s16)(entity->posY.i.hi + collider->unk18), collider,
+                         0);
+    if (collider->unk0 & 1) {
+        var_s0 = 1;
+        if (collider->unk0 & 0x8000) {
+            if (collider->unk0 & 0x4000) {
+                if (g_CurrentEntity->facing != 0) {
+                    var_s0 = 4;
+                } else {
+                    var_s0 = 2;
+                }
+            } else {
+                if (g_CurrentEntity->facing != 0) {
+                    var_s0 = 2;
+                } else {
+                    var_s0 = 4;
+                }
+            }
+        }
+    }
+    entity->ext.generic.unk88.S16.unk0 = var_s0;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE120);
 
