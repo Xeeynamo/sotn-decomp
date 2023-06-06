@@ -822,5 +822,6 @@ bool func_80133950(void);
 void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);
+extern s32 D_80138004;
 
 #endif
