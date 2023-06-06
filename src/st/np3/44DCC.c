@@ -90,8 +90,8 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C5F58);
 // EntityWaterDrop ID 0x31
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C61B4);
 
-s32 func_801C6458(s16 yVector) {
-    s16 newY = yVector + g_CurrentEntity->posY.i.hi;
+s32 func_801C6458(s16 yOffset) {
+    s16 newY = yOffset + g_CurrentEntity->posY.i.hi;
     s32 expectedResult = 0;
     Collider collider;
     Entity* newEntity;
@@ -106,15 +106,15 @@ s32 func_801C6458(s16 yVector) {
     }
 
     if (collider.unk0 & 8) {
-        if (*(u8*)&g_CurrentEntity->ext.generic.unkA0 == 0) {
+        if (!g_CurrentEntity->ext.merman.isUnderwater) {
             newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x33, g_CurrentEntity, newEntity);
-                newEntity->posY.i.hi += yVector;
+                newEntity->posY.i.hi += yOffset;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
-            g_api.PlaySfx(0x7C2);
-            *(u8*)&g_CurrentEntity->ext.generic.unkA0 = 1;
+            g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
+            g_CurrentEntity->ext.merman.isUnderwater = true;
         }
     }
     return res;
@@ -134,7 +134,6 @@ void EntityMerman2(Entity* self) {
     s16 posX, posY;
     s32 colRes;
     s32 offset;
-    s32 index;
     u32 accel;
     s16* pos;
     s16 camY;
@@ -181,9 +180,9 @@ void EntityMerman2(Entity* self) {
 
     case MERMAN2_SWIMMING:
         if (self->step_s == 0) {
-            rnd = (Random() & 3) * 2;
-            self->accelerationX = D_80182224[rnd];
-            self->accelerationY = D_80182228[rnd];
+            rnd = Random() & 3;
+            self->accelerationX = D_80182224[rnd].x;
+            self->accelerationY = D_80182224[rnd].y;
             self->step_s++;
         }
         if (AnimateEntity(D_8018229C, self) == 0) {
@@ -197,9 +196,8 @@ void EntityMerman2(Entity* self) {
         if (!(collider.unk0 & 8)) {
             self->accelerationY = 0x8000;
         }
-        index = (self->subId >> 8) & 1;
-        pos = &D_80181230;
-        pos += index;
+        pos = D_80181230;
+        pos += (self->subId >> 8) & 1;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
             self->posY.i.hi = pos[4] - g_Camera.posY.i.hi - 24;
@@ -274,9 +272,8 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_JUMPING_UNDERWATER:
             MoveEntity();
-            index = (self->subId >> 8) & 1;
-            pos = &D_80181230;
-            pos += index;
+            pos = D_80181230;
+            pos += (self->subId >> 8) & 1;
             posY = self->posY.i.hi;
             posY -= 24;
             camY = g_Camera.posY.i.hi + posY;
@@ -350,7 +347,8 @@ void EntityMerman2(Entity* self) {
                     return;
                 }
             } else {
-                self->flags |= 0xC0000000;
+                self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                               FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
                 MoveEntity();
                 self->accelerationY += 0x4000;
             }
@@ -532,7 +530,8 @@ void EntityMerman2(Entity* self) {
 
     case MERMAN2_7:
         if (self->step_s == 0) {
-            self->flags |= 0xC0000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                           FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             self->step_s++;
         }
         MoveEntity();
@@ -547,7 +546,8 @@ void EntityMerman2(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 14;
-            self->flags |= 0xC0000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                           FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             if (!(GetPlayerSide() & 1)) {
                 self->accelerationX = -0x20000;
             } else {
@@ -877,7 +877,6 @@ void EntityMerman(Entity* self) {
     s16 camY;
     s32 rnd;
     s32 res;
-    s32 index;
 
     if (self->ext.merman.isUnderwater) {
         self->palette = self->ext.merman.palette;
@@ -933,9 +932,9 @@ void EntityMerman(Entity* self) {
         if (self->step_s == 0) {
             self->hitboxWidth = 5;
             self->hitboxHeight = 17;
-            rnd = (Random() & 3) * 2;
-            self->accelerationX = D_80182338[rnd];
-            self->accelerationY = D_8018233C[rnd];
+            rnd = Random() & 3;
+            self->accelerationX = D_80182338[rnd].x;
+            self->accelerationY = D_80182338[rnd].y;
             self->step_s++;
         }
         if (AnimateEntity(D_801823D0, self) == 0) {
@@ -952,9 +951,8 @@ void EntityMerman(Entity* self) {
             self->accelerationY = 0x8000;
         }
 
-        index = (self->subId >> 8) & 1;
         pos = &D_80181230;
-        pos += index;
+        pos += (self->subId >> 8) & 1;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
             self->posY.i.hi = pos[4] - g_Camera.posY.i.hi - 24;
@@ -978,9 +976,8 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
-            index = (self->subId >> 8) & 1;
             pos = &D_80181230;
-            pos += index;
+            pos += (self->subId >> 8) & 1;
             camY = g_Camera.posY.i.hi;
             posY = self->posY.i.hi;
             posY -= 20;
@@ -999,14 +996,15 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_IN_AIR:
             AnimateEntity(D_801823BC, self);
-            if (self->ext.merman.isUnderwater == 0) {
+            if (!self->ext.merman.isUnderwater) {
                 if (func_801BC8E4(&D_8018235C) & 1) {
                     self->animFrameDuration = 0;
                     self->animFrameIdx = 0;
                     self->step_s++;
                 }
             } else {
-                self->flags |= 0xC0000000;
+                self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                               FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
                 MoveEntity();
                 self->accelerationY += 0x4000;
             }
@@ -1164,8 +1162,7 @@ void EntityMerman(Entity* self) {
                 self->step_s++;
             }
             func_801C6458(11);
-            res = self->ext.merman.isUnderwater;
-            if (res != 0) {
+            if (self->ext.merman.isUnderwater) {
                 self->ext.merman.ignoreCol = 1;
             }
             break;
@@ -1177,8 +1174,7 @@ void EntityMerman(Entity* self) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             func_801C6458(11);
-            res = self->ext.merman.isUnderwater;
-            if (res != 0) {
+            if (self->ext.merman.isUnderwater) {
                 self->ext.merman.ignoreCol = 1;
             }
         }
@@ -1186,7 +1182,8 @@ void EntityMerman(Entity* self) {
 
     case MERMAN_FALLING:
         if (self->step_s == 0) {
-            self->flags |= 0xC0000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                           FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             self->step_s++;
         }
         MoveEntity();

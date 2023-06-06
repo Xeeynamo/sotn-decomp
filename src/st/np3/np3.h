@@ -91,24 +91,22 @@ extern u16 D_80181204[];
 
 // *** Merman properties START ***
 
-extern u16 D_80181230[]; // pos TBL
-extern s32 D_80182224[]; // accel_x TBL
-extern s32 D_80182228[]; // accel_y TBL
-extern u8 D_80182244[];  // timers
-extern s32 D_80182248;   // Collision data
-extern s32 D_80182258;   // Collision data
-extern u16 D_80182268;   // Collision data
-extern u8 D_80182270[];  // Animation
-extern u8 D_8018227C[];  // Animation
-extern u8 D_80182294[];  // Animation
-extern u8 D_8018229C[];  // Animation
-extern s32 D_80182338[];
-extern s32 D_8018233C[];
+extern u16 D_80181230[];     // pos TBL
+extern point32 D_80182224[]; // accel_x TBL
+extern u8 D_80182244[];      // timers
+extern s32 D_80182248;       // Collision data
+extern s32 D_80182258;       // Collision data
+extern u16 D_80182268;       // Collision data
+extern u8 D_80182270[];      // Animation
+extern u8 D_8018227C[];      // Animation
+extern u8 D_80182294[];      // Animation
+extern u8 D_8018229C[];      // Animation
+extern point32 D_80182338[];
 extern u8 D_80182358[];
-extern u16 D_8018235C;
-extern u16 D_8018236C;
-extern u16 D_8018237C;
-extern u16 D_8018238C;
+extern s16 D_8018235C;
+extern s16 D_8018236C;
+extern s16 D_8018237C;
+extern s16 D_8018238C;
 extern u8 D_80182394[]; // animation
 extern u8 D_801823AC[]; // animation
 extern u8 D_801823BC[]; // animation

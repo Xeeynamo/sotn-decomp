@@ -674,7 +674,7 @@ void func_801C0D08(Entity* self) {
     }
 }
 
-bool func_801C0F38(Unkstruct6* unk) {
+bool func_801C0F38(point16* unk) {
     Collider res;
 
     FallEntity();
