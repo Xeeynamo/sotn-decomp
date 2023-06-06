@@ -1,4 +1,5 @@
 #include "inc_asm.h"
+#include "sattypes.h"
 INCLUDE_ASM("asm/saturn/game", d6066000, d_06066000);
 INCLUDE_ASM("asm/saturn/game", f6066040, func_06066040);
 INCLUDE_ASM("asm/saturn/game", f60661BC, func_060661BC);
@@ -224,14 +225,6 @@ INCLUDE_ASM("asm/saturn/game", f607B218, func_0607B218);
 INCLUDE_ASM("asm/saturn/game", f607B240, func_0607B240);
 INCLUDE_ASM("asm/saturn/game", f607B264, func_0607B264);
 
-typedef signed char s8;
-typedef signed short s16;
-typedef signed int s32;
-typedef signed long long s64;
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-typedef unsigned long long u64;
 extern u32 g_randomNext;
 
 // SAT: func_0607B2F4
