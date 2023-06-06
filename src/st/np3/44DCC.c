@@ -98,7 +98,12 @@ s32 func_801C6458(s16 yVector) {
     s32 res;
 
     g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
-    res = expectedResult == (collider.unk0 & 1);
+
+    if (expectedResult == (collider.unk0 & 1)) {
+        res = true;
+    } else {
+        res = false;
+    }
 
     if (collider.unk0 & 8) {
         if (*(u8*)&g_CurrentEntity->ext.generic.unkA0 == 0) {
