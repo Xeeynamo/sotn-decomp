@@ -1043,6 +1043,7 @@ extern Event g_EvHwCardNew;
 extern PixPattern D_8007EFE4;
 extern s32 D_80080FE4; // maybe PixPattern[]?
 extern s8 D_80082FE4;
+extern u16 D_8008701E[];
 extern Primitive g_PrimBuf[MAX_PRIM_COUNT]; // entity polygons
 extern s32 playerX;
 extern s32 playerY;
