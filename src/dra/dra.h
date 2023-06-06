@@ -468,6 +468,7 @@ extern s32 D_80137FB8;
 extern s32 D_80137FBC;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;
+extern s32 D_80138004;
 extern s32 D_80138008;
 extern s32 D_8013800C[];
 extern u8 D_8013803C;
@@ -822,6 +823,5 @@ bool func_80133950(void);
 void func_80133FCC(void);
 void func_8013415C(void);
 void func_801361F8(void);
-extern s32 D_80138004;
 
 #endif

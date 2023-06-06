@@ -181,15 +181,16 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801177A0);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80117AC0);
 
 s32 func_80117D3C(void) {
-    if (PLAYER.step_s != 0) {
-        if ((D_8009744C != 0) || (g_Player.padTapped & PAD_L1) ||
-            (func_800FEEA4(1, 1) < 0) ||
-            ((func_800FE3A8(8) == false) &&
-             ((D_80138004 == 0) || (--D_80138004 == 0)))) {
-            func_8010E27C();
-            SetPlayerStep(0xE);
-            return 1;
-        }
+    if (PLAYER.step_s == 0) {
+        return 0;
+    }
+    if (D_8009744C != 0 || g_Player.padTapped & PAD_L1 ||
+        func_800FEEA4(1, 1) < 0 ||
+        (func_800FE3A8(8) == false &&
+            (D_80138004 == 0 || --D_80138004 == 0))) {
+        func_8010E27C();
+        SetPlayerStep(0xE);
+        return 1;
     }
     return 0;
 }
