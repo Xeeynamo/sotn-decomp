@@ -133,9 +133,17 @@ typedef struct {
     /* 0x9D */ u8 grabedAscending;
 } ET_GaibonSlogra;
 
+typedef struct {
+    /* 0x7C */ s16 angle;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ s16 unk82;
+} ET_AbsorbOrb;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
+    /* 0x7C */ ET_AbsorbOrb absorbOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ char stub[0x40];
 } Ext;
