@@ -951,7 +951,7 @@ void EntityMerman(Entity* self) {
             self->accelerationY = 0x8000;
         }
 
-        pos = &D_80181230;
+        pos = D_80181230;
         pos += (self->subId >> 8) & 1;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
@@ -976,7 +976,7 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = &D_80181230;
+            pos = D_80181230;
             pos += (self->subId >> 8) & 1;
             camY = g_Camera.posY.i.hi;
             posY = self->posY.i.hi;
