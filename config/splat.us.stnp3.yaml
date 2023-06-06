@@ -63,7 +63,9 @@ segments:
       - [0x320A0, .rodata, 49BC8]
       - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
       - [0x320DC, rodata]
-      - [0x32360, rodata]
+      - [0x322CC, rodata] # func_801CF254 .rodata, 4B018
+      - [0x322F8, rodata] # Gurka .rodata, 4B018
+      - [0x32380, rodata]
       - [0x3246C, c]
       - [0x36990, c] # Gaibon & Slogra boss
       - [0x390BC, c]
