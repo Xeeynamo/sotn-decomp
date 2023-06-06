@@ -138,7 +138,6 @@ void EntityMerman2(Entity* self) {
     s16* pos;
     s16 camY;
     s32 rnd;
-    s32 res;
     s32 i;
 
     if (self->ext.merman2.ignoreCol && (self->step < MERMAN2_7)) {
@@ -398,14 +397,12 @@ void EntityMerman2(Entity* self) {
                             self->step_s--;
                         }
                     }
-                    res = func_801C6458(0x1B);
-                    if (res != 0) {
+                    if (func_801C6458(0x1B)) {
                         self->ext.merman2.ignoreCol = 1;
                     }
                 }
             } else {
-                res = func_801C6458(0x1B);
-                if (res != 0) {
+                if (func_801C6458(0x1B)) {
                     self->ext.merman2.ignoreCol = 1;
                 }
             }
@@ -496,8 +493,7 @@ void EntityMerman2(Entity* self) {
                 self->step_s++;
             }
             func_801C6458(0x1B);
-            res = self->ext.merman2.isUnderwater;
-            if (res != 0) {
+            if (self->ext.merman2.isUnderwater) {
                 self->ext.merman2.ignoreCol = 1;
             }
             break;
@@ -521,8 +517,7 @@ void EntityMerman2(Entity* self) {
                 self->unk19 &= 0xFB;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
-            res = func_801C6458(0x1B);
-            if (res != 0) {
+            if (func_801C6458(0x1B)) {
                 self->ext.merman2.ignoreCol = 1;
             }
         }
@@ -876,7 +871,6 @@ void EntityMerman(Entity* self) {
     s16* pos;
     s16 camY;
     s32 rnd;
-    s32 res;
 
     if (self->ext.merman.isUnderwater) {
         self->palette = self->ext.merman.palette;
@@ -1073,8 +1067,7 @@ void EntityMerman(Entity* self) {
                     SetStep(MERMAN_LUNGE);
                 }
             }
-            res = func_801C6458(0x15);
-            if (res != 0) {
+            if (func_801C6458(0x15)) {
                 self->ext.merman.ignoreCol = 1;
             }
         }
