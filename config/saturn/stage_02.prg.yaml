@@ -1,0 +1,58 @@
+options:
+  target_path:  disks/saturn/STAGE_02.PRG
+  asm_path:     asm/saturn/stage_02
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+segments:
+  - name: stage_02
+    type: code
+    start: 0x00000000
+    vram:  0x060DC000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: 60
+        end: 0x3f
+      - start: 0x40
+        type: c
+        file: 60
+        end: 0x6a7f
+
+      # something wrong with this func fixme
+      - start: 0x6a80
+        type: data
+        file: 60
+        end: 0x72db
+
+      # and this one too
+      - start: 0x72dc
+        type: data
+        file: 60
+        end: 0x87a3
+
+      # alignment issue at 7c1e
+
+      # and this one
+      - start: 0x87a4
+        type: data
+        file: 60
+        end: 0x8907
+
+      - start: 0x8908
+        type: c
+        file: 60
+        end: 0x10A93
+
+      # and this one
+      - start: 0x10A94
+        type: data
+        file: 60
+        end: 0x10c4f
+
+      - start: 0x10c50
+        type: data
+        file: 60
+        end: 0x19037
