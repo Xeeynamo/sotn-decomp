@@ -114,7 +114,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
 
 void func_8018C04C(s16 arg0) {
     while (true) {
-        if ((D_80195A30->posX != 0xFFFE) && (((s32)D_80195A30->posX >= arg0))) {
+        if (D_80195A30->posX != 0xFFFE && (s32)D_80195A30->posX >= arg0) {
             break;
         }
         D_80195A30++;
@@ -137,7 +137,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C1EC);
 
 void func_8018C300(s16 arg0) {
     while (true) {
-        if ((D_80195A34->posY != 0xFFFE) && ((s32)D_80195A34->posY >= arg0)) {
+        if (D_80195A34->posY != 0xFFFE && (s32)D_80195A34->posY >= arg0) {
             break;
         }
         D_80195A34++;
