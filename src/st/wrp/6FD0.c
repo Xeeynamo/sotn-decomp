@@ -1300,12 +1300,11 @@ void EntityBreakable(Entity* entity) {
     }
 }
 
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC[];
 extern s32 D_8003C8B8;
-extern s32 g_Player.D_80072EFC;
 extern s32 D_80193AA0; // rename into move_room
 extern s32 D_80193AA4;
 extern s32 D_80193AA8;
@@ -1315,290 +1314,230 @@ extern s32 D_80193AAC;
 // It is responsible to spawn the colourful background, the stones on the
 // ground and it always listen to the UP button. When the UP
 // button is pressed, it brights the screen and teleport the player.
-void EntityWarpRoom(Entity* entity) {
-    POLY_GT4* poly;
-    s16 temp_s4;
-    s16 temp_s5;
-    s32 move_y;
-    s32 move_x;
-    s16 temp_s6;
-    s16 temp_s7;
-    s16 firstPolyIndex;
-    s32 temp_s1_2;
-    POLY_GT4* temp_s2_4;
-    s32 temp_v1_6;
-    s32 move_room;
-    s32 var_s0;
+void EntityWarpRoom(Entity* self) {
+    Primitive* prim;
+    Entity* newEntity;
+    WarpCoord* warpCoords;
     s32 i;
     s32 i3;
-    s32 var_s1;
-    s32 var_v0_10;
-    s32 bgColorG1;
-    s32 var_v0_12;
-    s32 bgColorB1;
-    s32 var_v0_15;
-    s32 var_v0_2;
-    s32 bgColorR0;
-    s32 var_v0_4;
-    POLY_GT4* new_var;
-    s32 bgColorG0;
-    s32 var_v0_6;
-    s32 bgColorB0;
-    s32 var_v0_8;
-    s32 bgColorR1;
-    s32 fadeIn;
-    s32 temp_s4_3;
-    s32 temp_s5_3;
-    u32* temp_v1_8;
-    POLY_GT4* temp_s2;
-    u32 temp_v0_5;
-    u8 tintColor;
-    WarpCoord* warpCoord;
-    POLY_GT4* temp_s2_5;
-    POLY_GT4* var_s2_3;
-    s32 tmpa;
-    s32 tmpb;
-    u16 newtmp_0;
-    s32 newtmp_1;
-    s32 newtmp_a1;
-    s32 newtmp_v0;
-    u8* newtmp_a0;
+    s16 firstPrimIndex;
+    s32 moveX;
+    s32 moveY;
+    s32 move_room;
 
-    FntPrint("step %x\n", entity->step);
-    switch (entity->step) {
+    FntPrint(D_80186E30, self->step);
+    switch (self->step) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        firstPolyIndex = g_api.AllocPrimitives(4, 24);
-        if (firstPolyIndex == -1) {
-            entity->step = 0;
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
+        if (firstPrimIndex == -1) {
+            self->step = 0;
             return;
         }
-        poly = &g_PrimBuf[firstPolyIndex];
-        temp_s5 = entity->posY.i.hi; // must not be lhu but lh
-        temp_s4 = entity->posX.i.hi; // must not be lhu but lh
-        entity->firstPolygonIndex = firstPolyIndex;
-        *(u32*)&entity->ext.generic.unk7C.s = poly;
-        temp_s7 = temp_s4;
-        temp_s6 = temp_s5;
-        entity->flags |= FLAG_FREE_POLYGONS;
-        var_s0 = 0;
-
-        while (var_s0 < 0x10) {
-            var_s1 = var_s0 << 8;
-            poly->x0 = temp_s4 + ((rcos(var_s1) * 4) >> 8);
-            poly->y0 = temp_s5 - ((rsin(var_s1) * 4) >> 8);
-            poly->u0 = (((rcos(var_s1) >> 4) * 30) >> 8) + 0x20;
-            poly->v0 = (-0x20) - (((rsin(var_s1) >> 4) * 30) >> 8);
-            var_s0++;
-            poly->x1 = temp_s4 + ((rcos(var_s0 << 8) * 4) >> 8);
-            poly->y1 = temp_s5 - ((rsin(var_s0 << 8) * 4) >> 8);
-            poly->u1 = (((rcos(var_s0 << 8) >> 4) * 30) >> 8) + 0x20;
-            poly->v1 = (-0x20) - (((rsin(var_s0 << 8) >> 4) * 30) >> 8);
-            poly->u3 = 0x20;
-            poly->u2 = 0x20;
-            poly->v3 = 0xE0;
-            poly->v2 = 0xE0;
-            poly->tpage = 0x1A;
-            poly->clut = 0x15F;
-            poly->pad2 = 0x40;
-            poly->pad3 = 0x406;
-            poly->y3 = temp_s6;
-            poly->y2 = temp_s6;
-            poly->x3 = temp_s7;
-            poly->x2 = temp_s7;
-            poly = (POLY_GT4*)poly->tag;
-            var_s1 = var_s0 << 8;
+        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[firstPrimIndex];
+        self->ext.warpRoom.primBg = prim;
+        self->flags |= 0x00800000;
+        moveY = self->posY.i.hi;
+        moveX = self->posX.i.hi;
+        for (i = 0; i < 0x10; i++) {
+            prim->x0 = moveX + ((rcos(i * 256) * 4) >> 8);
+            prim->y0 = moveY - ((rsin(i * 256) * 4) >> 8);
+            prim->u0 = 0x20 + (((rcos(i * 256) >> 4) * 0x1E) >> 8);
+            prim->v0 = -0x20 - (((rsin(i * 256) >> 4) * 0x1E) >> 8);
+            prim->x1 = moveX + ((rcos((i + 1) * 256) * 4) >> 8);
+            prim->y1 = moveY - ((rsin((i + 1) * 256) * 4) >> 8);
+            prim->u1 = 0x20 + (((rcos((i + 1) * 256) >> 4) * 0x1E) >> 8);
+            prim->v1 = -0x20 - (((rsin((i + 1) * 256) >> 4) * 0x1E) >> 8);
+            prim->y2 = prim->y3 = moveY;
+            prim->x2 = prim->x3 = moveX;
+            prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
+            prim->tpage = 0x1A;
+            prim->clut = 0x15F;
+            prim->priority = 0x40;
+            prim->blendMode = 0x406;
+            prim = prim->next;
         }
 
-        entity->ext.generic.unk84.unk = poly; // store next polygon?
-        setcode(poly, 1);
-        poly->u0 = 0x40;
-        poly->v0 = 0x50;
-        poly->x0 = 0x60;
-        poly->y0 = 0x70;
-        poly->r0 = poly->g0 = poly->b0 = 0;
-        poly->pad2 = 0x60;
-        poly->pad3 = 0xA;
-        poly = (POLY_GT4*)poly->tag;
-        poly->code = 3;
-        poly->r0 = poly->g0 = poly->b0 = 0;
-        poly->x1 = poly->x3 = 256;
-        poly->y0 = poly->y1 = 16;
-        poly->y2 = poly->y3 = 240;
-        poly->pad2 = 0x1F0;
-        poly->pad3 = 8;
-        poly->x0 = poly->x2 = 0;
-        *((s32*)(&poly->r1)) = *((s32*)(&poly->r0));
-        *((s32*)(&poly->r2)) = *((s32*)(&poly->r0));
-        *((s32*)(&poly->r3)) = *((s32*)(&poly->r0));
+        self->ext.warpRoom.primFade = prim;
+        prim->type = PRIM_TILE;
+        prim->u0 = 64;
+        prim->v0 = 80;
+        prim->x0 = 96;
+        prim->y0 = 112;
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->priority = 0x60;
+        prim->blendMode = 0xA;
+        prim = prim->next;
+        prim->type = PRIM_G4;
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 256;
+        prim->y0 = prim->y1 = 16;
+        prim->y2 = prim->y3 = 240;
+        prim->priority = 0x1F0;
+        prim->blendMode = 8;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
         D_80193AA4 = 0x100;
         for (i = 0; i < 32; i++) {
-            Entity* newEntity = AllocEntity(D_8007A958, &D_8007A958[96]);
-            if (newEntity) {
+            newEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
+            if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x17, newEntity);
                 newEntity->posY.i.hi = 0xCC - g_Camera.posY.i.hi;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
 
-        entity->unk3C = 1;
-        entity->hitboxWidth = 2;
-        entity->hitboxHeight = 16;
-        newtmp_0 = entity->unk12;
+        self->unk3C = 1;
+        self->hitboxWidth = 2;
+        self->hitboxHeight = 16;
+        self->unk12 += 16;
         D_80180648 = 0;
-        entity->unk12 = newtmp_0 + 0x10;
-        newtmp_v0 = g_Camera.posX.i.hi;
-        newtmp_a1 = PLAYER.posX.i.hi;
-        newtmp_1 = newtmp_a1 + newtmp_v0;
-        newtmp_a0 = D_8003BEBC;
-        newtmp_a0[0] |= 1;
-        newtmp_a0[0] |= 1 << entity->subId;
-        if ((u32)(newtmp_1 - 0x61) < 0x3F) {
+        *D_8003BEBC |= 1;
+        *D_8003BEBC |= 1 << self->subId;
+        moveX = g_Camera.posX.i.hi + (&PLAYER)->posX.i.hi;
+        if (moveX > 0x60 && moveX < 0xA0) {
             g_Player.D_80072EFC = 0x10;
             g_Player.D_80072EF4 = 0;
             D_8003C8B8 = 0;
-            entity->step = 5;
+            self->step = 5;
             D_80180648 = 1;
         }
         break;
 
     case 1:
         // Wait for player to press the UP button
-        if (entity->unk48 != 0 && (g_pads->pressed & 0x1000) &&
+        if (self->unk48 != 0 && g_pads->pressed & 0x1000 &&
             !(g_Player.unk0C & 0xC5CF3EF7)) {
-            D_8003C8B8 = (g_Player.D_80072EF4 = 0);
+            D_8003C8B8 = 0;
+            g_Player.D_80072EF4 = 0;
             g_Player.D_80072EFC = 0x80;
             PLAYER.accelerationX = 0;
             PLAYER.accelerationY = 0;
-            entity->step++;
+            self->step++;
         }
         break;
 
     case 2:
         // Move Alucard in the background and fade him to white
         g_Player.D_80072EFC = 0x80;
-        PLAYER.zPriority = 0x5C;
         g_Player.D_80072EF4 = 0;
+        PLAYER.zPriority = 0x5C;
         g_zEntityCenter.unk = 0x5C;
-        poly = (POLY_GT4*)(*&entity->ext.generic.unk84.unk);
         D_8003C8B8 = 0;
-        poly->g0 = poly->b0 = poly->r0 += 2;
-        poly->pad3 = 0x31;
-        if (poly->r0 >= 97) {
+        prim = self->ext.warpRoom.primFade;
+        prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
+        prim->blendMode = 0x31;
+        if (prim->r0 > 96) {
             D_80180648 = 1;
             g_api.PlaySfx(0x636);
-            entity->step++;
+            self->step++;
         }
         break;
 
     case 3:
         // Fade the entire room into white
         g_Player.D_80072EFC = 0x80;
-        PLAYER.zPriority = 0x5C;
         g_Player.D_80072EF4 = 0;
+        PLAYER.zPriority = 0x5C;
         g_zEntityCenter.unk = 0x5C;
-        poly = (POLY_GT4*)(*&entity->ext.generic.unk84.unk);
         D_8003C8B8 = 0;
-        poly->pad3 = 0x31;
-        if (poly->r0 < 0xF0) {
-            poly->g0 = poly->b0 = poly->r0 += 2;
+        prim = self->ext.warpRoom.primFade;
+        prim->blendMode = 0x31;
+        if (prim->r0 < 0xF0) {
+            prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
         }
-        var_s2_3 = poly->tag;
-        var_s2_3->pad3 = 0x31;
-        if (var_s2_3->r0 < 0xF8) {
-            var_s2_3->g0 = var_s2_3->b0 = var_s2_3->r0 += 2;
+        prim = prim->next;
+        prim->blendMode = 0x31;
+        if (prim->r0 < 0xF8) {
+            prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
         } else {
-            entity->step++;
+            self->step++;
         }
-        *((s32*)(&var_s2_3->r1)) = *((s32*)(&var_s2_3->r0));
-        *((s32*)(&var_s2_3->r2)) = *((s32*)(&var_s2_3->r0));
-        *((s32*)(&var_s2_3->r3)) = *((s32*)(&var_s2_3->r0));
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
         break;
 
     case 4:
-        // .rodata+0x1c
         // Perform the actual warp
-        move_room = entity->subId + 1;
-        for (i = 0; i < 5; i++) {
+        move_room = self->subId + 1;
+        for (i3 = 0; i3 < 5; i3++) {
             if (move_room >= 5) {
                 move_room = 0;
             }
-            if ((D_8003BEBC[0] >> move_room) & 1)
+            if (*D_8003BEBC >> move_room & 1) {
                 break;
+            }
             move_room++;
         }
 
-        warpCoord = &D_8018065C[move_room];
+        warpCoords = &D_8018065C[move_room];
+        moveX = warpCoords->x - g_CurrentRoom.left;
+        moveY = warpCoords->y - g_CurrentRoom.top;
         D_80193AA0 = move_room;
-        newtmp_1 = warpCoord->x - g_CurrentRoom.left;
-        move_x = newtmp_1;
-        move_y = warpCoord->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, move_room);
-        FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
-        FntPrint(D_80186E5C, move_x, move_y);
+        FntPrint(D_80186E4C, warpCoords->x, warpCoords->y);
+        FntPrint(D_80186E5C, moveX, moveY);
+        PLAYER.posX.i.hi += moveX << 8;
+        PLAYER.posY.i.hi += moveY << 8;
         D_80097C98 = 2;
-        PLAYER.posX.i.hi += move_x << 8;
-        PLAYER.posY.i.hi += move_y << 8;
-        entity->step = 128;
+        self->step = 0x80;
         break;
 
     case 5:
-        // .rodata+0x20
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 0x10;
-        temp_s2_4 = (POLY_GT4*)entity->ext.generic.unk84.unk;
         D_8003C8B8 = 0;
-        temp_s2_4->pad3 = 8;
-        temp_s2_4->r0 = 0;
-        temp_s2_4->b0 = 0;
-        temp_s2_4->g0 = 0;
-        temp_s2_5 = temp_s2_4->tag;
-        temp_s2_5->b0 = 0xF8;
-        temp_s2_5->g0 = 0xF8;
-        temp_s2_5->r0 = 0xF8;
-        temp_s2_5->pad3 = 0x31;
-        *((s32*)(&temp_s2_5->r1)) = *((s32*)(&temp_s2_5->r0));
-        *((s32*)(&temp_s2_5->r2)) = *((s32*)(&temp_s2_5->r0));
-        *((s32*)(&temp_s2_5->r3)) = *((s32*)(&temp_s2_5->r0));
+        prim = self->ext.warpRoom.primFade;
+        prim->blendMode = 8;
+        prim->r0 = 0;
+        prim->b0 = 0;
+        prim->g0 = 0;
+        prim = prim->next;
+        prim->r0 = prim->g0 = prim->b0 = 0xF8;
+        prim->blendMode = 0x31;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
         g_api.g_pfn_800EA5AC(0, 0, 0, 0);
-        entity->step++;
-        /* fallthrough */
+        self->step++;
 
     case 6:
         // Finalize warp by fading in from white
-        // .rodata+0x24
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 0x10;
-        new_var = (POLY_GT4*)*&entity->ext.generic.unk84.unk;
-        var_s2_3 = new_var->tag;
+        prim = self->ext.warpRoom.primFade;
+        prim = prim->next;
         D_8003C8B8 = 0;
-        fadeIn = var_s2_3->r0 - 4;
-        if (fadeIn < 0) {
-            // Fade-in complete
-            fadeIn = 0;
-            var_s2_3->pad3 = 8;
+        move_room = prim->r0;
+        move_room -= 4;
+        if (move_room < 0) {
+            move_room = 0;
+            prim->blendMode = 8;
             D_8003C8B8 = 1;
-            entity->step = 1;
+            self->step = 1;
         }
-        var_v0_15 = fadeIn < 0x28;
-        if (var_v0_15 != 0) {
+        if (move_room < 0x28) {
             D_80180648 = 0;
         }
-        var_s2_3->g0 = var_s2_3->b0 = var_s2_3->r0 = fadeIn;
-        *((s32*)(&var_s2_3->r1)) = *((s32*)(&var_s2_3->r0));
-        *((s32*)(&var_s2_3->r2)) = *((s32*)(&var_s2_3->r0));
-        *((s32*)(&var_s2_3->r3)) = *((s32*)(&var_s2_3->r0));
+        prim->g0 = prim->b0 = prim->r0 = move_room;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
         break;
 
     default:
-        warpCoord = &D_8018065C[D_80193AA0];
-        bgColorR1 = warpCoord->x - g_CurrentRoom.left;
-        temp_s4_3 = bgColorR1;
-        temp_s5_3 = warpCoord->y - g_CurrentRoom.top;
+        warpCoords = &D_8018065C[D_80193AA0];
+        moveX = warpCoords->x - g_CurrentRoom.left;
+        moveY = warpCoords->y - g_CurrentRoom.top;
         FntPrint(D_80186E3C, D_80193AA0);
-        FntPrint(D_80186E4C, warpCoord->x, warpCoord->y);
-        FntPrint(D_80186E5C, temp_s4_3, temp_s5_3);
+        FntPrint(D_80186E4C, warpCoords->x, warpCoords->y);
+        FntPrint(D_80186E5C, moveX, moveY);
         break;
     }
 
@@ -1607,92 +1546,29 @@ void EntityWarpRoom(Entity* entity) {
     if (D_80193AAC < 0) {
         D_80193AAC = 0;
     }
-    if (D_80193AAC >= 0x100) {
+    if (D_80193AAC > 0xFF) {
         D_80193AAC = 0xFF;
     }
-    poly = (POLY_GT4*)&entity->ext.generic.unk7C.s;
     D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
+
+    prim = self->ext.warpRoom.primBg;
     for (i3 = 0; i3 < 0x10; i3++) {
-        var_v0_2 = i3;
-        if (i3 < 0) {
-            var_v0_2 = i3 + 15;
-        }
-        bgColorR0 =
-            ((rsin(D_80180608[i3 - ((var_v0_2 >> 4) * 0x10)]) + 0x1000) >> 6) *
-            D_80193AA4;
-        if (bgColorR0 < 0) {
-            bgColorR0 += 255;
-        }
-        poly->r0 = bgColorR0 >> 8;
-        temp_v1_6 = i3 + 5;
-        var_v0_4 = temp_v1_6;
-        if (var_v0_4 < 0) {
-            var_v0_4 = i3 + 20;
-        }
-        bgColorG0 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_4 >> 4) * 0x10)]) +
-                      0x1000) >>
-                     6) *
-                    D_80193AA4;
-        if (bgColorG0 < 0) {
-            bgColorG0 += 255;
-        }
-        poly->g0 = bgColorG0 >> 8;
-        temp_v1_6 = i3 + 10;
-        var_v0_6 = temp_v1_6;
-        if (var_v0_6 < 0) {
-            var_v0_6 = i3 + 25;
-        }
-        bgColorB0 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_6 >> 4) * 0x10)]) +
-                      0x1000) >>
-                     6) *
-                    D_80193AA4;
-        if (bgColorB0 < 0) {
-            bgColorB0 += 255;
-        }
-        poly->b0 = bgColorB0 >> 8;
-        temp_s1_2 = i3 + 1;
-        var_v0_8 = temp_s1_2;
-        if (var_v0_8 < 0) {
-            var_v0_8 = i3 + 16;
-        }
-        bgColorR1 = ((rsin(D_80180608[temp_s1_2 - ((var_v0_8 >> 4) * 0x10)]) +
-                      0x1000) >>
-                     6) *
-                    D_80193AA4;
-        if (bgColorR1 < 0) {
-            bgColorR1 += 255;
-        }
-        poly->r1 = bgColorR1 >> 8;
-        temp_v1_6 = i3 + 6;
-        var_v0_10 = temp_v1_6;
-        if (var_v0_10 < 0) {
-            var_v0_10 = i3 + 0x15;
-        }
-        bgColorG1 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_10 >> 4) * 0x10)]) +
-                      0x1000) >>
-                     6) *
-                    D_80193AA4;
-        if (bgColorG1 < 0) {
-            bgColorG1 += 255;
-        }
-        poly->g1 = bgColorG1 >> 8;
-        temp_v1_6 = i3 + 11;
-        var_v0_12 = temp_v1_6;
-        if (temp_v1_6 < 0) {
-            var_v0_12 = i3 + 26;
-        }
-        bgColorB1 = ((rsin(D_80180608[temp_v1_6 - ((var_v0_12 >> 4) * 0x10)]) +
-                      0x1000) >>
-                     6) *
-                    D_80193AA4;
-        if (bgColorB1 < 0) {
-            bgColorB1 += 255;
-        }
-        poly->b1 = bgColorB1 >> 8;
-        poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3 =
-            *(u8*)&D_80193AAC;
+        prim->r0 = ((rsin(D_80180608[(i3 + 0) % 16]) + 0x1000) >> 6) *
+                   D_80193AA4 / 256;
+        prim->g0 = ((rsin(D_80180608[(i3 + 5) % 16]) + 0x1000) >> 6) *
+                   D_80193AA4 / 256;
+        prim->b0 = ((rsin(D_80180608[(i3 + 10) % 16]) + 0x1000) >> 6) *
+                   D_80193AA4 / 256;
+        prim->r1 = ((rsin(D_80180608[(i3 + 1) % 16]) + 0x1000) >> 6) *
+                   D_80193AA4 / 256;
+        prim->g1 = ((rsin(D_80180608[(i3 + 6) % 16]) + 0x1000) >> 6) *
+                   D_80193AA4 / 256;
+        prim->b1 = ((rsin(D_80180608[(i3 + 11) % 16]) + 0x1000) >> 6) *
+                   D_80193AA4 / 256;
+        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+            D_80193AAC;
         D_80180608[i3] += 0x20;
-        poly = (POLY_GT4*)poly->tag;
+        prim = prim->next;
     }
 }
 #endif

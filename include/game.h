@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 #include "common.h"
-#include "entity.h"
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
 #include <psxsdk/libc.h>
@@ -64,6 +63,8 @@ typedef struct Primitive {
     /* 0x31 */ u8 v3; // TODO not verified
     /* 0x32 */ u16 blendMode;
 } Primitive; /* size=0x34 */
+
+#include "entity.h"
 
 #define COLORS_PER_PAL 16
 #define OTSIZE 0x200
@@ -1028,7 +1029,7 @@ extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
 extern Unkstruct8 g_CurrentRoomTileLayout;
-extern Entity D_8007A958[];
+extern Entity D_8007A958[]; // &g_Entities[0xA0]
 extern Entity D_8007C0D8[];
 extern Entity D_8007D858[];
 extern Entity D_8007DE38[];
