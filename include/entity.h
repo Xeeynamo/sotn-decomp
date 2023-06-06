@@ -3,6 +3,7 @@
  */
 
 #include "common.h"
+
 typedef union {
     s32 unk;
     void* ptr;
@@ -140,10 +141,17 @@ typedef struct {
     /* 0x82 */ s16 unk82;
 } ET_AbsorbOrb;
 
+typedef struct {
+    /* 0x7C */ Primitive* primBg;
+    /* 0x80 */ s32 unused80;
+    /* 0x84 */ Primitive* primFade;
+} ET_WarpRoom;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_AbsorbOrb absorbOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
+    /* 0x7C */ ET_WarpRoom warpRoom;
     /* 0x7C */ char stub[0x40];
 } Ext;
