@@ -201,6 +201,7 @@ void func_80117AC0(void) {
         func_8010E7AC();
         return;
     }
+    
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameDuration < 0) {
@@ -209,35 +210,26 @@ void func_80117AC0(void) {
         }
         return;
     case 1:
-        // If any directional button is pressed
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             func_8010DA48(0xC8);
             PlaySfx(0x6EE);
             PLAYER.step_s = 0;
-            return;
-        }
-        if (g_Player.unk72 == 1) {
+        } else if (g_Player.unk72 == 1) {
             PLAYER.animFrameIdx = 0;
             PLAYER.animFrameDuration = 3;
-            return;
-        }
-        if (g_Player.unk72 == 2) {
+        } else if (g_Player.unk72 == 2) {
             if (PLAYER.animFrameIdx != 0) {
                 PLAYER.animFrameIdx = 1;
                 PLAYER.animFrameDuration = 3;
             }
-            return;
-        }
-        if (g_Player.unk72 == 3) {
+        } else if (g_Player.unk72 == 3) {
             if (PLAYER.animFrameIdx >= 2) {
                 PLAYER.animFrameIdx = 2;
                 PLAYER.animFrameDuration = 3;
                 PLAYER.step = 2;
                 PLAYER.step_s = 5;
             }
-            return;
-        }
-        if (g_Player.unk72 == 4) {
+        } else if (g_Player.unk72 == 4) {
             if (PLAYER.animFrameIdx >= 3) {
                 PLAYER.animFrameIdx = 3;
                 PLAYER.animFrameDuration = 3;
