@@ -129,7 +129,7 @@ typedef struct {
     /* 0x86 */ u8 nearDeath; // Slogra loses spear, Gaibon in rage mode
     /* 0x88 */ s32 speed;
     /* 0x8C */ s16 angle;
-    /* 0x8E */ char pad8E[0xE];
+    /* 0x8E */ char pad_8E[0xE];
     /* 0x9C */ u8 pickupFlag;
     /* 0x9D */ u8 grabedAscending;
 } ET_GaibonSlogra;
