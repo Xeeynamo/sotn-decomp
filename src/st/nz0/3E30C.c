@@ -903,6 +903,7 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 // instructions
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C29B0);
 
+// TODO(sestren): Move external declarations to header file
 s32 func_801BD44C(Entity*, Entity*); /* extern */
 s16 func_801BD4CC(u16, u16, s32);    /* extern */
 extern u16 D_80181F80[];
