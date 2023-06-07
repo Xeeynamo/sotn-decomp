@@ -179,16 +179,17 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80116B0C);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801177A0);
 
 void func_80117AC0(void) {
-    Collider sp10;
+    Collider collider;
     s32 collisionCount;
-    CheckCollision(PLAYER.posX.i.hi, PLAYER.posY.i.hi + 0x19, &sp10, 0);
-    collisionCount = (s32)sp10.unk0 & 1;
-    CheckCollision(PLAYER.posX.i.hi + 4, PLAYER.posY.i.hi + 0x19, &sp10, 0);
-    if ((s32)sp10.unk0 & 1) {
+
+    CheckCollision(PLAYER.posX.i.hi, PLAYER.posY.i.hi + 0x19, &collider, 0);
+    collisionCount = (s32)collider.unk0 & 1;
+    CheckCollision(PLAYER.posX.i.hi + 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
+    if ((s32)collider.unk0 & 1) {
         collisionCount += 1;
     }
-    CheckCollision(PLAYER.posX.i.hi - 4, PLAYER.posY.i.hi + 0x19, &sp10, 0);
-    if ((s32)sp10.unk0 & 1) {
+    CheckCollision(PLAYER.posX.i.hi - 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
+    if ((s32)collider.unk0 & 1) {
         collisionCount += 1;
     }
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
@@ -209,7 +210,7 @@ void func_80117AC0(void) {
         return;
     case 1:
         // If any directional button is pressed
-        if (g_Player.padTapped & 0xF000) {
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             func_8010DA48(0xC8);
             PlaySfx(0x6EE);
             PLAYER.step_s = 0;
