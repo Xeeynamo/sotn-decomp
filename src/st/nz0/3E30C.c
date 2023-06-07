@@ -903,7 +903,95 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 // instructions
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C29B0);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", EntityAbsorbOrb);
+s32 func_801BD44C(Entity*, Entity*); /* extern */
+s16 func_801BD4CC(u16, u16, s32);    /* extern */
+extern u16 D_80181F80[];
+extern u16 D_80181F90[];
+extern u8 D_80181FF0;
+
+void EntityAbsorbOrb(Entity* self) {
+    Primitive* prim;
+    s32 firstPrimIndex;
+    u16 *temp_d, temp_e;
+    s32 temp_a, temp_b;
+    u16 angle;
+
+    switch (self->step) {
+    case 0:
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (firstPrimIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(D_80180BD4);
+        D_8008701E[firstPrimIndex * 0x1a] = 8;
+        self->firstPolygonIndex = firstPrimIndex;
+        self->animSet = 0;
+        self->flags |= 0x800000;
+        angle = func_801BD44C(self, &PLAYER);
+        temp_a = self->posY.i.hi < 113;
+        temp_b = temp_a ^ 1;
+        if (self->posX.i.hi < PLAYER.posX.i.hi) {
+            temp_b = temp_a;
+        }
+        if (temp_b & 0xFFFF) {
+            self->ext.absorbOrb.angle = angle - D_80181F80[Random() & 7];
+        } else {
+            angle += D_80181F80[Random() & 7];
+            self->ext.absorbOrb.angle = angle;
+        }
+        self->ext.absorbOrb.unk80 = 0x400;
+        self->ext.absorbOrb.unk7E = 0;
+        self->unk3C = 0;
+        break;
+
+    case 1:
+        self->ext.absorbOrb.unk82++;
+        if (self->ext.absorbOrb.unk82 == 16) {
+            self->unk3C = 1;
+        }
+        if (self->unk48 != 0) {
+            if (g_Player.unk56 == 0) {
+                g_Player.unk56 = 1;
+                g_Player.unk58 = 8;
+            }
+            DestroyEntity(self);
+            return;
+        }
+        if (self->unk1A < 0x100) {
+            self->unk1A = self->unk1C += 0x10;
+        }
+        if (self->ext.absorbOrb.unk7E < 0x200) {
+            self->ext.absorbOrb.unk7E += 2;
+        }
+        if (self->ext.absorbOrb.unk80 < 0x800) {
+            self->ext.absorbOrb.unk80 += 4;
+        }
+        self->ext.absorbOrb.angle =
+            func_801BD4CC(self->ext.absorbOrb.unk7E, self->ext.absorbOrb.angle,
+                          0xffff & func_801BD44C(self, &PLAYER));
+        func_801BD390(self->ext.absorbOrb.angle & 0xFFFF,
+                      self->ext.absorbOrb.unk80);
+        MoveEntity(self); // argument pass necessary to match
+        prim = &g_PrimBuf[self->firstPolygonIndex];
+        AnimateEntity(&D_80181FF0, self);
+        angle = (float)(u32)self; // !FAKE
+        prim->tpage = 0x18;
+        prim->clut = 0x194;
+        temp_d = &D_80181F90[(u16)((8 * (u16)self->animCurFrame) - 8)];
+        prim->x0 = prim->x2 = self->posX.i.hi + *(temp_d++);
+        prim->y0 = prim->y1 = self->posY.i.hi + *(temp_d++);
+        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
+        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
+        prim->u0 = prim->u2 = *(temp_d++);
+        prim->v0 = prim->v1 = *(temp_d++);
+        prim->u1 = prim->u3 = *(temp_d++);
+        prim->v2 = prim->v3 = *(temp_d++);
+        prim->priority = self->zPriority;
+        prim->blendMode = 0;
+        break;
+    }
+}
 
 void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
