@@ -178,7 +178,68 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80116B0C);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801177A0);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80117AC0);
+void func_80117AC0(void) {
+    Collider collider;
+    s32 collisionCount;
+
+    CheckCollision(PLAYER.posX.i.hi, PLAYER.posY.i.hi + 0x19, &collider, 0);
+    collisionCount = (s32)collider.unk0 & 1;
+    CheckCollision(PLAYER.posX.i.hi + 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
+    if ((s32)collider.unk0 & 1) {
+        collisionCount += 1;
+    }
+    CheckCollision(PLAYER.posX.i.hi - 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
+    if ((s32)collider.unk0 & 1) {
+        collisionCount += 1;
+    }
+    if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
+        collisionCount += 1;
+    }
+    PLAYER.unk1E = 0;
+    func_8010E27C();
+    if (collisionCount == 0) {
+        func_8010E7AC();
+        return;
+    }
+
+    switch (PLAYER.step_s) {
+    case 0:
+        if (PLAYER.animFrameDuration < 0) {
+            func_8010DA48(0xF6);
+            PLAYER.step_s += 1;
+        }
+        break;
+    case 1:
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
+            func_8010DA48(0xC8);
+            PlaySfx(0x6EE);
+            PLAYER.step_s = 0;
+        } else if (g_Player.unk72 == 1) {
+            PLAYER.animFrameIdx = 0;
+            PLAYER.animFrameDuration = 3;
+        } else if (g_Player.unk72 == 2) {
+            if (PLAYER.animFrameIdx != 0) {
+                PLAYER.animFrameIdx = 1;
+                PLAYER.animFrameDuration = 3;
+            }
+        } else if (g_Player.unk72 == 3) {
+            if (PLAYER.animFrameIdx >= 2) {
+                PLAYER.animFrameIdx = 2;
+                PLAYER.animFrameDuration = 3;
+                PLAYER.step = 2;
+                PLAYER.step_s = 5;
+            }
+        } else if (g_Player.unk72 == 4) {
+            if (PLAYER.animFrameIdx >= 3) {
+                PLAYER.animFrameIdx = 3;
+                PLAYER.animFrameDuration = 3;
+                PLAYER.step = 2;
+                PLAYER.step_s = 5;
+            }
+        }
+        break;
+    }
+}
 
 s32 func_80117D3C(void) {
     if (PLAYER.step_s == 0) {
