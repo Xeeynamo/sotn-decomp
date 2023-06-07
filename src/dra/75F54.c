@@ -201,7 +201,7 @@ void func_80117AC0(void) {
         func_8010E7AC();
         return;
     }
-    
+
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameDuration < 0) {
