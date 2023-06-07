@@ -208,7 +208,7 @@ void func_80117AC0(void) {
             func_8010DA48(0xF6);
             PLAYER.step_s += 1;
         }
-        return;
+        break;
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             func_8010DA48(0xC8);
@@ -237,6 +237,7 @@ void func_80117AC0(void) {
                 PLAYER.step_s = 5;
             }
         }
+        break;
     }
 }
 
