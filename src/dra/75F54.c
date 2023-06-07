@@ -180,7 +180,19 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_801177A0);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80117AC0);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80117D3C);
+s32 func_80117D3C(void) {
+    if (PLAYER.step_s == 0) {
+        return 0;
+    }
+    if (D_8009744C != 0 || g_Player.padTapped & PAD_L1 ||
+        func_800FEEA4(1, 1) < 0 ||
+        (func_800FE3A8(8) == false && (D_80138004 == 0 || --D_80138004 == 0))) {
+        func_8010E27C();
+        SetPlayerStep(0xE);
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80117DEC);
 
@@ -234,7 +246,17 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80118810);
+Entity* func_80118810(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->objectId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
 void func_80118894(Entity* self) {
     s32 i;
@@ -1566,7 +1588,25 @@ void func_8012CB0C(void) {
     PLAYER.step_s = 7;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012CB4C);
+void func_8012CB4C(void) {
+    PLAYER.step_s = 2;
+    if ((PLAYER.facing != 0 && g_Player.padPressed & PAD_RIGHT) ||
+        (PLAYER.facing == 0 && g_Player.padPressed & PAD_LEFT)) {
+        func_8010DA48(0xE1);
+        D_800B0914 = 0;
+        D_8013842C = 0;
+        return;
+    } else if (D_8013842C != 0) {
+        func_8010DA48(0xE2);
+        D_800B0914 = 2;
+        AccelerateX(0x20000);
+        return;
+    } else {
+        func_8010DA48(0xE0);
+        D_800B0914 = 1;
+        D_8013842C = 0xC;
+    }
+}
 
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
