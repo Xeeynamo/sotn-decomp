@@ -391,11 +391,6 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8019373C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8019390C);
 
-// TODO(sestren): Move external declarations to header file
-extern u16 D_801810A0[];
-extern u16 D_801810B0[];
-extern u16 D_8018044C[];
-extern u16 D_80181110[];
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;
