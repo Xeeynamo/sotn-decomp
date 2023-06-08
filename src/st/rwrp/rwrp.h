@@ -15,7 +15,7 @@ void func_8018BD58(Entity*, LayoutObject*);
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 D_801810A0[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties
+extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties?
 extern u16 D_8018044C[];
 extern u16 D_80181110[];
 

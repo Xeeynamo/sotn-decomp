@@ -883,10 +883,6 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_801917BC);
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityStageNamePopup);
 
-// TODO(sestren): Move external declarations to header file
-extern u16 D_801810A0[];
-extern u16 D_801810B0[];
-extern u8 D_80181110;
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;
