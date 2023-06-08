@@ -903,6 +903,8 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 // instructions
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C29B0);
 
+// The white flying orbs of energy that Alucard summons as part of the Soul
+// Steal spell
 s16 func_801BD4CC(u16, u16, s32); /* extern */
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
