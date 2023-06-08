@@ -513,7 +513,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", EntityStageNamePopup);
 extern u16 D_8018138C[];
 extern u16 D_8018139C[];
 extern u8 D_801813FC;
-void EntityAbsorbOrb(Entity* self) {
+void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;
     u16 *temp_d, temp_e;
@@ -539,19 +539,19 @@ void EntityAbsorbOrb(Entity* self) {
             temp_b = temp_a;
         }
         if (temp_b & 0xFFFF) {
-            self->ext.absorbOrb.angle = angle - D_8018138C[Random() & 7];
+            self->ext.soulStealOrb.angle = angle - D_8018138C[Random() & 7];
         } else {
             angle += D_8018138C[Random() & 7];
-            self->ext.absorbOrb.angle = angle;
+            self->ext.soulStealOrb.angle = angle;
         }
-        self->ext.absorbOrb.unk80 = 0x400;
-        self->ext.absorbOrb.unk7E = 0;
+        self->ext.soulStealOrb.unk80 = 0x400;
+        self->ext.soulStealOrb.unk7E = 0;
         self->unk3C = 0;
         break;
 
     case 1:
-        self->ext.absorbOrb.unk82++;
-        if (self->ext.absorbOrb.unk82 == 16) {
+        self->ext.soulStealOrb.unk82++;
+        if (self->ext.soulStealOrb.unk82 == 16) {
             self->unk3C = 1;
         }
         if (self->unk48 != 0) {
@@ -565,17 +565,17 @@ void EntityAbsorbOrb(Entity* self) {
         if (self->unk1A < 0x100) {
             self->unk1A = self->unk1C += 0x10;
         }
-        if (self->ext.absorbOrb.unk7E < 0x200) {
-            self->ext.absorbOrb.unk7E += 2;
+        if (self->ext.soulStealOrb.unk7E < 0x200) {
+            self->ext.soulStealOrb.unk7E += 2;
         }
-        if (self->ext.absorbOrb.unk80 < 0x800) {
-            self->ext.absorbOrb.unk80 += 4;
+        if (self->ext.soulStealOrb.unk80 < 0x800) {
+            self->ext.soulStealOrb.unk80 += 4;
         }
-        self->ext.absorbOrb.angle = func_8019AF88(
-            self->ext.absorbOrb.unk7E, (u16)self->ext.absorbOrb.angle,
+        self->ext.soulStealOrb.angle = func_8019AF88(
+            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
             0xffff & func_8019AF08(self, &PLAYER));
-        func_8019AE4C(self->ext.absorbOrb.angle & 0xFFFF,
-                      self->ext.absorbOrb.unk80);
+        func_8019AE4C(self->ext.soulStealOrb.angle & 0xFFFF,
+                      self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
         prim = &g_PrimBuf[self->firstPolygonIndex];
         AnimateEntity(&D_801813FC, self);
