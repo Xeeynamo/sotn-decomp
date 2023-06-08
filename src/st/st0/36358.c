@@ -571,12 +571,10 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B9DB0);
 
-s32 func_801B56BC(Entity*, Entity*); /* extern */
-s16 func_801BD4CC(u16, u16, s32);    /* extern */
+// TODO(sestren): Move external declarations to header file
 extern u16 D_80181F54[];
 extern u16 D_80181F64[];
 extern u8 D_80181FC4;
-
 void EntityAbsorbOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;
