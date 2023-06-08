@@ -905,6 +905,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C29B0);
 
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
+// TODO(sestren): Reconcile this func_801BD4CC with the one in 36DE4.c
 s16 func_801BD4CC(u16, u16, s32); /* extern */
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
