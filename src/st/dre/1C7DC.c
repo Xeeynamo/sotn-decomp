@@ -510,12 +510,9 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A0564);
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", EntityStageNamePopup);
 
 // TODO(sestren): Move external declarations to header file
-s32 func_8019AF08(Entity*, Entity*); /* extern */
-s16 func_801BD4CC(u16, u16, s32);    /* extern */
 extern u16 D_8018138C[];
 extern u16 D_8018139C[];
 extern u8 D_801813FC;
-
 void EntityAbsorbOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;

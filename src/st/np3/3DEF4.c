@@ -905,7 +905,6 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityStageNamePopup);
 extern u16 D_8018205C[];
 extern u16 D_801820CC[];
 extern u16 D_8018206C[];
-
 void EntityAbsorbOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;

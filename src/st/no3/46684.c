@@ -775,11 +775,9 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CAE20);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityStageNamePopup);
 
 // TODO(sestren): Move external declarations to header file
-extern u16 D_80180AB8[];
 extern u16 D_801826D0[];
 extern u16 D_80182740[];
 extern u16 D_801826E0[];
-
 void EntityAbsorbOrb(Entity* self) {
     Primitive* prim;
     s32 firstPrimIndex;
