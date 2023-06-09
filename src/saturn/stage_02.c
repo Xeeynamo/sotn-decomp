@@ -121,8 +121,7 @@ s32 func_801BBC3C(Entity* e) {
     } else {
         diff = PLAYER.posY - e->posY;
         diff = ABS(diff);
-        if (diff > 32)
-        {
+        if (diff > 32) {
             return 0;
         }
     }
