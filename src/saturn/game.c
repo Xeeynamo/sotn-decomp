@@ -82,10 +82,15 @@ INCLUDE_ASM("asm/saturn/game", f607003C, func_0607003C);
 INCLUDE_ASM("asm/saturn/game", f60703DC, func_060703DC);
 INCLUDE_ASM("asm/saturn/game", f6070410, func_06070410);
 INCLUDE_ASM("asm/saturn/game", f6070540, func_06070540);
-INCLUDE_ASM("asm/saturn/game", f6070568, func_06070568);
+
+extern s32 DAT_060861B0[];
+s32 func_06070568(s32 pos) { DAT_060861B0[pos] = 0; }
+
 INCLUDE_ASM("asm/saturn/game", f6070580, func_06070580);
 INCLUDE_ASM("asm/saturn/game", f60705A0, func_060705A0);
-INCLUDE_ASM("asm/saturn/game", f60705B8, func_060705B8);
+
+s32 func_060705B8(s32 pos) { return DAT_060861B0[pos]; }
+
 INCLUDE_ASM("asm/saturn/game", f60705CC, func_060705CC);
 INCLUDE_ASM("asm/saturn/game", f60707F0, func_060707F0);
 INCLUDE_ASM("asm/saturn/game", f6070820, func_06070820);
@@ -130,7 +135,10 @@ INCLUDE_ASM("asm/saturn/game", f6074700, func_06074700);
 INCLUDE_ASM("asm/saturn/game", f6074724, func_06074724);
 INCLUDE_ASM("asm/saturn/game", f6074964, func_06074964);
 INCLUDE_ASM("asm/saturn/game", f60749F8, func_060749F8);
-INCLUDE_ASM("asm/saturn/game", f6074A98, func_06074A98);
+
+extern s32 DAT_06085c70;
+s32* func_06074A98(void) { return &DAT_06085c70; }
+
 INCLUDE_ASM("asm/saturn/game", f6074AA8, func_06074AA8);
 INCLUDE_ASM("asm/saturn/game", f6074BF4, func_06074BF4);
 INCLUDE_ASM("asm/saturn/game", f6074C28, func_06074C28);
@@ -138,7 +146,15 @@ INCLUDE_ASM("asm/saturn/game", f6074CC8, func_06074CC8);
 INCLUDE_ASM("asm/saturn/game", f6075838, func_06075838);
 INCLUDE_ASM("asm/saturn/game", f6075D24, func_06075D24);
 INCLUDE_ASM("asm/saturn/game", f60766DC, func_060766DC);
-INCLUDE_ASM("asm/saturn/game", f6076718, func_06076718);
+
+struct Unk_060860D8 {
+    u8 pad[0x23];
+    s32 unk24;
+};
+
+extern struct Unk_060860D8 DAT_060860D8;
+s32 func_06076718(void) { return DAT_060860D8.unk24 == 0x15; }
+
 INCLUDE_ASM("asm/saturn/game", f607672C, func_0607672C);
 INCLUDE_ASM("asm/saturn/game", f6076A04, func_06076A04);
 INCLUDE_ASM("asm/saturn/game", f6077148, func_06077148);
@@ -151,7 +167,11 @@ INCLUDE_ASM("asm/saturn/game", f6077764, func_06077764);
 INCLUDE_ASM("asm/saturn/game", f6077B20, func_06077B20);
 INCLUDE_ASM("asm/saturn/game", f6077D88, func_06077D88);
 INCLUDE_ASM("asm/saturn/game", f6078120, func_06078120);
-INCLUDE_ASM("asm/saturn/game", f60784A8, func_060784A8);
+
+extern s32 DAT_00292000;
+
+s32* func_060784A8(void) { return &DAT_00292000; }
+
 INCLUDE_ASM("asm/saturn/game", f60784B8, func_060784B8);
 INCLUDE_ASM("asm/saturn/game", f6078550, func_06078550);
 INCLUDE_ASM("asm/saturn/game", f6078604, func_06078604);
@@ -203,12 +223,18 @@ INCLUDE_ASM("asm/saturn/game", f607AB4C, func_0607AB4C);
 INCLUDE_ASM("asm/saturn/game", f607AB84, func_0607AB84);
 INCLUDE_ASM("asm/saturn/game", f607ABBC, func_0607ABBC);
 INCLUDE_ASM("asm/saturn/game", f607ABF4, func_0607ABF4);
-INCLUDE_ASM("asm/saturn/game", f607AC2C, func_0607AC2C);
+
+extern u8 DAT_06099811;
+u8 func_0607AC2C(void) { return DAT_06099811; }
+
 INCLUDE_ASM("asm/saturn/game", f607AC40, func_0607AC40);
 INCLUDE_ASM("asm/saturn/game", f607AE48, func_0607AE48);
 INCLUDE_ASM("asm/saturn/game", f607AECC, func_0607AECC);
 INCLUDE_ASM("asm/saturn/game", f607AF0C, func_0607AF0C);
-INCLUDE_ASM("asm/saturn/game", f607AF28, func_0607AF28);
+
+extern s16 DAT_06085e86[];
+s32 func_0607AF28(u8 pos) { return DAT_06085e86[pos]; }
+
 INCLUDE_ASM("asm/saturn/game", f607AF3C, func_0607AF3C);
 INCLUDE_ASM("asm/saturn/game", f607AF68, func_0607AF68);
 INCLUDE_ASM("asm/saturn/game", f607AF94, func_0607AF94);
