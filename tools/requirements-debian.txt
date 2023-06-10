@@ -1,1 +1,1 @@
-curl make gcc-mipsel-linux-gnu binutils-mipsel-linux-gnu clang-format python3-pip p7zip-full bchunk
+git wget curl make gcc-mipsel-linux-gnu binutils-mipsel-linux-gnu clang-format python3-pip p7zip-full bchunk
