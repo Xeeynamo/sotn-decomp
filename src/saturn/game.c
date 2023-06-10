@@ -223,7 +223,12 @@ INCLUDE_ASM("asm/saturn/game", f607AC40, func_0607AC40);
 INCLUDE_ASM("asm/saturn/game", f607AE48, func_0607AE48);
 INCLUDE_ASM("asm/saturn/game", f607AECC, func_0607AECC);
 INCLUDE_ASM("asm/saturn/game", f607AF0C, func_0607AF0C);
-INCLUDE_ASM("asm/saturn/game", f607AF28, func_0607AF28);
+
+extern s16 DAT_06085e86[];
+s32 func_0607AF28(u8 pos) {
+    return DAT_06085e86[pos];
+}
+
 INCLUDE_ASM("asm/saturn/game", f607AF3C, func_0607AF3C);
 INCLUDE_ASM("asm/saturn/game", f607AF68, func_0607AF68);
 INCLUDE_ASM("asm/saturn/game", f607AF94, func_0607AF94);
