@@ -204,7 +204,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
     /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
     /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
-    /* 3FC */ (PfnEntityUpdate)EntityAbsorbOrb,
+    /* 3FC */ (PfnEntityUpdate)EntitySoulStealOrb,
     /* 400 */ (PfnEntityUpdate)EntityRoomForeground,
     /* 404 */ (PfnEntityUpdate)EntityStageNamePopup,
     /* 408 */ (PfnEntityUpdate)EntityEquipItemDrop,
