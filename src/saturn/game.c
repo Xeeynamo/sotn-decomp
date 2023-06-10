@@ -151,7 +151,13 @@ INCLUDE_ASM("asm/saturn/game", f6077764, func_06077764);
 INCLUDE_ASM("asm/saturn/game", f6077B20, func_06077B20);
 INCLUDE_ASM("asm/saturn/game", f6077D88, func_06077D88);
 INCLUDE_ASM("asm/saturn/game", f6078120, func_06078120);
-INCLUDE_ASM("asm/saturn/game", f60784A8, func_060784A8);
+
+extern s32 DAT_060784b4; // 0x00292000
+
+s32 *func_060784A8(void) {
+    return &DAT_060784b4;
+}
+
 INCLUDE_ASM("asm/saturn/game", f60784B8, func_060784B8);
 INCLUDE_ASM("asm/saturn/game", f6078550, func_06078550);
 INCLUDE_ASM("asm/saturn/game", f6078604, func_06078604);
