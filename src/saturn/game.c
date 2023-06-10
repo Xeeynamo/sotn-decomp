@@ -146,7 +146,18 @@ INCLUDE_ASM("asm/saturn/game", f6074CC8, func_06074CC8);
 INCLUDE_ASM("asm/saturn/game", f6075838, func_06075838);
 INCLUDE_ASM("asm/saturn/game", f6075D24, func_06075D24);
 INCLUDE_ASM("asm/saturn/game", f60766DC, func_060766DC);
-INCLUDE_ASM("asm/saturn/game", f6076718, func_06076718);
+
+struct Unk_060860D8 {
+u8 pad[0x23];
+s32 unk24;
+};
+
+extern struct Unk_060860D8 DAT_060860D8;
+s32 func_06076718(void) {
+    return DAT_060860D8.unk24 == 0x15;
+}
+
+
 INCLUDE_ASM("asm/saturn/game", f607672C, func_0607672C);
 INCLUDE_ASM("asm/saturn/game", f6076A04, func_06076A04);
 INCLUDE_ASM("asm/saturn/game", f6077148, func_06077148);
@@ -160,9 +171,9 @@ INCLUDE_ASM("asm/saturn/game", f6077B20, func_06077B20);
 INCLUDE_ASM("asm/saturn/game", f6077D88, func_06077D88);
 INCLUDE_ASM("asm/saturn/game", f6078120, func_06078120);
 
-extern s32 DAT_060784b4; // 0x00292000
+extern s32 DAT_00292000;
 
-s32* func_060784A8(void) { return &DAT_060784b4; }
+s32* func_060784A8(void) { return &DAT_00292000; }
 
 INCLUDE_ASM("asm/saturn/game", f60784B8, func_060784B8);
 INCLUDE_ASM("asm/saturn/game", f6078550, func_06078550);
