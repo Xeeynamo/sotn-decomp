@@ -9,7 +9,7 @@ void EntityPrizeDrop(Entity*);
 void EntityNumericDamage(Entity*);
 void EntityRedDoor(Entity*);
 void EntityIntenseExplosion(Entity*);
-void EntityAbsorbOrb(Entity*);
+void EntitySoulStealOrb(Entity*);
 void EntityRoomForeground(Entity*);
 void EntityStageNamePopup(Entity*);
 void EntityEquipItemDrop(Entity*);

@@ -33,6 +33,6 @@ EntityUnkId15 = 0x8019858C;
 EntityIntenseExplosion = 0x80198F2C;
 ClutLerp = 0x8019A130;
 EntityStageNamePopup = 0x8019A5F0;
-EntityAbsorbOrb = 0x8019B274;
+EntitySoulStealOrb = 0x8019B274;
 EntityEnemyBlood = 0x8019B608;
 EntityUnkId08 = 0x8019BAB8;

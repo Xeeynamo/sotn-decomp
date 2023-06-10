@@ -8,7 +8,7 @@ typedef enum {
     E_NUMERIC_DAMAGE,
     E_RED_DOOR,
     E_INTENSE_EXPLOSION,
-    E_ABSORB_ORB,
+    E_SOUL_STEAL_ORB,
     E_ROOM_FOREGROUND,
     E_STAGE_NAME_POPUP,
     E_EQUIP_ITEM_DROP,
@@ -228,3 +228,11 @@ extern s32 D_801826C4;
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u8 D_80182914[];
 extern u8 D_80182935[];
+
+// *** EntitySoulStealOrb properties START ***
+
+extern u16 D_8018205C[]; // NOTE(sestren): Random angle offsets?
+extern u16 D_8018206C[]; // NOTE(sestren): Animation frame properties?
+extern u16 D_801820CC[];
+
+// *** EntitySoulStealOrb properties END ***

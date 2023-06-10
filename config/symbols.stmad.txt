@@ -75,6 +75,6 @@ EntityEquipItemDrop = 0x801943EC;
 EntityRelicOrb = 0x801949C0;
 EntityHeartDrop = 0x80195520;
 EntityIntenseExplosion = 0x801964E4;
-EntityAbsorbOrb = 0x801982BC;
+EntitySoulStealOrb = 0x801982BC;
 EntityEnemyBlood = 0x80198650;
 EntityRoomForeground = 0x80198B00;
