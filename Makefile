@@ -350,10 +350,10 @@ $(BUILD_DIR)/%.s.o: %.s
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
-build_saturn_dosemu_docker:
+build_saturn_dosemu_docker_container:
 	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile . 
 
-build_saturn_binutils_docker:
+build_saturn_binutils_docker_container:
 	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .
 
 build_saturn_toolchain_gccsh:
@@ -366,10 +366,10 @@ build_saturn_toolchain_gccsh:
 	rm -rf saturn-compilers-main
 
 # parallel OK
-build_saturn_toolchain: build_saturn_dosemu_docker build_saturn_binutils_docker build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
+build_saturn_toolchain: build_saturn_dosemu_docker_container build_saturn_binutils_docker_container build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
 
 # CI prep, don't build dosemu container (parallel OK)
-saturn_ci_tasks: extract_disk_saturn build_saturn_binutils_docker build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
+saturn_ci_tasks: extract_disk_saturn build_saturn_binutils_docker_container build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
 
 SATURN_BUILD_DIR := build/saturn
 # absolute path for docker mounts
