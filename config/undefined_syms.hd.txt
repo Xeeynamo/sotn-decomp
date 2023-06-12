@@ -1,0 +1,13 @@
+g_api         = 0x8003C774;
+g_GpuBuffers  = 0x8003CB08;
+
+g_Player      = 0x80072BD0;
+g_Camera      = 0x8007308C;
+g_CurrentRoom = 0x800730A0;
+
+g_pads        = 0x80097490;
+g_Status      = 0x80097964;
+
+D_8003BDEC = 0x8003BDEC;
+D_8003C908 = 0x8003C908;
+D_8017D000 = 0x8017D000;
