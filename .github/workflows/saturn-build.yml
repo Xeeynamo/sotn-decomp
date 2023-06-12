@@ -1,0 +1,67 @@
+name: Build Saturn version
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+      - '**/*.md'
+  pull_request_target:
+    paths-ignore:
+      - '*.md'
+      - '**/*.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.job }}-${{ github.event_name }}-${{ github.number }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-test-saturn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.after }}
+          submodules: false
+      - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: Clone dependencies
+        uses: actions/checkout@v3
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: saturn
+          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          path: 'disks/dependencies'
+      - name: Setting up dependencies
+        working-directory: disks
+        run: |
+          cat dependencies/* > dependencies.tar.gz
+          tar -xf dependencies.tar.gz
+          mv *.cue sotn.saturn.cue
+          mv *.bin sotn.saturn.bin
+      - name: Install bchunk 7zip
+        run: |
+          sudo apt-get install p7zip-full bchunk
+      - name: Install dosemu
+        run: |
+          sudo apt-get install -y -o APT::Immediate-Configure=false \
+          dos2unix software-properties-common && \
+          sudo add-apt-repository -y ppa:dosemu2/ppa && \
+          sudo apt-get update && \
+          sudo apt-get install -y dosemu2;
+      - name: Prep
+        run: make -j saturn_ci_tasks
+      - name: Extract asm
+        run: make extract_saturn
+      - name: Build saturn binaries
+        run: make build_saturn_ci
+      - name: Check saturn
+        run: make check_saturn

@@ -277,7 +277,7 @@ extract_disk_ps1%: $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
 extract_disk_saturn:
 	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
-	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/
+	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/ || true
 disk: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
@@ -350,7 +350,13 @@ $(BUILD_DIR)/%.s.o: %.s
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
 
-build_saturn_toolchain:
+build_saturn_dosemu_docker_container:
+	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile . 
+
+build_saturn_binutils_docker_container:
+	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .
+
+build_saturn_toolchain_gccsh:
 	# get GCCSH
 	wget -nc https://github.com/sozud/saturn-compilers/archive/refs/heads/main.zip
 	unzip -n main.zip
@@ -359,18 +365,20 @@ build_saturn_toolchain:
 	rm -rf main.zip
 	rm -rf saturn-compilers-main
 
-	# build dockerfiles
-	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile .
-	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .
+# parallel OK
+build_saturn_toolchain: build_saturn_dosemu_docker_container build_saturn_binutils_docker_container build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
+
+# CI prep, don't build dosemu container (parallel OK)
+saturn_ci_tasks: extract_disk_saturn build_saturn_binutils_docker_container build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
 
 SATURN_BUILD_DIR := build/saturn
 # absolute path for docker mounts
-SATURN_BUILD_ABS := $(realpath $(SATURN_BUILD_DIR))
+SATURN_BUILD_ABS := $(shell pwd)/$(SATURN_BUILD_DIR)
 SATURN_DISK_DIR := disks/saturn
 # absolute path for docker mounts
-SATURN_DISK_ABS := $(realpath $(SATURN_DISK_DIR))
+SATURN_DISK_ABS := $(shell pwd)/$(SATURN_DISK_DIR)
 
-build_saturn:
+build_saturn_copy_files:
 	# copy everything into same directory since dosemu is hard to use otherwise
 	rm -rf $(SATURN_BUILD_DIR)
 	mkdir -p $(SATURN_BUILD_DIR)
@@ -391,12 +399,19 @@ build_saturn:
 	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
 	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
-	# execute in docker
+build_saturn_dosemu_native:
+	cd build/saturn && FILENAME=game sh ./compile_dosemu.sh
+	cd build/saturn && FILENAME=t_bat sh ./compile_dosemu.sh
+	cd build/saturn && FILENAME=zero sh ./compile_dosemu.sh
+	cd build/saturn && FILENAME=stage_02 sh ./compile_dosemu.sh
+
+build_saturn_dosemu_docker:
 	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=t_bat -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=zero -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=stage_02 -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 
+build_saturn_link:
 	# link
 	cat ./config/saturn/game_syms.txt > ./build/saturn/all_syms.txt
 	cat ./config/saturn/t_bat_syms.txt >> ./build/saturn/all_syms.txt
@@ -410,6 +425,12 @@ build_saturn:
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s"
+
+# do not run in parallel
+build_saturn: build_saturn_copy_files build_saturn_dosemu_docker build_saturn_link
+
+# do not run in parallel
+build_saturn_ci: build_saturn_copy_files build_saturn_dosemu_native build_saturn_link
 
 check_saturn:
 	# dump binaries using sh binutils container
