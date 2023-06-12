@@ -79,7 +79,7 @@ define link
 	$(LD) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
-		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt \
 		--no-check-sections \
@@ -114,7 +114,7 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(MAIN).ld \
-	-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt \
 	--no-check-sections \
 	-nostdlib \
@@ -198,7 +198,7 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T stmad.ld \
-		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
 		--no-check-sections \
@@ -219,7 +219,7 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 	$(LD) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
 		-T stmad.ld \
-		-T $(CONFIG_DIR)/symbols.beta.txt \
+		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
 		--no-check-sections \
@@ -360,7 +360,7 @@ build_saturn_toolchain:
 	rm -rf saturn-compilers-main
 
 	# build dockerfiles
-	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile . 
+	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile .
 	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .
 
 SATURN_BUILD_DIR := build/saturn
