@@ -13,10 +13,6 @@ on:
       - '**/*.md'
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.ref }}-${{ github.job }}-${{ github.event_name }}-${{ github.number }}
-  cancel-in-progress: false
-
 jobs:
   build-and-test-saturn:
     runs-on: ubuntu-latest
