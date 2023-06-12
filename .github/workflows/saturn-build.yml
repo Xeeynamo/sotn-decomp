@@ -38,7 +38,7 @@ jobs:
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: saturn
-          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          token: ${{ secrets.DEPS_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
