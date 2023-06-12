@@ -8,11 +8,14 @@
 
 #if defined(_internal_version_us)
 #define VERSION_US
+#define VERSION "us"
 #elif defined(_internal_version_hd)
 #define VERSION_HD
+#define VERSION "hd"
 #else
 #warning "Version not specified. Falling back to the US version."
 #define VERSION_US
+#define VERSION "us"
 #endif
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))

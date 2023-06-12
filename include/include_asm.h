@@ -7,7 +7,6 @@
 #ifndef PERMUTER
 
 #ifndef INCLUDE_ASM
-
 #define INCLUDE_ASM(FOLDER, NAME)                                              \
     __asm__(".section .text\n"                                                 \
             "\t.align\t2\n"                                                    \
@@ -17,6 +16,7 @@
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
             "\t.end\t" #NAME);
+//".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"
 #endif
 
 // omit .global
