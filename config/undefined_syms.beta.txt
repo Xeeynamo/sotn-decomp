@@ -1,0 +1,4 @@
+g_api         = 0x8003C670;
+g_CurrentRoom = 0x80072b50;
+g_Camera      = 0x80072b3c;
+g_Player      = 0x80072684;
