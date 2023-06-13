@@ -129,7 +129,7 @@ typedef struct {
     /* 0x86 */ u8 nearDeath; // Slogra loses spear, Gaibon in rage mode
     /* 0x88 */ s32 speed;
     /* 0x8C */ s16 angle;
-    /* 0x8E */ char pad8E[0xE];
+    /* 0x8E */ char pad_8E[0xE];
     /* 0x9C */ u8 pickupFlag;
     /* 0x9D */ u8 grabedAscending;
 } ET_GaibonSlogra;
@@ -147,11 +147,36 @@ typedef struct {
     /* 0x84 */ Primitive* primFade;
 } ET_WarpRoom;
 
+typedef struct {
+    /* 0x7C */ char pad_0[0x8];
+    /* 0x84 */ u8 timer;
+    /* 0x85 */ char pad_85[0x1];
+    /* 0x86 */ s8 timer2;
+    /* 0x87 */ char pad_87[0x5];
+    /* 0x8C */ u16 palette;
+    /* 0x8E */ char pad_8E[0x12];
+    /* 0xA0 */ u8 isUnderwater;
+    /* 0xA1 */ u8 ignoreCol;
+} ET_Merman;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ char pad_0[0x6];
+    /* 0x86 */ s8 timer;
+    /* 0x87 */ char pad_87[0x5];
+    /* 0x8C */ s16 rotation;
+    /* 0x8E */ char pad_8E[0x12];
+    /* 0xA0 */ u8 isUnderwater;
+    /* 0xA1 */ u8 ignoreCol;
+} ET_Merman_2;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ ET_WarpRoom warpRoom;
+    /* 0x7C */ ET_Merman merman;
+    /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ char stub[0x40];
 } Ext;
