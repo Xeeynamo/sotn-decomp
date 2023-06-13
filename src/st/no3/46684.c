@@ -606,7 +606,7 @@ void EntityUnkId15(Entity* arg0) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C9080);
 
-bool func_801C92B0(Unkstruct6* unk) {
+bool func_801C92B0(point16* unk) {
     Collider res;
 
     FallEntity();
@@ -1417,7 +1417,7 @@ void EntityLargeFallingObject(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman2);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMermanSpawner);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityMerman);
 
