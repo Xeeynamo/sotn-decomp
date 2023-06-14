@@ -161,7 +161,7 @@ segments:
       - [0x48250, c, 47BB8_hd]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
-      - [0x50F00, c, 5087C_hd]
+      - [0x50F00, c, 5087C]
       - [0x52EE4, c, 52860]
       - [0x53010, c, 5298C_hd]
       - [0x5D678, c, 5D6C4_hd]
