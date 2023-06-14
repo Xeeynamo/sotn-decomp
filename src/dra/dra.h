@@ -659,7 +659,7 @@ void func_800FF7B8(s32 arg0);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
-void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
+void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
 void DrawSettingsReverseCloak(MenuContext* context);
 void DrawSettingsSound(MenuContext* context);
