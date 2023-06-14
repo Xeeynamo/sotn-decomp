@@ -423,8 +423,43 @@ void DrawMenuChar(u8 ch, int x, int y, MenuContext* context) {
                   0x196, 0x1E, 1, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawMenuStr);
-// DECOMP_ME_WIP DrawMenuStr https://decomp.me/scratch/S4Dzb
+void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
+    const int ChWidth = 8;
+    const int ChHeight = 8;
+    u8 ch;
+    s32 xcopy;
+    s32 ycopy;
+
+    s32 s4 = D_8013784C;
+
+    D_80137614 = 0;
+    while (1) {
+        xcopy = x;
+        ycopy = y;
+        ch = *str++;
+        if (*str == 0xC0 && *(str + 1) == 0xD2) {
+            D_8013784C = 2;
+            str += 2;
+        } else
+            D_8013784C = s4;
+
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+            if (ch != 0xFF) {
+                xcopy -= ChWidth;
+                ycopy -= ChHeight;
+                x -= ChWidth;
+            }
+        }
+        DrawMenuChar(ch, xcopy, ycopy, context);
+        x += ChWidth;
+    }
+    D_80137614 = 1;
+    func_800F53D4(0x1E, context->unk18 + 2);
+}
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     do {
