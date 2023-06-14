@@ -1,3 +1,4 @@
+#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
@@ -17,10 +18,10 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F0940);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0940);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", SetNextRoomToLoad);
+INCLUDE_ASM("dra/nonmatchings/5087C", SetNextRoomToLoad);
 #else
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     s32 res;
@@ -55,7 +56,7 @@ loop_3:
 #endif
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F0CD8);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0CD8);
 #else
 extern s16 D_80072F98;
 extern s32 D_801375A4;
@@ -223,7 +224,7 @@ void func_800F1424(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F14CC);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F14CC);
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
@@ -315,7 +316,7 @@ void func_800F18C4(s32 arg0, s32 arg1) {
     func_800F1868(arg0, arg1, &sp10);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1954);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1954);
 
 void func_800F1A3C(s32 arg0) {
     if (arg0 == 0) {
@@ -335,20 +336,20 @@ void func_800F1A3C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1B08);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1B08);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1D54);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1D54);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1EB0);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1EB0);
 
 void func_800F1FC4(s32 arg0) {
     func_800F1EB0((playerX >> 8) + g_CurrentRoom.left,
                   (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2014);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2014);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2120);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2120);
 
 void func_800F223C(void) {
     g_StageId ^= 0x20;
@@ -356,7 +357,7 @@ void func_800F223C(void) {
     g_StageId ^= 0x20;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2288);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2288);
 
 void func_800F2404(s32 arg0) {
     s32* temp;
@@ -402,7 +403,7 @@ void func_800F2404(s32 arg0) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F24F4);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F24F4);
 #else
 void func_801042C4(s32);
 void func_80105428();
@@ -454,7 +455,7 @@ block_18:
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2658);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2658);
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
