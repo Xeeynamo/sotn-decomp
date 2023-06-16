@@ -206,12 +206,6 @@ void func_801065F4(s16 startIndex) {
         DestroyEntity(pItem);
 }
 
-// Not jumping into a 'nop'. Matching with PSY-Q 3.5.
-#ifndef NON_MATCHING
-void DrawEntitiesHitbox(s32 blendMode);
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", DrawEntitiesHitbox);
-#else
-// DECOMP_ME_WIP DrawEntitiesHitbox https://decomp.me/scratch/QFSeC
 void DrawEntitiesHitbox(s32 blendMode) {
     DR_MODE* drawMode;
     s32 polyCount;
@@ -311,7 +305,6 @@ void DrawEntitiesHitbox(s32 blendMode) {
         g_GpuUsage.drawModes++;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106A28);
 

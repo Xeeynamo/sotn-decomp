@@ -89,7 +89,7 @@ void func_800E5498(void) {
     g_GpuUsage.gt4++;
 }
 
-// Jump to 'nop' due to ASPSX missing
+// Jump to 'nop' due to ASPSX missing | needs rodata
 // HD version needs some tweaking at 'Gameover_4'
 #ifndef NON_MATCHING
 #if defined(VERSION_US)
