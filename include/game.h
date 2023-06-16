@@ -253,15 +253,17 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s16 cursorX;
     /* 0x02 */ s16 cursorY;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
+    /* 0x04 */ s16 cursorW;
+    /* 0x06 */ s16 cursorH;
     /* 0x08 */ RECT unk1;
     /* 0x10 */ s16 w;
-    /* 0x10 */ s16 h;
-    /* 0x14 */ int unk14;
+    /* 0x12 */ s16 h;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
     /* 0x18 */ s16 unk18;
     /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
+    /* 0x1C */ u8 unk1C;
+    /* 0x1D */ u8 unk1D;
 } MenuContext; // size = 0x1E
 #define SIZEOF_MENUCONTEXT (0x1E)
 
