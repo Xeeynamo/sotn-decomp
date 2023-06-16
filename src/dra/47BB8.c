@@ -853,10 +853,6 @@ void func_800EAEEC(void) {
     func_800EAEA4();
 }
 
-// ASPSX jump to 'nop'
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EAF28);
-#else
 void func_800EAF28(s32 arg0) {
     s32 temp_v1;
     s32 i;
@@ -884,7 +880,6 @@ void func_800EAF28(s32 arg0) {
         }
     }
 }
-#endif
 
 void DecompressWriteNibble(s32 ch) {
     u8 temp = ch;

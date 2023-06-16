@@ -10,3 +10,6 @@
 [submodule "tools/saturn-splitter"]
 	path = tools/saturn-splitter
 	url = https://github.com/sozud/saturn-splitter.git
+[submodule "tools/maspsx"]
+	path = tools/maspsx
+	url = https://github.com/mkst/maspsx.git

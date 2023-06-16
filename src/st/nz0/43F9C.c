@@ -6,11 +6,6 @@
 
 #include "nz0.h"
 
-// aspatch skips a nop. TODO: fix compiler
-// matching in decomp.me: https://decomp.me/scratch/oDgqZ
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43F9C", func_801C3F9C);
-#else
 void func_801C3F9C(Unkstruct_801C3F9C** self) {
     Collider collider;
     Entity* newEntity;
@@ -52,7 +47,6 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
         return;
     }
 }
-#endif
 
 // Called by EntityAxeKnight
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43F9C", func_801C4198);

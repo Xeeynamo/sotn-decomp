@@ -589,11 +589,6 @@ void EntityMoveableBox(Entity* self) {
 }
 
 // lever to operate cannon
-// DECOMP_ME_WIP EntityCannonLever https://decomp.me/scratch/7ce8a
-// Matching in PSY-Q 3.5, assembler skips a nop
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityCannonLever);
-#else
 void EntityCannonLever(Entity* self) {
     /** TODO: !FAKE
      * self->ext.generic.unk7C should be a POLY_G4*
@@ -659,18 +654,17 @@ void EntityCannonLever(Entity* self) {
         break;
 
     case 3:
-        D_80180ED0 = 1;
+        D_80180ED0[0] = 1;
         break;
     }
 
-    if (D_8003BE6F != 0) {
+    if (D_8003BE6F[0] != 0) {
         self->unk3C = 0;
     }
     poly = (POLY_GT4*)*(s32*)&self->ext.generic.unk7C.s;
     poly->x0 = self->posX.i.hi - 4;
     poly->y0 = self->posY.i.hi - 20;
 }
-#endif
 
 // cannon for shortcut
 void EntityCannon(Entity* self) {
@@ -907,11 +901,6 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
 
-// Aspatch skips a nop. TODO: Fix compiler
-// Matching in decompme: https://decomp.me/scratch/Swhgi
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityFloorSpikes);
-#else
 void EntityFloorSpikes(Entity* self) {
     Primitive* prim;
     s16 firstPrimIndex;
@@ -986,7 +975,6 @@ void EntityFloorSpikes(Entity* self) {
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi - 16;
 }
-#endif
 
 // table with globe on it that can be broken
 void EntityTableWithGlobe(Entity* self) {
