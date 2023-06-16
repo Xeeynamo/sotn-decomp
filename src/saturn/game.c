@@ -67,6 +67,8 @@ typedef struct {
     u8 pad2[0x250];
     s32 hp;
     s32 hpMax;
+    u8 pad[88];
+    u32 equipment[7];
 } PlayerStatus;
 
 extern PlayerStatus g_Status;
@@ -102,8 +104,51 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F328, func_0606F328);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F348, func_0606F348);
+extern u16 g_StageId; // u32 in psx
+// SAT: func_0606F328
+s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ s16 attack;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 element;
+    /* 0x0E */ u8 damageScale;
+    /* 0x0F */ u8 weaponId;
+    /* 0x10 */ u16 unk10;
+    /* 0x12 */ u8 playerAnim;
+    /* 0x13 */ u8 unk13;
+    /* 0x14 */ u8 unk14;
+    /* 0x15 */ u8 lockDuration;
+    /* 0x16 */ u16 chainable;
+    /* 0x18 */ u8 specialMove;
+    /* 0x19 */ u8 isConsumable;
+    /* 0x1A */ u8 enemyInvincibilityFrames;
+    /* 0x1B */ u8 unk1B;
+    /* 0x1C */ u16 unk1C;
+    /* 0x1E */ u16 unk1E;
+    /* 0x20 */ u16 unk20;
+    /* 0x22 */ u16 unk22;
+    /* 0x24 */ u16 mpUsage;
+    /* 0x26 */ u16 stunFrames;
+    /* 0x28 */ u16 hitType;
+    /* 0x2A */ u16 hitEffect;
+    /* 0x2C */ u16 icon;
+    /* 0x2E */ u16 palette;
+    /* 0x30 */ u16 criticalRate;
+    /* 0x32 */ u16 unk32;
+} Equipment; /* size=0x34 */
+
+// Not 100% sure about address, gcc seems to added the offset within
+// the struct to the base address
+extern Equipment D_800A4B04[];
+
+// SAT: func_0606F348
+u8 GetEquipDamageScale(s32 equipId) {
+    return D_800A4B04[g_Status.equipment[equipId]].damageScale;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F378, func_0606F378);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3D8, func_0606F3D8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
