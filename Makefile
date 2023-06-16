@@ -61,6 +61,7 @@ SOTNDISK		:= $(GOPATH)/bin/sotn-disk
 GFXSTAGE		:= $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
+SATURN_ADPCM_EXTRACT_APP := $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -256,6 +257,58 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
 
+extract_saturn_pcm: $(SATURN_SPLITTER_APP)
+	mkdir -p build/saturn/SD
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD01.PCM build/saturn/SD/SD01.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD02.PCM build/saturn/SD/SD02.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD03.PCM build/saturn/SD/SD03.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD04.PCM build/saturn/SD/SD04.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD05.PCM build/saturn/SD/SD05.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD06.PCM build/saturn/SD/SD06.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD07.PCM build/saturn/SD/SD07.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD08.PCM build/saturn/SD/SD08.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD09.PCM build/saturn/SD/SD09.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0A.PCM build/saturn/SD/SD0A.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0B.PCM build/saturn/SD/SD0B.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0C.PCM build/saturn/SD/SD0C.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0D.PCM build/saturn/SD/SD0D.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0E.PCM build/saturn/SD/SD0E.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0F.PCM build/saturn/SD/SD0F.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD10.PCM build/saturn/SD/SD10.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD11.PCM build/saturn/SD/SD11.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD12.PCM build/saturn/SD/SD12.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD13.PCM build/saturn/SD/SD13.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD14.PCM build/saturn/SD/SD14.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD15.PCM build/saturn/SD/SD15.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD16.PCM build/saturn/SD/SD16.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD17.PCM build/saturn/SD/SD17.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD18.PCM build/saturn/SD/SD18.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD19.PCM build/saturn/SD/SD19.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1A.PCM build/saturn/SD/SD1A.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1B.PCM build/saturn/SD/SD1B.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1C.PCM build/saturn/SD/SD1C.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1D.PCM build/saturn/SD/SD1D.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1E.PCM build/saturn/SD/SD1E.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1F.PCM build/saturn/SD/SD1F.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD20.PCM build/saturn/SD/SD20.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD21.PCM build/saturn/SD/SD21.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD22.PCM build/saturn/SD/SD22.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD23.PCM build/saturn/SD/SD23.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD24.PCM build/saturn/SD/SD24.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD25.PCM build/saturn/SD/SD25.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD26.PCM build/saturn/SD/SD26.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD27.PCM build/saturn/SD/SD27.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD28.PCM build/saturn/SD/SD28.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD29.PCM build/saturn/SD/SD29.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2A.PCM build/saturn/SD/SD2A.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2B.PCM build/saturn/SD/SD2B.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2C.PCM build/saturn/SD/SD2C.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2D.PCM build/saturn/SD/SD2D.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2E.PCM build/saturn/SD/SD2E.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2F.PCM build/saturn/SD/SD2F.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD30.PCM build/saturn/SD/SD30.wav
+	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD31.PCM build/saturn/SD/SD31.wav
+
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
 	mv src src_tmp
@@ -344,6 +397,8 @@ $(SATURN_SPLITTER_APP):
 	git submodule init $(SATURN_SPLITTER_DIR)
 	git submodule update $(SATURN_SPLITTER_DIR)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
+	# just build the adpcm extractor here too
+	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
