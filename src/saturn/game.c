@@ -55,13 +55,128 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F21C, func_0606F21C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F2C0, func_0606F2C0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F328, func_0606F328);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F348, func_0606F348);
+
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+} Unkstruct_800FD5BC;
+
+// offsets are not the same
+typedef struct {
+    u8 pad2[0x250];
+    s32 hp;
+    s32 hpMax;
+    u8 pad[88];
+    u32 equipment[7];
+} PlayerStatus;
+
+extern PlayerStatus g_Status;
+
+#define true 1
+#define false 0
+#define bool s32
+
+// PSX: func_800FD5BC
+// SAT: func_0606F2C0
+bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
+    s32 temp;
+
+    if (arg0->unk4 != 5) {
+        if (((u32)arg0->unk4) >= 0x10U) {
+            temp = g_Status.hpMax;
+            if (g_Status.hpMax < 0) {
+                temp += 7;
+            }
+            arg0->unk8 = temp >> 3;
+        } else if ((arg0->unk8 * 0x14) <= g_Status.hpMax) { // reversed on PSX
+            arg0->unk4 = 3;
+        } else {
+            arg0->unk4 = 2;
+        }
+    }
+    if (g_Status.hp <= arg0->unk8) {
+        g_Status.hp = 0;
+        return true;
+    } else {
+        g_Status.hp -= arg0->unk8;
+        return false;
+    }
+}
+
+extern u16 g_StageId; // u32 in psx
+// SAT: func_0606F328
+s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ s16 attack;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 element;
+    /* 0x0E */ u8 damageScale;
+    /* 0x0F */ u8 weaponId;
+    /* 0x10 */ u16 unk10;
+    /* 0x12 */ u8 playerAnim;
+    /* 0x13 */ u8 unk13;
+    /* 0x14 */ u8 unk14;
+    /* 0x15 */ u8 lockDuration;
+    /* 0x16 */ u16 chainable;
+    /* 0x18 */ u8 specialMove;
+    /* 0x19 */ u8 isConsumable;
+    /* 0x1A */ u8 enemyInvincibilityFrames;
+    /* 0x1B */ u8 unk1B;
+    /* 0x1C */ u16 unk1C;
+    /* 0x1E */ u16 unk1E;
+    /* 0x20 */ u16 unk20;
+    /* 0x22 */ u16 unk22;
+    /* 0x24 */ u16 mpUsage;
+    /* 0x26 */ u16 stunFrames;
+    /* 0x28 */ u16 hitType;
+    /* 0x2A */ u16 hitEffect;
+    /* 0x2C */ u16 icon;
+    /* 0x2E */ u16 palette;
+    /* 0x30 */ u16 criticalRate;
+    /* 0x32 */ u16 unk32;
+} Equipment; /* size=0x34 */
+
+// Not 100% sure about address, gcc seems to added the offset within
+// the struct to the base address
+extern Equipment D_800A4B04[];
+
+// SAT: func_0606F348
+u8 GetEquipDamageScale(s32 equipId) {
+    return D_800A4B04[g_Status.equipment[equipId]].damageScale;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F378, func_0606F378);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3D8, func_0606F3D8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F418, func_0606F418);
+
+// Defines armor, cloak and rings
+typedef struct {
+    /* 00 */ const char* name;
+    /* 04 */ const char* description;
+    /* 08 */ u32 unk08;
+    /* 0C */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u16 icon;
+    /* 1A */ u16 palette;
+    /* 1C */ u32 unk1C;
+} Accessory; /* size=0x20 */
+
+extern Accessory D_800A7718[];
+
+// SAT: func_0606F418
+const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
+    if (!equipTypeFilter) {
+        return D_800A4B04[equipId].name;
+    } else {
+        return D_800A7718[equipId].name;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F59C, func_0606F59C);
