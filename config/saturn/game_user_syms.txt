@@ -10,3 +10,6 @@ _g_Status = 0x0605C6F0;
 _g_StageId = 0x0605D750;
 _D_800A4B04 = 0x0607c250;
 _D_800A7718 = 0x0607f0a0;
+_CheckEquipmentItemCount = 0x0606f448;
+_rand = 0x06032e68;
+_g_SpellDefs = 0x0607fd78;
