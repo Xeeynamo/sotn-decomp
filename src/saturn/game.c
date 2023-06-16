@@ -55,7 +55,53 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F21C, func_0606F21C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F2C0, func_0606F2C0);
+
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+} Unkstruct_800FD5BC;
+
+// offsets are not the same
+typedef struct {
+    u8 pad2[0x250];
+    s32 hp;
+    s32 hpMax;
+} PlayerStatus;
+
+extern PlayerStatus g_Status;
+
+#define true 1
+#define false 0
+#define bool s32
+
+// PSX: func_800FD5BC
+// SAT: func_0606F2C0
+bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
+    s32 temp;
+
+    if (arg0->unk4 != 5) {
+        if (((u32)arg0->unk4) >= 0x10U) {
+            temp = g_Status.hpMax;
+            if (g_Status.hpMax < 0) {
+                temp += 7;
+            }
+            arg0->unk8 = temp >> 3;
+        } else if ((arg0->unk8 * 0x14) <= g_Status.hpMax) { // reversed on PSX
+            arg0->unk4 = 3;
+        } else {
+            arg0->unk4 = 2;
+        }
+    }
+    if (g_Status.hp <= arg0->unk8) {
+        g_Status.hp = 0;
+        return true;
+    } else {
+        g_Status.hp -= arg0->unk8;
+        return false;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F328, func_0606F328);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F348, func_0606F348);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F378, func_0606F378);
