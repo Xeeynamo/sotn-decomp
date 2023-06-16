@@ -152,7 +152,31 @@ u8 GetEquipDamageScale(s32 equipId) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F378, func_0606F378);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3D8, func_0606F3D8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F418, func_0606F418);
+
+// Defines armor, cloak and rings
+typedef struct {
+    /* 00 */ const char* name;
+    /* 04 */ const char* description;
+    /* 08 */ u32 unk08;
+    /* 0C */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u16 icon;
+    /* 1A */ u16 palette;
+    /* 1C */ u32 unk1C;
+} Accessory; /* size=0x20 */
+
+extern Accessory D_800A7718[];
+
+// SAT: func_0606F418
+const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
+    if (!equipTypeFilter) {
+        return D_800A4B04[equipId].name;
+    } else {
+        return D_800A7718[equipId].name;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F59C, func_0606F59C);
