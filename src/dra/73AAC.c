@@ -111,19 +111,10 @@ s32 func_80113D7C(s16 arg0) {
     return -1;
 }
 
-// !FAKE: too many temps
-s16 func_80113E68(void) {
+s32 func_80113E68(void) {
     s16 rnd = rand();
-    s32 temp_v0;
-    s32 var_a1;
-
-    temp_v0 = rnd;
-    PLAYER.ext.generic.unkAC = (rnd % 3) + 0x2E;
-    var_a1 = rnd;
-    if (rnd < 0) {
-        var_a1 = rnd + 0xF;
-    }
-    return (temp_v0 - ((var_a1 >> 4) * 0x10));
+    PLAYER.ext.generic.unkAC = 0x2E + (rnd % 3);
+    return rnd % 16;
 }
 
 void func_80113EE0(void) {
