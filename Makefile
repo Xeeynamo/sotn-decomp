@@ -2,21 +2,21 @@
 .SECONDARY:
 
 # Binaries
-VERSION			?= us
+VERSION         ?= us
 MAIN            := main
 DRA             := dra
 
 # Compilers
-CC1PSX			:= ./bin/cc1-psx-26
+CC1PSX          := ./bin/cc1-psx-26
 CROSS           := mipsel-linux-gnu-
 AS              := $(CROSS)as
 CC              := $(CC1PSX)
 LD              := $(CROSS)ld
-CPP				:= $(CROSS)cpp
+CPP             := $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
-CC_FLAGS        += -mcpu=3000 -quiet -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float
-CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin -gstabs
+CC_FLAGS        += -mcpu=3000 -quiet -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float -gcoff
+CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
 CPP_FLAGS       += -D_internal_version_$(VERSION)
 
@@ -34,11 +34,11 @@ TOOLS_DIR       := tools
 MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/data
 MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk
 MAIN_S_FILES    := $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/*.s)) \
-					$(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
+                   $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
 MAIN_C_FILES    := $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/*.c)) \
-					$(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/**/*.c))
+                   $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/**/*.c))
 MAIN_O_FILES    := $(foreach file,$(MAIN_S_FILES),$(BUILD_DIR)/$(file).o) \
-					$(foreach file,$(MAIN_C_FILES),$(BUILD_DIR)/$(file).o)
+                   $(foreach file,$(MAIN_C_FILES),$(BUILD_DIR)/$(file).o)
 MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 
 # Tooling
@@ -53,12 +53,13 @@ M2CTX           := $(PYTHON) $(M2CTX_APP)
 M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
-M2C_ARGS		:= -P 4
-GO				:= $(HOME)/go/bin/go
-GOPATH			:= $(HOME)/go
-ASPATCH			:= $(GOPATH)/bin/aspatch
-SOTNDISK		:= $(GOPATH)/bin/sotn-disk
-GFXSTAGE		:= $(PYTHON) $(TOOLS_DIR)/gfxstage.py
+M2C_ARGS        := -P 4
+GO              := $(HOME)/go/bin/go
+GOPATH          := $(HOME)/go
+ASPATCH         := $(GOPATH)/bin/aspatch
+MASPSX          := $(PYTHON) tools/maspsx/maspsx.py --no-macro-inc --expand-div
+SOTNDISK        := $(GOPATH)/bin/sotn-disk
+GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SATURN_ADPCM_EXTRACT_APP := $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
@@ -403,10 +404,10 @@ $(SATURN_SPLITTER_APP):
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(ASPATCH) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 build_saturn_dosemu_docker_container:
-	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile . 
+	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile .
 
 build_saturn_binutils_docker_container:
 	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .

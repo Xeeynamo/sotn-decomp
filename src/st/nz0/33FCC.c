@@ -128,7 +128,7 @@ typedef enum {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityCloseBossRoom);
 
 // blocks that move to close slogra/gaibon room
-// assembler skips a nop
+// assembler skips a nop | needs rodata
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityBossRoomBlock);
 #else

@@ -2,7 +2,7 @@
 
 // TODO almost matching but one single jump makes not so. The original jump
 // points to a 'nop' while the current build toolchain points to the
-// instruction right after the 'nop'.
+// instruction right after the 'nop'. | needs rodata
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/func_801B8A8C", func_801B8A8C);
 #else
