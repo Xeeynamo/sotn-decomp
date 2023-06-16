@@ -362,19 +362,19 @@ void func_800F6508(MenuContext* context, s32 x, s32 y) {
 }
 
 // Draw main menu cursor
-void func_800F6568(MenuContext* arg0) {
+void func_800F6568(MenuContext* context) {
     s32 height;
     s32 r;
 
-    height = arg0->unk6 / 5;
+    height = context->cursorH / 5;
     if (g_blinkTimer & 0x20) {
         r = (g_blinkTimer & 0x1F) + 0x40;
     } else {
         r = 0x5F - (g_blinkTimer & 0x1F);
     }
-    DrawMenuRect(arg0, arg0->cursorX,
-                 arg0->cursorY + (height * g_MenuNavigation.cursorMain),
-                 arg0->unk4, height, r, 0, 0);
+    DrawMenuRect(context, context->cursorX,
+                 context->cursorY + (height * g_MenuNavigation.cursorMain),
+                 context->cursorW, height, r, 0, 0);
 }
 
 // Draw equip menu cursor
@@ -875,7 +875,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     totalItemCount = func_800FD6C4(*new_var);
     curX = 0;
     curY = 0;
-    itemsPerPage = Cols + ctx->unk6 / Height * Cols;
+    itemsPerPage = Cols + ctx->cursorH / Height * Cols;
     for (i = 0; i < itemsPerPage; i++) {
         itemIndex = i + -ctx->h / Height * Cols;
         if (itemIndex >= totalItemCount) {
