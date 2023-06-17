@@ -261,8 +261,36 @@ void func_801078C4(void) {
     }
 }
 
-// 101
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
+void func_80107B04(void) {
+    s32 i;
+    s32 len;
+
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + (u8*)&D_8007EFE4;
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
+        LoadTPage(&D_8007EFE4, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        g_Cd.D_80137F78 = 1;
+        CdDataCallback(NULL);
+    }
+}
 
 void func_80107C6C(void) {
     s32 len;
@@ -335,7 +363,7 @@ void func_80107EF0(void) {
     s32 len;
 
     if (g_Cd.overlayBlockCount != 0) {
-        len = 0x800;
+        len = CD_BLOCK_LEN;
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
@@ -361,9 +389,9 @@ void func_80107EF0(void) {
             CdDataCallback(NULL);
         } else {
             CdFile* cdFile = D_800ACC74[D_80137F96];
-            g_Cd.overlayBlockCount = cdFile->size / 0x800;
+            g_Cd.overlayBlockCount = cdFile->size / CD_BLOCK_LEN;
             g_Cd.overlayLastBlockSize =
-                cdFile->size - cdFile->size / 0x800 * 0x800;
+                cdFile->size - cdFile->size / CD_BLOCK_LEN * CD_BLOCK_LEN;
             g_Cd.D_80137F74 = 0;
             CdDataCallback(func_80107C6C);
         }
