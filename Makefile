@@ -361,7 +361,9 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
-update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
+update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
+	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
+	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
@@ -399,7 +401,6 @@ $(SATURN_SPLITTER_APP):
 	git submodule init $(SATURN_SPLITTER_DIR)
 	git submodule update $(SATURN_SPLITTER_DIR)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
-	# just build the adpcm extractor here too
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 
 $(BUILD_DIR)/%.s.o: %.s
