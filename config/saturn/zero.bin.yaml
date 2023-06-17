@@ -16,7 +16,7 @@ segments:
         type: data
         file: zero
         end: 0xae07
-
+  
       # ratan2
       - start: 0xae08
         type: c
@@ -45,7 +45,44 @@ segments:
         file: zero
         end: 0xbf87
 
+      # before DGFS
       - start: 0xbf88
+        type: data
+        file: zero
+        end: 0x17233
+
+      # DGFS
+      - start: 0x17234
+        type: c
+        file: zero
+        end: 0x1D867
+
+      # SEGA_SPR.A
+      - start: 0x1D868
+        type: c
+        file: zero
+        end: 0x1F313
+
+      # after SEGA_SPR.A
+      - start: 0x1F314
+        type: data
+        file: zero
+        end: 0x2C363
+
+      # _bup_version
+      - start: 0x2C364
+        type: data
+        file: zero
+        end: 0x2C383
+
+      # _BUP_Init to _get_sr
+      - start: 0x2C384
+        type: c
+        file: zero
+        end: 0x2C9C9
+
+      # post-BUP
+      - start: 0x2C9CA
         type: data
         file: zero
         end: 0x4C560
