@@ -59,7 +59,6 @@ MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --no-macro-inc --expand-div
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
-ASPATCH         := $(GOPATH)/bin/aspatch
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
@@ -364,7 +363,6 @@ disk: build $(SOTNDISK)
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO)
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 	git clean -fd bin/
@@ -394,8 +392,6 @@ $(GO):
 	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
 	rm go1.19.7.linux-amd64.tar.gz
-$(ASPATCH): $(GO)
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/aspatch@latest
 $(SOTNDISK): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 
