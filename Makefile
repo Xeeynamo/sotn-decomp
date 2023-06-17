@@ -54,10 +54,12 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
+MASPSX_DIR      := $(TOOLS_DIR)/maspsx
+MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
+MASPSX          := $(PYTHON) $(MASPSX_APP) --no-macro-inc --expand-div
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 ASPATCH         := $(GOPATH)/bin/aspatch
-MASPSX          := $(PYTHON) tools/maspsx/maspsx.py --no-macro-inc --expand-div
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
@@ -385,6 +387,9 @@ $(M2C_APP):
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
+$(MASPSX_APP):
+	git submodule init $(MASPSX_DIR)
+	git submodule update $(MASPSX_DIR)
 $(GO):
 	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
@@ -403,7 +408,7 @@ $(SATURN_SPLITTER_APP):
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(ASPATCH) $(CC1PSX)
+$(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 build_saturn_dosemu_docker_container:
