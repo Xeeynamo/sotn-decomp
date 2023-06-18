@@ -67,6 +67,167 @@ segments:
       - start: 0x1F314
         type: data
         file: zero
+        end: 0x1F473
+
+      # DMA
+      - start: 0x1F474
+        type: c
+        file: zero
+        end: 0x1F69B
+
+      # splitter bug here
+      - start: 0x1F69C
+        type: data
+        file: zero
+        end: 0x1F8CF
+
+      # continue DMA
+      - start: 0x1F8D0
+        type: c
+        file: zero
+        end: 0x1FB7F
+
+      # splitter bug
+      - start: 0x1FB80
+        type: data
+        file: zero
+        end: 0x1FD5F
+
+      # continue DMA
+      - start: 0x1FD60
+        type: c
+        file: zero
+        end: 0x1FFD7
+
+      # after DMA
+      - start: 0x1FFD8
+        type: data
+        file: zero
+        end: 0x203C3
+    
+      # SEGA_SCL.A
+      - start: 0x203C4
+        type: c
+        file: zero
+        end: 0x26B1B
+
+      # after SCL
+      - start: 0x26B1C
+        type: data
+        file: zero
+        end: 0x27933
+
+
+      # SEGA_CSH.A
+      - start: 0x27934
+        type: c
+        file: zero
+        end: 0x27B17
+
+      # after SEGA_CSH.A
+      - start: 0x27B18
+        type: data
+        file: zero
+        end: 0x28B8B
+
+
+      # SEGA_PER.A
+      - start: 0x28B8C
+        type: c
+        file: zero
+        end: 0x28F83
+
+      # after PER
+      - start: 0x28F84
+        type: data
+        file: zero
+        end: 0x295DF
+
+
+      # CDC
+      - start: 0x295E0
+        type: c
+        file: zero
+        end: 0x2B41D
+
+      # after CDC
+      - start: 0x2B41E
+        type: data
+        file: zero
+        end: 0x2B5B7
+
+
+      # SEGA_MTH.A
+      # _MTH_MoveMatrix (hasm)
+      - start: 0x2B5B8
+        type: data
+        file: zero
+        end: 0x2B611
+      # _MTH_RotateMatrixX (hasm)
+      - start: 0x2B612
+        type: data
+        file: zero
+        end: 0x2B6D7
+      # ??? (gap)
+      - start: 0x2B6D8
+        type: data
+        file: zero
+        end: 0x2B7BB        
+      # _MTH_RotateMatrixZ (hasm)
+      - start: 0x2B7BC
+        type: data
+        file: zero
+        end: 0x2B88B
+      # gap
+      - start: 0x2B88C
+        type: data
+        file: zero
+        end: 0x2B8A1
+      # _MTH_MulMatrix (hasm)
+      - start: 0x2B8A2
+        type: data
+        file: zero
+        end: 0x2B9DB
+      # gap
+      - start: 0x2B9DC
+        type: data
+        file: zero
+        end: 0x2B9DB
+      # _MTH_CoordTrans (hasm)
+      - start: 0x2B9DC
+        type: data
+        file: zero
+        end: 0x2BA27
+      # _MTH_NormalTrans (hasm)
+      - start: 0x2BA28
+        type: data
+        file: zero
+        end: 0x2BA6B     
+      # gap  
+      - start: 0x2BA6C
+        type: data
+        file: zero
+        end: 0x2BADB
+      # _MTH_ComputeBright
+      - start: 0x2BADC
+        type: data
+        file: zero
+        end: 0x2BB03
+      # SINTBL etc
+      - start: 0x2BB04
+        type: data
+        file: zero
+        end: 0x2C1A7     
+      # _MTH_Hypot (C) 
+      - start: 0x2C1A8
+        type: c
+        file: zero
+        end: 0x2C303 
+
+      # after SEGA_MTH.A
+      - start: 0x2C304
+        type: data
+        file: zero
         end: 0x2C363
 
       # _bup_version
@@ -81,8 +242,25 @@ segments:
         file: zero
         end: 0x2C9C9
 
-      # post-BUP
+      # after bup
       - start: 0x2C9CA
+        type: data
+        file: zero
+        end: 0x2CA5B
+
+      # version string
+      - start: 0x2CA5C
+        type: data
+        file: zero
+        end: 0x2CA7B
+
+      - start: 0x2CA5C
+        type: c
+        file: zero
+        end: 0x2CB73
+
+      # post-SYS
+      - start: 0x2CB74
         type: data
         file: zero
         end: 0x4C560
