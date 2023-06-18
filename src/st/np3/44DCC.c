@@ -120,11 +120,6 @@ s32 func_801C6458(s16 yOffset) {
     return res;
 }
 
-// Matching, assembler skips a NOP
-// https://decomp.me/scratch/8wa56
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntityMerman2);
-#else
 void EntityMerman2(Entity* self) {
     s32 firstPrimIndex;
     Collider collider;
@@ -174,8 +169,8 @@ void EntityMerman2(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, posY, &collider, 0);
         if (!(collider.unk0 & 8)) {
             SetStep(MERMAN2_SWIMMING);
-            break;
         }
+        return;
 
     case MERMAN2_SWIMMING:
         if (self->step_s == 0) {
@@ -631,7 +626,6 @@ void EntityMerman2(Entity* self) {
         break;
     }
 }
-#endif
 
 // some sort of explosion: ID 0x36
 void EntityExplosion2(Entity* entity, s32 arg1) {

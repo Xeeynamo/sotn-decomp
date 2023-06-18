@@ -452,6 +452,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
 }
 
 // PSY-Q 3.5 match as in GCC a jump skips a 'nop'
+// has Jumptable
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174038);
 #else
