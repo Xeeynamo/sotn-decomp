@@ -136,7 +136,7 @@ void EntityBossRoomBlock(Entity* self) {
 
     case 1:
         if (g_BossFlag & 1) {
-            self->ext.generic.unk80.modeS16.unk0 = 0x10;
+            self->ext.GS_Props.timer = 16;
             self->step++;
         }
         break;
@@ -152,7 +152,7 @@ void EntityBossRoomBlock(Entity* self) {
         if (!(g_blinkTimer & 3)) {
             g_api.PlaySfx(0x608);
         }
-        if (--self->ext.generic.unk80.modeS16.unk0) {
+        if (--self->ext.GS_Props.timer) {
             break;
         }
         self->step++;
