@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
@@ -175,7 +176,7 @@ segments:
       - [0x75A90, c, 75DA0]
       - [0x75C44, c, 75F54_hd]
       - [0x94F7C, c, 953A0_hd]
-      - [0x95E88, sbss]  
+      - [0x95E88, sbss]
   - name: dra_data
     type: data
     start: 0x9B270
