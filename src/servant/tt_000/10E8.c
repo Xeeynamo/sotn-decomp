@@ -1,13 +1,16 @@
 #include "servant.h"
 
-SpriteParts* D_80170040[];
-u16 D_80170448[];
-Sprite D_80170608[];
-u16 D_80170720[];
-s32 D_80171090;
-EntitySearch D_80171094[];
-Collider D_80174AD8;
-s32 D_80174D3C;
+extern SpriteParts* D_80170040[];
+extern u16 D_80170448[];
+extern s32 D_801704A8;
+extern Sprite D_80170608[];
+extern u16 D_80170720[];
+extern s32 D_80171090;
+extern EntitySearch D_80171094[];
+extern Collider D_80174AD8;
+extern Unkstruct_8011A3AC D_80174C30;
+extern point16 D_80174C3C[][16];
+extern s32 D_80174D3C;
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -202,20 +205,8 @@ void func_801718A0(Entity* entity) {
     poly->y2 = poly->y3 = poly->y0 + D_80170608[frame].height;
 }
 
-extern s32 D_801704A8;
-extern /*?*/ Unkstruct_8011A3AC D_80174C30;
-
-typedef struct {
-    s16 x, y;
-} Pos;
-extern Pos D_80174C3C[];
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801719E0);
-// #else
 void func_801719E0(Entity* self) {
     s32 i;
-    s32 posX;
-    s32 posY;
 
     if (self->ext.fam.unk80 == 0) {
         self->ext.fam.unk8E = 0;
@@ -228,7 +219,8 @@ void func_801719E0(Entity* self) {
                 return;
             }
             func_8017170C(self, 0);
-            self->flags = 0x0C820000;
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_FREE_POLYGONS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             self->ext.fam.unk84 = rand() % 4096;
             self->ext.fam.unk86 = 0;
@@ -244,7 +236,9 @@ void func_801719E0(Entity* self) {
                 return;
             }
             func_8017170C(self, 0);
-            self->flags = 0x0E820000;
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_UNK_02000000 | FLAG_FREE_POLYGONS |
+                          FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             if (self->ext.fam.unk82 == 0) {
                 self->ext.fam.ent = &PLAYER;
@@ -256,29 +250,26 @@ void func_801719E0(Entity* self) {
 
             if (self->ext.fam.unk82 == 0) {
                 for (i = 0; i < 16; i++) {
-                    posX = i * 4 + (self->ext.fam.unk82 << 6);
-                    (*(Pos*)((u8*)D_80174C3C + posX)).x =
+                    D_80174C3C[self->ext.fam.unk82][i].x =
                         self->ext.fam.ent->posX.i.hi + self->ext.fam.cameraX;
-                    posY = i * 4 + (self->ext.fam.unk82 << 6);
-                    (*(Pos*)((u8*)D_80174C3C + posY)).y =
+                    D_80174C3C[self->ext.fam.unk82][i].y =
                         self->ext.fam.ent->posY.i.hi + self->ext.fam.cameraY;
                 }
             } else {
                 for (i = 0; i < 16; i++) {
                     if (PLAYER.facing) {
-                        D_80174C3C[i + (self->ext.fam.unk82 << 4)].x =
+                        D_80174C3C[self->ext.fam.unk82][i].x =
                             PLAYER.posX.i.hi +
                             ((self->ext.fam.unk82 + 1) * 0x10) +
                             self->ext.fam.cameraX;
 
                     } else {
-                        D_80174C3C[i + (self->ext.fam.unk82 << 4)].x =
+                        D_80174C3C[self->ext.fam.unk82][i].x =
                             PLAYER.posX.i.hi -
                             ((self->ext.fam.unk82 + 1) * 0x10) +
                             self->ext.fam.cameraX;
                     }
-                    posY = self->ext.fam.unk82;
-                    D_80174C3C[i + (posY << 4)].y =
+                    D_80174C3C[self->ext.fam.unk82][i].y =
                         PLAYER.posY.i.hi + self->ext.fam.cameraY;
                 }
                 self->posX.i.hi = PLAYER.facing ? 0x180 : -0x80;
@@ -292,13 +283,16 @@ void func_801719E0(Entity* self) {
         self->ext.fam.unk8E = 0;
         switch (self->objectId) {
         case 0xD1:
-            self->flags = 0x0C820000;
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_FREE_POLYGONS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             self->ext.fam.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
-            self->flags = 0x0E820000;
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_UNK_02000000 | FLAG_FREE_POLYGONS |
+                          FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             if (self->ext.fam.unk82 == 0) {
                 self->ext.fam.ent = &PLAYER;
@@ -310,15 +304,15 @@ void func_801719E0(Entity* self) {
 
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facing) {
-                    D_80174C3C[i + (self->ext.fam.unk82 << 4)].x =
+                    D_80174C3C[self->ext.fam.unk82][i].x =
                         PLAYER.posX.i.hi + ((self->ext.fam.unk82 + 1) * 0x10) +
                         self->ext.fam.cameraX;
                 } else {
-                    D_80174C3C[i + (self->ext.fam.unk82 << 4)].x =
+                    D_80174C3C[self->ext.fam.unk82][i].x =
                         PLAYER.posX.i.hi - ((self->ext.fam.unk82 + 1) * 0x10) +
                         self->ext.fam.cameraX;
                 }
-                D_80174C3C[i + (self->ext.fam.unk82 << 4)].y =
+                D_80174C3C[self->ext.fam.unk82][i].y =
                     PLAYER.posY.i.hi + self->ext.fam.cameraY;
             }
             self->ext.fam.unkA8 = 0;
@@ -329,7 +323,6 @@ void func_801719E0(Entity* self) {
     self->ext.fam.unk80 = self->objectId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
-// #endif
 
 void func_80171ED4(s32 arg0) {
     RECT rect;
