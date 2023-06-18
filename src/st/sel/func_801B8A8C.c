@@ -1,11 +1,5 @@
 #include "sel.h"
 
-// TODO almost matching but one single jump makes not so. The original jump
-// points to a 'nop' while the current build toolchain points to the
-// instruction right after the 'nop'. | needs rodata
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/func_801B8A8C", func_801B8A8C);
-#else
 void _clear_event(void);
 void _clear_event_x(void);
 s32 _peek_event_with_retry(void);
@@ -102,4 +96,3 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
 
     return unk->unk25C;
 }
-#endif
