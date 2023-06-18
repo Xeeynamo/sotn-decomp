@@ -128,10 +128,6 @@ typedef enum {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityCloseBossRoom);
 
 // blocks that move to close slogra/gaibon room
-// assembler skips a nop | needs rodata
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityBossRoomBlock);
-#else
 void EntityBossRoomBlock(Entity* self) {
     switch (self->step) {
     case 0:
@@ -180,7 +176,6 @@ void EntityBossRoomBlock(Entity* self) {
         break;
     }
 }
-#endif
 
 s32 EntitySlograSpecialCollision(u16* unused) {
     /**
