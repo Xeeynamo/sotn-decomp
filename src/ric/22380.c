@@ -209,11 +209,6 @@ void func_80160C38(Entity* entity) {
     }
 }
 
-// aspatch jumps to the wrong instruction
-// Matches with PSY-Q 3.5 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160D2C);
-#else
 void func_80160D2C(Entity* self) {
     if (PLAYER.step != 26) {
         func_80156C60(self);
@@ -238,17 +233,16 @@ void func_80160D2C(Entity* self) {
     }
 
     if (PLAYER.animCurFrame == 141) {
-        self->unk12 = 0xC;
+        self->unk12 = 12;
     }
 
     if (self->unk48 != 0) {
         g_Player.unk44 |= 0x80;
     } else {
-        g_Player.unk44 &= 0xFF7F;
+        g_Player.unk44 &= ~0x80;
     }
     self->unk48 = 0;
 }
-#endif
 
 void func_80160E4C(Entity* self) {
     if (PLAYER.step != 24) {
