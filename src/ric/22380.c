@@ -209,11 +209,6 @@ void func_80160C38(Entity* entity) {
     }
 }
 
-// aspatch jumps to the wrong instruction
-// Matches with PSY-Q 3.5 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160D2C);
-#else
 void func_80160D2C(Entity* self) {
     if (PLAYER.step != 26) {
         func_80156C60(self);
@@ -238,17 +233,16 @@ void func_80160D2C(Entity* self) {
     }
 
     if (PLAYER.animCurFrame == 141) {
-        self->unk12 = 0xC;
+        self->unk12 = 12;
     }
 
     if (self->unk48 != 0) {
         g_Player.unk44 |= 0x80;
     } else {
-        g_Player.unk44 &= 0xFF7F;
+        g_Player.unk44 &= ~0x80;
     }
     self->unk48 = 0;
 }
-#endif
 
 void func_80160E4C(Entity* self) {
     if (PLAYER.step != 24) {
@@ -358,13 +352,6 @@ void func_801623E0(Entity* entity) {
     poly->clut = (LOH(g_blinkTimer) & 1) + 0x13E;
 }
 
-/**
- * This function matches with GCC 2.6.0 + ASPSX 2.3.4
- * Aspatch jumps to the wrong instruction
- */
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162604);
-#else
 void func_80162604(Entity* entity) {
     POLY_GT4* poly;
     s16 firstPolygonIndex;
@@ -435,7 +422,6 @@ void func_80162604(Entity* entity) {
         break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162870);
 
