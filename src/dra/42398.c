@@ -837,7 +837,6 @@ void HandleTitle(void) {
         } else {
             callback = g_api.o.InitRoomEntities;
         }
-        NOP;
         callback();
         break;
     }

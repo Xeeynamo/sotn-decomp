@@ -81,7 +81,6 @@ void func_8015FAB8(Entity* entity) {
     } else {
         attack = subwpn->attack;
     }
-    NOP;
 
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;

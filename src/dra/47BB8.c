@@ -362,7 +362,6 @@ void func_800E8D54(void) {
     s32 i = 0;
 
     do {
-        NOP;
         if (pressed & button) {
             if (unk & button) {
                 repeat |= button;
