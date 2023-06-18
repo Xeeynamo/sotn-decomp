@@ -170,6 +170,32 @@ typedef struct {
     /* 0xA1 */ u8 ignoreCol;
 } ET_Merman_2;
 
+typedef struct {
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 unkAA;
+    /* 0xAC */ s16 cameraX;
+    /* 0xAE */ s16 cameraY;
+    /* 0xB0 */ s32 unkB0;
+    /* 0xB4 */ struct Entity* ent;
+} ET_Familiar;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
@@ -178,5 +204,6 @@ typedef union {
     /* 0x7C */ ET_WarpRoom warpRoom;
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
+    /* 0x7C */ ET_Familiar fam;
     /* 0x7C */ char stub[0x40];
 } Ext;
