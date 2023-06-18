@@ -208,11 +208,6 @@ s32 EntitySlograSpecialCollision(u16* unused) {
     return ret;
 }
 
-// assembler skips a NOP
-// matching in decomp.me https://decomp.me/scratch/vaRJR
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntitySlogra);
-#else
 void EntitySlogra(Entity* self) {
     Entity* newEntity;
     s32 entityOnFloor;
@@ -600,7 +595,6 @@ void EntitySlogra(Entity* self) {
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
-#endif
 
 void EntitySlograSpear(Entity* self) {
     s8* hitbox;
