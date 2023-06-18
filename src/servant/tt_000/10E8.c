@@ -451,20 +451,18 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     return SquareRoot12((diffX * diffX + diffY * diffY) << 12, diffX) >> 12;
 }
 
-// PSY-Q 3.5 match as in GCC a jump skips a 'nop'
-// has Jumptable
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174038);
-#else
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = 0x20000 | FLAG_UNK_04000000;
-        if (D_8003C704 == 0) {
-            if (g_api.func_80133940() != 0) {
-                g_api.PlaySfx(16);
-                entity->step++;
-            }
+        if (D_8003C704 != 0) {
+            D_80171090 = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        if (g_api.func_80133940() != 0) {
+            g_api.PlaySfx(16);
+            entity->step++;
         }
         break;
 
@@ -491,7 +489,7 @@ void func_80174038(Entity* entity) {
         break;
 
     case 5:
-        if ((D_8003C708 & 0x60) != 0) {
+        if ((*(s32*)&D_8003C708.flags & 0x60) != 0) {
             D_80171090 = 99;
             DestroyEntity(entity);
             return;
@@ -521,9 +519,8 @@ void func_80174038(Entity* entity) {
         return;
     }
 
-    D_80171090 = (s32)entity->step;
+    D_80171090 = entity->step;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
