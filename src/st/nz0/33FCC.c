@@ -128,10 +128,6 @@ typedef enum {
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityCloseBossRoom);
 
 // blocks that move to close slogra/gaibon room
-// assembler skips a nop | needs rodata
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityBossRoomBlock);
-#else
 void EntityBossRoomBlock(Entity* self) {
     switch (self->step) {
     case 0:
@@ -140,7 +136,7 @@ void EntityBossRoomBlock(Entity* self) {
 
     case 1:
         if (g_BossFlag & 1) {
-            self->ext.generic.unk80.modeS16.unk0 = 0x10;
+            self->ext.GS_Props.timer = 16;
             self->step++;
         }
         break;
@@ -156,7 +152,7 @@ void EntityBossRoomBlock(Entity* self) {
         if (!(g_blinkTimer & 3)) {
             g_api.PlaySfx(0x608);
         }
-        if (--self->ext.generic.unk80.modeS16.unk0) {
+        if (--self->ext.GS_Props.timer) {
             break;
         }
         self->step++;
@@ -180,7 +176,6 @@ void EntityBossRoomBlock(Entity* self) {
         break;
     }
 }
-#endif
 
 s32 EntitySlograSpecialCollision(u16* unused) {
     /**
@@ -213,11 +208,6 @@ s32 EntitySlograSpecialCollision(u16* unused) {
     return ret;
 }
 
-// assembler skips a NOP
-// matching in decomp.me https://decomp.me/scratch/vaRJR
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntitySlogra);
-#else
 void EntitySlogra(Entity* self) {
     Entity* newEntity;
     s32 entityOnFloor;
@@ -605,7 +595,6 @@ void EntitySlogra(Entity* self) {
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
-#endif
 
 void EntitySlograSpear(Entity* self) {
     s8* hitbox;
