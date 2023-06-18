@@ -20,9 +20,17 @@ jobs:
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
-      - name: Clone main repo
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          submodules: false
+      - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
           submodules: false
       - name: Clone dependencies
         uses: actions/checkout@v3
