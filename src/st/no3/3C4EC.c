@@ -97,7 +97,7 @@ void EntityUnkId53(Entity* entity) {
             return;
         }
         InitializeEntity(D_80180AD0);
-        g_Entities[1].unk7C.S8.unk0 = 1;
+        g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
         g_Player.D_80072EF4 = 0x2000;
         g_Player.D_80072EFC = 0xFF;
         player->posX.i.hi = 8;
