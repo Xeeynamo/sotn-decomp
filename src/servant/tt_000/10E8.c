@@ -682,7 +682,6 @@ s32 func_801746A0(s32 arg0) {
     }
 
     tmp = PLAYER.accelerationY;
-    NOP;
     if (tmp > 0) {
         if (!(g_Player.pl_vram_flag & 2)) {
             return 1;
@@ -693,7 +692,6 @@ s32 func_801746A0(s32 arg0) {
         return 1;
 
     tmp = PLAYER.accelerationX;
-    NOP;
     if (PLAYER.accelerationX > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
