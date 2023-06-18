@@ -30,7 +30,7 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "stwrp"
+                "dra", "ric", "stcen", "stdre", "stmad", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "stwrp", "tt_000"
             ]
         },
         {
