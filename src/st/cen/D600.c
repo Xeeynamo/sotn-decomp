@@ -884,9 +884,6 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80199450);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80199A30);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", ClutLerp);
-#else
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
     RECT bufRect;
@@ -923,7 +920,6 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
         D_8003C104[offset + i] = GetClut(bufRect.x, bufRect.y);
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8019A328);
 
