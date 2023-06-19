@@ -743,7 +743,6 @@ void func_80195714(void) {
         }
         entity = g_CurrentEntity;
     }
-    NOP;
 
     if (entity->accelerationY < 0x00004000) {
         entity->accelerationY += 0x2000;
