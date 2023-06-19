@@ -283,6 +283,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF778);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
 
+// DECOMP_ME_WIP https://decomp.me/scratch/51iIJ
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkha);
 
 void EntityGurkhaSword(Entity* self) {
