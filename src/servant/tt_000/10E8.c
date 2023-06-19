@@ -316,11 +316,6 @@ void func_80173C2C(Entity* entity) {
     DestroyEntity(entity);
 }
 
-// matching on decomp.me, jumps to a NOP
-// DECOMP_ME_WIP func_80173C64 https://decomp.me/scratch/B45wo
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80173C64);
-#else
 s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s8 new_var;
@@ -371,7 +366,6 @@ s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
     self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
     return ret;
 }
-#endif
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -687,7 +681,6 @@ s32 func_801746A0(s32 arg0) {
     }
 
     tmp = PLAYER.accelerationY;
-    NOP;
     if (tmp > 0) {
         if (!(g_Player.pl_vram_flag & 2)) {
             return 1;
@@ -698,7 +691,6 @@ s32 func_801746A0(s32 arg0) {
         return 1;
 
     tmp = PLAYER.accelerationX;
-    NOP;
     if (PLAYER.accelerationX > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
