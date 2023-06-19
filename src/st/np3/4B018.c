@@ -237,8 +237,47 @@ void func_801CF254(Entity* self) {
 }
 #endif
 
-// https://decomp.me/scratch/RYIJM Matching
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityHammerWeapon);
+void EntityHammerWeapon(Entity* self) {
+    s16 temp_s0;
+    s32 accel;
+    s32 temp_s1;
+    s16 angle;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B98);
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 10;
+        self->unk19 |= 4;
+
+    case 1:
+        angle = *(u16*)&self->ext.stub[0x20];
+        self->unk1E = angle;
+        self->unk10 = ((u32)(rsin(angle) * 0xD) >> 0xA);
+        self->unk12 = (-(rcos(angle) * 0x34) >> 0xC);
+        break;
+
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            temp_s1 = (Random() & 0x1F) + 0x10;
+            temp_s0 = (Random() * 6) + 0x900;
+            self->accelerationX = (temp_s1 * rcos(temp_s0)) / 2;
+            accel = temp_s1 * rsin(temp_s0);
+            self->unk3C = 0;
+            self->flags |= 0x80000000;
+            self->step_s++;
+            self->accelerationY = accel;
+            break;
+
+        case 1:
+            MoveEntity();
+            self->accelerationY += 0x2000;
+            func_801CDC80(&self->unk1E, 0x800, 0x20);
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF778);
 
