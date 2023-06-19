@@ -50,15 +50,15 @@ segments:
       - [0x3A7C, roomdef, g_Rooms]
       - [0x3B68, rodata]
       - [0x31EA0, rodata]
-      - [0x31ED0, rodata] # EntitySlogra .rodata, 36990
+      - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
       - [0x31F00, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, rodata]
       - [0x31FB0, rodata]
       - [0x3200C, rodata] # EntityStageNamePopup .rodata,
-      - [0x32020, .rodata, 44DCC] # EntityMerman2 .rodata, 44DCC
-      - [0x32044, rodata] # EntityMerman .rodata, 44DCC
+      - [0x32020, .rodata, 44DCC] # EntityMerman2
+      - [0x32044, .rodata, 48238] # EntityMerman
       - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C]
       - [0x320A0, .rodata, 49BC8]
@@ -72,6 +72,7 @@ segments:
       - [0x390BC, c]
       - [0x3DEF4, c]
       - [0x44DCC, c] # Merman Entities
+      - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]
