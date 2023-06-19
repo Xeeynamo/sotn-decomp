@@ -425,4 +425,3 @@ void func_80162604(Entity* entity) {
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162870);
 
 void func_80162C7C(void) {}
-
