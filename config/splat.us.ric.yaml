@@ -48,6 +48,8 @@ segments:
       - [0x1AB04, rodata]
       - [0x1AB68, .rodata, 32324]
       - [0x1AB88, rodata]
+      - [0x1ABC8, .rodata, 345EC] # func_801705EC jtbl
+      - [0x1ABF0, rodata]
       - [0x1AC60, c, 1AC60]
       - [0x1F348, c, 1F348]
       - [0x1FCD0, c, 1FCD0]
@@ -56,5 +58,6 @@ segments:
       - [0x22380, c, 22380]
       - [0x26C84, c, 26C84]
       - [0x32324, c, 32324]
+      - [0x345EC, c, 345EC]
       - [0x37B60, data]
   - [0x39A58]
