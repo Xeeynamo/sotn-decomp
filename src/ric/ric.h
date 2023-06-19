@@ -51,6 +51,8 @@ extern s16 D_80154606;
 extern u8 D_80154674[][4];
 extern SubweaponDef D_80154688[];
 extern AnimationFrame* D_80154924;
+extern s32 D_80154ED4;
+extern s32 D_80154EF8;
 extern s32 D_80155368[];
 extern AnimationFrame* D_80155394;
 extern AnimationFrame* D_8015539C;
