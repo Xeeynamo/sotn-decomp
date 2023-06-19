@@ -2,8 +2,8 @@ name: Build Saturn version
 
 on:
   push:
-    branches:
-      - master
+    # branches:
+    #   - master
     paths-ignore:
       - '*.md'
       - '**/*.md'
