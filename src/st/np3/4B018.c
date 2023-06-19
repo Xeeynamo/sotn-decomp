@@ -285,8 +285,88 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkha);
 
-// https://decomp.me/scratch/BBAHS Matching
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkhaSword);
+void EntityGurkhaSword(Entity* self) {
+    s16 angle;
+    s32 rnd;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BB0);
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->unk19 |= 4;
+        break;
+
+    case 1:
+        angle = self->ext.gurkhaSword.unk9C;
+        self->unk1E = angle;
+        self->unk10 = (u32)rsin(angle) >> 8;
+        self->unk12 = -(rcos(angle) * 16) >> 0xC;
+        if (self->ext.gurkhaSword.unk8C) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->facing == 0) {
+            self->accelerationX = -0x80000;
+        } else {
+            self->accelerationX = 0x80000;
+        }
+        self->step++;
+
+    case 3:
+        MoveEntity();
+        self->unk1E -= 0x100;
+        self->ext.gurkhaSword.unk9C = self->unk1E;
+        self->ext.gurkhaSword.unkA6 = -0xC0;
+        angle = self->unk1E;
+        self->unk10 = (u32)rsin(self->unk1E) >> 8;
+        self->unk12 = -(rcos(angle) * 16) >> 0xC;
+
+        if (self->facing != 0) {
+            self->accelerationX -= 0x4000;
+        } else {
+            self->accelerationX += 0x4000;
+        }
+
+        if ((g_blinkTimer % 16) == 0) {
+            func_801C2598(0x625);
+        }
+
+        if (ABS(self->accelerationX) == 0x80000) {
+            self->ext.gurkhaSword.unk8C = 0;
+            self->step = 1;
+        }
+        break;
+
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            rnd = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
+            self->accelerationX = (rnd * rcos(angle)) / 2;
+            self->accelerationY = rnd * rsin(angle);
+            self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
+            self->unk3C = 0;
+            self->flags |= 0x80000000;
+            self->step_s++;
+            break;
+
+        case 1:
+            MoveEntity();
+            self->accelerationY += 0x2000;
+            self->unk1E += self->ext.gurkhaSword.unkA6;
+            if (--self->ext.gurkhaSword.unk80 == 0) {
+                self->step = 0;
+                self->pfnUpdate = EntityExplosion;
+                self->subId = 0;
+                self->unk19 = 0;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0A00);
 

@@ -206,6 +206,17 @@ typedef struct {
     /* 0xA0 */ struct Entity* next;
 } ET_801CF254;
 
+typedef struct {
+    /* 0x7C */ char pad_0[0x4];
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ char pad_82[0xA];
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ char pad_8D[0xF];
+    /* 0x9C */ u16 unk9C;
+    /* 0x9E */ char pad_9E[0x8];
+    /* 0xA6 */ s16 unkA6;
+} ET_GurkhaSword;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
@@ -216,5 +227,6 @@ typedef union {
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_Familiar fam;
     /* 0x7C */ ET_801CF254 et_801CF254;
+    /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ char stub[0x40];
 } Ext;
