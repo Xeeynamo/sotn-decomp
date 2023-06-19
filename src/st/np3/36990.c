@@ -118,9 +118,6 @@ typedef enum {
     GAIBON_DYING_TURN_INTO_BONES,
 } GaibonDyingSubSteps;
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/36990", EntitySlogra);
-#else
 void EntitySlogra(Entity* self) {
     const int RetreatedInEntrance = 57;
     const int KilledInAlchLab = 132;
@@ -494,7 +491,6 @@ void EntitySlogra(Entity* self) {
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
-#endif
 
 void EntitySlograSpear(Entity* self) {
     s8* hitbox;
