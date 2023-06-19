@@ -48,7 +48,7 @@ jobs:
           mv *.bin sotn.saturn.bin
       - name: Install bchunk 7zip
         run: |
-          sudo apt-get install p7zip-full bchunk
+          sudo apt-get install p7zip-full bchunk binutils-sh-elf
       - name: Install dosemu
         run: |
           sudo apt-get install -y -o APT::Immediate-Configure=false \
@@ -57,10 +57,10 @@ jobs:
           sudo apt-get update && \
           sudo apt-get install -y dosemu2;
       - name: Prep
-        run: make -j saturn_ci_tasks
+        run: make -j build_saturn_toolchain_native
       - name: Extract asm
         run: make extract_saturn
       - name: Build saturn binaries
-        run: make build_saturn_ci
+        run: make build_saturn_native
       - name: Check saturn
-        run: make check_saturn
+        run: make check_saturn_native
