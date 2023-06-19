@@ -13,3 +13,4 @@ _D_800A7718 = 0x0607f0a0;
 _CheckEquipmentItemCount = 0x0606f448;
 _rand = 0x06032e68;
 _g_SpellDefs = 0x0607fd78;
+_D_800A7734 = 0x0607f0a0;

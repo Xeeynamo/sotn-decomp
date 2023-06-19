@@ -105,5 +105,14 @@ extern SpellDef g_SpellDefs[];
 extern int rand(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 
+// layout is different
+typedef struct Unkstruct_800A7734 {
+    /* 0x00 */ u16 unk00;
+    /* 0x02 */ char unk02[0x19];
+    u16 unk03;
+    char unk04[0x1];
+} Unkstruct_800A7734; // size = 0x20
+
+extern Unkstruct_800A7734 D_800A7734[];
 
 #endif

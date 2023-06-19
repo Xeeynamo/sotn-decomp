@@ -91,7 +91,45 @@ u8 GetEquipDamageScale(s32 equipId) {
     return D_800A4B04[g_Status.equipment[equipId]].damageScale;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F378, func_0606F378);
+// SAT: func_0606F378
+// a little different from PSX version
+s32 func_800FD6C4(s32 equipTypeFilter) {
+    s32 var_a0;
+    s32 var_v1;
+    s32 var_a1;
+    Unkstruct_800A7734 *temp;
+
+    switch (equipTypeFilter) {
+    case 0:
+        return 0xB0; // different
+    case 1:
+        var_a1 = 0;
+        break;
+    case 2:
+        var_a1 = 1;
+        break;
+    case 3:
+        var_a1 = 2;
+        break;
+    case 4:
+        var_a1 = 3;
+    default:
+        break;
+    }
+    var_a0 = 0;
+    var_v1 = 0;
+    temp = D_800A7734;
+    do {
+        // different offset accessed
+        if (D_800A7734[var_v1].unk03 == var_a1) {
+            var_a0 += 1;
+        }
+        var_v1 += 1;
+    } while (var_v1 < 0x5c); //changed from 90
+
+    return var_a0;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3D8, func_0606F3D8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
 
