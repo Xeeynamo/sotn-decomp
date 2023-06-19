@@ -37,7 +37,7 @@ jobs:
         with:
           repository: sozud/sotn-decomp-dependencies
           ref: saturn
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.DEPS_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
@@ -48,7 +48,7 @@ jobs:
           mv *.bin sotn.saturn.bin
       - name: Install bchunk 7zip
         run: |
-          sudo apt-get install p7zip-full bchunk
+          sudo apt-get install p7zip-full bchunk binutils-sh-elf
       - name: Install dosemu
         run: |
           sudo apt-get install -y -o APT::Immediate-Configure=false \
