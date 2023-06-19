@@ -1,13 +1,16 @@
 #include "servant.h"
 
-SpriteParts* D_80170040[];
-u16 D_80170448[];
-Sprite D_80170608[];
-u16 D_80170720[];
-s32 D_80171090;
-EntitySearch D_80171094[];
-Collider D_80174AD8;
-s32 D_80174D3C;
+extern SpriteParts* D_80170040[];
+extern u16 D_80170448[];
+extern s32 D_801704A8;
+extern Sprite D_80170608[];
+extern u16 D_80170720[];
+extern s32 D_80171090;
+extern EntitySearch D_80171094[];
+extern Collider D_80174AD8;
+extern Unkstruct_8011A3AC D_80174C30;
+extern point16 D_80174C3C[][16];
+extern s32 D_80174D3C;
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -202,7 +205,124 @@ void func_801718A0(Entity* entity) {
     poly->y2 = poly->y3 = poly->y0 + D_80170608[frame].height;
 }
 
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801719E0);
+void func_801719E0(Entity* self) {
+    s32 i;
+
+    if (self->ext.fam.unk80 == 0) {
+        self->ext.fam.unk8E = 0;
+        self->ext.fam.unk82 = self->subId;
+        switch (self->objectId) {
+        case 0xD1:
+            self->firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->firstPolygonIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            func_8017170C(self, 0);
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_FREE_POLYGONS | FLAG_UNK_20000;
+            func_801710E8(self, &D_801704A8);
+            self->ext.fam.unk84 = rand() % 4096;
+            self->ext.fam.unk86 = 0;
+            self->ext.fam.unk88 = 0xC;
+            self->ext.fam.unk8C = rand() % 4096;
+            self->ext.fam.unk8A = 0x20;
+            self->step++;
+            break;
+        case 0xD2:
+            self->firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->firstPolygonIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            func_8017170C(self, 0);
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_UNK_02000000 | FLAG_FREE_POLYGONS |
+                          FLAG_UNK_20000;
+            func_801710E8(self, &D_801704A8);
+            if (self->ext.fam.unk82 == 0) {
+                self->ext.fam.ent = &PLAYER;
+            } else {
+                self->ext.fam.ent = &g_Entities[3 + self->ext.fam.unk82];
+            }
+            self->ext.fam.cameraX = g_Camera.posX.i.hi;
+            self->ext.fam.cameraY = g_Camera.posY.i.hi;
+
+            if (self->ext.fam.unk82 == 0) {
+                for (i = 0; i < 16; i++) {
+                    D_80174C3C[self->ext.fam.unk82][i].x =
+                        self->ext.fam.ent->posX.i.hi + self->ext.fam.cameraX;
+                    D_80174C3C[self->ext.fam.unk82][i].y =
+                        self->ext.fam.ent->posY.i.hi + self->ext.fam.cameraY;
+                }
+            } else {
+                for (i = 0; i < 16; i++) {
+                    if (PLAYER.facing) {
+                        D_80174C3C[self->ext.fam.unk82][i].x =
+                            PLAYER.posX.i.hi +
+                            ((self->ext.fam.unk82 + 1) * 0x10) +
+                            self->ext.fam.cameraX;
+
+                    } else {
+                        D_80174C3C[self->ext.fam.unk82][i].x =
+                            PLAYER.posX.i.hi -
+                            ((self->ext.fam.unk82 + 1) * 0x10) +
+                            self->ext.fam.cameraX;
+                    }
+                    D_80174C3C[self->ext.fam.unk82][i].y =
+                        PLAYER.posY.i.hi + self->ext.fam.cameraY;
+                }
+                self->posX.i.hi = PLAYER.facing ? 0x180 : -0x80;
+                self->posY.i.hi = rand() % 256;
+            }
+            self->ext.fam.unkA8 = 0;
+            self->step++;
+            break;
+        }
+    } else {
+        self->ext.fam.unk8E = 0;
+        switch (self->objectId) {
+        case 0xD1:
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_FREE_POLYGONS | FLAG_UNK_20000;
+            func_801710E8(self, &D_801704A8);
+            self->ext.fam.unk8C = rand() % 4096;
+            self->step++;
+            break;
+        case 0xD2:
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_UNK_02000000 | FLAG_FREE_POLYGONS |
+                          FLAG_UNK_20000;
+            func_801710E8(self, &D_801704A8);
+            if (self->ext.fam.unk82 == 0) {
+                self->ext.fam.ent = &PLAYER;
+            } else {
+                self->ext.fam.ent = &g_Entities[3 + self->ext.fam.unk82];
+            }
+            self->ext.fam.cameraX = g_Camera.posX.i.hi;
+            self->ext.fam.cameraY = g_Camera.posY.i.hi;
+
+            for (i = 0; i < 16; i++) {
+                if (PLAYER.facing) {
+                    D_80174C3C[self->ext.fam.unk82][i].x =
+                        PLAYER.posX.i.hi + ((self->ext.fam.unk82 + 1) * 0x10) +
+                        self->ext.fam.cameraX;
+                } else {
+                    D_80174C3C[self->ext.fam.unk82][i].x =
+                        PLAYER.posX.i.hi - ((self->ext.fam.unk82 + 1) * 0x10) +
+                        self->ext.fam.cameraX;
+                }
+                D_80174C3C[self->ext.fam.unk82][i].y =
+                    PLAYER.posY.i.hi + self->ext.fam.cameraY;
+            }
+            self->ext.fam.unkA8 = 0;
+            self->step++;
+            break;
+        }
+    }
+    self->ext.fam.unk80 = self->objectId;
+    g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
+}
 
 void func_80171ED4(s32 arg0) {
     RECT rect;
@@ -451,19 +571,18 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     return SquareRoot12((diffX * diffX + diffY * diffY) << 12, diffX) >> 12;
 }
 
-// PSY-Q 3.5 match as in GCC a jump skips a 'nop'
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174038);
-#else
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = 0x20000 | FLAG_UNK_04000000;
-        if (D_8003C704 == 0) {
-            if (g_api.func_80133940() != 0) {
-                g_api.PlaySfx(16);
-                entity->step++;
-            }
+        if (D_8003C704 != 0) {
+            D_80171090 = 99;
+            DestroyEntity(entity);
+            return;
+        }
+        if (g_api.func_80133940() != 0) {
+            g_api.PlaySfx(16);
+            entity->step++;
         }
         break;
 
@@ -490,7 +609,7 @@ void func_80174038(Entity* entity) {
         break;
 
     case 5:
-        if ((D_8003C708 & 0x60) != 0) {
+        if ((*(s32*)&D_8003C708.flags & 0x60) != 0) {
             D_80171090 = 99;
             DestroyEntity(entity);
             return;
@@ -520,9 +639,8 @@ void func_80174038(Entity* entity) {
         return;
     }
 
-    D_80171090 = (s32)entity->step;
+    D_80171090 = entity->step;
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
