@@ -97,7 +97,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 var_a0;
     s32 var_v1;
     s32 var_a1;
-    Unkstruct_800A7734 *temp;
+    Unkstruct_800A7734* temp;
 
     switch (equipTypeFilter) {
     case 0:
@@ -125,7 +125,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
             var_a0 += 1;
         }
         var_v1 += 1;
-    } while (var_v1 < 0x5c); //changed from 90
+    } while (var_v1 < 0x5c); // changed from 90
 
     return var_a0;
 }
