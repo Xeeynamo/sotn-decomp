@@ -17,7 +17,7 @@ jobs:
   build-and-test-saturn:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
-    if: github.repository == 'Xeeynamo/sotn-decomp'
+    # if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repo (PR)
@@ -35,9 +35,9 @@ jobs:
       - name: Clone dependencies
         uses: actions/checkout@v3
         with:
-          repository: xeeynamo/sotn-decomp-dependencies
+          repository: sozud/sotn-decomp-dependencies
           ref: saturn
-          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
@@ -57,10 +57,10 @@ jobs:
           sudo apt-get update && \
           sudo apt-get install -y dosemu2;
       - name: Prep
-        run: make -j saturn_ci_tasks
+        run: make -j build_saturn_toolchain_native
       - name: Extract asm
         run: make extract_saturn
       - name: Build saturn binaries
-        run: make build_saturn_ci
+        run: make build_saturn_native
       - name: Check saturn
-        run: make check_saturn
+        run: make check_saturn_native
