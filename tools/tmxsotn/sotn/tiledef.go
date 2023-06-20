@@ -13,14 +13,42 @@ type TileDefinition struct {
 	Collisions []byte
 }
 
-type tiledefConfig struct {
+type tiledefConfig_legacy struct {
 	GfxPage   string `json:"gfxPage"`
 	GfxIndex  string `json:"gfxIndex"`
 	Clut      string `json:"clut"`
 	Collision string `json:"collision"`
 }
 
+type tiledefConfig struct {
+	GfxPage   []byte `json:"gfxPage"`
+	GfxIndex  []byte `json:"gfxIndex"`
+	Clut      []byte `json:"clut"`
+	Collision []byte `json:"collision"`
+}
+
 func readTiledef(fileName string) (TileDefinition, error) {
+	tiledef := TileDefinition{}
+	jsonData, err := os.ReadFile(fileName)
+	if err != nil {
+		return tiledef, err
+	}
+
+	cfg := tiledefConfig{}
+	err = json.Unmarshal(jsonData, &cfg)
+	if err != nil {
+		return tiledef, err
+	}
+
+	return TileDefinition{
+		Tiles:      cfg.GfxIndex,
+		Pages:      cfg.GfxPage,
+		Palettes:   cfg.Clut,
+		Collisions: cfg.Collision,
+	}, err
+}
+
+func readTiledef_legacy(fileName string) (TileDefinition, error) {
 	tiledef := TileDefinition{}
 	basePath := path.Dir(fileName)
 
@@ -29,7 +57,7 @@ func readTiledef(fileName string) (TileDefinition, error) {
 		return tiledef, err
 	}
 
-	cfg := tiledefConfig{}
+	cfg := tiledefConfig_legacy{}
 	err = json.Unmarshal(jsonData, &cfg)
 	if err != nil {
 		return tiledef, err

@@ -41,6 +41,7 @@ func MakeStage(name string, roomFilePath string, gfxPath string, draPath string)
 	basePath := path.Dir(roomFilePath)
 	makeLayerDefinition := func(layer layerDef) *LayerDefinition {
 		return &LayerDefinition{
+			Symbol:  layer.DataFilePath,
 			Layout:  tiledata[layer.DataFilePath],
 			TileDef: tiledefs[layer.TiledefFilePath],
 			Rect: Rect{
@@ -85,7 +86,7 @@ func MakeStage(name string, roomFilePath string, gfxPath string, draPath string)
 			if data, err = os.ReadFile(filePath); err != nil {
 				return Stage{}, err
 			}
-			tiledata[room.Fg.DataFilePath] = readLayout(data, 0)
+			tiledata[room.Fg.DataFilePath] = parseLayout(data)
 		}
 		rooms[i].Fg = makeLayerDefinition(room.Fg)
 
@@ -102,7 +103,7 @@ func MakeStage(name string, roomFilePath string, gfxPath string, draPath string)
 				if data, err = os.ReadFile(filePath); err != nil {
 					return Stage{}, err
 				}
-				tiledata[room.Bg.DataFilePath] = readLayout(data, 0)
+				tiledata[room.Bg.DataFilePath] = parseLayout(data)
 			}
 			rooms[i].Bg = makeLayerDefinition(room.Bg)
 		}

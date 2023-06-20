@@ -1,6 +1,7 @@
 package sotn
 
 type LayerDefinition struct {
+	Symbol        string
 	Layout        []uint16
 	TileDef       TileDefinition
 	Rect          Rect
@@ -34,17 +35,12 @@ func (l *LayerDefinition) Height() int {
 	return l.Rect.Height()
 }
 
-func readLayout(data []byte, offset int) []uint16 {
-	w := 16
-	h := 16
-	count := w * h
-	layout := make([]uint16, count)
+func parseLayout(data []byte) []uint16 {
+	result := make([]uint16, len(data)/2)
 
-	for i := 0; i < count; i++ {
-		ch1 := data[offset+i*2+0]
-		ch2 := data[offset+i*2+1]
-		layout[i] = uint16(ch1) | (uint16(ch2) << 8)
+	for i := 0; i < len(result); i++ {
+		result[i] = uint16(data[i*2]) | uint16(data[i*2+1])<<8
 	}
 
-	return layout
+	return result
 }

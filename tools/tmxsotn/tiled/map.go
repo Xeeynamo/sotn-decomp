@@ -41,6 +41,7 @@ type Layer struct {
 	Height     int        `xml:"height,attr"`
 	OffsetX    float32    `xml:"offsetx,attr"`
 	OffsetY    float32    `xml:"offsety,attr"`
+	Visible    int        `xml:"visible,attr"`
 	Properties []Property `xml:"properties>property"`
 	Data       LayerData  `xml:"data"`
 }

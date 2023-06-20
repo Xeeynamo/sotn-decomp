@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/xeeynamo/sotn-decomp/tools/tmxsotn/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/tmxsotn/tiled"
@@ -19,13 +20,22 @@ type SotnStage struct {
 }
 
 func main() {
-	err := exportOvlToTmx("wrp")
+	err := exportOvlToTmx("nz0", false)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func exportOvlToTmx(name string) error {
+func isCollisionLayer(layer *tiled.Layer) bool {
+	for _, p := range layer.Properties {
+		if p.Name == "IsCollisionLayer" && p.Value == "1" {
+			return true
+		}
+	}
+	return false
+}
+
+func exportOvlToTmx(name string, showCollisionLayer bool) error {
 	stage, err := sotn.MakeStage(
 		name,
 		fmt.Sprintf("../../assets/st/%s/rooms.layers.json", name),
@@ -36,6 +46,13 @@ func exportOvlToTmx(name string) error {
 	}
 
 	m, err := makeTmx(&stage)
+	for i := 0; i < len(m.Layers); i++ {
+		layer := &m.Layers[i]
+		if showCollisionLayer && isCollisionLayer(layer) {
+			layer.Visible = 1
+		}
+	}
+
 	if err != nil {
 		return err
 	}
@@ -91,6 +108,10 @@ func makeTmx(stage *sotn.Stage) (tiled.Map, error) {
 			Height:  room.Fg.Height() * tileSize,
 			OffsetX: float32(room.Fg.Rect.Left) * 256,
 			OffsetY: float32(room.Fg.Rect.Top) * 256,
+			Visible: 0,
+			Properties: []tiled.Property{
+				tiled.GetIntProperty("IsCollisionLayer", int(1)),
+			},
 			Data: tiled.LayerData{
 				Encoding: "csv",
 				Content:  getLayerCollisionContentAsCsv(room.Fg.Layout, 0x10001, room.Fg.TileDef),
@@ -101,21 +122,27 @@ func makeTmx(stage *sotn.Stage) (tiled.Map, error) {
 	return m, nil
 }
 
-func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
+func appendLayer(m *tiled.Map, layer *sotn.LayerDefinition, name string) {
+	expectedLayoutLen := layer.Width() * tileSize * layer.Height() * tileSize
+	if len(layer.Layout) != expectedLayoutLen {
+		fmt.Fprintf(os.Stderr, "%s (%s) unexpected len (expected: %X, actual: %X)\n", name, layer.Symbol, expectedLayoutLen*2, len(layer.Layout)*2)
+	}
+
 	m.Layers = append(m.Layers, tiled.Layer{
-		Name:    name,
-		Width:   layerIn.Width() * tileSize,
-		Height:  layerIn.Height() * tileSize,
-		OffsetX: float32(layerIn.Rect.Left) * 256,
-		OffsetY: float32(layerIn.Rect.Top) * 256,
+		Name:    fmt.Sprintf("%s (%s)", name, layer.Symbol),
+		Width:   layer.Width() * tileSize,
+		Height:  layer.Height() * tileSize,
+		OffsetX: float32(layer.Rect.Left) * 256,
+		OffsetY: float32(layer.Rect.Top) * 256,
+		Visible: 1,
 		Properties: []tiled.Property{
-			tiled.GetIntProperty("ScrollMode", int(layerIn.ScrollMode)),
-			tiled.GetIntProperty("ZPriority", int(layerIn.ZPriority)),
-			tiled.GetIntProperty("unkE", int(layerIn.UnkE)),
+			tiled.GetIntProperty("ScrollMode", int(layer.ScrollMode)),
+			tiled.GetIntProperty("ZPriority", int(layer.ZPriority)),
+			tiled.GetIntProperty("unkE", int(layer.UnkE)),
 		},
 		Data: tiled.LayerData{
 			Encoding: "csv",
-			Content:  getLayerContentAsCsv(layerIn.Layout, 1, layerIn.TileDef),
+			Content:  getLayerContentAsCsv(layer.Layout, 1, layer.TileDef),
 		},
 	})
 }
@@ -127,7 +154,7 @@ func getLayerContentAsCsv(data []uint16, base int, tileDef sotn.TileDefinition) 
 
 	content := ""
 	for _, tid := range data {
-		id := base + int(tileDef.Tiles[tid]) | (int(tileDef.Pages[tid]) << 8)
+		id := base + int(tileDef.Tiles[tid]) | (int(tileDef.Pages[tid]) << 10)
 		//id |= (int(tileDef.Palettes[tid]) << 16) // palette support temporarily removed
 		content += fmt.Sprintf("%d,", id)
 	}
