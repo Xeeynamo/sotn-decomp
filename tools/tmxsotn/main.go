@@ -9,90 +9,52 @@ import (
 
 const tileSize = 16
 
+type SotnStage struct {
+	Name      string
+	Path      string
+	GfxPath   string
+	DraBin    string
+	TileDef   string
+	LayoutBin string
+}
+
 func main() {
-	err := writeTmxFromDecomp(
-		"wrp",
-		"../../assets/out",
-		"../../assets/dra",
-		"../../assets/st",
-		"../../assets/st/wrp",
-		"../../assets/st/wrp/D_80186D78.tiledef.json",
-		"../../assets/st/wrp/D_80182368.tilelayout.bin",
-	)
-	// err := writeTmxFromBin(
-	// 	"../../iso/ST/WRP/WRP.BIN",
-	// 	"../../iso/ST/WRP/F_WRP.BIN",
-	// 	"wrp",
-	// )
+	err := exportOvlToTmx("wrp")
 	if err != nil {
 		panic(err)
 	}
 }
 
-func writeTmxFromDecomp(
-	name string,
-	outPath string,
-	draPath string,
-	gfxPath string,
-	stagePath string,
-	tiledefFileName string,
-	layoutFileName string) error {
-
-	tiledef, err := sotn.ReadTileDefinitionFromJson(stagePath, tiledefFileName)
+func exportOvlToTmx(name string) error {
+	stage, err := sotn.MakeStage(
+		name,
+		fmt.Sprintf("../../assets/st/%s/rooms.layers.json", name),
+		"../../assets/st",
+		"../../assets/dra")
 	if err != nil {
 		return err
 	}
 
-	tilemap, err := sotn.ReadLayout(layoutFileName)
+	m, err := makeTmx(&stage)
 	if err != nil {
 		return err
 	}
 
-	layer := sotn.LayerDefinition{
-		TileDef: tiledef,
-		Layout:  tilemap,
-		Rect: sotn.Rect{
-			Left:   0,
-			Top:    0,
-			Right:  0,
-			Bottom: 0,
-		},
-		ScrollMode: 1,
-		ZPriority:  0x60,
-		UnkE:       0,
-	}
-	bucket := sotn.LayerBucket{
-		Layers: make([]sotn.LayerDefinition, 0),
-	}
-	bucket.Layers = append(bucket.Layers, layer)
-
-	m, err := makeTmx(name, gfxPath, bucket, bucket.Layers[0])
-	if err != nil {
-		return err
-	}
-	return m.EncodeToFile(fmt.Sprintf("%s.tmx", name))
+	return m.EncodeToFile(fmt.Sprintf("%s.tmx", stage.Name))
 }
 
-func makeTmx(
-	name string,
-	gfxPath string,
-	bucket sotn.LayerBucket,
-	mainLayer sotn.LayerDefinition) (tiled.Map, error) {
+func makeTmx(stage *sotn.Stage) (tiled.Map, error) {
 	m := tiled.Map{
 		Version:     "1.0",
 		Orientation: "orthogonal",
 		RenderOrder: "right-down",
-		Width:       mainLayer.Width() * 16,
-		Height:      mainLayer.Height() * 16,
 		TileWidth:   tileSize,
 		TileHeight:  tileSize,
 		Properties:  []tiled.Property{},
 		Layers:      make([]tiled.Layer, 0),
 	}
 
-	appendLayer(&m, &mainLayer, name)
-
-	gfxTilesets, err := sotn.GetStageTileset(name, gfxPath)
+	gfxTilesets, err := sotn.GetStageTileset(stage.Name, stage.GfxPath)
 	if err != nil {
 		return m, err
 	}
@@ -102,7 +64,7 @@ func makeTmx(
 		clut := 0
 		m.Tilesets[i] = tiled.Tileset{
 			FirstGID:   uint32(1 | (i << 10) | (clut << 18)),
-			Name:       fmt.Sprintf("%s %d", name, i),
+			Name:       fmt.Sprintf("%s %d", stage.Name, i),
 			TileWidth:  tileSize,
 			TileHeight: tileSize,
 			Image: tiled.Image{
@@ -110,14 +72,33 @@ func makeTmx(
 			},
 		}
 	}
+	m.Tilesets = append(m.Tilesets, tiled.Tileset{
+		FirstGID:   0x10001,
+		Name:       "col",
+		TileWidth:  16,
+		TileHeight: 16,
+		Image: tiled.Image{
+			Transparency: "#FF00FF",
+			Source:       "collisions.png",
+		},
+	})
+
+	for i, room := range stage.Rooms {
+		appendLayer(&m, room.Fg, fmt.Sprintf("room %d fg", i))
+		m.Layers = append(m.Layers, tiled.Layer{
+			Name:    fmt.Sprintf("room %d col", i),
+			Width:   room.Fg.Width() * tileSize,
+			Height:  room.Fg.Height() * tileSize,
+			OffsetX: float32(room.Fg.Rect.Left) * 256,
+			OffsetY: float32(room.Fg.Rect.Top) * 256,
+			Data: tiled.LayerData{
+				Encoding: "csv",
+				Content:  getLayerCollisionContentAsCsv(room.Fg.Layout, 0x10001, room.Fg.TileDef),
+			},
+		})
+	}
 
 	return m, nil
-}
-
-func appendRoom(m *tiled.Map, layers *sotn.LayerBucket, roomIdx int) {
-	room := layers.Rooms[roomIdx]
-	appendLayer(m, &layers.Layers[room.Background], fmt.Sprintf("room %d bg", roomIdx))
-	appendLayer(m, &layers.Layers[room.Foreground], fmt.Sprintf("room %d fg", roomIdx))
 }
 
 func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
@@ -134,20 +115,35 @@ func appendLayer(m *tiled.Map, layerIn *sotn.LayerDefinition, name string) {
 		},
 		Data: tiled.LayerData{
 			Encoding: "csv",
-			Content:  getLayerContentAsCsv(layerIn.Layout, layerIn.TileDef),
+			Content:  getLayerContentAsCsv(layerIn.Layout, 1, layerIn.TileDef),
 		},
 	})
 }
 
-func getLayerContentAsCsv(data []uint16, tileDef sotn.TileDefinition) string {
+func getLayerContentAsCsv(data []uint16, base int, tileDef sotn.TileDefinition) string {
 	if len(data) == 0 {
 		return ""
 	}
 
 	content := ""
 	for _, tid := range data {
-		id := 1 + int(tileDef.Tiles[tid]) | (int(tileDef.Pages[tid]) << 8)
+		id := base + int(tileDef.Tiles[tid]) | (int(tileDef.Pages[tid]) << 8)
 		//id |= (int(tileDef.Palettes[tid]) << 16) // palette support temporarily removed
+		content += fmt.Sprintf("%d,", id)
+	}
+
+	// remove last ',' character
+	return content[:len(content)-1]
+}
+
+func getLayerCollisionContentAsCsv(data []uint16, base int, tileDef sotn.TileDefinition) string {
+	if len(data) == 0 {
+		return ""
+	}
+
+	content := ""
+	for _, tid := range data {
+		id := base + int(tileDef.Collisions[tid])
 		content += fmt.Sprintf("%d,", id)
 	}
 

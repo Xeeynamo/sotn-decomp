@@ -29,9 +29,10 @@ type Tileset struct {
 }
 
 type Image struct {
-	Source string `xml:"source,attr"`
-	Width  int    `xml:"width,attr"`
-	Height int    `xml:"height,attr"`
+	Source       string `xml:"source,attr"`
+	Width        int    `xml:"width,attr"`
+	Height       int    `xml:"height,attr"`
+	Transparency string `xml:"trans,attr"`
 }
 
 type Layer struct {

@@ -1,26 +1,30 @@
 package sotn
 
-import (
-	"encoding/binary"
-)
-
 type LayerDefinition struct {
-	Layout     []uint16
-	TileDef    TileDefinition
-	Rect       Rect
-	ScrollMode uint8
-	ZPriority  uint16
-	UnkE       uint16
+	Layout        []uint16
+	TileDef       TileDefinition
+	Rect          Rect
+	ScrollMode    uint8
+	ZPriority     uint16
+	IsSaveRoom    bool
+	IsLoadingRoom bool
+	UnkE          byte
+	UnkF          byte
 }
 
-type LayerBucket struct {
-	Layers []LayerDefinition
-	Rooms  []RoomLayers
-}
-
-type RoomLayers struct {
-	Foreground int
-	Background int
+type layerDef struct {
+	DataFilePath    string `json:"data"`
+	TiledefFilePath string `json:"tiledef"`
+	Left            int    `json:"left"`
+	Top             int    `json:"top"`
+	Right           int    `json:"right"`
+	Bottom          int    `json:"bottom"`
+	ScrollMode      int    `json:"scrollMode"`
+	IsSaveRoom      bool   `json:"isSaveRoom"`
+	IsLoadingRoom   bool   `json:"isLoadingRoom"`
+	ZPriority       int    `json:"zPriority"`
+	UnkE            int    `json:"unkE"`
+	UnkF            int    `json:"unkF"`
 }
 
 func (l *LayerDefinition) Width() int {
@@ -30,63 +34,7 @@ func (l *LayerDefinition) Height() int {
 	return l.Rect.Height()
 }
 
-func readLayerDefinitions(data []byte, offset int, nRooms int) LayerBucket {
-	bucket := LayerBucket{
-		Layers: make([]LayerDefinition, 0),
-		Rooms:  make([]RoomLayers, 0),
-	}
-
-	offsets := make(map[int]int, 0)
-	for i := 0; i < nRooms; i++ {
-		offBg := asStageOffset(data, offset+i*4+4)
-		bgIdx, found := offsets[offBg]
-		if !found {
-			bgIdx = len(bucket.Layers)
-			bucket.Layers = append(bucket.Layers, readLayerDefinition(data, offBg))
-		}
-
-		offFg := asStageOffset(data, offset+i*4+0)
-		fgIdx, found := offsets[offFg]
-		if !found {
-			fgIdx = len(bucket.Layers)
-			bucket.Layers = append(bucket.Layers, readLayerDefinition(data, offFg))
-		}
-
-		bucket.Rooms = append(bucket.Rooms, RoomLayers{
-			Foreground: fgIdx,
-			Background: bgIdx,
-		})
-	}
-
-	return bucket
-}
-
-func readLayerDefinition(data []byte, offset int) LayerDefinition {
-	offLayout := asStageOffset(data, offset+0)
-	offTileDef := asStageOffset(data, offset+4)
-	rectData := binary.LittleEndian.Uint32(data[offset+8:])
-	if offLayout == 0 || offTileDef == 0 || rectData == 0 {
-		return LayerDefinition{}
-	}
-
-	rect := Rect{
-		Left:   int((rectData >> 0) & 63),
-		Top:    int((rectData >> 6) & 63),
-		Right:  int((rectData >> 12) & 63),
-		Bottom: int((rectData >> 18) & 63),
-	}
-
-	return LayerDefinition{
-		Layout:     readLayout(data, offLayout, rect),
-		TileDef:    readTileDefinition(data, offTileDef),
-		Rect:       rect,
-		ScrollMode: uint8(rectData >> 24),
-		ZPriority:  binary.LittleEndian.Uint16(data[offset+12:]),
-		UnkE:       binary.LittleEndian.Uint16(data[offset+14:]),
-	}
-}
-
-func readLayout(data []byte, offset int, rect Rect) []uint16 {
+func readLayout(data []byte, offset int) []uint16 {
 	w := 16
 	h := 16
 	count := w * h
