@@ -199,7 +199,17 @@ s32 func_800FDE00(void) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC60, func_0606FC60);
+
+// SAT: func_0606FC60
+// sh2 compiler is more literal?
+bool func_800FE3A8(s32 arg0) {
+    if ((g_Status.relics[arg0] & 2) != 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC80, func_0606FC80);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FE60, func_0606FE60);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FFA0, func_0606FFA0);
