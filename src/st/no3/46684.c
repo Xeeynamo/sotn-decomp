@@ -606,7 +606,7 @@ void EntityUnkId15(Entity* arg0) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C9080);
 
-bool func_801C92B0(point16* unk) {
+bool func_801C92B0(Point16* unk) {
     Collider res;
 
     FallEntity();
