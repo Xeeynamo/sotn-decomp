@@ -187,7 +187,16 @@ bool func_800FDC94(s32 arg0) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F884, func_0606F884);
+
+// SAT: func_0606F884
+// no return value on PSX?
+s32 func_800FDE00(void) {
+    D_80137960 = 0;
+    D_80137964 = 0;
+    D_80137968 = 0;
+    return 0;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC60, func_0606FC60);

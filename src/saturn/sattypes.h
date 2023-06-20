@@ -129,4 +129,8 @@ typedef struct Unkstruct_800A7734 {
 
 extern Unkstruct_800A7734 D_800A7734[];
 
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
+
 #endif
