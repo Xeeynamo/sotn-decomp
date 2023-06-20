@@ -212,16 +212,43 @@ bool func_800FE3A8(s32 arg0) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC80, func_0606FC80);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FE60, func_0606FE60);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FFA0, func_0606FFA0);
+
+// SAT: func_0606FFA0
+bool HasEnoughMp(s32 mpCount, bool subtractMp) {
+    if (!(mpCount > g_Status.mp)) { // condition swapped
+        if (subtractMp != 0) {
+            g_Status.mp -= mpCount;
+        }
+        return false;
+    }
+    return true;
+}
 
 extern s32 DAT_06086380;
+// PSX: func_800FE8F0
 void func_0606FFC8(void) {
     if (DAT_06086380 == 0) {
         DAT_06086380 = 0x40;
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FFE4, func_0606FFE4);
+// SAT: func_0606FFE4
+void AddHearts(s32 value) {
+    Entity* temp;
+    if (g_Status.hearts < g_Status.heartsMax) {
+        g_Status.hearts += value;
+        if ((g_Status.hearts > g_Status.heartsMax)) { // swapped
+            g_Status.hearts = g_Status.heartsMax;
+        }
+        temp = g_Entities;
+        g_api.func_8011AAFC(temp, 99, 0); // g_api is new
+        PlaySfx(NA_SE_PL_COLLECT_HEART);
+    }
+}
+
+const u16 pad_06070038 = 0xCCCC;
+const u16 pad_0607003A = 0xCCCD;
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607003C, func_0607003C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60703DC, func_060703DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070410, func_06070410);

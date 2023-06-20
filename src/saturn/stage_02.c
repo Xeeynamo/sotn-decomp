@@ -76,37 +76,6 @@ INCLUDE_ASM("asm/saturn/stage_02/data", d60E32DC, d_060E32DC);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60E47A4, d_060E47A4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4908, func_060E4908);
 
-typedef struct Entity {
-    s16 temp;
-    s16 temp3;
-    s16 posX;
-    s16 temp2;
-    s16 posY;
-} Entity;
-
-#define ABS(x) ((x) < 0 ? -(x) : (x))
-
-typedef enum {
-    PLAYER_CHARACTER,
-    UNK_ENTITY_1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
-    UNK_ENTITY_4,
-    UNK_ENTITY_5,
-    UNK_ENTITY_6,
-    UNK_ENTITY_7,
-    UNK_ENTITY_8,
-    UNK_ENTITY_10 = 0x10,
-    UNK_ENTITY_13 = 0x13,
-    UNK_ENTITY_20 = 0x20,
-    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
-    UNK_ENTITY_100 = 0x100
-} EntityTypes;
-
-#define TOTAL_ENTITY_COUNT 256
-#define PLAYER g_Entities[PLAYER_CHARACTER]
-extern Entity g_Entities[TOTAL_ENTITY_COUNT];
-
 // SAT func_060E4F78
 // PSX func_801BBC3C
 // Different from PSX version but same idea

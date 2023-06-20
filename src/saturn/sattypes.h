@@ -10,6 +10,47 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
+// entity layout is different somehow
+typedef struct Entity {
+    s16 temp;
+    s16 pad1;
+    s16 posX;
+    s16 pad3;
+    s16 posY;
+    s8 pad[0x25];
+    u16 subId;
+} Entity;
+
+typedef struct {
+    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+} GameApi; /* size=0x140 */
+extern GameApi g_api;
+void PlaySfx(s16 sfxId);
+#define NA_SE_PL_COLLECT_HEART 0x67A
+
+#define ABS(x) ((x) < 0 ? -(x) : (x))
+
+typedef enum {
+    PLAYER_CHARACTER,
+    UNK_ENTITY_1,
+    UNK_ENTITY_2,
+    UNK_ENTITY_3,
+    UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
+    UNK_ENTITY_10 = 0x10,
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
+    UNK_ENTITY_100 = 0x100
+} EntityTypes;
+
+#define TOTAL_ENTITY_COUNT 256
+#define PLAYER g_Entities[PLAYER_CHARACTER]
+extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+
 typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
@@ -28,7 +69,8 @@ typedef struct {
     u8 pad2[0x4E];
     s32 hp;
     s32 hpMax;
-    u8 pad8[6];
+    s32 hearts;
+    s32 heartsMax;
     s32 mp;
     u8 pad[35];
     s32 statsTotal[4];
