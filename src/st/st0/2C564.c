@@ -28,15 +28,15 @@ void EntityDracula(Entity* self) {
     index = 1; // !FAKE
 
     if (self->unk48 == 1) {
-        g_api.PlaySfx(0x85B);
+        g_api.PlaySfx(NA_SE_V0_DR_HURT_2);
     }
 
     if (self->unk48 == 2) {
-        g_api.PlaySfx(0x85C);
+        g_api.PlaySfx(NA_SE_V0_DR_HURT_3);
     }
 
     if (self->unk48 == 3) {
-        g_api.PlaySfx(0x85D);
+        g_api.PlaySfx(NA_SE_V0_DR_HURT_4);
     }
 
     switch (self->step) {
@@ -122,7 +122,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk9C =
                 func_801ABBBC(self->ext.dracula.unk9C, self);
             if (self->ext.dracula.unkA0 != 0) {
-                g_api.PlaySfx(0x850);
+                g_api.PlaySfx(NA_SE_VO_DR_TAUNT_2);
                 self->animCurFrame = 0;
                 self->ext.dracula.unkA0 = 0;
             }
@@ -157,7 +157,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk9C =
                 func_801ABBBC(self->ext.dracula.unk9C, self);
             if (self->ext.dracula.unkA0 != 0) {
-                g_api.PlaySfx(0x84F);
+                g_api.PlaySfx(NA_SE_VO_DR_TAUNT_1);
                 self->animCurFrame = 1;
                 self->facing = (func_801B4C78() & 1) ^ 1;
                 self->ext.dracula.unkA0 = 0;
@@ -187,7 +187,7 @@ void EntityDracula(Entity* self) {
                 self[1].animFrameDuration = 0;
                 self[1].animFrameIdx = 0;
                 func_801B57B4(1);
-                g_api.PlaySfx(0x853);
+                g_api.PlaySfx(NA_SE_V0_DR_HURT_1);
             }
             break;
 
@@ -229,8 +229,8 @@ void EntityDracula(Entity* self) {
             if (AnimateEntity(D_80180934, self) == 0) {
                 func_801B57B4(1);
                 self->ext.dracula.unk8C = 2;
-                g_api.PlaySfx(0x660);
-                g_api.PlaySfx(0x855);
+                g_api.PlaySfx(NA_SE_EN_DR_FIREBALL);
+                g_api.PlaySfx(NA_SE_V0_DR_HERE_IS_TRUE_POWER);
             }
             break;
 
@@ -280,7 +280,7 @@ void EntityDracula(Entity* self) {
                 prim->blendMode = 8;
                 prim = prim->next;
             }
-            g_api.PlaySfx(0x858);
+            g_api.PlaySfx(NA_SE_V0_DR_PLAYTIME_IS_OVER);
             self->step_s++;
 
         case 1:
@@ -296,7 +296,7 @@ void EntityDracula(Entity* self) {
 
         case 2:
             if (--self->ext.dracula.unk8C == 0) {
-                g_api.PlaySfx(0x857);
+                g_api.PlaySfx(NA_SE_V0_DR_GRANT_ME_POWER);
                 self->step_s++;
             }
             break;
@@ -478,7 +478,6 @@ void EntityDracula(Entity* self) {
     }
 }
 
-extern u16 D_801805E0[];
 void EntityDraculaBody(Entity* entity) {
     if (g_isDraculaFirstFormDefeated) {
         DestroyEntity(entity);
