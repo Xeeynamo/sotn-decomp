@@ -134,7 +134,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 // same as PSX but better match?
 u8* func_800FD744(s32 equipTypeFilter) {
     if (equipTypeFilter == 0) {
-         return g_Status.equipHandOrder;
+        return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
