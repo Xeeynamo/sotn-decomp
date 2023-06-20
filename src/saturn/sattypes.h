@@ -27,12 +27,19 @@ typedef struct {
     u8 pad2[0x4E];
     s32 hp;
     s32 hpMax;
-    u8 pad[45];
+    u8 pad8[6];
+    s32 mp;
+    u8 pad[35];
     s32 statsTotal[4];
     u8 pad3[0x18];
     u32 equipment[7];
 } PlayerStatus;
 
+typedef struct {
+    char pad_0[0x1B];
+    s8 unk1C;
+} Unkstruct_800A841C;
+extern Unkstruct_800A841C D_800A841C[]; // related to player MP
 
 extern PlayerStatus g_Status;
 

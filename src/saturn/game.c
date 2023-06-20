@@ -157,7 +157,9 @@ const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
     }
 }
 
+// CheckEquipmentItemCount
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
 
 // SAT: func_0606F59C
@@ -170,7 +172,19 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F760, func_0606F760);
+
+// SAT: func_0606F760
+bool func_800FDC94(s32 arg0) {
+    u8 temp = D_800A841C[arg0].unk1C;
+
+    if (g_Status.mp < temp) {
+        return false;
+    } else {
+        g_Status.mp -= temp;
+        return true;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F884, func_0606F884);
