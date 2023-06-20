@@ -280,7 +280,15 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60705CC, func_060705CC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60707F0, func_060707F0);
+
+// SAT: func_060707F0
+s32 func_800FF460(s32 arg0) {
+    if (arg0 == 0) {
+        return 0;
+    }
+    return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070820, func_06070820);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
