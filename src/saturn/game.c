@@ -224,11 +224,10 @@ bool HasEnoughMp(s32 mpCount, bool subtractMp) {
     return true;
 }
 
-extern s32 DAT_06086380;
-// PSX: func_800FE8F0
-void func_0606FFC8(void) {
-    if (DAT_06086380 == 0) {
-        DAT_06086380 = 0x40;
+// SAT: func_0606FFC8
+void func_800FE8F0(void) {
+    if (D_8013B5E8 == 0) {
+        D_8013B5E8 = 0x40;
     }
 }
 
@@ -268,14 +267,17 @@ s32 func_800FF064(s32 arg0) {
     return -1;
 }
 
-extern s32 DAT_060861B0[];
-s32 func_06070568(s32 pos) { DAT_060861B0[pos] = 0; }
+// SAT: func_06070568
+void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 
+// probably PSX func_800FF0B8 but strange to match
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
 
-s32 func_060705A0(s32 pos) { DAT_060861B0[pos] = 0x1000; }
+// SAT: func_060705A0
+void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
-s32 func_060705B8(s32 pos) { return DAT_060861B0[pos]; }
+// SAT: func_060705B8
+s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60705CC, func_060705CC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60707F0, func_060707F0);
