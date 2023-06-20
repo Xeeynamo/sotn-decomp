@@ -54,7 +54,7 @@ typedef struct ET_Generic {
             /* 0x80 */ u8 unk0;
             /* 0x81 */ u8 unk1;
         } modeS8;
-    } unk80; // size = 0x4
+    } unk80;                // size = 0x4
     /* 0x84 */ Multi unk84;
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
@@ -196,6 +196,24 @@ typedef struct {
     /* 0xB4 */ struct Entity* ent;
 } ET_Familiar;
 
+typedef struct ET_Dracula {
+    /* 0x7C */ char pad_7C[0x10];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ char pad_8E[0x2];
+    /* 0x90 */ char pad_90[0x4];
+    /* 0x94 */ u8 unk94;
+    /* 0x95 */ char pad_95[0x3];
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ char pad_9A[0x2];
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ char pad_9E[0x2];
+    /* 0xA0 */ u8 unkA0;
+    /* 0xA1 */ u8 unkA1;
+    /* 0xA2 */ u8 unkA2;
+    /* 0xA3 */ char pad_A3[0x9];
+    /* 0xAC */ struct Primitive* prim;
+} ET_Dracula;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
@@ -205,5 +223,6 @@ typedef union {
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_Familiar fam;
+    /* 0x7C */ ET_Dracula dracula;
     /* 0x7C */ char stub[0x40];
 } Ext;

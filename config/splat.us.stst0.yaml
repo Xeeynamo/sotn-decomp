@@ -44,6 +44,8 @@ segments:
       - [0x27984, .rodata, 27D64]
       - [0x279E8, rodata]
       - [0x27ACC, rodata]
+      - [0x27B40, .rodata, 2C564] # EntityDracula .rodata, 2C564
+      - [0x27B7C, rodata]
       - [0x27BFC, rodata]
       - [0x27C8C, .rodata, 36358]
       - [0x27CAC, rodata]

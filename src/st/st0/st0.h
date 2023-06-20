@@ -47,6 +47,26 @@ extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern u16 D_801805D4[];
 extern ObjInit2 D_80180638[];
+
+// *** EntityAlucard properties START ***
+
+extern u16 D_801805E0[]; // Init
+extern u8 D_80180914[];  // Animation
+extern u8 D_80180924[];  // Animation
+extern u8 D_80180934[];  // Animation
+extern u8 D_80180944[];  // Animation
+extern u8 D_80180954[];  // Animation
+extern u8 D_801809A4[];  // Animation
+extern u8 D_80180A0C[];  // Animation
+extern u8 D_80180A20[];  // Animation
+extern u8 D_80180A2C[];  // Animation
+extern u16 D_80180A48[];
+extern Point16 D_80180A58[];
+extern s32 D_801C2578;
+extern s32 D_801C257C;
+
+// *** EntityAlucard properties END ***
+
 extern s16 D_80181990[];
 extern s16 D_801815EC[];
 extern u32 D_80181D7C[];

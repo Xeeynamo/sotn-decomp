@@ -1,6 +1,482 @@
+/*
+ * Overlay: ST0
+ * Enemy: Dracula Boss
+ */
+
 #include "st0.h"
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDracula);
+void EntityDracula(Entity* self) {
+    s16 firstPrimIndex;
+    Entity* newEntity;
+    Primitive* prim;
+    s16 temp_v1_8;
+    u16 temp_v1_6;
+    s32 var_a0_2;
+    s16 temp_19;
+    s16 temp_20;
+    s32 var_a1;
+    s32 index;
+    u16 posX;
+    s32 i;
+
+    if ((self->flags & 0x100) && (self->step < 8)) {
+        self->unk3C = 0;
+        self[1].unk3C = 0;
+        func_801B5794(8);
+    }
+
+    index = 1; // !FAKE
+
+    if (self->unk48 == 1) {
+        g_api.PlaySfx(0x85B);
+    }
+
+    if (self->unk48 == 2) {
+        g_api.PlaySfx(0x85C);
+    }
+
+    if (self->unk48 == 3) {
+        g_api.PlaySfx(0x85D);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_801805E0);
+        self->animCurFrame = 0x4F;
+        self->ext.dracula.unkA1 = 1;
+        self->unk3C = 0;
+        self->facing = 1;
+        CreateEntityFromCurrentEntity(0x1D, &self[1]);
+        self[1].zPriority = self->zPriority + 1;
+
+        firstPrimIndex = g_api.func_800EDB58(4, 0x80);
+        if (firstPrimIndex == -1) {
+            self->step = 0;
+            break;
+        }
+
+        prim = &g_PrimBuf[firstPrimIndex];
+        self->firstPolygonIndex = firstPrimIndex;
+        self->ext.dracula.prim = prim;
+        self->flags |= 0x800000;
+        while (prim != NULL) {
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        func_801B5794(2);
+        break;
+
+    case 2:
+        func_801B5794(3);
+        break;
+
+    case 3:
+        switch (self->step_s) {
+        case 0:
+            if (D_801C257C & 0x10) {
+                func_801B57B4(1);
+            }
+            break;
+
+        case 1:
+            if ((AnimateEntity(D_80180A0C, self) == 0) && (D_801C257C & 0x20)) {
+                func_801B57B4(2);
+            }
+            break;
+
+        case 2:
+            if (AnimateEntity(D_80180A20, self) == 0) {
+                D_801C257C |= 0x100;
+            }
+            if (D_801C257C & 0x40) {
+                D_8003C744 = 1;
+                func_801B57B4(3);
+            }
+            if (*(s32*)&self->animFrameIdx == 2) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x1F, self, newEntity);
+                    newEntity->facing = self->facing;
+                    newEntity->posX.i.hi -= 8;
+                    newEntity->posY.i.hi -= 24;
+                }
+            }
+            break;
+
+        case 3:
+            if (AnimateEntity(D_80180A2C, self) == 0) {
+                g_api.func_800FD4C0(0, 2);
+                func_801B5794(4);
+            }
+        }
+        break;
+
+    case 4:
+        switch (self->step_s) {
+        case 0:
+            self->unk3C = 0;
+            self->ext.dracula.unk9C = 0;
+            self->step_s++;
+
+        case 1:
+            self->ext.dracula.unk9C =
+                func_801ABBBC(self->ext.dracula.unk9C, self);
+            if (self->ext.dracula.unkA0 != 0) {
+                g_api.PlaySfx(0x850);
+                self->animCurFrame = 0;
+                self->ext.dracula.unkA0 = 0;
+            }
+            if (self->ext.dracula.unk9C != 0xFF) {
+                break;
+            }
+            self->step_s++;
+            break;
+
+        case 2:
+            func_801B5794(5);
+        }
+        break;
+
+    case 5:
+        switch (self->step_s) {
+        case 0:
+            self->ext.dracula.unk8C = 0x80;
+            self->step_s++;
+
+        case 1:
+            if (--self->ext.dracula.unk8C == 0) {
+                posX = D_80180A48[Random() & 7];
+                self->posY.i.hi = 0x82;
+                self->ext.dracula.unk9C = 0;
+                self->posX.i.hi = posX;
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            self->ext.dracula.unk9C =
+                func_801ABBBC(self->ext.dracula.unk9C, self);
+            if (self->ext.dracula.unkA0 != 0) {
+                g_api.PlaySfx(0x84F);
+                self->animCurFrame = 1;
+                self->facing = (func_801B4C78() & 1) ^ 1;
+                self->ext.dracula.unkA0 = 0;
+            }
+            if (self->ext.dracula.unk9C != 0xFF) {
+                break;
+            }
+            self->step_s++;
+            break;
+
+        case 3:
+            self->facing = (func_801B4C78() & 1) ^ 1;
+            self->ext.dracula.unkA2 = (self->ext.dracula.unkA2 + 1) & 3;
+            self->unk3C = 3;
+            if (self->ext.dracula.unkA2 == 0) {
+                func_801B5794(6);
+                break;
+            }
+            func_801B5794(7);
+        }
+        break;
+
+    case 7:
+        switch (self->step_s) {
+        case 0:
+            if (AnimateEntity(D_80180914, self) == 0) {
+                self[1].animFrameDuration = 0;
+                self[1].animFrameIdx = 0;
+                func_801B57B4(1);
+                g_api.PlaySfx(0x853);
+            }
+            break;
+
+        case 1:
+            if (AnimateEntity(D_801809A4, &self[1]) == 0) {
+                self[1].animCurFrame = 0;
+                func_801B57B4(2);
+            }
+            break;
+
+        case 2:
+            for (i = 0; i < 3; i++) {
+                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x1B, self, newEntity);
+                    newEntity->facing = self->facing;
+                    newEntity->zPriority = self->zPriority + 1;
+                    newEntity->subId = i;
+                    if (self->facing != 0) {
+                        newEntity->posX.i.hi -= 24;
+                    } else {
+                        newEntity->posX.i.hi += 24;
+                    }
+                    newEntity->posY.i.hi += 44;
+                }
+            }
+            self->step_s++;
+
+        case 3:
+            if (AnimateEntity(D_80180924, self) == 0) {
+                func_801B5794(4);
+            }
+        }
+        break;
+
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            if (AnimateEntity(D_80180934, self) == 0) {
+                func_801B57B4(1);
+                self->ext.dracula.unk8C = 2;
+                g_api.PlaySfx(0x660);
+                g_api.PlaySfx(0x855);
+            }
+            break;
+
+        case 1:
+        case 2:
+            if (--self->ext.dracula.unk8C == 0) {
+                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x1C, self, newEntity);
+                    index = self->step_s - 1;
+                    newEntity->facing = self->facing;
+                    if (self->facing != 0) {
+                        newEntity->posX.i.hi += D_80180A58[index].x;
+                    } else {
+                        newEntity->posX.i.hi -= D_80180A58[index].x;
+                    }
+                    newEntity->posY.i.hi += D_80180A58[index].y;
+                    newEntity->zPriority = self->zPriority + 1;
+                    newEntity->subId = index;
+                }
+                self->ext.dracula.unk8C = 0x20;
+                self->step_s++;
+            }
+            break;
+
+        case 3:
+            if (--self->ext.dracula.unk8C == 0) {
+                self->step_s++;
+            }
+            break;
+
+        case 4:
+            if (AnimateEntity(D_80180944, self) == 0) {
+                func_801B5794(4);
+            }
+            break;
+        }
+        break;
+
+    case 8:
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.dracula.prim;
+            self->unk3C = 0;
+            g_isDraculaFirstFormDefeated = 1;
+            while (prim != NULL) {
+                prim->blendMode = 8;
+                prim = prim->next;
+            }
+            g_api.PlaySfx(0x858);
+            self->step_s++;
+
+        case 1:
+            if (AnimateEntity(D_80180954, self) == 0) {
+                self->ext.dracula.unk8C = 0x28;
+                self->unk5A = 0x59;
+                self->step_s++;
+            }
+            if (*(s32*)&self->animFrameIdx == 5) {
+                g_api.func_80102CD8(2);
+            }
+            break;
+
+        case 2:
+            if (--self->ext.dracula.unk8C == 0) {
+                g_api.PlaySfx(0x857);
+                self->step_s++;
+            }
+            break;
+
+        case 3:
+            prim = self->ext.dracula.prim;
+            self->ext.dracula.unk94 = 0x40;
+            self->ext.dracula.unk98 = 0;
+            self->unk6C = 0x80;
+            self->unk19 |= 8;
+            prim->type = 3;
+            prim->x0 = prim->x2 = self->posX.i.hi;
+            prim->x1 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0x100;
+            prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
+            prim->priority = 0xC0;
+            prim->blendMode = 0x31;
+            *(s32*)&prim->r1 = *(s32*)&prim->r0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+            prim = prim->next;
+            prim->type = 3;
+            prim->x0 = prim->x2 = self->posX.i.hi;
+            prim->x1 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = prim->r0 = prim->g0 = prim->b0 = 0;
+            prim->y2 = prim->y3 = 0x100;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            prim->r1 = prim->g1 = prim->b1 = self->ext.dracula.unk94;
+            prim->priority = 0xC0;
+            prim->blendMode = 0x31;
+            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+            prim = prim->next;
+            prim->type = 3;
+            prim->x0 = prim->x2 = self->posX.i.hi;
+            prim->x1 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0x100;
+            prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
+            prim->r1 = prim->g1 = prim->b1 = 0;
+            prim->priority = 0xC0;
+            prim->blendMode = 0x31;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+            self->ext.dracula.unk8C = 0x20;
+            self->step_s++;
+
+        case 4:
+            prim = self->ext.dracula.prim;
+            prim = prim->next;
+
+            prim->x0 = prim->x2 = prim->x2 - 2;
+            prim = prim->next;
+
+            temp_19 = prim->x3 + 2;
+            prim->x1 = prim->x3 = temp_19;
+            if (self->posX.i.hi != (temp_19 - 0x30)) {
+                break;
+            }
+            self->step_s++;
+            break;
+
+        case 5:
+            var_a1 = 0;
+            temp_20 = self->ext.dracula.unk98 + 4;
+            var_a0_2 = self->posX.i.hi - temp_20;
+            self->ext.dracula.unk98 = temp_20;
+            if (var_a0_2 < 0) {
+                var_a1 = 1;
+                var_a0_2 = 0;
+            }
+
+            prim = self->ext.dracula.prim;
+            temp_v1_6 = var_a0_2;
+            prim->x0 = prim->x2 = temp_v1_6;
+            prim = prim->next;
+            prim->x0 = prim->x2 = temp_v1_6 - 0x30;
+            prim->x1 = prim->x3 = temp_v1_6;
+
+            var_a0_2 = self->posX.i.hi + self->ext.dracula.unk98;
+            if (var_a0_2 > 0x100) {
+                var_a1 += 1;
+                var_a0_2 = 0x100;
+            }
+            temp_v1_8 = var_a0_2 + 0x30;
+
+            prim = self->ext.dracula.prim;
+            prim->x1 = prim->x3 = var_a0_2;
+            prim = prim->next;
+
+            prim = prim->next;
+            prim->x0 = prim->x2 = var_a0_2;
+            prim->x1 = prim->x3 = temp_v1_8;
+
+            if (self->unk6C != 0) {
+                self->unk6C += 0xF8;
+            }
+
+            if (self->ext.dracula.unk94 < 0xF0) {
+                self->ext.dracula.unk94 += 8;
+            }
+
+            prim = self->ext.dracula.prim;
+            prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
+            *(s32*)&prim->r1 = *(s32*)&prim->r0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+
+            prim = prim->next;
+            prim->r0 = prim->g0 = prim->b0 = 0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            prim->r1 = prim->g1 = prim->b1 = self->ext.dracula.unk94;
+            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+
+            prim = prim->next;
+            prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
+            prim->r1 = prim->g1 = prim->b1 = 0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+
+            if (var_a1 == 2) {
+                self->step_s++;
+            }
+            break;
+
+        case 6:
+            prim = self->ext.dracula.prim;
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->blendMode = 8;
+                prim = prim->next;
+            }
+            CreateEntityFromCurrentEntity(0x2B, &self[2]);
+            self[2].facing = self->facing;
+            CreateEntityFromCurrentEntity(0x20, &self[5]);
+            self[5].facing = self->facing;
+            self[5].posY.i.hi += 2;
+            self->step_s++;
+            break;
+
+        case 7:
+            if (func_801BD88C(self->ext.dracula.prim, 7) == 0) {
+                self->step_s++;
+            }
+            break;
+
+        case 8:
+            if (D_801C2578 == 0) {
+                DestroyEntity(self);
+            }
+        }
+        break;
+
+    case 255:
+        /**
+         * Debug: Press SQUARE / CIRCLE on the second controller
+         * to advance/rewind current animation frame
+         */
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->subId == 0) {
+                self->animCurFrame++;
+                self->subId |= 1;
+            } else {
+                break;
+            }
+        } else {
+            self->subId = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s == 0) {
+                self->animCurFrame--;
+                self->step_s |= 1;
+                break;
+            }
+        } else {
+            self->step_s = 0;
+        }
+        break;
+    }
+}
 
 extern u16 D_801805E0[];
 void EntityDraculaBody(Entity* entity) {
