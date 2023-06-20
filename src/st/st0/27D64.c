@@ -298,4 +298,3 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityStageTitleCard);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801ABBBC);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AC458);
-

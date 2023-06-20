@@ -77,7 +77,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define MU_METAMORPHOSIS 0x327
 #define MU_METAMORPHOSIS_II 0x328
 // 0x329 blank
-#define SE_INTRO_WIND 0x32A       // wind sound from intro
+#define SE_INTRO_WIND 0x32A // wind sound from intro
 #define SE_INTRO_WIND_LOOP_POINT 0x32B
 #define SE_INTRO_WIND_QUIET 0x32C // quieter wind
 #define SE_INTRO_WIND_QUIET_LOOP_POINT 0x32D
