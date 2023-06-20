@@ -74,13 +74,13 @@ void EntityDracula(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (D_801C257C & 0x10) {
-                StepSubStep(1);
+                SetSubStep(1);
             }
             break;
 
         case 1:
             if ((AnimateEntity(D_80180A0C, self) == 0) && (D_801C257C & 0x20)) {
-                StepSubStep(2);
+                SetSubStep(2);
             }
             break;
 
@@ -90,7 +90,7 @@ void EntityDracula(Entity* self) {
             }
             if (D_801C257C & 0x40) {
                 D_8003C744 = 1;
-                StepSubStep(3);
+                SetSubStep(3);
             }
             if (*(s32*)&self->animFrameIdx == 2) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -186,7 +186,7 @@ void EntityDracula(Entity* self) {
             if (AnimateEntity(D_80180914, self) == 0) {
                 self[1].animFrameDuration = 0;
                 self[1].animFrameIdx = 0;
-                StepSubStep(1);
+                SetSubStep(1);
                 g_api.PlaySfx(NA_SE_V0_DR_HURT_1);
             }
             break;
@@ -194,7 +194,7 @@ void EntityDracula(Entity* self) {
         case 1:
             if (AnimateEntity(D_801809A4, &self[1]) == 0) {
                 self[1].animCurFrame = 0;
-                StepSubStep(2);
+                SetSubStep(2);
             }
             break;
 
@@ -227,7 +227,7 @@ void EntityDracula(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(D_80180934, self) == 0) {
-                StepSubStep(1);
+                SetSubStep(1);
                 self->ext.dracula.unk8C = 2;
                 g_api.PlaySfx(NA_SE_EN_DR_FIREBALL);
                 g_api.PlaySfx(NA_SE_V0_DR_HERE_IS_TRUE_POWER);
