@@ -629,15 +629,15 @@ u16 func_801B573C(u16 arg0, s16 arg1, s16 arg2) {
 }
 #endif
 
-void func_801B5794(u8 state) {
-    g_CurrentEntity->step = state;
+void SetStep(u8 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_801B57B4(u8 arg0) {
-    g_CurrentEntity->step_s = arg0;
+void StepSubStep(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }

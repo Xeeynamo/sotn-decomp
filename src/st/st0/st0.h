@@ -38,7 +38,7 @@ extern bool g_isDraculaFirstFormDefeated;
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 s16 func_801B4C78();
 void MoveEntity();
-void func_801B5794(u8);
+void SetStep(u8);
 void EntityExplosion(Entity*);
 
 extern u16 D_80180574[];

@@ -22,7 +22,7 @@ void EntityDracula(Entity* self) {
     if ((self->flags & 0x100) && (self->step < 8)) {
         self->unk3C = 0;
         self[1].unk3C = 0;
-        func_801B5794(8);
+        SetStep(8);
     }
 
     index = 1; // !FAKE
@@ -63,24 +63,24 @@ void EntityDracula(Entity* self) {
             prim->blendMode = 8;
             prim = prim->next;
         }
-        func_801B5794(2);
+        SetStep(2);
         break;
 
     case 2:
-        func_801B5794(3);
+        SetStep(3);
         break;
 
     case 3:
         switch (self->step_s) {
         case 0:
             if (D_801C257C & 0x10) {
-                func_801B57B4(1);
+                StepSubStep(1);
             }
             break;
 
         case 1:
             if ((AnimateEntity(D_80180A0C, self) == 0) && (D_801C257C & 0x20)) {
-                func_801B57B4(2);
+                StepSubStep(2);
             }
             break;
 
@@ -90,7 +90,7 @@ void EntityDracula(Entity* self) {
             }
             if (D_801C257C & 0x40) {
                 D_8003C744 = 1;
-                func_801B57B4(3);
+                StepSubStep(3);
             }
             if (*(s32*)&self->animFrameIdx == 2) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -106,7 +106,7 @@ void EntityDracula(Entity* self) {
         case 3:
             if (AnimateEntity(D_80180A2C, self) == 0) {
                 g_api.func_800FD4C0(0, 2);
-                func_801B5794(4);
+                SetStep(4);
             }
         }
         break;
@@ -133,7 +133,7 @@ void EntityDracula(Entity* self) {
             break;
 
         case 2:
-            func_801B5794(5);
+            SetStep(5);
         }
         break;
 
@@ -173,10 +173,10 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unkA2 = (self->ext.dracula.unkA2 + 1) & 3;
             self->unk3C = 3;
             if (self->ext.dracula.unkA2 == 0) {
-                func_801B5794(6);
+                SetStep(6);
                 break;
             }
-            func_801B5794(7);
+            SetStep(7);
         }
         break;
 
@@ -186,7 +186,7 @@ void EntityDracula(Entity* self) {
             if (AnimateEntity(D_80180914, self) == 0) {
                 self[1].animFrameDuration = 0;
                 self[1].animFrameIdx = 0;
-                func_801B57B4(1);
+                StepSubStep(1);
                 g_api.PlaySfx(NA_SE_V0_DR_HURT_1);
             }
             break;
@@ -194,7 +194,7 @@ void EntityDracula(Entity* self) {
         case 1:
             if (AnimateEntity(D_801809A4, &self[1]) == 0) {
                 self[1].animCurFrame = 0;
-                func_801B57B4(2);
+                StepSubStep(2);
             }
             break;
 
@@ -218,7 +218,7 @@ void EntityDracula(Entity* self) {
 
         case 3:
             if (AnimateEntity(D_80180924, self) == 0) {
-                func_801B5794(4);
+                SetStep(4);
             }
         }
         break;
@@ -227,7 +227,7 @@ void EntityDracula(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (AnimateEntity(D_80180934, self) == 0) {
-                func_801B57B4(1);
+                StepSubStep(1);
                 self->ext.dracula.unk8C = 2;
                 g_api.PlaySfx(NA_SE_EN_DR_FIREBALL);
                 g_api.PlaySfx(NA_SE_V0_DR_HERE_IS_TRUE_POWER);
@@ -264,7 +264,7 @@ void EntityDracula(Entity* self) {
 
         case 4:
             if (AnimateEntity(D_80180944, self) == 0) {
-                func_801B5794(4);
+                SetStep(4);
             }
             break;
         }
@@ -520,7 +520,7 @@ void EntityDraculaFireball(Entity* entity) {
     }
 
     if (entity->flags & 0x100) {
-        entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+        entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
         entity->subId = 2;
         return;
@@ -584,7 +584,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 1:
         if (AnimateEntity(D_801809B0, entity) == 0) {
             entity->unk3C = 1;
-            func_801B5794(2);
+            SetStep(2);
         }
         break;
     case 2:
@@ -602,8 +602,8 @@ void EntityDraculaMeteorball(Entity* entity) {
             entity->accelerationX -= speedX;
         }
 
-        if (!(g_blinkTimer & 3)) { // lolwut?
-            Entity* newEntity = AllocEntity(D_8007D858, D_8007D858 + 0x20);
+        if (!(g_blinkTimer & 3)) {
+            Entity* newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
                 CreateEntityFromEntity(0x1E, entity, newEntity);
@@ -659,7 +659,7 @@ void EntityDraculaGlass(Entity* entity) {
             radians = (Random() * 6) + 0x900;
             entity->accelerationX = speed * rcos(radians);
             entity->accelerationY = speed * rsin(radians);
-            func_801B5794(3);
+            SetStep(3);
         }
     case 1:
         MoveEntity();
@@ -668,7 +668,7 @@ void EntityDraculaGlass(Entity* entity) {
         if (entity->posY.i.hi >= 205) {
             g_api.PlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.i.hi = 204;
-            func_801B5794(2);
+            SetStep(2);
         }
         break;
     case 2:
