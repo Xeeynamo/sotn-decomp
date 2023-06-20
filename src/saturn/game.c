@@ -252,7 +252,21 @@ const u16 pad_0607003A = 0xCCCD;
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607003C, func_0607003C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60703DC, func_060703DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070410, func_06070410);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070540, func_06070540);
+
+// SAT: func_06070540
+s32 func_800FF064(s32 arg0) {
+    s32 playerMP;
+
+    playerMP = g_Status.mp - 4;
+
+    if (playerMP > 0) {
+        if (arg0 != 0) {
+            g_Status.mp = playerMP;
+        }
+        return 0;
+    }
+    return -1;
+}
 
 extern s32 DAT_060861B0[];
 s32 func_06070568(s32 pos) { DAT_060861B0[pos] = 0; }
