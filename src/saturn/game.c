@@ -139,7 +139,14 @@ u8* func_800FD744(s32 equipTypeFilter) {
     return g_Status.equipBodyOrder;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
+// SAT: func_0606F3F8
+// better match like above?
+u8* func_800FD760(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandCount;
+    }
+    return g_Status.equipBodyCount;
+}
 
 // SAT: func_0606F418
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {

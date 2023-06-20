@@ -18,7 +18,10 @@ typedef struct {
 
 // offsets are not the same
 typedef struct {
-    u8 pad4[0x136];
+    u8 pad4[0x2A];
+    u8 equipHandCount[176];
+    u8 equipBodyCount[26];
+    u8 pad5[0x42];
     u8 equipHandOrder[176];
     u8 equipBodyOrder[26];
     u8 pad2[0x4E];
@@ -29,6 +32,7 @@ typedef struct {
     u8 pad3[0x18];
     u32 equipment[7];
 } PlayerStatus;
+
 
 extern PlayerStatus g_Status;
 
