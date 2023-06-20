@@ -23,7 +23,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
     case 1:
         temp = (*self)->unk0A + ((*self)->unk1E / 3);
         g_api.CheckCollision((*self)->unk14, temp, &collider, 0);
-        if (collider.unk0 % 2) {
+        if (collider.effects % 2) {
             (*self)->unk0A = (*self)->unk0A + collider.unk18;
             if ((*self)->unk10 < 0x4000) {
                 (*self)->unk2C = 1;

@@ -82,17 +82,17 @@ void func_80111CC0(void) {
 }
 
 bool func_80111D24(void) {
-    Collider res;
+    Collider collider;
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.i.hi;
     s16 posY = PLAYER.posY.i.hi;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
-    CheckCollision(posX - 7, posY, &res, 0);
-    hitboxLeftMargin = res.unk0 & 0x10;
-    CheckCollision(posX + 7, posY, &res, 0);
-    hitboxRightMargin = res.unk0 & 0x10;
+    CheckCollision(posX - 7, posY, &collider, 0);
+    hitboxLeftMargin = collider.effects & EFFECT_MIST_ONLY;
+    CheckCollision(posX + 7, posY, &collider, 0);
+    hitboxRightMargin = collider.effects & EFFECT_MIST_ONLY;
 
     if (hitboxRightMargin & hitboxLeftMargin) {
         AccelerateX(speed);

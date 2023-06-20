@@ -847,7 +847,7 @@ void EntityFallingRock2(Entity* self) {
         new_var2 += D_80181204[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
 
-        if (collider.unk0 & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             if (self->accelerationY > 0x40000) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
@@ -906,7 +906,7 @@ void EntityFallingRock(Entity* self) {
 
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
                              0);
-        if (collider.unk0 & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(6, self, newEntity);

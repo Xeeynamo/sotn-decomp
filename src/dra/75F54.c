@@ -183,13 +183,13 @@ void func_80117AC0(void) {
     s32 collisionCount;
 
     CheckCollision(PLAYER.posX.i.hi, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    collisionCount = (s32)collider.unk0 & 1;
+    collisionCount = (s32)collider.effects & EFFECT_SOLID;
     CheckCollision(PLAYER.posX.i.hi + 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    if ((s32)collider.unk0 & 1) {
+    if ((s32)collider.effects & EFFECT_SOLID) {
         collisionCount += 1;
     }
     CheckCollision(PLAYER.posX.i.hi - 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    if ((s32)collider.unk0 & 1) {
+    if ((s32)collider.effects & EFFECT_SOLID) {
         collisionCount += 1;
     }
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
@@ -1063,17 +1063,17 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
     y = baseY + g_CurrentEntity->posY.i.hi;
 
     CheckCollision(x, y, &res1, 0);
-    colRes1 = res1.unk0 & 0xF801;
+    colRes1 = res1.effects & 0xF801;
     CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
     y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
 
     if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
-        colRes2 = res2.unk0 & 0xF001;
-        if (!((s16)res2.unk0 & 1)) {
+        colRes2 = res2.effects & 0xF001;
+        if (!((s16)res2.effects & 1)) {
             g_CurrentEntity->posY.i.hi = y;
             return 1;
         }
-        if ((res2.unk0 & 0x8001) == 0x8001) {
+        if ((res2.effects & 0x8001) == 0x8001) {
             g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
             return colRes2;
         }
@@ -1085,7 +1085,7 @@ s32 func_80125A30(s32 baseY, s32 baseX) {
 }
 
 s32 func_80125B6C(s16 arg0, s16 arg1) {
-    Collider res;
+    Collider collider;
     s16 var_a1;
 
     if (g_CurrentEntity->accelerationX == 0) {
@@ -1093,14 +1093,14 @@ s32 func_80125B6C(s16 arg0, s16 arg1) {
     }
 
     CheckCollision(g_CurrentEntity->posX.i.hi + arg1,
-                   g_CurrentEntity->posY.i.hi + arg0, &res, 0);
+                   g_CurrentEntity->posY.i.hi + arg0, &collider, 0);
     if (g_CurrentEntity->accelerationX > 0) {
-        var_a1 = res.unk14;
+        var_a1 = collider.unk14;
     } else {
-        var_a1 = res.unk1C;
+        var_a1 = collider.unk1C;
     }
 
-    if (res.unk0 & 2) {
+    if (collider.effects & EFFECT_UNK_0002) {
         g_CurrentEntity->posX.i.lo = 0;
         g_CurrentEntity->posX.i.hi += var_a1;
         return 2;

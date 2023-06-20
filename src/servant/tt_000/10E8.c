@@ -69,13 +69,13 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
     g_api.CheckCollision(x, y, &D_80174AD8, 0);
-    if (D_80174AD8.unk0 & 1) {
+    if (D_80174AD8.effects & 1) {
         return 0;
     }
 
     for (curY = y - 16; curY > 0; curY -= 16) {
         g_api.CheckCollision(x, curY, &D_80174AD8, 0);
-        switch (D_80174AD8.unk0 & 0x801) {
+        switch (D_80174AD8.effects & 0x801) {
         case 0:
             break;
         case 1:

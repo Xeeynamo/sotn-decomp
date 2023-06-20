@@ -614,8 +614,30 @@ typedef struct {
     /* 8003C7B0 */ void (*unk3C)(void);
 } Overlay;
 
+typedef enum {
+    EFFECT_SOLID = 1 << 0,
+    EFFECT_UNK_0002 = 1 << 1,
+    EFFECT_QUICKSAND = 1 << 2,
+    EFFECT_WATER = 1 << 3,
+    EFFECT_MIST_ONLY = 1 << 4,
+    EFFECT_UNK_0020 = 1 << 5,
+    // Used when you jump from below to a platform. You can drop below.
+    EFFECT_SOLID_FROM_ABOVE = 1 << 6,
+    // Doesn't collide when falling on it but you cannot go back up.
+    EFFECT_SOLID_FROM_BELOW = 1 << 7,
+    EFFECT_UNK_0800 = 1 << 11,
+    EFFECT_UNK_1000 = 1 << 12,
+    EFFECT_UNK_2000 = 1 << 13,
+    EFFECT_UNK_4000 = 1 << 14,
+    EFFECT_UNK_8000 = 1 << 15,
+
+    // Aggregate helpers below:
+    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND
+} ColliderEffectFlags;
+
 typedef struct Collider {
-    /* 0x00 */ s32 unk0;
+    /* 0x00 */ s32 effects;
     /* 0x04 */ s32 unk4;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;

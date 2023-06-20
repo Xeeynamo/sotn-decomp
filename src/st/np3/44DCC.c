@@ -57,13 +57,13 @@ s32 func_801C6458(s16 yOffset) {
 
     g_api.CheckCollision(g_CurrentEntity->posX.i.hi, newY, &collider, 0);
 
-    if (expectedResult == (collider.unk0 & 1)) {
+    if (expectedResult == (collider.effects & EFFECT_SOLID)) {
         res = true;
     } else {
         res = false;
     }
 
-    if (collider.unk0 & 8) {
+    if (collider.effects & EFFECT_WATER) {
         if (!g_CurrentEntity->ext.merman.isUnderwater) {
             newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
             if (newEntity != NULL) {
@@ -125,7 +125,7 @@ void EntityMerman2(Entity* self) {
         MoveEntity();
         posY = self->posY.i.hi - 24;
         g_api.CheckCollision(self->posX.i.hi, posY, &collider, 0);
-        if (!(collider.unk0 & 8)) {
+        if (!(collider.effects & EFFECT_WATER)) {
             SetStep(MERMAN2_SWIMMING);
         }
         return;
@@ -145,7 +145,7 @@ void EntityMerman2(Entity* self) {
         posY = self->posY.i.hi;
         posY -= 24;
         g_api.CheckCollision(posX, posY, &collider, 0);
-        if (!(collider.unk0 & 8)) {
+        if (!(collider.effects & EFFECT_WATER)) {
             self->accelerationY = 0x8000;
         }
         pos = D_80181230;
@@ -429,7 +429,7 @@ void EntityMerman2(Entity* self) {
                 posX += 20;
             }
             g_api.CheckCollision(posX, posY, &collider, 0);
-            if (collider.unk0 & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 self->accelerationX = 0;
             }
             self->unk1E += self->ext.merman2.rotation;
@@ -460,7 +460,7 @@ void EntityMerman2(Entity* self) {
                 posX += 20;
             }
             g_api.CheckCollision(posX, posY, &collider, 0);
-            if (collider.unk0 & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 self->accelerationX = 0;
             }
             MoveEntity();
