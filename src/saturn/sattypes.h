@@ -159,6 +159,31 @@ typedef struct {
 } SpellDef;
 extern SpellDef g_SpellDefs[];
 
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ s16 hitPoints;
+    /* 0x06 */ u16 attack;
+    /* 0x08 */ u16 attackElement;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ u16 weaknesses;
+    /* 0x10 */ u16 strengths;
+    /* 0x12 */ u16 immunes;
+    /* 0x14 */ u16 absorbs;
+    /* 0x16 */ s16 level;
+    /* 0x18 */ s16 exp;
+    /* 0x1A */ s16 rareItemId;
+    /* 0x1C */ s16 uncommonItemId;
+    /* 0x1E */ u16 rareItemDropRate;
+    /* 0x20 */ u16 uncommonItemDropRate;
+    /* 0x22 */ u8 hitboxWidth;
+    /* 0x23 */ u8 hitboxHeight;
+    /* 0x24 */ s32 unk24;
+} EnemyDef; /* size=0x28 */
+
+
+
 extern int rand(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 

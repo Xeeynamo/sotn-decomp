@@ -289,7 +289,46 @@ s32 func_800FF460(s32 arg0) {
     return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070820, func_06070820);
+// SAT: func_06070820
+// Determine what type of item to drop
+s32 func_800FF494(EnemyDef* arg0) {
+    // 0x4B is the item ID for Ring of Arcana
+    // Ring of Arcana is an item that increases enemy item drop rates when
+    // equipped
+    s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4D, 4); // 4d not 4b
+    s32 rnd = rand() & 0xFF;
+
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20; // swapped
+
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
+    }
+
+    if (rnd < arg0->rareItemDropRate) {
+        return 0x40; // drop the enemy's rare item
+    } else {
+        // drop a common item, typically hearts or money
+        rnd -= arg0->rareItemDropRate;
+        if (ringOfArcanaCount != 0) {
+            rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
+        }
+        rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20; // swapped
+
+        if (rnd >= arg0->uncommonItemDropRate) {
+            rnd = rand() % 28;
+            if (arg0->rareItemDropRate == 0) {
+                rnd++;
+            }
+            if (arg0->uncommonItemDropRate == 0) {
+                rnd++;
+            }
+            return ringOfArcanaCount + rnd; // swapped
+        } else {
+            return 0x20; // drop the enemy's uncommon item
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
