@@ -326,18 +326,18 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80167EC4);
 INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_801682B4);
 
 s32 func_8016840C(s16 x, s16 y) {
-    Collider res;
+    Collider collider;
     u16 temp;
 
     if (g_CurrentEntity->accelerationX != 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
-                             g_CurrentEntity->posY.i.hi + x, &res, 0);
+                             g_CurrentEntity->posY.i.hi + x, &collider, 0);
         if (g_CurrentEntity->accelerationX > 0) {
-            temp = res.unk14;
+            temp = collider.unk14;
         } else {
-            temp = res.unk1C;
+            temp = collider.unk1C;
         }
-        if (!(res.unk0 & 2)) {
+        if (!(collider.effects & EFFECT_UNK_0002)) {
             return 0;
         }
     } else {

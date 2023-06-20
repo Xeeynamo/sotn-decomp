@@ -332,7 +332,7 @@ void func_801B19A0(Entity* self) {
         self->accelerationY += 0x2000;
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 6, &collider,
                              0);
-        if (collider.unk0 & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             if (self->subId == 0) {
                 func_801C29B0(0x644);

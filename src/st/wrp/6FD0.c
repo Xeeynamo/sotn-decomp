@@ -2444,8 +2444,8 @@ s32 func_8018C434(u16* hitSensors, s16 sensorCount) {
 
             y += *hitSensors++;
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.unk0 & 2 &&
-                ((!(collider.unk0 & 0x8000)) || (i != 0))) {
+            if (collider.effects & EFFECT_UNK_0002 &&
+                ((!(collider.effects & EFFECT_UNK_8000)) || (i != 0))) {
                 return 2;
             }
         }
@@ -2474,7 +2474,8 @@ void func_8018C55C(u16* hitSensors, s16 sensorCount) {
 
         y += *hitSensors++;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+        if (collider.effects & EFFECT_UNK_0002 &&
+            (!(collider.effects & EFFECT_UNK_8000) || i != 0)) {
             if (accelerationX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
@@ -2540,21 +2541,21 @@ void func_8018CAB0(void) {
 }
 
 void func_8018CB34(u16 arg0) {
-    Collider res;
+    Collider collider;
 
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
-        if (res.unk0 & 5) {
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
 
     g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
 
     if (arg0) {
-        if (!(res.unk0 & 5)) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
             MoveEntity();
             FallEntity();
             return;
@@ -2563,16 +2564,16 @@ void func_8018CB34(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (res.unk0 & 4) {
+        if (collider.effects & EFFECT_QUICKSAND) {
             g_CurrentEntity->posY.val += 0x2000;
             return;
         }
 
-        g_CurrentEntity->posY.i.hi += res.unk18;
+        g_CurrentEntity->posY.i.hi += collider.unk18;
         return;
     }
 
-    if (!(res.unk0 & 5)) {
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
         MoveEntity();
         func_8018CAB0();
     }

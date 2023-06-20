@@ -163,7 +163,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         MoveEntity();
         self->accelerationY += 0x1000;
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-        if (collider.unk0 != 0) {
+        if (collider.effects != 0) {
             func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
             func_801C090C(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
@@ -225,7 +225,7 @@ void EntitySpittleBoneSpit(Entity* self) {
             if (*(s32*)&prim->x3 > 0) {
                 g_api.CheckCollision(prim->x0, (s16)(prim->y0 + 16), &collider,
                                      0);
-                if (collider.unk0 != 0) {
+                if (collider.effects != 0) {
                     prim->blendMode = 8;
                 }
             }
