@@ -130,7 +130,15 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     return var_a0;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3D8, func_0606F3D8);
+// SAT: func_0606F3D8
+// same as PSX but better match?
+u8* func_800FD744(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+         return g_Status.equipHandOrder;
+    }
+    return g_Status.equipBodyOrder;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
 
 // SAT: func_0606F418
