@@ -266,7 +266,6 @@ void EntityDracula(Entity* self) {
             if (AnimateEntity(D_80180944, self) == 0) {
                 SetStep(4);
             }
-            break;
         }
         break;
 
