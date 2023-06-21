@@ -28,15 +28,15 @@ void EntityDracula(Entity* self) {
     index = 1; // !FAKE
 
     if (self->unk48 == 1) {
-        g_api.PlaySfx(NA_SE_V0_DR_HURT_2);
+        g_api.PlaySfx(NA_SE_VO_DR_HURT_2);
     }
 
     if (self->unk48 == 2) {
-        g_api.PlaySfx(NA_SE_V0_DR_HURT_3);
+        g_api.PlaySfx(NA_SE_VO_DR_HURT_3);
     }
 
     if (self->unk48 == 3) {
-        g_api.PlaySfx(NA_SE_V0_DR_HURT_4);
+        g_api.PlaySfx(NA_SE_VO_DR_HURT_4);
     }
 
     switch (self->step) {
@@ -49,7 +49,7 @@ void EntityDracula(Entity* self) {
         CreateEntityFromCurrentEntity(0x1D, &self[1]);
         self[1].zPriority = self->zPriority + 1;
 
-        firstPrimIndex = g_api.func_800EDB58(4, 0x80);
+        firstPrimIndex = g_api.func_800EDB58(PRIM_GT4, 128);
         if (firstPrimIndex == -1) {
             self->step = 0;
             break;
@@ -58,7 +58,7 @@ void EntityDracula(Entity* self) {
         prim = &g_PrimBuf[firstPrimIndex];
         self->firstPolygonIndex = firstPrimIndex;
         self->ext.dracula.prim = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_FREE_POLYGONS;
         while (prim != NULL) {
             prim->blendMode = 8;
             prim = prim->next;
@@ -92,8 +92,8 @@ void EntityDracula(Entity* self) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }
-            if (*(s32*)&self->animFrameIdx == 2) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (LOW(self->animFrameIdx) == 2) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1F, self, newEntity);
                     newEntity->facing = self->facing;
@@ -187,7 +187,7 @@ void EntityDracula(Entity* self) {
                 self[1].animFrameDuration = 0;
                 self[1].animFrameIdx = 0;
                 SetSubStep(1);
-                g_api.PlaySfx(NA_SE_V0_DR_HURT_1);
+                g_api.PlaySfx(NA_SE_VO_DR_HURT_1);
             }
             break;
 
@@ -200,7 +200,7 @@ void EntityDracula(Entity* self) {
 
         case 2:
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1B, self, newEntity);
                     newEntity->facing = self->facing;
@@ -230,14 +230,14 @@ void EntityDracula(Entity* self) {
                 SetSubStep(1);
                 self->ext.dracula.unk8C = 2;
                 g_api.PlaySfx(NA_SE_EN_DR_FIREBALL);
-                g_api.PlaySfx(NA_SE_V0_DR_HERE_IS_TRUE_POWER);
+                g_api.PlaySfx(NA_SE_VO_DR_HERE_IS_TRUE_POWER);
             }
             break;
 
         case 1:
         case 2:
             if (--self->ext.dracula.unk8C == 0) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1C, self, newEntity);
                     index = self->step_s - 1;
@@ -279,7 +279,7 @@ void EntityDracula(Entity* self) {
                 prim->blendMode = 8;
                 prim = prim->next;
             }
-            g_api.PlaySfx(NA_SE_V0_DR_PLAYTIME_IS_OVER);
+            g_api.PlaySfx(NA_SE_VO_DR_PLAYTIME_IS_OVER);
             self->step_s++;
 
         case 1:
@@ -288,14 +288,14 @@ void EntityDracula(Entity* self) {
                 self->unk5A = 0x59;
                 self->step_s++;
             }
-            if (*(s32*)&self->animFrameIdx == 5) {
+            if (LOW(self->animFrameIdx) == 5) {
                 g_api.func_80102CD8(2);
             }
             break;
 
         case 2:
             if (--self->ext.dracula.unk8C == 0) {
-                g_api.PlaySfx(NA_SE_V0_DR_GRANT_ME_POWER);
+                g_api.PlaySfx(NA_SE_VO_DR_GRANT_ME_POWER);
                 self->step_s++;
             }
             break;
@@ -306,7 +306,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk98 = 0;
             self->unk6C = 0x80;
             self->unk19 |= 8;
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
             prim->x1 = prim->x3 = self->posX.i.hi;
             prim->y0 = prim->y1 = 0;
@@ -314,22 +314,22 @@ void EntityDracula(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
             prim->priority = 0xC0;
             prim->blendMode = 0x31;
-            *(s32*)&prim->r1 = *(s32*)&prim->r0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
             prim = prim->next;
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
             prim->x1 = prim->x3 = self->posX.i.hi;
             prim->y0 = prim->y1 = prim->r0 = prim->g0 = prim->b0 = 0;
             prim->y2 = prim->y3 = 0x100;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            LOW(prim->r2) = LOW(prim->r0);
             prim->r1 = prim->g1 = prim->b1 = self->ext.dracula.unk94;
             prim->priority = 0xC0;
             prim->blendMode = 0x31;
-            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+            LOW(prim->r3) = LOW(prim->r1);
             prim = prim->next;
-            prim->type = 3;
+            prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
             prim->x1 = prim->x3 = self->posX.i.hi;
             prim->y0 = prim->y1 = 0;
@@ -338,8 +338,8 @@ void EntityDracula(Entity* self) {
             prim->r1 = prim->g1 = prim->b1 = 0;
             prim->priority = 0xC0;
             prim->blendMode = 0x31;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r1);
             self->ext.dracula.unk8C = 0x20;
             self->step_s++;
 
@@ -400,21 +400,21 @@ void EntityDracula(Entity* self) {
 
             prim = self->ext.dracula.prim;
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
-            *(s32*)&prim->r1 = *(s32*)&prim->r0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
 
             prim = prim->next;
             prim->r0 = prim->g0 = prim->b0 = 0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            LOW(prim->r2) = LOW(prim->r0);
             prim->r1 = prim->g1 = prim->b1 = self->ext.dracula.unk94;
-            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+            LOW(prim->r3) = LOW(prim->r1);
 
             prim = prim->next;
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
             prim->r1 = prim->g1 = prim->b1 = 0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r1;
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r1);
 
             if (var_a1 == 2) {
                 self->step_s++;
@@ -596,7 +596,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         }
 
         if (!(g_blinkTimer & 3)) {
-            Entity* newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
                 CreateEntityFromEntity(0x1E, entity, newEntity);
@@ -670,7 +670,7 @@ void EntityDraculaGlass(Entity* entity) {
             s32 i;
             for (i = 0; i < 8; i++) {
                 Entity* glassShardEntity =
-                    AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                    AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (glassShardEntity != 0) {
                     CreateEntityFromEntity(31, entity, glassShardEntity);
                     glassShardEntity->subId = 1;
@@ -711,7 +711,8 @@ void EntityDraculaMegaFireball(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180610);
-        self->flags |= 0xC0000000;
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         if (self->subId == 0) {
             angle = self->unk1E;
             self->unk1C = 0x80;
@@ -750,7 +751,7 @@ void EntityDraculaRainAttack(Entity* self) {
     s32 i;
 
     if (self->flags & 0x100) {
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->subId = 2;
@@ -787,7 +788,7 @@ void EntityDraculaRainAttack(Entity* self) {
         if (AnimateEntity(D_80180BDC, self) == 0) {
 
             for (i = 0; i < 4; i++) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x22, self, newEntity);
                     newEntity->subId = 1;

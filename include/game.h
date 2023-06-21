@@ -14,14 +14,14 @@
 typedef long Event;
 
 typedef enum {
-    PRIM_NONE,
-    PRIM_TILE,
-    PRIM_LINE_G2,
-    PRIM_G4,
-    PRIM_GT4,
-    PRIM_GT3,
-    PRIM_SPRT,
-    PRIM_ENV,
+    /* 0x0 */ PRIM_NONE,
+    /* 0x1 */ PRIM_TILE,
+    /* 0x2 */ PRIM_LINE_G2,
+    /* 0x3 */ PRIM_G4,
+    /* 0x4 */ PRIM_GT4,
+    /* 0x5 */ PRIM_GT3,
+    /* 0x6 */ PRIM_SPRT,
+    /* 0x7 */ PRIM_ENV,
 } PrimitiveType;
 
 typedef struct Primitive {
@@ -62,7 +62,7 @@ typedef struct Primitive {
     /* 0x30 */ u8 u3; // TODO not verified
     /* 0x31 */ u8 v3; // TODO not verified
     /* 0x32 */ u16 blendMode;
-} Primitive; /* size=0x34 */
+} Primitive;          /* size=0x34 */
 
 #include "entity.h"
 
@@ -250,7 +250,7 @@ typedef struct {
     /* 28 */ u8 unk28;
     /* 29 */ s8 seqIdx; // index of D_800ACCF8
     /* 2A */ u16 unk2A;
-} Lba; /* size=0x2C */
+} Lba;                  /* size=0x2C */
 
 typedef struct {
     /* 0x00 */ s16 cursorX;
@@ -1056,9 +1056,9 @@ extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
 extern Unkstruct8 g_CurrentRoomTileLayout;
-extern Entity D_8007A958[]; // &g_Entities[0xA0]
+extern Entity D_8007A958[]; // &g_Entities[160]
 extern Entity D_8007C0D8[];
-extern Entity D_8007D858[];
+extern Entity D_8007D858[]; // &g_Entities[224]
 extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];
