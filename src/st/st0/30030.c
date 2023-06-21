@@ -701,8 +701,8 @@ s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
 
             y += *hitSensors++;
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.unk0 & 2 &&
-                ((!(collider.unk0 & 0x8000)) || (i != 0))) {
+            if (collider.effects & 2 &&
+                ((!(collider.effects & 0x8000)) || (i != 0))) {
                 return 2;
             }
         }
@@ -731,7 +731,7 @@ void func_801B5A98(u16* hitSensors, s16 sensorCount) {
 
         y += *hitSensors++;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+        if (collider.effects & 2 && (!(collider.effects & 0x8000) || i != 0)) {
             if (accelerationX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
@@ -802,7 +802,7 @@ void func_801B5F4C(u16 arg0) {
     if (g_CurrentEntity->accelerationX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi - 7, &res, 0);
-        if (res.unk0 & 5) {
+        if (res.effects & 5) {
             g_CurrentEntity->accelerationY = 0;
         }
     }
@@ -811,7 +811,7 @@ void func_801B5F4C(u16 arg0) {
                          g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
-        if (!(res.unk0 & 5)) {
+        if (!(res.effects & 5)) {
             MoveEntity();
             FallEntity();
             return;
@@ -820,7 +820,7 @@ void func_801B5F4C(u16 arg0) {
         g_CurrentEntity->accelerationX = 0;
         g_CurrentEntity->accelerationY = 0;
 
-        if (res.unk0 & 4) {
+        if (res.effects & 4) {
             g_CurrentEntity->posY.val += 0x2000;
             return;
         }
@@ -829,7 +829,7 @@ void func_801B5F4C(u16 arg0) {
         return;
     }
 
-    if (!(res.unk0 & 5)) {
+    if (!(res.effects & 5)) {
         MoveEntity();
         func_801B5EC8();
     }
