@@ -345,7 +345,21 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60731C0, func_060731C0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60732E4, func_060732E4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60733A4, func_060733A4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607356C, func_0607356C);
+
+// SAT: func_0607356C
+bool func_800FB1EC(s32 arg0) {
+    if (D_801375CC.equipTypeFilter == 0) {
+        if (arg0 == 0) {
+            return true;
+        }
+    } else if ((arg0 == 0x1A) || (arg0 == 0) || (arg0 == 0x30) ||
+               (arg0 == 0x3A)) { // 3A instead of 39
+        return true;
+    }
+
+    return false;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60735A4, func_060735A4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607360C, func_0607360C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607369C, func_0607369C);
