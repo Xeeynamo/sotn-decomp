@@ -205,4 +205,11 @@ extern s32 D_80139828[];
 
 extern s32 D_8013B5E8;
 
+typedef struct Unkstruct_800A2D98 {
+    /* 0x0 */ s32 equipTypeFilter;
+    /* 0x4 */ s32 unk4;
+    /* 0x8 */ s32 unk8;
+} Unkstruct_800A2D98;
+extern Unkstruct_800A2D98 D_801375CC;
+
 #endif
