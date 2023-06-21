@@ -509,8 +509,6 @@ void EntityDraculaBody(Entity* self) {
     }
 }
 
-extern u16 D_801805EC[];
-extern u8 D_8018097C[];
 void EntityDraculaFireball(Entity* self) {
     if (g_isDraculaFirstFormDefeated) {
         self->flags |= 0x100;
