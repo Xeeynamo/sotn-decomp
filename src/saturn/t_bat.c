@@ -1,17 +1,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
-// entity layout is different somehow
-typedef struct Entity {
-    s16 temp;
-    s16 pad1;
-    s16 posx;
-    s16 pad3;
-    s16 posy;
-    s8 pad[0x25];
-    u16 subId;
-} Entity;
-
 INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF060, func_060CF060);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF294, func_060CF294);
@@ -74,9 +63,9 @@ INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D11DC, func_060D11DC);
 // PSX: func_80173F30
 // SAT: func_060D1224
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 diffx = x - entity->posx; // was entity->posX.i.hi
+    s16 diffx = x - entity->posX; // was entity->posX.i.hi
     // not the same implementation as ratan2
-    return func_0600EE88(-(s16)(y - entity->posy), diffx) &
+    return func_0600EE88(-(s16)(y - entity->posY), diffx) &
            0xFFF; // was entity->posY.i.hi
 }
 
@@ -87,8 +76,8 @@ s32 func_0600F914(s32, s32);
 // SAT: func_060D12AC
 // PSX: func_80173FE8
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
-    s32 diffX = x - entity->posx;
-    s32 diffY = y - entity->posy;
+    s32 diffX = x - entity->posX;
+    s32 diffY = y - entity->posY;
 
     // not shifted by 12
     return func_0600F914((diffX * diffX + diffY * diffY),

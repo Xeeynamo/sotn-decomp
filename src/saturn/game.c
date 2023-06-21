@@ -91,9 +91,62 @@ u8 GetEquipDamageScale(s32 equipId) {
     return D_800A4B04[g_Status.equipment[equipId]].damageScale;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F378, func_0606F378);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3D8, func_0606F3D8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F3F8, func_0606F3F8);
+// SAT: func_0606F378
+// a little different from PSX version
+s32 func_800FD6C4(s32 equipTypeFilter) {
+    s32 var_a0;
+    s32 var_v1;
+    s32 var_a1;
+    Unkstruct_800A7734* temp;
+
+    switch (equipTypeFilter) {
+    case 0:
+        return 0xB0; // different
+    case 1:
+        var_a1 = 0;
+        break;
+    case 2:
+        var_a1 = 1;
+        break;
+    case 3:
+        var_a1 = 2;
+        break;
+    case 4:
+        var_a1 = 3;
+    default:
+        break;
+    }
+    var_a0 = 0;
+    var_v1 = 0;
+    temp = D_800A7734;
+    do {
+        // different offset accessed
+        if (D_800A7734[var_v1].unk03 == var_a1) {
+            var_a0 += 1;
+        }
+        var_v1 += 1;
+    } while (var_v1 < 0x5c); // changed from 90
+
+    return var_a0;
+}
+
+// SAT: func_0606F3D8
+// same as PSX but better match?
+u8* func_800FD744(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandOrder;
+    }
+    return g_Status.equipBodyOrder;
+}
+
+// SAT: func_0606F3F8
+// better match like above?
+u8* func_800FD760(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandCount;
+    }
+    return g_Status.equipBodyCount;
+}
 
 // SAT: func_0606F418
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
@@ -104,7 +157,9 @@ const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
     }
 }
 
+// CheckEquipmentItemCount
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
 
 // SAT: func_0606F59C
@@ -117,42 +172,163 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F760, func_0606F760);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F884, func_0606F884);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC60, func_0606FC60);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC80, func_0606FC80);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FE60, func_0606FE60);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FFA0, func_0606FFA0);
 
-extern s32 DAT_06086380;
-void func_0606FFC8(void) {
-    if (DAT_06086380 == 0) {
-        DAT_06086380 = 0x40;
+// SAT: func_0606F760
+bool func_800FDC94(s32 arg0) {
+    u8 temp = D_800A841C[arg0].unk1C;
+
+    if (g_Status.mp < temp) {
+        return false;
+    } else {
+        g_Status.mp -= temp;
+        return true;
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FFE4, func_0606FFE4);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
+
+// SAT: func_0606F884
+// no return value on PSX?
+s32 func_800FDE00(void) {
+    D_80137960 = 0;
+    D_80137964 = 0;
+    D_80137968 = 0;
+    return 0;
+}
+
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
+
+// SAT: func_0606FC60
+// sh2 compiler is more literal?
+bool func_800FE3A8(s32 arg0) {
+    if ((g_Status.relics[arg0] & 2) != 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC80, func_0606FC80);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FE60, func_0606FE60);
+
+// SAT: func_0606FFA0
+bool HasEnoughMp(s32 mpCount, bool subtractMp) {
+    if (!(mpCount > g_Status.mp)) { // condition swapped
+        if (subtractMp != 0) {
+            g_Status.mp -= mpCount;
+        }
+        return false;
+    }
+    return true;
+}
+
+// SAT: func_0606FFC8
+void func_800FE8F0(void) {
+    if (D_8013B5E8 == 0) {
+        D_8013B5E8 = 0x40;
+    }
+}
+
+// SAT: func_0606FFE4
+void AddHearts(s32 value) {
+    Entity* temp;
+    if (g_Status.hearts < g_Status.heartsMax) {
+        g_Status.hearts += value;
+        if ((g_Status.hearts > g_Status.heartsMax)) { // swapped
+            g_Status.hearts = g_Status.heartsMax;
+        }
+        temp = g_Entities;
+        g_api.func_8011AAFC(temp, 99, 0); // g_api is new
+        PlaySfx(NA_SE_PL_COLLECT_HEART);
+    }
+}
+
+const u16 pad_06070038 = 0xCCCC;
+const u16 pad_0607003A = 0xCCCD;
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607003C, func_0607003C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60703DC, func_060703DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070410, func_06070410);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070540, func_06070540);
 
-extern s32 DAT_060861B0[];
-s32 func_06070568(s32 pos) { DAT_060861B0[pos] = 0; }
+// SAT: func_06070540
+s32 func_800FF064(s32 arg0) {
+    s32 playerMP;
 
+    playerMP = g_Status.mp - 4;
+
+    if (playerMP > 0) {
+        if (arg0 != 0) {
+            g_Status.mp = playerMP;
+        }
+        return 0;
+    }
+    return -1;
+}
+
+// SAT: func_06070568
+void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
+
+// probably PSX func_800FF0B8 but strange to match
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
 
-s32 func_060705A0(s32 pos) { DAT_060861B0[pos] = 0x1000; }
+// SAT: func_060705A0
+void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
-s32 func_060705B8(s32 pos) { return DAT_060861B0[pos]; }
+// SAT: func_060705B8
+s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60705CC, func_060705CC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60707F0, func_060707F0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070820, func_06070820);
+
+// SAT: func_060707F0
+s32 func_800FF460(s32 arg0) {
+    if (arg0 == 0) {
+        return 0;
+    }
+    return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
+}
+
+// SAT: func_06070820
+// Determine what type of item to drop
+s32 func_800FF494(EnemyDef* arg0) {
+    // 0x4B is the item ID for Ring of Arcana
+    // Ring of Arcana is an item that increases enemy item drop rates when
+    // equipped
+    s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4D, 4); // 4d not 4b
+    s32 rnd = rand() & 0xFF;
+
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20; // swapped
+
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
+    }
+
+    if (rnd < arg0->rareItemDropRate) {
+        return 0x40; // drop the enemy's rare item
+    } else {
+        // drop a common item, typically hearts or money
+        rnd -= arg0->rareItemDropRate;
+        if (ringOfArcanaCount != 0) {
+            rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
+        }
+        rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20; // swapped
+
+        if (rnd >= arg0->uncommonItemDropRate) {
+            rnd = rand() % 28;
+            if (arg0->rareItemDropRate == 0) {
+                rnd++;
+            }
+            if (arg0->uncommonItemDropRate == 0) {
+                rnd++;
+            }
+            return ringOfArcanaCount + rnd; // swapped
+        } else {
+            return 0x20; // drop the enemy's uncommon item
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);

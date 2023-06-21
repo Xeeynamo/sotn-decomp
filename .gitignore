@@ -33,3 +33,9 @@ disks/
 .vscode/settings.json
 tools/go
 tools/saturn_toolchain/GCCSH
+config/saturn/game_syms.txt
+config/saturn/stage_02_syms.txt
+config/saturn/t_bat_syms.txt
+config/saturn/zero_syms.txt
+asm/saturn
+
