@@ -62,7 +62,7 @@ typedef struct Primitive {
     /* 0x30 */ u8 u3; // TODO not verified
     /* 0x31 */ u8 v3; // TODO not verified
     /* 0x32 */ u16 blendMode;
-} Primitive;          /* size=0x34 */
+} Primitive; /* size=0x34 */
 
 #include "entity.h"
 
@@ -250,7 +250,7 @@ typedef struct {
     /* 28 */ u8 unk28;
     /* 29 */ s8 seqIdx; // index of D_800ACCF8
     /* 2A */ u16 unk2A;
-} Lba;                  /* size=0x2C */
+} Lba; /* size=0x2C */
 
 typedef struct {
     /* 0x00 */ s16 cursorX;
