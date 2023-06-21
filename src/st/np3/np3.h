@@ -72,6 +72,8 @@ extern u16 D_80180B5C[];
 extern u16 D_80180B68[];
 extern u16 D_80180B74[];
 extern u16 D_80180B80[];
+extern u16 D_80180B98[];
+extern u16 D_80180BB0[];
 extern ObjInit2 D_80180C10[];
 extern u8 D_80180D98[];
 extern u8 D_80180DA0[];
