@@ -185,7 +185,7 @@ void func_801BECCC(Entity* entity) {
             g_api.FreePrimitives(D_801D7D54);
         }
         gameApi = &g_api;
-        (*gameApi).PlaySfx(0xA);
+        (*gameApi).PlaySfx(SET_STOP_MUSIC);
         entity->step = 1;
         entity->step_s = 0;
     }

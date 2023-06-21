@@ -184,9 +184,9 @@ typedef struct Primitive {
 #define FLAG_UNK_02000000 0x02000000
 #define FLAG_UNK_04000000 0x04000000
 #define FLAG_UNK_08000000 0x08000000
-#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 #define FLAG_UNK_20000000 0x20000000
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
+#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 
 typedef enum {
     Game_Init,
@@ -1056,9 +1056,9 @@ extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
 extern Unkstruct8 g_CurrentRoomTileLayout;
-extern Entity D_8007A958[]; // &g_Entities[0xA0]
+extern Entity D_8007A958[]; // &g_Entities[160]
 extern Entity D_8007C0D8[];
-extern Entity D_8007D858[];
+extern Entity D_8007D858[]; // &g_Entities[224]
 extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
 extern s32 g_entityDestroyed[];

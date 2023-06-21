@@ -119,7 +119,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE4CC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityHammer);
 
-// DECOMP_ME_WIP https://decomp.me/scratch/EpZEL
+// DECOMP_ME_WIP func_801CF254 https://decomp.me/scratch/EpZEL
 // minor regalloc
 // has jumptable
 #ifndef NON_MATCHING
@@ -283,7 +283,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF778);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
 
-// DECOMP_ME_WIP https://decomp.me/scratch/51iIJ
+// DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkha);
 
 void EntityGurkhaSword(Entity* self) {
