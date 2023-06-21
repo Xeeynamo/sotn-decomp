@@ -41,6 +41,12 @@ void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
 
+// *** Initializers ***
+
+extern u16 D_801805E0[]; // Init EntityDracula
+extern u16 D_80180610[]; // Init EntityDraculaMegaFireball
+extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
+
 extern u16 D_80180574[];
 extern u16 D_8018058C[];
 extern u16 D_801805A4[];
@@ -50,19 +56,19 @@ extern ObjInit2 D_80180638[];
 
 // *** EntityAlucard properties START ***
 
-extern u16 D_801805E0[]; // Init
-extern u16 D_80180610[]; // Init
-extern u8 D_80180914[];  // Animation
-extern u8 D_80180924[];  // Animation
-extern u8 D_80180934[];  // Animation
-extern u8 D_80180944[];  // Animation
-extern u8 D_80180954[];  // Animation
-extern u8 D_801809A4[];  // Animation
-extern u8 D_80180A0C[];  // Animation
-extern u8 D_80180A20[];  // Animation
-extern u8 D_80180A2C[];  // Animation
-extern u8 D_80180BA0[];  // Animation
-extern u8 D_80180BB8[];  // Animation
+extern u8 D_80180914[]; // Animation
+extern u8 D_80180924[]; // Animation
+extern u8 D_80180934[]; // Animation
+extern u8 D_80180944[]; // Animation
+extern u8 D_80180954[]; // Animation
+extern u8 D_801809A4[]; // Animation
+extern u8 D_80180A0C[]; // Animation
+extern u8 D_80180A20[]; // Animation
+extern u8 D_80180A2C[]; // Animation
+extern u8 D_80180BA0[]; // Animation
+extern u8 D_80180BB8[]; // Animation
+extern u8 D_80180BCC[]; // Animation
+extern u8 D_80180BDC[]; // Animation
 extern u16 D_80180A48[];
 extern point16 D_80180A58[];
 extern s32 D_801C2578;

@@ -748,7 +748,71 @@ void EntityDraculaMegaFireball(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDraculaRainAttack);
+void EntityDraculaRainAttack(Entity* self) {
+    Entity* newEntity;
+    s32 accelY;
+    s32 accelX;
+    s16 angle;
+    s32 i;
+
+    if (self->flags & 0x100) {
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            newEntity->subId = 2;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_8018061C);
+        if (self->subId != 0) {
+            self->unk3C = 0;
+            self->animCurFrame = 0x59;
+            accelX = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
+            self->accelerationX = accelX * rcos(angle);
+            accelY = accelX * rsin(angle);
+            self->step = 3;
+            self->accelerationY = accelY;
+            break;
+        }
+        self->accelerationY = 0x40000;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_80180BCC, self);
+        if (func_801ADAC8(0x14) != 0) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        if (AnimateEntity(D_80180BDC, self) == 0) {
+
+            for (i = 0; i < 4; i++) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(0x22, self, newEntity);
+                    newEntity->subId = 1;
+                    newEntity->posY.i.hi += 12;
+                }
+            }
+            DestroyEntity(self);
+        }
+        break;
+
+    case 3:
+        MoveEntity();
+        self->accelerationY += 0x2000;
+        if (self->posY.i.hi >= 0xF1) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801AF380);
 
