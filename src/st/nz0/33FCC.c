@@ -903,7 +903,7 @@ void EntityGaibon(Entity* self) {
             self->accelerationY += 0x1800;
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 28,
                                  &collider, 0);
-            if (collider.unk0 & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 self->posY.i.hi = self->posY.i.hi + *(u16*)&collider.unk18;
                 self->step_s++;
             }

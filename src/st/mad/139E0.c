@@ -52,7 +52,7 @@ void EntityPrizeDrop(Entity* self) {
 
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-        if (collider.unk0 & 7) {
+        if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
             DestroyEntity(self);
         } else {
             self->step++;
@@ -67,7 +67,7 @@ void EntityPrizeDrop(Entity* self) {
         if (self->accelerationY < 0) {
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi - 7,
                                  &collider, 0);
-            if (collider.unk0 & 5) {
+            if (collider.effects & EFFECT_NOTHROUGH) {
                 self->accelerationY = 0;
             }
         }
@@ -75,7 +75,8 @@ void EntityPrizeDrop(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
                              0);
         if (itemId != 0) {
-            if (collider.unk0 & 5 && self->accelerationY > 0) {
+            if (collider.effects & EFFECT_NOTHROUGH &&
+                self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
                 self->posY.i.hi += collider.unk18;
@@ -87,7 +88,7 @@ void EntityPrizeDrop(Entity* self) {
             func_80192EF8(D_80180E10, 2);
             return;
         }
-        if (collider.unk0 & 5) {
+        if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
             self->ext.generic.unk80.modeS8.unk0 = 0x60;
             self->step++;
@@ -168,7 +169,8 @@ void EntityPrizeDrop(Entity* self) {
             MoveEntity();
             g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7,
                                  &collider, 0);
-            if (collider.unk0 & 5 && self->accelerationY > 0) {
+            if (collider.effects & EFFECT_NOTHROUGH &&
+                self->accelerationY > 0) {
                 self->accelerationX = 0;
                 self->accelerationY = 0;
                 self->posY.i.hi += collider.unk18;
@@ -420,7 +422,7 @@ void func_80195B44(Entity* entity) {
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", func_80195C38);
 
 bool func_80195E68(point16* unk) {
-    Collider res;
+    Collider collider;
 
     FallEntity();
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
@@ -431,9 +433,9 @@ bool func_80195E68(point16* unk) {
         s16 posY = g_CurrentEntity->posY.i.hi;
         posX += unk->x;
         posY += unk->y;
-        g_api.CheckCollision(posX, posY, &res, 0);
-        if (res.unk0 & 1) {
-            g_CurrentEntity->posY.i.hi += res.unk18;
+        g_api.CheckCollision(posX, posY, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            g_CurrentEntity->posY.i.hi += collider.unk18;
             g_CurrentEntity->accelerationY =
                 -g_CurrentEntity->accelerationY / 2;
             if (g_CurrentEntity->accelerationY > -0x10000) {

@@ -101,7 +101,7 @@ void EntityMerman(Entity* self) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi - 24;
         g_api.CheckCollision(posX, posY, &collider, 0);
-        if (!(collider.unk0 & 8)) {
+        if (!(collider.effects & EFFECT_WATER)) {
             SetStep(MERMAN_SWIMMING);
         }
         return;
@@ -125,7 +125,7 @@ void EntityMerman(Entity* self) {
         posY -= 24;
 
         g_api.CheckCollision(posX, posY, &collider, 0);
-        if (!(collider.unk0 & 8)) {
+        if (!(collider.effects & EFFECT_WATER)) {
             self->accelerationY = 0x8000;
         }
 
@@ -317,7 +317,7 @@ void EntityMerman(Entity* self) {
                 posX -= 24;
             }
             g_api.CheckCollision(posX, posY, &collider, 0);
-            if (collider.unk0 & 1) {
+            if (collider.effects & EFFECT_SOLID) {
                 self->accelerationX = 0;
             }
             func_801C0B20(&D_8018236C);

@@ -185,7 +185,7 @@ void func_801C7538(Entity* entity) {
 
 // falling liquid from subweapons container
 void func_801C7654(Entity* entity) {
-    Collider res;
+    Collider collider;
 
     switch (entity->step) {
     case 0:
@@ -203,9 +203,9 @@ void func_801C7654(Entity* entity) {
         entity->accelerationY += 0x2000;
 
         g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8,
-                             &res.unk0, 0);
+                             &collider.effects, 0);
 
-        if (res.unk0 & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             entity->unk19 = 2;
             entity->unk1C = 0x100;
             entity->accelerationY = 0x4000;

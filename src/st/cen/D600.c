@@ -682,8 +682,8 @@ s32 func_80195098(u16* hitSensors, s16 sensorCount) {
 
             y += *hitSensors++;
             g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.unk0 & 2 &&
-                ((!(collider.unk0 & 0x8000)) || (i != 0))) {
+            if (collider.effects & EFFECT_UNK_0002 &&
+                ((!(collider.effects & EFFECT_UNK_8000)) || (i != 0))) {
                 return 2;
             }
         }
@@ -712,7 +712,8 @@ void func_801951C0(u16* hitSensors, s16 sensorCount) {
 
         y += *hitSensors++;
         g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.unk0 & 2 && (!(collider.unk0 & 0x8000) || i != 0)) {
+        if (collider.effects & EFFECT_UNK_0002 &&
+            (!(collider.effects & EFFECT_UNK_8000) || i != 0)) {
             if (accelerationX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
