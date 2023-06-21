@@ -477,81 +477,77 @@ void EntityDracula(Entity* self) {
     }
 }
 
-void EntityDraculaBody(Entity* entity) {
+void EntityDraculaBody(Entity* self) {
     if (g_isDraculaFirstFormDefeated) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
     }
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(D_801805E0);
-        entity->unk3C = 1;
-        entity->hitPoints = 0x7FFF;
-        entity->unk10 = 3;
-        entity->unk12 = 0x27;
-        entity->hitboxWidth = 12;
-        entity->animCurFrame = 0;
-        entity->hitboxHeight = 34;
+        self->unk3C = 1;
+        self->hitPoints = 0x7FFF;
+        self->unk10 = 3;
+        self->unk12 = 0x27;
+        self->hitboxWidth = 12;
+        self->animCurFrame = 0;
+        self->hitboxHeight = 34;
         break;
     case 1:
-        entity->facing = entity[-1].facing;
-        entity->posX.i.hi = entity[-1].posX.i.hi;
-        entity->posY.i.hi = entity[-1].posY.i.hi;
-        entity->unk3C = entity[-1].unk3C & 0xFFFD;
+        self->facing = self[-1].facing;
+        self->posX.i.hi = self[-1].posX.i.hi;
+        self->posY.i.hi = self[-1].posY.i.hi;
+        self->unk3C = self[-1].unk3C & 0xFFFD;
         break;
     case 2:
-        entity->unk3C = 0;
+        self->unk3C = 0;
         break;
     }
 
     if (g_isDraculaFirstFormDefeated) {
-        entity->unk3C = 0;
+        self->unk3C = 0;
     }
 }
 
 extern u16 D_801805EC[];
 extern u8 D_8018097C[];
-void EntityDraculaFireball(Entity* entity) {
-    u16 temp_v0;
-
+void EntityDraculaFireball(Entity* self) {
     if (g_isDraculaFirstFormDefeated) {
-        entity->flags |= 0x100;
+        self->flags |= 0x100;
     }
 
-    if (entity->flags & 0x100) {
-        entity->pfnUpdate = EntityExplosion;
-        entity->step = 0;
-        entity->subId = 2;
+    if (self->flags & 0x100) {
+        self->pfnUpdate = EntityExplosion;
+        self->step = 0;
+        self->subId = 2;
         return;
     }
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(D_801805EC);
 
-        if (entity->facing == 0) {
-            entity->accelerationX = -0x20000;
+        if (self->facing == 0) {
+            self->accelerationX = -0x20000;
         } else {
-            entity->accelerationX = 0x20000;
+            self->accelerationX = 0x20000;
         }
 
-        if (entity->subId == 1) {
-            entity->accelerationY = -0x8000;
+        if (self->subId == 1) {
+            self->accelerationY = -0x8000;
         }
 
-        if (entity->subId == 2) {
-            entity->accelerationY = 0x8000;
+        if (self->subId == 2) {
+            self->accelerationY = 0x8000;
         }
-        entity->ext.generic.unk8C.modeU16.unk0 = 0x28;
+        self->ext.generic.unk8C.modeU16.unk0 = 0x28;
 
     case 1:
-        AnimateEntity(D_8018097C, entity);
+        AnimateEntity(D_8018097C, self);
         MoveEntity();
-        temp_v0 = entity->ext.generic.unk8C.modeU16.unk0 - 1;
-        entity->ext.generic.unk8C.modeU16.unk0 = temp_v0;
 
-        if ((temp_v0 << 0x10) == 0) {
-            entity->accelerationY = 0;
+        if (--self->ext.generic.unk8C.modeS16.unk0 == 0) {
+            self->accelerationY = 0;
         }
         return;
     }
