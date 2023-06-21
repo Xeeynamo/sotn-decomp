@@ -712,7 +712,41 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801ADB10);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDraculaFinalForm);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDraculaMegaFireball);
+void EntityDraculaMegaFireball(Entity* self) {
+    s16 angle;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180610);
+        self->flags |= 0xC0000000;
+        if (self->subId == 0) {
+            angle = self->unk1E;
+            self->unk1C = 0x80;
+            self->unk1A = 0x80;
+            self->unk19 |= 7;
+            self->unk1E = 0x1C0 - angle;
+            if (self->facing != 0) {
+                self->accelerationX = rcos(angle) * 0x60;
+            } else {
+                self->accelerationX = -(rcos(angle) * 0x60);
+            }
+            self->accelerationY = rsin(angle) * 0x60;
+        }
+    }
+    if (self->subId != 0) {
+        if (AnimateEntity(D_80180BA0, self) == 0) {
+            DestroyEntity(self);
+        }
+        if (g_blinkTimer & 1) {
+            self->animCurFrame = 0;
+        }
+    } else {
+        if (self->unk1A < 0x100) {
+            self->unk1A = self->unk1C = self->unk1C + 0x10;
+        }
+        AnimateEntity(D_80180BB8, self);
+        MoveEntity();
+    }
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDraculaRainAttack);
 
