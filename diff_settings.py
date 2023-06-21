@@ -53,18 +53,28 @@ def apply_stage(config, version, name):
         f'src/st/{name}', 'include', f'asm/{version}/st/{name}']
     config['objdump_executable'] = 'mipsel-linux-gnu-objdump'
 
+def apply_saturn(config, name):
+    config["arch"] = "sh2"
+    config['baseimg'] = f'disks/saturn' + (f'/{name}.PRG').upper()
+    config['myimg'] = f'build/saturn' + (f'/{name}.PRG').upper()
+    config['mapfile'] = f'build/saturn/{name}.map'
+    config['source_directories'] = [f'src/saturn/']
+    config['objdump_executable'] = 'sh-elf-objdump'
 
 def apply(config, args):
-    name = args.overlay or 'dra'
-    version = args.version or 'us'
-    if name.startswith("st/"):
-        apply_stage(config, version, name[3:])
-    elif name.startswith("tt_"):
-        apply_servant(config, version, name)
-    elif name is "dra" or name is "main":
-        apply_base(config, version, name)
+    if args.version == 'saturn':
+        apply_saturn(config, args.overlay)
     else:
-        apply_bin(config, version, name)
+        name = args.overlay or 'dra'
+        version = args.version or 'us'
+        if name.startswith("st/"):
+            apply_stage(config, version, name[3:])
+        elif name.startswith("tt_"):
+            apply_servant(config, version, name)
+        elif name is "dra" or name is "main":
+            apply_base(config, version, name)
+        else:
+            apply_bin(config, version, name)
 
-    config["arch"] = "mipsel"
-    config['objdump_executable'] = 'mipsel-linux-gnu-objdump'
+        config["arch"] = "mipsel"
+        config['objdump_executable'] = 'mipsel-linux-gnu-objdump'
