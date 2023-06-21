@@ -14,14 +14,14 @@
 typedef long Event;
 
 typedef enum {
-    /* 0x0 */ PRIM_NONE,
-    /* 0x1 */ PRIM_TILE,
-    /* 0x2 */ PRIM_LINE_G2,
-    /* 0x3 */ PRIM_G4,
-    /* 0x4 */ PRIM_GT4,
-    /* 0x5 */ PRIM_GT3,
-    /* 0x6 */ PRIM_SPRT,
-    /* 0x7 */ PRIM_ENV,
+    PRIM_NONE,
+    PRIM_TILE,
+    PRIM_LINE_G2,
+    PRIM_G4,
+    PRIM_GT4,
+    PRIM_GT3,
+    PRIM_SPRT,
+    PRIM_ENV,
 } PrimitiveType;
 
 typedef struct Primitive {
