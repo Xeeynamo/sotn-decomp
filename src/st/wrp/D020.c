@@ -654,7 +654,7 @@ void func_8018F928(Entity* arg0) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018FA1C);
 
-bool func_8018FC4C(Point16* unk) {
+bool func_8018FC4C(point16* unk) {
     Collider res;
 
     FallEntity();

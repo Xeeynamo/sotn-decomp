@@ -61,7 +61,7 @@ extern u8 D_80180A0C[];  // Animation
 extern u8 D_80180A20[];  // Animation
 extern u8 D_80180A2C[];  // Animation
 extern u16 D_80180A48[];
-extern Point16 D_80180A58[];
+extern point16 D_80180A58[];
 extern s32 D_801C2578;
 extern s32 D_801C257C;
 
