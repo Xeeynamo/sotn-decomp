@@ -10,6 +10,47 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
+// entity layout is different somehow
+typedef struct Entity {
+    s16 temp;
+    s16 pad1;
+    s16 posX;
+    s16 pad3;
+    s16 posY;
+    s8 pad[0x25];
+    u16 subId;
+} Entity;
+
+typedef struct {
+    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+} GameApi; /* size=0x140 */
+extern GameApi g_api;
+void PlaySfx(s16 sfxId);
+#define NA_SE_PL_COLLECT_HEART 0x67A
+
+#define ABS(x) ((x) < 0 ? -(x) : (x))
+
+typedef enum {
+    PLAYER_CHARACTER,
+    UNK_ENTITY_1,
+    UNK_ENTITY_2,
+    UNK_ENTITY_3,
+    UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
+    UNK_ENTITY_10 = 0x10,
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
+    UNK_ENTITY_100 = 0x100
+} EntityTypes;
+
+#define TOTAL_ENTITY_COUNT 256
+#define PLAYER g_Entities[PLAYER_CHARACTER]
+extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+
 typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
@@ -18,14 +59,30 @@ typedef struct {
 
 // offsets are not the same
 typedef struct {
-    u8 pad2[0x250];
+    u8 relics[30];
+    u8 pad4[0xc];
+    u8 equipHandCount[176];
+    u8 equipBodyCount[26];
+    u8 pad5[0x42];
+    u8 equipHandOrder[176];
+    u8 equipBodyOrder[26];
+    u8 pad2[0x4E];
     s32 hp;
     s32 hpMax;
-    u8 pad[45];
+    s32 hearts;
+    s32 heartsMax;
+    s32 mp;
+    u8 pad[35];
     s32 statsTotal[4];
     u8 pad3[0x18];
     u32 equipment[7];
 } PlayerStatus;
+
+typedef struct {
+    char pad_0[0x1B];
+    s8 unk1C;
+} Unkstruct_800A841C;
+extern Unkstruct_800A841C D_800A841C[]; // related to player MP
 
 extern PlayerStatus g_Status;
 
@@ -102,8 +159,50 @@ typedef struct {
 } SpellDef;
 extern SpellDef g_SpellDefs[];
 
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ s16 hitPoints;
+    /* 0x06 */ u16 attack;
+    /* 0x08 */ u16 attackElement;
+    /* 0x0A */ s16 defense;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ u16 weaknesses;
+    /* 0x10 */ u16 strengths;
+    /* 0x12 */ u16 immunes;
+    /* 0x14 */ u16 absorbs;
+    /* 0x16 */ s16 level;
+    /* 0x18 */ s16 exp;
+    /* 0x1A */ s16 rareItemId;
+    /* 0x1C */ s16 uncommonItemId;
+    /* 0x1E */ u16 rareItemDropRate;
+    /* 0x20 */ u16 uncommonItemDropRate;
+    /* 0x22 */ u8 hitboxWidth;
+    /* 0x23 */ u8 hitboxHeight;
+    /* 0x24 */ s32 unk24;
+} EnemyDef; /* size=0x28 */
+
+
+
 extern int rand(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 
+// layout is different
+typedef struct Unkstruct_800A7734 {
+    /* 0x00 */ u16 unk00;
+    /* 0x02 */ char unk02[0x19];
+    u16 unk03;
+    char unk04[0x1];
+} Unkstruct_800A7734; // size = 0x20
+
+extern Unkstruct_800A7734 D_800A7734[];
+
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
+
+extern s32 D_80139828[];
+
+extern s32 D_8013B5E8;
 
 #endif
