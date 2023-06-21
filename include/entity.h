@@ -54,7 +54,7 @@ typedef struct ET_Generic {
             /* 0x80 */ u8 unk0;
             /* 0x81 */ u8 unk1;
         } modeS8;
-    } unk80;                // size = 0x4
+    } unk80; // size = 0x4
     /* 0x84 */ Multi unk84;
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
     union {
