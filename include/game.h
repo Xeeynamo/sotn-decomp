@@ -726,8 +726,12 @@ typedef struct {
 typedef struct {
     /* 00 */ const char* name;
     /* 04 */ const char* description;
-    /* 08 */ u32 unk08;
-    /* 0C */ u32 unk0C;
+    /* 08 */ s16 attBonus;
+    /* 0A */ s16 defBonus;
+    /* 0C */ s8 strBonus;
+    /* 0D */ s8 conBonus;
+    /* 0E */ s8 intBonus;
+    /* 0F */ s8 lckBonus;
     /* 10 */ u32 unk10;
     /* 14 */ u32 unk14;
     /* 18 */ u16 icon;
