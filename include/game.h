@@ -687,15 +687,15 @@ typedef struct {
 } SubweaponDef;          /* size=0x14 */
 
 typedef enum {
-    ITEM_SSWORD,
+    ITEM_S_SWORD,
     ITEM_SWORD,
-    ITEM_THROW1,
+    ITEM_THROW_1,
     ITEM_FIST,
     ITEM_CLUB,
     ITEM_TWOHAND,
     ITEM_FOOD,
     ITEM_BOMB,
-    ITEM_THROW2,
+    ITEM_THROW_2,
     ITEM_SHIELD,
     ITEM_MEDICINE
 } ItemCategory;
