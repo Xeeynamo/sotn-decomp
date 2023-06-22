@@ -87,8 +87,8 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 
 // SAT: func_0606F348
-u8 GetEquipDamageScale(s32 equipId) {
-    return D_800A4B04[g_Status.equipment[equipId]].damageScale;
+u8 GetEquipItemCategory(s32 equipId) {
+    return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
 }
 
 // SAT: func_0606F378

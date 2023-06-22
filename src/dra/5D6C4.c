@@ -297,7 +297,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalModRate;
     Equipment* var_a2;
     s32 criticalRate;
-    u8 damageScale;
+    u8 itemCategory;
 
     var_a2 = &D_800A4B04[(s16)equipId]; // FAKE
     criticalModRate = 5;
@@ -318,8 +318,8 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     res->criticalRate = criticalRate;
     func_800F4994();
-    damageScale = D_800A4B04[equipId].damageScale;
-    if (damageScale != 6 && damageScale != 10) {
+    itemCategory = D_800A4B04[equipId].itemCategory;
+    if (itemCategory != 6 && itemCategory != 10) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.unk0C & 0x4000) {
             res->attack >>= 1;

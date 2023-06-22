@@ -98,7 +98,7 @@ typedef struct {
     /* 0x08 */ s16 attack;
     /* 0x0A */ s16 defense;
     /* 0x0C */ u16 element;
-    /* 0x0E */ u8 damageScale;
+    /* 0x0E */ u8 itemCategory;
     /* 0x0F */ u8 weaponId;
     /* 0x10 */ u16 unk10;
     /* 0x12 */ u8 playerAnim;
