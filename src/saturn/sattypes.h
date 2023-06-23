@@ -232,4 +232,16 @@ typedef struct Unkstruct_800A2D98 {
 } Unkstruct_800A2D98;
 extern Unkstruct_800A2D98 D_801375CC;
 
+typedef struct {
+    u8 pad[0x3f8];
+    u32 unk0C;
+} PlayerState;
+
+extern PlayerState g_Player;
+#define STAGE_ST0 0x1F
+
+s32 SquareRoot0(s32);
+s32 func_800F4D38(s32, s32);
+void func_800F4994(void);
+
 #endif
