@@ -74,9 +74,29 @@ typedef struct {
     s32 mp;
     u8 pad[35];
     s32 statsTotal[4];
-    u8 pad3[0x18];
+    u8 pad3[0x14];
+    u32 subWeapon;
     u32 equipment[7];
 } PlayerStatus;
+
+typedef struct {
+    /* 0x00 */ s16 attack;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ u16 attackElement;
+    /* 0x06 */ u8 unk6;
+    /* 0x07 */ u8 sp17;
+    /* 0x08 */ u16 sp18;
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 unkB;
+    /* 0x0C */ u16 sp1C;
+    /* 0x0E */ u16 sp1E;
+    /* 0x10 */ u8 sp20;
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+} SubweaponDef;          /* size=0x14 */
+
+extern SubweaponDef g_Subweapons[];
+
 
 typedef struct {
     char pad_0[0x1B];
