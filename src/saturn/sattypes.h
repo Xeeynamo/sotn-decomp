@@ -12,13 +12,15 @@ typedef unsigned long long u64;
 
 // entity layout is different somehow
 typedef struct Entity {
-    s16 temp;
-    s16 pad1;
-    s16 posX;
-    s16 pad3;
-    s16 posY;
-    s8 pad[0x25];
-    u16 subId;
+    /* 0x00 */ s16 temp;
+    /* 0x02 */ char pad_2[0x2];
+    /* 0x04 */ s16 posX;
+    /* 0x06 */ char pad_6[0x2];
+    /* 0x08 */ s16 posY;
+    /* 0x0A */ char pad_0A[0x22];
+    /* 0x2C */ u16 unk2C;
+    /* 0x2E */ char pad_2E;
+    /* 0x2F */ u16 subId;
 } Entity;
 
 typedef struct {
@@ -159,7 +161,6 @@ typedef struct {
 } SpellDef;
 extern SpellDef g_SpellDefs[];
 
-
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ s16 hitPoints;
@@ -181,8 +182,6 @@ typedef struct {
     /* 0x23 */ u8 hitboxHeight;
     /* 0x24 */ s32 unk24;
 } EnemyDef; /* size=0x28 */
-
-
 
 extern int rand(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);

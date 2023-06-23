@@ -500,7 +500,7 @@ build_saturn_link_native: build_saturn_link_copy build_saturn_link_native_ld
 build_saturn_docker: build_saturn_copy_files build_saturn_dosemu_docker build_saturn_link_docker
 
 # do not run in parallel
-build_saturn_native: build_saturn_copy_files build_saturn_dosemu_native build_saturn_link_native
+build_saturn_native: build_saturn_copy_files build_saturn_dosemu_native build_saturn_link_native check_saturn_native
 
 check_saturn_docker:
 	# dump binaries using sh binutils container
