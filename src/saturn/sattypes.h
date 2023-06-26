@@ -47,6 +47,20 @@ typedef enum {
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
 
+typedef enum {
+    ITEM_S_SWORD,
+    ITEM_SWORD,
+    ITEM_THROW_1,
+    ITEM_FIST,
+    ITEM_CLUB,
+    ITEM_TWOHAND,
+    ITEM_FOOD,
+    ITEM_BOMB,
+    ITEM_THROW_2,
+    ITEM_SHIELD,
+    ITEM_MEDICINE
+} ItemCategory;
+
 #define TOTAL_ENTITY_COUNT 256
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
@@ -96,7 +110,6 @@ typedef struct {
 } SubweaponDef;          /* size=0x14 */
 
 extern SubweaponDef g_Subweapons[];
-
 
 typedef struct {
     char pad_0[0x1B];
@@ -179,7 +192,6 @@ typedef struct {
 } SpellDef;
 extern SpellDef g_SpellDefs[];
 
-
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ s16 hitPoints;
@@ -201,8 +213,6 @@ typedef struct {
     /* 0x23 */ u8 hitboxHeight;
     /* 0x24 */ s32 unk24;
 } EnemyDef; /* size=0x28 */
-
-
 
 extern int rand(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
