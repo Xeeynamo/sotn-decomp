@@ -31,16 +31,16 @@ typedef struct Entity {
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 unk46; // 1 = took hit
-    /* 0x47 */ char pad_47[0x4];
-    /* 0x4B */ u16 animFrameIdx;
-    /* 0x4D */ s16 animFrameDuration;
-    /* 0x4F */ char pad_4F[0x24];
-    /* 0x73 */ u16 unk73;
-    /* 0x75 */ char pad_75[0x24];
-    /* 0x99 */ u16 zPriority;
-    /* 0x9B */ char pad_9B[0x14];
-    /* 0xAF */ u16 objectId;
-    /* 0xB1 */ char pad_B1[0x4];
+    /* 0x47 */ char pad_47[0x5];
+    /* 0x4C */ u16 animFrameIdx;
+    /* 0x4E */ s16 animFrameDuration;
+    /* 0x50 */ char pad_4F[0x24];
+    /* 0x74 */ u16 unk74;
+    /* 0x76 */ char pad_75[0x24];
+    /* 0x9A */ u16 zPriority;
+    /* 0x9C */ char pad_9B[0x14];
+    /* 0xB1 */ u16 objectId;
+    /* 0xB2 */ char pad_B1[0x4];
 } Entity;
 
 typedef struct {
