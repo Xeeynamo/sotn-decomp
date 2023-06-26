@@ -672,7 +672,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 attack;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 sp17;
@@ -681,7 +681,7 @@ typedef struct {
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u16 sp1C;
     /* 0x0E */ u16 sp1E;
-    /* 0x10 */ u8 sp20;
+    /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
     /* 0x12 */ u16 sp22; // entity->objectRoomIndex
 } SubweaponDef;          /* size=0x14 */
