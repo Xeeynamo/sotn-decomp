@@ -47,14 +47,69 @@ bool IsAlucart(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F4994);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F4D38);
+s32 CalcAttack(s32 equipId, s32 otherEquipId) {
+    s32 i;
+    u16 equipmentAttackBonus;
+    s16 totalAttack;
+    s16 strengthStat;
+
+    if (D_800A4B04[equipId].damageScale == 6 ||
+        D_800A4B04[equipId].damageScale == 10 ||
+        (D_800A4B04[equipId].damageScale == 9 &&
+         D_800A4B04[equipId].attack == 1)) {
+        return 0;
+    }
+    if (equipId == 0x10) {
+        return 0;
+    }
+    equipmentAttackBonus = 0;
+    for (i = 0; i < 5; i++) {
+        equipmentAttackBonus +=
+            (u16)D_800A7718[g_Status.equipment[2 + i]].attBonus;
+    }
+
+    totalAttack = D_800A4B04[equipId].attack;
+    strengthStat = g_Status.statsTotal[0];
+
+    if (strengthStat >= totalAttack) {
+        totalAttack += strengthStat;
+    } else {
+        totalAttack += strengthStat / 2;
+    }
+
+    totalAttack += equipmentAttackBonus;
+
+    if (equipId == 0x7D) { // Badelaire sword
+        totalAttack += g_Status.timerHours;
+    }
+    if (equipId == 0x8D) { // Muramasa sword
+        totalAttack += SquareRoot0(g_Status.D_80097C40);
+    }
+    if ((equipId == 4) &&
+        (D_800A4B04[otherEquipId].damageScale == 9)) { // Shield Rod
+        totalAttack += 5;
+    }
+    if (equipId == 0x7E) {                  // Equippable Sword Familiar
+        totalAttack += g_Status.D_80097C74; // Level of sword familiar
+    }
+    if (D_8013982C != 0) {
+        totalAttack += 20;
+    }
+    if (totalAttack < 0) {
+        totalAttack = 0;
+    }
+    if (totalAttack > 999) {
+        totalAttack = 999;
+    }
+    return totalAttack;
+}
 
 void func_800F4F48(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
         g_Status.attackHands[i] =
-            func_800F4D38(g_Status.equipment[i], g_Status.equipment[1 - i]);
+            CalcAttack(g_Status.equipment[i], g_Status.equipment[1 - i]);
     }
 }
 
