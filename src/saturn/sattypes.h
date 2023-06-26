@@ -34,13 +34,13 @@ typedef struct Entity {
     /* 0x47 */ char pad_47[0x5];
     /* 0x4C */ u16 animFrameIdx;
     /* 0x4E */ s16 animFrameDuration;
-    /* 0x50 */ char pad_4F[0x24];
+    /* 0x50 */ char pad_50[0x24];
     /* 0x74 */ u16 unk74;
-    /* 0x76 */ char pad_75[0x24];
+    /* 0x76 */ char pad_76[0x24];
     /* 0x9A */ u16 zPriority;
-    /* 0x9C */ char pad_9B[0x14];
+    /* 0x9C */ char pad_9C[0x14];
     /* 0xB1 */ u16 objectId;
-    /* 0xB2 */ char pad_B1[0x4];
+    /* 0xB2 */ char pad_B2[0x4];
 } Entity;
 
 typedef struct {
