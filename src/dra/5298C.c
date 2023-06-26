@@ -53,9 +53,9 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     s16 totalAttack;
     s16 strengthStat;
 
-    if (D_800A4B04[equipId].damageScale == 6 ||
-        D_800A4B04[equipId].damageScale == 10 ||
-        (D_800A4B04[equipId].damageScale == 9 &&
+    if (D_800A4B04[equipId].itemCategory == ITEM_FOOD ||
+        D_800A4B04[equipId].itemCategory == ITEM_MEDICINE ||
+        (D_800A4B04[equipId].itemCategory == ITEM_SHIELD &&
          D_800A4B04[equipId].attack == 1)) {
         return 0;
     }
@@ -85,8 +85,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == 0x8D) { // Muramasa sword
         totalAttack += SquareRoot0(g_Status.D_80097C40);
     }
-    if ((equipId == 4) &&
-        (D_800A4B04[otherEquipId].damageScale == 9)) { // Shield Rod
+    if (equipId == 4 && D_800A4B04[otherEquipId].itemCategory == ITEM_SHIELD) {
         totalAttack += 5;
     }
     if (equipId == 0x7E) {                  // Equippable Sword Familiar

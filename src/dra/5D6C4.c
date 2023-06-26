@@ -320,7 +320,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     func_800F4994();
     itemCategory = D_800A4B04[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
-        res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
+        res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.unk0C & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }

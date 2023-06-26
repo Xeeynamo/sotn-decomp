@@ -908,6 +908,7 @@ DemoInit = 0x800F0578;
 DemoUpdate = 0x800F0608;
 SetNextRoomToLoad = 0x800F0BC0;
 IsAlucart = 0x800F4944;
+CalcAttack = 0x800F4D38;
 IsOutsideDrawArea = 0x800F54CC;
 ScissorPolyG4 = 0x800F5530;
 ScissorPolyGT4 = 0x800F564C;
