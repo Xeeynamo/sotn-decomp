@@ -258,7 +258,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalModRate;
     s32 criticalRate;
-    u8 damageScale;
+    u8 itemCategory;
 
     criticalModRate = 5;
 
@@ -278,8 +278,8 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     res->criticalRate = criticalRate;
     func_800F4994();
-    damageScale = D_800A4B04[equipId].damageScale;
-    if (damageScale != 6 && damageScale != 10) {
+    itemCategory = D_800A4B04[equipId].itemCategory;
+    if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.unk0C & 0x4000) {
             res->attack >>= 1;
