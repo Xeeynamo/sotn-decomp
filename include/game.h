@@ -690,6 +690,20 @@ typedef struct {
     /* 0x12 */ u16 sp22; // entity->objectRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
+typedef enum {
+    ITEM_S_SWORD,
+    ITEM_SWORD,
+    ITEM_THROW_1,
+    ITEM_FIST,
+    ITEM_CLUB,
+    ITEM_TWOHAND,
+    ITEM_FOOD,
+    ITEM_BOMB,
+    ITEM_THROW_2,
+    ITEM_SHIELD,
+    ITEM_MEDICINE
+} ItemCategory;
+
 // Defines the equipment that can be set on left and right hand
 // This includes weapons, throw weapons, consumable and restoration items.
 // D_800A4B04 it is assumed the equip data starts from here
@@ -700,7 +714,7 @@ typedef struct {
     /* 0x08 */ s16 attack;
     /* 0x0A */ s16 defense;
     /* 0x0C */ u16 element;
-    /* 0x0E */ u8 damageScale;
+    /* 0x0E */ u8 itemCategory;
     /* 0x0F */ u8 weaponId;
     /* 0x10 */ u16 unk10;
     /* 0x12 */ u8 playerAnim;

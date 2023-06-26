@@ -26,7 +26,7 @@ def serialize_equipment(content: str) -> bytearray:
         serialized_data += utils.from_16(item["attack"])
         serialized_data += utils.from_16(item["defense"])
         serialized_data += utils.from_16(item["element"])
-        serialized_data += utils.from_u8(item["damageScale"])
+        serialized_data += utils.from_u8(item["itemCategory"])
         serialized_data += utils.from_u8(item["weaponId"])
         serialized_data += utils.from_16(item["unk10"])
         serialized_data += utils.from_u8(item["playerAnim"])
@@ -103,7 +103,7 @@ class PSXSegEquipment(N64Segment):
                 "attack": utils.to_s16(item_data[0x08:]),
                 "defense": utils.to_s16(item_data[0x0A:]),
                 "element": utils.to_u16(item_data[0x0C:]),
-                "damageScale": utils.to_u8(item_data[0x0E:]),
+                "itemCategory": utils.to_u8(item_data[0x0E:]),
                 "weaponId": utils.to_u8(item_data[0x0F:]),
                 "unk10": utils.to_u16(item_data[0x10:]),
                 "playerAnim": utils.to_u8(item_data[0x12:]),
