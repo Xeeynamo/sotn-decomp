@@ -720,13 +720,13 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuInt(g_Status.level, 304, 40, ctx);
         DrawMenuStr(c_strSTATUS, 248, 56, ctx);
         i = 37;
-        if (g_Player.unk0C & 0x8000) {
+        if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
             i = 40;
         }
-        if (g_Player.unk0C & 0x4000) {
+        if (g_Player.unk0C & PLAYER_STATUS_POISON) {
             i = 38;
         }
-        if (g_Player.unk0C & 0x80) {
+        if (g_Player.unk0C & PLAYER_STATUS_STONE) {
             i = 39;
         }
         if (IsAlucart()) {
@@ -1396,6 +1396,6 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 
 s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 
-u8 GetEquipDamageScale(s32 equipId) {
-    return D_800A4B04[g_Status.equipment[equipId]].damageScale;
+u8 GetEquipItemCategory(s32 equipId) {
+    return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
 }
