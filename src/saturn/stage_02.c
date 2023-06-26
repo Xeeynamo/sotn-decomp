@@ -10,7 +10,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC460, func_060DC460);
 void DestroyEntity(Entity*);
 
 void func_060DC4EC(Entity* self) {
-    if (self->unk2C == 0) {
+    if (self->step == 0) {
         DestroyEntity(self);
     }
 }

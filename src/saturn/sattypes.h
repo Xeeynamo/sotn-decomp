@@ -12,15 +12,35 @@ typedef unsigned long long u64;
 
 // entity layout is different somehow
 typedef struct Entity {
-    /* 0x00 */ s16 temp;
-    /* 0x02 */ char pad_2[0x2];
+    /* 0x00 */ void* unk0;
     /* 0x04 */ s16 posX;
     /* 0x06 */ char pad_6[0x2];
     /* 0x08 */ s16 posY;
-    /* 0x0A */ char pad_0A[0x22];
-    /* 0x2C */ u16 unk2C;
-    /* 0x2E */ char pad_2E;
-    /* 0x2F */ u16 subId;
+    /* 0x0A */ char pad_A[0x4];
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ char pad_10[0x4];
+    /* 0x14 */ u16 unk14; // Hitbox X Offset
+    /* 0x16 */ s16 unk16; // Hitbox Y Offset
+    /* 0x18 */ char pad_18[0x14];
+    /* 0x2C */ u16 step;
+    /* 0x2E */ u16 step_s;
+    /* 0x30 */ u16 subId;
+    /* 0x32 */ char pad_32[0x8];
+    /* 0x3A */ u16 unk3A; // hitbox state
+    /* 0x3C */ char pad_3C[0x8];
+    /* 0x44 */ u8 hitboxWidth;
+    /* 0x45 */ u8 hitboxHeight;
+    /* 0x46 */ u8 unk46; // 1 = took hit
+    /* 0x47 */ char pad_47[0x4];
+    /* 0x4B */ u16 animFrameIdx;
+    /* 0x4D */ s16 animFrameDuration;
+    /* 0x4F */ char pad_4F[0x24];
+    /* 0x73 */ u16 unk73;
+    /* 0x75 */ char pad_75[0x24];
+    /* 0x99 */ u16 zPriority;
+    /* 0x9B */ char pad_9B[0x14];
+    /* 0xAF */ u16 objectId;
+    /* 0xB1 */ char pad_B1[0x4];
 } Entity;
 
 typedef struct {
