@@ -44,6 +44,16 @@ def to_s16(data: bytearray):
 def to_u16(data: bytearray):
     return data[0] | (data[1] << 8)
 
+def from_s8(num):
+    if num < 0:
+        num += 256
+    return bytes([num])
+
+def to_s8(data: bytearray):
+    raw = data[0]
+    if raw >= 128:
+        return raw - 256
+    return raw
 
 def from_u8(num):
     return bytes([num])

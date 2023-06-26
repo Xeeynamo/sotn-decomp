@@ -28,8 +28,12 @@ def serialize_accessory(content: str) -> bytearray:
         item = obj[i]
         serialized_data += utils.from_ptr_str(item["name_addr"])
         serialized_data += utils.from_ptr_str(item["desc_addr"])
-        serialized_data += utils.from_u32(item["unk08"])
-        serialized_data += utils.from_u32(item["unk0C"])
+        serialized_data += utils.from_16(item["attBonus"])
+        serialized_data += utils.from_16(item["defBonus"])
+        serialized_data += utils.from_s8(item["strBonus"])
+        serialized_data += utils.from_s8(item["conBonus"])
+        serialized_data += utils.from_s8(item["intBonus"])
+        serialized_data += utils.from_s8(item["lckBonus"])
         serialized_data += utils.from_u32(item["unk10"])
         serialized_data += utils.from_u32(item["unk14"])
         serialized_data += utils.from_16(item["menuIcon"])
@@ -85,8 +89,12 @@ class PSXSegAccessory(N64Segment):
 
                 "name_addr": utils.to_ptr_str(item_data[0x00:]),
                 "desc_addr": utils.to_ptr_str(item_data[0x04:]),
-                "unk08": utils.to_u32(item_data[0x08:]),
-                "unk0C": utils.to_u32(item_data[0x0C:]),
+                "attBonus": utils.to_s16(item_data[0x08:]),
+                "defBonus": utils.to_s16(item_data[0x0A:]),
+                "strBonus": utils.to_s8(item_data[0x0C:]),
+                "conBonus": utils.to_s8(item_data[0x0D:]),
+                "intBonus": utils.to_s8(item_data[0x0E:]),
+                "lckBonus": utils.to_s8(item_data[0x0F:]),
                 "unk10": utils.to_u32(item_data[0x10:]),
                 "unk14": utils.to_u32(item_data[0x14:]),
                 "menuIcon": utils.to_u16(item_data[0x18:]),
