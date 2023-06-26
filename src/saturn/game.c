@@ -210,8 +210,82 @@ bool func_800FE3A8(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FC80, func_0606FC80);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FE60, func_0606FE60);
+// SAT: func_0606FC80
+s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+    u32 accessoryCount;
+
+    if (subweaponId == 0) {
+        *subwpn = g_Subweapons[g_Status.subWeapon];
+        accessoryCount = CheckEquipmentItemCount(0x4f, 4); // 4f instead of 4d
+        if (accessoryCount == 1) {
+            subwpn->unk2 = subwpn->unk2 / 2;
+        }
+        if (accessoryCount == 2) {
+            subwpn->unk2 = subwpn->unk2 / 3;
+        }
+        if (subwpn->unk2 <= 0) {
+            subwpn->unk2 = 1;
+        }
+        if (g_Status.hearts >= subwpn->unk2) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->unk2;
+            }
+            return g_Status.subWeapon;
+        } else {
+            return 0;
+        }
+    } else {
+        *subwpn = g_Subweapons[subweaponId];
+        if (CheckEquipmentItemCount(0x14, 2) != 0) {
+            subwpn->attack += 10;
+        }
+        if (subweaponId == 4 || subweaponId == 12) {
+            accessoryCount =
+                CheckEquipmentItemCount(0x3e, 4); // 3e instead of 3d
+            if (accessoryCount == 1) {
+                subwpn->attack *= 2;
+            }
+            if (accessoryCount == 2) {
+                subwpn->attack *= 3;
+            }
+        }
+        subwpn->attack += ((g_Status.statsTotal[2] * 2) + (rand() % 12)) / 10;
+        return subweaponId;
+    }
+}
+
+// SAT: func_0606FE60
+void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
+    s32 criticalModRate;
+    s32 criticalRate;
+    u8 damageScale;
+
+    criticalModRate = 5;
+
+    *res = D_800A4B04[equipId]; // hack not needed
+    criticalRate = res->criticalRate;
+    criticalRate = criticalRate - criticalModRate +
+                   SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
+    if (criticalRate > 255) {
+        criticalRate = 255;
+    }
+    if (criticalRate < 0) {
+        criticalRate = 0;
+    }
+    if (g_StageId == STAGE_ST0) {
+        criticalRate = 0;
+    }
+
+    res->criticalRate = criticalRate;
+    func_800F4994();
+    damageScale = D_800A4B04[equipId].damageScale;
+    if (damageScale != 6 && damageScale != 10) {
+        res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
+        if (g_Player.unk0C & 0x4000) {
+            res->attack >>= 1;
+        }
+    }
+}
 
 // SAT: func_0606FFA0
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
