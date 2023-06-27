@@ -340,7 +340,7 @@ void func_80161C2C(Entity* self) {
         self->posY.i.hi = ((g_Entities[PLAYER_CHARACTER].posY.i.hi +
                             g_Entities[PLAYER_CHARACTER].unk12) +
                            rnd) -
-                          0x10;
+                          16;
         self->accelerationY = subIdHi;
         self->accelerationX = g_Entities[PLAYER_CHARACTER].accelerationX >> 2;
         self->step++;
