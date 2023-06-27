@@ -351,14 +351,14 @@ void func_80161C2C(Entity* self) {
         self->unk1C -= 4;
         self->posY.val += self->accelerationY;
         self->posX.val += self->accelerationX;
-        if ((self->animFrameIdx == 8) && (self->unk4C != (&D_80154C80))) {
+        if ((self->animFrameIdx == 8) && (self->unk4C != &D_80154C80)) {
             self->blendMode = 0x10;
             if (!(subId & 1) && (self->animFrameDuration == step)) {
                 func_801606BC(self, 0x40004, 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->unk4C == (&D_80154C80))) {
+        if ((self->animFrameIdx == 16) && (self->unk4C == &D_80154C80)) {
             self->blendMode = 0x10;
         }
 
