@@ -532,7 +532,7 @@ void EntityTrapDoor(Entity* entity) {
         }
 
     case 1:
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             g_TrapDoorFlag = 1;
             entity->step++;
         }
@@ -582,7 +582,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             tileLayoutPtr = &D_80181258[self->ext.generic.unk84.S16.unk0 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -631,7 +631,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (g_Player.unk0C & 4)) {
+        if ((self->hitFlags != 0) && (g_Player.unk0C & 4)) {
             D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
         }
         break;
@@ -677,7 +677,7 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             tileLayoutPtr = &D_80181294[(self->ext.generic.unk84.S16.unk0 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -722,7 +722,7 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (g_Player.unk0C & 1)) {
+        if ((self->hitFlags != 0) && (g_Player.unk0C & 1)) {
             D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
         }
         break;

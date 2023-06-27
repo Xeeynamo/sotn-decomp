@@ -129,7 +129,7 @@ void EntitySlogra(Entity* self) {
     self->ext.GS_Props.pickupFlag = 0;
 
     if (self->step != SLOGRA_INIT) {
-        if ((self->unk48 & 3) && (self->step != SLOGRA_KNOCKBACK)) {
+        if ((self->hitFlags & 3) && (self->step != SLOGRA_KNOCKBACK)) {
             SetStep(SLOGRA_KNOCKBACK);
         }
         if (self->ext.GS_Props.nearDeath == 0) {

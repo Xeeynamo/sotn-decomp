@@ -53,7 +53,7 @@ void EntityPinkBallProjectile(Entity* self) {
         self->accelerationY = rsin(temp_s0) * 0x38;
         self->ext.generic.unkA2 = temp_s0;
 
-        if (self->unk48 & 0x80) {
+        if (self->hitFlags & 0x80) {
             self->step = 4;
         }
 
@@ -144,7 +144,7 @@ void EntityUnkId1F(Entity* entity) {
             entity->unk3C = 1;
             entity->animCurFrame = 0x56;
         }
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             D_80180668 = 1;
         }
         if (entity[-1].objectId != 0x1E) {
@@ -292,7 +292,7 @@ void Update(void) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
-                        entity->unk48 = 0;
+                        entity->hitFlags = 0;
                     }
                 }
             }
@@ -300,7 +300,7 @@ void Update(void) {
             g_CurrentEntity = entity;
             entity->pfnUpdate(entity);
             entity->unk44 = 0;
-            entity->unk48 = 0;
+            entity->hitFlags = 0;
         }
     }
 }

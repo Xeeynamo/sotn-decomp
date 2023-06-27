@@ -70,7 +70,7 @@ void EntitySubWeaponContainer(Entity* self) {
             }
         }
 
-        if (self->unk48 != 0) { // container got hit!
+        if (self->hitFlags != 0) { // container got hit!
             self->step++;
         }
         break;

@@ -220,7 +220,7 @@ void EntitySlogra(Entity* self) {
     FntPrint("beri_flag %x\n", g_BossFlag);
 
     if (self->step >= SLOGRA_TAUNT_WITH_SPEAR) {
-        if ((self->unk48 & 3) && (self->step != SLOGRA_KNOCKBACK)) {
+        if ((self->hitFlags & 3) && (self->step != SLOGRA_KNOCKBACK)) {
             SetStep(SLOGRA_KNOCKBACK);
         }
         if (self->ext.GS_Props.nearDeath == false) {
@@ -260,7 +260,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_IDLE:
         AnimateEntity(D_80181080, self);
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
         }
         if (g_BossFlag & BOSS_FLAG_FIGHT_BEGIN) {
