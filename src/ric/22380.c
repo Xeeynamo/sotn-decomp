@@ -292,7 +292,29 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016147C);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161C2C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161EF8);
+void func_80161EF8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->animSet = 2;
+        self->unk4C = &D_80154E38;
+        self->flags = 0x170000;
+        self->zPriority = PLAYER.zPriority + 4;
+        self->accelerationY = (rand() & 0x3FFF) + 0xFFFF0000;
+        self->step++;
+        break;
+
+    case 1:
+        if ((self->animFrameIdx == 6) &&
+            (self->animFrameDuration == self->step) && (rand() & 1)) {
+            func_801606BC(self, 4, 0);
+        }
+        self->posY.val += self->accelerationY;
+        if (self->animFrameDuration < 0) {
+            func_80156C60(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161FF0);
 
