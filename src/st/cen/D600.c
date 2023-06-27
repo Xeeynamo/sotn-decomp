@@ -811,7 +811,7 @@ void EntityHeartDrop(Entity* self) {
     } else {
         temp_a0_2 = self->ext.generic.unkB4;
         if (self->step < 5) {
-            if (self->unk48 != 0) {
+            if (self->hitFlags != 0) {
                 var_a0 = self->ext.generic.unkB4;
                 D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
                 self->step = 5;

@@ -662,7 +662,7 @@ void func_8011B334(Entity* entity) {
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 5;
         entity->step++;
-    } else if (entity->unk48 == 1) {
+    } else if (entity->hitFlags == 1) {
         g_Player.unk44 |= 0x80;
     }
 }
@@ -1219,7 +1219,7 @@ void func_801274DC(Entity* entity) {
         break;
 
     case 1:
-        if (entity->unk48 == 0) {
+        if (entity->hitFlags == 0) {
             entity->ext.generic.unk7C.s--;
             if ((entity->ext.generic.unk7C.s) == 0) {
                 entity->step++;
@@ -1232,7 +1232,7 @@ void func_801274DC(Entity* entity) {
         break;
 
     case 2:
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             DestroyEntity(entity);
             break;
         }
