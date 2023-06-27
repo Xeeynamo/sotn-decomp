@@ -19,8 +19,8 @@ void func_80113AAC(void) {
             if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
                 PLAYER.unk1E = 0x800;
-                PLAYER.unk22 = 2;
-                PLAYER.unk20 = 0;
+                PLAYER.rotPivotY = 2;
+                PLAYER.rotPivotX = 0;
                 PLAYER.unk19 |= 4;
                 PLAYER.facing = (PLAYER.facing + 1) & 1;
                 func_8010DA48(0x2B);
@@ -48,8 +48,8 @@ void func_80113AAC(void) {
 
     case 2:
         PLAYER.unk19 |= 4;
-        PLAYER.unk20 = 0;
-        PLAYER.unk22 = 2;
+        PLAYER.rotPivotX = 0;
+        PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
             func_8010DA48(0x2D);
             PLAYER.unk1E = 0;
