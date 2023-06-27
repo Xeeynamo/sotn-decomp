@@ -123,12 +123,12 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxWidth = 20;
             self->hitboxHeight = 17;
             *(s16*)&self->unk10 = -11;
-            self->unk12 = -14;
+            self->hitboxOffY = -14;
         } else {
             self->hitboxWidth = 8;
             self->hitboxHeight = 18;
             *(s16*)&self->unk10 = -1;
-            self->unk12 = 0;
+            self->hitboxOffY = 0;
         }
 
         if (*(s32*)&self->animFrameIdx == 7) {

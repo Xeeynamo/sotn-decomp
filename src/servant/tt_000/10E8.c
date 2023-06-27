@@ -479,7 +479,7 @@ s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
         hitboxFrames = &hitboxFrames[new_var2 << 2];
         self->unk10 = (s8)*hitboxFrames++;
         new_var = *(hitboxFrames++);
-        self->unk12 = new_var;
+        self->hitboxOffY = new_var;
         self->hitboxWidth = *hitboxFrames++;
         self->hitboxHeight = *hitboxFrames++;
     }
