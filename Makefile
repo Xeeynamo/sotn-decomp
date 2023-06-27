@@ -90,7 +90,8 @@ define link
 		-s
 endef
 
-all: build check
+psx: build check
+saturn: build_saturn_native check_saturn_native
 build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
 	git clean -fdx assets/
@@ -500,7 +501,7 @@ build_saturn_link_native: build_saturn_link_copy build_saturn_link_native_ld
 build_saturn_docker: build_saturn_copy_files build_saturn_dosemu_docker build_saturn_link_docker
 
 # do not run in parallel
-build_saturn_native: build_saturn_copy_files build_saturn_dosemu_native build_saturn_link_native check_saturn_native
+build_saturn_native: build_saturn_copy_files build_saturn_dosemu_native build_saturn_link_native
 
 check_saturn_docker:
 	# dump binaries using sh binutils container
