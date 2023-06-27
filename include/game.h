@@ -357,7 +357,7 @@ typedef struct Entity {
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
     /* 0x48 */ u8 hitFlags; // 1 = took hit
-    /* 0x49 */ u8 unk49; // invincibility frames
+    /* 0x49 */ u8 unk49;    // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
