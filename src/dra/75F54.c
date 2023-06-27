@@ -658,7 +658,7 @@ void func_8011B334(Entity* entity) {
         entity->objectRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->unk10 = 9;
-        entity->unk12 = 21;
+        entity->hitboxOffY = 21;
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 5;
         entity->step++;
@@ -822,7 +822,7 @@ void func_80123A60(Entity* entity) {
         entity->hitboxWidth = 12;
         entity->hitboxHeight = 32;
         entity->unk10 = 0x1C;
-        entity->unk12 = -0xC;
+        entity->hitboxOffY = -0xC;
         return;
     }
 
@@ -830,7 +830,7 @@ void func_80123A60(Entity* entity) {
         entity->hitboxWidth = 10;
         entity->hitboxHeight = 10;
         entity->unk10 = 0x1C;
-        entity->unk12 = 0x10;
+        entity->hitboxOffY = 0x10;
         return;
     }
 

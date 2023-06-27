@@ -27,7 +27,7 @@ void func_801CD540(Entity* self) {
 
     hitbox += diff * 4;
     self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
     if (self[-1].objectId != 0x44) {
@@ -254,7 +254,7 @@ void EntityHammerWeapon(Entity* self) {
         angle = *(u16*)&self->ext.stub[0x20];
         self->unk1E = angle;
         self->unk10 = ((u32)(rsin(angle) * 0xD) >> 0xA);
-        self->unk12 = (-(rcos(angle) * 0x34) >> 0xC);
+        self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
         break;
 
     case 24:
@@ -302,7 +302,7 @@ void EntityGurkhaSword(Entity* self) {
         angle = self->ext.gurkhaSword.unk9C;
         self->unk1E = angle;
         self->unk10 = (u32)rsin(angle) >> 8;
-        self->unk12 = -(rcos(angle) * 16) >> 0xC;
+        self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
         if (self->ext.gurkhaSword.unk8C) {
             self->step++;
         }
@@ -323,7 +323,7 @@ void EntityGurkhaSword(Entity* self) {
         self->ext.gurkhaSword.unkA6 = -0xC0;
         angle = self->unk1E;
         self->unk10 = (u32)rsin(self->unk1E) >> 8;
-        self->unk12 = -(rcos(angle) * 16) >> 0xC;
+        self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
 
         if (self->facing != 0) {
             self->accelerationX -= 0x4000;

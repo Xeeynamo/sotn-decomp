@@ -235,7 +235,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
         } else {
             x += entity->unk10;
         }
-        y += entity->unk12;
+        y += entity->hitboxOffY;
 
         tile->r0 = 0xFF;
         tile->g0 = 0xFF;
@@ -269,7 +269,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
         } else {
             x += entity->unk10;
         }
-        y += entity->unk12;
+        y += entity->hitboxOffY;
 
         tile->r0 = 0xFF;
         tile->g0 = 0xFF;

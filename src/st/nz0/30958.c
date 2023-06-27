@@ -840,7 +840,7 @@ void func_801B2AD8(Entity* self) {
     case 0:
         InitializeEntity(D_80180BF8);
         self->hitboxHeight = 8;
-        self->unk12 = -0x16;
+        self->hitboxOffY = -0x16;
         self->hitboxWidth = 6;
         self->unk3C = 1;
         CreateEntityFromEntity(0x26, self, &self[-1]);
@@ -984,7 +984,7 @@ void EntityTableWithGlobe(Entity* self) {
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
-        self->unk12 = -0xA;
+        self->hitboxOffY = -0xA;
         self->unk10 = 0;
         self->unk3C = 2;
 
@@ -1014,7 +1014,7 @@ void func_801B3648(Entity* self) {
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
-        self->unk12 = -0xA;
+        self->hitboxOffY = -0xA;
         self->unk10 = 0;
         self->unk3C = 2;
 
@@ -1060,7 +1060,7 @@ void func_801B37C0(Entity* self) {
             self->zPriority = 0x6A;
             self->hitboxWidth = 8;
             self->hitboxHeight = 12;
-            self->unk12 = -0xA;
+            self->hitboxOffY = -0xA;
             self->unk10 = 0;
             self->unk3C = 2;
             CreateEntityFromEntity(0x37, self, &self[1]);
@@ -1133,7 +1133,7 @@ void func_801B3A50(Entity* self) {
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 16;
-        self->unk12 = -0xA;
+        self->hitboxOffY = -0xA;
         self->unk10 = 0;
         self->unk3C = 2;
 

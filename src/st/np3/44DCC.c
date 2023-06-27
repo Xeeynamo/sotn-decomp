@@ -112,7 +112,7 @@ void EntityMerman2(Entity* self) {
     switch (self->step) {
     case MERMAN2_INIT:
         InitializeEntity(D_80180AB4);
-        self->unk12 = 8;
+        self->hitboxOffY = 8;
         self->zPriority = 0xA9;
         if (self->subId != 0) {
             self->palette++;

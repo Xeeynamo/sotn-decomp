@@ -488,7 +488,7 @@ void EntityDraculaBody(Entity* self) {
         self->unk3C = 1;
         self->hitPoints = 0x7FFF;
         self->unk10 = 3;
-        self->unk12 = 0x27;
+        self->hitboxOffY = 0x27;
         self->hitboxWidth = 12;
         self->animCurFrame = 0;
         self->hitboxHeight = 34;
