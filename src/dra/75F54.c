@@ -499,7 +499,7 @@ void func_8011A290(Entity* entity) {
     entity->unk58 = subwpn.sp18;
     entity->unk6A = subwpn.sp1E;
     entity->objectRoomIndex = subwpn.sp22;
-    entity->ext.generic.unkB2 = subwpn.sp20;
+    entity->ext.generic.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
 

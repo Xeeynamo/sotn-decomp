@@ -93,7 +93,33 @@ void func_8015FAB8(Entity* entity) {
     func_8015F9F0(entity);
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FB84);
+// We're playing as Richter and we used a subweapon (normal or crash)
+s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
+    s32 pad[2]; // Needed so stack pointer moves properly
+    u8 crashId;
+    // Not an item crash. Just read the item in.
+    if (isItemCrash == 0) {
+        *subwpn = D_80154688[g_Status.subWeapon];
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    } else {
+        // If it's a crash, load the subweapon by referencing our
+        // subweapon's crash ID and loading that.
+        crashId = D_80154688[g_Status.subWeapon].crashId;
+        *subwpn = D_80154688[crashId];
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FDB0);
 

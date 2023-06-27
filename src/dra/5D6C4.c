@@ -258,17 +258,17 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
         accessoryCount = CheckEquipmentItemCount(0x4D, 4);
         if (accessoryCount == 1) {
-            subwpn->unk2 = subwpn->unk2 / 2;
+            subwpn->heartCost = subwpn->heartCost / 2;
         }
         if (accessoryCount == 2) {
-            subwpn->unk2 = subwpn->unk2 / 3;
+            subwpn->heartCost = subwpn->heartCost / 3;
         }
-        if (subwpn->unk2 <= 0) {
-            subwpn->unk2 = 1;
+        if (subwpn->heartCost <= 0) {
+            subwpn->heartCost = 1;
         }
-        if (g_Status.hearts >= subwpn->unk2) {
+        if (g_Status.hearts >= subwpn->heartCost) {
             if (useHearts) {
-                g_Status.hearts -= subwpn->unk2;
+                g_Status.hearts -= subwpn->heartCost;
             }
             return g_Status.subWeapon;
         } else {
