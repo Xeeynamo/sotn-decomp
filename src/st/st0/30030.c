@@ -162,7 +162,8 @@ void Update(void) {
 
             if (unk34 & 0xF) {
                 entity->palette =
-                    D_801815EC[(entity->unk49 << 1) | (unk34 & 1)];
+                    D_801815EC[(entity->nFramesInvincibility << 1) |
+                               (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;

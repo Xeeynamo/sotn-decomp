@@ -85,7 +85,7 @@ void func_8015FAB8(Entity* entity) {
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
     entity->unk3C = subwpn->sp1C;
-    entity->unk49 = subwpn->sp17;
+    entity->nFramesInvincibility = subwpn->sp17;
     entity->unk58 = subwpn->sp18;
     entity->unk6A = subwpn->sp1E;
     entity->objectRoomIndex = subwpn->sp22;

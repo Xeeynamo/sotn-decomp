@@ -1728,7 +1728,8 @@ void Update(void) {
 
             if (unk34 & 0xF) {
                 entity->palette =
-                    D_80180690[(entity->unk49 << 1) | (unk34 & 1)];
+                    D_80180690[(entity->nFramesInvincibility << 1) |
+                               (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
@@ -1769,8 +1770,8 @@ void func_80188514(void) {
             if (!(entity->flags & FLAG_UNK_10000))
                 continue;
             if (entity->flags & 0xF) {
-                entity->palette =
-                    D_80180690[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->palette = D_80180690[entity->nFramesInvincibility << 1 |
+                                             LOH(entity->flags) & 1];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
