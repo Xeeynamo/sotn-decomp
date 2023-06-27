@@ -1,13 +1,13 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 
+void DestroyEntity(Entity*);
+
 // Alchemy Laboratory
 
 INCLUDE_ASM("asm/saturn/stage_02/data", d60DC000, d_060DC000);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC040, func_060DC040);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC460, func_060DC460);
-
-void DestroyEntity(Entity*);
 
 void func_060DC4EC(Entity* self) {
     if (self->step == 0) {
