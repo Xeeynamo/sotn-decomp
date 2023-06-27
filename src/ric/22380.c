@@ -190,7 +190,7 @@ void func_80160C38(Entity* entity) {
         if (entity->step == 0) {
             entity->flags = 0x60000 | FLAG_UNK_04000000;
             entity->unk10 = 0x14;
-            entity->unk12 = 0xC;
+            entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
             entity->ext.generic.unkB0 = 0x12;
@@ -228,11 +228,11 @@ void func_80160D2C(Entity* self) {
     }
 
     if (PLAYER.animCurFrame == 140) {
-        self->unk12 = 0;
+        self->hitboxOffY = 0;
     }
 
     if (PLAYER.animCurFrame == 141) {
-        self->unk12 = 12;
+        self->hitboxOffY = 12;
     }
 
     if (self->unk48 != 0) {
@@ -254,7 +254,7 @@ void func_80160E4C(Entity* self) {
             self->flags = 0x60000 | FLAG_UNK_04000000;
             self->hitboxHeight = 20;
             self->hitboxWidth = 20;
-            self->unk12 = 0;
+            self->hitboxOffY = 0;
             self->unk10 = 0;
             self->ext.generic.unkB0 = 0x11;
             func_8015FAB8(self);
@@ -277,7 +277,7 @@ void func_80160F0C(Entity* self) {
     if (self->step == 0) {
         self->flags = 0x60000 | FLAG_UNK_04000000;
         self->unk10 = 0xC;
-        self->unk12 = -0x1A;
+        self->hitboxOffY = -0x1A;
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->ext.generic.unkB0 = 0x16;

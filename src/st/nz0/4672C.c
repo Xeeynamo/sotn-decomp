@@ -64,7 +64,7 @@ void EntitySpittleBone(Entity* self) {
             }
         }
         self->unk10 = (u32)rsin(self->unk1E) >> 8;
-        self->unk12 = -(rcos(self->unk1E) * 16) >> 0xC;
+        self->hitboxOffY = -(rcos(self->unk1E) * 16) >> 0xC;
         return;
 
     case 3:

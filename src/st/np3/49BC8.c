@@ -23,7 +23,7 @@ void EntityZombie(Entity* self) {
     case 0:
         InitializeEntity(D_80180B08);
         self->hitboxWidth = 8;
-        self->unk12 = 0x10;
+        self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;
         self->zPriority += 4;
         if (g_blinkTimer & 1) {
@@ -47,7 +47,7 @@ void EntityZombie(Entity* self) {
             SetStep(3);
         }
         if (self->animFrameDuration == 0) {
-            self->unk12 -= 2;
+            self->hitboxOffY -= 2;
             self->hitboxHeight += 2;
         }
         break;
