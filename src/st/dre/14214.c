@@ -138,10 +138,10 @@ void EntityUnkId1F(Entity* entity) {
         InitializeEntity(D_8018050C);
         entity->animCurFrame = 0;
         entity->unk19 = 4;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
     case 1:
         if (entity[-1].animCurFrame != 0) {
-            entity->unk3C = 1;
+            entity->hitboxState = 1;
             entity->animCurFrame = 0x56;
         }
         if (entity->hitFlags != 0) {
@@ -810,7 +810,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->hitPoints = enemyDef->hitPoints;
     g_CurrentEntity->attack = enemyDef->attack;
     g_CurrentEntity->attackElement = enemyDef->attackElement;
-    g_CurrentEntity->unk3C = enemyDef->unkC;
+    g_CurrentEntity->hitboxState = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
     g_CurrentEntity->flags = enemyDef->unk24;

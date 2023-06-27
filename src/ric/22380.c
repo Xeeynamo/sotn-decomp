@@ -84,7 +84,7 @@ void func_8015FAB8(Entity* entity) {
 
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
-    entity->unk3C = subwpn->sp1C;
+    entity->hitboxState = subwpn->sp1C;
     entity->nFramesInvincibility = subwpn->sp17;
     entity->unk58 = subwpn->sp18;
     entity->unk6A = subwpn->sp1E;
@@ -221,12 +221,12 @@ void func_80160C38(Entity* entity) {
             entity->hitboxWidth = 9;
             entity->ext.generic.unkB0 = 0x12;
             func_8015FAB8(entity);
-            entity->ext.generic.unk7C.s = entity->unk3C;
+            entity->ext.generic.unk7C.s = entity->hitboxState;
             entity->step++;
         }
-        entity->unk3C = entity->ext.generic.unk7C.s;
+        entity->hitboxState = entity->ext.generic.unk7C.s;
         if (PLAYER.animFrameIdx < 2) {
-            entity->unk3C = 0;
+            entity->hitboxState = 0;
         }
         if (PLAYER.animFrameIdx >= 8) {
             func_80156C60(entity);

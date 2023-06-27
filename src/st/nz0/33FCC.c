@@ -525,7 +525,7 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_DYING:
         switch (self->step_s) {
         case SLOGRA_DYING_START:
-            self->unk3C = 0;
+            self->hitboxState = 0;
             if (self->ext.GS_Props.nearDeath == 0) {
                 self->ext.GS_Props.nearDeath = 1;
             }
@@ -622,7 +622,7 @@ void EntitySlograSpear(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->unk19 = 4;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             if (self->facing != 0) {
                 self->accelerationX = -0x24000;
             } else {
@@ -1239,7 +1239,7 @@ void func_801B69E8(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180D30);
-        self->unk3C = 0;
+        self->hitboxState = 0;
     }
 
     prevEntity = &self[-1];
@@ -1324,7 +1324,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->palette = 0x81F3;
             self->blendMode = 0x30;
             self->step = 2;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->flags |= 0x2000;
         }
         break;

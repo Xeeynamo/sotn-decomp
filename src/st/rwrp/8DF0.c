@@ -608,13 +608,13 @@ void EntitySoulStealOrb(Entity* self) {
         }
         self->ext.soulStealOrb.unk80 = 0x400;
         self->ext.soulStealOrb.unk7E = 0;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         break;
 
     case 1:
         self->ext.soulStealOrb.unk82++;
         if (self->ext.soulStealOrb.unk82 == 16) {
-            self->unk3C = 1;
+            self->hitboxState = 1;
         }
         if (self->hitFlags != 0) {
             if (g_Player.unk56 == 0) {

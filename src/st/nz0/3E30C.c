@@ -631,7 +631,7 @@ void func_801C0D08(Entity* self) {
         }
         prim = &g_PrimBuf[firstPolygonIndex];
         self->firstPolygonIndex = firstPolygonIndex;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         *(s32*)&self->ext.generic.unk7C = prim;
         self->flags |= FLAG_FREE_POLYGONS;
         while (prim != NULL) {
@@ -1123,13 +1123,13 @@ void EntitySoulStealOrb(Entity* self) {
         }
         self->ext.soulStealOrb.unk80 = 0x400;
         self->ext.soulStealOrb.unk7E = 0;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         break;
 
     case 1:
         self->ext.soulStealOrb.unk82++;
         if (self->ext.soulStealOrb.unk82 == 16) {
-            self->unk3C = 1;
+            self->hitboxState = 1;
         }
         if (self->hitFlags != 0) {
             if (g_Player.unk56 == 0) {
@@ -1192,7 +1192,7 @@ void EntityEnemyBlood(Entity* self) {
             self->firstPolygonIndex = i;
             self->animSet = 0;
             subId = self->subId;
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
@@ -1258,7 +1258,7 @@ void EntityEnemyBlood(Entity* self) {
             break;
         }
 
-        if (self->unk3C != 0) {
+        if (self->hitboxState != 0) {
             if (g_Player.unk0C & 0x02000000) {
                 posX = self->posX.i.hi;
                 self->accelerationX += self->ext.generic.unk80.modeS32;
@@ -1276,7 +1276,7 @@ void EntityEnemyBlood(Entity* self) {
                     self->hitboxHeight =
                         (self->ext.generic.unk7E.modeU16 / 4) + 8;
                 } else {
-                    self->unk3C = 0;
+                    self->hitboxState = 0;
                 }
 
                 if (self->hitFlags != 0) {
@@ -1288,10 +1288,10 @@ void EntityEnemyBlood(Entity* self) {
                         }
                     }
                     g_Player.unk10++;
-                    self->unk3C = 0;
+                    self->hitboxState = 0;
                 }
             } else {
-                self->unk3C = 0;
+                self->hitboxState = 0;
             }
         }
 
