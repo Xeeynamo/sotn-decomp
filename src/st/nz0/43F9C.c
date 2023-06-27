@@ -94,7 +94,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_INIT:
         InitializeEntity(D_80180C64);
         self->facing = (GetPlayerSide() & 1) ^ 1;
-        self->unk12 = 10;
+        self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
@@ -307,7 +307,7 @@ void EntityAxeKnight(Entity* self) {
     hitbox++;
     hitbox--;
     self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }

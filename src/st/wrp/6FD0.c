@@ -1728,7 +1728,8 @@ void Update(void) {
 
             if (unk34 & 0xF) {
                 entity->palette =
-                    D_80180690[(entity->unk49 << 1) | (unk34 & 1)];
+                    D_80180690[(entity->nFramesInvincibility << 1) |
+                               (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
@@ -1769,8 +1770,8 @@ void func_80188514(void) {
             if (!(entity->flags & FLAG_UNK_10000))
                 continue;
             if (entity->flags & 0xF) {
-                entity->palette =
-                    D_80180690[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->palette = D_80180690[entity->nFramesInvincibility << 1 |
+                                             LOH(entity->flags) & 1];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
@@ -2407,7 +2408,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
-    g_CurrentEntity->unk12 = 0;
+    g_CurrentEntity->hitboxOffY = 0;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {

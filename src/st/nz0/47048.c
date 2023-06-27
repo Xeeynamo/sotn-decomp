@@ -26,7 +26,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->zPriority = 0x70;
         self->hitboxWidth = 14;
         self->hitboxHeight = 32;
-        self->unk12 = -0x38;
+        self->hitboxOffY = -0x38;
         self->unk10 = 0;
         self->unk3C = 2;
         self->palette += self->subId;

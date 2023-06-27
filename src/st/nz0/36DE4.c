@@ -11,7 +11,7 @@ void func_801B6DE4(Entity* self) {
         InitializeEntity(D_80180BF8);
         self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
         self->hitboxHeight = 8;
-        self->unk12 = -0x16;
+        self->hitboxOffY = -0x16;
         self->hitboxWidth = 6;
         self->unk3C = 1;
 
@@ -216,7 +216,8 @@ void Update(void) {
 
             if (unk34 & 0xF) {
                 entity->palette =
-                    D_80181574[(entity->unk49 << 1) | (unk34 & 1)];
+                    D_80181574[(entity->nFramesInvincibility << 1) |
+                               (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
@@ -257,8 +258,8 @@ void func_801B9800(void) {
             if (!(entity->flags & FLAG_UNK_10000))
                 continue;
             if (entity->flags & 0xF) {
-                entity->palette =
-                    D_80181574[entity->unk49 << 1 | LOH(entity->flags) & 1];
+                entity->palette = D_80181574[entity->nFramesInvincibility << 1 |
+                                             LOH(entity->flags) & 1];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
@@ -844,7 +845,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
     g_CurrentEntity->flags = enemyDef->unk24;
     g_CurrentEntity->unk10 = 0;
-    g_CurrentEntity->unk12 = 0;
+    g_CurrentEntity->hitboxOffY = 0;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {

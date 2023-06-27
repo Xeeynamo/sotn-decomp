@@ -495,11 +495,11 @@ void func_8011A290(Entity* entity) {
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
     entity->unk3C = subwpn.sp1C;
-    entity->unk49 = subwpn.sp17;
+    entity->nFramesInvincibility = subwpn.sp17;
     entity->unk58 = subwpn.sp18;
     entity->unk6A = subwpn.sp1E;
     entity->objectRoomIndex = subwpn.sp22;
-    entity->ext.generic.unkB2 = subwpn.sp20;
+    entity->ext.generic.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
 
@@ -510,7 +510,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     entity->attack = spell.attack;
     entity->attackElement = spell.attackElement;
     entity->unk3C = spell.unk10;
-    entity->unk49 = spell.unk0D;
+    entity->nFramesInvincibility = spell.unk0D;
     entity->unk58 = spell.unk0E;
     entity->unk6A = spell.unk12;
     entity->objectRoomIndex = spell.unk14;
@@ -526,7 +526,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         arg0->attack = spell.attack;
         arg0->attackElement = spell.attackElement;
         arg0->unk3C = spell.unk10;
-        arg0->unk49 = spell.unk0D;
+        arg0->nFramesInvincibility = spell.unk0D;
         arg0->unk58 = spell.unk0E;
         arg0->unk6A = spell.unk12;
         arg0->objectRoomIndex = spell.unk14;
@@ -652,13 +652,13 @@ void func_8011B334(Entity* entity) {
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
         entity->unk3C = equip.hitType;
-        entity->unk49 = equip.enemyInvincibilityFrames;
+        entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
         entity->unk58 = equip.stunFrames;
         entity->unk6A = equip.hitEffect;
         entity->objectRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->unk10 = 9;
-        entity->unk12 = 21;
+        entity->hitboxOffY = 21;
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 5;
         entity->step++;
@@ -822,7 +822,7 @@ void func_80123A60(Entity* entity) {
         entity->hitboxWidth = 12;
         entity->hitboxHeight = 32;
         entity->unk10 = 0x1C;
-        entity->unk12 = -0xC;
+        entity->hitboxOffY = -0xC;
         return;
     }
 
@@ -830,7 +830,7 @@ void func_80123A60(Entity* entity) {
         entity->hitboxWidth = 10;
         entity->hitboxHeight = 10;
         entity->unk10 = 0x1C;
-        entity->unk12 = 0x10;
+        entity->hitboxOffY = 0x10;
         return;
     }
 

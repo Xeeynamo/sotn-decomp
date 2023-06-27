@@ -85,7 +85,7 @@ void func_8015FAB8(Entity* entity) {
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
     entity->unk3C = subwpn->sp1C;
-    entity->unk49 = subwpn->sp17;
+    entity->nFramesInvincibility = subwpn->sp17;
     entity->unk58 = subwpn->sp18;
     entity->unk6A = subwpn->sp1E;
     entity->objectRoomIndex = subwpn->sp22;
@@ -93,7 +93,33 @@ void func_8015FAB8(Entity* entity) {
     func_8015F9F0(entity);
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FB84);
+// We're playing as Richter and we used a subweapon (normal or crash)
+s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
+    s32 pad[2]; // Needed so stack pointer moves properly
+    u8 crashId;
+    // Not an item crash. Just read the item in.
+    if (isItemCrash == 0) {
+        *subwpn = D_80154688[g_Status.subWeapon];
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    } else {
+        // If it's a crash, load the subweapon by referencing our
+        // subweapon's crash ID and loading that.
+        crashId = D_80154688[g_Status.subWeapon].crashId;
+        *subwpn = D_80154688[crashId];
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FDB0);
 
@@ -190,7 +216,7 @@ void func_80160C38(Entity* entity) {
         if (entity->step == 0) {
             entity->flags = 0x60000 | FLAG_UNK_04000000;
             entity->unk10 = 0x14;
-            entity->unk12 = 0xC;
+            entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
             entity->ext.generic.unkB0 = 0x12;
@@ -228,11 +254,11 @@ void func_80160D2C(Entity* self) {
     }
 
     if (PLAYER.animCurFrame == 140) {
-        self->unk12 = 0;
+        self->hitboxOffY = 0;
     }
 
     if (PLAYER.animCurFrame == 141) {
-        self->unk12 = 12;
+        self->hitboxOffY = 12;
     }
 
     if (self->hitFlags != 0) {
@@ -254,7 +280,7 @@ void func_80160E4C(Entity* self) {
             self->flags = 0x60000 | FLAG_UNK_04000000;
             self->hitboxHeight = 20;
             self->hitboxWidth = 20;
-            self->unk12 = 0;
+            self->hitboxOffY = 0;
             self->unk10 = 0;
             self->ext.generic.unkB0 = 0x11;
             func_8015FAB8(self);
@@ -277,7 +303,7 @@ void func_80160F0C(Entity* self) {
     if (self->step == 0) {
         self->flags = 0x60000 | FLAG_UNK_04000000;
         self->unk10 = 0xC;
-        self->unk12 = -0x1A;
+        self->hitboxOffY = -0x1A;
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->ext.generic.unkB0 = 0x16;

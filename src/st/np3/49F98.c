@@ -231,7 +231,7 @@ void EntityBloodyZombie(Entity* self) {
     case BLOODY_ZOMBIE_INIT:
         InitializeEntity(D_80180B38);
         self->unk10 = 1;
-        self->unk12 = 4;
+        self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
 
@@ -434,12 +434,12 @@ void EntityBloodyZombie(Entity* self) {
         self->hitboxWidth = 18;
         self->hitboxHeight = 12;
         *(s16*)&self->unk10 = -12;
-        self->unk12 = -12;
+        self->hitboxOffY = -12;
     } else {
         self->hitboxWidth = 4;
         self->hitboxHeight = 22;
         self->unk10 = 1;
-        self->unk12 = 4;
+        self->hitboxOffY = 4;
     }
 }
 
