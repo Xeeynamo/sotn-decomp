@@ -170,7 +170,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         }
 
     case LEFT_SECRET_ROOM_WALL_IDLE:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             func_801C29B0(NA_SE_EN_ROCK_BREAK);
             self->step++;
         }
@@ -249,7 +249,7 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
         }
 
     case BOTTOM_SECRET_ROOM_FLOOR_IDLE:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             func_801C29B0(NA_SE_EN_ROCK_BREAK);
             self->step++;
         }
@@ -632,7 +632,7 @@ void EntityCannonLever(Entity* self) {
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             self->accelerationX = -0x40000;
             self->step++;
         }
@@ -866,7 +866,7 @@ void func_801B2AD8(Entity* self) {
         poly->pad3 = 2;
 
     case 1:
-        var_a0 = self->unk48;
+        var_a0 = self->hitFlags;
         var_v0 = self->posX.i.hi - self[-1].posX.i.hi;
 
         if (ABS(var_v0) < 8) {
@@ -990,7 +990,7 @@ void EntityTableWithGlobe(Entity* self) {
 
     case 1:
         AnimateEntity(D_80180EF0, self);
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             func_801C29B0(0x61D);
             self->unk3C = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
@@ -1020,7 +1020,7 @@ void func_801B3648(Entity* self) {
 
     case 1:
         AnimateEntity(D_80180F1C, self);
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             func_801C29B0(0x619);
             self->unk3C = 0;
             SetStep(2);
@@ -1073,7 +1073,7 @@ void func_801B37C0(Entity* self) {
             break;
         }
         AnimateEntity(D_80180F50, self);
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             self->unk3C = 0;
             SetStep(2);
         }
@@ -1139,7 +1139,7 @@ void func_801B3A50(Entity* self) {
 
     case 1:
         AnimateEntity(D_80180F88, self);
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             self->unk3C = 0;
             SetStep(2);

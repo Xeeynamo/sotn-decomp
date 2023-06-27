@@ -27,15 +27,15 @@ void EntityDracula(Entity* self) {
 
     index = 1; // !FAKE
 
-    if (self->unk48 == 1) {
+    if (self->hitFlags == 1) {
         g_api.PlaySfx(NA_SE_VO_DR_HURT_2);
     }
 
-    if (self->unk48 == 2) {
+    if (self->hitFlags == 2) {
         g_api.PlaySfx(NA_SE_VO_DR_HURT_3);
     }
 
-    if (self->unk48 == 3) {
+    if (self->hitFlags == 3) {
         g_api.PlaySfx(NA_SE_VO_DR_HURT_4);
     }
 

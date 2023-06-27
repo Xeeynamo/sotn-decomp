@@ -16,7 +16,7 @@ void EntityPrizeDrop(Entity* self) {
     if (self->step != 0) {
         AnimateEntity(D_80181E14[itemId], self);
     }
-    if (self->step - 2 < 3U && self->unk48 != 0) {
+    if (self->step - 2 < 3U && self->hitFlags != 0) {
         self->step = 5;
     }
     self->palette = 0;
@@ -295,7 +295,7 @@ void EntityEquipItemDrop(Entity* self) {
     s16 temp_a0;
     s32* unk;
 
-    if (((self->step - 2) < 3U) && (self->unk48 != 0)) {
+    if (((self->step - 2) < 3U) && (self->hitFlags != 0)) {
         self->step = 5;
     }
 
@@ -495,7 +495,7 @@ void EntityHeartDrop(Entity* self) {
     } else {
         temp_a0_2 = self->ext.generic.unkB4;
         if (self->step < 5) {
-            if (self->unk48 != 0) {
+            if (self->hitFlags != 0) {
                 var_a0 = self->ext.generic.unkB4;
                 D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
                 self->step = 5;
@@ -948,7 +948,7 @@ void EntitySoulStealOrb(Entity* self) {
         if (self->ext.soulStealOrb.unk82 == 16) {
             self->unk3C = 1;
         }
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             if (g_Player.unk56 == 0) {
                 g_Player.unk56 = 1;
                 g_Player.unk58 = 8;
@@ -1096,7 +1096,7 @@ void EntityEnemyBlood(Entity* self) {
                     self->unk3C = 0;
                 }
 
-                if (self->unk48 != 0) {
+                if (self->hitFlags != 0) {
                     if (g_Player.unk56 == 0) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;

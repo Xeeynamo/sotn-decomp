@@ -1,7 +1,7 @@
 #include "nz0.h"
 
 void func_801B6DE4(Entity* self) {
-    s32 temp_s1 = self->unk48;
+    s32 temp_s1 = self->hitFlags;
     s16 firstPolygonIndex;
     POLY_GT4* poly;
     s32 temp;
@@ -233,7 +233,7 @@ void Update(void) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
-                        entity->unk48 = 0;
+                        entity->hitFlags = 0;
                     }
                 }
             }
@@ -241,7 +241,7 @@ void Update(void) {
             g_CurrentEntity = entity;
             entity->pfnUpdate(entity);
             entity->unk44 = 0;
-            entity->unk48 = 0;
+            entity->hitFlags = 0;
         }
     }
 }
@@ -270,7 +270,7 @@ void func_801B9800(void) {
         g_CurrentEntity = entity;
         entity->pfnUpdate(entity);
         entity->unk44 = 0;
-        entity->unk48 = 0;
+        entity->hitFlags = 0;
     }
 }
 

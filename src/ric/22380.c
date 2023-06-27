@@ -235,12 +235,12 @@ void func_80160D2C(Entity* self) {
         self->unk12 = 12;
     }
 
-    if (self->unk48 != 0) {
+    if (self->hitFlags != 0) {
         g_Player.unk44 |= 0x80;
     } else {
         g_Player.unk44 &= ~0x80;
     }
-    self->unk48 = 0;
+    self->hitFlags = 0;
 }
 
 void func_80160E4C(Entity* self) {
