@@ -252,7 +252,7 @@ void EntityHammerWeapon(Entity* self) {
 
     case 1:
         angle = *(u16*)&self->ext.stub[0x20];
-        self->unk1E = angle;
+        self->rotAngle = angle;
         self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
         self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
         break;
@@ -273,7 +273,7 @@ void EntityHammerWeapon(Entity* self) {
         case 1:
             MoveEntity();
             self->accelerationY += 0x2000;
-            func_801CDC80(&self->unk1E, 0x800, 0x20);
+            func_801CDC80(&self->rotAngle, 0x800, 0x20);
             break;
         }
     }
@@ -300,7 +300,7 @@ void EntityGurkhaSword(Entity* self) {
 
     case 1:
         angle = self->ext.gurkhaSword.unk9C;
-        self->unk1E = angle;
+        self->rotAngle = angle;
         self->hitboxOffX = (u32)rsin(angle) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
         if (self->ext.gurkhaSword.unk8C) {
@@ -318,11 +318,11 @@ void EntityGurkhaSword(Entity* self) {
 
     case 3:
         MoveEntity();
-        self->unk1E -= 0x100;
-        self->ext.gurkhaSword.unk9C = self->unk1E;
+        self->rotAngle -= 0x100;
+        self->ext.gurkhaSword.unk9C = self->rotAngle;
         self->ext.gurkhaSword.unkA6 = -0xC0;
-        angle = self->unk1E;
-        self->hitboxOffX = (u32)rsin(self->unk1E) >> 8;
+        angle = self->rotAngle;
+        self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
 
         if (self->facing != 0) {
@@ -357,7 +357,7 @@ void EntityGurkhaSword(Entity* self) {
         case 1:
             MoveEntity();
             self->accelerationY += 0x2000;
-            self->unk1E += self->ext.gurkhaSword.unkA6;
+            self->rotAngle += self->ext.gurkhaSword.unkA6;
             if (--self->ext.gurkhaSword.unk80 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;

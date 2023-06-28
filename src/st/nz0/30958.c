@@ -324,9 +324,9 @@ void func_801B19A0(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->unk1E += 0x20;
+        self->rotAngle += 0x20;
         if (self->subId != 0) {
-            self->unk1E += 0x20;
+            self->rotAngle += 0x20;
         }
 
         self->accelerationY += 0x2000;

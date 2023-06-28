@@ -939,7 +939,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
-            entity->unk1E = 0x800;
+            entity->rotAngle = 0x800;
             entity->unk19 |= 4;
         }
     }

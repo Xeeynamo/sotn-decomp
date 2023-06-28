@@ -18,7 +18,7 @@ void func_80113AAC(void) {
             func_801139CC(3);
             if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
-                PLAYER.unk1E = 0x800;
+                PLAYER.rotAngle = 0x800;
                 PLAYER.rotPivotY = 2;
                 PLAYER.rotPivotX = 0;
                 PLAYER.unk19 |= 4;
@@ -52,7 +52,7 @@ void func_80113AAC(void) {
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
             func_8010DA48(0x2D);
-            PLAYER.unk1E = 0;
+            PLAYER.rotAngle = 0;
             PLAYER.step_s = 4;
             PLAYER.unk19 &= 0xFB;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
@@ -126,7 +126,7 @@ void func_80113EE0(void) {
     PLAYER.blendMode = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.unk1E = 0;
+    PLAYER.rotAngle = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
     if (g_Entities[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();

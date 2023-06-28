@@ -177,7 +177,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_80182424[entity->subId];
+            entity->rotAngle += D_80182424[entity->subId];
             FallEntity();
             MoveEntity();
             return;
@@ -209,7 +209,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
             return;
         }
 
-        entity->unk1E += 0x80;
+        entity->rotAngle += 0x80;
         entity->accelerationY += 0x2400;
         MoveEntity();
 

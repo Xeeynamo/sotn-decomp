@@ -636,8 +636,8 @@ void EntitySlograSpear(Entity* self) {
         case 1:
             MoveEntity();
             self->accelerationY += 0x2800;
-            self->unk1E += 0x80;
-            if (!(self->unk1E & 0xFFF)) {
+            self->rotAngle += 0x80;
+            if (!(self->rotAngle & 0xFFF)) {
                 func_801C29B0(0x625);
             }
         }
@@ -1280,10 +1280,10 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->animCurFrame = 1;
         self->unk19 = 5;
         self->unk1A = 0xC0;
-        self->accelerationX = (rcos(self->unk1E) * 0x28000) >> 0xC;
-        self->accelerationY = (rsin(self->unk1E) * 0x28000) >> 0xC;
+        self->accelerationX = (rcos(self->rotAngle) * 0x28000) >> 0xC;
+        self->accelerationY = (rsin(self->rotAngle) * 0x28000) >> 0xC;
         self->palette = 0x81B6;
-        self->unk1E -= 0x400;
+        self->rotAngle -= 0x400;
 
     case 1:
         MoveEntity();
@@ -1311,10 +1311,10 @@ void EntityLargeGaibonProjectile(Entity* self) {
         if (self->subId == 0) {
             self->animSet = 2;
             self->unk19 = 4;
-            self->accelerationX = (rcos(self->unk1E) * 0x38000) >> 0xC;
-            self->accelerationY = (rsin(self->unk1E) * 0x38000) >> 0xC;
+            self->accelerationX = (rcos(self->rotAngle) * 0x38000) >> 0xC;
+            self->accelerationY = (rsin(self->rotAngle) * 0x38000) >> 0xC;
             self->palette = 0x81B6;
-            self->unk1E -= 0x400;
+            self->rotAngle -= 0x400;
         } else {
             self->animSet = 14;
             self->unk5A = 0x79;
@@ -1337,7 +1337,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
                 newEntity->subId = 1;
-                newEntity->unk1E = self->unk1E;
+                newEntity->rotAngle = self->rotAngle;
                 newEntity->zPriority = self->zPriority + 1;
             }
         }

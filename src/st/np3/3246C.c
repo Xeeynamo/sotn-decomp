@@ -150,18 +150,18 @@ void EntityCavernDoorLever(Entity* entity) {
     case 0:
         InitializeEntity(D_80180AA8);
         entity->animCurFrame = 18;
-        entity->unk1E = -0x200;
+        entity->rotAngle = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
         if (D_8003BDEC[0x30] != 0) {
-            entity->unk1E = 0;
+            entity->rotAngle = 0;
         }
 
     case 1:
         if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
-            entity->unk1E += 4;
-            if (entity->unk1E > 0) {
-                entity->unk1E = 0;
+            entity->rotAngle += 4;
+            if (entity->rotAngle > 0) {
+                entity->rotAngle = 0;
                 if (D_8003BDEC[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
@@ -175,8 +175,8 @@ void EntityCavernDoorLever(Entity* entity) {
 
     posX = entity->posX.val;
     posY = entity->posY.val;
-    posX += rcos(entity->unk1E) * 0x280;
-    posY += rsin(entity->unk1E) * 0x280;
+    posX += rcos(entity->rotAngle) * 0x280;
+    posY += rsin(entity->rotAngle) * 0x280;
     entity[1].posX.val = posX;
     entity[1].posY.val = posY;
 }
@@ -842,7 +842,7 @@ void EntityFallingRock2(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x4000;
-        self->unk1E -= 0x20;
+        self->rotAngle -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_80181204[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
@@ -902,7 +902,7 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x2000;
-        self->unk1E -= 0x20;
+        self->rotAngle -= 0x20;
 
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
                              0);

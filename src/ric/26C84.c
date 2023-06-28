@@ -417,12 +417,12 @@ void func_80169D74(Entity* entity) {
         entity->facing = PLAYER.facing;
         entity->zPriority = PLAYER.zPriority;
         entity->unk19 = 4;
-        entity->unk1E = 0xC00;
+        entity->rotAngle = 0xC00;
         entity->step++;
         break;
 
     case 1:
-        entity->unk1E -= 0x80;
+        entity->rotAngle -= 0x80;
         if (entity->ext.generic.unk8C.entityPtr->step == 7) {
             entity->step++;
             entity->ext.generic.unk7C.s = (entity->subId + 1) * 4;
@@ -430,7 +430,7 @@ void func_80169D74(Entity* entity) {
         break;
 
     case 2:
-        entity->unk1E -= 0x80;
+        entity->rotAngle -= 0x80;
         entity->ext.generic.unk7C.s--;
         if (entity->ext.generic.unk7C.s == 0) {
             func_80156C60(entity);

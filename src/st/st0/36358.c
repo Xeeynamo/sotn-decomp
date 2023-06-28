@@ -682,7 +682,7 @@ void func_801B8D00(Entity* self) {
             break;
         }
 
-        self->unk1E = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
+        self->rotAngle = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
         temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
         self->accelerationX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
         self->accelerationY =
@@ -1001,7 +1001,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
-            entity->unk1E = 0x800;
+            entity->rotAngle = 0x800;
             entity->unk19 |= 4;
         }
     }
