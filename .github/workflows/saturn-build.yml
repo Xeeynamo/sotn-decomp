@@ -35,7 +35,7 @@ jobs:
       - name: Clone dependencies
         uses: actions/checkout@v3
         with:
-          repository: xeeynamo/sotn-decomp-dependencies
+          repository: sozud/sotn-decomp-dependencies
           ref: saturn
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
@@ -51,11 +51,15 @@ jobs:
           sudo apt-get install p7zip-full bchunk binutils-sh-elf
       - name: Install dosemu
         run: |
-          sudo apt-get install -y -o APT::Immediate-Configure=false \
-          dos2unix software-properties-common && \
-          sudo add-apt-repository -y ppa:dosemu2/ppa && \
-          sudo apt-get update && \
-          sudo apt-get install -y dosemu2;
+          wget https://github.com/sozud/dosemu-deb/archive/refs/heads/main.zip
+          unzip main.zip
+          rm -rf main.zip
+          cd dosemu-deb-main
+          sudo apt-get install xfonts-utils
+          sudo dpkg -i fdpp_1.6-1_amd64.deb
+          sudo dpkg -i fdpp-dev_1.6-1_amd64.deb
+          sudo dpkg -i comcom32_0.1~alpha3-1_all.deb
+          sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
       - name: Prep
         run: make -j build_saturn_toolchain_native
       - name: Extract asm
