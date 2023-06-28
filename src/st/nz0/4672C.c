@@ -63,7 +63,7 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->posY.i.hi += 24;
             }
         }
-        self->unk10 = (u32)rsin(self->unk1E) >> 8;
+        self->hitboxOffX = (u32)rsin(self->unk1E) >> 8;
         self->hitboxOffY = -(rcos(self->unk1E) * 16) >> 0xC;
         return;
 
