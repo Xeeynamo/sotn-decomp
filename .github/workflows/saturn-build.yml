@@ -35,7 +35,7 @@ jobs:
       - name: Clone dependencies
         uses: actions/checkout@v3
         with:
-          repository: sozud/sotn-decomp-dependencies
+          repository: xeeynamo/sotn-decomp-dependencies
           ref: saturn
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
