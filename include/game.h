@@ -789,8 +789,8 @@ typedef struct {
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
-    /* 8003C828 */ u16 (*func_800FF128)(Entity* enemyEntity,
-                                        Entity* weaponEntity);
+    /* 8003C828 */ u16 (*DealDamage)(Entity* enemyEntity,
+                                     Entity* attackerEntity);
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;
