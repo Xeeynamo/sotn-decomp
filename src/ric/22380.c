@@ -215,7 +215,7 @@ void func_80160C38(Entity* entity) {
         entity->facing = PLAYER.facing;
         if (entity->step == 0) {
             entity->flags = 0x60000 | FLAG_UNK_04000000;
-            entity->unk10 = 0x14;
+            entity->hitboxOffX = 0x14;
             entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
@@ -245,7 +245,7 @@ void func_80160D2C(Entity* self) {
 
     if (self->step == 0) {
         self->flags = 0x60000 | FLAG_UNK_04000000;
-        self->unk10 = 0x14;
+        self->hitboxOffX = 0x14;
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
         self->ext.generic.unkB0 = 0x17;
@@ -281,7 +281,7 @@ void func_80160E4C(Entity* self) {
             self->hitboxHeight = 20;
             self->hitboxWidth = 20;
             self->hitboxOffY = 0;
-            self->unk10 = 0;
+            self->hitboxOffX = 0;
             self->ext.generic.unkB0 = 0x11;
             func_8015FAB8(self);
             self->step++;
@@ -302,7 +302,7 @@ void func_80160F0C(Entity* self) {
     self->facing = PLAYER.facing;
     if (self->step == 0) {
         self->flags = 0x60000 | FLAG_UNK_04000000;
-        self->unk10 = 0xC;
+        self->hitboxOffX = 0xC;
         self->hitboxOffY = -0x1A;
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;

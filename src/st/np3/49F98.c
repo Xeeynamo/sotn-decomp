@@ -230,7 +230,7 @@ void EntityBloodyZombie(Entity* self) {
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
         InitializeEntity(D_80180B38);
-        self->unk10 = 1;
+        self->hitboxOffX = 1;
         self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
@@ -433,12 +433,12 @@ void EntityBloodyZombie(Entity* self) {
     if (self->animCurFrame > 10 && self->animCurFrame < 13) {
         self->hitboxWidth = 18;
         self->hitboxHeight = 12;
-        *(s16*)&self->unk10 = -12;
+        *(s16*)&self->hitboxOffX = -12;
         self->hitboxOffY = -12;
     } else {
         self->hitboxWidth = 4;
         self->hitboxHeight = 22;
-        self->unk10 = 1;
+        self->hitboxOffX = 1;
         self->hitboxOffY = 4;
     }
 }

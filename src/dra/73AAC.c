@@ -140,15 +140,15 @@ void func_80113F7C(void) {
     s32 var_a2;
 
     if (entity->facing != 0) {
-        var_a2 = -entity->unk10;
+        var_a2 = -entity->hitboxOffX;
     } else {
-        var_a2 = entity->unk10;
+        var_a2 = entity->hitboxOffX;
     }
 
     if (PLAYER.facing != 0) {
-        var_a0 = -PLAYER.unk10;
+        var_a0 = -PLAYER.hitboxOffX;
     } else {
-        var_a0 = PLAYER.unk10;
+        var_a0 = PLAYER.hitboxOffX;
     }
 
     posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;

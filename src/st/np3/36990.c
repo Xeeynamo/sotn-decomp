@@ -486,7 +486,7 @@ void EntitySlogra(Entity* self) {
     hitbox = &D_8018142C[self->animCurFrame][D_801813EC];
     hitbox--;
     hitbox++;
-    self->unk10 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
@@ -505,7 +505,7 @@ void EntitySlograSpear(Entity* self) {
         self->posY.i.hi = self[-1].posY.i.hi;
         hitbox = D_80181454;
         hitbox += 4 * D_8018148C[self[-1].animCurFrame];
-        self->unk10 = *hitbox++;
+        self->hitboxOffX = *hitbox++;
         self->hitboxOffY = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
