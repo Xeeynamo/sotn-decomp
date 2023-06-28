@@ -487,7 +487,7 @@ void EntityDraculaBody(Entity* self) {
         InitializeEntity(D_801805E0);
         self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
-        self->unk10 = 3;
+        self->hitboxOffX = 3;
         self->hitboxOffY = 0x27;
         self->hitboxWidth = 12;
         self->animCurFrame = 0;

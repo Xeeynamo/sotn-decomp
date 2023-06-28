@@ -27,7 +27,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxWidth = 14;
         self->hitboxHeight = 32;
         self->hitboxOffY = -0x38;
-        self->unk10 = 0;
+        self->hitboxOffX = 0;
         self->hitboxState = 2;
         self->palette += self->subId;
         CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon

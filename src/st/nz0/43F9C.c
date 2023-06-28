@@ -306,7 +306,7 @@ void EntityAxeKnight(Entity* self) {
     hitbox = &D_80182284[self->animCurFrame][D_80182274];
     hitbox++;
     hitbox--;
-    self->unk10 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];

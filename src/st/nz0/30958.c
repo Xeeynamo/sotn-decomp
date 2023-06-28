@@ -985,7 +985,7 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
         self->hitboxOffY = -0xA;
-        self->unk10 = 0;
+        self->hitboxOffX = 0;
         self->hitboxState = 2;
 
     case 1:
@@ -1015,7 +1015,7 @@ void func_801B3648(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
         self->hitboxOffY = -0xA;
-        self->unk10 = 0;
+        self->hitboxOffX = 0;
         self->hitboxState = 2;
 
     case 1:
@@ -1061,7 +1061,7 @@ void func_801B37C0(Entity* self) {
             self->hitboxWidth = 8;
             self->hitboxHeight = 12;
             self->hitboxOffY = -0xA;
-            self->unk10 = 0;
+            self->hitboxOffX = 0;
             self->hitboxState = 2;
             CreateEntityFromEntity(0x37, self, &self[1]);
             self[1].subId = 0x100;
@@ -1134,7 +1134,7 @@ void func_801B3A50(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 16;
         self->hitboxOffY = -0xA;
-        self->unk10 = 0;
+        self->hitboxOffX = 0;
         self->hitboxState = 2;
 
     case 1:

@@ -328,7 +328,7 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ u16 unk10;      // Hitbox X Offset
+    /* 0x10 */ u16 hitboxOffX; // Hitbox X Offset
     /* 0x12 */ s16 hitboxOffY; // Hitbox Y Offset
     /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;

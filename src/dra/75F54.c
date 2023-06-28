@@ -657,7 +657,7 @@ void func_8011B334(Entity* entity) {
         entity->unk6A = equip.hitEffect;
         entity->objectRoomIndex = equip.criticalRate;
         func_80118894(entity);
-        entity->unk10 = 9;
+        entity->hitboxOffX = 9;
         entity->hitboxOffY = 21;
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 5;
@@ -821,7 +821,7 @@ void func_80123A60(Entity* entity) {
     if (player->animCurFrame == 5) {
         entity->hitboxWidth = 12;
         entity->hitboxHeight = 32;
-        entity->unk10 = 0x1C;
+        entity->hitboxOffX = 0x1C;
         entity->hitboxOffY = -0xC;
         return;
     }
@@ -829,7 +829,7 @@ void func_80123A60(Entity* entity) {
     if (player->animCurFrame == 6) {
         entity->hitboxWidth = 10;
         entity->hitboxHeight = 10;
-        entity->unk10 = 0x1C;
+        entity->hitboxOffX = 0x1C;
         entity->hitboxOffY = 0x10;
         return;
     }
