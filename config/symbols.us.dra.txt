@@ -939,6 +939,7 @@ AddToInventory = 0x800FD874;
 GetEquipProperties = 0x800FE728;
 HasEnoughMp = 0x800FE8B4;
 AddHearts = 0x800FE914;
+DealDamage = 0x800FF128;
 DrawHudRichter = 0x80100750;
 jpt_80102810 = 0x80102810;
 DestroyEntity = 0x80106590;
