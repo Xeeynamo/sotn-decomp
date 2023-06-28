@@ -86,13 +86,13 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->unk19 = 4;
         self->animCurFrame = 0;
         var_s0 = D_801807F0[self->subId];
-        self->unk1E = var_s0;
+        self->rotAngle = var_s0;
         self->unk19 |= 1;
         self->unk1A = 0x100;
         CreateEntityFromEntity(0x1F, self, &self[1]);
         self[1].facing = self->facing;
         self[1].subId = self->subId;
-        self[1].unk1E = self->unk1E;
+        self[1].rotAngle = self->rotAngle;
 
     case 1:
         if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
@@ -120,7 +120,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         }
     }
 
-    var_s0 = self->unk1E;
+    var_s0 = self->rotAngle;
     temp_s2 = (self->unk1A * 0xB) >> 6;
     if (self->facing == 0) {
         var_s0 = 0x800 - var_s0;

@@ -8,11 +8,11 @@ void func_801092E8(s32 arg0) {
 }
 
 void func_80109328(void) {
-    s16* player_unk1E = &PLAYER.unk1E;
+    s16* player_unk1E = &PLAYER.rotAngle;
 
     g_Player.unk66 = 0;
     if (*player_unk1E == 0x800 && PLAYER.step == 8) {
-        PLAYER.unk1E = 0;
+        PLAYER.rotAngle = 0;
         PLAYER.animCurFrame = 0x9D;
         PLAYER.facing = (PLAYER.facing + 1) & 1;
     }

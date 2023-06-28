@@ -29,7 +29,7 @@ void func_80115F54(void) {
         PLAYER.accelerationY = -0x1A000;
         PLAYER.ext.generic.unkAC = 0xC1;
         PLAYER.blendMode = 0x30;
-        PLAYER.unk1E = 0x200;
+        PLAYER.rotAngle = 0x200;
         func_80118C28(1);
         func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
         func_8011AAFC(g_CurrentEntity, 0x60031, 0);
@@ -158,16 +158,16 @@ bool func_80116838(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    if (PLAYER.unk1E < arg0) {
-        PLAYER.unk1E += 16;
-        if (arg0 < PLAYER.unk1E) {
-            PLAYER.unk1E = arg0;
+    if (PLAYER.rotAngle < arg0) {
+        PLAYER.rotAngle += 16;
+        if (arg0 < PLAYER.rotAngle) {
+            PLAYER.rotAngle = arg0;
         }
     }
-    if (arg0 < PLAYER.unk1E) {
-        PLAYER.unk1E -= 16;
-        if (PLAYER.unk1E < arg0) {
-            PLAYER.unk1E = arg0;
+    if (arg0 < PLAYER.rotAngle) {
+        PLAYER.rotAngle -= 16;
+        if (PLAYER.rotAngle < arg0) {
+            PLAYER.rotAngle = arg0;
         }
     }
 }
@@ -195,7 +195,7 @@ void func_80117AC0(void) {
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
         collisionCount += 1;
     }
-    PLAYER.unk1E = 0;
+    PLAYER.rotAngle = 0;
     func_8010E27C();
     if (collisionCount == 0) {
         func_8010E7AC();
@@ -1259,7 +1259,7 @@ void func_80127840(Entity* entity) {
         }
 
         entity->animSet = 9;
-        entity->unk1E = 0;
+        entity->rotAngle = 0;
         entity->unk4C = &D_800B07C8;
         entity->unk19 |= 4;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1274,7 +1274,7 @@ void func_80127840(Entity* entity) {
     case 1:
         if (entity->animFrameIdx >= 23) {
             if (!(D_8003C8C4 & 3)) {
-                entity->unk1E += 0x400;
+                entity->rotAngle += 0x400;
             }
             if (entity->accelerationX < 0) {
                 entity->accelerationX -= 0x1800;

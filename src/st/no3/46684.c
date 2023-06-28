@@ -1205,7 +1205,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
-            entity->unk1E = 0x800;
+            entity->rotAngle = 0x800;
             entity->unk19 |= 4;
         }
     }
@@ -1699,7 +1699,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_80183BA8[entity->subId];
+            entity->rotAngle += D_80183BA8[entity->subId];
             FallEntity();
             MoveEntity();
             return;
