@@ -336,7 +336,7 @@ typedef struct Entity {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;     // poly rotation angle
+    /* 0x1E */ s16 rotAngle;     // poly rotation angle
     /* 0x20 */ s16 rotPivotX; // poly / rotation origin x
     /* 0x22 */ s16 rotPivotY; // poly / rotation origin y
     /* 0x24 */ u16 zPriority;

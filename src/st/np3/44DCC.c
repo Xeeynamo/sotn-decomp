@@ -237,7 +237,7 @@ void EntityMerman2(Entity* self) {
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
-                self->unk1E = 0;
+                self->rotAngle = 0;
                 self->unk19 |= 4;
                 self->step_s++;
             }
@@ -249,7 +249,7 @@ void EntityMerman2(Entity* self) {
                 prim->blendMode = 8;
                 self->animCurFrame = 18;
                 self->hitboxHeight = 8;
-                self->unk1E -= 0x80;
+                self->rotAngle -= 0x80;
             } else {
                 if (self->facing != 0) {
                     s16 posX = self->posX.i.hi;
@@ -397,7 +397,7 @@ void EntityMerman2(Entity* self) {
                     }
                 }
                 self->ext.merman2.rotation = 1;
-                self->unk1E = 0;
+                self->rotAngle = 0;
                 self->unk19 |= 4;
                 if (self->facing != 0) {
                     self->accelerationX = -0x60000;
@@ -432,7 +432,7 @@ void EntityMerman2(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->accelerationX = 0;
             }
-            self->unk1E += self->ext.merman2.rotation;
+            self->rotAngle += self->ext.merman2.rotation;
             self->accelerationY -= 0x2000;
 
             if (func_801BC8E4(&D_80182248) & 1) {
@@ -464,8 +464,8 @@ void EntityMerman2(Entity* self) {
                 self->accelerationX = 0;
             }
             MoveEntity();
-            self->unk1E += 0xC0;
-            if (self->unk1E > 0x1000) {
+            self->rotAngle += 0xC0;
+            if (self->rotAngle > 0x1000) {
                 self->posY.i.hi -= 10;
                 self->unk19 &= 0xFB;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);

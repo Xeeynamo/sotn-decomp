@@ -268,7 +268,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_801824B8[entity->subId];
+            entity->rotAngle += D_801824B8[entity->subId];
             FallEntity();
             MoveEntity();
             return;

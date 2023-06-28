@@ -18,7 +18,7 @@ void EntitySpittleBone(Entity* self) {
     case 0:
         InitializeEntity(D_80180CAC);
         self->unk19 = 4;
-        self->unk1E = 0;
+        self->rotAngle = 0;
         self->flags &= ~0x2200;
         self->facing = self->subId;
         break;
@@ -48,10 +48,10 @@ void EntitySpittleBone(Entity* self) {
         self->ext.generic.unk7C.U8.unk0 =
             func_801C1034(self->ext.generic.unk7C.U8.unk0);
         if (self->ext.generic.unk80.modeS16.unk2 != 0) {
-            self->unk1E += self->ext.generic.unk80.modeS16.unk0;
+            self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
             self->ext.generic.unk80.modeS16.unk2--;
             if (self->ext.generic.unk80.modeS16.unk2 == 0) {
-                self->unk1E = self[1].unk1E;
+                self->rotAngle = self[1].rotAngle;
             }
         }
         if (((self->ext.generic.unk7C.U8.unk0 & 0x3F) == 1) &&
@@ -63,8 +63,8 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->posY.i.hi += 24;
             }
         }
-        self->hitboxOffX = (u32)rsin(self->unk1E) >> 8;
-        self->hitboxOffY = -(rcos(self->unk1E) * 16) >> 0xC;
+        self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
+        self->hitboxOffY = -(rcos(self->rotAngle) * 16) >> 0xC;
         return;
 
     case 3:
@@ -77,7 +77,7 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->palette = 0x20D;
                 newEntity->animCurFrame = i + 0x3A;
                 newEntity->unk19 |= 4;
-                newEntity->unk1E = self->unk1E;
+                newEntity->rotAngle = self->rotAngle;
                 newEntity->step = 4;
                 newEntity->accelerationX = D_80182504[i];
                 newEntity->accelerationY = 0xFFFD0000 - ((Random() & 3) << 0xF);
@@ -90,8 +90,8 @@ void EntitySpittleBone(Entity* self) {
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->subId = 1;
-            newEntity->posX.i.hi += -(rsin(self->unk1E) * 0x10) >> 0xC;
-            newEntity->posY.i.hi += -(rcos(self->unk1E) * 0x10) >> 0xC;
+            newEntity->posX.i.hi += -(rsin(self->rotAngle) * 0x10) >> 0xC;
+            newEntity->posY.i.hi += -(rcos(self->rotAngle) * 0x10) >> 0xC;
         }
         func_801C29B0(0x62B);
         DestroyEntity(self);
@@ -138,7 +138,7 @@ void EntitySpittleBoneSpit(Entity* self) {
 
     case 1:
         entity = self->ext.generic.unk84.unk;
-        if ((entity->unk1E & 0xFFF) == 0x800) {
+        if ((entity->rotAngle & 0xFFF) == 0x800) {
             if (entity->facing != 0) {
                 self->posX.i.hi = entity->posX.i.hi - 3;
             } else {

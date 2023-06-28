@@ -314,12 +314,12 @@ void EntityAxeKnight(Entity* self) {
 
 void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->subId != 0) {
-        g_CurrentEntity->unk1E += 0x80;
+        g_CurrentEntity->rotAngle += 0x80;
     } else {
-        g_CurrentEntity->unk1E -= 0x80;
+        g_CurrentEntity->rotAngle -= 0x80;
     }
 
-    g_CurrentEntity->unk1E &= 0xFFF;
+    g_CurrentEntity->rotAngle &= 0xFFF;
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {

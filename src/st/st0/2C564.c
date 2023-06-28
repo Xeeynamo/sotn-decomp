@@ -583,7 +583,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 2:
         AnimateEntity(D_80180990, entity);
         MoveEntity();
-        entity->unk1E += 4;
+        entity->rotAngle += 4;
         speedX = 0x1000;
         if (entity->subId != 0) {
             speedX = 0xE00;
@@ -656,7 +656,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
     case 1:
         MoveEntity();
-        entity->unk1E += 0x20;
+        entity->rotAngle += 0x20;
         entity->accelerationY += 0x2000;
         if (entity->posY.i.hi >= 205) {
             g_api.PlaySfx(NA_SE_BREAK_GLASS);
@@ -714,11 +714,11 @@ void EntityDraculaMegaFireball(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         if (self->subId == 0) {
-            angle = self->unk1E;
+            angle = self->rotAngle;
             self->unk1C = 0x80;
             self->unk1A = 0x80;
             self->unk19 |= 7;
-            self->unk1E = 0x1C0 - angle;
+            self->rotAngle = 0x1C0 - angle;
             if (self->facing != 0) {
                 self->accelerationX = rcos(angle) * 0x60;
             } else {
