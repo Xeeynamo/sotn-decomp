@@ -360,7 +360,7 @@ void func_80161C2C(Entity* self) {
         }
 
         rnd = rand() & 31;
-        self->posY.i.hi = ((PLAYER.posY.i.hi + PLAYER.hitboxOffY) + rnd) - 16;
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
         self->accelerationY = -0x8000;
         self->accelerationX = PLAYER.accelerationX >> 2;
         self->step++;
