@@ -587,10 +587,38 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B0AC, func_0607B0AC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B0D0, func_0607B0D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B104, func_0607B104);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B134, func_0607B134);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B184, func_0607B184);
+
+// SAT: func_0607B184
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
+
+    while (current < end) {
+        if (current->unk74 == 0) { // not objectId?
+            DestroyEntity(current);
+            return current;
+        }
+        current++;
+    }
+    return NULL;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B1C8, func_0607B1C8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B218, func_0607B218);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B240, func_0607B240);
+
+// SAT: func_0607B218
+void func_801C58A4(s32 state) {
+    g_CurrentEntity->step = state;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+}
+
+// SAT: func_0607B240
+void func_801C58C4(s32 state) {
+    g_CurrentEntity->step_s = state;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B264, func_0607B264);
 
 extern u32 g_randomNext;

@@ -10,16 +10,35 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
-// entity layout is different somehow
 typedef struct Entity {
-    s16 temp;
-    s16 pad1;
-    s16 posX;
-    s16 pad3;
-    s16 posY;
-    s8 pad[0x25];
-    u16 subId;
+    /* 0x0 */ void* unk0;
+    /* 0x4 */ s16 posX;
+    s16 pad0;
+    /* 0x8 */ s16 posY;
+    s16 pad1[5];
+    /* 0x14 */ u16 hitboxOffX; // Hitbox X Offset
+    /* 0x16 */ s16 hitboxOffY; // Hitbox Y Offset
+    s8 pad3[0x14];
+    /* 0x2c */ u16 step;
+    /* 0x2e */ u16 step_s;
+    /* 0x30 */ u16 subId;
+    u8 pad4[8];
+    /* 0x3a */ u16 hitboxState; // hitbox state
+    s16 pad5[4];
+    /* 0x44 */ u8 hitboxWidth;
+    /* 0x45 */ u8 hitboxHeight;
+    /* 0x46 */ u8 hitFlags; // 1 = took hit
+    u8 pad6[0x4];
+    /* 0x4c */ u16 animFrameIdx;
+    /* 0x4e */ s16 animFrameDuration;
+    u8 pad7[0x24];
+    /* 0x74 */ u16 unk74;
+    u8 pad8[0x40];
 } Entity;
+
+extern Entity* g_CurrentEntity;
+
+#define NULL 0
 
 typedef struct {
     /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
