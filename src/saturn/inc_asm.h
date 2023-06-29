@@ -8,10 +8,10 @@
 
 #ifndef INCLUDE_ASM
 
-#define INCLUDE_ASM(FOLDER, NAME, LABEL)                                              \
-    __asm__(".text\n"                                                 \
+#define INCLUDE_ASM(FOLDER, NAME, LABEL)                                       \
+    __asm__(".text\n"                                                          \
             "\t.align\t2\n"                                                    \
-            "\t.global\t _" #LABEL "\n"                                            \
+            "\t.global\t _" #LABEL "\n"                                        \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
 #endif
 
@@ -22,11 +22,10 @@ __asm__(".include \"macro.inc\"\n");
 #define INCLUDE_ASM(FOLDER, NAME)
 #endif
 
-#define INCLUDE_ASM_NO_ALIGN(FOLDER, NAME, LABEL)                                              \
-    __asm__(".text\n"                                                 \
-            "\t.global\t _" #LABEL "\n"                                            \
+#define INCLUDE_ASM_NO_ALIGN(FOLDER, NAME, LABEL)                              \
+    __asm__(".text\n"                                                          \
+            "\t.global\t _" #LABEL "\n"                                        \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
 __asm__(".include \"macro.inc\"\n");
-
 
 #endif
