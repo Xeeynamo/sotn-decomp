@@ -1,6 +1,11 @@
 # Castlevania: Symphony of the Night Decompilation
 
-A work-in-progress decompilation of Castlevania Symphony of the Night for PlayStation 1. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation. Currently it only supports the US version of the game `SLUS-00067`.
+A work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1 and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
+
+It currently supports the following versions of the game:
+* `us` the reference build with the serial number SLUS-00067
+* `hd` an unreleases PS1 Japanese build found in Castlevania: Dracula X Chronicles game data
+* `saturn` the port created by an external development team
 
 This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.
 
@@ -42,6 +47,7 @@ This project is possible thanks to the hard work of tools provided by the Decomp
 * [splat](https://github.com/ethteck/splat) from @ethteck to disassemble code and extract data with a symbol map. This tool provides the fundamental of the SOTN decomp.
 * [asm-differ](https://github.com/simonlindholm/asm-differ) from @simonlindholm to know how the decompiled code compares to the original binary.
 * [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) from @simonlindholm to pick different versions of the same code that better matches the original binary.
+* [maspsx](https://github.com/mkst/maspsx) by @mkst to replicate the customized assembler used in the official PSX SDK.
 * [decomp.me](https://github.com/decompme/decomp.me/) by @ethteck, @nanaian and @mkst to provide a collaborative decompilation site to share and contribute to work-in-progress decompiled functions.
 * [frogress](https://github.com/decompals/frogress) by @ethteck to store and retrieve progression data.
 * [esa-new](https://github.com/mkst/esa-new) by @mkst as an inspiration on how to set-up a PS1 decompilation project.
