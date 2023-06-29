@@ -328,17 +328,17 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ u16 unk10; // Hitbox X Offset
-    /* 0x12 */ s16 unk12; // Hitbox Y Offset
+    /* 0x10 */ u16 hitboxOffX; // Hitbox X Offset
+    /* 0x12 */ s16 hitboxOffY; // Hitbox Y Offset
     /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E; // poly rotation angle
-    /* 0x20 */ s16 unk20; // poly / rotation origin x
-    /* 0x22 */ s16 unk22; // poly / rotation origin y
+    /* 0x1E */ s16 rotAngle;  // poly rotation angle
+    /* 0x20 */ s16 rotPivotX; // poly / rotation origin x
+    /* 0x22 */ s16 rotPivotY; // poly / rotation origin y
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -349,15 +349,15 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ u16 enemyId;
-    /* 0x3C */ u16 unk3C; // hitbox state
+    /* 0x3C */ u16 hitboxState; // hitbox state
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ s16 attackElement;
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 unk48; // 1 = took hit
-    /* 0x49 */ u8 unk49; // invincibility frames
+    /* 0x48 */ u8 hitFlags;             // 1 = took hit
+    /* 0x49 */ u8 nFramesInvincibility; // invincibility frames
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
@@ -676,7 +676,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 attack;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 sp17;
@@ -685,7 +685,7 @@ typedef struct {
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u16 sp1C;
     /* 0x0E */ u16 sp1E;
-    /* 0x10 */ u8 sp20;
+    /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
     /* 0x12 */ u16 sp22; // entity->objectRoomIndex
 } SubweaponDef;          /* size=0x14 */
@@ -789,8 +789,8 @@ typedef struct {
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
-    /* 8003C828 */ u16 (*func_800FF128)(Entity* enemyEntity,
-                                        Entity* weaponEntity);
+    /* 8003C828 */ u16 (*DealDamage)(Entity* enemyEntity,
+                                     Entity* attackerEntity);
     /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;

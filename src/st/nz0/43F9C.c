@@ -83,7 +83,7 @@ void EntityAxeKnight(Entity* self) {
         if (self->step != AXE_KNIGHT_DYING) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->ext.generic.unk80.modeS16.unk0 = 65;
             self->zPriority -= 0x10;
             SetStep(AXE_KNIGHT_DYING);
@@ -94,7 +94,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_INIT:
         InitializeEntity(D_80180C64);
         self->facing = (GetPlayerSide() & 1) ^ 1;
-        self->unk12 = 10;
+        self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
@@ -306,20 +306,20 @@ void EntityAxeKnight(Entity* self) {
     hitbox = &D_80182284[self->animCurFrame][D_80182274];
     hitbox++;
     hitbox--;
-    self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
 
 void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->subId != 0) {
-        g_CurrentEntity->unk1E += 0x80;
+        g_CurrentEntity->rotAngle += 0x80;
     } else {
-        g_CurrentEntity->unk1E -= 0x80;
+        g_CurrentEntity->rotAngle -= 0x80;
     }
 
-    g_CurrentEntity->unk1E &= 0xFFF;
+    g_CurrentEntity->rotAngle &= 0xFFF;
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {

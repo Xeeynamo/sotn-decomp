@@ -104,7 +104,7 @@ void EntityMerman2(Entity* self) {
             g_api.FreePrimitives(self->firstPolygonIndex);
             self->flags &= ~FLAG_FREE_POLYGONS;
         }
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
         SetStep(MERMAN2_DYING);
     }
@@ -112,7 +112,7 @@ void EntityMerman2(Entity* self) {
     switch (self->step) {
     case MERMAN2_INIT:
         InitializeEntity(D_80180AB4);
-        self->unk12 = 8;
+        self->hitboxOffY = 8;
         self->zPriority = 0xA9;
         if (self->subId != 0) {
             self->palette++;
@@ -237,7 +237,7 @@ void EntityMerman2(Entity* self) {
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
-                self->unk1E = 0;
+                self->rotAngle = 0;
                 self->unk19 |= 4;
                 self->step_s++;
             }
@@ -249,7 +249,7 @@ void EntityMerman2(Entity* self) {
                 prim->blendMode = 8;
                 self->animCurFrame = 18;
                 self->hitboxHeight = 8;
-                self->unk1E -= 0x80;
+                self->rotAngle -= 0x80;
             } else {
                 if (self->facing != 0) {
                     s16 posX = self->posX.i.hi;
@@ -397,7 +397,7 @@ void EntityMerman2(Entity* self) {
                     }
                 }
                 self->ext.merman2.rotation = 1;
-                self->unk1E = 0;
+                self->rotAngle = 0;
                 self->unk19 |= 4;
                 if (self->facing != 0) {
                     self->accelerationX = -0x60000;
@@ -432,7 +432,7 @@ void EntityMerman2(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->accelerationX = 0;
             }
-            self->unk1E += self->ext.merman2.rotation;
+            self->rotAngle += self->ext.merman2.rotation;
             self->accelerationY -= 0x2000;
 
             if (func_801BC8E4(&D_80182248) & 1) {
@@ -464,8 +464,8 @@ void EntityMerman2(Entity* self) {
                 self->accelerationX = 0;
             }
             MoveEntity();
-            self->unk1E += 0xC0;
-            if (self->unk1E > 0x1000) {
+            self->rotAngle += 0xC0;
+            if (self->rotAngle > 0x1000) {
                 self->posY.i.hi -= 10;
                 self->unk19 &= 0xFB;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
@@ -593,7 +593,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
     if (entity->step == 0) {
         InitializeEntity(D_80180AB4);
         entity->animCurFrame = 0;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
         entity->zPriority += 4;
         if (entity->subId != 0) {
             firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -676,7 +676,7 @@ void func_801C7D80(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AB4);
         self->animCurFrame = 0;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->flags |= 0x2000;
         self->zPriority += 4;
     }
@@ -754,7 +754,7 @@ void EntityLargeFallingObject(Entity* self) {
         InitializeEntity(D_80180AB4);
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->accelerationY = 0x1000;
         self->palette = self->subId + 0xE;
         self->unk6C = 0x80;

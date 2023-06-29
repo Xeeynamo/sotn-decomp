@@ -17,7 +17,7 @@ void EntityEquipItemDrop(Entity* self) {
     s16 temp_a0;
     s32* unk;
 
-    if (((self->step - 2) < 3U) && (self->unk48 != 0)) {
+    if (((self->step - 2) < 3U) && (self->hitFlags != 0)) {
         self->step = 5;
     }
 
@@ -217,7 +217,7 @@ void EntityHeartDrop(Entity* self) {
     } else {
         temp_a0_2 = self->ext.generic.unkB4;
         if (self->step < 5) {
-            if (self->unk48 != 0) {
+            if (self->hitFlags != 0) {
                 var_a0 = self->ext.generic.unkB4;
                 D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
                 self->step = 5;
@@ -358,7 +358,187 @@ bool func_8019E9F4(point16* arg0) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019EAF0);
+u8 func_8019EAF0(s32 arg0) {
+    Collider collider;
+    u32 bits_67;
+    u32 bits_45;
+    u32 bits_23;
+    u8 bits_01;
+    u16 collEff;
+
+    MoveEntity();
+    bits_67 = 0;
+    bits_23 = 0;
+    bits_45 = 0;
+    bits_01 = arg0 & 3;
+    collEff = 0;
+    switch (bits_01) {
+    case 0:
+        g_CurrentEntity->posY.i.hi += 3;
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        if (collider.effects != 0) {
+            collEff = collider.effects;
+            g_CurrentEntity->posY.i.hi += collider.unk18;
+            g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                                 (s16)(g_CurrentEntity->posY.i.hi - 4),
+                                 &collider, 0);
+            if (collider.effects & EFFECT_UNK_0002) {
+                bits_67 = 0x40;
+                if (g_CurrentEntity->accelerationX > 0) {
+                    bits_01 = 2;
+                } else {
+                    bits_01 = 3;
+                    g_CurrentEntity->accelerationX =
+                        -g_CurrentEntity->accelerationX;
+                }
+                g_CurrentEntity->accelerationY =
+                    -g_CurrentEntity->accelerationX;
+                g_CurrentEntity->accelerationX = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            g_CurrentEntity->posX.val -= g_CurrentEntity->accelerationX;
+            if (g_CurrentEntity->accelerationX > 0) {
+                bits_01 = 3;
+            } else {
+                bits_01 = 2;
+                g_CurrentEntity->accelerationX =
+                    -g_CurrentEntity->accelerationX;
+            }
+            g_CurrentEntity->accelerationY = g_CurrentEntity->accelerationX;
+            g_CurrentEntity->accelerationX = 0;
+        }
+        break;
+
+    case 1:
+        g_CurrentEntity->posY.i.hi -= 3;
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        if (collider.effects != 0) {
+            collEff = collider.effects;
+            g_CurrentEntity->posY.i.hi += collider.unk20;
+            g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                                 (s16)(g_CurrentEntity->posY.i.hi + 4),
+                                 &collider, 0);
+            if (collider.effects & EFFECT_UNK_0002) {
+                bits_67 = 0x40;
+                if (g_CurrentEntity->accelerationX > 0) {
+                    bits_01 = 2;
+                } else {
+                    bits_01 = 3;
+                    g_CurrentEntity->accelerationX =
+                        -g_CurrentEntity->accelerationX;
+                }
+                g_CurrentEntity->accelerationY = g_CurrentEntity->accelerationX;
+                g_CurrentEntity->accelerationX = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            g_CurrentEntity->posX.val -= g_CurrentEntity->accelerationX;
+            if (g_CurrentEntity->accelerationX > 0) {
+                bits_01 = 3;
+            } else {
+                bits_01 = 2;
+                g_CurrentEntity->accelerationX =
+                    -g_CurrentEntity->accelerationX;
+            }
+            g_CurrentEntity->accelerationY = -g_CurrentEntity->accelerationX;
+            g_CurrentEntity->accelerationX = 0;
+        }
+        break;
+
+    case 2:
+        g_CurrentEntity->posX.i.hi += 3;
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        if (collider.effects != 0) {
+            collEff = collider.effects;
+            g_CurrentEntity->posX.i.hi += collider.unk14;
+            g_api.CheckCollision((s16)(g_CurrentEntity->posX.i.hi - 4),
+                                 g_CurrentEntity->posY.i.hi, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                bits_67 = 0x40;
+                if (g_CurrentEntity->accelerationY > 0) {
+                    bits_01 = 0;
+                } else {
+                    bits_01 = 1;
+                    g_CurrentEntity->accelerationY =
+                        -g_CurrentEntity->accelerationY;
+                }
+                g_CurrentEntity->accelerationX =
+                    -g_CurrentEntity->accelerationY;
+                g_CurrentEntity->accelerationY = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            g_CurrentEntity->posY.val -= g_CurrentEntity->accelerationY;
+            if (g_CurrentEntity->accelerationY > 0) {
+                bits_01 = 1;
+            } else {
+                bits_01 = 0;
+                g_CurrentEntity->accelerationY =
+                    -g_CurrentEntity->accelerationY;
+            }
+            g_CurrentEntity->accelerationX = g_CurrentEntity->accelerationY;
+            g_CurrentEntity->accelerationY = 0;
+        }
+        break;
+
+    case 3:
+        g_CurrentEntity->posX.i.hi -= 3;
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        if (collider.effects != 0) {
+            collEff = collider.effects;
+            g_CurrentEntity->posX.i.hi += collider.unk1C;
+            g_api.CheckCollision((s16)(g_CurrentEntity->posX.i.hi + 4),
+                                 g_CurrentEntity->posY.i.hi, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                bits_67 = 0x40;
+                if (g_CurrentEntity->accelerationY > 0) {
+                    bits_01 = 0;
+                } else {
+                    bits_01 = 1;
+                    g_CurrentEntity->accelerationY =
+                        -g_CurrentEntity->accelerationY;
+                }
+                g_CurrentEntity->accelerationX = g_CurrentEntity->accelerationY;
+                g_CurrentEntity->accelerationY = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            g_CurrentEntity->posY.val -= g_CurrentEntity->accelerationY;
+            if (g_CurrentEntity->accelerationY > 0) {
+                bits_01 = 1;
+            } else {
+                bits_01 = 0;
+                g_CurrentEntity->accelerationY =
+                    -g_CurrentEntity->accelerationY;
+            }
+            g_CurrentEntity->accelerationX = -g_CurrentEntity->accelerationY;
+            g_CurrentEntity->accelerationY = 0;
+        }
+    }
+
+    if (collEff & EFFECT_UNK_8000) {
+        bits_23 = 4;
+    }
+    if (collEff & EFFECT_UNK_1000) {
+        bits_23 = 8;
+    }
+    if (collEff & EFFECT_UNK_2000) {
+        bits_23 = 0xC;
+    }
+    if (collEff & EFFECT_UNK_0800) {
+        bits_45 = 0x20;
+    }
+    if (collEff & EFFECT_UNK_4000) {
+        bits_45 = 0x10;
+    }
+    bits_01 = (bits_45 + (bits_23 + (bits_67 + bits_01)));
+    return bits_01;
+}
 
 void EntityIntenseExplosion(Entity* entity) {
     u32 temp_v0;
@@ -545,15 +725,15 @@ void EntitySoulStealOrb(Entity* self) {
         }
         self->ext.soulStealOrb.unk80 = 0x400;
         self->ext.soulStealOrb.unk7E = 0;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         break;
 
     case 1:
         self->ext.soulStealOrb.unk82++;
         if (self->ext.soulStealOrb.unk82 == 16) {
-            self->unk3C = 1;
+            self->hitboxState = 1;
         }
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             if (g_Player.unk56 == 0) {
                 g_Player.unk56 = 1;
                 g_Player.unk58 = 8;
@@ -615,7 +795,7 @@ void EntityEnemyBlood(Entity* self) {
             self->firstPolygonIndex = i;
             self->animSet = 0;
             subId = self->subId;
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
@@ -681,7 +861,7 @@ void EntityEnemyBlood(Entity* self) {
             break;
         }
 
-        if (self->unk3C != 0) {
+        if (self->hitboxState != 0) {
             if (g_Player.unk0C & 0x02000000) {
                 posX = self->posX.i.hi;
                 self->accelerationX += self->ext.generic.unk80.modeS32;
@@ -699,10 +879,10 @@ void EntityEnemyBlood(Entity* self) {
                     self->hitboxHeight =
                         (self->ext.generic.unk7E.modeU16 / 4) + 8;
                 } else {
-                    self->unk3C = 0;
+                    self->hitboxState = 0;
                 }
 
-                if (self->unk48 != 0) {
+                if (self->hitFlags != 0) {
                     if (g_Player.unk56 == 0) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;
@@ -711,10 +891,10 @@ void EntityEnemyBlood(Entity* self) {
                         }
                     }
                     g_Player.unk10++;
-                    self->unk3C = 0;
+                    self->hitboxState = 0;
                 }
             } else {
-                self->unk3C = 0;
+                self->hitboxState = 0;
             }
         }
 
@@ -759,7 +939,7 @@ void EntityRoomForeground(Entity* entity) {
             entity->flags = objInit->unkC;
         }
         if (entity->subId >= 5) {
-            entity->unk1E = 0x800;
+            entity->rotAngle = 0x800;
             entity->unk19 |= 4;
         }
     }

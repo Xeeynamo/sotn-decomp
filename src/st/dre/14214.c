@@ -53,7 +53,7 @@ void EntityPinkBallProjectile(Entity* self) {
         self->accelerationY = rsin(temp_s0) * 0x38;
         self->ext.generic.unkA2 = temp_s0;
 
-        if (self->unk48 & 0x80) {
+        if (self->hitFlags & 0x80) {
             self->step = 4;
         }
 
@@ -86,13 +86,13 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->unk19 = 4;
         self->animCurFrame = 0;
         var_s0 = D_801807F0[self->subId];
-        self->unk1E = var_s0;
+        self->rotAngle = var_s0;
         self->unk19 |= 1;
         self->unk1A = 0x100;
         CreateEntityFromEntity(0x1F, self, &self[1]);
         self[1].facing = self->facing;
         self[1].subId = self->subId;
-        self[1].unk1E = self->unk1E;
+        self[1].rotAngle = self->rotAngle;
 
     case 1:
         if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
@@ -120,7 +120,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         }
     }
 
-    var_s0 = self->unk1E;
+    var_s0 = self->rotAngle;
     temp_s2 = (self->unk1A * 0xB) >> 6;
     if (self->facing == 0) {
         var_s0 = 0x800 - var_s0;
@@ -138,13 +138,13 @@ void EntityUnkId1F(Entity* entity) {
         InitializeEntity(D_8018050C);
         entity->animCurFrame = 0;
         entity->unk19 = 4;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
     case 1:
         if (entity[-1].animCurFrame != 0) {
-            entity->unk3C = 1;
+            entity->hitboxState = 1;
             entity->animCurFrame = 0x56;
         }
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             D_80180668 = 1;
         }
         if (entity[-1].objectId != 0x1E) {
@@ -274,7 +274,8 @@ void Update(void) {
 
             if (unk34 & 0xF) {
                 entity->palette =
-                    D_8018097C[(entity->unk49 << 1) | (unk34 & 1)];
+                    D_8018097C[(entity->nFramesInvincibility << 1) |
+                               (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
                     entity->palette = entity->unk6A;
@@ -291,7 +292,7 @@ void Update(void) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;
-                        entity->unk48 = 0;
+                        entity->hitFlags = 0;
                     }
                 }
             }
@@ -299,7 +300,7 @@ void Update(void) {
             g_CurrentEntity = entity;
             entity->pfnUpdate(entity);
             entity->unk44 = 0;
-            entity->unk48 = 0;
+            entity->hitFlags = 0;
         }
     }
 }
@@ -809,12 +810,12 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->hitPoints = enemyDef->hitPoints;
     g_CurrentEntity->attack = enemyDef->attack;
     g_CurrentEntity->attackElement = enemyDef->attackElement;
-    g_CurrentEntity->unk3C = enemyDef->unkC;
+    g_CurrentEntity->hitboxState = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
     g_CurrentEntity->flags = enemyDef->unk24;
-    g_CurrentEntity->unk10 = 0;
-    g_CurrentEntity->unk12 = 0;
+    g_CurrentEntity->hitboxOffX = 0;
+    g_CurrentEntity->hitboxOffY = 0;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {

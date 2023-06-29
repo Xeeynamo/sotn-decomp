@@ -129,7 +129,7 @@ void EntitySlogra(Entity* self) {
     self->ext.GS_Props.pickupFlag = 0;
 
     if (self->step != SLOGRA_INIT) {
-        if ((self->unk48 & 3) && (self->step != SLOGRA_KNOCKBACK)) {
+        if ((self->hitFlags & 3) && (self->step != SLOGRA_KNOCKBACK)) {
             SetStep(SLOGRA_KNOCKBACK);
         }
         if (self->ext.GS_Props.nearDeath == 0) {
@@ -139,7 +139,7 @@ void EntitySlogra(Entity* self) {
             }
             if ((self->hitPoints < (hitPoints >> 2)) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
-                self->unk3C = 0;
+                self->hitboxState = 0;
                 func_801C2598(NA_SE_EN_SLOGRA_HURT_2);
                 SetStep(SLOGRA_LOSE_SPEAR);
             }
@@ -151,7 +151,7 @@ void EntitySlogra(Entity* self) {
             }
         }
         if (D_801812CC != 0) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
             if (self->step != SLOGRA_GAIBON_RETREAT) {
                 SetStep(SLOGRA_GAIBON_RETREAT);
             }
@@ -421,7 +421,7 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_DYING: // Unused
         switch (self->step_s) {
         case SLOGRA_DYING_START:
-            self->unk3C = 0;
+            self->hitboxState = 0;
             if (self->ext.GS_Props.nearDeath == 0) {
                 self->ext.GS_Props.nearDeath = 1;
             }
@@ -486,8 +486,8 @@ void EntitySlogra(Entity* self) {
     hitbox = &D_8018142C[self->animCurFrame][D_801813EC];
     hitbox--;
     hitbox++;
-    self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
@@ -505,8 +505,8 @@ void EntitySlograSpear(Entity* self) {
         self->posY.i.hi = self[-1].posY.i.hi;
         hitbox = D_80181454;
         hitbox += 4 * D_8018148C[self[-1].animCurFrame];
-        self->unk10 = *hitbox++;
-        self->unk12 = *hitbox++;
+        self->hitboxOffX = *hitbox++;
+        self->hitboxOffY = *hitbox++;
         self->hitboxWidth = *hitbox++;
         self->hitboxHeight = *hitbox++;
         if (self[-1].ext.GS_Props.nearDeath != 0) {
@@ -518,7 +518,7 @@ void EntitySlograSpear(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->unk19 = 4;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             if (self->facing != 0) {
                 self->accelerationX = -0x24000;
             } else {
@@ -532,8 +532,8 @@ void EntitySlograSpear(Entity* self) {
         case 1:
             MoveEntity();
             self->accelerationY += 0x2800;
-            self->unk1E += 0x80;
-            if (!(self->unk1E & 0xFFF)) {
+            self->rotAngle += 0x80;
+            if (!(self->rotAngle & 0xFFF)) {
                 func_801C2598(0x625);
             }
         }
@@ -1180,7 +1180,7 @@ void func_801B8CC0(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180B68);
-        self->unk3C = 0;
+        self->hitboxState = 0;
     }
 
     prevEntity = &self[-1];
@@ -1221,10 +1221,10 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->animCurFrame = 1;
         self->unk19 = 5;
         self->unk1A = 0xC0;
-        self->accelerationX = (rcos(self->unk1E) * 0x28000) >> 0xC;
-        self->accelerationY = (rsin(self->unk1E) * 0x28000) >> 0xC;
+        self->accelerationX = (rcos(self->rotAngle) * 0x28000) >> 0xC;
+        self->accelerationY = (rsin(self->rotAngle) * 0x28000) >> 0xC;
         self->palette = 0x81B6;
-        self->unk1E -= 0x400;
+        self->rotAngle -= 0x400;
 
     case 1:
         MoveEntity();
@@ -1251,10 +1251,10 @@ void EntityLargeGaibonProjectile(Entity* self) {
         if (self->subId == 0) {
             self->animSet = 2;
             self->unk19 = 4;
-            self->accelerationX = (rcos(self->unk1E) * 0x38000) >> 0xC;
-            self->accelerationY = (rsin(self->unk1E) * 0x38000) >> 0xC;
+            self->accelerationX = (rcos(self->rotAngle) * 0x38000) >> 0xC;
+            self->accelerationY = (rsin(self->rotAngle) * 0x38000) >> 0xC;
             self->palette = 0x81B6;
-            self->unk1E -= 0x400;
+            self->rotAngle -= 0x400;
         } else {
             self->animSet = 14;
             self->unk5A = 0x79;
@@ -1264,7 +1264,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->palette = 0x81F3;
             self->blendMode = 0x30;
             self->step = 2;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->flags |= 0x2000;
         }
         break;
@@ -1277,7 +1277,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
                 newEntity->subId = 1;
-                newEntity->unk1E = self->unk1E;
+                newEntity->rotAngle = self->rotAngle;
                 newEntity->zPriority = self->zPriority + 1;
             }
         }

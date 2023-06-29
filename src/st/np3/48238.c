@@ -65,7 +65,7 @@ void EntityMerman(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < MERMAN_DYING)) {
         func_801C2598(0x71D);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -462,7 +462,7 @@ void func_801C8F54(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180ACC);
         self->animCurFrame = 0;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->zPriority += 4;
         self->flags |= 0x2000;
     }

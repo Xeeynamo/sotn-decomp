@@ -222,7 +222,7 @@ void EntityBloodyZombie(Entity* self) {
 
     if (self->flags & 0x100 && self->step < 8) {
         func_801C29B0(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
         SetStep(BLOODY_ZOMBIE_DYING);
     }
@@ -230,8 +230,8 @@ void EntityBloodyZombie(Entity* self) {
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
         InitializeEntity(D_80180C7C);
-        self->unk10 = 1;
-        self->unk12 = 4;
+        self->hitboxOffX = 1;
+        self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
 
@@ -433,13 +433,13 @@ void EntityBloodyZombie(Entity* self) {
     if (self->animCurFrame > 10 && self->animCurFrame < 13) {
         self->hitboxWidth = 18;
         self->hitboxHeight = 12;
-        *(s16*)&self->unk10 = -12;
-        self->unk12 = -12;
+        *(s16*)&self->hitboxOffX = -12;
+        self->hitboxOffY = -12;
     } else {
         self->hitboxWidth = 4;
         self->hitboxHeight = 22;
-        self->unk10 = 1;
-        self->unk12 = 4;
+        self->hitboxOffX = 1;
+        self->hitboxOffY = 4;
     }
 }
 
@@ -454,7 +454,7 @@ void func_801C5D20(Entity* self) { // BloodDrips
         if (firstPrimIndex != -1) {
             prim = &g_PrimBuf[firstPrimIndex];
             self->firstPolygonIndex = firstPrimIndex;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             *(s32*)&self->ext.generic.unk7C = prim;
             self->flags |= 0x800000;
             while (prim != NULL) {

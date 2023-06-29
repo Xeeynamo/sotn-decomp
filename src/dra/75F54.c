@@ -29,7 +29,7 @@ void func_80115F54(void) {
         PLAYER.accelerationY = -0x1A000;
         PLAYER.ext.generic.unkAC = 0xC1;
         PLAYER.blendMode = 0x30;
-        PLAYER.unk1E = 0x200;
+        PLAYER.rotAngle = 0x200;
         func_80118C28(1);
         func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
         func_8011AAFC(g_CurrentEntity, 0x60031, 0);
@@ -158,16 +158,16 @@ bool func_80116838(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    if (PLAYER.unk1E < arg0) {
-        PLAYER.unk1E += 16;
-        if (arg0 < PLAYER.unk1E) {
-            PLAYER.unk1E = arg0;
+    if (PLAYER.rotAngle < arg0) {
+        PLAYER.rotAngle += 16;
+        if (arg0 < PLAYER.rotAngle) {
+            PLAYER.rotAngle = arg0;
         }
     }
-    if (arg0 < PLAYER.unk1E) {
-        PLAYER.unk1E -= 16;
-        if (PLAYER.unk1E < arg0) {
-            PLAYER.unk1E = arg0;
+    if (arg0 < PLAYER.rotAngle) {
+        PLAYER.rotAngle -= 16;
+        if (PLAYER.rotAngle < arg0) {
+            PLAYER.rotAngle = arg0;
         }
     }
 }
@@ -195,7 +195,7 @@ void func_80117AC0(void) {
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
         collisionCount += 1;
     }
-    PLAYER.unk1E = 0;
+    PLAYER.rotAngle = 0;
     func_8010E27C();
     if (collisionCount == 0) {
         func_8010E7AC();
@@ -391,7 +391,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     var_a1 = 0;
     if (ent2 != NULL) {
         var_a1 = (ent2->objectId == 0) << 0xC;
-        if (ent2->unk3C == 0) {
+        if (ent2->hitboxState == 0) {
             var_a1 = 0x2000;
         }
         if (ent2->flags & 0x200000) {
@@ -494,12 +494,12 @@ void func_8011A290(Entity* entity) {
     func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
-    entity->unk3C = subwpn.sp1C;
-    entity->unk49 = subwpn.sp17;
+    entity->hitboxState = subwpn.sp1C;
+    entity->nFramesInvincibility = subwpn.sp17;
     entity->unk58 = subwpn.sp18;
     entity->unk6A = subwpn.sp1E;
     entity->objectRoomIndex = subwpn.sp22;
-    entity->ext.generic.unkB2 = subwpn.sp20;
+    entity->ext.generic.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
 
@@ -509,8 +509,8 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_800FD9D4(&spell, arg1);
     entity->attack = spell.attack;
     entity->attackElement = spell.attackElement;
-    entity->unk3C = spell.unk10;
-    entity->unk49 = spell.unk0D;
+    entity->hitboxState = spell.unk10;
+    entity->nFramesInvincibility = spell.unk0D;
     entity->unk58 = spell.unk0E;
     entity->unk6A = spell.unk12;
     entity->objectRoomIndex = spell.unk14;
@@ -525,8 +525,8 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         func_800FD9D4(&spell, arg1);
         arg0->attack = spell.attack;
         arg0->attackElement = spell.attackElement;
-        arg0->unk3C = spell.unk10;
-        arg0->unk49 = spell.unk0D;
+        arg0->hitboxState = spell.unk10;
+        arg0->nFramesInvincibility = spell.unk0D;
         arg0->unk58 = spell.unk0E;
         arg0->unk6A = spell.unk12;
         arg0->objectRoomIndex = spell.unk14;
@@ -651,18 +651,18 @@ void func_8011B334(Entity* entity) {
         GetEquipProperties(0, &equip, 0);
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
-        entity->unk3C = equip.hitType;
-        entity->unk49 = equip.enemyInvincibilityFrames;
+        entity->hitboxState = equip.hitType;
+        entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
         entity->unk58 = equip.stunFrames;
         entity->unk6A = equip.hitEffect;
         entity->objectRoomIndex = equip.criticalRate;
         func_80118894(entity);
-        entity->unk10 = 9;
-        entity->unk12 = 21;
+        entity->hitboxOffX = 9;
+        entity->hitboxOffY = 21;
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 5;
         entity->step++;
-    } else if (entity->unk48 == 1) {
+    } else if (entity->hitFlags == 1) {
         g_Player.unk44 |= 0x80;
     }
 }
@@ -821,16 +821,16 @@ void func_80123A60(Entity* entity) {
     if (player->animCurFrame == 5) {
         entity->hitboxWidth = 12;
         entity->hitboxHeight = 32;
-        entity->unk10 = 0x1C;
-        entity->unk12 = -0xC;
+        entity->hitboxOffX = 0x1C;
+        entity->hitboxOffY = -0xC;
         return;
     }
 
     if (player->animCurFrame == 6) {
         entity->hitboxWidth = 10;
         entity->hitboxHeight = 10;
-        entity->unk10 = 0x1C;
-        entity->unk12 = 0x10;
+        entity->hitboxOffX = 0x1C;
+        entity->hitboxOffY = 0x10;
         return;
     }
 
@@ -1219,7 +1219,7 @@ void func_801274DC(Entity* entity) {
         break;
 
     case 1:
-        if (entity->unk48 == 0) {
+        if (entity->hitFlags == 0) {
             entity->ext.generic.unk7C.s--;
             if ((entity->ext.generic.unk7C.s) == 0) {
                 entity->step++;
@@ -1232,7 +1232,7 @@ void func_801274DC(Entity* entity) {
         break;
 
     case 2:
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             DestroyEntity(entity);
             break;
         }
@@ -1259,7 +1259,7 @@ void func_80127840(Entity* entity) {
         }
 
         entity->animSet = 9;
-        entity->unk1E = 0;
+        entity->rotAngle = 0;
         entity->unk4C = &D_800B07C8;
         entity->unk19 |= 4;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1274,7 +1274,7 @@ void func_80127840(Entity* entity) {
     case 1:
         if (entity->animFrameIdx >= 23) {
             if (!(D_8003C8C4 & 3)) {
-                entity->unk1E += 0x400;
+                entity->rotAngle += 0x400;
             }
             if (entity->accelerationX < 0) {
                 entity->accelerationX -= 0x1800;

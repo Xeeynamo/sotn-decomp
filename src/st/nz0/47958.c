@@ -18,7 +18,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < 3)) {
         func_801C29B0(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         SetStep(BLOOD_SKELETON_DISASSEMBLE);
     }
 
@@ -72,7 +72,7 @@ void EntityBloodSkeleton(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-                self->unk1E = 0;
+                self->rotAngle = 0;
                 self->unk19 |= 4;
                 func_801C29B0(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
                 self->step_s++;
@@ -84,15 +84,15 @@ void EntityBloodSkeleton(Entity* self) {
             if ((g_blinkTimer % 3) == 0) {
                 self->ext.generic.unk80.modeS16.unk0++;
                 if (self->ext.generic.unk80.modeS16.unk0 % 2) {
-                    self->unk1E = 0x10;
+                    self->rotAngle = 0x10;
                 } else {
-                    self->unk1E = -0x10;
+                    self->rotAngle = -0x10;
                 }
             }
 
             if (self->ext.generic.unk80.modeS16.unk0 >= 9) {
                 self->unk19 = 0;
-                self->unk1E = 0;
+                self->rotAngle = 0;
                 self->step_s++;
             }
             break;
@@ -106,7 +106,7 @@ void EntityBloodSkeleton(Entity* self) {
 
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
-                self->unk3C = 3;
+                self->hitboxState = 3;
                 self->flags = g_api.enemyDefs[70].unk24 & 0x1FFFFFFF;
                 SetStep(BLOOD_SKELETON_WALK);
             }

@@ -6,7 +6,7 @@ void EntityZombie(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < 4)) {
         func_801C2598(NA_SE_EN_ZOMBIE_EXPLODE);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
@@ -23,7 +23,7 @@ void EntityZombie(Entity* self) {
     case 0:
         InitializeEntity(D_80180B08);
         self->hitboxWidth = 8;
-        self->unk12 = 0x10;
+        self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;
         self->zPriority += 4;
         if (g_blinkTimer & 1) {
@@ -47,7 +47,7 @@ void EntityZombie(Entity* self) {
             SetStep(3);
         }
         if (self->animFrameDuration == 0) {
-            self->unk12 -= 2;
+            self->hitboxOffY -= 2;
             self->hitboxHeight += 2;
         }
         break;
@@ -62,7 +62,7 @@ void EntityZombie(Entity* self) {
         }
 
         if (temp_a0 & 0xC0) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
             SetStep(4);
         }
         break;

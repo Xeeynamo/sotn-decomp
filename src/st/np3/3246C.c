@@ -150,18 +150,18 @@ void EntityCavernDoorLever(Entity* entity) {
     case 0:
         InitializeEntity(D_80180AA8);
         entity->animCurFrame = 18;
-        entity->unk1E = -0x200;
+        entity->rotAngle = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
         if (D_8003BDEC[0x30] != 0) {
-            entity->unk1E = 0;
+            entity->rotAngle = 0;
         }
 
     case 1:
         if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
-            entity->unk1E += 4;
-            if (entity->unk1E > 0) {
-                entity->unk1E = 0;
+            entity->rotAngle += 4;
+            if (entity->rotAngle > 0) {
+                entity->rotAngle = 0;
                 if (D_8003BDEC[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
@@ -175,8 +175,8 @@ void EntityCavernDoorLever(Entity* entity) {
 
     posX = entity->posX.val;
     posY = entity->posY.val;
-    posX += rcos(entity->unk1E) * 0x280;
-    posY += rsin(entity->unk1E) * 0x280;
+    posX += rcos(entity->rotAngle) * 0x280;
+    posY += rsin(entity->rotAngle) * 0x280;
     entity[1].posX.val = posX;
     entity[1].posY.val = posY;
 }
@@ -561,7 +561,7 @@ void EntityTrapDoor(Entity* entity) {
         entity->zPriority = 0x6A;
         entity->hitboxWidth = 0x10;
         entity->hitboxHeight = 4;
-        entity->unk3C = 1;
+        entity->hitboxState = 1;
 
         if (g_TrapDoorFlag == 0) {
             if (PLAYER.posY.val < entity->posY.val) {
@@ -580,7 +580,7 @@ void EntityTrapDoor(Entity* entity) {
         }
 
     case 1:
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             g_TrapDoorFlag = 1;
             entity->step++;
         }
@@ -603,7 +603,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A6C);
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
@@ -625,13 +625,13 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step = 2;
         }
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             tileLayoutPtr = &D_80181120[self->ext.generic.unk84.S16.unk0 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -674,13 +674,13 @@ void EntityMermanRockLeftSide(Entity* self) {
                 newEntity->subId = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (g_Player.unk0C & 4)) {
+        if ((self->hitFlags != 0) && (g_Player.unk0C & 4)) {
             D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Wolf form collision */
         }
         break;
@@ -698,7 +698,7 @@ void EntityMermanRockRightSide(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A6C);
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
@@ -720,13 +720,13 @@ void EntityMermanRockRightSide(Entity* self) {
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step = 2;
         }
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             tileLayoutPtr = &D_8018115C[(self->ext.generic.unk84.S16.unk0 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -765,13 +765,13 @@ void EntityMermanRockRightSide(Entity* self) {
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
             D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Broken */
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (g_Player.unk0C & 1)) {
+        if ((self->hitFlags != 0) && (g_Player.unk0C & 1)) {
             D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Bat form collision */
         }
         break;
@@ -842,7 +842,7 @@ void EntityFallingRock2(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x4000;
-        self->unk1E -= 0x20;
+        self->rotAngle -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_80181204[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
@@ -902,7 +902,7 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x2000;
-        self->unk1E -= 0x20;
+        self->rotAngle -= 0x20;
 
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
                              0);

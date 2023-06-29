@@ -26,9 +26,9 @@ void EntitySubWeaponContainer(Entity* self) {
         self->zPriority = 0x70;
         self->hitboxWidth = 14;
         self->hitboxHeight = 32;
-        self->unk12 = -0x38;
-        self->unk10 = 0;
-        self->unk3C = 2;
+        self->hitboxOffY = -0x38;
+        self->hitboxOffX = 0;
+        self->hitboxState = 2;
         self->palette += self->subId;
         CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
         self[1].posY.i.hi -= 72;
@@ -70,7 +70,7 @@ void EntitySubWeaponContainer(Entity* self) {
             }
         }
 
-        if (self->unk48 != 0) { // container got hit!
+        if (self->hitFlags != 0) { // container got hit!
             self->step++;
         }
         break;
@@ -106,12 +106,12 @@ void EntitySubWeaponContainer(Entity* self) {
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
                 newEntity->posY.i.hi += rndPosY;
-                newEntity->unk1E = ratan2(rndPosY, rndPosX);
+                newEntity->rotAngle = ratan2(rndPosY, rndPosX);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
         func_801C29B0(NA_SE_EV_VASE_BREAK);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->animCurFrame = 2;
         self->step++;
         break;
@@ -167,18 +167,18 @@ void func_801C7538(Entity* entity) {
 
         if (entity->accelerationX != 0) {
             if (entity->facing == 0) {
-                new_var = (u16)entity->unk1E - 16;
+                new_var = (u16)entity->rotAngle - 16;
                 var_v0 = new_var;
             } else {
-                var_v0 = entity->unk1E + 16;
+                var_v0 = entity->rotAngle + 16;
             }
         } else if (entity->facing != 0) {
-            var_v0 = entity->unk1E - 16;
+            var_v0 = entity->rotAngle - 16;
         } else {
-            var_v0 = entity->unk1E + 16;
+            var_v0 = entity->rotAngle + 16;
         }
 
-        entity->unk1E = var_v0;
+        entity->rotAngle = var_v0;
         break;
     }
 }
@@ -193,8 +193,8 @@ void func_801C7654(Entity* entity) {
         entity->animSet = 2;
         entity->palette = 0x816D;
         entity->blendMode = 0x70;
-        entity->accelerationX = rcos(entity->unk1E) * 0x10;
-        entity->accelerationY = rsin(entity->unk1E) * 0x10;
+        entity->accelerationX = rcos(entity->rotAngle) * 0x10;
+        entity->accelerationY = rsin(entity->rotAngle) * 0x10;
         break;
 
     case 1:
@@ -259,14 +259,14 @@ void func_801C7884(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180BD4);
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
 
     case 1:
         MoveEntity();
         AnimateEntity(D_80181D3C[subId], entity);
 
-        entity->accelerationY = rsin(entity->unk1E) * 2;
-        entity->unk1E += 0x20;
+        entity->accelerationY = rsin(entity->rotAngle) * 2;
+        entity->rotAngle += 0x20;
 
         if (entity[-1].step != 1) {
             entity->objectId = E_PRIZE_DROP;
@@ -274,7 +274,7 @@ void func_801C7884(Entity* entity) {
             entity->animFrameDuration = 0;
             entity->animFrameIdx = 0;
             entity->step = 0;
-            entity->unk3C = 1;
+            entity->hitboxState = 1;
         }
     }
 }

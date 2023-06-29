@@ -18,9 +18,9 @@ void func_80113AAC(void) {
             func_801139CC(3);
             if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
-                PLAYER.unk1E = 0x800;
-                PLAYER.unk22 = 2;
-                PLAYER.unk20 = 0;
+                PLAYER.rotAngle = 0x800;
+                PLAYER.rotPivotY = 2;
+                PLAYER.rotPivotX = 0;
                 PLAYER.unk19 |= 4;
                 PLAYER.facing = (PLAYER.facing + 1) & 1;
                 func_8010DA48(0x2B);
@@ -48,11 +48,11 @@ void func_80113AAC(void) {
 
     case 2:
         PLAYER.unk19 |= 4;
-        PLAYER.unk20 = 0;
-        PLAYER.unk22 = 2;
+        PLAYER.rotPivotX = 0;
+        PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
             func_8010DA48(0x2D);
-            PLAYER.unk1E = 0;
+            PLAYER.rotAngle = 0;
             PLAYER.step_s = 4;
             PLAYER.unk19 &= 0xFB;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
@@ -126,7 +126,7 @@ void func_80113EE0(void) {
     PLAYER.blendMode = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.unk1E = 0;
+    PLAYER.rotAngle = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
     if (g_Entities[UNK_ENTITY_10].objectId == 0x22) {
         func_8010FAF4();
@@ -140,15 +140,15 @@ void func_80113F7C(void) {
     s32 var_a2;
 
     if (entity->facing != 0) {
-        var_a2 = -entity->unk10;
+        var_a2 = -entity->hitboxOffX;
     } else {
-        var_a2 = entity->unk10;
+        var_a2 = entity->hitboxOffX;
     }
 
     if (PLAYER.facing != 0) {
-        var_a0 = -PLAYER.unk10;
+        var_a0 = -PLAYER.hitboxOffX;
     } else {
-        var_a0 = PLAYER.unk10;
+        var_a0 = PLAYER.hitboxOffX;
     }
 
     posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
