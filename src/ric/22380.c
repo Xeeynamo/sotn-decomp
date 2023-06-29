@@ -364,7 +364,7 @@ void func_80161C2C(Entity* self) {
         rnd = rand() & 31;
         subIdHi = -0x8000;
         self->posY.i.hi = ((g_Entities[PLAYER_CHARACTER].posY.i.hi +
-                            g_Entities[PLAYER_CHARACTER].unk12) +
+                            g_Entities[PLAYER_CHARACTER].hitboxOffY) +
                            rnd) -
                           16;
         self->accelerationY = subIdHi;
