@@ -26,21 +26,21 @@ s32 func_8015D250(void) {
     func_801606BC(g_CurrentEntity, sp10.unkB, 0);
     g_Player.D_80072F14 = 4;
     switch (PLAYER.step) {
+    case 25:
+        PLAYER.step = 0;
+        func_801606BC(g_CurrentEntity, 0U, 0);
+        func_8015C920(&D_801555E8);
+        break;
     case 0:
     case 1:
     case 2:
         PLAYER.step = 0;
-        func_8015C920(D_801555E8);
+        func_8015C920(&D_801555E8);
         break;
     case 3:
     case 4:
         PLAYER.step = 4;
-        func_8015C920(D_80155638);
-        break;
-    case 25:
-        PLAYER.step = 0;
-        func_801606BC(g_CurrentEntity, 0U, 0);
-        func_8015C920(D_801555E8);
+        func_8015C920(&D_80155638);
         break;
     }
     g_Player.unk46 = 3;
