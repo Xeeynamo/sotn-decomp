@@ -1,34 +1,34 @@
 #include "ric.h"
 
 s32 func_8015D250(void) {
-    SubweaponDef sp10;
-    s16 subweapon_Id;
+    SubweaponDef subweapon;
+    s16 subweaponId;
 
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
-    subweapon_Id = func_8015FB84(&sp10, 0, 0);
-    if (subweapon_Id <= 0) {
+    subweaponId = func_8015FB84(&subweapon, 0, 0);
+    if (subweaponId <= 0) {
         return 1;
     }
-    if (sp10.unkB == 0) {
+    if (subweapon.unkB == 0) {
         return 4;
     }
-    if (func_8015D1D0(subweapon_Id, sp10.unk6) < 0) {
+    if (func_8015D1D0(subweaponId, subweapon.unk6) < 0) {
         return 2;
     }
-    if ((func_8015FB84(&sp10, 0, 1) << 0x10) <= 0) {
+    if ((s16)func_8015FB84(&subweapon, 0, 1) <= 0) {
         return 3;
     }
     if (g_Player.unk72 != 0) {
         return 5;
     }
-    func_801606BC(g_CurrentEntity, sp10.unkB, 0);
+    func_801606BC(g_CurrentEntity, subweapon.unkB, 0);
     g_Player.D_80072F14 = 4;
     switch (PLAYER.step) {
     case 25:
         PLAYER.step = 0;
-        func_801606BC(g_CurrentEntity, 0U, 0);
+        func_801606BC(g_CurrentEntity, 0, 0);
         func_8015C920(&D_801555E8);
         break;
     case 0:
