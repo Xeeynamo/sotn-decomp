@@ -41,7 +41,7 @@ s32 func_8015D250(void) {
         PLAYER.step = 0;
         func_8015C920(D_801555E8);
         break;
-        
+
     case 3:
     case 4:
         PLAYER.step = 4;
