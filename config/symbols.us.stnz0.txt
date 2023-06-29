@@ -71,6 +71,7 @@ EntityNumericDamage = 0x801BAA20;
 CreateEntityFromLayout = 0x801BB0C4;
 CreateEntityWhenInVerticalRange = 0x801BB188;
 CreateEntityWhenInHorizontalRange = 0x801BB2A0;
+InitRoomEntities = 0x801BB920;
 CreateEntityFromCurrentEntity = 0x801BBB4C;
 CreateEntityFromEntity = 0x801BBBC0;
 EntityRedDoor = 0x801BBCB4;

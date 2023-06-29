@@ -385,23 +385,23 @@ void func_801908DC(s16 arg0) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_801909D8);
 
-void func_80190AD8(s32 arg0) {
-    s32 a1 = 0xFFFE;
-    arg0 = (s16)arg0;
-loop_1:
-    if (D_801997DC->posY == a1 || D_801997DC->posY < arg0) {
-        D_801997DC++;
-        goto loop_1;
+void func_80190AD8(s16 arg0) {
+    while (true) {
+        if ((D_801997DC[1] != 0xFFFE) && ((s32)D_801997DC[1] >= arg0)) {
+            break;
+        }
+
+        D_801997DC += 5;
     }
 }
 
 void func_80190B24(s16 arg0) {
     while (true) {
-        if ((D_801997DC->posY != 0xFFFF) &&
-            ((arg0 >= D_801997DC->posY || D_801997DC->posY == 0xFFFE))) {
+        if ((D_801997DC[1] != 0xFFFF) &&
+            ((arg0 >= D_801997DC[1] || D_801997DC[1] == 0xFFFE))) {
             break;
         }
-        D_801997DC--;
+        D_801997DC -= 5;
     }
 }
 
@@ -409,56 +409,46 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80190B7C);
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80190C78);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", InitRoomEntities);
-#else
 void InitRoomEntities(s32 objLayoutId) {
+    u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
     s16 temp_s0;
-    u16* pObjLayoutStart;
-    LayoutObject* temp_v1;
-    LayoutObject* temp_v0_2;
-    s32 phi_a0;
-    s16 phi_a1;
-    s16 phi_a1_2;
-    Unkstruct4* s1;
+    s16 arg0;
+    s16 i;
+    u16* temp_v1;
 
-    pObjLayoutStart = g_pStObjLayout[objLayoutId];
     D_801997D8 = pObjLayoutStart;
     D_801997DC = D_801803C8[objLayoutId];
-    s1 = &g_CurrentRoomTileLayout;
+
     if (*pObjLayoutStart != 0xFFFE) {
         D_801997D8 = pObjLayoutStart + 1;
-        phi_a0 = Random() & 0xFF;
-
-        for (phi_a1 = 0;; phi_a1++) {
-            s32 temp_v0 = phi_a0 - D_801997D8->posX;
-            D_801997D8 = (u16*)D_801997D8 + 1;
-            phi_a0 = temp_v0;
-            if (temp_v0 << 0x10 < 0)
+        arg0 = Random() & 0xFF;
+        for (i = 0; true; i++) {
+            temp_v1 = D_801997D8;
+            D_801997D8 = temp_v1 + 1;
+            arg0 -= temp_v1[0];
+            if (arg0 < 0) {
                 break;
-
-            D_801997D8 = (u32*)D_801997D8 + 1;
+            }
+            D_801997D8 = temp_v1 + 3;
         }
-
-        D_801997D8 = (temp_v1->objectId << 0x10) + temp_v1->posY;
-        temp_v0_2 = (u32*)D_801997DC + (phi_a1 + 1);
-        D_801997DC = temp_v0_2;
-        D_801997DC = (temp_v0_2->posY << 0x10) + temp_v0_2->posX;
+        D_801997D8 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_801997DC += i * 2 + 2;
+        D_801997DC = (D_801997DC[1] << 0x10) + D_801997DC[0];
     }
-
-    temp_s0 = s1->unkA + 0x140;
-    phi_a1_2 = s1->unkA - 0x40;
-    if (phi_a1_2 < 0) {
-        phi_a1_2 = 0;
+    arg0 = currentRoomTileLayout->unkA;
+    temp_s0 = arg0 + 0x140;
+    i = arg0 - 0x40;
+    if (i < 0) {
+        i = 0;
     }
 
     D_801997E0 = 0;
     D_801997E4 = 0;
-    func_80190838(phi_a1_2);
+    func_80190838(i);
     func_801908DC(temp_s0);
-    func_80190AD8((s16)(s1->unkE + 0x120));
+    func_80190AD8(currentRoomTileLayout->unkE + 0x120);
 }
-#endif
 
 void func_80190F04(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;

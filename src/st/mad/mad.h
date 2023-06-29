@@ -70,11 +70,11 @@ extern s16 D_801809EC[];
 extern u8 D_80181010[];
 extern RoomHeader g_rooms[];
 extern LayoutObject* g_pStObjLayout[];
-extern LayoutObject** D_801803C8[];
+extern LayoutObject* D_801803C8[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 extern LayoutObject* D_801997D8;
-extern LayoutObject* D_801997DC;
+extern u16* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
 extern u16 D_80199E54[];
