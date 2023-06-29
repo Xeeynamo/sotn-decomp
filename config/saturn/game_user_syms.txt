@@ -27,3 +27,5 @@ _SquareRoot0 = 0x0600f914;
 _func_800F4994 = 0x0606d880;
 _func_800F4D38 = 0x0606dae8;
 _g_Player = 0x0605c140;
+_DestroyEntity = 0x0600FFB8;
+_g_CurrentEntity = 0x0605C6E0;
