@@ -92,6 +92,7 @@ extern u8 D_80181EF0[];
 extern u16 D_80181EF4[];
 extern u16 D_80181F04[];
 extern u8 D_801824CC[];
+extern u16* D_801C00A4;
 extern s16 D_801C24D2;
 extern u16 D_801C24D4;
 extern s16 D_801C24D6;

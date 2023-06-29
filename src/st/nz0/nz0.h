@@ -43,6 +43,8 @@ void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
 extern u8 D_8003BE6F[];
+LayoutObject* D_801808EC[];
+LayoutObject* D_801809C0[];
 extern PfnEntityUpdate D_80180A90[];
 extern const u16 D_80180BE0[];
 extern u16 D_80180BEC[];
@@ -188,7 +190,7 @@ extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 extern LayoutObject* D_801CAA74;
-extern LayoutObject* D_801CAA78;
+extern u16* D_801CAA78;
 extern u8 D_801CAA7C;
 extern u8 D_801CAA80;
 

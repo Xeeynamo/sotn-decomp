@@ -1984,56 +1984,46 @@ void func_8018A520(s16 arg0) {
     }
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", InitRoomEntities);
-#else
 void InitRoomEntities(s32 objLayoutId) {
+    u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
     s16 temp_s0;
-    s16 var_a1_2;
-    u16* pObjLayoutStart;
-    s16* layout;
-    s32 arg0;
-    s16 var_a1;
+    s16 arg0;
+    s16 i;
     u16* temp_v1;
 
-    pObjLayoutStart = g_pStObjLayout[objLayoutId];
-    layout = &g_CurrentRoomTileLayout;
     D_80193AB0 = pObjLayoutStart;
     D_80193AB4 = D_80180310[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
         D_80193AB0 = pObjLayoutStart + 1;
         arg0 = Random() & 0xFF;
-        for (var_a1 = 0;; var_a1++) {
-            s32 temp_v0;
+        for (i = 0; true; i++) {
             temp_v1 = D_80193AB0;
-            D_80193AB0 = ((u16*)D_80193AB0) + 1;
-            temp_v0 = arg0 - temp_v1[0];
-            arg0 = temp_v0;
-            if (((s16)temp_v0) < 0) {
+            D_80193AB0 = temp_v1 + 1;
+            arg0 -= temp_v1[0];
+            if (arg0 < 0) {
                 break;
             }
             D_80193AB0 = temp_v1 + 3;
         }
-
         D_80193AB0 = (temp_v1[2] << 0x10) + temp_v1[1];
-        D_80193AB4 += var_a1 * 2 + 2;
+        D_80193AB4 += i * 2 + 2;
         D_80193AB4 = (D_80193AB4[1] << 0x10) + D_80193AB4[0];
     }
-
-    var_a1_2 = layout[5] - 0x40;
-    temp_s0 = layout[5] + 0x140;
-    if (var_a1_2 < 0) {
-        var_a1_2 = 0;
+    arg0 = currentRoomTileLayout->unkA;
+    temp_s0 = arg0 + 0x140;
+    i = arg0 - 0x40;
+    if (i < 0) {
+        i = 0;
     }
 
     D_80193AB8 = 0;
     D_80193ABC = 0;
-    func_8018A0CC(var_a1_2);
+    func_8018A0CC(i);
     func_8018A170(temp_s0);
-    func_8018A380(layout[7] + 0x120);
+    func_8018A380(currentRoomTileLayout->unkE + 0x120);
 }
-#endif
 
 void func_8018A7AC(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;

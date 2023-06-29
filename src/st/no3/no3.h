@@ -30,7 +30,7 @@ extern void func_801C8C84(Entity* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
 extern void func_801CAD28(s32);
 extern POLY_GT4* func_801D6DB8(POLY_GT4* poly);
 
-extern u8* D_80180850;
+LayoutObject* D_80180850[];
 extern u16 D_80180AB8[];
 extern u16 D_80180AC4[];
 extern u16 D_80180AD0[];
@@ -103,7 +103,7 @@ extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
 extern LayoutObject* D_801D7110;
-extern LayoutObject* D_801D7114;
+extern u16* D_801D7114;
 extern s8 D_801D7118;
 extern s8 D_801D711C;
 extern s32 D_801D7D20;

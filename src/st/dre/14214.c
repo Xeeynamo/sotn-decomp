@@ -428,21 +428,21 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80199014);
 
 void func_80199128(s16 arg0) {
     while (1) {
-        if ((D_801A32C8->posY != 0xFFFE) && ((s32)D_801A32C8->posY >= arg0)) {
+        if ((D_801A32C8[1] != 0xFFFE) && ((s32)D_801A32C8[1] >= arg0)) {
             break;
         }
 
-        D_801A32C8++;
+        D_801A32C8 += 5;
     }
 }
 
 void func_80199174(s16 arg0) {
     while (true) {
-        if ((D_801A32C8->posY != 0xFFFF) &&
-            (((s32)arg0 >= D_801A32C8->posY) || (D_801A32C8->posY == 0xFFFE))) {
+        if ((D_801A32C8[1] != 0xFFFF) &&
+            (((s32)arg0 >= D_801A32C8[1]) || (D_801A32C8[1] == 0xFFFE))) {
             break;
         }
-        D_801A32C8--;
+        D_801A32C8 -= 5;
     }
 }
 
@@ -450,7 +450,46 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801991CC);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801992C8);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801993DC);
+void InitRoomEntities(s32 objLayoutId) {
+    u16* pObjLayoutStart = D_80180220[objLayoutId];
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    s16 temp_s0;
+    s16 arg0;
+    s16 i;
+    u16* temp_v1;
+
+    D_801A32C4 = pObjLayoutStart;
+    D_801A32C8 = D_801802F4[objLayoutId];
+
+    if (*pObjLayoutStart != 0xFFFE) {
+        D_801A32C4 = pObjLayoutStart + 1;
+        arg0 = Random() & 0xFF;
+        for (i = 0; true; i++) {
+            temp_v1 = D_801A32C4;
+            D_801A32C4 = temp_v1 + 1;
+            arg0 -= temp_v1[0];
+            if (arg0 < 0) {
+                break;
+            }
+            D_801A32C4 = temp_v1 + 3;
+        }
+        D_801A32C4 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_801A32C8 += i * 2 + 2;
+        D_801A32C8 = (D_801A32C8[1] << 0x10) + D_801A32C8[0];
+    }
+    arg0 = currentRoomTileLayout->unkA;
+    temp_s0 = arg0 + 0x140;
+    i = arg0 - 0x40;
+    if (i < 0) {
+        i = 0;
+    }
+
+    D_801A32CC = 0;
+    D_801A32D0 = 0;
+    func_80198E74(i);
+    func_80198F18(temp_s0);
+    func_80199128(currentRoomTileLayout->unkE + 0x120);
+}
 
 void func_80199554(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;

@@ -443,20 +443,20 @@ void func_801BB558(s16 arg0) {
 
 void func_801BB66C(s16 arg0) {
     while (true) {
-        if ((D_801CAA78->posY != 0xFFFE) && (D_801CAA78->posY >= (s32)arg0)) {
+        if ((D_801CAA78[1] != 0xFFFE) && (D_801CAA78[1] >= (s32)arg0)) {
             break;
         }
-        D_801CAA78++;
+        D_801CAA78 += 5;
     }
 }
 
 void func_801BB6B8(s16 arg0) {
     while (true) {
-        if (!(D_801CAA78->posY == 0xFFFF) &&
-            (((s32)arg0 >= D_801CAA78->posY) || (D_801CAA78->posY == 0xFFFE))) {
+        if (!(D_801CAA78[1] == 0xFFFF) &&
+            (((s32)arg0 >= D_801CAA78[1]) || (D_801CAA78[1] == 0xFFFE))) {
             break;
         }
-        D_801CAA78--;
+        D_801CAA78 -= 5;
     }
 }
 
@@ -470,17 +470,17 @@ void func_801BB710(s16 arg0) {
     }
 
     while (true) {
-        if ((D_801CAA78->posY == 0xFFFF) || (arg0 < D_801CAA78->posY)) {
+        if ((D_801CAA78[1] == 0xFFFF) || (arg0 < D_801CAA78[1])) {
             return;
         }
 
         expected = 0;
-        flag = (D_801CAA78->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801CAA78[3] >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801CAA78);
         }
-        D_801CAA78++;
+        D_801CAA78 += 5;
     }
 }
 
@@ -498,21 +498,60 @@ void func_801BB80C(s16 arg0) {
     }
 
     while (true) {
-        if ((D_801CAA78->posY == 0xFFFE) || (arg0 > D_801CAA78->posY)) {
+        if ((D_801CAA78[1] == 0xFFFE) || (arg0 > D_801CAA78[1])) {
             return;
         }
 
         expected = 0;
-        flag = (D_801CAA78->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801CAA78[3] >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801CAA78);
         }
-        D_801CAA78--;
+        D_801CAA78 -= 5;
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801BB920);
+void InitRoomEntities(s32 objLayoutId) {
+    u16* pObjLayoutStart = D_801808EC[objLayoutId];
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    s16 temp_s0;
+    s16 arg0;
+    s16 i;
+    u16* temp_v1;
+
+    D_801CAA74 = pObjLayoutStart;
+    D_801CAA78 = D_801809C0[objLayoutId];
+
+    if (*pObjLayoutStart != 0xFFFE) {
+        D_801CAA74 = pObjLayoutStart + 1;
+        arg0 = Random() & 0xFF;
+        for (i = 0; true; i++) {
+            temp_v1 = D_801CAA74;
+            D_801CAA74 = temp_v1 + 1;
+            arg0 -= temp_v1[0];
+            if (arg0 < 0) {
+                break;
+            }
+            D_801CAA74 = temp_v1 + 3;
+        }
+        D_801CAA74 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_801CAA78 += i * 2 + 2;
+        D_801CAA78 = (D_801CAA78[1] << 0x10) + D_801CAA78[0];
+    }
+    arg0 = currentRoomTileLayout->unkA;
+    temp_s0 = arg0 + 0x140;
+    i = arg0 - 0x40;
+    if (i < 0) {
+        i = 0;
+    }
+
+    D_801CAA7C = 0;
+    D_801CAA80 = 0;
+    func_801BB3B8(i);
+    func_801BB45C(temp_s0);
+    func_801BB66C(currentRoomTileLayout->unkE + 0x120);
+}
 
 void func_801BBA98(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
