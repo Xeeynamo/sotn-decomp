@@ -583,7 +583,28 @@ label:
         goto loop_1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A9D8);
+void func_8011A9D8(void) {
+    Entity* entity;
+    s32 i;
+
+    entity = &g_Entities[4];
+    g_CurrentEntity = &g_Entities[4];
+    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+        if (!(entity->flags & FLAG_UNK_20000)) {
+            DestroyEntity(entity);
+        }
+        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD &&
+            0x36 < entity->objectId && entity->objectId < 0x3D &&
+            entity->step != 0) {
+            entity->pfnUpdate(entity);
+        }
+        if (entity->flags & FLAG_UNK_02000000 && entity->step != 0) {
+            entity->flags |= FLAG_UNK_00200000;  // set a flag
+            entity->pfnUpdate(entity);           // update
+            entity->flags &= ~FLAG_UNK_00200000; // unset that same flag
+        }
+    }
+}
 
 Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     Entity* entity;

@@ -179,8 +179,9 @@ typedef struct Primitive {
 
 // Flags for entity->flags
 #define FLAG_UNK_10000 0x10000
-#define FLAG_UNK_20000 0x20000
+#define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
 #define FLAG_FREE_POLYGONS 0x00800000
+#define FLAG_UNK_00200000 0x00200000
 #define FLAG_UNK_02000000 0x02000000
 #define FLAG_UNK_04000000 0x04000000
 #define FLAG_UNK_08000000 0x08000000
