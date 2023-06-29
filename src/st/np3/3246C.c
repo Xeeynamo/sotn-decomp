@@ -561,7 +561,7 @@ void EntityTrapDoor(Entity* entity) {
         entity->zPriority = 0x6A;
         entity->hitboxWidth = 0x10;
         entity->hitboxHeight = 4;
-        entity->unk3C = 1;
+        entity->hitboxState = 1;
 
         if (g_TrapDoorFlag == 0) {
             if (PLAYER.posY.val < entity->posY.val) {
@@ -603,7 +603,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A6C);
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
@@ -625,7 +625,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step = 2;
         }
         break;
@@ -674,7 +674,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 newEntity->subId = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step++;
         }
         break;
@@ -698,7 +698,7 @@ void EntityMermanRockRightSide(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A6C);
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
@@ -720,7 +720,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step = 2;
         }
         break;
@@ -765,7 +765,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
             D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Broken */
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step++;
         }
         break;

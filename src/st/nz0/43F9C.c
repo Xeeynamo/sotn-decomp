@@ -83,7 +83,7 @@ void EntityAxeKnight(Entity* self) {
         if (self->step != AXE_KNIGHT_DYING) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->ext.generic.unk80.modeS16.unk0 = 65;
             self->zPriority -= 0x10;
             SetStep(AXE_KNIGHT_DYING);

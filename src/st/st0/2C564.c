@@ -20,8 +20,8 @@ void EntityDracula(Entity* self) {
     s32 i;
 
     if ((self->flags & 0x100) && (self->step < 8)) {
-        self->unk3C = 0;
-        self[1].unk3C = 0;
+        self->hitboxState = 0;
+        self[1].hitboxState = 0;
         SetStep(8);
     }
 
@@ -44,7 +44,7 @@ void EntityDracula(Entity* self) {
         InitializeEntity(D_801805E0);
         self->animCurFrame = 0x4F;
         self->ext.dracula.unkA1 = 1;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->facing = 1;
         CreateEntityFromCurrentEntity(0x1D, &self[1]);
         self[1].zPriority = self->zPriority + 1;
@@ -114,7 +114,7 @@ void EntityDracula(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->ext.dracula.unk9C = 0;
             self->step_s++;
 
@@ -171,7 +171,7 @@ void EntityDracula(Entity* self) {
         case 3:
             self->facing = (func_801B4C78() & 1) ^ 1;
             self->ext.dracula.unkA2 = (self->ext.dracula.unkA2 + 1) & 3;
-            self->unk3C = 3;
+            self->hitboxState = 3;
             if (self->ext.dracula.unkA2 == 0) {
                 SetStep(6);
                 break;
@@ -273,7 +273,7 @@ void EntityDracula(Entity* self) {
         switch (self->step_s) {
         case 0:
             prim = self->ext.dracula.prim;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             g_isDraculaFirstFormDefeated = 1;
             while (prim != NULL) {
                 prim->blendMode = 8;
@@ -485,7 +485,7 @@ void EntityDraculaBody(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_801805E0);
-        self->unk3C = 1;
+        self->hitboxState = 1;
         self->hitPoints = 0x7FFF;
         self->hitboxOffX = 3;
         self->hitboxOffY = 0x27;
@@ -497,15 +497,15 @@ void EntityDraculaBody(Entity* self) {
         self->facing = self[-1].facing;
         self->posX.i.hi = self[-1].posX.i.hi;
         self->posY.i.hi = self[-1].posY.i.hi;
-        self->unk3C = self[-1].unk3C & 0xFFFD;
+        self->hitboxState = self[-1].hitboxState & 0xFFFD;
         break;
     case 2:
-        self->unk3C = 0;
+        self->hitboxState = 0;
         break;
     }
 
     if (g_isDraculaFirstFormDefeated) {
-        self->unk3C = 0;
+        self->hitboxState = 0;
     }
 }
 
@@ -571,12 +571,12 @@ void EntityDraculaMeteorball(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_801805F8);
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
         entity->unk19 |= 4;
         break;
     case 1:
         if (AnimateEntity(D_801809B0, entity) == 0) {
-            entity->unk3C = 1;
+            entity->hitboxState = 1;
             SetStep(2);
         }
         break;
@@ -623,7 +623,7 @@ void func_801AD838(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_801805EC);
         entity->animCurFrame = 0;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
         entity->accelerationY = -0x10000;
     }
     MoveEntity();
@@ -641,7 +641,7 @@ void EntityDraculaGlass(Entity* entity) {
         InitializeEntity(D_801805EC);
         entity->animCurFrame = 0x59;
         entity->unk19 = 4;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
         entity->accelerationX = -0x10000;
         entity->accelerationY = 0;
         if (entity->subId) {
@@ -764,7 +764,7 @@ void EntityDraculaRainAttack(Entity* self) {
     case 0:
         InitializeEntity(D_8018061C);
         if (self->subId != 0) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->animCurFrame = 0x59;
             accelX = (Random() & 0x1F) + 0x10;
             angle = (Random() * 6) + 0x900;

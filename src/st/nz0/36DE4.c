@@ -13,7 +13,7 @@ void func_801B6DE4(Entity* self) {
         self->hitboxHeight = 8;
         self->hitboxOffY = -0x16;
         self->hitboxWidth = 6;
-        self->unk3C = 1;
+        self->hitboxState = 1;
 
         firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == (-1)) {
@@ -840,7 +840,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->hitPoints = enemyDef->hitPoints;
     g_CurrentEntity->attack = enemyDef->attack;
     g_CurrentEntity->attackElement = enemyDef->attackElement;
-    g_CurrentEntity->unk3C = enemyDef->unkC;
+    g_CurrentEntity->hitboxState = enemyDef->unkC;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
     g_CurrentEntity->flags = enemyDef->unk24;

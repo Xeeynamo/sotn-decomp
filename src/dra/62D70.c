@@ -222,7 +222,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
     otIdx = 0x1F0;
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40;
          polyCount++, entity++) {
-        if (entity->unk3C == 0)
+        if (entity->hitboxState == 0)
             continue;
         if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
             break;
@@ -240,7 +240,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
         tile->r0 = 0xFF;
         tile->g0 = 0xFF;
         tile->b0 = 0xFF;
-        if (entity->unk3C == 2) {
+        if (entity->hitboxState == 2) {
             tile->r0 = 0;
             tile->g0 = 0xFF;
             tile->b0 = 0;
@@ -256,7 +256,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
     }
 
     for (; polyCount < GPU_MAX_TILE_COUNT; polyCount++, entity++) {
-        if (entity->unk3C == 0)
+        if (entity->hitboxState == 0)
             continue;
         if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
             break;
@@ -274,17 +274,17 @@ void DrawEntitiesHitbox(s32 blendMode) {
         tile->r0 = 0xFF;
         tile->g0 = 0xFF;
         tile->b0 = 0xFF;
-        if (entity->unk3C == 1) {
+        if (entity->hitboxState == 1) {
             tile->r0 = 0xFF;
             tile->g0 = 0;
             tile->b0 = 0;
         }
-        if (entity->unk3C == 2) {
+        if (entity->hitboxState == 2) {
             tile->r0 = 0;
             tile->g0 = 0;
             tile->b0 = 0xFF;
         }
-        if (entity->unk3C == 3) {
+        if (entity->hitboxState == 3) {
             tile->r0 = 0xFF;
             tile->g0 = 0;
             tile->b0 = 0xFF;

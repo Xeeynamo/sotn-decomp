@@ -104,7 +104,7 @@ void EntityMerman2(Entity* self) {
             g_api.FreePrimitives(self->firstPolygonIndex);
             self->flags &= ~FLAG_FREE_POLYGONS;
         }
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
         SetStep(MERMAN2_DYING);
     }
@@ -593,7 +593,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
     if (entity->step == 0) {
         InitializeEntity(D_80180AB4);
         entity->animCurFrame = 0;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
         entity->zPriority += 4;
         if (entity->subId != 0) {
             firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -676,7 +676,7 @@ void func_801C7D80(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AB4);
         self->animCurFrame = 0;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->flags |= 0x2000;
         self->zPriority += 4;
     }
@@ -754,7 +754,7 @@ void EntityLargeFallingObject(Entity* self) {
         InitializeEntity(D_80180AB4);
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->accelerationY = 0x1000;
         self->palette = self->subId + 0xE;
         self->unk6C = 0x80;

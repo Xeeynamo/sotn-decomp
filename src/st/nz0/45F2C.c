@@ -241,7 +241,7 @@ void func_801C6678(Entity* entity) { // From Skeleton
         entity->unk1A = 0x120;
         entity->unk1C = 0x200;
         entity->unk6C = 0;
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
         entity->unk19 = entity->unk19 | 0xB;
         return;
     }

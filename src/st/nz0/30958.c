@@ -151,7 +151,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         InitializeEntity(D_80180BF8);
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
-        self->unk3C = 2;
+        self->hitboxState = 2;
 
         cond = D_8003BDEC[129] != 0;
         tileLayoutPtr = &D_80180E54 + (-cond & 0xC);
@@ -231,7 +231,7 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
         InitializeEntity(D_80180BF8);
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
-        self->unk3C = 2;
+        self->hitboxState = 2;
         flag = (D_8003BDEC[130] != 0);
         tileLayoutPtr = &D_80180E94 + (-flag & 0x6);
 
@@ -440,7 +440,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         self->hitboxHeight = 12;
         self->attackElement = 1;
         self->attack = 7;
-        self->unk3C = 1;
+        self->hitboxState = 1;
 
         firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == -1) {
@@ -604,7 +604,7 @@ void EntityCannonLever(Entity* self) {
         InitializeEntity(D_80180BF8);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
-        self->unk3C = 2;
+        self->hitboxState = 2;
 
         firstPolygonIndex = g_api.AllocPrimitives(4, 1);
         if (firstPolygonIndex == -1) {
@@ -627,7 +627,7 @@ void EntityCannonLever(Entity* self) {
         poly->pad3 = 2;
 
         if (PLAYER.posX.i.hi < 128) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
         }
         break;
 
@@ -659,7 +659,7 @@ void EntityCannonLever(Entity* self) {
     }
 
     if (D_8003BE6F[0] != 0) {
-        self->unk3C = 0;
+        self->hitboxState = 0;
     }
     poly = (POLY_GT4*)*(s32*)&self->ext.generic.unk7C.s;
     poly->x0 = self->posX.i.hi - 4;
@@ -842,7 +842,7 @@ void func_801B2AD8(Entity* self) {
         self->hitboxHeight = 8;
         self->hitboxOffY = -0x16;
         self->hitboxWidth = 6;
-        self->unk3C = 1;
+        self->hitboxState = 1;
         CreateEntityFromEntity(0x26, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Camera.posY.i.hi;
 
@@ -917,7 +917,7 @@ void EntityFloorSpikes(Entity* self) {
         self->hitboxHeight = 12;
         self->attackElement = 1;
         self->attack = 7;
-        self->unk3C = 1;
+        self->hitboxState = 1;
         self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
 
         temp = 4;
@@ -948,13 +948,13 @@ void EntityFloorSpikes(Entity* self) {
         self->posY.i.hi -= 28;
 
     case 1:
-        self->unk3C = 1;
+        self->hitboxState = 1;
         if (self->ext.generic.unk84.unk != 0) {
             self->posY.val += 0x10000;
             new_var = g_Camera.posY.i.hi + self->posY.i.hi;
             var_v1 = g_Camera.posY.i.hi;
             if (new_var > self->ext.generic.unk80.modeS32) {
-                self->unk3C = 0;
+                self->hitboxState = 0;
                 self->posY.i.hi = self->ext.generic.unk80.modeS16.unk0 - var_v1;
             }
         } else {
@@ -986,13 +986,13 @@ void EntityTableWithGlobe(Entity* self) {
         self->hitboxHeight = 12;
         self->hitboxOffY = -0xA;
         self->hitboxOffX = 0;
-        self->unk3C = 2;
+        self->hitboxState = 2;
 
     case 1:
         AnimateEntity(D_80180EF0, self);
         if (self->hitFlags != 0) {
             func_801C29B0(0x61D);
-            self->unk3C = 0;
+            self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].subId = D_80180F10[self->subId];
             SetStep(2);
@@ -1016,13 +1016,13 @@ void func_801B3648(Entity* self) {
         self->hitboxHeight = 12;
         self->hitboxOffY = -0xA;
         self->hitboxOffX = 0;
-        self->unk3C = 2;
+        self->hitboxState = 2;
 
     case 1:
         AnimateEntity(D_80180F1C, self);
         if (self->hitFlags != 0) {
             func_801C29B0(0x619);
-            self->unk3C = 0;
+            self->hitboxState = 0;
             SetStep(2);
         }
         break;
@@ -1062,7 +1062,7 @@ void func_801B37C0(Entity* self) {
             self->hitboxHeight = 12;
             self->hitboxOffY = -0xA;
             self->hitboxOffX = 0;
-            self->unk3C = 2;
+            self->hitboxState = 2;
             CreateEntityFromEntity(0x37, self, &self[1]);
             self[1].subId = 0x100;
         }
@@ -1074,7 +1074,7 @@ void func_801B37C0(Entity* self) {
         }
         AnimateEntity(D_80180F50, self);
         if (self->hitFlags != 0) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
             SetStep(2);
         }
         break;
@@ -1135,13 +1135,13 @@ void func_801B3A50(Entity* self) {
         self->hitboxHeight = 16;
         self->hitboxOffY = -0xA;
         self->hitboxOffX = 0;
-        self->unk3C = 2;
+        self->hitboxState = 2;
 
     case 1:
         AnimateEntity(D_80180F88, self);
         if (self->hitFlags != 0) {
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
-            self->unk3C = 0;
+            self->hitboxState = 0;
             SetStep(2);
         }
         break;

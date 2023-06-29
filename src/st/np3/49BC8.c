@@ -6,7 +6,7 @@ void EntityZombie(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < 4)) {
         func_801C2598(NA_SE_EN_ZOMBIE_EXPLODE);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
@@ -62,7 +62,7 @@ void EntityZombie(Entity* self) {
         }
 
         if (temp_a0 & 0xC0) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
             SetStep(4);
         }
         break;
