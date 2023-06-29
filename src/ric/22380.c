@@ -316,9 +316,102 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160FC4);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016147C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161C2C);
+void func_80161C2C(Entity* self) {
+    u16 subId = self->subId;
+    s16 subIdHi = self->subId >> 8;
+    s32 step = self->step;
+    s32 rnd;
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161EF8);
+    switch (step) {
+    case 0:
+        if (subIdHi == 1) {
+            self->unk1A = 0xC0;
+            self->unk1C = 0xC0;
+            self->unk19 = 3;
+            self->animSet = 2;
+            self->unk4C = D_80154E04;
+        }
+
+        if ((subIdHi == 0) || (subIdHi == 2)) {
+            if (subId & 3) {
+                self->unk4C = D_80154DC8;
+                self->unk1A = 0x120;
+                self->unk1C = 0x120;
+                self->unk19 = 3;
+                self->animSet = 2;
+            } else {
+                self->animSet = 5;
+                self->unk4C = D_80154C80;
+                self->palette = 0x8170;
+            }
+        }
+        self->flags = 0x08120000;
+
+        if (rand() % 4) {
+            self->zPriority = PLAYER.zPriority + 2;
+        } else {
+            self->zPriority = PLAYER.zPriority - 2;
+        }
+
+        if (subIdHi == 2) {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
+        }
+
+        rnd = rand() & 31;
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
+        self->accelerationY = -0x8000;
+        self->accelerationX = PLAYER.accelerationX >> 2;
+        self->step++;
+        break;
+
+    case 1:
+        self->unk1A -= 4;
+        self->unk1C -= 4;
+        self->posY.val += self->accelerationY;
+        self->posX.val += self->accelerationX;
+        if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
+            self->blendMode = 0x10;
+            if (!(subId & 1) && (self->animFrameDuration == step)) {
+                func_801606BC(self, 0x40004, 0);
+            }
+        }
+
+        if ((self->animFrameIdx == 16) && (self->unk4C == D_80154C80)) {
+            self->blendMode = 0x10;
+        }
+
+        if (self->animFrameDuration < 0) {
+            func_80156C60(self);
+        }
+        break;
+    }
+}
+
+void func_80161EF8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->animSet = 2;
+        self->unk4C = &D_80154E38;
+        self->flags = 0x170000;
+        self->zPriority = PLAYER.zPriority + 4;
+        self->accelerationY = (rand() & 0x3FFF) - 0x10000;
+        self->step++;
+        break;
+
+    case 1:
+        if ((self->animFrameIdx == 6) &&
+            (self->animFrameDuration == self->step) && (rand() & 1)) {
+            func_801606BC(self, 4, 0);
+        }
+        self->posY.val += self->accelerationY;
+        if (self->animFrameDuration < 0) {
+            func_80156C60(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161FF0);
 
