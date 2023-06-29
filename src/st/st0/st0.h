@@ -55,7 +55,7 @@ extern u16 D_801805BC[];
 extern u16 D_801805D4[];
 extern ObjInit2 D_80180638[];
 
-// *** EntityAlucard properties START ***
+// *** EntityDracula properties START ***
 
 extern u8 D_80180914[]; // Animation
 extern u8 D_80180924[]; // Animation
@@ -76,7 +76,7 @@ extern point16 D_80180A58[];
 extern s32 D_801C2578;
 extern s32 D_801C257C;
 
-// *** EntityAlucard properties END ***
+// *** EntityDracula properties END ***
 
 extern s16 D_80181990[];
 extern s16 D_801815EC[];
