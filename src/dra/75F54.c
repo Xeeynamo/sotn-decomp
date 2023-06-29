@@ -589,19 +589,19 @@ void func_8011A9D8(void) {
 
     entity = &g_Entities[4];
     g_CurrentEntity = &g_Entities[4];
-    for(i=4; i < 0x40; i++, g_CurrentEntity++, entity++){
-        if (!(entity->flags & 0x20000)) {
+    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+        if (!(entity->flags & FLAG_UNK_20000)) {
             DestroyEntity(entity);
         }
-        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD && 
-            (entity->objectId - 0x37) < 6U && 
+        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD &&
+            0x36 < entity->objectId && entity->objectId < 0x3D &&
             entity->step != 0) {
-                entity->pfnUpdate(entity);
-        }
-        if ((entity->flags & 0x02000000) && (entity->step != 0)) {
-            entity->flags |= 0x200000;
             entity->pfnUpdate(entity);
-            entity->flags &= 0xFFDFFFFF;
+        }
+        if (entity->flags & FLAG_UNK_02000000 && entity->step != 0) {
+            entity->flags |= FLAG_UNK_00200000;  // set a flag
+            entity->pfnUpdate(entity);           // update
+            entity->flags &= ~FLAG_UNK_00200000; // unset that same flag
         }
     }
 }
