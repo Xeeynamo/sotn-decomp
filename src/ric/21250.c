@@ -8,7 +8,7 @@ s32 func_8015D250(void) {
         return 1;
     }
     subweapon_Id = func_8015FB84(&sp10, 0, 0);
-    if(subweapon_Id <= 0){
+    if (subweapon_Id <= 0) {
         return 1;
     }
     if (sp10.unkB == 0) {
@@ -20,7 +20,7 @@ s32 func_8015D250(void) {
     if ((func_8015FB84(&sp10, 0, 1) << 0x10) <= 0) {
         return 3;
     }
-    if (g_Player.unk72 != 0){
+    if (g_Player.unk72 != 0) {
         return 5;
     }
     func_801606BC(g_CurrentEntity, sp10.unkB, 0);
@@ -94,4 +94,3 @@ void func_8015DB04(void) {
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/21250", func_8015DBB0);
-

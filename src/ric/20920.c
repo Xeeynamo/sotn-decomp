@@ -270,4 +270,3 @@ void func_8015D120(void) {
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D1D0);
-
