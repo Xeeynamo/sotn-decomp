@@ -18,7 +18,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < 3)) {
         func_801C29B0(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         SetStep(BLOOD_SKELETON_DISASSEMBLE);
     }
 
@@ -106,7 +106,7 @@ void EntityBloodSkeleton(Entity* self) {
 
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
-                self->unk3C = 3;
+                self->hitboxState = 3;
                 self->flags = g_api.enemyDefs[70].unk24 & 0x1FFFFFFF;
                 SetStep(BLOOD_SKELETON_WALK);
             }

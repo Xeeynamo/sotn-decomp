@@ -264,7 +264,7 @@ void EntityHammerWeapon(Entity* self) {
             temp_s0 = (Random() * 6) + 0x900;
             self->accelerationX = (temp_s1 * rcos(temp_s0)) / 2;
             accel = temp_s1 * rsin(temp_s0);
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->flags |= 0x80000000;
             self->step_s++;
             self->accelerationY = accel;
@@ -349,7 +349,7 @@ void EntityGurkhaSword(Entity* self) {
             self->accelerationX = (rnd * rcos(angle)) / 2;
             self->accelerationY = rnd * rsin(angle);
             self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->flags |= 0x80000000;
             self->step_s++;
             break;

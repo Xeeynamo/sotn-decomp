@@ -167,7 +167,7 @@ void EntitySpittleBoneSpit(Entity* self) {
             func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
             func_801C090C(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->step++;
         }
         break;

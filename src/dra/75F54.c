@@ -391,7 +391,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     var_a1 = 0;
     if (ent2 != NULL) {
         var_a1 = (ent2->objectId == 0) << 0xC;
-        if (ent2->unk3C == 0) {
+        if (ent2->hitboxState == 0) {
             var_a1 = 0x2000;
         }
         if (ent2->flags & 0x200000) {
@@ -494,7 +494,7 @@ void func_8011A290(Entity* entity) {
     func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
-    entity->unk3C = subwpn.sp1C;
+    entity->hitboxState = subwpn.sp1C;
     entity->nFramesInvincibility = subwpn.sp17;
     entity->unk58 = subwpn.sp18;
     entity->unk6A = subwpn.sp1E;
@@ -509,7 +509,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_800FD9D4(&spell, arg1);
     entity->attack = spell.attack;
     entity->attackElement = spell.attackElement;
-    entity->unk3C = spell.unk10;
+    entity->hitboxState = spell.unk10;
     entity->nFramesInvincibility = spell.unk0D;
     entity->unk58 = spell.unk0E;
     entity->unk6A = spell.unk12;
@@ -525,7 +525,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         func_800FD9D4(&spell, arg1);
         arg0->attack = spell.attack;
         arg0->attackElement = spell.attackElement;
-        arg0->unk3C = spell.unk10;
+        arg0->hitboxState = spell.unk10;
         arg0->nFramesInvincibility = spell.unk0D;
         arg0->unk58 = spell.unk0E;
         arg0->unk6A = spell.unk12;
@@ -651,7 +651,7 @@ void func_8011B334(Entity* entity) {
         GetEquipProperties(0, &equip, 0);
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
-        entity->unk3C = equip.hitType;
+        entity->hitboxState = equip.hitType;
         entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
         entity->unk58 = equip.stunFrames;
         entity->unk6A = equip.hitEffect;

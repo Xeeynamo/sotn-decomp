@@ -50,7 +50,7 @@ void func_801710E8(Entity* entity, s32* arg1) {
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_8017110C);
 
 s32 func_801713C8(Entity* entity) {
-    if (entity->unk3C == 0)
+    if (entity->hitboxState == 0)
         return 0;
     if (entity->posX.i.hi < -16)
         return 0;
@@ -835,7 +835,7 @@ s32 func_801747B8(void) {
     for (i = 0; i < 0x80; i++, entity++) {
         if (entity->objectId == 0)
             continue;
-        if (entity->unk3C == 0)
+        if (entity->hitboxState == 0)
             continue;
         if (entity->flags & 0x200000)
             continue;

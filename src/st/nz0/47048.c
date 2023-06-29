@@ -28,7 +28,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxHeight = 32;
         self->hitboxOffY = -0x38;
         self->hitboxOffX = 0;
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->palette += self->subId;
         CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
         self[1].posY.i.hi -= 72;
@@ -111,7 +111,7 @@ void EntitySubWeaponContainer(Entity* self) {
             }
         }
         func_801C29B0(NA_SE_EV_VASE_BREAK);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->animCurFrame = 2;
         self->step++;
         break;
@@ -259,7 +259,7 @@ void func_801C7884(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180BD4);
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
 
     case 1:
         MoveEntity();
@@ -274,7 +274,7 @@ void func_801C7884(Entity* entity) {
             entity->animFrameDuration = 0;
             entity->animFrameIdx = 0;
             entity->step = 0;
-            entity->unk3C = 1;
+            entity->hitboxState = 1;
         }
     }
 }
