@@ -7,6 +7,7 @@ s32 func_8015D250(void) {
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
+
     subweaponId = func_8015FB84(&subweapon, 0, 0);
     if (subweaponId <= 0) {
         return 1;
@@ -23,20 +24,24 @@ s32 func_8015D250(void) {
     if (g_Player.unk72 != 0) {
         return 5;
     }
+
     func_801606BC(g_CurrentEntity, subweapon.unkB, 0);
     g_Player.D_80072F14 = 4;
+
     switch (PLAYER.step) {
     case 25:
         PLAYER.step = 0;
         func_801606BC(g_CurrentEntity, 0, 0);
         func_8015C920(D_801555E8);
         break;
+
     case 0:
     case 1:
     case 2:
         PLAYER.step = 0;
         func_8015C920(D_801555E8);
         break;
+        
     case 3:
     case 4:
         PLAYER.step = 4;
