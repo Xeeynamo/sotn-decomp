@@ -270,18 +270,18 @@ void func_8015D120(void) {
 }
 
 s32 func_8015D1D0(s16 subWpnId, s16 subWpnUnk6) {
-    Entity* var_v1;
+    Entity* entity;
     s32 b0MatchCount;
-    s32 i;
     s32 nullObjCount;
+    s32 i;
 
-    var_v1 = &g_Entities[32];
-    for (i = 0, b0MatchCount = 0, nullObjCount = 0; i < 0x10; i++, var_v1++) {
-        if (var_v1->objectId == 0) {
+    entity = &g_Entities[32];
+    for (i = 0, b0MatchCount = 0, nullObjCount = 0; i < 0x10; i++, entity++) {
+        if (entity->objectId == 0) {
             nullObjCount++;
         }
-        if (var_v1->ext.generic.unkB0 != 0 &&
-            var_v1->ext.generic.unkB0 == subWpnId) {
+        if (entity->ext.generic.unkB0 != 0 &&
+            entity->ext.generic.unkB0 == subWpnId) {
             b0MatchCount++;
         }
         if (b0MatchCount >= subWpnUnk6) {
