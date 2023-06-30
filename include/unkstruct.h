@@ -16,8 +16,8 @@ typedef struct {
 
 typedef struct {
     /* 0x0 */ s32 x;
-    /* 0x2 */ s32 y;
-} Point32; // size = 0x4
+    /* 0x4 */ s32 y;
+} Point32; // size = 0x8
 
 typedef struct {
     /* 0x0 */ u16 unk0;
