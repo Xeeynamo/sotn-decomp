@@ -8,7 +8,7 @@
 
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
-    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
+    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->params * 10];
 
     if (entity->step == 0) {
         InitializeEntity(D_801804AC);
@@ -23,7 +23,7 @@ void EntityUnkId11(Entity* entity) {
             entity->flags = obj->unkC;
         }
 
-        if (entity->subId == 1) {
+        if (entity->params == 1) {
             entity->unk1C = 0x200;
             entity->unk1A = 0x200;
         }
@@ -35,7 +35,7 @@ void EntityUnkId11(Entity* entity) {
 void func_80191B44(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
-    u16 temp_s1 = entity->subId;
+    u16 temp_s1 = entity->params;
     u16 phi_v1;
     u16 unk;
     entity->unk6D = 0;
@@ -96,7 +96,7 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
     Entity* temp_v0;
-    u16 temp_s0 = entity->subId >> 0xC;
+    u16 temp_s0 = entity->params >> 0xC;
 
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
@@ -105,7 +105,7 @@ void EntityBreakable(Entity* entity) {
             temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
                 CreateEntityFromCurrentEntity(2, temp_v0);
-                temp_v0->subId = g_eBreakableExplosionTypes[temp_s0];
+                temp_v0->params = g_eBreakableExplosionTypes[temp_s0];
             }
             ReplaceBreakableWithItemDrop(entity);
         }

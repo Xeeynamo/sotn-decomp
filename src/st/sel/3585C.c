@@ -80,7 +80,7 @@ extern s8 D_8018BC50;
 void func_801B5A7C(void) {
     Entity* e = &g_Entities[8];
 
-    switch (e->subId) {
+    switch (e->params) {
     case 0:
         switch (e->step) {
         case 0:
@@ -375,7 +375,7 @@ void func_801B60D4(void) {
 
         D_801D6B24 = 0;
         D_801BD030 = 0;
-        g_Entities[8].subId = D_800978B4 - 1;
+        g_Entities[8].params = D_800978B4 - 1;
         g_api.func_800EA5E4(0x16);
         g_api.func_800EA5E4(0);
         g_api.func_800EA5E4(0x8005);

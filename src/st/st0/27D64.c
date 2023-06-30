@@ -2,7 +2,7 @@
 
 void func_801A7D64(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180638[arg0->subId];
+    ObjInit2* temp_s0 = &D_80180638[arg0->params];
 
     if (arg0->step == 0) {
         InitializeEntity(D_801805BC);
@@ -51,7 +51,7 @@ void EntityLockCamera(Entity* entity) {
     u8 temp_v0;
     s32 phi_v1;
 
-    temp_s1 = entity->subId;
+    temp_s1 = entity->params;
     if (entity->step == 0) {
         InitializeEntity(D_801805B0);
         temp_v1 = temp_s1 & 0xFFFF;
@@ -67,7 +67,7 @@ void EntityLockCamera(Entity* entity) {
         }
     }
 
-    if (entity->subId & 0x100) {
+    if (entity->params & 0x100) {
         temp_v1_2 = &D_80180664[(((temp_s1 & 0xFFFF) * 4) & 0xFFFF)];
         g_CurrentRoom.x = *temp_v1_2++;
         g_CurrentRoom.y = *temp_v1_2++;
@@ -100,9 +100,9 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8328);
 
 void func_801A8620(Entity* entity) {
     s16 dist;
-    s32 subId = (s16)entity->subId;
+    s32 params = (s16)entity->params;
 
-    FntPrint("set:%04x\n", subId);
+    FntPrint("set:%04x\n", params);
     FntPrint("sx:%04x\n", g_CurrentRoom.left);
     FntPrint("ex:%04x\n", g_CurrentRoom.right);
 
@@ -119,7 +119,7 @@ void func_801A8620(Entity* entity) {
         dist = ABS(dist);
 
         if (dist < 0x20) {
-            switch (subId) {
+            switch (params) {
             case 0:
                 if (playerX > 0x280) {
                     g_CurrentRoom.width = 0x280;

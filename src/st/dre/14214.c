@@ -37,7 +37,7 @@ void EntityPinkBallProjectile(Entity* self) {
         break;
 
     case 2:
-        temp_s0 = (self->subId << 0xA) + 0x200;
+        temp_s0 = (self->params << 0xA) + 0x200;
         self->accelerationX = rcos(temp_s0) * 0x38;
         self->accelerationY = rsin(temp_s0) * 0x38;
         self->ext.generic.unkA2 = temp_s0;
@@ -85,13 +85,13 @@ void EntitySuccubusWingSpike(Entity* self) {
         InitializeEntity(D_801804E8);
         self->unk19 = 4;
         self->animCurFrame = 0;
-        var_s0 = D_801807F0[self->subId];
+        var_s0 = D_801807F0[self->params];
         self->rotAngle = var_s0;
         self->unk19 |= 1;
         self->unk1A = 0x100;
         CreateEntityFromEntity(0x1F, self, &self[1]);
         self[1].facing = self->facing;
-        self[1].subId = self->subId;
+        self[1].params = self->params;
         self[1].rotAngle = self->rotAngle;
 
     case 1:
@@ -317,7 +317,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->pfnUpdate = D_801803C4[entity->objectId];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->subId = initDesc->subId;
+    entity->params = initDesc->params;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
@@ -828,7 +828,7 @@ void func_8019B024(u16 arg0, u16 arg1) {
     entity->unk19 = 0;
     entity->objectId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    entity->subId = arg0;
+    entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
@@ -936,7 +936,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019B45C);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 subId;
+    u16 params;
 
     PreventEntityFromRespawning(self);
 
@@ -947,20 +947,20 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     }
 #endif
 
-    subId = self->subId &= 0xFFF;
+    params = self->params &= 0xFFF;
 
-    if (subId < 0x80) {
+    if (params < 0x80) {
         self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
-        subId -= 0x80;
+        params -= 0x80;
         self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
-    self->subId = subId;
+    self->params = params;
     self->unk6D = 0x10;
     self->step = 0;
 }
@@ -1080,24 +1080,24 @@ void EntityExplosion(Entity* entity) {
         entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
 
-        if (entity->subId & 0xF0) {
+        if (entity->params & 0xF0) {
             entity->palette = 0x8195;
             entity->blendMode = 0x10;
         }
 
-        temp_v0 = entity->subId & 0xFF00;
+        temp_v0 = entity->params & 0xFF00;
 
         if (temp_v0 != 0) {
             entity->zPriority = (u16)(temp_v0 >> 8);
         }
 
-        entity->subId &= 0xF;
-        entity->accelerationY = D_801811B0[entity->subId];
+        entity->params &= 0xF;
+        entity->accelerationY = D_801811B0[entity->params];
         return;
     }
 
     entity->posY.val += entity->accelerationY;
-    if (!AnimateEntity(D_8018125C[entity->subId], entity)) {
+    if (!AnimateEntity(D_8018125C[entity->params], entity)) {
         DestroyEntity(entity);
     }
 }

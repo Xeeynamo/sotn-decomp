@@ -1193,7 +1193,7 @@ extern u16 D_80194728[];
 // *** bss? section end ***
 
 void func_80186FD0(Entity* arg0) {
-    ObjInit2* objInit = &D_801804E0[arg0->subId];
+    ObjInit2* objInit = &D_801804E0[arg0->params];
     if (arg0->step == 0) {
         InitializeEntity(D_80180494);
         arg0->animSet = objInit->animSet;
@@ -1207,7 +1207,7 @@ void func_80186FD0(Entity* arg0) {
             arg0->flags = objInit->unkC;
         }
 
-        if (arg0->subId == 1) {
+        if (arg0->params == 1) {
             arg0->unk1C = 0x0200;
             arg0->unk1A = 0x0200;
         }
@@ -1219,7 +1219,7 @@ void func_80186FD0(Entity* arg0) {
 void func_801870B0(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
-    u16 temp_s1 = entity->subId;
+    u16 temp_s1 = entity->params;
     u16 phi_v1;
     u16 unk;
     entity->unk6D = 0;
@@ -1276,7 +1276,7 @@ void func_801870B0(Entity* entity);
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
 void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->subId >> 0xC;
+    u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
@@ -1286,7 +1286,7 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->subId =
+                entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
@@ -1398,7 +1398,7 @@ void EntityWarpRoom(Entity* self) {
         self->unk12 += 16;
         D_80180648 = 0;
         *D_8003BEBC |= 1;
-        *D_8003BEBC |= 1 << self->subId;
+        *D_8003BEBC |= 1 << self->params;
         moveX = g_Camera.posX.i.hi + (&PLAYER)->posX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
             g_Player.D_80072EFC = 0x10;
@@ -1465,7 +1465,7 @@ void EntityWarpRoom(Entity* self) {
 
     case 4:
         // Perform the actual warp
-        move_room = self->subId + 1;
+        move_room = self->params + 1;
         for (i3 = 0; i3 < 5; i3++) {
             if (move_room >= 5) {
                 move_room = 0;
@@ -1799,7 +1799,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->subId = initDesc->subId;
+    entity->params = initDesc->params;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
@@ -2372,7 +2372,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     entity->unk19 = 0;
     entity->objectId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    entity->subId = arg0;
+    entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
@@ -2480,7 +2480,7 @@ void func_8018C55C(u16* hitSensors, s16 sensorCount) {
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018C6B4);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 subId;
+    u16 params;
 
     PreventEntityFromRespawning(self);
 
@@ -2491,20 +2491,20 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     }
 #endif
 
-    subId = self->subId &= 0xFFF;
+    params = self->params &= 0xFFF;
 
-    if (subId < 0x80) {
+    if (params < 0x80) {
         self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
-        subId -= 0x80;
+        params -= 0x80;
         self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
-    self->subId = subId;
+    self->params = params;
     self->unk6D = 0x10;
     self->step = 0;
 }
@@ -2627,7 +2627,7 @@ void CollectSubweapon(u16 arg0) {
         g_CurrentEntity->unk6D = 0x60;
     }
     if (var_a0 != 0) {
-        g_CurrentEntity->subId = var_a0;
+        g_CurrentEntity->params = var_a0;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
         func_8018C240(7);
         g_CurrentEntity->accelerationY = -0x28000;

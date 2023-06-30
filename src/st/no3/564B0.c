@@ -12,7 +12,7 @@ void EntityZombie(Entity* self) {
         if (newEntity != NULL) {
             CreateEntityFromEntity(0x62, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;
-            newEntity->subId = 3;
+            newEntity->params = 3;
             newEntity->posY.i.hi += 12;
         }
         DestroyEntity(self);

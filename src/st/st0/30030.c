@@ -205,7 +205,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->subId = initDesc->subId;
+    entity->params = initDesc->params;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
@@ -789,7 +789,7 @@ void func_801B5A98(u16* hitSensors, s16 sensorCount) {
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B5BF0);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 subId;
+    u16 params;
 
     PreventEntityFromRespawning(self);
 
@@ -800,20 +800,20 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     }
 #endif
 
-    subId = self->subId &= 0xFFF;
+    params = self->params &= 0xFFF;
 
-    if (subId < 0x80) {
+    if (params < 0x80) {
         self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
-        subId -= 0x80;
+        params -= 0x80;
         self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
-    self->subId = subId;
+    self->params = params;
     self->unk6D = 0x10;
     self->step = 0;
 }
@@ -893,6 +893,6 @@ void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801B633C(void) {
     g_CurrentEntity->step = 3;
-    g_CurrentEntity->subId = 4;
+    g_CurrentEntity->params = 4;
     return g_CurrentEntity;
 }

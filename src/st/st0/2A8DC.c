@@ -16,7 +16,7 @@ void EntitySecretButton(Entity* self) {
         self->hitboxHeight = 6;
         self->hitboxState = 2;
 
-        if (self->subId != 0) {
+        if (self->params != 0) {
             self->step = 4;
             self->zPriority += 2;
             break;
@@ -41,7 +41,7 @@ void EntitySecretButton(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_SECRET_BUTTON, self, newEntity);
-                newEntity->subId = 1;
+                newEntity->params = 1;
             }
             self->step++;
         }
@@ -84,7 +84,7 @@ void EntitySecretButton(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 0x11;
+                newEntity->params = 0x11;
             }
             DestroyEntity(self);
         }
@@ -140,18 +140,18 @@ void EntitySecretStairs(Entity* self) {
     case 0:
         InitializeEntity(D_80180628);
         self->animCurFrame = 1;
-        if (self->subId == 0) {
+        if (self->params == 0) {
             self->ext.generic.unk84.U8.unk0 = true;
             newEntity = &self[1];
             for (i = 0; i < 3; i++) {
                 CreateEntityFromCurrentEntity(E_SECRET_STAIRS, newEntity);
-                newEntity->subId = i + 1;
+                newEntity->params = i + 1;
                 newEntity++;
             }
 
         } else {
             self->ext.generic.unk84.U8.unk0 = false;
-            if (self->subId == 3) {
+            if (self->params == 3) {
                 self->animCurFrame = 2;
                 self->zPriority += 1;
                 for (tilePos = &D_801808B0; *tilePos != 0xFFFF; tilePos += 2) {
@@ -163,13 +163,13 @@ void EntitySecretStairs(Entity* self) {
                 }
 
             } else {
-                self->zPriority -= self->subId;
+                self->zPriority -= self->params;
             }
         }
 
         if (g_isSecretStairsButtonPressed) {
-            temp_s0 = D_801808A0[self->subId].x;
-            temp_s1 = D_801808A0[self->subId].y;
+            temp_s0 = D_801808A0[self->params].x;
+            temp_s1 = D_801808A0[self->params].y;
             self->posX.i.hi = temp_s0 - g_Camera.posX.i.hi;
             self->posY.i.hi = temp_s1 - g_Camera.posY.i.hi;
             self->step = 15;
@@ -198,7 +198,7 @@ void EntitySecretStairs(Entity* self) {
         if (!self->ext.generic.unk84.U8.unk0) {
             self->posX.i.hi = self[-1].posX.i.hi;
             self->posY.i.hi = self[-1].posY.i.hi;
-            if (self->subId == 3) {
+            if (self->params == 3) {
                 self->posX.i.hi += 16;
                 self->posY.i.hi += 16;
             }
@@ -209,8 +209,8 @@ void EntitySecretStairs(Entity* self) {
         break;
 
     case 4:
-        temp_s0 = D_801808A0[self->subId].x;
-        temp_s1 = D_801808A0[self->subId].y;
+        temp_s0 = D_801808A0[self->params].x;
+        temp_s1 = D_801808A0[self->params].y;
 
         switch (self->step_s) {
         case 0:
@@ -229,7 +229,7 @@ void EntitySecretStairs(Entity* self) {
                 g_api.PlaySfx(0x64F);
                 self->posX.i.hi = temp_s0 - g_Camera.posX.i.hi;
                 self->posY.i.hi = temp_s1 - g_Camera.posY.i.hi;
-                if (self->subId != 3) {
+                if (self->params != 3) {
                     self[1].ext.stub[0x8] = 1;
                 } else {
                     tilePos = &D_801808B0;

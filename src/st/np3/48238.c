@@ -70,7 +70,7 @@ void EntityMerman(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 2;
+                newEntity->params = 2;
             }
             DestroyEntity(self);
             return;
@@ -130,7 +130,7 @@ void EntityMerman(Entity* self) {
         }
 
         pos = D_80181230;
-        pos += (self->subId >> 8) & 1;
+        pos += (self->params >> 8) & 1;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
             self->posY.i.hi = pos[4] - g_Camera.posY.i.hi - 24;
@@ -155,7 +155,7 @@ void EntityMerman(Entity* self) {
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
             pos = D_80181230;
-            pos += (self->subId >> 8) & 1;
+            pos += (self->params >> 8) & 1;
             camY = g_Camera.posY.i.hi;
             posY = self->posY.i.hi;
             posY -= 20;
@@ -399,7 +399,7 @@ void EntityMerman(Entity* self) {
                     newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x3C, self, newEntity);
-                        newEntity->subId = 2;
+                        newEntity->params = 2;
                     }
                 }
             }
@@ -450,7 +450,7 @@ void func_801C8DF0(Entity* self) {
             entity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
-                entity->subId = 0;
+                entity->params = 0;
             }
             DestroyEntity(self);
         }
@@ -478,8 +478,8 @@ void EntityMermanExplosion(Entity* self) {
         InitializeEntity(D_80180A54);
         self->palette = 0x82BB;
         self->animSet = 2;
-        self->animCurFrame = D_80182454[self->subId];
-        self->accelerationY = D_80182440[self->subId];
+        self->animCurFrame = D_80182454[self->params];
+        self->accelerationY = D_80182440[self->params];
         self->step++;
         return;
     } else {
@@ -491,7 +491,7 @@ void EntityMermanExplosion(Entity* self) {
         self->animCurFrame++;
     }
 
-    if (D_80182458[self->subId] < self->animFrameDuration) {
+    if (D_80182458[self->params] < self->animFrameDuration) {
         DestroyEntity(self);
     }
 }

@@ -440,7 +440,7 @@ void EntitySlogra(Entity* self) {
                     newEntity->posX.i.hi -= 16 - (Random() & 31);
                     newEntity->posY.i.hi -= 16 - (Random() & 31);
                     newEntity->zPriority = self->zPriority + 1;
-                    newEntity->subId = 1;
+                    newEntity->params = 1;
                 }
             }
             self->ext.GS_Props.timer--;
@@ -453,7 +453,7 @@ void EntitySlogra(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 3;
+                newEntity->params = 3;
                 newEntity->posY.i.hi += 16;
             }
             DestroyEntity(self);
@@ -464,14 +464,14 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_DEBUG:
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 self->animCurFrame++;
-                self->subId |= 1;
+                self->params |= 1;
             } else {
                 break;
             }
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
@@ -548,7 +548,7 @@ void EntitySlograSpearProjectile(Entity* self) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
-            entity->subId = 1;
+            entity->params = 1;
         }
         DestroyEntity(self);
         return;
@@ -1130,7 +1130,7 @@ void EntityGaibon(Entity* self) {
                     newEntity->posY.i.hi += 28;
                     newEntity->posX.i.hi -= 32 - (Random() & 63);
                     newEntity->zPriority = self->zPriority + 1;
-                    newEntity->subId = 2;
+                    newEntity->params = 2;
                 }
             }
             self->ext.GS_Props.timer--;
@@ -1145,14 +1145,14 @@ void EntityGaibon(Entity* self) {
     case GAIBON_DEBUG:
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 self->animCurFrame++;
-                self->subId |= 1;
+                self->params |= 1;
             } else {
                 break;
             }
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
@@ -1210,7 +1210,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->unk19 = 0;
         self->step = 0;
         self->objectId = 2;
-        self->subId = 0;
+        self->params = 0;
         return;
     }
 
@@ -1241,14 +1241,14 @@ void EntityLargeGaibonProjectile(Entity* self) {
         self->objectId = 2;
         self->unk19 = 0;
         self->step = 0;
-        self->subId = 1;
+        self->params = 1;
         return;
     }
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B80);
-        if (self->subId == 0) {
+        if (self->params == 0) {
             self->animSet = 2;
             self->unk19 = 4;
             self->accelerationX = (rcos(self->rotAngle) * 0x38000) >> 0xC;
@@ -1276,7 +1276,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
-                newEntity->subId = 1;
+                newEntity->params = 1;
                 newEntity->rotAngle = self->rotAngle;
                 newEntity->zPriority = self->zPriority + 1;
             }

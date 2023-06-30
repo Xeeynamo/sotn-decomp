@@ -12,7 +12,7 @@ typedef struct {
     /* 0x2 */ u16 posY;
     /* 0x4 */ u16 objectId;
     /* 0x6 */ u16 objectRoomIndex;
-    /* 0x8 */ u16 subId;
+    /* 0x8 */ u16 params;
 } LayoutObject; // size = 0xA
 
 s32 Random();

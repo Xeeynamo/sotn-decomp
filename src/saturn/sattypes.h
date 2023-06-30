@@ -21,7 +21,7 @@ typedef struct Entity {
     s8 pad3[0x14];
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
-    /* 0x30 */ u16 subId;
+    /* 0x30 */ u16 params;
     u8 pad4[8];
     /* 0x3a */ u16 hitboxState; // hitbox state
     s16 pad5[4];

@@ -9,7 +9,7 @@
 // vase in the room with the door to the caverns
 void EntityCavernDoorVase(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
+    ObjInit2* temp_s0 = &D_80180BFC[arg0->params];
 
     if (arg0->step == 0) {
         InitializeEntity(D_80180B00);
@@ -38,7 +38,7 @@ extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->subId >> 0xC;
+    u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
@@ -48,7 +48,7 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->subId =
+                entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
@@ -266,7 +266,7 @@ void EntityCavernDoor(Entity* self) {
                     entity->posY.i.hi = 156;
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
-                    entity->subId = 0x10;
+                    entity->params = 0x10;
                     entity->unk19 |= 3;
                     entity->unk1A = entity->unk1C = 192;
                 }
@@ -548,7 +548,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* subId;
+    u8* params;
     s32 i;
 
     switch (self->step) {
@@ -597,19 +597,19 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(2, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *subId++;
+                    newEntity->params = *params++;
                     newEntity->accelerationX = -0x8000 - (Random() << 8);
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
@@ -622,7 +622,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0xA, self, newEntity);
-                newEntity->subId = 0x43;
+                newEntity->params = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Half broken */
             self->hitboxState = 1;
@@ -643,7 +643,7 @@ void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* subId;
+    u8* params;
     s32 i;
 
     switch (self->step) {
@@ -692,19 +692,19 @@ void EntityMermanRockRightSide(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(2, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *subId++;
+                    newEntity->params = *params++;
                     newEntity->accelerationX = (Random() << 8) + 0x8000;
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->facing = 1;
@@ -775,7 +775,7 @@ void EntityUnkId26(Entity* self) {
 
 // falling rock that breaks into dust
 void EntityFallingRock2(Entity* self) {
-    s32 animFrame = self->subId & 0xF;
+    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
     s32 temp_a0;
@@ -804,9 +804,9 @@ void EntityFallingRock2(Entity* self) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(2, self, newEntity);
-                    newEntity->subId = 0x11;
+                    newEntity->params = 0x11;
                     if (animFrame == 0) {
-                        newEntity->subId = 0x13;
+                        newEntity->params = 0x13;
                     }
                 }
                 DestroyEntity(self);
@@ -831,7 +831,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
 void EntityFallingRock(Entity* self) {
-    s32 animFrame = self->subId & 0xF;
+    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
     s16 rndAngle;
@@ -864,9 +864,9 @@ void EntityFallingRock(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(6, self, newEntity);
-                newEntity->subId = 0x10;
+                newEntity->params = 0x10;
                 if (animFrame == 0) {
-                    newEntity->subId = 0x13;
+                    newEntity->params = 0x13;
                 }
             }
             DestroyEntity(self);
@@ -898,9 +898,9 @@ void EntityUnkId2A(Entity* entity) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
         entity->flags &= ~FLAG_UNK_08000000;
-        entity->animCurFrame = entity->subId + 0x22;
-        entity->posX.i.hi = D_8018139C[entity->subId << 1];
-        entity->posY.i.hi = D_8018139E[entity->subId << 1];
+        entity->animCurFrame = entity->params + 0x22;
+        entity->posX.i.hi = D_8018139C[entity->params << 1];
+        entity->posY.i.hi = D_8018139E[entity->params << 1];
         entity->ext.generic.unk80.modeS16.unk0 = 5;
     }
     entity->ext.generic.unk80.modeS16.unk0--;
@@ -1035,7 +1035,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     CreateEntityFromEntity(6, self, newEntity);
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (Random() & 0xF);
-                    newEntity->subId = 0x10;
+                    newEntity->params = 0x10;
                     newEntity->unk1A = newEntity->unk1C = 192;
                     newEntity->unk19 |= 3;
                 }

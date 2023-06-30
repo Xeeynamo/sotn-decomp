@@ -67,11 +67,11 @@ const u32 rodataPadding_801569E4 = 0;
 bool func_80162E9C(Entity* entity) {
     s32 i = 16;
     s16 objId = entity->objectId;
-    s16 subId = entity->subId;
+    s16 params = entity->params;
     Entity* e;
 
     for (e = &g_Entities[i]; i < 64; i++, e++) {
-        if ((objId == e->objectId) && (subId == e->subId) && (e != entity)) {
+        if ((objId == e->objectId) && (params == e->params) && (e != entity)) {
             return true;
         }
     }
@@ -298,7 +298,7 @@ void func_80167964(Entity* entity) {
         if (entity->step == 0) {
             entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_UNK_10000;
         }
-        if (!(entity->subId & 0xFF00)) {
+        if (!(entity->params & 0xFF00)) {
             *(&PLAYER.palette +
               (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
         }
@@ -410,7 +410,7 @@ void func_80169D74(Entity* entity) {
         entity->ext.generic.unk84.unk =
             entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
         entity->animSet = -0x7FEF;
-        entity->animCurFrame = D_80155E68[entity->subId];
+        entity->animCurFrame = D_80155E68[entity->params];
         entity->unk5A = 0x66;
         entity->palette = 0x81B0;
         entity->blendMode = 0x10;
@@ -425,7 +425,7 @@ void func_80169D74(Entity* entity) {
         entity->rotAngle -= 0x80;
         if (entity->ext.generic.unk8C.entityPtr->step == 7) {
             entity->step++;
-            entity->ext.generic.unk7C.s = (entity->subId + 1) * 4;
+            entity->ext.generic.unk7C.s = (entity->params + 1) * 4;
         }
         break;
 

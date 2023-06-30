@@ -29,10 +29,10 @@ void EntitySubWeaponContainer(Entity* self) {
         self->hitboxOffY = -0x38;
         self->hitboxOffX = 0;
         self->hitboxState = 2;
-        self->palette += self->subId;
+        self->palette += self->params;
         CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
         self[1].posY.i.hi -= 72;
-        self[1].subId = D_801825CC[self->subId];
+        self[1].params = D_801825CC[self->params];
         self[1].zPriority = self->zPriority - 2;
 
         firstPrimIndex = g_api.AllocPrimitives(4, 2);
@@ -59,11 +59,11 @@ void EntitySubWeaponContainer(Entity* self) {
                 rnd = (Random() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
-                newEntity->subId = Random() & 3;
-                if (newEntity->subId == 0) {
+                newEntity->params = Random() & 3;
+                if (newEntity->params == 0) {
                     absRnd = ABS(rnd);
                     if (absRnd >= 9) {
-                        newEntity->subId = 1;
+                        newEntity->params = 1;
                     }
                 }
                 newEntity->zPriority = self->zPriority - 1;
@@ -89,9 +89,9 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->posX.i.hi += glassPieceTBL->posX;
                 newEntity->posY.i.hi += glassPieceTBL->posY;
                 newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
-                newEntity->subId = glassPieceTBL->subId;
+                newEntity->params = glassPieceTBL->params;
                 newEntity->facing = glassPieceTBL->facing;
-                newEntity->ext.generic.unk84.S16.unk2 = self->subId;
+                newEntity->ext.generic.unk84.S16.unk2 = self->params;
             }
             glassPieceTBL++;
             i++;
@@ -123,14 +123,14 @@ void EntitySubWeaponContainer(Entity* self) {
          */
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 newEntity->animCurFrame++;
-                self->subId |= 1;
+                self->params |= 1;
             } else {
                 break;
             }
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
@@ -154,7 +154,7 @@ void func_801C7538(Entity* entity) {
     case 0:
         InitializeEntity(D_80180CF4);
         entity->unk19 = 4;
-        entity->animCurFrame = entity->subId;
+        entity->animCurFrame = entity->params;
         entity->palette += entity->ext.generic.unk84.S16.unk2;
         entity->accelerationX = entity->ext.generic.unk84.S16.unk0 << 12;
         entity->accelerationX += 0x8000 - (Random() << 8);
@@ -235,8 +235,8 @@ void func_801C77B8(Entity* entity) {
         entity->unk1C = 0x100;
         entity->unk1A = 0x100;
         entity->accelerationX = 0;
-        entity->animCurFrame = entity->subId + 8;
-        entity->accelerationY = D_80182600[entity->subId];
+        entity->animCurFrame = entity->params + 8;
+        entity->accelerationY = D_80182600[entity->params];
         break;
 
     case 1:
@@ -254,7 +254,7 @@ void func_801C77B8(Entity* entity) {
 }
 
 void func_801C7884(Entity* entity) {
-    u16 subId = entity->subId;
+    u16 params = entity->params;
 
     switch (entity->step) {
     case 0:
@@ -263,7 +263,7 @@ void func_801C7884(Entity* entity) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_80181D3C[subId], entity);
+        AnimateEntity(D_80181D3C[params], entity);
 
         entity->accelerationY = rsin(entity->rotAngle) * 2;
         entity->rotAngle += 0x20;

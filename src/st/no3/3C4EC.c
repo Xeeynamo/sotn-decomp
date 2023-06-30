@@ -219,12 +219,12 @@ void EntityBackgroundCastleWall(Entity* entity) {
     newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
     if (newEntity != NULL) {
         CreateEntityFromCurrentEntity(0x11U, newEntity);
-        newEntity->subId = 0xC;
+        newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
         newEntity = AllocEntity(newEntity, &D_8007C0D8[64]);
         if (newEntity != NULL) {
             CreateEntityFromCurrentEntity(0x11U, newEntity);
-            newEntity->subId = 0xB;
+            newEntity->params = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;
             newEntity->posX.i.hi += 0x40;

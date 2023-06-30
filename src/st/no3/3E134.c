@@ -12,7 +12,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         InitializeEntity(D_80180B00);
         entity->animSet = -0x7FFF;
         entity->animCurFrame = 56;
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             entity->unk19 = 0xB;
             entity->unk1A = 0x180;
             entity->unk1C = 0x180;
@@ -40,7 +40,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         }
         if (entity->posX.i.hi < 192) {
             func_801C58A4(3);
-            if (entity->subId != 0) {
+            if (entity->params != 0) {
                 entity->accelerationX = 0x80000;
                 entity->accelerationY = 0x30000;
                 break;
@@ -51,14 +51,14 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(0x60, newEntity);
-                    newEntity->subId = i;
+                    newEntity->params = i;
                 }
             }
         }
         break;
 
     case 3:
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             animFlag = AnimateEntity(D_801819DC, entity);
             entity->accelerationY -= 0xA00;
         } else {
@@ -68,7 +68,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             }
         }
         MoveEntity();
-        if ((entity->subId == 0) && (currentRoomTiles->unkA > 0xD80)) {
+        if ((entity->params == 0) && (currentRoomTiles->unkA > 0xD80)) {
             entity->step++;
         }
         if (entity->posX.i.hi > 288) {
@@ -107,10 +107,10 @@ void EntityFallingLeaf(Entity* entity) {
     case 0:
         InitializeEntity(D_80180B00);
         entity->animSet = -0x7FFF;
-        entity->animCurFrame = (entity->subId & 1) + 63;
+        entity->animCurFrame = (entity->params & 1) + 63;
         entity->zPriority = 0xC1;
-        entity->accelerationX = D_801819E8[entity->subId * 2];
-        entity->accelerationY = D_801819EC[entity->subId * 2];
+        entity->accelerationX = D_801819E8[entity->params * 2];
+        entity->accelerationY = D_801819EC[entity->params * 2];
         entity->unk68 = 0x1C0;
         break;
 
@@ -199,7 +199,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRoomTransition1);
 // seems to cause a room transition
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRoomTransition2);
 
-// shows the sword taken from you by Death. Using a different subid shows
+// shows the sword taken from you by Death. Using a different params shows
 // the other items?
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityDeathStolenItem);
 
@@ -237,7 +237,7 @@ void EntityUnkId5B(Entity* entity) {
                 }
                 CreateEntityFromCurrentEntity(0x5E, newEntity);
                 newEntity->animCurFrame = entity->animCurFrame;
-                newEntity->subId = 1;
+                newEntity->params = 1;
                 break;
             }
         } else {
@@ -258,7 +258,7 @@ void EntityUnkId5E(Entity* entity) {
         entity->animSet = -0x7FF8;
         entity->palette = 0x2D6;
         entity->unk5A = 0x44;
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             entity->unk19 = 8;
             entity->ext.generic.unk84.U16.unk0 = 0x40;
         } else {
@@ -274,7 +274,7 @@ void EntityUnkId5E(Entity* entity) {
             DestroyEntity(entity);
             break;
         }
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             entity->unk6C = (s8)entity->unk6C - 1;
         } else {
             entity->unk6C += -2;
@@ -295,7 +295,7 @@ void func_801C13F8() {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
             CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
-            entity->subId = 2;
+            entity->params = 2;
             entity->ext.generic.unk88.S8.unk1 = 6 - i;
             entity->ext.generic.unk84.S16.unk0 = temp_s3;
             entity->ext.generic.unk88.S8.unk0 = temp_s4;
@@ -406,7 +406,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->subId = initDesc->subId;
+    entity->params = initDesc->params;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = (initDesc->objectId >> 0xA) & 7;
 }
@@ -877,7 +877,7 @@ void func_801C58E0(u16 arg0, u16 arg1) {
     entity->unk19 = 0;
     entity->objectId = 2;
     entity->pfnUpdate = EntityExplosion;
-    entity->subId = arg0;
+    entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
@@ -985,7 +985,7 @@ void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801C5D18);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 subId;
+    u16 params;
 
     PreventEntityFromRespawning(self);
 
@@ -996,20 +996,20 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     }
 #endif
 
-    subId = self->subId &= 0xFFF;
+    params = self->params &= 0xFFF;
 
-    if (subId < 0x80) {
+    if (params < 0x80) {
         self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
-        subId -= 0x80;
+        params -= 0x80;
         self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
-    self->subId = subId;
+    self->params = params;
     self->unk6D = 0x10;
     self->step = 0;
 }
