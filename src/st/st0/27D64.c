@@ -240,19 +240,3 @@ void func_801A8B9C(s16 yOffset) {
     rect.h = 12;
     ClearImage(&rect, 0, 0, 0);
 }
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8BF8);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8CB0);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8E34);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A8E60);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A910C);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityDialogue);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801AA218);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityCutscene);

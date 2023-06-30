@@ -53,6 +53,7 @@ segments:
       - [0x27CAC, rodata]
       - [0x27CC4, rodata]
       - [0x27D64, c]
+      - [0x28BF8, c] # Dracula Cutscene
       - [0x2A8DC, c]
       - [0x2B0C8, c]
       - [0x2C564, c] # EntityDracula
