@@ -421,7 +421,7 @@ void func_80195B44(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", func_80195C38);
 
-bool func_80195E68(point16* unk) {
+bool func_80195E68(Point16* unk) {
     Collider collider;
 
     FallEntity();
