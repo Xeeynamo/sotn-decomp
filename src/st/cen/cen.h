@@ -24,11 +24,16 @@ typedef enum {
     E_DUMMY_10,
 } EntityIDs;
 
+void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
+void func_80192A3C(Entity*, LayoutObject*);
+extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
+
 extern LayoutObject* D_801801EC[];
 extern LayoutObject* D_801802C0[];
 extern PfnEntityUpdate D_80180390[];
 extern u16 D_80180410[]; // Init
 extern u16 D_80180428[];
+extern u16 D_80180434[]; // Init EntityPlatform
 extern u16 D_80180458[];
 extern ObjInit2 D_80180490[];
 extern u16 D_801805D8[];
@@ -39,7 +44,6 @@ extern u16 D_801811C8[];
 extern u16 D_801811D8[];
 extern u8 D_80181238;
 extern ObjInit2 D_8018125C[];
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
 extern LayoutObject* D_8019C764;
 extern u16* D_8019C768;
 extern u8 D_8019C76C;
@@ -54,8 +58,7 @@ extern s16 D_8019D386;
 extern s16 D_8019D38A;
 extern s8 D_8019D38E;
 extern s8 D_8019D38F;
-void func_80192A3C(Entity*, LayoutObject*);
-extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
+extern s32 D_8019D424;
 extern u8 D_8019C76C;
 extern u8 D_8019C770;
 #endif

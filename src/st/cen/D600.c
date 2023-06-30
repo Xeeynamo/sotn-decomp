@@ -105,8 +105,201 @@ void func_8018F8EC(u16 index) {
     }
 }
 
-// platform that lifts you into chamber, starts cutscene
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityPlatform);
+// platform that lifts you into chamber, starts cutscene, gives you holy glasses
+void EntityPlatform(Entity* self) {
+    Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
+    Entity* player = &PLAYER;
+    Primitive* prim;
+    s16 firstPrimIndex;
+    s16 temp_a0;
+    s16 temp_s1;
+    s16 temp_v0;
+    s16 temp_v1_4;
+    u16 temp_a1;
+
+    self->posY.i.hi -= 8;
+    temp_a1 = func_80195318(self, 0x20, 0x11, 4);
+    temp_s1 = player->posX.i.hi + g_Camera.posX.i.hi;
+    temp_v0 = self->posY.i.hi + g_Camera.posY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (firstPrimIndex != -1) {
+            InitializeEntity(D_80180434);
+            self->animSet = 0x8002;
+            self->animCurFrame = 9;
+            self->zPriority = 0x80;
+
+            if (D_8003BDEC[216] != 0) {
+                self->step = 9;
+            }
+
+            func_8018F8EC(0);
+            prim = &g_PrimBuf[firstPrimIndex];
+            self->firstPolygonIndex = firstPrimIndex;
+            self->flags |= FLAG_FREE_POLYGONS;
+            prim->tpage = 0xF;
+            prim->clut = 2;
+            prim->u0 = prim->u2 = 0xA0;
+            prim->u1 = prim->u3 = 0xB0;
+            prim->v0 = prim->v1 = 0xA1;
+            prim->v2 = prim->v3 = 0xA7;
+            prim->priority = 0x7F;
+            prim->blendMode = 2;
+        }
+        break;
+
+    case 1:
+        if ((func_80194564() < 32) &&
+            ((self->posY.i.hi - player->posY.i.hi) < 80)) {
+            D_8003C8B8 = 0;
+            *D_80097400 = 1;
+            if (g_Player_unk0C & 1) {
+                g_Player.D_80072EF4 = 8;
+            } else if (g_Player_unk0C & 2) {
+                g_Player.D_80072EF4 = 4;
+            } else if (g_Player_unk0C & 4) {
+                g_Player.D_80072EF4 = 2;
+            } else if (temp_s1 > 384) {
+                g_Player.D_80072EF4 = 0x8000;
+            } else if (temp_s1 < 384) {
+                g_Player.D_80072EF4 = 0x2000;
+            } else {
+                g_Player.D_80072EF4 = 0;
+            }
+            g_Entities[1].ext.generic.unk7C.S8.unk0 = 0;
+            g_Player.D_80072EFC = 1;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        g_Player.D_80072EF4 = 0;
+        if (g_Player_unk0C & 7) {
+            if (g_blinkTimer & 1) {
+                if (g_Player_unk0C & 1) {
+                    g_Player.D_80072EF4 = 8;
+                } else if (g_Player_unk0C & 2) {
+                    g_Player.D_80072EF4 = 4;
+                } else if (g_Player_unk0C & 4) {
+                    g_Player.D_80072EF4 = 2;
+                }
+            }
+        } else {
+            if ((temp_a1 != 0) || (g_Player.pl_vram_flag & 1)) {
+                if (temp_s1 > 384) {
+                    g_Player.D_80072EF4 = 0x8000;
+                } else if (temp_s1 < 384) {
+                    g_Player.D_80072EF4 = 0x2000;
+                }
+                self->step++;
+            }
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 3:
+        if (g_Player.D_80072EF4 == 0x8000) {
+            if (temp_s1 <= 384) {
+                g_Player.D_80072EF4 = 0;
+            }
+        } else if ((g_Player.D_80072EF4 == 0x2000) && (temp_s1 >= 384)) {
+            g_Player.D_80072EF4 = 0;
+        }
+        if (g_Player.D_80072EF4 == 0) {
+            g_Player.D_80072EF4 = 0x8000;
+            player->posX.i.hi = 384 - roomLayout->unkA;
+            self->step++;
+            g_api.PlaySfx(0x60D);
+            D_8019D424 |= 1;
+            roomLayout->unk48 = ((s16)roomLayout->unkE + 0x100);
+            func_8018F8EC(0);
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 4:
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
+        player->posX.i.hi = 384 - roomLayout->unkA;
+        if (temp_v0 > 496) {
+            self->posY.i.hi--;
+            player->posY.i.hi--;
+            D_8009748E[0]--;
+        } else {
+            g_api.PlaySfx(0x64F);
+            if (player->facing == 0) {
+                g_Player.D_80072EF4 = 0x8000;
+            }
+            D_8019D424 |= 4;
+            self->step++;
+        }
+        func_8018F890(0x200);
+        break;
+
+    case 5:
+        func_8018F890(0x200);
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
+
+        if (D_8019D424 & 8) {
+            CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
+            g_Entities[204].subId = ITEM_HOLY_GLASSES;
+            g_Entities[204].step = 5;
+            g_Entities[204].flags = 0;
+            self->step++;
+        }
+        break;
+
+    case 6:
+        if (D_8019D424 & 2) {
+            self->step++;
+            g_api.PlaySfx(0x60D);
+        }
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 7:
+        if (temp_v0 < 592) {
+            self->posY.i.hi++;
+            player->posY.i.hi++;
+            *D_8009748A += 1;
+        } else {
+            D_8003C8B8 = 1;
+            if (*D_80097400 != 0) {
+                *D_80097400 = 0;
+            }
+            g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+            self->step++;
+            g_api.PlaySfx(0x64F);
+        }
+        func_8018F890(0x300);
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
+        break;
+
+    case 8:
+        func_8018F890(0x300);
+        if (roomLayout->unk48 == 0x300) {
+            self->step++;
+        }
+        break;
+
+    case 9:
+        break;
+    }
+
+    prim = &g_PrimBuf[self->firstPolygonIndex];
+    temp_a0 = self->posX.i.hi - 8;
+    temp_v1_4 = self->posX.i.hi + 8;
+    self->posY.i.hi += 8;
+    prim->x0 = prim->x2 = temp_a0;
+    prim->x1 = prim->x3 = temp_v1_4;
+    prim->y0 = prim->y1 = self->posY.i.hi + 15;
+    prim->y2 = prim->y3 = 0x268 - roomLayout->unkE;
+}
 
 // Black layer that covers room interior and lights up when cutscene starts
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRoomDarkness);
@@ -120,7 +313,7 @@ void EntityMaria(Entity* self) {
         }
         InitializeEntity(D_80180428);
         self->flags = FLAG_UNK_08000000;
-        self->animSet = -0x7FFF;
+        self->animSet = 0x8001;
         self->animCurFrame = 10;
         self->unk5A = 0x48;
         self->palette = 0x210;

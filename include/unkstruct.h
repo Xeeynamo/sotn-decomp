@@ -38,12 +38,14 @@ typedef struct {
 } unkStruct_800A872C; // size = 0x10
 
 typedef struct {
-    /* 0x0 */ u16* fg;
-    /* 0x4 */ u16* bg;
-    /* 0x8 */ u16 unk8;
-    /* 0xA */ s16 unkA;
-    /* 0xC */ u16 unkC;
-    /* 0xE */ u16 unkE;
+    /* 0x00 */ u16* fg;
+    /* 0x04 */ u16* bg;
+    /* 0x08 */ u16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ char pad_10[0x38];
+    /* 0x48 */ s32 unk48;
 } Unkstruct8; // size = 0x10
 
 typedef struct {
