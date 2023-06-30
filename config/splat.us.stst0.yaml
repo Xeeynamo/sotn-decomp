@@ -44,7 +44,7 @@ segments:
       - [0x27984, .rodata, 27D64]
       - [0x279E8, rodata]
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
-      - [0x27ACC, .rodata, 2A8DC]
+      - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairsChunk
       - [0x27AE0, rodata]
       - [0x27B40, .rodata, 2C564] # EntityDracula
       - [0x27B7C, rodata]
