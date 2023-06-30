@@ -124,10 +124,10 @@ void EntityPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        firstPrimIndex = g_api.AllocPrimitives(4, 1);
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (firstPrimIndex != -1) {
             InitializeEntity(D_80180434);
-            self->animSet = -0x7FFE;
+            self->animSet = 0x8002;
             self->animCurFrame = 9;
             self->zPriority = 0x80;
 
@@ -138,7 +138,7 @@ void EntityPlatform(Entity* self) {
             func_8018F8EC(0);
             prim = &g_PrimBuf[firstPrimIndex];
             self->firstPolygonIndex = firstPrimIndex;
-            self->flags |= 0x800000;
+            self->flags |= FLAG_FREE_POLYGONS;
             prim->tpage = 0xF;
             prim->clut = 2;
             prim->u0 = prim->u2 = 0xA0;
@@ -313,7 +313,7 @@ void EntityMaria(Entity* self) {
         }
         InitializeEntity(D_80180428);
         self->flags = FLAG_UNK_08000000;
-        self->animSet = -0x7FFF;
+        self->animSet = 0x8001;
         self->animCurFrame = 10;
         self->unk5A = 0x48;
         self->palette = 0x210;
