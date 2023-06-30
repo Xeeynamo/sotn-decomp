@@ -1,3 +1,8 @@
+/*
+ * Overlay: ST0
+ * Entity: Secret Stairs
+ */
+
 #include "st0.h"
 
 void EntitySecretButton(Entity* self) {
