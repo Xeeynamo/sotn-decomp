@@ -114,7 +114,7 @@ void EntityMerman2(Entity* self) {
         InitializeEntity(D_80180AB4);
         self->hitboxOffY = 8;
         self->zPriority = 0xA9;
-        if (self->subId != 0) {
+        if (self->params != 0) {
             self->palette++;
         }
         self->accelerationY = -0x10000;
@@ -149,7 +149,7 @@ void EntityMerman2(Entity* self) {
             self->accelerationY = 0x8000;
         }
         pos = D_80181230;
-        pos += (self->subId >> 8) & 1;
+        pos += (self->params >> 8) & 1;
         posY += g_Camera.posY.i.hi;
         if (pos[4] < posY) {
             self->posY.i.hi = pos[4] - g_Camera.posY.i.hi - 24;
@@ -180,7 +180,7 @@ void EntityMerman2(Entity* self) {
                 self->flags |= FLAG_FREE_POLYGONS;
                 prim->tpage = 0x12;
                 prim->clut = 0x28C;
-                if (self->subId & 1) {
+                if (self->params & 1) {
                     prim->clut = 0x28D;
                 }
                 prim->u0 = 0;
@@ -225,7 +225,7 @@ void EntityMerman2(Entity* self) {
         case MERMAN2_JUMPING_UNDERWATER:
             MoveEntity();
             pos = D_80181230;
-            pos += (self->subId >> 8) & 1;
+            pos += (self->params >> 8) & 1;
             posY = self->posY.i.hi;
             posY -= 24;
             camY = g_Camera.posY.i.hi + posY;
@@ -339,8 +339,8 @@ void EntityMerman2(Entity* self) {
                 self->posX.val += self->accelerationX;
             }
 
-            if (!(self->subId & 1) ||
-                (self->accelerationX *= 2, !(self->subId & 1))) {
+            if (!(self->params & 1) ||
+                (self->accelerationX *= 2, !(self->params & 1))) {
                 if (!(self->posX.i.hi & 0xFF00)) {
                     self->ext.merman2.timer--;
                     if ((self->ext.merman2.timer & 0xFF) == 0) {
@@ -392,7 +392,7 @@ void EntityMerman2(Entity* self) {
                         newEntity->posY.i.hi -= 12;
                         newEntity->facing = self->facing;
                         if (i == 0) {
-                            newEntity->subId = 1;
+                            newEntity->params = 1;
                         }
                     }
                 }
@@ -513,7 +513,7 @@ void EntityMerman2(Entity* self) {
                 func_801D2684(prim, firstPrimIndex);
                 prim->tpage = 0x12;
                 prim->clut = 0x292;
-                if (self->subId & 1) {
+                if (self->params & 1) {
                     prim->clut = 0x293;
                 }
                 if (self->facing != 0) {
@@ -568,7 +568,7 @@ void EntityMerman2(Entity* self) {
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x37, self, newEntity);
                         newEntity->facing = self->facing;
-                        newEntity->subId = prim->clut;
+                        newEntity->params = prim->clut;
                         newEntity->zPriority = self->zPriority;
                     }
                 }
@@ -595,7 +595,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
         entity->zPriority += 4;
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (firstPolygonIndex == -1) {
                 DestroyEntity(entity);
@@ -625,7 +625,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         }
     }
 
-    if (entity->subId != 0) {
+    if (entity->params != 0) {
         poly = *(s32*)&entity->ext.generic.unk7C.s;
         func_801D1F38(poly);
         ((POLY_GT4*)poly->next)->b3 += 252;
@@ -664,7 +664,7 @@ void EntityMediumWaterSplash(Entity* entity) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-            newEntity->subId = 0;
+            newEntity->params = 0;
         }
         DestroyEntity(entity);
     }
@@ -705,7 +705,7 @@ void func_801C7E18(Entity* self) {
         self->unk1C = 0x1A0;
         self->unk19 |= 3;
         self->ext.generic.unk84.S8.unk1 = 0x11;
-        self->ext.generic.unk84.S8.unk0 = self->subId;
+        self->ext.generic.unk84.S8.unk0 = self->params;
         self->unk19 |= 8;
         break;
 
@@ -756,7 +756,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->ext.generic.unk84.S8.unk0 = 0x20;
         self->hitboxState = 0;
         self->accelerationY = 0x1000;
-        self->palette = self->subId + 0xE;
+        self->palette = self->params + 0xE;
         self->unk6C = 0x80;
         self->unk19 |= 8;
         self->flags |= 0x2000;
@@ -798,7 +798,7 @@ void EntityMermanSpawner(Entity* self) {
                 if (newEntity != 0) {
                     if (Random() & 1) {
                         CreateEntityFromCurrentEntity(0x32, newEntity);
-                        newEntity->subId = Random() & 1;
+                        newEntity->params = Random() & 1;
                     } else {
                         CreateEntityFromCurrentEntity(0x39, newEntity);
                     }

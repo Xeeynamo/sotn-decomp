@@ -135,7 +135,7 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->animSet = 0x8014;
             entity->zPriority = g_Entities[0].zPriority - 2;
             facing = (g_Entities[0].facing + 1) & 1;
-            entity->subId = i + 1;
+            entity->params = i + 1;
             entity->facing = facing;
         }
         *((s16*)(&entity->ext.generic.unkAC)) = g_Camera.posX.i.hi;
@@ -210,7 +210,7 @@ void func_801719E0(Entity* self) {
 
     if (self->ext.fam.unk80 == 0) {
         self->ext.fam.unk8E = 0;
-        self->ext.fam.unk82 = self->subId;
+        self->ext.fam.unk82 = self->params;
         switch (self->objectId) {
         case 0xD1:
             self->firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -367,7 +367,7 @@ void func_80171ED4(s32 arg0) {
     e->unk5A = 0x6C;
     e->palette = 0x140;
     e->animSet = 0x8014;
-    e->subId = 0;
+    e->params = 0;
     e->zPriority = PLAYER.zPriority - 2;
     e->facing = (PLAYER.facing + 1) & 1;
     e->posX.val = PLAYER.posX.val;
@@ -430,7 +430,7 @@ void func_80173C1C(void) {}
 void func_80173C24(void) {}
 
 void func_80173C2C(Entity* entity) {
-    if (entity->subId == 0xF) {
+    if (entity->params == 0xF) {
         D_80174D3C = 1;
     }
     DestroyEntity(entity);
@@ -592,7 +592,7 @@ void func_80174038(Entity* entity) {
         }
         break;
     case 2:
-        g_api.PlaySfx(entity->subId);
+        g_api.PlaySfx(entity->params);
         entity->step++;
         break;
 
@@ -656,7 +656,7 @@ typedef struct {
     s32 unk1C;
     u32 unk20;
     u32 objectId;
-    u32 subId;
+    u32 params;
     u32 unk2C;
 } Unkstruct_80174210;
 
@@ -712,7 +712,7 @@ void func_80174210(Entity* self, s32 arg1) {
                                 temp_s0->unk4 = 0;
                                 if (temp_s0->unk20 == 0) {
                                     func_801745E4(self, temp_s0->objectId,
-                                                  temp_s0->subId);
+                                                  temp_s0->params);
                                     if (temp_s0->unk2C == 0) {
                                         goto block_26;
                                     }
@@ -748,7 +748,7 @@ void func_80174210(Entity* self, s32 arg1) {
                 temp_v1_5 = *var_s1_2;
                 var_v0_2 = temp_v1_5->unk4 - 1;
                 if (temp_v1_5->unk4 == 0) {
-                    func_801745E4(self, temp_v1_5->objectId, temp_v1_5->subId);
+                    func_801745E4(self, temp_v1_5->objectId, temp_v1_5->params);
                     temp_v1_4 = *var_s1_2;
                     if (temp_v1_4->unk2C != 0) {
                         *var_s1_2 = temp_v1_4->unk0;
@@ -765,7 +765,7 @@ void func_80174210(Entity* self, s32 arg1) {
 }
 #endif
 
-void func_801745E4(Entity* entityParent, s32 objectId, s32 subId) {
+void func_801745E4(Entity* entityParent, s32 objectId, s32 params) {
     Entity* entity;
     s32 i;
 
@@ -786,7 +786,7 @@ init_entity:
     entity->posX.val = entityParent->posX.val;
     entity->posY.val = entityParent->posY.val;
     entity->ext.generic.unk8C.entityPtr = entityParent;
-    entity->subId = subId;
+    entity->params = params;
 }
 
 s32 func_801746A0(s32 arg0) {

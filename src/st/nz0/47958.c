@@ -28,7 +28,7 @@ void EntityBloodSkeleton(Entity* self) {
         self->facing = (u32)Random() % 2;
         self->animCurFrame = 1;
         self->flags &= 0x1FFFFFFF;
-        self->palette += self->subId;
+        self->palette += self->params;
         break;
 
     case BLOOD_SKELETON_IDLE:
@@ -61,7 +61,7 @@ void EntityBloodSkeleton(Entity* self) {
         if (AnimateEntity(D_80182638, self) == 0) {
             self->ext.generic.unk80.modeS16.unk0 = 0xF0;
             self->flags &= ~0x100;
-            if (self->subId != 0) {
+            if (self->params != 0) {
                 self->ext.generic.unk80.modeS16.unk0 = 4;
             }
             SetStep(BLOOD_SKELETON_REASSEMBLE);
@@ -98,7 +98,7 @@ void EntityBloodSkeleton(Entity* self) {
             break;
 
         case 2:
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 animation = &D_80182654;
             } else {
                 animation = &D_80182670;

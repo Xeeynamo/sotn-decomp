@@ -287,7 +287,7 @@ typedef enum {
 typedef struct SubWpnContDebris {
     u16 posX;
     u16 posY;
-    u16 subId;
+    u16 params;
     u16 facing;
 } SubWpnContDebris;
 
@@ -326,7 +326,7 @@ extern u8 D_80182540[];
 
 // *** EntitySpittleBoneSpit properties END ***
 
-extern s32 D_801825CC[]; // SubWeapons subId table
+extern s32 D_801825CC[]; // SubWeapons params table
 extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];

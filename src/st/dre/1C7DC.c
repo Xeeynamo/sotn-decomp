@@ -1,7 +1,7 @@
 #include "dre.h"
 
 void EntityEquipItemDrop(Entity* self) {
-    u16 itemId = self->subId & 0x7FFF;
+    u16 itemId = self->params & 0x7FFF;
     s32 firstPolygonIndex;
     Collider collider;
     POLY_GT4* poly;
@@ -25,7 +25,7 @@ void EntityEquipItemDrop(Entity* self) {
     case 0:
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
-            self->subId = 0;
+            self->params = 0;
             self->objectId = 3;
             func_8019AFE8(0);
             EntityPrizeDrop(self);
@@ -134,7 +134,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     case 3:
         func_8019B8DC(1);
-        if (!(self->subId & 0x8000)) {
+        if (!(self->params & 0x8000)) {
             if (!(--self->ext.generic.unk80.modeS8.unk0 & 255)) {
                 self->ext.generic.unk80.modeS8.unk0 = 0x50;
                 self->step++;
@@ -199,7 +199,7 @@ void EntityHeartDrop(Entity* self) {
     u16 var_a0;
 
     if (self->step == 0) {
-        temp_a0 = self->subId + 0x118;
+        temp_a0 = self->params + 0x118;
         self->ext.generic.unkB4 = temp_a0;
         if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
             DestroyEntity(self);
@@ -213,7 +213,7 @@ void EntityHeartDrop(Entity* self) {
             self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
             var_a0 -= 128;
         }
-        self->subId = var_a0 + 0x8000;
+        self->params = var_a0 + 0x8000;
     } else {
         temp_a0_2 = self->ext.generic.unkB4;
         if (self->step < 5) {
@@ -245,7 +245,7 @@ void EntityUnkId13(Entity* entity) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
                 newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
-                newEntity->subId = entity->subId;
+                newEntity->params = entity->params;
             }
             entity->ext.generic.unk7C.U8.unk0 = 0;
         }
@@ -275,7 +275,7 @@ void EntityExplosion14(Entity* entity) {
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->accelerationY = new_var;
-        new_var2 = D_80181324[entity->subId];
+        new_var2 = D_80181324[entity->params];
         entity->blendMode = 0x10;
         entity->step++;
         entity->animCurFrame = new_var2;
@@ -289,7 +289,7 @@ void EntityExplosion14(Entity* entity) {
         entity->animCurFrame++;
     }
 
-    if (D_80181328[entity->subId] < entity->animFrameDuration) {
+    if (D_80181328[entity->params] < entity->animFrameDuration) {
         DestroyEntity(entity);
     }
 }
@@ -306,10 +306,10 @@ void EntityUnkId15(Entity* entity) {
         entity->animCurFrame = 1;
         entity->blendMode = 0x10;
         entity->unk19 = 3;
-        temp_v0 = D_801812E4[entity->subId];
+        temp_v0 = D_801812E4[entity->params];
         entity->unk1A = temp_v0;
         entity->unk1C = temp_v0;
-        temp2 = D_801812F4[entity->subId];
+        temp2 = D_801812F4[entity->params];
         entity->step += 1;
         entity->accelerationY = temp2;
         return;
@@ -550,12 +550,12 @@ void EntityIntenseExplosion(Entity* entity) {
         entity->animCurFrame = 1;
         entity->blendMode = 0x30;
 
-        if (entity->subId & 0xF0) {
+        if (entity->params & 0xF0) {
             entity->palette = 0x8195;
             entity->blendMode = 0x10;
         }
 
-        temp_v0 = entity->subId & 0xFF00;
+        temp_v0 = entity->params & 0xFF00;
         if (temp_v0 != 0) {
             entity->zPriority = temp_v0 >> 8;
         }
@@ -586,8 +586,8 @@ void func_8019F170(Entity* entity) {
         entity->animCurFrame = 1;
         entity->zPriority += 0x10;
 
-        if (entity->subId != 0) {
-            entity->palette = entity->subId;
+        if (entity->params != 0) {
+            entity->palette = entity->params;
         } else {
             entity->palette = 0x8160;
         }
@@ -781,7 +781,7 @@ void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
     Primitive* prim;
     s32 var_a0_2;
-    u16 subId;
+    u16 params;
     s16 posX;
     s32 rnd;
     s32 i;
@@ -794,7 +794,7 @@ void EntityEnemyBlood(Entity* self) {
             prim = &g_PrimBuf[i];
             self->firstPolygonIndex = i;
             self->animSet = 0;
-            subId = self->subId;
+            params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
             self->hitboxHeight = 8;
@@ -811,7 +811,7 @@ void EntityEnemyBlood(Entity* self) {
                 prim->u0 = 4;
                 prim->v0 = 4;
 
-                if (subId != 0) {
+                if (params != 0) {
                     func_8019AE4C(0xCC0 + i * 64,
                                   ((Random() & 0xF) * 0x10) + 0x180);
                 } else {
@@ -842,7 +842,7 @@ void EntityEnemyBlood(Entity* self) {
                 }
             }
 
-            if (subId != 0) {
+            if (params != 0) {
                 self->accelerationX = 0x14000;
                 self->ext.generic.unk80.modeS32 = -0x200;
             } else {
@@ -925,7 +925,7 @@ void EntityEnemyBlood(Entity* self) {
 
 extern ObjInit2 D_80181420[];
 void EntityRoomForeground(Entity* entity) {
-    ObjInit2* objInit = &D_80181420[entity->subId];
+    ObjInit2* objInit = &D_80181420[entity->params];
 
     if (entity->step == 0) {
         InitializeEntity(D_801804AC);
@@ -938,7 +938,7 @@ void EntityRoomForeground(Entity* entity) {
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
-        if (entity->subId >= 5) {
+        if (entity->params >= 5) {
             entity->rotAngle = 0x800;
             entity->unk19 |= 4;
         }

@@ -192,7 +192,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
         entity->posY.val = srcEntity->posY.val;
         entity->facing = srcEntity->facing;
         entity->zPriority = srcEntity->zPriority;
-        entity->subId = arg1 & 0xFFF;
+        entity->params = arg1 & 0xFFF;
         entity->ext.generic.unkA0 = (arg1 >> 8) & 0xFF00;
 
         if (srcEntity->flags & FLAG_UNK_10000) {
@@ -317,14 +317,14 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160FC4);
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016147C);
 
 void func_80161C2C(Entity* self) {
-    u16 subId = self->subId;
-    s16 subIdHi = self->subId >> 8;
+    u16 params = self->params;
+    s16 paramsHi = self->params >> 8;
     s32 step = self->step;
     s32 rnd;
 
     switch (step) {
     case 0:
-        if (subIdHi == 1) {
+        if (paramsHi == 1) {
             self->unk1A = 0xC0;
             self->unk1C = 0xC0;
             self->unk19 = 3;
@@ -332,8 +332,8 @@ void func_80161C2C(Entity* self) {
             self->unk4C = D_80154E04;
         }
 
-        if ((subIdHi == 0) || (subIdHi == 2)) {
-            if (subId & 3) {
+        if ((paramsHi == 0) || (paramsHi == 2)) {
+            if (params & 3) {
                 self->unk4C = D_80154DC8;
                 self->unk1A = 0x120;
                 self->unk1C = 0x120;
@@ -353,7 +353,7 @@ void func_80161C2C(Entity* self) {
             self->zPriority = PLAYER.zPriority - 2;
         }
 
-        if (subIdHi == 2) {
+        if (paramsHi == 2) {
             self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
         } else {
             self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
@@ -373,7 +373,7 @@ void func_80161C2C(Entity* self) {
         self->posX.val += self->accelerationX;
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
             self->blendMode = 0x10;
-            if (!(subId & 1) && (self->animFrameDuration == step)) {
+            if (!(params & 1) && (self->animFrameDuration == step)) {
                 func_801606BC(self, 0x40004, 0);
             }
         }

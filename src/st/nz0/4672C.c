@@ -20,7 +20,7 @@ void EntitySpittleBone(Entity* self) {
         self->unk19 = 4;
         self->rotAngle = 0;
         self->flags &= ~0x2200;
-        self->facing = self->subId;
+        self->facing = self->params;
         break;
 
     case 1:
@@ -89,7 +89,7 @@ void EntitySpittleBone(Entity* self) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->subId = 1;
+            newEntity->params = 1;
             newEntity->posX.i.hi += -(rsin(self->rotAngle) * 0x10) >> 0xC;
             newEntity->posY.i.hi += -(rcos(self->rotAngle) * 0x10) >> 0xC;
         }
@@ -105,7 +105,7 @@ void EntitySpittleBone(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 0;
+                newEntity->params = 0;
             }
             DestroyEntity(self);
         }

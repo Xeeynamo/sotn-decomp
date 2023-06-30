@@ -398,7 +398,7 @@ void EntityBloodyZombie(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 2;
+                newEntity->params = 2;
                 newEntity->posY.i.hi += 16;
                 if (self->facing != 0) {
                     newEntity->posX.i.hi -= 8;

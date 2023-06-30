@@ -39,7 +39,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                 newEntity->posX.i.hi = (*self)->unk14;
                 newEntity->posY.i.hi = (*self)->unk0A;
-                newEntity->subId = 0;
+                newEntity->params = 0;
             }
             func_801C29B0(0x655);
             func_801CA0D0(self);
@@ -233,7 +233,7 @@ void EntityAxeKnight(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                     newEntity->facing = self->facing;
-                    newEntity->subId = 1;
+                    newEntity->params = 1;
                     newEntity->posY.i.hi += 12;
                     if (newEntity->facing != 0) {
                         newEntity->posX.i.hi += 8;
@@ -266,7 +266,7 @@ void EntityAxeKnight(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->subId = 2;
+                newEntity->params = 2;
                 newEntity->posY.i.hi -= 40;
                 if (newEntity->facing != 0) {
                     newEntity->posX.i.hi += 16;
@@ -285,7 +285,7 @@ void EntityAxeKnight(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     temp >>= 3;
-                    newEntity->subId = 2;
+                    newEntity->params = 2;
                     newEntity->posX.i.hi += D_80182198[temp];
                     newEntity->posY.i.hi += D_8018219A[temp];
                 }
@@ -313,7 +313,7 @@ void EntityAxeKnight(Entity* self) {
 }
 
 void EntityAxeKnightRotateAxe(void) {
-    if (g_CurrentEntity->subId != 0) {
+    if (g_CurrentEntity->params != 0) {
         g_CurrentEntity->rotAngle += 0x80;
     } else {
         g_CurrentEntity->rotAngle -= 0x80;
@@ -335,8 +335,8 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     case 0:
         InitializeEntity(D_80180C70);
         entity->unk19 = 4;
-        entity->accelerationY = D_801822C8[entity->subId];
-        accelerationX = D_801822BC[entity->subId];
+        entity->accelerationY = D_801822C8[entity->params];
+        accelerationX = D_801822BC[entity->params];
 
         if (entity->facing == 0) {
             entity->accelerationX = -accelerationX;
@@ -346,7 +346,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 
         entity->ext.generic.unk7C.s = -0x40;
 
-        if (entity->subId == 2) {
+        if (entity->params == 2) {
             entity->step++;
             return;
         }

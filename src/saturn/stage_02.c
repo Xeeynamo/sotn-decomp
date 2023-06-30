@@ -103,7 +103,7 @@ void EntityTableWithGlobe(Entity* self) {
             func_801C29B0(0x61D);
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-            self[1].subId = D_80180F10[self->subId];
+            self[1].params = D_80180F10[self->params];
             SetStep(2);
         }
         break;

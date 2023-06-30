@@ -7,7 +7,7 @@
 #include "np3.h"
 
 void func_801B246C(Entity* self) {
-    ObjInit2* temp_s0 = &D_80180C10[self->subId];
+    ObjInit2* temp_s0 = &D_80180C10[self->params];
 
     if (self->step == 0) {
         InitializeEntity(D_80180A90);
@@ -29,7 +29,7 @@ void func_801B246C(Entity* self) {
 void func_801B2540(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
-    u16 temp_s1 = entity->subId;
+    u16 temp_s1 = entity->params;
     u16 phi_v1;
     u16 unk;
 
@@ -84,7 +84,7 @@ void func_801B2540(Entity* entity) {
 }
 
 void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->subId >> 0xC;
+    u16 breakableType = entity->params >> 0xC;
 
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
@@ -95,7 +95,7 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->subId =
+                entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
@@ -312,7 +312,7 @@ void func_801B40F8(Entity* self) {
                     entity->posY.i.hi = 156;
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
-                    entity->subId = 0x10;
+                    entity->params = 0x10;
                     entity->unk19 |= 3;
                     entity->unk1A = entity->unk1C = 192;
                 }
@@ -597,7 +597,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* subId;
+    u8* params;
     s32 i;
 
     switch (self->step) {
@@ -646,19 +646,19 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *subId++;
+                    newEntity->params = *params++;
                     newEntity->accelerationX = -0x8000 - (Random() << 8);
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
@@ -671,7 +671,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0xA, self, newEntity);
-                newEntity->subId = 0x43;
+                newEntity->params = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
             self->hitboxState = 1;
@@ -692,7 +692,7 @@ void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* subId;
+    u8* params;
     s32 i;
 
     switch (self->step) {
@@ -741,19 +741,19 @@ void EntityMermanRockRightSide(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_8018120C[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *subId++;
+                    newEntity->params = *params++;
                     newEntity->accelerationX = (Random() << 8) + 0x8000;
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->facing = 1;
@@ -823,7 +823,7 @@ void func_801B5488(Entity* self) {
 }
 
 void EntityFallingRock2(Entity* self) {
-    s32 animFrame = self->subId & 0xF;
+    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
     s32 temp_a0;
@@ -852,9 +852,9 @@ void EntityFallingRock2(Entity* self) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                    newEntity->subId = 0x11;
+                    newEntity->params = 0x11;
                     if (animFrame == 0) {
-                        newEntity->subId = 0x13;
+                        newEntity->params = 0x13;
                     }
                 }
                 DestroyEntity(self);
@@ -877,7 +877,7 @@ void EntityFallingRock2(Entity* self) {
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B5790);
 
 void EntityFallingRock(Entity* self) {
-    s32 animFrame = self->subId & 0xF;
+    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
     s16 rndAngle;
@@ -910,9 +910,9 @@ void EntityFallingRock(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(6, self, newEntity);
-                newEntity->subId = 0x10;
+                newEntity->params = 0x10;
                 if (animFrame == 0) {
-                    newEntity->subId = 0x13;
+                    newEntity->params = 0x13;
                 }
             }
             DestroyEntity(self);
@@ -939,9 +939,9 @@ void func_801B5E98(Entity* self) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x29;
         self->flags &= ~FLAG_UNK_08000000;
-        self->animCurFrame = self->subId + 0x22;
-        self->posX.i.hi = D_80181220[self->subId][0];
-        self->posY.i.hi = D_80181220[self->subId][1];
+        self->animCurFrame = self->params + 0x22;
+        self->posX.i.hi = D_80181220[self->params][0];
+        self->posY.i.hi = D_80181220[self->params][1];
         self->ext.generic.unk80.modeS16.unk0 = 5;
     }
 
@@ -989,7 +989,7 @@ void func_801B653C(void) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             CreateEntityFromEntity(0x4D, g_CurrentEntity, entity);
-            entity->subId = 2;
+            entity->params = 2;
             entity->ext.generic.unk88.U8.unk1 = 6 - i;
             entity->ext.generic.unk84.S16.unk0 = temp_s3;
             entity->ext.generic.unk88.U8.unk0 = temp_s4;
