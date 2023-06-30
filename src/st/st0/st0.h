@@ -44,6 +44,7 @@ void SetStep(u8);
 void EntityExplosion(Entity*);
 
 // *** Initializers ***
+extern u16 D_80180598[]; // Init EntityCutscene
 
 extern u16 D_801805E0[]; // Init EntityDracula
 extern u16 D_801805EC[]; // Init EntityDraculaFireball
@@ -57,6 +58,22 @@ extern u16 D_801805BC[];
 extern u16 D_801805D4[];
 extern u16 D_80180628[];
 extern ObjInit2 D_80180638[];
+
+// *** EntityCutscene properties START ***
+
+extern u8 D_80180830[]; // Animation 
+extern u8 D_8018083C[]; // Animation
+extern u8 D_8018084C[]; // Animation
+extern u8 D_8018085C[]; // Animation
+extern u8 D_80180864[]; // Animation
+extern u8 D_8018086C[]; // Animation
+extern u8 D_8018087C[]; // Animation
+extern u8 D_80180884[]; // Animation
+extern u8 D_8018088C[]; // Animation
+extern u8 D_80180894[]; // Animation
+
+// *** EntityCutscene properties END ***
+
 extern point16 D_801808A0[];
 extern u16 D_801808B0[];
 extern s16 D_801808F8[];
@@ -99,6 +116,7 @@ extern u16 D_80181EF4[];
 extern u16 D_80181F04[];
 extern u8 D_801824CC[];
 extern u16* D_801C00A4;
+extern s32 D_801C24C8;
 extern s16 D_801C24D2;
 extern u16 D_801C24D4;
 extern s16 D_801C24D6;
@@ -107,6 +125,8 @@ extern s16 D_801C24DA;
 extern s16 D_801C24DE;
 extern s8 D_801C24E2;
 extern s8 D_801C24E3;
+extern s32 D_801C257C;
+extern s32 D_801C2580;
 extern u16 D_801C2584[];
 
 // *** EntitySoulStealOrb properties START ***
