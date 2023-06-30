@@ -239,11 +239,3 @@ void EntitySecretStairsChunk(Entity* self) {
         break;
     }
 }
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2A8DC", EntityStageTitleFadeout);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2A8DC", EntityStageTitleCard);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2A8DC", func_801ABBBC);
-
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2A8DC", func_801AC458);
