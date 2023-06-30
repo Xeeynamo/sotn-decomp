@@ -232,9 +232,10 @@ void EntitySecretStairs(Entity* self) {
                 if (self->subId != 3) {
                     self[1].ext.stub[0x8] = 1;
                 } else {
-                    for (tilePos = &D_801808B0; *tilePos != 0xFFFF;
-                         tilePos += 2) {
+                    tilePos = &D_801808B0;
+                    while (*tilePos != 0xFFFF) {
                         g_CurrentRoomTileLayout.fg[*tilePos] = *(tilePos + 1);
+                        tilePos += 2;
                     }
                 }
                 self->step++;
