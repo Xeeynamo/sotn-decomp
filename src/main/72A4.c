@@ -169,11 +169,6 @@ INCLUDE_ASM("asm/us/main/nonmatchings/72A4", RotMatrixY);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", RotMatrixZ);
 
-// https://decomp.me/scratch/u8eMF
-// matching in decomp.me, uses div
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ratan2);
-#else
 long ratan2(long dx, long dy) {
     long ret;
     bool flag0;
@@ -214,7 +209,6 @@ long ratan2(long dx, long dy) {
         ret = -ret;
     return ret;
 }
-#endif
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", patch_gte);
 

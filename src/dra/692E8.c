@@ -199,12 +199,6 @@ void func_8010A234(s32 arg0) {
 }
 #endif
 
-// Matching in gcc 2.6.0 + aspsx 2.3.4
-// Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
-// DECOMP_ME_WIP func_8010A3F0 https://decomp.me/scratch/oKHMJ
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A3F0);
-#else
 void func_8010A3F0(void) {
     s32 temp = 0x38;
 
@@ -221,7 +215,6 @@ void func_8010A3F0(void) {
     }
     g_Player.unk10 = 0;
 }
-#endif
 
 s32 func_8010A4A4(void);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A4A4);
