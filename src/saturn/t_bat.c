@@ -32,7 +32,7 @@ void DestroyEntity(Entity*); // func_0600FFB8h
 // PSX: func_80173C2C
 // SAT: func_060D1040
 void func_80173C2C(Entity* entity) {
-    if (entity->subId == 0xF) {
+    if (entity->params == 0xF) {
         D_80174D3C = 1;
     }
     func_0600FFB8(entity); // DestroyEntity

@@ -345,7 +345,7 @@ typedef struct Entity {
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
     /* 0x2E */ u16 step_s;
-    /* 0x30 */ u16 subId;
+    /* 0x30 */ u16 params;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;

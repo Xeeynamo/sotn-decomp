@@ -9,7 +9,7 @@
 
 // background block of rock
 void EntityBackgroundBlock(Entity* self) {
-    ObjInit2* obj = &D_80180490[self->subId].animSet;
+    ObjInit2* obj = &D_80180490[self->params].animSet;
 
     if (self->step == 0) {
         InitializeEntity(D_80180458);
@@ -24,7 +24,7 @@ void EntityBackgroundBlock(Entity* self) {
             self->flags = obj->unkC;
         }
 
-        if (self->subId == 1) {
+        if (self->params == 1) {
             self->unk1C = 0x200;
             self->unk1A = 0x200;
         }
@@ -245,7 +245,7 @@ void EntityPlatform(Entity* self) {
 
         if (D_8019D424 & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
-            g_Entities[204].subId = ITEM_HOLY_GLASSES;
+            g_Entities[204].params = ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
             g_Entities[204].flags = 0;
             self->step++;
@@ -877,7 +877,7 @@ void func_80194EE0(u16 arg0, u16 arg1) {
     entity->unk19 = 0;
     entity->objectId = 2;
     entity->pfnUpdate = EntityExplosion;
-    entity->subId = arg0;
+    entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
@@ -1025,7 +1025,7 @@ void EntityHeartDrop(Entity* self) {
     u16 var_a0;
 
     if (self->step == 0) {
-        temp_a0 = self->subId + 0xC0;
+        temp_a0 = self->params + 0xC0;
         self->ext.generic.unkB4 = temp_a0;
         if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
             DestroyEntity(self);
@@ -1039,7 +1039,7 @@ void EntityHeartDrop(Entity* self) {
             self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
             var_a0 -= 128;
         }
-        self->subId = var_a0 + 0x8000;
+        self->params = var_a0 + 0x8000;
     } else {
         temp_a0_2 = self->ext.generic.unkB4;
         if (self->step < 5) {
@@ -1072,7 +1072,7 @@ void EntityUnkId13(Entity* entity) {
                 func_80193538(E_EXPLOSION, entity, newEntity);
                 newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
-                newEntity->subId = entity->subId;
+                newEntity->params = entity->params;
             }
             entity->ext.generic.unk7C.U8.unk0 = 0;
         }

@@ -90,7 +90,7 @@ void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
     Primitive* prim;
     s32 var_a0_2;
-    u16 subId;
+    u16 params;
     s16 posX;
     s32 rnd;
     s32 i;
@@ -103,7 +103,7 @@ void EntityEnemyBlood(Entity* self) {
             prim = &g_PrimBuf[i];
             self->firstPolygonIndex = i;
             self->animSet = 0;
-            subId = self->subId;
+            params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
             self->hitboxHeight = 8;
@@ -120,7 +120,7 @@ void EntityEnemyBlood(Entity* self) {
                 prim->u0 = 4;
                 prim->v0 = 4;
 
-                if (subId != 0) {
+                if (params != 0) {
                     func_80194D08(0xCC0 + i * 64,
                                   ((Random() & 0xF) * 0x10) + 0x180);
                 } else {
@@ -151,7 +151,7 @@ void EntityEnemyBlood(Entity* self) {
                 }
             }
 
-            if (subId != 0) {
+            if (params != 0) {
                 self->accelerationX = 0x14000;
                 self->ext.generic.unk80.modeS32 = -0x200;
             } else {
@@ -233,7 +233,7 @@ void EntityEnemyBlood(Entity* self) {
 }
 
 void EntityUnkId08(Entity* entity) {
-    ObjInit2* objInit = &D_8018125C[entity->subId];
+    ObjInit2* objInit = &D_8018125C[entity->params];
 
     if (entity->step == 0) {
         InitializeEntity(D_80180458);
@@ -246,7 +246,7 @@ void EntityUnkId08(Entity* entity) {
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
-        if (entity->subId >= 5) {
+        if (entity->params >= 5) {
             entity->rotAngle = 0x800;
             entity->unk19 = (u8)(entity->unk19 | 4);
         }

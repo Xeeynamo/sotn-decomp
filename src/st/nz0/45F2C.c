@@ -81,7 +81,7 @@ void EntitySkeleton(Entity* self) {
         if (!animStatus) {
             SetStep(SKELETON_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
-                D_80182480[self->subId & 1]
+                D_80182480[self->params & 1]
                           [++self->ext.generic.unk84.S8.unk0 & 3];
             break;
         }
@@ -154,7 +154,7 @@ void EntitySkeleton(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x30, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->subId = i;
+                newEntity->params = i;
                 newEntity->ext.generic.unk88.S8.unk0 = D_80182430[i];
                 if (self->facing != 0) {
                     newEntity->posX.i.hi -= D_80182468[i];
@@ -177,7 +177,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->rotAngle += D_80182424[entity->subId];
+            entity->rotAngle += D_80182424[entity->params];
             FallEntity();
             MoveEntity();
             return;
@@ -185,14 +185,14 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
 
         entity->objectId = E_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-        entity->subId = 0;
+        entity->params = 0;
         entity->step = 0;
         return;
     }
 
     InitializeEntity(D_80180C94);
     entity->unk19 = 4;
-    entity->animCurFrame = entity->subId + 15;
+    entity->animCurFrame = entity->params + 15;
 
     if (entity->facing != 0) {
         entity->accelerationX = -entity->accelerationX;

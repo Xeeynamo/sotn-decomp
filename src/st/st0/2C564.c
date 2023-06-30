@@ -205,7 +205,7 @@ void EntityDracula(Entity* self) {
                     CreateEntityFromEntity(0x1B, self, newEntity);
                     newEntity->facing = self->facing;
                     newEntity->zPriority = self->zPriority + 1;
-                    newEntity->subId = i;
+                    newEntity->params = i;
                     if (self->facing != 0) {
                         newEntity->posX.i.hi -= 24;
                     } else {
@@ -249,7 +249,7 @@ void EntityDracula(Entity* self) {
                     }
                     newEntity->posY.i.hi += D_80180A58[index].y;
                     newEntity->zPriority = self->zPriority + 1;
-                    newEntity->subId = index;
+                    newEntity->params = index;
                 }
                 self->ext.dracula.unk8C = 0x20;
                 self->step_s++;
@@ -455,14 +455,14 @@ void EntityDracula(Entity* self) {
          * to advance/rewind current animation frame
          */
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 self->animCurFrame++;
-                self->subId |= 1;
+                self->params |= 1;
             } else {
                 break;
             }
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
@@ -517,7 +517,7 @@ void EntityDraculaFireball(Entity* self) {
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->step = 0;
-        self->subId = 2;
+        self->params = 2;
         return;
     }
 
@@ -531,11 +531,11 @@ void EntityDraculaFireball(Entity* self) {
             self->accelerationX = 0x20000;
         }
 
-        if (self->subId == 1) {
+        if (self->params == 1) {
             self->accelerationY = -0x8000;
         }
 
-        if (self->subId == 2) {
+        if (self->params == 2) {
             self->accelerationY = 0x8000;
         }
         self->ext.generic.unk8C.modeU16.unk0 = 0x28;
@@ -564,7 +564,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
         entity->step_s = 0;
-        entity->subId = 1;
+        entity->params = 1;
         return;
     }
 
@@ -585,7 +585,7 @@ void EntityDraculaMeteorball(Entity* entity) {
         MoveEntity();
         entity->rotAngle += 4;
         speedX = 0x1000;
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             speedX = 0xE00;
         }
 
@@ -644,7 +644,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->hitboxState = 0;
         entity->accelerationX = -0x10000;
         entity->accelerationY = 0;
-        if (entity->subId) {
+        if (entity->params) {
             s16 radians;
             s32 speed;
             entity->animCurFrame = 0x5C;
@@ -673,7 +673,7 @@ void EntityDraculaGlass(Entity* entity) {
                     AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (glassShardEntity != 0) {
                     CreateEntityFromEntity(31, entity, glassShardEntity);
-                    glassShardEntity->subId = 1;
+                    glassShardEntity->params = 1;
                 }
             }
             DestroyEntity(entity);
@@ -713,7 +713,7 @@ void EntityDraculaMegaFireball(Entity* self) {
         InitializeEntity(D_80180610);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        if (self->subId == 0) {
+        if (self->params == 0) {
             angle = self->rotAngle;
             self->unk1C = 0x80;
             self->unk1A = 0x80;
@@ -727,7 +727,7 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->accelerationY = rsin(angle) * 0x60;
         }
     }
-    if (self->subId != 0) {
+    if (self->params != 0) {
         if (AnimateEntity(D_80180BA0, self) == 0) {
             DestroyEntity(self);
         }
@@ -754,7 +754,7 @@ void EntityDraculaRainAttack(Entity* self) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->subId = 2;
+            newEntity->params = 2;
         }
         DestroyEntity(self);
         return;
@@ -763,7 +763,7 @@ void EntityDraculaRainAttack(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_8018061C);
-        if (self->subId != 0) {
+        if (self->params != 0) {
             self->hitboxState = 0;
             self->animCurFrame = 0x59;
             accelX = (Random() & 0x1F) + 0x10;
@@ -791,7 +791,7 @@ void EntityDraculaRainAttack(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x22, self, newEntity);
-                    newEntity->subId = 1;
+                    newEntity->params = 1;
                     newEntity->posY.i.hi += 12;
                 }
             }

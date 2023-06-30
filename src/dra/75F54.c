@@ -324,7 +324,7 @@ void func_80118894(Entity* self) {
     s32 search_value;
 
     if (self == &g_Entities[UNK_ENTITY_10]) {
-        if (!(self->subId & 0x8000)) {
+        if (!(self->params & 0x8000)) {
             self->enemyId = 1;
             return;
         }
@@ -622,7 +622,7 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     entity->posY.val = self->posY.val;
     entity->facing = self->facing;
     entity->zPriority = self->zPriority;
-    entity->subId = flags & 0xFFF;
+    entity->params = flags & 0xFFF;
     if (flags & 0x5000) {
         entity->ext.generic.unkA8 = 0xE0;
     }
@@ -708,10 +708,10 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011BBE0);
 bool func_8011BD48(Entity* entity) {
     s32 i = 0x10;
     s16 objId = entity->objectId;
-    s16 subId = entity->subId;
+    s16 params = entity->params;
     Entity* e = &g_Entities[i];
     for (; i < 0x40; i++, e++) {
-        if (objId == (s32)e->objectId && subId == (s32)e->subId &&
+        if (objId == (s32)e->objectId && params == (s32)e->params &&
             e != entity) {
             return true;
         }
@@ -1222,7 +1222,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80126ECC);
 void func_801274DC(Entity* entity) {
     switch (entity->step) {
     case 0:
-        if (entity->subId == 0) {
+        if (entity->params == 0) {
             PlaySfx(0x660);
         }
         entity->flags = 0x100000 | FLAG_UNK_08000000;
@@ -1230,8 +1230,8 @@ void func_801274DC(Entity* entity) {
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facing = (PLAYER.facing + 1) & 1;
-        AccelerateX(D_800B0830[entity->subId]);
-        entity->accelerationY = D_800B083C[entity->subId];
+        AccelerateX(D_800B0830[entity->params]);
+        entity->accelerationY = D_800B083C[entity->params];
         entity->ext.generic.unk7C.s = 0x14;
         func_8011A328(entity, 2);
         entity->hitboxWidth = 4;
@@ -1267,13 +1267,13 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8012768C);
 void func_80127840(Entity* entity) {
     switch (entity->step) {
     case 0:
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             PlaySfx(0x683);
         }
 
         entity->flags = 0x100000 | FLAG_UNK_08000000;
 
-        if (entity->subId != 0) {
+        if (entity->params != 0) {
             entity->posY.i.hi = entity->posY.i.hi + 16;
         } else {
             entity->posY.i.hi = entity->posY.i.hi - 4;

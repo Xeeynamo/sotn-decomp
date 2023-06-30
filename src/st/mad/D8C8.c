@@ -106,7 +106,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
 void func_8018E5AC(Entity* self) {
     s32 temp_v0;
-    ObjInit2* objInit = &D_8018056C[self->subId];
+    ObjInit2* objInit = &D_8018056C[self->params];
 
     if (self->step == 0) {
         InitializeEntity(D_80180544);
@@ -127,7 +127,7 @@ void func_8018E5AC(Entity* self) {
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E674);
 
 void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->subId >> 0xC;
+    u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
@@ -137,7 +137,7 @@ void EntityBreakable(Entity* entity) {
                 AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->subId =
+                entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
@@ -253,7 +253,7 @@ void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     } while (0);
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->subId = initDesc->subId;
+    entity->params = initDesc->params;
     entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
     entity->unk68 = initDesc->objectId >> 0xA & 7;
 }
@@ -752,7 +752,7 @@ void func_80192C0C(u16 arg0, u16 arg1) {
     entity->unk19 = 0;
     entity->objectId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    entity->subId = arg0;
+    entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
@@ -860,7 +860,7 @@ void func_80192EF8(u16* hitSensors, s16 sensorCount) {
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_80193050);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 subId;
+    u16 params;
 
     PreventEntityFromRespawning(self);
 
@@ -871,20 +871,20 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     }
 #endif
 
-    subId = self->subId &= 0xFFF;
+    params = self->params &= 0xFFF;
 
-    if (subId < 0x80) {
+    if (params < 0x80) {
         self->objectId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
-        subId -= 0x80;
+        params -= 0x80;
         self->objectId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
-    self->subId = subId;
+    self->params = params;
     self->unk6D = 0x10;
     self->step = 0;
 }
@@ -1001,6 +1001,6 @@ void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801939C4(void) {
     g_CurrentEntity->step = 3;
-    g_CurrentEntity->subId = 4;
+    g_CurrentEntity->params = 4;
     return g_CurrentEntity;
 }

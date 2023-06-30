@@ -7,7 +7,7 @@
 #include "nz0.h"
 
 void func_801B0958(Entity* self) {
-    ObjInit2* temp_s0 = &D_80180D64[self->subId];
+    ObjInit2* temp_s0 = &D_80180D64[self->params];
 
     if (self->step == 0) {
         InitializeEntity(D_80180C1C);
@@ -57,13 +57,13 @@ void EntityRedEyeBust(Entity* self) {
     case 2:
         FntPrint(&D_801B058C, self->animCurFrame); // "charal %x\n"
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 self->animCurFrame++;
-                self->subId |= 1;
+                self->params |= 1;
             } else
                 break;
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
 
         if (g_pads[1].pressed & PAD_CIRCLE) {
@@ -191,7 +191,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->subId = 0x13;
+            newEntity->params = 0x13;
         }
         self->ext.generic.unk80.modeS32 = 32;
         self->step++;
@@ -270,7 +270,7 @@ void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->subId = 0x11;
+            newEntity->params = 0x11;
         }
         self->ext.generic.unk80.modeS32 = 32;
         self->step++;
@@ -310,7 +310,7 @@ void func_801B19A0(Entity* self) {
 
         rnd = (Random() & 0x1F) + 16;
         rnd2 = ((Random() & 0x3F) * 16) | 0xC00;
-        if (self->subId != 0) {
+        if (self->params != 0) {
             self->animCurFrame = 3;
             rnd = (Random() & 0x1F) + 16;
             rnd2 = (Random() * 6) + 0x900;
@@ -325,7 +325,7 @@ void func_801B19A0(Entity* self) {
     case 1:
         MoveEntity();
         self->rotAngle += 0x20;
-        if (self->subId != 0) {
+        if (self->params != 0) {
             self->rotAngle += 0x20;
         }
 
@@ -334,14 +334,14 @@ void func_801B19A0(Entity* self) {
                              0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 func_801C29B0(0x644);
                 for (i = 0; i < 2; i++) {
                     newEntity =
                         AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x22, self, newEntity);
-                        newEntity->subId = 0x1;
+                        newEntity->params = 0x1;
                     }
                 }
                 DestroyEntity(self);
@@ -353,7 +353,7 @@ void func_801B19A0(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self,
                                            newEntity);
-                    newEntity->subId = 0x10;
+                    newEntity->params = 0x10;
                 }
                 DestroyEntity(self);
                 break;
@@ -402,7 +402,7 @@ void func_801B1C18(Entity* self) {
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 468) {
                 self->posY.i.hi = 468 - g_Camera.posY.i.hi;
-                D_80180EB4 ^= self->subId;
+                D_80180EB4 ^= self->params;
                 self->step++;
             }
         }
@@ -461,7 +461,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         poly->pad2 = 0x5F;
         poly->pad3 = 2;
 
-        if (self->subId & D_80180EB4) {
+        if (self->params & D_80180EB4) {
             self->posY.i.hi = 480 - g_Camera.posY.i.hi;
             self->ext.generic.unk88.S8.unk0 = 1;
         } else {
@@ -470,7 +470,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         }
 
     case 1:
-        if (self->subId & D_80180EB4) {
+        if (self->params & D_80180EB4) {
             self->posY.val += 0x10000;
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 480) {
@@ -497,7 +497,7 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
     poly->x0 = self->posX.i.hi - 16;
     poly->y0 = self->posY.i.hi - 16;
     temp = 480 - (g_Camera.posY.i.hi + self->posY.i.hi);
-    D_801CB736[self->subId] = temp;
+    D_801CB736[self->params] = temp;
 }
 
 // moveable box for spike/switch areas
@@ -559,7 +559,7 @@ void EntityMoveableBox(Entity* self) {
 
         func_801BCF74(&D_80180EB8);
 
-        if (self->subId == 0) {
+        if (self->params == 0) {
             temp_v0_2 = self->posX.i.hi + g_Camera.posX.i.hi;
             var_v1 = temp_v0_2 - 192;
             var_v1 = ABS(var_v1);
@@ -724,7 +724,7 @@ void EntityCannon(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
             }
             CreateEntityFromEntity(0x1E, self, &self[1]);
             self->step++;
@@ -779,7 +779,7 @@ void EntityCannonShot(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 3;
+                newEntity->params = 3;
             }
             D_8003BE6F[0] = 1;
             DestroyEntity(self);
@@ -994,7 +994,7 @@ void EntityTableWithGlobe(Entity* self) {
             func_801C29B0(0x61D);
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-            self[1].subId = D_80180F10[self->subId];
+            self[1].params = D_80180F10[self->params];
             SetStep(2);
         }
         break;
@@ -1030,11 +1030,11 @@ void func_801B3648(Entity* self) {
     case 2:
         if (AnimateEntity(D_80180F30, self) == 0) {
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-            self[1].subId = D_80180F4C[self->subId];
+            self[1].params = D_80180F4C[self->params];
             newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->subId = 2;
+                newEntity->params = 2;
                 newEntity->posY.i.hi -= 8;
             }
             self->step++;
@@ -1054,7 +1054,7 @@ void func_801B37C0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180CDC);
-        if (self->subId & 0x100) {
+        if (self->params & 0x100) {
             self->blendMode = 0x30;
         } else {
             self->zPriority = 0x6A;
@@ -1064,11 +1064,11 @@ void func_801B37C0(Entity* self) {
             self->hitboxOffX = 0;
             self->hitboxState = 2;
             CreateEntityFromEntity(0x37, self, &self[1]);
-            self[1].subId = 0x100;
+            self[1].params = 0x100;
         }
 
     case 1:
-        if (self->subId & 0x100) {
+        if (self->params & 0x100) {
             AnimateEntity(D_80180F74, self);
             break;
         }
@@ -1080,19 +1080,19 @@ void func_801B37C0(Entity* self) {
         break;
 
     case 2:
-        if (self->subId > 0x1) {
+        if (self->params > 0x1) {
             CreateEntityFromEntity(E_RELIC_ORB, self, &self[1]);
         } else {
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
         }
 
-        self[1].subId = D_80180F9C[self->subId];
+        self[1].params = D_80180F9C[self->params];
         do { // !FAKE
         } while (0);
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->subId = 2;
+            newEntity->params = 2;
             newEntity->posY.i.hi -= 8;
         }
         func_801C29B0(0x61D);
@@ -1105,13 +1105,13 @@ void func_801B37C0(Entity* self) {
     case 255:
         FntPrint(&D_801B0598, self->animCurFrame); // "charal %x\n"
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId != 0) {
+            if (self->params != 0) {
                 break;
             }
             self->animCurFrame++;
-            self->subId |= 1;
+            self->params |= 1;
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
@@ -1148,7 +1148,7 @@ void func_801B3A50(Entity* self) {
 
     case 2:
         CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-        self[1].subId = D_80180F9C[self->subId];
+        self[1].params = D_80180F9C[self->params];
         self->step++;
 
     case 3:
@@ -1167,7 +1167,7 @@ void func_801B3B78() {
         entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
         if (entity != NULL) {
             CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
-            entity->subId = 2;
+            entity->params = 2;
             entity->ext.generic.unk88.S8.unk1 = 6 - i;
             entity->ext.generic.unk84.S16.unk0 = temp_s3;
             entity->ext.generic.unk88.S8.unk0 = temp_s4;

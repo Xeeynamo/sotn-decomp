@@ -147,7 +147,7 @@ void func_801CF254(Entity* self) {
 
     switch (self->step) {
     case 0:
-        switch (self->subId >> 8) {
+        switch (self->params >> 8) {
         case 0:
             InitializeEntity(D_80180B8C);
             break;
@@ -160,8 +160,8 @@ void func_801CF254(Entity* self) {
         }
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
-        self->subId = (u8)self->subId;
-        self->animCurFrame = self->subId;
+        self->params = (u8)self->params;
+        self->animCurFrame = self->params;
         self->unk19 |= 4;
         break;
 
@@ -189,7 +189,7 @@ void func_801CF254(Entity* self) {
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
-                self->subId = 0;
+                self->params = 0;
                 self->unk19 = 0;
                 return;
             }
@@ -197,7 +197,7 @@ void func_801CF254(Entity* self) {
         break;
     }
 
-    switch (self->subId) {
+    switch (self->params) {
     case 8:
     case 14:
         collider.unk18 = 9;
@@ -361,7 +361,7 @@ void EntityGurkhaSword(Entity* self) {
             if (--self->ext.gurkhaSword.unk80 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
-                self->subId = 0;
+                self->params = 0;
                 self->unk19 = 0;
             }
         }
