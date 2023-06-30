@@ -141,7 +141,7 @@ void EntitySecretStairsChunk(Entity* self) {
         InitializeEntity(D_80180628);
         self->animCurFrame = 1;
         if (self->subId == 0) {
-            self->ext.generic.unk84.S8.unk0 = 1;
+            self->ext.generic.unk84.U8.unk0 = true;
             newEntity = &self[1];
             for (i = 0; i < 3; i++) {
                 CreateEntityFromCurrentEntity(0x29, newEntity);
@@ -150,7 +150,7 @@ void EntitySecretStairsChunk(Entity* self) {
             }
 
         } else {
-            self->ext.generic.unk84.S8.unk0 = 0;
+            self->ext.generic.unk84.U8.unk0 = false;
             if (self->subId == 3) {
                 self->animCurFrame = 2;
                 self->zPriority += 1;
@@ -195,7 +195,7 @@ void EntitySecretStairsChunk(Entity* self) {
         break;
 
     case 3:
-        if (self->ext.generic.unk84.U8.unk0 == 0) {
+        if (!self->ext.generic.unk84.U8.unk0) {
             self->posX.i.hi = self[-1].posX.i.hi;
             self->posY.i.hi = self[-1].posY.i.hi;
             if (self->subId == 3) {
