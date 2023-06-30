@@ -135,10 +135,10 @@ segments:
       - start: 0x28B8C
         type: c
         file: zero
-        end: 0x28F83
+        end: 0x28F87
 
       # after PER
-      - start: 0x28F84
+      - start: 0x28F88
         type: data
         file: zero
         end: 0x295DF
@@ -222,10 +222,10 @@ segments:
       - start: 0x2C1A8
         type: c
         file: zero
-        end: 0x2C303 
+        end: 0x2C307
 
       # after SEGA_MTH.A
-      - start: 0x2C304
+      - start: 0x2C308
         type: data
         file: zero
         end: 0x2C363
