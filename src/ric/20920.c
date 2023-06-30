@@ -269,4 +269,27 @@ void func_8015D120(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D1D0);
+s32 func_8015D1D0(s16 subWpnId, s16 subWpnUnk6) {
+    Entity* var_v1;
+    s32 b0MatchCount;
+    s32 i;
+    s32 nullObjCount;
+
+    var_v1 = &g_Entities[32];
+    for (i = 0, b0MatchCount = 0, nullObjCount = 0; i < 0x10; i++, var_v1++) {
+        if (var_v1->objectId == 0) {
+            nullObjCount++;
+        }
+        if (var_v1->ext.generic.unkB0 != 0 &&
+            var_v1->ext.generic.unkB0 == subWpnId) {
+            b0MatchCount++;
+        }
+        if (b0MatchCount >= subWpnUnk6) {
+            return -1;
+        }
+    }
+    if (nullObjCount == 0) {
+        return -1;
+    }
+    return 0;
+}
