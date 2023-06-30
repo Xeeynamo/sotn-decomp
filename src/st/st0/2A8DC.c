@@ -100,18 +100,21 @@ void EntitySecretStairsEmitter(Entity* entity) {
             entity->step = 3;
         }
         break;
+
     case 1:
         if (g_isSecretStairsButtonPressed) {
             g_api.PlaySfx(NA_SE_SECRET_STAIRS);
             entity->step++;
         }
         break;
+
     case 2:
         entity->posY.val -= 0x4000;
         if (entity->posY.i.hi < -16) {
             entity->step++;
         }
         break;
+
     case 3:
         entity->animCurFrame = 0;
         break;
