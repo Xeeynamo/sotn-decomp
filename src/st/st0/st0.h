@@ -53,6 +53,7 @@ extern u16 D_8018058C[];
 extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern u16 D_801805D4[];
+extern u16 D_80180628[];
 extern ObjInit2 D_80180638[];
 
 // *** EntityDracula properties START ***
