@@ -83,15 +83,8 @@ void EntityCutscene(Entity* self) {
             posX = 0;
         }
 
-        if (g_Player.D_80072EF4 == 0x8000) {
-            if (posX >= 0xA1) {
-                goto block_24;
-            }
-            goto block_26;
-        }
-    block_24:
-        if ((g_Player.D_80072EF4 == 0x2000) && (posX >= 0x9F)) {
-        block_26:
+        if ((g_Player.D_80072EF4 == 0x8000) && (posX <= 0xA0) ||
+            (g_Player.D_80072EF4 == 0x2000) && (posX >= 0x9F)) {
             g_Player.D_80072EFC = 1;
             g_Player.D_80072EF4 = 0x8000;
             self->ext.generic.unk7C.s = 0x18;
@@ -128,7 +121,7 @@ void EntityCutscene(Entity* self) {
         player->animCurFrame = self->animCurFrame;
         if (D_801C257C & 0x400) {
             player->animCurFrame = 0;
-            self->animSet = -0x7FFB;
+            self->animSet = 0x8005;
             self->animCurFrame = 1;
             SetStep(6);
         }
