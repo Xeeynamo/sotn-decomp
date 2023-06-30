@@ -25,6 +25,8 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
+    E_SECRET_BUTTON = 0x28,
+    E_SECRET_STAIRS = 0x29,
 } EntityIDs;
 
 extern const char* D_801A7984;

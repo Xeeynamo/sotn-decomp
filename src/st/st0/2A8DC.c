@@ -40,7 +40,7 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(0x644);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x28, self, newEntity);
+                CreateEntityFromEntity(E_SECRET_BUTTON, self, newEntity);
                 newEntity->subId = 1;
             }
             self->step++;
@@ -83,7 +83,7 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(0x652);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->subId = 0x11;
             }
             DestroyEntity(self);
@@ -94,7 +94,7 @@ void EntitySecretButton(Entity* self) {
 
 const u32 rodataPadding_801A7AC8 = 0;
 
-void EntitySecretStairsEmitter(Entity* entity) {
+void EntitySecretStairsCeiling(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180628);
@@ -126,7 +126,7 @@ void EntitySecretStairsEmitter(Entity* entity) {
     }
 }
 
-void EntitySecretStairsChunk(Entity* self) {
+void EntitySecretStairs(Entity* self) {
     Entity* newEntity;
     u16* tilePos;
     s32 temp_s0;
@@ -144,7 +144,7 @@ void EntitySecretStairsChunk(Entity* self) {
             self->ext.generic.unk84.U8.unk0 = true;
             newEntity = &self[1];
             for (i = 0; i < 3; i++) {
-                CreateEntityFromCurrentEntity(0x29, newEntity);
+                CreateEntityFromCurrentEntity(E_SECRET_STAIRS, newEntity);
                 newEntity->subId = i + 1;
                 newEntity++;
             }
