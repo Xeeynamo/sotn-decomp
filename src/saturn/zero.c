@@ -729,7 +729,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602CF4C, func_0602CF4C);
 //_MoveOldToNew
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602CF8C, func_0602CF8C);
 
-INCLUDE_ASM("asm/saturn/zero/data", d602D004, d_0602D004);
+INCLUDE_ASM("asm/saturn/zero/data", d602D008, d_0602D008);
 
 // SEGA_CDC.A
 
@@ -934,7 +934,7 @@ INCLUDE_ASM("asm/saturn/zero/data", d602FB84, d_0602FB84);
 
 // _MTH_Hypot (C)
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030228, func_06030228);
-INCLUDE_ASM("asm/saturn/zero/data", d6030384, d_06030384);
+INCLUDE_ASM("asm/saturn/zero/data", d6030388, d_06030388);
 
 // SEGA_BUP.A
 const char* bup_version = "BUP Version 1.25 1997-06-20";
