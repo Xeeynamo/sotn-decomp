@@ -74,7 +74,7 @@ extern u8 D_80180894[]; // Animation
 
 // *** EntityCutscene properties END ***
 
-extern point16 D_801808A0[];
+extern Point16 D_801808A0[];
 extern u16 D_801808B0[];
 extern s16 D_801808F8[];
 
@@ -95,7 +95,7 @@ extern u8 D_80180BB8[]; // Animation
 extern u8 D_80180BCC[]; // Animation
 extern u8 D_80180BDC[]; // Animation
 extern u16 D_80180A48[];
-extern point16 D_80180A58[];
+extern Point16 D_80180A58[];
 extern s32 D_801C2578;
 extern s32 D_801C257C;
 

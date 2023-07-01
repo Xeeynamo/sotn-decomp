@@ -12,12 +12,12 @@ typedef struct {
 typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
-} point16; // size = 0x4
+} Point16; // size = 0x4
 
 typedef struct {
     /* 0x0 */ s32 x;
-    /* 0x2 */ s32 y;
-} point32;
+    /* 0x4 */ s32 y;
+} Point32; // size = 0x8
 
 typedef struct {
     /* 0x0 */ u16 unk0;
@@ -46,7 +46,7 @@ typedef struct {
     /* 0x0E */ s16 unkE;
     /* 0x10 */ char pad_10[0x38];
     /* 0x48 */ s32 unk48;
-} Unkstruct8; // size = 0x10
+} Unkstruct8; // size = unknown
 
 typedef struct {
     /* 0x00 */ u8 unk0[0x278];
