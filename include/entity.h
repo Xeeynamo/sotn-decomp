@@ -235,6 +235,15 @@ typedef struct ET_Dracula {
     /* 0xAC */ struct Primitive* prim;
 } ET_Dracula;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ char pad_80[0x8];
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ char pad_8A[0x2];
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 unk8E;
+} ET_StageTitleCard;
+
 typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
@@ -247,5 +256,6 @@ typedef union {
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
+    /* 0x7C */ ET_StageTitleCard stageTitleCard;
     /* 0x7C */ char stub[0x40];
 } Ext;
