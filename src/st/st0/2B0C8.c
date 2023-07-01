@@ -9,33 +9,33 @@ void EntityStageTitleFadeout(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (D_80180908 == 0) {
-            InitializeEntity(D_801805D4);
-            firstPrimIndex = g_api.AllocPrimitives(PRIM_G4, 5);
-            if (firstPrimIndex != -1) {
-                prim = &g_PrimBuf[firstPrimIndex];
-                self->firstPolygonIndex = firstPrimIndex;
-                self->ext.stageTitleCard.prim = prim;
-                self->flags |= FLAG_FREE_POLYGONS;
-                while (prim != NULL) {
-                    prim->blendMode = 8;
-                    prim = prim->next;
-                }
-                prim = self->ext.stageTitleCard.prim;
-                prim->r0 = prim->g0 = prim->b0 = 0;
-                prim->x1 = prim->x3 = 0x100;
-                prim->y2 = prim->y3 = 0xF0;
-                prim->priority = 0x1FD;
-                prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
-                prim->blendMode = 0;
-                LOW(prim->r1) = LOW(prim->r0);
-                LOW(prim->r2) = LOW(prim->r0);
-                LOW(prim->r3) = LOW(prim->r0);
-                self->ext.stageTitleCard.unk88 = 0x20;
-            } else {
-                DestroyEntity(self);
-                break;
+        if (D_80180908 != 0) {
+            DestroyEntity(self);
+            return;
+        }
+
+        InitializeEntity(D_801805D4);
+        firstPrimIndex = g_api.AllocPrimitives(PRIM_G4, 5);
+        if (firstPrimIndex != -1) {
+            prim = &g_PrimBuf[firstPrimIndex];
+            self->firstPolygonIndex = firstPrimIndex;
+            self->ext.stageTitleCard.prim = prim;
+            self->flags |= FLAG_FREE_POLYGONS;
+            while (prim != NULL) {
+                prim->blendMode = 8;
+                prim = prim->next;
             }
+            prim = self->ext.stageTitleCard.prim;
+            prim->r0 = prim->g0 = prim->b0 = 0;
+            prim->x1 = prim->x3 = 0x100;
+            prim->y2 = prim->y3 = 0xF0;
+            prim->priority = 0x1FD;
+            prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
+            prim->blendMode = 0;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            self->ext.stageTitleCard.unk88 = 0x20;
         } else {
             DestroyEntity(self);
             break;
@@ -167,10 +167,10 @@ void EntityStageTitleFadeout(Entity* self) {
         prim->x0 = prim->x2 = temp_a1 - 0x40;
 
         if ((temp_a0 < -0x40) && (temp_a1 > 0x140)) {
-            prim = self->ext.stageTitleCard.prim;
-            while (prim != 0) {
+
+            for (prim = self->ext.stageTitleCard.prim; prim != NULL;
+                 prim = prim->next) {
                 prim->blendMode = 8;
-                prim = prim->next;
             }
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
@@ -188,7 +188,7 @@ void EntityStageTitleCard(Entity* self) {
     Entity* fakeEntity; // !FAKE
     s16 firstPrimIndex;
     Primitive* prim;
-    Triangle* triangle;
+    VertexFake* v;
     s16 temp_unk8E;
     s32 var_s7;
     s16 angle;
@@ -210,7 +210,7 @@ void EntityStageTitleCard(Entity* self) {
             self->firstPolygonIndex = firstPrimIndex;
             self->ext.stageTitleCard.prim = prim;
             self->flags |= FLAG_FREE_POLYGONS;
-            prim->type = 5;
+            prim->type = PRIM_GT3;
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->v2 = prim->v3 = prim->u1 = prim->u3 = 0x18;
@@ -278,15 +278,15 @@ void EntityStageTitleCard(Entity* self) {
             var_s7 = 0;
         }
 
-        triangle = (Triangle*)&prim->x0;
         temp_unk8E = self->ext.stageTitleCard.unk8E;
         angle = self->ext.stageTitleCard.unk8C + 0x400;
 
+        v = (VertexFake*)&prim->x0;
         for (i = 0; i < 3; i++) {
-            triangle->x0 = (temp_unk8E * rcos(angle) >> 0xC) + 0x60;
-            triangle->y0 = (temp_unk8E * rsin(angle) >> 0xC) + 0x80;
+            v->x = (temp_unk8E * rcos(angle) >> 0xC) + 0x60;
+            v->y = (temp_unk8E * rsin(angle) >> 0xC) + 0x80;
             angle += 0x555;
-            triangle++;
+            v++;
         }
 
         prim = prim->next;
@@ -334,10 +334,8 @@ void EntityStageTitleCard(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
 
-        prim = prim->next;
-        while (prim != NULL) {
+        for (prim = prim->next; prim != NULL; prim = prim->next) {
             prim->blendMode = 8;
-            prim = prim->next;
         }
         self->ext.stageTitleCard.unk88 = 0x20;
         self->step++;
@@ -359,17 +357,17 @@ void EntityStageTitleCard(Entity* self) {
     case 5:
         prim = self->ext.stageTitleCard.prim;
         angle = self->ext.stageTitleCard.unk8C + 0x400;
-        triangle = (Triangle*)&prim->x0;
         self->ext.stageTitleCard.unk8C -= 4;
         temp_unk8E = self->ext.stageTitleCard.unk8E;
 
         fakeEntity = self; // !FAKE
 
+        v = (VertexFake*)&prim->x0;
         for (j = 0; j < 3; j++) {
-            triangle->x0 = (temp_unk8E * rcos(angle) >> 0xC) + 0x60;
-            triangle->y0 = (temp_unk8E * rsin(angle) >> 0xC) + 0x80;
+            v->x = (temp_unk8E * rcos(angle) >> 0xC) + 0x60;
+            v->y = (temp_unk8E * rsin(angle) >> 0xC) + 0x80;
             angle += 0x555;
-            triangle++;
+            v++;
         }
 
         func_801BD88C(prim, 4);

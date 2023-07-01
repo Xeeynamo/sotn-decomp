@@ -24,6 +24,36 @@ typedef enum {
     PRIM_ENV,
 } PrimitiveType;
 
+typedef struct Vertex {
+    /* 0x0 */ u8 r;
+    /* 0x1 */ u8 g;
+    /* 0x2 */ u8 b;
+    /* 0x3 */ u8 p;
+    /* 0x4 */ s16 x;
+    /* 0x6 */ s16 y;
+    /* 0x8 */ u8 u;
+    /* 0x9 */ u8 v;
+    /* 0xA */ u16 param;
+} Vertex; // size = 0xC
+
+// This structure is identical to Vertex but it is used for a FAKE! match.
+// The fields are shifted compared to Vertex but they are not supposed to.
+typedef struct {
+    s16 x;
+    s16 y;
+    u8 u;
+    u8 v;
+    u16 param;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 p;
+} VertexFake; // size = 0xC
+
+typedef struct Prim {
+    struct Prim* next;
+    struct Vertex v[4];
+} Prim;
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
     /* 0x04 */ u8 r0;

@@ -337,15 +337,6 @@ u_short GetClut(int x, // Horizontal frame buffer address of CLUT
                 int y  // Vertical frame buffer address of CLUT
 );
 
-typedef struct {
-    /* 0x0 */ s16 x0;
-    /* 0x2 */ s16 y0;
-    /* 0x4 */ s16 x1;
-    /* 0x6 */ s16 y1;
-    /* 0x8 */ s16 x2;
-    /* 0xA */ s16 y2;
-} Triangle; // size = 0xC
-
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetLineG2(LINE_G2* p);
