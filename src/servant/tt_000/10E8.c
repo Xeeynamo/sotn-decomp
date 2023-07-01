@@ -9,7 +9,7 @@ extern s32 D_80171090;
 extern EntitySearch D_80171094[];
 extern Collider D_80174AD8;
 extern Unkstruct_8011A3AC D_80174C30;
-extern point16 D_80174C3C[][16];
+extern Point16 D_80174C3C[][16];
 extern s32 D_80174D3C;
 
 void func_80171ED4(s32 arg0);

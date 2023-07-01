@@ -382,7 +382,7 @@ void func_801B8014(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B8108);
 
-bool func_801B8338(point16* unk) {
+bool func_801B8338(Point16* unk) {
     Collider collider;
 
     FallEntity();
