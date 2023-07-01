@@ -7,10 +7,9 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/2B0C8", EntityStageTitleCard);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2B0C8", func_801ABBBC);
 
 s32 func_801AC458(s16 arg0) {
-    // !FAKE:
     s32 ret = arg0;
     Entity* e;
-    Entity* new_var;
+    Entity* e2;
 
     switch (ret) {
     case 0:
@@ -25,11 +24,11 @@ s32 func_801AC458(s16 arg0) {
         e[1].posY.i.hi = e->posY.i.hi + 16;
 
     case 1:
-        new_var = &g_CurrentEntity[1];
-        if (AnimateEntity(D_80180964, new_var) == 0) {
+        e2 = &g_CurrentEntity[1];
+        if (AnimateEntity(D_80180964, e2) == 0) {
             ret++;
         }
-        if (LOW(new_var->animFrameIdx) == 6) {
+        if (LOW(e2->animFrameIdx) == 6) {
             g_CurrentEntity->ext.stub[0x24] = 1;
         }
         break;
