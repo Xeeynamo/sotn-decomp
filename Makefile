@@ -100,7 +100,6 @@ clean:
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
-	# format saturn headers
 	clang-format -i $$(find $(SRC_DIR)/saturn -type f -name "*.h")
 	$(PYTHON) ./tools/symbols.py sort
 check:
