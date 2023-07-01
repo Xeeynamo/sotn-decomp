@@ -1,6 +1,188 @@
 #include "st0.h"
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2B0C8", EntityStageTitleFadeout);
+void EntityStageTitleFadeout(Entity* self) {
+    s16 firstPrimIndex;
+    Primitive* prim;
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 posX;
+
+    switch (self->step) {
+    case 0:
+        if (D_80180908 == 0) {
+            InitializeEntity(D_801805D4);
+            firstPrimIndex = g_api.AllocPrimitives(PRIM_G4, 5);
+            if (firstPrimIndex != -1) {
+                prim = &g_PrimBuf[firstPrimIndex];
+                self->firstPolygonIndex = firstPrimIndex;
+                self->ext.stageTitleCard.prim = prim;
+                self->flags |= FLAG_FREE_POLYGONS;
+                while (prim != NULL) {
+                    prim->blendMode = 8;
+                    prim = prim->next;
+                }
+                prim = self->ext.stageTitleCard.prim;
+                prim->r0 = prim->g0 = prim->b0 = 0;
+                prim->x1 = prim->x3 = 0x100;
+                prim->y2 = prim->y3 = 0xF0;
+                prim->priority = 0x1FD;
+                prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
+                prim->blendMode = 0;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
+                self->ext.stageTitleCard.unk88 = 0x20;
+            } else {
+                DestroyEntity(self);
+                break;
+            }
+        } else {
+            DestroyEntity(self);
+            break;
+        }
+
+    case 1:
+        if (D_80180908 != 0) {
+            prim = self->ext.stageTitleCard.prim;
+            prim->r0 = prim->g0 = prim->b0 = 247;
+            prim->blendMode = 0x51;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        prim = self->ext.stageTitleCard.prim;
+        prim = prim->next;
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->priority = 0xC0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y2 = prim->y3 = 0xF0;
+        prim->blendMode = 0;
+        prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        PLAYER.zPriority = 0xD0;
+        self->step++;
+
+    case 3:
+        PLAYER.zPriority = 0xD0;
+        prim = self->ext.stageTitleCard.prim;
+        prim->r0 += 248;
+        if (prim->r0 > 248) {
+            prim->r0 = 0;
+            prim->blendMode = 8;
+            prim = prim->next;
+            prim->blendMode = 0;
+            self->step = 5;
+            break;
+        }
+        prim->g0 = prim->b0 = LOW(prim->r0);
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        break;
+
+    case 4:
+        PLAYER.zPriority = 0xD0;
+        prim = self->ext.stageTitleCard.prim;
+        prim = prim->next;
+        prim->r0 += 248;
+        if (prim->r0 > 248) {
+            prim->r0 = 0;
+            prim->blendMode = 8;
+            PLAYER.zPriority = g_zEntityCenter.S16.unk0;
+            self->step = 1;
+        }
+        prim->g0 = prim->b0 = LOW(prim->r0);
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        break;
+
+    case 5:
+        prim = self->ext.stageTitleCard.prim;
+        while (prim != NULL) {
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xF0;
+            prim->priority = 0xB0;
+            prim->blendMode = 0x55;
+            prim->r0 = prim->g0 = prim->b0 = 255;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim = prim->next;
+        }
+        prim = self->ext.stageTitleCard.prim;
+        prim->x0 = prim->x2 = 0;
+
+        prim = prim->next;
+        prim->r0 = prim->g0 = prim->b0 = 255;
+        prim->r1 = prim->g1 = prim->b1 = 0;
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r1);
+
+        prim = prim->next;
+        prim->x1 = prim->x3 = 0x100;
+
+        prim = prim->next;
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->r1 = prim->g1 = prim->b1 = 255;
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r1);
+
+        posX = PLAYER.posX.i.hi;
+        self->ext.stageTitleCard.unk88 = 32;
+        self->ext.stageTitleCard.unk84 = posX;
+        self->ext.stageTitleCard.unk80 = posX;
+        self->step++;
+
+    case 6:
+        if (self->ext.stageTitleCard.unk88 != 0) {
+            self->ext.stageTitleCard.unk88--;
+            if (self->ext.stageTitleCard.unk88 == 0) {
+                g_Entities[PLAYER_CHARACTER].zPriority =
+                    g_zEntityCenter.S16.unk0;
+            }
+        }
+        temp_a0 = self->ext.stageTitleCard.unk80;
+        temp_a1 = self->ext.stageTitleCard.unk84;
+        prim = self->ext.stageTitleCard.prim;
+        temp_a0 -= 4;
+        temp_a1 += 4;
+        prim->x1 = prim->x3 = temp_a0;
+
+        prim = prim->next;
+        prim->x0 = prim->x2 = temp_a0;
+        prim->x1 = prim->x3 = temp_a0 + 0x40;
+
+        prim = prim->next;
+        prim->x0 = prim->x2 = temp_a1;
+
+        prim = prim->next;
+        prim->x1 = prim->x3 = temp_a1;
+        prim->x0 = prim->x2 = temp_a1 - 0x40;
+
+        if ((temp_a0 < -0x40) && (temp_a1 > 0x140)) {
+            prim = self->ext.stageTitleCard.prim;
+            while (prim != 0) {
+                prim->blendMode = 8;
+                prim = prim->next;
+            }
+            PreventEntityFromRespawning(self);
+            DestroyEntity(self);
+            break;
+        }
+        self->ext.stageTitleCard.unk80 = temp_a0;
+        self->ext.stageTitleCard.unk84 = temp_a1;
+        break;
+    }
+}
+
+const u32 rodataPadding_801A7AFC = 0;
 
 void EntityStageTitleCard(Entity* self) {
     Entity* fakeEntity; // !FAKE

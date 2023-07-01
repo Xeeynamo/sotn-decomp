@@ -237,7 +237,8 @@ typedef struct ET_Dracula {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0x8];
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 unk84;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ char pad_8A[0x2];
     /* 0x8C */ s16 unk8C;

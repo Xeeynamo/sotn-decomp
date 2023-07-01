@@ -45,19 +45,17 @@ void EntityExplosion(Entity*);
 
 // *** Initializers ***
 extern u16 D_80180598[]; // Init EntityCutscene
-
+extern u16 D_80180574[];
+extern u16 D_8018058C[];
+extern u16 D_801805A4[];
+extern u16 D_801805BC[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
 extern u16 D_801805E0[]; // Init EntityDracula
 extern u16 D_801805EC[]; // Init EntityDraculaFireball
 extern u16 D_80180610[]; // Init EntityDraculaMegaFireball
 extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
-
-extern u16 D_80180574[];
-extern u16 D_8018058C[];
-extern u16 D_801805A4[];
-extern u16 D_801805BC[];
-extern u16 D_801805D4[];
 extern u16 D_80180628[];
+
 extern ObjInit2 D_80180638[];
 
 // *** EntityCutscene properties START ***
