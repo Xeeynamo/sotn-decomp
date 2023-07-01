@@ -221,6 +221,7 @@ void EntityStageTitleCard(Entity* self) {
             prim->blendMode = 4;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
+
             prim = prim->next;
             prim->u1 = prim->u3 = 0x6F;
             prim->tpage = 0x11;
@@ -233,6 +234,7 @@ void EntityStageTitleCard(Entity* self) {
             prim->blendMode = 0;
             prim->x1 = prim->x3 = 0;
             prim->y2 = prim->y3 = 0x7F;
+
             prim = prim->next;
             prim->u1 = prim->u3 = 0x7F;
             prim->v2 = prim->v3 = 0x2A;
@@ -246,6 +248,7 @@ void EntityStageTitleCard(Entity* self) {
             prim->priority = 0x1FF;
             prim->blendMode = 0;
             prim->y2 = prim->y3 = 0x9A;
+
             prim = prim->next;
             while (prim != NULL) {
                 prim->blendMode = 8;
@@ -316,6 +319,7 @@ void EntityStageTitleCard(Entity* self) {
     case 3:
         prim = self->ext.stageTitleCard.prim;
         prim->blendMode |= 0x31;
+
         prim = prim->next;
         prim->u1 = prim->u3 = 0x7F;
         prim->v2 = prim->v3 = 0x2A;
@@ -329,6 +333,7 @@ void EntityStageTitleCard(Entity* self) {
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
+
         prim = prim->next;
         while (prim != NULL) {
             prim->blendMode = 8;
