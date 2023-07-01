@@ -85,6 +85,7 @@ extern u8 D_80180924[]; // Animation
 extern u8 D_80180934[]; // Animation
 extern u8 D_80180944[]; // Animation
 extern u8 D_80180954[]; // Animation
+extern u8 D_80180964[]; // Animation
 extern u8 D_8018097C[]; // Animation
 extern u8 D_801809A4[]; // Animation
 extern u8 D_80180A0C[]; // Animation
