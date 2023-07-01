@@ -46,7 +46,9 @@ segments:
       - [0x27A74, .rodata, 28BF8] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
-      - [0x27AE0, rodata]
+      - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
+      - [0x27B00, .rodata, 2B0C8] # EntityStageTitleCard
+      - [0x27B18, rodata]
       - [0x27B40, .rodata, 2C564] # EntityDracula
       - [0x27B7C, rodata]
       - [0x27BFC, rodata]
