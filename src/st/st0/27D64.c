@@ -1,23 +1,22 @@
 #include "st0.h"
 
-void func_801A7D64(Entity* arg0) {
+void func_801A7D64(Entity* self) {
     s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180638[arg0->params];
+    ObjInit2* temp_s0 = &D_80180638[self->params];
 
-    if (arg0->step == 0) {
+    if (self->step == 0) {
         InitializeEntity(D_801805BC);
-        arg0->animSet = temp_s0->animSet;
-        arg0->zPriority = temp_s0->zPriority;
-        arg0->unk5A = temp_s0->unk4.s;
-        arg0->palette = temp_s0->palette;
-        arg0->unk19 = temp_s0->unk8;
-        arg0->blendMode = temp_s0->blendMode;
-        temp_v0 = temp_s0->unkC;
-        if (temp_v0 != 0) {
-            arg0->flags = temp_v0;
+        self->animSet = temp_s0->animSet;
+        self->zPriority = temp_s0->zPriority;
+        self->unk5A = temp_s0->unk4.s;
+        self->palette = temp_s0->palette;
+        self->unk19 = temp_s0->unk8;
+        self->blendMode = temp_s0->blendMode;
+        if (temp_s0->unkC != 0) {
+            self->flags = temp_s0->unkC;
         }
     }
-    AnimateEntity(temp_s0->unk10, arg0);
+    AnimateEntity(temp_s0->unk10, self);
 }
 
 bool func_801A7E2C(Entity* self) {
@@ -161,7 +160,7 @@ void func_801A8328(Entity* self) {
         if (self->facing != 0) {
             prim->next->tpage += 0x10;
         } else {
-            prim->next->tpage *= 0x10;
+            prim->next->tpage -= 0x10;
         }
 
         func_801BD0C0(prim);
@@ -171,7 +170,7 @@ void func_801A8328(Entity* self) {
         if (collider.effects & 1) {
             g_api.PlaySfx(0x691);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != 0) {
+            if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                 newEntity->params = 0;
             }
