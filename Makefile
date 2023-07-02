@@ -99,9 +99,10 @@ clean:
 	git clean -fdx config/
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
-	clang-format -i $$(find $(SRC_DIR)/saturn -type f -name "*.h")
-	$(PYTHON) ./tools/symbols.py sort
+	VERSION=us $(PYTHON) ./tools/symbols.py sort
+	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
