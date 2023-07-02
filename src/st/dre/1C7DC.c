@@ -68,11 +68,11 @@ void EntityEquipItemDrop(Entity* self) {
             self->ext.generic.unk8C.modeU16.unk0 = index;
 
             if (itemId < 169) {
-                g_api.func_800EB534(g_api.D_800A4B04[itemId].icon,
+                g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
                                     g_api.D_800A4B04[itemId].palette, index);
             } else {
                 itemId -= 169;
-                g_api.func_800EB534(g_api.D_800A7718[itemId].icon,
+                g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
                                     g_api.D_800A7718[itemId].palette, index);
             }
 

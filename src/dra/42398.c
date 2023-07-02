@@ -17,14 +17,14 @@ void func_800E7BB8(void);
 void func_800E8EE4(void);
 void func_800EA7CC(void);
 void func_800EB314(void);
-void func_800EBBAC(void);
+void RenderEntities(void);
 void func_800ECBF8(void);
-void func_800ECE58(void);
-void func_800EDEDC(void);
+void RenderTilemap(void);
+void RenderPrimitives(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
 void DrawEntitiesHitbox(s32 blendMode);
-void func_80108448(void);
+void UpdateCd(void);
 s32 func_8010E27C(void);
 void AccelerateX(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
@@ -520,16 +520,16 @@ loop_5:
             UpdateGame();
         }
         if (D_8003C0F8 == 0 && D_800973EC == 0) {
-            func_800ECE58();
-            func_800EBBAC();
+            RenderTilemap();
+            RenderEntities();
             if (g_GameState == Game_Play && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
                     DrawEntitiesHitbox(D_801362B0);
                 }
             }
         }
-        func_800EDEDC();
-        func_80108448();
+        RenderPrimitives();
+        UpdateCd();
         func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
@@ -566,7 +566,7 @@ loop_5:
         DrawOTag(g_CurrentOT);
         func_800EA7CC();
         func_801361F8();
-        if (func_80131F28() >= 0x385) {
+        if (func_80131F28() > 900) {
             CdInit();
             func_80132760();
         }
@@ -737,7 +737,7 @@ void HandleTitle(void) {
         func_800ECE2C();
         func_800EDA94();
         func_800EDAE4();
-        func_800EBB70();
+        ResetEntityArray();
         func_801065F4(0);
         func_800EA538(0);
         func_800EAEEC();

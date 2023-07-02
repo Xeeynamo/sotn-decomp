@@ -1021,7 +1021,7 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
-void func_800EB534(s32 equipIcon, s32 palette, s32 index) {
+void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     u8* iconGfx;
     s32 vramX;
     s32 var_t0;
@@ -1060,11 +1060,9 @@ void func_800EB6B4(void) {
     s32 i;
 
     for (i = 0; i < 32; i++) {
-        func_800EB534(D_80137478[i], D_801374B8[i], i);
+        LoadEquipIcon(D_80137478[i], D_801374B8[i], i);
     }
 }
-
-// https://decomp.me/scratch/n0Z3p match with -fforce-addr
 
 bool func_800EB720(void) {
     unkstruct_80072FA0* temp = D_80072FA0;
@@ -1081,24 +1079,23 @@ bool func_800EB720(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
 
-// clears out each entity struct 1 byte at a time
-void func_800EBB70(void) {
-    s8* byte;
-    Entity* entity = &g_Entities[0];
+void ResetEntityArray(void) {
+    Entity* entity;
+    u8* ch;
     s32 i;
     u32 j;
 
+    entity = &g_Entities[0];
     for (i = 0; i < ARRAY_COUNT(g_Entities); i++) {
-        byte = (s8*)entity;
-        for (j = 0; j < 188; j++) {
-            byte[0] = 0;
-            byte++;
+        ch = (s8*)entity;
+        for (j = 0; j < sizeof(Entity); j++) {
+            *ch++ = 0;
         }
         entity++;
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EBBAC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderEntities);
 
 // The loop at the end is weird, the rest is matching
 #ifndef NON_MATCHING
@@ -1221,7 +1218,7 @@ void func_800ECE2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECE58);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderTilemap);
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomForegroundLayer);
@@ -1490,4 +1487,4 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDEDC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderPrimitives);

@@ -142,7 +142,7 @@ typedef enum {
     Player_Unk40,
 } PlayerSteps;
 
-// Info necessary to load a file from the Cd in func_80108448
+// Info necessary to load a file from the Cd in UpdateCd
 typedef struct {
     s32 loc;        // lba offset, might be a s32
     CdCallbacks cb; // sets g_CdCallback
@@ -208,6 +208,12 @@ typedef struct {
     s32 (*func_8017A018)();
     void (*func_8017A01C)(u8);
 } WeaponOvl;
+
+typedef struct {
+    u32 unk0;
+    u32 damageKind;
+    u32 unk8;
+} DamageParam;
 
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
@@ -627,7 +633,7 @@ void func_800EA5E4(s32);
 void func_800EA538(s32);
 void func_800EAD7C(void);
 void func_800EAEEC(void);
-void func_800EB534(s32 equipIcon, s32 palette, s32 index);
+void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void func_800ECE2C(void);
 void func_800EDA70(Primitive* prim);
 void func_800EDA94(void);
@@ -803,7 +809,7 @@ void func_801309B4(Entity* entity);
 void func_80130E94(Entity* entity);
 void func_8013136C(Entity* entity);
 void func_801315F8(Entity* entity);
-// commented as a requirement for func_80108448 to match
+// commented as a requirement for UpdateCd to match
 // void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);

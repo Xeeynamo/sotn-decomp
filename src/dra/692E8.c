@@ -219,7 +219,7 @@ void func_8010A3F0(void) {
 s32 func_8010A4A4(void);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A4A4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateEntityAlucard);
+INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", EntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
