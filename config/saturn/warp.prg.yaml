@@ -1,0 +1,26 @@
+options:
+  target_path:  disks/saturn/WARP.PRG
+  asm_path:     asm/saturn/warp
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: true
+segments:
+  - name: warp
+    type: code
+    start: 0x00000000
+    vram:  0x060DC000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: 14
+        end: 0x3f
+      - start: 0x40
+        type: c
+        file: 14
+        end: 0x1D74
+      - start: 0x1D74
+        type: data
+        file: 14
+        end: 0x6488
