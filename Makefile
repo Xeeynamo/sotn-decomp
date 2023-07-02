@@ -521,7 +521,7 @@ check_saturn_docker:
 	docker run --rm -e INPUT_FILENAME=zero_li.o -e OUTPUT_FILENAME=0.BIN -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	docker run --rm -e INPUT_FILENAME=stage_02_li.o -e OUTPUT_FILENAME=STAGE_02.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	# check hashes
-	sha1sum --check config/saturn/check.saturn.sha
+	sha1sum --check config/check.saturn.sha
 
 check_saturn_native:
 	# dump binaries using sh binutils container
@@ -530,7 +530,7 @@ check_saturn_native:
 	sh-elf-objcopy ./build/saturn/zero_li.o -O binary ./build/saturn/0.BIN
 	sh-elf-objcopy ./build/saturn/stage_02_li.o -O binary ./build/saturn/STAGE_02.PRG
 	# check hashes
-	sha1sum --check config/saturn/check.saturn.sha
+	sha1sum --check config/check.saturn.sha
 
 diff_saturn_docker:
 	chmod +x tools/saturn_toolchain/diff.sh
