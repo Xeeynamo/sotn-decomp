@@ -159,9 +159,9 @@ void func_801A8328(Entity* self) {
         prim->next->y0 = self->posY.i.hi;
 
         if (self->facing != 0) {
-            prim->next->tpage = prim->next->tpage + 0x10;
+            prim->next->tpage += 0x10;
         } else {
-            prim->next->tpage = prim->next->tpage - 0x10;
+            prim->next->tpage *= 0x10;
         }
 
         func_801BD0C0(prim);
