@@ -1320,7 +1320,7 @@ void EntityWarpRoom(Entity* self) {
     WarpCoord* warpCoords;
     s32 i;
     s32 i3;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s32 moveX;
     s32 moveY;
     s32 move_room;
@@ -1330,15 +1330,15 @@ void EntityWarpRoom(Entity* self) {
     case 0:
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
+        if (primIndex == -1) {
             self->step = 0;
             return;
         }
-        self->firstPolygonIndex = firstPrimIndex;
-        prim = &g_PrimBuf[firstPrimIndex];
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         self->ext.warpRoom.primBg = prim;
-        self->flags |= 0x00800000;
+        self->flags |= FLAG_HAS_PRIMS;
         moveY = self->posY.i.hi;
         moveX = self->posX.i.hi;
         for (i = 0; i < 0x10; i++) {
@@ -2085,8 +2085,8 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(item->firstPolygonIndex);
+    if (item->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(item->primIndex);
     }
 
     ptr = (u32*)item;

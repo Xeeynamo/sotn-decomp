@@ -67,11 +67,11 @@ void func_80172AE8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = ret;
-        if (entity->firstPolygonIndex != -1) {
-            entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
+        ret = g_api.AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = ret;
+        if (entity->primIndex != -1) {
+            entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            poly = &g_PrimBuf[entity->primIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
             poly->u2 = 0x20;
@@ -110,7 +110,7 @@ void func_80172AE8(Entity* entity) {
     default:
         break;
     }
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
         poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
             entity->ext.generic.unk7E.modeU8.unk0;

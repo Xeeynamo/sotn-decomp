@@ -3,7 +3,7 @@
 void func_8016E324(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = 0x20000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
         entity->ext.generic.unk7C.s = 0x14;
         entity->step++;
 

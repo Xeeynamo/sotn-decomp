@@ -11,7 +11,7 @@ u16 D_80181D74[];
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s16 var_a2;
     u16 itemId;
     s16 temp_a0;
@@ -138,11 +138,11 @@ void EntityPrizeDrop(Entity* self) {
                     self->params = itemId = 1;
                 }
             }
-            firstPrimIndex = g_api.AllocPrimitives(4, 1);
-            if (firstPrimIndex != -1) {
-                self->firstPolygonIndex = firstPrimIndex;
-                self->flags |= 0x800000;
-                prim = &g_PrimBuf[firstPrimIndex];
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (primIndex != -1) {
+                self->primIndex = primIndex;
+                self->flags |= FLAG_HAS_PRIMS;
+                prim = &g_PrimBuf[primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x170;
                 prim->u0 = prim->u2 = 0;
@@ -175,7 +175,7 @@ void EntityPrizeDrop(Entity* self) {
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
             } else {
-                prim = &g_PrimBuf[self->firstPolygonIndex];
+                prim = &g_PrimBuf[self->primIndex];
                 prim->x0 = prim->x2 = self->posX.i.hi - 1;
                 prim->x1 = prim->x3 = self->posX.i.hi + 1;
                 prim->y0 = prim->y1 = self->posY.i.hi - 1;
@@ -186,7 +186,7 @@ void EntityPrizeDrop(Entity* self) {
 
         case 2:
             func_801B5F4C(itemId);
-            prim = &g_PrimBuf[self->firstPolygonIndex];
+            prim = &g_PrimBuf[self->primIndex];
             self->ext.generic.unk88.S16.unk2++;
             if (self->ext.generic.unk88.S16.unk2 < 0x11) {
                 var_a2 = self->ext.generic.unk88.S16.unk2;
@@ -202,11 +202,11 @@ void EntityPrizeDrop(Entity* self) {
             prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
             prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
             if (self->ext.generic.unk88.S16.unk2 == 0x20) {
-                g_api.FreePrimitives(self->firstPolygonIndex);
+                g_api.FreePrimitives(self->primIndex);
                 self->ext.generic.unk80.modeS8.unk0 = 0xD0;
                 self->step = 3;
                 self->step_s = 0;
-                self->flags &= ~0x800000;
+                self->flags &= ~FLAG_HAS_PRIMS;
             }
             break;
         }
@@ -329,7 +329,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7E3C);
 void func_801B7F24(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181ED8[entity->ext.generic.unk94];
-        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 2;
         entity->animCurFrame = D_80181EF0[entity->params];
@@ -354,7 +354,7 @@ void func_801B8014(Entity* entity) {
     u32 temp2;
 
     if (entity->step == 0) {
-        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
         entity->animSet = 5;
         entity->animCurFrame = 1;
@@ -626,8 +626,8 @@ void func_801B8B80(u16 objectId, Entity* source, Entity* entity) {
     entity->unk5A = source->unk5A;
     entity->zPriority = source->zPriority;
     entity->animSet = source->animSet;
-    entity->flags = 0x1002000 | FLAG_UNK_04000000 | FLAG_UNK_08000000 |
-                    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+    entity->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
+                    FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                     FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     palette = source->palette;
@@ -757,23 +757,23 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B9DB0);
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
-    s32 firstPrimIndex;
+    s32 primIndex;
     u16 *temp_d, temp_e;
     s32 temp_a, temp_b;
     u16 angle;
 
     switch (self->step) {
     case 0:
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
         InitializeEntity(D_80180580);
-        D_8008701E[firstPrimIndex * 0x1a] = 8;
-        self->firstPolygonIndex = firstPrimIndex;
+        D_8008701E[primIndex * 0x1a] = 8;
+        self->primIndex = primIndex;
         self->animSet = 0;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         angle = func_801B56BC(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;
         temp_b = temp_a ^ 1;
@@ -819,7 +819,7 @@ void EntitySoulStealOrb(Entity* self) {
         func_801B5600(self->ext.soulStealOrb.angle & 0xFFFF,
                       self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         AnimateEntity(&D_80181FC4, self);
         angle = (float)(u32)self; // !FAKE
         prim->tpage = 0x18;
@@ -854,7 +854,7 @@ void EntityEnemyBlood(Entity* self) {
         if (i != -1) {
             InitializeEntity(D_80180580);
             prim = &g_PrimBuf[i];
-            self->firstPolygonIndex = i;
+            self->primIndex = i;
             self->animSet = 0;
             params = self->params;
             self->hitboxState = 1;
@@ -862,7 +862,7 @@ void EntityEnemyBlood(Entity* self) {
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
             self->hitboxWidth = 0;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
 
             for (i = 12; i != 0;) {
                 prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
@@ -960,7 +960,7 @@ void EntityEnemyBlood(Entity* self) {
             }
         }
 
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 12; i != 0; i--, prim++) {
             *(u16*)&prim->b1 = prim->x0;
             prim->y1 = prim->y0;

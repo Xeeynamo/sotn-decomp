@@ -577,23 +577,23 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8019390C);
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
-    s32 firstPrimIndex;
+    s32 primIndex;
     u16 *temp_d, temp_e;
     s32 temp_a, temp_b;
     u16 angle;
 
     switch (self->step) {
     case 0:
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             func_8018D580(self);
             return;
         }
         func_8018E290(D_8018044C);
-        D_8008701E[firstPrimIndex * 0x1a] = 8;
-        self->firstPolygonIndex = firstPrimIndex;
+        D_8008701E[primIndex * 0x1a] = 8;
+        self->primIndex = primIndex;
         self->animSet = 0;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         angle = func_8018E0E0(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;
         temp_b = temp_a ^ 1;
@@ -639,7 +639,7 @@ void EntitySoulStealOrb(Entity* self) {
         func_8018E024(self->ext.soulStealOrb.angle & 0xFFFF,
                       self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         func_8018D6B0(&D_80181110, self);
         angle = (float)(u32)self; // !FAKE
         prim->tpage = 0x18;

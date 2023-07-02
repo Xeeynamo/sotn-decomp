@@ -524,7 +524,7 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     fd = open(file, 0x8001);
     ret = -1;
 
-    if (fd != (-1)) {
+    if (fd != -1) {
         D_80137474 = fd;
         func_800E91B0();
         read(fd, readBufferAddress, nBytes);
@@ -553,7 +553,7 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     new_var = arg4 << 0xD;
     device = open(savePath, 0x8002);
 
-    if (device == (-1)) {
+    if (device == -1) {
         return -1;
     } else {
         D_80137474 = device;

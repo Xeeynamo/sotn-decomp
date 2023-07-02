@@ -212,7 +212,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 }
 
 void func_801B40F8(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     u16* tileLayoutPtr;
     Entity* entity;
     POLY_GT4* poly;
@@ -233,16 +233,16 @@ void func_801B40F8(Entity* self) {
             self->step = 128;
             self->animCurFrame = 0;
         } else {
-            firstPolygonIndex = g_api.AllocPrimitives(1, 64);
-            if (firstPolygonIndex == -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+            if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
 
-            poly = &g_PrimBuf[firstPolygonIndex];
-            self->firstPolygonIndex = firstPolygonIndex;
+            poly = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             *((s32*)(&self->ext.generic.unk7C)) = poly;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             while (poly != NULL) {
                 poly->u0 = poly->v0 = 1;
                 poly->r0 = 64;
@@ -321,7 +321,7 @@ void func_801B40F8(Entity* self) {
         break;
     }
 
-    if (self->flags & FLAG_FREE_POLYGONS) {
+    if (self->flags & FLAG_HAS_PRIMS) {
         for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
              poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
@@ -396,7 +396,7 @@ void EntityClickSwitch(Entity* entity) {
 
 // smaller weight blocking path near cube of zoe
 void EntityPathBlockSmallWeight(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
     s32 var_a1;
     s32 i;
@@ -407,16 +407,16 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
 
         while (poly != NULL) {
             poly->tpage = 0xF;
@@ -473,7 +473,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 // taller weight blocking path near cube of zoe
 void EntityPathBlockTallWeight(Entity* self) {
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
     s32 temp_a2;
     s32 var_a1;
     s32 var_v0;
@@ -486,16 +486,16 @@ void EntityPathBlockTallWeight(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
 
         while (poly != NULL) {
             poly->tpage = 0xF;

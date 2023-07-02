@@ -78,13 +78,13 @@ void func_801ACC3C(void) {
 }
 
 void func_801ACC7C(void) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
     s32 i;
 
-    firstPolygonIndex = g_api.AllocPrimitives(4, 3);
-    poly = &g_PrimBuf[firstPolygonIndex];
-    D_801BAFC0 = firstPolygonIndex;
+    primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+    poly = &g_PrimBuf[primIndex];
+    D_801BAFC0 = primIndex;
 
     for (i = 0; i < 3; i++) {
         func_801B26A0(poly, i << 7, 0, 128, 240, 0, 0);
@@ -95,9 +95,9 @@ void func_801ACC7C(void) {
         poly = (POLY_GT4*)poly->tag;
     }
 
-    firstPolygonIndex = g_api.AllocPrimitives(1, 2);
-    poly = &g_PrimBuf[firstPolygonIndex];
-    D_801BAFC4 = firstPolygonIndex;
+    primIndex = g_api.AllocPrimitives(PRIM_TILE, 2);
+    poly = &g_PrimBuf[primIndex];
+    D_801BAFC4 = primIndex;
 
     for (i = 0; poly != NULL; i++) {
         poly->x0 = (i & 1) * 192;

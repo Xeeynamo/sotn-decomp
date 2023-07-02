@@ -1265,7 +1265,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->blendMode = 0x30;
             self->step = 2;
             self->hitboxState = 0;
-            self->flags |= 0x2000;
+            self->flags |= FLAG_UNK_2000;
         }
         break;
 

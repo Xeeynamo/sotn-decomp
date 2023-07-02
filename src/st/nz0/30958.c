@@ -81,7 +81,7 @@ void EntityRedEyeBust(Entity* self) {
 // A purplish-red brick background that scrolls behind the foreground layer
 void EntityPurpleBrickScrollingBackground(Entity* self) {
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s32 tempPosX;
     s32 tempPosY;
     s32 x, y;
@@ -93,15 +93,15 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
         // Composed of 15 primitives
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 15);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 15);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[firstPrimIndex];
-        self->firstPolygonIndex = (s32)firstPrimIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = (s32)primIndex;
         *(s32*)&self->ext.generic.unk7C = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->tpage = 0xF;
             prim->clut = 4;
@@ -367,7 +367,7 @@ void func_801B19A0(Entity* self) {
 
 void func_801B1C18(Entity* self) {
     s32 temp_s1 = func_801BD9A0(self, 8, 8, 4);
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
     Entity* player;
     s32 temp;
@@ -375,15 +375,15 @@ void func_801B1C18(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        if (firstPolygonIndex == (-1)) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *((s32*)(&self->ext.generic.unk7C)) = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -428,7 +428,7 @@ void func_801B1C18(Entity* self) {
     poly->y0 = self->posY.i.hi - 8;
 }
 
-void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
+void func_801B1E54(Entity* self, s16 primIndex) {
     POLY_GT4* poly;
     s8 var_v1;
     s32 temp;
@@ -442,15 +442,15 @@ void func_801B1E54(Entity* self, s16 firstPolygonIndex) {
         self->attack = 7;
         self->hitboxState = 1;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *((s32*)(&self->ext.generic.unk7C)) = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -506,7 +506,7 @@ void EntityMoveableBox(Entity* self) {
     POLY_GT4* poly;
     s32 temp_s1 = func_801BD9A0(self, 0x10, 0x10, 5);
     s32 var_s1 = temp_s1;
-    s16 firstPolygonIndex;
+    s16 primIndex;
     s32 temp_v0_2;
     s32 var_v0;
     s32 var_v1;
@@ -515,15 +515,15 @@ void EntityMoveableBox(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        if (firstPolygonIndex == (-1)) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *((s32*)(&self->ext.generic.unk7C.s)) = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -548,8 +548,7 @@ void EntityMoveableBox(Entity* self) {
                 self->accelerationX = 0x8000;
             }
             temp_s1 = GetPlayerSide();
-            if (!(firstPolygonIndex = (temp_s1 & 1)) &&
-                (player->accelerationX < 0)) {
+            if (!(primIndex = (temp_s1 & 1)) && (player->accelerationX < 0)) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
@@ -594,7 +593,7 @@ void EntityCannonLever(Entity* self) {
      * self->ext.generic.unk7C should be a POLY_G4*
      */
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
     s32 temp_v0_2;
     s32 temp_v1_2;
     s32 var_v0;
@@ -606,16 +605,16 @@ void EntityCannonLever(Entity* self) {
         self->hitboxHeight = 20;
         self->hitboxState = 2;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
 
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         poly->code = 6;
         poly->tpage = 0xF;
         poly->clut = 9;
@@ -668,7 +667,7 @@ void EntityCannonLever(Entity* self) {
 
 // cannon for shortcut
 void EntityCannon(Entity* self) {
-    s16 firstPrimIndex;
+    s16 primIndex;
     Entity* newEntity;
     Primitive* prim;
     s32 var_v0;
@@ -678,16 +677,16 @@ void EntityCannon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        self->firstPolygonIndex = firstPrimIndex;
-        prim = &g_PrimBuf[firstPrimIndex];
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         *(s32*)&self->ext.generic.unk7C = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -830,7 +829,7 @@ void EntityCannonWall(Entity* self) {
 }
 
 void func_801B2AD8(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
     s32 var_v0;
     s32 var_a0;
@@ -846,15 +845,15 @@ void func_801B2AD8(Entity* self) {
         CreateEntityFromEntity(0x26, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Camera.posY.i.hi;
 
-        firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         poly->tpage = 0xF;
         poly->clut = 9;
         poly->u0 = 72;
@@ -903,7 +902,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
 
 void EntityFloorSpikes(Entity* self) {
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s32 var_v1;
     s32 tilePos;
     s32 new_var;
@@ -928,15 +927,15 @@ void EntityFloorSpikes(Entity* self) {
 
         g_CurrentRoomTileLayout.fg[tilePos] = 0x102;
         g_CurrentRoomTileLayout.fg[tilePos + 1] = 0x103;
-        firstPrimIndex = g_api.AllocPrimitives(4, 1);
-        if (firstPrimIndex == (-1)) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[firstPrimIndex];
-        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *((s32*)(&self->ext.generic.unk7C)) = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         prim->type = 6;
         prim->tpage = 0xF;
         prim->clut = 9;

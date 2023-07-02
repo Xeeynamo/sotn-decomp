@@ -11,8 +11,8 @@ void func_80156C60(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
     }
 
     ptr = (u32*)entity;

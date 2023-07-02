@@ -409,8 +409,8 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(item->firstPolygonIndex);
+    if (item->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(item->primIndex);
     }
 
     ptr = (u32*)item;

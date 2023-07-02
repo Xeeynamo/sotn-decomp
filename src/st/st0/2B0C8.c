@@ -1,7 +1,7 @@
 #include "st0.h"
 
 void EntityStageTitleFadeout(Entity* self) {
-    s16 firstPrimIndex;
+    s16 primIndex;
     Primitive* prim;
     s32 temp_a0;
     s32 temp_a1;
@@ -15,12 +15,12 @@ void EntityStageTitleFadeout(Entity* self) {
         }
 
         InitializeEntity(D_801805D4);
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_G4, 5);
-        if (firstPrimIndex != -1) {
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->firstPolygonIndex = firstPrimIndex;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 5);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             self->ext.stageTitleCard.prim = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
                 prim->blendMode = 8;
                 prim = prim->next;
@@ -186,7 +186,7 @@ const u32 rodataPadding_801A7AFC = 0;
 
 void EntityStageTitleCard(Entity* self) {
     Entity* fakeEntity; // !FAKE
-    s16 firstPrimIndex;
+    s16 primIndex;
     Primitive* prim;
     VertexFake* v;
     s16 temp_unk8E;
@@ -199,17 +199,17 @@ void EntityStageTitleCard(Entity* self) {
     case 0:
         if (D_80180908 == 0) {
             InitializeEntity(D_801805D4);
-            firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
-            if (firstPrimIndex == -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+            if (primIndex == -1) {
                 D_80180908 = 1;
             label:
                 DestroyEntity(self);
                 return;
             }
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->firstPolygonIndex = firstPrimIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             self->ext.stageTitleCard.prim = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             prim->type = PRIM_GT3;
             prim->tpage = 0x1A;
             prim->clut = 0x15F;

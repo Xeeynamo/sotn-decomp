@@ -19,7 +19,7 @@ void EntitySpittleBone(Entity* self) {
         InitializeEntity(D_80180CAC);
         self->unk19 = 4;
         self->rotAngle = 0;
-        self->flags &= ~0x2200;
+        self->flags &= ~(FLAG_UNK_2000 | 0x200);
         self->facing = self->params;
         break;
 
@@ -73,7 +73,9 @@ void EntitySpittleBone(Entity* self) {
             if (newEntity != NULL) {
                 func_801C1780(0x31, self, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->flags = -0x37FFE000;
+                newEntity->flags = FLAG_UNK_2000 | FLAG_UNK_08000000 |
+                                   FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                                   FLAG_DESTROY_IF_OUT_OF_CAMERA;
                 newEntity->palette = 0x20D;
                 newEntity->animCurFrame = i + 0x3A;
                 newEntity->unk19 |= 4;
@@ -122,7 +124,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 void EntitySpittleBoneSpit(Entity* self) {
     Collider collider;
     Unkstruct_801C6C6C test;
-    s16 firstPrimIndex;
+    s16 primIndex;
     Primitive* prim;
     Entity* entity;
     s32 u0, v0, r0, b0, blendMode;
@@ -173,15 +175,15 @@ void EntitySpittleBoneSpit(Entity* self) {
         break;
 
     case 3:
-        firstPrimIndex = g_api.AllocPrimitives(1, 9);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 9);
+        if (primIndex == -1) {
             DestroyEntity(self);
             break;
         }
-        prim = &g_PrimBuf[firstPrimIndex];
-        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         self->ext.generic.unk84.unk = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         if (prim != NULL) {
             for (u0 = 1, v0 = 2, r0 = 0x20, b0 = 0xc0, blendMode = 0x33, i = 0;
                  prim != NULL; i += 8) {
