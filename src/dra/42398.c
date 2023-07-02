@@ -400,9 +400,26 @@ void func_800E376C(void) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-// DECOMP_ME_WIP func_800E385C https://decomp.me/scratch/Ocshz
-// mips to c doesn't support this function very well
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
+void func_800E385C(u_long* ot) {
+    s32 i;
+    s32 var_t0;
+    u_long* var_t1;
+
+    var_t0 = false;
+    for (i = 0; i < OTSIZE; i++, ot++) {
+        if (var_t0 == false) {
+            if (getaddr(ot) == ((u_long)ot & 0xffffff) + 4) {
+                var_t0 = true;
+                var_t1 = ot;
+            }
+        } else {
+            if (getaddr(ot) != ((u_long)ot & 0xffffff) + 4) {
+                *var_t1 = (u_long)ot & 0xffffff;
+                var_t0 = false;
+            }
+        }
+    }
+}
 
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
