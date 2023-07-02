@@ -2,21 +2,21 @@
 
 void func_801A7D64(Entity* self) {
     s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180638[self->params];
+    ObjInit2* obj = &D_80180638[self->params];
 
     if (self->step == 0) {
         InitializeEntity(D_801805BC);
-        self->animSet = temp_s0->animSet;
-        self->zPriority = temp_s0->zPriority;
-        self->unk5A = temp_s0->unk4.s;
-        self->palette = temp_s0->palette;
-        self->unk19 = temp_s0->unk8;
-        self->blendMode = temp_s0->blendMode;
-        if (temp_s0->unkC != 0) {
-            self->flags = temp_s0->unkC;
+        self->animSet = obj->animSet;
+        self->zPriority = obj->zPriority;
+        self->unk5A = obj->unk4.s;
+        self->palette = obj->palette;
+        self->unk19 = obj->unk8;
+        self->blendMode = obj->blendMode;
+        if (obj->unkC != 0) {
+            self->flags = obj->unkC;
         }
     }
-    AnimateEntity(temp_s0->unk10, self);
+    AnimateEntity(obj->unk10, self);
 }
 
 bool func_801A7E2C(Entity* self) {
