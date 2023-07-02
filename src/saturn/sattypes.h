@@ -13,8 +13,20 @@ typedef unsigned long long u64;
 #define LOW(x) (*(s32*)&(x))
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
+
+struct Unk0600B344 {
+    s16 unk0;
+    u8 pad2[6];
+    s16 unk8;
+    u8 pad[0x3];
+    s16 zPriority;
+    u8 pad3[0x1];
+    s32 unk14;
+    s32 unk18;
+};
+
 typedef struct Entity {
-    /* 0x00 */ void* unk0;
+    /* 0x00 */ struct Unk0600B344* unk0;
     /* 0x04 */ s16 posX;
     /* 0x06 */ s16 posX_lo;
     /* 0x08 */ s16 posY;
@@ -24,7 +36,7 @@ typedef struct Entity {
     /* 0x14 */ u16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
     s16 pad3[3];
-    /* 0x1E */ s16 unk1E;
+    /* 0x1E */ s16 rotAngle;
     /* 0x20 */ s16 unk1A;
     /* 0x22 */ s16 unk1C;
     s16 pad3_8;

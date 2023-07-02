@@ -3,14 +3,6 @@
 
 #include "sattypes.h"
 
-struct Unk0600B344 {
-    u8 pad[0xd];
-    s16 zPriority;
-    u8 pad2[0x1];
-    s32 unk14;
-    s32 unk18;
-};
-
 struct Unk0600B344* func_0600B344(s32, s32, s32, s32);
 struct Unk060ED26C {
     s32 unk0;

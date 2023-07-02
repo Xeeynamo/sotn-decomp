@@ -266,7 +266,25 @@ const u16 pad_060EA260 = 0xCCCC;
 const u16 pad_060EA262 = 0xCCCD;
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA264, func_060EA264);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAC54, func_060EAC54);
+
+// SAT: func_060EAC54
+void EntityAxeKnightRotateAxe(Entity* self) {
+    self->unk0->unk0 |= 0x40;
+
+    if (self->params != 0) {
+        self->unk0->unk8 += 0x80;
+    } else {
+        self->unk0->unk8 -= 0x80;
+    }
+    if (self->params != 0) {
+        self->rotAngle += 0x80;
+    } else {
+        self->rotAngle -= 0x80;
+    }
+
+    self->rotAngle &= 0xFFF;
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EACC0, func_060EACC0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAF2C, func_060EAF2C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAFAC, func_060EAFAC);
