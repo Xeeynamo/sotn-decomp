@@ -38,3 +38,5 @@ _rsin = 0x0600F7BC;
 _rcos = 0x0600F81C;
 _AllocEntity = 0x0607B184;
 _CreateEntityFromCurrentEntity = 0x0607B318;
+_g_CurrentEntity = 0x0605C6E0;
+_PfnEntityUpdates = 0x06064648;

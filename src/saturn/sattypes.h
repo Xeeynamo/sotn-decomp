@@ -97,6 +97,12 @@ typedef enum {
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
 
+typedef struct {
+    s32 unk0;
+    PfnEntityUpdate func;
+} EntityEntry;
+extern EntityEntry** PfnEntityUpdates[];
+
 typedef enum {
     ITEM_S_SWORD,
     ITEM_SWORD,
@@ -303,5 +309,6 @@ extern PlayerState g_Player;
 s32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
+void DestroyEntity(Entity* entity);
 
 #endif
