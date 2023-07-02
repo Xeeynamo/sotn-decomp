@@ -630,8 +630,7 @@ s32 Random(void) {
 }
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B318,
-            CreateEntityFromCurrentEntity);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B318, func_0607B318);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B374, func_0607B374);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B3D0, func_0607B3D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
@@ -646,7 +645,10 @@ void func_0607B604(s32* param_1) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B618, func_0607B618);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B674, func_0607B674);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B714, func_0607B714);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B7B4, CheckCollision);
+
+void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
+INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B7B4, func_0607B7B4);
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BE38, func_0607BE38);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BED0, func_0607BED0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C054, func_0607C054);

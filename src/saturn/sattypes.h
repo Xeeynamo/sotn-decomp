@@ -53,6 +53,10 @@ typedef struct Entity {
 
 extern Entity* g_CurrentEntity;
 
+typedef struct {
+    // structure still unknwon
+} Collider;
+
 #define NULL 0
 
 typedef struct {
