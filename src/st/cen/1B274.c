@@ -19,7 +19,7 @@ void EntitySoulStealOrb(Entity* self) {
         InitializeEntity(D_80180410);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
-        self->animSet = 0;
+        self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
         angle = func_80194DC4(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;
@@ -102,7 +102,7 @@ void EntityEnemyBlood(Entity* self) {
             InitializeEntity(D_80180410);
             prim = &g_PrimBuf[i];
             self->primIndex = i;
-            self->animSet = 0;
+            self->animSet = ANIMSET_DRA(0);
             params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;

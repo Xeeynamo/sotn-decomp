@@ -41,7 +41,7 @@ void EntityCutscene(Entity* self) {
     if ((self->step != 14) && (D_801C24C8 != 0) && (D_801C2580 != 0) &&
         (self->step >= 5)) {
         self->step = 15;
-        self->animSet = 0;
+        self->animSet = ANIMSET_DRA(0);
         self->animCurFrame = 0;
     }
 
@@ -121,7 +121,7 @@ void EntityCutscene(Entity* self) {
         player->animCurFrame = self->animCurFrame;
         if (D_801C257C & 0x400) {
             player->animCurFrame = 0;
-            self->animSet = 0x8005;
+            self->animSet = ANIMSET_OVL(5);
             self->animCurFrame = 1;
             SetStep(6);
         }

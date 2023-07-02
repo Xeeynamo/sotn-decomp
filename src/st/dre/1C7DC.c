@@ -273,7 +273,7 @@ void EntityExplosion14(Entity* entity) {
         new_var = D_8018130C[entity->ext.generic.unk94];
         entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->accelerationY = new_var;
         new_var2 = D_80181324[entity->params];
         entity->blendMode = 0x10;
@@ -302,7 +302,7 @@ void EntityUnkId15(Entity* entity) {
     if (!entity->step) {
         entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x10;
         entity->unk19 = 3;
@@ -546,7 +546,7 @@ void EntityIntenseExplosion(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180470);
         entity->palette = 0x8170;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x30;
 
@@ -582,7 +582,7 @@ void func_8019F170(Entity* entity) {
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
-        entity->animSet = 8;
+        entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 0x10;
 
@@ -709,7 +709,7 @@ void EntitySoulStealOrb(Entity* self) {
         InitializeEntity(D_80180464);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
-        self->animSet = 0;
+        self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
         angle = func_8019AF08(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;
@@ -793,7 +793,7 @@ void EntityEnemyBlood(Entity* self) {
             InitializeEntity(D_80180464);
             prim = &g_PrimBuf[i];
             self->primIndex = i;
-            self->animSet = 0;
+            self->animSet = ANIMSET_DRA(0);
             params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;

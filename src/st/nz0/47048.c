@@ -190,7 +190,7 @@ void func_801C7654(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180BE0);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
         entity->blendMode = 0x70;
         entity->accelerationX = rcos(entity->rotAngle) * 0x10;

@@ -9,7 +9,7 @@ void func_80162C84(Entity* entity) {
         entity->unk5A = 0x66;
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = 0x8149;
-        entity->animSet = -0x7FED;
+        entity->animSet = ANIMSET_OVL(19);
         func_8015C920(&D_80154ED4);
         entity->accelerationX = -0x1C000;
         entity->posY.i.hi = 0xBB;
@@ -258,7 +258,7 @@ void func_8016779C(Entity* entity) {
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_UNK_10000;
-        entity->animSet = -0x7FEE;
+        entity->animSet = ANIMSET_OVL(18);
         entity->unk5A = 0x46;
         entity->palette = 0x8120;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -411,7 +411,7 @@ void func_80169D74(Entity* entity) {
         entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->ext.generic.unk84.unk =
             entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-        entity->animSet = -0x7FEF;
+        entity->animSet = ANIMSET_OVL(17);
         entity->animCurFrame = D_80155E68[entity->params];
         entity->unk5A = 0x66;
         entity->palette = 0x81B0;
@@ -521,7 +521,7 @@ void func_8016D328(Entity* entity) {
             entity->ext.generic.unkB0 = 0x18;
             func_8015FAB8(entity);
             entity->unk5A = 0x79;
-            entity->animSet = 0xE;
+            entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
             entity->unk4C = &D_80155EA8;
             entity->blendMode = 0x30;

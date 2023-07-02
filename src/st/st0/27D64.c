@@ -109,7 +109,7 @@ void func_801A8620(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_801805BC);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;
         break;

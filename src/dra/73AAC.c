@@ -118,7 +118,7 @@ s32 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    PLAYER.animSet = 1;
+    PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.unk19 &= 0xF3;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;

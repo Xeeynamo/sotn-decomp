@@ -134,7 +134,7 @@ void func_801601DC(Entity* entity) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
-        entity->animSet = 0xE;
+        entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
         entity->palette = 0x819F;
 
@@ -328,7 +328,7 @@ void func_80161C2C(Entity* self) {
             self->unk1A = 0xC0;
             self->unk1C = 0xC0;
             self->unk19 = 3;
-            self->animSet = 2;
+            self->animSet = ANIMSET_DRA(2);
             self->unk4C = D_80154E04;
         }
 
@@ -338,9 +338,9 @@ void func_80161C2C(Entity* self) {
                 self->unk1A = 0x120;
                 self->unk1C = 0x120;
                 self->unk19 = 3;
-                self->animSet = 2;
+                self->animSet = ANIMSET_DRA(2);
             } else {
-                self->animSet = 5;
+                self->animSet = ANIMSET_DRA(5);
                 self->unk4C = D_80154C80;
                 self->palette = 0x8170;
             }
@@ -392,7 +392,7 @@ void func_80161C2C(Entity* self) {
 void func_80161EF8(Entity* self) {
     switch (self->step) {
     case 0:
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->unk4C = &D_80154E38;
         self->flags =
             FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 | FLAG_UNK_40000;

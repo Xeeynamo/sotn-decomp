@@ -1034,7 +1034,7 @@ void func_801B4D78(void) {
     Entity* e = &g_Entities[UNK_ENTITY_3];
 
     if (e->step == 0) {
-        e->animSet = -0x7FFF;
+        e->animSet = ANIMSET_OVL(1);
         e->animCurFrame = 1;
         e->palette = 0x200;
         e->ext.generic.unk80.modeS32 = 0x5C0000;
@@ -1154,7 +1154,7 @@ void func_801B5350(void) {
 
     switch (entity->step) {
     case 0:
-        entity->animSet = 1;
+        entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = 142;
         entity->ext.generic.unk80.modeS32 = 0x800000;
         entity->posY.i.hi = 159;
@@ -1189,7 +1189,7 @@ void func_801B54C8(void) {
     Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
-        e->animSet = -0x7FFE;
+        e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
@@ -1205,7 +1205,7 @@ void func_801B5548(void) {
     Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
-        e->animSet = -0x7FFE;
+        e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 7;
         e->unk5A = 0xF;
         e->ext.generic.unk80.modeS32 = 0x780000;

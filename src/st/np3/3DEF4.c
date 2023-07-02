@@ -225,7 +225,7 @@ void EntityExplosion(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_80180A54);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
@@ -566,7 +566,7 @@ void func_801C070C(Entity* entity) {
         entity->accelerationY = D_80181FDC[entity->ext.generic.unk94];
         entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = D_80181FF4[entity->params];
         entity->blendMode = 0x10;
         entity->step++;
@@ -591,7 +591,7 @@ void func_801C07FC(Entity* entity) {
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x10;
         entity->unk19 = 3;
@@ -886,7 +886,7 @@ void EntityIntenseExplosion(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180A54);
         entity->palette = 0x8170;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x30;
 
@@ -922,7 +922,7 @@ void func_801C129C(Entity* entity) {
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
-        entity->animSet = 8;
+        entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 0x10;
 
@@ -988,7 +988,7 @@ void func_801C14E8(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180A54);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->palette = 0x81B6;
         self->unk6C = 0x70;
         self->zPriority = 192;
@@ -1104,7 +1104,7 @@ void EntitySoulStealOrb(Entity* self) {
         InitializeEntity(D_80180A48);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
-        self->animSet = 0;
+        self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
         angle = func_801BD034(self, &g_Entities[PLAYER_CHARACTER]);
         temp_a = self->posY.i.hi < 113;
@@ -1187,7 +1187,7 @@ void EntityEnemyBlood(Entity* self) {
             InitializeEntity(D_80180A48);
             prim = &g_PrimBuf[i];
             self->primIndex = i;
-            self->animSet = 0;
+            self->animSet = ANIMSET_DRA(0);
             params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
