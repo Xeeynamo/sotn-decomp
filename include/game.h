@@ -822,7 +822,7 @@ typedef struct {
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
     /* 8003C828 */ u16 (*DealDamage)(Entity* enemyEntity,
                                      Entity* attackerEntity);
-    /* 8003C82C */ void (*func_800EB534)(s32 equipIcon, s32 palette, s32 index);
+    /* 8003C82C */ void (*LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);

@@ -956,7 +956,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
             palette = D_800A7718[equipId].palette;
         }
 
-        func_800EB534(icon, palette, i);
+        LoadEquipIcon(icon, palette, i);
         func_800F892C(i, myX - 16, myY - 4, ctx);
         DrawMenuStr(strEquipName, myX, myY, ctx);
 
@@ -1201,7 +1201,7 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     if (arg1) {
         D_80137608 = 1;
         func_800F99B8(arg0, 2, 0);
-        func_800EB534(equipIcon, palette, 0x1F);
+        LoadEquipIcon(equipIcon, palette, 0x1F);
     }
 }
 
