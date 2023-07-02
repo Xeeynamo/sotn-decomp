@@ -92,7 +92,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
 
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
         while (poly != NULL) {
             poly->x1 = 0;
             poly = (POLY_GT4*)poly->tag;

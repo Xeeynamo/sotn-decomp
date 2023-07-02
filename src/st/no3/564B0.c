@@ -92,7 +92,7 @@ void EntityZombieSpawner(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180AD0);
         self->ext.generic.unk80.modeS16.unk0 = 1;
-        self->flags &= 0x2000;
+        self->flags &= FLAG_UNK_2000;
     }
 
     if (D_8003BE23 != 0) {

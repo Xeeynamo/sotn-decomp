@@ -845,7 +845,7 @@ s32 func_801B3694(void) {
         func_801B9698(saveFile, temp_a1);
         if (func_801B884C(nCardSlot, 0, saveFile, &D_8007EFE4, 1) != 0) {
             g_memCardRetryCount--;
-            if (g_memCardRetryCount == (-1)) {
+            if (g_memCardRetryCount == -1) {
                 temp_v0 = -1;
             } else {
                 return 0;
@@ -978,8 +978,8 @@ void DestroyEntity(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
     }
 
     ptr = (u32*)entity;
@@ -1046,16 +1046,16 @@ void func_801B4D78(void) {
 
 void func_801B4DE0(void) {
     Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
-        if (firstPolygonIndex != -1) {
-            poly = &g_PrimBuf[firstPolygonIndex];
-            unkEntity->firstPolygonIndex = firstPolygonIndex;
-            unkEntity->flags |= FLAG_FREE_POLYGONS;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            poly = &g_PrimBuf[primIndex];
+            unkEntity->primIndex = primIndex;
+            unkEntity->flags |= FLAG_HAS_PRIMS;
             *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 255;
@@ -1103,16 +1103,16 @@ void func_801B4DE0(void) {
 
 void func_801B4FFC(void) {
     Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
-        if (firstPolygonIndex != -1) {
-            poly = &g_PrimBuf[firstPolygonIndex];
-            unkEntity->firstPolygonIndex = firstPolygonIndex;
-            unkEntity->flags |= FLAG_FREE_POLYGONS;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            poly = &g_PrimBuf[primIndex];
+            unkEntity->primIndex = primIndex;
+            unkEntity->flags |= FLAG_HAS_PRIMS;
             *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 384;

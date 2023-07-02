@@ -178,7 +178,7 @@ void func_801CF254(Entity* self) {
             self->accelerationY = temp_s1 * rsin((s32)temp_s0_2);
             self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;
             self->unk3C = 0;
-            self->flags |= 0x80000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
             break;
 
@@ -265,7 +265,7 @@ void EntityHammerWeapon(Entity* self) {
             self->accelerationX = (temp_s1 * rcos(temp_s0)) / 2;
             accel = temp_s1 * rsin(temp_s0);
             self->hitboxState = 0;
-            self->flags |= 0x80000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
             self->accelerationY = accel;
             break;
@@ -350,7 +350,7 @@ void EntityGurkhaSword(Entity* self) {
             self->accelerationY = rnd * rsin(angle);
             self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
             self->hitboxState = 0;
-            self->flags |= 0x80000000;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
             break;
 

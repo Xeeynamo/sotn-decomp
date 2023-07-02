@@ -110,7 +110,7 @@ void EntityPlatform(Entity* self) {
     Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
     Entity* player = &PLAYER;
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s16 temp_a0;
     s16 temp_s1;
     s16 temp_v0;
@@ -124,8 +124,8 @@ void EntityPlatform(Entity* self) {
 
     switch (self->step) {
     case 0:
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (firstPrimIndex != -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex != -1) {
             InitializeEntity(D_80180434);
             self->animSet = 0x8002;
             self->animCurFrame = 9;
@@ -136,9 +136,9 @@ void EntityPlatform(Entity* self) {
             }
 
             func_8018F8EC(0);
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->firstPolygonIndex = firstPrimIndex;
-            self->flags |= FLAG_FREE_POLYGONS;
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
             prim->tpage = 0xF;
             prim->clut = 2;
             prim->u0 = prim->u2 = 0xA0;
@@ -291,7 +291,7 @@ void EntityPlatform(Entity* self) {
         break;
     }
 
-    prim = &g_PrimBuf[self->firstPolygonIndex];
+    prim = &g_PrimBuf[self->primIndex];
     temp_a0 = self->posX.i.hi - 8;
     temp_v1_4 = self->posX.i.hi + 8;
     self->posY.i.hi += 8;
@@ -640,8 +640,8 @@ void DestroyEntity(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
     }
 
     ptr = (u32*)entity;

@@ -10,7 +10,7 @@ void EntitySubWeaponContainer(Entity* self) {
     SubWpnContDebris* glassPieceTBL;
     Entity* newEntity;
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s32 rnd;
     s32 rndPosX;
     s32 rndPosY;
@@ -35,15 +35,15 @@ void EntitySubWeaponContainer(Entity* self) {
         self[1].params = D_801825CC[self->params];
         self[1].zPriority = self->zPriority - 2;
 
-        firstPrimIndex = g_api.AllocPrimitives(4, 2);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->firstPolygonIndex = firstPrimIndex;
-        prim = &g_PrimBuf[firstPrimIndex];
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         *(s32*)&self->ext.generic.unk7C = prim;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
             prim->blendMode = 8;
@@ -79,8 +79,8 @@ void EntitySubWeaponContainer(Entity* self) {
         // Spawn falling glass pieces
         glassPieceTBL = D_80182584;
         i = 0;
-        g_api.FreePrimitives(self->firstPolygonIndex);
-        self->flags &= ~FLAG_FREE_POLYGONS;
+        g_api.FreePrimitives(self->primIndex);
+        self->flags &= ~FLAG_HAS_PRIMS;
         g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
         while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);

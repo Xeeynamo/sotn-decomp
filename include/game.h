@@ -208,10 +208,18 @@ typedef struct Primitive {
 #define STAGE_MEMORYCARD 0xFF
 
 // Flags for entity->flags
+#define FLAG_UNK_2000 0x2000
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
-#define FLAG_FREE_POLYGONS 0x00800000
+#define FLAG_UNK_40000 0x40000
+#define FLAG_UNK_100000 0x100000
 #define FLAG_UNK_00200000 0x00200000
+
+// When an entity used AllocPrimitives and their primIndex set.
+// At their destruction they need to free the prims with FreePrimitives.
+#define FLAG_HAS_PRIMS 0x00800000
+
+#define FLAG_UNK_01000000 0x01000000
 #define FLAG_UNK_02000000 0x02000000
 #define FLAG_UNK_04000000 0x04000000
 #define FLAG_UNK_08000000 0x08000000
@@ -399,7 +407,7 @@ typedef struct Entity {
     /* 0x5A */ s16 unk5A;
     /* 0x5C */ s32 unk5C;
     /* 0x60 */ s32 unk60;
-    /* 0x64 */ s32 firstPolygonIndex;
+    /* 0x64 */ s32 primIndex;
     /* 0x68 */ s16 unk68;
     /* 0x6A */ u16 unk6A;
     /* 0x6C */ u8 unk6C;

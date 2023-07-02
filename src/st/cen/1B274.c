@@ -4,23 +4,23 @@
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
-    s32 firstPrimIndex;
+    s32 primIndex;
     u16 *temp_d, temp_e;
     s32 temp_a, temp_b;
     u16 angle;
 
     switch (self->step) {
     case 0:
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
         InitializeEntity(D_80180410);
-        D_8008701E[firstPrimIndex * 0x1a] = 8;
-        self->firstPolygonIndex = firstPrimIndex;
+        D_8008701E[primIndex * 0x1a] = 8;
+        self->primIndex = primIndex;
         self->animSet = 0;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         angle = func_80194DC4(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;
         temp_b = temp_a ^ 1;
@@ -66,7 +66,7 @@ void EntitySoulStealOrb(Entity* self) {
         func_80194D08(self->ext.soulStealOrb.angle & 0xFFFF,
                       self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         func_80194394(&D_80181238, self);
         angle = (float)(u32)self; // !FAKE
         prim->tpage = 0x18;
@@ -101,7 +101,7 @@ void EntityEnemyBlood(Entity* self) {
         if (i != -1) {
             InitializeEntity(D_80180410);
             prim = &g_PrimBuf[i];
-            self->firstPolygonIndex = i;
+            self->primIndex = i;
             self->animSet = 0;
             params = self->params;
             self->hitboxState = 1;
@@ -109,7 +109,7 @@ void EntityEnemyBlood(Entity* self) {
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
             self->hitboxWidth = 0;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
 
             for (i = 12; i != 0;) {
                 prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
@@ -207,7 +207,7 @@ void EntityEnemyBlood(Entity* self) {
             }
         }
 
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 12; i != 0; i--, prim++) {
             *(u16*)&prim->b1 = prim->x0;
             prim->y1 = prim->y0;

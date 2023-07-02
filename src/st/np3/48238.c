@@ -464,7 +464,7 @@ void func_801C8F54(Entity* self) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
         self->zPriority += 4;
-        self->flags |= 0x2000;
+        self->flags |= FLAG_UNK_2000;
     }
     MoveEntity();
     self->accelerationY += 0x2800;

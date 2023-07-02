@@ -32,7 +32,7 @@ void func_80109594(void) {
     Primitive* prim;
     s32 radius;
     s32 intensity;
-    s32 firstPrimIndex;
+    s32 primIndex;
     s32 i;
     s32 val;
     s32 memset_len;
@@ -71,12 +71,12 @@ void func_80109594(void) {
         e->animSet = 1;
         e->unk5A = i + 1;
         e->palette = 0x8100;
-        e->flags = 0x08020000;
+        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
     }
 
-    firstPrimIndex = AllocPrimitives(PRIM_TILE, 8);
-    prim = &g_PrimBuf[firstPrimIndex];
-    g_Entities[1].firstPolygonIndex = firstPrimIndex;
+    primIndex = AllocPrimitives(PRIM_TILE, 8);
+    prim = &g_PrimBuf[primIndex];
+    g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= 0x800000;
     for (i = 0; i < 6; i++) {
         prim->blendMode = 0x10A;
@@ -343,7 +343,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
