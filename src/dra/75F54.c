@@ -457,7 +457,7 @@ void func_80119D3C(Entity* entity) {
         entity->accelerationY = -0x8000;
         entity->ext.generic.unk7E.modeU16 = 0x40;
         entity->animCurFrame = 0xE;
-        entity->animSet = 3;
+        entity->animSet = ANIMSET_DRA(3);
         entity->ext.generic.unk80.modeS16.unk0 = 0x80;
         entity->flags = FLAG_UNK_08000000;
         break;
@@ -747,7 +747,7 @@ void func_8011F074(Entity* entity) {
     case 0:
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
-        entity->animSet = 0xE;
+        entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
         entity->palette = 0x819F;
 
@@ -875,7 +875,7 @@ void func_80123F78(Entity* entity) {
             DestroyEntity(entity);
             break;
         }
-        entity->animSet = 1;
+        entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
         entity->unk19 = PLAYER.unk19;
@@ -1044,7 +1044,7 @@ void func_80124A8C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->animSet = 0x11;
+        entity->animSet = ANIMSET_DRA(17);
         entity->accelerationY = -0x6000;
         AccelerateX(0x4000);
         entity->unk5A = 0x50;
@@ -1139,7 +1139,7 @@ void EntityHolyWater(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_08000000;
-        entity->animSet = 9;
+        entity->animSet = ANIMSET_DRA(9);
         entity->animCurFrame = 0x1D;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->posY.i.hi += 8;
@@ -1179,7 +1179,7 @@ void EntityHolyWater(Entity* entity) {
             PlaySfx(0x69A);
             func_8011AAFC(entity, 0x3B, 0);
             entity->ext.generic.unk7C.s = 0x10;
-            entity->animSet = 0;
+            entity->animSet = ANIMSET_DRA(0);
             entity->step = 2;
         }
         break;
@@ -1227,7 +1227,7 @@ void func_801274DC(Entity* entity) {
             PlaySfx(0x660);
         }
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
-        entity->animSet = 9;
+        entity->animSet = ANIMSET_DRA(9);
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facing = (PLAYER.facing + 1) & 1;
@@ -1280,7 +1280,7 @@ void func_80127840(Entity* entity) {
             entity->posY.i.hi = entity->posY.i.hi - 4;
         }
 
-        entity->animSet = 9;
+        entity->animSet = ANIMSET_DRA(9);
         entity->rotAngle = 0;
         entity->unk4C = &D_800B07C8;
         entity->unk19 |= 4;
@@ -1829,7 +1829,7 @@ void func_8013136C(Entity* entity) {
         return;
     }
     if (entity->step == 0) {
-        entity->animSet = 0xF;
+        entity->animSet = ANIMSET_DRA(15);
         entity->unk5A = 0x7E;
         entity->palette = PLAYER.palette;
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;

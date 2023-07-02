@@ -10,7 +10,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        entity->animSet = -0x7FFF;
+        entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 56;
         if (entity->params != 0) {
             entity->unk19 = 0xB;
@@ -106,7 +106,7 @@ void EntityFallingLeaf(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        entity->animSet = -0x7FFF;
+        entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = (entity->params & 1) + 63;
         entity->zPriority = 0xC1;
         entity->accelerationX = D_801819E8[entity->params * 2];
@@ -214,7 +214,7 @@ void EntityUnkId5B(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        entity->animSet = -0x7FF8;
+        entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
         entity->unk5A = 0x44;
@@ -255,7 +255,7 @@ void EntityUnkId5E(Entity* entity) {
         animCurFrame = entity->animCurFrame;
         InitializeEntity(D_80180B00);
         entity->animCurFrame = animCurFrame;
-        entity->animSet = -0x7FF8;
+        entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->unk5A = 0x44;
         if (entity->params != 0) {

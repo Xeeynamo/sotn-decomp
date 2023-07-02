@@ -220,7 +220,7 @@ void EntityExplosion(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_80180AC4);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
@@ -562,7 +562,7 @@ void EntityUnkId14(Entity* entity) {
         entity->accelerationY = D_80182650[entity->ext.generic.unk94];
         entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = D_80182668[entity->params];
         entity->blendMode = 0x10;
         entity->step++;
@@ -586,7 +586,7 @@ void EntityUnkId15(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         arg0->palette = 0x8195;
-        arg0->animSet = 5;
+        arg0->animSet = ANIMSET_DRA(5);
         arg0->animCurFrame = 1U;
         arg0->blendMode = 0x10;
         arg0->unk19 = 3;
@@ -822,7 +822,7 @@ void EntityIntenseExplosion(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180AC4);
         entity->palette = 0x8170;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x30;
         if (entity->params & 0xF0) {
@@ -855,7 +855,7 @@ void func_801903C8(Entity* entity) {
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
         entity->unk1C = 0x01A0;
-        entity->animSet = 8;
+        entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 16;
         if (entity->params) {
@@ -977,7 +977,7 @@ void EntitySoulStealOrb(Entity* self) {
         InitializeEntity(D_80180AB8);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
-        self->animSet = 0;
+        self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
         angle = func_801C57C4(self, &g_Entities[PLAYER_CHARACTER]);
         temp_a = self->posY.i.hi < 113;
@@ -1060,7 +1060,7 @@ void EntityEnemyBlood(Entity* self) {
             InitializeEntity(D_80180AB8);
             prim = &g_PrimBuf[i];
             self->primIndex = i;
-            self->animSet = 0;
+            self->animSet = ANIMSET_DRA(0);
             params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
@@ -1339,7 +1339,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_80180AC4);
-        entity->animSet = 0xE;
+        entity->animSet = ANIMSET_DRA(14);
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
         entity->blendMode = 0x30;
@@ -1521,7 +1521,7 @@ void EntityUnkId3D(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180AC4);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->accelerationY = -0x50000;
         self->palette = 0x8162;
         self->blendMode = 0x10;

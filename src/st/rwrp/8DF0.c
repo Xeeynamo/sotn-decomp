@@ -592,7 +592,7 @@ void EntitySoulStealOrb(Entity* self) {
         func_8018E290(D_8018044C);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
-        self->animSet = 0;
+        self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
         angle = func_8018E0E0(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;

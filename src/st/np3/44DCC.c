@@ -694,7 +694,7 @@ void func_801C7E18(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A54);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->accelerationY = -0x50000;
         self->palette = 0x8162;
         self->blendMode = 0x10;

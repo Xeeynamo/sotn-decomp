@@ -132,7 +132,7 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
             entity->objectId = objectId;
-            entity->animSet = 0x8014;
+            entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
             facing = (g_Entities[0].facing + 1) & 1;
             entity->params = i + 1;
@@ -364,7 +364,7 @@ void func_80171ED4(s32 arg0) {
     DestroyEntity(e);
     e->unk5A = 0x6C;
     e->palette = 0x140;
-    e->animSet = 0x8014;
+    e->animSet = ANIMSET_OVL(20);
     e->params = 0;
     e->zPriority = PLAYER.zPriority - 2;
     e->facing = (PLAYER.facing + 1) & 1;

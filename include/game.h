@@ -231,6 +231,11 @@ typedef struct Primitive {
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_STONE 0x00000080
 
+#define ANIMSET_OVL_FLAG 0x8000
+#define ANIMSET_DRA(x) (x)
+#define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
+typedef s16 AnimSet;
+
 typedef enum {
     Game_Init,
     Game_Title,
@@ -401,7 +406,7 @@ typedef struct Entity {
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
     /* 0x52 */ s16 animFrameDuration;
-    /* 0x54 */ s16 animSet;
+    /* 0x54 */ AnimSet animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 unk58;
     /* 0x5A */ s16 unk5A;
@@ -420,7 +425,7 @@ typedef struct Entity {
 } Entity; // size = 0xBC
 
 typedef struct {
-    /* 0x00 */ u16 animSet;
+    /* 0x00 */ AnimSet animSet;
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;

@@ -127,7 +127,7 @@ void EntityPlatform(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
             InitializeEntity(D_80180434);
-            self->animSet = 0x8002;
+            self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 9;
             self->zPriority = 0x80;
 
@@ -313,7 +313,7 @@ void EntityMaria(Entity* self) {
         }
         InitializeEntity(D_80180428);
         self->flags = FLAG_UNK_08000000;
-        self->animSet = 0x8001;
+        self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
         self->unk5A = 0x48;
         self->palette = 0x210;

@@ -1276,7 +1276,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180D3C);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->unk19 = 5;
         self->unk1A = 0xC0;
@@ -1309,14 +1309,14 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 0:
         InitializeEntity(D_80180D48);
         if (self->params == 0) {
-            self->animSet = 2;
+            self->animSet = ANIMSET_DRA(2);
             self->unk19 = 4;
             self->accelerationX = (rcos(self->rotAngle) * 0x38000) >> 0xC;
             self->accelerationY = (rsin(self->rotAngle) * 0x38000) >> 0xC;
             self->palette = 0x81B6;
             self->rotAngle -= 0x400;
         } else {
-            self->animSet = 14;
+            self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
             self->unk19 = 0xD;
             self->unk1A = 0x100;

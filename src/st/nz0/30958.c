@@ -765,7 +765,7 @@ void EntityCannonShot(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = 0x81AF;
         self->zPriority = 0x6F;

@@ -1075,7 +1075,7 @@ void EntityExplosion(Entity* entity) {
 
     if (!entity->step) {
         InitializeEntity(D_80180470);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->blendMode = 0x30;

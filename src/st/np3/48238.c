@@ -477,7 +477,7 @@ void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180A54);
         self->palette = 0x82BB;
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = D_80182454[self->params];
         self->accelerationY = D_80182440[self->params];
         self->step++;

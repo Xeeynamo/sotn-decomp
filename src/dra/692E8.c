@@ -44,7 +44,7 @@ void func_80109594(void) {
     DestroyEntity(g_CurrentEntity);
     PLAYER.posX.val = 0x200000;
     PLAYER.posY.val = 0x200000;
-    PLAYER.animSet = 1;
+    PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.palette = 0x8100;
     PLAYER.facing = 0;
     PLAYER.unk1A = 0x100;
@@ -68,7 +68,7 @@ void func_80109594(void) {
 
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
-        e->animSet = 1;
+        e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
         e->palette = 0x8100;
         e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
@@ -177,7 +177,7 @@ void func_8010A234(s32 arg0) {
             }
         } else if (*(s32*)&g_Player.unk0C & 0x01000000) {
             g_Entities[PLAYER_CHARACTER].palette = 0x8100;
-            g_Entities[PLAYER_CHARACTER].animSet = 1;
+            g_Entities[PLAYER_CHARACTER].animSet = ANIMSET_DRA(1);
             g_Entities[PLAYER_CHARACTER].unk5A = 0;
             g_Entities[PLAYER_CHARACTER].unk1E = 0;
             g_Entities[PLAYER_CHARACTER].unk19 &= 0xF3;
