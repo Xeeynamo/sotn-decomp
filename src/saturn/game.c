@@ -629,8 +629,14 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B318, func_0607B318);
+void CreateEntityFromCurrentEntity(u16 id, Entity* entity) {
+    DestroyEntity(entity);
+    entity->unk74 = id;
+    entity->pfnUpdate = (*PfnEntityUpdates)[id - 1]->func;
+    entity->posX = g_CurrentEntity->posX;
+    entity->posY = g_CurrentEntity->posY;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B374, func_0607B374);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B3D0, func_0607B3D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
