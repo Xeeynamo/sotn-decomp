@@ -113,7 +113,7 @@ void func_801A8328(Entity* self) {
             self->palette = 0x212;
             self->animCurFrame = 0x15;
             self->zPriority = 0x6A;
-            self->step = 0x100;
+            self->step = 256;
             break;
         }
 
