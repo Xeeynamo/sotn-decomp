@@ -1,5 +1,6 @@
 #ifndef STAGE_H
 #define STAGE_H
+#define STAGE 0xCC
 
 #include "common.h"
 #include "game.h"

@@ -372,17 +372,21 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 accelerationX;
     /* 0x0C */ s32 accelerationY;
-    /* 0x10 */ u16 hitboxOffX; // Hitbox X Offset
-    /* 0x12 */ s16 hitboxOffY; // Hitbox Y Offset
+#ifdef STAGE
+    /* 0x10 */ s16 hitboxOffX;
+#else // hack to match in DRA and RIC
+    /* 0x10 */ u16 hitboxOffX;
+#endif
+    /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facing;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ u8 unk19;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 rotAngle;  // poly rotation angle
-    /* 0x20 */ s16 rotPivotX; // poly / rotation origin x
-    /* 0x22 */ s16 rotPivotY; // poly / rotation origin y
+    /* 0x1E */ s16 rotAngle;
+    /* 0x20 */ s16 rotPivotX;
+    /* 0x22 */ s16 rotPivotY;
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 objectId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -400,8 +404,8 @@ typedef struct Entity {
     /* 0x44 */ u16 unk44;
     /* 0x46 */ u8 hitboxWidth;
     /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 hitFlags;             // 1 = took hit
-    /* 0x49 */ u8 nFramesInvincibility; // invincibility frames
+    /* 0x48 */ u8 hitFlags; // 1 = took hit
+    /* 0x49 */ u8 nFramesInvincibility;
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;

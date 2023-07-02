@@ -1,6 +1,8 @@
 #include "stage.h"
 
+#undef STAGE
 #define STAGE STAGE_ST0
+
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_ALL_H
@@ -60,7 +62,7 @@ extern ObjInit2 D_80180638[];
 
 // *** EntityCutscene properties START ***
 
-extern u8 D_80180830[]; // Animation 
+extern u8 D_80180830[]; // Animation
 extern u8 D_8018083C[]; // Animation
 extern u8 D_8018084C[]; // Animation
 extern u8 D_8018085C[]; // Animation
