@@ -116,6 +116,7 @@ extern u16 D_80180A48[];
 extern Point16 D_80180A58[];
 extern LayoutObject* D_801C00A0;
 extern u8 D_801C00A8;
+extern u8 D_801C00AC;
 extern s16 D_801C2508;
 extern s16 D_801C250A;
 extern s32 D_801C250C;
