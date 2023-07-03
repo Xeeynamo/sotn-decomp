@@ -387,6 +387,7 @@ void func_801A8984(void) {
     D_801C24D2 = D_801C24D4 + 0x14;
 }
 
+// DECOMP_ME_WIP func_801A89D8 https://decomp.me/scratch/UnHaA
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A89D8);
 
 void func_801A8B9C(s16 yOffset) {
