@@ -77,7 +77,7 @@ void EntityLockCamera(Entity* entity) {
     }
 
     if (func_801A7E2C(entity)) {
-        temp_v0_2 = func_801B4C78();
+        temp_v0_2 = GetPlayerSide();
         if (entity->ext.generic.unk7C.modeU16) {
             phi_v1 = (temp_v0_2 & 2) * 2;
         } else {
@@ -108,7 +108,7 @@ void func_801A805C(Entity* self) {
         if (self->unk44 != 0) {
             params_ = params - 2;
             if (params_ < 2) {
-                self->facing = func_801B4C78() & 1;
+                self->facing = GetPlayerSide() & 1;
                 posY = self->posY.i.hi - 40;
 
                 if (params == 2) {

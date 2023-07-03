@@ -578,7 +578,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B4AF0);
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the X Axis
  */
-s16 func_801B4C08(void) {
+s16 GetPlayerDistanceX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -590,7 +590,7 @@ s16 func_801B4C08(void) {
 /*
  * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
  */
-s32 func_801B4C44(void) {
+s32 GetPlayerDistanceY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -599,13 +599,13 @@ s32 func_801B4C44(void) {
     return yDistance;
 }
 
-s16 func_801B4C78(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+s16 GetPlayerSide(void) {
+    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+        side |= 2;
     }
-    return var_a0;
+    return side;
 }
 
 void MoveEntity(void) {

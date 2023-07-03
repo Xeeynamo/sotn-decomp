@@ -41,7 +41,7 @@ extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-s16 func_801B4C78();
+s16 GetPlayerSide();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
