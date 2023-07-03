@@ -572,6 +572,7 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #include "st/AnimateEntity.h"
 
+// DECOMP_ME_WIP func_801B4AF0 https://decomp.me/scratch/2ry2z
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B4AF0);
 
 /*
