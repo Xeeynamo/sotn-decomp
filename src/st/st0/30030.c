@@ -776,7 +776,22 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B57D0);
+void func_801B57D0(u16 params) {
+    Entity* current;
+
+    if (params == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+    current = g_CurrentEntity;
+    g_CurrentEntity->objectId = 2;
+    g_CurrentEntity->pfnUpdate = EntityExplosion;
+    g_CurrentEntity->unk19 = 0;
+    current->params = params;
+    current->animCurFrame = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 
 void InitializeEntity(u16 arg0[]) {
     u16 enemyId;
