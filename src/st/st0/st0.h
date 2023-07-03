@@ -46,6 +46,9 @@ void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
 
+LayoutObject* D_80180314[];
+LayoutObject* D_801803E8[];
+
 // *** Initializers ***
 extern u16 D_80180574[];
 extern u16 D_8018058C[];

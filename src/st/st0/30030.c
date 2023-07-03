@@ -441,9 +441,6 @@ void func_801B3828(s16 arg0) {
     }
 }
 
-LayoutObject* D_80180314[];
-LayoutObject* D_801803E8[];
-
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_80180314[objLayoutId];
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
