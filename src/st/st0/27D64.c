@@ -93,8 +93,84 @@ void EntityLockCamera(Entity* entity) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A805C);
+void func_801A805C(Entity* self) {
+    u16 params = self->params >> 0xC;
+    Entity* newEntity;
+    s32 entityCount;
+    u16* paramsPtr;
+    u16 params_;
+    u16* temp;
+    s16 posY;
+    s32 i;
 
+    if (self->step != 0) {
+        AnimateEntity(D_801806D0[params], self);
+        if (self->unk44 != 0) {
+            params_ = params - 2;
+            if (params_ < 2) {
+                self->facing = func_801B4C78() & 1;
+                posY = self->posY.i.hi - 40;
+
+                if (params == 2) {
+                    entityCount = 4;
+                } else {
+                    entityCount = 3;
+                }
+
+                if (params == 3) {
+                    temp = &D_80180770[10];
+                } else {
+                    temp = &D_80180770;
+                }
+
+                for (i = 0, paramsPtr = temp; i < entityCount; i++) {
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (newEntity != NULL) {
+                        CreateEntityFromEntity(E_ID_26, self, newEntity);
+                        newEntity->posY.i.hi = posY;
+                        newEntity->params = *paramsPtr;
+                        newEntity->facing = self->facing;
+                    }
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (newEntity != NULL) {
+                        CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                        newEntity->posY.i.hi = posY;
+                        newEntity->params = 0;
+                    }
+                    posY += 16;
+                    paramsPtr++;
+                }
+                g_api.PlaySfx(0x67F);
+            } else {
+                if (params == 9) {
+                    newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    if (newEntity != NULL) {
+                        CreateEntityFromCurrentEntity(E_ID_26, newEntity);
+                        newEntity->params = 0x100;
+                    }
+                }
+                g_api.PlaySfx(0x61D);
+            }
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                newEntity->params = D_80180704[params];
+            }
+            ReplaceBreakableWithItemDrop(self);
+        }
+    } else {
+        InitializeEntity(D_80180574);
+        self->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
+        self->blendMode = D_8018074C[params];
+        self->hitboxHeight = D_801806F8[params];
+        self->animSet = D_80180724[params];
+        self->unk5A = D_80180738[params];
+        self->palette = D_80180710[params];
+        self->hitboxOffY = D_80180758[params];
+    }
+}
+
+// Entity ID: 0x26
 void func_801A8328(Entity* self) {
     s16 firstPrimIndex;
     Entity* newEntity;

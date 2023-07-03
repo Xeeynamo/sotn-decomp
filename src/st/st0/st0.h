@@ -27,6 +27,7 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
+    E_ID_26 = 0x26,
     E_SECRET_BUTTON = 0x28,
     E_SECRET_STAIRS = 0x29,
 } EntityIDs;
@@ -46,9 +47,9 @@ void SetStep(u8);
 void EntityExplosion(Entity*);
 
 // *** Initializers ***
-extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 D_80180574[];
 extern u16 D_8018058C[];
+extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
@@ -59,6 +60,20 @@ extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
 extern u16 D_80180628[];
 
 extern ObjInit2 D_80180638[];
+
+// *** func_801A805C properties START ***
+
+extern s32 D_801806D0[]; // animation
+extern u8 D_801806F8[];  // hitboxHeight
+extern u8 D_80180704[];  // params
+extern u16 D_80180710[]; // palette
+extern s16 D_80180724[]; // animSet
+extern s16 D_80180738[]; // unk5A
+extern s8 D_8018074C[];  // blendMode
+extern s16 D_80180758[]; // hitboxOffY
+extern u8 D_80180770[];  // params
+
+// *** func_801A805C properties END ***
 
 // *** EntityCutscene properties START ***
 
