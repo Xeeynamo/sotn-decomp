@@ -387,8 +387,65 @@ void func_801A8984(void) {
     D_801C24D2 = D_801C24D4 + 0x14;
 }
 
-// DECOMP_ME_WIP func_801A89D8 https://decomp.me/scratch/UnHaA
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", func_801A89D8);
+s32 func_801A89D8(s32 arg0) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+
+    firstPrimIndex = g_api.AllocPrimitives(6, 8);
+    D_801C2504[0] = firstPrimIndex;
+    if (firstPrimIndex == -1) {
+        D_801C2504[0] = 0;
+        return 0;
+    }
+    D_801C24CC = arg0;
+    D_801C2508 = 0;
+    D_801C2500 = -1;
+    D_801C24FC = -1;
+    func_801A8984();
+
+    if (prim && prim) { // !FAKE
+    }
+
+    prim = D_801C24E4[0] = &g_PrimBuf[D_801C2504[0]];
+
+    prim->blendMode = 8;
+    prim = D_801C24E4[1] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801C24E4[2] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801C24E4[3] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801C24E4[4] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801C24E4[5] = prim->next;
+
+    prim->type = 4;
+    prim->blendMode = 8;
+
+    prim = prim->next;
+    prim->type = 3;
+    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = 0;
+    prim->x0 = prim->x2 = 4;
+    prim->x1 = prim->x3 = 0xF8;
+    prim->priority = 0x1FD;
+    prim->blendMode = 8;
+
+    prim = prim->next;
+    prim->type = 1;
+    prim->x0 = 3;
+    prim->y0 = 0x2F;
+    prim->v0 = 0x4A;
+    prim->r0 = prim->g0 = prim->b0 = 0xFF;
+    prim->priority = 0x1FC;
+    prim->blendMode = 8;
+    return 1;
+}
 
 void func_801A8B9C(s16 yOffset) {
     RECT rect;
