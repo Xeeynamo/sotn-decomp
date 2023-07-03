@@ -236,7 +236,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B1B4, func_0601B1B4);
 // _SET_GAME_OVERLAYADDR
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B1CC, func_0601B1CC);
 
-
 // I think everything beyond this point is sega libraries
 
 // SEGADGFS.A (debug version of lib)
@@ -936,7 +935,6 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6025174, func_06025174);
 
 // _SCL_GetColRamMode
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6025214, func_06025214);
-
 
 // _SCL_AbortAutoVe
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6025244, func_06025244);
