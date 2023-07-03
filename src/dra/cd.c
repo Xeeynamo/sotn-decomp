@@ -500,7 +500,7 @@ void func_80107460(void);
 void PlaySfx(s32);
 void SsVabClose(short);
 
-void func_80108448(void) {
+void UpdateCd(void) {
     unsigned char result[8];
     unsigned char setModeArg[24];
     u32* var_v1;

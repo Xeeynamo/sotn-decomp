@@ -79,7 +79,7 @@ s32 func_801C6458(s16 yOffset) {
 }
 
 void EntityMerman2(Entity* self) {
-    s32 firstPrimIndex;
+    s32 primIndex;
     Collider collider;
     Entity* newEntity;
     Entity* newEntity2;
@@ -100,9 +100,9 @@ void EntityMerman2(Entity* self) {
     if ((self->flags & 0x100) && (self->step < MERMAN2_DYING)) {
         func_801C2598(0x71D);
         self->unk19 = 0;
-        if (self->flags & FLAG_FREE_POLYGONS) {
-            g_api.FreePrimitives(self->firstPolygonIndex);
-            self->flags &= ~FLAG_FREE_POLYGONS;
+        if (self->flags & FLAG_HAS_PRIMS) {
+            g_api.FreePrimitives(self->primIndex);
+            self->flags &= ~FLAG_HAS_PRIMS;
         }
         self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
@@ -170,14 +170,14 @@ void EntityMerman2(Entity* self) {
             self->accelerationX = 0;
             self->accelerationY = -0x88000;
             self->step_s++;
-            firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (firstPrimIndex != -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (primIndex != -1) {
                 u32 v0;
-                prim = &g_PrimBuf[firstPrimIndex];
+                prim = &g_PrimBuf[primIndex];
                 self->animCurFrame = 0;
-                self->firstPolygonIndex = firstPrimIndex;
+                self->primIndex = primIndex;
                 self->ext.merman2.prim = prim;
-                self->flags |= FLAG_FREE_POLYGONS;
+                self->flags |= FLAG_HAS_PRIMS;
                 prim->tpage = 0x12;
                 prim->clut = 0x28C;
                 if (self->params & 1) {
@@ -291,9 +291,9 @@ void EntityMerman2(Entity* self) {
             }
             if (self->ext.merman2.isUnderwater == 0) {
                 if (func_801BC8E4(&D_80182248) & 1) {
-                    g_api.FreePrimitives(self->firstPolygonIndex);
+                    g_api.FreePrimitives(self->primIndex);
                     self->hitboxHeight = 21;
-                    self->flags &= ~FLAG_FREE_POLYGONS;
+                    self->flags &= ~FLAG_HAS_PRIMS;
                     self->unk19 &= 0xFB;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                     return;
@@ -503,14 +503,14 @@ void EntityMerman2(Entity* self) {
             }
             self->accelerationY = -0x10000;
             self->step_s++;
-            firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-            if (firstPrimIndex != -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIndex != -1) {
                 u32 v0;
-                prim = &g_PrimBuf[firstPrimIndex];
-                self->firstPolygonIndex = firstPrimIndex;
+                prim = &g_PrimBuf[primIndex];
+                self->primIndex = primIndex;
                 self->ext.merman2.prim = prim;
                 self->flags |= 0x800000;
-                func_801D2684(prim, firstPrimIndex);
+                func_801D2684(prim, primIndex);
                 prim->tpage = 0x12;
                 prim->clut = 0x292;
                 if (self->params & 1) {
@@ -588,7 +588,7 @@ void EntityMerman2(Entity* self) {
 // some sort of explosion: ID 0x36
 void EntityExplosion2(Entity* entity, s32 arg1) {
     Primitive* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
 
     if (entity->step == 0) {
         InitializeEntity(D_80180AB4);
@@ -596,16 +596,16 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         entity->hitboxState = 0;
         entity->zPriority += 4;
         if (entity->params != 0) {
-            firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-            if (firstPolygonIndex == -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIndex == -1) {
                 DestroyEntity(entity);
                 return;
             }
-            poly = &g_PrimBuf[firstPolygonIndex];
-            entity->firstPolygonIndex = firstPolygonIndex;
+            poly = &g_PrimBuf[primIndex];
+            entity->primIndex = primIndex;
             *(s32*)&entity->ext.generic.unk7C.s = poly;
-            entity->flags |= FLAG_FREE_POLYGONS;
-            func_801D2684(poly, firstPolygonIndex);
+            entity->flags |= FLAG_HAS_PRIMS;
+            func_801D2684(poly, primIndex);
             poly->u0 = 0;
             poly->u1 = 0x20;
             poly->tpage = 0x1A;
@@ -677,7 +677,7 @@ void func_801C7D80(Entity* self) {
         InitializeEntity(D_80180AB4);
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        self->flags |= 0x2000;
+        self->flags |= FLAG_UNK_2000;
         self->zPriority += 4;
     }
     MoveEntity();
@@ -694,7 +694,7 @@ void func_801C7E18(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A54);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->accelerationY = -0x50000;
         self->palette = 0x8162;
         self->blendMode = 0x10;
@@ -759,7 +759,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->palette = self->params + 0xE;
         self->unk6C = 0x80;
         self->unk19 |= 8;
-        self->flags |= 0x2000;
+        self->flags |= FLAG_UNK_2000;
         return;
     }
     MoveEntity();
@@ -781,7 +781,7 @@ void EntityMermanSpawner(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180A60);
-        self->flags |= 0x2000;
+        self->flags |= FLAG_UNK_2000;
     }
 
     if (!(g_blinkTimer & 0x3F)) {

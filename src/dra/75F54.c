@@ -394,7 +394,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
         if (ent2->hitboxState == 0) {
             var_a1 = 0x2000;
         }
-        if (ent2->flags & 0x200000) {
+        if (ent2->flags & FLAG_UNK_00200000) {
             var_a1 = 0x3000;
         }
     }
@@ -457,7 +457,7 @@ void func_80119D3C(Entity* entity) {
         entity->accelerationY = -0x8000;
         entity->ext.generic.unk7E.modeU16 = 0x40;
         entity->animCurFrame = 0xE;
-        entity->animSet = 3;
+        entity->animSet = ANIMSET_DRA(3);
         entity->ext.generic.unk80.modeS16.unk0 = 0x80;
         entity->flags = FLAG_UNK_08000000;
         break;
@@ -568,7 +568,7 @@ loop_1: // !FAKE: this should be a for loop
                       0x111))) {
                     DestroyEntity(entity);
                     goto label;
-                } else if (entity->flags & 0x100000) {
+                } else if (entity->flags & FLAG_UNK_100000) {
                     UpdateAnim(NULL, D_800ACFB4);
                 }
             }
@@ -662,7 +662,7 @@ void func_8011B334(Entity* entity) {
         return;
     }
 
-    entity->flags = 0x60000;
+    entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
     entity->facing = PLAYER.facing;
     entity->posY.i.hi = PLAYER.posY.i.hi;
     entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -694,7 +694,7 @@ void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
         DestroyEntity(entity);
     } else if (entity->step == 0) {
-        entity->flags = 0x60000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         func_8011A328(entity, 5);
         entity->step++;
     }
@@ -745,9 +745,9 @@ void func_8011F074(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = 0x120000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
-        entity->animSet = 0xE;
+        entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
         entity->palette = 0x819F;
 
@@ -835,7 +835,7 @@ void func_80123A60(Entity* entity) {
     entity->posY.i.hi = player->posY.i.hi;
     if (entity->step == 0) {
         func_8011A328(entity, 0xB);
-        entity->flags = 0x60000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
         entity->step++;
     }
 
@@ -869,12 +869,13 @@ void func_80123F78(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = 0x30000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 | FLAG_UNK_04000000 |
+                        FLAG_UNK_08000000;
         if (PLAYER.animSet != 1) {
             DestroyEntity(entity);
             break;
         }
-        entity->animSet = 1;
+        entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
         entity->unk19 = PLAYER.unk19;
@@ -1043,13 +1044,13 @@ void func_80124A8C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->animSet = 0x11;
+        entity->animSet = ANIMSET_DRA(17);
         entity->accelerationY = -0x6000;
         AccelerateX(0x4000);
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
         entity->unk4C = &D_800AE294;
-        entity->flags = 0x100000;
+        entity->flags = FLAG_UNK_100000;
         entity->facing = 0;
         entity->posY.i.hi -= 16;
         entity->posX.val += entity->accelerationX << 5;
@@ -1138,7 +1139,7 @@ void EntityHolyWater(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_08000000;
-        entity->animSet = 9;
+        entity->animSet = ANIMSET_DRA(9);
         entity->animCurFrame = 0x1D;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->posY.i.hi += 8;
@@ -1178,7 +1179,7 @@ void EntityHolyWater(Entity* entity) {
             PlaySfx(0x69A);
             func_8011AAFC(entity, 0x3B, 0);
             entity->ext.generic.unk7C.s = 0x10;
-            entity->animSet = 0;
+            entity->animSet = ANIMSET_DRA(0);
             entity->step = 2;
         }
         break;
@@ -1225,8 +1226,8 @@ void func_801274DC(Entity* entity) {
         if (entity->params == 0) {
             PlaySfx(0x660);
         }
-        entity->flags = 0x100000 | FLAG_UNK_08000000;
-        entity->animSet = 9;
+        entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
+        entity->animSet = ANIMSET_DRA(9);
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facing = (PLAYER.facing + 1) & 1;
@@ -1271,7 +1272,7 @@ void func_80127840(Entity* entity) {
             PlaySfx(0x683);
         }
 
-        entity->flags = 0x100000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
 
         if (entity->params != 0) {
             entity->posY.i.hi = entity->posY.i.hi + 16;
@@ -1279,7 +1280,7 @@ void func_80127840(Entity* entity) {
             entity->posY.i.hi = entity->posY.i.hi - 4;
         }
 
-        entity->animSet = 9;
+        entity->animSet = ANIMSET_DRA(9);
         entity->rotAngle = 0;
         entity->unk4C = &D_800B07C8;
         entity->unk19 |= 4;
@@ -1315,7 +1316,7 @@ void func_80127840(Entity* entity) {
 // circle expands out of player
 void EntityExpandingCircle(Entity* entity) {
     POLY_GT4* poly;
-    s32 firstPolygonIndex;
+    s32 primIndex;
 
     if (PLAYER.facing == 0) {
         entity->posX.i.hi = PLAYER.posX.i.hi - 10;
@@ -1326,12 +1327,12 @@ void EntityExpandingCircle(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
+        primIndex = AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = primIndex;
+        if (primIndex != -1) {
             entity->ext.generic.unk7C.s = 22;
             entity->ext.generic.unk7E.modeU16 = 26;
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->primIndex];
             poly->u2 = 64;
             poly->u3 = 127;
             poly->u1 = 127;
@@ -1356,7 +1357,7 @@ void EntityExpandingCircle(Entity* entity) {
             poly->clut = 0x15F;
             poly->pad2 = PLAYER.zPriority + 1;
             poly->pad3 = 0x35;
-            entity->flags = 0x40000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
+            entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             break;
         }
@@ -1376,7 +1377,7 @@ void EntityExpandingCircle(Entity* entity) {
         break;
     }
 
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
     poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
     poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
@@ -1409,8 +1410,8 @@ void func_80127CC8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPrimitives(3, 1);
-        entity->firstPolygonIndex = ret;
+        ret = AllocPrimitives(PRIM_G4, 1);
+        entity->primIndex = ret;
 
         if (ret == -1) {
             DestroyEntity(entity);
@@ -1418,8 +1419,9 @@ void func_80127CC8(Entity* entity) {
             return;
         }
 
-        entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
+                        FLAG_HAS_PRIMS;
+        poly = &g_PrimBuf[entity->primIndex];
         poly->r3 = 192;
         poly->r2 = 192;
         poly->r1 = 192;
@@ -1447,7 +1449,7 @@ void func_80127CC8(Entity* entity) {
     default:
         break;
     }
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     poly->x0 = poly->x2 = entity->posX.i.hi - 3;
     poly->y0 = 0;
     poly->y1 = 0;
@@ -1526,11 +1528,11 @@ void func_8012B78C(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = ret;
-        if (entity->firstPolygonIndex != -1) {
-            entity->flags = 0x20000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
+        ret = AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = ret;
+        if (entity->primIndex != -1) {
+            entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            poly = &g_PrimBuf[entity->primIndex];
             poly->tpage = 0x1C;
             poly->clut = 0x19D;
             poly->u2 = 32;
@@ -1569,7 +1571,7 @@ void func_8012B78C(Entity* entity) {
     default:
         break;
     }
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
         poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
             entity->ext.generic.unk7E.modeU8.unk0;
@@ -1827,10 +1829,10 @@ void func_8013136C(Entity* entity) {
         return;
     }
     if (entity->step == 0) {
-        entity->animSet = 0xF;
+        entity->animSet = ANIMSET_DRA(15);
         entity->unk5A = 0x7E;
         entity->palette = PLAYER.palette;
-        entity->flags = 0x60000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
         entity->unk19 = 4;
         entity->unk20 = -8;
         entity->step++;

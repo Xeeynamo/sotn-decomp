@@ -521,9 +521,9 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
 
-void func_06079B9C(s32* param_1) {
-    param_1[1] += param_1[3];
-    param_1[2] += param_1[4];
+void MoveEntity(Entity* entity) {
+    LOW(entity->posX) += entity->accelerationX;
+    LOW(entity->posY) += entity->accelerationY;
 }
 
 void func_06079BB4(s32* param_1) {
@@ -629,7 +629,14 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B318, func_0607B318);
+void CreateEntityFromCurrentEntity(u16 id, Entity* entity) {
+    DestroyEntity(entity);
+    entity->unk74 = id;
+    entity->pfnUpdate = (*PfnEntityUpdates)[id - 1]->func;
+    entity->posX = g_CurrentEntity->posX;
+    entity->posY = g_CurrentEntity->posY;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B374, func_0607B374);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B3D0, func_0607B3D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
@@ -644,7 +651,10 @@ void func_0607B604(s32* param_1) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B618, func_0607B618);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B674, func_0607B674);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B714, func_0607B714);
+
+void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B7B4, func_0607B7B4);
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BE38, func_0607BE38);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BED0, func_0607BED0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C054, func_0607C054);

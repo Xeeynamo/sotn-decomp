@@ -845,7 +845,7 @@ s32 func_801B3694(void) {
         func_801B9698(saveFile, temp_a1);
         if (func_801B884C(nCardSlot, 0, saveFile, &D_8007EFE4, 1) != 0) {
             g_memCardRetryCount--;
-            if (g_memCardRetryCount == (-1)) {
+            if (g_memCardRetryCount == -1) {
                 temp_v0 = -1;
             } else {
                 return 0;
@@ -978,8 +978,8 @@ void DestroyEntity(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
     }
 
     ptr = (u32*)entity;
@@ -1034,7 +1034,7 @@ void func_801B4D78(void) {
     Entity* e = &g_Entities[UNK_ENTITY_3];
 
     if (e->step == 0) {
-        e->animSet = -0x7FFF;
+        e->animSet = ANIMSET_OVL(1);
         e->animCurFrame = 1;
         e->palette = 0x200;
         e->ext.generic.unk80.modeS32 = 0x5C0000;
@@ -1046,16 +1046,16 @@ void func_801B4D78(void) {
 
 void func_801B4DE0(void) {
     Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
-        if (firstPolygonIndex != -1) {
-            poly = &g_PrimBuf[firstPolygonIndex];
-            unkEntity->firstPolygonIndex = firstPolygonIndex;
-            unkEntity->flags |= FLAG_FREE_POLYGONS;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            poly = &g_PrimBuf[primIndex];
+            unkEntity->primIndex = primIndex;
+            unkEntity->flags |= FLAG_HAS_PRIMS;
             *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 255;
@@ -1103,16 +1103,16 @@ void func_801B4DE0(void) {
 
 void func_801B4FFC(void) {
     Entity* unkEntity = &g_Entities[UNK_ENTITY_2];
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
 
     switch (unkEntity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(3, 1);
-        if (firstPolygonIndex != -1) {
-            poly = &g_PrimBuf[firstPolygonIndex];
-            unkEntity->firstPolygonIndex = firstPolygonIndex;
-            unkEntity->flags |= FLAG_FREE_POLYGONS;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            poly = &g_PrimBuf[primIndex];
+            unkEntity->primIndex = primIndex;
+            unkEntity->flags |= FLAG_HAS_PRIMS;
             *(s32*)&unkEntity->ext.generic.unk7C = poly;
 
             poly->x1 = poly->x3 = 384;
@@ -1154,7 +1154,7 @@ void func_801B5350(void) {
 
     switch (entity->step) {
     case 0:
-        entity->animSet = 1;
+        entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = 142;
         entity->ext.generic.unk80.modeS32 = 0x800000;
         entity->posY.i.hi = 159;
@@ -1189,7 +1189,7 @@ void func_801B54C8(void) {
     Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
-        e->animSet = -0x7FFE;
+        e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 38;
         e->facing = 1;
         e->unk5A = 0xF;
@@ -1205,7 +1205,7 @@ void func_801B5548(void) {
     Entity* e = &g_Entities[UNK_ENTITY_7];
 
     if (e->step == 0) {
-        e->animSet = -0x7FFE;
+        e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 7;
         e->unk5A = 0xF;
         e->ext.generic.unk80.modeS32 = 0x780000;

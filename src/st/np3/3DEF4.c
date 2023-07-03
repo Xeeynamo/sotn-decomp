@@ -7,7 +7,7 @@ u16 D_80181E74[];
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s16 var_a2;
     u16 itemId;
     s16 temp_a0;
@@ -142,11 +142,11 @@ void EntityPrizeDrop(Entity* self) {
                     self->params = itemId = 1;
                 }
             }
-            firstPrimIndex = g_api.AllocPrimitives(4, 1);
-            if (firstPrimIndex != -1) {
-                self->firstPolygonIndex = firstPrimIndex;
-                self->flags |= 0x800000;
-                prim = &g_PrimBuf[firstPrimIndex];
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (primIndex != -1) {
+                self->primIndex = primIndex;
+                self->flags |= FLAG_HAS_PRIMS;
+                prim = &g_PrimBuf[primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x170;
                 prim->v2 = prim->v3 = 0x20;
@@ -180,7 +180,7 @@ void EntityPrizeDrop(Entity* self) {
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
             } else {
-                prim = &g_PrimBuf[self->firstPolygonIndex];
+                prim = &g_PrimBuf[self->primIndex];
                 prim->x0 = prim->x2 = self->posX.i.hi - 1;
                 prim->x1 = prim->x3 = self->posX.i.hi + 1;
                 prim->y0 = prim->y1 = self->posY.i.hi - 1;
@@ -191,7 +191,7 @@ void EntityPrizeDrop(Entity* self) {
 
         case 2:
             func_801BDA08(itemId);
-            prim = &g_PrimBuf[self->firstPolygonIndex];
+            prim = &g_PrimBuf[self->primIndex];
             self->ext.generic.unk88.S16.unk2++;
             if (self->ext.generic.unk88.S16.unk2 < 0x11) {
                 var_a2 = self->ext.generic.unk88.S16.unk2;
@@ -207,11 +207,11 @@ void EntityPrizeDrop(Entity* self) {
             prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
             prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
             if (self->ext.generic.unk88.S16.unk2 == 0x20) {
-                g_api.FreePrimitives(self->firstPolygonIndex);
+                g_api.FreePrimitives(self->primIndex);
                 self->ext.generic.unk80.modeS8.unk0 = 0xD0;
                 self->step = 3;
                 self->step_s = 0;
-                self->flags &= ~0x800000;
+                self->flags &= ~FLAG_HAS_PRIMS;
             }
             break;
         }
@@ -225,7 +225,7 @@ void EntityExplosion(Entity* entity) {
 
     if (entity->step == 0) {
         InitializeEntity(D_80180A54);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->blendMode = 0x30;
@@ -252,7 +252,7 @@ void EntityExplosion(Entity* entity) {
 }
 
 void func_801BE864(Entity* self, s32 arg1) {
-    POLY_GT4* poly = &g_PrimBuf[self->firstPolygonIndex];
+    POLY_GT4* poly = &g_PrimBuf[self->primIndex];
     s16 right, left, bottom, top;
 
     left = self->posX.i.hi - 7;
@@ -280,7 +280,7 @@ void func_801BE864(Entity* self, s32 arg1) {
 
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
-    s32 firstPolygonIndex;
+    s32 primIndex;
     Collider collider;
     POLY_GT4* poly;
     s32* itemName;
@@ -334,27 +334,27 @@ void EntityEquipItemDrop(Entity* self) {
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
 
-            firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-            if (firstPolygonIndex == (-1)) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
 
-            self->flags |= FLAG_FREE_POLYGONS;
-            self->firstPolygonIndex = firstPolygonIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
             D_801D33F4[index] = 0x1E0;
             self->ext.generic.unk8C.modeU16.unk0 = index;
 
             if (itemId < 169) {
-                g_api.func_800EB534(g_api.D_800A4B04[itemId].icon,
+                g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
                                     g_api.D_800A4B04[itemId].palette, index);
             } else {
                 itemId -= 169;
-                g_api.func_800EB534(g_api.D_800A7718[itemId].icon,
+                g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
                                     g_api.D_800A7718[itemId].palette, index);
             }
 
-            poly = &g_PrimBuf[firstPolygonIndex];
+            poly = &g_PrimBuf[primIndex];
             vramX = ((temp_v0_6 = index) & 7) * 0x10;
             vramY = (temp_v0_6 & 0x18) * 2;
 
@@ -425,7 +425,7 @@ void EntityEquipItemDrop(Entity* self) {
     case 4:
         func_801BDA08(1);
         if (self->ext.generic.unk80.modeS8.unk0 += 255) {
-            poly = &g_PrimBuf[self->firstPolygonIndex];
+            poly = &g_PrimBuf[self->primIndex];
             if (self->ext.generic.unk80.modeS8.unk0 & 2) {
                 poly->pad3 = 8;
             } else {
@@ -564,9 +564,9 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801C0624);
 void func_801C070C(Entity* entity) {
     if (entity->step == 0) {
         entity->accelerationY = D_80181FDC[entity->ext.generic.unk94];
-        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = D_80181FF4[entity->params];
         entity->blendMode = 0x10;
         entity->step++;
@@ -589,9 +589,9 @@ void func_801C07FC(Entity* entity) {
     u32 temp2;
 
     if (entity->step == 0) {
-        entity->flags = 0x2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->palette = 0x8195;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x10;
         entity->unk19 = 3;
@@ -616,19 +616,19 @@ void func_801C07FC(Entity* entity) {
 }
 
 void func_801C08F0(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     Primitive* prim;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A54);
-        firstPolygonIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
-        if (firstPolygonIndex != -1) {
-            prim = &g_PrimBuf[firstPolygonIndex];
-            self->firstPolygonIndex = firstPolygonIndex;
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             self->hitboxState = 0;
             *(s32*)&self->ext.generic.unk7C = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
                 prim->x0 = prim->x1 = self->posX.i.hi;
                 prim->y0 = prim->y1 = self->posY.i.hi;
@@ -666,7 +666,7 @@ void func_801C08F0(Entity* self) {
         prim->y0 = self->posY.i.hi;
 
         if (prim->y0 < prim->y1) {
-            g_api.FreePrimitives(self->firstPolygonIndex);
+            g_api.FreePrimitives(self->primIndex);
             DestroyEntity(self);
         }
         break;
@@ -886,7 +886,7 @@ void EntityIntenseExplosion(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180A54);
         entity->palette = 0x8170;
-        entity->animSet = 5;
+        entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x30;
 
@@ -922,7 +922,7 @@ void func_801C129C(Entity* entity) {
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
-        entity->animSet = 8;
+        entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 0x10;
 
@@ -950,8 +950,8 @@ void func_801C1368(u16 objectId, Entity* src, Entity* dst) {
     dst->unk5A = src->unk5A;
     dst->zPriority = src->zPriority;
     dst->animSet = src->animSet;
-    dst->flags = 0x1002000 | FLAG_UNK_04000000 | FLAG_UNK_08000000 |
-                 FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+    dst->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
+                 FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                  FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     if (src->palette & 0x8000) {
@@ -988,7 +988,7 @@ void func_801C14E8(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(D_80180A54);
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->palette = 0x81B6;
         self->unk6C = 0x70;
         self->zPriority = 192;
@@ -1088,7 +1088,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityStageNamePopup);
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {
     Primitive* prim;
-    s32 firstPrimIndex;
+    s32 primIndex;
     u16* temp_d;
     u16 temp_e;
     s32 temp_a;
@@ -1096,16 +1096,16 @@ void EntitySoulStealOrb(Entity* self) {
     u16 angle;
     switch (self->step) {
     case 0:
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (firstPrimIndex == (-1)) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
         InitializeEntity(D_80180A48);
-        D_8008701E[firstPrimIndex * 0x1a] = 8;
-        self->firstPolygonIndex = firstPrimIndex;
-        self->animSet = 0;
-        self->flags |= 0x800000;
+        D_8008701E[primIndex * 0x1a] = 8;
+        self->primIndex = primIndex;
+        self->animSet = ANIMSET_DRA(0);
+        self->flags |= FLAG_HAS_PRIMS;
         angle = func_801BD034(self, &g_Entities[PLAYER_CHARACTER]);
         temp_a = self->posY.i.hi < 113;
         temp_b = temp_a ^ 1;
@@ -1151,7 +1151,7 @@ void EntitySoulStealOrb(Entity* self) {
         func_801BCF78(self->ext.soulStealOrb.angle & 0xFFFF,
                       self->ext.soulStealOrb.unk80);
         MoveEntity(self);
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         AnimateEntity(&D_801820CC, self);
         angle = (float)((u32)self);
         prim->tpage = 0x18;
@@ -1186,15 +1186,15 @@ void EntityEnemyBlood(Entity* self) {
         if (i != -1) {
             InitializeEntity(D_80180A48);
             prim = &g_PrimBuf[i];
-            self->firstPolygonIndex = i;
-            self->animSet = 0;
+            self->primIndex = i;
+            self->animSet = ANIMSET_DRA(0);
             params = self->params;
             self->hitboxState = 1;
             self->ext.generic.unk7C.s = 48;
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
             self->hitboxWidth = 0;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
 
             for (i = 12; i != 0;) {
                 prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
@@ -1292,7 +1292,7 @@ void EntityEnemyBlood(Entity* self) {
             }
         }
 
-        prim = &g_PrimBuf[self->firstPolygonIndex];
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 12; i != 0; i--, prim++) {
             *(u16*)&prim->b1 = prim->x0;
             prim->y1 = prim->y0;

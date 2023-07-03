@@ -464,7 +464,7 @@ void func_801C8F54(Entity* self) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
         self->zPriority += 4;
-        self->flags |= 0x2000;
+        self->flags |= FLAG_UNK_2000;
     }
     MoveEntity();
     self->accelerationY += 0x2800;
@@ -477,7 +477,7 @@ void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180A54);
         self->palette = 0x82BB;
-        self->animSet = 2;
+        self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = D_80182454[self->params];
         self->accelerationY = D_80182440[self->params];
         self->step++;

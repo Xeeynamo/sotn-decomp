@@ -61,7 +61,8 @@ void EntityBoneScimitar(Entity* self) {
         InitializeEntity(D_80180C4C);
         if (self->params != 0) {
             self->palette += self->params;
-            self->flags &= ~0xC0000C00;
+            self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                             FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
             self->ext.generic.unk9C = g_Camera.posX.i.hi + self->posX.i.hi;
             if (self->params & D_8018208C) {
                 DestroyEntity(self);

@@ -132,7 +132,7 @@ void func_8017160C(s32 amount, s32 objectId) {
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
             entity->objectId = objectId;
-            entity->animSet = 0x8014;
+            entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
             facing = (g_Entities[0].facing + 1) & 1;
             entity->params = i + 1;
@@ -150,7 +150,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     s32 y;
     s32 index;
 
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     if (frameIndex == 0) {
         poly->pad3 = 8;
         return;
@@ -198,7 +198,7 @@ void func_801718A0(Entity* entity) {
     x += (rsin(entity->ext.generic.unk8C.modeS16.unk0 << 7) * 8) >> 12;
     y -= entity->ext.generic.unk8C.modeS16.unk0 / 2;
 
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     poly->x0 = poly->x2 = x - D_80170608[frame].x;
     poly->y0 = poly->y1 = y - D_80170608[frame].y;
     poly->x1 = poly->x3 = poly->x0 + D_80170608[frame].width;
@@ -213,14 +213,14 @@ void func_801719E0(Entity* self) {
         self->ext.fam.unk82 = self->params;
         switch (self->objectId) {
         case 0xD1:
-            self->firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (self->firstPolygonIndex == -1) {
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
             func_8017170C(self, 0);
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
-                          FLAG_FREE_POLYGONS | FLAG_UNK_20000;
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             self->ext.fam.unk84 = rand() % 4096;
             self->ext.fam.unk86 = 0;
@@ -230,15 +230,14 @@ void func_801719E0(Entity* self) {
             self->step++;
             break;
         case 0xD2:
-            self->firstPolygonIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (self->firstPolygonIndex == -1) {
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
             func_8017170C(self, 0);
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
-                          FLAG_UNK_02000000 | FLAG_FREE_POLYGONS |
-                          FLAG_UNK_20000;
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             if (self->ext.fam.unk82 == 0) {
                 self->ext.fam.ent = &PLAYER;
@@ -284,15 +283,14 @@ void func_801719E0(Entity* self) {
         switch (self->objectId) {
         case 0xD1:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
-                          FLAG_FREE_POLYGONS | FLAG_UNK_20000;
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             self->ext.fam.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
-                          FLAG_UNK_02000000 | FLAG_FREE_POLYGONS |
-                          FLAG_UNK_20000;
+                          FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
             if (self->ext.fam.unk82 == 0) {
                 self->ext.fam.ent = &PLAYER;
@@ -366,7 +364,7 @@ void func_80171ED4(s32 arg0) {
     DestroyEntity(e);
     e->unk5A = 0x6C;
     e->palette = 0x140;
-    e->animSet = 0x8014;
+    e->animSet = ANIMSET_OVL(20);
     e->params = 0;
     e->zPriority = PLAYER.zPriority - 2;
     e->facing = (PLAYER.facing + 1) & 1;
@@ -442,7 +440,7 @@ s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
     u16 new_var2;
     s32 ret;
     ret = 0;
-    if (self->animFrameDuration == (-1)) {
+    if (self->animFrameDuration == -1) {
         ret = -1;
     } else if (self->animFrameDuration == 0) {
         self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
@@ -492,8 +490,8 @@ void DestroyEntity(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
     }
 
     ptr = (u32*)entity;
@@ -574,7 +572,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
 void func_80174038(Entity* entity) {
     switch (entity->step) {
     case 0:
-        entity->flags = 0x20000 | FLAG_UNK_04000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000;
         if (D_8003C704 != 0) {
             D_80171090 = 99;
             DestroyEntity(entity);
@@ -837,7 +835,7 @@ s32 func_801747B8(void) {
             continue;
         if (entity->hitboxState == 0)
             continue;
-        if (entity->flags & 0x200000)
+        if (entity->flags & FLAG_UNK_00200000)
             continue;
         if (entity->posX.i.hi < -16)
             continue;

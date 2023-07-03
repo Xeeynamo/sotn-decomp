@@ -2,7 +2,7 @@
 
 void func_801B6DE4(Entity* self) {
     s32 temp_s1 = self->hitFlags;
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
     s32 temp;
 
@@ -15,16 +15,16 @@ void func_801B6DE4(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxState = 1;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        if (firstPolygonIndex == (-1)) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *((s32*)(&self->ext.generic.unk7C)) = poly;
 
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         poly->tpage = 0xF;
         poly->clut = 9;
         poly->u0 = 72;
@@ -613,8 +613,8 @@ void DestroyEntity(Entity* self) {
     s32 length;
     u32* ptr;
 
-    if (self->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(self->firstPolygonIndex);
+    if (self->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(self->primIndex);
     }
 
     ptr = (u32*)self;

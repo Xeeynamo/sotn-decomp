@@ -1,7 +1,7 @@
 #include "st0.h"
 
 void EntityStageTitleFadeout(Entity* self) {
-    s16 firstPrimIndex;
+    s16 primIndex;
     Primitive* prim;
     s32 temp_a0;
     s32 temp_a1;
@@ -15,12 +15,12 @@ void EntityStageTitleFadeout(Entity* self) {
         }
 
         InitializeEntity(D_801805D4);
-        firstPrimIndex = g_api.AllocPrimitives(PRIM_G4, 5);
-        if (firstPrimIndex != -1) {
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->firstPolygonIndex = firstPrimIndex;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 5);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             self->ext.stageTitleCard.prim = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
                 prim->blendMode = 8;
                 prim = prim->next;
@@ -186,7 +186,7 @@ const u32 rodataPadding_801A7AFC = 0;
 
 void EntityStageTitleCard(Entity* self) {
     Entity* fakeEntity; // !FAKE
-    s16 firstPrimIndex;
+    s16 primIndex;
     Primitive* prim;
     VertexFake* v;
     s16 temp_unk8E;
@@ -199,17 +199,17 @@ void EntityStageTitleCard(Entity* self) {
     case 0:
         if (D_80180908 == 0) {
             InitializeEntity(D_801805D4);
-            firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
-            if (firstPrimIndex == -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+            if (primIndex == -1) {
                 D_80180908 = 1;
             label:
                 DestroyEntity(self);
                 return;
             }
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->firstPolygonIndex = firstPrimIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             self->ext.stageTitleCard.prim = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             prim->type = PRIM_GT3;
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
@@ -385,4 +385,40 @@ void EntityStageTitleCard(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2B0C8", func_801ABBBC);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2B0C8", func_801AC458);
+s32 func_801AC458(s16 arg0) {
+    s32 ret = arg0;
+    Entity* e;
+    Entity* e2;
+
+    switch (ret) {
+    case 0:
+        e = g_CurrentEntity;
+        ret = 1;
+        e[1].unk19 = 2;
+        e[1].unk1C = 0x600;
+        e[1].animFrameIdx = 0;
+        e[1].animFrameDuration = 0;
+        e[1].step = 2;
+        e[1].posX.i.hi = e->posX.i.hi;
+        e[1].posY.i.hi = e->posY.i.hi + 16;
+
+    case 1:
+        e2 = &g_CurrentEntity[1];
+        if (AnimateEntity(D_80180964, e2) == 0) {
+            ret++;
+        }
+        if (LOW(e2->animFrameIdx) == 6) {
+            g_CurrentEntity->ext.stub[0x24] = 1;
+        }
+        break;
+
+    case 2:
+        e = &g_CurrentEntity[1];
+        e->animCurFrame = 0;
+        e->unk19 = 0;
+        e->step = 1;
+        ret = 0xFF;
+        break;
+    }
+    return ret;
+}

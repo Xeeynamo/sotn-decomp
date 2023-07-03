@@ -118,7 +118,7 @@ s32 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    PLAYER.animSet = 1;
+    PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.unk19 &= 0xF3;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
@@ -174,7 +174,8 @@ block_13:
     PLAYER.objectRoomIndex = 1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_8011405C);
+void AlucardHandleDamage(DamageParam* param, s16 arg1, s16 arg2);
+INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", AlucardHandleDamage);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80114DF4);
 

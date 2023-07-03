@@ -99,8 +99,10 @@ clean:
 	git clean -fdx config/
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
-	$(PYTHON) ./tools/symbols.py sort
+	VERSION=us $(PYTHON) ./tools/symbols.py sort
+	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
@@ -258,6 +260,7 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
 
 extract_saturn_pcm: $(SATURN_SPLITTER_APP)
 	mkdir -p build/saturn/SD
@@ -447,6 +450,8 @@ build_saturn_copy_files:
 	cp  ./src/saturn/t_bat.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/zero.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/stage_02.c $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/stage_02.h $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/warp.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/sattypes.h $(SATURN_BUILD_DIR)
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
@@ -454,6 +459,7 @@ build_saturn_copy_files:
 	cp -r ./asm/saturn/t_bat $(SATURN_BUILD_DIR)/asm/saturn/t_bat
 	cp -r ./asm/saturn/zero $(SATURN_BUILD_DIR)/asm/saturn/zero
 	cp -r ./asm/saturn/stage_02 $(SATURN_BUILD_DIR)/asm/saturn/stage_02
+	cp -r ./asm/saturn/warp $(SATURN_BUILD_DIR)/asm/saturn/warp
 	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
 	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
@@ -462,24 +468,28 @@ build_saturn_dosemu_native:
 	cd build/saturn && FILENAME=t_bat sh ./compile_dosemu.sh
 	cd build/saturn && FILENAME=zero sh ./compile_dosemu.sh
 	cd build/saturn && FILENAME=stage_02 sh ./compile_dosemu.sh
+	cd build/saturn && FILENAME=warp sh ./compile_dosemu.sh
 
 build_saturn_dosemu_docker:
 	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=t_bat -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=zero -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 	docker run --rm -e FILENAME=stage_02 -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
+	docker run --rm -e FILENAME=warp -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 
 build_saturn_link_docker_ld:
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -verbose zero.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s"
+	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib -s"
 
 build_saturn_link_native_ld:
 	cd build/saturn && sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -verbose zero.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s
+	cd build/saturn && sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib -s
 
 build_saturn_link_copy:
 	# link
@@ -489,6 +499,7 @@ build_saturn_link_copy:
 	cp ./config/saturn/t_bat_user_syms.txt ./build/saturn/
 	cp ./config/saturn/game_user_syms.txt ./build/saturn/
 	cp ./config/saturn/stage_02_user_syms.txt ./build/saturn/
+	cp ./config/saturn/warp_user_syms.txt ./build/saturn/
 
 	cp ./config/saturn/*.ld ./build/saturn
 
@@ -511,7 +522,7 @@ check_saturn_docker:
 	docker run --rm -e INPUT_FILENAME=zero_li.o -e OUTPUT_FILENAME=0.BIN -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	docker run --rm -e INPUT_FILENAME=stage_02_li.o -e OUTPUT_FILENAME=STAGE_02.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	# check hashes
-	sha1sum --check config/saturn/check.saturn.sha
+	sha1sum --check config/check.saturn.sha
 
 check_saturn_native:
 	# dump binaries using sh binutils container
@@ -520,7 +531,7 @@ check_saturn_native:
 	sh-elf-objcopy ./build/saturn/zero_li.o -O binary ./build/saturn/0.BIN
 	sh-elf-objcopy ./build/saturn/stage_02_li.o -O binary ./build/saturn/STAGE_02.PRG
 	# check hashes
-	sha1sum --check config/saturn/check.saturn.sha
+	sha1sum --check config/check.saturn.sha
 
 diff_saturn_docker:
 	chmod +x tools/saturn_toolchain/diff.sh

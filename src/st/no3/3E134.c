@@ -10,7 +10,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        entity->animSet = -0x7FFF;
+        entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 56;
         if (entity->params != 0) {
             entity->unk19 = 0xB;
@@ -106,7 +106,7 @@ void EntityFallingLeaf(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        entity->animSet = -0x7FFF;
+        entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = (entity->params & 1) + 63;
         entity->zPriority = 0xC1;
         entity->accelerationX = D_801819E8[entity->params * 2];
@@ -166,7 +166,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEA20);
 void func_801BECCC(Entity* entity) {
     /** TODO: !FAKE
      * do while (0) fixed instruction reordering at
-     * entity->flags ^= FLAG_FREE_POLYGONS;
+     * entity->flags ^= FLAG_HAS_PRIMS;
      * but intruduces a problem in PlaySfx, which is fixed
      * by using gameApi pointer.
      */
@@ -174,14 +174,14 @@ void func_801BECCC(Entity* entity) {
 
     if (g_pads[0].tapped == 0x800) {
         D_801D7D20 = 1;
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+        g_api.FreePrimitives(entity->primIndex);
         do {
-            entity->flags ^= FLAG_FREE_POLYGONS;
+            entity->flags ^= FLAG_HAS_PRIMS;
         } while (0);
-        if (D_801D7D58 != (-1)) {
+        if (D_801D7D58 != -1) {
             g_api.FreePrimitives(D_801D7D58);
         }
-        if (D_801D7D54 != (-1)) {
+        if (D_801D7D54 != -1) {
             g_api.FreePrimitives(D_801D7D54);
         }
         gameApi = &g_api;
@@ -214,7 +214,7 @@ void EntityUnkId5B(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        entity->animSet = -0x7FF8;
+        entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
         entity->unk5A = 0x44;
@@ -255,7 +255,7 @@ void EntityUnkId5E(Entity* entity) {
         animCurFrame = entity->animCurFrame;
         InitializeEntity(D_80180B00);
         entity->animCurFrame = animCurFrame;
-        entity->animSet = -0x7FF8;
+        entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->unk5A = 0x44;
         if (entity->params != 0) {
@@ -645,8 +645,8 @@ void DestroyEntity(Entity* item) {
     s32 length;
     u32* ptr;
 
-    if (item->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(item->firstPolygonIndex);
+    if (item->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(item->primIndex);
     }
 
     ptr = (u32*)item;

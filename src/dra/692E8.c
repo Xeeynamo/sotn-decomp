@@ -32,7 +32,7 @@ void func_80109594(void) {
     Primitive* prim;
     s32 radius;
     s32 intensity;
-    s32 firstPrimIndex;
+    s32 primIndex;
     s32 i;
     s32 val;
     s32 memset_len;
@@ -44,7 +44,7 @@ void func_80109594(void) {
     DestroyEntity(g_CurrentEntity);
     PLAYER.posX.val = 0x200000;
     PLAYER.posY.val = 0x200000;
-    PLAYER.animSet = 1;
+    PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.palette = 0x8100;
     PLAYER.facing = 0;
     PLAYER.unk1A = 0x100;
@@ -68,15 +68,15 @@ void func_80109594(void) {
 
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
-        e->animSet = 1;
+        e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
         e->palette = 0x8100;
-        e->flags = 0x08020000;
+        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
     }
 
-    firstPrimIndex = AllocPrimitives(PRIM_TILE, 8);
-    prim = &g_PrimBuf[firstPrimIndex];
-    g_Entities[1].firstPolygonIndex = firstPrimIndex;
+    primIndex = AllocPrimitives(PRIM_TILE, 8);
+    prim = &g_PrimBuf[primIndex];
+    g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= 0x800000;
     for (i = 0; i < 6; i++) {
         prim->blendMode = 0x10A;
@@ -177,7 +177,7 @@ void func_8010A234(s32 arg0) {
             }
         } else if (*(s32*)&g_Player.unk0C & 0x01000000) {
             g_Entities[PLAYER_CHARACTER].palette = 0x8100;
-            g_Entities[PLAYER_CHARACTER].animSet = 1;
+            g_Entities[PLAYER_CHARACTER].animSet = ANIMSET_DRA(1);
             g_Entities[PLAYER_CHARACTER].unk5A = 0;
             g_Entities[PLAYER_CHARACTER].unk1E = 0;
             g_Entities[PLAYER_CHARACTER].unk19 &= 0xF3;
@@ -219,7 +219,7 @@ void func_8010A3F0(void) {
 s32 func_8010A4A4(void);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A4A4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateEntityAlucard);
+INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", EntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
@@ -343,7 +343,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;

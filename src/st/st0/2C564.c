@@ -6,7 +6,7 @@
 #include "st0.h"
 
 void EntityDracula(Entity* self) {
-    s16 firstPrimIndex;
+    s16 primIndex;
     Entity* newEntity;
     Primitive* prim;
     s16 temp_v1_8;
@@ -49,16 +49,16 @@ void EntityDracula(Entity* self) {
         CreateEntityFromCurrentEntity(0x1D, &self[1]);
         self[1].zPriority = self->zPriority + 1;
 
-        firstPrimIndex = g_api.func_800EDB58(PRIM_GT4, 128);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 128);
+        if (primIndex == -1) {
             self->step = 0;
             break;
         }
 
-        prim = &g_PrimBuf[firstPrimIndex];
-        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         self->ext.dracula.prim = prim;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->blendMode = 8;
             prim = prim->next;

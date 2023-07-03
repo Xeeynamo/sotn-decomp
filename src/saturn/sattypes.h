@@ -10,19 +10,44 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
+#define LOW(x) (*(s32*)&(x))
+
+typedef void (*PfnEntityUpdate)(struct Entity*);
+
+struct Unk0600B344 {
+    s16 unk0;
+    u8 pad2[6];
+    s16 unk8;
+    u8 pad[0x3];
+    s16 zPriority;
+    u8 pad3[0x1];
+    s32 unk14;
+    s32 unk18;
+};
+
 typedef struct Entity {
-    /* 0x0 */ void* unk0;
-    /* 0x4 */ s16 posX;
-    s16 pad0;
-    /* 0x8 */ s16 posY;
-    s16 pad1[5];
-    /* 0x14 */ u16 hitboxOffX; // Hitbox X Offset
-    /* 0x16 */ s16 hitboxOffY; // Hitbox Y Offset
-    s8 pad3[0x14];
+    /* 0x00 */ struct Unk0600B344* unk0;
+    /* 0x04 */ s16 posX;
+    /* 0x06 */ s16 posX_lo;
+    /* 0x08 */ s16 posY;
+    /* 0x0a */ s16 posY_lo;
+    /* 0x0c */ s32 accelerationX;
+    /* 0x10 */ s32 accelerationY;
+    /* 0x14 */ u16 hitboxOffX;
+    /* 0x16 */ s16 hitboxOffY;
+    s16 pad3[3];
+    /* 0x1E */ s16 rotAngle;
+    /* 0x20 */ s16 unk1A;
+    /* 0x22 */ s16 unk1C;
+    s16 pad3_8;
+    s16 pad3_9;
+    /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
     /* 0x30 */ u16 params;
-    u8 pad4[8];
+    /* 0x32 */ u16 objectRoomIndex;
+    /* 0x34 */ u32 flags;
+    /* 0x38 */ u16 pad4_1;
     /* 0x3a */ u16 hitboxState; // hitbox state
     s16 pad5[4];
     /* 0x44 */ u8 hitboxWidth;
@@ -31,12 +56,18 @@ typedef struct Entity {
     u8 pad6[0x4];
     /* 0x4c */ u16 animFrameIdx;
     /* 0x4e */ s16 animFrameDuration;
-    u8 pad7[0x24];
+    /* 0x50 */ u16 pad7[8];
+    /* 0x60 */ s16 primIndex;
+    /* 0x62 */ u16 pad7_1[9];
     /* 0x74 */ u16 unk74;
     u8 pad8[0x40];
 } Entity;
 
 extern Entity* g_CurrentEntity;
+
+typedef struct {
+    // structure still unknwon
+} Collider;
 
 #define NULL 0
 
@@ -65,6 +96,12 @@ typedef enum {
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
+
+typedef struct {
+    s32 unk0;
+    PfnEntityUpdate func;
+} EntityEntry;
+extern EntityEntry** PfnEntityUpdates[];
 
 typedef enum {
     ITEM_S_SWORD,
@@ -272,5 +309,6 @@ extern PlayerState g_Player;
 s32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
+void DestroyEntity(Entity* entity);
 
 #endif

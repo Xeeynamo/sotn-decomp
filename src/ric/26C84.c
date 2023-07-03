@@ -9,7 +9,7 @@ void func_80162C84(Entity* entity) {
         entity->unk5A = 0x66;
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = 0x8149;
-        entity->animSet = -0x7FED;
+        entity->animSet = ANIMSET_OVL(19);
         func_8015C920(&D_80154ED4);
         entity->accelerationX = -0x1C000;
         entity->posY.i.hi = 0xBB;
@@ -83,18 +83,18 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80162EF8);
 
 void func_801641A0(Entity* entity) {
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
 
     entity->posX.i.hi = PLAYER.posX.i.hi;
     entity->posY.i.hi = PLAYER.posY.i.hi - 8;
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = primIndex;
+        if (primIndex != -1) {
             entity->ext.generic.unk7C.s = 16;
             entity->ext.generic.unk7E.modeU16 = 12;
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->primIndex];
             poly->u0 = poly->u2 = 64;
             poly->v0 = poly->v1 = 192;
             poly->u1 = poly->u3 = 127;
@@ -106,7 +106,7 @@ void func_801641A0(Entity* entity) {
             poly->clut = 0x160;
             poly->pad2 = PLAYER.zPriority + 8;
             poly->pad3 = 0x35;
-            entity->flags = 0x40000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
+            entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
         } else {
@@ -124,7 +124,7 @@ void func_801641A0(Entity* entity) {
 
     default:
     def:
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
+        poly = &g_PrimBuf[entity->primIndex];
         poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
         poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
         poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
@@ -256,8 +256,9 @@ void func_8016779C(Entity* entity) {
 
     entity->facing = PLAYER.facing;
     if (entity->step == 0) {
-        entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_UNK_10000;
-        entity->animSet = -0x7FEE;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
+                        FLAG_UNK_10000;
+        entity->animSet = ANIMSET_OVL(18);
         entity->unk5A = 0x46;
         entity->palette = 0x8120;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -296,7 +297,8 @@ void func_80167964(Entity* entity) {
      */
     if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
-            entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_UNK_10000;
+            entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 |
+                            FLAG_UNK_04000000 | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
             *(&PLAYER.palette +
@@ -360,22 +362,22 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80169704);
 
 void func_80169C10(Entity* entity) {
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
     s32 PosX = 8;
     s32 PosY = 4;
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = primIndex;
+        if (primIndex != -1) {
+            entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
             entity->accelerationY = 0x8000;
             entity->posX.i.hi =
                 ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
             entity->posY.i.hi =
                 ((u16)entity->posY.i.hi - PosY) + (rand() & 0xF);
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->primIndex];
             poly->clut = 0x1B0;
             poly->tpage = 0x1A;
             poly->b0 = 0;
@@ -392,7 +394,7 @@ void func_80169C10(Entity* entity) {
 
     default:
         entity->posY.val += entity->accelerationY;
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
+        poly = &g_PrimBuf[entity->primIndex];
         if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
             func_80156C60(entity);
         }
@@ -409,7 +411,7 @@ void func_80169D74(Entity* entity) {
         entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
         entity->ext.generic.unk84.unk =
             entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-        entity->animSet = -0x7FEF;
+        entity->animSet = ANIMSET_OVL(17);
         entity->animCurFrame = D_80155E68[entity->params];
         entity->unk5A = 0x66;
         entity->palette = 0x81B0;
@@ -501,15 +503,15 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016C734);
 INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016CC74);
 
 void func_8016D328(Entity* entity) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     s32 acceleration;
 
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = primIndex;
+        if (primIndex != -1) {
+            entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
             entity->posX.val =
                 entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
             entity->posY.val =
@@ -519,7 +521,7 @@ void func_8016D328(Entity* entity) {
             entity->ext.generic.unkB0 = 0x18;
             func_8015FAB8(entity);
             entity->unk5A = 0x79;
-            entity->animSet = 0xE;
+            entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
             entity->unk4C = &D_80155EA8;
             entity->blendMode = 0x30;
@@ -527,7 +529,7 @@ void func_8016D328(Entity* entity) {
             entity->unk6C = 0x60;
             entity->hitboxWidth = 8;
             entity->hitboxHeight = 8;
-            entity->flags |= 0x100000;
+            entity->flags |= FLAG_UNK_100000;
             acceleration = (rand() % 512) + 0x300;
             entity->accelerationX = rcos(acceleration) * 32;
             entity->accelerationY = -(rsin(acceleration) * 32);

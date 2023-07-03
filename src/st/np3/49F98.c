@@ -18,7 +18,7 @@ typedef enum {
 
 void EntityBloodSplatter(Entity* self) {
     Primitive *prim, *prim2, *prim3;
-    s16 firstPrimIndex;
+    s16 primIndex;
 
     switch (self->step) {
     case 0:
@@ -26,15 +26,15 @@ void EntityBloodSplatter(Entity* self) {
         break;
 
     case 1:
-        firstPrimIndex = g_api.AllocPrimitives(4, 8);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->firstPolygonIndex = firstPrimIndex;
-        prim = &g_PrimBuf[firstPrimIndex];
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         *(s32*)&self->ext.generic.unk7C = prim;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         self->step++;
         break;
 
@@ -210,7 +210,7 @@ void func_801CA498(Primitive* prim) {
 void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
     Entity* newEntity;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s16 facing;
     s32 animStatus;
 
@@ -339,15 +339,15 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_DYING:
         if (self->step_s == 0) {
-            firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
-            if (firstPrimIndex == -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
+            if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
-            self->firstPolygonIndex = firstPrimIndex;
-            prim = &g_PrimBuf[firstPrimIndex];
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
             *(s32*)&self->ext.generic.unk7C = prim;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             self->step_s++;
         }
 
@@ -384,7 +384,7 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (self->flags & FLAG_FREE_POLYGONS) {
+        if (self->flags & FLAG_HAS_PRIMS) {
             prim = *(s32*)&self->ext.generic.unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
@@ -414,7 +414,7 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_DESTROY:
-        if (self->flags & FLAG_FREE_POLYGONS) {
+        if (self->flags & FLAG_HAS_PRIMS) {
             prim = *(s32*)&self->ext.generic.unk7C;
             while (prim != NULL) {
                 if (prim->p3 & 8) {
@@ -445,18 +445,18 @@ void EntityBloodyZombie(Entity* self) {
 
 void func_801CAE0C(Entity* self) { // BloodDrips
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180A54);
-        firstPrimIndex = g_api.AllocPrimitives(2, 1);
-        if (firstPrimIndex != -1) {
-            prim = &g_PrimBuf[firstPrimIndex];
-            self->firstPolygonIndex = firstPrimIndex;
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             self->hitboxState = 0;
             *(s32*)&self->ext.generic.unk7C = prim;
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
                 prim->x0 = prim->x1 = self->posX.i.hi;
                 prim->y0 = prim->y1 = self->posY.i.hi;
@@ -493,7 +493,7 @@ void func_801CAE0C(Entity* self) { // BloodDrips
         prim->x1 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
         if (prim->y0 < prim->y1) {
-            g_api.FreePrimitives(self->firstPolygonIndex);
+            g_api.FreePrimitives(self->primIndex);
             DestroyEntity(self);
         }
         break;
