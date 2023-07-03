@@ -125,6 +125,8 @@ extern s16 D_801C250A;
 extern s32 D_801C250C;
 extern s32 D_801C2578;
 extern s32 D_801C257C;
+extern u16 D_80181CAC[];
+extern u16 D_80181CDC[];
 extern u32 D_80181CF0[];
 
 // *** EntityDracula properties END ***

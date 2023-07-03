@@ -1000,7 +1000,39 @@ void func_801B61D4(void) {}
 
 void func_801B61DC(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", CollectSubweapon);
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80181CAC[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        subWeapon = D_80181CDC[subWeapon];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        g_CurrentEntity->step = 7;
+        g_CurrentEntity->step_s = 0;
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+            return;
+        }
+        g_CurrentEntity->accelerationX = 0x20000;
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
 
