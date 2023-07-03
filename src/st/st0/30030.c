@@ -986,7 +986,15 @@ void func_801B5F4C(u16 arg0) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", CollectHeart);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", CollectGold);
+void CollectGold(u16 index) {
+    g_api.PlaySfx(0x6A9);
+    index -= 2;
+    g_Status.gold = g_Status.gold + D_80181CF0[index];
+
+    if ((s32)g_Status.gold > 0xF423F) {
+        g_Status.gold = 0xF423F;
+    }
+}
 
 void func_801B61D4(void) {}
 
