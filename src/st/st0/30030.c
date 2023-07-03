@@ -784,7 +784,7 @@ void func_801B57D0(u16 params) {
         return;
     }
     current = g_CurrentEntity;
-    g_CurrentEntity->objectId = 2;
+    g_CurrentEntity->objectId = E_EXPLOSION;
     g_CurrentEntity->pfnUpdate = EntityExplosion;
     g_CurrentEntity->unk19 = 0;
     current->params = params;
