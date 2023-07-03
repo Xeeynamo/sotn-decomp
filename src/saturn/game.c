@@ -189,7 +189,6 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
     }
 }
 
-
 // _etc_hosei
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
 
@@ -205,7 +204,6 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
-
 // _waza_work_set
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
 
@@ -220,7 +218,6 @@ s32 func_800FDE00(void) {
     D_80137968 = 0;
     return 0;
 }
-
 
 // _check_experience
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
@@ -347,7 +344,6 @@ void AddHearts(s32 value) {
 
 const u16 pad_06070038 = 0xCCCC;
 const u16 pad_0607003A = 0xCCCD;
-
 
 // _get_damage_sub
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607003C, func_0607003C);
@@ -702,7 +698,6 @@ void func_801C58C4(s32 state) {
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
-
 
 // _teki_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B264, func_0607B264);
