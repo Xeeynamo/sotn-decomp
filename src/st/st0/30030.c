@@ -318,8 +318,29 @@ void func_801B3420(s16 arg0) {
     }
 }
 
-void func_801B3478(s16);
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B3478);
+void func_801B3478(s16 arg0) {
+    s32 expected;
+    u8 flag;
+
+    if (D_801C00A8 != 0) {
+        func_801B33D4(arg0 - D_80097908);
+        D_801C00A8 = 0;
+    }
+
+    while (true) {
+        if ((D_801C00A0->posX == 0xFFFF) || (arg0 < D_801C00A0->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801C00A0->objectRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801C00A0);
+        }
+        D_801C00A0++;
+    }
+}
 
 void func_801B3574(s16);
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B3574);
@@ -351,8 +372,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B3828);
 
 LayoutObject* D_80180314[];
 LayoutObject* D_801803E8[];
-extern LayoutObject* D_801C00A0;
-extern s8 D_801C00A8;
+
 extern u8 D_801C00AC;
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_80180314[objLayoutId];
