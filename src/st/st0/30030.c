@@ -31,7 +31,15 @@ void func_801B0058(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B0180);
+void func_801B0180(void) {
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 512;
+    rect.h = 512;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 void func_801B01C0(void) {
     g_GpuBuffers[0].draw.r0 = 0;
