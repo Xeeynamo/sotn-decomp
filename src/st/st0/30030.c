@@ -1012,7 +1012,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
         subWeapon = 1;
         g_CurrentEntity->unk6D = 0x10;
     } else {
-        subWeapon = D_80181CDC[subWeapon];
+        subWeapon = D_80181CDC[subWeapon]; 
         g_CurrentEntity->unk6D = 0x60;
     }
 
