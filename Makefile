@@ -521,6 +521,7 @@ check_saturn_docker:
 	docker run --rm -e INPUT_FILENAME=t_bat_li.o -e OUTPUT_FILENAME=T_BAT.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	docker run --rm -e INPUT_FILENAME=zero_li.o -e OUTPUT_FILENAME=0.BIN -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	docker run --rm -e INPUT_FILENAME=stage_02_li.o -e OUTPUT_FILENAME=STAGE_02.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
+	docker run --rm -e INPUT_FILENAME=warp_li.o -e OUTPUT_FILENAME=WARP.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
 	# check hashes
 	sha1sum --check config/check.saturn.sha
 
@@ -530,6 +531,7 @@ check_saturn_native:
 	sh-elf-objcopy ./build/saturn/t_bat_li.o -O binary ./build/saturn/T_BAT.PRG
 	sh-elf-objcopy ./build/saturn/zero_li.o -O binary ./build/saturn/0.BIN
 	sh-elf-objcopy ./build/saturn/stage_02_li.o -O binary ./build/saturn/STAGE_02.PRG
+	sh-elf-objcopy ./build/saturn/warp_li.o -O binary ./build/saturn/WARP.PRG
 	# check hashes
 	sha1sum --check config/check.saturn.sha
 
