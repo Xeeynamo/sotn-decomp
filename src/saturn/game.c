@@ -1,5 +1,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
+
+// __game_start
 INCLUDE_ASM("asm/saturn/game/data", d6066000, d_06066000);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066040, func_06066040);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60661BC, func_060661BC);
@@ -20,6 +22,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067958, func_06067958);
 INCLUDE_ASM("asm/saturn/game/data", d606797C, d_0606797C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6067A04, func_06067A04);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B6F8, func_0606B6F8);
+
+// _READ_SUB_OUT_MODE
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606B760, func_0606B760);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BB4C, func_0606BB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606BEE4, func_0606BEE4);
@@ -34,7 +38,11 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606CA10, func_0606CA10);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D058, func_0606D058);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D2D0, func_0606D2D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D358, func_0606D358);
+
+// _PSX_POSITION_GET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D3FC, func_0606D3FC);
+
+// _PSX_TO_STAGE_NO_GET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D554, func_0606D554);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D5FC, func_0606D5FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
@@ -42,13 +50,23 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D880, func_0606D880);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DAE8, func_0606DAE8);
+
+// _make_att
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DC8C, func_0606DC8C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DCF0, func_0606DCF0);
+
+// _make_all
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DF2C, func_0606DF2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DFA0, func_0606DFA0);
+
+// _servant_work_clear
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E020, func_0606E020);
+
+// _init_work_sub_out_p
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E074, func_0606E074);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E0D0, func_0606E0D0);
+
+// _MODE_GAME
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EE28, func_0606EE28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EEF8, func_0606EEF8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
@@ -171,6 +189,7 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
     }
 }
 
+// _etc_hosei
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
 
 // SAT: func_0606F760
@@ -185,7 +204,10 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
+// _waza_work_set
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
+
+// _reduce_weapon
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
 
 // SAT: func_0606F884
@@ -197,6 +219,7 @@ s32 func_800FDE00(void) {
     return 0;
 }
 
+// _check_experience
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
 
@@ -322,6 +345,7 @@ void AddHearts(s32 value) {
 const u16 pad_06070038 = 0xCCCC;
 const u16 pad_0607003A = 0xCCCD;
 
+// _get_damage_sub
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607003C, func_0607003C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60703DC, func_060703DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070410, func_06070410);
@@ -407,17 +431,31 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
+
+// _INIT_ROOM
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60720F4, func_060720F4);
+
+// _SET_DEFAULT_SCL_PRIORITY
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60726A8, func_060726A8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60727DC, func_060727DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607284C, func_0607284C);
 INCLUDE_ASM("asm/saturn/game/data", d60728B4, d_060728B4);
+
+// _INIT_GAME_OVER
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072BCC, func_06072BCC);
+
+// _GAMEOVER_FADEIN
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C04, func_06072C04);
+
+// _SUB_DISP
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C94, func_06072C94);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60731C0, func_060731C0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
+
+// _INIT_SUB_GAMEN
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60732E4, func_060732E4);
+
+// _PSX_cursor_up_down
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60733A4, func_060733A4);
 
 // SAT: func_0607356C
@@ -437,13 +475,21 @@ bool func_800FB1EC(s32 arg0) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60735A4, func_060735A4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607360C, func_0607360C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607369C, func_0607369C);
+
+// _PSX_id_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60736D4, func_060736D4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607371C, func_0607371C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073740, func_06073740);
+
+// _goto_equip
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073770, func_06073770);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60737A0, func_060737A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073E58, func_06073E58);
+
+// _PSX_sort_item
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073EEC, func_06073EEC);
+
+// _PSX_equip_id_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073FEC, func_06073FEC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074048, func_06074048);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074068, func_06074068);
@@ -451,7 +497,11 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60740F8, func_060740F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074278, func_06074278);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60743B8, func_060743B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074470, func_06074470);
+
+// _EVENT_SCL_TRANS
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60744F8, func_060744F8);
+
+// _SS_MOJI_SET
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60745A0, func_060745A0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074698, func_06074698);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074700, func_06074700);
@@ -465,9 +515,13 @@ s32* func_06074A98(void) { return &DAT_06085c70; }
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074AA8, func_06074AA8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074BF4, func_06074BF4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074C28, func_06074C28);
+
+// _status_work_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6074CC8, func_06074CC8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075838, func_06075838);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075D24, func_06075D24);
+
+// _status_pause
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60766DC, func_060766DC);
 
 struct Unk_060860D8 {
@@ -480,13 +534,19 @@ s32 func_06076718(void) { return DAT_060860D8.unk24 == 0x15; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6076A04, func_06076A04);
+
+// _set_XYWH
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077148, func_06077148);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607718C, func_0607718C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60771B0, func_060771B0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60771D4, func_060771D4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077260, func_06077260);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077354, func_06077354);
+
+// _set_life_num
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077764, func_06077764);
+
+// _status_disp_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077B20, func_06077B20);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077D88, func_06077D88);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078120, func_06078120);
@@ -498,17 +558,25 @@ s32* func_060784A8(void) { return &DAT_00292000; }
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60784B8, func_060784B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078550, func_06078550);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078604, func_06078604);
+
+// _disp_num_string
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078684, func_06078684);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607872C, func_0607872C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078748, func_06078748);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60787C8, func_060787C8);
+
+// _SubDispSpecial
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078920, func_06078920);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60789C4, func_060789C4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078D58, func_06078D58);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078E80, func_06078E80);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6078F58, func_06078F58);
+
+// _SubDispSortKind
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079008, func_06079008);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60790B4, func_060790B4);
+
+// _SubDispFace
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079208, func_06079208);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60792B8, func_060792B8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079424, func_06079424);
@@ -519,6 +587,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60797FC, func_060797FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
+
+// _normal_move
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
 
 void MoveEntity(Entity* entity) {
@@ -546,6 +616,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079BE4, func_06079BE4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079C04, func_06079C04);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079DEC, func_06079DEC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079F60, func_06079F60);
+
+// _v_side_hosei
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A030, func_0607A030);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A118, func_0607A118);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A1C8, func_0607A1C8);
@@ -553,6 +625,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A290, func_0607A290);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A608, func_0607A608);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
+
+// _hkyori_search
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A9F8, func_0607A9F8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA1C, func_0607AA1C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
@@ -561,8 +635,12 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAA4, func_0607AAA4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAF4, func_0607AAF4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB1C, func_0607AB1C);
+
+// _bicyousei_dir_0
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB4C, func_0607AB4C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB84, func_0607AB84);
+
+// _hanten_dir_0
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607ABBC, func_0607ABBC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607ABF4, func_0607ABF4);
 
@@ -580,6 +658,8 @@ s32 func_0607AF28(u8 pos) { return DAT_06085e86[pos]; }
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF3C, func_0607AF3C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF68, func_0607AF68);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF94, func_0607AF94);
+
+// _search_point
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AFD8, func_0607AFD8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B014, func_0607B014);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B04C, func_0607B04C);
@@ -619,6 +699,7 @@ void func_801C58C4(s32 state) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
+// _teki_init
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B264, func_0607B264);
 
 extern u32 g_randomNext;
@@ -659,4 +740,6 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BE38, func_0607BE38);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607BED0, func_0607BED0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C054, func_0607C054);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0A0, func_0607C0A0);
+
+// _MTH_GetRand
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607C0BC, func_0607C0BC);
