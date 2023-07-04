@@ -94,7 +94,6 @@ void EntityLockCamera(Entity* entity) {
 #endif
 
 void func_801A805C(Entity* self) {
-    u16 params = self->params >> 0xC;
     Entity* newEntity;
     s32 entityCount;
     u16* paramsPtr;
@@ -102,6 +101,7 @@ void func_801A805C(Entity* self) {
     u16* temp;
     s16 posY;
     s32 i;
+    u16 params = self->params >> 0xC;
 
     if (self->step != 0) {
         AnimateEntity(D_801806D0[params], self);
@@ -391,7 +391,7 @@ s32 func_801A89D8(s32 arg0) {
     Primitive* prim;
     s16 firstPrimIndex;
 
-    firstPrimIndex = g_api.AllocPrimitives(6, 8);
+    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 8);
     D_801C2504[0] = firstPrimIndex;
     if (firstPrimIndex == -1) {
         D_801C2504[0] = 0;
