@@ -5,6 +5,8 @@
 // Alchemy Laboratory
 
 INCLUDE_ASM("asm/saturn/stage_02/data", d60DC000, d_060DC000);
+
+// EntityBreakable (candles)
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC040, func_060DC040);
 
 // SAT: func_060DC460
@@ -132,7 +134,10 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E22FC, func_060E22FC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2420, func_060E2420);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E2898, func_060E2898);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E29A4, func_060E29A4);
+
+// EntityHeartDrop
 INCLUDE_ASM("asm/saturn/stage_02/data", d60E2A80, d_060E2A80);
+
 INCLUDE_ASM("asm/saturn/stage_02/data", d60E32DC, d_060E32DC);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60E47A4, d_060E47A4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4908, func_060E4908);
@@ -162,7 +167,10 @@ s32 func_801BBC3C(Entity* e) {
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4FD0, func_060E4FD0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5388, func_060E5388);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5410, func_060E5410);
+
+// EntityExplosion
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5AE4, func_060E5AE4);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5C4C, func_060E5C4C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5DB4, func_060E5DB4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E5EA0, func_060E5EA0);
@@ -265,8 +273,10 @@ void func_060EA234(u16** param_1) {
 const u16 pad_060EA260 = 0xCCCC;
 const u16 pad_060EA262 = 0xCCCD;
 
+// EntityAxeKnight
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA264, func_060EA264);
 
+// EntityAxeKnightThrowingAxe
 // SAT: func_060EAC54
 void EntityAxeKnightRotateAxe(Entity* self) {
     self->unk0->unk0 |= 0x40;
@@ -286,6 +296,7 @@ void EntityAxeKnightRotateAxe(Entity* self) {
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EACC0, func_060EACC0);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAF2C, func_060EAF2C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAFAC, func_060EAFAC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
