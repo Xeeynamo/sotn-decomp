@@ -35,7 +35,7 @@ segments:
         end: 0xb8eb
 
       - start: 0xb8ec
-        type: data
+        type: c
         file: zero
         end: 0xbf37
 
