@@ -15,6 +15,11 @@ segments:
       - start: 0x0
         type: data
         file: zero
+        end: 0x57
+
+      - start: 0x58
+        type: c
+        file: zero
         end: 0xae07
   
       # ratan2
