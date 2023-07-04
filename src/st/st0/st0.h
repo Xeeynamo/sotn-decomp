@@ -27,6 +27,7 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
+    E_ID_26 = 0x26,
     E_SECRET_BUTTON = 0x28,
     E_SECRET_STAIRS = 0x29,
 } EntityIDs;
@@ -40,15 +41,18 @@ extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-s16 func_801B4C78();
+s16 GetPlayerSide();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
 
+LayoutObject* D_80180314[];
+LayoutObject* D_801803E8[];
+
 // *** Initializers ***
-extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 D_80180574[];
 extern u16 D_8018058C[];
+extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 D_801805A4[];
 extern u16 D_801805BC[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
@@ -59,6 +63,20 @@ extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
 extern u16 D_80180628[];
 
 extern ObjInit2 D_80180638[];
+
+// *** func_801A805C properties START ***
+
+extern s32 D_801806D0[]; // animation
+extern u8 D_801806F8[];  // hitboxHeight
+extern u8 D_80180704[];  // params
+extern u16 D_80180710[]; // palette
+extern s16 D_80180724[]; // animSet
+extern s16 D_80180738[]; // unk5A
+extern s8 D_8018074C[];  // blendMode
+extern s16 D_80180758[]; // hitboxOffY
+extern u8 D_80180770[];  // params
+
+// *** func_801A805C properties END ***
 
 // *** EntityCutscene properties START ***
 
@@ -99,8 +117,17 @@ extern u8 D_80180BCC[]; // Animation
 extern u8 D_80180BDC[]; // Animation
 extern u16 D_80180A48[];
 extern Point16 D_80180A58[];
+extern LayoutObject* D_801C00A0;
+extern u8 D_801C00A8;
+extern u8 D_801C00AC;
+extern s16 D_801C2508;
+extern s16 D_801C250A;
+extern s32 D_801C250C;
 extern s32 D_801C2578;
 extern s32 D_801C257C;
+extern u16 D_80181CAC[];
+extern u16 D_80181CDC[];
+extern u32 D_80181CF0[];
 
 // *** EntityDracula properties END ***
 
@@ -120,6 +147,12 @@ extern u16 D_80181F04[];
 extern u8 D_801824CC[];
 extern u16* D_801C00A4;
 extern s32 D_801C24C8;
+extern s32 D_801C24CC;
+extern Primitive* D_801C24E4[];
+extern s32 D_801C24FC;
+extern s32 D_801C2500;
+extern s32 D_801C2504[];
+extern s16 D_801C2508;
 extern s16 D_801C24D2;
 extern u16 D_801C24D4;
 extern s16 D_801C24D6;

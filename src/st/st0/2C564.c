@@ -159,7 +159,7 @@ void EntityDracula(Entity* self) {
             if (self->ext.dracula.unkA0 != 0) {
                 g_api.PlaySfx(NA_SE_VO_DR_TAUNT_1);
                 self->animCurFrame = 1;
-                self->facing = (func_801B4C78() & 1) ^ 1;
+                self->facing = (GetPlayerSide() & 1) ^ 1;
                 self->ext.dracula.unkA0 = 0;
             }
             if (self->ext.dracula.unk9C != 0xFF) {
@@ -169,7 +169,7 @@ void EntityDracula(Entity* self) {
             break;
 
         case 3:
-            self->facing = (func_801B4C78() & 1) ^ 1;
+            self->facing = (GetPlayerSide() & 1) ^ 1;
             self->ext.dracula.unkA2 = (self->ext.dracula.unkA2 + 1) & 3;
             self->hitboxState = 3;
             if (self->ext.dracula.unkA2 == 0) {

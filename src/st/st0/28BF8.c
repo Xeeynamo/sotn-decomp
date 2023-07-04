@@ -9,7 +9,11 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8BF8);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8CB0);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8E34);
+void func_801A8E34(s32 arg0) {
+    D_801C250C = arg0 + 0x100000;
+    D_801C250A = 0;
+    D_801C2508 = 1;
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8E60);
 
