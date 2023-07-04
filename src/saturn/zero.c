@@ -6,13 +6,19 @@ INCLUDE_ASM("asm/saturn/zero/data", d600EFBC, d_0600EFBC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F914, func_0600F914);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F96C, func_0600F96C);
+
+// _PSX_SHAKE_MAIN
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FACC, func_0600FACC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB0C, func_0600FB0C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB34, func_0600FB34);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB4C, func_0600FB4C);
+
+// _TEST_TEST
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB9C, func_0600FB9C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FBBC, func_0600FBBC);
+
+// _all_map_check
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, func_0600FC04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, func_0600FCF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FE98, func_0600FE98);
