@@ -32,19 +32,21 @@ typedef enum {
     E_SECRET_STAIRS = 0x29,
 } EntityIDs;
 
-extern const char* D_801A7984;
-extern const char* D_801A7990;
-extern const char* D_801A799C;
-
-extern PfnEntityUpdate PfnEntityUpdates[];
-extern bool g_isSecretStairsButtonPressed;
-extern bool g_isDraculaFirstFormDefeated;
-
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 s16 GetPlayerSide();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
+
+extern const char* D_801A7984;
+extern const char* D_801A7990;
+extern const char* D_801A799C;
+
+extern s8 c_HeartPrizes[10];
+
+extern PfnEntityUpdate PfnEntityUpdates[];
+extern bool g_isSecretStairsButtonPressed;
+extern bool g_isDraculaFirstFormDefeated;
 
 LayoutObject* D_80180314[];
 LayoutObject* D_801803E8[];
