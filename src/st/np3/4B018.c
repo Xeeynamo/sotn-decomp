@@ -79,9 +79,9 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDFD8);
 void func_801CE04C(Entity* entity, Collider* collider) {
     s16 var_s0 = 0;
 
-    g_api.CheckCollision(entity->posX.i.hi,
-                         (s16)(entity->posY.i.hi + collider->unk18), collider,
-                         0);
+    g_api.CheckCollision(
+        entity->posX.i.hi, (s16)(entity->posY.i.hi + collider->unk18), collider,
+        0);
     if (collider->effects & 1) {
         var_s0 = 1;
         if (collider->effects & 0x8000) {

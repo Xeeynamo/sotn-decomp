@@ -84,8 +84,8 @@ s32 func_800F0CD8(s32 arg0) {
             goto block_25;
         }
         if (playerX < g_CurrentRoom.x) {
-            var_v0 = SetNextRoomToLoad(g_CurrentRoom.left - 1,
-                                       (playerY >> 8) + g_CurrentRoom.top);
+            var_v0 = SetNextRoomToLoad(
+                g_CurrentRoom.left - 1, (playerY >> 8) + g_CurrentRoom.top);
             if (var_v0) {
                 D_80072F98 = 1;
                 D_801375C0 = g_Entities[0].posX.i.hi + 0x100;
@@ -96,8 +96,8 @@ s32 func_800F0CD8(s32 arg0) {
             playerX = g_CurrentRoom.x;
         }
         if (playerX >= g_CurrentRoom.width) {
-            var_v0 = SetNextRoomToLoad(g_CurrentRoom.right + 1,
-                                       (playerY >> 8) + g_CurrentRoom.top);
+            var_v0 = SetNextRoomToLoad(
+                g_CurrentRoom.right + 1, (playerY >> 8) + g_CurrentRoom.top);
             if (var_v0) {
                 D_80072F98 = 1;
                 D_801375C0 = g_Entities[0].posX.i.hi - 0x100;
@@ -110,8 +110,8 @@ s32 func_800F0CD8(s32 arg0) {
     }
     if (D_80097424 == 0) {
         if (playerY < g_CurrentRoom.y + 4) {
-            temp_v0 = SetNextRoomToLoad((playerX >> 8) + g_CurrentRoom.left,
-                                        g_CurrentRoom.top - 1);
+            temp_v0 = SetNextRoomToLoad(
+                (playerX >> 8) + g_CurrentRoom.left, g_CurrentRoom.top - 1);
             if (temp_v0 != false) {
                 D_80072F98 = 2;
                 D_801375C0 = g_Entities[0].posX.i.hi;
@@ -127,8 +127,8 @@ s32 func_800F0CD8(s32 arg0) {
             var_s0 = 0x18;
         }
         if (playerY >= ((g_CurrentRoom.height - var_s0) + 0x14)) {
-            temp_v0 = SetNextRoomToLoad((playerX >> 8) + g_CurrentRoom.left,
-                                        g_CurrentRoom.bottom + 1);
+            temp_v0 = SetNextRoomToLoad(
+                (playerX >> 8) + g_CurrentRoom.left, g_CurrentRoom.bottom + 1);
             if (temp_v0 != false) {
                 D_80072F98 = 2;
                 D_801375C0 = g_Entities[0].posX.i.hi;
@@ -186,8 +186,8 @@ block_25:
                 g_CurrentRoom.y + 8 < g_Camera.posY.i.hi) {
                 g_Camera.posY.i.hi -= 4;
                 g_Entities[0].posY.i.hi += 4;
-            } else if (g_Camera.posY.i.hi < g_CurrentRoom.y &&
-                       g_CurrentRoom.y != 0) {
+            } else if (
+                g_Camera.posY.i.hi < g_CurrentRoom.y && g_CurrentRoom.y != 0) {
                 g_Camera.posY.i.hi += 4;
                 g_Entities[0].posY.i.hi -= 4;
             } else {

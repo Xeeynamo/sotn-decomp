@@ -224,8 +224,8 @@ void DemoSaveFile(void) {
     char buf[0x100];
     long fd;
 
-    __builtin_memcpy(buf, "sim:c:\\bin\\demo_key.bin",
-                     sizeof("sim:c:\\bin\\demo_key.bin"));
+    __builtin_memcpy(
+        buf, "sim:c:\\bin\\demo_key.bin", sizeof("sim:c:\\bin\\demo_key.bin"));
     fd = open(buf, 0x200);
     if (fd < 0) {
         return;

@@ -121,11 +121,11 @@ void EntityEnemyBlood(Entity* self) {
                 prim->v0 = 4;
 
                 if (params != 0) {
-                    func_80194D08(0xCC0 + i * 64,
-                                  ((Random() & 0xF) * 0x10) + 0x180);
+                    func_80194D08(
+                        0xCC0 + i * 64, ((Random() & 0xF) * 0x10) + 0x180);
                 } else {
-                    func_80194D08(0xB40 - i * 64,
-                                  ((Random() & 0xF) * 0x10) + 0x180);
+                    func_80194D08(
+                        0xB40 - i * 64, ((Random() & 0xF) * 0x10) + 0x180);
                 }
 
                 *(s32*)&prim->u1 = self->accelerationX;

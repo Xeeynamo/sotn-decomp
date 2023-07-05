@@ -814,8 +814,8 @@ typedef struct {
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*AccelerateX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
-    /* 8003C7D0 */ void (*GetEquipProperties)(s32 handId, Equipment* res,
-                                              s32 equipId);
+    /* 8003C7D0 */ void (*GetEquipProperties)(
+        s32 handId, Equipment* res, s32 equipId);
     /* 8003C7D4 */ void (*func_800EA5E4)(s32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
@@ -837,8 +837,8 @@ typedef struct {
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
-    /* 8003C828 */ u16 (*DealDamage)(Entity* enemyEntity,
-                                     Entity* attackerEntity);
+    /* 8003C828 */ u16 (*DealDamage)(
+        Entity* enemyEntity, Entity* attackerEntity);
     /* 8003C82C */ void (*LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
     /* 8003C830 */ Equipment* D_800A4B04;
     /* 8003C834 */ Accessory* D_800A7718;
@@ -857,8 +857,8 @@ typedef struct {
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void* func_800F2288;
-    /* 8003C874 */ void (*func_8011A3AC)(Entity* entity, s32 arg1, s32 arg2,
-                                         Unkstruct_8011A3AC* arg3);
+    /* 8003C874 */ void (*func_8011A3AC)(
+        Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
     /* 8003C880 */ bool (*func_80133940)(void);

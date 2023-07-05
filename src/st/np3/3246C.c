@@ -904,8 +904,8 @@ void EntityFallingRock(Entity* self) {
         self->accelerationY += 0x2000;
         self->rotAngle -= 0x20;
 
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
-                             0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {

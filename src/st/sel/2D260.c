@@ -439,10 +439,10 @@ void func_801B195C(s32 arg0) {
 
 void func_801B19F4(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W,
-                  DISP_STAGE_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
-                  DISP_STAGE_H);
+    SetDefDrawEnv(
+        &g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(
+        &g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
     SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_801B195C(0);
 }
@@ -627,8 +627,8 @@ void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->y3 = y + height;
 }
 
-void func_801B26A0(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
-                   s32 v) {
+void func_801B26A0(
+    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;
@@ -708,8 +708,8 @@ void DrawString16x16(const char* str, s32 x, s32 y, s32 tga) {
 #endif
 
 void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
-    func_801B27A8(x, y, 8, 8, (img & 0xF) * 8, (img & 0xF0) / 2, 0x196, 0x1E,
-                  tge, 0x80);
+    func_801B27A8(
+        x, y, 8, 8, (img & 0xF) * 8, (img & 0xF0) / 2, 0x196, 0x1E, tge, 0x80);
 }
 
 void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge) {

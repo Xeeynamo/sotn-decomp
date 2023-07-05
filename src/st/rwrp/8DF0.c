@@ -356,9 +356,9 @@ u8 func_80191CC8(s32 arg0) {
         if (collider.effects != 0) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk18;
-            g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                                 (s16)(g_CurrentEntity->posY.i.hi - 4),
-                                 &collider, 0);
+            g_api.CheckCollision(
+                g_CurrentEntity->posX.i.hi,
+                (s16)(g_CurrentEntity->posY.i.hi - 4), &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->accelerationX > 0) {
@@ -394,9 +394,9 @@ u8 func_80191CC8(s32 arg0) {
         if (collider.effects != 0) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk20;
-            g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                                 (s16)(g_CurrentEntity->posY.i.hi + 4),
-                                 &collider, 0);
+            g_api.CheckCollision(
+                g_CurrentEntity->posX.i.hi,
+                (s16)(g_CurrentEntity->posY.i.hi + 4), &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->accelerationX > 0) {

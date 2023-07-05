@@ -147,8 +147,8 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80164DF8);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_801656B0);
 
-void func_80165DD8(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
-                   bool arg4) {
+void func_80165DD8(
+    POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
     s16 top = y - radius;
     s16 bottom = y + radius;
     s32 colorChannel;

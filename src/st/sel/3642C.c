@@ -176,8 +176,8 @@ s32 func_801B884C(s32 cardSlot, s32 cardSubSlot, const char* saveFile,
     return 0;
 }
 
-s32 func_801B88F4(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
-                  s32 arg5) {
+s32 func_801B88F4(
+    s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4, s32 arg5) {
     s8 savePath[32];
     s32 new_var;
     s32 device;

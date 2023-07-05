@@ -1218,8 +1218,8 @@ void func_8010189C(void) {
             poly->pad3 = D_800A2F64[i];
 
             if (i == 5) {
-                SetPolyRect(poly, D_800A2EED, D_800A2EFD, D_800A2F3D,
-                            D_800A2F2D);
+                SetPolyRect(
+                    poly, D_800A2EED, D_800A2EFD, D_800A2F3D, D_800A2F2D);
                 poly->y0 = poly->y2;
                 poly->x1 = poly->x0;
                 poly->x2 = poly->x3;

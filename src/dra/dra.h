@@ -661,9 +661,9 @@ void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
-void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
-                    s32 colorIntensity, s32 argB);
+void DrawMenuSprite(
+    MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
+    s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB);
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
@@ -706,8 +706,8 @@ void DestroyEntity(Entity*);
 void func_801065F4(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(POLY_GT4* poly, s32 colorIntensity);
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
-                   s32 v);
+void func_80107360(
+    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
@@ -740,8 +740,8 @@ void func_80118D0C(Entity* entity);
 void func_80119588(Entity* entity);
 void func_80119D3C(Entity* entity);
 void func_80119F70(Entity* entity);
-void func_8011A3AC(Entity* entity, s32 arg1, s32 arg2,
-                   Unkstruct_8011A3AC* arg3);
+void func_8011A3AC(
+    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 void func_8011A4C8(Entity* entity);
 Entity* func_8011AAFC(Entity* entity, u32, s32);
 void func_8011AC3C(Entity* entity);

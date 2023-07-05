@@ -675,12 +675,12 @@ void UpdateCd(void) {
                 func_800219E0(0) == 1) {
                 CdIntToPos(cdFile->loc, &g_CdLoc);
                 if (g_CdCallback == CdCallback_12) {
-                    CdIntToPos(D_8003C908.D_8003C90C * 14 + cdFile->loc,
-                               &g_CdLoc);
+                    CdIntToPos(
+                        D_8003C908.D_8003C90C * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_13) {
-                    CdIntToPos(D_8003C908.D_8003C910 * 14 + cdFile->loc,
-                               &g_CdLoc);
+                    CdIntToPos(
+                        D_8003C908.D_8003C910 * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_14) {
                     CdIntToPos(g_mapTilesetId * 11 + cdFile->loc, &g_CdLoc);
@@ -778,8 +778,8 @@ void UpdateCd(void) {
             break;
 
         case CdCallback_16:
-            D_80137FB0 = func_80021350(g_Cd.D_80137F88, D_80137F94,
-                                       D_800BD1C8[D_80137F94]);
+            D_80137FB0 = func_80021350(
+                g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
             break;
 
         case CdCallback_17:

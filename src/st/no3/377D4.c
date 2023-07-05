@@ -858,8 +858,8 @@ void EntityFallingRock(Entity* self) {
         self->accelerationY += 0x2000;
         self->rotAngle -= 0x20;
 
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
-                             0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -957,9 +957,9 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         self->zPriority = 0x5E;
 
         if (D_8003BDEC[50] != 0) {
-            for (tilePos = 0x48, i = 7, self->step = 128,
-                self->animCurFrame = 0;
-                 i >= 0; tilePos += 0x10, i--) {
+            for (
+                tilePos = 0x48, i = 7, self->step = 128, self->animCurFrame = 0;
+                i >= 0; tilePos += 0x10, i--) {
                 g_CurrentRoomTileLayout.fg[tilePos] = 0;
             }
             break;
@@ -987,8 +987,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0;
-             tilePos += 0x10, i--) {
+        for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0; tilePos += 0x10,
+            i--) {
             g_CurrentRoomTileLayout.fg[tilePos] = temp;
         }
         break;

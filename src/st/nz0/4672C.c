@@ -225,8 +225,8 @@ void EntitySpittleBoneSpit(Entity* self) {
             prim->y1 = test.y.c.h;
             *(s32*)&prim->x3 += 0x1800;
             if (*(s32*)&prim->x3 > 0) {
-                g_api.CheckCollision(prim->x0, (s16)(prim->y0 + 16), &collider,
-                                     0);
+                g_api.CheckCollision(
+                    prim->x0, (s16)(prim->y0 + 16), &collider, 0);
                 if (collider.effects != 0) {
                     prim->blendMode = 8;
                 }
