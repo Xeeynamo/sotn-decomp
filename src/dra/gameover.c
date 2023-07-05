@@ -380,11 +380,11 @@ void func_800E6250(void) {
             ;
         while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
             ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) !=
-               0)
+        while (
+            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
             ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) !=
-               0)
+        while (
+            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
             ;
     }
 }

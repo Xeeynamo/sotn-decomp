@@ -67,15 +67,15 @@ void EntityPrizeDrop(Entity* self) {
 
     case 2:
         if (self->accelerationY < 0) {
-            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi - 7,
-                                 &collider, 0);
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
             if (collider.effects & EFFECT_NOTHROUGH) {
                 self->accelerationY = 0;
             }
         }
         MoveEntity();
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
-                             0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
         if (itemId != 0) {
             if (collider.effects & EFFECT_NOTHROUGH &&
                 self->accelerationY > 0) {
@@ -169,8 +169,8 @@ void EntityPrizeDrop(Entity* self) {
 
         case 1:
             MoveEntity();
-            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7,
-                                 &collider, 0);
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
             if (collider.effects & EFFECT_NOTHROUGH &&
                 self->accelerationY > 0) {
                 self->accelerationX = 0;
@@ -395,8 +395,8 @@ void EntityEquipItemDrop(Entity* self) {
 
     case 2:
         if (self->accelerationY < 0) {
-            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi - 7,
-                                 &collider, 0);
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
             if (collider.effects & EFFECT_NOTHROUGH) {
                 self->accelerationY = 0;
             }
@@ -404,8 +404,8 @@ void EntityEquipItemDrop(Entity* self) {
 
         MoveEntity();
 
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 7, &collider,
-                             0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
 
         if ((collider.effects & EFFECT_NOTHROUGH) &&
             (self->accelerationY > 0)) {
@@ -576,8 +576,8 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018F620);
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018F750);
 #else
 extern void func_8018F928(Entity*);
-void func_8018F750(Entity* source, s8 count, u16 xOffset, u16 yOffset,
-                   s16 xDistance) {
+void func_8018F750(
+    Entity* source, s8 count, u16 xOffset, u16 yOffset, s16 xDistance) {
     Entity* entity;
     s32 x, y;
     u8 i;
@@ -704,9 +704,9 @@ u8 func_8018FD48(s32 arg0) {
         if (collider.effects != 0) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk18;
-            g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                                 (s16)(g_CurrentEntity->posY.i.hi - 4),
-                                 &collider, 0);
+            g_api.CheckCollision(
+                g_CurrentEntity->posX.i.hi,
+                (s16)(g_CurrentEntity->posY.i.hi - 4), &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->accelerationX > 0) {
@@ -742,9 +742,9 @@ u8 func_8018FD48(s32 arg0) {
         if (collider.effects != 0) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk20;
-            g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                                 (s16)(g_CurrentEntity->posY.i.hi + 4),
-                                 &collider, 0);
+            g_api.CheckCollision(
+                g_CurrentEntity->posX.i.hi,
+                (s16)(g_CurrentEntity->posY.i.hi + 4), &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->accelerationX > 0) {
@@ -1187,11 +1187,11 @@ void EntityEnemyBlood(Entity* self) {
                 prim->v0 = 4;
 
                 if (params != 0) {
-                    func_8018C0A4(0xCC0 + i * 64,
-                                  ((Random() & 0xF) * 0x10) + 0x180);
+                    func_8018C0A4(
+                        0xCC0 + i * 64, ((Random() & 0xF) * 0x10) + 0x180);
                 } else {
-                    func_8018C0A4(0xB40 - i * 64,
-                                  ((Random() & 0xF) * 0x10) + 0x180);
+                    func_8018C0A4(
+                        0xB40 - i * 64, ((Random() & 0xF) * 0x10) + 0x180);
                 }
 
                 *(s32*)&prim->u1 = self->accelerationX;

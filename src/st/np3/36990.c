@@ -262,8 +262,8 @@ void EntitySlogra(Entity* self) {
                 func_801C2598(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_SLOGRA_SPEAR_PROJECTILE, self,
-                                           newEntity);
+                    CreateEntityFromEntity(
+                        E_SLOGRA_SPEAR_PROJECTILE, self, newEntity);
                     if (self->facing != 0) {
                         newEntity->posX.i.hi += 68;
                     } else {
@@ -749,8 +749,8 @@ void EntityGaibon(Entity* self) {
             if (!(self->ext.GS_Props.timer & maxSpeed)) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_GAIBON_SMALL_FIREBALL, self,
-                                           newEntity);
+                    CreateEntityFromEntity(
+                        E_GAIBON_SMALL_FIREBALL, self, newEntity);
                     func_801C2598(NA_SE_EN_GAIBON_SMALL_FIREBALL);
                     newEntity->posY.i.hi -= 2;
                     if (self->facing != 0) {
@@ -811,8 +811,8 @@ void EntityGaibon(Entity* self) {
         case GAIBON_FALLING_WITH_MAP_COLLISION:
             MoveEntity();
             self->accelerationY += 0x1800;
-            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 28,
-                                 &collider, 0);
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi + 28, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
                 self->posY.i.hi += *(u16*)&collider.unk18;
                 self->step_s++;
@@ -848,12 +848,12 @@ void EntityGaibon(Entity* self) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     if (self->ext.GS_Props.nearDeath == 0) {
-                        CreateEntityFromEntity(E_GAIBON_SMALL_FIREBALL, self,
-                                               newEntity);
+                        CreateEntityFromEntity(
+                            E_GAIBON_SMALL_FIREBALL, self, newEntity);
                         func_801C2598(NA_SE_EN_GAIBON_SMALL_FIREBALL);
                     } else {
-                        CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self,
-                                               newEntity);
+                        CreateEntityFromEntity(
+                            E_GAIBON_BIG_FIREBALL, self, newEntity);
                         func_801C2598(NA_SE_EN_GAIBON_BIG_FIREBALL);
                     }
 
@@ -889,8 +889,8 @@ void EntityGaibon(Entity* self) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     func_801C2598(NA_SE_EN_GAIBON_BIG_FIREBALL);
-                    CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self,
-                                           newEntity);
+                    CreateEntityFromEntity(
+                        E_GAIBON_BIG_FIREBALL, self, newEntity);
                     newEntity->posY.i.hi -= 2;
                     if (self->facing != 0) {
                         newEntity->unk1E = 0x220;

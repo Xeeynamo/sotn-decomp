@@ -128,8 +128,8 @@ s32 func_800E7E08(u32 arg0) {
     case 4:
         while (func_800219E0(0) != 1)
             ;
-        if (func_80021350(D_8013644C->addr, D_800A0248,
-                          D_800BD1C8[D_800A0248]) < 0) {
+        if (func_80021350(
+                D_8013644C->addr, D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
             return -1;
         }
         break;
@@ -508,8 +508,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
-s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
-                  s32 fd) {
+s32 func_800E9640(
+    s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress, s32 fd) {
     char file[32];
     s32 nBytes;
     s32 ret;
@@ -533,8 +533,8 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     return ret;
 }
 
-s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
-                  s32 arg5) {
+s32 func_800E96E8(
+    s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4, s32 arg5) {
     s8 savePath[32];
     s32 new_var;
     s32 device;

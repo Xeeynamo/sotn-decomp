@@ -54,8 +54,8 @@ void EntityTableWithGlobe(Entity* self) {
     case 0:
         func_0607B264(self, 5);
         self->step++;
-        result = func_0600B344(D_060ED26C.unk8, D_060ED26C.unk10,
-                               D_060ED26C.unk0, 7);
+        result = func_0600B344(
+            D_060ED26C.unk8, D_060ED26C.unk10, D_060ED26C.unk0, 7);
 
         self->unk0 = result;
         result->zPriority = 0x6A;

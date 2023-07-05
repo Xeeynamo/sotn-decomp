@@ -241,8 +241,8 @@ void func_801A8328(Entity* self) {
 
         func_801BD0C0(prim);
 
-        g_api.CheckCollision(self->posX.i.hi, (s16)(self->posY.i.hi + 8),
-                             &collider, 0);
+        g_api.CheckCollision(
+            self->posX.i.hi, (s16)(self->posY.i.hi + 8), &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             g_api.PlaySfx(0x691);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);

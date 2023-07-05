@@ -69,10 +69,10 @@ void func_801B01F8(s32 arg0) {
 // Set stage display buffer
 void func_801B0280(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W,
-                  DISP_STAGE_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
-                  DISP_STAGE_H);
+    SetDefDrawEnv(
+        &g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(
+        &g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
     SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_801B01F8(0);
 }
@@ -956,8 +956,8 @@ void func_801B5F4C(u16 arg0) {
         }
     }
 
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         g_CurrentEntity->posY.i.hi + 7, &res, 0);
+    g_api.CheckCollision(
+        g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi + 7, &res, 0);
 
     if (arg0) {
         if (!(res.effects & 5)) {

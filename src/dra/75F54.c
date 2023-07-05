@@ -925,8 +925,8 @@ void func_80123F78(Entity* entity) {
     }
 }
 
-void func_80124164(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
-                   bool arg4) {
+void func_80124164(
+    POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
     s16 top = y - radius;
     s16 bottom = y + radius;
     s32 colorChannel;
@@ -2608,10 +2608,10 @@ void func_80134B48(void) {
 
 void func_80134C60(void) {
     u16 temp = (D_8013AE7C * D_800BF554[D_8013B664].volume) >> 7;
-    func_80132A04(0x14, D_800BF554[D_8013B664].vabid,
-                  D_800BF554[D_8013B664].prog, D_800BF554[D_8013B664].tone,
-                  D_800BF554[D_8013B664].note, (temp * (u16)D_801390A4) >> 7,
-                  D_80139010);
+    func_80132A04(
+        0x14, D_800BF554[D_8013B664].vabid, D_800BF554[D_8013B664].prog,
+        D_800BF554[D_8013B664].tone, D_800BF554[D_8013B664].note,
+        (temp * (u16)D_801390A4) >> 7, D_80139010);
 }
 
 void func_80134D14(void) {

@@ -289,9 +289,9 @@ void func_800F5AE4(MenuContext* context) {
         func_800F5904(context, x, 201, 128, 16, (i & 1) << 7,
                       func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
 }
-void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
-                    s32 colorIntensity, s32 argB) {
+void DrawMenuSprite(
+    MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
+    s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB) {
     u32* ot = g_CurrentBuffer->ot;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     s32 otIdx = context->unk18 + 2;
@@ -449,8 +449,8 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
                  0xB, r, 0, 0);
 }
 
-void func_800F66BC(const char* str, s32 x, s32 y, MenuContext* context,
-                   bool disableTexShade) {
+void func_800F66BC(
+    const char* str, s32 x, s32 y, MenuContext* context, bool disableTexShade) {
     u16 temp;
     const int ChWidth = 12;
     const int ChHeight = 16;
@@ -577,16 +577,16 @@ void DrawSettingsButton(MenuContext* ctx) {
         y += 16;
     }
 
-    func_800F5E68(ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, 84, 12,
-                  4, 1);
+    func_800F5E68(
+        ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, 84, 12, 4, 1);
 }
 #endif
 
 void DrawSettingsReverseCloak(MenuContext* context) {
     DrawMenuStr(c_strNormal, 176, 48, context);
     DrawMenuStr(c_strReversal, 176, 64, context);
-    func_800F5E68(context, g_Settings.isCloakLingingReversed, 174, 46, 64, 12,
-                  4, 1);
+    func_800F5E68(
+        context, g_Settings.isCloakLingingReversed, 174, 46, 64, 12, 4, 1);
 }
 
 void DrawSettingsSound(MenuContext* context) {
@@ -657,8 +657,8 @@ void func_800F72BC(void) {
                                    LOH(g_StatusAttackLeftHand)),
                      0x13C, 0x5A, (&D_80137692) - 0x3A);
         DrawMenuInt(g_StatusDefenseEquip, 0x154, 0x6A, (&D_80137692) - 0x3A);
-        DrawMenuChar(func_800F7218(LOH(g_Status.defenseEquip),
-                                   LOH(g_StatusDefenseEquip)),
+        DrawMenuChar(func_800F7218(
+                         LOH(g_Status.defenseEquip), LOH(g_StatusDefenseEquip)),
                      0x13C, 0x6A, (&D_80137692) - 0x3A);
         y = 0x22;
         new_var = g_Status.statsTotal;
@@ -1297,8 +1297,8 @@ bool func_800FB1EC(s32 arg0) {
         if (arg0 == 0) {
             return true;
         }
-    } else if ((arg0 == 0x1A) || (arg0 == 0) || (arg0 == 0x30) ||
-               (arg0 == 0x39)) {
+    } else if (
+        (arg0 == 0x1A) || (arg0 == 0) || (arg0 == 0x30) || (arg0 == 0x39)) {
         return true;
     }
 

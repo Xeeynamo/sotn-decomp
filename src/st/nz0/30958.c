@@ -220,8 +220,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     }
 }
 
-void EntityBottomSecretRoomFloor(Entity* self, u16* tileLayoutPtr,
-                                 s32 tilePos) {
+void EntityBottomSecretRoomFloor(
+    Entity* self, u16* tileLayoutPtr, s32 tilePos) {
     Entity* newEntity;
     s32 flag;
     s32 i;
@@ -330,8 +330,8 @@ void func_801B19A0(Entity* self) {
         }
 
         self->accelerationY += 0x2000;
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 6, &collider,
-                             0);
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             if (self->params == 0) {
@@ -351,8 +351,8 @@ void func_801B19A0(Entity* self) {
                 newEntity =
                     AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self,
-                                           newEntity);
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->params = 0x10;
                 }
                 DestroyEntity(self);

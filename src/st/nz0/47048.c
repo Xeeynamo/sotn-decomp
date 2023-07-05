@@ -98,8 +98,8 @@ void EntitySubWeaponContainer(Entity* self) {
         }
 
         for (i = 0; i < 96; i++) { // Spawn falling liquid
-            newEntity = AllocEntity(&g_Entities[UNK_ENTITY_51],
-                                    &g_Entities[UNK_ENTITY_100]);
+            newEntity = AllocEntity(
+                &g_Entities[UNK_ENTITY_51], &g_Entities[UNK_ENTITY_100]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3B, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;
@@ -202,8 +202,8 @@ void func_801C7654(Entity* entity) {
         MoveEntity();
         entity->accelerationY += 0x2000;
 
-        g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8,
-                             &collider.effects, 0);
+        g_api.CheckCollision(
+            entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
 
         if (collider.effects & EFFECT_SOLID) {
             entity->unk19 = 2;

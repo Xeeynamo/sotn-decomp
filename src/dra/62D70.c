@@ -220,8 +220,8 @@ void DrawEntitiesHitbox(s32 blendMode) {
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
     drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
     otIdx = 0x1F0;
-    for (polyCount = 0, entity = g_Entities; polyCount < 0x40;
-         polyCount++, entity++) {
+    for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
+        entity++) {
         if (entity->hitboxState == 0)
             continue;
         if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
@@ -378,8 +378,8 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->y3 = y + height;
 }
 
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
-                   s32 v) {
+void func_80107360(
+    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;

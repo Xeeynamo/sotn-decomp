@@ -77,8 +77,8 @@ void HandleNowLoading(void) {
             g_DemoMode = Demo_None;
             if (D_80098850 != 0) {
                 if (g_pads[1].pressed & PAD_UP) {
-                    __builtin_memcpy(g_Status.saveName, "richter ",
-                                     sizeof("richter "));
+                    __builtin_memcpy(
+                        g_Status.saveName, "richter ", sizeof("richter "));
                     g_CurrentPlayableCharacter = PLAYER_RICHTER;
                     g_IsTimeAttackUnlocked = true;
                 } else {
@@ -299,10 +299,10 @@ void HandleNowLoading(void) {
             }
             pfnWeapon = D_8017D000.func_8017A01C;
             pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
-        } else if ((func_800E81FC(D_8003C908.D_8003C90C,
-                                  SimFileType_Weapon0Chr) < 0) ||
-                   (func_800E81FC(D_8003C908.D_8003C910,
-                                  SimFileType_Weapon1Chr) < 0)) {
+        } else if ((func_800E81FC(
+                        D_8003C908.D_8003C90C, SimFileType_Weapon0Chr) < 0) ||
+                   (func_800E81FC(
+                        D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
             break;
         }
         func_800FA7E8();
