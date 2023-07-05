@@ -15,6 +15,11 @@ segments:
       - start: 0x0
         type: data
         file: zero
+        end: 0x57
+
+      - start: 0x58
+        type: c
+        file: zero
         end: 0xae07
   
       # ratan2
@@ -35,7 +40,7 @@ segments:
         end: 0xb8eb
 
       - start: 0xb8ec
-        type: data
+        type: c
         file: zero
         end: 0xbf37
 
@@ -47,7 +52,18 @@ segments:
 
       # before DGFS
       - start: 0xbf88
+        type: c
+        file: zero
+        end: 0xD1F7
+        
+      # bug
+      - start: 0xD1F8
         type: data
+        file: zero
+        end: 0xD9EB
+        
+      - start: 0xD9EC
+        type: c
         file: zero
         end: 0x17233
 
