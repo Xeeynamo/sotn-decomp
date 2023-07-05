@@ -1,5 +1,7 @@
+#include "zero.h"
 #include "inc_asm.h"
 #include "sattypes.h"
+
 INCLUDE_ASM("asm/saturn/zero/data", d6004080, d_06004080);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60040D8, func_060040D8);
@@ -545,7 +547,12 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019FE4, func_06019FE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601A020, func_0601A020);
 
 // _SET_STAGE_OVERLAYADDR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AC00, func_0601AC00);
+void SetStageOverlayAddress() {
+    *DAT_0601ac28 = *DAT_0601ac2c; // 0x60dc000
+    *DAT_0601ac34 = *DAT_0601ac30; // 0x60dc004
+    *DAT_0601ac3c = *DAT_0601ac38; // 0x60dc008
+    *DAT_0601ac44 = *DAT_0601ac40; // 0x60dc00c
+}
 
 // _SET_SCL_OVERLAYADDR
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AC48, func_0601AC48);
