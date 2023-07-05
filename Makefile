@@ -449,6 +449,7 @@ build_saturn_copy_files:
 	cp  ./src/saturn/game.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/t_bat.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/zero.c $(SATURN_BUILD_DIR)
+	cp  ./src/saturn/zero.h $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/stage_02.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/stage_02.h $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/warp.c $(SATURN_BUILD_DIR)
@@ -478,14 +479,14 @@ build_saturn_dosemu_docker:
 	docker run --rm -e FILENAME=warp -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
 
 build_saturn_link_docker_ld:
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -verbose zero.o --no-check-sections -nostdlib -s"
+	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -T zero_user_syms.txt -verbose zero.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s"
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib -s"
 
 build_saturn_link_native_ld:
-	cd build/saturn && sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -verbose zero.o --no-check-sections -nostdlib -s
+	cd build/saturn && sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -T zero_user_syms.txt -verbose zero.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s
@@ -500,6 +501,7 @@ build_saturn_link_copy:
 	cp ./config/saturn/game_user_syms.txt ./build/saturn/
 	cp ./config/saturn/stage_02_user_syms.txt ./build/saturn/
 	cp ./config/saturn/warp_user_syms.txt ./build/saturn/
+	cp ./config/saturn/zero_user_syms.txt ./build/saturn/
 
 	cp ./config/saturn/*.ld ./build/saturn
 
