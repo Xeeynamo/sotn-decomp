@@ -553,42 +553,41 @@ void func_8011A4D0(void) {
         if (i == 16 && entity->objectId == 0) {
             g_Player.unk48 = 0;
         }
-        if (entity->objectId != 0) {
-            if (entity->step == 0) {
-                objectId = entity->objectId;
-                if (objectId < 0xD0) {
-                    //Objects 00-CF
-                    entity->pfnUpdate = D_800AD0C4[objectId];
-                } else if (objectId < 0xE0) {
-                    //Objects D0-DF
-                    entity->pfnUpdate = D_8016FCC0[objectId];
-                } else if (objectId == 0xEF || objectId == 0xFF ||
-                           objectId == 0xED || objectId == 0xFD) {
-                    entity->pfnUpdate = D_800AD0C4[1];
-                } else if (objectId == 0xEE || objectId == 0xFE) {
-                    entity->pfnUpdate = D_800AD0C4[15];
-                } else if (objectId >= 0xF0) {
-                    //Objects F0-FC
-                    entity->pfnUpdate = D_8017CC40[objectId];
-                } else {
-                    //Objects E0-EC
-                    entity->pfnUpdate = D_80179C80[objectId];
-                }
+        if (entity->objectId == 0) {
+            continue;
+        }
+        if (entity->step == 0) {
+            objectId = entity->objectId;
+            if (objectId < 0xD0) {
+                // Objects 00-CF
+                entity->pfnUpdate = D_800AD0C4[objectId];
+            } else if (objectId < 0xE0) {
+                // Objects D0-DF
+                entity->pfnUpdate = D_8016FCC0[objectId];
+            } else if (objectId == 0xEF || objectId == 0xFF ||
+                        objectId == 0xED || objectId == 0xFD) {
+                entity->pfnUpdate = D_800AD0C4[1];
+            } else if (objectId == 0xEE || objectId == 0xFE) {
+                entity->pfnUpdate = D_800AD0C4[15];
+            } else if (objectId >= 0xF0) {
+                // Objects F0-FC
+                entity->pfnUpdate = D_8017CC40[objectId];
+            } else {
+                // Objects E0-EC
+                entity->pfnUpdate = D_80179C80[objectId];
             }
-            if ((temp_s2 == 0) || (entity->flags & 0x10000)) {
-                entity->pfnUpdate(entity);
-                entity = g_CurrentEntity;
-                if (entity->objectId != 0) {
-                    if (!(entity->flags & FLAG_UNK_04000000) &&
-                        (((((u16)entity->posX.i.hi + 0x20) & 0xFFFF) >=
-                          0x141U) ||
-                         ((((u16)entity->posY.i.hi + 0x10) & 0xFFFF) >=
-                          0x111U))) {
-                        DestroyEntity(entity);
-                    } else {
-                        if (entity->flags & 0x100000) {
-                            UpdateAnim(NULL, (s32*)D_800ACFB4);
-                        }
+        }
+        if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
+            entity->pfnUpdate(entity);
+            entity = g_CurrentEntity;
+            if (entity->objectId != 0) {
+                if (!(entity->flags & FLAG_UNK_04000000) &&
+                    ((u16)(entity->posX.i.hi + 32) > 320 ||
+                        (u16)(entity->posY.i.hi + 16) > 272)) {
+                    DestroyEntity(entity);
+                } else {
+                    if (entity->flags & 0x100000) {
+                        UpdateAnim(NULL, (s32*)D_800ACFB4);
                     }
                 }
             }
