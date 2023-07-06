@@ -538,7 +538,6 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
 void func_8011A4C8(Entity* entity) {}
 
 extern PfnEntityUpdate D_800AD0C4[];
-extern PfnEntityUpdate D_800AD100[];
 extern PfnEntityUpdate D_80179C80[];
 extern PfnEntityUpdate D_8017CC40[];
 extern char* aAtariNuki;
@@ -563,8 +562,10 @@ void func_8011A4D0(void) {
             if (entity->step == 0) {
                 objectId = entity->objectId;
                 if (objectId < 0xD0) {
+                    //Objects 00-CF
                     entity->pfnUpdate = D_800AD0C4[objectId];
                 } else if (objectId < 0xE0) {
+                    //Objects D0-DF
                     entity->pfnUpdate = D_8016FCC0[objectId];
                 } else if (objectId == 0xEF || objectId == 0xFF ||
                            objectId == 0xED || objectId == 0xFD) {
@@ -572,8 +573,10 @@ void func_8011A4D0(void) {
                 } else if (objectId == 0xEE || objectId == 0xFE) {
                     entity->pfnUpdate = D_800AD0C4[15];
                 } else if (objectId >= 0xF0) {
+                    //Objects F0-FC
                     entity->pfnUpdate = D_8017CC40[objectId];
                 } else {
+                    //Objects E0-EC
                     entity->pfnUpdate = D_80179C80[objectId];
                 }
             }
