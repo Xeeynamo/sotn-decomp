@@ -615,13 +615,13 @@ void func_8011A4D0(void) {
             D_8013800C[enemy2]++;
         }
     }
-    //Apepars to be a temporary debugging block that was left in.
+    // Appears to be a temporary debugging block that was left in.
     if ((g_Player.unk0C & 0xC0000) ||
         (PLAYER.step == 0x12 && PLAYER.step_s == 0)) {
-        //prints "atari nuki", Japanese for "without hit".
+        // prints "atari nuki", Japanese for "without hit".
         FntPrint(&aAtariNuki);
         entity = &g_Entities[4];
-        //Disable all hitboxes!
+        // Disable all hitboxes!
         for (i = 4; i < 64; i++, entity++) {
             entity->hitboxState = 0;
         }
