@@ -317,6 +317,16 @@ typedef struct {
 } MenuContext; // size = 0x1E
 #define SIZEOF_MENUCONTEXT (0x1E)
 
+// Struct for table of values to intitialize MenuContext structs
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ s16 cursorW;
+    /* 0x06 */ s16 cursorH;
+    /* 0x08 */ s16 unk08;
+    /* 0x0A */ s16 padding;
+} MenuContextInit; // size = 0x1C
+
 typedef struct {
     /* 0x0 */ u8 tileLayoutId;
     /* 0x1 */ u8 tilesetId;
