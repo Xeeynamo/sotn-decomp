@@ -502,7 +502,7 @@ typedef struct {
     /* 80097B66 */ u8 equipCloakOrder[9];
     /* 80097B6F */ u8 equipOtherOrder[33];
     /* 80097B90 */ u8 saveName[12];
-    /* 80097B90 */ u32 D_80097B9C;
+    /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;
     /* 80097BA4 */ s32 hpMax;
     /* 80097BA8 */ s32 hearts;
@@ -877,7 +877,7 @@ typedef struct {
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
-    /* 8003C898 */ void* func_800FDCE0;
+    /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*func_800E2438)(const char* str);
     /* 8003C8A0 */ void* unused12C;
     /* 8003C8A4 */ void* unused130;
@@ -936,8 +936,7 @@ typedef struct {
 typedef struct {
     /* 800730A0 0x00 */ s32 unk00;
     /* 800730A4 0x04 */ s32 hSize;
-    /* 800730A8 0x08 */ u16 vSize;
-    /* 800730AA 0x0A */ u16 _padding06;
+    /* 800730A8 0x08 */ s32 vSize;
     /* 800730AC 0x0C */ s32 unk8;
     /* 800730B0 0x10 */ s32 left;
     /* 800730B4 0x14 */ s32 top;
@@ -947,7 +946,7 @@ typedef struct {
     /* 800730C4 0x24 */ s32 y;
     /* 800730C8 0x28 */ s32 width;
     /* 800730CC 0x2C */ s32 height;
-    /* 800730D0 0x30 */ s32 _padding30;
+    /* 800730D0 0x30 */ s32 unk30;
     /* 800730D4 0x34 */ s32 D_800730D4;
     /* 800730D8 0x38 */ BgLayer bg[MAX_BG_LAYER_COUNT];
 } RoomDimensions;
@@ -1118,6 +1117,7 @@ extern Event g_EvSwCardNew;
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
+extern s32 D_8007309C;
 extern RoomDimensions g_CurrentRoom;
 extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
 

@@ -161,7 +161,7 @@ void Update(void) {
 
             if ((unk34 & 0x02000000)) {
                 s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
-                s16 test = (g_CurrentRoom.vSize * 256) + 128;
+                s16 test = (LOHU(g_CurrentRoom.vSize) * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
                     continue;
@@ -984,7 +984,18 @@ void func_801B5F4C(u16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", CollectHeart);
+void CollectHeart(u16 index) {
+    s8 hearts[10];
+
+    __builtin_memcpy(&hearts[0], &c_HeartPrizes[0], 2);
+    __builtin_memcpy(&hearts[8], &c_HeartPrizes[4], 2);
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_Status.hearts = hearts[index] + g_Status.hearts;
+    if (g_Status.heartsMax < g_Status.hearts) {
+        g_Status.hearts = g_Status.heartsMax;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectGold(u16 index) {
     g_api.PlaySfx(0x6A9);
