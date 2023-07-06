@@ -316,6 +316,7 @@ extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
+extern PfnEntityUpdate D_800AD0C4[];
 extern s32 D_800ADC44;
 extern RECT D_800AE130;
 extern s32 D_800AE270[];
@@ -367,6 +368,7 @@ extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
+extern char* aAtariNuki;
 extern s32 D_801362AC;
 extern s32 D_801362B0;
 extern s32 D_801362B4;
@@ -597,7 +599,9 @@ extern s32 D_8013B694;
 extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
+extern PfnEntityUpdate D_80179C80[];
 extern WeaponOvl D_8017A000;
+extern PfnEntityUpdate D_8017CC40[];
 extern WeaponOvl D_8017D000;
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;

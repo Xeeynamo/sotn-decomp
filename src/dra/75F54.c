@@ -537,11 +537,6 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
 
 void func_8011A4C8(Entity* entity) {}
 
-extern PfnEntityUpdate D_800AD0C4[];
-extern PfnEntityUpdate D_80179C80[];
-extern PfnEntityUpdate D_8017CC40[];
-extern char* aAtariNuki;
-
 void func_8011A4D0(void) {
     Entity* entity;
     s32 temp_s2;
