@@ -1221,9 +1221,9 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     u16 rand63;
 
     if (self->step == 0) {
-        self->primIndex = AllocPrimitives(4U, 0x40);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 64);
         if (self->primIndex != -1) {
-            self->flags = 0x04800000;
+            self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             // entity lives for 192 frames
             self->ext.generic.unk7C.s = 192;
             self->step++;
@@ -1238,12 +1238,13 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
         DestroyEntity(self);
         return;
     }
+    // On every third frame, as long as we have over 9 frames left alive
     if ((self->ext.generic.unk7C.s >= 9) && !(self->ext.generic.unk7C.s & 3)) {
-        poly = &g_PrimBuf[self->primIndex];
-        while (poly != NULL) {
-            if (poly->r0 != 0) {
-                poly = poly->next;
-            } else {
+        // iterate through primtives until we find one where r0 == 0, and set to
+        // 1
+        for (poly = &g_PrimBuf[self->primIndex]; poly != NULL;
+             poly = poly->next) {
+            if (poly->r0 == 0) {
                 poly->r0 = 1;
                 poly->r1 = 0;
                 break;
@@ -1251,9 +1252,10 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
         }
     }
 
-    poly = &g_PrimBuf[self->primIndex];
-    while (poly != NULL) {
+    for (poly = &g_PrimBuf[self->primIndex]; poly != NULL; poly = poly->next) {
+        // for any of those prims with nonzero r0 values,
         if (poly->r0 != 0) {
+            // r1 acts as a flag to show whether this has happened.
             if (poly->r1 == 0) {
                 rand63 = rand() & 0x3F; // random integer 0-63
                 poly->g0 = (rand() % 237) + 9;
@@ -1277,7 +1279,6 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
                 func_80119E78(poly, poly->g0, poly->g1);
             }
         }
-        poly = poly->next;
     }
 }
 
