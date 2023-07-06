@@ -1239,9 +1239,9 @@ void func_800202E0(s16);
 void func_80020F44(s16);
 void func_80021174(void);
 void func_80021188(void);
-s16 func_80021350(const char* str, s32, s32);
+s32 func_80021350(const char* str, s32, s32);
 s32 func_80021880(s32*, s32, s32);
-s16 func_800219E0(s32);
+s32 func_800219E0(s32);
 void func_80021F6C(s16, s16);
 void func_8002A024(s32, s32);
 

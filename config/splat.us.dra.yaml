@@ -44,7 +44,6 @@ segments:
       - [0x227B0, rodata]
       - [0x3B3B0, rodata]
       - [0x3B430, .rodata, 42398]
-      - [0x3B524, rodata]
       - [0x3B530, rodata, play]
       - [0x3B560, .rodata, gameover]
       - [0x3B720, .rodata, 46358]

@@ -10,7 +10,7 @@
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
 void func_800E2398(const char* str);
-s32 func_800E3278(void);
+s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
 void func_800E7BB8(void);
@@ -234,89 +234,44 @@ void PrintGpuInfo(void) {
 void PrintHBlankInfo(void) {
     if (D_800BD1C0 != 0 && D_80138FB0 != 3) {
         if (g_blinkTimer & 1) {
-            FntPrint(D_800DB524, D_801362D0[1]);
-            FntPrint(D_800DB524, D_801362D0[0]);
+            FntPrint("l=%03x/100\n", D_801362D0[1]);
+            FntPrint("l=%03x/100\n", D_801362D0[0]);
         } else {
-            FntPrint(D_800DB524, D_801362D0[0]);
-            FntPrint(D_800DB524, D_801362D0[1]);
+            FntPrint("l=%03x/100\n", D_801362D0[0]);
+            FntPrint("l=%03x/100\n", D_801362D0[1]);
         }
         D_801362D0[0] = D_801362D0[1];
     }
 }
 
-// TODO: fix branching
-// DECOMP_ME_WIP func_800E3278 https://decomp.me/scratch/y3otf
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
-#else
-extern s32 D_800BD1C8;
-extern s32 D_800BD1CC;
-extern s32 D_800BD1D0;
-extern s32 D_800BD1D4;
-extern s32 D_8013B6A0;
-extern s32 D_8017D350;
-extern s32 D_8018B4E0;
-extern s32 D_801A9C80;
 extern const char aPqes[];
 extern const char aPqes_0[];
 extern const char aPqes_1[];
+
 void SsVabClose(short vab_id);
-s32 func_800E3278(void) {
-    SsVabClose(0);
+#define LOAD_VAB(vab_id, name, pos, data, dataLen)                             \
+    SsVabClose(vab_id);                                                        \
+    while (func_800219E0(0) != 1)                                              \
+        ;                                                                      \
+                                                                               \
+    if (func_80021350(name, vab_id, pos) < 0) {                                \
+        return -1;                                                             \
+    }                                                                          \
+    if (func_80021880(data, dataLen, vab_id) < 0) {                            \
+        return -1;                                                             \
+    }                                                                          \
     while (func_800219E0(0) != 1)
-        ;
 
-    if (func_80021350(&aPbav, 0, D_800BD1C8) < 0) {
-        return;
-    }
-    if (func_80021880(&D_8013B6A0, 0x41CB0, 0) < 0) {
-        return;
-    }
-
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(1);
-    while (func_800219E0(0) != 1)
-        ;
-
-    if (func_80021350(&aPbav_0, 1, D_800BD1CC) < 0) {
-        return;
-    }
-    if (func_80021880(&D_8017D350, 0xE190, 1) < 0) {
-        return;
-    }
-
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(2);
-    while (func_800219E0(0) != 1)
-        ;
-
-    if (func_80021350(&aPbav_1, 2, D_800BD1D0) < 0) {
-        return;
-    }
-    if (func_80021880(&D_801A9C80, 0xFBF0, 2) < 0) {
-        return;
-    }
-
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(3);
-    while (func_800219E0(0) != 1)
-        ;
-
-    if (func_80021350(&aPbav_2, 3, D_800BD1D4) < 0 ||
-        func_80021880(&D_8018B4E0, 0x1A610, 3) < 0) {
-        return -1;
-    }
-    while (func_800219E0(0) != 1)
-        ;
+s32 LoadVabData(void) {
+    LOAD_VAB(0, &aPbav, D_800BD1C8[0], D_8013B6A0, 269488);
+    LOAD_VAB(1, &aPbav_0, D_800BD1C8[1], D_8017D350, 57744);
+    LOAD_VAB(2, &aPbav_1, D_800BD1C8[2], D_801A9C80, 64496);
+    LOAD_VAB(3, &aPbav_2, D_800BD1C8[3], D_8018B4E0, 108048);
     func_80131EBC(&aPqes, 0x618);
     func_80131EBC(&aPqes_0, 0x201);
     func_80131EBC(&aPqes_1, 0x205);
     return 0;
 }
-#endif
 
 void func_800E346C(void) {
     g_GpuBuffers[0].draw.r0 = 0;
@@ -461,7 +416,7 @@ void entrypoint_sotn(void) {
     g_CurrentBuffer = &g_GpuBuffers[0];
     func_80131ED8(0xB9B6);
     SoundInit();
-    while (func_800E3278() < 0)
+    while (LoadVabData() < 0)
         ;
     VSyncCallback(func_800E7BB8);
     FntLoad(0x380, 0x100);
