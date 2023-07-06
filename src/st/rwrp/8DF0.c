@@ -184,7 +184,35 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D668);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D6B0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018D768);
+u8 func_8018D768(u8 frames[], Entity* self, u8 arg2) {
+    u8* var_s1 = &frames[(self->animFrameIdx * 2) & 0xFFFF];
+    s16 var_a1 = 0;
+
+    if (self->animFrameDuration == 0) {
+        if (*var_s1 != 0) {
+            if (*var_s1 == 0xFF) {
+                return 0;
+            }
+            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *var_s1++;
+            self->animFrameIdx++;
+            var_a1 = 128;
+        } else {
+            var_s1 = frames;
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
+            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *var_s1;
+            self->animFrameIdx++;
+            return 0;
+        }
+    }
+    self->animFrameDuration--;
+    self->animCurFrame = var_s1[-1];
+    var_a1 |= 1;
+    return var_a1;
+}
 
 s32 func_8018D880(void) {
     s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
