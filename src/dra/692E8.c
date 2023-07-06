@@ -463,12 +463,18 @@ s32 func_8010E27C(void) {
     return 0;
 }
 
-// DECOMP_ME_WIP func_8010E334 https://decomp.me/scratch/YvoMU
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010E334);
+s32 func_8010E334(s32 xStart, s32 xEnd) {
+    Entity* e = &PLAYER;
 
-/*
- * Updates the Entity acceleration in the X Axis
- */
+    g_Player.unk7A = 1;
+    if (e->step == 0 && PLAYER.step_s == 1 && e->posX.i.hi >= xStart &&
+        e->posX.i.hi <= xEnd) {
+        return 1;
+    }
+    return 0;
+}
+
+// Updates the Entity acceleration in the X Axis
 void AccelerateX(s32 accelerationX) {
     if (g_CurrentEntity->facing == 1) {
         accelerationX = -accelerationX;
@@ -476,9 +482,7 @@ void AccelerateX(s32 accelerationX) {
     g_CurrentEntity->accelerationX = accelerationX;
 }
 
-/*
- * Updates the Player acceleration in the X Axis
- */
+// Updates the Player acceleration in the X Axis
 void func_8010E3B8(s32 accelerationX) {
     if (PLAYER.objectRoomIndex == 1) {
         accelerationX = -accelerationX;
