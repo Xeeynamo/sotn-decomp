@@ -1,0 +1,9 @@
+# build container and tag it as sotn-build:latest
+# docker build --tag sotn-build:latest -f DockerfileSetup . 
+FROM ubuntu:22.04
+ADD ./setup.sh setup.sh
+
+# we copy twice which is inefficient but allows setup.sh
+# to be closer to what an actual user would do
+ADD sotncue disks
+RUN sh ./setup.sh
