@@ -936,8 +936,7 @@ typedef struct {
 typedef struct {
     /* 800730A0 0x00 */ s32 unk00;
     /* 800730A4 0x04 */ s32 hSize;
-    /* 800730A8 0x08 */ u16 vSize;
-    /* 800730AA 0x0A */ u16 _padding06;
+    /* 800730A8 0x08 */ s32 vSize;
     /* 800730AC 0x0C */ s32 unk8;
     /* 800730B0 0x10 */ s32 left;
     /* 800730B4 0x14 */ s32 top;
@@ -947,7 +946,7 @@ typedef struct {
     /* 800730C4 0x24 */ s32 y;
     /* 800730C8 0x28 */ s32 width;
     /* 800730CC 0x2C */ s32 height;
-    /* 800730D0 0x30 */ s32 _padding30;
+    /* 800730D0 0x30 */ s32 unk30;
     /* 800730D4 0x34 */ s32 D_800730D4;
     /* 800730D8 0x38 */ BgLayer bg[MAX_BG_LAYER_COUNT];
 } RoomDimensions;

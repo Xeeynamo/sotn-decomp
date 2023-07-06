@@ -23,7 +23,9 @@
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 
 #define LOH(x) (*(s16*)&(x))
+#define LOHU(x) (*(u16*)&(x))
 #define LOW(x) (*(s32*)&(x))
+#define LOWU(x) (*(u32*)&(x))
 
 #if defined(HACKS) && !defined(PERMUTER)
 #define ALIGNED4 __attribute__((aligned(4)))
