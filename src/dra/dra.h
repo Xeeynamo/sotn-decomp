@@ -564,6 +564,7 @@ extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
 extern s16 D_8013AE94;
 extern s32 D_8013AE9C;
+extern s32 D_8013AED0;
 extern s16 D_8013AED4[];
 extern s16 g_volumeL;
 extern s16 g_volumeR;
