@@ -316,6 +316,7 @@ extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
+extern u8 D_800AD094[];
 extern s32 D_800ADC44;
 extern RECT D_800AE130;
 extern s32 D_800AE270[];
