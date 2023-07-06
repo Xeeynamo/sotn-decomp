@@ -1216,7 +1216,70 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntityHolyWaterFlame);
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnCrashCross);
 
 // rising blue particles from cross crash
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", EntitySubwpnCrashCrossParticles);
+void EntitySubwpnCrashCrossParticles(Entity* self) {
+    Primitive* poly;
+    u16 rand63;
+
+    if (self->step == 0) {
+        self->primIndex = AllocPrimitives(4U, 0x40);
+        if (self->primIndex != -1) {
+            self->flags = 0x04800000;
+            // entity lives for 192 frames
+            self->ext.generic.unk7C.s = 192;
+            self->step++;
+            return;
+        }
+        DestroyEntity(self);
+        return;
+    }
+    // This is some kind of time to live, since it decrements and if 0 gets
+    // destroyed.
+    if (--self->ext.generic.unk7C.s == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    if ((self->ext.generic.unk7C.s >= 9) && !(self->ext.generic.unk7C.s & 3)) {
+        poly = &g_PrimBuf[self->primIndex];
+        while (poly != NULL) {
+            if (poly->r0 != 0) {
+                poly = poly->next;
+            } else {
+                poly->r0 = 1;
+                poly->r1 = 0;
+                break;
+            }
+        }
+    }
+
+    poly = &g_PrimBuf[self->primIndex];
+    while (poly != NULL) {
+        if (poly->r0 != 0) {
+            if (poly->r1 == 0) {
+                rand63 = rand() & 0x3F; // random integer 0-63
+                poly->g0 = (rand() % 237) + 9;
+                poly->g1 = -0x10 - (rand() & 0x20);
+                poly->clut = 0x1B0;
+                poly->tpage = 0x1A;
+                poly->b0 = 0;
+                poly->b1 = 0;
+                poly->priority = (rand63 + PLAYER.zPriority) - 0x20;
+                poly->blendMode = 0;
+                poly->g3 = (rand63 >> 2) + 4; // rand15 + 4 means 4 to 19
+                poly->r1++;
+            } else {
+                poly->g1 -= poly->g3;
+                if (((u8)poly->b0 >= 6U) || ((u8)poly->g1 < 0x18U)) {
+                    poly->blendMode = 8;
+                    poly->r0 = 0;
+                }
+            }
+            if (poly->r0 != 0) {
+                func_80119E78(poly, poly->g0, poly->g1);
+            }
+        }
+        poly = poly->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80126ECC);
 
