@@ -565,7 +565,7 @@ void func_8011A4D0(void) {
                 // Objects D0-DF
                 entity->pfnUpdate = D_8016FCC0[objectId];
             } else if (objectId == 0xEF || objectId == 0xFF ||
-                        objectId == 0xED || objectId == 0xFD) {
+                       objectId == 0xED || objectId == 0xFD) {
                 entity->pfnUpdate = D_800AD0C4[1];
             } else if (objectId == 0xEE || objectId == 0xFE) {
                 entity->pfnUpdate = D_800AD0C4[15];
@@ -583,7 +583,7 @@ void func_8011A4D0(void) {
             if (entity->objectId != 0) {
                 if (!(entity->flags & FLAG_UNK_04000000) &&
                     ((u16)(entity->posX.i.hi + 32) > 320 ||
-                        (u16)(entity->posY.i.hi + 16) > 272)) {
+                     (u16)(entity->posY.i.hi + 16) > 272)) {
                     DestroyEntity(entity);
                 } else {
                     if (entity->flags & 0x100000) {
