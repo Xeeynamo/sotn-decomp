@@ -1324,12 +1324,12 @@ void func_800FB9BC(void) {
         context->unk1.w = temp;
         context->cursorW = temp;
         temp = MenuContextData[i].cursorH;
+        context->unk1.h = temp;
+        context->cursorH = temp;
         context->unk14 = 0;
         context->w = 0;
         context->unk16 = 0;
         context->h = 0;
-        context->unk1.h = temp;
-        context->cursorH = temp;
         context->unk18 = MenuContextData[i].unk08;
         context->unk1C = 2;
     }
