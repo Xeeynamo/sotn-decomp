@@ -53,15 +53,16 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_801028AC);
 INCLUDE_ASM("asm/hd/dra/nonmatchings/627C4", jpt_80102810);
 #endif
 
-void func_80102CD8(s32 arg0) {
-    D_801379AC[0] = arg0;
-    D_801379AC[1] = 0;
-    D_801379B0 = D_800A3194[arg0];
+void func_80102CD8(s32 start) {
+    D_801379AC.start = start;
+    D_801379AC.current = 0;
+    D_801379AC.coords = D_800A3194[start];
 }
 
-#if defined(VERSION_US)
-// DECOMP_ME_WIP func_80102D08 https://decomp.me/scratch/NNXbc
-INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_80102D08);
-#elif defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/627C4", func_80102D08);
-#endif
+void func_80102D08(void) {
+    D_801379AC.unk8 = D_801379AC.coords[D_801379AC.current];
+    if (D_801379AC.coords[++D_801379AC.current] == 0x7FFF) {
+        D_801379AC.start = 0;
+        D_801379AC.unk8 = 0;
+    }
+}
