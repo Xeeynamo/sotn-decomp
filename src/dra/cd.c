@@ -295,7 +295,7 @@ void func_80107B04(void) {
 void func_80107C6C(void) {
     s32 len;
 
-    if (g_Cd.D_80137F74 != 0 && func_800219E0(0) != 1) {
+    if (g_Cd.D_80137F74 != 0 && (s16)func_800219E0(0) != 1) {
         func_801073C0();
         g_Cd.D_80137F78 = -1;
         return;
@@ -361,6 +361,7 @@ void func_80107EF0(void) {
     void (*var_a0)();
     s32 i;
     s32 len;
+    s16 res;
 
     if (g_Cd.overlayBlockCount != 0) {
         len = CD_BLOCK_LEN;
@@ -383,8 +384,9 @@ void func_80107EF0(void) {
     g_Cd.overlayBlockCount--;
     if (g_Cd.overlayBlockCount < 0 ||
         (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
-        if (func_80021350(g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]) <
-            0) {
+        res =
+            func_80021350(g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
+        if (res < 0) {
             g_Cd.D_80137F78 = -2;
             CdDataCallback(NULL);
         } else {
@@ -672,7 +674,7 @@ void UpdateCd(void) {
             }
             if (g_CdCallback != CdCallback_16 &&
                     g_CdCallback != CdCallback_Vh ||
-                func_800219E0(0) == 1) {
+                (s16)func_800219E0(0) == 1) {
                 CdIntToPos(cdFile->loc, &g_CdLoc);
                 if (g_CdCallback == CdCallback_12) {
                     CdIntToPos(
@@ -778,13 +780,13 @@ void UpdateCd(void) {
             break;
 
         case CdCallback_16:
-            D_80137FB0 = func_80021350(
+            D_80137FB0 = (s16)func_80021350(
                 g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
             break;
 
         case CdCallback_17:
         case CdCallback_Vh:
-            while (func_800219E0(0) != 1) {
+            while ((s16)func_800219E0(0) != 1) {
             }
             break;
 

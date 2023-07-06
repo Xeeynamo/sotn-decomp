@@ -347,6 +347,7 @@ extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
+extern s32 D_800BD1C8[6];
 extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
@@ -572,6 +573,10 @@ extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
+extern u8 D_8013B6A0[]; // VAB file
+extern u8 D_8017D350[]; // VAB file
+extern u8 D_8018B4E0[]; // VAB file
+extern u8 D_801A9C80[]; // VAB file
 extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 D_8013AEEC;

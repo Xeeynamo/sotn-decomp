@@ -875,6 +875,7 @@ jpt_801353DC = 0x800E2354;
 nullsub_8 = 0x800E2F34;
 PrintGpuInfo = 0x800E2F3C;
 PrintHBlankInfo = 0x800E31C0;
+LoadVabData = 0x800E3278;
 SetStageDisplayBuffer = 0x800E3574;
 SetCgiDisplayBuffer = 0x800E3618;
 SetMenuDisplayBuffer = 0x800E36C8;
