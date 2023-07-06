@@ -484,7 +484,48 @@ void func_80119D3C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119E78);
+s32 func_80119E78(Primitive* poly, s32 xCenter, s32 yCenter) {
+    s16 left;
+    s16 top;
+    s16 right;
+    s32 size;
+    u8* idx;
+    // 800AD094 is a read-only array of bytes in 8-byte groups.
+    // These are sets of 4 pairs of u,v values.
+    // the ->b0 value is very likely fake.
+    idx = D_800AD094;
+    idx += poly->b0 * 8;
+    size = 6;
+    if (poly->b0 >= 3U) {
+        size = 4;
+    }
+    if (poly->b0 == 6) {
+        return -1;
+    }
+    left = xCenter - size;
+    top = yCenter - size;
+    poly->y0 = top;            // a
+    poly->y1 = top;            // 16
+    poly->x0 = left;           // 8
+    poly->x1 = xCenter + size; // 14
+    poly->x2 = left;           // 20
+    poly->y2 = yCenter + size; // 22
+    poly->x3 = xCenter + size; // 2c
+    poly->y3 = yCenter + size; // 2e
+
+    poly->u0 = *idx++;
+    poly->v0 = *idx++;
+    poly->u1 = *idx++;
+    poly->v1 = *idx++;
+    poly->u2 = *idx++;
+    poly->v2 = *idx++;
+    poly->u3 = *idx++;
+    poly->v3 = *idx;
+    if (!(++poly->b1 & 1)) {
+        poly->b0++;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80119F70);
 
