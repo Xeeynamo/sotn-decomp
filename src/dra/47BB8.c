@@ -410,7 +410,7 @@ void ReadPads(void) {
     func_800E8D54();
 }
 
-void func_800E8EE4(void) {
+void SetupEvents(void) {
     EnterCriticalSection();
     g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
     g_EvSwCardErr = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
@@ -1209,7 +1209,7 @@ void func_800ECBF8(void) {
 
 #endif
 
-void func_800ECE2C(void) {
+void HideAllBackgroundLayers(void) {
     s32 i;
 
     g_CurrentRoom.unk00 = 0;
@@ -1278,18 +1278,18 @@ void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
     }
 }
 
-void LoadRoomLayer(s32 arg0) {
+void LoadRoomLayer(s32 layerIndex) {
     s32 i;
 
-    SetRoomForegroundLayer(g_api.o.tileLayers[arg0].fg);
-    SetRoomBackgroundLayer(0, g_api.o.tileLayers[arg0].bg);
+    SetRoomForegroundLayer(g_api.o.tileLayers[layerIndex].fg);
+    SetRoomBackgroundLayer(0, g_api.o.tileLayers[layerIndex].bg);
 
     for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
         g_CurrentRoom.bg[i].D_800730F4 = 0;
     }
 }
 
-void func_800EDA70(Primitive* prim) {
+void DestroyPrimitive(Primitive* prim) {
     s32 i;
     s32 n;
     u32* primData = (u32*)prim;
@@ -1299,12 +1299,12 @@ void func_800EDA70(Primitive* prim) {
     }
 }
 
-void func_800EDA94(void) {
+void DestroyAllPrimitives(void) {
     Primitive* prim;
     s32 i;
 
     for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
-        func_800EDA70(prim);
+        DestroyPrimitive(prim);
         prim->type = PRIM_NONE;
         prim++;
     }
@@ -1371,7 +1371,7 @@ s16 func_800EDB58(u8 primType, s32 count) {
     }
 
     for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
-        func_800EDA70(prim);
+        DestroyPrimitive(prim);
         var_s1 = 0;
         temp_v0 = &g_PrimBuf[i];
         prim->type = primType;
@@ -1392,7 +1392,7 @@ s32 AllocPrimitives(u8 primType, s32 count) {
 
     while (primIndex < MAX_PRIM_ALLOC_COUNT) {
         if (*dstPrimType == 0) {
-            func_800EDA70(prim);
+            DestroyPrimitive(prim);
             if (count == 1) {
                 *dstPrimType = primType;
                 prim->next = NULL;
@@ -1436,7 +1436,7 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
         pCode = &poly->code;
         temp_v0 = *polyCode;
         if (temp_v0 == 0) {
-            func_800EDA70(poly);
+            DestroyPrimitive(poly);
             if (count == 1) {
                 *polyCode = primitives;
                 poly->tag = 0;

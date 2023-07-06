@@ -2305,7 +2305,7 @@ void func_80132500(u8 soundMode) {
  * Called by entrypoint_sotn, seems to be initializing
  * various parts of the sound system
  */
-void func_801325D8(void) {
+void SoundInit(void) {
     D_8013AEEC = 1;
     SsInitHot();
     SsSetTickMode(1);

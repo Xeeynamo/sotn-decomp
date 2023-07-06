@@ -194,7 +194,7 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = NULL;
 }
 
-void func_801065F4(s16 startIndex) {
+void DestroyEntities(s16 startIndex) {
     Entity* pItem;
 
     for (pItem = &g_Entities[startIndex];
