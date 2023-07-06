@@ -537,8 +537,96 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
 
 void func_8011A4C8(Entity* entity) {}
 
-// https://decomp.me/scratch/0aMFT 94.19%
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011A4D0);
+extern PfnEntityUpdate D_800AD0C4[];
+extern PfnEntityUpdate D_800AD100[];
+extern PfnEntityUpdate D_80179C80[];
+extern PfnEntityUpdate D_8017CC40[];
+extern char* aAtariNuki;
+
+void func_8011A4D0(void) {
+    Entity* entity;
+    s32 temp_s2;
+    s32 i;
+    s32 i2;
+    s32 i3;
+    u16 objectId;
+    s32 enemy;
+    s32 enemy2;
+
+    temp_s2 = *D_80097420;
+    entity = g_CurrentEntity = &g_Entities[4];
+    for (i = 4; i < 64; i++, g_CurrentEntity++, entity++) {
+        if (i == 16 && entity->objectId == 0) {
+            g_Player.unk48 = 0;
+        }
+        if (entity->objectId != 0) {
+            if (entity->step == 0) {
+                objectId = entity->objectId;
+                if (objectId < 0xD0) {
+                    entity->pfnUpdate = D_800AD0C4[objectId];
+                } else if (objectId < 0xE0) {
+                    entity->pfnUpdate = D_8016FCC0[objectId];
+                } else if (objectId == 0xEF || objectId == 0xFF ||
+                           objectId == 0xED || objectId == 0xFD) {
+                    entity->pfnUpdate = D_800AD0C4[1];
+                } else if (objectId == 0xEE || objectId == 0xFE) {
+                    entity->pfnUpdate = D_800AD0C4[15];
+                } else if (objectId >= 0xF0) {
+                    entity->pfnUpdate = D_8017CC40[objectId];
+                } else {
+                    entity->pfnUpdate = D_80179C80[objectId];
+                }
+            }
+            if ((temp_s2 == 0) || (entity->flags & 0x10000)) {
+                entity->pfnUpdate(entity);
+                entity = g_CurrentEntity;
+                if (entity->objectId != 0) {
+                    if (!(entity->flags & FLAG_UNK_04000000) &&
+                        (((((u16)entity->posX.i.hi + 0x20) & 0xFFFF) >=
+                          0x141U) ||
+                         ((((u16)entity->posY.i.hi + 0x10) & 0xFFFF) >=
+                          0x111U))) {
+                        DestroyEntity(entity);
+                    } else {
+                        if (entity->flags & 0x100000) {
+                            UpdateAnim(NULL, (s32*)D_800ACFB4);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (D_8013803C != 0) {
+        if (--D_8013803C & 1) {
+            func_800EA5AC(1U, D_80138040, D_80138044, D_80138048);
+        }
+    }
+    D_8013800C[1] = D_8013800C[2] = 0;
+    enemy = g_Entities[16].enemyId;
+    if (enemy == 1) {
+        D_8013800C[1] = 1;
+    } else if (enemy == 2) {
+        D_8013800C[2] = 1;
+    }
+    for (i2 = 3; i2 < 11; i2++) {
+        D_8013800C[i2] = 0;
+    }
+    entity = &g_Entities[17];
+    for (i3 = 17; i3 < 48; entity++, i3++) {
+        enemy2 = entity->enemyId;
+        if (enemy2 >= 3) {
+            D_8013800C[enemy2]++;
+        }
+    }
+    if ((g_Player.unk0C & 0xC0000) ||
+        (PLAYER.step == 0x12 && PLAYER.step_s == 0)) {
+        FntPrint(&aAtariNuki);
+        entity = &g_Entities[4];
+        for (i = 4; i < 64; i++, entity++) {
+            entity->hitboxState = 0;
+        }
+    }
+}
 
 void func_8011A870(void) {
     Entity* entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
