@@ -463,7 +463,7 @@ extern u32 D_8013799C;
 extern s32 D_801379A0;
 extern s32 D_801379A4;
 extern s32 D_801379A8;
-extern u16 D_801379AC[2];
+extern Unkstruct_80102CD8 D_801379AC;
 extern s32 D_801379B0;
 extern s32 D_80137E40;
 extern s32 D_80137E44;

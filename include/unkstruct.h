@@ -279,3 +279,10 @@ typedef struct {
     u8 unk26;
     u8 unk27;
 } Unkstruct_800ECBF8_1; /* size = 0x28 */
+
+typedef struct {
+    u16 start;
+    s16 current;
+    s16* coords;
+    s16 unk8;
+} Unkstruct_80102CD8;
