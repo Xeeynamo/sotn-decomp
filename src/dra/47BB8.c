@@ -1220,73 +1220,59 @@ void func_800ECE2C(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderTilemap);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomForegroundLayer);
-#else
-extern s16 D_8003C70A;
-extern s16 D_8003C70C;
-extern u16 D_8003C70E;
-extern s32 D_8007309C;
-extern s32 D_8013AED0;
-
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
-    D_8003C708 = 0;
+    D_8003C708.flags = 0;
     D_8013AED0 = 1;
-    g_CurrentRoom.unk00 = 0;
     D_80073088 = layerDef->tileDef;
-    if (layerDef->tileDef != NULL) {
-        g_CurrentRoomTileLayout.fg = layerDef->layout;
-        D_8007309C = (s32)layerDef->unkC;
-        if (layerDef->rect.flags & 0x40) {
-            D_8007309C = 0x60;
-            D_8003C70A = 0;
-            D_8003C70C = 0;
-            D_8003C708 = (u16)layerDef->rect.flags;
-            D_8003C70E = layerDef->unkC;
-        }
-        if (layerDef->rect.flags & 0x20) {
-            D_8007309C = 0x60;
-            D_8003C708 = (u16)layerDef->rect.flags;
-        }
-        if (layerDef->rect.flags & 0x10) {
-            D_8007309C = 0x60;
-            D_8013AED0 = 0;
-        }
-        g_CurrentRoom.unk00 = (s32)layerDef->unkE;
-        g_CurrentRoom.left = layerDef->rect.left;
-        g_CurrentRoom.top = layerDef->rect.top;
-        g_CurrentRoom.right = layerDef->rect.right;
-        g_CurrentRoom.hSize = (g_CurrentRoom.right - g_CurrentRoom.left) + 1;
-        g_CurrentRoom.y = 0;
-        g_CurrentRoom.x = 0;
-        g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
-        g_CurrentRoom.D_800730AC = 1;
-        g_CurrentRoom.bottom = layerDef->rect.bottom;
-        g_CurrentRoom.vSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
-        g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
+    if (g_CurrentRoom.hSize && g_CurrentRoom.vSize) {
     }
+    g_CurrentRoom.unk00 = 0;
+    if (D_80073088 == 0) {
+        return;
+    }
+
+    g_CurrentRoomTileLayout.fg = layerDef->layout;
+    D_8007309C = layerDef->zPriority;
+    if (layerDef->rect.flags & 0x40) {
+        D_8007309C = 0x60;
+        D_8003C708.flags = layerDef->rect.flags;
+        D_8003C708.unk2 = 0;
+        D_8003C708.unk4 = 0;
+        D_8003C708.zPriority = layerDef->zPriority;
+    }
+    if (layerDef->rect.flags & 0x20) {
+        D_8007309C = 0x60;
+        D_8003C708.flags = layerDef->rect.flags;
+    }
+    if (layerDef->rect.flags & 0x10) {
+        D_8007309C = 0x60;
+        D_8013AED0 = 0;
+    };
+    g_CurrentRoom.unk00 = layerDef->unkE;
+    g_CurrentRoom.left = layerDef->rect.left;
+    g_CurrentRoom.top = layerDef->rect.top;
+    g_CurrentRoom.right = layerDef->rect.right;
+    g_CurrentRoom.bottom = layerDef->rect.bottom;
+    g_CurrentRoom.hSize = g_CurrentRoom.right - g_CurrentRoom.left + 1;
+    g_CurrentRoom.vSize = g_CurrentRoom.bottom - g_CurrentRoom.top + 1;
+    g_CurrentRoom.y = 0;
+    g_CurrentRoom.x = 0;
+    g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
+    g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
+    g_CurrentRoom.unk8 = 1;
 }
-#endif
 
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
-    u32 rect;
-
     g_CurrentRoom.bg[index].D_800730F4 = 0;
     g_CurrentRoom.bg[index].tileDef = layerDef->tileDef;
     g_CurrentRoom.bg[index].layout = layerDef->layout;
     if (g_CurrentRoom.bg[index].tileDef != 0) {
         g_CurrentRoom.bg[index].zPriority = layerDef->zPriority;
         g_CurrentRoom.bg[index].D_800730F4 = layerDef->unkE;
-#if 0 // matches with PSY-Q 3.5
-        g_CurrentRoom.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
-        g_CurrentRoom.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
-#else
-        rect = *(u32*)&layerDef->rect;
-        g_CurrentRoom.bg[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
-        rect = *(u32*)&layerDef->rect;
+        g_CurrentRoom.bg[index].w =
+            layerDef->rect.right - layerDef->rect.left + 1;
         g_CurrentRoom.bg[index].h =
-            ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
-#endif
+            layerDef->rect.bottom - layerDef->rect.top + 1;
         g_CurrentRoom.bg[index].flags = layerDef->rect.flags;
         g_CurrentRoom.bg[index].D_80073100 = 1;
     }
