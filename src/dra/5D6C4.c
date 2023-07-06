@@ -207,8 +207,19 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
-// DECOMP_ME_WIP func_800FDCE0 https://decomp.me/scratch/5ufgy
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDCE0);
+void LearnSpell(s32 spellId) {
+    s32 i;
+
+    if ((g_Status.spellsLearnt & (1 << spellId)) == 0) {
+        g_Status.spellsLearnt |= 1 << spellId;
+        for (i = 0; i < LEN(g_Status.spells); i++) {
+            if (g_Status.spells[i] == 0) {
+                g_Status.spells[i] = spellId | (~0x7F);
+                return;
+            }
+        }
+    }
+}
 
 bool func_800FDD44(s32 equipId) {
     s32 equippedItem;
