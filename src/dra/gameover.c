@@ -114,12 +114,12 @@ void HandleGameOver(void) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
         }
-        func_801065F4(0);
+        DestroyEntities(0);
         func_800EA538(0);
         func_800EAEEC();
-        func_800EDA94();
+        DestroyAllPrimitives();
         func_800EDAE4();
-        func_800ECE2C();
+        HideAllBackgroundLayers();
         func_800EAD7C();
     case Gameover_10:
     case Gameover_AllocResources_Alt:

@@ -14,7 +14,7 @@ s32 func_800E3278(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
 void func_800E7BB8(void);
-void func_800E8EE4(void);
+void SetupEvents(void);
 void func_800EA7CC(void);
 void func_800EB314(void);
 void RenderEntities(void);
@@ -28,7 +28,7 @@ void UpdateCd(void);
 s32 func_8010E27C(void);
 void AccelerateX(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
-void func_801325D8(void);
+void SoundInit(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
@@ -181,7 +181,7 @@ void func_800E2E98(s32 colorAdd) {
 
 s32 nullsub_8(void) {}
 
-void func_800E2F3C(void) {
+void PrintGpuInfo(void) {
     if (D_800BD1C0 == 0)
         return;
 
@@ -231,8 +231,8 @@ void func_800E2F3C(void) {
     }
 }
 
-void func_800E31C0(void) {
-    if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
+void PrintHBlankInfo(void) {
+    if (D_800BD1C0 != 0 && D_80138FB0 != 3) {
         if (g_blinkTimer & 1) {
             FntPrint(D_800DB524, D_801362D0[1]);
             FntPrint(D_800DB524, D_801362D0[0]);
@@ -355,8 +355,7 @@ void func_800E34DC(s32 arg0) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-// Set stage display buffer
-void func_800E3574(void) {
+void SetStageDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     SetDefDrawEnv(
         &g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
@@ -366,8 +365,7 @@ void func_800E3574(void) {
     func_800E34DC(0);
 }
 
-// Set CGI display buffer?
-void func_800E3618(s32 width) {
+void SetCgiDisplayBuffer(s32 width) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, width, DISP_ALL_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, width, DISP_ALL_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, width, DISP_ALL_H);
@@ -375,8 +373,7 @@ void func_800E3618(s32 width) {
     func_800E34DC(1);
 }
 
-// Set menu display buffer
-void func_800E36C8(void) {
+void SetMenuDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
@@ -384,7 +381,7 @@ void func_800E36C8(void) {
     func_800E34DC(1);
 }
 
-void func_800E376C(void) {
+void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
@@ -444,7 +441,7 @@ void entrypoint_sotn(void) {
     StartCARD();
     _bu_init();
     ChangeClearPAD(0);
-    func_800E8EE4();
+    SetupEvents();
     ResetGraph(0);
     SetGraphDebug(0);
     InitGeom();
@@ -463,7 +460,7 @@ void entrypoint_sotn(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
     func_80131ED8(0xB9B6);
-    func_801325D8();
+    SoundInit();
     while (func_800E3278() < 0)
         ;
     VSyncCallback(func_800E7BB8);
@@ -484,13 +481,13 @@ void entrypoint_sotn(void) {
     D_80098850 = 0;
 loop_5:
     D_8003C73C = 0;
-    func_800E3574();
+    SetStageDisplayBuffer();
     func_800ECBF8();
     func_800EAD7C();
-    func_800ECE2C();
-    func_800EDA94();
+    HideAllBackgroundLayers();
+    DestroyAllPrimitives();
     func_800EDAE4();
-    func_801065F4(0);
+    DestroyEntities(0);
     func_800EA538(0);
     func_800EAEEC();
     D_801362B4 = 0x20;
@@ -751,14 +748,14 @@ void HandleTitle(void) {
         ClearBackbuffer();
         func_800ECBF8();
         func_800EAD7C();
-        func_800ECE2C();
-        func_800EDA94();
+        HideAllBackgroundLayers();
+        DestroyAllPrimitives();
         func_800EDAE4();
         ResetEntityArray();
-        func_801065F4(0);
+        DestroyEntities(0);
         func_800EA538(0);
         func_800EAEEC();
-        func_800E3574();
+        SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
             if (g_IsUsingCd) {
@@ -795,7 +792,7 @@ void HandleTitle(void) {
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
             ClearImage(&g_Vram.D_800ACDF0, 0, 0, 0);
-            func_800E3574();
+            SetStageDisplayBuffer();
             g_StageId = STAGE_SEL;
             if (g_UseDisk) {
                 if (g_IsUsingCd) {

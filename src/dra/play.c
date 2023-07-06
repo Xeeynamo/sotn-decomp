@@ -13,12 +13,12 @@ void func_800E4970(void) {
     SetGameState(Game_NowLoading);
     g_GameStep = 2;
     ClearBackbuffer();
-    func_800E3574();
+    SetStageDisplayBuffer();
     func_800EAD7C();
-    func_801065F4(0);
-    func_800EDA94();
+    DestroyEntities(0);
+    DestroyAllPrimitives();
     func_800EA538(0);
-    func_800ECE2C();
+    HideAllBackgroundLayers();
     func_800EAEEC();
     func_800EDAE4();
     PlaySfx(0x12);
