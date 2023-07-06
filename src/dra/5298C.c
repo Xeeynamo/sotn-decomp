@@ -1309,23 +1309,14 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB23C);
 
 void func_800FB9BC(void) {
     s32 i;
-    u16 temp;
 
     MenuContext* context = (MenuContext*)&D_8013761C[0];
 
     for (i = 0; i < 0x10; i++, context++) {
-        temp = MenuContextData[i].cursorX;
-        context->unk1.x = temp;
-        context->cursorX = temp;
-        temp = MenuContextData[i].cursorY;
-        context->unk1.y = temp;
-        context->cursorY = temp;
-        temp = MenuContextData[i].cursorW;
-        context->unk1.w = temp;
-        context->cursorW = temp;
-        temp = MenuContextData[i].cursorH;
-        context->unk1.h = temp;
-        context->cursorH = temp;
+        context->cursorX = context->unk1.x = MenuContextData[i].cursorX;
+        context->cursorY = context->unk1.y = MenuContextData[i].cursorY;
+        context->cursorW = context->unk1.w = MenuContextData[i].cursorW;
+        context->cursorH = context->unk1.h = MenuContextData[i].cursorH;
         context->unk14 = 0;
         context->w = 0;
         context->unk16 = 0;
@@ -1333,9 +1324,7 @@ void func_800FB9BC(void) {
         context->unk18 = MenuContextData[i].unk08;
         context->unk1C = 2;
     }
-    temp = -((g_MenuNavigation.cursorRelic / 2) * 120) / 14;
-    D_801376C8 = temp;
-    D_801376C4 = temp;
+    D_801376C4 = D_801376C8 = -((g_MenuNavigation.cursorRelic / 2) * 120) / 14;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
