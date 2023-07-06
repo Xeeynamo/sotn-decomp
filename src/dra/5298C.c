@@ -1307,7 +1307,37 @@ bool func_800FB1EC(s32 arg0) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB23C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB9BC);
+void func_800FB9BC(void) {
+    s32 var_a0;
+    s32 i;
+    u16 temp;
+
+    MenuContext* context = (MenuContext*)&D_8013761C[0];
+
+    for (var_a0 = 0, i = 0; i < 0x10; i++, var_a0++, context++) {
+        temp = MenuContextData[var_a0].cursorX;
+        context->unk1.x = temp;
+        context->cursorX = temp;
+        temp = MenuContextData[var_a0].cursorY;
+        context->unk1.y = temp;
+        context->cursorY = temp;
+        temp = MenuContextData[var_a0].cursorW;
+        context->unk1.w = temp;
+        context->cursorW = temp;
+        temp = MenuContextData[var_a0].cursorH;
+        context->unk14 = 0;
+        context->w = 0;
+        context->unk16 = 0;
+        context->h = 0;
+        context->unk1.h = temp;
+        context->cursorH = temp;
+        context->unk18 = MenuContextData[var_a0].unk08;
+        context->unk1C = 2;
+    }
+    temp = -((g_MenuNavigation.cursorRelic / 2) * 120) / 14;
+    D_801376C8 = temp;
+    D_801376C4 = temp;
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
 
