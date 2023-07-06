@@ -1807,7 +1807,7 @@ void func_8012CC30(s32 arg0) {
             AccelerateX(0x50000);
             g_CurrentEntity->accelerationY = 0;
             func_8010DA48(0xEDU);
-            func_800FDCE0(4);
+            LearnSpell(4);
         }
     } else {
         D_80138444 = 1;

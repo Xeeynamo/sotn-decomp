@@ -697,7 +697,7 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void func_800FD9D4(SpellDef* spell, s32 id);
 s16 func_800FDB18(s32, s32);
-void func_800FDCE0(s32);
+void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);

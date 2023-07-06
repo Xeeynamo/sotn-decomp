@@ -502,7 +502,7 @@ typedef struct {
     /* 80097B66 */ u8 equipCloakOrder[9];
     /* 80097B6F */ u8 equipOtherOrder[33];
     /* 80097B90 */ u8 saveName[12];
-    /* 80097B90 */ u32 D_80097B9C;
+    /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;
     /* 80097BA4 */ s32 hpMax;
     /* 80097BA8 */ s32 hearts;
@@ -877,7 +877,7 @@ typedef struct {
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
-    /* 8003C898 */ void* func_800FDCE0;
+    /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*func_800E2438)(const char* str);
     /* 8003C8A0 */ void* unused12C;
     /* 8003C8A4 */ void* unused130;
