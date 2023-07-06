@@ -22,7 +22,7 @@ import sys
 callable_registers = ["$v0", "$v1", "$a0","$a1","$t2"]
 
 def handle_jal_call(full_file,call_index, known_func_list):
-    debug = False#("800F2B08" in full_file[call_index])
+    debug = False #("8011A638" in full_file[call_index])
     call_line = full_file[call_index]
     call_target = call_line.split(" ")[-1].strip()
     if call_target in known_func_list: #easy, just a direct function call by name
@@ -46,6 +46,8 @@ def handle_jal_call(full_file,call_index, known_func_list):
         if f'lw         {call_target}, %lo(D_' in callreg_setline: #Simply jumping to what's stored in a D_ variable
             jump_variable = callreg_setline[51:61]
             return jump_variable
+        if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
+            return "pfnEntityUpdate"
         #happens in NZ0/func_801C1034. v0 is set by dereferencing a register.
         target_setter_pattern = r'lw\s+' + '\\' + call_target + r', 0x.{,2}\((\$\w+)'
         if match := re.search(target_setter_pattern,callreg_setline):
@@ -69,8 +71,7 @@ def handle_jal_call(full_file,call_index, known_func_list):
             return "PlaySfx"
         if "0xB8($a2)" in callreg_setline or "-0x20($s0)" in callreg_setline:
             return "UnknownEntityFunction"
-        if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
-            return "pfnEntityUpdate"
+        
         if any(x in callreg_setline for x in ["80015840", "80015E74","8001923C"]): #weird sdk stuff
             return "UnknownSDKFunction"
         print("made it out the bottom")
@@ -235,7 +236,7 @@ def analyze_function(fname,tree):
         print("No functions called.")
     else:
         for item in tree[fname]:
-            if item in tree['SDK_FUNCS'] or item in tree['G_API_FUNCS']:
+            if item in tree['SDK_FUNCS'] or item in tree['G_API_FUNCS'] or item == 'pfnEntityUpdate':
                 decomp_done = 'N/A'
             else:
                 item_as_func = get_nonmatching_functions('../asm',item)
