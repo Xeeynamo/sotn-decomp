@@ -36,7 +36,6 @@ void func_801BDD9C(void);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
 s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
-void func_801C29B0(s32 sfxId); // sfx
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
