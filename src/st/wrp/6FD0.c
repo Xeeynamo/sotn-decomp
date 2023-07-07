@@ -1904,8 +1904,29 @@ void func_8018A118(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A170);
-void func_8018A170(s16);
+void func_8018A170(s16 x) {
+    u8 flag;
+    s32 expected;
+
+    if (D_80193AB8 != 0) {
+        func_8018A0CC(x - D_80097908);
+        D_80193AB8 = 0;
+    }
+
+    while (true) {
+        if (D_80193AB0->posX == 0xFFFF || D_80193AB0->posX > x) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_80193AB0->objectRoomIndex >> 8) + 0xFF;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_80193AB0);
+        }
+        D_80193AB0++;
+    }
+}
 
 void func_8018A26C(s16 x) {
     u8 flag;
