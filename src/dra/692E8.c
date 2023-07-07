@@ -269,7 +269,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DB38);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DBFC);
 
-u32 UpdateAnim(u8* frameProps, s32* frames) {
+u32 UpdateAnim(s8* frameProps, s32* frames) {
     AnimationFrame* animFrame;
     s32 ret;
 
@@ -311,8 +311,8 @@ u32 UpdateAnim(u8* frameProps, s32* frames) {
                              .unk2 >>
                          9)
                         << 2];
-        g_CurrentEntity->hitboxOffX = (s8)*frameProps++;
-        g_CurrentEntity->hitboxOffY = (s8) * (frameProps++);
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
         g_CurrentEntity->hitboxWidth = *frameProps++;
         g_CurrentEntity->hitboxHeight = *frameProps++;
     }

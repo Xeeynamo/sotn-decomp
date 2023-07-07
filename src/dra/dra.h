@@ -726,7 +726,7 @@ void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
-u32 UpdateAnim(u8* frameProps, s32*);
+u32 UpdateAnim(s8* frameProps, s32*);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
