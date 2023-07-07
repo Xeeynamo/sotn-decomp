@@ -339,6 +339,7 @@ extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
+extern s32 D_801CB688;
 extern s16 D_801CB68E;
 extern u16 D_801CB690;
 extern s16 D_801CB692;
@@ -347,6 +348,10 @@ extern s16 D_801CB696;
 extern s16 D_801CB69A;
 extern s8 D_801CB69E;
 extern s8 D_801CB69F;
+extern Primitive* D_801CB6A0[];
+extern s32 D_801CB6B8;
+extern s32 D_801CB6BC;
+extern s32 D_801CB6C0[];
 extern s16 D_801CB6C4;
 extern s16 D_801CB6C6;
 extern s32 D_801CB6C8;

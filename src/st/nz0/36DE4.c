@@ -81,8 +81,65 @@ void func_801B74CC(void) {
 }
 
 // called from EntityMariaCutscene
-// DECOMP_ME_WIP func_801B7520 https://decomp.me/scratch/6ZAIQ
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B7520);
+s32 func_801B7520(s32 arg0) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+
+    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
+    D_801CB6C0[0] = firstPrimIndex;
+    if (firstPrimIndex == -1) {
+        D_801CB6C0[0] = 0;
+        return 0;
+    }
+    D_801CB688 = arg0;
+    D_801CB6C4 = 0;
+    D_801CB6BC = -1;
+    D_801CB6B8 = -1;
+    func_801B74CC();
+
+    if (prim && prim) { // !FAKE
+    }
+
+    prim = D_801CB6A0[0] = &g_PrimBuf[D_801CB6C0[0]];
+
+    prim->blendMode = 8;
+    prim = D_801CB6A0[1] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801CB6A0[2] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801CB6A0[3] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801CB6A0[4] = prim->next;
+
+    prim->blendMode = 8;
+    prim = D_801CB6A0[5] = prim->next;
+
+    prim->type = 4;
+    prim->blendMode = 8;
+
+    prim = prim->next;
+    prim->type = 3;
+    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = 0;
+    prim->x0 = prim->x2 = 4;
+    prim->x1 = prim->x3 = 0xF8;
+    prim->priority = 0x1FD;
+    prim->blendMode = 8;
+
+    prim = prim->next;
+    prim->type = 1;
+    prim->x0 = 3;
+    prim->y0 = 0x2F;
+    prim->v0 = 0x4A;
+    prim->r0 = prim->g0 = prim->b0 = 0xFF;
+    prim->priority = 0x1FC;
+    prim->blendMode = 8;
+    return 1;
+}
 
 void func_801B76E4(s16 arg0) {
     RECT rect;
