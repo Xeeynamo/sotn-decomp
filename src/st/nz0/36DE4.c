@@ -834,7 +834,62 @@ s32 func_801BCCFC(u16* sensors) {
     return 0;
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801BCF74);
+s32 func_801BCF74(s16* posX) {
+    Collider collider;
+    s16 temp1;
+    s16 temp2;
+    s16 temp3;
+    s16 temp4;
+
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    temp2 = g_CurrentEntity->posY.i.hi + 3;
+    g_CurrentEntity->posY.i.hi = temp2;
+    temp1 = g_CurrentEntity->posX.i.hi + *posX;
+    posX++;
+    temp3 = temp2 + *posX;
+    g_api.CheckCollision(temp1, temp3, &collider, 0);
+    if (!(collider.effects & EFFECT_SOLID)) {
+        return 0;
+    }
+    posX++;
+
+    g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
+    if (g_CurrentEntity->accelerationX != 0) {
+        if (g_CurrentEntity->accelerationX < 0) {
+            temp4 = temp1 - *posX;
+            posX++;
+        } else {
+            temp4 = temp1 + *posX;
+            posX++;
+        }
+        temp3 = temp3 + *posX - 7;
+        g_api.CheckCollision(temp4, temp3, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            if ((collider.effects & 0x8002) == 2) {
+                g_CurrentEntity->posX.val =
+                    g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
+                g_CurrentEntity->accelerationX = 0;
+                return 0xFF;
+            }
+            return 0x61;
+        }
+        
+        temp3 += 15;
+        g_api.CheckCollision(temp4, temp3, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            if (collider.effects & 0x8000) {
+                return 0x61;
+            }
+            return 1;
+        }
+        g_CurrentEntity->posX.val =
+            g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
+        g_CurrentEntity->accelerationX = 0;
+
+        return 0x80;
+    }
+    return 1;
+}
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
