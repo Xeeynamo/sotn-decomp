@@ -911,7 +911,6 @@ void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     entity->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
