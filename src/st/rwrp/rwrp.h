@@ -21,4 +21,7 @@ extern u16 D_80181110[];
 
 // *** EntitySoulStealOrb properties END ***
 
+extern u16 D_80180DC4[];
+extern u16 D_80180DF4[];
+
 #endif

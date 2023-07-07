@@ -52,13 +52,15 @@ extern s32 D_80097908;
 // ST/MAD
 extern u16 D_8018052C[];
 extern u16 D_801806B4[];
-extern u16 D_80180F5C[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
+extern u16 D_80180D1C[];
+extern u16 D_80180D4C[];
 extern s16 D_80180ED8[];
 extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
 extern s16 D_80180EDA[];
+extern u16 D_80180F5C[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern s32 D_80180FE4[];

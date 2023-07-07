@@ -179,6 +179,8 @@ extern u8 D_801815FC[];
 extern u16 D_80181618[];
 extern u16 D_8018164C[];
 extern s16 D_80181A50[];
+extern u16 D_80181D80[];
+extern u16 D_80181DB0[];
 extern const u32* D_80181DC4[];
 extern const s32 c_GoldPrizes[];
 extern u16 D_80181E74[];

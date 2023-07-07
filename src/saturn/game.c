@@ -685,16 +685,16 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B1C8, func_0607B1C8);
 
 // SAT: func_0607B218
-void func_801C58A4(s32 state) {
-    g_CurrentEntity->step = state;
+void func_801C58A4(s32 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 // SAT: func_0607B240
-void func_801C58C4(s32 state) {
-    g_CurrentEntity->step_s = state;
+void func_801C58C4(s32 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }

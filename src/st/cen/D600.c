@@ -846,7 +846,7 @@ u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2) {
     return arg2;
 }
 
-void func_80194EA4(u8 step) {
+void SetStep(u8 step) {
     Entity* entity = g_CurrentEntity;
 
     entity->step = step;
@@ -995,7 +995,38 @@ void CollectHeart(u16 index) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195974);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195A50);
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80180EEC[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        subWeapon = D_80180F1C[subWeapon];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+            return;
+        }
+        g_CurrentEntity->accelerationX = 0x20000;
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195B68);
 

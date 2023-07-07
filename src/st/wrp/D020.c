@@ -316,7 +316,7 @@ void EntityEquipItemDrop(Entity* self) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
             self->objectId = 3;
-            func_8018C240(0);
+            SetStep(0);
             EntityPrizeDrop(self);
             return;
         }
