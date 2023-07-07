@@ -26,7 +26,6 @@ void func_80198F18(s16);
 void func_80199014(s16);
 void func_801991CC(s16);
 void func_801992C8(s16);
-void func_801A046C(u16);
 s32 func_8019AC78(u8, s16);
 void PreventEntityFromRespawning(Entity* entity);
 void FallEntity(void);
