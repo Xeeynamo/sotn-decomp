@@ -276,37 +276,45 @@ u32 UpdateAnim(u8* frameProps, s32* frames) {
     if (g_CurrentEntity->animFrameDuration == -1) {
         ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
-        g_CurrentEntity->animFrameDuration = g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+        g_CurrentEntity->animFrameDuration =
+            g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
         ret = 0;
     } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
         animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
-        //Effectively a switch statement, but breaks if I actually use one.
+        // Effectively a switch statement, but breaks if I actually use one.
         if (animFrame->duration == 0) {
             g_CurrentEntity->animFrameIdx = animFrame->unk2;
-            g_CurrentEntity->animFrameDuration = g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+            g_CurrentEntity->animFrameDuration =
+                g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
             ret = 0;
-        } else if (animFrame->duration == 0xFFFF){
+        } else if (animFrame->duration == 0xFFFF) {
             g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
             ret = -1;
-        } else if (animFrame->duration == 0xFFFE){
+        } else if (animFrame->duration == 0xFFFE) {
             g_CurrentEntity->unk4C = frames[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
             ret = -2;
-            g_CurrentEntity->animFrameDuration = g_CurrentEntity->unk4C->duration;
+            g_CurrentEntity->animFrameDuration =
+                g_CurrentEntity->unk4C->duration;
         } else {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
         }
     }
     if (frameProps != NULL) {
-        //This is ugly - theoretically the type for frameProps should be FrameProperty*
-        //but anything besides this where we assign this big expression fails.
-        frameProps = &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 >> 9)<<2];
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+        frameProps =
+            &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx]
+                             .unk2 >>
+                         9)
+                        << 2];
         g_CurrentEntity->hitboxOffX = (s8)*frameProps++;
-        g_CurrentEntity->hitboxOffY = (s8)*(frameProps++);
+        g_CurrentEntity->hitboxOffY = (s8) * (frameProps++);
         g_CurrentEntity->hitboxWidth = *frameProps++;
-        g_CurrentEntity->hitboxHeight =  *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
     }
     g_CurrentEntity->animCurFrame =
         g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
