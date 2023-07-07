@@ -434,52 +434,46 @@ void func_80173C2C(Entity* entity) {
     DestroyEntity(entity);
 }
 
-s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
+u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
-    s8 new_var;
-    u16 new_var2;
     s32 ret;
+
     ret = 0;
     if (self->animFrameDuration == -1) {
         ret = -1;
     } else if (self->animFrameDuration == 0) {
         self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
-    } else {
-        self->animFrameDuration--;
-        if (self->animFrameDuration == 0) {
-            self->animFrameIdx++;
-            animFrame = &self->unk4C[self->animFrameIdx];
-            if (animFrame->duration == 0) {
-                self->animFrameIdx = animFrame->unk2;
-                self->animFrameDuration =
-                    self->unk4C[self->animFrameIdx].duration;
-            } else {
-                ;
-                if (animFrame->duration == 0xFFFF) {
-                    new_var2 = animFrame->duration;
-                    new_var2 += self->animFrameIdx;
-                    self->animFrameIdx += animFrame->duration;
-                    ret = -1;
-                    self->animFrameDuration = -1;
-                } else if (animFrame->duration == 0xFFFE) {
-                    self->unk4C = frames[animFrame->unk2];
-                    self->animFrameIdx = 0;
-                    ret = -2;
-                    self->animFrameDuration = self->unk4C->duration;
-                } else {
-                    self->animFrameDuration = animFrame->duration;
-                }
-            }
+    } else if (--self->animFrameDuration == 0) {
+        self->animFrameIdx++;
+        animFrame = &self->unk4C[self->animFrameIdx];
+        // Effectively a switch statement, but breaks if I actually use one.
+        if (animFrame->duration == 0) {
+            self->animFrameIdx = animFrame->unk2;
+            self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+            ret = 0;
+        } else if (animFrame->duration == 0xFFFF) {
+            self->animFrameIdx--;
+            self->animFrameDuration = -1;
+            ret = -1;
+        } else if (animFrame->duration == 0xFFFE) {
+            self->unk4C = frames[animFrame->unk2];
+            self->animFrameIdx = 0;
+            ret = -2;
+            self->animFrameDuration = self->unk4C->duration;
+        } else {
+            self->animFrameDuration = animFrame->duration;
         }
     }
-    if (hitboxFrames != 0) {
-        new_var2 = self->unk4C[self->animFrameIdx].unk2 >> 9;
-        hitboxFrames = &hitboxFrames[new_var2 << 2];
-        self->hitboxOffX = (s8)*hitboxFrames++;
-        new_var = *(hitboxFrames++);
-        self->hitboxOffY = new_var;
-        self->hitboxWidth = *hitboxFrames++;
-        self->hitboxHeight = *hitboxFrames++;
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+        frameProps =
+            &frameProps[(self->unk4C[self->animFrameIdx].unk2 >> 9) << 2];
+        self->hitboxOffX = *frameProps++;
+        self->hitboxOffY = *frameProps++;
+        self->hitboxWidth = *frameProps++;
+        self->hitboxHeight = *frameProps++;
     }
     self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
     return ret;
