@@ -23,6 +23,7 @@ AllocEntity = 0x80194AD4;
 SetStep = 0x80194EA4;
 InitializeEntity = 0x80194F74;
 CollectHeart = 0x801958F4;
+CollectSubweapon = 0x80195A50;
 EntityPrizeDrop = 0x80195C84;
 EntityExplosion = 0x801964F8;
 EntityEquipItemDrop = 0x80196698;

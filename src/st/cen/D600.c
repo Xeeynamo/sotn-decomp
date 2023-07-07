@@ -995,12 +995,7 @@ void CollectHeart(u16 index) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195974);
 
-//INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80195A50);
-
-extern u16 D_80180EEC[];
-extern u16 D_80180F1C[];
-
-void func_80195A50(u16 subWeaponIdx) {
+void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 

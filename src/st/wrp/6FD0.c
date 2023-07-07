@@ -1037,6 +1037,7 @@ u8 D_80180EEC[] = {
     0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x12,
     0x03, 0x13, 0x04, 0x14, 0x00, 0x00, 0x00, 0x00,
 };
+extern u16 D_80180F1C[];
 u8 D_80180F08[] = {
     0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A,
     0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x20,
@@ -2344,7 +2345,7 @@ u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void func_8018C240(u8 step) {
+void SetStep(u8 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
@@ -2606,43 +2607,38 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-#ifndef NON_MATCHING
-void CollectSubweapon(u16);
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", CollectSubweapon);
-#else
-void CollectSubweapon(u16 arg0) {
-    u16 temp_v0;
-    u16 var_a0;
-    Entity* player;
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
 
     g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
-    player = &PLAYER;
-    temp_v0 = D_80180DC4[arg0];
-    // player_equip_left_hand = temp_v0;
-    if (player_equip_left_hand == temp_v0) {
-        var_a0 = 1;
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80180DC4[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
         g_CurrentEntity->unk6D = 0x10;
     } else {
-        var_a0 = D_80180DF4[player_equip_left_hand];
+        subWeapon = D_80180DF4[subWeapon];
         g_CurrentEntity->unk6D = 0x60;
     }
-    if (var_a0 != 0) {
-        g_CurrentEntity->params = var_a0;
-        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 0xC;
-        func_8018C240(7);
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
         g_CurrentEntity->accelerationY = -0x28000;
         g_CurrentEntity->animCurFrame = 0;
-        g_CurrentEntity->unk8A = 5;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
             g_CurrentEntity->accelerationX = -0x20000;
-        } else {
-            g_CurrentEntity->accelerationX = 0x20000;
+            return;
         }
-    } else {
-        DestroyEntity(g_CurrentEntity);
+        g_CurrentEntity->accelerationX = 0x20000;
+        return;
     }
+    DestroyEntity(g_CurrentEntity);
 }
-#endif
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
