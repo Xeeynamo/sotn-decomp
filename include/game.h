@@ -481,12 +481,7 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
-typedef enum {
-    STAT_STR,
-    STAT_CON,
-    STAT_INT,
-    STAT_LCK
-} Stats;
+typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];

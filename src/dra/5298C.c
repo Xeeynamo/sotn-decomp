@@ -45,8 +45,6 @@ bool IsAlucart(void) {
     return false;
 }
 
-
-
 void func_800F4994(void) {
     s32 correctStonesEquipped;
     s32 j;
@@ -56,10 +54,10 @@ void func_800F4994(void) {
     u32 hourOfDay;
 
     statsPtr = &g_Status.statsEquip;
-    for (i = 3; i >= 0; i--, statsPtr++) {
+    for (i = 0; i < 4; i++, statsPtr++) {
         *statsPtr = 0;
     }
-    // Iterate through each Accessory i
+    // Iterate through each Accessory
     for (i = 0; i < 5; i++) {
         // Iterate through the 4 stats (STR, CON, INT, LCK)
         for (j = 0; j < 4; j++) {
