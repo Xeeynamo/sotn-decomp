@@ -569,7 +569,30 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018F620);
+void func_8018F620(
+    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
+    Entity* newEntity;
+    s16 newY;
+    s16 newX;
+    s32 i;
+
+    newX = self->posX.i.hi + x;
+    newY = self->posY.i.hi + y;
+    for (i = 0; i < count; i++) {
+        newEntity = AllocEntity(D_8007A958, D_8007A958 + 0x20);
+        if (newEntity != NULL) {
+            newEntity->posX.i.hi = newX + xGap * i;
+            newEntity->posY.i.hi = newY;
+            newEntity->objectId = E_UNK_14;
+            newEntity->pfnUpdate = func_8018F838;
+            newEntity->params = params;
+            newEntity->ext.generic.unk94 = arg5 + i;
+            newEntity->unk1C = newEntity->unk1A = D_80180FE8[arg5 + i];
+            newEntity->unk19 = 3;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+    }
+}
 
 // DECOMP_ME_WIP func_8018F750 https://decomp.me/scratch/peM5t by stuckpixel
 #ifndef NON_EQUIVALENT
