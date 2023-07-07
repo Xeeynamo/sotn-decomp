@@ -16,6 +16,7 @@ CreateEntityWhenInVerticalRange = 0x80192B00;
 CreateEntityWhenInHorizontalRange = 0x80192C18;
 InitRoomEntities = 0x80193298;
 CreateEntityFromCurrentEntity = 0x801934C4;
+CreateEntityFromEntity = 0x80193538;
 EntityRedDoor = 0x8019362C;
 DestroyEntity = 0x80194264;
 MoveEntity = 0x80194618;

@@ -31,11 +31,20 @@ extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
 extern LayoutObject* D_801801EC[];
 extern LayoutObject* D_801802C0[];
 extern PfnEntityUpdate D_80180390[];
+
+extern u16 D_80180404[];
 extern u16 D_80180410[]; // Init
 extern u16 D_80180428[];
 extern u16 D_80180434[]; // Init EntityPlatform
 extern u16 D_80180458[];
+extern u16 D_8018047C[];
 extern ObjInit2 D_80180490[];
+extern s32 D_80180574[];
+extern s8 D_80180594[];
+extern u8 D_8018059C[];
+extern s16 D_801805A4[];
+extern s8 D_801805B4[];
+extern u16 D_801805BC;
 extern u16 D_801805D8[];
 extern s32 D_8018068C[];
 extern s16 D_80180BBC[];
