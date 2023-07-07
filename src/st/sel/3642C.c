@@ -185,7 +185,7 @@ s32 func_801B88F4(
     sprintf(savePath, &g_MemcardSavePath, arg0, arg1, arg2);
 
     if (arg5 == 1) {
-        device = open(savePath, (arg4 << 0x10) | 0x200);
+        device = open(savePath, (arg4 << 0x10) | O_CREAT);
         if (device == -1) {
             return -2;
         } else {
@@ -194,7 +194,7 @@ s32 func_801B88F4(
     }
 
     new_var = arg4 << 0xD;
-    device = open(savePath, 0x8002);
+    device = open(savePath, O_WRONLY | O_NOWAIT);
 
     if (device == -1) {
         return -1;

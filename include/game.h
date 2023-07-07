@@ -10,6 +10,7 @@
 #include <psxsdk/libgs.h>
 #include <psxsdk/libgte.h>
 #include <psxsdk/libsnd.h>
+#include <psxsdk/romio.h>
 
 typedef long Event;
 

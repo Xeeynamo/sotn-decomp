@@ -316,7 +316,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         D_8013644C->type = 20;
     }
 
-    fid = open(D_8013644C->path, 1);
+    fid = open(D_8013644C->path, O_RDONLY);
     if (fid < 0) {
         FntPrint("o err:%s\n", D_8013644C->path);
         D_800A04EC = 0;
@@ -521,7 +521,7 @@ s32 func_800E9640(
         nBytes = 0x2B8;
     }
 
-    fd = open(file, 0x8001);
+    fd = open(file, O_RDONLY | O_NOWAIT);
     ret = -1;
 
     if (fd != -1) {
@@ -542,7 +542,7 @@ s32 func_800E96E8(
     sprintf(savePath, g_MemcardSavePath, arg0, arg1, arg2);
 
     if (arg5 == 1) {
-        device = open(savePath, (arg4 << 0x10) | 0x200);
+        device = open(savePath, (arg4 << 0x10) | O_CREAT);
         if (device == -1) {
             return -2;
         } else {
@@ -551,7 +551,7 @@ s32 func_800E96E8(
     }
 
     new_var = arg4 << 0xD;
-    device = open(savePath, 0x8002);
+    device = open(savePath, O_WRONLY | O_NOWAIT);
 
     if (device == -1) {
         return -1;
