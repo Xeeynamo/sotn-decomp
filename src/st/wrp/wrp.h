@@ -23,7 +23,7 @@ typedef enum {
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 D_80180458[];
-extern s16 D_80181044[];
+extern u32 D_80181044[];
 extern u16 D_801810A0[]; // NOTE(sestren): Random angle offsets?
 extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties?
 extern u32 D_80181110[];

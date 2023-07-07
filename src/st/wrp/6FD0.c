@@ -1188,7 +1188,7 @@ const char D_80186E5C[] = "move_x:%x y%x\n\0\0\0\0\0";
 // *** bss? section start ***
 extern LayoutObject* D_80193AB0;
 extern u16* D_80193AB4;
-extern s8 D_80193AB8;
+extern u8 D_80193AB8;
 extern u8 D_80193ABC;
 extern u16 D_80194728[];
 // *** bss? section end ***
@@ -1907,7 +1907,32 @@ void func_8018A118(s16 arg0) {
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A170);
 void func_8018A170(s16);
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", func_8018A26C);
+void func_8018A26C(s16 x) {
+    u8 flag;
+    s32 expected;
+
+    if (x < 0) {
+        x = 0;
+    }
+    if (D_80193AB8 == 0) {
+        func_8018A118(x - D_80097908);
+        D_80193AB8 = 1;
+    }
+
+    while (true) {
+        if (D_80193AB0->posX == 0xFFFE || x > D_80193AB0->posX) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_80193AB0->objectRoomIndex >> 8) + 0xFF;
+        if (flag == 0xFF ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_80193AB0);
+        }
+        D_80193AB0 -= 1;
+    }
+}
 void func_8018A26C(s16);
 
 void func_8018A380(s16 arg0) {
