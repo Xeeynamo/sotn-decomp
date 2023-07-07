@@ -836,18 +836,17 @@ s32 func_801BCCFC(u16* sensors) {
 
 s32 func_801BCF74(s16* posX) {
     Collider collider;
-    s16 temp1;
     s16 temp2;
-    s16 temp3;
     s16 temp4;
+    s16 x, y;
 
     g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
     temp2 = g_CurrentEntity->posY.i.hi + 3;
     g_CurrentEntity->posY.i.hi = temp2;
-    temp1 = g_CurrentEntity->posX.i.hi + *posX;
+    x = g_CurrentEntity->posX.i.hi + *posX;
     posX++;
-    temp3 = temp2 + *posX;
-    g_api.CheckCollision(temp1, temp3, &collider, 0);
+    y = temp2 + *posX;
+    g_api.CheckCollision(x, y, &collider, 0);
     if (!(collider.effects & EFFECT_SOLID)) {
         return 0;
     }
@@ -856,16 +855,17 @@ s32 func_801BCF74(s16* posX) {
     g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
     if (g_CurrentEntity->accelerationX != 0) {
         if (g_CurrentEntity->accelerationX < 0) {
-            temp4 = temp1 - *posX;
+            temp4 = x - *posX;
             posX++;
         } else {
-            temp4 = temp1 + *posX;
+            temp4 = x + *posX;
             posX++;
         }
-        temp3 = temp3 + *posX - 7;
-        g_api.CheckCollision(temp4, temp3, &collider, 0);
+        y = y + *posX - 7;
+        g_api.CheckCollision(temp4, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            if ((collider.effects & 0x8002) == 2) {
+            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
+                EFFECT_UNK_0002) {
                 g_CurrentEntity->posX.val =
                     g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
                 g_CurrentEntity->accelerationX = 0;
@@ -873,17 +873,15 @@ s32 func_801BCF74(s16* posX) {
             }
             return 0x61;
         }
-        
-        temp3 += 15;
-        g_api.CheckCollision(temp4, temp3, &collider, 0);
+        y += 15;
+        g_api.CheckCollision(temp4, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            if (collider.effects & 0x8000) {
+            if (collider.effects & EFFECT_UNK_8000) {
                 return 0x61;
             }
             return 1;
         }
-        g_CurrentEntity->posX.val =
-            g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
+        g_CurrentEntity->posX.val -= g_CurrentEntity->accelerationX;
         g_CurrentEntity->accelerationX = 0;
 
         return 0x80;
