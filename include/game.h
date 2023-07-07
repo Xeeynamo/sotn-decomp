@@ -481,11 +481,11 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
-typedef struct {
-    s32 statStr;
-    s32 statCon;
-    s32 statInt;
-    s32 statLck;
+typedef enum {
+    STAT_STR,
+    STAT_CON,
+    STAT_INT,
+    STAT_LCK
 } Stats;
 
 typedef struct {
@@ -804,10 +804,7 @@ typedef struct {
     /* 04 */ const char* description;
     /* 08 */ s16 attBonus;
     /* 0A */ s16 defBonus;
-    /* 0C */ s8 strBonus;
-    /* 0D */ s8 conBonus;
-    /* 0E */ s8 intBonus;
-    /* 0F */ s8 lckBonus;
+    /* 0C */ u8 statsBonus[4];
     /* 10 */ u32 unk10;
     /* 14 */ u32 unk14;
     /* 18 */ u16 icon;

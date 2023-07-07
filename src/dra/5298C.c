@@ -45,7 +45,89 @@ bool IsAlucart(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F4994);
+
+
+void func_800F4994(void) {
+    s32 correctStonesEquipped;
+    s32 j;
+    s32 i;
+    s32* statsPtr;
+    u32 statBonus;
+    u32 hourOfDay;
+
+    statsPtr = &g_Status.statsEquip;
+    for (i = 3; i >= 0; i--, statsPtr++) {
+        *statsPtr = 0;
+    }
+    // Iterate through each Accessory i
+    for (i = 0; i < 5; i++) {
+        // Iterate through the 4 stats (STR, CON, INT, LCK)
+        for (j = 0; j < 4; j++) {
+            statBonus = D_800A7718[g_Status.equipment[2 + i]].statsBonus[j];
+            if ((s32)statBonus >= 0x81) {
+                statBonus -= 0x100;
+            }
+            g_Status.statsEquip[j] += statBonus;
+        }
+    }
+    hourOfDay = g_Status.timerHours % 24;
+    // Hours of sunstone effectiveness
+    if (6 <= hourOfDay && hourOfDay < 18) {
+        // Sunstone check
+        correctStonesEquipped = CheckEquipmentItemCount(0x3BU, 4U);
+        statsPtr = &g_Status.statsEquip;
+        for (i = 0; i < 4; i++, statsPtr++) {
+            *statsPtr += correctStonesEquipped * 5;
+        }
+    } else {
+        // Moonstone check
+        correctStonesEquipped = CheckEquipmentItemCount(0x3AU, 4U);
+        statsPtr = &g_Status.statsEquip;
+        for (i = 0; i < 4; i++, statsPtr++) {
+            *statsPtr += correctStonesEquipped * 5;
+        }
+    }
+    if (D_80139830[2] != 0) {
+        g_Status.statsEquip[STAT_STR] += 20;
+    }
+    if (D_80139830[1] != 0) {
+        g_Status.statsEquip[STAT_INT] += 20;
+    }
+    if (D_80139830[0] != 0) {
+        g_Status.statsEquip[STAT_LCK] += 20;
+    }
+    if (g_Status.relics[27] & 2) {
+        g_Status.statsEquip[STAT_CON] += 10;
+    }
+    if (g_Status.relics[29] & 2) {
+        g_Status.statsEquip[STAT_LCK] += 10;
+    }
+    if (g_Status.relics[26] & 2) {
+        g_Status.statsEquip[STAT_STR] += 10;
+    }
+    if (g_Status.relics[28] & 2) {
+        g_Status.statsEquip[STAT_INT] += 10;
+    }
+    if (IsAlucart() != false) {
+        g_Status.statsEquip[STAT_LCK] += 30;
+    }
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsEquip[i] >= 100) {
+            g_Status.statsEquip[i] = 99;
+        }
+        g_Status.statsTotal[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
+    }
+
+    g_Status.statsTotal[1] =
+        (g_Status.statsEquip[1] * 8) + g_Status.statsBase[1];
+    g_Status.statsTotal[2] =
+        (g_Status.statsEquip[2] * 4) + g_Status.statsBase[2];
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsTotal[i] < 0) {
+            g_Status.statsTotal[i] = 0;
+        }
+    }
+}
 
 s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     s32 i;
