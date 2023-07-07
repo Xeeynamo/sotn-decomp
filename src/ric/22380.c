@@ -1,10 +1,9 @@
 #include "ric.h"
 
-// same as func_800E2398
-void func_8015E380(const char* str) {
+void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
-    FntPrint(str);
-    if (D_80174F7C++ & 4) {
+    FntPrint(msg);
+    if (g_DebugWaitInfoTimer++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
@@ -14,11 +13,11 @@ void func_8015E380(const char* str) {
     FntFlush(-1);
 }
 
-void func_8015E420(s32 arg0) {
+void DebugInputWait(const char* msg) {
     while (PadRead(0))
-        func_8015E380(arg0);
+        DebugShowWaitInfo(msg);
     while (PadRead(0) == 0)
-        func_8015E380(arg0);
+        DebugShowWaitInfo(msg);
 }
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E484);
