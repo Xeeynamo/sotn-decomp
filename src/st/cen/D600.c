@@ -101,7 +101,114 @@ void EntityUnkId01(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018DB18);
+void func_8018DB18(Entity* self) {
+    Entity* newEntity;
+    Collider collider;
+    Primitive* prim;
+    s16 primIndex;
+    s32 facing;
+    s16 temp;
+    s32 temp2;
+    s32 temp3;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180404);
+        self->zPriority = 0xB0;
+        self->unk19 = 4;
+        self->animCurFrame = self->params + 28;
+        facing = func_801945D4() & 1;
+
+        temp = (Random() & 30) + 8;
+        self->ext.generic.unk80.modeS16.unk0 = temp;
+        if (self->facing != 0) {
+            self->ext.generic.unk80.modeS16.unk0 = -temp;
+        }
+
+        if (self->params >= 4) {
+            self->ext.generic.unk80.modeS16.unk0 =
+                -self->ext.generic.unk80.modeS16.unk0;
+        }
+
+        if (facing == 0) {
+            self->accelerationX = -0x10000;
+        } else {
+            self->accelerationX = 0x10000;
+        }
+
+        temp3 = 0x8000;
+        temp2 = Random() << 8;
+        self->accelerationX = self->accelerationX + temp3 - temp2;
+        self->accelerationY = -0x30000;
+        self->accelerationY = (self->params >> 1) * 0x6000 - 0x30000;
+        if (self->params == 6) {
+            self->accelerationX = 0;
+            self->accelerationY = 0;
+            self->step = 2;
+        }
+
+        self->primIndex = 0;
+        if (self->params == 0) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIndex != -1) {
+                prim = &g_PrimBuf[primIndex];
+                self->primIndex = primIndex;
+                self->flags |= FLAG_HAS_PRIMS;
+                func_8019C620(prim, primIndex);
+                prim->tpage = 0x1A;
+                prim->clut = 0x159;
+                prim->u0 = prim->u2 = 0x40;
+                prim->u1 = prim->u3 = 0x60;
+                prim->v0 = prim->v1 = 0;
+                prim->v2 = prim->v3 = 0x20;
+                prim->next->x1 = self->posX.i.hi + 4;
+                prim->next->y0 = self->posY.i.hi - 8;
+                facing = LOH(prim->next->r2) = 32;
+                LOH(prim->next->b2) = facing;
+                prim->next->b3 = 16;
+                prim->priority = 0xB2;
+                prim->blendMode = 0x37;
+            }
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
+        self->accelerationY += 0x4000;
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
+        if (collider.effects & 1) {
+            self->posY.i.hi += collider.unk18;
+            self->accelerationY = -self->accelerationY / 2;
+            self->accelerationX -= self->accelerationX / 3;
+            if (self->accelerationY > -0xA000) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity != 0) {
+                    CreateEntityFromEntity(6, self, newEntity);
+                    newEntity->params = 16;
+                }
+                DestroyEntity(self);
+                break;
+            }
+        }
+
+        if (self->primIndex != 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            func_8019BED4(prim);
+            LOH(prim->next->r2) = LOH(prim->next->b2) += 4;
+            if (LOH(prim->next->r2) > 64) {
+                prim->next->b3 += 252;
+                if (prim->next->b3 == 0) {
+                    g_api.FreePrimitives(self->primIndex);
+                    self->primIndex = 0;
+                    self->flags &= ~FLAG_HAS_PRIMS;
+                }
+            }
+        }
+        break;
+    }
+}
 
 void func_8018DF0C(void) {
     D_8019D384 = 2;
