@@ -474,7 +474,86 @@ void EntityPlatform(Entity* self) {
 }
 
 // Black layer that covers room interior and lights up when cutscene starts
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityRoomDarkness);
+void EntityRoomDarkness(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s16 temp_a1;
+    s16 temp_a2;
+    s16 temp_a3;
+    s16 temp_t0;
+    s16 temp_a0;
+    s16 temp_v0;
+    s16 temp_v1;
+
+    switch (self->step) {
+    case 0:
+        /* Has player seen Maria Holy Glasses Cutscene? */
+        if (D_8003BDEC[216] != 0) {
+            DestroyEntity(self);
+            return;
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
+        if (primIndex != -1) {
+            InitializeEntity(D_80180434);
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->animSet = 0;
+            temp_a2 = self->posX.i.hi - 0x70;
+            temp_a3 = self->posX.i.hi + 0x70;
+            temp_t0 = self->posX.i.hi - 0x20;
+            temp_a0 = self->posX.i.hi + 0x20;
+            self->flags |= FLAG_HAS_PRIMS;
+            temp_v1 = 0x178 - g_Camera.posY.i.hi;
+            temp_v0 = temp_v1 - 0x58;
+            temp_a1 = temp_v1 + 0x68;
+            self->posY.i.hi = temp_v1;
+            prim->y0 = prim->y1 = temp_v0;
+            prim->x0 = prim->x2 = temp_a2;
+            prim->x1 = prim->x3 = temp_a3;
+            prim->y2 = prim->y3 = temp_a1;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0xFF;
+            prim->priority = 0x88;
+            prim->blendMode = 0x57;
+            prim = prim->next;
+            prim->x0 = prim->x2 = temp_t0;
+            prim->x1 = prim->x3 = temp_a0;
+            prim->y0 = prim->y1 = temp_a1;
+            prim->y2 = prim->y3 = temp_v1 + 0x88;
+            prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
+                255;
+            prim->r2 = prim->r3 = prim->g2 = prim->g3 = prim->b2 = prim->b3 = 0;
+            prim->priority = 0x88;
+            prim->blendMode = 0x57;
+        }
+        break;
+
+    case 1:
+        if (D_8019D424 & 4) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 -= 1;
+            prim = prim->next;
+            prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 = prim->r0 =
+                prim->b1 - 1;
+            if (prim->r0 == 0) {
+                self->step++;
+            }
+        }
+        break;
+
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->blendMode = 8;
+        prim = prim->next;
+        prim->blendMode = 8;
+        self->step++;
+        break;
+    }
+}
 
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
