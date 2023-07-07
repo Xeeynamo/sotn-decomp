@@ -499,10 +499,10 @@ void EntityRoomDarkness(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->animSet = 0;
-            temp_a2 = self->posX.i.hi - 0x70;
-            temp_a3 = self->posX.i.hi + 0x70;
-            temp_t0 = self->posX.i.hi - 0x20;
-            temp_a0 = self->posX.i.hi + 0x20;
+            temp_a2 = self->posX.i.hi - 112;
+            temp_a3 = self->posX.i.hi + 112;
+            temp_t0 = self->posX.i.hi - 32;
+            temp_a0 = self->posX.i.hi + 32;
             self->flags |= FLAG_HAS_PRIMS;
             temp_v1 = 0x178 - g_Camera.posY.i.hi;
             temp_v0 = temp_v1 - 0x58;
@@ -514,7 +514,7 @@ void EntityRoomDarkness(Entity* self) {
             prim->y2 = prim->y3 = temp_a1;
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = 0xFF;
+                    prim->b3 = 255;
             prim->priority = 0x88;
             prim->blendMode = 0x57;
             prim = prim->next;
