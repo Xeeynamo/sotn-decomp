@@ -301,7 +301,7 @@ void EntityEquipItemDrop(Entity* self) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
             self->objectId = 3;
-            func_801C58A4(0);
+            SetStep(0);
             EntityPrizeDrop(self);
             return;
         }
@@ -1264,7 +1264,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CF438);
 void func_801CF58C(Entity* self) {
     self->accelerationX = 0;
     self->ext.generic.unk84.S16.unk2 = 0x100;
-    func_801C58A4(6);
+    SetStep(6);
     g_api.PlaySfx(0x783);
     self->ext.generic.unk80.modeS16.unk0 = 0x20;
 }
@@ -1273,7 +1273,7 @@ void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
     if (self->facing == func_801C4FD4()) {
-        func_801C58A4(5);
+        SetStep(5);
         return;
     }
 
@@ -1286,21 +1286,21 @@ void func_801CF5E0(Entity* self) {
         self->ext.generic.unk84.S16.unk0 - self->posX.i.hi - g_Camera.posX.i.hi;
 
     if (temp_v0 > 16) {
-        func_801C58A4(3);
+        SetStep(3);
         if (self->facing != 0) {
             self->ext.generic.unk7C.S8.unk0 = 0;
         } else {
             self->ext.generic.unk7C.S8.unk0 = 1;
         }
     } else if (temp_v0 < -16) {
-        func_801C58A4(3);
+        SetStep(3);
         if (self->facing != 0) {
             self->ext.generic.unk7C.S8.unk0 = 1;
         } else {
             self->ext.generic.unk7C.S8.unk0 = 0;
         }
     } else {
-        func_801C58A4(7);
+        SetStep(7);
     }
 
     self->ext.generic.unk80.modeS16.unk0 = 0;
@@ -1677,14 +1677,14 @@ void func_801D59D0(void) {
     s32 temp2 = func_801C5A98(&D_80183C38, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
-        func_801C58A4(5);
+        SetStep(5);
         return;
     }
 
     if (g_CurrentEntity->ext.generic.unk7C.U8.unk0 == 0) {
         if (func_801C4F64() < 64) {
             if (g_CurrentEntity->facing != (func_801C4FD4() & 1)) {
-                func_801C58A4(4);
+                SetStep(4);
             }
         }
     } else {

@@ -39,7 +39,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             g_api.PlaySfx(0x7A4);
         }
         if (entity->posX.i.hi < 192) {
-            func_801C58A4(3);
+            SetStep(3);
             if (entity->params != 0) {
                 entity->accelerationX = 0x80000;
                 entity->accelerationY = 0x30000;
@@ -849,7 +849,7 @@ u16 func_801C5844(u16 arg0, u16 arg1, u16 arg2) {
     return arg2;
 }
 
-void func_801C58A4(u8 state) {
+void SetStep(u8 state) {
     g_CurrentEntity->step = state;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
@@ -1112,7 +1112,38 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", CollectSubweapon);
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_801823F4[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        subWeapon = D_80182424[subWeapon];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+            return;
+        }
+        g_CurrentEntity->accelerationX = 0x20000;
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
