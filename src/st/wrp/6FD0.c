@@ -2352,8 +2352,8 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_8018C260(u8 arg0) {
-    g_CurrentEntity->step_s = arg0;
+void func_8018C260(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }

@@ -239,15 +239,15 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E118);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018E160);
 
-void SetStep(s32 arg0) {
-    g_CurrentEntity->step = arg0 & 0xFF;
+void SetStep(u8 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_8018E1E0(s32 arg0) {
-    g_CurrentEntity->step_s = arg0 & 0xFF;
+void func_8018E1E0(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }

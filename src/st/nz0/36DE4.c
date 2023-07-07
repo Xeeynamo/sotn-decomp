@@ -829,20 +829,16 @@ u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
 }
 
 void SetStep(u8 step) {
-    Entity* entity = g_CurrentEntity;
-
-    entity->step = step;
-    entity->step_s = 0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void SetSubStep(u8 step_s) {
-    Entity* entity = g_CurrentEntity;
-
-    entity->step_s = step_s;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    g_CurrentEntity->step_s = step_s;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void func_801BD568(u16 arg0, u16 sfxId) {

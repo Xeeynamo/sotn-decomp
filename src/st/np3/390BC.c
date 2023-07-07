@@ -619,8 +619,8 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void SetSubStep(u8 arg0) {
-    g_CurrentEntity->step_s = arg0;
+void SetSubStep(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
