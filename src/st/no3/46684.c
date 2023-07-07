@@ -987,7 +987,56 @@ void func_801CAD28(s16 sfxId) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CAE20);
+void func_801CAE20(Primitive* prim) {
+    u8 xPos;
+    s32 i;
+    s32 j;
+
+    switch (prim->p3) {
+    case 0:
+        if (prim->p1 < 0x80) {
+            if (--prim->p1 == 0) {
+                prim->p3 = 1;
+            }
+        } else {
+            if (++prim->p1 == 0) {
+                prim->p3 = 2;
+            }
+        }
+
+        if (prim->p3 != 0) {
+            u8* dst = prim->p3 == 1 ? &prim->r1 : &prim->r0;
+            for (i = 0; i < 2; i++) {
+                for (j = 0; j < 3; j++) {
+                    dst[j] = 0x50;
+                }
+                dst += 0x18;
+            }
+            prim->p2 = 0;
+        }
+        break;
+    case 1:
+        if (prim->p2 < 0x14) {
+            prim->p2++;
+        }
+        xPos = prim->p2 / 5;
+        prim->x2 = prim->x0 = prim->x0 + xPos;
+        prim->x1 = prim->x1 + xPos;
+        prim->x3 = prim->x0;
+        func_801D704C(prim, 4);
+        break;
+    case 2:
+        if (prim->p2 < 0x14) {
+            prim->p2++;
+        }
+        xPos = prim->p2 / 5;
+        prim->x2 = prim->x0 = prim->x0 - xPos;
+        prim->x1 = prim->x1 - xPos;
+        prim->x3 = prim->x0;
+        func_801D704C(prim, 4);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityStageNamePopup);
 
