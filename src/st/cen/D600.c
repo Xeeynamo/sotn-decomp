@@ -615,7 +615,34 @@ s16 func_801904B8(Primitive* prim, s16 arg1) {
 // Elevator when not moving (ID 1A)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityElevatorStationary);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId1B);
+void EntityUnkId1B(Entity* self) {
+    Entity* entity = &self[self->params];
+    s32 step = self->step;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_8018047C);
+        if (self->params & 16) {
+            self->animCurFrame = self->params & 15;
+            self->zPriority = 0x6A;
+            self->step = 2;
+            return;
+        }
+        self->animCurFrame = 0;
+        break;
+
+    case 1:
+        self->posX.i.hi = entity->posX.i.hi;
+        if (self->params == step) {
+            self->posY.i.hi = entity->posY.i.hi + 35;
+            self->ext.generic.unk80.modeS8.unk0 = func_80195318(self, 12, 8, 4);
+        } else {
+            self->posY.i.hi = entity->posY.i.hi - 24;
+            self->ext.generic.unk80.modeS8.unk0 = func_80195318(self, 12, 8, 6);
+        }
+        break;
+    }
+}
 
 // Elevator when moving, fixes player into position (ID 1C)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityMovingElevator);

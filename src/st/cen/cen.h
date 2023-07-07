@@ -37,6 +37,7 @@ extern u16 D_80180410[]; // Init
 extern u16 D_80180428[];
 extern u16 D_80180434[]; // Init EntityPlatform
 extern u16 D_80180458[];
+extern u16 D_8018047C[];
 extern ObjInit2 D_80180490[];
 extern s32 D_80180574[];
 extern s8 D_80180594[];
