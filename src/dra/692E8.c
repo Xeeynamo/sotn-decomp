@@ -269,57 +269,49 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DB38);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DBFC);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateAnim);
-#else
-void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
+u32 UpdateAnim(u8* frameProps, s32* frames) {
     AnimationFrame* animFrame;
-    s8* frameProp;
+    s32 ret;
+
     if (g_CurrentEntity->animFrameDuration == -1) {
+        ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
-        g_CurrentEntity->animFrameDuration =
-            g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
-    } else if (--g_CurrentEntity->animFrameDuration == 0) {
+        g_CurrentEntity->animFrameDuration = g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+        ret = 0;
+    } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
         animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
-        switch ((u32)animFrame->duration) {
-        case 0:
+        //Effectively a switch statement, but breaks if I actually use one.
+        if (animFrame->duration == 0) {
             g_CurrentEntity->animFrameIdx = animFrame->unk2;
-            g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
-            break;
-
-        case 0xFFFF:
-            g_CurrentEntity->animFrameIdx =
-                g_CurrentEntity->animFrameIdx + 1 + animFrame->duration;
+            g_CurrentEntity->animFrameDuration = g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+            ret = 0;
+        } else if (animFrame->duration == 0xFFFF){
+            g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
-            break;
-
-        case 0xFFFE:
-            g_CurrentEntity->unk4C = (s32*)arg1[animFrame->unk2];
+            ret = -1;
+        } else if (animFrame->duration == 0xFFFE){
+            g_CurrentEntity->unk4C = frames[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
-            g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C[0].duration;
-            break;
-
-        default:
+            ret = -2;
+            g_CurrentEntity->animFrameDuration = g_CurrentEntity->unk4C->duration;
+        } else {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
-            break;
         }
     }
-    if (frameProps != 0) {
-        frameProp =
-            frameProps +
-            (g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 >> 9);
-        g_CurrentEntity->unk10 = *(frameProp++);
-        g_CurrentEntity->unk12 = *(frameProp++);
-        g_CurrentEntity->hitboxWidth = frameProp[0];
-        g_CurrentEntity->hitboxHeight = frameProp[1];
+    if (frameProps != NULL) {
+        //This is ugly - theoretically the type for frameProps should be FrameProperty*
+        //but anything besides this where we assign this big expression fails.
+        frameProps = &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 >> 9)<<2];
+        g_CurrentEntity->hitboxOffX = (s8)*frameProps++;
+        g_CurrentEntity->hitboxOffY = (s8)*(frameProps++);
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight =  *frameProps++;
     }
     g_CurrentEntity->animCurFrame =
         g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+    return ret;
 }
-#endif
 
 void func_8010DF70(void) {
     g_CurrentEntity = &PLAYER;
