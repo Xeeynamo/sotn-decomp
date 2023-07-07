@@ -20,6 +20,7 @@ EntityRedDoor = 0x8019362C;
 DestroyEntity = 0x80194264;
 MoveEntity = 0x80194618;
 AllocEntity = 0x80194AD4;
+SetStep = 0x80194EA4;
 InitializeEntity = 0x80194F74;
 CollectHeart = 0x801958F4;
 EntityPrizeDrop = 0x80195C84;
