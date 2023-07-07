@@ -34,7 +34,72 @@ void EntityBackgroundBlock(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId01);
+void EntityUnkId01(Entity* self) {
+    Entity* newEntity;
+    u16* ptr;
+    s32 j;
+    s32 i;
+    u16 params = self->params >> 0xC;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180404);
+        self->zPriority = 0xB0;
+        self->blendMode = D_801805B4[params];
+        newEntity = &self[1];
+        self->hitboxHeight = D_80180594[params];
+        self->animSet = D_801805A4[params];
+        DestroyEntity(newEntity);
+        CreateEntityFromEntity(0x11, self, newEntity);
+        if (params != 0) {
+            self[1].posY.i.hi -= 32;
+        } else {
+            self[1].posY.i.hi -= 16;
+        }
+        newEntity->params = 1;
+    }
+
+    func_80194394(D_80180574[params], self);
+
+    if (self->unk44 != 0) {
+        g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (newEntity != 0) {
+            CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+            newEntity->params = D_8018059C[params] | 0x10;
+        }
+
+        for (ptr = &D_801805BC, i = 0; i < 4; i++) {
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != 0) {
+                CreateEntityFromEntity(0x80, self, newEntity);
+                newEntity->posX.i.hi += *ptr;
+                ptr++;
+                newEntity->posY.i.hi = newEntity->posY.i.hi + *ptr;
+                ptr++;
+                if (params != 0) {
+                    newEntity->posY.i.hi -= 20;
+                }
+                newEntity->params = i;
+            }
+        }
+
+        if (params != 0) {
+            for (j = 0; j < 3; j++) {
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity != 0) {
+                    CreateEntityFromEntity(0x80, self, newEntity);
+                    newEntity->posX.i.hi += *ptr;
+                    ptr++;
+                    newEntity->posY.i.hi += *ptr;
+                    ptr++;
+                    newEntity->params = j + 4;
+                }
+            }
+        }
+        func_8019565C(self);
+        DestroyEntity(&self[1]);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018DB18);
 
@@ -610,7 +675,7 @@ void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
 }
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-void func_80193538(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
     entity->pfnUpdate = D_80180390[objectId];
@@ -1069,7 +1134,7 @@ void EntityUnkId13(Entity* entity) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
-                func_80193538(E_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
                 newEntity->objectId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
