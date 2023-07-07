@@ -655,7 +655,63 @@ void func_8018F928(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018FA1C);
+void func_8018FA1C(Entity* self) {
+    s16 primIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180458);
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->hitboxState = 0;
+            *(s32*)&self->ext.generic.unk7C = prim;
+            self->flags |= FLAG_HAS_PRIMS;
+            while (prim != NULL) {
+                prim->x0 = prim->x1 = self->posX.i.hi;
+                prim->y0 = prim->y1 = self->posY.i.hi;
+                prim->r0 = 64;
+                prim->r1 = 0;
+                prim->g0 = 64;
+                prim->g1 = 0;
+                prim->b0 = 255;
+                prim->b1 = 16;
+                prim->priority = self->zPriority + 1;
+                prim->blendMode |= 0x37;
+                prim = prim->next;
+            }
+        }
+        break;
+
+    case 1:
+        prim = (Primitive*)*(s32*)&self->ext.generic.unk7C.s;
+        if (func_8018F420(D_80181044, 0) & 255) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                func_8018F620(self, 1, 2, 0, 0, 3, 0);
+                self->step_s = 1;
+            }
+        } else {
+            self->accelerationY += 0x400;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->primIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 bool func_8018FC4C(Point16* unk) {
     Collider collider;
