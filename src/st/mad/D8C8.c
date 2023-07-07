@@ -982,8 +982,39 @@ void func_801937BC(void) {}
 
 void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
 
-// DECOMP_ME_WIP CollectSubweapon https://decomp.me/scratch/GsS0m
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", CollectSubweapon);
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(0x672);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80180D1C[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        subWeapon = D_80180D4C[subWeapon];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        g_CurrentEntity->step = 7;
+        g_CurrentEntity->step_s = 0;
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+            return;
+        }
+        g_CurrentEntity->accelerationX = 0x20000;
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectHeartVessel(void) {
     g_api.PlaySfx(0x670);

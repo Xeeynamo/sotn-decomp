@@ -74,6 +74,7 @@ AnimateEntity = 0x801C4D94;
 MoveEntity = 0x801C5018;
 FallEntity = 0x801C5048;
 AllocEntity = 0x801C54D4;
+SetStep = 0x801C58A4;
 InitializeEntity = 0x801C5974;
 EntityDummy = 0x801C5A70;
 ReplaceBreakableWithItemDrop = 0x801C605C;
