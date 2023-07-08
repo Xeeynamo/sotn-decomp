@@ -625,9 +625,9 @@ void EntityElevatorStationary(Entity* self) {
         InitializeEntity(D_8018047C);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
-        CreateEntityFromCurrentEntity(0x1B, &self[-1]);
+        CreateEntityFromCurrentEntity(E_ID1B, &self[-1]);
         self[-1].params = 1;
-        CreateEntityFromCurrentEntity(0x1B, &self[-2]);
+        CreateEntityFromCurrentEntity(E_ID1B, &self[-2]);
         self[-2].params = 2;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
         if (primIndex == -1) {
