@@ -1048,7 +1048,7 @@ extern s32 D_8003C730;
 extern GameState g_GameState;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
-extern s32 g_roomCount;
+extern u32 g_roomCount;
 extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
 extern s32 D_8003C8B8;

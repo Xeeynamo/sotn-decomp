@@ -260,7 +260,7 @@ void func_800F4FD0(void) {
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
     // Walk armor
     if (CheckEquipmentItemCount(0x13, 2) != 0) {
-        totalDefense += (g_roomCount / 60U);
+        totalDefense += g_roomCount / 60;
     }
 
     if (*D_80139828 != 0) {
@@ -269,7 +269,7 @@ void func_800F4FD0(void) {
     if (totalDefense < 0) {
         totalDefense = 0;
     }
-    if (totalDefense >= 1000) {
+    if (totalDefense > 999) {
         totalDefense = 999;
     }
     g_Status.defenseEquip = totalDefense;
