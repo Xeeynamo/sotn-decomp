@@ -33,7 +33,8 @@ def serialize_equipment(content: str) -> bytearray:
         serialized_data += utils.from_u8(item["unk13"])
         serialized_data += utils.from_u8(item["unk14"])
         serialized_data += utils.from_u8(item["lockDuration"])
-        serialized_data += utils.from_16(item["chainable"])
+        serialized_data += utils.from_u8(item["chainLimit"])
+        serialized_data += utils.from_u8(item["unk17"])
         serialized_data += utils.from_u8(item["specialMove"])
         serialized_data += utils.from_bool(item["isConsumable"])
         serialized_data += utils.from_u8(item["enemyInvincibilityFrames"])
@@ -110,7 +111,8 @@ class PSXSegEquipment(N64Segment):
                 "unk13": utils.to_u8(item_data[0x13:]),
                 "unk14": utils.to_u8(item_data[0x14:]),
                 "lockDuration": utils.to_u8(item_data[0x15:]),
-                "chainable": utils.to_u16(item_data[0x16:]),
+                "chainLimit": utils.to_u8(item_data[0x16:]),
+                "unk17": utils.to_u8(item_data[0x17:]),
                 "specialMove": utils.to_u8(item_data[0x18:]),
                 "isConsumable": utils.to_bool(item_data[0x19:]),
                 "enemyInvincibilityFrames": utils.to_u8(item_data[0x1A:]),

@@ -972,6 +972,7 @@ EntityAlucard = 0x8010A5BC;
 SetPlayerStep = 0x8010D584;
 UpdateAnim = 0x8010DDA0;
 AccelerateX = 0x8010E390;
+CheckChainLimit = 0x8010EC8C;
 AlucardHandleDamage = 0x8011405C;
 GetFreeDraEntity = 0x8011879C;
 EntityNumberMovesToHpMeter = 0x80118D0C;
