@@ -676,7 +676,7 @@ void func_800F223C(void);
 void func_800F4994(void);
 s32 CalcAttack(s32, s32);
 void func_800F4F48(void);
-void func_800F4FD0(void);
+void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);

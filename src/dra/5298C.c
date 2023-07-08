@@ -192,7 +192,7 @@ void func_800F4F48(void) {
     }
 }
 
-void func_800F4FD0(void) {
+void CalcDefense(void) {
     Accessory* acc;
     s32 thisHandItem;
     s32 i;
@@ -278,7 +278,7 @@ void func_800F4FD0(void) {
 void func_800F53A4(void) {
     func_800F4994();
     func_800F4F48();
-    func_800F4FD0();
+    CalcDefense();
 }
 
 void func_800F53D4(s32 tpage, s32 otIdx) {
