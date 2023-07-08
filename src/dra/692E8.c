@@ -684,7 +684,45 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     return (ret == 0) ? -1 : 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EB5C);
+s32 func_8010EB5C(void) {
+    SubweaponDef subWpn;
+    s16 subWpnId;
+    s32 var_s0;
+    s32 faker;
+
+    var_s0 = 0;
+    if (!(g_Player.padPressed & PAD_UP)) {
+        return 1;
+    }
+    if (g_Player.pl_vram_flag & 0x20) {
+        var_s0 = 1;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, false);
+
+    if (subWpnId == 0) {
+        return 1;
+    }
+    if (subWpnId == 6 && D_80097400[0] != 0) {
+        return 4;
+    }
+    if (func_8010EADC(subWpnId, subWpn.unk6) < 0) {
+        return 2;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, true);
+    if (subWpnId == 0) {
+        return 3;
+    }
+    func_8011AAFC(g_CurrentEntity, (u32)subWpn.unkB, subWpnId << 9);
+    g_Player.D_80072F14 = 4;
+    if (PLAYER.step_s < 64) {
+        faker = subWpn.unkA;
+        if (PLAYER.step == 0) {
+            func_8010DA48(faker + var_s0);
+        }
+        func_8010EA54(8);
+    }
+    return 0;
+}
 
 // DECOMP_ME_WIP func_8010EC8C https://decomp.me/scratch/N8Srk
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EC8C);
