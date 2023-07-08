@@ -629,7 +629,7 @@ void EntityElevatorStationary(Entity* self) {
         self[-1].params = 1;
         CreateEntityFromCurrentEntity(0x1B, &self[-2]);
         self[-2].params = 2;
-        primIndex = g_api.AllocPrimitives(4, 12);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
