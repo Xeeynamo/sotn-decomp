@@ -776,7 +776,7 @@ typedef struct {
     /* 0x13 */ u8 unk13;
     /* 0x14 */ u8 unk14;
     /* 0x15 */ u8 lockDuration;
-    /* 0x16 */ u8 chainable;
+    /* 0x16 */ u8 chainLimit;
     /* 0x17 */ u8 unk17;
     /* 0x18 */ u8 specialMove;
     /* 0x19 */ u8 isConsumable;
