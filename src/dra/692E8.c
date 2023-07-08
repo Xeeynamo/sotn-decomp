@@ -686,8 +686,41 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EB5C);
 
-// DECOMP_ME_WIP func_8010EC8C https://decomp.me/scratch/N8Srk
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EC8C);
+s32 CheckChainLimit(s32 itemId, bool unkBool) {
+    Entity* entity;
+    s32 existing_count;
+    s32 i;
+    s32 chain_limit;
+
+    chain_limit = D_800A4B04[itemId].chainable;
+    if (chain_limit & 0x80) {
+        return -(s32)((u16)g_Player.unk46 >> 0xF);
+    }
+    entity = &g_Entities[16];
+    for (i = 16, existing_count = 0; i < 64; i++, entity++) {
+        // Hack to load unkAE as an s16 (struct has s8)
+        // Longer term, figure out what g_Entites[16-64] are
+        // and make dedicated ent extension.
+        if (*(s16*)&entity->ext.generic.unkAE != itemId) {
+            continue;
+        }
+
+        if (unkBool) {
+            if (entity->params & 0x8000) {
+                existing_count++;
+            }
+        } else {
+            if (!(entity->params & 0x8000)) {
+                existing_count++;
+            }
+        }
+
+        if (!(existing_count < chain_limit)) {
+            return -1;
+        }
+    }
+    return 0;
+}
 
 void func_8010ED54(u8 arg0) {
     PLAYER.accelerationY = 0;
