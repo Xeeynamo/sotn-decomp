@@ -192,7 +192,88 @@ void func_800F4F48(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F4FD0);
+void func_800F4FD0(void) {
+    Accessory* acc;
+    s32 thisHandItem;
+    s32 i;
+    s16 totalDefense;
+
+    totalDefense = 0;
+    g_Status.defenseElement = 0;
+    g_Status.D_80097C2A = 0;
+    g_Status.D_80097C2C = 0;
+    g_Status.D_80097C2E = 0;
+
+    // Iterate over player's hands, hand 0 and hand 1.
+    for (i = 0; i < 2; i++) {
+        thisHandItem = g_Status.equipment[i];
+        totalDefense += D_800A4B04[thisHandItem].defense;
+        // If this hand is shield rod and other hand is a shield, defense bonus
+        // of 2.
+        if ((thisHandItem == 4) &&
+            D_800A4B04[g_Status.equipment[1 - i]].itemCategory == 9) {
+            totalDefense += 2;
+        }
+    }
+    // Iterate over accessories worn by player
+    for (i = 0; i < 5; i++) {
+        acc = &D_800A7718[g_Status.equipment[i + 2]];
+        totalDefense += acc->defBonus;
+        g_Status.defenseElement |= acc->unk10;
+        g_Status.D_80097C2A |= acc->unk12;
+        g_Status.D_80097C2C |= acc->unk14;
+        g_Status.D_80097C2E |= acc->unk16;
+    }
+    // Mirror cuirass
+    if (CheckEquipmentItemCount(0xD, 0U) != 0) {
+        g_Status.D_80097C2C |= 0x200;
+    }
+    // Alucard Mail
+    if (CheckEquipmentItemCount(0xF, 0U) != 0) {
+        g_Status.D_80097C2C |= 0x8000;
+    }
+    if (g_Status.relics[25] & 2) {
+        g_Status.D_80097C2C |= 0x100;
+    }
+    if (D_8013983C != 0) {
+        g_Status.D_80097C2A |= 0x8000;
+    }
+    if (D_80139840 != 0) {
+        g_Status.D_80097C2A |= 0x2000;
+    }
+    if (D_80139844 != 0) {
+        g_Status.D_80097C2A |= 0x4000;
+    }
+    if (D_80139848 != 0) {
+        g_Status.D_80097C2A |= 0x100;
+    }
+    if (D_8013984C != 0) {
+        g_Status.D_80097C2A |= 0x1000;
+    }
+    if (D_80139850 != 0) {
+        g_Status.D_80097C2C |= 0x200;
+    }
+    if (D_80139854 != 0) {
+        g_Status.D_80097C2A |= 0x800;
+    }
+
+    totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
+    // Walk armor
+    if (CheckEquipmentItemCount(0x13, 2) != 0) {
+        totalDefense += (g_roomCount / 60U);
+    }
+
+    if (*D_80139828 != 0) {
+        totalDefense += 0x14;
+    }
+    if (totalDefense < 0) {
+        totalDefense = 0;
+    }
+    if (totalDefense >= 1000) {
+        totalDefense = 999;
+    }
+    g_Status.defenseEquip = totalDefense;
+}
 
 void func_800F53A4(void) {
     func_800F4994();

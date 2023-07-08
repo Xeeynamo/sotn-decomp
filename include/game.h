@@ -802,8 +802,10 @@ typedef struct {
     /* 08 */ s16 attBonus;
     /* 0A */ s16 defBonus;
     /* 0C */ u8 statsBonus[4];
-    /* 10 */ u32 unk10;
-    /* 14 */ u32 unk14;
+    /* 10 */ u16 unk10;
+    /* 10 */ u16 unk12;
+    /* 14 */ u16 unk14;
+    /* 10 */ u16 unk16;
     /* 18 */ u16 icon;
     /* 1A */ u16 palette;
     /* 1C */ u32 unk1C;
