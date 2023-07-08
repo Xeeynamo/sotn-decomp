@@ -28,3 +28,6 @@ typedef enum {
 
 #define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
 #define ARRAY_COUNTU(arr) (u32)(sizeof(arr) / sizeof(arr[0]))
+
+//Characters printed in menu are ASCII offset by 0x20
+#define MENUCHAR(x) x - 0x20

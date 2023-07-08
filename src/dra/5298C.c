@@ -1065,24 +1065,23 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
         equipCount = g_Status.equipHandCount[itemId];
         str_idx = &outstring;
         // First character in the string is the (
-        *str_idx++ = 8;
+        *str_idx++ = MENUCHAR('(');
         // This is now how many you have.
         displayCount = equipCount + 1;
         if (displayCount < 10) {
-            // Get the character code for the count. They're offset by 16.
-            *str_idx++ = equipCount + 17;
+            // Get the character code for the count.
+            *str_idx++ = equipCount + 1 + MENUCHAR('0');
         } else {
             if (displayCount == 100) {
-                // Draw a 1.
-                *str_idx++ = 17;
+                *str_idx++ = MENUCHAR('1');
                 // Neat trick, set this to 0 so following two steps draw 00
                 displayCount = 0;
             }
-            *str_idx++ = (displayCount / 10) + 16;
-            *str_idx++ = (displayCount % 10) + 16;
+            *str_idx++ = (displayCount / 10) + MENUCHAR('0');
+            *str_idx++ = (displayCount % 10) + MENUCHAR('0');
         }
         // Finish off with a ) and string terminator
-        *str_idx++ = 9;
+        *str_idx++ = MENUCHAR(')');
         *str_idx++ = 0xFF;
         *str_idx++ = 0;
         // Draw it after the item name. X=224, Y = 30 + 13*hand
