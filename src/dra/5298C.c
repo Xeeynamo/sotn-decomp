@@ -1054,7 +1054,40 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8C98);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8E18);
+void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
+    u8 outstring[16];
+    u8* str_idx;
+    s32 displayCount;
+    u8 equipCount;
+
+    if (D_800A4B04[itemId].isConsumable != 0) {
+        // This holds one less than how many you have.
+        equipCount = g_Status.equipHandCount[itemId];
+        str_idx = &outstring;
+        // First character in the string is the (
+        *str_idx++ = MENUCHAR('(');
+        // This is now how many you have.
+        displayCount = equipCount + 1;
+        if (displayCount < 10) {
+            // Get the character code for the count.
+            *str_idx++ = equipCount + 1 + MENUCHAR('0');
+        } else {
+            if (displayCount == 100) {
+                *str_idx++ = MENUCHAR('1');
+                // Neat trick, set this to 0 so following two steps draw 00
+                displayCount = 0;
+            }
+            *str_idx++ = (displayCount / 10) + MENUCHAR('0');
+            *str_idx++ = (displayCount % 10) + MENUCHAR('0');
+        }
+        // Finish off with a ) and string terminator
+        *str_idx++ = MENUCHAR(')');
+        *str_idx++ = 0xFF;
+        *str_idx++ = 0;
+        // Draw it after the item name. X=224, Y = 30 + 13*hand
+        DrawMenuStr(&outstring, 224, (hand * 13) + 30, ctx);
+    }
+}
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8F28);
 
