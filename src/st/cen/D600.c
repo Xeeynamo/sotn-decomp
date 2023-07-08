@@ -802,7 +802,100 @@ void EntityUnkId1B(Entity* self) {
 }
 
 // Elevator when moving, fixes player into position (ID 1C)
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityMovingElevator);
+void EntityMovingElevator(Entity* self) {
+    Entity* player = &PLAYER;
+    Primitive* prim;
+    s16 primIndex;
+    s32 step;
+    s16 posY;
+    s16 temp;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_8018047C);
+        self->animCurFrame = 3;
+        self->zPriority = player->zPriority + 2;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->tpage = 0x12;
+            prim->u0 = prim->u2 = 0x50;
+            prim->u1 = prim->u3 = 0x60;
+            prim->v0 = prim->v1 = 6;
+            prim->v2 = prim->v3 = 0x26;
+            prim->clut = 0x223;
+            prim->priority = 0x6A;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+
+        if (player->posY.i.hi > 192) {
+            step = 2;
+            self->posY.i.hi = player->posY.i.hi;
+            player->posX.i.hi = self->posX.i.hi;
+        } else {
+            step = 3;
+            self->posY.i.hi = player->posY.i.hi;
+            player->posX.i.hi = self->posX.i.hi;
+        }
+
+        self->animCurFrame = 10;
+        g_Entities[1].ext.stub[0x00] = 1;
+        SetStep(step);
+        break;
+
+    case 3:
+        g_Player.D_80072EFC = 2;
+        g_Player.D_80072EF4 = 0;
+        self->posY.val += 0x8000;
+        player->posY.i.hi = self->posY.i.hi + 4;
+        g_Player.pl_vram_flag = 0x41;
+        break;
+
+    case 2:
+        g_Player.D_80072EFC = self->step;
+        g_Player.D_80072EF4 = 0;
+        self->posY.val -= 0x8000;
+        player->posY.i.hi = self->posY.i.hi + 4;
+        g_Player.pl_vram_flag = 0x41;
+        break;
+    }
+    prim = self->ext.prim;
+    prim->x0 = prim->x2 = self->posX.i.hi - 8;
+    prim->x1 = prim->x3 = self->posX.i.hi + 8;
+    temp = self->posY.i.hi;
+    prim->blendMode = 2;
+    prim->y2 = prim->y3 = temp - 0x1F;
+    prim->y0 = prim->y1 = temp - 0x2F;
+    prim = prim->next;
+
+    posY = self->posY.i.hi - 40;
+
+    while (prim != NULL) {
+        posY = func_801904B8(prim, posY);
+        prim = prim->next;
+        if (posY <= 0) {
+            break;
+        }
+        prim = prim->next;
+    }
+
+    while (prim != NULL) {
+        prim->blendMode = 8;
+        prim = prim->next;
+    }
+
+    if (ABS(self->posY.i.hi) > 384) {
+        DestroyEntity(self);
+    }
+}
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;

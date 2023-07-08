@@ -50,7 +50,7 @@ extern u16 D_80180410[];
 extern u16 D_80180428[];
 extern u16 D_80180434[]; // EntityPlatform
 extern u16 D_80180458[];
-extern u16 D_8018047C[]; // EntityElevatorStationary
+extern u16 D_8018047C[]; // EntityElevator
 
 extern ObjInit2 D_80180490[];
 extern s32 D_80180574[];
