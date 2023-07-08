@@ -49,7 +49,7 @@ void EntityUnkId01(Entity* self) {
         self->hitboxHeight = D_80180594[params];
         self->animSet = D_801805A4[params];
         DestroyEntity(newEntity);
-        CreateEntityFromEntity(0x11, self, newEntity);
+        CreateEntityFromEntity(E_BACKGROUND_BLOCK, self, newEntity);
         if (params != 0) {
             self[1].posY.i.hi -= 32;
         } else {
@@ -185,7 +185,7 @@ void func_8018DB18(Entity* self) {
             if (self->accelerationY > -0xA000) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(6, self, newEntity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->params = 16;
                 }
                 DestroyEntity(self);

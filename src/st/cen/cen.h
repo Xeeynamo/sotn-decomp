@@ -6,7 +6,7 @@
 
 typedef enum {
     /* 0x00 */ E_NONE,
-    /* 0x01 */ E_BREAKABLE,
+    /* 0x01 */ E_ID01,
     /* 0x02 */ E_EXPLOSION,
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ E_NUMERIC_DAMAGE,
