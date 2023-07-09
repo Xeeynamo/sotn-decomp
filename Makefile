@@ -91,6 +91,7 @@ define link
 endef
 
 all: build check
+saturn: build_saturn_native check_saturn_native
 build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 clean:
 	git clean -fdx assets/

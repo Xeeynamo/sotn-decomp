@@ -237,9 +237,9 @@ typedef struct Unkstruct_800A2D98 {
 // layout is different
 typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
-    /* 0x02 */ char unk02[0x19];
-    /* 0x1B */ u16 unk03;
-    /* 0x1D */ char unk04[0x1];
+    /* 0x02 */ char pad_02[0x1A];
+    /* 0x1C */ u16 unk03;
+    /* 0x1E */ char pad_1E[0x2];
 } Unkstruct_800A7734; // size = 0x20
 
 typedef struct {
