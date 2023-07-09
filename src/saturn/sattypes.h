@@ -71,7 +71,7 @@ typedef struct Entity {
     /* 0x8C */ char pad[0x2C];
 } Entity; // size = 0xB8
 
-struct Unk0600B344 {
+typedef struct Unk0600B344 {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ char pad_02[0x6];
     /* 0x08 */ s16 unk8;
@@ -80,7 +80,7 @@ struct Unk0600B344 {
     /* 0x10 */ char pad_10[0x1];
     /* 0x14 */ s32 unk14;
     /* 0x18 */ s32 unk18;
-};
+} Unk0600B344;
 
 typedef struct {
     // structure still unknown
