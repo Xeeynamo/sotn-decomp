@@ -200,12 +200,9 @@ void func_060e8330(void) {
     arr_0605C140[0xF1] = 1;
 }
 
-// INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8350, func_060E8350);
 void func_060E8350(Entity* self) {
-    UnkStruct_060e8350* iVar1;
-    int i;
-
-    iVar1 = (UnkStruct_060e8350*)self->unk88;
+    UnkStruct_060e8350* iVar1 = self->unk88;
+    s32 i;
 
     for (i = 0; i < 9; i++) {
         iVar1->unk18 = 0;
