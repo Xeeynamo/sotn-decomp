@@ -39,20 +39,18 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 
 const u32 rodataPadding_jpt_800FD6E0 = 0;
 
-u8* func_800FD744(s32 equipTypeFilter) {
-    u8* begin = g_Status.equipHandOrder;
-    if (equipTypeFilter != 0) {
-        begin += sizeof(g_Status.equipHandOrder);
+u8* GetEquipOrder(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandOrder;
     }
-    return begin;
+    return g_Status.equipBodyOrder;
 }
 
-u8* func_800FD760(s32 equipTypeFilter) {
-    s8* begin = &g_Status.equipHandCount;
-    if (equipTypeFilter != 0) {
-        begin += sizeof(g_Status.equipHandCount);
+u8* GetEquipCount(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandCount;
     }
-    return begin;
+    return g_Status.equipBodyCount;
 }
 
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
@@ -98,8 +96,8 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
     long i;
     s32 phi_a1;
     s32 phi_a1_2;
-    u8* cursorY = func_800FD744(itemCategory);
-    u8* itemArray = func_800FD760(itemCategory);
+    u8* cursorY = GetEquipOrder(itemCategory);
+    u8* itemArray = GetEquipCount(itemCategory);
     if (itemArray[itemId] < 99) {
         temp_a1 = itemArray[itemId];
         itemArray[itemId]++;
