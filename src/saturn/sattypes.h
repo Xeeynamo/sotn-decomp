@@ -10,7 +10,21 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
+#define true 1
+#define false 0
+#define bool s32
+
+#define NULL 0
+
+#define STAGE_ST0 0x1F
+#define TOTAL_ENTITY_COUNT 256
+
+#define NA_SE_PL_COLLECT_HEART 0x67A
+
+#define PLAYER g_Entities[PLAYER_CHARACTER]
+
 #define LOW(x) (*(s32*)&(x))
+#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 struct Entity;
 
@@ -58,73 +72,28 @@ typedef struct Entity {
 } Entity; // size = 0xB8
 
 struct Unk0600B344 {
-    s16 unk0;
-    u8 pad2[6];
-    s16 unk8;
-    u8 pad[0x3];
-    s16 zPriority;
-    u8 pad3[0x1];
-    s32 unk14;
-    s32 unk18;
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ char pad_02[0x6];
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ char pad_0A[0x4];
+    /* 0x0E */ s16 zPriority;
+    /* 0x10 */ char pad_10[0x1];
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
 };
 
-extern Entity* g_CurrentEntity;
-
 typedef struct {
-    // structure still unknwon
+    // structure still unknown
 } Collider;
-
-#define NULL 0
 
 typedef struct {
     /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
 } GameApi; /* size=0x140 */
-extern GameApi g_api;
-void PlaySfx(s16 sfxId);
-#define NA_SE_PL_COLLECT_HEART 0x67A
-
-#define ABS(x) ((x) < 0 ? -(x) : (x))
-
-typedef enum {
-    PLAYER_CHARACTER,
-    UNK_ENTITY_1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
-    UNK_ENTITY_4,
-    UNK_ENTITY_5,
-    UNK_ENTITY_6,
-    UNK_ENTITY_7,
-    UNK_ENTITY_8,
-    UNK_ENTITY_10 = 0x10,
-    UNK_ENTITY_13 = 0x13,
-    UNK_ENTITY_20 = 0x20,
-    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
-    UNK_ENTITY_100 = 0x100
-} EntityTypes;
 
 typedef struct {
     s32 unk0;
     PfnEntityUpdate func;
 } EntityEntry;
-extern EntityEntry** PfnEntityUpdates[];
-
-typedef enum {
-    ITEM_S_SWORD,
-    ITEM_SWORD,
-    ITEM_THROW_1,
-    ITEM_FIST,
-    ITEM_CLUB,
-    ITEM_TWOHAND,
-    ITEM_FOOD,
-    ITEM_BOMB,
-    ITEM_THROW_2,
-    ITEM_SHIELD,
-    ITEM_MEDICINE
-} ItemCategory;
-
-#define TOTAL_ENTITY_COUNT 256
-#define PLAYER g_Entities[PLAYER_CHARACTER]
-extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
 typedef struct {
     /* 0x00 */ s32 unk0;
@@ -132,24 +101,24 @@ typedef struct {
     /* 0x08 */ s32 unk8;
 } Unkstruct_800FD5BC;
 
-// offsets are not the same
+// offsets are not the same as psx
 typedef struct {
     u8 relics[30];
-    u8 pad4[0xc];
+    char pad4[0xc];
     u8 equipHandCount[176];
     u8 equipBodyCount[26];
-    u8 pad5[0x42];
+    char pad5[0x42];
     u8 equipHandOrder[176];
     u8 equipBodyOrder[26];
-    u8 pad2[0x4E];
+    char pad2[0x4E];
     s32 hp;
     s32 hpMax;
     s32 hearts;
     s32 heartsMax;
     s32 mp;
-    u8 pad[35];
+    char pad[35];
     s32 statsTotal[4];
-    u8 pad3[0x14];
+    char pad3[0x14];
     u32 subWeapon;
     u32 equipment[7];
 } PlayerStatus;
@@ -170,21 +139,10 @@ typedef struct {
     /* 0x12 */ u16 sp22; // entity->objectRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
-extern SubweaponDef g_Subweapons[];
-
 typedef struct {
     char pad_0[0x1B];
     s8 unk1C;
-} Unkstruct_800A841C;
-extern Unkstruct_800A841C D_800A841C[]; // related to player MP
-
-extern PlayerStatus g_Status;
-
-#define true 1
-#define false 0
-#define bool s32
-
-extern u16 g_StageId; // u32 in psx
+} Unkstruct_800A841C; // related to player MP
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -218,10 +176,6 @@ typedef struct {
     /* 0x32 */ u16 unk32;
 } Equipment; /* size=0x34 */
 
-// Not 100% sure about address, gcc seems to added the offset within
-// the struct to the base address
-extern Equipment D_800A4B04[];
-
 // Defines armor, cloak and rings
 typedef struct {
     /* 00 */ const char* name;
@@ -234,8 +188,6 @@ typedef struct {
     /* 1A */ u16 palette;
     /* 1C */ u32 unk1C;
 } Accessory; /* size=0x20 */
-
-extern Accessory D_800A7718[];
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -251,7 +203,6 @@ typedef struct {
     /* 0x18 */ s16 attack;
     /* 0x1A */ s16 unk1A;
 } SpellDef;
-extern SpellDef g_SpellDefs[];
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -275,45 +226,85 @@ typedef struct {
     /* 0x24 */ s32 unk24;
 } EnemyDef; /* size=0x28 */
 
-extern int rand(void);
-u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-
-// layout is different
-typedef struct Unkstruct_800A7734 {
-    /* 0x00 */ u16 unk00;
-    /* 0x02 */ char unk02[0x19];
-    u16 unk03;
-    char unk04[0x1];
-} Unkstruct_800A7734; // size = 0x20
-
-extern Unkstruct_800A7734 D_800A7734[];
-
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-
-extern s32 D_80139828[];
-
-extern s32 D_8013B5E8;
-
 typedef struct Unkstruct_800A2D98 {
     /* 0x0 */ s32 equipTypeFilter;
     /* 0x4 */ s32 unk4;
     /* 0x8 */ s32 unk8;
 } Unkstruct_800A2D98;
-extern Unkstruct_800A2D98 D_801375CC;
+
+// layout is different
+typedef struct Unkstruct_800A7734 {
+    /* 0x00 */ u16 unk00;
+    /* 0x02 */ char unk02[0x19];
+    /* 0x1B */ u16 unk03;
+    /* 0x1D */ char unk04[0x1];
+} Unkstruct_800A7734; // size = 0x20
 
 typedef struct {
-    u8 pad[0x3f8];
+    char pad[0x3F8];
     u32 unk0C;
 } PlayerState;
 
-extern PlayerState g_Player;
-#define STAGE_ST0 0x1F
+typedef enum {
+    PLAYER_CHARACTER,
+    UNK_ENTITY_1,
+    UNK_ENTITY_2,
+    UNK_ENTITY_3,
+    UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
+    UNK_ENTITY_10 = 0x10,
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_51 = 0x51,
+    UNK_ENTITY_100 = 0x100
+} EntityTypes;
+
+typedef enum {
+    ITEM_S_SWORD,
+    ITEM_SWORD,
+    ITEM_THROW_1,
+    ITEM_FIST,
+    ITEM_CLUB,
+    ITEM_TWOHAND,
+    ITEM_FOOD,
+    ITEM_BOMB,
+    ITEM_THROW_2,
+    ITEM_SHIELD,
+    ITEM_MEDICINE
+} ItemCategory;
 
 s32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 void DestroyEntity(Entity* entity);
+extern int rand(void);
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
+void PlaySfx(s16 sfxId);
+
+// Not 100% sure about address, gcc seems to added the offset within
+// the struct to the base address
+extern Equipment D_800A4B04[];
+
+extern GameApi g_api;
+extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
+extern EntityEntry** PfnEntityUpdates[];
+extern u16 g_StageId; // u32 in psx
+extern SpellDef g_SpellDefs[];
+extern Accessory D_800A7718[];
+extern Unkstruct_800A7734 D_800A7734[];
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
+extern s32 D_80139828[];
+extern s32 D_8013B5E8;
+extern Unkstruct_800A2D98 D_801375CC;
+extern PlayerState g_Player;
+extern Entity* g_CurrentEntity;
+extern Unkstruct_800A841C D_800A841C[]; // related to player MP
+extern PlayerStatus g_Status;
+extern SubweaponDef g_Subweapons[];
 
 #endif
