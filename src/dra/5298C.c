@@ -681,14 +681,13 @@ void DrawSettingsSound(MenuContext* context) {
 
 u8 func_800F7218(u16 arg0, u16 arg1) {
     if (arg0 == arg1) {
-        return 0xE4;    //Right arrow
-
+        return 0xE4; // Right arrow
     }
     if (arg0 < arg1) {
-        return 0xE3;    //Right-Up arrow
+        return 0xE3; // Right-Up arrow
 
     } else {
-        return 0xE5;    //Right-Down arrow
+        return 0xE5; // Right-Down arrow
     }
 }
 
@@ -1333,7 +1332,7 @@ void func_800FB004(void) {
         *D_80137844 = 0;
     }
 
-    temp_v0 = -draMenuStuff.D_80137688 + draMenuStuff.D_8013767C;
+    temp_v0 = -draMenuStuff.D_80137688 + draMenuStuff.D_80137678[2];
 
     if ((temp_v0 / 12) < (temp_a1 / 2)) {
         if (D_80137848[0] == 0) {

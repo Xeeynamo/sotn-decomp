@@ -217,16 +217,14 @@ typedef struct {
 
 typedef struct {
     /* 8013761C */ MenuContext menus[3];
-    /* 80137676 */ s16 unkPad1;
-    /* 80137678 */ s32 unkPad2;
-    /* 8013767C */ s16 D_8013767C;
-    /* 80137680 */ s32 unkPad3;
-    /* 80137684 */ s32 unkPad4;
+    /* 80137676 */ s16 D_80137676;
+    /* 80137678 */ s16 D_80137678[6];
+    /* 80137684 */ s32 unused1; // No known use yet, one may be found
     /* 80137688 */ s16 D_80137688;
     /* 8013768A */ s16 D_8013768A;
     /* 8013768C */ u16 D_8013768C;
-    /* 8013768E */ s16 unkPad5;
-    /* 80137690 */ s16 unkPad6;
+    /* 8013768E */ s16 unused2; // No known use yet, one may be found
+    /* 80137690 */ s16 unused3; // No known use yet, one may be found
     /* 80137692 */ u8 D_80137692;
 } UnkDRAMenuStruct;
 
