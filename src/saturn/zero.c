@@ -342,9 +342,26 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010008, func_06010008);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100B8, func_060100B8);
+
+// 0x060100b8
+// clears the debug print tilemap area, debug prints are at least used by
+// the stage select screen on the title screen
+void ClearDebugPrintTilemap(void) {
+    u16 i;
+    u16* ptr;
+
+    ptr = VDP2_DEBUG_TILEMAP_OFFSET;
+    i = 0;
+    do {
+        *ptr = 0;
+        i++;
+        ptr++;
+    } while (i <= 0xfff);
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100DC, func_060100DC);
 
+// debug print function used by title screen stage select
 // _DEBUG_FONT_SET2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010274, func_06010274);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010328, func_06010328);
