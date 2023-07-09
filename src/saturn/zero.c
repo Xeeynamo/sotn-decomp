@@ -351,12 +351,9 @@ void ClearDebugPrintTilemap(void) {
     u16* ptr;
 
     ptr = VDP2_DEBUG_TILEMAP_OFFSET;
-    i = 0;
-    do {
-        *ptr = 0;
-        i++;
-        ptr++;
-    } while (i <= 0xfff);
+    for (i = 0; i < 0x1000; i++) {
+        *ptr++ = 0;
+    }
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60100DC, func_060100DC);
