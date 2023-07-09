@@ -185,7 +185,8 @@ void func_8018DB18(Entity* self) {
             if (self->accelerationY > -0xA000) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
-                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, newEntity);
                     newEntity->params = 16;
                 }
                 DestroyEntity(self);
