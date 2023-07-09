@@ -62,7 +62,9 @@ typedef struct Entity {
     /* 0x47 */ char pad6[0x4];
     /* 0x4c */ u16 animFrameIdx;
     /* 0x4e */ s16 animFrameDuration;
-    /* 0x50 */ char pad_50[0x10];
+    /* 0x50 */ char pad_50[0x2];
+    /* 0x52 */ s16 unk52;
+    /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 unk74;

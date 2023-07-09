@@ -12,14 +12,14 @@ typedef struct UnkStruct_060e8350 {
     /* 0x20 */ struct UnkStruct_060e8350* unk20;
 } UnkStruct_060e8350; // size = 0x24
 
-typedef struct  {
+typedef struct {
     s32 unk0;
     u8 pad[4];
     u16 unk8;
     u16 unk10;
 } Unk060ED26C;
 
-typedef struct  {
+typedef struct {
     u8 pad[0x1c];
     u32 unk28;
 } Unk2;
@@ -60,7 +60,7 @@ void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 void SetStep(u8 step);
 
 void func_0600AFA8(Unk0600B344*, u32);
-void func_0600B004(Unk0600B344*, void*);
+void func_0600B004(Unk0600B344*, s32);
 void func_0607B264(Entity*, s32);
 Unk0600B344* func_0600B344(s32, s32, s32, s32);
 void func_06079BB4(Entity*);
@@ -74,6 +74,6 @@ extern u16 D_80180CC4[];
 extern const u8 D_80180EF0[];
 extern u16 D_80180F10[];
 extern const u8 D_80180EF8[];
-extern void* DAT_060ec270[];
+extern s32 DAT_060f4e6c[];
 
 #endif
