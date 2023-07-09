@@ -33,7 +33,12 @@ void EntityRedEyeBust(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC4EC, func_060DC4EC);
+void func_060DC4EC(Entity* self) {
+    if (self->step == 0) {
+        DestroyEntity(self);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC510, func_060DC510);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC7B4, func_060DC7B4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCA54, func_060DCA54);

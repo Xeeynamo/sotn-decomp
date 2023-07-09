@@ -1,3 +1,4 @@
+_DestroyEntity = 0x0600FFB8;
 _DAT_060e2014 = 0x060F5044;
 _arr_0605C140 = 0x0605C140;
 _func_060E8E1C = 0x060E8E1C;
@@ -18,3 +19,4 @@ _dat_060ed174 = 0x060F0E80;
 _entityRedEyeBustData2 = 0x060ecd70;
 _func_0600AFA8 = 0x0600afa8;
 _entityRedEyeBustData = 0x060ecf74;
+
