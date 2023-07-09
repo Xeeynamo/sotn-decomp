@@ -240,7 +240,11 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8E1C, func_060E8E1C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9270, func_060E9270);
+
+void func_060E9270(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060f237c[self->unk52]);
+}
 
 // dupe of func_060e97c4
 void func_060E92A8(u16** param_1) {
