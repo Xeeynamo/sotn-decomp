@@ -215,6 +215,21 @@ typedef struct {
     u32 unk8;
 } DamageParam;
 
+typedef struct {
+    /* 8013761C */ MenuContext menus[3];
+    /* 80137676 */ s16 unkPad1;
+    /* 80137678 */ s32 unkPad2;
+    /* 8013767C */ s16 D_8013767C;
+    /* 80137680 */ s32 unkPad3;
+    /* 80137684 */ s32 unkPad4;
+    /* 80137688 */ s16 D_80137688;
+    /* 8013768A */ s16 D_8013768A;
+    /* 8013768C */ u16 D_8013768C;
+    /* 8013768E */ s16 unkPad5;
+    /* 80137690 */ s16 unkPad6;
+    /* 80137692 */ u8 D_80137692;
+} UnkDRAMenuStruct;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -420,17 +435,7 @@ extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 D_80137618;
-
-/**
- * can't use "extern MenuContext D_8013761C[]";
- * as it's 2-byte aligned
- */
-extern u8 D_8013761C[];
-extern s32* D_8013763A; // type MenuContext ?
-extern s16 D_8013767C;
-extern s16 D_80137688;
-extern u16 D_8013768C;
-extern u8 D_80137692;
+extern UnkDRAMenuStruct draMenuStuff;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
 extern s16 D_801376C8;
