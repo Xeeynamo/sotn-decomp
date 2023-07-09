@@ -1077,8 +1077,8 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     s32 idx;
 
     new_var = &D_801375CC.equipTypeFilter;
-    sp20 = func_800FD744(*new_var);
-    equipsAmount = func_800FD760(*new_var);
+    sp20 = GetEquipOrder(*new_var);
+    equipsAmount = GetEquipCount(*new_var);
     totalItemCount = func_800FD6C4(*new_var);
     curX = 0;
     curY = 0;
@@ -1473,7 +1473,7 @@ void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
     u8 swap;
     u8* equipOrder;
 
-    equipOrder = func_800FD744(equipType);
+    equipOrder = GetEquipOrder(equipType);
     swap = equipOrder[D_801375D8[arg0]];
     equipOrder[D_801375D8[arg0]] = equipOrder[D_801375D8[arg1]];
     equipOrder[D_801375D8[arg1]] = swap;

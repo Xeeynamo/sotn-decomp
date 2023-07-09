@@ -149,8 +149,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 }
 
 // SAT: func_0606F3D8
-// same as PSX but better match?
-u8* func_800FD744(s32 equipTypeFilter) {
+u8* GetEquipOrder(s32 equipTypeFilter) {
     if (equipTypeFilter == 0) {
         return g_Status.equipHandOrder;
     }
@@ -158,8 +157,7 @@ u8* func_800FD744(s32 equipTypeFilter) {
 }
 
 // SAT: func_0606F3F8
-// better match like above?
-u8* func_800FD760(s32 equipTypeFilter) {
+u8* GetEquipCount(s32 equipTypeFilter) {
     if (equipTypeFilter == 0) {
         return g_Status.equipHandCount;
     }
