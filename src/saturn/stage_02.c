@@ -200,7 +200,21 @@ void func_060e8330(void) {
     arr_0605C140[0xF1] = 1;
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8350, func_060E8350);
+// INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8350, func_060E8350);
+void func_060E8350(Entity* self) {
+    UnkStruct_060e8350* iVar1;
+    int i;
+
+    iVar1 = (UnkStruct_060e8350*)self->unk88;
+
+    for (i = 0; i < 9; i++) {
+        iVar1->unk18 = 0;
+        iVar1->unk1E = 8;
+        iVar1 = iVar1->unk20;
+    }
+    return;
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E837C, func_060E837C);
 
 void func_060E87D0(s32, s32);

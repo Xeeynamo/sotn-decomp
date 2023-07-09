@@ -12,18 +12,9 @@ typedef unsigned long long u64;
 
 #define LOW(x) (*(s32*)&(x))
 
-typedef void (*PfnEntityUpdate)(struct Entity*);
+struct Entity;
 
-struct Unk0600B344 {
-    s16 unk0;
-    u8 pad2[6];
-    s16 unk8;
-    u8 pad[0x3];
-    s16 zPriority;
-    u8 pad3[0x1];
-    s32 unk14;
-    s32 unk18;
-};
+typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
@@ -35,12 +26,13 @@ typedef struct Entity {
     /* 0x10 */ s32 accelerationY;
     /* 0x14 */ u16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
-    s16 pad3[3];
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ char pad_1A[0x4];
     /* 0x1E */ s16 rotAngle;
     /* 0x20 */ s16 unk1A;
     /* 0x22 */ s16 unk1C;
-    s16 pad3_8;
-    s16 pad3_9;
+    /* 0x24 */ char pad_24[0x2];
+    /* 0x26 */ char pad_26[0x2];
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
@@ -48,20 +40,33 @@ typedef struct Entity {
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ u32 flags;
     /* 0x38 */ u16 pad4_1;
-    /* 0x3a */ u16 hitboxState; // hitbox state
-    s16 pad5[4];
+    /* 0x3A */ u16 hitboxState; // hitbox state
+    /* 0x3C */ char pad_3C[0x8];
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
-    u8 pad6[0x4];
+    /* 0x47 */ char pad6[0x4];
     /* 0x4c */ u16 animFrameIdx;
     /* 0x4e */ s16 animFrameDuration;
-    /* 0x50 */ u16 pad7[8];
+    /* 0x50 */ char pad_50[0x10];
     /* 0x60 */ s16 primIndex;
-    /* 0x62 */ u16 pad7_1[9];
+    /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 unk74;
-    u8 pad8[0x40];
-} Entity;
+    /* 0x76 */ char pad_76[0x12];
+    /* 0x88 */ struct Unk0600B344* unk88;
+    /* 0x8C */ char pad[0x2A];
+} Entity; // size = 0xB6
+
+struct Unk0600B344 {
+    s16 unk0;
+    u8 pad2[6];
+    s16 unk8;
+    u8 pad[0x3];
+    s16 zPriority;
+    u8 pad3[0x1];
+    s32 unk14;
+    s32 unk18;
+};
 
 extern Entity* g_CurrentEntity;
 
