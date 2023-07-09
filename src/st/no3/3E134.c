@@ -403,7 +403,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId - 1];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->params = initDesc->params;
@@ -608,7 +608,7 @@ void func_801C3E10(void) {
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
@@ -616,7 +616,7 @@ void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
 }

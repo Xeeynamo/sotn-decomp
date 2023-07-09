@@ -606,7 +606,7 @@ void func_8019F170(Entity* entity) {
 void func_8019F23C(u16 objectId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->objectId = objectId;
-    dst->pfnUpdate = D_801803C4[objectId];
+    dst->pfnUpdate = PfnEntityUpdates[objectId - 1];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;
