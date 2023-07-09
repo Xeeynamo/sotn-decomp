@@ -75,5 +75,6 @@ extern const u8 D_80180EF0[];
 extern u16 D_80180F10[];
 extern const u8 D_80180EF8[];
 extern s32 DAT_060f4e6c[];
+extern s32 DAT_060f2878[];
 
 #endif
