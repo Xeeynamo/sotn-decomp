@@ -55,7 +55,7 @@ typedef struct Entity {
     /* 0x76 */ char pad_76[0x12];
     /* 0x88 */ struct Unk0600B344* unk88;
     /* 0x8C */ char pad[0x2C];
-} Entity; // size = 0xB6
+} Entity; // size = 0xB8
 
 struct Unk0600B344 {
     s16 unk0;
