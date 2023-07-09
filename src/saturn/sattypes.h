@@ -69,7 +69,7 @@ typedef struct Entity {
     /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 unk74;
     /* 0x76 */ char pad_76[0x12];
-    /* 0x88 */ struct Unk0600B344* unk88;
+    /* 0x88 */ struct UnkStruct_060e8350* unk88;
     /* 0x8C */ char pad[0x2C];
 } Entity; // size = 0xB8
 
