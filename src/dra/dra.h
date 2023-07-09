@@ -226,7 +226,7 @@ typedef struct {
     /* 8013768E */ s16 unused2; // No known use yet, one may be found
     /* 80137690 */ s16 unused3; // No known use yet, one may be found
     /* 80137692 */ u8 D_80137692;
-} UnkDRAMenuStruct;
+} MenuData;
 
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
@@ -433,7 +433,7 @@ extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 D_80137618;
-extern UnkDRAMenuStruct draMenuStuff;
+extern MenuData g_MenuData;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
 extern s16 D_801376C8;
@@ -443,10 +443,10 @@ extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
-extern s32 g_StatusAttackRightHand;
-extern s32 g_StatusAttackLeftHand;
-extern s32 g_StatusDefenseEquip;
-extern s32 g_StatusPlayerStatsTotal[];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+extern s32 g_NewPlayerStatsTotal[];
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;

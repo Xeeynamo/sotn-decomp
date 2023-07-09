@@ -378,7 +378,7 @@ void DrawMenuSprite(
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
-    if (context == &draMenuStuff.menus[1]) {
+    if (context == &g_MenuData.menus[1]) {
         otIdx--;
     }
 
@@ -514,7 +514,7 @@ void func_800F6568(MenuContext* context) {
 // Draw equip menu cursor
 void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
     s32 r;
-    MenuContext* context = &draMenuStuff.menus[menuContextIndex];
+    MenuContext* context = &g_MenuData.menus[menuContextIndex];
 
     if (bColorMode != 0) {
         r = 0x80;
@@ -679,7 +679,7 @@ void DrawSettingsSound(MenuContext* context) {
                   12, 4, 1);
 }
 
-u8 func_800F7218(u16 arg0, u16 arg1) {
+u8 statChangeArrow(u16 arg0, u16 arg1) {
     if (arg0 == arg1) {
         return 0xE4; // Right arrow
     }
@@ -694,42 +694,42 @@ u8 func_800F7218(u16 arg0, u16 arg1) {
 void func_800F7244(void) {
     s32 i;
 
-    g_StatusAttackRightHand = g_Status.attackHands[0];
-    g_StatusAttackLeftHand = g_Status.attackHands[1];
-    g_StatusDefenseEquip = g_Status.defenseEquip;
+    g_NewAttackRightHand = g_Status.attackHands[0];
+    g_NewAttackLeftHand = g_Status.attackHands[1];
+    g_NewDefenseEquip = g_Status.defenseEquip;
 
     for (i = 0; i < 4; i++) {
-        g_StatusPlayerStatsTotal[i] =
+        g_NewPlayerStatsTotal[i] =
             g_Status.statsBase[i] + g_Status.statsEquip[i];
     }
 }
 
 extern s32 D_80137948;
 
-void func_800F72BC(void) {
+void DrawStatChanges(void) {
     s32 xcoord;
     s32 ycoord;
     s32 i;
     MenuContext* ctx;
     s32 arrow;
 
-    if ((draMenuStuff.D_80137692 != 0) || (D_80137948 == 0)) {
+    if ((g_MenuData.D_80137692 != 0) || (D_80137948 == 0)) {
         return;
     }
-    ctx = &draMenuStuff.menus[2];
+    ctx = &g_MenuData.menus[2];
     // Print the destination value for the square attack item
-    DrawMenuInt(g_StatusAttackRightHand, 0x154, 0x50, ctx);
+    DrawMenuInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
     // Show arrow icon for increasing, decreasing, or staying the same
-    arrow = func_800F7218(g_Status.attackHands[0], g_StatusAttackRightHand);
+    arrow = statChangeArrow(g_Status.attackHands[0], g_NewAttackRightHand);
     DrawMenuChar(arrow, 0x13C, 0x50, ctx);
 
     // Same but for the circle attack item
-    DrawMenuInt(g_StatusAttackLeftHand, 0x154, 0x5A, ctx);
-    arrow = func_800F7218(g_Status.attackHands[1], g_StatusAttackLeftHand);
+    DrawMenuInt(g_NewAttackLeftHand, 0x154, 0x5A, ctx);
+    arrow = statChangeArrow(g_Status.attackHands[1], g_NewAttackLeftHand);
     DrawMenuChar(arrow, 0x13C, 0x5A, ctx);
     // And repeat for defense.
-    DrawMenuInt(g_StatusDefenseEquip, 0x154, 0x6A, ctx);
-    arrow = func_800F7218(g_Status.defenseEquip, g_StatusDefenseEquip);
+    DrawMenuInt(g_NewDefenseEquip, 0x154, 0x6A, ctx);
+    arrow = statChangeArrow(g_Status.defenseEquip, g_NewDefenseEquip);
     DrawMenuChar(arrow, 0x13C, 0x6A, ctx);
 
     // Iterate through the 4 stats (STR CON INT LCK) doing the same.
@@ -742,11 +742,12 @@ void func_800F72BC(void) {
         DrawMenuInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
                     xcoord + 0x2C, ycoord, ctx);
         // Indication of change
-        arrow = func_800F7218((g_Status.statsBase[i] + g_Status.statsEquip[i]),
-                              g_StatusPlayerStatsTotal[i]);
+        arrow =
+            statChangeArrow((g_Status.statsBase[i] + g_Status.statsEquip[i]),
+                            g_NewPlayerStatsTotal[i]);
         DrawMenuChar(arrow, xcoord + 0x34, ycoord, ctx);
         // Final value for the stat
-        DrawMenuInt(g_StatusPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
+        DrawMenuInt(g_NewPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
     }
 }
 
@@ -760,7 +761,7 @@ void DrawPauseMenu(s32 arg0) {
     s32 temp_y;
     s32 phi_a0_5;
 
-    ctx = &draMenuStuff.menus[arg0];
+    ctx = &g_MenuData.menus[arg0];
     func_800F53A4();
     if (arg0 == 1) {
         DrawMenuAlucardPortrait(ctx);
@@ -815,7 +816,7 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuTime(g_Status.timerSeconds, 312, 192, ctx, 2);
     }
 
-    if (ctx == &draMenuStuff.menus[1]) {
+    if (ctx == &g_MenuData.menus[1]) {
         x = 248;
         y = 88;
     } else {
@@ -846,7 +847,7 @@ void DrawPauseMenu(s32 arg0) {
     DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
     func_800F66BC(D_800A2D6C, x, y + 20, ctx, 1);
     DrawMenuInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
-    if (ctx == (&draMenuStuff.menus[1])) {
+    if (ctx == (&g_MenuData.menus[1])) {
         x = 32;
         y = 120;
     } else {
@@ -1071,7 +1072,7 @@ void func_800F96F4(void) { // !Fake:
 
     new_var = D_80137848;
     poly = &g_PrimBuf[D_80137840];
-    temp_a2 = draMenuStuff.D_80137692 == 0;
+    temp_a2 = g_MenuData.D_80137692 == 0;
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
@@ -1305,11 +1306,11 @@ void func_800FAF44(s32 arg0) {
             var_a1++;
         }
 
-        draMenuStuff.D_80137688 = draMenuStuff.D_8013768C =
+        g_MenuData.D_80137688 = g_MenuData.D_8013768C =
             g_MenuNavigation.scrollEquipHand;
         return;
     }
-    draMenuStuff.D_80137688 = draMenuStuff.D_8013768C =
+    g_MenuData.D_80137688 = g_MenuData.D_8013768C =
         ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
 
     for (i = 0; i < 90; i++) {
@@ -1324,7 +1325,7 @@ void func_800FB004(void) {
     s32 temp_a1 = func_800FD6C4(D_801375CC.equipTypeFilter);
     s32 temp_v0;
 
-    if (((-draMenuStuff.D_80137688) / 12) != 0) {
+    if (((-g_MenuData.D_80137688) / 12) != 0) {
         if (*D_80137844 == 0) {
             *D_80137844 = 1;
         }
@@ -1332,7 +1333,7 @@ void func_800FB004(void) {
         *D_80137844 = 0;
     }
 
-    temp_v0 = -draMenuStuff.D_80137688 + draMenuStuff.D_80137678[2];
+    temp_v0 = -g_MenuData.D_80137688 + g_MenuData.D_80137678[2];
 
     if ((temp_v0 / 12) < (temp_a1 / 2)) {
         if (D_80137848[0] == 0) {
@@ -1382,7 +1383,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB23C);
 void func_800FB9BC(void) {
     s32 i;
 
-    MenuContext* context = &draMenuStuff.menus[0];
+    MenuContext* context = &g_MenuData.menus[0];
 
     for (i = 0; i < 0x10; i++, context++) {
         context->cursorX = context->unk1.x = MenuContextData[i].cursorX;
