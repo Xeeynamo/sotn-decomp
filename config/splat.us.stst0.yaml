@@ -29,6 +29,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x124, layers, rooms]
+      - [0x1A4, data]
       - [0x580, data]
       - [0x770, data]
       - [0x990, data]
@@ -41,6 +43,13 @@ segments:
       - [0x187BC, data]
       #- [0x1A40C, cmp]
       - [0x1A750, data]
+      - [0x1B2D0, tilelayout, D_8019B2D0]
+      - [0x1C6D0, tilelayout, D_8019C6D0]
+      - [0x1DAD0, tilelayout, D_8019DAD0]
+      - [0x1E0D0, tilelayout, D_8019E0D0]
+      - [0x1E2D0, tilelayout, D_8019E2D0]
+      - [0x1E6D0, tiledef, D_801A26D0]
+      - [0x226E0, data]
       - [0x27984, .rodata, 27D64]
       - [0x279E8, rodata]
       - [0x27ACC, rodata]
