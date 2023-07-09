@@ -20,7 +20,7 @@ type SotnStage struct {
 }
 
 func main() {
-	err := exportOvlToTmx("nz0", false)
+	err := exportOvlToTmx("st0", false)
 	if err != nil {
 		panic(err)
 	}
@@ -85,7 +85,8 @@ func makeTmx(stage *sotn.Stage) (tiled.Map, error) {
 			TileWidth:  tileSize,
 			TileHeight: tileSize,
 			Image: tiled.Image{
-				Source: gfxTilesets[i],
+				Transparency: "#000000",
+				Source:       gfxTilesets[i],
 			},
 		}
 	}
@@ -101,6 +102,9 @@ func makeTmx(stage *sotn.Stage) (tiled.Map, error) {
 	})
 
 	for i, room := range stage.Rooms {
+		if room.Bg != nil {
+			appendLayer(&m, room.Bg, fmt.Sprintf("room %d bg", i))
+		}
 		appendLayer(&m, room.Fg, fmt.Sprintf("room %d fg", i))
 		m.Layers = append(m.Layers, tiled.Layer{
 			Name:    fmt.Sprintf("room %d col", i),
