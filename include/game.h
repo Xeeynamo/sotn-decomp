@@ -813,6 +813,15 @@ typedef struct {
 } Accessory; /* size=0x20 */
 
 typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* desc;
+    /* 0x08 */ u16 icon;
+    /* 0x0A */ u16 palette;
+    /* 0x0C */ u16 unk0C;
+    /* 0x0E */ u16 unk0E;
+} RelicOrb; /* size=0x10 */
+
+typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
     /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
@@ -836,7 +845,7 @@ typedef struct {
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ void* func_80106A28;
     /* 8003C804 */ void (*func_80118894)(Entity*);
-    /* 8003C808 */ EnemyDef* enemyDefs;
+    /* 8003C808 */ EnemyDef (*enemyDefs)[];
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
     /* 8003C814 */ void* func_8010DB38;
@@ -847,15 +856,15 @@ typedef struct {
     /* 8003C828 */ u16 (*DealDamage)(
         Entity* enemyEntity, Entity* attackerEntity);
     /* 8003C82C */ void (*LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
-    /* 8003C830 */ Equipment* D_800A4B04;
-    /* 8003C834 */ Accessory* D_800A7718;
+    /* 8003C830 */ Equipment (*D_800A4B04)[];
+    /* 8003C834 */ Accessory (*D_800A7718)[];
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
     /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
-    /* 8003C850 */ void* D_800A8720;
+    /* 8003C850 */ RelicOrb (*D_800A8720)[];
     /* 8003C854 */ void* func_800FF7B8;
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
