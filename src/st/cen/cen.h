@@ -30,7 +30,7 @@ extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
 
 extern LayoutObject* D_801801EC[];
 extern LayoutObject* D_801802C0[];
-extern PfnEntityUpdate D_80180390[];
+extern PfnEntityUpdate PfnEntityUpdates[];
 
 extern u16 D_80180404[];
 extern u16 D_80180410[]; // Init

@@ -1006,7 +1006,7 @@ void func_80190494(u16 objectId, Entity* source, Entity* entity) {
 
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
     entity->unk5A = source->unk5A;

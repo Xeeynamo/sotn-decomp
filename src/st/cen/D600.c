@@ -906,15 +906,15 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_80193410);
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = D_80180390[objectId];
-    entity->posX.i.hi = (s16)(u16)g_CurrentEntity->posX.i.hi;
-    entity->posY.i.hi = (s16)(u16)g_CurrentEntity->posY.i.hi;
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = D_80180390[objectId];
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
 }

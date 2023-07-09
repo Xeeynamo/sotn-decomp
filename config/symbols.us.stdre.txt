@@ -1,4 +1,5 @@
 g_SpriteBanks = 0x80180040;
+PfnEntityUpdates = 0x801803C8;
 g_eBreakableInit = 0x80180458;
 g_eBreakableAnimations = 0x80180610;
 g_eBreakableHitboxes = 0x80180630;

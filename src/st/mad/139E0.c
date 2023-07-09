@@ -695,7 +695,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/139E0", func_801966B0);
 void func_8019686C(u16 objectId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->objectId = objectId;
-    dst->pfnUpdate = PfnEntityUpdates[objectId];
+    dst->pfnUpdate = PfnEntityUpdates[objectId - 1];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;

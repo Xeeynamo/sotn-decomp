@@ -184,6 +184,7 @@ LayoutObject* D_80180310[] = {
     /* 3D4 */ D_80181400,
     /* 3D8 */ D_80181400,
     /* 3DC */ D_80181400,
+    /* 3E0 */ D_80181400,
 };
 // *** Layout object definition end ***
 
@@ -197,7 +198,6 @@ void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate PfnEntityUpdates[] = {
-    /* 3E0 */ (PfnEntityUpdate)D_80181400,
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
     /* 3EC */ (PfnEntityUpdate)EntityPrizeDrop,
@@ -1797,7 +1797,7 @@ INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityNumericDamage);
 void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
     DestroyEntity(entity);
     entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->pfnUpdate = PfnEntityUpdates[entity->objectId - 1];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->params = initDesc->params;
@@ -2095,7 +2095,7 @@ void func_8018A7AC(void) {
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
@@ -2103,7 +2103,7 @@ void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
 }
