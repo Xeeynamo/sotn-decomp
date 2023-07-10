@@ -189,9 +189,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A264, func_0600A264);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, func_0600A29C);
 
 // func_0600A304
-void SetSprGourTable(u16 arg0) {
-    SPR_2SetGourTbl(arg0);
-}
+void SetSprGourTable(u16 arg0) { SPR_2SetGourTbl(arg0); }
 
 // _SetPlTransNonSeparateAura
 void func_0600A31C(void) { DAT_0605D910[3] = 1; }
