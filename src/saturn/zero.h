@@ -14,6 +14,8 @@ s32 DMA_CpuResult();
 // func_060234F4
 void DMA_ScuInit();
 
+void SPR_2SetGourTbl(u16 arg0);
+
 extern s32 DAT_0601ac28[];
 extern s32 DAT_0601ac2c[];
 extern s32 DAT_0601ac30[];

@@ -112,6 +112,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008134, func_06008134);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60081C8, func_060081C8);
 
+// func_0600824C
 void InitScuDma(void) {
     // sega library func
     DMA_ScuInit();
@@ -186,7 +187,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A240, func_0600A240);
 // _SetCharTrans
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A264, func_0600A264);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, func_0600A29C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A304, func_0600A304);
+
+// func_0600A304
+void SetSprGourTable(u16 arg0) {
+    SPR_2SetGourTbl(arg0);
+}
 
 // _SetPlTransNonSeparateAura
 void func_0600A31C(void) { DAT_0605D910[3] = 1; }
