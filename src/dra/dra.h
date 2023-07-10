@@ -216,7 +216,7 @@ typedef struct {
 } DamageParam;
 
 typedef struct {
-    /* 8013761C */ MenuContext menus[3];
+    /* 8013761C */ MenuContext menus[3]; // 761C, 763A, 7658
     /* 80137676 */ s16 D_80137676;
     /* 80137678 */ s16 D_80137678[6];
     /* 80137684 */ s32 unused1; // No known use yet, one may be found

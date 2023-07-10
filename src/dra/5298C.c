@@ -1125,7 +1125,46 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8C98);
+void BlinkMenuCursor(s32 left, s32 top, s32 right, s32 bottom, s32 arg4) {
+
+    s32 var_s2;
+    u8 blink_value;
+
+    u32* temp_s3 = g_CurrentBuffer->ot;
+    LINE_G2* temp_s0 = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
+
+    if (arg4 != 0) {
+        var_s2 = g_MenuData.menus[arg4 - 1].unk18 + 4;
+    } else {
+        var_s2 = 0x80;
+    }
+    SetSemiTrans(temp_s0, 0);
+    SetShadeTex(temp_s0, 1);
+    if (g_blinkTimer & 0x20) {
+        blink_value = g_blinkTimer & 0x1F;
+    } else {
+        blink_value = 0x1F - (g_blinkTimer & 0x1F);
+    }
+    blink_value *= 4;
+    blink_value -= 0x80;
+
+    if (arg4 != 0) {
+        blink_value = 0xFF;
+    }
+
+    temp_s0->r0 = blink_value;
+    temp_s0->g0 = blink_value;
+    temp_s0->b0 = blink_value;
+    temp_s0->r1 = blink_value;
+    temp_s0->g1 = blink_value;
+    temp_s0->b1 = blink_value;
+    temp_s0->x0 = left;
+    temp_s0->y0 = top;
+    temp_s0->x1 = right;
+    temp_s0->y1 = bottom;
+    AddPrim(&temp_s3[var_s2], temp_s0);
+    g_GpuUsage.line++;
+}
 
 void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
     u8 outstring[16];
