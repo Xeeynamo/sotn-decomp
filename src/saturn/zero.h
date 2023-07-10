@@ -19,4 +19,5 @@ extern s32 DAT_0601ac38[];
 extern s32 DAT_0601ac3c[];
 extern s32 DAT_0601ac40[];
 extern s32 DAT_0601ac44[];
+extern s32 DAT_0605D910[];
 #endif
