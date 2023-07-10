@@ -332,7 +332,10 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB6E4, func_060EB6E4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB8D0, func_060EB8D0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB950, func_060EB950);
+
+// EntitySkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB9EC, func_060EB9EC);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EBEB0, func_060EBEB0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC030, func_060EC030);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
