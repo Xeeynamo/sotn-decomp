@@ -950,6 +950,7 @@ DrawStatChanges = 0x800F72BC;
 DrawPauseMenu = 0x800F74B4;
 DrawSpellMenu = 0x800F7B60;
 DrawSystemMenu = 0x800F8374;
+BlinkMenuCursor = 0x800F8C98;
 DrawConsumableCount = 0x800F8E18;
 LoadWeaponPrg = 0x800FA8C4;
 func_800FD39C = 0x800FD39C;
