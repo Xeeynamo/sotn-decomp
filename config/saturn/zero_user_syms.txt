@@ -6,3 +6,5 @@ _DAT_0601ac38 = 0x60dc008;
 _DAT_0601ac3c = 0x60645e4;
 _DAT_0601ac40 = 0x60dc00c;
 _DAT_0601ac44 = 0x60645f8;
+_DMA_CpuMemCopy = 0x06023394;
+_DMA_CpuResult = 0x06023484;

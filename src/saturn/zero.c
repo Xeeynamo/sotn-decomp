@@ -129,7 +129,20 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008588, func_06008588);
 
 // _DMA_SCROLL
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60086E8, func_060086E8);
+// func_060086E8
+void DmaScroll(s32* src, s32* dest, u32 cnt) {
+    s32 result;
+
+    if (cnt != 0) {
+        // sega DMA lib
+        DMA_CpuMemCopy(dest, src, cnt >> 1); // not sure which of 1-5
+        do {
+            result = DMA_CpuResult();
+        } while (result == 2);
+    }
+    return;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60089F0, func_060089F0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008A70, func_06008A70);
