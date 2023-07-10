@@ -363,7 +363,9 @@ void func_060EC240(Entity* self) {
     func_0600B004(self->unk0, DAT_060f4e6c[self->unk52]);
 }
 
+// EntitySpittleBone
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC278, func_060EC278);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC730, func_060EC730);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60ECA94, d_060ECA94);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60ECC50, d_060ECC50);
