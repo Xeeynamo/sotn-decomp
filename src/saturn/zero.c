@@ -97,7 +97,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007BE0, func_06007BE0);
 
 // _SprSetGourTbl
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, func_06007CA0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CE0, func_06007CE0);
+
+u16 func_06007CE0(u16 param_1) { return param_1 * 0x10 + 0x400; }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CF8, func_06007CF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007D54, func_06007D54);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007E14, func_06007E14);
@@ -111,7 +113,12 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008134, func_06008134);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60081C8, func_060081C8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600824C, func_0600824C);
+
+// func_0600824C
+void InitScuDma(void) {
+    // sega library func
+    DMA_ScuInit();
+}
 
 // _VDP1_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
@@ -129,7 +136,19 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008588, func_06008588);
 
 // _DMA_SCROLL
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60086E8, func_060086E8);
+// func_060086E8
+void DmaScroll(s32* src, s32* dest, u32 cnt) {
+    s32 result;
+
+    if (cnt != 0) {
+        // sega DMA lib
+        DMA_CpuMemCopy(dest, src, cnt >> 1); // not sure which of 1-5
+        do {
+            result = DMA_CpuResult();
+        } while (result == 2);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60089F0, func_060089F0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008A70, func_06008A70);
@@ -169,10 +188,13 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A240, func_0600A240);
 // _SetCharTrans
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A264, func_0600A264);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, func_0600A29C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A304, func_0600A304);
+
+// func_0600A304
+void SetSprGourTable(u16 arg0) { SPR_2SetGourTbl(arg0); }
 
 // _SetPlTransNonSeparateAura
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A31C, func_0600A31C);
+void func_0600A31C(void) { DAT_0605D910[3] = 1; }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A330, func_0600A330);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
