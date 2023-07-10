@@ -237,7 +237,6 @@ void func_060E8350(Entity* self) {
         iVar1->unk1E = 8;
         iVar1 = iVar1->unk20;
     }
-    return;
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E837C, func_060E837C);
