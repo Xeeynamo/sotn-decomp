@@ -97,7 +97,7 @@ void func_801B3B78(void) {
     for (i = 0; i < 6; i++) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(0x38, g_CurrentEntity, newEntity);
+            CreateEntityFromEntity(E_FIRE, g_CurrentEntity, newEntity);
             newEntity->params = 2;
             newEntity->unk85 = 6 - i;
             newEntity->unk80 = temp_s3;
