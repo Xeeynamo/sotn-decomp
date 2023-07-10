@@ -68,7 +68,12 @@ typedef struct Entity {
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 unk74;
-    /* 0x76 */ char pad_76[0x12];
+    /* 0x76 */ char pad_76[0xA];
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ s8 unk84;
+    /* 0x85 */ s8 unk85;
+    /* 0x86 */ char pad_86[0x2];
     /* 0x88 */ struct UnkStruct_060e8350* unk88;
     /* 0x8C */ char pad[0x2C];
 } Entity; // size = 0xB8
