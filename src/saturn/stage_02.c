@@ -264,7 +264,9 @@ void func_060E92A8(u16** param_1) {
 const u16 pad_060e92d4 = 0xAAAA;
 const u16 pad_060e92d6 = 0xAAAB;
 
+// EntityBloodSkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E92D8, func_060E92D8);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9770, func_060E9770);
 
 // seems to saturn-only. param_1 is probably a struct?
