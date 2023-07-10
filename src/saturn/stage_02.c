@@ -54,16 +54,13 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDB80, func_060DDB80);
 // SAT: func_060DDE40
 // table with globe on it that can be broken
 void EntityTableWithGlobe(Entity* self) {
-    struct Unk0600B344* result;
     switch (self->step) {
     case 0:
         func_0607B264(self, 5);
         self->step++;
-        result = func_0600B344(
+        self->unk0 = func_0600B344(
             D_060ED26C.unk8, D_060ED26C.unk10, D_060ED26C.unk0, 7);
-
-        self->unk0 = result;
-        result->zPriority = 0x6A;
+        self->unk0->zPriority = 0x6A;
         self->hitboxWidth = 10;
         self->hitboxHeight = 12;
         self->hitboxOffX = 0;
