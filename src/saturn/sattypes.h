@@ -53,7 +53,7 @@ typedef struct Entity {
     /* 0x30 */ u16 params;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ u32 flags;
-    /* 0x38 */ u16 pad4_1;
+    /* 0x38 */ char pad_38[0x2];
     /* 0x3A */ u16 hitboxState; // hitbox state
     /* 0x3C */ char pad_3C[0x8];
     /* 0x44 */ u8 hitboxWidth;

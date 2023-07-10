@@ -93,7 +93,10 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE2B0, func_060DE2B0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE348, func_060DE348);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE6CC, func_060DE6CC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE970, func_060DE970);
+
+// EntitySubWeaponContainer
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DEE20, func_060DEE20);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF264, func_060DF264);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF3B8, func_060DF3B8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF52C, func_060DF52C);
@@ -280,7 +283,9 @@ void func_060E97F0(Entity* self) {
     func_0600B004(self->unk0, DAT_060f2878[self->unk52]);
 }
 
+// EntityBoneScimitar
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9828, func_060E9828);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA058, func_060EA058);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA1E0, func_060EA1E0);
 
