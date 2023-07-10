@@ -44,7 +44,10 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC7B4, func_060DC7B4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCA54, func_060DCA54);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCCD4, func_060DCCD4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCFA4, func_060DCFA4);
+
+// EntityCannonLever
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD20C, func_060DD20C);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD3E8, func_060DD3E8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD690, func_060DD690);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD790, func_060DD790);
