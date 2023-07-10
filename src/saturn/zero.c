@@ -185,10 +185,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, func_0600A29C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A304, func_0600A304);
 
 // _SetPlTransNonSeparateAura
-void func_0600A31C(void) {
-    DAT_0605D910[3] = 1;
-}
-
+void func_0600A31C(void) { DAT_0605D910[3] = 1; }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A330, func_0600A330);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
