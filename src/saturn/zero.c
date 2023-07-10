@@ -111,7 +111,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008134, func_06008134);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60081C8, func_060081C8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600824C, func_0600824C);
+
+void InitScuDma(void) {
+    // sega library func
+    DMA_ScuInit();
+}
 
 // _VDP1_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);

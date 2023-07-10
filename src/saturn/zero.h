@@ -11,6 +11,9 @@ void DMA_CpuMemCopy(s32*, s32*, u32);
 // func_06023484
 s32 DMA_CpuResult();
 
+// func_060234F4
+void DMA_ScuInit();
+
 extern s32 DAT_0601ac28[];
 extern s32 DAT_0601ac2c[];
 extern s32 DAT_0601ac30[];
