@@ -147,7 +147,6 @@ void DmaScroll(s32* src, s32* dest, u32 cnt) {
             result = DMA_CpuResult();
         } while (result == 2);
     }
-    return;
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
