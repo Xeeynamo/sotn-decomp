@@ -246,6 +246,7 @@ typedef struct {
 } ET_StageTitleCard;
 
 typedef union {
+    /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;

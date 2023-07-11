@@ -5,23 +5,35 @@
 #include "stage.h"
 
 typedef enum {
-    E_NONE,
-    E_BREAKABLE,
-    E_EXPLOSION,
-    E_PRIZE_DROP,
-    E_NUMERIC_DAMAGE,
-    E_RED_DOOR,
-    E_INTENSE_EXPLOSION,
-    E_SOUL_STEAL_ORB,
-    E_ROOM_FOREGROUND,
-    E_STAGE_NAME_POPUP,
-    E_EQUIP_ITEM_DROP,
-    E_RELIC_ORB,
-    E_HEART_DROP,
-    E_ENEMY_BLOOD,
-    E_SAVE_GAME_POPUP,
-    E_DUMMY_0F,
-    E_DUMMY_10,
+    /* 0x00 */ E_NONE,
+    /* 0x01 */ E_ID01,
+    /* 0x02 */ E_EXPLOSION,
+    /* 0x03 */ E_PRIZE_DROP,
+    /* 0x04 */ E_NUMERIC_DAMAGE,
+    /* 0x05 */ E_RED_DOOR,
+    /* 0x06 */ E_INTENSE_EXPLOSION,
+    /* 0x07 */ E_SOUL_STEAL_ORB,
+    /* 0x08 */ E_ROOM_FOREGROUND,
+    /* 0x09 */ E_STAGE_NAME_POPUP,
+    /* 0x0A */ E_EQUIP_ITEM_DROP,
+    /* 0x0B */ E_RELIC_ORB,
+    /* 0x0C */ E_HEART_DROP,
+    /* 0x0D */ E_ENEMY_BLOOD,
+    /* 0x0E */ E_SAVE_GAME_POPUP,
+    /* 0x0F */ E_DUMMY_0F,
+    /* 0x10 */ E_DUMMY_10,
+    /* 0x11 */ E_BACKGROUND_BLOCK,
+    /* 0x12 */ E_ID12,
+    /* 0x13 */ E_ID13,
+    /* 0x14 */ E_ENTITY_EXPLOSION_14,
+    /* 0x15 */ E_ID15,
+    /* 0x16 */ E_ID16,
+    /* 0x17 */ E_PLATFORM,
+    /* 0x18 */ E_MARIA,
+    /* 0x19 */ E_ROOM_DARKNESS,
+    /* 0x1A */ E_ELEVATOR_STATIONARY,
+    /* 0x1B */ E_ID1B,
+    /* 0x1C */ E_MOVING_ELEVATOR,
 } EntityIDs;
 
 void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
@@ -32,12 +44,14 @@ extern LayoutObject* D_801801EC[];
 extern LayoutObject* D_801802C0[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
+/*** Initializers ***/
 extern u16 D_80180404[];
-extern u16 D_80180410[]; // Init
+extern u16 D_80180410[];
 extern u16 D_80180428[];
-extern u16 D_80180434[]; // Init EntityPlatform
+extern u16 D_80180434[]; // EntityPlatform
 extern u16 D_80180458[];
-extern u16 D_8018047C[];
+extern u16 D_8018047C[]; // EntityElevator
+
 extern ObjInit2 D_80180490[];
 extern s32 D_80180574[];
 extern s8 D_80180594[];
@@ -47,6 +61,8 @@ extern s8 D_801805B4[];
 extern u16 D_801805BC;
 extern u16 D_801805D8[];
 extern s32 D_8018068C[];
+extern u8 D_80180768[]; // Animation
+extern u8 D_80180780[]; // Animation
 extern s16 D_80180BBC[];
 extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
