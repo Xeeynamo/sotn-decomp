@@ -353,7 +353,10 @@ void EntityAxeKnightRotateAxe(Entity* self) {
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EACC0, func_060EACC0);
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAF2C, func_060EAF2C);
+
+// EntityBloodyZombie
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EAFAC, func_060EAFAC);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB6E4, func_060EB6E4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB8D0, func_060EB8D0);
