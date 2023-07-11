@@ -33,32 +33,43 @@ void EntityRedEyeBust(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC4EC, func_060DC4EC);
+void func_060DC4EC(Entity* self) {
+    if (self->step == 0) {
+        DestroyEntity(self);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC510, func_060DC510);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DC7B4, func_060DC7B4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCA54, func_060DCA54);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCCD4, func_060DCCD4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DCFA4, func_060DCFA4);
+
+// EntityCannonLever
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD20C, func_060DD20C);
+
+// EntityCannon
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD3E8, func_060DD3E8);
+
+// EntityCannonShot
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD690, func_060DD690);
+
+// EntityCannonWall
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD790, func_060DD790);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DD8D8, func_060DD8D8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDB80, func_060DDB80);
 
 // SAT: func_060DDE40
 // table with globe on it that can be broken
 void EntityTableWithGlobe(Entity* self) {
-    struct Unk0600B344* result;
     switch (self->step) {
     case 0:
         func_0607B264(self, 5);
         self->step++;
-        result = func_0600B344(
+        self->unk0 = func_0600B344(
             D_060ED26C.unk8, D_060ED26C.unk10, D_060ED26C.unk0, 7);
-
-        self->unk0 = result;
-        result->zPriority = 0x6A;
+        self->unk0->zPriority = 0x6A;
         self->hitboxWidth = 10;
         self->hitboxHeight = 12;
         self->hitboxOffX = 0;
@@ -84,11 +95,33 @@ void EntityTableWithGlobe(Entity* self) {
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDF64, func_060DDF64);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE178, func_060DE178);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE2B0, func_060DE2B0);
+
+// SAT func_060DE2B0
+void func_801B3B78(void) {
+    Entity* newEntity;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s32 i;
+
+    for (i = 0; i < 6; i++) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_FIRE, g_CurrentEntity, newEntity);
+            newEntity->params = 2;
+            newEntity->unk85 = 6 - i;
+            newEntity->unk80 = temp_s3;
+            newEntity->unk84 = temp_s4;
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE348, func_060DE348);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE6CC, func_060DE6CC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE970, func_060DE970);
+
+// EntitySubWeaponContainer
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DEE20, func_060DEE20);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF264, func_060DF264);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF3B8, func_060DF3B8);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DF52C, func_060DF52C);
@@ -195,7 +228,17 @@ void func_060e8330(void) {
     arr_0605C140[0xF1] = 1;
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8350, func_060E8350);
+void func_060E8350(Entity* self) {
+    UnkStruct_060e8350* iVar1 = self->unk88;
+    s32 i;
+
+    for (i = 0; i < 9; i++) {
+        iVar1->unk18 = 0;
+        iVar1->unk1E = 8;
+        iVar1 = iVar1->unk20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E837C, func_060E837C);
 
 void func_060E87D0(s32, s32);
@@ -224,7 +267,11 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8E1C, func_060E8E1C);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E8EEC, func_060E8EEC);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9058, func_060E9058);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9270, func_060E9270);
+
+void func_060E9270(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060f237c[self->unk52]);
+}
 
 // dupe of func_060e97c4
 void func_060E92A8(u16** param_1) {
@@ -241,7 +288,9 @@ void func_060E92A8(u16** param_1) {
 const u16 pad_060e92d4 = 0xAAAA;
 const u16 pad_060e92d6 = 0xAAAB;
 
+// EntityBloodSkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E92D8, func_060E92D8);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9770, func_060E9770);
 
 // seems to saturn-only. param_1 is probably a struct?
@@ -255,8 +304,14 @@ void func_060e97c4(u16** param_1) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E97F0, func_060E97F0);
+void func_060E97F0(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060f2878[self->unk52]);
+}
+
+// EntityBoneScimitar
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9828, func_060E9828);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA058, func_060EA058);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EA1E0, func_060EA1E0);
 
@@ -303,12 +358,22 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB5C4, func_060EB5C4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB6E4, func_060EB6E4);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB8D0, func_060EB8D0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB950, func_060EB950);
+
+// EntitySkeleton
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EB9EC, func_060EB9EC);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EBEB0, func_060EBEB0);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC030, func_060EC030);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
-INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC240, func_060EC240);
+
+void func_060EC240(Entity* self) {
+    func_06079BB4(self);
+    func_0600B004(self->unk0, DAT_060f4e6c[self->unk52]);
+}
+
+// EntitySpittleBone
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC278, func_060EC278);
+
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC730, func_060EC730);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60ECA94, d_060ECA94);
 INCLUDE_ASM("asm/saturn/stage_02/data", d60ECC50, d_060ECC50);

@@ -595,7 +595,8 @@ void MoveEntity(Entity* entity) {
 }
 
 void func_06079BB4(s32* param_1) {
-    s32* temp = *param_1;
+    s32* temp = (s32*)*param_1;
+
     if (temp != 0) {
         temp[0x14 / 4] = param_1[1];
         temp[0x18 / 4] = param_1[2];
@@ -603,7 +604,7 @@ void func_06079BB4(s32* param_1) {
 }
 
 void func_06079BCC(s32* param_1) {
-    s32* temp = *param_1;
+    s32* temp = (s32*)*param_1;
     if (temp != 0) {
         param_1[1] = temp[0x14 / 4];
         param_1[2] = temp[0x18 / 4];
@@ -722,7 +723,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
 
 void func_0607B604(s32* param_1) {
-    s32* temp = *param_1;
+    s32* temp = (s32*)*param_1;
     temp[0x14 / 4] = param_1[1];
     temp[0x18 / 4] = param_1[2];
 }
