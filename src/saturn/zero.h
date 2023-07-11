@@ -16,6 +16,8 @@ void DMA_ScuInit();
 
 void SPR_2SetGourTbl(u16 arg0);
 
+void func_0600DACC();
+
 extern s32 DAT_0601ac28[];
 extern s32 DAT_0601ac2c[];
 extern s32 DAT_0601ac30[];
@@ -25,4 +27,19 @@ extern s32 DAT_0601ac3c[];
 extern s32 DAT_0601ac40[];
 extern s32 DAT_0601ac44[];
 extern s32 DAT_0605D910[];
+extern s16 DAT_0605AEA8;
+extern s16 DAT_06057A10[];
+extern s32 DAT_00252000;
+extern s32 DAT_00258000;
+extern s32* DAT_0606471C;
+
+struct Unk060645D0_1 {
+    struct Unk060645D0_2* unk0;
+};
+struct Unk060645D0_2 {
+    u8 pad[0x8];
+    s16 unk8;
+};
+extern struct Unk060645D0_1* DAT_060645D0;
+
 #endif
