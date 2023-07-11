@@ -208,8 +208,10 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AA18, func_0600AA18);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AB60, func_0600AB60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AC30, func_0600AC30);
 
-// _GetEnemyPlayerCharaAddr
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AD80, func_0600AD80);
+int GetEnemyPlayerCharaAddr(void) {
+    return -(s32)&DAT_00252000 + (s32)&DAT_00258000;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AD98, func_0600AD98);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AE30, func_0600AE30);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AEE4, func_0600AEE4);
