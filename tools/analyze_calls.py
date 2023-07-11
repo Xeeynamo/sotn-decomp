@@ -141,12 +141,10 @@ def get_all_funcnames():
 def build_call_tree():
     tree_dict = {}
     all_func_names = get_all_funcnames()
-    tree_dict["SDK_FUNCS"] = ",".join(get_sdk_funcs())
-    tree_dict["G_API_FUNCS"] = ",".join(get_g_api_funcs())
+    tree_dict["IGNORE_FUNCS"] = ",".join(get_sdk_funcs() + get_g_api_funcs() + get_main_funcs())
     print("Functions loaded.")
     print(f"Function count: {len(all_func_names)}")
     print("Building call trees...")
-    counter = 0
     for path in Path('../asm').rglob("*.s"):
         f = str(path)
         if 'mad' in f: #Skip mad for now, it has weird symbols
@@ -154,18 +152,16 @@ def build_call_tree():
         if not 'nonmatchings' in f:
             continue
         with open(f) as opened_f:
-            counter += 1
             filelines = opened_f.read().split('\n')
-            foundfuncs = []
+            foundfuncs = {}
             for i,line in enumerate(filelines):
                 if 'jal' in line:
                     funcname = handle_jal_call(filelines,i,all_func_names)
-                    if funcname is None:
-                        print(counter)
                     if funcname not in foundfuncs:
-                        foundfuncs.append(funcname)
-            
-            tree_dict[path.stem] = ",".join(foundfuncs)
+                        foundfuncs[funcname] = 1
+                    else:
+                        foundfuncs[funcname] +=1
+            tree_dict[path.stem] = ",".join([f'{func}-{count}' for func,count in foundfuncs.items()])
     return tree_dict
 
 def get_all_c_files(src_dir):
@@ -221,7 +217,6 @@ def is_decompiled(srcfile,fname):
     return True
 
 def analyze_function(fname,tree):
-    
     foundfunc = get_nonmatching_functions('../asm', fname)
     decomp_done = str(is_decompiled(foundfunc.src_path,fname))
     if MODE == 'GRAPHICAL':
@@ -232,31 +227,39 @@ def analyze_function(fname,tree):
         print(f"Analyzing {fname}; Decompiled: {decomp_done}")
         print(f"Functions called:")
     #Look through our asm file, and see who else we call.
-    if len(tree[fname]) == 1:
+    if len(tree[fname]) < 2:
         print("No functions called.")
     else:
         for item in tree[fname]:
-            if item in tree['SDK_FUNCS'] or item in tree['G_API_FUNCS'] or item == 'pfnEntityUpdate':
+            func,count = item.split('-')
+            if func in tree['IGNORE_FUNCS'] or func == 'pfnEntityUpdate':
                 decomp_done = 'N/A'
             else:
-                item_as_func = get_nonmatching_functions('../asm',item)
-                decomp_done = str(is_decompiled(item_as_func.src_path,item))
+                function_object = get_nonmatching_functions('../asm',func)
+                decomp_done = str(is_decompiled(function_object.src_path,func))
             if MODE == 'GRAPHICAL':
-                graph.node(item,style='filled',fillcolor=graph_colors[decomp_done])
-                graph.edge(fname,item)
+                graph.node(func,style='filled',fillcolor=graph_colors[decomp_done])
+                graph.edge(fname,func,count)
             if MODE == 'CMDLINE':
-                print(f'{item}; Decompiled: {decomp_done}')
+                print(f'{func} called {count} times; Decompiled: {decomp_done}')
+    #The opposite, find who calls us
     if MODE == 'CMDLINE':
         print(f'\nFunctions which call this:')
     for key,value in tree.items():
-        if fname in value:
+        if key == 'IGNORE_FUNCS':
+            continue
+        if any(fname in callee for callee in value):
+            callee_dict = {a:b for a,b in (x.split('-') for x in value)}
+            if fname not in callee_dict:
+                fname = "g_api_" + fname
+            call_count = callee_dict[fname]
             key_as_func = get_nonmatching_functions('../asm',key)
             decomp_done = str(is_decompiled(key_as_func.src_path,key))
             if MODE == 'GRAPHICAL':
                 graph.node(key,style='filled',fillcolor=graph_colors[decomp_done])
-                graph.edge(key,fname)
+                graph.edge(key,fname,call_count)
             if MODE == 'CMDLINE':
-                print(f'{key}; Decompiled: {decomp_done}')
+                print(f'Called by {key} {call_count} times; Decompiled: {decomp_done}')
     if MODE == 'GRAPHICAL':
         imgbytes = graph.pipe()
         img = Image.open(io.BytesIO(imgbytes))
