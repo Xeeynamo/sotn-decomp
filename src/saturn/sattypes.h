@@ -45,7 +45,7 @@ typedef struct Entity {
     /* 0x1E */ s16 rotAngle;
     /* 0x20 */ s16 unk1A;
     /* 0x22 */ s16 unk1C;
-    /* 0x24 */ char pad_24[0x2];
+    /* 0x24 */ s16 ghidra_pad_24;
     /* 0x26 */ char pad_26[0x2];
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2c */ u16 step;
@@ -53,7 +53,7 @@ typedef struct Entity {
     /* 0x30 */ u16 params;
     /* 0x32 */ u16 objectRoomIndex;
     /* 0x34 */ u32 flags;
-    /* 0x38 */ char pad_38[0x2];
+    /* 0x38 */ s16 ghidra_pad_38;
     /* 0x3A */ u16 hitboxState; // hitbox state
     /* 0x3C */ char pad_3C[0x8];
     /* 0x44 */ u8 hitboxWidth;
