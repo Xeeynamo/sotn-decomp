@@ -236,10 +236,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BCE0, func_0600BCE0);
 
-int func_0600BD4C(u8* param_1)
-{
-  return DAT_0606471C + param_1[2] * 2;
-}
+int func_0600BD4C(u8* param_1) { return DAT_0606471C + param_1[2] * 2; }
 
 // _Odma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
