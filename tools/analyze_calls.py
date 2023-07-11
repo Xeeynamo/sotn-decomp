@@ -141,9 +141,7 @@ def get_all_funcnames():
 def build_call_tree():
     tree_dict = {}
     all_func_names = get_all_funcnames()
-    tree_dict["SDK_FUNCS"] = ",".join(get_sdk_funcs())
-    tree_dict["G_API_FUNCS"] = ",".join(get_g_api_funcs())
-    tree_dict["MAIN_FUNCS"] = ",".join(get_main_funcs())
+    tree_dict["IGNORE_FUNCS"] = ",".join(get_sdk_funcs() + get_g_api_funcs() + get_main_funcs())
     print("Functions loaded.")
     print(f"Function count: {len(all_func_names)}")
     print("Building call trees...")
@@ -219,7 +217,6 @@ def is_decompiled(srcfile,fname):
     return True
 
 def analyze_function(fname,tree):
-
     foundfunc = get_nonmatching_functions('../asm', fname)
     decomp_done = str(is_decompiled(foundfunc.src_path,fname))
     if MODE == 'GRAPHICAL':
@@ -230,12 +227,12 @@ def analyze_function(fname,tree):
         print(f"Analyzing {fname}; Decompiled: {decomp_done}")
         print(f"Functions called:")
     #Look through our asm file, and see who else we call.
-    if len(tree[fname]) == 0:
+    if len(tree[fname]) < 2:
         print("No functions called.")
     else:
         for item in tree[fname]:
             func,count = item.split('-')
-            if func in tree['SDK_FUNCS'] or func in tree['G_API_FUNCS'] or func in tree['MAIN_FUNCS'] or func == 'pfnEntityUpdate':
+            if func in tree['IGNORE_FUNCS'] or func == 'pfnEntityUpdate':
                 decomp_done = 'N/A'
             else:
                 function_object = get_nonmatching_functions('../asm',func)
@@ -245,12 +242,16 @@ def analyze_function(fname,tree):
                 graph.edge(fname,func,count)
             if MODE == 'CMDLINE':
                 print(f'{func} called {count} times; Decompiled: {decomp_done}')
-                
+    #The opposite, find who calls us
     if MODE == 'CMDLINE':
         print(f'\nFunctions which call this:')
     for key,value in tree.items():
+        if key == 'IGNORE_FUNCS':
+            continue
         if any(fname in callee for callee in value):
             callee_dict = {a:b for a,b in (x.split('-') for x in value)}
+            if fname not in callee_dict:
+                fname = "g_api_" + fname
             call_count = callee_dict[fname]
             key_as_func = get_nonmatching_functions('../asm',key)
             decomp_done = str(is_decompiled(key_as_func.src_path,key))
