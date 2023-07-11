@@ -208,6 +208,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AA18, func_0600AA18);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AB60, func_0600AB60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600AC30, func_0600AC30);
 
+// func_0600AD80
 int GetEnemyPlayerCharaAddr(void) {
     return -(s32)&DAT_00252000 + (s32)&DAT_00258000;
 }
@@ -234,7 +235,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B4C4, func_0600B4C4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B954, func_0600B954);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BA24, func_0600BA24);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BCE0, func_0600BCE0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD4C, func_0600BD4C);
+
+int func_0600BD4C(u8* param_1)
+{
+  return DAT_0606471C + param_1[2] * 2;
+}
 
 // _Odma
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
