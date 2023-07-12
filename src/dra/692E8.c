@@ -266,7 +266,6 @@ void func_8010DA48(u32 arg0) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DA70);
 
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
-    s32 var_v0;
     u16* frameIndex;
 
     frameIndex =
