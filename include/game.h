@@ -95,6 +95,8 @@ typedef struct Primitive {
     /* 0x32 */ u16 blendMode;
 } Primitive; /* size=0x34 */
 
+#define BLEND_VISIBLE 8 // if unset, the primitive will not be rendered
+
 #include "entity.h"
 
 #define COLORS_PER_PAL 16
@@ -237,6 +239,14 @@ typedef struct Primitive {
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 typedef s16 AnimSet;
+
+#define FONT_W 8               // small font size used for dialogues and menu
+#define FONT_H 8               // small font size used for dialogues and menu
+#define FONT_GAP FONT_W        // gap between the beginning of two letters
+#define FONT_SPACE 4           // gap for the space character
+#define MENUCHAR(x) ((x)-0x20) // 8x8 characters are ASCII offset by 0x20
+#define DIAG_EOL 0xFF          // end of line
+#define DIAG_EOS 0x00          // end of string
 
 typedef enum {
     Game_Init,
