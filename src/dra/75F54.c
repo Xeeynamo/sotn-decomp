@@ -801,7 +801,7 @@ void EntityUnarmedAttack(Entity* entity) {
     }
 
     if (entity->step == 0) {
-        entity->flags = 0x60000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         GetEquipProperties(paramsTopBit, &equip, 0);
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
