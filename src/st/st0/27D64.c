@@ -378,13 +378,13 @@ void func_801A8620(Entity* entity) {
 }
 
 void func_801A8984(void) {
-    D_801C24D8 = 2;
-    D_801C24D6 = 2;
-    D_801C24DA = 0;
-    D_801C24DE = 0;
-    D_801C24E2 = 0;
-    D_801C24E3 = 8;
-    D_801C24D2 = D_801C24D4 + 0x14;
+    g_Dialogue.D_801C24D8 = 2;
+    g_Dialogue.D_801C24D6 = 2;
+    g_Dialogue.D_801C24DA = 0;
+    g_Dialogue.D_801C24DE = 0;
+    g_Dialogue.D_801C24E2 = 0;
+    g_Dialogue.D_801C24E3 = 8;
+    g_Dialogue.D_801C24D2 = g_Dialogue.D_801C24D4 + 0x14;
 }
 
 s32 func_801A89D8(s32 arg0) {
@@ -392,36 +392,36 @@ s32 func_801A89D8(s32 arg0) {
     s16 firstPrimIndex;
 
     firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 8);
-    D_801C2504[0] = firstPrimIndex;
+    g_Dialogue.D_801C24FC[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
-        D_801C2504[0] = 0;
+        g_Dialogue.D_801C24FC[2] = 0;
         return 0;
     }
-    D_801C24CC = arg0;
-    D_801C2508 = 0;
-    D_801C2500 = -1;
-    D_801C24FC = -1;
+    g_Dialogue.D_801C24CC = arg0;
+    g_Dialogue.D_801C2508 = 0;
+    g_Dialogue.D_801C24FC[1] = -1;
+    g_Dialogue.D_801C24FC[0] = -1;
     func_801A8984();
 
     if (prim && prim) { // !FAKE
     }
 
-    prim = D_801C24E4[0] = &g_PrimBuf[D_801C2504[0]];
+    prim = g_Dialogue.D_801C24E4[0] = &g_PrimBuf[g_Dialogue.D_801C24FC[2]];
 
     prim->blendMode = 8;
-    prim = D_801C24E4[1] = prim->next;
+    prim = g_Dialogue.D_801C24E4[1] = prim->next;
 
     prim->blendMode = 8;
-    prim = D_801C24E4[2] = prim->next;
+    prim = g_Dialogue.D_801C24E4[2] = prim->next;
 
     prim->blendMode = 8;
-    prim = D_801C24E4[3] = prim->next;
+    prim = g_Dialogue.D_801C24E4[3] = prim->next;
 
     prim->blendMode = 8;
-    prim = D_801C24E4[4] = prim->next;
+    prim = g_Dialogue.D_801C24E4[4] = prim->next;
 
     prim->blendMode = 8;
-    prim = D_801C24E4[5] = prim->next;
+    prim = g_Dialogue.D_801C24E4[5] = prim->next;
 
     prim->type = 4;
     prim->blendMode = 8;
@@ -429,8 +429,8 @@ s32 func_801A89D8(s32 arg0) {
     prim = prim->next;
     prim->type = 3;
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = 0;
+    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;

@@ -5,9 +5,82 @@
 
 #include "st0.h"
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8BF8);
+void func_801A8BF8(void) {
+    Primitive* prim;
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8CB0);
+    func_801A8B9C(g_Dialogue.D_801C24DA);
+    prim = g_Dialogue.D_801C24E4[g_Dialogue.D_801C24DA];
+    prim->tpage = 0x10;
+    prim->clut = g_Dialogue.D_801C24E0;
+    prim->y0 = g_Dialogue.D_801C24D2;
+    prim->u0 = 0;
+    prim->x0 = g_Dialogue.D_801C24D0;
+    prim->x0 = prim->x0 + 4;
+    prim->v0 = g_Dialogue.D_801C24DA * 0xC - 0x80;
+    prim->u1 = 0xC0;
+    prim->v1 = 0xC;
+    prim->priority = 0x1FF;
+    prim->blendMode = 0;
+}
+
+// Creates primitives for the actor name at the head of the dialogue
+void func_801A8CB0(u16 actorIndex, Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s32 x;
+    u16 chCount;
+    const char* actorName;
+    char ch;
+
+    actorName = D_80180828[actorIndex];
+    chCount = 0;
+    while (true) {
+        ch = *actorName++;
+        if (ch == DIAG_EOL) {
+            ch = *actorName++;
+            if (ch == DIAG_EOS) {
+                break;
+            }
+        }
+        if (ch == MENUCHAR(' ')) {
+            continue;
+        }
+        chCount++;
+    }
+
+    // Create chCount amount of sprites based on the actor name's letter count
+    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
+    if (primIndex == -1) {
+        DestroyEntity(self);
+        return;
+    }
+
+    // Fill prims to render the actor name on screen
+    prim = &g_PrimBuf[primIndex];
+    g_Dialogue.D_801C24FC[1] = primIndex;
+    actorName = D_80180828[actorIndex];
+    x = 0x38;
+    while (prim != NULL) {
+        ch = *actorName++;
+        if (ch == MENUCHAR(' ')) {
+            x += FONT_SPACE;
+        } else {
+            prim->type = PRIM_SPRT;
+            prim->tpage = 0x1E;
+            prim->clut = 0x196;
+            prim->u0 = (ch & 0x0F) * FONT_W;
+            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
+            prim->v1 = FONT_H;
+            prim->u1 = FONT_W;
+            prim->priority = 0x1FF;
+            prim->blendMode = BLEND_VISIBLE;
+            prim->x0 = x;
+            prim->y0 = g_Dialogue.D_801C24D4 + 6;
+            prim = prim->next;
+            x += FONT_GAP;
+        }
+    }
+}
 
 void func_801A8E34(s32 arg0) {
     D_801C250C = arg0 + 0x100000;
@@ -17,7 +90,34 @@ void func_801A8E34(s32 arg0) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8E60);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A910C);
+// Animates the portrait size of the actor by enlarging or shrinking it
+void func_801A910C(u8 ySteps) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+
+    primIndex = g_Dialogue.D_801C24DA + 1;
+    while (primIndex >= 5) {
+        primIndex -= 5;
+    }
+    if (g_CurrentEntity->step_s == 0) {
+        prim = g_Dialogue.D_801C24E4[primIndex];
+        prim->v1 -= ySteps;
+        prim->v0 += ySteps;
+        if (prim->v1 == 0) {
+            g_CurrentEntity->step_s++;
+            prim->blendMode = BLEND_VISIBLE;
+        }
+    }
+
+    for (i = 0; i < 5; i++) {
+        if (i != primIndex) {
+            prim = g_Dialogue.D_801C24E4[i];
+            prim->y0 -= ySteps;
+        }
+    }
+    g_Dialogue.D_801C24DC++;
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", EntityDialogue);
 

@@ -32,6 +32,26 @@ typedef enum {
     E_SECRET_STAIRS = 0x29,
 } EntityIDs;
 
+typedef struct {
+    const char* D_801C24CC;   // pointer to dialogue next character
+    u16 D_801C24D0;           // starting x coord
+    u16 D_801C24D2;           // next line y coord
+    u16 D_801C24D4;           // starting y coord
+    u16 D_801C24D6;           // next char x coord
+    u16 D_801C24D8;           // next line x coord
+    s16 D_801C24DA;           // next char y coord
+    u16 D_801C24DC;           // portrait anim timer
+    u16 D_801C24DE;           // unknown
+    u16 D_801C24E0;           // CLUT index
+    u8 D_801C24E2;            // timer to next character
+    u8 D_801C24E3;            // unknown
+    Primitive* D_801C24E4[6]; // necessary for the dialogue graphics rendering
+    s32 D_801C24FC[3];        // primIndices: unk, actorName, unk
+    u16 D_801C2508;           // unknown
+    u16 D_801C250A;           // global timer
+    const char* D_801C250C;   // dialogue settings, maybe?
+} Dialogue;
+
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
 s16 GetSideToPlayer();
 void MoveEntity();
@@ -81,6 +101,8 @@ extern u8 D_80180770[];  // params
 // *** func_801A805C properties END ***
 
 // *** EntityCutscene properties START ***
+
+extern const char* D_80180828[]; // array to the name of the dialogue's actors
 
 extern u8 D_80180830[]; // Animation
 extern u8 D_8018083C[]; // Animation
@@ -149,20 +171,6 @@ extern u16 D_80181F04[];
 extern u8 D_801824CC[];
 extern u16* D_801C00A4;
 extern s32 D_801C24C8;
-extern s32 D_801C24CC;
-extern Primitive* D_801C24E4[];
-extern s32 D_801C24FC;
-extern s32 D_801C2500;
-extern s32 D_801C2504[];
-extern s16 D_801C2508;
-extern s16 D_801C24D2;
-extern u16 D_801C24D4;
-extern s16 D_801C24D6;
-extern s16 D_801C24D8;
-extern s16 D_801C24DA;
-extern s16 D_801C24DE;
-extern s8 D_801C24E2;
-extern s8 D_801C24E3;
 extern s32 D_801C257C;
 extern s32 D_801C2580;
 extern u16 D_801C2584[];
@@ -174,3 +182,5 @@ extern u16 D_80181F64[]; // NOTE(sestren): Animation frame properties?
 extern u8 D_80181FC4;
 
 // *** EntitySoulStealOrb properties END ***
+
+extern Dialogue g_Dialogue;
