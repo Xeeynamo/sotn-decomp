@@ -625,14 +625,59 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A608, func_0607A608);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
 
-// _hkyori_search
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A9F8, func_0607A9F8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA1C, func_0607AA1C);
+// SAT func_0607A9F8
+// Original name: _hkyori_search
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the X Axis
+ */
+s32 GetPlayerDistanceX(Entity* self) {
+    s16 xDistance = self->posX - PLAYER.posX;
+
+    if (xDistance < 0) {
+        xDistance = -xDistance;
+    }
+    return xDistance;
+}
+
+// SAT func_0607AA1C
+/*
+ * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
+ */
+s32 GetPlayerDistanceY(Entity* self) {
+    s16 yDistance = self->posY - PLAYER.posY;
+
+    if (yDistance < 0) {
+        yDistance = -yDistance;
+    }
+    return yDistance;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAA4, func_0607AAA4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAF4, func_0607AAF4);
+
+// SAT func_0607AAF4
+/*
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+ */
+s16 GetPlayerSide(Entity* self) {
+    Entity* player = &PLAYER;
+    s16 side = 0;
+
+    if (LOW(self->posX) > LOW(player->posX)) {
+        side = 1;
+    }
+
+    if (LOW(self->posY) > LOW(player->posY)) {
+        side |= 2;
+    }
+    return side;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB1C, func_0607AB1C);
 
 // _bicyousei_dir_0
