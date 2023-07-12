@@ -1245,7 +1245,7 @@ void func_801870B0(Entity* entity) {
         }
 
         if (entity->unk44 != 0) {
-            ret = func_8018B970();
+            ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;
@@ -2193,10 +2193,8 @@ u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the X Axis
- */
-s16 func_8018B900(void) {
+// Absolute distance from g_CurrentEntity to the player in the X Axis
+s16 GetDistanceToPlayerX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -2205,10 +2203,8 @@ s16 func_8018B900(void) {
     return xDistance;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
- */
-s32 func_8018B93C(void) {
+// Absolute distance from g_CurrentEntity to the player in the Y Axis
+s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -2217,7 +2213,7 @@ s32 func_8018B93C(void) {
     return yDistance;
 }
 
-s32 func_8018B970(void) {
+s32 GetSideToPlayer(void) {
     s16 arg0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {

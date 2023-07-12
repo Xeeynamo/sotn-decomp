@@ -55,7 +55,7 @@ void func_801B2540(Entity* entity) {
         }
 
         if (entity->unk44 != 0) {
-            ret = GetPlayerSide();
+            ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;

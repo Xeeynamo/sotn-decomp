@@ -93,14 +93,14 @@ void EntityAxeKnight(Entity* self) {
     switch (self->step) {
     case AXE_KNIGHT_INIT:
         InitializeEntity(D_80180C64);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
     case AXE_KNIGHT_IDLE:
         if (func_801BCCFC(&D_80182188) & 1) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
         break;
@@ -117,7 +117,7 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (animStatus == 0) {
@@ -126,7 +126,7 @@ void EntityAxeKnight(Entity* self) {
             } else {
                 self->accelerationX = 0x3000;
             }
-            if (GetPlayerDistanceX() < 96) {
+            if (GetDistanceToPlayerX() < 96) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             }
@@ -163,7 +163,7 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         if (animStatus == 0) {
             if (self->facing == 0) {
@@ -172,7 +172,7 @@ void EntityAxeKnight(Entity* self) {
                 self->accelerationX = -0x3000;
             }
 
-            if (GetPlayerDistanceX() > 80) {
+            if (GetDistanceToPlayerX() > 80) {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             }
@@ -201,7 +201,7 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
         label:
-            if (GetPlayerDistanceX() < 89) {
+            if (GetDistanceToPlayerX() < 89) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             } else {
@@ -250,7 +250,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_ARCING_THROW: // unused
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
-            if (GetPlayerDistanceX() > 88) {
+            if (GetDistanceToPlayerX() > 88) {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             } else {

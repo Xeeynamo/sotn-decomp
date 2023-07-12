@@ -273,8 +273,8 @@ void EntityBloodyZombie(Entity* self) {
                 newEntity->posY.i.hi += 12;
             }
         }
-        facing = GetPlayerSide() & 1;
-        if (PLAYER.facing == facing && GetPlayerDistanceX() < 128) {
+        facing = GetSideToPlayer() & 1;
+        if (PLAYER.facing == facing && GetDistanceToPlayerX() < 128) {
             self->facing = facing ^ 1;
             SetStep(BLOODY_ZOMBIE_CHASE);
         }
@@ -282,7 +282,7 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_CHASE:
         if (AnimateEntity(D_8018237C, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         func_801BCF74(D_801822E4);
 
@@ -305,7 +305,7 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (GetPlayerDistanceX() < 40) {
+        if (GetDistanceToPlayerX() < 40) {
             SetStep(BLOODY_ZOMBIE_ATTACK);
         }
         break;
@@ -326,7 +326,7 @@ void EntityBloodyZombie(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2D, self, newEntity);
-                newEntity->facing = GetPlayerSide() & 1;
+                newEntity->facing = GetSideToPlayer() & 1;
             }
             self->step_s++;
         }

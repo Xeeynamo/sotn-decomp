@@ -731,10 +731,8 @@ u8 func_801BCAD4(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the X Axis
- */
-s32 GetPlayerDistanceX(void) {
+// Absolute distance from g_CurrentEntity to the player in the X Axis
+s32 GetDistanceToPlayerX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -743,10 +741,8 @@ s32 GetPlayerDistanceX(void) {
     return xDistance;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
- */
-s32 GetPlayerDistanceY(void) {
+// Absolute distance from g_CurrentEntity to the player in the Y Axis
+s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -761,7 +757,7 @@ s32 GetPlayerDistanceY(void) {
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-s16 GetPlayerSide(void) {
+s16 GetSideToPlayer(void) {
     s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {

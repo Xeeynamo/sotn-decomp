@@ -117,7 +117,7 @@ void func_8018DB18(Entity* self) {
         self->zPriority = 0xB0;
         self->unk19 = 4;
         self->animCurFrame = self->params + 28;
-        facing = func_801945D4() & 1;
+        facing = GetSideToPlayer() & 1;
 
         temp = (Random() & 30) + 8;
         self->ext.generic.unk80.modeS16.unk0 = temp;
@@ -324,7 +324,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 1:
-        if ((func_80194564() < 32) &&
+        if ((GetDistanceToPlayerX() < 32) &&
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
             D_8003C8B8 = 0;
             *D_80097400 = 1;
@@ -1253,10 +1253,8 @@ u8 func_8019444C(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the X Axis
- */
-s32 func_80194564(void) {
+// Absolute distance from g_CurrentEntity to the player in the X Axis
+s32 GetDistanceToPlayerX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -1265,10 +1263,8 @@ s32 func_80194564(void) {
     return xDistance;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
- */
-s32 func_801945A0(void) {
+// Absolute distance from g_CurrentEntity to the player in the Y Axis
+s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -1277,7 +1273,7 @@ s32 func_801945A0(void) {
     return yDistance;
 }
 
-s16 func_801945D4(void) {
+s16 GetSideToPlayer(void) {
     s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
