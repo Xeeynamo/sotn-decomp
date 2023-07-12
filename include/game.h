@@ -848,7 +848,7 @@ typedef struct {
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
-    /* 8003C814 */ void* func_8010DB38;
+    /* 8003C814 */ void* UpdateUnarmedAnim;
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);

@@ -976,6 +976,7 @@ CopySupportOvlCallback = 0x80107750;
 UpdateCd = 0x80108448;
 EntityAlucard = 0x8010A5BC;
 SetPlayerStep = 0x8010D584;
+UpdateUnarmedAnim = 0x8010DB38;
 UpdateAnim = 0x8010DDA0;
 AccelerateX = 0x8010E390;
 CheckChainLimit = 0x8010EC8C;
