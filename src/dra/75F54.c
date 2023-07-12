@@ -818,7 +818,7 @@ void EntityUnarmedAttack(Entity* entity) {
         (PLAYER.animFrameIdx == temp_s1->soundFrame)) {
         PlaySfx(temp_s1->soundId);
     }
-    if (func_8010DB38(temp_s1->frameProps, temp_s1->frames) < 0) {
+    if (UpdateUnarmedAnim(temp_s1->frameProps, temp_s1->frames) < 0) {
         DestroyEntity(entity);
     }
 }
