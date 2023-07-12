@@ -265,8 +265,25 @@ void func_8010DA48(u32 arg0) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DA70);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DB38);
+u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
+    s32 var_v0;
+    u16* frameIndex;
 
+    frameIndex =
+        frames[g_CurrentEntity->ext.generic.unkAC] + PLAYER.animFrameIdx;
+    if (*frameIndex == 0xFFFF) {
+        return -1;
+    }
+    if (frameProps != NULL) {
+        frameProps = &frameProps[(*frameIndex >> 9) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
+    }
+    g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
+    return PLAYER.animFrameDuration >= 0 ? 0 : -1;
+}
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DBFC);
 
 u32 UpdateAnim(s8* frameProps, s32* frames) {
