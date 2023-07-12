@@ -23,6 +23,7 @@ void func_801A8BF8(void) {
     prim->blendMode = 0;
 }
 
+// Creates primitives for the actor name at the head of the dialogue
 void func_801A8CB0(u16 actorIndex, Entity* self) {
     Primitive* prim;
     s16 primIndex;
@@ -47,7 +48,7 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
         chCount++;
     }
 
-    // Create chCount amount of sprites based on the actor name character count
+    // Create chCount amount of sprites based on the actor name's letter count
     primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
     if (primIndex == -1) {
         DestroyEntity(self);
@@ -69,8 +70,8 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
             prim->clut = 0x196;
             prim->u0 = (ch & 0x0F) * FONT_W;
             prim->v0 = (ch & 0xF0) / (FONT_H / 4);
-            prim->v1 = FONT_W;
-            prim->u1 = FONT_H;
+            prim->v1 = FONT_H;
+            prim->u1 = FONT_W;
             prim->priority = 0x1FF;
             prim->blendMode = BLEND_VISIBLE;
             prim->x0 = x;
@@ -89,30 +90,30 @@ void func_801A8E34(s32 arg0) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8E60);
 
-void func_801A910C(u8 arg0) {
+// Animates the portrait size of the actor by enlarging or shrinking it
+void func_801A910C(u8 ySteps) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
 
     primIndex = g_Dialogue.D_801C24DA + 1;
-    if (primIndex >= 5) {
-        for (primIndex = primIndex; primIndex >= 5; primIndex -= 5) {
-        }
+    while (primIndex >= 5) {
+        primIndex -= 5;
     }
     if (g_CurrentEntity->step_s == 0) {
         prim = g_Dialogue.D_801C24E4[primIndex];
-        prim->v1 -= arg0;
-        prim->v0 += arg0;
+        prim->v1 -= ySteps;
+        prim->v0 += ySteps;
         if (prim->v1 == 0) {
             g_CurrentEntity->step_s++;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
         }
     }
 
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
             prim = g_Dialogue.D_801C24E4[i];
-            prim->y0 -= arg0;
+            prim->y0 -= ySteps;
         }
     }
     g_Dialogue.D_801C24DC++;
