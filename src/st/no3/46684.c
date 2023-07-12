@@ -1306,7 +1306,7 @@ void func_801CC90C(Entity* arg0) {
     s16 temp_v1;
     s16 temp_v0;
 
-    temp_v0 = func_801C4F64();
+    temp_v0 = GetDistanceToPlayerX();
     temp_v1 = arg0->ext.generic.unk84.S16.unk2;
     if (temp_v1 != 0) {
 
@@ -1355,7 +1355,7 @@ void func_801CF58C(Entity* self) {
 void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
-    if (self->facing == func_801C4FD4()) {
+    if (self->facing == GetSideToPlayer()) {
         SetStep(5);
         return;
     }
@@ -1396,7 +1396,7 @@ void func_801CF6D8(Entity* arg0) {
     s16 temp_v1;
     s16 temp_v0;
 
-    temp_v0 = func_801C4F64();
+    temp_v0 = GetDistanceToPlayerX();
     temp_v1 = arg0->ext.generic.unk84.S16.unk2;
     if (temp_v1 != 0) {
 
@@ -1765,8 +1765,8 @@ void func_801D59D0(void) {
     }
 
     if (g_CurrentEntity->ext.generic.unk7C.U8.unk0 == 0) {
-        if (func_801C4F64() < 64) {
-            if (g_CurrentEntity->facing != (func_801C4FD4() & 1)) {
+        if (GetDistanceToPlayerX() < 64) {
+            if (g_CurrentEntity->facing != (GetSideToPlayer() & 1)) {
                 SetStep(4);
             }
         }

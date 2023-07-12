@@ -569,7 +569,7 @@ u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-s32 func_8019203C(void) {
+s32 GetDistanceToPlayerX(void) {
     s16 value = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (value < 0) {
@@ -578,7 +578,7 @@ s32 func_8019203C(void) {
     return value;
 }
 
-s32 func_80192078(void) {
+s32 GetDistanceToPlayerY(void) {
     s32 value = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (value < 0) {
@@ -587,7 +587,7 @@ s32 func_80192078(void) {
     return value;
 }
 
-s16 func_801920AC(void) {
+s16 GetSideToPlayer(void) {
     s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
