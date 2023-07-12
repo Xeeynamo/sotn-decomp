@@ -228,6 +228,16 @@ typedef struct {
     /* 80137692 */ u8 D_80137692;
 } MenuData;
 
+// Used in EntityUnarmedAttack, more research would be useful
+typedef struct {
+    u16** frames;
+    s8* frameProps;
+    s16 unk8;
+    u16 soundId;
+    u8 ACshift;
+    u8 soundFrame;
+} animSoundEvent;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -331,6 +341,7 @@ extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
+extern animSoundEvent* D_800AD53C[];
 extern s32 D_800ADC44;
 extern RECT D_800AE130;
 extern s32 D_800AE270[];
@@ -769,7 +780,7 @@ void func_8011A3AC(
 void func_8011A4C8(Entity* entity);
 Entity* func_8011AAFC(Entity* entity, u32, s32);
 void func_8011AC3C(Entity* entity);
-void func_8011B190(Entity* entity);
+void EntityUnarmedAttack(Entity* entity);
 void func_8011B334(Entity* entity);
 void func_8011B480(Entity* entity);
 void func_8011B530(Entity* entity);
