@@ -40,3 +40,6 @@ _AllocEntity = 0x0607B184;
 _CreateEntityFromCurrentEntity = 0x0607B318;
 _g_CurrentEntity = 0x0605C6E0;
 _PfnEntityUpdates = 0x06064648;
+_GetPlayerDistanceX = 0x0607A9F8;
+_GetPlayerDistanceY = 0x0607AA1C;
+_GetPlayerSide = 0x0607AAF4;
