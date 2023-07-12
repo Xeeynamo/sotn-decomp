@@ -983,6 +983,7 @@ AlucardHandleDamage = 0x8011405C;
 GetFreeDraEntity = 0x8011879C;
 EntityNumberMovesToHpMeter = 0x80118D0C;
 EntityGuardText = 0x80119588;
+EntityUnarmedAttack = 0x8011B190;
 EntityPlayerBlinkWhite = 0x8011BDA4;
 EntityMpReplenished = 0x8011D9F8;
 EntityHitByLightning = 0x8011F24C;
