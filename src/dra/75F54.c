@@ -781,7 +781,47 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011AC3C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
+// Name comes purely from emulator breakpoint experiments, could be wrong
+void EntityUnarmedAttack(Entity* entity) {
+    Equipment equip;
+    animSoundEvent* temp_s1;
+    u16 paramsTopBit;
+
+    entity->posX.val = PLAYER.posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    paramsTopBit = entity->params >> 0xF;
+    entity->facing = PLAYER.facing;
+    temp_s1 = &D_800AD53C[(entity->params >> 6) & 0x1FC];
+
+    if (PLAYER.ext.generic.unkAC < temp_s1->ACshift ||
+        (temp_s1->ACshift + 7) <= PLAYER.ext.generic.unkAC ||
+        g_Player.unk46 == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    if (entity->step == 0) {
+        entity->flags = 0x60000;
+        GetEquipProperties(paramsTopBit, &equip, 0);
+        entity->attack = equip.attack;
+        entity->attackElement = equip.element;
+        entity->hitboxState = equip.hitType;
+        entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
+        entity->unk58 = equip.stunFrames;
+        entity->unk6A = equip.hitEffect;
+        entity->objectRoomIndex = equip.criticalRate;
+        func_80118894(entity);
+        entity->step++;
+    }
+    entity->ext.generic.unkAC = PLAYER.ext.generic.unkAC - temp_s1->ACshift;
+    if ((PLAYER.animFrameDuration == 1) &&
+        (PLAYER.animFrameIdx == temp_s1->soundFrame)) {
+        PlaySfx(temp_s1->soundId);
+    }
+    if (func_8010DB38(temp_s1->frameProps, temp_s1->frames) < 0) {
+        DestroyEntity(entity);
+    }
+}
 
 void func_8011B334(Entity* entity) {
     Equipment equip;
