@@ -116,7 +116,7 @@ void EntityMerman(Entity* self) {
             self->step_s++;
         }
         if (AnimateEntity(D_801823D0, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
         camY = g_Camera.posY.i.hi;
@@ -138,7 +138,7 @@ void EntityMerman(Entity* self) {
         if ((u8)self->ext.merman.timer2++ > 32) {
             self->ext.merman.timer2 = 0;
             self->step_s = 0;
-            if ((GetPlayerDistanceX() >= 48) && !(Random() & 1)) {
+            if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
                 SetStep(MERMAN_JUMPING);
             }
         }
@@ -219,7 +219,7 @@ void EntityMerman(Entity* self) {
     case MERMAN_WALKING_TOWARDS_PLAYER:
         switch (self->step_s) {
         case MERMAN_WALKING_TOWARDS_START:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             if (self->facing == 0) {
                 self->accelerationX = -0x6000;
             } else {
@@ -260,7 +260,7 @@ void EntityMerman(Entity* self) {
     case MERMAN_SPIT_FIRE:
         switch (self->step_s) {
         case MERMAN_SPIT_FIRE_FACE_PLAYER:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             break;
 
@@ -380,7 +380,7 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_DYING_KNOCKEDBACK:
             if (func_801BC8E4(&D_8018237C) & 1) {
-                if (!(GetPlayerSide() & 1)) {
+                if (!(GetSideToPlayer() & 1)) {
                     self->accelerationX = -0x8000;
                 } else {
                     self->accelerationX = 0x8000;

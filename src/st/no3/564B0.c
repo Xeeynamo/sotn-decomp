@@ -37,7 +37,7 @@ void EntityZombie(Entity* self) {
 
     case 1:
         if (func_801C5074(&D_80183CAC) & 1) {
-            self->facing = (func_801C4FD4() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;

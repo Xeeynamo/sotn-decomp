@@ -33,7 +33,7 @@ typedef enum {
 } EntityIDs;
 
 void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
-s16 GetPlayerSide();
+s16 GetSideToPlayer();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);

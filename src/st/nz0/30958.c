@@ -540,14 +540,14 @@ void EntityMoveableBox(Entity* self) {
         self->accelerationY = 0;
 
         if (var_s1 & 1) {
-            temp_s1 = GetPlayerSide();
+            temp_s1 = GetSideToPlayer();
             if (temp_s1 & 1 && player->accelerationX > 0) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
                 self->accelerationX = 0x8000;
             }
-            temp_s1 = GetPlayerSide();
+            temp_s1 = GetSideToPlayer();
             if (!(primIndex = (temp_s1 & 1)) && (player->accelerationX < 0)) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);

@@ -627,10 +627,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
 
 // SAT func_0607A9F8
 // Original name: _hkyori_search
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the X Axis
- */
-s32 GetPlayerDistanceX(Entity* self) {
+// Absolute distance from the specified entity to the player in the X Axis
+s32 GetDistanceToPlayerX(Entity* self) {
     s16 xDistance = self->posX - PLAYER.posX;
 
     if (xDistance < 0) {
@@ -640,10 +638,8 @@ s32 GetPlayerDistanceX(Entity* self) {
 }
 
 // SAT func_0607AA1C
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
- */
-s32 GetPlayerDistanceY(Entity* self) {
+// Absolute distance from the specified entity to the player in the Y Axis
+s32 GetDistanceToPlayerY(Entity* self) {
     s16 yDistance = self->posY - PLAYER.posY;
 
     if (yDistance < 0) {
@@ -664,7 +660,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-s16 GetPlayerSide(Entity* self) {
+s16 GetSideToPlayer(Entity* self) {
     Entity* player = &PLAYER;
     s16 side = 0;
 
