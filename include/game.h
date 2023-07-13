@@ -781,7 +781,8 @@ typedef struct {
     /* 0x0C */ u16 element;
     /* 0x0E */ u8 itemCategory;
     /* 0x0F */ u8 weaponId;
-    /* 0x10 */ u16 unk10;
+    /* 0x10 */ u8 unk10;
+    /* 0x11 */ u8 unk11;
     /* 0x12 */ u8 playerAnim;
     /* 0x13 */ u8 unk13;
     /* 0x14 */ u8 unk14;
