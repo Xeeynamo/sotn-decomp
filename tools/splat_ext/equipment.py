@@ -40,10 +40,8 @@ def serialize_equipment(content: str) -> bytearray:
         serialized_data += utils.from_bool(item["isConsumable"])
         serialized_data += utils.from_u8(item["enemyInvincibilityFrames"])
         serialized_data += utils.from_u8(item["unk1B"])
-        serialized_data += utils.from_16(item["unk1C"])
-        serialized_data += utils.from_16(item["unk1E"])
-        serialized_data += utils.from_16(item["unk20"])
-        serialized_data += utils.from_16(item["unk22"])
+        serialized_data += utils.from_u32(item["unk1C"])
+        serialized_data += utils.from_u32(item["unk20"])
         serialized_data += utils.from_16(item["mpUsage"])
         serialized_data += utils.from_16(item["stunFrames"])
         serialized_data += utils.from_16(item["hitType"])
@@ -119,10 +117,8 @@ class PSXSegEquipment(N64Segment):
                 "isConsumable": utils.to_bool(item_data[0x19:]),
                 "enemyInvincibilityFrames": utils.to_u8(item_data[0x1A:]),
                 "unk1B": utils.to_u8(item_data[0x1B:]),
-                "unk1C": utils.to_u16(item_data[0x1C:]),
-                "unk1E": utils.to_u16(item_data[0x1E:]),
-                "unk20": utils.to_u16(item_data[0x20:]),
-                "unk22": utils.to_u16(item_data[0x22:]),
+                "unk1C": utils.to_u32(item_data[0x1C:]),
+                "unk20": utils.to_u32(item_data[0x20:]),
                 "mpUsage": utils.to_u16(item_data[0x24:]),
                 "stunFrames": utils.to_u16(item_data[0x26:]),
                 "hitType": utils.to_u16(item_data[0x28:]),
