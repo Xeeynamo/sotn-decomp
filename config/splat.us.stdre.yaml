@@ -38,6 +38,8 @@ segments:
       - [0x1498, roomdef, g_Rooms]
       - [0x14AC, rodata]
       - [0x16C0, rodata]
+      - [0x1171C, .rodata, 11A64]
+      - [0x11728, rodata]
       - [0x11770, rodata]
       - [0x117A0, rodata]
       - [0x117F0, rodata]

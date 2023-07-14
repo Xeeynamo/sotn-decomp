@@ -39,6 +39,7 @@ void func_8019E5E0(Entity* entity);
 LayoutObject* D_80180220[];
 LayoutObject* D_801802F4[];
 extern u16 D_80180464[];
+extern u16 D_80180488[]; // Init EntityBackgroundClouds
 extern u16 D_80180494[];
 extern u16 D_801804A0[];
 extern u16 D_801804DC[];
