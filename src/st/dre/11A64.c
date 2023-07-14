@@ -136,7 +136,7 @@ void EntityBackgroundClouds(Entity* self) {
         self->primIndex = primIndex;
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        prim->type = 3;
+        prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
         prim->y0 = prim->y1 = 0x6E - g_Camera.posY.i.hi;
@@ -194,12 +194,12 @@ void EntityBackgroundClouds(Entity* self) {
         }
         break;
     }
-    D_8003CB25 = 40;
-    D_8003CB26 = 24;
-    D_8003CB27 = 24;
-    D_800542FC_buf_draw_r0 = 40;
-    D_800542FC_buf_draw_g0 = 24;
-    D_800542FC_buf_draw_b0 = 24;
+    g_GpuBuffers[0].draw.r0 = 40;
+    g_GpuBuffers[0].draw.g0 = 24;
+    g_GpuBuffers[0].draw.b0 = 24;
+    g_GpuBuffers[1].draw.r0 = 40;
+    g_GpuBuffers[1].draw.g0 = 24;
+    g_GpuBuffers[1].draw.b0 = 24;
 }
 
 // ID 0x19
