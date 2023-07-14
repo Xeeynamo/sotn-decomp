@@ -1083,7 +1083,6 @@ extern u32 g_blinkTimer;
 extern GpuBuffer g_GpuBuffers[2];
 extern s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
                                            // overlap, hard to remove
-
 extern const char g_MemcardSavePath[];
 extern const char aBaslus00067dra[19];
 extern const char g_strMemcardRootPath[];
