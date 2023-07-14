@@ -83,12 +83,63 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
 }
 
 void func_801A8E34(s32 arg0) {
-    D_801C250C = arg0 + 0x100000;
-    D_801C250A = 0;
-    D_801C2508 = 1;
+    g_Dialogue.D_801C250C = arg0 + 0x100000;
+    g_Dialogue.D_801C250A = 0;
+    g_Dialogue.D_801C2508 = 1;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", func_801A8E60);
+void func_801A8E60(void) {
+    Entity* entity;
+    u16 startTimer;
+    u8 entityIndex;
+
+    g_Dialogue.D_801C250A++;
+    // protect from overflows
+    if (g_Dialogue.D_801C250A > 0xFFFE) {
+        g_Dialogue.D_801C2508 = 0;
+        return;
+    }
+
+    while (true) {
+        // Start the dialogue script only if the start timer has passed
+        startTimer = (*g_Dialogue.D_801C250C++ << 8) | *g_Dialogue.D_801C250C++;
+        if (g_Dialogue.D_801C250A < startTimer) {
+            // Re-evaluate the condition at the next frame
+            g_Dialogue.D_801C250C -= 2;
+            return;
+        }
+
+        switch (*g_Dialogue.D_801C250C++) {
+        case 0:
+            entityIndex = *g_Dialogue.D_801C250C++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+
+            entity->objectId = *g_Dialogue.D_801C250C++;
+            entity->pfnUpdate = PfnEntityUpdates[entity->objectId - 1];
+            entity->posX.i.hi = *g_Dialogue.D_801C250C++ * 0x10;
+            entity->posX.i.hi = *g_Dialogue.D_801C250C++ | entity->posX.i.hi;
+            entity->posY.i.hi = *g_Dialogue.D_801C250C++ * 0x10;
+            entity->posY.i.hi = *g_Dialogue.D_801C250C++ | entity->posY.i.hi;
+            break;
+        case 1:
+            entityIndex = *g_Dialogue.D_801C250C++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+            break;
+        case 2:
+            if (!((D_801C257C >> *g_Dialogue.D_801C250C) & 1)) {
+                g_Dialogue.D_801C250C--;
+                return;
+            }
+            D_801C257C &= ~(1 << *g_Dialogue.D_801C250C++);
+            break;
+        case 3:
+            D_801C257C |= 1 << *g_Dialogue.D_801C250C++;
+            break;
+        }
+    }
+}
 
 // Animates the portrait size of the actor by enlarging or shrinking it
 void func_801A910C(u8 ySteps) {
