@@ -387,7 +387,7 @@ void func_801A8984(void) {
     g_Dialogue.D_801C24D2 = g_Dialogue.D_801C24D4 + 0x14;
 }
 
-s32 func_801A89D8(s32 arg0) {
+s32 func_801A89D8(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -397,7 +397,7 @@ s32 func_801A89D8(s32 arg0) {
         g_Dialogue.D_801C24FC[2] = 0;
         return 0;
     }
-    g_Dialogue.D_801C24CC = arg0;
+    g_Dialogue.D_801C24CC = textDialogue;
     g_Dialogue.D_801C2508 = 0;
     g_Dialogue.D_801C24FC[1] = -1;
     g_Dialogue.D_801C24FC[0] = -1;
