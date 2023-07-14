@@ -41,6 +41,7 @@ LayoutObject* D_801802F4[];
 extern u16 D_80180464[];
 extern u16 D_80180494[];
 extern u16 D_801804A0[];
+extern u16 D_801804DC[];
 extern u16 D_80180500[];
 extern u8 D_80180580[];
 extern u8 D_80180588[];
