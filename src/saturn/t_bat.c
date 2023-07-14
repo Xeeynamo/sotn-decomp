@@ -63,9 +63,9 @@ INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60D11DC, func_060D11DC);
 // PSX: func_80173F30
 // SAT: func_060D1224
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 diffx = x - entity->posX; // was entity->posX.i.hi
+    s16 diffx = x - entity->posX.i.hi;
     // not the same implementation as ratan2
-    return func_0600EE88(-(s16)(y - entity->posY), diffx) &
+    return func_0600EE88(-(s16)(y - entity->posY.i.hi), diffx) &
            0xFFF; // was entity->posY.i.hi
 }
 
@@ -76,8 +76,8 @@ s32 func_0600F914(s32, s32);
 // SAT: func_060D12AC
 // PSX: func_80173FE8
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
-    s32 diffX = x - entity->posX;
-    s32 diffY = y - entity->posY;
+    s32 diffX = x - entity->posX.i.hi;
+    s32 diffY = y - entity->posY.i.hi;
 
     // not shifted by 12
     return func_0600F914((diffX * diffX + diffY * diffY),
