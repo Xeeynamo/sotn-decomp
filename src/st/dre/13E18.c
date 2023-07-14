@@ -110,7 +110,7 @@ void EntityUnkId1C(Entity* self) {
         if (self->ext.generic.unk80.modeS16.unk0 & 1) {
             self->animSet = 0;
         } else {
-            self->animSet = -0x7FFF;
+            self->animSet = ANIMSET_OVL(1);
         }
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             DestroyEntity(self);
