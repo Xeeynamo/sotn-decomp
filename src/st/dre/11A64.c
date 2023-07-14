@@ -123,7 +123,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityBackgroundClouds);
 
 // Shows Alucard's mother on cross, but may be the succubus boss given
 // that the asm is huge (ID 0x19)
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityMother);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubus);
 
 // Petal projectile shot by succubus ID 0x1A
 void EntitySuccubusPetal(Entity* self) {
