@@ -193,6 +193,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019CDC4);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", EntityRelicOrb);
 
+extern u16 D_80180660[];
 void EntityHeartDrop(Entity* self) {
     u16 temp_a0;
     u16 temp_a0_2;
