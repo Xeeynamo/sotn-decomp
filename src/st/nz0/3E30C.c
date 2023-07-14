@@ -559,8 +559,28 @@ void func_801C07FC(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP func_801C090C https://decomp.me/scratch/0VI4v
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C090C);
+void func_801C090C(
+    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
+    Entity* newEntity;
+    s32 i;
+    s16 newX = self->posX.i.hi + x;
+    s16 newY = self->posY.i.hi + y;
+
+    for (i = 0; i < count; i++) {
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            newEntity->posX.i.hi = newX + xGap * i;
+            newEntity->posY.i.hi = newY;
+            newEntity->objectId = 0x14;
+            newEntity->pfnUpdate = func_801C0B24;
+            newEntity->params = params;
+            newEntity->ext.generic.unk94 = arg5 + i;
+            newEntity->unk1C = newEntity->unk1A = D_80181ECC[arg5 + i];
+            newEntity->unk19 = 3;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C0A3C);
 

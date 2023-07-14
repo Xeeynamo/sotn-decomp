@@ -178,6 +178,7 @@ extern s32 D_80181DA8[];
 extern u8 D_80181DD0[];
 extern u8 D_80181DD0[];
 extern const u8* D_80181E54[];
+extern u16 D_80181ECC[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
