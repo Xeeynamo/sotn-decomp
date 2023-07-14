@@ -287,5 +287,3 @@ void EntityUnkId1B(Entity* entity) {
 
     entity->zPriority = PLAYER.zPriority + 4;
 }
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId1C);

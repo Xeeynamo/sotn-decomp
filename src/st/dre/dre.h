@@ -47,17 +47,21 @@ extern u16 D_80180500[];
 extern u8 D_80180580[];
 extern u8 D_80180588[];
 extern u16 D_80180590[];
-extern u16 D_80180660[];
+
 extern s32 D_80180664;
+extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
+extern s32 D_801807F8[];
+extern u8 D_80180830[];
 extern u16 D_8018097C[];
 extern s16 D_80180D80[];
 extern LayoutObject* D_801A32C4;
 extern u16* D_801A32C8;
 extern s8 D_801A32CC;
 extern u8 D_801A32D0;
-extern u16 D_801804AC[];
 extern u16 D_80180470[];
+extern u16 D_801804AC[];
+extern u16 D_801804F4[];
 extern s8 c_HeartPrizes[];
 extern s32 D_801811B0[];
 extern u32 D_8018125C[];
