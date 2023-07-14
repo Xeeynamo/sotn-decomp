@@ -181,13 +181,13 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E4908, func_060E4908);
 s32 func_801BBC3C(Entity* e) {
     s16 diff;
 
-    diff = PLAYER.posX - e->posX;
+    diff = PLAYER.posX.i.hi - e->posX.i.hi;
     diff = ABS(diff);
 
     if (diff >= 23) {
         return 0;
     } else {
-        diff = PLAYER.posY - e->posY;
+        diff = PLAYER.posY.i.hi - e->posY.i.hi;
         diff = ABS(diff);
         if (diff > 32) {
             return 0;
