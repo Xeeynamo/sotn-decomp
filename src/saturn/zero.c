@@ -336,7 +336,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E050, func_0600E050);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E070, func_0600E070);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E0A4, func_0600E0A4);
 
-void func_0600E0C4() {}
+void func_0600E0C4(void) {}
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E0D0, func_0600E0D0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E164, func_0600E164);
@@ -382,7 +382,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FC04, func_0600FC04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FCF8, func_0600FCF8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FE98, func_0600FE98);
 
-void func_0600FEFC() {}
+void func_0600FEFC(void) {}
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, func_0600FF08);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
@@ -608,7 +608,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019FE4, func_06019FE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601A020, func_0601A020);
 
 // _SET_STAGE_OVERLAYADDR
-void SetStageOverlayAddress() {
+void SetStageOverlayAddress(void) {
     *DAT_0601ac28 = *DAT_0601ac2c; // 0x60dc000
     *DAT_0601ac34 = *DAT_0601ac30; // 0x60dc004
     *DAT_0601ac3c = *DAT_0601ac38; // 0x60dc008

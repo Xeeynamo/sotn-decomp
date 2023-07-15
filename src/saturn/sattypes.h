@@ -30,7 +30,7 @@ typedef union {
     s32 val;
     struct {
         s16 hi;
-        s16 lo
+        s16 lo;
     } i;
 } Fixed32;
 
