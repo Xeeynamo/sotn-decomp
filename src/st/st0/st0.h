@@ -52,7 +52,7 @@ typedef struct {
     const char* D_801C250C;   // dialogue settings, maybe?
 } Dialogue;
 
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity);
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 s16 GetSideToPlayer();
 void MoveEntity();
 void SetStep(u8);
@@ -68,8 +68,8 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
-LayoutObject* D_80180314[];
-LayoutObject* D_801803E8[];
+LayoutEntity* D_80180314[];
+LayoutEntity* D_801803E8[];
 
 // *** Initializers ***
 extern u16 D_80180574[];
@@ -141,7 +141,7 @@ extern u8 D_80180BCC[]; // Animation
 extern u8 D_80180BDC[]; // Animation
 extern u16 D_80180A48[];
 extern Point16 D_80180A58[];
-extern LayoutObject* D_801C00A0;
+extern LayoutEntity* D_801C00A0;
 extern u8 D_801C00A8;
 extern u8 D_801C00AC;
 extern s32 D_801C2578;

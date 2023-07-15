@@ -66,7 +66,7 @@ void func_8015CA84(s32 speed) {
 }
 
 void func_8015CAAC(s32 speed) {
-    if (PLAYER.objectRoomIndex == 1)
+    if (PLAYER.entityRoomIndex == 1)
         speed = -speed;
     PLAYER.accelerationX = speed;
 }
@@ -277,7 +277,7 @@ s32 func_8015D1D0(s16 subWpnId, s16 subWpnUnk6) {
 
     entity = &g_Entities[32];
     for (i = 0, b0MatchCount = 0, nullObjCount = 0; i < 0x10; i++, entity++) {
-        if (entity->objectId == 0) {
+        if (entity->entityId == E_NONE) {
             nullObjCount++;
         }
         if (entity->ext.generic.unkB0 != 0 &&

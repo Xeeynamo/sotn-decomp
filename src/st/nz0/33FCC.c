@@ -1257,7 +1257,7 @@ void func_801B69E8(Entity* self) {
         self->animCurFrame = 0x28;
     }
 
-    if (prevEntity->objectId != E_GAIBON) {
+    if (prevEntity->entityId != E_GAIBON) {
         DestroyEntity(self);
     }
 }
@@ -1268,7 +1268,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->pfnUpdate = EntityExplosion;
         self->unk19 = 0;
         self->step = 0;
-        self->objectId = 2;
+        self->entityId = 2;
         self->params = 0;
         return;
     }
@@ -1298,7 +1298,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
-        self->objectId = 2;
+        self->entityId = 2;
         self->unk19 = 0;
         self->step = 0;
         self->params = 1;

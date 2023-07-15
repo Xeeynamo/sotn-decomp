@@ -2,7 +2,7 @@
 
 void Update(void);
 void TestCollisions(void);
-void CreateEntityWhenInHorizontalRange(LayoutObject*);
+void CreateEntityWhenInHorizontalRange(LayoutEntity*);
 void func_8018A520(s16);
 void func_8018A7AC(void);
 void func_8018CAB0(void);

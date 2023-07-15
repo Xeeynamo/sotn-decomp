@@ -410,12 +410,12 @@ typedef struct Entity {
     /* 0x20 */ s16 rotPivotX;
     /* 0x22 */ s16 rotPivotY;
     /* 0x24 */ u16 zPriority;
-    /* 0x26 */ u16 objectId;
+    /* 0x26 */ u16 entityId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
     /* 0x2E */ u16 step_s;
     /* 0x30 */ u16 params;
-    /* 0x32 */ u16 objectRoomIndex;
+    /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ u16 enemyId;
@@ -672,7 +672,7 @@ typedef struct {
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
     /* 8003C78C */ s32** cluts;
-    /* 8003C790 */ void* unk1C; // related to object layout
+    /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
@@ -752,7 +752,7 @@ typedef struct {
     /* 0x0E */ u16 sp1E;
     /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
 typedef enum {

@@ -108,6 +108,7 @@ typedef enum {
     E_UNK_1,
 
     ENTITY_13 = 0x13,
+    E_UNK_22 = 0x22,
 } EntityIDs;
 
 typedef enum {

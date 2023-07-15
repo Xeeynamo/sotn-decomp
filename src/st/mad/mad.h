@@ -32,7 +32,7 @@ void func_80190C78(s16);
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void ReplaceBreakableWithItemDrop(Entity*);
-void CreateEntityFromEntity(u16 objectId, Entity* ent1, Entity* ent2);
+void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void func_80198BC8(void* const, s32);
 void func_8019344C(void);
 
@@ -71,11 +71,11 @@ extern u16 D_80180508[];
 extern s16 D_801809EC[];
 extern u8 D_80181010[];
 extern RoomHeader g_rooms[];
-extern LayoutObject* g_pStObjLayout[];
-extern LayoutObject* D_801803C8[];
+extern LayoutEntity* g_pStObjLayout[];
+extern LayoutEntity* D_801803C8[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
-extern LayoutObject* D_801997D8;
+extern LayoutEntity* D_801997D8;
 extern u16* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;

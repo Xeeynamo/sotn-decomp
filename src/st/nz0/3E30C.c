@@ -306,7 +306,7 @@ void EntityEquipItemDrop(Entity* self) {
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
-            self->objectId = 3;
+            self->entityId = 3;
             SetStep(0);
             EntityPrizeDrop(self);
             return;
@@ -536,14 +536,14 @@ void func_801C07FC(Entity* entity) {
     case 0:
         InitializeEntity(D_80180C04);
         entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->objectId;
+            entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->objectId = E_EXPLOSION;
+                newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
             }
@@ -551,7 +551,7 @@ void func_801C07FC(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId !=
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
             entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
@@ -965,10 +965,10 @@ void func_801C16B4(Entity* entity) {
     }
 }
 
-void func_801C1780(u16 objectId, Entity* src, Entity* dst) {
+void func_801C1780(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
-    dst->objectId = objectId;
-    dst->pfnUpdate = D_80180A90[objectId];
+    dst->entityId = entityId;
+    dst->pfnUpdate = D_80180A90[entityId];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;

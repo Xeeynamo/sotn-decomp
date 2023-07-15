@@ -30,14 +30,14 @@ s32 func_8019AC78(u8, s16);
 void PreventEntityFromRespawning(Entity* entity);
 void FallEntity(void);
 void func_8019B858(void);
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
-LayoutObject* D_80180220[];
-LayoutObject* D_801802F4[];
+LayoutEntity* D_80180220[];
+LayoutEntity* D_801802F4[];
 extern u16 D_80180464[];
 extern u16 D_80180488[]; // Init EntityBackgroundClouds
 extern u16 D_80180494[];
@@ -55,7 +55,7 @@ extern s32 D_801807F8[];
 extern u8 D_80180830[];
 extern u16 D_8018097C[];
 extern s16 D_80180D80[];
-extern LayoutObject* D_801A32C4;
+extern LayoutEntity* D_801A32C4;
 extern u16* D_801A32C8;
 extern s8 D_801A32CC;
 extern u8 D_801A32D0;
