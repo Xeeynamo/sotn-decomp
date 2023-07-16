@@ -16,7 +16,7 @@ void HandleVideoPlayback(void) {
                 func_800EA5E4(0x1A);
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
-                func_800E3618(0x140);
+                SetCgiDisplayBuffer(0x140);
                 D_8013640C = AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
                 func_80107360(prim, 44, 96, 232, 32, 0, 0);
@@ -191,15 +191,15 @@ void HandleEnding(void) {
 
     switch (g_GameStep) {
     case 0:
-        func_801065F4(0);
+        DestroyEntities(0);
         func_800EA538(0);
         func_800EAEEC();
-        func_800EDA94();
+        DestroyAllPrimitives();
         func_800EDAE4();
-        func_800ECE2C();
+        HideAllBackgroundLayers();
         func_800EAD7C();
         ClearBackbuffer();
-        func_800E3574();
+        SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
             if (g_IsUsingCd) {
@@ -269,7 +269,7 @@ void HandleEnding(void) {
     case 6:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            g_LoadFile = CdFile_19;
+            g_LoadFile = CdFile_AlucardPrg;
         }
         g_GameStep = 7;
         if (D_800978B4 != 3 && D_800978B4 != 5) {

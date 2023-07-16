@@ -16,11 +16,11 @@ void func_80113AAC(void) {
     case 0:
         if (g_Player.pl_vram_flag & 2) {
             func_801139CC(3);
-            if ((g_Player.unk4A) >= 5) {
+            if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
-                PLAYER.unk1E = 0x800;
-                PLAYER.unk22 = 2;
-                PLAYER.unk20 = 0;
+                PLAYER.rotAngle = 0x800;
+                PLAYER.rotPivotY = 2;
+                PLAYER.rotPivotX = 0;
                 PLAYER.unk19 |= 4;
                 PLAYER.facing = (PLAYER.facing + 1) & 1;
                 func_8010DA48(0x2B);
@@ -47,12 +47,12 @@ void func_80113AAC(void) {
         break;
 
     case 2:
-        D_800733F8 = 0;    // TODO: !FAKE: symbol should be PLAYER.unk20
-        D_800733FA = 2;    // TODO: !FAKE: symbol should be PLAYER.unk22
-        PLAYER.unk19 |= 4; // But it doesn't match with them for some reason
+        PLAYER.unk19 |= 4;
+        PLAYER.rotPivotX = 0;
+        PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
             func_8010DA48(0x2D);
-            PLAYER.unk1E = 0;
+            PLAYER.rotAngle = 0;
             PLAYER.step_s = 4;
             PLAYER.unk19 &= 0xFB;
             PLAYER.facing = (PLAYER.facing + 1) & 1;
@@ -67,7 +67,7 @@ void func_80113AAC(void) {
 
     case 4:
         PLAYER.accelerationY += 0x1000;
-        if (D_8007342A < 0) {
+        if (PLAYER.animFrameDuration < 0) {
             var_s1 = 2;
         }
         break;
@@ -80,7 +80,7 @@ void func_80113AAC(void) {
         }
         PLAYER.palette = 0x8100;
         PLAYER.step_s = 1;
-        PLAYER.step = 4;
+        PLAYER.step = Player_Jump;
     }
 }
 
@@ -106,38 +106,29 @@ s32 func_80113D7C(s16 arg0) {
     temp_s1 = PLAYER.step_s;
     sp10[0] = 0;
     sp10[1] = 0;
-    func_8010D584(0x10);
+    SetPlayerStep(Player_Unk16);
     func_80115394(&sp10[0], step, temp_s1);
     return -1;
 }
 
-// !FAKE: too many temps
-s16 func_80113E68(void) {
+s32 func_80113E68(void) {
     s16 rnd = rand();
-    s32 temp_v0;
-    s32 var_a1;
-
-    temp_v0 = rnd;
-    PLAYER.ext.generic.unkAC = (rnd % 3) + 0x2E;
-    var_a1 = rnd;
-    if (rnd < 0) {
-        var_a1 = rnd + 0xF;
-    }
-    return (temp_v0 - ((var_a1 >> 4) * 0x10));
+    PLAYER.ext.generic.unkAC = 0x2E + (rnd % 3);
+    return rnd % 16;
 }
 
 void func_80113EE0(void) {
-    PLAYER.animSet = 1;
+    PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.unk19 &= 0xF3;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
-    PLAYER.objectId = 0;
+    PLAYER.entityId = 0;
     PLAYER.blendMode = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.unk1E = 0;
+    PLAYER.rotAngle = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
-    if (g_Entities[UNK_ENTITY_10].objectId == 0x22) {
+    if (g_Entities[UNK_ENTITY_10].entityId == E_UNK_22) {
         func_8010FAF4();
     }
 }
@@ -149,15 +140,15 @@ void func_80113F7C(void) {
     s32 var_a2;
 
     if (entity->facing != 0) {
-        var_a2 = -entity->unk10;
+        var_a2 = -entity->hitboxOffX;
     } else {
-        var_a2 = entity->unk10;
+        var_a2 = entity->hitboxOffX;
     }
 
     if (PLAYER.facing != 0) {
-        var_a0 = -PLAYER.unk10;
+        var_a0 = -PLAYER.hitboxOffX;
     } else {
-        var_a0 = PLAYER.unk10;
+        var_a0 = PLAYER.hitboxOffX;
     }
 
     posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
@@ -165,7 +156,7 @@ void func_80113F7C(void) {
     if (ABS(posX) < 16) {
         if (entity->accelerationX != 0) {
             if (entity->accelerationX >= 0) {
-                PLAYER.objectRoomIndex = 1;
+                PLAYER.entityRoomIndex = 1;
                 return;
             }
             goto block_14;
@@ -176,14 +167,15 @@ void func_80113F7C(void) {
 block_13:
     if (posX < 0) {
     block_14:
-        PLAYER.objectRoomIndex = 0;
+        PLAYER.entityRoomIndex = 0;
         return;
     }
 
-    PLAYER.objectRoomIndex = 1;
+    PLAYER.entityRoomIndex = 1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_8011405C);
+void AlucardHandleDamage(DamageParam* param, s16 arg1, s16 arg2);
+INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", AlucardHandleDamage);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80114DF4);
 

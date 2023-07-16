@@ -128,8 +128,8 @@ s32 func_800E7E08(u32 arg0) {
     case 4:
         while (func_800219E0(0) != 1)
             ;
-        if (func_80021350(D_8013644C->addr, D_800A0248,
-                          D_800BD1C8[D_800A0248]) < 0) {
+        if (func_80021350(
+                D_8013644C->addr, D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
             return -1;
         }
         break;
@@ -316,7 +316,7 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
         D_8013644C->type = 20;
     }
 
-    fid = open(D_8013644C->path, 1);
+    fid = open(D_8013644C->path, O_RDONLY);
     if (fid < 0) {
         FntPrint("o err:%s\n", D_8013644C->path);
         D_800A04EC = 0;
@@ -362,7 +362,6 @@ void func_800E8D54(void) {
     s32 i = 0;
 
     do {
-        NOP;
         if (pressed & button) {
             if (unk & button) {
                 repeat |= button;
@@ -411,7 +410,7 @@ void ReadPads(void) {
     func_800E8D54();
 }
 
-void func_800E8EE4(void) {
+void SetupEvents(void) {
     EnterCriticalSection();
     g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
     g_EvSwCardErr = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
@@ -509,8 +508,8 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
-s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
-                  s32 fd) {
+s32 func_800E9640(
+    s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress, s32 fd) {
     char file[32];
     s32 nBytes;
     s32 ret;
@@ -522,10 +521,10 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
         nBytes = 0x2B8;
     }
 
-    fd = open(file, 0x8001);
+    fd = open(file, O_RDONLY | O_NOWAIT);
     ret = -1;
 
-    if (fd != (-1)) {
+    if (fd != -1) {
         D_80137474 = fd;
         func_800E91B0();
         read(fd, readBufferAddress, nBytes);
@@ -534,8 +533,8 @@ s32 func_800E9640(s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress,
     return ret;
 }
 
-s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
-                  s32 arg5) {
+s32 func_800E96E8(
+    s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4, s32 arg5) {
     s8 savePath[32];
     s32 new_var;
     s32 device;
@@ -543,7 +542,7 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     sprintf(savePath, g_MemcardSavePath, arg0, arg1, arg2);
 
     if (arg5 == 1) {
-        device = open(savePath, (arg4 << 0x10) | 0x200);
+        device = open(savePath, (arg4 << 0x10) | O_CREAT);
         if (device == -1) {
             return -2;
         } else {
@@ -552,9 +551,9 @@ s32 func_800E96E8(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     }
 
     new_var = arg4 << 0xD;
-    device = open(savePath, 0x8002);
+    device = open(savePath, O_WRONLY | O_NOWAIT);
 
-    if (device == (-1)) {
+    if (device == -1) {
         return -1;
     } else {
         D_80137474 = device;
@@ -853,10 +852,6 @@ void func_800EAEEC(void) {
     func_800EAEA4();
 }
 
-// ASPSX jump to 'nop'
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EAF28);
-#else
 void func_800EAF28(s32 arg0) {
     s32 temp_v1;
     s32 i;
@@ -884,7 +879,6 @@ void func_800EAF28(s32 arg0) {
         }
     }
 }
-#endif
 
 void DecompressWriteNibble(s32 ch) {
     u8 temp = ch;
@@ -1027,7 +1021,7 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
-void func_800EB534(s32 equipIcon, s32 palette, s32 index) {
+void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     u8* iconGfx;
     s32 vramX;
     s32 var_t0;
@@ -1066,11 +1060,9 @@ void func_800EB6B4(void) {
     s32 i;
 
     for (i = 0; i < 32; i++) {
-        func_800EB534(D_80137478[i], D_801374B8[i], i);
+        LoadEquipIcon(D_80137478[i], D_801374B8[i], i);
     }
 }
-
-// https://decomp.me/scratch/n0Z3p match with -fforce-addr
 
 bool func_800EB720(void) {
     unkstruct_80072FA0* temp = D_80072FA0;
@@ -1087,46 +1079,30 @@ bool func_800EB720(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
 
-// clears out each entity struct 1 byte at a time
-void func_800EBB70(void) {
-    s8* byte;
-    Entity* entity = &g_Entities[0];
+void ResetEntityArray(void) {
+    Entity* entity;
+    u8* ch;
     s32 i;
     u32 j;
 
+    entity = &g_Entities[0];
     for (i = 0; i < ARRAY_COUNT(g_Entities); i++) {
-        byte = (s8*)entity;
-        for (j = 0; j < 188; j++) {
-            byte[0] = 0;
-            byte++;
+        ch = (s8*)entity;
+        for (j = 0; j < sizeof(Entity); j++) {
+            *ch++ = 0;
         }
         entity++;
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EBBAC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderEntities);
 
 // The loop at the end is weird, the rest is matching
-#ifndef NON_EQUIVALENT
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECBF8);
 #else
 typedef struct {
-    s16 unk00, unk02;
-    u16 unk04, unk06;
-    u16 unk08, unk0A;
-    u16 unk0c, unk0E;
-    u16 unk10, unk12;
-    u16 unk14, unk16;
-    u16 unk18, unk1A;
-    u16 unk1c;
-    u8 unk1E, unk1F;
-    u16 unk20;
-    u8 unk22, unk23;
-    u16 unk24, unk26;
-} Unkstruct_800ECBF8_1; /* size = 0x28 */
-
-typedef struct {
-    s16 unk0, unk4;
+    s16 unk0, unk2;
 } Unkstruct_800ECBF8_2; /* size = 0x4 */
 
 extern POLY_GT4 D_8004077C[0x300]; // TODO D_8003CB08.polyGT4
@@ -1156,58 +1132,84 @@ void func_800ECBF8(void) {
     SPRT *f1, *f2;
     POLY_GT3 *g1, *g2;
 
+    s16* new_var4;
+    int new_var5;
+    int new_var2;
     Unkstruct_800ECBF8_1* var_v1;
-    Unkstruct_800ECBF8_2 *var_a2, *var_a0;
+    s16* new_var;
+    s16* var_a2;
+    s16* var_a0;
 
-    for (a1 = D_8004077C, a2 = D_80057F70, i = 0; i < 0x300; i++, a1++, a2++) {
+    a1 = g_GpuBuffers[0].polyGT4;
+    a2 = g_GpuBuffers[1].polyGT4;
+    for (i = 0; i < 0x300; i++, a1++, a2++) {
         SetPolyGT4(a1);
         SetPolyGT4(a2);
     }
 
-    for (b1 = D_8004E2FC, b2 = D_80065AF0, i = 0; i < 0x280; i++, b1++, b2++) {
+    b1 = g_GpuBuffers[0].sprite16;
+    b2 = g_GpuBuffers[1].sprite16;
+    for (i = 0; i < 0x280; i++, b1++, b2++) {
         SetSprt16(b1);
         SetSprt16(b2);
     }
 
-    for (c1 = D_80050AFC, c2 = D_800682F0, i = 0; i < 0x100; i++, c1++, c2++) {
+    c1 = g_GpuBuffers[0].tiles;
+    c2 = g_GpuBuffers[1].tiles;
+    for (i = 0; i < 0x100; i++, c1++, c2++) {
         SetTile(c1);
         SetTile(c2);
     }
 
-    for (d1 = D_8004CEFC, d2 = D_800646F0, i = 0; i < 0x100; i++, d1++, d2++) {
+    d1 = g_GpuBuffers[0].lineG2;
+    d2 = g_GpuBuffers[1].lineG2;
+    for (i = 0; i < 0x100; i++, d1++, d2++) {
         SetLineG2(d1);
         SetLineG2(d2);
     }
 
-    for (e1 = D_8004A37C, e2 = D_80061B70, i = 0; i < 0x100; i++, e1++, e2++) {
+    e1 = g_GpuBuffers[0].polyG4;
+    e2 = g_GpuBuffers[1].polyG4;
+    for (i = 0; i < 0x100; i++, e1++, e2++) {
         SetPolyG4(e1);
         SetPolyG4(e2);
     }
 
-    for (f1 = D_80051AFC, f2 = D_800692F0, i = 0; i < 0x200; i++, f1++, f2++) {
+    f1 = g_GpuBuffers[0].sprite;
+    f2 = g_GpuBuffers[1].sprite;
+    for (i = 0; i < 0x200; i++, f1++, f2++) {
         SetSprt(f1);
         SetSprt(f2);
     }
 
-    for (g1 = D_8004C77C, g2 = D_80063F70, i = 0; i < 0x30; i++, g1++, g2++) {
+    g1 = g_GpuBuffers[0].polyGT3;
+    g2 = g_GpuBuffers[1].polyGT3;
+    for (i = 0; i < 0x30; i++, g1++, g2++) {
         SetPolyGT3(g1);
         SetPolyGT3(g2);
     }
 
     var_v1 = &D_80097D1C;
-    var_a0 = &D_800A21B8;
     i = 0;
-    var_a2 = &D_800A21B8;
-    for (; i < 16; var_a2++, i++, var_a0++, var_v1++) {
-        var_v1->unk00 = var_a2->unk0;
-        var_v1->unk02 = var_a0->unk4 & 0x1FF;
-        var_v1->unk23 = (var_a0->unk4 >> 8) & ~1;
-        var_v1->unk1F = (var_v1->unk00 >> 6) + 0x10;
+    new_var5 = -2;
+    new_var4 = &D_800A21B8->unk0;
+    var_a0 = &D_800A21B8->unk0 + 1;
+    var_a2 = new_var4;
+    for (; i < 16;) {
+        var_v1->unk00 = *var_a2;
+        var_v1->unk02 = (*var_a0) & 0x1FF;
+        var_v1->unk23 = ((*var_a0) >> 8) & new_var5;
+        var_v1->unk1F = (var_v1->unk00 >> 6) - (-0x10);
+        var_a2 += 2;
+        i++;
+        var_a0 += 2;
+        var_v1++;
     }
 }
+
 #endif
 
-void func_800ECE2C(void) {
+void HideAllBackgroundLayers(void) {
     s32 i;
 
     g_CurrentRoom.unk00 = 0;
@@ -1216,92 +1218,78 @@ void func_800ECE2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECE58);
-
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", SetRoomForegroundLayer);
-#else
-extern s16 D_8003C70A;
-extern s16 D_8003C70C;
-extern u16 D_8003C70E;
-extern s32 D_8007309C;
-extern s32 D_8013AED0;
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderTilemap);
 
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
-    D_8003C708 = 0;
+    D_8003C708.flags = 0;
     D_8013AED0 = 1;
-    g_CurrentRoom.unk00 = 0;
     D_80073088 = layerDef->tileDef;
-    if (layerDef->tileDef != NULL) {
-        g_CurrentRoomTileLayout.fg = layerDef->layout;
-        D_8007309C = (s32)layerDef->unkC;
-        if (layerDef->rect.flags & 0x40) {
-            D_8007309C = 0x60;
-            D_8003C70A = 0;
-            D_8003C70C = 0;
-            D_8003C708 = (u16)layerDef->rect.flags;
-            D_8003C70E = layerDef->unkC;
-        }
-        if (layerDef->rect.flags & 0x20) {
-            D_8007309C = 0x60;
-            D_8003C708 = (u16)layerDef->rect.flags;
-        }
-        if (layerDef->rect.flags & 0x10) {
-            D_8007309C = 0x60;
-            D_8013AED0 = 0;
-        }
-        g_CurrentRoom.unk00 = (s32)layerDef->unkE;
-        g_CurrentRoom.left = layerDef->rect.left;
-        g_CurrentRoom.top = layerDef->rect.top;
-        g_CurrentRoom.right = layerDef->rect.right;
-        g_CurrentRoom.hSize = (g_CurrentRoom.right - g_CurrentRoom.left) + 1;
-        g_CurrentRoom.y = 0;
-        g_CurrentRoom.x = 0;
-        g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
-        g_CurrentRoom.D_800730AC = 1;
-        g_CurrentRoom.bottom = layerDef->rect.bottom;
-        g_CurrentRoom.vSize = (layerDef->rect.bottom - layerDef->rect.top) + 1;
-        g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
+    if (g_CurrentRoom.hSize && g_CurrentRoom.vSize) {
     }
+    g_CurrentRoom.unk00 = 0;
+    if (D_80073088 == 0) {
+        return;
+    }
+
+    g_CurrentRoomTileLayout.fg = layerDef->layout;
+    D_8007309C = layerDef->zPriority;
+    if (layerDef->rect.flags & 0x40) {
+        D_8007309C = 0x60;
+        D_8003C708.flags = layerDef->rect.flags;
+        D_8003C708.unk2 = 0;
+        D_8003C708.unk4 = 0;
+        D_8003C708.zPriority = layerDef->zPriority;
+    }
+    if (layerDef->rect.flags & 0x20) {
+        D_8007309C = 0x60;
+        D_8003C708.flags = layerDef->rect.flags;
+    }
+    if (layerDef->rect.flags & 0x10) {
+        D_8007309C = 0x60;
+        D_8013AED0 = 0;
+    };
+    g_CurrentRoom.unk00 = layerDef->unkE;
+    g_CurrentRoom.left = layerDef->rect.left;
+    g_CurrentRoom.top = layerDef->rect.top;
+    g_CurrentRoom.right = layerDef->rect.right;
+    g_CurrentRoom.bottom = layerDef->rect.bottom;
+    g_CurrentRoom.hSize = g_CurrentRoom.right - g_CurrentRoom.left + 1;
+    g_CurrentRoom.vSize = g_CurrentRoom.bottom - g_CurrentRoom.top + 1;
+    g_CurrentRoom.y = 0;
+    g_CurrentRoom.x = 0;
+    g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
+    g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
+    g_CurrentRoom.unk8 = 1;
 }
-#endif
 
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
-    u32 rect;
-
     g_CurrentRoom.bg[index].D_800730F4 = 0;
     g_CurrentRoom.bg[index].tileDef = layerDef->tileDef;
     g_CurrentRoom.bg[index].layout = layerDef->layout;
     if (g_CurrentRoom.bg[index].tileDef != 0) {
         g_CurrentRoom.bg[index].zPriority = layerDef->zPriority;
         g_CurrentRoom.bg[index].D_800730F4 = layerDef->unkE;
-#if 0 // matches with PSY-Q 3.5
-        g_CurrentRoom.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
-        g_CurrentRoom.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
-#else
-        rect = *(u32*)&layerDef->rect;
-        g_CurrentRoom.bg[index].w = ((rect >> 12) & 0x3F) - (rect & 0x3F) + 1;
-        rect = *(u32*)&layerDef->rect;
+        g_CurrentRoom.bg[index].w =
+            layerDef->rect.right - layerDef->rect.left + 1;
         g_CurrentRoom.bg[index].h =
-            ((rect >> 18) & 0x3F) - ((rect >> 6) & 0x3F) + 1;
-#endif
+            layerDef->rect.bottom - layerDef->rect.top + 1;
         g_CurrentRoom.bg[index].flags = layerDef->rect.flags;
         g_CurrentRoom.bg[index].D_80073100 = 1;
     }
 }
 
-void LoadRoomLayer(s32 arg0) {
+void LoadRoomLayer(s32 layerIndex) {
     s32 i;
 
-    SetRoomForegroundLayer(g_api.o.tileLayers[arg0].fg);
-    SetRoomBackgroundLayer(0, g_api.o.tileLayers[arg0].bg);
+    SetRoomForegroundLayer(g_api.o.tileLayers[layerIndex].fg);
+    SetRoomBackgroundLayer(0, g_api.o.tileLayers[layerIndex].bg);
 
     for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
         g_CurrentRoom.bg[i].D_800730F4 = 0;
     }
 }
 
-void func_800EDA70(Primitive* prim) {
+void DestroyPrimitive(Primitive* prim) {
     s32 i;
     s32 n;
     u32* primData = (u32*)prim;
@@ -1311,12 +1299,12 @@ void func_800EDA70(Primitive* prim) {
     }
 }
 
-void func_800EDA94(void) {
+void DestroyAllPrimitives(void) {
     Primitive* prim;
     s32 i;
 
     for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
-        func_800EDA70(prim);
+        DestroyPrimitive(prim);
         prim->type = PRIM_NONE;
         prim++;
     }
@@ -1383,7 +1371,7 @@ s16 func_800EDB58(u8 primType, s32 count) {
     }
 
     for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
-        func_800EDA70(prim);
+        DestroyPrimitive(prim);
         var_s1 = 0;
         temp_v0 = &g_PrimBuf[i];
         prim->type = primType;
@@ -1404,7 +1392,7 @@ s32 AllocPrimitives(u8 primType, s32 count) {
 
     while (primIndex < MAX_PRIM_ALLOC_COUNT) {
         if (*dstPrimType == 0) {
-            func_800EDA70(prim);
+            DestroyPrimitive(prim);
             if (count == 1) {
                 *dstPrimType = primType;
                 prim->next = NULL;
@@ -1448,7 +1436,7 @@ s32 func_800EDD9C(u8 primitives, s32 count) {
         pCode = &poly->code;
         temp_v0 = *polyCode;
         if (temp_v0 == 0) {
-            func_800EDA70(poly);
+            DestroyPrimitive(poly);
             if (count == 1) {
                 *polyCode = primitives;
                 poly->tag = 0;
@@ -1485,4 +1473,4 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EDEDC);
+INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderPrimitives);

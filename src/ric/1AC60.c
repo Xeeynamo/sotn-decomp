@@ -11,8 +11,8 @@ void func_80156C60(Entity* entity) {
     s32 length;
     u32* ptr;
 
-    if (entity->flags & FLAG_FREE_POLYGONS) {
-        g_api.FreePrimitives(entity->firstPolygonIndex);
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
     }
 
     ptr = (u32*)entity;
@@ -108,7 +108,7 @@ void func_80158BFC(void) {
         switch (PLAYER.step_s) {
         case 0:
             if (func_8015C9CC() == 0) {
-                if (g_Player.g_Player & 0x1000) {
+                if (g_Player.padPressed & PAD_UP) {
                     func_8015C920(&D_80155394);
                     PLAYER.step_s = 1;
                     break;
@@ -122,7 +122,7 @@ void func_80158BFC(void) {
             if (func_8015C9CC() != 0) {
                 func_8015CDE0(0);
                 break;
-            } else if (g_Player.g_Player & 0x1000) {
+            } else if (g_Player.padPressed & PAD_UP) {
                 break;
             } else {
                 func_8015CD98(0);
@@ -133,7 +133,7 @@ void func_80158BFC(void) {
             func_8015CB58(1, 1);
             if (PLAYER.animFrameIdx < 3) {
                 func_8015C9CC();
-                if (g_Player.g_Player & 0x4000) {
+                if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
                     PLAYER.unk4C = &D_801555A8;
                     break;
@@ -141,7 +141,7 @@ void func_80158BFC(void) {
             }
 
             if (PLAYER.animFrameDuration < 0) {
-                if (g_Player.g_Player & 0x80) {
+                if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
                     func_8015C920(&D_80155730);
@@ -155,7 +155,7 @@ void func_80158BFC(void) {
 
         case 65:
             func_8015CB58(1, 1);
-            if (g_Player.g_Player & 0x80) {
+            if (g_Player.padPressed & PAD_SQUARE) {
                 break;
             }
             g_Player.unk46 = 0;
@@ -225,7 +225,7 @@ void func_801595D8(void) {
     if (PLAYER.step_s != 0) {
         return;
     }
-    if (g_Player.D_80072F0A != 0 && g_Player.D_80072EEC & 0x40) {
+    if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8015D020();
     } else if (func_8015C9CC() != 0) {
         func_8015CA84(0xC000);
@@ -249,15 +249,15 @@ void func_80159C04(void) {
     s32 var_a2;
 
     if (entity->facing != 0) {
-        var_a2 = -entity->unk10;
+        var_a2 = -entity->hitboxOffX;
     } else {
-        var_a2 = entity->unk10;
+        var_a2 = entity->hitboxOffX;
     }
 
     if (PLAYER.facing != 0) {
-        var_a0 = -PLAYER.unk10;
+        var_a0 = -PLAYER.hitboxOffX;
     } else {
-        var_a0 = PLAYER.unk10;
+        var_a0 = PLAYER.hitboxOffX;
     }
 
     temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
@@ -265,19 +265,19 @@ void func_80159C04(void) {
     if (ABS(temp_v0) < 16) {
         if (entity->accelerationX != 0) {
             if (entity->accelerationX < 0) {
-                PLAYER.objectRoomIndex = 0;
+                PLAYER.entityRoomIndex = 0;
                 return;
             } else {
-                PLAYER.objectRoomIndex = 1;
+                PLAYER.entityRoomIndex = 1;
                 return;
             }
         }
     }
 
     if (temp_v0 < 0) {
-        PLAYER.objectRoomIndex = 0;
+        PLAYER.entityRoomIndex = 0;
     } else {
-        PLAYER.objectRoomIndex = 1;
+        PLAYER.entityRoomIndex = 1;
     }
 }
 
@@ -297,7 +297,7 @@ void func_8015AFE0(void) {
         }
     } else if (g_Player.unk4E != 0) {
         g_Player.unk46 = 0;
-        func_8015C908(4);
+        SetPlayerStep(4);
         func_8015C920(&D_80155528);
         g_Player.unk44 = 0;
     }
@@ -364,7 +364,7 @@ void func_8015B244(void) {
             g_Player.unk4E = 1;
         }
     }
-    if (g_Player.D_80072EEC & 0x40) {
+    if (g_Player.padTapped & PAD_CROSS) {
         func_8015D020();
         g_Player.unk46 = 0;
         g_Player.unk4E = 1;

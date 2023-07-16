@@ -1,0 +1,4 @@
+EntityWarpRoom = 0x060DC040;
+WarpRoomInit = 0x060DC4D4;
+WarpRoomAnimateBg = 0x060DC7D8;
+EntityWarpSmallRocks = 0x060DCAFC;

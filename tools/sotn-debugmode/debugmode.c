@@ -131,22 +131,22 @@ void Init() {
     DestroyEntity(e);
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
-    e->objectId = 0xD1;
-    e->subId = 0;
+    e->entityId = 0xD1;
+    e->params = 0;
     e->pfnUpdate = Update;
 
     // the following two flags are important to disallow the game engine to
     // destroy the entity when the room chnages.
     e->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
 
-    e->flags |= FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
-    e->firstPolygonIndex = g_api.AllocPrimitives(PRIM_TILE, 5);
-    if (e->firstPolygonIndex == -1) {
+    e->flags |= FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+    e->primIndex = g_api.AllocPrimitives(PRIM_TILE, 5);
+    if (e->primIndex == -1) {
         g_PrimFirst = NULL;
         return;
     }
 
-    g_PrimFirst = &g_PrimBuf[e->firstPolygonIndex];
+    g_PrimFirst = &g_PrimBuf[e->primIndex];
     DRAW_RESET();
     DRAW_RECT(159, 22, 90, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
     FILL_RECT(159, 22, 90, 14, 0x50, 0x50, 0x30, 0x41);

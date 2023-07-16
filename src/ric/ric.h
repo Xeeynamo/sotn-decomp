@@ -1,14 +1,22 @@
-
 #include "common.h"
 #include "game.h"
 #include "objects.h"
 #include "sfx.h"
 
+typedef enum {
+    E_NONE,
+    E_UNK_1,
+} EntityIDs;
+
+typedef enum {
+    Dummy,
+} PlayerSteps;
+
 extern void func_80159C04(void);
 extern void func_80156C60(Entity* entity);
 extern void func_8015BB80(void);
 extern void func_8015C178(void);
-extern void func_8015C908(s32 step);
+extern void SetPlayerStep(PlayerSteps step);
 void func_8015C920(AnimationFrame* unk0);
 extern void func_8015C93C(s32 speed);
 extern s32 func_8015C9CC(void);
@@ -42,7 +50,13 @@ extern s16 D_80154606;
 extern u8 D_80154674[][4];
 extern SubweaponDef D_80154688[];
 extern AnimationFrame* D_80154924;
+extern s32 D_80154ED4;
+extern s32 D_80154EF8;
 extern s32 D_80155368[];
+extern AnimationFrame D_80154C80[];
+extern AnimationFrame D_80154DC8[];
+extern AnimationFrame D_80154E04[];
+extern AnimationFrame* D_80154E38;
 extern AnimationFrame* D_80155394;
 extern AnimationFrame* D_8015539C;
 extern AnimationFrame* D_801553BC;
@@ -57,6 +71,8 @@ extern AnimationFrame* D_80155528;
 extern AnimationFrame* D_80155534;
 extern AnimationFrame* D_8015555C;
 extern AnimationFrame* D_801555A8;
+extern AnimationFrame D_801555E8[];
+extern AnimationFrame D_80155638[];
 extern AnimationFrame* D_80155670;
 extern AnimationFrame* D_80155730;
 extern AnimationFrame* D_80155748;

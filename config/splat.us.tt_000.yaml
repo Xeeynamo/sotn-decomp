@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   section_order:
     - ".rodata"
     - ".text"
@@ -31,7 +32,7 @@ segments:
       - [0x4A8, .data, 4A8]
       - [0x608, .data, 608]
       - [0x10AC, rodata] # func_80172120 jtbl
-      - [0x10C4, rodata] # func_80174038 jtbl
+      - [0x10C4, .rodata, 10E8]
       - [0x10E8, c]
       - [0x48D8, sbss]
   - [0xA000]

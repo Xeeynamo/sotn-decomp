@@ -1,7 +1,7 @@
 #include "dra.h"
 
 // TODO functions probably part of the same file
-void func_800E3574(void);
+void SetStageDisplayBuffer(void);
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3);
 void func_800E6250(void);
 s32 func_800E6300(void);
@@ -21,7 +21,7 @@ void HandleNowLoading(void) {
         D_8003C730 = 0;
         D_80097924 = -1;
         ClearBackbuffer();
-        func_800E3574();
+        SetStageDisplayBuffer();
         D_8003C9A4 = 0;
         g_GameStep++;
         break;
@@ -77,8 +77,8 @@ void HandleNowLoading(void) {
             g_DemoMode = Demo_None;
             if (D_80098850 != 0) {
                 if (g_pads[1].pressed & PAD_UP) {
-                    __builtin_memcpy(g_Status.saveName, "richter ",
-                                     sizeof("richter "));
+                    __builtin_memcpy(
+                        g_Status.saveName, "richter ", sizeof("richter "));
                     g_CurrentPlayableCharacter = PLAYER_RICHTER;
                     g_IsTimeAttackUnlocked = true;
                 } else {
@@ -299,10 +299,10 @@ void HandleNowLoading(void) {
             }
             pfnWeapon = D_8017D000.func_8017A01C;
             pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
-        } else if ((func_800E81FC(D_8003C908.D_8003C90C,
-                                  SimFileType_Weapon0Chr) < 0) ||
-                   (func_800E81FC(D_8003C908.D_8003C910,
-                                  SimFileType_Weapon1Chr) < 0)) {
+        } else if ((func_800E81FC(
+                        D_8003C908.D_8003C90C, SimFileType_Weapon0Chr) < 0) ||
+                   (func_800E81FC(
+                        D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
             break;
         }
         func_800FA7E8();
@@ -315,7 +315,7 @@ void HandleNowLoading(void) {
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
-                g_LoadFile = CdFile_Servant;
+                g_LoadFile = CdFile_ServantChr;
                 g_mapTilesetId = D_8006CBC4 - 1;
             }
             g_GameStep++;

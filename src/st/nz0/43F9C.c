@@ -6,11 +6,6 @@
 
 #include "nz0.h"
 
-// aspatch skips a nop. TODO: fix compiler
-// matching in decomp.me: https://decomp.me/scratch/oDgqZ
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43F9C", func_801C3F9C);
-#else
 void func_801C3F9C(Unkstruct_801C3F9C** self) {
     Collider collider;
     Entity* newEntity;
@@ -28,7 +23,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
     case 1:
         temp = (*self)->unk0A + ((*self)->unk1E / 3);
         g_api.CheckCollision((*self)->unk14, temp, &collider, 0);
-        if (collider.unk0 % 2) {
+        if (collider.effects % 2) {
             (*self)->unk0A = (*self)->unk0A + collider.unk18;
             if ((*self)->unk10 < 0x4000) {
                 (*self)->unk2C = 1;
@@ -41,10 +36,10 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
         if ((*self)->unk2C == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, newEntity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                 newEntity->posX.i.hi = (*self)->unk14;
                 newEntity->posY.i.hi = (*self)->unk0A;
-                newEntity->subId = 0;
+                newEntity->params = 0;
             }
             func_801C29B0(0x655);
             func_801CA0D0(self);
@@ -52,7 +47,6 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
         return;
     }
 }
-#endif
 
 // Called by EntityAxeKnight
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43F9C", func_801C4198);
@@ -61,7 +55,7 @@ void func_801C4550(void) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2 -= 3;
     } else {
-        func_801BD52C(D_801822B4[(Random() & 7)]);
+        SetStep(D_801822B4[(Random() & 7)]);
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2 = 256;
     }
 }
@@ -89,25 +83,25 @@ void EntityAxeKnight(Entity* self) {
         if (self->step != AXE_KNIGHT_DYING) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->ext.generic.unk80.modeS16.unk0 = 65;
             self->zPriority -= 0x10;
-            func_801BD52C(AXE_KNIGHT_DYING);
+            SetStep(AXE_KNIGHT_DYING);
         }
     }
 
     switch (self->step) {
     case AXE_KNIGHT_INIT:
         InitializeEntity(D_80180C64);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
-        self->unk12 = 10;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
+        self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
     case AXE_KNIGHT_IDLE:
         if (func_801BCCFC(&D_80182188) & 1) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
-            func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
         break;
 
@@ -123,7 +117,7 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (animStatus == 0) {
@@ -132,8 +126,8 @@ void EntityAxeKnight(Entity* self) {
             } else {
                 self->accelerationX = 0x3000;
             }
-            if (GetPlayerDistanceX() < 96) {
-                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+            if (GetDistanceToPlayerX() < 96) {
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             }
         }
@@ -169,7 +163,7 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         if (animStatus == 0) {
             if (self->facing == 0) {
@@ -178,8 +172,8 @@ void EntityAxeKnight(Entity* self) {
                 self->accelerationX = -0x3000;
             }
 
-            if (GetPlayerDistanceX() > 80) {
-                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            if (GetDistanceToPlayerX() > 80) {
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             }
         }
@@ -207,11 +201,11 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
         label:
-            if (GetPlayerDistanceX() < 89) {
-                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+            if (GetDistanceToPlayerX() < 89) {
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             } else {
-                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
@@ -239,7 +233,7 @@ void EntityAxeKnight(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                     newEntity->facing = self->facing;
-                    newEntity->subId = 1;
+                    newEntity->params = 1;
                     newEntity->posY.i.hi += 12;
                     if (newEntity->facing != 0) {
                         newEntity->posX.i.hi += 8;
@@ -256,11 +250,11 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_ARCING_THROW: // unused
         animStatus = AnimateEntity(D_80182244, self);
         if (animStatus == 0) {
-            if (GetPlayerDistanceX() > 88) {
-                func_801BD52C(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
+            if (GetDistanceToPlayerX() > 88) {
+                SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 0;
             } else {
-                func_801BD52C(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
+                SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.generic.unk7C.S8.unk0 = 1;
             }
             break;
@@ -272,7 +266,7 @@ void EntityAxeKnight(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->subId = 2;
+                newEntity->params = 2;
                 newEntity->posY.i.hi -= 40;
                 if (newEntity->facing != 0) {
                     newEntity->posX.i.hi += 16;
@@ -289,9 +283,9 @@ void EntityAxeKnight(Entity* self) {
             if (!(self->ext.generic.unk80.modeS16.unk0 & 7)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
+                    CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     temp >>= 3;
-                    newEntity->subId = 2;
+                    newEntity->params = 2;
                     newEntity->posX.i.hi += D_80182198[temp];
                     newEntity->posY.i.hi += D_8018219A[temp];
                 }
@@ -312,20 +306,20 @@ void EntityAxeKnight(Entity* self) {
     hitbox = &D_80182284[self->animCurFrame][D_80182274];
     hitbox++;
     hitbox--;
-    self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
 
 void EntityAxeKnightRotateAxe(void) {
-    if (g_CurrentEntity->subId != 0) {
-        g_CurrentEntity->unk1E += 0x80;
+    if (g_CurrentEntity->params != 0) {
+        g_CurrentEntity->rotAngle += 0x80;
     } else {
-        g_CurrentEntity->unk1E -= 0x80;
+        g_CurrentEntity->rotAngle -= 0x80;
     }
 
-    g_CurrentEntity->unk1E &= 0xFFF;
+    g_CurrentEntity->rotAngle &= 0xFFF;
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {
@@ -341,8 +335,8 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     case 0:
         InitializeEntity(D_80180C70);
         entity->unk19 = 4;
-        entity->accelerationY = D_801822C8[entity->subId];
-        accelerationX = D_801822BC[entity->subId];
+        entity->accelerationY = D_801822C8[entity->params];
+        accelerationX = D_801822BC[entity->params];
 
         if (entity->facing == 0) {
             entity->accelerationX = -accelerationX;
@@ -352,7 +346,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 
         entity->ext.generic.unk7C.s = -0x40;
 
-        if (entity->subId == 2) {
+        if (entity->params == 2) {
             entity->step++;
             return;
         }

@@ -176,8 +176,8 @@ s32 func_801B884C(s32 cardSlot, s32 cardSubSlot, const char* saveFile,
     return 0;
 }
 
-s32 func_801B88F4(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
-                  s32 arg5) {
+s32 func_801B88F4(
+    s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4, s32 arg5) {
     s8 savePath[32];
     s32 new_var;
     s32 device;
@@ -185,7 +185,7 @@ s32 func_801B88F4(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     sprintf(savePath, &g_MemcardSavePath, arg0, arg1, arg2);
 
     if (arg5 == 1) {
-        device = open(savePath, (arg4 << 0x10) | 0x200);
+        device = open(savePath, (arg4 << 0x10) | O_CREAT);
         if (device == -1) {
             return -2;
         } else {
@@ -194,9 +194,9 @@ s32 func_801B88F4(s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4,
     }
 
     new_var = arg4 << 0xD;
-    device = open(savePath, 0x8002);
+    device = open(savePath, O_WRONLY | O_NOWAIT);
 
-    if (device == (-1)) {
+    if (device == -1) {
         return -1;
     } else {
         D_801BC2FC = device;

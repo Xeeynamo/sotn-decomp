@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
     - ".rodata"
@@ -37,15 +38,18 @@ segments:
       - [0x1498, roomdef, g_Rooms]
       - [0x14AC, rodata]
       - [0x16C0, rodata]
+      - [0x1171C, .rodata, 11A64]
+      - [0x11728, rodata]
       - [0x11770, rodata]
       - [0x117A0, rodata]
-      - [0x117F0, rodata]
+      - [0x117F0, .rodata, 13E18]
       - [0x11808, .rodata, 14214]
       - [0x1181C, rodata]
       - [0x118D0, rodata]
       - [0x119C4, .rodata, 1C7DC]
       - [0x119DC, rodata]
       - [0x11A64, c, 11A64]
+      - [0x13E18, c, 13E18]
       - [0x14214, c, 14214]
       - [0x1C7DC, c, 1C7DC]
       - [0x23260, data]

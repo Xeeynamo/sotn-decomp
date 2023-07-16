@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
@@ -34,8 +35,8 @@ segments:
       - [0x3C40, data]
       - [0x4A00, data]
       - [0x4B04, equipment, equipments]
-      - [0x7718, raw, accessory_data]
-      - [0x8000, data]
+      - [0x7718, accessory, accessory_data]
+      - [0x8258, data]
       - [0x8900, data]
       - [0xCEB0, data]
       - [0xD670, rodata] # not rodata but data
@@ -43,9 +44,8 @@ segments:
       - [0x227B0, rodata]
       - [0x3B3B0, rodata]
       - [0x3B430, .rodata, 42398]
-      - [0x3B524, rodata]
       - [0x3B530, rodata, play]
-      - [0x3B560, rodata, gameover]
+      - [0x3B560, .rodata, gameover]
       - [0x3B720, .rodata, 46358]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
@@ -94,11 +94,7 @@ segments:
       - [0x3CDDC, rodata]
       - [0x40D38, .rodata, cd] # To be merged with 40D38
       - [0x40E28, rodata]
-      - [0x40E48, rodata] # jpt_8010A86C
-      - [0x40E88, rodata] # jpt_8010AA30
-      - [0x40EC8, rodata] # jpt_8010AE88
-      - [0x40EF0, rodata] # jpt_8010B3B4
-      - [0x40FC0, rodata] # jpt_8010B658
+      - [0x40E48, rodata] # EntityAlucard jump table
       - [0x4108C, rodata] # jpt_8010F424
       - [0x412AC, rodata] # jpt_8010F48C
       - [0x412C4, rodata] # jpt_8010F75C

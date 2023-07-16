@@ -9,7 +9,7 @@
 // vase in the room with the door to the caverns
 void EntityCavernDoorVase(Entity* arg0) {
     s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180BFC[arg0->subId];
+    ObjInit2* temp_s0 = &D_80180BFC[arg0->params];
 
     if (arg0->step == 0) {
         InitializeEntity(D_80180B00);
@@ -38,7 +38,7 @@ extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->subId >> 0xC;
+    u16 breakableType = entity->params >> 0xC;
     if (entity->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
@@ -47,8 +47,8 @@ void EntityBreakable(Entity* entity) {
             entityDropItem =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(ENTITY_EXPLOSION, entityDropItem);
-                entityDropItem->subId =
+                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
+                entityDropItem->params =
                     g_eBreakableExplosionTypes[breakableType];
             }
             ReplaceBreakableWithItemDrop(entity);
@@ -109,18 +109,18 @@ void EntityCavernDoorLever(Entity* entity) {
     case 0:
         InitializeEntity(D_80180B18);
         entity->animCurFrame = 18;
-        entity->unk1E = -0x200;
+        entity->rotAngle = -0x200;
         entity->unk19 |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
         if (D_8003BDEC[0x30] != 0) {
-            entity->unk1E = 0;
+            entity->rotAngle = 0;
         }
 
     case 1:
         if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
-            entity->unk1E += 4;
-            if (entity->unk1E > 0) {
-                entity->unk1E = 0;
+            entity->rotAngle += 4;
+            if (entity->rotAngle > 0) {
+                entity->rotAngle = 0;
                 if (D_8003BDEC[0x30] == 0) {
                     g_api.PlaySfx(0x675);
                 }
@@ -134,8 +134,8 @@ void EntityCavernDoorLever(Entity* entity) {
 
     posX = entity->posX.val;
     posY = entity->posY.val;
-    posX += rcos(entity->unk1E) * 0x280;
-    posY += rsin(entity->unk1E) * 0x280;
+    posX += rcos(entity->rotAngle) * 0x280;
+    posY += rsin(entity->rotAngle) * 0x280;
     entity[1].posX.val = posX;
     entity[1].posY.val = posY;
 }
@@ -170,7 +170,7 @@ void EntityCavernDoorPlatform(Entity* self) {
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     u16* tileLayoutPtr;
     Entity* entity;
     POLY_GT4* poly;
@@ -191,16 +191,16 @@ void EntityCavernDoor(Entity* self) {
             self->step = 128;
             self->animCurFrame = 0;
         } else {
-            firstPolygonIndex = g_api.AllocPrimitives(1, 64);
-            if (firstPolygonIndex == -1) {
+            primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+            if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
 
-            poly = &g_PrimBuf[firstPolygonIndex];
-            self->firstPolygonIndex = firstPolygonIndex;
+            poly = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
             *(s32*)&self->ext.generic.unk7C = poly;
-            self->flags |= FLAG_FREE_POLYGONS;
+            self->flags |= FLAG_HAS_PRIMS;
             while (poly != NULL) {
                 poly->u0 = poly->v0 = 1;
                 poly->r0 = 64;
@@ -266,7 +266,7 @@ void EntityCavernDoor(Entity* self) {
                     entity->posY.i.hi = 156;
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
-                    entity->subId = 0x10;
+                    entity->params = 0x10;
                     entity->unk19 |= 3;
                     entity->unk1A = entity->unk1C = 192;
                 }
@@ -275,7 +275,7 @@ void EntityCavernDoor(Entity* self) {
         break;
     }
 
-    if (self->flags & FLAG_FREE_POLYGONS) {
+    if (self->flags & FLAG_HAS_PRIMS) {
         for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
              poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {
@@ -350,7 +350,7 @@ void EntityClickSwitch(Entity* entity) {
 
 // smaller weight blocking path near cube of zoe
 void EntityPathBlockSmallWeight(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     POLY_GT4* poly;
     s32 var_a1;
     s32 i;
@@ -361,16 +361,16 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
 
         while (poly != NULL) {
             poly->tpage = 0xF;
@@ -424,7 +424,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
 // taller weight blocking path near cube of zoe
 void EntityPathBlockTallWeight(Entity* self) {
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
     s32 temp_a2;
     s32 var_a1;
     s32 var_v0;
@@ -437,15 +437,15 @@ void EntityPathBlockTallWeight(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0x5E;
 
-        firstPolygonIndex = g_api.AllocPrimitives(4, 8);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
 
         while (poly != NULL) {
             poly->tpage = 0xF;
@@ -513,7 +513,7 @@ void EntityTrapDoor(Entity* entity) {
         entity->zPriority = 0x6A;
         entity->hitboxWidth = 16;
         entity->hitboxHeight = 4;
-        entity->unk3C = 1;
+        entity->hitboxState = 1;
 
         if (g_TrapDoorFlag == 0) {
             if (PLAYER.posY.val < entity->posY.val) {
@@ -532,7 +532,7 @@ void EntityTrapDoor(Entity* entity) {
         }
 
     case 1:
-        if (entity->unk48 != 0) {
+        if (entity->hitFlags != 0) {
             g_TrapDoorFlag = 1;
             entity->step++;
         }
@@ -548,13 +548,13 @@ void EntityMermanRockLeftSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* subId;
+    u8* params;
     s32 i;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180ADC);
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
@@ -576,13 +576,13 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step = 2;
         }
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             tileLayoutPtr = &D_80181258[self->ext.generic.unk84.S16.unk0 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -597,19 +597,19 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(2, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *subId++;
+                    newEntity->params = *params++;
                     newEntity->accelerationX = -0x8000 - (Random() << 8);
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
@@ -622,16 +622,16 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0xA, self, newEntity);
-                newEntity->subId = 0x43;
+                newEntity->params = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Half broken */
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (g_Player.unk0C & 4)) {
+        if ((self->hitFlags != 0) && (g_Player.unk0C & 4)) {
             D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
         }
         break;
@@ -643,13 +643,13 @@ void EntityMermanRockRightSide(Entity* self) {
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
-    u8* subId;
+    u8* params;
     s32 i;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180ADC);
-        self->unk3C = 2;
+        self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
@@ -671,13 +671,13 @@ void EntityMermanRockRightSide(Entity* self) {
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step = 2;
         }
         break;
 
     case 1:
-        if (self->unk48 != 0) {
+        if (self->hitFlags != 0) {
             tileLayoutPtr = &D_80181294[(self->ext.generic.unk84.S16.unk0 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -692,19 +692,19 @@ void EntityMermanRockRightSide(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(2, self, newEntity);
-                newEntity->subId = 0x13;
+                newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi -= self->ext.generic.unk84.S16.unk0 * 16;
                 newEntity->posY.i.hi += 16;
             }
 
-            subId = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
+            params = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
-                    newEntity->subId = *subId++;
+                    newEntity->params = *params++;
                     newEntity->accelerationX = (Random() << 8) + 0x8000;
                     newEntity->accelerationY = -Random() * 0x100;
                     newEntity->facing = 1;
@@ -716,13 +716,13 @@ void EntityMermanRockRightSide(Entity* self) {
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
             D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
-            self->unk3C = 1;
+            self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->unk48 != 0) && (g_Player.unk0C & 1)) {
+        if ((self->hitFlags != 0) && (g_Player.unk0C & 1)) {
             D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
         }
         break;
@@ -775,7 +775,7 @@ void EntityUnkId26(Entity* self) {
 
 // falling rock that breaks into dust
 void EntityFallingRock2(Entity* self) {
-    s32 animFrame = self->subId & 0xF;
+    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
     s32 temp_a0;
@@ -794,19 +794,19 @@ void EntityFallingRock2(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x4000;
-        self->unk1E -= 0x20;
+        self->rotAngle -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_8018133C[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
 
-        if (collider.unk0 & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             if (self->accelerationY > 0x40000) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(2, self, newEntity);
-                    newEntity->subId = 0x11;
+                    newEntity->params = 0x11;
                     if (animFrame == 0) {
-                        newEntity->subId = 0x13;
+                        newEntity->params = 0x13;
                     }
                 }
                 DestroyEntity(self);
@@ -831,7 +831,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
 void EntityFallingRock(Entity* self) {
-    s32 animFrame = self->subId & 0xF;
+    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
     s16 rndAngle;
@@ -856,17 +856,17 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->accelerationY += 0x2000;
-        self->unk1E -= 0x20;
+        self->rotAngle -= 0x20;
 
-        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 8, &collider,
-                             0);
-        if (collider.unk0 & 1) {
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(6, self, newEntity);
-                newEntity->subId = 0x10;
+                newEntity->params = 0x10;
                 if (animFrame == 0) {
-                    newEntity->subId = 0x13;
+                    newEntity->params = 0x13;
                 }
             }
             DestroyEntity(self);
@@ -898,9 +898,9 @@ void EntityUnkId2A(Entity* entity) {
         InitializeEntity(D_80180B18);
         entity->zPriority = 0x29;
         entity->flags &= ~FLAG_UNK_08000000;
-        entity->animCurFrame = entity->subId + 0x22;
-        entity->posX.i.hi = D_8018139C[entity->subId << 1];
-        entity->posY.i.hi = D_8018139E[entity->subId << 1];
+        entity->animCurFrame = entity->params + 0x22;
+        entity->posX.i.hi = D_8018139C[entity->params << 1];
+        entity->posY.i.hi = D_8018139E[entity->params << 1];
         entity->ext.generic.unk80.modeS16.unk0 = 5;
     }
     entity->ext.generic.unk80.modeS16.unk0--;
@@ -942,7 +942,7 @@ void EntitySwitch(Entity* entity) {
 
 // door preventing access to warp room / heart
 void EntityHeartRoomGoldDoor(Entity* self) {
-    s16 firstPolygonIndex;
+    s16 primIndex;
     Entity* newEntity;
     POLY_GT4* poly;
     s32 tilePos;
@@ -957,24 +957,24 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         self->zPriority = 0x5E;
 
         if (D_8003BDEC[50] != 0) {
-            for (tilePos = 0x48, i = 7, self->step = 128,
-                self->animCurFrame = 0;
-                 i >= 0; tilePos += 0x10, i--) {
+            for (
+                tilePos = 0x48, i = 7, self->step = 128, self->animCurFrame = 0;
+                i >= 0; tilePos += 0x10, i--) {
                 g_CurrentRoomTileLayout.fg[tilePos] = 0;
             }
             break;
         }
 
-        firstPolygonIndex = g_api.AllocPrimitives(1, 64);
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
 
-        poly = &g_PrimBuf[firstPolygonIndex];
-        self->firstPolygonIndex = firstPolygonIndex;
+        poly = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         *(s32*)&self->ext.generic.unk7C = poly;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         while (poly != NULL) {
             poly->v0 = 1;
             poly->u0 = 1;
@@ -987,8 +987,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0;
-             tilePos += 0x10, i--) {
+        for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0; tilePos += 0x10,
+            i--) {
             g_CurrentRoomTileLayout.fg[tilePos] = temp;
         }
         break;
@@ -1035,7 +1035,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     CreateEntityFromEntity(6, self, newEntity);
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (Random() & 0xF);
-                    newEntity->subId = 0x10;
+                    newEntity->params = 0x10;
                     newEntity->unk1A = newEntity->unk1C = 192;
                     newEntity->unk19 |= 3;
                 }
@@ -1044,7 +1044,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         break;
     }
 
-    if (self->flags & FLAG_FREE_POLYGONS) {
+    if (self->flags & FLAG_HAS_PRIMS) {
         for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
              poly = (POLY_GT4*)poly->tag) {
             if (poly->p3 != 0) {

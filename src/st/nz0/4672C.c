@@ -18,9 +18,9 @@ void EntitySpittleBone(Entity* self) {
     case 0:
         InitializeEntity(D_80180CAC);
         self->unk19 = 4;
-        self->unk1E = 0;
-        self->flags &= ~0x2200;
-        self->facing = self->subId;
+        self->rotAngle = 0;
+        self->flags &= ~(FLAG_UNK_2000 | 0x200);
+        self->facing = self->params;
         break;
 
     case 1:
@@ -48,10 +48,10 @@ void EntitySpittleBone(Entity* self) {
         self->ext.generic.unk7C.U8.unk0 =
             func_801C1034(self->ext.generic.unk7C.U8.unk0);
         if (self->ext.generic.unk80.modeS16.unk2 != 0) {
-            self->unk1E += self->ext.generic.unk80.modeS16.unk0;
+            self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
             self->ext.generic.unk80.modeS16.unk2--;
             if (self->ext.generic.unk80.modeS16.unk2 == 0) {
-                self->unk1E = self[1].unk1E;
+                self->rotAngle = self[1].rotAngle;
             }
         }
         if (((self->ext.generic.unk7C.U8.unk0 & 0x3F) == 1) &&
@@ -63,8 +63,8 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->posY.i.hi += 24;
             }
         }
-        self->unk10 = (u32)rsin(self->unk1E) >> 8;
-        self->unk12 = -(rcos(self->unk1E) * 16) >> 0xC;
+        self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
+        self->hitboxOffY = -(rcos(self->rotAngle) * 16) >> 0xC;
         return;
 
     case 3:
@@ -73,11 +73,13 @@ void EntitySpittleBone(Entity* self) {
             if (newEntity != NULL) {
                 func_801C1780(0x31, self, newEntity);
                 newEntity->facing = self->facing;
-                newEntity->flags = -0x37FFE000;
+                newEntity->flags = FLAG_UNK_2000 | FLAG_UNK_08000000 |
+                                   FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                                   FLAG_DESTROY_IF_OUT_OF_CAMERA;
                 newEntity->palette = 0x20D;
                 newEntity->animCurFrame = i + 0x3A;
                 newEntity->unk19 |= 4;
-                newEntity->unk1E = self->unk1E;
+                newEntity->rotAngle = self->rotAngle;
                 newEntity->step = 4;
                 newEntity->accelerationX = D_80182504[i];
                 newEntity->accelerationY = 0xFFFD0000 - ((Random() & 3) << 0xF);
@@ -88,10 +90,10 @@ void EntitySpittleBone(Entity* self) {
 
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
-            newEntity->subId = 1;
-            newEntity->posX.i.hi += -(rsin(self->unk1E) * 0x10) >> 0xC;
-            newEntity->posY.i.hi += -(rcos(self->unk1E) * 0x10) >> 0xC;
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            newEntity->params = 1;
+            newEntity->posX.i.hi += -(rsin(self->rotAngle) * 0x10) >> 0xC;
+            newEntity->posY.i.hi += -(rcos(self->rotAngle) * 0x10) >> 0xC;
         }
         func_801C29B0(0x62B);
         DestroyEntity(self);
@@ -104,8 +106,8 @@ void EntitySpittleBone(Entity* self) {
         if (self->ext.generic.unk80.modeS16.unk2 == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(ENTITY_EXPLOSION, self, newEntity);
-                newEntity->subId = 0;
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                newEntity->params = 0;
             }
             DestroyEntity(self);
         }
@@ -122,7 +124,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4672C", func_801C6B24);
 void EntitySpittleBoneSpit(Entity* self) {
     Collider collider;
     Unkstruct_801C6C6C test;
-    s16 firstPrimIndex;
+    s16 primIndex;
     Primitive* prim;
     Entity* entity;
     s32 u0, v0, r0, b0, blendMode;
@@ -138,7 +140,7 @@ void EntitySpittleBoneSpit(Entity* self) {
 
     case 1:
         entity = self->ext.generic.unk84.unk;
-        if ((entity->unk1E & 0xFFF) == 0x800) {
+        if ((entity->rotAngle & 0xFFF) == 0x800) {
             if (entity->facing != 0) {
                 self->posX.i.hi = entity->posX.i.hi - 3;
             } else {
@@ -163,25 +165,25 @@ void EntitySpittleBoneSpit(Entity* self) {
         MoveEntity();
         self->accelerationY += 0x1000;
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-        if (collider.unk0 != 0) {
+        if (collider.effects != 0) {
             func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
             func_801C090C(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
-            self->unk3C = 0;
+            self->hitboxState = 0;
             self->step++;
         }
         break;
 
     case 3:
-        firstPrimIndex = g_api.AllocPrimitives(1, 9);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 9);
+        if (primIndex == -1) {
             DestroyEntity(self);
             break;
         }
-        prim = &g_PrimBuf[firstPrimIndex];
-        self->firstPolygonIndex = firstPrimIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
         self->ext.generic.unk84.unk = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         if (prim != NULL) {
             for (u0 = 1, v0 = 2, r0 = 0x20, b0 = 0xc0, blendMode = 0x33, i = 0;
                  prim != NULL; i += 8) {
@@ -223,9 +225,9 @@ void EntitySpittleBoneSpit(Entity* self) {
             prim->y1 = test.y.c.h;
             *(s32*)&prim->x3 += 0x1800;
             if (*(s32*)&prim->x3 > 0) {
-                g_api.CheckCollision(prim->x0, (s16)(prim->y0 + 16), &collider,
-                                     0);
-                if (collider.unk0 != 0) {
+                g_api.CheckCollision(
+                    prim->x0, (s16)(prim->y0 + 16), &collider, 0);
+                if (collider.effects != 0) {
                     prim->blendMode = 8;
                 }
             }

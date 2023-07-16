@@ -8,11 +8,11 @@ void func_801092E8(s32 arg0) {
 }
 
 void func_80109328(void) {
-    s16* player_unk1E = &PLAYER.unk1E;
+    s16* player_unk1E = &PLAYER.rotAngle;
 
     g_Player.unk66 = 0;
     if (*player_unk1E == 0x800 && PLAYER.step == 8) {
-        PLAYER.unk1E = 0;
+        PLAYER.rotAngle = 0;
         PLAYER.animCurFrame = 0x9D;
         PLAYER.facing = (PLAYER.facing + 1) & 1;
     }
@@ -24,9 +24,116 @@ void func_80109328(void) {
     PLAYER.blendMode = 0;
 }
 
+void func_801093C4(Primitive*);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801093C4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80109594);
+void func_80109594(void) {
+    Entity* e;
+    Primitive* prim;
+    s32 radius;
+    s32 intensity;
+    s32 primIndex;
+    s32 i;
+    s32 val;
+    s32 memset_len;
+    s32* memset_ptr;
+    s32 (*weapon)(void);
+
+    g_Player.unk6A = 0;
+    g_CurrentEntity = g_Entities;
+    DestroyEntity(g_CurrentEntity);
+    PLAYER.posX.val = 0x200000;
+    PLAYER.posY.val = 0x200000;
+    PLAYER.animSet = ANIMSET_DRA(1);
+    PLAYER.palette = 0x8100;
+    PLAYER.facing = 0;
+    PLAYER.unk1A = 0x100;
+    PLAYER.unk1C = 0x100;
+    PLAYER.zPriority = (u16)g_zEntityCenter.S16.unk0;
+
+    memset_len = sizeof(PlayerState) / sizeof(s32);
+    memset_ptr = &g_Player;
+    for (i = 0; i < memset_len; i++) {
+        *memset_ptr++ = 0;
+    }
+
+    for (i = 0; i < 0x10; i++) {
+        D_80138FC0[i].x = 0;
+        D_80138FC0[i].y = 0;
+    }
+
+    g_Player.unk04 = 1;
+    g_Player.pl_vram_flag = 1;
+    func_8010E570(0);
+
+    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+        DestroyEntity(e);
+        e->animSet = ANIMSET_DRA(1);
+        e->unk5A = i + 1;
+        e->palette = 0x8100;
+        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
+    }
+
+    primIndex = AllocPrimitives(PRIM_TILE, 8);
+    prim = &g_PrimBuf[primIndex];
+    g_Entities[1].primIndex = primIndex;
+    g_Entities[1].flags |= 0x800000;
+    for (i = 0; i < 6; i++) {
+        prim->blendMode = 0x10A;
+        prim = prim->next;
+    }
+    func_801093C4(prim);
+    g_Player.unk20[0] = 0x10;
+    g_Player.D_80072EFC = 0x10;
+    g_Player.D_80072EF4 = 0;
+    D_80137FB8 = 0;
+    D_80137FBC = 1;
+    if (g_Status.mp != g_Status.mpMax) {
+        D_80137FB4 = 0;
+    } else {
+        D_80137FB4 = 1;
+    }
+    D_80097D37 = 0;
+    func_800EA5E4(0x16);
+    func_801092E8(0);
+    for (i = 0; i < 0x20; i++) {
+        radius = (rand() & 0x3FF) + 0x100;
+        intensity = (rand() & 0xFF) + 0x100;
+        val = rcos(radius) * 0x10;
+        D_801396F8[i] = +((val * intensity) >> 8);
+        val = rsin(radius) * 0x10;
+        D_80139778[i] = -((val * intensity) >> 7);
+    }
+    func_80111928();
+    if (D_80097C98 == 6) {
+        func_8011AAFC(g_CurrentEntity, 0x10079, 0);
+        func_8010E42C(1);
+    }
+    if (D_80097C98 == 4) {
+        func_8011AAFC(g_CurrentEntity, 0x30079, 0);
+        func_8010E42C(3);
+    }
+    if (D_80097C98 == 5) {
+        func_8011AAFC(g_CurrentEntity, 0x50079, 0);
+        func_8010E42C(5);
+    }
+
+    g_CurrentEntity = g_Entities;
+    weapon = D_8017A000.func_8017A018;
+    if (weapon() != 0x2D) {
+        return;
+    }
+    if (CheckEquipmentItemCount(0x19, 2) == 0) {
+        return;
+    }
+    func_8010FAF4();
+
+    weapon = D_8017A000.func_8017A000;
+    weapon();
+    g_Player.unk0C |= 0x01000000;
+    func_8010DFF0(1, 10);
+    func_80109328();
+}
 
 void func_80109990(void) {
     if (D_80137FB4 == 0) {
@@ -40,6 +147,7 @@ void func_80109990(void) {
     }
 }
 
+void func_80109A44(s32 arg0);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80109A44);
 
 // regalloc
@@ -69,7 +177,7 @@ void func_8010A234(s32 arg0) {
             }
         } else if (*(s32*)&g_Player.unk0C & 0x01000000) {
             g_Entities[PLAYER_CHARACTER].palette = 0x8100;
-            g_Entities[PLAYER_CHARACTER].animSet = 1;
+            g_Entities[PLAYER_CHARACTER].animSet = ANIMSET_DRA(1);
             g_Entities[PLAYER_CHARACTER].unk5A = 0;
             g_Entities[PLAYER_CHARACTER].unk1E = 0;
             g_Entities[PLAYER_CHARACTER].unk19 &= 0xF3;
@@ -91,12 +199,6 @@ void func_8010A234(s32 arg0) {
 }
 #endif
 
-// Matching in gcc 2.6.0 + aspsx 2.3.4
-// Matching in gcc 2.7.2 + aspsx (the one in decomp.me)
-// DECOMP_ME_WIP func_8010A3F0 https://decomp.me/scratch/oKHMJ
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A3F0);
-#else
 void func_8010A3F0(void) {
     s32 temp = 0x38;
 
@@ -113,11 +215,11 @@ void func_8010A3F0(void) {
     }
     g_Player.unk10 = 0;
 }
-#endif
 
+s32 func_8010A4A4(void);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A4A4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateEntityAlucard);
+INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", EntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
@@ -140,7 +242,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010D010);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010D2C8);
 
-void func_8010D584(s16 step) {
+void SetPlayerStep(PlayerSteps step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }
@@ -163,61 +265,77 @@ void func_8010DA48(u32 arg0) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DA70);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DB38);
+u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
+    u16* frameIndex;
 
+    frameIndex =
+        frames[g_CurrentEntity->ext.generic.unkAC] + PLAYER.animFrameIdx;
+    if (*frameIndex == 0xFFFF) {
+        return -1;
+    }
+    if (frameProps != NULL) {
+        frameProps = &frameProps[(*frameIndex >> 9) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
+    }
+    g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
+    return PLAYER.animFrameDuration >= 0 ? 0 : -1;
+}
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DBFC);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateAnim);
-#else
-void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
+u32 UpdateAnim(s8* frameProps, s32* frames) {
     AnimationFrame* animFrame;
-    s8* frameProp;
+    s32 ret;
+
     if (g_CurrentEntity->animFrameDuration == -1) {
+        ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
         g_CurrentEntity->animFrameDuration =
             g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
-    } else if (--g_CurrentEntity->animFrameDuration == 0) {
+        ret = 0;
+    } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
         animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
-        switch ((u32)animFrame->duration) {
-        case 0:
+        // Effectively a switch statement, but breaks if I actually use one.
+        if (animFrame->duration == 0) {
             g_CurrentEntity->animFrameIdx = animFrame->unk2;
             g_CurrentEntity->animFrameDuration =
                 g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
-            break;
-
-        case 0xFFFF:
-            g_CurrentEntity->animFrameIdx =
-                g_CurrentEntity->animFrameIdx + 1 + animFrame->duration;
+            ret = 0;
+        } else if (animFrame->duration == 0xFFFF) {
+            g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
-            break;
-
-        case 0xFFFE:
-            g_CurrentEntity->unk4C = (s32*)arg1[animFrame->unk2];
+            ret = -1;
+        } else if (animFrame->duration == 0xFFFE) {
+            g_CurrentEntity->unk4C = frames[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
+            ret = -2;
             g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C[0].duration;
-            break;
-
-        default:
+                g_CurrentEntity->unk4C->duration;
+        } else {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
-            break;
         }
     }
-    if (frameProps != 0) {
-        frameProp =
-            frameProps +
-            (g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 >> 9);
-        g_CurrentEntity->unk10 = *(frameProp++);
-        g_CurrentEntity->unk12 = *(frameProp++);
-        g_CurrentEntity->hitboxWidth = frameProp[0];
-        g_CurrentEntity->hitboxHeight = frameProp[1];
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+        frameProps =
+            &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx]
+                             .unk2 >>
+                         9)
+                        << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
     }
     g_CurrentEntity->animCurFrame =
         g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+    return ret;
 }
-#endif
 
 void func_8010DF70(void) {
     g_CurrentEntity = &PLAYER;
@@ -241,7 +359,7 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
 
         for (i = 0; i < 6; i++) {
             poly->x1 = 0;
@@ -340,16 +458,16 @@ s32 func_8010E27C(void) {
 
     facing = &PLAYER.facing;
     if (*facing == 1) {
-        if (g_Player.g_Player & 0x2000) {
+        if (g_Player.padPressed & PAD_RIGHT) {
             *facing = 0;
             g_Player.unk4C = 1;
             return -1;
-        } else if (g_Player.g_Player & 0x8000) {
+        } else if (g_Player.padPressed & PAD_LEFT) {
             return 1;
         }
     } else {
-        if (!(g_Player.g_Player & 0x2000)) {
-            if (g_Player.g_Player & 0x8000) {
+        if (!(g_Player.padPressed & PAD_RIGHT)) {
+            if (g_Player.padPressed & PAD_LEFT) {
                 *facing = 1;
                 g_Player.unk4C = 1;
                 return -1;
@@ -361,12 +479,18 @@ s32 func_8010E27C(void) {
     return 0;
 }
 
-// DECOMP_ME_WIP func_8010E334 https://decomp.me/scratch/YvoMU
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010E334);
+s32 func_8010E334(s32 xStart, s32 xEnd) {
+    Entity* e = &PLAYER;
 
-/*
- * Updates the Entity acceleration in the X Axis
- */
+    g_Player.unk7A = 1;
+    if (e->step == 0 && PLAYER.step_s == 1 && e->posX.i.hi >= xStart &&
+        e->posX.i.hi <= xEnd) {
+        return 1;
+    }
+    return 0;
+}
+
+// Updates the Entity acceleration in the X Axis
 void AccelerateX(s32 accelerationX) {
     if (g_CurrentEntity->facing == 1) {
         accelerationX = -accelerationX;
@@ -374,11 +498,9 @@ void AccelerateX(s32 accelerationX) {
     g_CurrentEntity->accelerationX = accelerationX;
 }
 
-/*
- * Updates the Player acceleration in the X Axis
- */
+// Updates the Player acceleration in the X Axis
 void func_8010E3B8(s32 accelerationX) {
-    if (PLAYER.objectRoomIndex == 1) {
+    if (PLAYER.entityRoomIndex == 1) {
         accelerationX = -accelerationX;
     }
     PLAYER.accelerationX = accelerationX;
@@ -393,7 +515,7 @@ void func_8010E3E0(void) {
 
 void func_8010E42C(u16 arg0) {
     PLAYER.step_s = arg0;
-    PLAYER.step = 18;
+    PLAYER.step = Player_Unk18;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -405,7 +527,7 @@ void func_8010E42C(u16 arg0) {
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.accelerationX = arg1;
     PLAYER.accelerationY = 0;
-    PLAYER.step = 2;
+    PLAYER.step = Player_Crouch;
     PLAYER.step_s = D_800ACF4C[arg0 * 2 + 0];
     func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
 }
@@ -421,7 +543,7 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         PLAYER.accelerationY = 0;
         PLAYER.accelerationX = 0;
-        func_8010D584(6);
+        SetPlayerStep(Player_Unk_6);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
         return;
@@ -439,7 +561,7 @@ void func_8010E6AC(s32 arg0) {
     condition = ((g_Player.pl_vram_flag & 0x20) != condition);
     AccelerateX(0x18000);
     PLAYER.accelerationY = 0;
-    func_8010D584(1);
+    SetPlayerStep(Player_Walk);
 
     if (arg0 != 0) {
         if (PLAYER.ext.generic.unkAC != 0xD) {
@@ -464,7 +586,7 @@ void func_8010E6AC(s32 arg0) {
 }
 
 void func_8010E7AC(void) {
-    func_8010D584(3);
+    SetPlayerStep(Player_Unk3);
 
     if (g_Player.unk50 != 1) {
         func_8010DA48(0x1C);
@@ -498,7 +620,7 @@ void func_8010E83C(s32 arg0) {
     }
 
     PLAYER.accelerationY = 0xFFFB0000 | 0x2000;
-    func_8010D584(4);
+    SetPlayerStep(Player_Jump);
 
     if (g_Player.unk50 == 1) {
         g_Player.unk44 |= 0x10;
@@ -535,7 +657,7 @@ void func_8010E9A4(void) {
     }
 
     func_8011AAFC(g_CurrentEntity, 2, 0);
-    func_8010D584(8);
+    SetPlayerStep(Player_Unk8);
     PLAYER.accelerationY = -0xC0000;
     func_8010DA48(0x21);
     g_Player.unk4A = 0;
@@ -546,8 +668,6 @@ void func_8010EA54(s32 arg0) {
 
     if (arg0 != 0) {
         temp_hi = rand() % arg0;
-        NOP;
-
         if (temp_hi < 4) {
             PlaySfx(D_800ACF60[temp_hi]);
         }
@@ -561,7 +681,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     s32 ret;
 
     for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
-        if (entity->objectId == 0) {
+        if (entity->entityId == E_NONE) {
             ret++;
         }
 
@@ -580,15 +700,86 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     return (ret == 0) ? -1 : 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EB5C);
+s32 func_8010EB5C(void) {
+    SubweaponDef subWpn;
+    s16 subWpnId;
+    s32 var_s0;
+    s32 faker;
 
-// DECOMP_ME_WIP func_8010EC8C https://decomp.me/scratch/N8Srk
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EC8C);
+    var_s0 = 0;
+    if (!(g_Player.padPressed & PAD_UP)) {
+        return 1;
+    }
+    if (g_Player.pl_vram_flag & 0x20) {
+        var_s0 = 1;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, false);
+
+    if (subWpnId == 0) {
+        return 1;
+    }
+    if (subWpnId == 6 && D_80097400[0] != 0) {
+        return 4;
+    }
+    if (func_8010EADC(subWpnId, subWpn.unk6) < 0) {
+        return 2;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, true);
+    if (subWpnId == 0) {
+        return 3;
+    }
+    func_8011AAFC(g_CurrentEntity, (u32)subWpn.unkB, subWpnId << 9);
+    g_Player.D_80072F14 = 4;
+    if (PLAYER.step_s < 64) {
+        faker = subWpn.unkA;
+        if (PLAYER.step == 0) {
+            func_8010DA48(faker + var_s0);
+        }
+        func_8010EA54(8);
+    }
+    return 0;
+}
+
+s32 CheckChainLimit(s32 itemId, s32 handId) {
+    Entity* entity;
+    s32 existing_count;
+    s32 i;
+    s32 chainLimit;
+
+    chainLimit = D_800A4B04[itemId].chainLimit;
+    if (chainLimit & 0x80) {
+        return -(s32)((u16)g_Player.unk46 >> 0xF);
+    }
+    entity = &g_Entities[16];
+    for (i = 16, existing_count = 0; i < 64; i++, entity++) {
+        // Hack to load unkAE as an s16 (struct has s8)
+        // Longer term, figure out what g_Entites[16-64] are
+        // and make dedicated ent extension.
+        if (LOH(entity->ext.generic.unkAE) != itemId) {
+            continue;
+        }
+
+        if (handId != 0) {
+            if (entity->params & 0x8000) {
+                existing_count++;
+            }
+        } else {
+            if (!(entity->params & 0x8000)) {
+                existing_count++;
+            }
+        }
+
+        if (!(existing_count < chainLimit)) {
+            return -1;
+        }
+    }
+    return 0;
+}
 
 void func_8010ED54(u8 arg0) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0xF);
+    SetPlayerStep(Player_Unk15);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
     g_Player.unk48 = 0;
@@ -604,7 +795,7 @@ void func_8010FAF4(void) {
 void func_8010FB24(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0x22);
+    SetPlayerStep(Player_SpellHellfire);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
@@ -612,7 +803,7 @@ void func_8010FB24(void) {
 void func_8010FB68(void) { // Related to Dark Methamorphosis
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0x20);
+    SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
     func_8010DA48(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
@@ -626,7 +817,7 @@ void func_8010FB68(void) { // Related to Dark Methamorphosis
 void func_8010FBF4(void) { // Related to Soul Steal spell
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0x25);
+    SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
     func_8010DA48(0xDA);
     PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
@@ -637,7 +828,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
 void func_8010FC50(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0x21);
+    SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x75, 0);
     func_8010DA48(0xF0);
@@ -648,7 +839,7 @@ void func_8010FC50(void) {
 void func_8010FCB8(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0x23);
+    SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
     func_8011AAFC(g_CurrentEntity, 0x10075, 0);
     func_8010DA48(0xF1);
@@ -659,7 +850,7 @@ void func_8010FCB8(void) {
 void func_8010FD24(void) {
     PLAYER.accelerationY = 0;
     PLAYER.accelerationX = 0;
-    func_8010D584(0x27);
+    SetPlayerStep(Player_Unk39);
     func_8010E3E0();
     func_8010DA48(0xF1);
     func_8011AAFC(g_CurrentEntity, 0x170028, 0);
@@ -667,7 +858,7 @@ void func_8010FD24(void) {
 }
 
 void func_8010FD88(void) {
-    PLAYER.step = 0;
+    PLAYER.step = Player_Stand;
     PLAYER.step_s = 3;
     AccelerateX(0xFFFC8000);
     g_CurrentEntity->accelerationY = 0;

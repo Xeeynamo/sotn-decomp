@@ -34,31 +34,27 @@ void func_8015C984(s32 speed) {
 }
 
 s32 func_8015C9CC(void) {
-    u16* facing;
-
     if (g_Player.unk44 & 2) {
         return 0;
     }
 
-    facing = &PLAYER.facing;
-    if (*facing == 1) {
-        if (g_Player.g_Player & 0x2000) {
-            *facing = 0;
+    if (PLAYER.facing == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facing = 0;
             g_Player.unk4C = 1;
             return -1;
-        } else if (g_Player.g_Player & 0x8000) {
+        } else if (g_Player.padPressed & PAD_LEFT) {
             return 1;
         }
     } else {
-        if (!(g_Player.g_Player & 0x2000)) {
-            if (g_Player.g_Player & 0x8000) {
-                *facing = 1;
-                g_Player.unk4C = 1;
-                return -1;
-            }
-            return 0;
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
         }
-        return 1;
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facing = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
     }
     return 0;
 }
@@ -70,7 +66,7 @@ void func_8015CA84(s32 speed) {
 }
 
 void func_8015CAAC(s32 speed) {
-    if (PLAYER.objectRoomIndex == 1)
+    if (PLAYER.entityRoomIndex == 1)
         speed = -speed;
     PLAYER.accelerationX = speed;
 }
@@ -96,7 +92,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
 
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].firstPolygonIndex];
+        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
         while (poly != NULL) {
             poly->x1 = 0;
             poly = (POLY_GT4*)poly->tag;
@@ -118,7 +114,7 @@ void func_8015CC28(void) {
     entity->ext.generic.unk7C.U8.unk0 = 0;
 }
 
-void func_8015CC50() { func_8015C908(0xF0); }
+void func_8015CC50() { SetPlayerStep(0xF0); }
 
 void func_8015CC70(s16 arg0) {
     PLAYER.step_s = arg0;
@@ -133,7 +129,7 @@ void func_8015CC70(s16 arg0) {
 }
 
 void func_8015CCC8(s32 arg0, s32 accelerationX) {
-    func_8015C908(2);
+    SetPlayerStep(2);
     func_8015C920(&D_801554C0);
     PLAYER.accelerationX = accelerationX;
     PLAYER.accelerationY = 0;
@@ -155,7 +151,7 @@ void func_8015CD98(s32 accelerationX) {
     PLAYER.accelerationX = accelerationX;
     PLAYER.accelerationY = 0;
     g_Player.unk44 = 0;
-    func_8015C908(0);
+    SetPlayerStep(0);
     func_8015C920(&D_801553BC);
 }
 
@@ -169,7 +165,7 @@ void func_8015CDE0(s32 arg0) {
     g_Player.D_80072F10 = 0xC;
     g_Player.D_80072F02 = 0xC;
     g_Player.unk44 = 0;
-    func_8015C908(1);
+    SetPlayerStep(1);
     func_8015C920(&D_80155488);
     func_8015CA84(0x14000);
     PLAYER.accelerationY = 0;
@@ -180,7 +176,7 @@ void func_8015CE7C(void) {
         func_8015CDE0(0);
     } else {
         g_Player.unk44 = 0;
-        func_8015C908(0x19);
+        SetPlayerStep(0x19);
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
         g_Player.D_80072F16 = 0x28;
@@ -208,7 +204,7 @@ block_6:
     block_7:
         g_Player.unk44 = 0x10;
     }
-    func_8015C908(3);
+    SetPlayerStep(3);
     PLAYER.accelerationY = 0x20000;
     g_Player.D_80072F0A = 8;
     g_Player.D_80072F0C = 8;
@@ -231,7 +227,7 @@ void func_8015D020(void) {
         return;
     }
 
-    if ((func_8015C9CC() != 0) || (PLAYER.step == 0x17)) {
+    if (func_8015C9CC() != 0 || PLAYER.step == 0x17) {
         func_8015C920(&D_8015550C);
         if (PLAYER.step == 0x19) {
             func_8015CA84(0x24000);
@@ -248,7 +244,7 @@ void func_8015D020(void) {
         g_Player.unk44 = temp;
     }
 
-    func_8015C908(4);
+    SetPlayerStep(4);
 
     if (D_80154570 != 0) {
         PLAYER.accelerationY = -0x4B000;
@@ -258,7 +254,7 @@ void func_8015D020(void) {
 }
 
 void func_8015D120(void) {
-    func_8015C908(8);
+    SetPlayerStep(8);
     PLAYER.accelerationX = 0;
     func_8015CA84(0x14000);
     PLAYER.accelerationY = -0x78000;
@@ -273,53 +269,27 @@ void func_8015D120(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D1D0);
+s32 func_8015D1D0(s16 subWpnId, s16 subWpnUnk6) {
+    Entity* entity;
+    s32 b0MatchCount;
+    s32 nullObjCount;
+    s32 i;
 
-// decompiling func_8015FB84 first is recommended to discover struct
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D250);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D3CC);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015D678);
-
-void func_8015D9B4() { func_8015C908(22); }
-
-void func_8015D9D4(void) {
-    func_8015C9CC();
-    func_8015C908(0x17);
-    func_8015C920(&D_80155750);
-    g_CurrentEntity->accelerationY = 0;
-    func_8015CA84(0x58000);
-    func_8015CC28();
-    func_801606BC(g_CurrentEntity, 0x19, 0);
-    g_api.PlaySfx(0x707);
-    g_Player.D_80072F18 = 4;
+    entity = &g_Entities[32];
+    for (i = 0, b0MatchCount = 0, nullObjCount = 0; i < 0x10; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            nullObjCount++;
+        }
+        if (entity->ext.generic.unkB0 != 0 &&
+            entity->ext.generic.unkB0 == subWpnId) {
+            b0MatchCount++;
+        }
+        if (b0MatchCount >= subWpnUnk6) {
+            return -1;
+        }
+    }
+    if (nullObjCount == 0) {
+        return -1;
+    }
+    return 0;
 }
-
-void func_8015DA60(void) {
-    g_Player.unk44 = 0;
-    func_8015C908(0x1A);
-    func_8015C920(&D_8015577C);
-    g_CurrentEntity->accelerationY = -0x20000;
-    func_8015CA84(0x58000);
-    func_8015CC28();
-    func_801606BC(g_CurrentEntity, 0x19, 0);
-    g_api.PlaySfx(0x6FA);
-    g_Player.D_80072F18 = 4;
-    func_801606BC(g_CurrentEntity, 0x1F, 0);
-}
-
-void func_8015DB04(void) {
-    func_8015C908(0x18);
-    func_8015C920(&D_801557D8);
-    g_CurrentEntity->accelerationY = 0;
-    func_8015CA84(0x58000);
-    g_Player.unk46 = 5;
-    g_Player.D_80072F18 = 4;
-    func_801606BC(g_CurrentEntity, 0x1A, 0);
-    func_8015CC28();
-    g_api.PlaySfx(0x6FB);
-    g_api.PlaySfx(0x707);
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/20920", func_8015DBB0);

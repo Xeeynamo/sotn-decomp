@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
     - ".rodata"
@@ -49,17 +50,30 @@ segments:
       - [0x3A7C, roomdef, g_Rooms]
       - [0x3B68, rodata]
       - [0x31EA0, rodata]
+      - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
+      - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
+      - [0x31F00, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, rodata]
       - [0x31FB0, rodata]
+      - [0x3200C, rodata] # EntityStageNamePopup .rodata,
+      - [0x32020, .rodata, 44DCC] # EntityMerman2
+      - [0x32044, .rodata, 48238] # EntityMerman
       - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data
       - [0x3208C, .rodata, 4997C]
       - [0x320A0, .rodata, 49BC8]
       - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
       - [0x320DC, rodata]
-      - [0x32360, rodata]
+      - [0x322CC, rodata] # func_801CF254 .rodata, 4B018
+      - [0x322F8, rodata] # Gurka .rodata, 4B018
+      - [0x32380, .rodata, 4B018] # EntityGurkhaSword
+      - [0x323E4, rodata]
       - [0x3246C, c]
+      - [0x36990, c] # Gaibon & Slogra boss
+      - [0x390BC, c]
       - [0x3DEF4, c]
+      - [0x44DCC, c] # Merman Entities
+      - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c] # EntityBoneScimitar
       - [0x4997C, c]
       - [0x49BC8, c]

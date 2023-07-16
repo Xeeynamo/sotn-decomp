@@ -31,8 +31,16 @@ build/
 expected/
 disks/
 
+config/saturn/game_syms.txt
+config/saturn/stage_02_syms.txt
+config/saturn/t_bat_syms.txt
+config/saturn/zero_syms.txt
+asm/saturn
+
 .vscode/settings.json
 tools/go
 
 !tools/sotn-debugmode/sotn-debugmode.ld
+tools/sotn_calltree.txt
+tools/saturn_toolchain/GCCSH
 

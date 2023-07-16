@@ -9,7 +9,7 @@ void EntityBat(Entity* entity) {
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(2, entity, newEntity);
-            newEntity->subId = 1;
+            newEntity->params = 1;
         }
         func_801CAD28(0x69C);
         DestroyEntity(entity);
@@ -23,17 +23,17 @@ void EntityBat(Entity* entity) {
         break;
 
     case 1:
-        xDistance = func_801C4F64();
-        yDistance = func_801C4FA0();
+        xDistance = GetDistanceToPlayerX();
+        yDistance = GetDistanceToPlayerY();
         if ((xDistance < 0x60) && (yDistance < 0x60) &&
-            !(func_801C4FD4() & 2)) {
+            !(GetSideToPlayer() & 2)) {
             entity->step++;
         }
         break;
 
     case 2:
         if (AnimateEntity(D_80183C60, entity) == 0) {
-            entity->facing = (func_801C4FD4() & 1) ^ 1;
+            entity->facing = (GetSideToPlayer() & 1) ^ 1;
             entity->accelerationY = 0xE000;
             if (entity->facing != 0) {
                 entity->accelerationX = 0x4000;
@@ -49,7 +49,7 @@ void EntityBat(Entity* entity) {
     case 3:
         AnimateEntity(D_80183C44, entity);
         MoveEntity();
-        if (func_801C4FA0() < 0x20) {
+        if (GetDistanceToPlayerY() < 0x20) {
             if (entity->facing == 0) {
                 entity->accelerationX = -0x10000;
             } else {

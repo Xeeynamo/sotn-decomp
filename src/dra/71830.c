@@ -82,17 +82,17 @@ void func_80111CC0(void) {
 }
 
 bool func_80111D24(void) {
-    Collider res;
+    Collider collider;
     s32 speed = 0xC000;
     s16 posX = PLAYER.posX.i.hi;
     s16 posY = PLAYER.posY.i.hi;
     s32 hitboxLeftMargin;
     s32 hitboxRightMargin;
 
-    CheckCollision(posX - 7, posY, &res, 0);
-    hitboxLeftMargin = res.unk0 & 0x10;
-    CheckCollision(posX + 7, posY, &res, 0);
-    hitboxRightMargin = res.unk0 & 0x10;
+    CheckCollision(posX - 7, posY, &collider, 0);
+    hitboxLeftMargin = collider.effects & EFFECT_MIST_ONLY;
+    CheckCollision(posX + 7, posY, &collider, 0);
+    hitboxRightMargin = collider.effects & EFFECT_MIST_ONLY;
 
     if (hitboxRightMargin & hitboxLeftMargin) {
         AccelerateX(speed);
@@ -141,7 +141,7 @@ void func_80112B64(void) {
 INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_80112BB0);
 
 void func_80113148(void) {
-    if (g_Player.D_80072F0A != 0 && g_Player.D_80072EEC & 0x40) {
+    if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         func_8010E1EC(0x1000);

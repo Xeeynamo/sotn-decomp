@@ -261,13 +261,41 @@ void func_801078C4(void) {
     }
 }
 
-// 101
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107B04);
+void func_80107B04(void) {
+    s32 i;
+    s32 len;
+
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + (u8*)&D_8007EFE4;
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
+        LoadTPage(&D_8007EFE4, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        g_Cd.D_80137F78 = 1;
+        CdDataCallback(NULL);
+    }
+}
 
 void func_80107C6C(void) {
     s32 len;
 
-    if (g_Cd.D_80137F74 != 0 && func_800219E0(0) != 1) {
+    if (g_Cd.D_80137F74 != 0 && (s16)func_800219E0(0) != 1) {
         func_801073C0();
         g_Cd.D_80137F78 = -1;
         return;
@@ -323,8 +351,54 @@ void func_80107DB4(void) {
     }
 }
 
-// 138
-INCLUDE_ASM("asm/us/dra/nonmatchings/cd", func_80107EF0);
+void func_80107EF0(void) {
+    s32 temp_v1;
+    s32 temp_v1_3;
+    s32 var_a1;
+    s32 var_v0;
+    s32 var_v0_2;
+    u8** temp_a0;
+    void (*var_a0)();
+    s32 i;
+    s32 len;
+    s16 res;
+
+    if (g_Cd.overlayBlockCount != 0) {
+        len = CD_BLOCK_LEN;
+    } else {
+        len = g_Cd.overlayLastBlockSize;
+    }
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Cd.D_80137F88;
+    g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
+#if USE_MICRO_OPTIMIZATIONS == 1
+    MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
+#else
+    for (i = 0; i < len; i++) {
+        *g_Cd.overlayCopyDst = *g_Cd.overlayCopySrc;
+        g_Cd.overlayCopySrc++;
+        g_Cd.overlayCopyDst++;
+    }
+#endif
+    g_Cd.D_80137F70 = (g_Cd.D_80137F70 + 1) & 7;
+    g_Cd.D_80137F74++;
+    g_Cd.overlayBlockCount--;
+    if (g_Cd.overlayBlockCount < 0 ||
+        (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
+        res =
+            func_80021350(g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
+        if (res < 0) {
+            g_Cd.D_80137F78 = -2;
+            CdDataCallback(NULL);
+        } else {
+            CdFile* cdFile = D_800ACC74[D_80137F96];
+            g_Cd.overlayBlockCount = cdFile->size / CD_BLOCK_LEN;
+            g_Cd.overlayLastBlockSize =
+                cdFile->size - cdFile->size / CD_BLOCK_LEN * CD_BLOCK_LEN;
+            g_Cd.D_80137F74 = 0;
+            CdDataCallback(func_80107C6C);
+        }
+    }
+}
 
 void func_801080DC(void) {
     int new_var2;
@@ -428,7 +502,7 @@ void func_80107460(void);
 void PlaySfx(s32);
 void SsVabClose(short);
 
-void func_80108448(void) {
+void UpdateCd(void) {
     unsigned char result[8];
     unsigned char setModeArg[24];
     u32* var_v1;
@@ -448,13 +522,13 @@ void func_80108448(void) {
     u32* var_a1;
     u16* clutAddr;
 
-    s32* pCdFileSize;
+    s32* pLoadFile;
     CdMgr* cd;
 
     if (D_8003C728 != 0) {
         return;
     }
-    pCdFileSize = &g_LoadFile;
+    pLoadFile = &g_LoadFile;
     g_IsUsingCd = g_CdStep;
     if (g_LoadFile == CdFile_StagePrg) {
         cdFile = &D_800ACC34;
@@ -484,17 +558,17 @@ void func_80108448(void) {
             D_800ACAD0 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vhLen);
             D_800ACAE0 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vbLen);
         }
-        if (*pCdFileSize == CdFile_GameChr) {
+        if (*pLoadFile == CdFile_GameChr) {
             if (g_StageId == STAGE_ST0 ||
                 g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
                 D_800AC9F8 = OFF_BIN_FGAME2;
-                D_800ACA06 = 5;
+                D_800ACA06 = CdFile_RichterPrg;
             } else {
                 D_800AC9F8 = OFF_BIN_FGAME;
-                D_800ACA06 = 0x13;
+                D_800ACA06 = CdFile_AlucardPrg;
             }
         }
-        if (g_LoadFile == CdFile_Servant) {
+        if (g_LoadFile == CdFile_ServantChr) {
             // SERVANT/FT_xxx.BIN
             D_800ACBD4 = *(temp_s0 = &D_800ACB48[g_mapTilesetId]);
 
@@ -562,20 +636,20 @@ void func_80108448(void) {
         }
         cd = &g_CdCallback;
         cd->cb = cdFile->cb;
-        pCdFileSize = &cdFile->size;
-        cdFileSize = *pCdFileSize;
+        pLoadFile = &cdFile->size;
+        cdFileSize = *pLoadFile;
         if (cdFileSize < 0) {
             cdFileSize += 0x1FFF;
         }
         g_Cd_D_80137F68 = cdFileSize >> 13;
         temp_a0 = cdFile->unkC;
         D_80137F94 = temp_a0;
-        var_v0_3 = *pCdFileSize;
+        var_v0_3 = *pLoadFile;
         if (var_v0_3 < 0) {
             var_v0_3 += 0x7FF;
         }
         g_Cd_overlayBlockCount = var_v0_3 >> 11;
-        temp_v1_2 = (var_v0_4 = *pCdFileSize);
+        temp_v1_2 = (var_v0_4 = *pLoadFile);
         if (temp_v1_2 < 0) {
             var_v0_4 += 0x7FF;
         }
@@ -600,15 +674,15 @@ void func_80108448(void) {
             }
             if (g_CdCallback != CdCallback_16 &&
                     g_CdCallback != CdCallback_Vh ||
-                func_800219E0(0) == 1) {
+                (s16)func_800219E0(0) == 1) {
                 CdIntToPos(cdFile->loc, &g_CdLoc);
                 if (g_CdCallback == CdCallback_12) {
-                    CdIntToPos(D_8003C908.D_8003C90C * 14 + cdFile->loc,
-                               &g_CdLoc);
+                    CdIntToPos(
+                        D_8003C908.D_8003C90C * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_13) {
-                    CdIntToPos(D_8003C908.D_8003C910 * 14 + cdFile->loc,
-                               &g_CdLoc);
+                    CdIntToPos(
+                        D_8003C908.D_8003C910 * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_14) {
                     CdIntToPos(g_mapTilesetId * 11 + cdFile->loc, &g_CdLoc);
@@ -706,13 +780,13 @@ void func_80108448(void) {
             break;
 
         case CdCallback_16:
-            D_80137FB0 = func_80021350(g_Cd.D_80137F88, D_80137F94,
-                                       D_800BD1C8[D_80137F94]);
+            D_80137FB0 = (s16)func_80021350(
+                g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
             break;
 
         case CdCallback_17:
         case CdCallback_Vh:
-            while (func_800219E0(0) != 1) {
+            while ((s16)func_800219E0(0) != 1) {
             }
             break;
 

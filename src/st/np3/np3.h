@@ -1,8 +1,33 @@
 #include "stage.h"
 
 typedef enum {
+    E_NONE,
+    E_BREAKABLE,
+    E_EXPLOSION,
+    E_PRIZE_DROP,
+    E_NUMERIC_DAMAGE,
+    E_RED_DOOR,
+    E_INTENSE_EXPLOSION,
+    E_SOUL_STEAL_ORB,
+    E_ROOM_FOREGROUND,
+    E_STAGE_NAME_POPUP,
+    E_EQUIP_ITEM_DROP,
+    E_RELIC_ORB,
+    E_HEART_DROP,
+    E_ENEMY_BLOOD,
+    E_SAVE_GAME_POPUP,
+    E_DUMMY_0F,
+    E_DUMMY_10,
+
+    E_UNK_15 = 0x15,
+
     E_BONE_SCIMITAR_HEAD = 0x3F,
-} ObjectIds;
+    E_SLOGRA_SPEAR = 0x4F,
+    E_SLOGRA_SPEAR_PROJECTILE = 0x50,
+    E_GAIBON = 0x51,
+    E_GAIBON_SMALL_FIREBALL = 0x53,
+    E_GAIBON_BIG_FIREBALL = 0x54,
+} EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
@@ -11,10 +36,9 @@ extern void func_801BB044(s16);
 extern void func_801BB140(s16);
 extern void func_801BB2F8(s16);
 extern void func_801BB3F4(s16);
-extern s32 func_801BCB5C(u16* arg0);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
 extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
-extern s32 GetPlayerDistanceX(void);
+extern s32 GetDistanceToPlayerX(void);
 extern s32 func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
@@ -47,6 +71,8 @@ extern u16 D_80180B5C[];
 extern u16 D_80180B68[];
 extern u16 D_80180B74[];
 extern u16 D_80180B80[];
+extern u16 D_80180B98[];
+extern u16 D_80180BB0[];
 extern ObjInit2 D_80180C10[];
 extern u8 D_80180D98[];
 extern u8 D_80180DA0[];
@@ -63,6 +89,82 @@ extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
 extern u16 D_80181204[];
+
+// *** Merman properties START ***
+
+extern u16 D_80181230[];     // pos TBL
+extern Point32 D_80182224[]; // accel_x TBL
+extern u8 D_80182244[];      // timers
+extern s32 D_80182248;       // Collision data
+extern s32 D_80182258;       // Collision data
+extern u16 D_80182268;       // Collision data
+extern u8 D_80182270[];      // Animation
+extern u8 D_8018227C[];      // Animation
+extern u8 D_80182294[];      // Animation
+extern u8 D_8018229C[];      // Animation
+extern Point32 D_80182338[];
+extern u8 D_80182358[];
+extern s16 D_8018235C;
+extern s16 D_8018236C;
+extern s16 D_8018237C;
+extern s16 D_8018238C;
+extern u8 D_80182394[]; // animation
+extern u8 D_801823AC[]; // animation
+extern u8 D_801823BC[]; // animation
+extern u8 D_801823D0[]; // animation
+extern u8 D_801823DC[]; // animation
+extern u8 D_801823EC[]; // animation
+extern s32 D_80182418[];
+
+// *** EntityMerman properties END ***
+
+// *** EntitySlogra properties START ***
+
+extern u16 D_80180B44[]; // Init
+extern s32 D_801812CC;   // killed in entrance local flag
+extern s32 D_801812D0;   // some collision data
+extern u16 D_801812E0;   // some collision data
+extern u8 D_801812E8[];  // animation
+extern u8 D_801812F4[];  // animation
+extern u8 D_80181300[];  // animation
+extern u8 D_80181310[];  // animation
+extern u8 D_8018131C[];  // animation
+extern u8 D_80181328[];  // animation
+extern u8 D_80181348[];  // animation
+extern u8 D_8018135C[];  // animation
+extern u8 D_80181370[];  // animation
+extern u8 D_8018137C[];  // animation
+extern u8 D_80181388[];  // animation
+extern u8 D_8018139C[];  // animation
+extern u8 D_801813B4[];  // animation
+extern u8 D_801813C4[];  // animation
+extern u8 D_801813CC[];  // animation
+extern s32 D_801813EC[];
+extern u8 D_8018142C[];
+
+// *** EntitySlogra properties END ***
+
+// *** EntityGaibon properties START ***
+
+extern u16 D_80180B68[]; // Init
+extern u16 D_80180B6E;   // Gaibon's palette data
+extern s32 D_801812CC;   // killed in entrance local flag
+extern s32 D_801814B4;   // Some collision data
+extern u8 D_801814C4;    // Animation
+extern u8 D_801814D8;    // Animation
+extern u8 D_8018150C;    // Animation
+extern u8 D_80181520;    // Animation
+extern u8 D_80181534;    // Animation
+extern u8 D_80181540;    // Animation
+extern u8 D_80181550;    // Animation
+extern u8 D_80181564;    // Animation
+extern u8 D_80181570;    // Animation
+extern u8 D_80181578;    // Animation
+extern s32 D_80181584[]; // Hitbox related
+extern u8 D_801815B4[];  // Hitbox related
+
+// *** EntityGaibon properties END ***
+
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
@@ -76,6 +178,8 @@ extern u8 D_801815FC[];
 extern u16 D_80181618[];
 extern u16 D_8018164C[];
 extern s16 D_80181A50[];
+extern u16 D_80181D80[];
+extern u16 D_80181DB0[];
 extern const u32* D_80181DC4[];
 extern const s32 c_GoldPrizes[];
 extern u16 D_80181E74[];
@@ -134,8 +238,8 @@ extern s32 D_80182530;
 extern u16 D_80180B38[]; // InitProps
 extern u8 D_801D2770;
 extern u8 D_801D2774;
-extern LayoutObject* D_801D2768;
-extern LayoutObject* D_801D276C;
+extern LayoutEntity* D_801D2768;
+extern LayoutEntity* D_801D276C;
 extern u16 D_801D33F4[];
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
@@ -155,3 +259,11 @@ extern s32 D_801826C4;
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u8 D_80182914[];
 extern u8 D_80182935[];
+
+// *** EntitySoulStealOrb properties START ***
+
+extern u16 D_8018205C[]; // NOTE(sestren): Random angle offsets?
+extern u16 D_8018206C[]; // NOTE(sestren): Animation frame properties?
+extern u16 D_801820CC[];
+
+// *** EntitySoulStealOrb properties END ***

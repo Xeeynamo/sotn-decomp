@@ -6,13 +6,13 @@ void EntityZombie(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < 4)) {
         func_801C2598(NA_SE_EN_ZOMBIE_EXPLODE);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(0x4D, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;
-            newEntity->subId = 3;
+            newEntity->params = 3;
             newEntity->posY.i.hi += 12;
         }
         DestroyEntity(self);
@@ -23,7 +23,7 @@ void EntityZombie(Entity* self) {
     case 0:
         InitializeEntity(D_80180B08);
         self->hitboxWidth = 8;
-        self->unk12 = 0x10;
+        self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;
         self->zPriority += 4;
         if (g_blinkTimer & 1) {
@@ -37,17 +37,17 @@ void EntityZombie(Entity* self) {
 
     case 1:
         if (func_801BC8E4(D_801825BC) & 1) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;
 
     case 2:
         if (AnimateEntity(D_80182594, self) == 0) {
-            func_801BD114(3);
+            SetStep(3);
         }
         if (self->animFrameDuration == 0) {
-            self->unk12 -= 2;
+            self->hitboxOffY -= 2;
             self->hitboxHeight += 2;
         }
         break;
@@ -62,8 +62,8 @@ void EntityZombie(Entity* self) {
         }
 
         if (temp_a0 & 0xC0) {
-            self->unk3C = 0;
-            func_801BD114(4);
+            self->hitboxState = 0;
+            SetStep(4);
         }
         break;
 
@@ -75,7 +75,14 @@ void EntityZombie(Entity* self) {
     }
 }
 
-void EntityZombieExplosion(Entity* self) {
+/*
+ * An invisible entity that is responsible for spawning the "floor
+ * zombies" that come up from the ground and swarm the player.
+ * Every 32 to 95 frames, it will alternate spawning a zombie
+ * on the right side or left side of the screen.
+ * The exact position a zombie is spawned in is also randomized.
+ */
+void EntityZombieSpawner(Entity* self) {
     s32 distCameraEntity;
     Entity* newEntity;
     s32 rnd;
@@ -83,7 +90,7 @@ void EntityZombieExplosion(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180A60);
         self->ext.generic.unk80.modeS16.unk0 = 1;
-        self->flags &= 0x2000;
+        self->flags &= FLAG_UNK_2000;
     }
 
     if (D_8003BE23 != 0) {
@@ -102,6 +109,8 @@ void EntityZombieExplosion(Entity* self) {
                 newEntity->posY.i.hi -= 48;
                 self->ext.generic.unk88.unk ^= 1;
 
+                // Zombies are prevented from spawning too close to the
+                // edges of the room.
                 distCameraEntity = g_Camera.posX.i.hi + newEntity->posX.i.hi;
                 if ((distCameraEntity < (g_CurrentRoom.x + 128)) ||
                     ((g_CurrentRoom.width - 128) < distCameraEntity)) {

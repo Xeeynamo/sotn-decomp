@@ -1,0 +1,50 @@
+options:
+  target_path:  disks/saturn/GAME.PRG
+  asm_path:     asm/saturn/game
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  # some sort of alignment issues
+  decomp_empty_funcs: false
+segments:
+  - name: game
+    type: code
+    start: 0x00000000
+    vram:  0x06066000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: 40
+        end: 0x3F
+      - start: 0x40
+        type: c
+        file: 40
+        end: 0x197b
+        # misdetected function TODO
+      - start: 0x197c
+        type: data
+        file: 40
+        end: 0x1a03  
+      - start: 0x1a04
+        type: c
+        file: 40
+        end: 0xaa5f        
+        # function that doesn't have an rts TODO
+      - start: 0xaa60
+        type: data
+        file: 40
+        end: 0xbc3b
+      - start: 0xbc3c
+        type: c
+        file: 40
+        end: 0xc8b3
+      # todo problematic jump table
+      - start: 0xc8b4
+        type: data
+        file: 40
+        end: 0xcbcb
+      - start: 0xcbcc
+        type: c
+        file: 40
+        end: 0x2008B

@@ -8,7 +8,7 @@
 
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
-    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->subId * 10];
+    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->params * 10];
 
     if (entity->step == 0) {
         InitializeEntity(D_801804AC);
@@ -23,7 +23,7 @@ void EntityUnkId11(Entity* entity) {
             entity->flags = obj->unkC;
         }
 
-        if (entity->subId == 1) {
+        if (entity->params == 1) {
             entity->unk1C = 0x200;
             entity->unk1A = 0x200;
         }
@@ -35,7 +35,7 @@ void EntityUnkId11(Entity* entity) {
 void func_80191B44(Entity* entity) {
     s32 ret;
     u16* temp_v0_2;
-    u16 temp_s1 = entity->subId;
+    u16 temp_s1 = entity->params;
     u16 phi_v1;
     u16 unk;
     entity->unk6D = 0;
@@ -60,7 +60,7 @@ void func_80191B44(Entity* entity) {
         }
 
         if (entity->unk44 != 0) {
-            ret = func_8019A718();
+            ret = GetSideToPlayer();
             phi_v1 = entity->ext.generic.unk7C.s;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;
@@ -96,7 +96,7 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 void EntityBreakable(Entity* entity) {
     Entity* temp_v0;
-    u16 temp_s0 = entity->subId >> 0xC;
+    u16 temp_s0 = entity->params >> 0xC;
 
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
@@ -105,7 +105,7 @@ void EntityBreakable(Entity* entity) {
             temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (temp_v0 != NULL) {
                 CreateEntityFromCurrentEntity(2, temp_v0);
-                temp_v0->subId = g_eBreakableExplosionTypes[temp_s0];
+                temp_v0->params = g_eBreakableExplosionTypes[temp_s0];
             }
             ReplaceBreakableWithItemDrop(entity);
         }
@@ -119,14 +119,153 @@ void EntityBreakable(Entity* entity) {
 }
 
 // clouds in the background ID 0x18
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityBackgroundClouds);
+void EntityBackgroundClouds(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s32 camX, camY;
 
-// Shows Alucard's mother on cross, but may be the succubus boss given
-// that the asm is huge (ID 0x19)
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityMother);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180488);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim->type = PRIM_G4;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0x100;
+        prim->y0 = prim->y1 = 0x6E - g_Camera.posY.i.hi;
+        prim->y2 = prim->y3 = 0xF0;
+        setRGB0(prim, 16, 16, 16);
+        prim->priority = 0x20;
+        prim->blendMode = 0;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim = prim->next;
+        camX = -g_Camera.posX.i.hi;
+        camY = 32 - g_Camera.posY.i.hi;
+        while (prim != 0) {
+            prim->x0 = prim->x2 = camX;
+            camX += 95;
+            prim->x1 = prim->x3 = camX;
+            prim->tpage = 0xF;
+            prim->clut = 5;
+            prim->u0 = prim->u2 = 0x84;
+            prim->u1 = prim->u3 = 0xE3;
+            prim->v0 = prim->v1 = 1;
+            prim->v2 = prim->v3 = 0x4F;
+            prim->y0 = prim->y1 = camY;
+            prim->y2 = prim->y3 = camY + 0x4E;
+            prim->priority = 0x20;
+            prim->blendMode = 0;
+            prim = prim->next;
+        }
+        break;
+
+    case 255:
+        /**
+         * Debug: Press SQUARE / CIRCLE on the second controller
+         * to advance/rewind current animation frame
+         */
+        FntPrint("charal %x\n", self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params == 0) {
+                self->animCurFrame++;
+                self->params |= 1;
+            } else {
+                break;
+            }
+        } else {
+            self->params = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s == 0) {
+                self->animCurFrame--;
+                self->step_s |= 1;
+            }
+        } else {
+            self->step_s = 0;
+        }
+        break;
+    }
+    g_GpuBuffers[0].draw.r0 = 40;
+    g_GpuBuffers[0].draw.g0 = 24;
+    g_GpuBuffers[0].draw.b0 = 24;
+    g_GpuBuffers[1].draw.r0 = 40;
+    g_GpuBuffers[1].draw.g0 = 24;
+    g_GpuBuffers[1].draw.b0 = 24;
+}
+
+// ID 0x19
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubus);
 
 // Petal projectile shot by succubus ID 0x1A
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntitySuccubusPetal);
+void EntitySuccubusPetal(Entity* self) {
+    Entity* newEntity;
+    s32 temp_s2;
+    s16 angle;
+
+    if (D_80180664 & 2) {
+        self->flags |= 0x100;
+    }
+    if (self->hitFlags & 0x80) {
+        D_80180668 = 1;
+    }
+
+    if (self->flags & 0x100) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            newEntity->params = 0;
+        }
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_801804DC);
+        self->unk19 = 4;
+        self->rotAngle = rand() & 0xFFF;
+        temp_s2 = Random() & 3;
+        if (temp_s2 >= 3) {
+            temp_s2 = 0;
+        }
+        self->animCurFrame = temp_s2 + 64;
+
+        angle = ((Random() & 0x1F) * 16) + 0xC0;
+        if (self->facing == 0) {
+            angle = 0x800 - angle;
+        } else {
+            angle = angle;
+        }
+        temp_s2 = ((rand() * 4) + 0x38000) >> 0xC;
+        self->accelerationX = temp_s2 * rcos(angle);
+        self->accelerationY = temp_s2 * rsin(angle);
+        self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x10;
+
+    case 1:
+        self->accelerationX = self->accelerationX - (self->accelerationX >> 6);
+        self->accelerationY = self->accelerationY - (self->accelerationY >> 6);
+        MoveEntity();
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        MoveEntity();
+        self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
+        break;
+    }
+}
 
 void EntityUnkId1B(Entity* entity) {
     if (entity->step == 0) {
@@ -148,5 +287,3 @@ void EntityUnkId1B(Entity* entity) {
 
     entity->zPriority = PLAYER.zPriority + 4;
 }
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/11A64", EntityUnkId1C);

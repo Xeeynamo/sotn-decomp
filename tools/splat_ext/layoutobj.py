@@ -12,7 +12,7 @@ from util import options, log
 from segtypes.n64.segment import N64Segment
 import utils
 
-item_size = 0xA  # sizeof(LayoutObject)
+item_size = 0xA  # sizeof(LayoutEntity)
 
 
 def parse_layoutobj(data: bytearray) -> list:
@@ -20,11 +20,11 @@ def parse_layoutobj(data: bytearray) -> list:
     items = []
     for i in range(0, count):
         item = {
-            "x": utils.to_s16(data[i * item_size + 0:]),
-            "y": utils.to_s16(data[i * item_size + 2:]),
-            "objectId": utils.to_s16(data[i * item_size + 4:]),
-            "objectRoomIndex": utils.to_s16(data[i * item_size + 6:]),
-            "subId": utils.to_s16(data[i * item_size + 8:]),
+            "x": utils.to_s16(data[i * item_size + 0 :]),
+            "y": utils.to_s16(data[i * item_size + 2 :]),
+            "entityId": utils.to_s16(data[i * item_size + 4 :]),
+            "entityRoomIndex": utils.to_s16(data[i * item_size + 6 :]),
+            "subId": utils.to_s16(data[i * item_size + 8 :]),
         }
         if item["x"] == -1 and item["y"] == -1:
             break
@@ -48,8 +48,8 @@ def serialize_layoutobj(content: str) -> bytearray:
         item = obj[i]
         from_16(data, i * item_size + 0, item["x"])
         from_16(data, i * item_size + 2, item["y"])
-        from_16(data, i * item_size + 4, item["objectId"])
-        from_16(data, i * item_size + 6, item["objectRoomIndex"])
+        from_16(data, i * item_size + 4, item["entityId"])
+        from_16(data, i * item_size + 6, item["entityRoomIndex"])
         from_16(data, i * item_size + 8, item["subId"])
     from_16(data, item_count * item_size + 0, -1)
     from_16(data, item_count * item_size + 2, -1)
@@ -70,7 +70,7 @@ class PSXSegLayoutobj(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = parse_layoutobj(rom_bytes[self.rom_start:self.rom_end])
+        data = parse_layoutobj(rom_bytes[self.rom_start : self.rom_end])
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 

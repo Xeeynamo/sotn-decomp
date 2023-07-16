@@ -288,7 +288,7 @@ int GetEntityAllocationCount() {
     s32 i;
 
     for (i = 0; i < MaxEntityCount; i++) {
-        if (D_8007D858[i].objectId) {
+        if (D_8007D858[i].entityId) {
             allocated++;
         }
     }
@@ -297,10 +297,10 @@ int GetEntityAllocationCount() {
 }
 
 u8 g_SpawnObjId;
-u16 g_SpawnSubId;
+u16 g_Spawnparams;
 void InitEntitySpawn(void) {
     g_SpawnObjId = 0;
-    g_SpawnSubId = 0;
+    g_Spawnparams = 0;
 }
 
 void UpdateEntitySpawn(int variant) {
@@ -328,22 +328,22 @@ void UpdateEntitySpawn(int variant) {
 
     FntPrint("alloc %d/%d\n", GetEntityAllocationCount(), MaxEntityCount);
     FntPrint("objID %02X\n", g_SpawnObjId + 1);
-    FntPrint("subID %02X\n", g_SpawnSubId);
+    FntPrint("params %02X\n", g_Spawnparams);
     FntPrint("func  %08X\n", entUpdate);
     if (g_pads->tapped & PAD_LEFT) {
         if (g_SpawnObjId > 0) {
             g_SpawnObjId--;
-            g_SpawnSubId = 0;
+            g_Spawnparams = 0;
         }
     } else if (g_pads->tapped & PAD_RIGHT) {
         if (g_SpawnObjId < def->length) {
             g_SpawnObjId++;
-            g_SpawnSubId = 0;
+            g_Spawnparams = 0;
         }
     } else if (g_pads->tapped & PAD_UP) {
-        g_SpawnSubId--;
+        g_Spawnparams--;
     } else if (g_pads->tapped & PAD_DOWN) {
-        g_SpawnSubId++;
+        g_Spawnparams++;
     }
 
     if (g_pads->tapped & (PAD_R1 | PAD_L1)) {
@@ -358,9 +358,9 @@ void UpdateEntitySpawn(int variant) {
         Entity* e = AllocEntity(start, end);
         if (e != NULL) {
             DestroyEntity(e);
-            e->objectId = g_SpawnObjId;
+            e->entityId = g_SpawnObjId;
             e->pfnUpdate = entUpdate;
-            e->subId = g_SpawnSubId;
+            e->params = g_Spawnparams;
             e->zPriority = PLAYER.zPriority + 0x20;
 
             // these coords will spawn the entity at the right side
@@ -377,7 +377,7 @@ void UpdateStageEntitySpawn() { UpdateEntitySpawn(1); }
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
     while (current < end) {
-        if (current->objectId == 0) {
+        if (current->entityId == 0) {
             return current;
         }
 
@@ -392,7 +392,7 @@ void DestroyEntity(Entity* item) {
     u32* ptr;
 
     if (item->flags & 0x800000) {
-        g_api.FreePrimitives(item->firstPolygonIndex);
+        g_api.FreePrimitives(item->primIndex);
     }
 
     ptr = (u32*)item;

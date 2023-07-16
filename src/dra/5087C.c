@@ -1,3 +1,4 @@
+#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
@@ -17,10 +18,10 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F0940);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0940);
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", SetNextRoomToLoad);
+INCLUDE_ASM("dra/nonmatchings/5087C", SetNextRoomToLoad);
 #else
 bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
     s32 res;
@@ -55,7 +56,7 @@ loop_3:
 #endif
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F0CD8);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0CD8);
 #else
 extern s16 D_80072F98;
 extern s32 D_801375A4;
@@ -83,8 +84,8 @@ s32 func_800F0CD8(s32 arg0) {
             goto block_25;
         }
         if (playerX < g_CurrentRoom.x) {
-            var_v0 = SetNextRoomToLoad(g_CurrentRoom.left - 1,
-                                       (playerY >> 8) + g_CurrentRoom.top);
+            var_v0 = SetNextRoomToLoad(
+                g_CurrentRoom.left - 1, (playerY >> 8) + g_CurrentRoom.top);
             if (var_v0) {
                 D_80072F98 = 1;
                 D_801375C0 = g_Entities[0].posX.i.hi + 0x100;
@@ -95,8 +96,8 @@ s32 func_800F0CD8(s32 arg0) {
             playerX = g_CurrentRoom.x;
         }
         if (playerX >= g_CurrentRoom.width) {
-            var_v0 = SetNextRoomToLoad(g_CurrentRoom.right + 1,
-                                       (playerY >> 8) + g_CurrentRoom.top);
+            var_v0 = SetNextRoomToLoad(
+                g_CurrentRoom.right + 1, (playerY >> 8) + g_CurrentRoom.top);
             if (var_v0) {
                 D_80072F98 = 1;
                 D_801375C0 = g_Entities[0].posX.i.hi - 0x100;
@@ -109,8 +110,8 @@ s32 func_800F0CD8(s32 arg0) {
     }
     if (D_80097424 == 0) {
         if (playerY < g_CurrentRoom.y + 4) {
-            temp_v0 = SetNextRoomToLoad((playerX >> 8) + g_CurrentRoom.left,
-                                        g_CurrentRoom.top - 1);
+            temp_v0 = SetNextRoomToLoad(
+                (playerX >> 8) + g_CurrentRoom.left, g_CurrentRoom.top - 1);
             if (temp_v0 != false) {
                 D_80072F98 = 2;
                 D_801375C0 = g_Entities[0].posX.i.hi;
@@ -126,8 +127,8 @@ s32 func_800F0CD8(s32 arg0) {
             var_s0 = 0x18;
         }
         if (playerY >= ((g_CurrentRoom.height - var_s0) + 0x14)) {
-            temp_v0 = SetNextRoomToLoad((playerX >> 8) + g_CurrentRoom.left,
-                                        g_CurrentRoom.bottom + 1);
+            temp_v0 = SetNextRoomToLoad(
+                (playerX >> 8) + g_CurrentRoom.left, g_CurrentRoom.bottom + 1);
             if (temp_v0 != false) {
                 D_80072F98 = 2;
                 D_801375C0 = g_Entities[0].posX.i.hi;
@@ -185,8 +186,8 @@ block_25:
                 g_CurrentRoom.y + 8 < g_Camera.posY.i.hi) {
                 g_Camera.posY.i.hi -= 4;
                 g_Entities[0].posY.i.hi += 4;
-            } else if (g_Camera.posY.i.hi < g_CurrentRoom.y &&
-                       g_CurrentRoom.y != 0) {
+            } else if (
+                g_Camera.posY.i.hi < g_CurrentRoom.y && g_CurrentRoom.y != 0) {
                 g_Camera.posY.i.hi += 4;
                 g_Entities[0].posY.i.hi -= 4;
             } else {
@@ -223,7 +224,7 @@ void func_800F1424(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F14CC);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F14CC);
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
@@ -315,7 +316,7 @@ void func_800F18C4(s32 arg0, s32 arg1) {
     func_800F1868(arg0, arg1, &sp10);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1954);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1954);
 
 void func_800F1A3C(s32 arg0) {
     if (arg0 == 0) {
@@ -335,20 +336,20 @@ void func_800F1A3C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1B08);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1B08);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1D54);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1D54);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F1EB0);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1EB0);
 
 void func_800F1FC4(s32 arg0) {
     func_800F1EB0((playerX >> 8) + g_CurrentRoom.left,
                   (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2014);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2014);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2120);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2120);
 
 void func_800F223C(void) {
     g_StageId ^= 0x20;
@@ -356,7 +357,7 @@ void func_800F223C(void) {
     g_StageId ^= 0x20;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2288);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2288);
 
 void func_800F2404(s32 arg0) {
     s32* temp;
@@ -402,7 +403,7 @@ void func_800F2404(s32 arg0) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F24F4);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F24F4);
 #else
 void func_801042C4(s32);
 void func_80105428();
@@ -454,7 +455,7 @@ block_18:
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5087C", func_800F2658);
+INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2658);
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {

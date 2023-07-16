@@ -10,7 +10,7 @@ void EntitySubWeaponContainer(Entity* self) {
     SubWpnContDebris* glassPieceTBL;
     Entity* newEntity;
     Primitive* prim;
-    s16 firstPrimIndex;
+    s16 primIndex;
     s32 rnd;
     s32 rndPosX;
     s32 rndPosY;
@@ -26,24 +26,24 @@ void EntitySubWeaponContainer(Entity* self) {
         self->zPriority = 0x70;
         self->hitboxWidth = 14;
         self->hitboxHeight = 32;
-        self->unk12 = -0x38;
-        self->unk10 = 0;
-        self->unk3C = 2;
-        self->palette += self->subId;
+        self->hitboxOffY = -0x38;
+        self->hitboxOffX = 0;
+        self->hitboxState = 2;
+        self->palette += self->params;
         CreateEntityFromEntity(0x3D, self, &self[1]); // Create SubWeapon
         self[1].posY.i.hi -= 72;
-        self[1].subId = D_801825CC[self->subId];
+        self[1].params = D_801825CC[self->params];
         self[1].zPriority = self->zPriority - 2;
 
-        firstPrimIndex = g_api.AllocPrimitives(4, 2);
-        if (firstPrimIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->firstPolygonIndex = firstPrimIndex;
-        prim = &g_PrimBuf[firstPrimIndex];
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         *(s32*)&self->ext.generic.unk7C = prim;
-        self->flags |= FLAG_FREE_POLYGONS;
+        self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
             prim->blendMode = 8;
@@ -59,18 +59,18 @@ void EntitySubWeaponContainer(Entity* self) {
                 rnd = (Random() & 0x18) - 12;
                 newEntity->posX.i.hi += rnd;
                 newEntity->posY.i.hi -= 30;
-                newEntity->subId = Random() & 3;
-                if (newEntity->subId == 0) {
+                newEntity->params = Random() & 3;
+                if (newEntity->params == 0) {
                     absRnd = ABS(rnd);
                     if (absRnd >= 9) {
-                        newEntity->subId = 1;
+                        newEntity->params = 1;
                     }
                 }
                 newEntity->zPriority = self->zPriority - 1;
             }
         }
 
-        if (self->unk48 != 0) { // container got hit!
+        if (self->hitFlags != 0) { // container got hit!
             self->step++;
         }
         break;
@@ -79,8 +79,8 @@ void EntitySubWeaponContainer(Entity* self) {
         // Spawn falling glass pieces
         glassPieceTBL = D_80182584;
         i = 0;
-        g_api.FreePrimitives(self->firstPolygonIndex);
-        self->flags &= ~FLAG_FREE_POLYGONS;
+        g_api.FreePrimitives(self->primIndex);
+        self->flags &= ~FLAG_HAS_PRIMS;
         g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
         while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -89,29 +89,29 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->posX.i.hi += glassPieceTBL->posX;
                 newEntity->posY.i.hi += glassPieceTBL->posY;
                 newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
-                newEntity->subId = glassPieceTBL->subId;
+                newEntity->params = glassPieceTBL->params;
                 newEntity->facing = glassPieceTBL->facing;
-                newEntity->ext.generic.unk84.S16.unk2 = self->subId;
+                newEntity->ext.generic.unk84.S16.unk2 = self->params;
             }
             glassPieceTBL++;
             i++;
         }
 
         for (i = 0; i < 96; i++) { // Spawn falling liquid
-            newEntity = AllocEntity(&g_Entities[UNK_ENTITY_51],
-                                    &g_Entities[UNK_ENTITY_100]);
+            newEntity = AllocEntity(
+                &g_Entities[UNK_ENTITY_51], &g_Entities[UNK_ENTITY_100]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3B, self, newEntity);
                 rndPosX = (Random() & 0x1F) - 16;
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
                 newEntity->posY.i.hi += rndPosY;
-                newEntity->unk1E = ratan2(rndPosY, rndPosX);
+                newEntity->rotAngle = ratan2(rndPosY, rndPosX);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
         func_801C29B0(NA_SE_EV_VASE_BREAK);
-        self->unk3C = 0;
+        self->hitboxState = 0;
         self->animCurFrame = 2;
         self->step++;
         break;
@@ -123,14 +123,14 @@ void EntitySubWeaponContainer(Entity* self) {
          */
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->subId == 0) {
+            if (self->params == 0) {
                 newEntity->animCurFrame++;
-                self->subId |= 1;
+                self->params |= 1;
             } else {
                 break;
             }
         } else {
-            self->subId = 0;
+            self->params = 0;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s == 0) {
@@ -154,7 +154,7 @@ void func_801C7538(Entity* entity) {
     case 0:
         InitializeEntity(D_80180CF4);
         entity->unk19 = 4;
-        entity->animCurFrame = entity->subId;
+        entity->animCurFrame = entity->params;
         entity->palette += entity->ext.generic.unk84.S16.unk2;
         entity->accelerationX = entity->ext.generic.unk84.S16.unk0 << 12;
         entity->accelerationX += 0x8000 - (Random() << 8);
@@ -167,34 +167,34 @@ void func_801C7538(Entity* entity) {
 
         if (entity->accelerationX != 0) {
             if (entity->facing == 0) {
-                new_var = (u16)entity->unk1E - 16;
+                new_var = (u16)entity->rotAngle - 16;
                 var_v0 = new_var;
             } else {
-                var_v0 = entity->unk1E + 16;
+                var_v0 = entity->rotAngle + 16;
             }
         } else if (entity->facing != 0) {
-            var_v0 = entity->unk1E - 16;
+            var_v0 = entity->rotAngle - 16;
         } else {
-            var_v0 = entity->unk1E + 16;
+            var_v0 = entity->rotAngle + 16;
         }
 
-        entity->unk1E = var_v0;
+        entity->rotAngle = var_v0;
         break;
     }
 }
 
 // falling liquid from subweapons container
 void func_801C7654(Entity* entity) {
-    Collider res;
+    Collider collider;
 
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180BE0);
-        entity->animSet = 2;
+        entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
         entity->blendMode = 0x70;
-        entity->accelerationX = rcos(entity->unk1E) * 0x10;
-        entity->accelerationY = rsin(entity->unk1E) * 0x10;
+        entity->accelerationX = rcos(entity->rotAngle) * 0x10;
+        entity->accelerationY = rsin(entity->rotAngle) * 0x10;
         break;
 
     case 1:
@@ -202,10 +202,10 @@ void func_801C7654(Entity* entity) {
         MoveEntity();
         entity->accelerationY += 0x2000;
 
-        g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 8,
-                             &res.unk0, 0);
+        g_api.CheckCollision(
+            entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
 
-        if (res.unk0 & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             entity->unk19 = 2;
             entity->unk1C = 0x100;
             entity->accelerationY = 0x4000;
@@ -235,8 +235,8 @@ void func_801C77B8(Entity* entity) {
         entity->unk1C = 0x100;
         entity->unk1A = 0x100;
         entity->accelerationX = 0;
-        entity->animCurFrame = entity->subId + 8;
-        entity->accelerationY = D_80182600[entity->subId];
+        entity->animCurFrame = entity->params + 8;
+        entity->accelerationY = D_80182600[entity->params];
         break;
 
     case 1:
@@ -254,27 +254,27 @@ void func_801C77B8(Entity* entity) {
 }
 
 void func_801C7884(Entity* entity) {
-    u16 subId = entity->subId;
+    u16 params = entity->params;
 
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180BD4);
-        entity->unk3C = 0;
+        entity->hitboxState = 0;
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_80181D3C[subId], entity);
+        AnimateEntity(D_80181D3C[params], entity);
 
-        entity->accelerationY = rsin(entity->unk1E) * 2;
-        entity->unk1E += 0x20;
+        entity->accelerationY = rsin(entity->rotAngle) * 2;
+        entity->rotAngle += 0x20;
 
         if (entity[-1].step != 1) {
-            entity->objectId = ENTITY_PRICE_DROP;
+            entity->entityId = E_PRIZE_DROP;
             entity->pfnUpdate = EntityPrizeDrop;
             entity->animFrameDuration = 0;
             entity->animFrameIdx = 0;
             entity->step = 0;
-            entity->unk3C = 1;
+            entity->hitboxState = 1;
         }
     }
 }

@@ -19,6 +19,7 @@ def get_root_dir():
             if os.path.isdir(dir) and dir == "src":
                 return os.path.normpath(base_dir)
         return search_root_dir(os.path.join(base_dir, ".."))
+
     script_dir = os.path.dirname(os.path.realpath(__file__))
     return search_root_dir(base_dir=script_dir)
 
@@ -72,16 +73,27 @@ def get_c_context(src_file) -> str:
 
 def decompile(func: NonMatchingFunc, ctx_str: str):
     with tempfile.NamedTemporaryFile(
-            mode="w", encoding="utf-8", suffix=".c") as tmp_ctx:
+        mode="w", encoding="utf-8", suffix=".c"
+    ) as tmp_ctx:
         tmp_ctx.writelines(ctx_str)
         tmp_ctx.flush()
-        options = m2c.parse_flags([
-            "-P", "4",
-            "--pointer-style", "left",
-            "--target", "mipsel-gcc-c",
-            "--context", tmp_ctx.name,
-            func.asm_path,
-        ])
+        options = m2c.parse_flags(
+            [
+                "-P",
+                "4",
+                "--pointer-style",
+                "left",
+                "--knr",
+                "--indent-switch-contents",
+                "--comment-style",
+                "oneline",
+                "--target",
+                "mipsel-gcc-c",
+                "--context",
+                tmp_ctx.name,
+                func.asm_path,
+            ]
+        )
 
         with redirect_stdout(io.StringIO()) as f:
             m2c.run(options)
@@ -118,16 +130,14 @@ def check_injected_code() -> InjectRes:
         cwd=root_dir,
         shell=True,
         check=False,
-        capture_output=True)
+        capture_output=True,
+    )
     if compile_result.returncode == 0:
         # good news, the code was compilable
         # now checking for the checksum...
         check_result = subprocess.run(
-            "make check",
-            cwd=root_dir,
-            shell=True,
-            check=False,
-            capture_output=True)
+            "make check", cwd=root_dir, shell=True, check=False, capture_output=True
+        )
         if check_result.returncode == 0:
             # decompilation successful! There is nothing else to do
             return InjectRes.SUCCESS
@@ -188,10 +198,12 @@ def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> Inj
 
 def show_asm_differ_command(func: NonMatchingFunc):
     isStage = True
-    if func.overlay_name == "dra" or \
-       func.overlay_name == "ric" or \
-       func.overlay_name.startswith("tt_") or \
-       func.overlay_name == "main":
+    if (
+        func.overlay_name == "dra"
+        or func.overlay_name == "ric"
+        or func.overlay_name.startswith("tt_")
+        or func.overlay_name == "main"
+    ):
         isStage = False
 
     tool_path = os.path.join(root_dir, "tools/asm-differ/diff.py")
@@ -200,9 +212,16 @@ def show_asm_differ_command(func: NonMatchingFunc):
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
 
-parser = argparse.ArgumentParser(
-    description="automatically decompiles a function")
+parser = argparse.ArgumentParser(description="automatically decompiles a function")
 parser.add_argument("function", help="function name to decompile")
+parser.add_argument(
+    "-o",
+    "--overlay",
+    help="the overlay where the function to decompile is located",
+    type=str,
+    default=None,
+    required=False,
+)
 
 args = parser.parse_args()
 if __name__ == "__main__":
@@ -210,7 +229,27 @@ if __name__ == "__main__":
     if len(funcs) == 0:
         print(f"function {args.function} not found or already decompiled")
 
-    func = funcs[0]
+    if args.overlay == None:
+        if len(funcs) > 1:
+            print(
+                f"{len(funcs)} occurrences found for '{args.function}' in the following overlays:"
+            )
+            for func in funcs:
+                print(f"{func.overlay_name} at {func.asm_path}")
+            print("invoke this decompiler again with the -o OVERLAY_NAME parameter.")
+            os._exit(-1)
+        func = funcs[0]
+    else:
+        func = next((x for x in funcs if x.overlay_name == args.overlay), None)
+        if func == None:
+            print(
+                f"No occurrences found for '{args.function}' between the following overlays:"
+            )
+            for func in funcs:
+                print(f"{func.overlay_name} at {func.asm_path}")
+            print("no action will be taken.")
+            os._exit(-1)
+
     # print(f"func: {func.name}")
     # print(f"overlay: {func.overlay_name}")
     # print(f"text: {func.text_offset}")

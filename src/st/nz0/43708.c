@@ -32,14 +32,14 @@ void func_801C3708(void) {
     s32 temp2 = func_801BD720(&D_80182174, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
-        func_801BD52C(BONE_SCIMITAR_JUMP);
+        SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
 
     if (g_CurrentEntity->ext.generic.unk7C.U8.unk0 == 0) {
-        if (GetPlayerDistanceX() < 64) {
-            if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
-                func_801BD52C(BONE_SCIMITAR_ATTACK);
+        if (GetDistanceToPlayerX() < 64) {
+            if (g_CurrentEntity->facing != (GetSideToPlayer() & 1)) {
+                SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
     } else {
@@ -59,11 +59,12 @@ void EntityBoneScimitar(Entity* self) {
     switch (self->step) {
     case BONE_SCIMITAR_INIT:
         InitializeEntity(D_80180C4C);
-        if (self->subId != 0) {
-            self->palette += self->subId;
-            self->flags &= ~0xC0000C00;
+        if (self->params != 0) {
+            self->palette += self->params;
+            self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                             FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
             self->ext.generic.unk9C = g_Camera.posX.i.hi + self->posX.i.hi;
-            if (self->subId & D_8018208C) {
+            if (self->params & D_8018208C) {
                 DestroyEntity(self);
                 return;
             }
@@ -76,15 +77,15 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_IDLE:
         if (func_801BCCFC(&D_8018215C) != 0) {
             self->step++;
-            if (self->subId != 0) {
-                func_801BD52C(BONE_SCIMITAR_SPECIAL);
+            if (self->params != 0) {
+                SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
 
     case BONE_SCIMITAR_WALK_TOWARDS_PLAYER:
         if (AnimateEntity(D_80182090, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.generic.unk80.modeS8.unk0 = self->facing;
 
@@ -94,7 +95,7 @@ void EntityBoneScimitar(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() < 76) {
+        if (GetDistanceToPlayerX() < 76) {
             self->step = BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER;
         }
         func_801C3708();
@@ -102,7 +103,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER:
         if (AnimateEntity(D_801820A0, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
 
@@ -112,7 +113,7 @@ void EntityBoneScimitar(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() > 92) {
+        if (GetDistanceToPlayerX() > 92) {
             self->step = BONE_SCIMITAR_WALK_TOWARDS_PLAYER;
         }
         func_801C3708();
@@ -123,26 +124,26 @@ void EntityBoneScimitar(Entity* self) {
         if (self->animCurFrame == 12) {
             self->hitboxWidth = 20;
             self->hitboxHeight = 17;
-            *(s16*)&self->unk10 = -11;
-            self->unk12 = -14;
+            *(s16*)&self->hitboxOffX = -11;
+            self->hitboxOffY = -14;
         } else {
             self->hitboxWidth = 8;
             self->hitboxHeight = 18;
-            *(s16*)&self->unk10 = -1;
-            self->unk12 = 0;
+            *(s16*)&self->hitboxOffX = -1;
+            self->hitboxOffY = 0;
         }
 
-        if (*(s32*)&self->animFrameIdx == 7) {
+        if (LOW(self->animFrameIdx) == 7) {
             func_801C29B0(NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH);
         }
 
         if (animStatus == 0) {
-            func_801BD52C(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+            SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
-                D_80182154[self->subId % 2]
+                D_80182154[self->params % 2]
                           [(++self->ext.generic.unk84.S8.unk0) & 3];
-            if (self->subId != 0) {
-                func_801BD52C(BONE_SCIMITAR_SPECIAL);
+            if (self->params != 0) {
+                SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
         break;
@@ -182,13 +183,13 @@ void EntityBoneScimitar(Entity* self) {
 
         case BONE_SCIMITAR_LAND:
             if (AnimateEntity(D_801820D8, self) == 0) {
-                func_801BD52C(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
+                SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             }
         }
         break;
 
     case BONE_SCIMITAR_SPECIAL:
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         func_801BCF74(&D_8018216C);
         if (((((u32)self->accelerationX) >> 0x1F) ^ self->facing) != 0) {
             AnimateEntity(D_80182090, self);
@@ -219,8 +220,8 @@ void EntityBoneScimitar(Entity* self) {
             return;
         }
 
-        if ((GetPlayerDistanceX() < 48) && (GetPlayerDistanceY() < 32)) {
-            func_801BD52C(BONE_SCIMITAR_ATTACK);
+        if ((GetDistanceToPlayerX() < 48) && (GetDistanceToPlayerY() < 32)) {
+            SetStep(BONE_SCIMITAR_ATTACK);
         }
         break;
 
@@ -233,7 +234,7 @@ void EntityBoneScimitar(Entity* self) {
             }
             CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_HEAD, newEntity);
             newEntity->facing = self->facing;
-            newEntity->subId = i;
+            newEntity->params = i;
             newEntity->ext.generic.unk88.S8.unk0 = D_801820F4[i];
 
             if (self->facing != 0) {
@@ -244,20 +245,20 @@ void EntityBoneScimitar(Entity* self) {
             newEntity->posY.i.hi += D_80182144[i];
             newEntity->accelerationX = D_801820FC[i];
             newEntity->accelerationY = D_80182118[i];
-            newEntity->subId |= self->subId << 8;
+            newEntity->params |= self->params << 8;
         }
 
         newEntity = &self[1];
         // If he's one of the special ones from entrance (first visit)
-        if (self->subId != 0) {
-            CreateEntityFromEntity(ENTITY_INVENTORY_DROP, self, newEntity);
-            if (!(self->subId & 1)) {
-                self[1].subId = ITEM_RED_RUST;
+        if (self->params != 0) {
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+            if (!(self->params & 1)) {
+                self[1].params = ITEM_RED_RUST;
             } else {
-                self[1].subId = ITEM_SHORT_SWORD;
+                self[1].params = ITEM_SHORT_SWORD;
             }
-            newEntity->subId |= 0x8000;
-            D_8018208C |= self->subId;
+            newEntity->params |= 0x8000;
+            D_8018208C |= self->params;
         }
         DestroyEntity(self);
         break;
@@ -269,26 +270,26 @@ void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->unk1E += D_801820E4[entity->subId];
+            entity->rotAngle += D_801820E4[entity->params];
             FallEntity();
             MoveEntity();
             return;
         }
-        entity->objectId = ENTITY_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
-        entity->subId = 0;
+        entity->params = 0;
         entity->step = 0;
         return;
     }
     InitializeEntity(D_80180C58);
     entity->unk19 = 4;
-    entity->animCurFrame = *(u8*)&entity->subId + 16;
+    entity->animCurFrame = *(u8*)&entity->params + 16;
 
     if (entity->facing != 0) {
         entity->accelerationX = -entity->accelerationX;
     }
 
-    if (entity->subId & 0xF00) {
-        entity->palette += entity->subId / 256;
+    if (entity->params & 0xF00) {
+        entity->palette += entity->params / 256;
     }
 }

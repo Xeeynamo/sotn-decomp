@@ -10,5 +10,11 @@ cxxfilt
 mapfile-parser>=1.1.3<2.0.0
 tabulate
 requests
-
--r n64splat/requirements.txt
+graphviz
+# splat
+spimdisasm==1.13.0
+rabbitizer==1.7.0
+n64img==0.3.3
+PyYAML
+pylibyaml
+pygfxd

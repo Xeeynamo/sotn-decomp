@@ -10,25 +10,25 @@
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
 void func_800E2398(const char* str);
-s32 func_800E3278(void);
+s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
 void func_800E7BB8(void);
-void func_800E8EE4(void);
+void SetupEvents(void);
 void func_800EA7CC(void);
 void func_800EB314(void);
-void func_800EBBAC(void);
+void RenderEntities(void);
 void func_800ECBF8(void);
-void func_800ECE58(void);
-void func_800EDEDC(void);
+void RenderTilemap(void);
+void RenderPrimitives(void);
 void func_800FADC0(void);
 void func_801026BC(s32);
 void DrawEntitiesHitbox(s32 blendMode);
-void func_80108448(void);
+void UpdateCd(void);
 s32 func_8010E27C(void);
 void AccelerateX(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
-void func_801325D8(void);
+void SoundInit(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
@@ -100,8 +100,8 @@ void func_800E2B00(void) {
     sprite->clut = D_8003C104[g_DebugCurPal];
     AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
-    SetDrawMode(drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7,
-                &g_Vram.D_800ACD80);
+    SetDrawMode(
+        drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &g_Vram.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
@@ -181,7 +181,7 @@ void func_800E2E98(s32 colorAdd) {
 
 s32 nullsub_8(void) {}
 
-void func_800E2F3C(void) {
+void PrintGpuInfo(void) {
     if (D_800BD1C0 == 0)
         return;
 
@@ -231,92 +231,47 @@ void func_800E2F3C(void) {
     }
 }
 
-void func_800E31C0(void) {
-    if ((D_800BD1C0 != 0) && (D_80138FB0 != 3)) {
+void PrintHBlankInfo(void) {
+    if (D_800BD1C0 != 0 && D_80138FB0 != 3) {
         if (g_blinkTimer & 1) {
-            FntPrint(D_800DB524, D_801362D0[1]);
-            FntPrint(D_800DB524, D_801362D0[0]);
+            FntPrint("l=%03x/100\n", D_801362D0[1]);
+            FntPrint("l=%03x/100\n", D_801362D0[0]);
         } else {
-            FntPrint(D_800DB524, D_801362D0[0]);
-            FntPrint(D_800DB524, D_801362D0[1]);
+            FntPrint("l=%03x/100\n", D_801362D0[0]);
+            FntPrint("l=%03x/100\n", D_801362D0[1]);
         }
         D_801362D0[0] = D_801362D0[1];
     }
 }
 
-// TODO: fix branching
-// DECOMP_ME_WIP func_800E3278 https://decomp.me/scratch/y3otf
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E3278);
-#else
-extern s32 D_800BD1C8;
-extern s32 D_800BD1CC;
-extern s32 D_800BD1D0;
-extern s32 D_800BD1D4;
-extern s32 D_8013B6A0;
-extern s32 D_8017D350;
-extern s32 D_8018B4E0;
-extern s32 D_801A9C80;
 extern const char aPqes[];
 extern const char aPqes_0[];
 extern const char aPqes_1[];
+
 void SsVabClose(short vab_id);
-s32 func_800E3278(void) {
-    SsVabClose(0);
+#define LOAD_VAB(vab_id, name, pos, data, dataLen)                             \
+    SsVabClose(vab_id);                                                        \
+    while (func_800219E0(0) != 1)                                              \
+        ;                                                                      \
+                                                                               \
+    if (func_80021350(name, vab_id, pos) < 0) {                                \
+        return -1;                                                             \
+    }                                                                          \
+    if (func_80021880(data, dataLen, vab_id) < 0) {                            \
+        return -1;                                                             \
+    }                                                                          \
     while (func_800219E0(0) != 1)
-        ;
 
-    if (func_80021350(&aPbav, 0, D_800BD1C8) < 0) {
-        return;
-    }
-    if (func_80021880(&D_8013B6A0, 0x41CB0, 0) < 0) {
-        return;
-    }
-
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(1);
-    while (func_800219E0(0) != 1)
-        ;
-
-    if (func_80021350(&aPbav_0, 1, D_800BD1CC) < 0) {
-        return;
-    }
-    if (func_80021880(&D_8017D350, 0xE190, 1) < 0) {
-        return;
-    }
-
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(2);
-    while (func_800219E0(0) != 1)
-        ;
-
-    if (func_80021350(&aPbav_1, 2, D_800BD1D0) < 0) {
-        return;
-    }
-    if (func_80021880(&D_801A9C80, 0xFBF0, 2) < 0) {
-        return;
-    }
-
-    while (func_800219E0(0) != 1)
-        ;
-    SsVabClose(3);
-    while (func_800219E0(0) != 1)
-        ;
-
-    if (func_80021350(&aPbav_2, 3, D_800BD1D4) < 0 ||
-        func_80021880(&D_8018B4E0, 0x1A610, 3) < 0) {
-        return -1;
-    }
-    while (func_800219E0(0) != 1)
-        ;
+s32 LoadVabData(void) {
+    LOAD_VAB(0, &aPbav, D_800BD1C8[0], D_8013B6A0, 269488);
+    LOAD_VAB(1, &aPbav_0, D_800BD1C8[1], D_8017D350, 57744);
+    LOAD_VAB(2, &aPbav_1, D_800BD1C8[2], D_801A9C80, 64496);
+    LOAD_VAB(3, &aPbav_2, D_800BD1C8[3], D_8018B4E0, 108048);
     func_80131EBC(&aPqes, 0x618);
     func_80131EBC(&aPqes_0, 0x201);
     func_80131EBC(&aPqes_1, 0x205);
     return 0;
 }
-#endif
 
 void func_800E346C(void) {
     g_GpuBuffers[0].draw.r0 = 0;
@@ -355,19 +310,17 @@ void func_800E34DC(s32 arg0) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-// Set stage display buffer
-void func_800E3574(void) {
+void SetStageDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W,
-                  DISP_STAGE_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
-                  DISP_STAGE_H);
+    SetDefDrawEnv(
+        &g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(
+        &g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
     SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
     func_800E34DC(0);
 }
 
-// Set CGI display buffer?
-void func_800E3618(s32 width) {
+void SetCgiDisplayBuffer(s32 width) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, width, DISP_ALL_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, width, DISP_ALL_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, width, DISP_ALL_H);
@@ -375,8 +328,7 @@ void func_800E3618(s32 width) {
     func_800E34DC(1);
 }
 
-// Set menu display buffer
-void func_800E36C8(void) {
+void SetMenuDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_MENU_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 128, 256, DISP_MENU_W, DISP_MENU_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 128, 256, DISP_MENU_W, DISP_MENU_H);
@@ -384,7 +336,7 @@ void func_800E36C8(void) {
     func_800E34DC(1);
 }
 
-void func_800E376C(void) {
+void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
@@ -400,9 +352,26 @@ void func_800E376C(void) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-// DECOMP_ME_WIP func_800E385C https://decomp.me/scratch/Ocshz
-// mips to c doesn't support this function very well
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E385C);
+void func_800E385C(u_long* ot) {
+    s32 i;
+    s32 var_t0;
+    u_long* var_t1;
+
+    var_t0 = false;
+    for (i = 0; i < OTSIZE; i++, ot++) {
+        if (var_t0 == false) {
+            if (getaddr(ot) == ((u_long)ot & 0xffffff) + 4) {
+                var_t0 = true;
+                var_t1 = ot;
+            }
+        } else {
+            if (getaddr(ot) != ((u_long)ot & 0xffffff) + 4) {
+                *var_t1 = (u_long)ot & 0xffffff;
+                var_t0 = false;
+            }
+        }
+    }
+}
 
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
@@ -427,7 +396,7 @@ void entrypoint_sotn(void) {
     StartCARD();
     _bu_init();
     ChangeClearPAD(0);
-    func_800E8EE4();
+    SetupEvents();
     ResetGraph(0);
     SetGraphDebug(0);
     InitGeom();
@@ -446,8 +415,8 @@ void entrypoint_sotn(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
     func_80131ED8(0xB9B6);
-    func_801325D8();
-    while (func_800E3278() < 0)
+    SoundInit();
+    while (LoadVabData() < 0)
         ;
     VSyncCallback(func_800E7BB8);
     FntLoad(0x380, 0x100);
@@ -467,13 +436,13 @@ void entrypoint_sotn(void) {
     D_80098850 = 0;
 loop_5:
     D_8003C73C = 0;
-    func_800E3574();
+    SetStageDisplayBuffer();
     func_800ECBF8();
     func_800EAD7C();
-    func_800ECE2C();
-    func_800EDA94();
+    HideAllBackgroundLayers();
+    DestroyAllPrimitives();
     func_800EDAE4();
-    func_801065F4(0);
+    DestroyEntities(0);
     func_800EA538(0);
     func_800EAEEC();
     D_801362B4 = 0x20;
@@ -520,16 +489,16 @@ loop_5:
             UpdateGame();
         }
         if (D_8003C0F8 == 0 && D_800973EC == 0) {
-            func_800ECE58();
-            func_800EBBAC();
+            RenderTilemap();
+            RenderEntities();
             if (g_GameState == Game_Play && D_800BD1C0 != 0) {
                 if (D_801362B0 != 0) {
                     DrawEntitiesHitbox(D_801362B0);
                 }
             }
         }
-        func_800EDEDC();
-        func_80108448();
+        RenderPrimitives();
+        UpdateCd();
         func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
@@ -566,7 +535,7 @@ loop_5:
         DrawOTag(g_CurrentOT);
         func_800EA7CC();
         func_801361F8();
-        if (func_80131F28() >= 0x385) {
+        if (func_80131F28() > 900) {
             CdInit();
             func_80132760();
         }
@@ -642,7 +611,8 @@ void func_800E414C(void) {
     }
 
     func_8010DFF0(1, 1);
-    if (D_8003C708.unk2 != 0 && !(D_800733DA >= 8 && D_800733DA < 249)) {
+    if (D_8003C708.unk2 != 0 &&
+        !(PLAYER.posX.i.hi >= 8 && PLAYER.posX.i.hi < 249)) {
         return;
     }
 
@@ -685,14 +655,14 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && D_800733DA < 0x78) {
+        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C710;
             D_8003C708.unk2++;
         }
-        if (D_8003C708.flags == 0x41 && D_800733DA >= 0x89) {
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -705,14 +675,14 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == 0x40 && D_800733DA >= 0x89) {
+        if (D_8003C708.flags == 0x40 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
             g_mapTilesetId = D_8003C712;
             D_8003C708.unk2 = 2;
         }
-        if (D_8003C708.flags == 0x41 && D_800733DA < 0x78) {
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = 1;
             g_LoadFile = CdFile_StageChr;
@@ -733,14 +703,14 @@ void HandleTitle(void) {
         ClearBackbuffer();
         func_800ECBF8();
         func_800EAD7C();
-        func_800ECE2C();
-        func_800EDA94();
+        HideAllBackgroundLayers();
+        DestroyAllPrimitives();
         func_800EDAE4();
-        func_800EBB70();
-        func_801065F4(0);
+        ResetEntityArray();
+        DestroyEntities(0);
         func_800EA538(0);
         func_800EAEEC();
-        func_800E3574();
+        SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
             if (g_IsUsingCd) {
@@ -777,7 +747,7 @@ void HandleTitle(void) {
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
             ClearImage(&g_Vram.D_800ACDF0, 0, 0, 0);
-            func_800E3574();
+            SetStageDisplayBuffer();
             g_StageId = STAGE_SEL;
             if (g_UseDisk) {
                 if (g_IsUsingCd) {
@@ -836,7 +806,6 @@ void HandleTitle(void) {
         } else {
             callback = g_api.o.InitRoomEntities;
         }
-        NOP;
         callback();
         break;
     }

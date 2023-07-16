@@ -89,20 +89,13 @@ void func_800E5498(void) {
     g_GpuUsage.gt4++;
 }
 
-// Jump to 'nop' due to ASPSX missing
-// HD version needs some tweaking at 'Gameover_4'
-#ifndef NON_MATCHING
-#if defined(VERSION_US)
-INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", HandleGameOver);
-#elif defined(VERSION_HD)
+#if !defined(NON_MATCHING) && defined(VERSION_HD)
 INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", HandleGameOver);
-#endif
 #else
 void HandleGameOver(void) {
     Primitive* prim;
     u8 var_s0;
     s32 i;
-    u8 temp_v1;
     u8 yScroll;
 
     switch (g_GameStep) {
@@ -121,12 +114,12 @@ void HandleGameOver(void) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
         }
-        func_801065F4(0);
+        DestroyEntities(0);
         func_800EA538(0);
         func_800EAEEC();
-        func_800EDA94();
+        DestroyAllPrimitives();
         func_800EDAE4();
-        func_800ECE2C();
+        HideAllBackgroundLayers();
         func_800EAD7C();
     case Gameover_10:
     case Gameover_AllocResources_Alt:
@@ -243,34 +236,28 @@ void HandleGameOver(void) {
                     PlaySfx(0x3DC);
                     break;
                 }
-            } else {
-                if (g_StageId == STAGE_DRE) {
-                    PlaySfx(0x391);
-                } else {
-                    if (g_StageId == STAGE_RBO2) {
-                        switch (rand() % 3) {
-                        case 0:
-                            PlaySfx(0x52E);
-                            break;
-                        case 1:
-                            PlaySfx(0x52F);
-                            break;
-                        case 2:
-                            PlaySfx(0x530);
-                            break;
-                        }
-                    } else {
-                        if (func_800FD4C0(0x1A, 0)) {
-                            if (!(rand() & 7)) {
-                                PlaySfx(0x3CE);
-                            } else {
-                                PlaySfx(0x33B);
-                            }
-                        } else {
-                            PlaySfx(0x33B);
-                        }
-                    }
+            } else if (g_StageId == STAGE_DRE) {
+                PlaySfx(0x391);
+            } else if (g_StageId == STAGE_RBO2) {
+                switch (rand() % 3) {
+                case 0:
+                    PlaySfx(0x52E);
+                    break;
+                case 1:
+                    PlaySfx(0x52F);
+                    break;
+                case 2:
+                    PlaySfx(0x530);
+                    break;
                 }
+            } else if (func_800FD4C0(0x1A, 0)) {
+                if (rand() & 7) {
+                    PlaySfx(0x33B);
+                } else {
+                    PlaySfx(0x3CE);
+                }
+            } else {
+                PlaySfx(0x33B);
             }
         } else {
             PlaySfx(0x33B);
@@ -340,9 +327,7 @@ void HandleGameOver(void) {
             break;
         }
         prim = prim->next;
-        temp_v1 = prim->p1;
-        prim->p1 = temp_v1 - 1;
-        if (temp_v1) {
+        if (prim->p1--) {
             break;
         }
         g_GameStep++;
@@ -395,11 +380,11 @@ void func_800E6250(void) {
             ;
         while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
             ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) !=
-               0)
+        while (
+            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
             ;
-        while (func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) !=
-               0)
+        while (
+            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
             ;
     }
 }

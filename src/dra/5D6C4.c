@@ -39,20 +39,18 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 
 const u32 rodataPadding_jpt_800FD6E0 = 0;
 
-u8* func_800FD744(s32 equipTypeFilter) {
-    u8* begin = g_Status.equipHandOrder;
-    if (equipTypeFilter != 0) {
-        begin += sizeof(g_Status.equipHandOrder);
+u8* GetEquipOrder(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandOrder;
     }
-    return begin;
+    return g_Status.equipBodyOrder;
 }
 
-u8* func_800FD760(s32 equipTypeFilter) {
-    s8* begin = &g_Status.equipHandCount;
-    if (equipTypeFilter != 0) {
-        begin += sizeof(g_Status.equipHandCount);
+u8* GetEquipCount(s32 equipTypeFilter) {
+    if (equipTypeFilter == 0) {
+        return g_Status.equipHandCount;
     }
-    return begin;
+    return g_Status.equipBodyCount;
 }
 
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
@@ -98,8 +96,8 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
     long i;
     s32 phi_a1;
     s32 phi_a1_2;
-    u8* cursorY = func_800FD744(itemCategory);
-    u8* itemArray = func_800FD760(itemCategory);
+    u8* cursorY = GetEquipOrder(itemCategory);
+    u8* itemArray = GetEquipCount(itemCategory);
     if (itemArray[itemId] < 99) {
         temp_a1 = itemArray[itemId];
         itemArray[itemId]++;
@@ -207,8 +205,19 @@ bool func_800FDC94(s32 arg0) {
     }
 }
 
-// DECOMP_ME_WIP func_800FDCE0 https://decomp.me/scratch/5ufgy
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDCE0);
+void LearnSpell(s32 spellId) {
+    s32 i;
+
+    if ((g_Status.spellsLearnt & (1 << spellId)) == 0) {
+        g_Status.spellsLearnt |= 1 << spellId;
+        for (i = 0; i < LEN(g_Status.spells); i++) {
+            if (g_Status.spells[i] == 0) {
+                g_Status.spells[i] = spellId | (~0x7F);
+                return;
+            }
+        }
+    }
+}
 
 bool func_800FDD44(s32 equipId) {
     s32 equippedItem;
@@ -258,17 +267,17 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
         accessoryCount = CheckEquipmentItemCount(0x4D, 4);
         if (accessoryCount == 1) {
-            subwpn->unk2 = subwpn->unk2 / 2;
+            subwpn->heartCost = subwpn->heartCost / 2;
         }
         if (accessoryCount == 2) {
-            subwpn->unk2 = subwpn->unk2 / 3;
+            subwpn->heartCost = subwpn->heartCost / 3;
         }
-        if (subwpn->unk2 <= 0) {
-            subwpn->unk2 = 1;
+        if (subwpn->heartCost <= 0) {
+            subwpn->heartCost = 1;
         }
-        if (g_Status.hearts >= subwpn->unk2) {
+        if (g_Status.hearts >= subwpn->heartCost) {
             if (useHearts) {
-                g_Status.hearts -= subwpn->unk2;
+                g_Status.hearts -= subwpn->heartCost;
             }
             return g_Status.subWeapon;
         } else {
@@ -297,7 +306,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalModRate;
     Equipment* var_a2;
     s32 criticalRate;
-    u8 damageScale;
+    u8 itemCategory;
 
     var_a2 = &D_800A4B04[(s16)equipId]; // FAKE
     criticalModRate = 5;
@@ -318,10 +327,10 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     res->criticalRate = criticalRate;
     func_800F4994();
-    damageScale = D_800A4B04[equipId].damageScale;
-    if (damageScale != 6 && damageScale != 10) {
-        res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
-        if (g_Player.unk0C & 0x4000) {
+    itemCategory = D_800A4B04[equipId].itemCategory;
+    if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
+        res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
+        if (g_Player.unk0C & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }
     }
@@ -399,8 +408,99 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
-u16 func_800FF128(Entity* enemyEntity, Entity* arg1);
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FF128);
+u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
+    s32 stats[4];
+    EnemyDef sp20;
+    EnemyDef* enemy;
+    u16 temp_v1;
+    u16 elementMask;
+    s32 higherStatIdx;
+    s32 i;
+    u16 element;
+    u16 damage;
+    u16 result;
+    u16 stuff;
+
+    enemy = &sp20;
+    sp20 = g_EnemyDefs[enemyEntity->enemyId];
+    if (CheckEquipmentItemCount(0x2D, 1) != 0) {
+        enemy->defense /= 2;
+    }
+
+    element = attackerEntity->attackElement;
+    damage = attackerEntity->attack;
+    if (element == 0) {
+        element = 0x20;
+    }
+    if (element & 0xFF80) {
+        elementMask = 0xFF80;
+    } else {
+        elementMask = 0x7F;
+    }
+
+    result = 0;
+    temp_v1 = element & elementMask;
+    if (temp_v1 == (temp_v1 & (elementMask & enemy->immunes))) {
+        result = DAMAGE_FLAG_IMMUNE;
+    } else if (temp_v1 == (temp_v1 & (elementMask & enemy->absorbs))) {
+        result = damage + DAMAGE_FLAG_ABSORB;
+    } else {
+        if (temp_v1 == (temp_v1 & (elementMask & enemy->strengths))) {
+            damage /= 2;
+        }
+        if (element & enemy->weaknesses) {
+            damage *= 2;
+        }
+        if (attackerEntity->entityRoomIndex > (rand() & 0xFF)) {
+            for (i = 0; i < 4; i++) {
+                stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
+            }
+
+            higherStatIdx = 0;
+            for (i = 1; i < 4; i++) {
+                if (stats[i] > stats[higherStatIdx]) {
+                    higherStatIdx = i;
+                }
+            }
+
+            switch (higherStatIdx) {
+            case 0:
+                damage *= 2;
+                break;
+            case 1:
+                if (enemy->defense > damage) {
+                    damage += enemy->defense / 2;
+                } else {
+                    damage += damage / 2;
+                }
+                break;
+            case 2:
+                damage += SquareRoot0(g_roomCount);
+                break;
+            case 3:
+                damage += (rand() % g_Status.statsTotal[3]) + 1;
+                break;
+            }
+            result = DAMAGE_FLAG_CRITICAL;
+        } else {
+            result = DAMAGE_FLAG_NORMAL;
+        }
+
+        if (damage > enemy->defense) {
+            damage = damage - enemy->defense;
+        } else {
+            damage = 1;
+        }
+
+        if (damage < 0 || damage >= 10000) {
+            damage = 9999;
+        }
+
+        result += damage;
+    }
+
+    return result;
+}
 
 s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
@@ -1127,8 +1227,8 @@ void func_8010189C(void) {
             poly->pad3 = D_800A2F64[i];
 
             if (i == 5) {
-                SetPolyRect(poly, D_800A2EED, D_800A2EFD, D_800A2F3D,
-                            D_800A2F2D);
+                SetPolyRect(
+                    poly, D_800A2EED, D_800A2EFD, D_800A2F3D, D_800A2F2D);
                 poly->y0 = poly->y2;
                 poly->x1 = poly->x0;
                 poly->x2 = poly->x3;

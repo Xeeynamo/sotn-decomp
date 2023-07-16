@@ -1,0 +1,70 @@
+name: Build Saturn version
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+      - '**/*.md'
+  pull_request_target:
+    paths-ignore:
+      - '*.md'
+      - '**/*.md'
+  workflow_dispatch:
+
+jobs:
+  build-and-test-saturn:
+    # Building and testing cannot work if the repository owner is not Xeeynamo
+    # due to the missing secrets to clone the game's data repository
+    if: github.repository == 'Xeeynamo/sotn-decomp'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          submodules: false
+      - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: Clone dependencies
+        uses: actions/checkout@v3
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: saturn
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+          path: 'disks/dependencies'
+      - name: Setting up dependencies
+        working-directory: disks
+        run: |
+          cat dependencies/* > dependencies.tar.gz
+          tar -xf dependencies.tar.gz
+          mv *.cue sotn.saturn.cue
+          mv *.bin sotn.saturn.bin
+      - name: Install bchunk 7zip
+        run: |
+          sudo apt-get install p7zip-full bchunk binutils-sh-elf
+      - name: Install dosemu
+        run: |
+          wget https://github.com/sozud/dosemu-deb/archive/refs/heads/main.zip
+          unzip main.zip
+          rm -rf main.zip
+          cd dosemu-deb-main
+          sudo apt-get install xfonts-utils
+          sudo dpkg -i fdpp_1.6-1_amd64.deb
+          sudo dpkg -i fdpp-dev_1.6-1_amd64.deb
+          sudo dpkg -i comcom32_0.1~alpha3-1_all.deb
+          sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
+      - name: Prep
+        run: make -j build_saturn_toolchain_native
+      - name: Extract asm
+        run: make extract_saturn
+      - name: Build saturn binaries
+        run: make build_saturn_native
+      - name: Check saturn
+        run: make check_saturn_native

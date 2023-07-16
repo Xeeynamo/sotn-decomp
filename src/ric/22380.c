@@ -40,23 +40,28 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
 
-Entity* func_8015F8F8(s16 entityIndex, s16 arg1) {
-    Entity* entity = &g_Entities[entityIndex];
-    s16 var_a0 = entityIndex;
+Entity* func_8015F8F8(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-    if (entityIndex < arg1) {
-        while (var_a0 < arg1) {
-            if (entity->objectId == ENTITY_UNALLOCATED) {
-                return entity;
-            }
-            var_a0++;
-            entity++;
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
         }
     }
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F96C);
+Entity* func_8015F96C(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F9F0);
 
@@ -76,20 +81,45 @@ void func_8015FAB8(Entity* entity) {
     } else {
         attack = subwpn->attack;
     }
-    NOP;
 
     entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
-    entity->unk3C = subwpn->sp1C;
-    entity->unk49 = subwpn->sp17;
+    entity->hitboxState = subwpn->sp1C;
+    entity->nFramesInvincibility = subwpn->sp17;
     entity->unk58 = subwpn->sp18;
     entity->unk6A = subwpn->sp1E;
-    entity->objectRoomIndex = subwpn->sp22;
+    entity->entityRoomIndex = subwpn->sp22;
     entity->attack = g_api.func_800FD664(entity->attack);
     func_8015F9F0(entity);
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FB84);
+// We're playing as Richter and we used a subweapon (normal or crash)
+s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
+    s32 pad[2]; // Needed so stack pointer moves properly
+    u8 crashId;
+    // Not an item crash. Just read the item in.
+    if (isItemCrash == 0) {
+        *subwpn = D_80154688[g_Status.subWeapon];
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    } else {
+        // If it's a crash, load the subweapon by referencing our
+        // subweapon's crash ID and loading that.
+        crashId = D_80154688[g_Status.subWeapon].crashId;
+        *subwpn = D_80154688[crashId];
+        if (g_Status.hearts >= subwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= subwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FDB0);
 
@@ -102,9 +132,9 @@ void func_801601DC(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->flags = 0x120000 | FLAG_UNK_08000000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->unk5A = 0x79;
-        entity->animSet = 0xE;
+        entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
         entity->palette = 0x819F;
 
@@ -156,13 +186,13 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
     if (entity != NULL) {
         func_80156C60(entity);
-        entity->objectId = ENTITY_BREAKABLE;
+        entity->entityId = E_UNK_1;
         entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
         entity->posY.val = srcEntity->posY.val;
         entity->facing = srcEntity->facing;
         entity->zPriority = srcEntity->zPriority;
-        entity->subId = arg1 & 0xFFF;
+        entity->params = arg1 & 0xFFF;
         entity->ext.generic.unkA0 = (arg1 >> 8) & 0xFF00;
 
         if (srcEntity->flags & FLAG_UNK_10000) {
@@ -184,19 +214,19 @@ void func_80160C38(Entity* entity) {
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->facing = PLAYER.facing;
         if (entity->step == 0) {
-            entity->flags = 0x60000 | FLAG_UNK_04000000;
-            entity->unk10 = 0x14;
-            entity->unk12 = 0xC;
+            entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+            entity->hitboxOffX = 0x14;
+            entity->hitboxOffY = 0xC;
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
             entity->ext.generic.unkB0 = 0x12;
             func_8015FAB8(entity);
-            entity->ext.generic.unk7C.s = entity->unk3C;
+            entity->ext.generic.unk7C.s = entity->hitboxState;
             entity->step++;
         }
-        entity->unk3C = entity->ext.generic.unk7C.s;
+        entity->hitboxState = entity->ext.generic.unk7C.s;
         if (PLAYER.animFrameIdx < 2) {
-            entity->unk3C = 0;
+            entity->hitboxState = 0;
         }
         if (PLAYER.animFrameIdx >= 8) {
             func_80156C60(entity);
@@ -204,11 +234,6 @@ void func_80160C38(Entity* entity) {
     }
 }
 
-// aspatch jumps to the wrong instruction
-// Matches with PSY-Q 3.5 + aspsx 2.3.4
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160D2C);
-#else
 void func_80160D2C(Entity* self) {
     if (PLAYER.step != 26) {
         func_80156C60(self);
@@ -219,8 +244,8 @@ void func_80160D2C(Entity* self) {
     self->facing = PLAYER.facing;
 
     if (self->step == 0) {
-        self->flags = 0x60000 | FLAG_UNK_04000000;
-        self->unk10 = 0x14;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+        self->hitboxOffX = 0x14;
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
         self->ext.generic.unkB0 = 0x17;
@@ -229,21 +254,20 @@ void func_80160D2C(Entity* self) {
     }
 
     if (PLAYER.animCurFrame == 140) {
-        self->unk12 = 0;
+        self->hitboxOffY = 0;
     }
 
     if (PLAYER.animCurFrame == 141) {
-        self->unk12 = 0xC;
+        self->hitboxOffY = 12;
     }
 
-    if (self->unk48 != 0) {
+    if (self->hitFlags != 0) {
         g_Player.unk44 |= 0x80;
     } else {
-        g_Player.unk44 &= 0xFF7F;
+        g_Player.unk44 &= ~0x80;
     }
-    self->unk48 = 0;
+    self->hitFlags = 0;
 }
-#endif
 
 void func_80160E4C(Entity* self) {
     if (PLAYER.step != 24) {
@@ -253,11 +277,11 @@ void func_80160E4C(Entity* self) {
         self->posY.i.hi = PLAYER.posY.i.hi;
         self->facing = PLAYER.facing;
         if (self->step == 0) {
-            self->flags = 0x60000 | FLAG_UNK_04000000;
+            self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
             self->hitboxHeight = 20;
             self->hitboxWidth = 20;
-            self->unk12 = 0;
-            self->unk10 = 0;
+            self->hitboxOffY = 0;
+            self->hitboxOffX = 0;
             self->ext.generic.unkB0 = 0x11;
             func_8015FAB8(self);
             self->step++;
@@ -277,9 +301,9 @@ void func_80160F0C(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->facing = PLAYER.facing;
     if (self->step == 0) {
-        self->flags = 0x60000 | FLAG_UNK_04000000;
-        self->unk10 = 0xC;
-        self->unk12 = -0x1A;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
+        self->hitboxOffX = 0xC;
+        self->hitboxOffY = -0x1A;
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->ext.generic.unkB0 = 0x16;
@@ -292,29 +316,123 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160FC4);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016147C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161C2C);
+void func_80161C2C(Entity* self) {
+    u16 params = self->params;
+    s16 paramsHi = self->params >> 8;
+    s32 step = self->step;
+    s32 rnd;
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161EF8);
+    switch (step) {
+    case 0:
+        if (paramsHi == 1) {
+            self->unk1A = 0xC0;
+            self->unk1C = 0xC0;
+            self->unk19 = 3;
+            self->animSet = ANIMSET_DRA(2);
+            self->unk4C = D_80154E04;
+        }
+
+        if ((paramsHi == 0) || (paramsHi == 2)) {
+            if (params & 3) {
+                self->unk4C = D_80154DC8;
+                self->unk1A = 0x120;
+                self->unk1C = 0x120;
+                self->unk19 = 3;
+                self->animSet = ANIMSET_DRA(2);
+            } else {
+                self->animSet = ANIMSET_DRA(5);
+                self->unk4C = D_80154C80;
+                self->palette = 0x8170;
+            }
+        }
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
+
+        if (rand() % 4) {
+            self->zPriority = PLAYER.zPriority + 2;
+        } else {
+            self->zPriority = PLAYER.zPriority - 2;
+        }
+
+        if (paramsHi == 2) {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
+        }
+
+        rnd = rand() & 31;
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
+        self->accelerationY = -0x8000;
+        self->accelerationX = PLAYER.accelerationX >> 2;
+        self->step++;
+        break;
+
+    case 1:
+        self->unk1A -= 4;
+        self->unk1C -= 4;
+        self->posY.val += self->accelerationY;
+        self->posX.val += self->accelerationX;
+        if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
+            self->blendMode = 0x10;
+            if (!(params & 1) && (self->animFrameDuration == step)) {
+                func_801606BC(self, 0x40004, 0);
+            }
+        }
+
+        if ((self->animFrameIdx == 16) && (self->unk4C == D_80154C80)) {
+            self->blendMode = 0x10;
+        }
+
+        if (self->animFrameDuration < 0) {
+            func_80156C60(self);
+        }
+        break;
+    }
+}
+
+void func_80161EF8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_DRA(2);
+        self->unk4C = &D_80154E38;
+        self->flags =
+            FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 | FLAG_UNK_40000;
+        self->zPriority = PLAYER.zPriority + 4;
+        self->accelerationY = (rand() & 0x3FFF) - 0x10000;
+        self->step++;
+        break;
+
+    case 1:
+        if ((self->animFrameIdx == 6) &&
+            (self->animFrameDuration == self->step) && (rand() & 1)) {
+            func_801606BC(self, 4, 0);
+        }
+        self->posY.val += self->accelerationY;
+        if (self->animFrameDuration < 0) {
+            func_80156C60(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80161FF0);
 
 void func_801623E0(Entity* entity) {
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
 
     entity->posX.val = g_Entities->posX.val;
     entity->posY.val = PLAYER.posY.val;
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex == -1) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = primIndex;
+        if (primIndex == -1) {
             func_80156C60(entity);
             return;
         }
         entity->ext.generic.unk7E.modeU16 = 32;
         entity->ext.generic.unk7C.s = 32;
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
+        poly = &g_PrimBuf[entity->primIndex];
         poly->u2 = 64;
         poly->u0 = 64;
         poly->v1 = 192;
@@ -327,7 +445,8 @@ void func_801623E0(Entity* entity) {
         poly->clut = 0x13E;
         poly->pad2 = PLAYER.zPriority + 8;
         poly->pad3 = 0;
-        entity->flags = 0x50000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
+        entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
+                        FLAG_HAS_PRIMS;
         entity->step++;
         break;
 
@@ -341,7 +460,7 @@ void func_801623E0(Entity* entity) {
         break;
     }
 
-    poly = &g_PrimBuf[entity->firstPolygonIndex];
+    poly = &g_PrimBuf[entity->primIndex];
     poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
     poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
     poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
@@ -353,27 +472,20 @@ void func_801623E0(Entity* entity) {
     poly->clut = (LOH(g_blinkTimer) & 1) + 0x13E;
 }
 
-/**
- * This function matches with GCC 2.6.0 + ASPSX 2.3.4
- * Aspatch jumps to the wrong instruction
- */
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162604);
-#else
 void func_80162604(Entity* entity) {
     POLY_GT4* poly;
-    s16 firstPolygonIndex;
+    s16 primIndex;
 
     entity->posX.val = g_Entities->posX.val;
     entity->posY.val = PLAYER.posY.val;
     switch (entity->step) {
     case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != (-1)) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        entity->primIndex = primIndex;
+        if (primIndex != -1) {
             entity->ext.generic.unk7E.modeU16 = 0;
             entity->ext.generic.unk7C.s = 0;
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
+            poly = &g_PrimBuf[entity->primIndex];
             poly->v1 = 192;
             poly->v0 = 192;
             poly->u3 = 63;
@@ -386,7 +498,8 @@ void func_80162604(Entity* entity) {
             poly->clut = 0x162;
             poly->pad2 = PLAYER.zPriority - 4;
             poly->pad3 = 0;
-            entity->flags = 0x50000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
+            entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 |
+                            FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
         } else {
@@ -418,7 +531,7 @@ void func_80162604(Entity* entity) {
 
     def:
     default:
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
+        poly = &g_PrimBuf[entity->primIndex];
         poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
         poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
         poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
@@ -430,624 +543,7 @@ void func_80162604(Entity* entity) {
         break;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162870);
 
 void func_80162C7C(void) {}
-
-/**
- * TODO:
- * Aspatch jumps to the wrong instruction
- * This function matches with GCC 2.6.0 + ASPSX 2.3.4,
- * It also has a jumptable which makes it impossible for it
- * to be included in a NON_MATCHING state.
- * CAUTION: rodata yet to be confirmed matching
- */
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162C84);
-#else
-extern s32 D_80154ED4;
-extern s32 D_80154EF8;
-
-void func_80162C84(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        entity->flags =
-            0x100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 | FLAG_UNK_08000000;
-        entity->facing = 1;
-        entity->unk5A = 0x66;
-        entity->zPriority = PLAYER.zPriority - 8;
-        entity->palette = 0x8149;
-        entity->animSet = -0x7FED;
-        func_8015C920(&D_80154ED4);
-        entity->accelerationX = -0x1C000;
-        entity->posY.i.hi = 0xBB;
-        entity->posX.i.hi = 0x148;
-        entity->ext.generic.unk7E.modeU16 = 0;
-        entity->step++;
-        break;
-
-    case 1:
-        if (*(s32*)&entity->animFrameIdx == 0x10000) {
-            g_api.PlaySfx(0x882);
-        }
-        if (*(s32*)&entity->animFrameIdx == 0x10004) {
-            g_api.PlaySfx(0x883);
-        }
-
-        entity->posX.val += entity->accelerationX;
-        if (((s16)entity->ext.generic.unk7E.modeU16 == 0) &&
-            (entity->posX.i.hi < 256)) {
-            g_api.PlaySfx(0x87D);
-            entity->ext.generic.unk7E.modeU16++;
-        }
-        if (entity->posX.i.hi < 0xE0) {
-            func_8015C920(&D_80154EF8);
-            entity->accelerationX = 0;
-            entity->step++;
-            func_801606BC(entity, 0x40000, 0);
-            return;
-        }
-    case 2:
-        if (entity->animFrameIdx == 16) {
-            g_api.PlaySfx(0x87E);
-            entity->ext.generic.unk7C.s = 0x80;
-            entity->step++;
-        }
-        break;
-
-    case 3:
-        entity->ext.generic.unk7C.s--;
-        if ((entity->ext.generic.unk7C.s) == 0) {
-            func_801606BC(entity, 0x1E, 0);
-            entity->step++;
-        }
-        break;
-
-    case 4:
-
-    default:
-        return;
-    }
-}
-#endif
-
-// same as DRA/func_8011BD48
-bool func_80162E9C(Entity* entity) {
-    s32 i = 0x10;
-    s16 objId = entity->objectId;
-    s16 subId = entity->subId;
-    Entity* e = &g_Entities[i];
-    for (; i < 0x40; i++, e++) {
-        if (objId == (s32)e->objectId && subId == (s32)e->subId &&
-            e != entity) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80162EF8);
-
-void func_801641A0(Entity* entity) {
-    POLY_GT4* poly;
-    s16 firstPolygonIndex;
-
-    entity->posX.i.hi = PLAYER.posX.i.hi;
-    entity->posY.i.hi = PLAYER.posY.i.hi - 8;
-    switch (entity->step) {
-    case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
-            entity->ext.generic.unk7C.s = 16;
-            entity->ext.generic.unk7E.modeU16 = 12;
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
-            poly->u2 = 64;
-            poly->u0 = 64;
-            poly->v1 = 192;
-            poly->v0 = 192;
-            poly->u3 = 127;
-            poly->u1 = 127;
-            poly->v3 = 255;
-            poly->v2 = 255;
-            poly->b3 = 128;
-            poly->g3 = 128;
-            poly->r3 = 128;
-            poly->b2 = 128;
-            poly->g2 = 128;
-            poly->r2 = 128;
-            poly->b1 = 128;
-            poly->g1 = 128;
-            poly->r1 = 128;
-            poly->b0 = 128;
-            poly->g0 = 128;
-            poly->r0 = 128;
-            poly->tpage = 0x1A;
-            poly->clut = 0x160;
-            poly->pad2 = PLAYER.zPriority + 8;
-            poly->pad3 = 0x35;
-            entity->flags = 0x40000 | FLAG_UNK_04000000 | FLAG_FREE_POLYGONS;
-            entity->step++;
-            goto def;
-        } else {
-            func_80156C60(entity);
-            break;
-        }
-
-    case 1:
-        entity->ext.generic.unk7C.s += 2;
-        entity->ext.generic.unk7E.modeU16 += 2;
-        if (entity->ext.generic.unk7C.s >= 57) {
-            func_80156C60(entity);
-            break;
-        }
-
-    default:
-    def:
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
-        poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-        poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-        if (poly->b3 >= 12) {
-            poly->b3 += 244;
-        }
-        poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 = poly->b1 =
-            poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3;
-    }
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80164444);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80164DF8);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801656B0);
-
-void func_80165DD8(POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius,
-                   bool arg4) {
-    s16 top = y - radius;
-    s16 bottom = y + radius;
-    s32 colorChannel;
-
-    poly->y1 = top;
-    poly->y0 = top;
-
-    poly->y3 = bottom;
-    poly->y2 = bottom;
-
-    if (poly->y0 < 0) {
-        poly->y1 = 0;
-        poly->y0 = 0;
-    }
-
-    if (poly->y0 > 240) {
-        poly->y3 = 240;
-        poly->y2 = 240;
-    }
-
-    if (arg4 == 0) {
-        colorChannel = colorIntensity * D_80155368[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r3 = (u32)colorChannel >> 8;
-        poly->r1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g3 = (u32)colorChannel >> 8;
-        poly->g1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b3 = (u32)colorChannel >> 8;
-        poly->b1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[3];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r2 = (u32)colorChannel >> 8;
-        poly->r0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[4];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g2 = (u32)colorChannel >> 8;
-        poly->g0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[5];
-    } else {
-        colorChannel = colorIntensity * D_80155368[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r3 = (u32)colorChannel >> 8;
-        poly->r1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g3 = (u32)colorChannel >> 8;
-        poly->g1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b3 = (u32)colorChannel >> 8;
-        poly->b1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[6];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r2 = (u32)colorChannel >> 8;
-        poly->r0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[7];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g2 = (u32)colorChannel >> 8;
-        poly->g0 = (u32)colorChannel >> 8;
-        colorChannel = colorIntensity * D_80155368[8];
-    }
-    if (colorChannel < 0) {
-        colorChannel += 255;
-    }
-    poly->b2 = (u32)colorChannel >> 8;
-    poly->b0 = (u32)colorChannel >> 8;
-}
-
-void func_80166024() {
-    PLAYER.palette = 0x815E;
-    PLAYER.blendMode = 0x70;
-}
-
-void func_80166044() {
-    PLAYER.palette = 0x8120;
-    PLAYER.blendMode = 0;
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166060);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80166784);
-
-void func_8016779C(Entity* entity) {
-    if (g_Player.unk46 == 0) {
-        func_80156C60(entity);
-        return;
-    }
-
-    entity->facing = PLAYER.facing;
-    if (entity->step == 0) {
-        entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_UNK_10000;
-        entity->animSet = -0x7FEE;
-        entity->unk5A = 0x46;
-        entity->palette = 0x8120;
-        entity->zPriority = PLAYER.zPriority + 2;
-    }
-
-    if (PLAYER.step == 2) {
-        if (PLAYER.facing != 0) {
-            entity->animCurFrame = D_80155CCC[D_80175080];
-        } else {
-            entity->animCurFrame = D_80155CB8[D_80175080];
-        }
-    } else if (PLAYER.step == 0) {
-        if (PLAYER.facing != 0) {
-            entity->animCurFrame = D_80155CF4[D_80175080];
-        } else {
-            entity->animCurFrame = D_80155CE0[D_80175080];
-        }
-    } else if (PLAYER.facing != 0) {
-        entity->animCurFrame = D_80155D1C[D_80175080];
-    } else {
-        entity->animCurFrame = D_80155D08[D_80175080];
-    }
-
-    entity->posX.val = g_Entities->posX.val;
-    entity->posY.val = PLAYER.posY.val;
-}
-
-/**
- * TODO: !FAKE
- * Needs to be refactored
- */
-void func_80167964(Entity* entity) {
-    /**
-     * 0x5E was originally 0xBC in mips2c output
-     * suggesting the size of the Entity struct
-     */
-    if (g_Player.unk46 != 0) {
-        if (entity->step == 0) {
-            entity->flags = 0x60000 | FLAG_UNK_04000000 | FLAG_UNK_10000;
-        }
-        if (!(entity->subId & 0xFF00)) {
-            *(&PLAYER.palette +
-              (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
-        }
-        *(&PLAYER.ext.generic.unkA4 +
-          (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
-        entity->animFrameDuration++;
-        if (entity->animFrameDuration == 0xF) {
-            func_80156C60(entity);
-        }
-    } else {
-        func_80156C60(entity);
-    }
-}
-
-void func_80167A58(void) {}
-
-void func_80167A60(void) {}
-
-void func_80167A68(void) {}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80167A70);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80167EC4);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801682B4);
-
-s32 func_8016840C(s16 x, s16 y) {
-    Collider res;
-    u16 temp;
-
-    if (g_CurrentEntity->accelerationX != 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
-                             g_CurrentEntity->posY.i.hi + x, &res, 0);
-        if (g_CurrentEntity->accelerationX > 0) {
-            temp = res.unk14;
-        } else {
-            temp = res.unk1C;
-        }
-        if (!(res.unk0 & 2)) {
-            return 0;
-        }
-    } else {
-        return 0;
-    }
-    g_CurrentEntity->posX.i.lo = 0;
-    g_CurrentEntity->posX.i.hi += temp;
-    return 2;
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801684D8);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80168A20);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016902C);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169470);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169704);
-
-void func_80169C10(Entity* entity) {
-    POLY_GT4* poly;
-    s16 firstPolygonIndex;
-    s32 PosX = 8;
-    s32 PosY = 4;
-
-    switch (entity->step) {
-    case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
-            entity->accelerationY = 0x8000;
-            entity->posX.i.hi =
-                ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
-            entity->posY.i.hi =
-                ((u16)entity->posY.i.hi - PosY) + (rand() & 0xF);
-            poly = &g_PrimBuf[entity->firstPolygonIndex];
-            poly->clut = 0x1B0;
-            poly->tpage = 0x1A;
-            poly->b0 = 0;
-            poly->b1 = 0;
-            poly->pad2 = entity->zPriority;
-            poly->pad2 = poly->pad2 + 4;
-            poly->pad3 = 0x31;
-            func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi);
-            entity->step++;
-        } else {
-            func_80156C60(entity);
-        }
-        break;
-
-    default:
-        entity->posY.val += entity->accelerationY;
-        poly = &g_PrimBuf[entity->firstPolygonIndex];
-        if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
-            func_80156C60(entity);
-        }
-        break;
-    }
-}
-
-void func_80169D74(Entity* entity) {
-    Multi temp;
-    s16* ptr;
-
-    switch (entity->step) {
-    case 0:
-        entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->ext.generic.unk84.unk =
-            entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-        entity->animSet = -0x7FEF;
-        entity->animCurFrame = D_80155E68[entity->subId];
-        entity->unk5A = 0x66;
-        entity->palette = 0x81B0;
-        entity->blendMode = 0x10;
-        entity->facing = PLAYER.facing;
-        entity->zPriority = PLAYER.zPriority;
-        entity->unk19 = 4;
-        entity->unk1E = 0xC00;
-        entity->step++;
-        break;
-
-    case 1:
-        entity->unk1E -= 0x80;
-        if (entity->ext.generic.unk8C.entityPtr->step == 7) {
-            entity->step++;
-            entity->ext.generic.unk7C.s = (entity->subId + 1) * 4;
-        }
-        break;
-
-    case 2:
-        entity->unk1E -= 0x80;
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
-            func_80156C60(entity);
-            return;
-        }
-        break;
-    }
-    temp = entity->ext.generic.unk84;
-    ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - g_Camera.posX.i.hi;
-    entity->posY.i.hi = ptr[1] - g_Camera.posY.i.hi;
-    entity->ext.generic.unk80.modeS16.unk0 =
-        (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80169F04);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016A26C);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016A974);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016B0C0);
-
-void func_8016B8E8(s32 arg0) {
-    g_CurrentEntity->ext.generic.unk7C.s =
-        (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
-    }
-}
-
-void func_8016B92C(s16 arg0) {
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk7C.s =
-            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
-    }
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016B97C);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016C1BC);
-
-s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
-    u8 ret = 0;
-    s32 i;
-    s32 j;
-    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
-
-    for (i = 0; i < 4; i++, temp++) {
-        for (j = 0; j < 3; j++) {
-            temp->unk00[j] -= value;
-
-            if (temp->unk00[j] < 16) {
-                temp->unk00[j] = 16;
-            } else {
-                ret |= 1;
-            }
-        }
-    }
-    return ret;
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016C734);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016CC74);
-
-void func_8016D328(Entity* entity) {
-    s16 firstPolygonIndex;
-    s32 acceleration;
-
-    switch (entity->step) {
-    case 0:
-        firstPolygonIndex = g_api.AllocPrimitives(4, 1);
-        entity->firstPolygonIndex = firstPolygonIndex;
-        if (firstPolygonIndex != -1) {
-            entity->flags = FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
-            entity->posX.val =
-                entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-            entity->posY.val =
-                entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
-            entity->facing = entity->ext.generic.unk8C.entityPtr->ext.generic
-                                 .unk8C.modeU16.unk0;
-            entity->ext.generic.unkB0 = 0x18;
-            func_8015FAB8(entity);
-            entity->unk5A = 0x79;
-            entity->animSet = 0xE;
-            entity->palette = 0x819E;
-            entity->unk4C = &D_80155EA8;
-            entity->blendMode = 0x30;
-            entity->unk19 = 8;
-            entity->unk6C = 0x60;
-            entity->hitboxWidth = 8;
-            entity->hitboxHeight = 8;
-            entity->flags |= 0x100000;
-            acceleration = (rand() % 512) + 0x300;
-            entity->accelerationX = rcos(acceleration) * 32;
-            entity->accelerationY = -(rsin(acceleration) * 32);
-            entity->step++;
-        } else {
-            func_80156C60(entity);
-        }
-        break;
-
-    case 1:
-        if (++entity->ext.generic.unk7C.s >= 39) {
-            func_80156C60(entity);
-        } else {
-            entity->posX.val += entity->accelerationX;
-            entity->posY.val += entity->accelerationY;
-        }
-        break;
-    }
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016D4D8);
-
-void func_8016D920(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        entity->flags = FLAG_UNK_04000000;
-        entity->ext.generic.unkB0 = 0x19;
-        func_8015FAB8(entity);
-        entity->hitboxWidth = 4;
-        entity->hitboxHeight = 4;
-        entity->step++;
-        break;
-
-    case 1:
-        if (++entity->ext.generic.unk7C.s >= 4) {
-            func_80156C60(entity);
-        }
-        break;
-    }
-}
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016D9C4);
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8016DF74);

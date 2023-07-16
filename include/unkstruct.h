@@ -12,7 +12,12 @@ typedef struct {
 typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
-} Unkstruct6; // size = 0x4
+} Point16; // size = 0x4
+
+typedef struct {
+    /* 0x0 */ s32 x;
+    /* 0x4 */ s32 y;
+} Point32; // size = 0x8
 
 typedef struct {
     /* 0x0 */ u16 unk0;
@@ -33,13 +38,15 @@ typedef struct {
 } unkStruct_800A872C; // size = 0x10
 
 typedef struct {
-    /* 0x0 */ u16* fg;
-    /* 0x4 */ u16* bg;
-    /* 0x8 */ u16 unk8;
-    /* 0xA */ s16 unkA;
-    /* 0xC */ u16 unkC;
-    /* 0xE */ u16 unkE;
-} Unkstruct8; // size = 0x10
+    /* 0x00 */ u16* fg;
+    /* 0x04 */ u16* bg;
+    /* 0x08 */ u16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ s16 unkE;
+    /* 0x10 */ char pad_10[0x38];
+    /* 0x48 */ s32 unk48;
+} Unkstruct8; // size = unknown
 
 typedef struct {
     /* 0x00 */ u8 unk0[0x278];
@@ -242,3 +249,40 @@ typedef struct Unkstruct_801C6C6C {
         s32 p;
     } y;
 } Unkstruct_801C6C6C;
+
+typedef struct {
+    s16 x, y;
+} Unkstruct_80138FC0;
+
+// Somehow related to how Player sprites are stored in the VRAM
+typedef struct {
+    s16 unk00, unk02;
+    u16 unk04, unk06;
+    u16 unk08, unk0A;
+    u16 unk0c, unk0E;
+    u16 unk10, unk12;
+    u16 unk14, unk16;
+    u8 unk18;
+    u8 unk19;
+    u8 unk1A;
+    u8 unk1B;
+    u8 unk1C;
+    u8 unk1D;
+    u8 unk1E;
+    u8 unk1F;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+    u8 unk24;
+    u8 unk25;
+    u8 unk26;
+    u8 unk27;
+} Unkstruct_800ECBF8_1; /* size = 0x28 */
+
+typedef struct {
+    u16 start;
+    s16 current;
+    s16* coords;
+    s16 unk8;
+} Unkstruct_80102CD8;

@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
@@ -30,14 +31,14 @@ segments:
       - [0x0, data]
       - [0x3B5F8, rodata] # jtbl_800DB5F8
       - [0x3B618, rodata, play] # jtbl_800DB618
-      - [0x3B648, 
-      rodata, gameover] # jtbl_800DB648
+      - [0x3B648, rodata, gameover] # jtbl_800DB648
       - [0x3B808, .rodata, 46358]
       - [0x3B8D0, .rodata, 46FD4]
       - [0x3B938, rodata]
       - [0x3BCF0, rodata] # jtbl_800DBCF0
       - [0x3BD08, rodata] # jtbl_800DBD08
-      - [0x3BD60, rodata]
+      - [0x3BD60, rodata, 47BB8]
+      - [0x3BE60, rodata]
       - [0x3BE78, rodata] # jtbl_800DBE78
       - [0x3BE90, rodata] # jtbl_800DBE90
       - [0x3BEA8, rodata] # jtbl_800DBEA8
@@ -46,9 +47,8 @@ segments:
       - [0x3C15C, rodata] # jtbl_800DC15C
       - [0x3C19C, rodata]
       - [0x3C1AC, rodata] # jtbl_800DC1AC
-      - [0x3C204, rodata] # jtbl_800DC204
-      - [0x3C404, rodata]
-      - [0x3C474, rodata] # jtbl_800DC474
+      - [0x3C204, .rodata, collider]
+      - [0x3C404, .rodata, demo]
       - [0x3C488, rodata] # jtbl_800DC488
       - [0x3C4A8, .rodata, 52860]
       - [0x3C4D0, rodata] # jtbl_800DC4D0
@@ -161,9 +161,9 @@ segments:
       - [0x46A0C, c, 46358]
       - [0x47688, c, 46FD4]
       - [0x48250, c, 47BB8_hd]
-      - [0x4FAE0, c, collider_hd]
-      - [0x5027C, c, demo_hd]
-      - [0x50F00, c, 5087C_hd]
+      - [0x4FAE0, c, collider]
+      - [0x5027C, c, demo]
+      - [0x50F00, c, 5087C]
       - [0x52EE4, c, 52860]
       - [0x53010, c, 5298C_hd]
       - [0x5D678, c, 5D6C4_hd]
@@ -176,7 +176,7 @@ segments:
       - [0x75A90, c, 75DA0]
       - [0x75C44, c, 75F54_hd]
       - [0x94F7C, c, 953A0_hd]
-      - [0x95E88, sbss]  
+      - [0x95E88, sbss]
   - name: dra_data
     type: data
     start: 0x9B270

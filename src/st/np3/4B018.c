@@ -26,11 +26,11 @@ void func_801CD540(Entity* self) {
     }
 
     hitbox += diff * 4;
-    self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
-    if (self[-1].objectId != 0x44) {
+    if (self[-1].entityId != 0x44) {
         DestroyEntity(self);
     }
 }
@@ -76,7 +76,32 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDF1C);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDFD8);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE04C);
+void func_801CE04C(Entity* entity, Collider* collider) {
+    s16 var_s0 = 0;
+
+    g_api.CheckCollision(
+        entity->posX.i.hi, (s16)(entity->posY.i.hi + collider->unk18), collider,
+        0);
+    if (collider->effects & 1) {
+        var_s0 = 1;
+        if (collider->effects & 0x8000) {
+            if (collider->effects & 0x4000) {
+                if (g_CurrentEntity->facing != 0) {
+                    var_s0 = 4;
+                } else {
+                    var_s0 = 2;
+                }
+            } else {
+                if (g_CurrentEntity->facing != 0) {
+                    var_s0 = 2;
+                } else {
+                    var_s0 = 4;
+                }
+            }
+        }
+    }
+    entity->ext.generic.unk88.S16.unk0 = var_s0;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE120);
 
@@ -92,19 +117,257 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE3FC);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE4CC);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE69C);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityHammer);
 
+// DECOMP_ME_WIP func_801CF254 https://decomp.me/scratch/EpZEL
+// minor regalloc
+// has jumptable
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF254);
+#else
+extern u16 D_80180B8C[];
+extern u16 D_80180BA4[];
+extern u16 D_80180BBC[];
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF5B8);
+void func_801CF254(Entity* self) {
+    Collider collider;
+    s32 aaaa;
+    s32 sp28;
+    s16 temp_s0;
+    s16 temp_s0_2;
+    s16 temp_v0_3;
+    s32 temp_s1;
+    u16 temp_v0;
+    u16 temp_v0_2;
+    u16 temp_v1;
+    u16 temp_v1_3;
+    u16* var_a0;
+    u32 temp_v1_2;
+    u16 temp_a0;
+
+    switch (self->step) {
+    case 0:
+        switch (self->params >> 8) {
+        case 0:
+            InitializeEntity(D_80180B8C);
+            break;
+        case 1:
+            InitializeEntity(D_80180BA4);
+            break;
+        case 2:
+            InitializeEntity(D_80180BBC);
+            break;
+        }
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->params = (u8)self->params;
+        self->animCurFrame = self->params;
+        self->unk19 |= 4;
+        break;
+
+    case 1:
+        self->unk1E = self->ext.et_801CF254.unk9C;
+        break;
+
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            temp_s1 = (Random() & 0x1F) + 0x10;
+            temp_s0_2 = (Random() * 6) + 0x900;
+            self->accelerationX = (s32)(temp_s1 * rcos((s32)temp_s0_2)) / 2;
+            self->accelerationY = temp_s1 * rsin((s32)temp_s0_2);
+            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;
+            self->unk3C = 0;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+            self->step_s++;
+            break;
+
+        case 1:
+            MoveEntity();
+            self->accelerationY += 0x2000;
+            self->unk1E += self->ext.generic.unkA6;
+            if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+                self->step = 0;
+                self->pfnUpdate = EntityExplosion;
+                self->params = 0;
+                self->unk19 = 0;
+                return;
+            }
+        }
+        break;
+    }
+
+    switch (self->params) {
+    case 8:
+    case 14:
+        collider.unk18 = 9;
+        func_801CE04C(self, &collider);
+        break;
+
+    case 9:
+    case 15:
+        aaaa = self->ext.et_801CF254.next->ext.et_801CF254.unk88;
+        if (aaaa == 2) {
+            self->ext.et_801CF254.unk9C = 0x200;
+        } else if (aaaa == 4) {
+            self->ext.et_801CF254.unk9C = -0x200;
+        } else if (aaaa == 1) {
+            self->ext.et_801CF254.unk9C = 0;
+        }
+
+        if (self->ext.et_801CF254.unk8D != 0) {
+            temp_s0 = self->unk1E;
+            self->unk10 = -(rsin(temp_s0) * 8) >> 0xC;
+            self->unk12 = (u32)rcos(temp_s0) >> 9;
+            self->attack = g_api.enemyDefs[192].attack;
+            self->attackElement = g_api.enemyDefs[192].attackElement;
+            break;
+        }
+        self->unk10 = 0;
+        self->unk12 = 0;
+        self->attack = g_api.enemyDefs[190].attack;
+        self->attackElement = g_api.enemyDefs[190].attackElement;
+        break;
+
+    case 5:
+    case 11:
+        self->ext.et_801CF254.next->ext.et_801CF254.unk9C =
+            self->ext.et_801CF254.unk9C;
+    }
+}
+#endif
+
+void EntityHammerWeapon(Entity* self) {
+    s16 temp_s0;
+    s32 accel;
+    s32 temp_s1;
+    s16 angle;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B98);
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 10;
+        self->unk19 |= 4;
+
+    case 1:
+        angle = *(u16*)&self->ext.stub[0x20];
+        self->rotAngle = angle;
+        self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
+        self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
+        break;
+
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            temp_s1 = (Random() & 0x1F) + 0x10;
+            temp_s0 = (Random() * 6) + 0x900;
+            self->accelerationX = (temp_s1 * rcos(temp_s0)) / 2;
+            accel = temp_s1 * rsin(temp_s0);
+            self->hitboxState = 0;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+            self->step_s++;
+            self->accelerationY = accel;
+            break;
+
+        case 1:
+            MoveEntity();
+            self->accelerationY += 0x2000;
+            func_801CDC80(&self->rotAngle, 0x800, 0x20);
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF778);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF94C);
+// DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkha);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0730);
+void EntityGurkhaSword(Entity* self) {
+    s16 angle;
+    s32 rnd;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BB0);
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->unk19 |= 4;
+        break;
+
+    case 1:
+        angle = self->ext.gurkhaSword.unk9C;
+        self->rotAngle = angle;
+        self->hitboxOffX = (u32)rsin(angle) >> 8;
+        self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
+        if (self->ext.gurkhaSword.unk8C) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->facing == 0) {
+            self->accelerationX = -0x80000;
+        } else {
+            self->accelerationX = 0x80000;
+        }
+        self->step++;
+
+    case 3:
+        MoveEntity();
+        self->rotAngle -= 0x100;
+        self->ext.gurkhaSword.unk9C = self->rotAngle;
+        self->ext.gurkhaSword.unkA6 = -0xC0;
+        angle = self->rotAngle;
+        self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
+        self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
+
+        if (self->facing != 0) {
+            self->accelerationX -= 0x4000;
+        } else {
+            self->accelerationX += 0x4000;
+        }
+
+        if ((g_blinkTimer % 16) == 0) {
+            func_801C2598(0x625);
+        }
+
+        if (ABS(self->accelerationX) == 0x80000) {
+            self->ext.gurkhaSword.unk8C = 0;
+            self->step = 1;
+        }
+        break;
+
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            rnd = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
+            self->accelerationX = (rnd * rcos(angle)) / 2;
+            self->accelerationY = rnd * rsin(angle);
+            self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
+            self->hitboxState = 0;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+            self->step_s++;
+            break;
+
+        case 1:
+            MoveEntity();
+            self->accelerationY += 0x2000;
+            self->rotAngle += self->ext.gurkhaSword.unkA6;
+            if (--self->ext.gurkhaSword.unk80 == 0) {
+                self->step = 0;
+                self->pfnUpdate = EntityExplosion;
+                self->params = 0;
+                self->unk19 = 0;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0A00);
 

@@ -28,7 +28,7 @@ jobs:
             version: us
           # - dependency: pspeu
           #   version: hd
-    # build-and-test cannot work if the repository owner is not Xeeynamo
+    # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
         if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.after }}
+          ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
@@ -54,7 +54,7 @@ jobs:
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: ${{ matrix.dependency }}
-          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
@@ -113,7 +113,7 @@ jobs:
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: ${{ matrix.version }}
-          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
@@ -151,7 +151,7 @@ jobs:
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: ${{ matrix.version }}
-          token: ${{ secrets.SOTN_DECOM_PRIVATE_REPO_TOKEN }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
@@ -179,12 +179,13 @@ jobs:
           python-version: '3.x'
       - name: Install secondary pre-requirements
         run: pip3 install -r tools/requirements-python.txt
-      - name: Generate duplicates report
-        run: python3 tools/find_duplicates.py -a
-      - name: Rename output file into something more meaningful
+      - name: Generate duplicates and function report
+        run: |
+            python3 tools/find_duplicates.py -a & \
+            python3 tools/function_finder.py > gh-duplicates/functions.txt & \
+            wait
+      - name: Rename duplicates report into a more meaningful file
         run: mv *_all_matches.txt gh-duplicates/duplicates.txt
-      - name: Generate function report
-        run: python3 tools/function_finder.py > gh-duplicates/functions.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 

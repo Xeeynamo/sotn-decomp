@@ -97,7 +97,7 @@ void EntityUnkId53(Entity* entity) {
             return;
         }
         InitializeEntity(D_80180AD0);
-        g_Entities[1].unk7C.S8.unk0 = 1;
+        g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
         g_Player.D_80072EF4 = 0x2000;
         g_Player.D_80072EFC = 0xFF;
         player->posX.i.hi = 8;
@@ -145,7 +145,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId55);
 #else
 void EntityUnkId55(Entity* entity, u16 arg2) {
-    s32 firstPolygonIndex;
+    s32 primIndex;
     POLY_GT4* poly;
     s32 temp_v0;
     s16 temp_v0_2;
@@ -156,17 +156,17 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180AD0);
-        firstPolygonIndex = g_api.AllocPrimitives(4, 9);
-        if (firstPolygonIndex == 0) {
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
+        if (primIndex == 0) {
             DestroyEntity(entity);
             return;
         }
-        poly = &g_PrimBuf[firstPolygonIndex];
+        poly = &g_PrimBuf[primIndex];
         var_a2 = 0;
         entity->posX.i.hi = 128;
-        entity->firstPolygonIndex = firstPolygonIndex;
+        entity->primIndex = primIndex;
         entity->unk68 = 0x10;
-        entity->flags |= FLAG_UNK_08000000 | FLAG_FREE_POLYGONS;
+        entity->flags |= FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
 
         while (poly != 0) {
             poly->x2 = 0;
@@ -196,8 +196,8 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
     case 1:
         new_var2 = 0x80 - entity->posX.i.hi;
         entity->posX.i.hi = 0x80;
-        firstPolygonIndex = entity->firstPolygonIndex;
-        poly = &g_PrimBuf[firstPolygonIndex];
+        primIndex = entity->primIndex;
+        poly = &g_PrimBuf[primIndex];
         while (poly != 0) {
             temp_v0_2 = poly->x2 - new_var2;
             temp_v1_2 = temp_v0_2 + 0x1E;
@@ -219,12 +219,12 @@ void EntityBackgroundCastleWall(Entity* entity) {
     newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
     if (newEntity != NULL) {
         CreateEntityFromCurrentEntity(0x11U, newEntity);
-        newEntity->subId = 0xC;
+        newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
         newEntity = AllocEntity(newEntity, &D_8007C0D8[64]);
         if (newEntity != NULL) {
             CreateEntityFromCurrentEntity(0x11U, newEntity);
-            newEntity->subId = 0xB;
+            newEntity->params = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;
             newEntity->posX.i.hi += 0x40;

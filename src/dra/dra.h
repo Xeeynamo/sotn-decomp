@@ -3,6 +3,11 @@
 
 #include "game.h"
 
+#define DAMAGE_FLAG_NORMAL 0x0000
+#define DAMAGE_FLAG_CRITICAL 0x4000
+#define DAMAGE_FLAG_ABSORB 0x8000
+#define DAMAGE_FLAG_IMMUNE 0xC000
+
 typedef enum {
     SimFileType_System,
     SimFileType_StagePrg,
@@ -53,6 +58,7 @@ typedef enum {
     CdFile_GameChr,
     CdFile_StageChr,
     CdFile_4,
+    CdFile_RichterPrg,
     CdFile_Seq = 12,
     CdFile_StageSfx,
     CdFile_14,
@@ -60,11 +66,11 @@ typedef enum {
     CdFile_16,
     CdFile_Weapon0,
     CdFile_Weapon1,
-    CdFile_19,
+    CdFile_AlucardPrg,
     CdFile_24 = 24,
     CdFile_25,
     CdFile_26,
-    CdFile_Servant,
+    CdFile_ServantChr,
     CdFile_28,
     CdFile_ServantPrg,
     CdFile_30,
@@ -97,7 +103,47 @@ typedef enum {
     CdCallback_Vh,       // func_80107EF0
 } CdCallbacks;
 
-// Info necessary to load a file from the Cd in func_80108448
+typedef enum {
+    E_NONE,
+    E_UNK_1,
+
+    ENTITY_13 = 0x13,
+    E_UNK_22 = 0x22,
+} EntityIDs;
+
+typedef enum {
+    Player_Stand,
+    Player_Walk,
+    Player_Crouch,
+    Player_Unk3,
+    Player_Jump,
+    Player_MorphBat,
+    Player_Unk_6,
+    Player_MorphMist,
+    Player_Unk8,
+    Player_Unk9,
+    Player_Hit,
+    Player_StatusStone,
+    Player_Unk12,
+    Player_KillWater,
+    Player_Unk14,
+    Player_Unk15,
+    Player_Unk16,
+    Player_Unk17,
+    Player_Unk18,
+    Player_Unk25 = 25,
+    Player_SpellDarkMetamorphosis = 32,
+    Player_SpellSummonSpirit,
+    Player_SpellHellfire,
+    Player_SpellTetraSpirit,
+    Player_Spell36,
+    Player_SpellSoulSteal,
+    Player_Unk38,
+    Player_Unk39,
+    Player_Unk40,
+} PlayerSteps;
+
+// Info necessary to load a file from the Cd in UpdateCd
 typedef struct {
     s32 loc;        // lba offset, might be a s32
     CdCallbacks cb; // sets g_CdCallback
@@ -164,6 +210,35 @@ typedef struct {
     void (*func_8017A01C)(u8);
 } WeaponOvl;
 
+typedef struct {
+    u32 unk0;
+    u32 damageKind;
+    u32 unk8;
+} DamageParam;
+
+typedef struct {
+    /* 8013761C */ MenuContext menus[3]; // 761C, 763A, 7658
+    /* 80137676 */ s16 D_80137676;
+    /* 80137678 */ s16 D_80137678[6];
+    /* 80137684 */ s32 unused1; // No known use yet, one may be found
+    /* 80137688 */ s16 D_80137688;
+    /* 8013768A */ s16 D_8013768A;
+    /* 8013768C */ u16 D_8013768C;
+    /* 8013768E */ s16 unused2; // No known use yet, one may be found
+    /* 80137690 */ s16 unused3; // No known use yet, one may be found
+    /* 80137692 */ u8 D_80137692;
+} MenuData;
+
+// Used in EntityUnarmedAttack, more research would be useful
+typedef struct {
+    u16** frames;
+    s8* frameProps;
+    s16 unk8;
+    u16 soundId;
+    u8 ACshift;
+    u8 soundFrame;
+} animSoundEvent;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -187,6 +262,7 @@ extern s32 D_800A2D6C;
 extern u8 c_chPlaystationButtons[];
 extern u8 c_chShoulderButtons[];
 extern Unkstruct_800A2D98 D_800A2D98[];
+extern MenuContextInit MenuContextData[];
 extern u8 D_800A2EE8[];
 extern u8 D_800A2EED;
 extern u8 D_800A2EF8[];
@@ -264,7 +340,11 @@ extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
+extern u8 D_800AD094[];
+extern PfnEntityUpdate D_800AD0C4[];
+extern animSoundEvent* D_800AD53C[];
 extern s32 D_800ADC44;
+extern RECT D_800AE130;
 extern s32 D_800AE270[];
 extern AnimationFrame* D_800AE294;
 extern s16 D_800AFDA6;
@@ -292,6 +372,7 @@ extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
 extern s32 D_800BD1C0;
 extern s32 D_800BD1C4;
+extern s32 D_800BD1C8[6];
 extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
@@ -314,6 +395,7 @@ extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
+extern char* aAtariNuki;
 extern s32 D_801362AC;
 extern s32 D_801362B0;
 extern s32 D_801362B4;
@@ -363,28 +445,20 @@ extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 D_80137618;
-
-/**
- * can't use "extern MenuContext D_8013761C[]";
- * as it's 2-byte aligned
- */
-extern u8 D_8013761C[];
-extern s32* D_8013763A; // type MenuContext ?
-extern s16 D_8013767C;
-extern s16 D_80137688;
-extern u16 D_8013768C;
-extern u8 D_80137692;
+extern MenuData g_MenuData;
 extern u8 D_801376B0;
+extern s16 D_801376C4;
+extern s16 D_801376C8;
 extern s32 D_8013783C;
 extern s32 D_801377FC[];
 extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
-extern s32 g_StatusAttackRightHand;
-extern s32 g_StatusAttackLeftHand;
-extern s32 g_StatusDefenseEquip;
-extern s32 g_StatusPlayerStatsTotal[];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+extern s32 g_NewPlayerStatsTotal[];
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
@@ -407,7 +481,7 @@ extern u32 D_8013799C;
 extern s32 D_801379A0;
 extern s32 D_801379A4;
 extern s32 D_801379A8;
-extern u16 D_801379AC[2];
+extern Unkstruct_80102CD8 D_801379AC;
 extern s32 D_801379B0;
 extern s32 D_80137E40;
 extern s32 D_80137E44;
@@ -423,13 +497,20 @@ extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+extern s32 D_80137FBC;
+extern s32 D_80137FE4;
+extern s32 D_80137FE8;
+extern s32 D_80138004;
 extern s32 D_80138008;
+extern s32 D_8013800C[];
 extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;
 extern u8 D_80138048;
 extern s32 D_8013808C;
 extern s32 D_8013841C;
+extern s32 D_8013842C;
 extern s32 D_80138430;
 extern s32 D_80138438;
 extern s32 D_80138440;
@@ -448,7 +529,7 @@ extern s16 D_80138FAC;
 extern s32 D_80138FB0;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
-extern s16 D_80138FC4;
+extern Unkstruct_80138FC0 D_80138FC0[0x10];
 extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
@@ -475,6 +556,8 @@ extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern s32 D_801396F0;
 extern volatile s16 D_801396F4;
+extern s32 D_801396F8[0x20];
+extern s32 D_80139778[0x20];
 extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;
@@ -483,13 +566,22 @@ extern u8 D_80139810;
 extern s16 D_80139814[];
 extern s16 D_80139820;
 extern s32 D_80139828[];
-extern s32 D_80139834[];
+extern s32 D_8013982C;
+extern s32 D_80139830[];
+extern s32 D_8013983C;
+extern s32 D_80139840;
+extern s32 D_80139844;
+extern s32 D_80139848;
+extern s32 D_8013984C;
+extern s32 D_80139850;
+extern s32 D_80139854;
 extern s16 D_80139868[];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
 extern s16 g_sfxRingBufferPos2; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
+extern u_long* D_80139A7C;
 extern u16 D_8013AE7C;
 extern volatile unsigned char D_8013AE80;
 extern s16 D_8013AE84[];
@@ -497,11 +589,16 @@ extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
 extern s16 D_8013AE94;
 extern s32 D_8013AE9C;
+extern s32 D_8013AED0;
 extern s16 D_8013AED4[];
 extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
+extern u8 D_8013B6A0[]; // VAB file
+extern u8 D_8017D350[]; // VAB file
+extern u8 D_8018B4E0[]; // VAB file
+extern u8 D_801A9C80[]; // VAB file
 extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 D_8013AEEC;
@@ -531,7 +628,9 @@ extern s32 D_8013B694;
 extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
+extern PfnEntityUpdate D_80179C80[];
 extern WeaponOvl D_8017A000;
+extern PfnEntityUpdate D_8017CC40[];
 extern WeaponOvl D_8017D000;
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
@@ -570,10 +669,10 @@ void func_800EA5E4(s32);
 void func_800EA538(s32);
 void func_800EAD7C(void);
 void func_800EAEEC(void);
-void func_800EB534(s32 equipIcon, s32 palette, s32 index);
-void func_800ECE2C(void);
-void func_800EDA70(Primitive* prim);
-void func_800EDA94(void);
+void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
+void HideAllBackgroundLayers(void);
+void DestroyPrimitive(Primitive* prim);
+void DestroyAllPrimitives(void);
 void func_800EDAE4(void);
 s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
@@ -590,17 +689,17 @@ void func_800F1EB0(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
-s32 func_800F4D38(s32, s32);
+s32 CalcAttack(s32, s32);
 void func_800F4F48(void);
-void func_800F4FD0(void);
+void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
                    s32 unk2, bool disableTexShade, s32 unk4);
-void DrawMenuSprite(MenuContext* context, s32 x, s32 y, s32 width, s32 height,
-                    s32 u, s32 v, s32 clut, s32 tpage, s32 arg9,
-                    s32 colorIntensity, s32 argB);
+void DrawMenuSprite(
+    MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
+    s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB);
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
@@ -608,7 +707,7 @@ void func_800FF7B8(s32 arg0);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
-void DrawMenuStr(const char* str, s32 x, s32 y, MenuContext* context);
+void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
 void DrawSettingsReverseCloak(MenuContext* context);
 void DrawSettingsSound(MenuContext* context);
@@ -622,14 +721,14 @@ void func_800FAF44(s32);
 s32 func_800FD4C0(s32 bossId, s32 action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
-u8* func_800FD744(s32 equipTypeFilter);
-u8* func_800FD760(s32 equipTypeFilter);
+u8* GetEquipOrder(s32 equipTypeFilter);
+u8* GetEquipCount(s32 equipTypeFilter);
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void func_800FD9D4(SpellDef* spell, s32 id);
 s16 func_800FDB18(s32, s32);
-void func_800FDCE0(s32);
+void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
@@ -640,16 +739,16 @@ void func_80102CD8(s32);
 void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void DestroyEntity(Entity*);
-void func_801065F4(s16 startIndex);
+void DestroyEntities(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(POLY_GT4* poly, s32 colorIntensity);
-void func_80107360(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u,
-                   s32 v);
+void func_80107360(
+    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
-void func_8010D584(s16 arg0);
-void UpdateAnim(FrameProperty* frameProps, s32*);
+void SetPlayerStep(PlayerSteps step);
+u32 UpdateAnim(s8* frameProps, s32*);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
@@ -677,12 +776,12 @@ void func_80118D0C(Entity* entity);
 void func_80119588(Entity* entity);
 void func_80119D3C(Entity* entity);
 void func_80119F70(Entity* entity);
-void func_8011A3AC(Entity* entity, s32 arg1, s32 arg2,
-                   Unkstruct_8011A3AC* arg3);
+void func_8011A3AC(
+    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 void func_8011A4C8(Entity* entity);
 Entity* func_8011AAFC(Entity* entity, u32, s32);
 void func_8011AC3C(Entity* entity);
-void func_8011B190(Entity* entity);
+void EntityUnarmedAttack(Entity* entity);
 void func_8011B334(Entity* entity);
 void func_8011B480(Entity* entity);
 void func_8011B530(Entity* entity);
@@ -746,7 +845,7 @@ void func_801309B4(Entity* entity);
 void func_80130E94(Entity* entity);
 void func_8013136C(Entity* entity);
 void func_801315F8(Entity* entity);
-// commented as a requirement for func_80108448 to match
+// commented as a requirement for UpdateCd to match
 // void func_80131EBC(const char* str, s16 arg1);
 void func_80131ED8(s32 value);
 void func_80131EE8(void);

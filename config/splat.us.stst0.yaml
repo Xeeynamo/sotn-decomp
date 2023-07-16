@@ -14,6 +14,7 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
@@ -42,12 +43,24 @@ segments:
       - [0x1A750, data]
       - [0x27984, .rodata, 27D64]
       - [0x279E8, rodata]
-      - [0x27ACC, rodata]
+      - [0x27A74, .rodata, 28BF8] # EntityCutscene
+      - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
+      - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
+      - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
+      - [0x27B00, .rodata, 2B0C8] # EntityStageTitleCard
+      - [0x27B18, rodata]
+      - [0x27B40, .rodata, 2C564] # EntityDracula
+      - [0x27B7C, rodata]
       - [0x27BFC, rodata]
       - [0x27C8C, .rodata, 36358]
       - [0x27CAC, rodata]
       - [0x27CC4, rodata]
       - [0x27D64, c]
+      - [0x28BF8, c] # Dracula Cutscene
+      - [0x2A8DC, c]
+      - [0x2B0C8, c]
+      - [0x2C564, c] # EntityDracula
+      - [0x30030, c]
       - [0x36358, c]
       - [0x3EB00, sbss]
   - [0x425C4]

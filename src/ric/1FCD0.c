@@ -7,7 +7,7 @@ void func_8015BCD0(void) {
     g_Player.D_80072EFC = 4;
     switch (PLAYER.step_s) {
     case 0:
-        if (*(s32*)&PLAYER.animFrameIdx == 0x10005 &&
+        if (LOW(PLAYER.animFrameIdx) == 0x10005 &&
             func_801606BC(g_CurrentEntity, 0x4D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -18,7 +18,7 @@ void func_8015BCD0(void) {
 
     case 2:
         func_8015BB80();
-        if (*(s32*)&PLAYER.animFrameIdx == 0x10005 &&
+        if (LOW(PLAYER.animFrameIdx) == 0x10005 &&
             func_801606BC(g_CurrentEntity, 0x2004D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -29,7 +29,7 @@ void func_8015BCD0(void) {
 
     case 4:
         func_8015BB80();
-        if (*(s32*)&PLAYER.animFrameIdx == 0x10005 &&
+        if (LOW(PLAYER.animFrameIdx) == 0x10005 &&
             func_801606BC(g_CurrentEntity, 0x4004D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -51,7 +51,7 @@ void func_8015BCD0(void) {
 }
 
 void func_8015BE84(void) {
-    if (g_Player.g_Player & 0x80 && g_Player.unk44 & 0x80) {
+    if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
         PLAYER.step = 4;
         func_8015C920(&D_8015555C);
         func_8015CA84(-0x18000);
@@ -80,7 +80,7 @@ void func_8015BE84(void) {
     }
 
     if (PLAYER.accelerationX < 0) {
-        if (g_Player.g_Player & 0x2000) {
+        if (g_Player.padPressed & PAD_RIGHT) {
             func_8015C93C(0x2000);
         }
         if ((PLAYER.accelerationX > (s32)0xFFFD0000) ||
@@ -95,7 +95,7 @@ void func_8015BE84(void) {
     }
 
     if (PLAYER.accelerationX > 0) {
-        if (g_Player.g_Player & 0x8000) {
+        if (g_Player.padPressed & PAD_LEFT) {
             func_8015C93C(0x2000);
         }
         if ((PLAYER.accelerationX <= 0x2FFFF) || (g_Player.pl_vram_flag & 4)) {
@@ -112,7 +112,7 @@ void func_8015BE84(void) {
 void func_8015C178(void) {
     func_8015C93C(0x1C00);
 
-    if (D_8007342A < 0) {
+    if (PLAYER.animFrameDuration < 0) {
         g_Player.unk46 = 0;
         func_8015CD98(0);
     } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
@@ -124,7 +124,7 @@ void func_8015C178(void) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }
 
-        if ((*(s32*)&PLAYER.animFrameIdx == 0x10012) &&
+        if ((LOW(PLAYER.animFrameIdx) == 0x10012) &&
             (g_Player.pl_vram_flag & 1)) {
             func_801606BC(g_CurrentEntity, 0, 0);
         }
