@@ -97,7 +97,7 @@ void func_80171568(Entity* self) {
 
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->objectId == 0) {
+        if (entity->entityId == 0) {
             goto init_entity;
         }
     }
@@ -105,7 +105,7 @@ void func_80171568(Entity* self) {
 
 init_entity:
     DestroyEntity(entity);
-    entity->objectId = 0xDA;
+    entity->entityId = 0xDA;
     entity->zPriority = self->zPriority;
     entity->facing = self->facing;
     entity->flags = FLAG_UNK_04000000;
@@ -114,7 +114,7 @@ init_entity:
     entity->ext.generic.unk8C.entityPtr = self;
 }
 
-void func_8017160C(s32 amount, s32 objectId) {
+void func_8017160C(s32 amount, s32 entityId) {
     s32 i;
     Entity* entity;
     s16 facing;
@@ -125,13 +125,13 @@ void func_8017160C(s32 amount, s32 objectId) {
 
     for (i = 0; i < amount; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->objectId == objectId) {
+        if (entity->entityId == entityId) {
             entity->step = 0;
         } else {
             DestroyEntity(entity);
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
-            entity->objectId = objectId;
+            entity->entityId = entityId;
             entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
             facing = (g_Entities[0].facing + 1) & 1;
@@ -211,7 +211,7 @@ void func_801719E0(Entity* self) {
     if (self->ext.fam.unk80 == 0) {
         self->ext.fam.unk8E = 0;
         self->ext.fam.unk82 = self->params;
-        switch (self->objectId) {
+        switch (self->entityId) {
         case 0xD1:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex == -1) {
@@ -280,7 +280,7 @@ void func_801719E0(Entity* self) {
         }
     } else {
         self->ext.fam.unk8E = 0;
-        switch (self->objectId) {
+        switch (self->entityId) {
         case 0xD1:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
@@ -318,7 +318,7 @@ void func_801719E0(Entity* self) {
             break;
         }
     }
-    self->ext.fam.unk80 = self->objectId;
+    self->ext.fam.unk80 = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
@@ -371,12 +371,12 @@ void func_80171ED4(s32 arg0) {
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
     if (arg0 == 1) {
-        e->objectId = 0xD1;
+        e->entityId = 0xD1;
         e->posX.val = 0x800000;
         e->posY.val = 0xFFE00000;
     } else {
         Entity* p;
-        e->objectId = 0xD1;
+        e->entityId = 0xD1;
         if (D_8003C708.flags & 0x20) {
             if (func_80174864() != 0) {
                 x = 0xC00000;
@@ -510,7 +510,7 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
     return arg0;
 }
 
-Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
+Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
     s16 start = D_80171094[rangeIndex].start;
     s16 end = D_80171094[rangeIndex].end;
@@ -518,7 +518,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     s32 i;
 
     for (i = start; end >= i; i++, entity++) {
-        if (entity->objectId == objectId) {
+        if (entity->entityId == entityId) {
             return entity;
         }
     }
@@ -647,7 +647,7 @@ typedef struct {
     u32 cameraY;
     s32 unk1C;
     u32 unk20;
-    u32 objectId;
+    u32 entityId;
     u32 params;
     u32 unk2C;
 } Unkstruct_80174210;
@@ -703,7 +703,7 @@ void func_80174210(Entity* self, s32 arg1) {
                                         1)))) {
                                 temp_s0->unk4 = 0;
                                 if (temp_s0->unk20 == 0) {
-                                    func_801745E4(self, temp_s0->objectId,
+                                    func_801745E4(self, temp_s0->entityId,
                                                   temp_s0->params);
                                     if (temp_s0->unk2C == 0) {
                                         goto block_26;
@@ -740,7 +740,7 @@ void func_80174210(Entity* self, s32 arg1) {
                 temp_v1_5 = *var_s1_2;
                 var_v0_2 = temp_v1_5->unk4 - 1;
                 if (temp_v1_5->unk4 == 0) {
-                    func_801745E4(self, temp_v1_5->objectId, temp_v1_5->params);
+                    func_801745E4(self, temp_v1_5->entityId, temp_v1_5->params);
                     temp_v1_4 = *var_s1_2;
                     if (temp_v1_4->unk2C != 0) {
                         *var_s1_2 = temp_v1_4->unk0;
@@ -757,13 +757,13 @@ void func_80174210(Entity* self, s32 arg1) {
 }
 #endif
 
-void func_801745E4(Entity* entityParent, s32 objectId, s32 params) {
+void func_801745E4(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
 
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->objectId == 0) {
+        if (entity->entityId == 0) {
             goto init_entity;
         }
     }
@@ -771,7 +771,7 @@ void func_801745E4(Entity* entityParent, s32 objectId, s32 params) {
 
 init_entity:
     DestroyEntity(entity);
-    entity->objectId = objectId;
+    entity->entityId = entityId;
     entity->zPriority = entityParent->zPriority;
     entity->facing = entityParent->facing;
     entity->flags = FLAG_UNK_04000000;
@@ -825,7 +825,7 @@ s32 func_801747B8(void) {
 
     entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 0x80; i++, entity++) {
-        if (entity->objectId == 0)
+        if (entity->entityId == 0)
             continue;
         if (entity->hitboxState == 0)
             continue;

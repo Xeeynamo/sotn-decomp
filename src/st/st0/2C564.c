@@ -560,7 +560,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     s32 speedX;
 
     if (g_isDraculaFirstFormDefeated) {
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
         entity->step_s = 0;

@@ -1366,7 +1366,7 @@ void func_800FAB1C(void) {
     s32 i;
 
     for (entity = g_Entities + START, i = START; i < 64; i++) {
-        if (entity->objectId >= 208 && entity->objectId < 224) {
+        if (entity->entityId >= 208 && entity->entityId < 224) {
             DestroyEntity(entity);
         }
         entity++;

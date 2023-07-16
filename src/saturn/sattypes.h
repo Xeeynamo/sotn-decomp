@@ -26,16 +26,22 @@ typedef unsigned long long u64;
 #define LOW(x) (*(s32*)&(x))
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
+typedef union {
+    s32 val;
+    struct {
+        s16 hi;
+        s16 lo
+    } i;
+} Fixed32;
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
-    /* 0x04 */ s16 posX;
-    /* 0x06 */ s16 posX_lo;
-    /* 0x08 */ s16 posY;
-    /* 0x0a */ s16 posY_lo;
+    /* 0x04 */ Fixed32 posX;
+    /* 0x08 */ Fixed32 posY;
     /* 0x0c */ s32 accelerationX;
     /* 0x10 */ s32 accelerationY;
     /* 0x14 */ u16 hitboxOffX;
@@ -51,7 +57,7 @@ typedef struct Entity {
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
     /* 0x30 */ u16 params;
-    /* 0x32 */ u16 objectRoomIndex;
+    /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ u32 flags;
     /* 0x38 */ s16 ghidra_pad_38;
     /* 0x3A */ u16 hitboxState; // hitbox state
@@ -143,7 +149,7 @@ typedef struct {
     /* 0x0E */ u16 sp1E;
     /* 0x10 */ u8 sp20;
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
 typedef struct {

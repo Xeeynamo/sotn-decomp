@@ -265,19 +265,19 @@ void func_80159C04(void) {
     if (ABS(temp_v0) < 16) {
         if (entity->accelerationX != 0) {
             if (entity->accelerationX < 0) {
-                PLAYER.objectRoomIndex = 0;
+                PLAYER.entityRoomIndex = 0;
                 return;
             } else {
-                PLAYER.objectRoomIndex = 1;
+                PLAYER.entityRoomIndex = 1;
                 return;
             }
         }
     }
 
     if (temp_v0 < 0) {
-        PLAYER.objectRoomIndex = 0;
+        PLAYER.entityRoomIndex = 0;
     } else {
-        PLAYER.objectRoomIndex = 1;
+        PLAYER.entityRoomIndex = 1;
     }
 }
 

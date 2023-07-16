@@ -122,13 +122,13 @@ void func_80113EE0(void) {
     PLAYER.unk19 &= 0xF3;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
-    PLAYER.objectId = 0;
+    PLAYER.entityId = 0;
     PLAYER.blendMode = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.rotAngle = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
-    if (g_Entities[UNK_ENTITY_10].objectId == 0x22) {
+    if (g_Entities[UNK_ENTITY_10].entityId == E_UNK_22) {
         func_8010FAF4();
     }
 }
@@ -156,7 +156,7 @@ void func_80113F7C(void) {
     if (ABS(posX) < 16) {
         if (entity->accelerationX != 0) {
             if (entity->accelerationX >= 0) {
-                PLAYER.objectRoomIndex = 1;
+                PLAYER.entityRoomIndex = 1;
                 return;
             }
             goto block_14;
@@ -167,11 +167,11 @@ void func_80113F7C(void) {
 block_13:
     if (posX < 0) {
     block_14:
-        PLAYER.objectRoomIndex = 0;
+        PLAYER.entityRoomIndex = 0;
         return;
     }
 
-    PLAYER.objectRoomIndex = 1;
+    PLAYER.entityRoomIndex = 1;
 }
 
 void AlucardHandleDamage(DamageParam* param, s16 arg1, s16 arg2);

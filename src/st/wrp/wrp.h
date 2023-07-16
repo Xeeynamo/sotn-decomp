@@ -22,6 +22,7 @@ typedef enum {
     E_UNK_12,
     E_UNK_13,
     E_UNK_14,
+    E_UNK_15,
 } EntityIDs;
 
 // *** EntitySoulStealOrb properties START ***

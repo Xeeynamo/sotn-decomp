@@ -238,8 +238,8 @@ extern s32 D_80182530;
 extern u16 D_80180B38[]; // InitProps
 extern u8 D_801D2770;
 extern u8 D_801D2774;
-extern LayoutObject* D_801D2768;
-extern LayoutObject* D_801D276C;
+extern LayoutEntity* D_801D2768;
+extern LayoutEntity* D_801D276C;
 extern u16 D_801D33F4[];
 extern s32 D_801825D4;
 extern u16 D_801825E4[];

@@ -590,8 +590,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
 
 void MoveEntity(Entity* entity) {
-    LOW(entity->posX) += entity->accelerationX;
-    LOW(entity->posY) += entity->accelerationY;
+    entity->posX.val += entity->accelerationX;
+    entity->posY.val += entity->accelerationY;
 }
 
 void func_06079BB4(s32* param_1) {
@@ -629,7 +629,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
 // Original name: _hkyori_search
 // Absolute distance from the specified entity to the player in the X Axis
 s32 GetDistanceToPlayerX(Entity* self) {
-    s16 xDistance = self->posX - PLAYER.posX;
+    s16 xDistance = self->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
         xDistance = -xDistance;
@@ -640,7 +640,7 @@ s32 GetDistanceToPlayerX(Entity* self) {
 // SAT func_0607AA1C
 // Absolute distance from the specified entity to the player in the Y Axis
 s32 GetDistanceToPlayerY(Entity* self) {
-    s16 yDistance = self->posY - PLAYER.posY;
+    s16 yDistance = self->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
         yDistance = -yDistance;
@@ -664,11 +664,11 @@ s16 GetSideToPlayer(Entity* self) {
     Entity* player = &PLAYER;
     s16 side = 0;
 
-    if (LOW(self->posX) > LOW(player->posX)) {
+    if (self->posX.val > player->posX.val) {
         side = 1;
     }
 
-    if (LOW(self->posY) > LOW(player->posY)) {
+    if (self->posY.val > player->posY.val) {
         side |= 2;
     }
     return side;
@@ -713,7 +713,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
-        if (current->unk74 == 0) { // not objectId?
+        if (current->unk74 == 0) { // not entityId?
             DestroyEntity(current);
             return current;
         }
@@ -754,8 +754,8 @@ void CreateEntityFromCurrentEntity(u16 id, Entity* entity) {
     DestroyEntity(entity);
     entity->unk74 = id;
     entity->pfnUpdate = (*PfnEntityUpdates)[id - 1]->func;
-    entity->posX = g_CurrentEntity->posX;
-    entity->posY = g_CurrentEntity->posY;
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B374, func_0607B374);

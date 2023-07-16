@@ -32,7 +32,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018B6B4);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018BD58);
 
-void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -54,11 +54,11 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
         return;
     }
 
-    switch (layoutObj->objectId & 0xE000) {
+    switch (layoutObj->entityId & 0xE000) {
     case 0x0:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
-        if (entity->objectId == 0) {
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
+        if (entity->entityId == 0) {
             func_8018BD58(entity, layoutObj);
         }
         break;
@@ -66,13 +66,13 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
         break;
     case 0xA000:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         func_8018BD58(entity, layoutObj);
         break;
     }
 }
 
-void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
@@ -94,11 +94,11 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
         return;
     }
 
-    switch (layoutObj->objectId & 0xE000) {
+    switch (layoutObj->entityId & 0xE000) {
     case 0x0:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
-        if (entity->objectId == 0) {
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
+        if (entity->entityId == 0) {
             func_8018BD58(entity, layoutObj);
         }
         break;
@@ -106,7 +106,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
         break;
     case 0xA000:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         func_8018BD58(entity, layoutObj);
         break;
     }
@@ -164,10 +164,10 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C72C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018C7E0);
 
-void func_8018C854(u16 objectId, Entity* source, Entity* entity) {
+void func_8018C854(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = D_801803E0[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = D_801803E0[entityId];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
 }

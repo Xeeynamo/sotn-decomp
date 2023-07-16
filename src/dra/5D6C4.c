@@ -451,7 +451,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
         if (element & enemy->weaknesses) {
             damage *= 2;
         }
-        if (attackerEntity->objectRoomIndex > (rand() & 0xFF)) {
+        if (attackerEntity->entityRoomIndex > (rand() & 0xFF)) {
             for (i = 0; i < 4; i++) {
                 stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
             }
