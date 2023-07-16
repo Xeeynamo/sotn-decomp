@@ -315,7 +315,7 @@ void EntityEquipItemDrop(Entity* self) {
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
-            self->objectId = 3;
+            self->entityId = 3;
             SetStep(0);
             EntityPrizeDrop(self);
             return;
@@ -546,14 +546,14 @@ void func_8018F510(Entity* entity) {
     case 0:
         InitializeEntity(D_8018047C);
         entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->objectId;
+            entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->objectId = E_EXPLOSION;
+                newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
             }
@@ -561,7 +561,7 @@ void func_8018F510(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId !=
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
             entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
@@ -583,7 +583,7 @@ void func_8018F620(
         if (newEntity != NULL) {
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
-            newEntity->objectId = E_UNK_14;
+            newEntity->entityId = E_UNK_14;
             newEntity->pfnUpdate = func_8018F838;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
@@ -611,7 +611,7 @@ void func_8018F750(
     for (i = 0; i < count; i++) {
         entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
         if (entity != NULL) {
-            entity->objectId = 21;
+            entity->entityId = E_UNK_15;
             entity->pfnUpdate = func_8018F928;
             entity->posX.i.hi = x;
             entity->posY.i.hi = y;
@@ -1001,12 +1001,12 @@ void func_801903C8(Entity* entity) {
     }
 }
 
-void func_80190494(u16 objectId, Entity* source, Entity* entity) {
+void func_80190494(u16 entityId, Entity* source, Entity* entity) {
     u16 palette;
 
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
     entity->unk5A = source->unk5A;

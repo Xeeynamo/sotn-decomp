@@ -30,7 +30,7 @@ void func_801CD540(Entity* self) {
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
-    if (self[-1].objectId != 0x44) {
+    if (self[-1].entityId != 0x44) {
         DestroyEntity(self);
     }
 }

@@ -274,7 +274,7 @@ void EntityBoneScimitarParts(Entity* entity) {
             MoveEntity();
             return;
         }
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->params = 0;
         entity->step = 0;

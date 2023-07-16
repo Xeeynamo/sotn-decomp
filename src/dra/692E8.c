@@ -500,7 +500,7 @@ void AccelerateX(s32 accelerationX) {
 
 // Updates the Player acceleration in the X Axis
 void func_8010E3B8(s32 accelerationX) {
-    if (PLAYER.objectRoomIndex == 1) {
+    if (PLAYER.entityRoomIndex == 1) {
         accelerationX = -accelerationX;
     }
     PLAYER.accelerationX = accelerationX;
@@ -681,7 +681,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     s32 ret;
 
     for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
-        if (entity->objectId == 0) {
+        if (entity->entityId == E_NONE) {
             ret++;
         }
 
