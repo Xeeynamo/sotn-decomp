@@ -122,7 +122,13 @@ void InitScuDma(void) {
 
 // _VDP1_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008298, func_06008298);
+
+void func_06008298(void) {
+    int i;
+    for (i = 0; i < 8; i++) {
+        func_06008588(i);
+    }
+}
 
 // _INIT_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60082C8, func_060082C8);
@@ -200,7 +206,31 @@ void DmaScroll(s32* src, s32* dest, u32 cnt) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60089F0, func_060089F0);
+
+void func_060089F0(struct Unk0605CD90* param_1) {
+    u16 sVar2;
+    s16* psVar5;
+    s16* psVar7;
+    u16 i; // r2
+    u16 j; // r1
+
+    psVar7 = DAT_0605c120[3] + 1;
+    sVar2 = param_1->unk24 * 0x1000;
+    j = 0;
+    psVar5 = param_1->unk8 + j * 0x20;
+    for (j = 0; j < 32; j++) {
+        for (i = 0; i < 32; i++) {
+            *psVar5++ = *psVar7++ + sVar2;
+        }
+        psVar5 = 0x400 + param_1->unk8 + j * 0x20;
+
+        for (i = 0; i < 10; i++) {
+            *psVar5++ = *psVar7++ + sVar2;
+        }
+        psVar5 = param_1->unk8 + (j + 1) * 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008A70, func_06008A70);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008AB4, func_06008AB4);
 
