@@ -57,7 +57,7 @@ typedef struct Entity {
     /* 0x2c */ u16 step;
     /* 0x2e */ u16 step_s;
     /* 0x30 */ u16 params;
-    /* 0x32 */ u16 objectRoomIndex;
+    /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ u32 flags;
     /* 0x38 */ s16 ghidra_pad_38;
     /* 0x3A */ u16 hitboxState; // hitbox state
@@ -149,7 +149,7 @@ typedef struct {
     /* 0x0E */ u16 sp1E;
     /* 0x10 */ u8 sp20;
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
 typedef struct {

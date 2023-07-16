@@ -183,7 +183,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
             return;
         }
 
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         entity->params = 0;
         entity->step = 0;
@@ -252,7 +252,7 @@ void func_801C6678(Entity* entity) { // From Skeleton
     entity->posX.i.hi = entity[-1].posX.i.hi;
     entity->posY.i.hi = entity[-1].posY.i.hi - 20;
 
-    if (entity[-1].objectId != 0x2E) {
+    if (entity[-1].entityId != 0x2E) {
         DestroyEntity(entity);
     }
 }

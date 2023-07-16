@@ -298,14 +298,14 @@ void func_801B7BFC(Entity* entity) {
     case 0:
         InitializeEntity(D_801805A4);
         entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->objectId;
+            entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->objectId = E_EXPLOSION;
+                newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
             }
@@ -313,7 +313,7 @@ void func_801B7BFC(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId !=
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
             entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
@@ -614,12 +614,12 @@ void func_801B8AB4(Entity* entity) {
     }
 }
 
-void func_801B8B80(u16 objectId, Entity* source, Entity* entity) {
+void func_801B8B80(u16 entityId, Entity* source, Entity* entity) {
     u16 palette;
 
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId - 1];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
     entity->unk5A = source->unk5A;

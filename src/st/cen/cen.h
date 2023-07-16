@@ -36,12 +36,12 @@ typedef enum {
     /* 0x1C */ E_MOVING_ELEVATOR,
 } EntityIDs;
 
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity);
-void func_80192A3C(Entity*, LayoutObject*);
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
+void func_80192A3C(Entity*, LayoutEntity*);
 extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
 
-extern LayoutObject* D_801801EC[];
-extern LayoutObject* D_801802C0[];
+extern LayoutEntity* D_801801EC[];
+extern LayoutEntity* D_801802C0[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 /*** Initializers ***/
@@ -71,7 +71,7 @@ extern u16 D_801811C8[];
 extern u16 D_801811D8[];
 extern u8 D_80181238;
 extern ObjInit2 D_8018125C[];
-extern LayoutObject* D_8019C764;
+extern LayoutEntity* D_8019C764;
 extern u16* D_8019C768;
 extern u8 D_8019C76C;
 extern s16 D_8019D3B4;

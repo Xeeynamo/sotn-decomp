@@ -713,7 +713,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
-        if (current->unk74 == 0) { // not objectId?
+        if (current->unk74 == 0) { // not entityId?
             DestroyEntity(current);
             return current;
         }
