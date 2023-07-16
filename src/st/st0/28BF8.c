@@ -115,8 +115,8 @@ void func_801A8E60(void) {
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
 
-            entity->objectId = *g_Dialogue.D_801C250C++;
-            entity->pfnUpdate = PfnEntityUpdates[entity->objectId - 1];
+            entity->entityId = *g_Dialogue.D_801C250C++;
+            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
             entity->posX.i.hi = *g_Dialogue.D_801C250C++ * 0x10;
             entity->posX.i.hi = *g_Dialogue.D_801C250C++ | entity->posX.i.hi;
             entity->posY.i.hi = *g_Dialogue.D_801C250C++ * 0x10;

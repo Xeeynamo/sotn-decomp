@@ -571,7 +571,7 @@ void func_801C090C(
         if (newEntity != NULL) {
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
-            newEntity->objectId = E_ID14;
+            newEntity->entityId = E_ID14;
             newEntity->pfnUpdate = func_801C0B24;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
