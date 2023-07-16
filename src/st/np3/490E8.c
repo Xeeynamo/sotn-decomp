@@ -132,7 +132,7 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxOffY = 0;
         }
 
-        if (*(s32*)&self->animFrameIdx == 7) {
+        if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
             func_801C2598(NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH);
         }
 
