@@ -932,11 +932,11 @@ void SetStep(u8 step) {
     entity->animFrameDuration = 0;
 }
 
-void func_8019B008(u8 arg0) {
+void SetSubStep(u8 step_s) {
     Entity* entity;
 
     entity = g_CurrentEntity;
-    entity->step_s = arg0;
+    entity->step_s = step_s;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }

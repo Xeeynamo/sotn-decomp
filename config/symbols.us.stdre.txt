@@ -44,6 +44,7 @@ MoveEntity = 0x8019A75C;
 FallEntity = 0x8019A78C;
 AllocEntity = 0x8019AC18;
 SetStep = 0x8019AFE8;
+SetSubStep = 0x8019B008;
 InitializeEntity = 0x8019B0B8;
 CollectSubweapon = 0x8019BB94;
 CollectHeartVessel = 0x8019BCAC;
