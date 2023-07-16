@@ -19,10 +19,10 @@ void func_80162C84(Entity* entity) {
         break;
 
     case 1:
-        if (LOW(entity->animFrameIdx) == 0x10000) {
+        if (entity->animFrameIdx == 0 && entity->animFrameDuration == 1) {
             g_api.PlaySfx(0x882);
         }
-        if (LOW(entity->animFrameIdx) == 0x10004) {
+        if (entity->animFrameIdx == 4 && entity->animFrameDuration == 1) {
             g_api.PlaySfx(0x883);
         }
 

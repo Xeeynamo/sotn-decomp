@@ -272,7 +272,7 @@ void func_80118640(void) {
 }
 
 void func_80118670(void) {
-    if (LOW(PLAYER.animFrameIdx) == 0x10007) {
+    if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(NA_SE_PL_MP_GAUGE);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
