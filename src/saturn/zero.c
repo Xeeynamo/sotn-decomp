@@ -157,11 +157,10 @@ void func_06008588(int param_1) {
     if ((puVar5->flags & 4) != 0) {
         if (DAT_060086d4 == 4) {
             func_060089F0(puVar6);
-            goto LAB_0600862a;
+        } else {
+            func_0600871C(puVar6, &DAT_0605c680, param_1);
         }
-        func_0600871C(puVar6, &DAT_0605c680, param_1);
     }
-LAB_0600862a:
     if ((puVar5->flags & 8) != 0) {
         DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
     }
