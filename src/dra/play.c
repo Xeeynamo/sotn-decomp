@@ -241,9 +241,9 @@ void HandlePlay(void) {
             g_LoadFile = CdFile_StageSfx;
             g_mapTilesetId = g_StageId;
         } else {
-            if (func_800E81FC(0, SimFileType_StageChr) < 0 ||
-                func_800E81FC(0, SimFileType_Vh) < 0 ||
-                func_800E81FC(0, SimFileType_Vb) < 0) {
+            if (LoadFileSim(0, SimFileType_StageChr) < 0 ||
+                LoadFileSim(0, SimFileType_Vh) < 0 ||
+                LoadFileSim(0, SimFileType_Vb) < 0) {
                 break;
             }
         }
@@ -271,11 +271,11 @@ void HandlePlay(void) {
                 break;
             }
         } else {
-            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
                 break;
             }
             if (g_StagesLba[g_StageId].seqIdx >= 0) {
-                if (func_800E81FC(
+                if (LoadFileSim(
                         g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) < 0) {
                     break;
                 }

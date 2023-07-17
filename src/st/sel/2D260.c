@@ -843,7 +843,7 @@ s32 func_801B3694(void) {
 
     case 3:
         func_801B9698(saveFile, temp_a1);
-        if (func_801B884C(nCardSlot, 0, saveFile, &D_8007EFE4, 1) != 0) {
+        if (MemcardReadFile(nCardSlot, 0, saveFile, &D_8007EFE4, 1) != 0) {
             g_memCardRetryCount--;
             if (g_memCardRetryCount == -1) {
                 temp_v0 = -1;
@@ -924,7 +924,7 @@ s32 func_801B3E2C(void) {
         break;
     case 1:
         func_801B9698(saveFile, blockId);
-        if (func_801B89C8(nCardSlot, 0, saveFile) != 0) {
+        if (MemcardEraseFile(nCardSlot, 0, saveFile) != 0) {
             g_memCardRetryCount--;
             if (g_memCardRetryCount == -1) {
                 return -1;

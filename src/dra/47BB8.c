@@ -175,7 +175,7 @@ s32 func_800E7E08(u32 arg0) {
 }
 #endif
 
-s32 func_800E81FC(s32 fileId, SimFileType type) {
+s32 LoadFileSim(s32 fileId, SimFileType type) {
     char buf[33];
     s32 fid;
 
@@ -341,27 +341,27 @@ s32 func_800E81FC(s32 fileId, SimFileType type) {
     return 0;
 }
 
-void func_800E8D24(void) {
+void ResetPadsRepeat(void) {
     s8* ptr;
     s32 i;
 
     g_pads[0].repeat = 0;
-    ptr = D_80137460;
+    ptr = g_PadsRepeatTimer;
 
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < LEN(g_PadsRepeatTimer); i++) {
         *ptr++ = 0x10;
     }
 }
 
-void func_800E8D54(void) {
+void UpdatePadsRepeat(void) {
     u16 button = 1;
     u16 repeat = 0;
     u16 unk = g_pads[0].tapped;
     u16 pressed = g_pads[0].pressed;
-    u8* timers = D_80137460;
+    u8* timers = g_PadsRepeatTimer;
     s32 i = 0;
 
-    do {
+    while (i < 0x10) {
         if (pressed & button) {
             if (unk & button) {
                 repeat |= button;
@@ -376,7 +376,7 @@ void func_800E8D54(void) {
         i++;
         timers++;
         button <<= 1;
-    } while (i < 0x10);
+    }
     g_pads[0].repeat = repeat;
 }
 
@@ -390,7 +390,7 @@ void InitializePads(void) {
         pad->previous = 0;
         pad->pressed = 0;
     }
-    func_800E8D24();
+    ResetPadsRepeat();
 }
 
 void ReadPads(void) {
@@ -407,7 +407,7 @@ void ReadPads(void) {
             pad->pressed = padd >> 0x10;
         pad->tapped = (pad->pressed ^ pad->previous) & pad->pressed;
     }
-    func_800E8D54();
+    UpdatePadsRepeat();
 }
 
 void SetupEvents(void) {
@@ -508,66 +508,68 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
-s32 func_800E9640(
-    s32 arg0, s32 arg1, s32 arg2, s32* readBufferAddress, s32 fd) {
-    char file[32];
+s32 MemcardReadFile(s32 slot, s32 block, const char* name, void* data, s32 fd) {
+    char savePath[32];
     s32 nBytes;
     s32 ret;
 
-    sprintf(file, g_MemcardSavePath, arg0, arg1, arg2);
+    sprintf(savePath, g_MemcardSavePath, slot, block, name);
     nBytes = fd << 0xD;
 
     if (fd == 0) {
         nBytes = 0x2B8;
     }
 
-    fd = open(file, O_RDONLY | O_NOWAIT);
+    fd = open(savePath, O_RDONLY | O_NOWAIT);
     ret = -1;
 
     if (fd != -1) {
         D_80137474 = fd;
         func_800E91B0();
-        read(fd, readBufferAddress, nBytes);
+        read(fd, data, nBytes);
         ret = 0;
     }
     return ret;
 }
 
-s32 func_800E96E8(
-    s32 arg0, s32 arg1, s32 arg2, void* arg3, s32 arg4, s32 arg5) {
-    s8 savePath[32];
-    s32 new_var;
-    s32 device;
+s32 MemcardWriteFile(
+    s32 slot, s32 block, const char* name, void* data, s32 flags, s32 create) {
+    char savePath[32];
+    s32 fd;
+    s32 len;
 
-    sprintf(savePath, g_MemcardSavePath, arg0, arg1, arg2);
+    sprintf(savePath, g_MemcardSavePath, slot, block, name);
 
-    if (arg5 == 1) {
-        device = open(savePath, (arg4 << 0x10) | O_CREAT);
-        if (device == -1) {
+    // known PSX bug: when creating a a file with open(), any read or write
+    // will immediately fail. The workaround is to close the file and open
+    // it again.
+    if (create == 1) {
+        fd = open(savePath, (flags << 0x10) | O_CREAT);
+        if (fd == -1) {
             return -2;
         } else {
-            close(device);
+            close(fd);
         }
     }
 
-    new_var = arg4 << 0xD;
-    device = open(savePath, O_WRONLY | O_NOWAIT);
+    len = flags << 0xD;
+    fd = open(savePath, O_WRONLY | O_NOWAIT);
 
-    if (device == -1) {
+    if (fd == -1) {
         return -1;
     } else {
-        D_80137474 = device;
+        D_80137474 = fd;
         func_800E91B0();
-        write(device, arg3, new_var);
+        write(fd, data, len);
     }
     return 0;
 }
 
-s32 func_800E97BC(s32 arg0, s32 arg1, s32 arg2) {
-    char buffer[0x20];
+s32 MemcardEraseFile(s32 slot, s32 block, const char* name) {
+    char savePath[0x20];
 
-    sprintf(buffer, g_MemcardSavePath, arg0, arg1, arg2);
-    return -(erase(buffer) == 0);
+    sprintf(savePath, g_MemcardSavePath, slot, block, name);
+    return -(erase(savePath) == 0);
 }
 
 s32 func_800E9804(s32 arg0) {
@@ -588,14 +590,14 @@ s32 func_800E9804(s32 arg0) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9880);
 
-s32 func_800E9B18(s32 arg0, s32 arg1) {
-    char buffer[0x8];
+s32 MemcardFormat(s32 slot, s32 block) {
+    char savePath[0x8];
     s32 ret;
 
-    D_8006C3AC &= D_800A0510[arg0];
-    sprintf(buffer, g_strMemcardRootPath, arg0, arg1);
+    D_8006C3AC &= D_800A0510[slot];
+    sprintf(savePath, g_strMemcardRootPath, slot, block);
     func_800E928C();
-    format(buffer);
+    format(savePath);
     ret = func_800E9208();
 
     if (ret != 1) {
@@ -676,10 +678,10 @@ s32 LoadSaveData(SaveData* save) {
     return 0;
 }
 
-void func_800EA48C(char* dstSaveName, s32 saveSlot) {
-    __builtin_memcpy(dstSaveName, aBaslus00067dra, sizeof(aBaslus00067dra));
-    dstSaveName[0x10] += saveSlot / 10;
-    dstSaveName[0x11] += saveSlot % 10;
+void func_800EA48C(char* dstname, s32 saveSlot) {
+    __builtin_memcpy(dstname, aBaslus00067dra, sizeof(aBaslus00067dra));
+    dstname[0x10] += saveSlot / 10;
+    dstname[0x11] += saveSlot % 10;
 }
 
 extern Unkstruct_8006C3CC D_8006C3CC[];

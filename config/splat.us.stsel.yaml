@@ -43,7 +43,7 @@ segments:
       - [0x27BF8, .rodata, 3585C]
       - [0x27CD4, rodata] # func_801B675C
       - [0x27CF4, rodata] # func_801B69F8
-      - [0x27D78, rodata] # func_801B8518, func_801B88F4
+      - [0x27D78, rodata] # func_801B8518, MemcardWriteFile
       - [0x27D90, .rodata, func_801B8A8C]
       - [0x27DD4, rodata]
       - [0x2C048, c, 2C048]

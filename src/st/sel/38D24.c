@@ -1,11 +1,11 @@
 #include "sel.h"
 
 // reg swap and missing move
-s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot);
+s32 MemcardFormat(s32 cardSlot, s32 cardSubSlot);
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", func_801B8D24);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/38D24", MemcardFormat);
 #else
-s32 func_801B8D24(s32 cardSlot, s32 cardSubSlot) {
+s32 MemcardFormat(s32 cardSlot, s32 cardSubSlot) {
     s8 cardPath[0x8];
     s32 ret;
 
