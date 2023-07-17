@@ -63,10 +63,8 @@ void HandlePlay(void) {
                 g_Settings.buttonConfig[i] = i;
                 g_Settings.buttonMask[i] = D_800A0160[i];
             }
-            for (i = 0; i < LEN(g_Settings.cloakExteriorColors) +
-                                LEN(g_Settings.cloakLiningColors);
-                 i++) {
-                g_Settings.cloakExteriorColors[i] = 0;
+            for (i = 0; i < LEN(g_Settings.cloakColors); i++) {
+                g_Settings.cloakColors[i] = 0;
             }
 
             g_Settings.windowColors[0] = 0;
