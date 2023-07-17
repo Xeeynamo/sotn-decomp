@@ -960,6 +960,7 @@ GetEquipCount = 0x800FD760;
 GetEquipmentName = 0x800FD77C;
 CheckEquipmentItemCount = 0x800FD7C0;
 AddToInventory = 0x800FD874;
+LearnSpell = 0x800FDCE0;
 GetEquipProperties = 0x800FE728;
 HasEnoughMp = 0x800FE8B4;
 AddHearts = 0x800FE914;

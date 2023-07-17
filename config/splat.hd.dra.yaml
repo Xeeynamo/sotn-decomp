@@ -30,7 +30,7 @@ segments:
     subsegments:
       - [0x0, data]
       - [0x3B5F8, rodata] # jtbl_800DB5F8
-      - [0x3B618, rodata, play] # jtbl_800DB618
+      - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
       - [0x3B808, .rodata, 46358]
       - [0x3B8D0, .rodata, 46FD4]
