@@ -42,4 +42,44 @@ struct Unk060645D0_2 {
 };
 extern struct Unk060645D0_1* DAT_060645D0;
 
+s32* DAT_060485e0;
+struct Unk0605d6c0* DAT_0605d6c0[];
+u16 DAT_060086d4;
+s32 PTR_FUN_060086cc(s32, s32, s32);
+void func_0600871C(s32, s32, s32);
+
+struct Unk0605CD90 {
+    s32 dst0;
+    s32 dst4;
+    u16* unk8;
+    s32 unkc;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+    s32 unk20;
+    s16 unk24;
+    u8 pad[10];
+};
+
+void func_060089F0(struct Unk0605CD90* param_1);
+s32 DAT_0605c680;
+s32 DAT_060086e4;
+s32 func_0600F96C(s32, s32, s32);
+// func_060086E8
+void DmaScroll(s32* src, s32* dest, u32 cnt);
+
+struct Unk0605d6c0 {
+    u32 flags;
+    u32 src;
+    u32 dest;
+    u32 cnt;
+};
+
+struct Unk0605CD90 DAT_0605CD90[];
+
+#define DMA_SRC_ADDR 0x002E0000
+
+extern s32* DAT_0605c120[];
+
 #endif

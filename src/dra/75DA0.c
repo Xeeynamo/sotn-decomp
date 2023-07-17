@@ -11,7 +11,7 @@ void func_80115DA0(void) {
 
     switch (PLAYER.step_s) {
     case 0:
-        if (LOW(PLAYER.animFrameIdx) == 0x10008 &&
+        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             func_8011AAFC(g_CurrentEntity, 0x79, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -22,7 +22,7 @@ void func_80115DA0(void) {
 
     case 2:
         func_80115C50();
-        if (LOW(PLAYER.animFrameIdx) == 0x10008 &&
+        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             func_8011AAFC(g_CurrentEntity, 0x20079, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -33,7 +33,7 @@ void func_80115DA0(void) {
 
     case 4:
         func_80115C50();
-        if (LOW(PLAYER.animFrameIdx) == 0x10008 &&
+        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
             func_8011AAFC(g_CurrentEntity, 0x40079, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }

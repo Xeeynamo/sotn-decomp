@@ -76,7 +76,7 @@ void EntityUnkId1C(Entity* self) {
             SetStep(3);
         }
 
-        if (LOW(self->animFrameIdx) == 4) {
+        if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
             func_801A046C(0x6E2);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
@@ -94,7 +94,7 @@ void EntityUnkId1C(Entity* self) {
                 }
             }
         }
-        if (LOW(self->animFrameIdx) == 5) {
+        if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
             func_801A046C(0x872);
             func_801A046C(0x87C);
             func_801A046C(0x62C);

@@ -268,7 +268,7 @@ void EntityMerman(Entity* self) {
             if (AnimateEntity(D_801823AC, self) == 0) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
-            if (*(s32*)&self->animFrameIdx == 4) {
+            if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
                 func_801C2598(0x662);
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {

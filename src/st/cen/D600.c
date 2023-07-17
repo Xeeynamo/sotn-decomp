@@ -705,7 +705,7 @@ void EntityElevatorStationary(Entity* self) {
                 self->step_s = 0;
                 self->step = 1;
             }
-            if (LOW(self->animFrameIdx) == 4) {
+            if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
                 g_api.PlaySfx(0x675);
             }
         }
@@ -722,7 +722,7 @@ void EntityElevatorStationary(Entity* self) {
                 self->animFrameDuration = 0;
                 self->step_s++;
             }
-            if (LOW(self->animFrameIdx) == 4) {
+            if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
                 g_api.PlaySfx(0x675);
             }
             break;

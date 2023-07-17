@@ -334,7 +334,7 @@ void EntitySlogra(Entity* self) {
         if (AnimateEntity(D_801810B4, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
-        if (*(s32*)&self->animFrameIdx == 4) {
+        if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
             func_801C29B0(NA_SE_EN_SLOGRA_SPEAR_SLASH);
         }
         break;
@@ -478,7 +478,7 @@ void EntitySlogra(Entity* self) {
         if (AnimateEntity(D_80181128, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
-        if (*(s32*)&self->animFrameIdx == 7) {
+        if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
             func_801C29B0(NA_SE_EN_SLOGRA_BEAK_ATTACK);
         }
         break;
@@ -730,7 +730,7 @@ void EntityGaibon(Entity* self) {
 
     case GAIBON_IDLE:
         AnimateEntity(D_80181250, self);
-        if (*(s32*)&self->animFrameIdx == 1) {
+        if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
             func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
         }
         if (self->unk48 != 0) {
@@ -772,7 +772,7 @@ void EntityGaibon(Entity* self) {
                 (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
             AnimateEntity(D_80181250, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             self->facing = (GetSideToPlayer() & 1) ^ 1;
@@ -789,7 +789,7 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(D_80181264, self) == 0) {
                 SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
         }
@@ -834,7 +834,7 @@ void EntityGaibon(Entity* self) {
                 (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
             AnimateEntity(D_80181298, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
 
@@ -876,7 +876,7 @@ void EntityGaibon(Entity* self) {
                     SetStep(GAIBON_FLY_SHOOT_BIG_FIREBALL);
                 }
             }
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
         }
@@ -1054,7 +1054,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(D_801812AC, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             MoveEntity();
@@ -1075,7 +1075,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(D_801812AC, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C29B0(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             if (GetSideToPlayer() & 1) {

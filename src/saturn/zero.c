@@ -122,7 +122,13 @@ void InitScuDma(void) {
 
 // _VDP1_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008298, func_06008298);
+
+void func_06008298(void) {
+    int i;
+    for (i = 0; i < 8; i++) {
+        func_06008588(i);
+    }
+}
 
 // _INIT_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60082C8, func_060082C8);
@@ -133,7 +139,57 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600841C, func_0600841C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008464, func_06008464);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008488, func_06008488);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008588, func_06008588);
+
+// Handles transfer of background tile graphics
+// func_06008588
+void func_06008588(int param_1) {
+    s32 cnt;
+    struct Unk0605d6c0* puVar5;
+    struct Unk0605CD90* puVar6;
+
+    puVar5 = &DAT_0605d6c0[param_1 * 4];
+    puVar6 = &DAT_0605CD90[param_1];
+    if (puVar5->flags == 0) {
+        return;
+    }
+    if ((puVar5->flags & 1) != 0) {
+        cnt = func_0600F96C(puVar6->unkc, &DAT_060485e0, puVar6->unk18);
+        DmaScroll(&DAT_060485e0, puVar6->dst0, cnt);
+    }
+    if ((puVar5->flags & 2) != 0) {
+        cnt = func_0600F96C(puVar6->unk10, &DAT_060485e0, puVar6->unk1c);
+        DmaScroll(&DAT_060485e0, puVar6->dst4, cnt);
+    }
+    if ((puVar5->flags & 4) != 0) {
+        if (DAT_060086d4 == 4) {
+            func_060089F0(puVar6);
+        } else {
+            func_0600871C(puVar6, &DAT_0605c680, param_1);
+        }
+    }
+    if ((puVar5->flags & 8) != 0) {
+        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    }
+    if ((puVar5->flags & 0x10) != 0) {
+        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    }
+    if ((puVar5->flags & 0x20) != 0) {
+        DmaScroll(puVar5->src, puVar5->dest, puVar5->cnt);
+    }
+    if ((puVar5->flags & 0x40) != 0) {
+        cnt = func_0600F96C(puVar6->unkc, DMA_SRC_ADDR, puVar6->unk18);
+        DmaScroll(DMA_SRC_ADDR, puVar6->dst0, cnt);
+    }
+    if ((puVar5->flags & 0x80) != 0) {
+        cnt = func_0600F96C(puVar6->unk10, DMA_SRC_ADDR, puVar6->unk1c);
+        DmaScroll(DMA_SRC_ADDR, puVar6->dst4, cnt);
+    }
+    puVar5->flags = 0;
+    puVar5->cnt = 0;
+    puVar5->dest = 0;
+    puVar5->src = 0;
+    return;
+}
 
 // _DMA_SCROLL
 // func_060086E8
@@ -150,7 +206,31 @@ void DmaScroll(s32* src, s32* dest, u32 cnt) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60089F0, func_060089F0);
+
+void func_060089F0(struct Unk0605CD90* param_1) {
+    u16 sVar2;
+    s16* psVar5;
+    s16* psVar7;
+    u16 i; // r2
+    u16 j; // r1
+
+    psVar7 = DAT_0605c120[3] + 1;
+    sVar2 = param_1->unk24 * 0x1000;
+    j = 0;
+    psVar5 = param_1->unk8 + j * 0x20;
+    for (j = 0; j < 32; j++) {
+        for (i = 0; i < 32; i++) {
+            *psVar5++ = *psVar7++ + sVar2;
+        }
+        psVar5 = 0x400 + param_1->unk8 + j * 0x20;
+
+        for (i = 0; i < 10; i++) {
+            *psVar5++ = *psVar7++ + sVar2;
+        }
+        psVar5 = param_1->unk8 + (j + 1) * 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008A70, func_06008A70);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008AB4, func_06008AB4);
 

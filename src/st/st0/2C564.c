@@ -92,7 +92,7 @@ void EntityDracula(Entity* self) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }
-            if (LOW(self->animFrameIdx) == 2) {
+            if (self->animFrameIdx == 2 && self->animFrameDuration == 0) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1F, self, newEntity);
@@ -288,7 +288,7 @@ void EntityDracula(Entity* self) {
                 self->unk5A = 0x59;
                 self->step_s++;
             }
-            if (LOW(self->animFrameIdx) == 5) {
+            if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
                 g_api.func_80102CD8(2);
             }
             break;
