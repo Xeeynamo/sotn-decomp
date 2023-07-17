@@ -70,7 +70,7 @@ void HandlePlay(void) {
             g_Settings.windowColors[0] = 0;
             g_Settings.windowColors[1] = 0;
             g_Settings.windowColors[2] = 8;
-            g_Settings.isCloakLingingReversed = 0;
+            g_Settings.isCloakLiningReversed = 0;
             g_Settings.isSoundMono = true;
             func_800E493C();
             for (i = 0; i < LEN(g_Settings.equipOrderTypes); i++) {

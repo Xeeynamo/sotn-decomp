@@ -553,11 +553,11 @@ s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
 // Creates light and dark versions of cloak colors in BGR555 format
 void ApplyJosephsCloakPalette(void) {
-    g_JosephsCloak.lingingDark =
+    g_JosephsCloak.liningDark =
         DarkenCloakColor(g_Settings.cloakColors[3]) +
         ((DarkenCloakColor(g_Settings.cloakColors[4]) << 5) - 0x8000) +
         (DarkenCloakColor(g_Settings.cloakColors[5]) << 0xA);
-    g_JosephsCloak.lingingLight =
+    g_JosephsCloak.liningLight =
         (g_Settings.cloakColors[3] +
          ((g_Settings.cloakColors[4] << 5) - 0x8000)) +
         ((u32)g_Settings.cloakColors[5] << 0xA);
@@ -758,7 +758,7 @@ void DrawSettingsReverseCloak(MenuContext* context) {
     DrawMenuStr(c_strNormal, 176, 48, context);
     DrawMenuStr(c_strReversal, 176, 64, context);
     func_800F5E68(
-        context, g_Settings.isCloakLingingReversed, 174, 46, 64, 12, 4, 1);
+        context, g_Settings.isCloakLiningReversed, 174, 46, 64, 12, 4, 1);
 }
 
 void DrawSettingsSound(MenuContext* context) {

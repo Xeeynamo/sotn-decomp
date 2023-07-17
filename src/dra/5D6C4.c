@@ -567,7 +567,7 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLingingReversed) {
+    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLiningReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);

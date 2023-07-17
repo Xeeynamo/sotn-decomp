@@ -241,8 +241,8 @@ typedef struct {
 
 // All the Joseph's Cloak color fields are in RGB555 format
 typedef struct {
-    u16 lingingDark;
-    u16 lingingLight;
+    u16 liningDark;
+    u16 liningLight;
     u16 exteriorDark;
     u16 exteriorLight;
 } JosephsCloak;
