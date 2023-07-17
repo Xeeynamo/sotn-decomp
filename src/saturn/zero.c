@@ -1,6 +1,7 @@
 #include "zero.h"
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "saturn/scl.h"
 
 INCLUDE_ASM("asm/saturn/zero/data", d6004080, d_06004080);
 
@@ -468,7 +469,35 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, func_0600FF08);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010008, func_06010008);
+
+void func_06010008(void) {
+    struct Unk0605d6c0* puVar2;
+    SclConfig temp;
+
+    DAT_06062224[1] = 0;
+    DAT_06062224[0] = 0;
+    ClearDebugPrintTilemap();
+    SCL_InitConfigTb(&temp);
+    temp.dispenbl = 1;
+    temp.charsize = 0;
+    temp.pnamesize = 1;
+    temp.platesize = 0;
+    temp.coltype = 0;
+    temp.datatype = 0;
+    temp.mapover = 0;
+    temp.flip = 0;
+    temp.patnamecontrl = 0x66;
+    temp.plate_addr[0] = VDP2_25E58000;
+    temp.plate_addr[1] = VDP2_25E58000;
+    temp.plate_addr[2] = VDP2_25E58000;
+    temp.plate_addr[3] = VDP2_25E58000;
+    SCL_SetConfig(SCL_NBG0, &temp);
+    puVar2 = &DAT_0605d6c0;
+    puVar2->unk30 = 0x10;
+    puVar2->unk34 = &DAT_06039214;
+    puVar2->unk38 = VDP2_25F00600;
+    puVar2->unk3c = 0x80;
+}
 
 // 0x060100b8
 // clears the debug print tilemap area, debug prints are at least used by
@@ -1465,7 +1494,12 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028BE4, func_06028BE4);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028C0C, func_06028C0C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028C34, func_06028C34);
+
+// _SCL_InitConfigTb
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028D10, func_06028D10);
+
+// _SCL_SetConfig = 0x06028ddc splitter bug
+
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f602915A, func_0602915A);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602A654, func_0602A654);
 

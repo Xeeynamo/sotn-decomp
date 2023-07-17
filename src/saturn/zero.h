@@ -74,6 +74,11 @@ struct Unk0605d6c0 {
     u32 src;
     u32 dest;
     u32 cnt;
+    u8 unk[0x20];
+    s32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3c;
 };
 
 struct Unk0605CD90 DAT_0605CD90[];
@@ -81,5 +86,12 @@ struct Unk0605CD90 DAT_0605CD90[];
 #define DMA_SRC_ADDR 0x002E0000
 
 extern s32* DAT_0605c120[];
+
+#define VDP2_25E58000 0x25E58000
+#define VDP2_25F00600 0x25F00600
+
+extern s16 DAT_06062224[];
+extern s32 DAT_06039214;
+void ClearDebugPrintTilemap();
 
 #endif
