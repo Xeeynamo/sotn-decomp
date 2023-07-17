@@ -33,6 +33,26 @@ extern s32 D_801A3ED4;
 extern s32 D_801A3F84;
 extern s32 D_80180660;
 
+typedef enum {
+    /* 0 */ SUCCUBUS_INIT,
+    /* 1 */ SUCCUBUS_1,
+    /* 2 */ SUCCUBUS_2,
+    /* 3 */ SUCCUBUS_3,
+    /* 4 */ SUCCUBUS_4,
+    /* 5 */ SUCCUBUS_5,
+    /* 7 */ SUCCUBUS_7 = 7,
+    /* 8 */ SUCCUBUS_PETAL_ATTACK,
+    /* 9 */ SUCCUBUS_9,
+    /* 11 */ SUCCUBUS_CLONE_ATTACK = 11,
+    /* 12 */ SUCCUBUS_SPIKE_ATTACK,
+    /* 13 */ SUCCUBUS_13,
+    /* 14 */ SUCCUBUS_14,
+    /* 15 */ SUCCUBUS_15,
+    /* 16 */ SUCCUBUS_16,
+    /* 18 */ SUCCUBUS_18 = 18,
+    /* 255 */ SUCCUBUS_DEBUG = 255,
+} SuccubusSteps;
+
 void EntitySuccubus(Entity* self) {
     Entity* newEntity;
     s32 posX, posY;
@@ -40,9 +60,10 @@ void EntitySuccubus(Entity* self) {
     s8* hitbox;
     s32 facing;
     s16 angle;
-    s32 temp_s5;
-    s32 fakeTemp;
+    s32 temp;
     s32 i;
+    s32 temp2;
+    s32 temp3;
 
     FntPrint("multiple_count %x\n", D_80180660);
     if ((self->hitFlags & 3) && (self->step & 1)) {
@@ -57,13 +78,13 @@ void EntitySuccubus(Entity* self) {
     }
 
     switch (self->step) {
-        case 0: // Init
+        case SUCCUBUS_INIT:
             InitializeEntity(D_801804D0);
             self->animCurFrame = 0x52;
             SetStep(1);
             CreateEntityFromCurrentEntity(0x1B, &self[1]);
 
-        case 1:
+        case SUCCUBUS_1:
             if ((D_8003BDEC[212] != 0) || (g_DemoMode != Demo_None)) {
                 self->facing = 0;
                 self->posX.i.hi = 0x1A0 - g_Camera.posX.i.hi;
@@ -77,7 +98,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 2:
+        case SUCCUBUS_2:
             if (D_801A3ED4 != 0) {
                 SetSubStep(4);
             }
@@ -119,7 +140,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 3:
+        case SUCCUBUS_3:
             if ((D_801A3ED4 == 0) || (self->step_s == 0)) {
                 switch (self->step_s) {
                     case 0:
@@ -160,7 +181,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 4:
+        case SUCCUBUS_4:
             switch (self->step_s) {
                 case 0:
                     if (AnimateEntity(D_80180694, self) == 0) {
@@ -195,7 +216,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 18:
+        case SUCCUBUS_18:
             switch (self->step_s) {
                 case 0:
                     func_801A046C(0x87B);
@@ -258,7 +279,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 5:
+        case SUCCUBUS_5:
             if (self->step_s == 0) {
                 self->ext.generic.unk80.modeS16.unk0 = 64;
                 self->step_s++;
@@ -281,11 +302,11 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 7:
+        case SUCCUBUS_7:
             switch (self->step_s) {
                 case 0:
                     self->accelerationY = 0;
-                    self->ext.generic.unk80.modeS16.unk0 = (Random() & 31) + 0x20;
+                    self->ext.generic.unk80.modeS16.unk0 = (Random() & 31) + 32;
                     self->ext.generic.unk84.S8.unk2 = 8;
                     self->ext.generic.unk8C.modeU16.unk2 = 0x58;
                     if (!(Random() % 4)) {
@@ -331,22 +352,24 @@ void EntitySuccubus(Entity* self) {
                         posX = 96;
                     }
 
-                    temp_s5 = GetDistanceToPlayerX();
+                    temp = GetDistanceToPlayerX();
                     if (self->ext.generic.unk84.U8.unk0 == 0) {
-                        if (temp_s5 < posX) {
+                        if (temp < posX) {
                             self->ext.generic.unk84.U8.unk0 ^= 1;
                         }
                         if (self->ext.generic.unk84.U8.unk0 != 0) {
-                            if (posX < temp_s5) {
+                            if (posX < temp) {
                                 self->ext.generic.unk84.U8.unk0 ^= 1;
                             }
                         }
-                    } else if (posX < temp_s5) {
+                    } else if (posX < temp) {
                         self->ext.generic.unk84.U8.unk0 ^= 1;
                     }
                     
-                    if (((GetSideToPlayer() & 1) ^ 1) != self->facing) { // TODO: Regalloc
-                        if (temp_s5 > 16) {
+                    temp2 = ((GetSideToPlayer() & 1) ^ 1);
+                    temp3 = self->facing;
+                    if (temp3 != temp2) {
+                        if (temp > 16) {
                             self->ext.generic.unk88.S16.unk0 = 11;
                             SetStep(16);
                         }
@@ -400,7 +423,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 15:
+        case SUCCUBUS_15:
             if (self->step_s == 0) {
                 self->facing = (GetSideToPlayer() & 1) ^ 1;
                 self->step_s++;
@@ -415,7 +438,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 16:
+        case SUCCUBUS_16:
             if (AnimateEntity(D_801806F8, self) == 0) {
                 if (self->ext.generic.unk88.U16.unk0 != 0) {
                     SetStep(self->ext.generic.unk88.U16.unk0);
@@ -426,7 +449,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 8: // Petal attack
+        case SUCCUBUS_PETAL_ATTACK:
             switch (self->step_s) {
                 case 0:
                     self->facing = (GetSideToPlayer() & 1) ^ 1;
@@ -475,7 +498,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 9:
+        case SUCCUBUS_9:
             switch (self->step_s) {
                 case 0:
                     self->ext.generic.unk80.modeS16.unk0 = 112;
@@ -503,9 +526,9 @@ void EntitySuccubus(Entity* self) {
                     if (posX > 0) {
                         self->accelerationX = 0;
                     }
-                    
+
                     MoveEntity();
-                    
+
                     posX = PLAYER.posX.i.hi - self->posX.i.hi;
                     if (self->facing == 0) {
                         posX = -posX;
@@ -518,7 +541,7 @@ void EntitySuccubus(Entity* self) {
                     if (posY < 0) {
                         posY = -posY;
                     }
-                    
+
                     if (!(g_Player_unk0C & 0x010401A2)) {
                         if ((posY < 12) && (posX < 24)) {
                             g_Player.unk60 = 1;
@@ -594,7 +617,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 13:
+        case SUCCUBUS_13:
             if (self->step_s == 0) {
                 self->ext.generic.unk80.modeS16.unk0 = 80;
                 self->facing = (GetSideToPlayer() & 1) ^ 1;
@@ -612,7 +635,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 11: // CLONE ATTACK
+        case SUCCUBUS_CLONE_ATTACK:
             switch (self->step_s) {
                 case 1:
                     posX = (self->posX.i.hi + g_Camera.posX.i.hi);
@@ -621,26 +644,22 @@ void EntitySuccubus(Entity* self) {
                     if (posX < 32) {
                         posX = 96 - ((32 - posX) % 64);
                     }
-
-                    if ((posX + 384) > 480) {
+                    
+                    if ((temp = posX + 384) > 480) {
                         posX = ((posX - 96) % 64) + 32;
                     }
-#if 0
-                    // !FAKE
-                    ClonesPos = *D_801807D4;
-                    ClonesPos += (Random() & 3) * 7;
-#else
                     
-#endif
-                        
-                    ClonesPos = &D_801807D4[Random() & 3][0];
+                    ClonesPos = *D_801807D4;
+                    temp = Random() & 3;
+                    ClonesPos += temp * 7;
+
                     newEntity = &g_Entities[112];
-                    temp_s5 = self->posX.i.hi + g_Camera.posX.i.hi;
+                    temp = self->posX.i.hi + g_Camera.posX.i.hi;
 
                     for (i = 0; i < 6; i++, newEntity++, ClonesPos++, posX += 64) {
                         CreateEntityFromEntity(0x1C, self, newEntity);
                         newEntity->ext.generic.unk9C = self;
-                        if (posX == temp_s5) {
+                        if (posX == temp) {
                             posX += 64;
                         }
                         newEntity->ext.generic.unkA0 = posX;
@@ -668,8 +687,8 @@ void EntitySuccubus(Entity* self) {
                     break;
 
                 case 3:
-                    newEntity = &g_Entities[0x70];
-                    newEntity += fakeTemp = Random() % 6; // !FAKE
+                    newEntity = &g_Entities[112];
+                    newEntity += temp = Random() % 6; // !FAKE
 
                     posX = newEntity->posX.i.hi;
                     posY = newEntity->posY.i.hi;
@@ -739,7 +758,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 12: // "spike" attack
+        case SUCCUBUS_SPIKE_ATTACK:
             switch (self->step_s) {
                 case 0:
                     newEntity = &g_Entities[96];
@@ -801,7 +820,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 14:
+        case SUCCUBUS_14:
             if (self->step_s == 0) {
                 if (Random() % 2) {
                     func_801A046C(0x879);
@@ -834,7 +853,7 @@ void EntitySuccubus(Entity* self) {
             }
             break;
 
-        case 255:
+        case SUCCUBUS_DEBUG:
             /**
              * Debug: Press SQUARE / CIRCLE on the second controller
              * to advance/rewind current animation frame
