@@ -1,50 +1,6 @@
 #include "dra.h"
 #include "sfx.h"
 
-typedef enum {
-    // Deallocate stage resources
-    Gameover_Init,
-
-    // Make screenshot and allocate 3D model for the melting foreground
-    Gameover_AllocResources,
-
-    // Wait for something...?
-    Gameover_2,
-
-    // Start loading game over graphics from the disk
-    Gameover_3,
-
-    // When the file is loaded, move it into the VRAM
-    Gameover_4,
-
-    // foreground melting
-    Gameover_5,
-
-    // Game over text starts brightening
-    Gameover_6,
-
-    // Start using Game Over textures that looks brighter
-    Gameover_7,
-
-    // Revert back to the slightly less bright Game Over text
-    Gameover_8,
-
-    // Game over screen fade out
-    Gameover_9,
-
-    Gameover_10,
-
-    // Return to the title screen (if you are not in ST0)
-    Gameover_11,
-
-    Gameover_Alt = 99,
-    Gameover_Init_Alt,
-    Gameover_AllocResources_Alt,
-    Gameover_2_Alt,
-    Gameover_3_Alt,
-    Gameover_11_Alt = 111,
-} GameSteps;
-
 // Game over melting effect
 void func_800E5358(void) {
     Primitive* poly = &g_PrimBuf[D_8013640C];

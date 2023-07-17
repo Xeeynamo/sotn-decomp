@@ -859,7 +859,7 @@ void func_800EAF28(s32 arg0) {
     Unsktruct_800EAF28* var_a1;
     unkstruct_80072FA0* var_a0;
 
-    if (arg0 & 0x8000) {
+    if (arg0 & ANIMSET_OVL_FLAG) {
         var_a1 = g_api.o.entityGfxs[arg0 & 0x7FFF];
     } else {
         var_a1 = D_800A3B5C[arg0];
