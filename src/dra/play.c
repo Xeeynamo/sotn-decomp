@@ -40,7 +40,7 @@ void HandlePlay(void) {
         D_8003C9A4 = 0;
         D_8003C738 = 0;
         if (D_8003C730 == 0) {
-            for (i = 0; i < 0x300; i++) {
+            for (i = 0; i < LEN(D_8003BDEC); i++) {
                 D_8003BDEC[i] = 0;
             }
             D_8003BDEC[0xB9] = 1;
@@ -63,7 +63,9 @@ void HandlePlay(void) {
                 g_Settings.buttonConfig[i] = i;
                 g_Settings.buttonMask[i] = D_800A0160[i];
             }
-            for (i = 0; i < 6; i++) {
+            for (i = 0; i < LEN(g_Settings.cloakExteriorColors) +
+                                LEN(g_Settings.cloakLiningColors);
+                 i++) {
                 g_Settings.cloakExteriorColors[i] = 0;
             }
 
@@ -73,7 +75,7 @@ void HandlePlay(void) {
             g_Settings.isCloakLingingReversed = 0;
             g_Settings.isSoundMono = true;
             func_800E493C();
-            for (i = 0; i < 11; i++) {
+            for (i = 0; i < LEN(g_Settings.equipOrderTypes); i++) {
                 g_Settings.equipOrderTypes[i] = i;
             }
         }

@@ -139,7 +139,6 @@ typedef struct Primitive {
 #define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
-#define EQUIP_TYPE_COUNT 11
 
 #define RIC_PRG_PTR 0x8013C000
 #define FAMILIAR_PTR 0x80170000
@@ -552,6 +551,21 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
+typedef enum {
+    ITEM_S_SWORD,
+    ITEM_SWORD,
+    ITEM_THROW_1,
+    ITEM_FIST,
+    ITEM_CLUB,
+    ITEM_TWOHAND,
+    ITEM_FOOD,
+    ITEM_BOMB,
+    ITEM_THROW_2,
+    ITEM_SHIELD,
+    ITEM_MEDICINE,
+    ITEM_END,
+} ItemCategory;
+
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 
 typedef struct {
@@ -645,7 +659,7 @@ typedef struct {
     /* 0x0B0, 0x8003CAA8 */ s32 cloakExteriorColors[3];
     /* 0x0BC, 0x8003CAB4 */ s32 cloakLiningColors[3];
     /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
-    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[EQUIP_TYPE_COUNT];
+    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[ITEM_END];
     /* 0x100, 0x8003CAF8 */ s32 isCloakLingingReversed;
     /* 0x104, 0x8003CAFC */ s32 isSoundMono;
     /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
@@ -813,20 +827,6 @@ typedef struct {
     /* 0x11 */ u8 unk11;
     /* 0x12 */ u16 sp22; // entity->entityRoomIndex
 } SubweaponDef;          /* size=0x14 */
-
-typedef enum {
-    ITEM_S_SWORD,
-    ITEM_SWORD,
-    ITEM_THROW_1,
-    ITEM_FIST,
-    ITEM_CLUB,
-    ITEM_TWOHAND,
-    ITEM_FOOD,
-    ITEM_BOMB,
-    ITEM_THROW_2,
-    ITEM_SHIELD,
-    ITEM_MEDICINE
-} ItemCategory;
 
 // Defines the equipment that can be set on left and right hand
 // This includes weapons, throw weapons, consumable and restoration items.
