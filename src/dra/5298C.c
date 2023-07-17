@@ -546,19 +546,30 @@ void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x64, 0x40, 0x20, 0, 0xC0, 0x150, 0x9C, 0, 0, 1);
 }
 
-// seems to be equivalent to floor(number * .75)
-// Cloak color components are 5 bit. Examples:
-// 31 -> 23
-// 15 -> 11
-s32 DarkenCloakColor(s32 color) {
-    s32 temp_v0 = color * 3;
-    s32 phi_v0 = temp_v0 < 0 ? temp_v0 + 3 : temp_v0;
-    return phi_v0 >> 2;
-}
+// Equivalent of floor(number * .75)
+// Cloak color components are 5 bit.
+// Examples: 31->23, 15->11
+s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
-// Apply cloak palette
 // Creates light and dark versions of cloak colors in BGR555 format
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", ApplyJosephsCloakPalette);
+void ApplyJosephsCloakPalette(void) {
+    g_JosephsCloak.liningDark =
+        DarkenCloakColor(g_Settings.cloakColors[3]) +
+        ((DarkenCloakColor(g_Settings.cloakColors[4]) << 5) - 0x8000) +
+        (DarkenCloakColor(g_Settings.cloakColors[5]) << 0xA);
+    g_JosephsCloak.liningLight =
+        (g_Settings.cloakColors[3] +
+         ((g_Settings.cloakColors[4] << 5) - 0x8000)) +
+        ((u32)g_Settings.cloakColors[5] << 0xA);
+    g_JosephsCloak.exteriorDark =
+        DarkenCloakColor(g_Settings.cloakColors[0]) +
+        ((DarkenCloakColor(g_Settings.cloakColors[1]) << 5) - 0x8000) +
+        (DarkenCloakColor(g_Settings.cloakColors[2]) << 0xA);
+    g_JosephsCloak.exteriorLight =
+        g_Settings.cloakColors[0] +
+        ((g_Settings.cloakColors[1] << 5) - 0x8000) +
+        ((u32)g_Settings.cloakColors[2] << 0xA);
+}
 
 void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
@@ -747,7 +758,7 @@ void DrawSettingsReverseCloak(MenuContext* context) {
     DrawMenuStr(c_strNormal, 176, 48, context);
     DrawMenuStr(c_strReversal, 176, 64, context);
     func_800F5E68(
-        context, g_Settings.isCloakLingingReversed, 174, 46, 64, 12, 4, 1);
+        context, g_Settings.isCloakLiningReversed, 174, 46, 64, 12, 4, 1);
 }
 
 void DrawSettingsSound(MenuContext* context) {

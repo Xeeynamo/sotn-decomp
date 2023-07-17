@@ -239,6 +239,14 @@ typedef struct {
     u8 soundFrame;
 } animSoundEvent;
 
+// All the Joseph's Cloak color fields are in RGB555 format
+typedef struct {
+    u16 liningDark;
+    u16 liningLight;
+    u16 exteriorDark;
+    u16 exteriorLight;
+} JosephsCloak;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -322,6 +330,7 @@ extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
 extern Unkstruct_801092E8 D_800A37D8;
+extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
