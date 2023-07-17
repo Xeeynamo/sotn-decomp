@@ -1039,7 +1039,7 @@ void func_800F8858(MenuContext* context) {
     const char** pStrEquipTypes = &c_strSSword;
     s32 y = 8;
 
-    for (; i < EQUIP_TYPE_COUNT; i++) {
+    for (; i < ITEM_END; i++) {
         DrawMenuStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
                     context->cursorX + 4, context->cursorY + y, context);
         y += 16;
