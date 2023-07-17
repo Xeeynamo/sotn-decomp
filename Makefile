@@ -455,6 +455,7 @@ build_saturn_copy_files:
 	cp  ./src/saturn/stage_02.h $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/warp.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/sattypes.h $(SATURN_BUILD_DIR)
+	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game
