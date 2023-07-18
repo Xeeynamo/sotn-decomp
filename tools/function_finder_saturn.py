@@ -50,7 +50,7 @@ def get_asm_files(asm_path, overlay):
     files = []
     for path in Path(asm_path).rglob('*.s'):
         # skip if not the right overlay
-        if len(overlay) and not overlay in str(path):
+        if overlay is not None and len(overlay) and not overlay in str(path):
             continue
         # ignore data
         if not 'f_nonmat' in str(path):
