@@ -119,7 +119,7 @@ jobs:
       - name: Install secondary pre-requirements
         run: pip3 install requests
       - name: Generate duplicates and function report
-        run: python3 tools/function_finder_saturn.py --no-fetch > gh-duplicates/functions_saturn.md
+        run: python3 tools/function_finder_saturn.py > gh-duplicates/functions_saturn.md
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 
