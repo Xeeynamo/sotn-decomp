@@ -94,4 +94,20 @@ extern s16 DAT_06062224[];
 extern s32 DAT_06039214;
 void ClearDebugPrintTilemap();
 
+#define SH2_REG_M_FRT_IC 0x21000000
+
+extern s32 DAT_060645d0;
+extern s32 DAT_060cf040;
+
+extern s32* DAT_06064674;
+extern s32* DAT_060a5000;
+extern s32* DAT_06064580;
+extern s32* DAT_060645e0;
+
+extern s32* DAT_06064644;
+extern s32* DAT_060dc000;
+
+extern s32* DAT_06064690;
+extern s32* DAT_06066000;
+
 #endif
