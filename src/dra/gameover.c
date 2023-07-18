@@ -163,16 +163,16 @@ void HandleGameOver(void) {
             LoadImage(&g_Vram.D_800ACDA8, (u32*)0x8019A000);
             StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
         } else {
-            if (func_800E81FC(8, SimFileType_System) < 0) {
+            if (LoadFileSim(8, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(9, SimFileType_System) < 0) {
+            if (LoadFileSim(9, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(10, SimFileType_System) < 0) {
+            if (LoadFileSim(10, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(11, SimFileType_System) < 0) {
+            if (LoadFileSim(11, SimFileType_System) < 0) {
                 break;
             }
         }
@@ -332,15 +332,13 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
+        while (LoadFileSim(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
             ;
-        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
+        while (LoadFileSim(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
             ;
-        while (
-            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
+        while (LoadFileSim((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
             ;
-        while (
-            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
+        while (LoadFileSim((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
             ;
     }
 }

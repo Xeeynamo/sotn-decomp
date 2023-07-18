@@ -154,8 +154,7 @@ segments:
       - [0x41FA8, rodata] # jtbl_800E1FA8
       - [0x41FD0, rodata] # jtbl_800E1FD0
       - [0x42270, rodata] # jtbl_800E2270
-      - [0x422B4, rodata]
-      - [0x42354, c, 42398_hd]
+      - [0x422B4, c, 42398_hd]
       - [0x44EC8, c, play]
       - [0x458E4, c, gameover]
       - [0x46A0C, c, 46358]

@@ -1360,8 +1360,8 @@ bool LoadWeaponPrg(s32 equipIndex) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_Weapon0 + equipIndex;
     } else {
-        if (func_800E81FC(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
-            func_800E81FC(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
+        if (LoadFileSim(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
+            LoadFileSim(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
             return 0;
         }
     }
