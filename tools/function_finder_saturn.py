@@ -7,6 +7,7 @@ import requests
 import json
 import time
 import concurrent.futures
+import argparse
 
 # search for scratches with the name on decomp.me
 def find_scratches(name):
@@ -45,9 +46,12 @@ def find_scratches(name):
     return None
 
 # look in asm files, read in the text and check for branches and jump tables
-def get_asm_files(asm_path):
+def get_asm_files(asm_path, overlay):
     files = []
     for path in Path(asm_path).rglob('*.s'):
+        # skip if not the right overlay
+        if len(overlay) and not overlay in str(path):
+            continue
         # ignore data
         if not 'f_nonmat' in str(path):
             continue
@@ -106,21 +110,36 @@ def find_wip(function):
 def print_github_flavored_table(data):
     headers = list(data[0].keys())  # Get the headers from the first row's keys
 
+    # Find the maximum length for each column
+    column_lengths = {header: len(header) for header in headers}
+
+    for row in data:
+        for key, value in row.items():
+            column_lengths[key] = max(column_lengths[key], len(str(value)))
+
     # Print the table header
-    table = "| " + " | ".join(headers) + " |"
-    separator = "|-" + "-|".join(["-" * len(header) for header in headers]) + "-|"
+    table = "| " + " | ".join(headers[i].ljust(column_lengths[headers[i]]) for i in range(len(headers))) + " |"
+    separator = "|-" + "-|-".join(["-" * column_lengths[header] for header in headers]) + "-|"
 
     print(table)
     print(separator)
 
     # Print the table rows
     for row in data:
-        row_values = [str(value) for value in row.values()]
+        row_values = [str(value).ljust(column_lengths[key]) for key, value in row.items()]
         table_row = "| " + " | ".join(row_values) + " |"
         print(table_row)
 
 if __name__ == '__main__':
-    asm_files = get_asm_files('asm/saturn')
+    # Create the argument parser
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--no-fetch', action='store_true', help='Disable fetching from decomp.me')
+    parser.add_argument('--overlay', type=str, help='Specify a overlay name')
+
+    # Parse the command-line arguments
+    args = parser.parse_args()
+
+    asm_files = get_asm_files('asm/saturn', args.overlay)
 
     # sort by name, then number of branches, then length
     asm_files = sorted(asm_files, key=lambda x: (x['filename']))
@@ -129,10 +148,13 @@ if __name__ == '__main__':
 
     output = asm_files
 
-    # we are mostly waiting on IO so run in parallel
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(find_wip, o) for o in output]
-        results = [f.result() for f in futures]
+    results = []
+
+    if not args.no_fetch:
+        # we are mostly waiting on IO so run in parallel
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = [executor.submit(find_wip, o) for o in output]
+            results = [f.result() for f in futures]
 
     to_print = []
 
@@ -142,7 +164,7 @@ if __name__ == '__main__':
                 'Length': o['length'],
                 'Branches': o['branches']}
         
-        if results[i]:
+        if len(results) and results[i]:
             obj['WIP'] = results[i]['link']
             obj['%'] = results[i]['percent']
         else:
