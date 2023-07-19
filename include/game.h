@@ -851,8 +851,8 @@ typedef struct {
     /* 0x19 */ u8 isConsumable;
     /* 0x1A */ u8 enemyInvincibilityFrames;
     /* 0x1B */ u8 unk1B;
-    /* 0x1C */ u32 unk1C;
-    /* 0x20 */ u32 unk20;
+    /* 0x1C */ u32 comboSub;
+    /* 0x20 */ u32 comboMain;
     /* 0x24 */ u16 mpUsage;
     /* 0x26 */ u16 stunFrames;
     /* 0x28 */ u16 hitType;
