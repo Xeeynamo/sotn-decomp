@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80115F54(void) {
     Unkstruct_800ECBF8_1* temp_s0;
@@ -272,7 +273,7 @@ void func_80118640(void) {
 }
 
 void func_80118670(void) {
-    if (LOW(PLAYER.animFrameIdx) == 0x10007) {
+    if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(NA_SE_PL_MP_GAUGE);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
@@ -284,7 +285,7 @@ void func_80118670(void) {
 
 void func_801186EC(void) {
     if (PLAYER.step_s == 0) {
-        if (g_Entities[UNK_ENTITY_10].objectId == 0) {
+        if (g_Entities[UNK_ENTITY_10].entityId == E_NONE) {
             D_80138008 = 0x10;
             func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
             PLAYER.step_s++;
@@ -300,7 +301,7 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
     s16 i;
 
     for (i = start; i < end; i++, entity++) {
-        if (entity->objectId == E_NONE) {
+        if (entity->entityId == E_NONE) {
             return entity;
         }
     }
@@ -312,7 +313,7 @@ Entity* func_80118810(s16 start, s16 end) {
     s16 i;
 
     for (i = end - 1; i >= start; i--, entity--) {
-        if (entity->objectId == E_NONE) {
+        if (entity->entityId == E_NONE) {
             return entity;
         }
     }
@@ -390,7 +391,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
 
     var_a1 = 0;
     if (ent2 != NULL) {
-        var_a1 = (ent2->objectId == 0) << 0xC;
+        var_a1 = (ent2->entityId == E_NONE) << 0xC;
         if (ent2->hitboxState == 0) {
             var_a1 = 0x2000;
         }
@@ -428,7 +429,7 @@ s32 func_80118C84(s16 arg0, s16 arg1) {
 
     if (entity != NULL) {
         DestroyEntity(entity);
-        entity->objectId = ENTITY_13;
+        entity->entityId = ENTITY_13;
         entity->posX.val = PLAYER.posX.val;
         entity->posY.val = PLAYER.posY.val;
         entity->ext.generic.unk80.modeS16.unk0 = arg0;
@@ -539,7 +540,7 @@ void func_8011A290(Entity* entity) {
     entity->nFramesInvincibility = subwpn.sp17;
     entity->unk58 = subwpn.sp18;
     entity->unk6A = subwpn.sp1E;
-    entity->objectRoomIndex = subwpn.sp22;
+    entity->entityRoomIndex = subwpn.sp22;
     entity->ext.generic.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
@@ -554,7 +555,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     entity->nFramesInvincibility = spell.unk0D;
     entity->unk58 = spell.unk0E;
     entity->unk6A = spell.unk12;
-    entity->objectRoomIndex = spell.unk14;
+    entity->entityRoomIndex = spell.unk14;
     func_80118894(entity);
 }
 
@@ -570,7 +571,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         arg0->nFramesInvincibility = spell.unk0D;
         arg0->unk58 = spell.unk0E;
         arg0->unk6A = spell.unk12;
-        arg0->objectRoomIndex = spell.unk14;
+        arg0->entityRoomIndex = spell.unk14;
         arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
         func_80118894(arg0);
     }
@@ -584,44 +585,44 @@ void func_8011A4D0(void) {
     s32 i;
     s32 i2;
     s32 i3;
-    u16 objectId;
+    u16 entityId;
     s32 enemy;
     s32 enemy2;
 
     temp_s2 = *D_80097420;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < 64; i++, g_CurrentEntity++, entity++) {
-        if (i == 16 && entity->objectId == 0) {
+        if (i == 16 && entity->entityId == E_NONE) {
             g_Player.unk48 = 0;
         }
-        if (entity->objectId == 0) {
+        if (entity->entityId == E_NONE) {
             continue;
         }
         if (entity->step == 0) {
-            objectId = entity->objectId;
-            if (objectId < 0xD0) {
+            entityId = entity->entityId;
+            if (entityId < 0xD0) {
                 // Objects 00-CF
-                entity->pfnUpdate = D_800AD0C4[objectId];
-            } else if (objectId < 0xE0) {
+                entity->pfnUpdate = D_800AD0C4[entityId];
+            } else if (entityId < 0xE0) {
                 // Objects D0-DF
-                entity->pfnUpdate = D_8016FCC0[objectId];
-            } else if (objectId == 0xEF || objectId == 0xFF ||
-                       objectId == 0xED || objectId == 0xFD) {
+                entity->pfnUpdate = D_8016FCC0[entityId];
+            } else if (entityId == 0xEF || entityId == 0xFF ||
+                       entityId == 0xED || entityId == 0xFD) {
                 entity->pfnUpdate = D_800AD0C4[1];
-            } else if (objectId == 0xEE || objectId == 0xFE) {
+            } else if (entityId == 0xEE || entityId == 0xFE) {
                 entity->pfnUpdate = D_800AD0C4[15];
-            } else if (objectId >= 0xF0) {
+            } else if (entityId >= 0xF0) {
                 // Objects F0-FC
-                entity->pfnUpdate = D_8017CC40[objectId];
+                entity->pfnUpdate = D_8017CC40[entityId];
             } else {
                 // Objects E0-EC
-                entity->pfnUpdate = D_80179C80[objectId];
+                entity->pfnUpdate = D_80179C80[entityId];
             }
         }
         if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
-            if (entity->objectId != 0) {
+            if (entity->entityId != 0) {
                 if (!(entity->flags & FLAG_UNK_04000000) &&
                     ((u16)(entity->posX.i.hi + 32) > 320 ||
                      (u16)(entity->posY.i.hi + 16) > 272)) {
@@ -671,16 +672,16 @@ void func_8011A4D0(void) {
 
 void func_8011A870(void) {
     Entity* entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
-    u16 objectId;
+    u16 entityId;
     s32 i = 4;
 
 loop_1: // !FAKE: this should be a for loop
-    objectId = entity->objectId;
+    entityId = entity->entityId;
 
-    if (objectId != 0) {
+    if (entityId != 0) {
         if (entity->step == 0) {
-            if ((u32)(entity->objectId - 0xD0) < 0x10) {
-                entity->pfnUpdate = (PfnEntityUpdate)D_8016FCC0[objectId];
+            if ((u32)(entity->entityId - 0xD0) < 0x10) {
+                entity->pfnUpdate = (PfnEntityUpdate)D_8016FCC0[entityId];
             } else {
                 goto label;
             }
@@ -689,7 +690,7 @@ loop_1: // !FAKE: this should be a for loop
         if (entity->pfnUpdate != NULL) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
-            if (entity->objectId != 0) {
+            if (entity->entityId != 0) {
                 if ((!(entity->flags & FLAG_UNK_04000000)) &&
                     (((u32)((((u16)entity->posX.i.hi) + 0x20) & 0xFFFF) >=
                       0x141) ||
@@ -723,7 +724,7 @@ void func_8011A9D8(void) {
             DestroyEntity(entity);
         }
         if (g_CurrentPlayableCharacter == PLAYER_ALUCARD &&
-            0x36 < entity->objectId && entity->objectId < 0x3D &&
+            0x36 < entity->entityId && entity->entityId < 0x3D &&
             entity->step != 0) {
             entity->pfnUpdate(entity);
         }
@@ -745,7 +746,7 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     }
 
     DestroyEntity(entity);
-    entity->objectId = 1;
+    entity->entityId = E_UNK_1;
     entity->ext.generic.unk8C.entityPtr = self;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
@@ -764,16 +765,16 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
         entity->flags |= FLAG_UNK_10000;
     }
     if (flags & 0x1000) {
-        entity->objectId = 0xEF;
+        entity->entityId = 0xEF;
     }
     if (flags & 0x2000) {
-        entity->objectId = 0xFF;
+        entity->entityId = 0xFF;
     }
     if (flags & 0x4000) {
-        entity->objectId = 0xED;
+        entity->entityId = 0xED;
     }
     if (flags & 0x8000) {
-        entity->objectId = 0xFD;
+        entity->entityId = 0xFD;
     }
 
     return entity;
@@ -781,7 +782,47 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011AC3C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011B190);
+// Name comes purely from emulator breakpoint experiments, could be wrong
+void EntityUnarmedAttack(Entity* entity) {
+    Equipment equip;
+    animSoundEvent* temp_s1;
+    u16 paramsTopBit;
+
+    entity->posX.val = PLAYER.posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    paramsTopBit = entity->params >> 0xF;
+    entity->facing = PLAYER.facing;
+    temp_s1 = &D_800AD53C[(entity->params >> 6) & 0x1FC];
+
+    if (PLAYER.ext.generic.unkAC < temp_s1->ACshift ||
+        (temp_s1->ACshift + 7) <= PLAYER.ext.generic.unkAC ||
+        g_Player.unk46 == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+
+    if (entity->step == 0) {
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        GetEquipProperties(paramsTopBit, &equip, 0);
+        entity->attack = equip.attack;
+        entity->attackElement = equip.element;
+        entity->hitboxState = equip.hitType;
+        entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
+        entity->unk58 = equip.stunFrames;
+        entity->unk6A = equip.hitEffect;
+        entity->entityRoomIndex = equip.criticalRate;
+        func_80118894(entity);
+        entity->step++;
+    }
+    entity->ext.generic.unkAC = PLAYER.ext.generic.unkAC - temp_s1->ACshift;
+    if ((PLAYER.animFrameDuration == 1) &&
+        (PLAYER.animFrameIdx == temp_s1->soundFrame)) {
+        PlaySfx(temp_s1->soundId);
+    }
+    if (UpdateUnarmedAnim(temp_s1->frameProps, temp_s1->frames) < 0) {
+        DestroyEntity(entity);
+    }
+}
 
 void func_8011B334(Entity* entity) {
     Equipment equip;
@@ -805,7 +846,7 @@ void func_8011B334(Entity* entity) {
         entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
         entity->unk58 = equip.stunFrames;
         entity->unk6A = equip.hitEffect;
-        entity->objectRoomIndex = equip.criticalRate;
+        entity->entityRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->hitboxOffX = 9;
         entity->hitboxOffY = 21;
@@ -836,11 +877,11 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_8011BBE0);
 // same as RIC/func_80162E9C
 bool func_8011BD48(Entity* entity) {
     s32 i = 0x10;
-    s16 objId = entity->objectId;
+    s16 objId = entity->entityId;
     s16 params = entity->params;
     Entity* e = &g_Entities[i];
     for (; i < 0x40; i++, e++) {
-        if (objId == (s32)e->objectId && params == (s32)e->params &&
+        if (objId == (s32)e->entityId && params == (s32)e->params &&
             e != entity) {
             return true;
         }
@@ -2834,3 +2875,4 @@ void func_80134E64(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134F50);
 void func_80134F50();
+#endif

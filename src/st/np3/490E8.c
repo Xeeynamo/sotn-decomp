@@ -36,8 +36,8 @@ void func_801C90E8(void) {
         return;
     }
     if ((g_CurrentEntity->ext.generic.unk7C.U8.unk0) == 0) {
-        if (GetPlayerDistanceX() < 64) {
-            if (g_CurrentEntity->facing != (GetPlayerSide() & 1)) {
+        if (GetDistanceToPlayerX() < 64) {
+            if (g_CurrentEntity->facing != (GetSideToPlayer() & 1)) {
                 SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
@@ -84,7 +84,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_WALK_TOWARDS_PLAYER:
         if (AnimateEntity(D_80182464, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.generic.unk80.modeS8.unk0 = self->facing;
 
@@ -94,7 +94,7 @@ void EntityBoneScimitar(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() < 76) {
+        if (GetDistanceToPlayerX() < 76) {
             self->step = BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER;
         }
         func_801C90E8();
@@ -102,7 +102,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER:
         if (AnimateEntity(D_80182474, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
 
@@ -112,7 +112,7 @@ void EntityBoneScimitar(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() > 92) {
+        if (GetDistanceToPlayerX() > 92) {
             self->step = BONE_SCIMITAR_WALK_TOWARDS_PLAYER;
         }
         func_801C90E8();
@@ -132,7 +132,7 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxOffY = 0;
         }
 
-        if (*(s32*)&self->animFrameIdx == 7) {
+        if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
             func_801C2598(NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH);
         }
 
@@ -188,7 +188,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_SPECIAL:
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         func_801BCB5C(&D_80182540);
         if (((((u32)self->accelerationX) >> 0x1F) ^ self->facing) != 0) {
             AnimateEntity(D_80182464, self);
@@ -219,7 +219,7 @@ void EntityBoneScimitar(Entity* self) {
             return;
         }
 
-        if ((GetPlayerDistanceX() < 48) && (GetPlayerDistanceY() < 32)) {
+        if ((GetDistanceToPlayerX() < 48) && (GetDistanceToPlayerY() < 32)) {
             SetStep(BONE_SCIMITAR_ATTACK);
         }
         break;
@@ -274,7 +274,7 @@ void EntityBoneScimitarParts(Entity* entity) {
             MoveEntity();
             return;
         }
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->params = 0;
         entity->step = 0;

@@ -120,18 +120,18 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/390BC", func_801B94F0);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/390BC", EntityNumericDamage);
 
-void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->entityId = initDesc->entityId & 0x3FF;
+    entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->params = initDesc->params;
-    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
-    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
+    entity->entityRoomIndex = initDesc->entityRoomIndex >> 8;
+    entity->unk68 = (initDesc->entityId >> 0xA) & 7;
 }
 
-void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     Entity* entity;
     s16 posY = g_Camera.posY.i.hi;
     s16 yClose = posY - 64;
@@ -150,11 +150,11 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
         return;
     }
 
-    switch (layoutObj->objectId & 0xE000) {
+    switch (layoutObj->entityId & 0xE000) {
     case 0x0:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
-        if (entity->objectId == 0) {
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
+        if (entity->entityId == E_NONE) {
             CreateEntityFromLayout(entity, layoutObj);
         }
         break;
@@ -162,13 +162,13 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
         break;
     case 0xA000:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
 }
 
-void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     Entity* entity;
     s16 posX = g_Camera.posX.i.hi;
     s16 xClose = posX - 64;
@@ -187,11 +187,11 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
         return;
     }
 
-    switch (layoutObj->objectId & 0xE000) {
+    switch (layoutObj->entityId & 0xE000) {
     case 0x0:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
-        if (entity->objectId == 0) {
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
+        if (entity->entityId == E_NONE) {
             CreateEntityFromLayout(entity, layoutObj);
         }
         break;
@@ -199,7 +199,7 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
         break;
     case 0xA000:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
@@ -239,7 +239,7 @@ void func_801BB044(s16 arg0) {
         }
 
         expected = 0;
-        flag = (D_801D2768->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801D2768->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInVerticalRange(D_801D2768);
@@ -267,7 +267,7 @@ void func_801BB140(s16 arg0) {
         }
 
         expected = 0;
-        flag = (D_801D2768->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801D2768->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInVerticalRange(D_801D2768);
@@ -310,7 +310,7 @@ void func_801BB2F8(s16 arg0) {
         }
 
         expected = 0;
-        flag = (D_801D276C->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801D276C->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D276C);
@@ -338,7 +338,7 @@ void func_801BB3F4(s16 arg0) {
         }
 
         expected = 0;
-        flag = (D_801D276C->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801D276C->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D276C);
@@ -369,18 +369,18 @@ void func_801BB680(void) {
     }
 }
 
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
 }
@@ -429,8 +429,8 @@ void DestroyEntityFromIndex(s16 index) {
 }
 
 void PreventEntityFromRespawning(Entity* entity) {
-    if (entity->objectRoomIndex) {
-        u32 value = (entity->objectRoomIndex - 1);
+    if (entity->entityRoomIndex) {
+        u32 value = (entity->entityRoomIndex - 1);
         u16 index = value / 32;
         u16 bit = value % 32;
         g_entityDestroyed[index] |= 1 << bit;
@@ -439,12 +439,39 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #include "st/AnimateEntity.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/390BC", func_801BC6BC);
+u8 func_801BC6BC(u8 frames[], Entity* self, u8 arg2) {
+    u16 animFrameStart = self->animFrameIdx * 2;
+    u8* var_s1 = &frames[animFrameStart];
+    s16 var_a1 = 0;
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the X Axis
- */
-s32 GetPlayerDistanceX(void) {
+    if (self->animFrameDuration == 0) {
+        if (*var_s1 != 0) {
+            if (*var_s1 == 0xFF) {
+                return 0;
+            }
+            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *var_s1++;
+            self->animFrameIdx++;
+            var_a1 = 128;
+        } else {
+            var_s1 = frames;
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
+            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *var_s1;
+            self->animFrameIdx++;
+            return 0;
+        }
+    }
+    self->animFrameDuration--;
+    self->animCurFrame = var_s1[-1];
+    var_a1 |= 1;
+    return var_a1;
+}
+
+// Absolute distance from g_CurrentEntity to the player in the X Axis
+s32 GetDistanceToPlayerX(void) {
     s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (yDistance < 0) {
@@ -453,10 +480,8 @@ s32 GetPlayerDistanceX(void) {
     return yDistance;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
- */
-s32 GetPlayerDistanceY(void) {
+// Absolute distance from g_CurrentEntity to the player in the Y Axis
+s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -471,7 +496,7 @@ s32 GetPlayerDistanceY(void) {
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-s16 GetPlayerSide(void) {
+s16 GetSideToPlayer(void) {
     s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
@@ -491,15 +516,119 @@ void FallEntity(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/390BC", func_801BC8E4);
+s32 func_801BC8E4(u16* sensors) {
+    Collider col;
+    Collider colBack;
+    s16 x;
+    s16 y;
+    s16 i;
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/390BC", func_801BCB5C);
+    MoveEntity();
+    FallEntity();
+    if (g_CurrentEntity->accelerationY >= 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            x += *sensors++;
+            y += *sensors++;
+            g_api.CheckCollision(x, y, &col, 0);
+            if (col.effects & EFFECT_UNK_8000) {
+                if (i == 1) {
+                    if (col.effects & EFFECT_SOLID) {
+                        g_api.CheckCollision(x, y - 8, &colBack, 0);
+                        if (!(colBack.effects & EFFECT_SOLID)) {
+                            g_CurrentEntity->posY.i.hi =
+                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
+                            g_CurrentEntity->accelerationX = 0;
+                            g_CurrentEntity->accelerationY = 0;
+                            g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                            return 1;
+                        }
+                    }
+                    continue;
+                }
+            }
+            if (col.effects & EFFECT_NOTHROUGH && i != 1) {
+                if (col.effects & EFFECT_QUICKSAND) {
+                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                    return 4;
+                }
+                g_api.CheckCollision(x, y - 8, &colBack, 0);
+                if (!(colBack.effects & EFFECT_SOLID)) {
+                    g_CurrentEntity->posY.i.hi =
+                        g_CurrentEntity->posY.i.hi + col.unk18;
+                    g_CurrentEntity->accelerationX = 0;
+                    g_CurrentEntity->accelerationY = 0;
+                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                    return 1;
+                }
+            }
+        }
+    }
+    g_CurrentEntity->flags |= FLAG_UNK_10000000;
+    return 0;
+}
+
+s32 func_801BCB5C(s16* posX) {
+    Collider collider;
+    s16 temp2;
+    s16 temp4;
+    s16 x, y;
+
+    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    temp2 = g_CurrentEntity->posY.i.hi + 3;
+    g_CurrentEntity->posY.i.hi = temp2;
+    x = g_CurrentEntity->posX.i.hi + *posX;
+    posX++;
+    y = temp2 + *posX;
+    g_api.CheckCollision(x, y, &collider, 0);
+    if (!(collider.effects & EFFECT_SOLID)) {
+        return 0;
+    }
+    posX++;
+
+    g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
+    if (g_CurrentEntity->accelerationX != 0) {
+        if (g_CurrentEntity->accelerationX < 0) {
+            temp4 = x - *posX;
+            posX++;
+        } else {
+            temp4 = x + *posX;
+            posX++;
+        }
+        y = y + *posX - 7;
+        g_api.CheckCollision(temp4, y, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
+                EFFECT_UNK_0002) {
+                g_CurrentEntity->posX.val =
+                    g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
+                g_CurrentEntity->accelerationX = 0;
+                return 0xFF;
+            }
+            return 0x61;
+        }
+        y += 15;
+        g_api.CheckCollision(temp4, y, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            if (collider.effects & EFFECT_UNK_8000) {
+                return 0x61;
+            }
+            return 1;
+        }
+        g_CurrentEntity->posX.val -= g_CurrentEntity->accelerationX;
+        g_CurrentEntity->accelerationX = 0;
+
+        return 0x80;
+    }
+    return 1;
+}
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
-        if (current->objectId == 0) {
+        if (current->entityId == E_NONE) {
             DestroyEntity(current);
             return current;
         }
@@ -619,8 +748,8 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void SetSubStep(u8 arg0) {
-    g_CurrentEntity->step_s = arg0;
+void SetSubStep(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -635,7 +764,7 @@ void func_801BD150(u16 arg0, u16 sfxId) {
         return;
     }
 
-    g_CurrentEntity->objectId = E_EXPLOSION;
+    g_CurrentEntity->entityId = E_EXPLOSION;
     g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     g_CurrentEntity->params = arg0;
     g_CurrentEntity->animCurFrame = 0;
@@ -760,13 +889,13 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     params = self->params &= 0xFFF;
 
     if (params < 0x80) {
-        self->objectId = E_PRIZE_DROP;
+        self->entityId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
         params -= 0x80;
-        self->objectId = E_EQUIP_ITEM_DROP;
+        self->entityId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 
@@ -870,7 +999,38 @@ void CollectGold(u16 goldSize) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/390BC", CollectSubweapon);
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80181D80[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D = 0x10;
+    } else {
+        subWeapon = D_80181DB0[subWeapon];
+        g_CurrentEntity->unk6D = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
+        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facing != 1) {
+            g_CurrentEntity->accelerationX = -0x20000;
+            return;
+        }
+        g_CurrentEntity->accelerationX = 0x20000;
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectHeartVessel(void) {
     if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {

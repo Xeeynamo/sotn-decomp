@@ -1,4 +1,5 @@
 #include "dra.h"
+#if defined(VERSION_US)
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -951,10 +952,10 @@ void HandleTitle(void) {
                 break;
             }
         } else {
-            if (func_800E81FC(2, SimFileType_System) < 0) {
+            if (LoadFileSim(2, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(0, SimFileType_System) < 0) {
+            if (LoadFileSim(0, SimFileType_System) < 0) {
                 break;
             }
         }
@@ -979,7 +980,7 @@ void HandleTitle(void) {
                 break;
             }
         } else {
-            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
                 break;
             }
         }
@@ -996,3 +997,4 @@ void HandleTitle(void) {
         break;
     }
 }
+#endif

@@ -138,7 +138,7 @@ void EntityMerman2(Entity* self) {
             self->step_s++;
         }
         if (AnimateEntity(D_8018229C, self) == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
         posX = self->posX.i.hi;
@@ -158,7 +158,7 @@ void EntityMerman2(Entity* self) {
         if ((u8)self->ext.merman2.timer++ > 32) {
             self->ext.merman2.timer = 0;
             self->step_s = 0;
-            if ((GetPlayerDistanceX() >= 48) && !(Random() & 1)) {
+            if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
                 SetStep(MERMAN2_JUMPING);
             }
         }
@@ -318,7 +318,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case MERMAN2_WALKING_TO_PLAYER_FACE_PLAYER:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->ext.merman2.timer = D_80182244[Random() & 3];
             self->step_s++;
             break;
@@ -365,7 +365,7 @@ void EntityMerman2(Entity* self) {
     case MERMAN2_SPIT_FIRE:
         switch (self->step_s) {
         case MERMAN2_SPIT_FIRE_FACE_PLAYER:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             return;
 
@@ -496,7 +496,7 @@ void EntityMerman2(Entity* self) {
             self->animCurFrame = 14;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-            if (!(GetPlayerSide() & 1)) {
+            if (!(GetSideToPlayer() & 1)) {
                 self->accelerationX = -0x20000;
             } else {
                 self->accelerationX = 0x20000;

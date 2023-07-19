@@ -306,7 +306,7 @@ void EntityEquipItemDrop(Entity* self) {
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
-            self->objectId = 3;
+            self->entityId = 3;
             SetStep(0);
             EntityPrizeDrop(self);
             return;
@@ -536,14 +536,14 @@ void func_801C07FC(Entity* entity) {
     case 0:
         InitializeEntity(D_80180C04);
         entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->objectId;
+            entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->objectId = E_EXPLOSION;
+                newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
             }
@@ -551,7 +551,7 @@ void func_801C07FC(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId !=
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
             entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
@@ -559,8 +559,28 @@ void func_801C07FC(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP func_801C090C https://decomp.me/scratch/0VI4v
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C090C);
+void func_801C090C(
+    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
+    Entity* newEntity;
+    s32 i;
+    s16 newX = self->posX.i.hi + x;
+    s16 newY = self->posY.i.hi + y;
+
+    for (i = 0; i < count; i++) {
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            newEntity->posX.i.hi = newX + xGap * i;
+            newEntity->posY.i.hi = newY;
+            newEntity->entityId = E_ID14;
+            newEntity->pfnUpdate = func_801C0B24;
+            newEntity->params = params;
+            newEntity->ext.generic.unk94 = arg5 + i;
+            newEntity->unk1C = newEntity->unk1A = D_80181ECC[arg5 + i];
+            newEntity->unk19 = 3;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C0A3C);
 
@@ -945,10 +965,10 @@ void func_801C16B4(Entity* entity) {
     }
 }
 
-void func_801C1780(u16 objectId, Entity* src, Entity* dst) {
+void func_801C1780(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
-    dst->objectId = objectId;
-    dst->pfnUpdate = D_80180A90[objectId];
+    dst->entityId = entityId;
+    dst->pfnUpdate = D_80180A90[entityId];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;
@@ -1082,9 +1102,41 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
-// DECOMP_ME_WIP func_801C29B0 https://decomp.me/scratch/Cxlhx 93.39 % 4 missing
-// instructions
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/3E30C", func_801C29B0);
+void func_801C29B0(s16 sfxId) {
+    s32 var_a3;
+    s32 temp_v0_2;
+    s16 var_a2;
+    s32 y;
+    s16 var_v0_4;
+    s16 var_v1;
+
+    var_a3 = g_CurrentEntity->posX.i.hi - 128;
+    var_a2 = (ABS(var_a3) - 32) >> 5;
+    if (var_a2 > 8) {
+        var_a2 = 8;
+    } else if (var_a2 < 0) {
+        var_a2 = 0;
+    }
+    if (var_a3 < 0) {
+        var_a2 = -var_a2;
+    }
+    var_a3 = ABS(var_a3) - 96;
+    y = g_CurrentEntity->posY.i.hi - 128;
+    temp_v0_2 = ABS(y) - 112;
+    var_v1 = var_a3;
+    if (temp_v0_2 > 0) {
+        var_v1 += temp_v0_2;
+    }
+    if (var_v1 < 0) {
+        var_v0_4 = 0;
+    } else {
+        var_v0_4 = var_v1;
+    }
+    var_a3 = 127 - (var_v0_4 >> 1);
+    if (var_a3 > 0) {
+        g_api.func_80134714(sfxId, var_a3, var_a2);
+    }
+}
 
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell

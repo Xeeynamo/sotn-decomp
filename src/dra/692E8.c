@@ -1,5 +1,6 @@
 #include "dra.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_801092E8(s32 arg0) {
     D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
@@ -265,61 +266,77 @@ void func_8010DA48(u32 arg0) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DA70);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DB38);
+u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
+    u16* frameIndex;
 
+    frameIndex =
+        frames[g_CurrentEntity->ext.generic.unkAC] + PLAYER.animFrameIdx;
+    if (*frameIndex == 0xFFFF) {
+        return -1;
+    }
+    if (frameProps != NULL) {
+        frameProps = &frameProps[(*frameIndex >> 9) << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
+    }
+    g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
+    return PLAYER.animFrameDuration >= 0 ? 0 : -1;
+}
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DBFC);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", UpdateAnim);
-#else
-void UpdateAnim(FrameProperty* frameProps, s32* arg1) {
+u32 UpdateAnim(s8* frameProps, s32* frames) {
     AnimationFrame* animFrame;
-    s8* frameProp;
+    s32 ret;
+
     if (g_CurrentEntity->animFrameDuration == -1) {
+        ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
         g_CurrentEntity->animFrameDuration =
             g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
-    } else if (--g_CurrentEntity->animFrameDuration == 0) {
+        ret = 0;
+    } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
         animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
-        switch ((u32)animFrame->duration) {
-        case 0:
+        // Effectively a switch statement, but breaks if I actually use one.
+        if (animFrame->duration == 0) {
             g_CurrentEntity->animFrameIdx = animFrame->unk2;
             g_CurrentEntity->animFrameDuration =
                 g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
-            break;
-
-        case 0xFFFF:
-            g_CurrentEntity->animFrameIdx =
-                g_CurrentEntity->animFrameIdx + 1 + animFrame->duration;
+            ret = 0;
+        } else if (animFrame->duration == 0xFFFF) {
+            g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
-            break;
-
-        case 0xFFFE:
-            g_CurrentEntity->unk4C = (s32*)arg1[animFrame->unk2];
+            ret = -1;
+        } else if (animFrame->duration == 0xFFFE) {
+            g_CurrentEntity->unk4C = frames[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
+            ret = -2;
             g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C[0].duration;
-            break;
-
-        default:
+                g_CurrentEntity->unk4C->duration;
+        } else {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
-            break;
         }
     }
-    if (frameProps != 0) {
-        frameProp =
-            frameProps +
-            (g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 >> 9);
-        g_CurrentEntity->unk10 = *(frameProp++);
-        g_CurrentEntity->unk12 = *(frameProp++);
-        g_CurrentEntity->hitboxWidth = frameProp[0];
-        g_CurrentEntity->hitboxHeight = frameProp[1];
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+        frameProps =
+            &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx]
+                             .unk2 >>
+                         9)
+                        << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
     }
     g_CurrentEntity->animCurFrame =
         g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+    return ret;
 }
-#endif
 
 void func_8010DF70(void) {
     g_CurrentEntity = &PLAYER;
@@ -484,7 +501,7 @@ void AccelerateX(s32 accelerationX) {
 
 // Updates the Player acceleration in the X Axis
 void func_8010E3B8(s32 accelerationX) {
-    if (PLAYER.objectRoomIndex == 1) {
+    if (PLAYER.entityRoomIndex == 1) {
         accelerationX = -accelerationX;
     }
     PLAYER.accelerationX = accelerationX;
@@ -665,7 +682,7 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     s32 ret;
 
     for (i = 0, var_a2 = 0, ret = 0; i < 16; i++) {
-        if (entity->objectId == 0) {
+        if (entity->entityId == E_NONE) {
             ret++;
         }
 
@@ -684,10 +701,81 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
     return (ret == 0) ? -1 : 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EB5C);
+s32 func_8010EB5C(void) {
+    SubweaponDef subWpn;
+    s16 subWpnId;
+    s32 var_s0;
+    s32 faker;
 
-// DECOMP_ME_WIP func_8010EC8C https://decomp.me/scratch/N8Srk
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EC8C);
+    var_s0 = 0;
+    if (!(g_Player.padPressed & PAD_UP)) {
+        return 1;
+    }
+    if (g_Player.pl_vram_flag & 0x20) {
+        var_s0 = 1;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, false);
+
+    if (subWpnId == 0) {
+        return 1;
+    }
+    if (subWpnId == 6 && D_80097400[0] != 0) {
+        return 4;
+    }
+    if (func_8010EADC(subWpnId, subWpn.unk6) < 0) {
+        return 2;
+    }
+    subWpnId = func_800FE3C4(&subWpn, 0, true);
+    if (subWpnId == 0) {
+        return 3;
+    }
+    func_8011AAFC(g_CurrentEntity, (u32)subWpn.unkB, subWpnId << 9);
+    g_Player.D_80072F14 = 4;
+    if (PLAYER.step_s < 64) {
+        faker = subWpn.unkA;
+        if (PLAYER.step == 0) {
+            func_8010DA48(faker + var_s0);
+        }
+        func_8010EA54(8);
+    }
+    return 0;
+}
+
+s32 CheckChainLimit(s32 itemId, s32 handId) {
+    Entity* entity;
+    s32 existing_count;
+    s32 i;
+    s32 chainLimit;
+
+    chainLimit = D_800A4B04[itemId].chainLimit;
+    if (chainLimit & 0x80) {
+        return -(s32)((u16)g_Player.unk46 >> 0xF);
+    }
+    entity = &g_Entities[16];
+    for (i = 16, existing_count = 0; i < 64; i++, entity++) {
+        // Hack to load unkAE as an s16 (struct has s8)
+        // Longer term, figure out what g_Entites[16-64] are
+        // and make dedicated ent extension.
+        if (LOH(entity->ext.generic.unkAE) != itemId) {
+            continue;
+        }
+
+        if (handId != 0) {
+            if (entity->params & 0x8000) {
+                existing_count++;
+            }
+        } else {
+            if (!(entity->params & 0x8000)) {
+                existing_count++;
+            }
+        }
+
+        if (!(existing_count < chainLimit)) {
+            return -1;
+        }
+    }
+    return 0;
+}
 
 void func_8010ED54(u8 arg0) {
     PLAYER.accelerationY = 0;
@@ -804,3 +892,4 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80111018);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801112AC);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8011151C);
+#endif

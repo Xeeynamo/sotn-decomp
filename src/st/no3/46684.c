@@ -300,8 +300,8 @@ void EntityEquipItemDrop(Entity* self) {
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
-            self->objectId = 3;
-            func_801C58A4(0);
+            self->entityId = 3;
+            SetStep(0);
             EntityPrizeDrop(self);
             return;
         }
@@ -530,14 +530,14 @@ void EntityUnkId13(Entity* entity) {
     case 0:
         InitializeEntity(D_80180AE8);
         entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->objectId;
+            entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->objectId = E_EXPLOSION;
+                newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
             }
@@ -545,7 +545,7 @@ void EntityUnkId13(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId !=
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
             entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
@@ -873,12 +873,12 @@ void func_801903C8(Entity* entity) {
     }
 }
 
-void func_801C9AF8(u16 objectId, Entity* source, Entity* entity) {
+void func_801C9AF8(u16 entityId, Entity* source, Entity* entity) {
     u16 palette;
 
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
     entity->unk5A = source->unk5A;
@@ -951,9 +951,92 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CAD28);
+void func_801CAD28(s16 sfxId) {
+    s32 var_a3;
+    s32 temp_v0_2;
+    s16 var_a2;
+    s32 y;
+    s16 var_v0_4;
+    s16 var_v1;
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CAE20);
+    var_a3 = g_CurrentEntity->posX.i.hi - 128;
+    var_a2 = (ABS(var_a3) - 32) >> 5;
+    if (var_a2 > 8) {
+        var_a2 = 8;
+    } else if (var_a2 < 0) {
+        var_a2 = 0;
+    }
+    if (var_a3 < 0) {
+        var_a2 = -var_a2;
+    }
+    var_a3 = ABS(var_a3) - 96;
+    y = g_CurrentEntity->posY.i.hi - 128;
+    temp_v0_2 = ABS(y) - 112;
+    var_v1 = var_a3;
+    if (temp_v0_2 > 0) {
+        var_v1 += temp_v0_2;
+    }
+    if (var_v1 < 0) {
+        var_v0_4 = 0;
+    } else {
+        var_v0_4 = var_v1;
+    }
+    var_a3 = 127 - (var_v0_4 >> 1);
+    if (var_a3 > 0) {
+        g_api.func_80134714(sfxId, var_a3, var_a2);
+    }
+}
+
+void func_801CAE20(Primitive* prim) {
+    u8 xPos;
+    s32 i;
+    s32 j;
+
+    switch (prim->p3) {
+    case 0:
+        if (prim->p1 < 0x80) {
+            if (--prim->p1 == 0) {
+                prim->p3 = 1;
+            }
+        } else {
+            if (++prim->p1 == 0) {
+                prim->p3 = 2;
+            }
+        }
+
+        if (prim->p3 != 0) {
+            u8* dst = prim->p3 == 1 ? &prim->r1 : &prim->r0;
+            for (i = 0; i < 2; i++) {
+                for (j = 0; j < 3; j++) {
+                    dst[j] = 0x50;
+                }
+                dst += 0x18;
+            }
+            prim->p2 = 0;
+        }
+        break;
+    case 1:
+        if (prim->p2 < 0x14) {
+            prim->p2++;
+        }
+        xPos = prim->p2 / 5;
+        prim->x2 = prim->x0 = prim->x0 + xPos;
+        prim->x1 = prim->x1 + xPos;
+        prim->x3 = prim->x0;
+        func_801D704C(prim, 4);
+        break;
+    case 2:
+        if (prim->p2 < 0x14) {
+            prim->p2++;
+        }
+        xPos = prim->p2 / 5;
+        prim->x2 = prim->x0 = prim->x0 - xPos;
+        prim->x1 = prim->x1 - xPos;
+        prim->x3 = prim->x0;
+        func_801D704C(prim, 4);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityStageNamePopup);
 
@@ -1223,7 +1306,7 @@ void func_801CC90C(Entity* arg0) {
     s16 temp_v1;
     s16 temp_v0;
 
-    temp_v0 = func_801C4F64();
+    temp_v0 = GetDistanceToPlayerX();
     temp_v1 = arg0->ext.generic.unk84.S16.unk2;
     if (temp_v1 != 0) {
 
@@ -1264,7 +1347,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801CF438);
 void func_801CF58C(Entity* self) {
     self->accelerationX = 0;
     self->ext.generic.unk84.S16.unk2 = 0x100;
-    func_801C58A4(6);
+    SetStep(6);
     g_api.PlaySfx(0x783);
     self->ext.generic.unk80.modeS16.unk0 = 0x20;
 }
@@ -1272,8 +1355,8 @@ void func_801CF58C(Entity* self) {
 void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
-    if (self->facing == func_801C4FD4()) {
-        func_801C58A4(5);
+    if (self->facing == GetSideToPlayer()) {
+        SetStep(5);
         return;
     }
 
@@ -1286,21 +1369,21 @@ void func_801CF5E0(Entity* self) {
         self->ext.generic.unk84.S16.unk0 - self->posX.i.hi - g_Camera.posX.i.hi;
 
     if (temp_v0 > 16) {
-        func_801C58A4(3);
+        SetStep(3);
         if (self->facing != 0) {
             self->ext.generic.unk7C.S8.unk0 = 0;
         } else {
             self->ext.generic.unk7C.S8.unk0 = 1;
         }
     } else if (temp_v0 < -16) {
-        func_801C58A4(3);
+        SetStep(3);
         if (self->facing != 0) {
             self->ext.generic.unk7C.S8.unk0 = 1;
         } else {
             self->ext.generic.unk7C.S8.unk0 = 0;
         }
     } else {
-        func_801C58A4(7);
+        SetStep(7);
     }
 
     self->ext.generic.unk80.modeS16.unk0 = 0;
@@ -1313,7 +1396,7 @@ void func_801CF6D8(Entity* arg0) {
     s16 temp_v1;
     s16 temp_v0;
 
-    temp_v0 = func_801C4F64();
+    temp_v0 = GetDistanceToPlayerX();
     temp_v1 = arg0->ext.generic.unk84.S16.unk2;
     if (temp_v1 != 0) {
 
@@ -1677,14 +1760,14 @@ void func_801D59D0(void) {
     s32 temp2 = func_801C5A98(&D_80183C38, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
-        func_801C58A4(5);
+        SetStep(5);
         return;
     }
 
     if (g_CurrentEntity->ext.generic.unk7C.U8.unk0 == 0) {
-        if (func_801C4F64() < 64) {
-            if (g_CurrentEntity->facing != (func_801C4FD4() & 1)) {
-                func_801C58A4(4);
+        if (GetDistanceToPlayerX() < 64) {
+            if (g_CurrentEntity->facing != (GetSideToPlayer() & 1)) {
+                SetStep(4);
             }
         }
     } else {
@@ -1704,7 +1787,7 @@ void EntityBoneScimitarParts(Entity* entity) {
             MoveEntity();
             return;
         }
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->params = 0;
         entity->step = 0;

@@ -149,8 +149,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 }
 
 // SAT: func_0606F3D8
-// same as PSX but better match?
-u8* func_800FD744(s32 equipTypeFilter) {
+u8* GetEquipOrder(s32 equipTypeFilter) {
     if (equipTypeFilter == 0) {
         return g_Status.equipHandOrder;
     }
@@ -158,8 +157,7 @@ u8* func_800FD744(s32 equipTypeFilter) {
 }
 
 // SAT: func_0606F3F8
-// better match like above?
-u8* func_800FD760(s32 equipTypeFilter) {
+u8* GetEquipCount(s32 equipTypeFilter) {
     if (equipTypeFilter == 0) {
         return g_Status.equipHandCount;
     }
@@ -592,12 +590,13 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
 
 void MoveEntity(Entity* entity) {
-    LOW(entity->posX) += entity->accelerationX;
-    LOW(entity->posY) += entity->accelerationY;
+    entity->posX.val += entity->accelerationX;
+    entity->posY.val += entity->accelerationY;
 }
 
 void func_06079BB4(s32* param_1) {
-    s32* temp = *param_1;
+    s32* temp = (s32*)*param_1;
+
     if (temp != 0) {
         temp[0x14 / 4] = param_1[1];
         temp[0x18 / 4] = param_1[2];
@@ -605,7 +604,7 @@ void func_06079BB4(s32* param_1) {
 }
 
 void func_06079BCC(s32* param_1) {
-    s32* temp = *param_1;
+    s32* temp = (s32*)*param_1;
     if (temp != 0) {
         param_1[1] = temp[0x14 / 4];
         param_1[2] = temp[0x18 / 4];
@@ -626,14 +625,55 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A608, func_0607A608);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
 
-// _hkyori_search
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A9F8, func_0607A9F8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA1C, func_0607AA1C);
+// SAT func_0607A9F8
+// Original name: _hkyori_search
+// Absolute distance from the specified entity to the player in the X Axis
+s32 GetDistanceToPlayerX(Entity* self) {
+    s16 xDistance = self->posX.i.hi - PLAYER.posX.i.hi;
+
+    if (xDistance < 0) {
+        xDistance = -xDistance;
+    }
+    return xDistance;
+}
+
+// SAT func_0607AA1C
+// Absolute distance from the specified entity to the player in the Y Axis
+s32 GetDistanceToPlayerY(Entity* self) {
+    s16 yDistance = self->posY.i.hi - PLAYER.posY.i.hi;
+
+    if (yDistance < 0) {
+        yDistance = -yDistance;
+    }
+    return yDistance;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAA4, func_0607AAA4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAF4, func_0607AAF4);
+
+// SAT func_0607AAF4
+/*
+ * Returns the player's side position relative to g_CurrentEntity
+ * 0 = Player is on the right side
+ * 1 = Player is on the left side
+ * 2 = Player is above
+ */
+s16 GetSideToPlayer(Entity* self) {
+    Entity* player = &PLAYER;
+    s16 side = 0;
+
+    if (self->posX.val > player->posX.val) {
+        side = 1;
+    }
+
+    if (self->posY.val > player->posY.val) {
+        side |= 2;
+    }
+    return side;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB1C, func_0607AB1C);
 
 // _bicyousei_dir_0
@@ -673,7 +713,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
-        if (current->unk74 == 0) { // not objectId?
+        if (current->unk74 == 0) { // not entityId?
             DestroyEntity(current);
             return current;
         }
@@ -685,16 +725,16 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B1C8, func_0607B1C8);
 
 // SAT: func_0607B218
-void func_801C58A4(s32 state) {
-    g_CurrentEntity->step = state;
+void func_801C58A4(s32 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
 // SAT: func_0607B240
-void func_801C58C4(s32 state) {
-    g_CurrentEntity->step_s = state;
+void func_801C58C4(s32 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -714,8 +754,8 @@ void CreateEntityFromCurrentEntity(u16 id, Entity* entity) {
     DestroyEntity(entity);
     entity->unk74 = id;
     entity->pfnUpdate = (*PfnEntityUpdates)[id - 1]->func;
-    entity->posX = g_CurrentEntity->posX;
-    entity->posY = g_CurrentEntity->posY;
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B374, func_0607B374);
@@ -724,7 +764,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
 
 void func_0607B604(s32* param_1) {
-    s32* temp = *param_1;
+    s32* temp = (s32*)*param_1;
     temp[0x14 / 4] = param_1[1];
     temp[0x18 / 4] = param_1[2];
 }

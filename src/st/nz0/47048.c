@@ -269,7 +269,7 @@ void func_801C7884(Entity* entity) {
         entity->rotAngle += 0x20;
 
         if (entity[-1].step != 1) {
-            entity->objectId = E_PRIZE_DROP;
+            entity->entityId = E_PRIZE_DROP;
             entity->pfnUpdate = EntityPrizeDrop;
             entity->animFrameDuration = 0;
             entity->animFrameIdx = 0;

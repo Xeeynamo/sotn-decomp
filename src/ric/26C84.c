@@ -19,10 +19,10 @@ void func_80162C84(Entity* entity) {
         break;
 
     case 1:
-        if (LOW(entity->animFrameIdx) == 0x10000) {
+        if (entity->animFrameIdx == 0 && entity->animFrameDuration == 1) {
             g_api.PlaySfx(0x882);
         }
-        if (LOW(entity->animFrameIdx) == 0x10004) {
+        if (entity->animFrameIdx == 4 && entity->animFrameDuration == 1) {
             g_api.PlaySfx(0x883);
         }
 
@@ -66,12 +66,12 @@ const u32 rodataPadding_801569E4 = 0;
 // same as DRA/func_8011BD48
 bool func_80162E9C(Entity* entity) {
     s32 i = 16;
-    s16 objId = entity->objectId;
+    s16 objId = entity->entityId;
     s16 params = entity->params;
     Entity* e;
 
     for (e = &g_Entities[i]; i < 64; i++, e++) {
-        if ((objId == e->objectId) && (params == e->params) && (e != entity)) {
+        if ((objId == e->entityId) && (params == e->params) && (e != entity)) {
             return true;
         }
     }

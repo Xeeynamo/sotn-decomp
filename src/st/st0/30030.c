@@ -207,18 +207,18 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1CA0);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", EntityNumericDamage);
 
-void CreateEntityFromLayout(Entity* entity, LayoutObject* initDesc) {
+void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     DestroyEntity(entity);
-    entity->objectId = initDesc->objectId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->objectId];
+    entity->entityId = initDesc->entityId & 0x3FF;
+    entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
     entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
     entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
     entity->params = initDesc->params;
-    entity->objectRoomIndex = initDesc->objectRoomIndex >> 8;
-    entity->unk68 = (initDesc->objectId >> 0xA) & 7;
+    entity->entityRoomIndex = initDesc->entityRoomIndex >> 8;
+    entity->unk68 = (initDesc->entityId >> 0xA) & 7;
 }
 
-void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
+void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 yClose;
     s16 yFar;
     s16 posY;
@@ -240,11 +240,11 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
         return;
     }
 
-    switch (layoutObj->objectId & 0xE000) {
+    switch (layoutObj->entityId & 0xE000) {
     case 0x0:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
-        if (entity->objectId == 0) {
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
+        if (entity->entityId == E_NONE) {
             CreateEntityFromLayout(entity, layoutObj);
         }
         break;
@@ -252,13 +252,13 @@ void CreateEntityWhenInVerticalRange(LayoutObject* layoutObj) {
         break;
     case 0xA000:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
 }
 
-void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
+void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     s16 xClose;
     s16 xFar;
     s16 posX;
@@ -280,11 +280,11 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
         return;
     }
 
-    switch (layoutObj->objectId & 0xE000) {
+    switch (layoutObj->entityId & 0xE000) {
     case 0x0:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
-        if (entity->objectId == 0) {
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
+        if (entity->entityId == E_NONE) {
             CreateEntityFromLayout(entity, layoutObj);
         }
         break;
@@ -292,13 +292,13 @@ void CreateEntityWhenInHorizontalRange(LayoutObject* layoutObj) {
         break;
     case 0xA000:
         entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->objectRoomIndex];
+            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         CreateEntityFromLayout(entity, layoutObj);
         break;
     }
 }
 
-extern LayoutObject* D_801C00A0;
+extern LayoutEntity* D_801C00A0;
 void func_801B33D4(s16 arg0) {
     while (true) {
         if (D_801C00A0->posX != 0xFFFE && D_801C00A0->posX >= arg0) {
@@ -333,7 +333,7 @@ void func_801B3478(s16 arg0) {
         }
 
         expected = 0;
-        flag = (D_801C00A0->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801C00A0->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInVerticalRange(D_801C00A0);
@@ -361,7 +361,7 @@ void func_801B3574(s16 arg0) {
         }
 
         expected = 0;
-        flag = (D_801C00A0->objectRoomIndex >> 8) + 0xFF;
+        flag = (D_801C00A0->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInVerticalRange(D_801C00A0);
@@ -502,18 +502,18 @@ void func_801B3AB4(void) {
     }
 }
 
-void CreateEntityFromCurrentEntity(u16 objectId, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-void CreateEntityFromEntity(u16 objectId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
 }
@@ -562,8 +562,8 @@ void DestroyEntityFromIndex(s16 index) {
 }
 
 void PreventEntityFromRespawning(Entity* entity) {
-    if (entity->objectRoomIndex) {
-        u32 value = (entity->objectRoomIndex - 1);
+    if (entity->entityRoomIndex) {
+        u32 value = (entity->entityRoomIndex - 1);
         u16 index = value / 32;
         u16 bit = value % 32;
         g_entityDestroyed[index] |= 1 << bit;
@@ -572,13 +572,39 @@ void PreventEntityFromRespawning(Entity* entity) {
 
 #include "st/AnimateEntity.h"
 
-// DECOMP_ME_WIP func_801B4AF0 https://decomp.me/scratch/2ry2z
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B4AF0);
+u8 func_801B4AF0(u8 frames[], Entity* self, u8 arg2) {
+    u16 animFrameStart = self->animFrameIdx * 2;
+    u8* var_s1 = &frames[animFrameStart];
+    s16 var_a1 = 0;
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the X Axis
- */
-s16 GetPlayerDistanceX(void) {
+    if (self->animFrameDuration == 0) {
+        if (*var_s1 != 0) {
+            if (*var_s1 == 0xFF) {
+                return 0;
+            }
+            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *var_s1++;
+            self->animFrameIdx++;
+            var_a1 = 128;
+        } else {
+            var_s1 = frames;
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
+            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *var_s1;
+            self->animFrameIdx++;
+            return 0;
+        }
+    }
+    self->animFrameDuration--;
+    self->animCurFrame = var_s1[-1];
+    var_a1 |= 1;
+    return var_a1;
+}
+
+// Absolute distance from g_CurrentEntity to the player in the X Axis
+s16 GetDistanceToPlayerX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (xDistance < 0) {
@@ -587,10 +613,8 @@ s16 GetPlayerDistanceX(void) {
     return xDistance;
 }
 
-/*
- * Returns the absolute distance from g_CurrentEntity to player in the Y Axis
- */
-s32 GetPlayerDistanceY(void) {
+// Absolute distance from g_CurrentEntity to the player in the Y Axis
+s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (yDistance < 0) {
@@ -599,7 +623,7 @@ s32 GetPlayerDistanceY(void) {
     return yDistance;
 }
 
-s16 GetPlayerSide(void) {
+s16 GetSideToPlayer(void) {
     s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
@@ -635,7 +659,58 @@ u8 func_801B4D18(void) {
     return unkState;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B4D5C);
+s32 func_801B4D5C(u16* sensors) {
+    Collider col;
+    Collider colBack;
+    s16 x;
+    s16 y;
+    s16 i;
+
+    MoveEntity();
+    FallEntity();
+    if (g_CurrentEntity->accelerationY >= 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            x += *sensors++;
+            y += *sensors++;
+            g_api.CheckCollision(x, y, &col, 0);
+            if (col.effects & EFFECT_UNK_8000) {
+                if (i == 1) {
+                    if (col.effects & EFFECT_SOLID) {
+                        g_api.CheckCollision(x, y - 8, &colBack, 0);
+                        if (!(colBack.effects & EFFECT_SOLID)) {
+                            g_CurrentEntity->posY.i.hi =
+                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
+                            g_CurrentEntity->accelerationX = 0;
+                            g_CurrentEntity->accelerationY = 0;
+                            g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                            return 1;
+                        }
+                    }
+                    continue;
+                }
+            }
+            if (col.effects & EFFECT_NOTHROUGH && i != 1) {
+                if (col.effects & EFFECT_QUICKSAND) {
+                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                    return 4;
+                }
+                g_api.CheckCollision(x, y - 8, &colBack, 0);
+                if (!(colBack.effects & EFFECT_SOLID)) {
+                    g_CurrentEntity->posY.i.hi =
+                        g_CurrentEntity->posY.i.hi + col.unk18;
+                    g_CurrentEntity->accelerationX = 0;
+                    g_CurrentEntity->accelerationY = 0;
+                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                    return 1;
+                }
+            }
+        }
+    }
+    g_CurrentEntity->flags |= FLAG_UNK_10000000;
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B4FD4);
 
@@ -644,7 +719,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B51E4);
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
     while (current < end) {
-        if (current->objectId == 0) {
+        if (current->entityId == E_NONE) {
             DestroyEntity(current);
             return current;
         }
@@ -784,7 +859,7 @@ void func_801B57D0(u16 params) {
         return;
     }
     current = g_CurrentEntity;
-    g_CurrentEntity->objectId = E_EXPLOSION;
+    g_CurrentEntity->entityId = E_EXPLOSION;
     g_CurrentEntity->pfnUpdate = EntityExplosion;
     g_CurrentEntity->unk19 = 0;
     current->params = params;
@@ -908,13 +983,13 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     params = self->params &= 0xFFF;
 
     if (params < 0x80) {
-        self->objectId = E_PRIZE_DROP;
+        self->entityId = E_PRIZE_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
         params -= 0x80;
-        self->objectId = E_EQUIP_ITEM_DROP;
+        self->entityId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
     }
 

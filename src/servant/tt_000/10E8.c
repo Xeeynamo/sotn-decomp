@@ -4,13 +4,16 @@ extern SpriteParts* D_80170040[];
 extern u16 D_80170448[];
 extern s32 D_801704A8;
 extern Sprite D_80170608[];
+extern s32 D_80170664[][5];
 extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch D_80171094[];
+extern s32 D_801748D8[];
 extern Collider D_80174AD8;
 extern Unkstruct_8011A3AC D_80174C30;
 extern Point16 D_80174C3C[][16];
 extern s32 D_80174D3C;
+extern s32 D_80174D40;
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -47,7 +50,93 @@ void func_801710E8(Entity* entity, s32* arg1) {
     }
 }
 
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_8017110C);
+Entity* func_8017110C(Entity* self) {
+    const int EntitySearchCount = 128;
+    s32 foundIndex;
+    s32 i;
+    u32 found;
+    Entity* e;
+    s32 distance;
+    s32 entityX;
+    s32 selfX;
+
+    found = 0;
+    e = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < EntitySearchCount; i++, e++) {
+        D_801748D8[i] = 0;
+        if (e->entityId == 0) {
+            continue;
+        }
+        if (e->hitboxState == 0) {
+            continue;
+        }
+        if (e->flags & FLAG_UNK_00200000) {
+            continue;
+        }
+
+        entityX = e->posX.i.hi;
+        if (entityX < -0x10) {
+            continue;
+        }
+        if (entityX > 0x110) {
+            continue;
+        }
+        if (e->posY.i.hi > 0xF0) {
+            continue;
+        }
+        if (e->posY.i.hi < 0) {
+            continue;
+        }
+        if (e->hitboxState & 8 && D_80170664[D_80174C30.unk0 / 10][1] == 0) {
+            continue;
+        }
+
+        selfX = self->posX.i.hi;
+        distance = self->posX.i.hi - entityX;
+        if (distance < 0) {
+            distance = -distance;
+        }
+        if (distance < 64) {
+            distance = self->posY.i.hi - e->posY.i.hi;
+            if (distance < 0) {
+                distance = -distance;
+            }
+            if (distance < 64) {
+                continue;
+            }
+        }
+
+        if ((self->facing ? entityX < selfX : selfX < entityX) != 0) {
+            continue;
+        }
+        if (e->hitPoints >= 0x7000) {
+            continue;
+        }
+
+        if (!(e->flags & FLAG_UNK_80000)) {
+            e->flags |= FLAG_UNK_80000;
+            return e;
+        }
+        if (e->hitPoints >= D_80170664[D_80174C30.unk0 / 10][0]) {
+            found++;
+            D_801748D8[i] = 1;
+        }
+    }
+
+    if (found > 0) {
+        foundIndex = D_80174D40 % EntitySearchCount;
+        for (i = 0; i < 0x80; i++) {
+            if (D_801748D8[foundIndex] != 0) {
+                e = &g_Entities[STAGE_ENTITY_START + foundIndex];
+                D_80174D40 = (foundIndex + 1) % EntitySearchCount;
+                return e;
+            }
+            foundIndex = (foundIndex + 1) % EntitySearchCount;
+        }
+    }
+
+    return NULL;
+}
 
 s32 func_801713C8(Entity* entity) {
     if (entity->hitboxState == 0)
@@ -97,7 +186,7 @@ void func_80171568(Entity* self) {
 
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->objectId == 0) {
+        if (entity->entityId == 0) {
             goto init_entity;
         }
     }
@@ -105,7 +194,7 @@ void func_80171568(Entity* self) {
 
 init_entity:
     DestroyEntity(entity);
-    entity->objectId = 0xDA;
+    entity->entityId = 0xDA;
     entity->zPriority = self->zPriority;
     entity->facing = self->facing;
     entity->flags = FLAG_UNK_04000000;
@@ -114,7 +203,7 @@ init_entity:
     entity->ext.generic.unk8C.entityPtr = self;
 }
 
-void func_8017160C(s32 amount, s32 objectId) {
+void func_8017160C(s32 amount, s32 entityId) {
     s32 i;
     Entity* entity;
     s16 facing;
@@ -125,13 +214,13 @@ void func_8017160C(s32 amount, s32 objectId) {
 
     for (i = 0; i < amount; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->objectId == objectId) {
+        if (entity->entityId == entityId) {
             entity->step = 0;
         } else {
             DestroyEntity(entity);
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
-            entity->objectId = objectId;
+            entity->entityId = entityId;
             entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
             facing = (g_Entities[0].facing + 1) & 1;
@@ -211,7 +300,7 @@ void func_801719E0(Entity* self) {
     if (self->ext.fam.unk80 == 0) {
         self->ext.fam.unk8E = 0;
         self->ext.fam.unk82 = self->params;
-        switch (self->objectId) {
+        switch (self->entityId) {
         case 0xD1:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (self->primIndex == -1) {
@@ -280,7 +369,7 @@ void func_801719E0(Entity* self) {
         }
     } else {
         self->ext.fam.unk8E = 0;
-        switch (self->objectId) {
+        switch (self->entityId) {
         case 0xD1:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
@@ -318,7 +407,7 @@ void func_801719E0(Entity* self) {
             break;
         }
     }
-    self->ext.fam.unk80 = self->objectId;
+    self->ext.fam.unk80 = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
@@ -371,12 +460,12 @@ void func_80171ED4(s32 arg0) {
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
     if (arg0 == 1) {
-        e->objectId = 0xD1;
+        e->entityId = 0xD1;
         e->posX.val = 0x800000;
         e->posY.val = 0xFFE00000;
     } else {
         Entity* p;
-        e->objectId = 0xD1;
+        e->entityId = 0xD1;
         if (D_8003C708.flags & 0x20) {
             if (func_80174864() != 0) {
                 x = 0xC00000;
@@ -434,52 +523,46 @@ void func_80173C2C(Entity* entity) {
     DestroyEntity(entity);
 }
 
-s32 func_80173C64(Entity* self, u8* hitboxFrames, AnimationFrame** frames) {
+u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
-    s8 new_var;
-    u16 new_var2;
     s32 ret;
+
     ret = 0;
     if (self->animFrameDuration == -1) {
         ret = -1;
     } else if (self->animFrameDuration == 0) {
         self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
-    } else {
-        self->animFrameDuration--;
-        if (self->animFrameDuration == 0) {
-            self->animFrameIdx++;
-            animFrame = &self->unk4C[self->animFrameIdx];
-            if (animFrame->duration == 0) {
-                self->animFrameIdx = animFrame->unk2;
-                self->animFrameDuration =
-                    self->unk4C[self->animFrameIdx].duration;
-            } else {
-                ;
-                if (animFrame->duration == 0xFFFF) {
-                    new_var2 = animFrame->duration;
-                    new_var2 += self->animFrameIdx;
-                    self->animFrameIdx += animFrame->duration;
-                    ret = -1;
-                    self->animFrameDuration = -1;
-                } else if (animFrame->duration == 0xFFFE) {
-                    self->unk4C = frames[animFrame->unk2];
-                    self->animFrameIdx = 0;
-                    ret = -2;
-                    self->animFrameDuration = self->unk4C->duration;
-                } else {
-                    self->animFrameDuration = animFrame->duration;
-                }
-            }
+    } else if (--self->animFrameDuration == 0) {
+        self->animFrameIdx++;
+        animFrame = &self->unk4C[self->animFrameIdx];
+        // Effectively a switch statement, but breaks if I actually use one.
+        if (animFrame->duration == 0) {
+            self->animFrameIdx = animFrame->unk2;
+            self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+            ret = 0;
+        } else if (animFrame->duration == 0xFFFF) {
+            self->animFrameIdx--;
+            self->animFrameDuration = -1;
+            ret = -1;
+        } else if (animFrame->duration == 0xFFFE) {
+            self->unk4C = frames[animFrame->unk2];
+            self->animFrameIdx = 0;
+            ret = -2;
+            self->animFrameDuration = self->unk4C->duration;
+        } else {
+            self->animFrameDuration = animFrame->duration;
         }
     }
-    if (hitboxFrames != 0) {
-        new_var2 = self->unk4C[self->animFrameIdx].unk2 >> 9;
-        hitboxFrames = &hitboxFrames[new_var2 << 2];
-        self->hitboxOffX = (s8)*hitboxFrames++;
-        new_var = *(hitboxFrames++);
-        self->hitboxOffY = new_var;
-        self->hitboxWidth = *hitboxFrames++;
-        self->hitboxHeight = *hitboxFrames++;
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+        frameProps =
+            &frameProps[(self->unk4C[self->animFrameIdx].unk2 >> 9) << 2];
+        self->hitboxOffX = *frameProps++;
+        self->hitboxOffY = *frameProps++;
+        self->hitboxWidth = *frameProps++;
+        self->hitboxHeight = *frameProps++;
     }
     self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
     return ret;
@@ -516,7 +599,7 @@ s32 func_80173E78(s32 arg0, s32 arg1) {
     return arg0;
 }
 
-Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
+Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
     volatile u32 pad; // fake?
     s16 start = D_80171094[rangeIndex].start;
     s16 end = D_80171094[rangeIndex].end;
@@ -524,7 +607,7 @@ Entity* func_80173EB0(s32 rangeIndex, s32 objectId) {
     s32 i;
 
     for (i = start; end >= i; i++, entity++) {
-        if (entity->objectId == objectId) {
+        if (entity->entityId == entityId) {
             return entity;
         }
     }
@@ -653,7 +736,7 @@ typedef struct {
     u32 cameraY;
     s32 unk1C;
     u32 unk20;
-    u32 objectId;
+    u32 entityId;
     u32 params;
     u32 unk2C;
 } Unkstruct_80174210;
@@ -709,7 +792,7 @@ void func_80174210(Entity* self, s32 arg1) {
                                         1)))) {
                                 temp_s0->unk4 = 0;
                                 if (temp_s0->unk20 == 0) {
-                                    func_801745E4(self, temp_s0->objectId,
+                                    func_801745E4(self, temp_s0->entityId,
                                                   temp_s0->params);
                                     if (temp_s0->unk2C == 0) {
                                         goto block_26;
@@ -746,7 +829,7 @@ void func_80174210(Entity* self, s32 arg1) {
                 temp_v1_5 = *var_s1_2;
                 var_v0_2 = temp_v1_5->unk4 - 1;
                 if (temp_v1_5->unk4 == 0) {
-                    func_801745E4(self, temp_v1_5->objectId, temp_v1_5->params);
+                    func_801745E4(self, temp_v1_5->entityId, temp_v1_5->params);
                     temp_v1_4 = *var_s1_2;
                     if (temp_v1_4->unk2C != 0) {
                         *var_s1_2 = temp_v1_4->unk0;
@@ -763,13 +846,13 @@ void func_80174210(Entity* self, s32 arg1) {
 }
 #endif
 
-void func_801745E4(Entity* entityParent, s32 objectId, s32 params) {
+void func_801745E4(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
 
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->objectId == 0) {
+        if (entity->entityId == 0) {
             goto init_entity;
         }
     }
@@ -777,7 +860,7 @@ void func_801745E4(Entity* entityParent, s32 objectId, s32 params) {
 
 init_entity:
     DestroyEntity(entity);
-    entity->objectId = objectId;
+    entity->entityId = entityId;
     entity->zPriority = entityParent->zPriority;
     entity->facing = entityParent->facing;
     entity->flags = FLAG_UNK_04000000;
@@ -831,7 +914,7 @@ s32 func_801747B8(void) {
 
     entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 0x80; i++, entity++) {
-        if (entity->objectId == 0)
+        if (entity->entityId == 0)
             continue;
         if (entity->hitboxState == 0)
             continue;

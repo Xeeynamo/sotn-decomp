@@ -44,7 +44,7 @@ Entity* func_8015F8F8(s16 start, s16 end) {
     s16 i;
 
     for (i = start; i < end; i++, entity++) {
-        if (entity->objectId == E_NONE) {
+        if (entity->entityId == E_NONE) {
             return entity;
         }
     }
@@ -55,7 +55,7 @@ Entity* func_8015F96C(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {
-        if (entity->objectId == E_NONE) {
+        if (entity->entityId == E_NONE) {
             return entity;
         }
     }
@@ -87,7 +87,7 @@ void func_8015FAB8(Entity* entity) {
     entity->nFramesInvincibility = subwpn->sp17;
     entity->unk58 = subwpn->sp18;
     entity->unk6A = subwpn->sp1E;
-    entity->objectRoomIndex = subwpn->sp22;
+    entity->entityRoomIndex = subwpn->sp22;
     entity->attack = g_api.func_800FD664(entity->attack);
     func_8015F9F0(entity);
 }
@@ -185,7 +185,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
     if (entity != NULL) {
         func_80156C60(entity);
-        entity->objectId = E_UNK_1;
+        entity->entityId = E_UNK_1;
         entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
         entity->posY.val = srcEntity->posY.val;

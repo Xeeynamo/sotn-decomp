@@ -165,7 +165,7 @@ void EntitySlogra(Entity* self) {
             return;
         }
         InitializeEntity(D_80180B44);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromCurrentEntity(E_SLOGRA_SPEAR, &self[1]);
 
     case SLOGRA_FLOOR_ALIGN:
@@ -176,7 +176,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_IDLE:
         AnimateEntity(D_801812F4, self);
-        if (GetPlayerDistanceX() < 96) {
+        if (GetDistanceToPlayerX() < 96) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
@@ -189,7 +189,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_WALKING_WITH_SPEAR:
         if (self->step_s == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             if (self->ext.GS_Props.attackMode != 0) {
                 self->ext.GS_Props.flag = 1;
             } else {
@@ -199,7 +199,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
         AnimateEntity(D_801812E8, self);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         if (self->facing != self->ext.GS_Props.flag) {
             self->accelerationX = 0xC000;
         } else {
@@ -207,7 +207,7 @@ void EntitySlogra(Entity* self) {
         }
         func_801BCB5C(&D_801812E0);
         if (self->ext.GS_Props.flag == 0) {
-            if (GetPlayerDistanceX() < 72) {
+            if (GetDistanceToPlayerX() < 72) {
                 if (self->ext.GS_Props.attackMode == 0) {
                     self->ext.GS_Props.timer = 1;
                 } else {
@@ -216,7 +216,7 @@ void EntitySlogra(Entity* self) {
             }
         }
         if (self->ext.GS_Props.flag != 0) {
-            if (GetPlayerDistanceX() > 112) {
+            if (GetDistanceToPlayerX() > 112) {
                 if (self->ext.GS_Props.attackMode != 0) {
                     self->ext.GS_Props.timer = 1;
                 } else {
@@ -246,7 +246,7 @@ void EntitySlogra(Entity* self) {
         if (AnimateEntity(D_80181328, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
-        if (*(s32*)&self->animFrameIdx == 4) {
+        if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
             func_801C2598(NA_SE_EN_SLOGRA_SPEAR_SLASH);
         }
         break;
@@ -254,7 +254,7 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_SPEAR_FIRE:
         switch (self->step_s) {
         case SLOGRA_FIRE_FACE_PLAYER:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
 
         case SLOGRA_FIRE_PROJECTILE:
@@ -327,14 +327,14 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_WALKING_WITHOUT_SPEAR:
         if (self->step_s == 0) {
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->ext.GS_Props.flag = 1;
             self->ext.GS_Props.timer = 128;
             self->step_s++;
         }
 
         AnimateEntity(D_80181370, self);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         if (self->facing != self->ext.GS_Props.flag) {
             self->accelerationX = 0xC000;
         } else {
@@ -343,16 +343,16 @@ void EntitySlogra(Entity* self) {
 
         func_801BCB5C(&D_801812E0);
         if (self->ext.GS_Props.flag == 0) {
-            if (GetPlayerDistanceX() < 72) {
+            if (GetDistanceToPlayerX() < 72) {
                 self->ext.GS_Props.flag ^= 1;
             }
             if (self->ext.GS_Props.flag != 0) {
-                if (GetPlayerDistanceX() > 112) {
+                if (GetDistanceToPlayerX() > 112) {
                     self->ext.GS_Props.flag ^= 1;
                 }
             }
         } else {
-            if (GetPlayerDistanceX() >= 0x71) {
+            if (GetDistanceToPlayerX() >= 0x71) {
                 self->ext.GS_Props.flag ^= 1;
             }
         }
@@ -369,7 +369,7 @@ void EntitySlogra(Entity* self) {
         if (AnimateEntity(D_8018139C, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
-        if (*(s32*)&self->animFrameIdx == 7) {
+        if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
             func_801C2598(NA_SE_EN_SLOGRA_BEAK_ATTACK);
         }
         break;
@@ -627,7 +627,7 @@ void EntityGaibon(Entity* self) {
             return;
         }
         InitializeEntity(D_80180B68);
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromCurrentEntity(0x52, &self[1]);
         self[1].zPriority = self->zPriority + 4;
         SetStep(GAIBON_IDLE);
@@ -635,10 +635,10 @@ void EntityGaibon(Entity* self) {
 
     case GAIBON_IDLE:
         AnimateEntity(&D_801814C4, self);
-        if (*(s32*)&self->animFrameIdx == 1) {
+        if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
             func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
         }
-        if ((GetPlayerDistanceX() < 96) && (GetPlayerDistanceY() < 96)) {
+        if ((GetDistanceToPlayerX() < 96) && (GetDistanceToPlayerY() < 96)) {
             SetStep(GAIBON_FLY_TOWARDS_PLAYER);
         }
         break;
@@ -646,7 +646,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_TOWARDS_PLAYER:
         switch (self->step_s) {
         case GAIBON_FLY_TOWARDS_PLAYER_BEGIN:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->ext.GS_Props.angle =
                 ratan2((PLAYER.posY.i.hi - 32) - self->posY.i.hi,
                        PLAYER.posX.i.hi - self->posX.i.hi);
@@ -674,10 +674,10 @@ void EntityGaibon(Entity* self) {
                 (accel * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
             AnimateEntity(&D_801814C4, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->ext.GS_Props.timer--;
             if (self->ext.GS_Props.timer == 0) {
                 self->step_s++;
@@ -691,7 +691,7 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(&D_801814D8, self) == 0) {
                 SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             break;
@@ -702,10 +702,10 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_SHOOT_FIREBALLS:
         switch (self->step_s) {
         case GAIBON_FLY_SHOOT_FIREBALLS_BEGIN:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             newEntity = &PLAYER;
             temp_s3 = newEntity->posX.i.hi;
-            if (GetPlayerSide() & 1) {
+            if (GetSideToPlayer() & 1) {
                 temp_s3 += 0x60;
             } else {
                 temp_s3 -= 0x60;
@@ -737,7 +737,7 @@ void EntityGaibon(Entity* self) {
                 (accel * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
             AnimateEntity(&D_8018150C, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             if (self->ext.GS_Props.nearDeath) {
@@ -785,7 +785,7 @@ void EntityGaibon(Entity* self) {
                     SetStep(GAIBON_FLY_SHOOT_BIG_FIREBALL);
                 }
             }
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             break;
@@ -830,7 +830,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_SHOOT_FROM_GROUND:
         switch (self->step_s) {
         case GAIBON_SHOOT_FROM_GROUND_FACE_PLAYER:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
 
         case GAIBON_SHOOT_FROM_GROUND_FACE_SETUP:
@@ -969,7 +969,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(&D_80181520, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             MoveEntity();
@@ -990,10 +990,10 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(&D_80181520, self);
-            if (*(s32*)&self->animFrameIdx == 1) {
+            if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
-            if (GetPlayerSide() & 1) {
+            if (GetSideToPlayer() & 1) {
                 self->accelerationX -= 0xA00;
             } else {
                 self->accelerationX += 0xA00;
@@ -1198,7 +1198,7 @@ void func_801B8CC0(Entity* self) {
         self->animCurFrame = 0x28;
     }
 
-    if (prevEntity->objectId != E_GAIBON) {
+    if (prevEntity->entityId != E_GAIBON) {
         DestroyEntity(self);
     }
 }
@@ -1209,7 +1209,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->pfnUpdate = EntityExplosion;
         self->unk19 = 0;
         self->step = 0;
-        self->objectId = 2;
+        self->entityId = 2;
         self->params = 0;
         return;
     }
@@ -1238,7 +1238,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
-        self->objectId = 2;
+        self->entityId = 2;
         self->unk19 = 0;
         self->step = 0;
         self->params = 1;

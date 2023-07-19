@@ -315,8 +315,8 @@ void EntityEquipItemDrop(Entity* self) {
         if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
-            self->objectId = 3;
-            func_8018C240(0);
+            self->entityId = 3;
+            SetStep(0);
             EntityPrizeDrop(self);
             return;
         }
@@ -546,14 +546,14 @@ void func_8018F510(Entity* entity) {
     case 0:
         InitializeEntity(D_8018047C);
         entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->objectId;
+            entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
             Entity* newEntity =
                 AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->objectId = E_EXPLOSION;
+                newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
                 newEntity->params = entity->params;
             }
@@ -561,7 +561,7 @@ void func_8018F510(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
         entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->objectId !=
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
             entity->ext.generic.unk8C.modeU16.unk0) {
             DestroyEntity(entity);
         }
@@ -569,7 +569,30 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018F620);
+void func_8018F620(
+    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
+    Entity* newEntity;
+    s16 newY;
+    s16 newX;
+    s32 i;
+
+    newX = self->posX.i.hi + x;
+    newY = self->posY.i.hi + y;
+    for (i = 0; i < count; i++) {
+        newEntity = AllocEntity(D_8007A958, D_8007A958 + 0x20);
+        if (newEntity != NULL) {
+            newEntity->posX.i.hi = newX + xGap * i;
+            newEntity->posY.i.hi = newY;
+            newEntity->entityId = E_UNK_14;
+            newEntity->pfnUpdate = func_8018F838;
+            newEntity->params = params;
+            newEntity->ext.generic.unk94 = arg5 + i;
+            newEntity->unk1C = newEntity->unk1A = D_80180FE8[arg5 + i];
+            newEntity->unk19 = 3;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+    }
+}
 
 // DECOMP_ME_WIP func_8018F750 https://decomp.me/scratch/peM5t by stuckpixel
 #ifndef NON_EQUIVALENT
@@ -588,7 +611,7 @@ void func_8018F750(
     for (i = 0; i < count; i++) {
         entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
         if (entity != NULL) {
-            entity->objectId = 21;
+            entity->entityId = E_UNK_15;
             entity->pfnUpdate = func_8018F928;
             entity->posX.i.hi = x;
             entity->posY.i.hi = y;
@@ -655,7 +678,63 @@ void func_8018F928(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018FA1C);
+void func_8018FA1C(Entity* self) {
+    s16 primIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180458);
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->hitboxState = 0;
+            *(s32*)&self->ext.generic.unk7C = prim;
+            self->flags |= FLAG_HAS_PRIMS;
+            while (prim != NULL) {
+                prim->x0 = prim->x1 = self->posX.i.hi;
+                prim->y0 = prim->y1 = self->posY.i.hi;
+                prim->r0 = 64;
+                prim->r1 = 0;
+                prim->g0 = 64;
+                prim->g1 = 0;
+                prim->b0 = 255;
+                prim->b1 = 16;
+                prim->priority = self->zPriority + 1;
+                prim->blendMode |= 0x37;
+                prim = prim->next;
+            }
+        }
+        break;
+
+    case 1:
+        prim = (Primitive*)*(s32*)&self->ext.generic.unk7C.s;
+        if (func_8018F420(D_80181044, 0) & 255) {
+            prim->y1 += 2;
+            if (self->step_s == 0) {
+                func_8018F620(self, 1, 2, 0, 0, 3, 0);
+                self->step_s = 1;
+            }
+        } else {
+            self->accelerationY += 0x400;
+            self->posY.val += self->accelerationY;
+            if ((prim->y0 - prim->y1) >= 9) {
+                prim->y1 = prim->y0 - 8;
+            }
+        }
+
+        prim->x0 = self->posX.i.hi;
+        prim->x1 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+
+        if (prim->y0 < prim->y1) {
+            g_api.FreePrimitives(self->primIndex);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 bool func_8018FC4C(Point16* unk) {
     Collider collider;
@@ -922,12 +1001,12 @@ void func_801903C8(Entity* entity) {
     }
 }
 
-void func_80190494(u16 objectId, Entity* source, Entity* entity) {
+void func_80190494(u16 entityId, Entity* source, Entity* entity) {
     u16 palette;
 
     DestroyEntity(entity);
-    entity->objectId = objectId;
-    entity->pfnUpdate = PfnEntityUpdates[objectId];
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
     entity->unk5A = source->unk5A;
@@ -1059,10 +1138,92 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_801916C4);
+void func_801916C4(s16 sfxId) {
+    s32 var_a3;
+    s32 temp_v0_2;
+    s16 var_a2;
+    s32 y;
+    s16 var_v0_4;
+    s16 var_v1;
 
-s32 func_80193A3C(u8* arg0, u8 value);
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_801917BC);
+    var_a3 = g_CurrentEntity->posX.i.hi - 128;
+    var_a2 = (ABS(var_a3) - 32) >> 5;
+    if (var_a2 > 8) {
+        var_a2 = 8;
+    } else if (var_a2 < 0) {
+        var_a2 = 0;
+    }
+    if (var_a3 < 0) {
+        var_a2 = -var_a2;
+    }
+    var_a3 = ABS(var_a3) - 96;
+    y = g_CurrentEntity->posY.i.hi - 128;
+    temp_v0_2 = ABS(y) - 112;
+    var_v1 = var_a3;
+    if (temp_v0_2 > 0) {
+        var_v1 += temp_v0_2;
+    }
+    if (var_v1 < 0) {
+        var_v0_4 = 0;
+    } else {
+        var_v0_4 = var_v1;
+    }
+    var_a3 = 127 - (var_v0_4 >> 1);
+    if (var_a3 > 0) {
+        g_api.func_80134714(sfxId, var_a3, var_a2);
+    }
+}
+
+void func_801917BC(Primitive* prim) {
+    u8 xPos;
+    s32 i;
+    s32 j;
+
+    switch (prim->p3) {
+    case 0:
+        if (prim->p1 < 0x80) {
+            if (--prim->p1 == 0) {
+                prim->p3 = 1;
+            }
+        } else {
+            if (++prim->p1 == 0) {
+                prim->p3 = 2;
+            }
+        }
+
+        if (prim->p3 != 0) {
+            u8* dst = prim->p3 == 1 ? &prim->r1 : &prim->r0;
+            for (i = 0; i < 2; i++) {
+                for (j = 0; j < 3; j++) {
+                    dst[j] = 0x50;
+                }
+                dst += 0x18;
+            }
+            prim->p2 = 0;
+        }
+        break;
+    case 1:
+        if (prim->p2 < 0x14) {
+            prim->p2++;
+        }
+        xPos = prim->p2 / 5;
+        prim->x2 = prim->x0 = prim->x0 + xPos;
+        prim->x1 = prim->x1 + xPos;
+        prim->x3 = prim->x0;
+        func_80193A3C(prim, 4);
+        break;
+    case 2:
+        if (prim->p2 < 0x14) {
+            prim->p2++;
+        }
+        xPos = prim->p2 / 5;
+        prim->x2 = prim->x0 = prim->x0 - xPos;
+        prim->x1 = prim->x1 - xPos;
+        prim->x3 = prim->x0;
+        func_80193A3C(prim, 4);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityStageNamePopup);
 

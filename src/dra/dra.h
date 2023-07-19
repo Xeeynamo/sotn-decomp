@@ -108,6 +108,7 @@ typedef enum {
     E_UNK_1,
 
     ENTITY_13 = 0x13,
+    E_UNK_22 = 0x22,
 } EntityIDs;
 
 typedef enum {
@@ -215,12 +216,45 @@ typedef struct {
     u32 unk8;
 } DamageParam;
 
+typedef struct {
+    /* 8013761C */ MenuContext menus[3]; // 761C, 763A, 7658
+    /* 80137676 */ s16 D_80137676;
+    /* 80137678 */ s16 D_80137678[6];
+    /* 80137684 */ s32 unused1; // No known use yet, one may be found
+    /* 80137688 */ s16 D_80137688;
+    /* 8013768A */ s16 D_8013768A;
+    /* 8013768C */ u16 D_8013768C;
+    /* 8013768E */ s16 unused2; // No known use yet, one may be found
+    /* 80137690 */ s16 unused3; // No known use yet, one may be found
+    /* 80137692 */ u8 D_80137692;
+} MenuData;
+
+// Used in EntityUnarmedAttack, more research would be useful
+typedef struct {
+    u16** frames;
+    s8* frameProps;
+    s16 unk8;
+    u16 soundId;
+    u8 ACshift;
+    u8 soundFrame;
+} animSoundEvent;
+
+// All the Joseph's Cloak color fields are in RGB555 format
+typedef struct {
+    u16 liningDark;
+    u16 liningLight;
+    u16 exteriorDark;
+    u16 exteriorLight;
+} JosephsCloak;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
 extern u8 D_800A0170[];
+extern u8 D_800A01B0[];
+extern RECT D_800A01C0[];
 extern s32 D_800A0248;
 extern SimFile D_800A024C[];
 extern SimFile D_800A036C[];
@@ -296,6 +330,7 @@ extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
 extern Unkstruct_801092E8 D_800A37D8;
+extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
@@ -318,6 +353,7 @@ extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
+extern animSoundEvent* D_800AD53C[];
 extern s32 D_800ADC44;
 extern RECT D_800AE130;
 extern s32 D_800AE270[];
@@ -389,12 +425,13 @@ extern s32 g_DebugWaitInfoTimer;
 extern s32 g_DebugRecordVideoFid;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern s32 D_80136410;
 extern s32 D_80136414[];
 extern SimFile* D_8013644C;
 extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
-extern u8 D_80137460[]; // button timers
+extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
@@ -421,17 +458,7 @@ extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 D_80137618;
-
-/**
- * can't use "extern MenuContext D_8013761C[]";
- * as it's 2-byte aligned
- */
-extern u8 D_8013761C[];
-extern s32* D_8013763A; // type MenuContext ?
-extern s16 D_8013767C;
-extern s16 D_80137688;
-extern u16 D_8013768C;
-extern u8 D_80137692;
+extern MenuData g_MenuData;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
 extern s16 D_801376C8;
@@ -441,10 +468,10 @@ extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
-extern s32 g_StatusAttackRightHand;
-extern s32 g_StatusAttackLeftHand;
-extern s32 g_StatusDefenseEquip;
-extern s32 g_StatusPlayerStatsTotal[];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+extern s32 g_NewPlayerStatsTotal[];
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
@@ -553,7 +580,14 @@ extern s16 D_80139814[];
 extern s16 D_80139820;
 extern s32 D_80139828[];
 extern s32 D_8013982C;
-extern s32 D_80139834[];
+extern s32 D_80139830[];
+extern s32 D_8013983C;
+extern s32 D_80139840;
+extern s32 D_80139844;
+extern s32 D_80139848;
+extern s32 D_8013984C;
+extern s32 D_80139850;
+extern s32 D_80139854;
 extern s16 D_80139868[];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
@@ -636,8 +670,8 @@ void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void SetGameState(GameState gameState);
 void func_800E4970(void);
-s32 func_800E81FC(s32 id, SimFileType type);
-void func_800E8D24(void);
+s32 LoadFileSim(s32 id, SimFileType type);
+void ResetPadsRepeat(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
 s32 func_800E9208(void);
@@ -670,7 +704,7 @@ void func_800F223C(void);
 void func_800F4994(void);
 s32 CalcAttack(s32, s32);
 void func_800F4F48(void);
-void func_800F4FD0(void);
+void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
@@ -700,8 +734,8 @@ void func_800FAF44(s32);
 s32 func_800FD4C0(s32 bossId, s32 action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
-u8* func_800FD744(s32 equipTypeFilter);
-u8* func_800FD760(s32 equipTypeFilter);
+u8* GetEquipOrder(s32 equipTypeFilter);
+u8* GetEquipCount(s32 equipTypeFilter);
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void AddToInventory(u16 itemId, s32 itemCategory);
@@ -727,7 +761,7 @@ void func_801073C0(void);
 void func_801092E8(s32);
 void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
-void UpdateAnim(FrameProperty* frameProps, s32*);
+u32 UpdateAnim(s8* frameProps, s32*);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
@@ -760,7 +794,7 @@ void func_8011A3AC(
 void func_8011A4C8(Entity* entity);
 Entity* func_8011AAFC(Entity* entity, u32, s32);
 void func_8011AC3C(Entity* entity);
-void func_8011B190(Entity* entity);
+void EntityUnarmedAttack(Entity* entity);
 void func_8011B334(Entity* entity);
 void func_8011B480(Entity* entity);
 void func_8011B530(Entity* entity);

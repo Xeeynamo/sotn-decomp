@@ -95,6 +95,8 @@ typedef struct Primitive {
     /* 0x32 */ u16 blendMode;
 } Primitive; /* size=0x34 */
 
+#define BLEND_VISIBLE 8 // if unset, the primitive will not be rendered
+
 #include "entity.h"
 
 #define COLORS_PER_PAL 16
@@ -137,7 +139,6 @@ typedef struct Primitive {
 #define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
-#define EQUIP_TYPE_COUNT 11
 
 #define RIC_PRG_PTR 0x8013C000
 #define FAMILIAR_PTR 0x80170000
@@ -213,6 +214,7 @@ typedef struct Primitive {
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
 #define FLAG_UNK_40000 0x40000
+#define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
 #define FLAG_UNK_00200000 0x00200000
 
@@ -224,6 +226,7 @@ typedef struct Primitive {
 #define FLAG_UNK_02000000 0x02000000
 #define FLAG_UNK_04000000 0x04000000
 #define FLAG_UNK_08000000 0x08000000
+#define FLAG_UNK_10000000 0x10000000
 #define FLAG_UNK_20000000 0x20000000
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
@@ -236,6 +239,14 @@ typedef struct Primitive {
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 typedef s16 AnimSet;
+
+#define FONT_W 8               // small font size used for dialogues and menu
+#define FONT_H 8               // small font size used for dialogues and menu
+#define FONT_GAP FONT_W        // gap between the beginning of two letters
+#define FONT_SPACE 4           // gap for the space character
+#define MENUCHAR(x) ((x)-0x20) // 8x8 characters are ASCII offset by 0x20
+#define DIAG_EOL 0xFF          // end of line
+#define DIAG_EOS 0x00          // end of string
 
 typedef enum {
     Game_Init,
@@ -250,6 +261,65 @@ typedef enum {
     Game_Ending,
     Game_99 = 99,
 } GameState;
+
+typedef enum {
+    // Clean-up and reset all the gameplay related memory
+    Play_Reset = 0,
+    // Re-initialize stage-specific resources
+    Play_Init,
+    // Set random seed if playing a demo
+    Play_PrepareDemo,
+    // Normal gameplay
+    Play_Default,
+    // Releases all the resources from the unloading stage
+    Play_PrepareNextStage,
+    // Load graphics for those stages without a CD room transition
+    Play_LoadStageChr,
+    // Wait until the previous operation is complete
+    Play_WaitStageChr,
+    // Load the sound effects specific for the selected stage
+    Play_LoadStageSfx,
+    // Wait until the previous operation is complete
+    Play_WaitStageSfx,
+    // Load the overlay program from the disk
+    Play_LoadStagePrg,
+    // Wait until the previous operation is complete
+    Play_WaitStagePrg,
+
+    // Deallocate stage resources
+    Gameover_Init = 0,
+    // Make screenshot and allocate 3D model for the melting foreground
+    Gameover_AllocResources,
+    // Wait for something...?
+    Gameover_2,
+    // Start loading game over graphics from the disk
+    Gameover_3,
+    // When the file is loaded, move it into the VRAM
+    Gameover_4,
+    // foreground melting
+    Gameover_5,
+    // Game over text starts brightening
+    Gameover_6,
+    // Start using Game Over textures that looks brighter
+    Gameover_7,
+    // Revert back to the slightly less bright Game Over text
+    Gameover_8,
+    // Game over screen fade out
+    Gameover_9,
+    // unknown
+    Gameover_10,
+    // Return to the title screen (if you are not in ST0)
+    Gameover_11,
+
+    Gameover_Alt = 99,
+    Gameover_Init_Alt,
+    Gameover_AllocResources_Alt,
+    Gameover_2_Alt,
+    Gameover_3_Alt,
+    Gameover_11_Alt = 111,
+
+    NowLoading_2 = 2,
+} GameSteps;
 
 typedef enum {
     Demo_None,
@@ -399,12 +469,12 @@ typedef struct Entity {
     /* 0x20 */ s16 rotPivotX;
     /* 0x22 */ s16 rotPivotY;
     /* 0x24 */ u16 zPriority;
-    /* 0x26 */ u16 objectId;
+    /* 0x26 */ u16 entityId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
     /* 0x2C */ u16 step;
     /* 0x2E */ u16 step_s;
     /* 0x30 */ u16 params;
-    /* 0x32 */ u16 objectRoomIndex;
+    /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ u16 enemyId;
@@ -482,12 +552,22 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
-typedef struct {
-    s32 statStr;
-    s32 statCon;
-    s32 statInt;
-    s32 statLck;
-} Stats;
+typedef enum {
+    ITEM_S_SWORD,
+    ITEM_SWORD,
+    ITEM_THROW_1,
+    ITEM_FIST,
+    ITEM_CLUB,
+    ITEM_TWOHAND,
+    ITEM_FOOD,
+    ITEM_BOMB,
+    ITEM_THROW_2,
+    ITEM_SHIELD,
+    ITEM_MEDICINE,
+    ITEM_END,
+} ItemCategory;
+
+typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
@@ -577,11 +657,10 @@ typedef struct {
     /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
     /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
     /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[32];
-    /* 0x0B0, 0x8003CAA8 */ s32 cloakExteriorColors[3];
-    /* 0x0BC, 0x8003CAB4 */ s32 cloakLiningColors[3];
+    /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];
     /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
-    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[EQUIP_TYPE_COUNT];
-    /* 0x100, 0x8003CAF8 */ s32 isCloakLingingReversed;
+    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[ITEM_END];
+    /* 0x100, 0x8003CAF8 */ s32 isCloakLiningReversed;
     /* 0x104, 0x8003CAFC */ s32 isSoundMono;
     /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
     /* 0x10C, 0x8003CB04 */ s32 D_8003CB04;
@@ -666,7 +745,7 @@ typedef struct {
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
     /* 8003C78C */ s32** cluts;
-    /* 8003C790 */ void* unk1C; // related to object layout
+    /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;
     /* 8003C79C */ void (*unk28)(void);
@@ -746,22 +825,8 @@ typedef struct {
     /* 0x0E */ u16 sp1E;
     /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->objectRoomIndex
+    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
 } SubweaponDef;          /* size=0x14 */
-
-typedef enum {
-    ITEM_S_SWORD,
-    ITEM_SWORD,
-    ITEM_THROW_1,
-    ITEM_FIST,
-    ITEM_CLUB,
-    ITEM_TWOHAND,
-    ITEM_FOOD,
-    ITEM_BOMB,
-    ITEM_THROW_2,
-    ITEM_SHIELD,
-    ITEM_MEDICINE
-} ItemCategory;
 
 // Defines the equipment that can be set on left and right hand
 // This includes weapons, throw weapons, consumable and restoration items.
@@ -775,20 +840,20 @@ typedef struct {
     /* 0x0C */ u16 element;
     /* 0x0E */ u8 itemCategory;
     /* 0x0F */ u8 weaponId;
-    /* 0x10 */ u16 unk10;
+    /* 0x10 */ u8 unk10;
+    /* 0x11 */ u8 unk11;
     /* 0x12 */ u8 playerAnim;
     /* 0x13 */ u8 unk13;
     /* 0x14 */ u8 unk14;
     /* 0x15 */ u8 lockDuration;
-    /* 0x16 */ u16 chainable;
+    /* 0x16 */ u8 chainLimit;
+    /* 0x17 */ u8 unk17;
     /* 0x18 */ u8 specialMove;
     /* 0x19 */ u8 isConsumable;
     /* 0x1A */ u8 enemyInvincibilityFrames;
     /* 0x1B */ u8 unk1B;
-    /* 0x1C */ u16 unk1C;
-    /* 0x1E */ u16 unk1E;
-    /* 0x20 */ u16 unk20;
-    /* 0x22 */ u16 unk22;
+    /* 0x1C */ u32 unk1C;
+    /* 0x20 */ u32 unk20;
     /* 0x24 */ u16 mpUsage;
     /* 0x26 */ u16 stunFrames;
     /* 0x28 */ u16 hitType;
@@ -805,16 +870,24 @@ typedef struct {
     /* 04 */ const char* description;
     /* 08 */ s16 attBonus;
     /* 0A */ s16 defBonus;
-    /* 0C */ s8 strBonus;
-    /* 0D */ s8 conBonus;
-    /* 0E */ s8 intBonus;
-    /* 0F */ s8 lckBonus;
-    /* 10 */ u32 unk10;
-    /* 14 */ u32 unk14;
+    /* 0C */ u8 statsBonus[4];
+    /* 10 */ u16 unk10;
+    /* 10 */ u16 unk12;
+    /* 14 */ u16 unk14;
+    /* 10 */ u16 unk16;
     /* 18 */ u16 icon;
     /* 1A */ u16 palette;
     /* 1C */ u32 unk1C;
 } Accessory; /* size=0x20 */
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* desc;
+    /* 0x08 */ u16 icon;
+    /* 0x0A */ u16 palette;
+    /* 0x0C */ u16 unk0C;
+    /* 0x0E */ u16 unk0E;
+} RelicOrb; /* size=0x10 */
 
 typedef struct {
     /* 8003C774 */ Overlay o;
@@ -843,7 +916,7 @@ typedef struct {
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
-    /* 8003C814 */ void* func_8010DB38;
+    /* 8003C814 */ void* UpdateUnarmedAnim;
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
@@ -859,7 +932,7 @@ typedef struct {
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
-    /* 8003C850 */ void* D_800A8720;
+    /* 8003C850 */ RelicOrb* D_800A8720;
     /* 8003C854 */ void* func_800FF7B8;
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
@@ -886,6 +959,61 @@ typedef struct {
     /* 8003C8AC */ void* unused138;
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
+
+/**** Helper signatures ****/
+extern void (*g_api_FreePrimitives)(s32);
+extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);
+extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
+extern void (*g_api_func_80102CD8)(s32 arg0);
+extern void (*g_api_UpdateAnim)(FrameProperty* frameProps, s32* arg1);
+extern void (*g_api_AccelerateX)(s32 value);
+extern Entity* (*g_api_GetFreeDraEntity)(s16 start, s16 end);
+extern void (*g_api_GetEquipProperties)(
+    s32 handId, Equipment* res, s32 equipId);
+extern void (*g_api_func_800EA5E4)(s32);
+extern void (*g_api_func_800EAF28)(s32);
+extern void (*g_api_PlaySfx)(s32 sfxId);
+extern s16 (*g_api_func_800EDB58)(s32, s32);
+extern void (*g_api_func_800EA538)(s32 arg0);
+extern void (*g_api_g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+extern Entity* (*g_api_func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+extern bool (*g_api_func_80131F68)(void);
+extern DR_ENV* (*g_api_func_800EDB08)(POLY_GT4* poly);
+extern void (*g_api_func_80118894)(Entity*);
+extern EnemyDef* g_api_enemyDefs;
+extern void* g_api_UpdateUnarmedAnim;
+extern void (*g_api_func_8010DBFC)(s32*, s32*);
+extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
+extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
+extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
+extern void (*g_api_LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
+extern Equipment* g_api_D_800A4B04;
+extern Accessory* g_api_D_800A7718;
+extern void (*g_api_AddHearts)(s32 value);
+extern s32 (*g_api_func_800FD4C0)(s32 bossId, s32 action);
+extern void* (*g_api_func_8010E0A8)(void);
+extern void (*g_api_func_800FE044)(s32, s32);
+extern void (*g_api_AddToInventory)(u16 itemId, s32 itemCategory);
+extern RelicOrb* g_api_D_800A8720;
+extern s32 (*g_api_func_80134714)(s32 arg0, s32 arg1, s32 arg2);
+extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);
+extern void (*g_api_func_800F53A4)(void);
+extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
+extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
+extern void (*g_api_func_800F1FC4)(s32 arg0);
+extern void (*g_api_func_8011A3AC)(
+    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+extern s32 (*g_api_func_800FF460)(s32 arg0);
+extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
+extern bool (*g_api_func_80133940)(void);
+extern bool (*g_api_func_80133950)(void);
+extern bool (*g_api_func_800F27F4)(s32 arg0);
+extern s32 (*g_api_func_800FF110)(s32 arg0);
+extern s32 (*g_api_func_800FD664)(s32 arg0);
+extern s32 (*g_api_func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+extern void (*g_api_LearnSpell)(s32 spellId);
+extern void (*g_api_func_800E2438)(const char* str);
+/***************************/
 
 typedef struct {
     /* 0x00 */ s16 x;
@@ -1035,7 +1163,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
-extern u8 D_8003BDEC[];
+extern u8 D_8003BDEC[0x300];
 extern u8 D_8003BE23;
 extern u8 D_8003BEEC[];
 extern u8 D_8003BF9C[];
@@ -1051,9 +1179,10 @@ extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern GameState g_GameState;
+extern s32 D_8003C738;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
-extern s32 g_roomCount;
+extern u32 g_roomCount;
 extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
 extern s32 D_8003C8B8;
@@ -1069,7 +1198,6 @@ extern u32 g_blinkTimer;
 extern GpuBuffer g_GpuBuffers[2];
 extern s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
                                            // overlap, hard to remove
-
 extern const char g_MemcardSavePath[];
 extern const char aBaslus00067dra[19];
 extern const char g_strMemcardRootPath[];
@@ -1179,7 +1307,7 @@ extern s32 D_8009744C;
 extern s32 D_80097450;
 extern u16 D_8009748A[];
 extern u16 D_8009748E[];
-extern Pad g_pads[];
+extern Pad g_pads[PAD_COUNT];
 extern u32 g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;

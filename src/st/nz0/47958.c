@@ -48,8 +48,8 @@ void EntityBloodSkeleton(Entity* self) {
         }
 
         if ((AnimateEntity(D_80182610, self) == 0) &&
-            (GetPlayerDistanceY() < 48) && (Random() % 4) == 0) {
-            self->facing = GetPlayerSide() % 2 == 0;
+            (GetDistanceToPlayerY() < 48) && (Random() % 4) == 0) {
+            self->facing = GetSideToPlayer() % 2 == 0;
         }
 
         if ((u8)func_801C070C(&D_801826AC, self->facing) != 2) {

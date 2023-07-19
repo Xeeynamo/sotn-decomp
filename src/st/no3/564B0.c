@@ -37,14 +37,14 @@ void EntityZombie(Entity* self) {
 
     case 1:
         if (func_801C5074(&D_80183CAC) & 1) {
-            self->facing = (func_801C4FD4() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;
 
     case 2:
         if (AnimateEntity(D_80183C84, self) == 0) {
-            func_801C58A4(3);
+            SetStep(3);
         }
         if (self->animFrameDuration == 0) {
             self->hitboxOffY -= 2;
@@ -63,7 +63,7 @@ void EntityZombie(Entity* self) {
 
         if (temp_a0 & 0xC0) {
             self->hitboxState = 0;
-            func_801C58A4(4);
+            SetStep(4);
         }
         break;
 

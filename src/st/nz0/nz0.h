@@ -1,50 +1,49 @@
 #include "stage.h"
 
 typedef enum {
-    E_NONE,
-    E_BREAKABLE,
-    E_EXPLOSION,
-    E_PRIZE_DROP,
-    E_NUMERIC_DAMAGE,
-    E_RED_DOOR,
-    E_INTENSE_EXPLOSION,
-    E_SOUL_STEAL_ORB,
-    E_ROOM_FOREGROUND,
-    E_STAGE_NAME_POPUP,
-    E_EQUIP_ITEM_DROP,
-    E_RELIC_ORB,
-    E_HEART_DROP,
-    E_ENEMY_BLOOD,
-    E_SAVE_GAME_POPUP,
-    E_DUMMY_0F,
-    E_DUMMY_10,
+    /* 0x00 */ E_NONE,
+    /* 0x01 */ E_BREAKABLE,
+    /* 0x02 */ E_EXPLOSION,
+    /* 0x03 */ E_PRIZE_DROP,
+    /* 0x04 */ E_NUMERIC_DAMAGE,
+    /* 0x05 */ E_RED_DOOR,
+    /* 0x06 */ E_INTENSE_EXPLOSION,
+    /* 0x07 */ E_SOUL_STEAL_ORB,
+    /* 0x08 */ E_ROOM_FOREGROUND,
+    /* 0x09 */ E_STAGE_NAME_POPUP,
+    /* 0x0A */ E_EQUIP_ITEM_DROP,
+    /* 0x0B */ E_RELIC_ORB,
+    /* 0x0C */ E_HEART_DROP,
+    /* 0x0D */ E_ENEMY_BLOOD,
+    /* 0x0E */ E_SAVE_GAME_POPUP,
+    /* 0x0F */ E_DUMMY_0F,
+    /* 0x10 */ E_DUMMY_10,
 
-    E_AXE_KNIGHT_AXE = 0x2A,
-    E_BONE_SCIMITAR_HEAD = 0x28,
-    E_FIRE = 0x38,
-    E_SLOGRA_SPEAR = 0x41,
-    E_SLOGRA_SPEAR_PROJECTILE = 0x42,
-    E_GAIBON = 0x43,
-    E_GAIBON_SMALL_FIREBALL = 0x45,
-    E_GAIBON_BIG_FIREBALL = 0x46,
+    /* 0x14 */ E_ID14 = 0x14,
+    /* 0x28 */ E_BONE_SCIMITAR_HEAD = 0x28,
+    /* 0x2A */ E_AXE_KNIGHT_AXE = 0x2A,
+    /* 0x38 */ E_FIRE = 0x38,
+    /* 0x41 */ E_SLOGRA_SPEAR = 0x41,
+    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE = 0x42,
+    /* 0x43 */ E_GAIBON = 0x43,
+    /* 0x45 */ E_GAIBON_SMALL_FIREBALL = 0x45,
+    /* 0x46 */ E_GAIBON_BIG_FIREBALL = 0x46,
 } EntityIDs;
 
 void DestroyEntity(Entity* item);
 void func_8018F928(Entity*);
 void func_8019B858(void);
 void func_801BDD9C(void);
-s32 func_801BCF74(s32*);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
 s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
-void func_801C29B0(s32 sfxId); // sfx
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
 void func_801C4CC0(void);
 
 extern u8 D_8003BE6F[];
-LayoutObject* D_801808EC[];
-LayoutObject* D_801809C0[];
+LayoutEntity* D_801808EC[];
+LayoutEntity* D_801809C0[];
 extern PfnEntityUpdate D_80180A90[];
 extern const u16 D_80180BE0[];
 extern u16 D_80180BEC[];
@@ -180,6 +179,7 @@ extern s32 D_80181DA8[];
 extern u8 D_80181DD0[];
 extern u8 D_80181DD0[];
 extern const u8* D_80181E54[];
+extern u16 D_80181ECC[];
 extern u8 D_80181F1C[];
 extern s32 D_80181F04[];
 extern u16 D_80181F20[];
@@ -189,7 +189,7 @@ extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
-extern LayoutObject* D_801CAA74;
+extern LayoutEntity* D_801CAA74;
 extern u16* D_801CAA78;
 extern u8 D_801CAA7C;
 extern u8 D_801CAA80;
@@ -259,6 +259,7 @@ extern s32 D_80182600[];
 extern s32 D_8018216C;
 extern s32 D_80182174;
 extern u16 D_80180BD4[];
+extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* D_80181D3C[];
 extern u16 D_80180C94[];
@@ -338,6 +339,7 @@ extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
+extern s32 D_801CB688;
 extern s16 D_801CB68E;
 extern u16 D_801CB690;
 extern s16 D_801CB692;
@@ -346,6 +348,10 @@ extern s16 D_801CB696;
 extern s16 D_801CB69A;
 extern s8 D_801CB69E;
 extern s8 D_801CB69F;
+extern Primitive* D_801CB6A0[];
+extern s32 D_801CB6B8;
+extern s32 D_801CB6BC;
+extern s32 D_801CB6C0[];
 extern s16 D_801CB6C4;
 extern s16 D_801CB6C6;
 extern s32 D_801CB6C8;

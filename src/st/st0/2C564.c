@@ -92,7 +92,7 @@ void EntityDracula(Entity* self) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }
-            if (LOW(self->animFrameIdx) == 2) {
+            if (self->animFrameIdx == 2 && self->animFrameDuration == 0) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1F, self, newEntity);
@@ -159,7 +159,7 @@ void EntityDracula(Entity* self) {
             if (self->ext.dracula.unkA0 != 0) {
                 g_api.PlaySfx(NA_SE_VO_DR_TAUNT_1);
                 self->animCurFrame = 1;
-                self->facing = (GetPlayerSide() & 1) ^ 1;
+                self->facing = (GetSideToPlayer() & 1) ^ 1;
                 self->ext.dracula.unkA0 = 0;
             }
             if (self->ext.dracula.unk9C != 0xFF) {
@@ -169,7 +169,7 @@ void EntityDracula(Entity* self) {
             break;
 
         case 3:
-            self->facing = (GetPlayerSide() & 1) ^ 1;
+            self->facing = (GetSideToPlayer() & 1) ^ 1;
             self->ext.dracula.unkA2 = (self->ext.dracula.unkA2 + 1) & 3;
             self->hitboxState = 3;
             if (self->ext.dracula.unkA2 == 0) {
@@ -288,7 +288,7 @@ void EntityDracula(Entity* self) {
                 self->unk5A = 0x59;
                 self->step_s++;
             }
-            if (LOW(self->animFrameIdx) == 5) {
+            if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
                 g_api.func_80102CD8(2);
             }
             break;
@@ -560,7 +560,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     s32 speedX;
 
     if (g_isDraculaFirstFormDefeated) {
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = EntityExplosion;
         entity->step = 0;
         entity->step_s = 0;
@@ -704,6 +704,7 @@ bool func_801ADAC8(s32 arg0) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801ADB10);
 
+// DECOMP_ME_WIP EntityDraculaFinalForm https://decomp.me/scratch/kUpoj
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDraculaFinalForm);
 
 void EntityDraculaMegaFireball(Entity* self) {

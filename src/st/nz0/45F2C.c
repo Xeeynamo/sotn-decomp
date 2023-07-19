@@ -43,7 +43,7 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_WALK_TOWARDS_PLAYER:
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         self->ext.generic.unk80.modeS8.unk0 = self->facing;
         AnimateEntity(D_801823DC, self);
 
@@ -53,14 +53,14 @@ void EntitySkeleton(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() < 76) {
+        if (GetDistanceToPlayerX() < 76) {
             self->step = SKELETON_WALK_AWAY_FROM_PLAYER;
         }
         func_801C5F2C(self);
         break;
 
     case SKELETON_WALK_AWAY_FROM_PLAYER:
-        self->facing = (GetPlayerSide() & 1) ^ 1;
+        self->facing = (GetSideToPlayer() & 1) ^ 1;
         self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
         AnimateEntity(D_801823EC, self);
 
@@ -70,7 +70,7 @@ void EntitySkeleton(Entity* self) {
             self->accelerationX = 0x8000;
         }
 
-        if (GetPlayerDistanceX() > 92) {
+        if (GetDistanceToPlayerX() > 92) {
             self->step = SKELETON_WALK_TOWARDS_PLAYER;
         }
         func_801C5F2C(self);
@@ -183,7 +183,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
             return;
         }
 
-        entity->objectId = E_EXPLOSION;
+        entity->entityId = E_EXPLOSION;
         entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
         entity->params = 0;
         entity->step = 0;
@@ -219,7 +219,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
     } else {
         InitializeEntity(D_80180CA0);
         entity->posY.val -= 0x1000;
-        xDistanceToPlayer = GetPlayerDistanceX();
+        xDistanceToPlayer = GetDistanceToPlayerX();
         xDistanceToPlayer /= 32;
         xDistanceToPlayer = CLAMP_MAX(xDistanceToPlayer, 7);
         accelerationX = D_80182488[xDistanceToPlayer];
@@ -252,7 +252,7 @@ void func_801C6678(Entity* entity) { // From Skeleton
     entity->posX.i.hi = entity[-1].posX.i.hi;
     entity->posY.i.hi = entity[-1].posY.i.hi - 20;
 
-    if (entity[-1].objectId != 0x2E) {
+    if (entity[-1].entityId != 0x2E) {
         DestroyEntity(entity);
     }
 }

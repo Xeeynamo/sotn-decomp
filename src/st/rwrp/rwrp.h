@@ -8,9 +8,9 @@ extern PfnEntityUpdate D_801803E0[];
 extern u16 D_80180494[];
 extern s16 D_80180A94[];
 extern ObjInit2 D_80181134[];
-extern LayoutObject* D_80195A30;
-extern LayoutObject* D_80195A34;
-void func_8018BD58(Entity*, LayoutObject*);
+extern LayoutEntity* D_80195A30;
+extern LayoutEntity* D_80195A34;
+void func_8018BD58(Entity*, LayoutEntity*);
 
 // *** EntitySoulStealOrb properties START ***
 
@@ -20,5 +20,8 @@ extern u16 D_8018044C[];
 extern u16 D_80181110[];
 
 // *** EntitySoulStealOrb properties END ***
+
+extern u16 D_80180DC4[];
+extern u16 D_80180DF4[];
 
 #endif

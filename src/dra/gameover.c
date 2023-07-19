@@ -1,50 +1,6 @@
 #include "dra.h"
 #include "sfx.h"
 
-typedef enum {
-    // Deallocate stage resources
-    Gameover_Init,
-
-    // Make screenshot and allocate 3D model for the melting foreground
-    Gameover_AllocResources,
-
-    // Wait for something...?
-    Gameover_2,
-
-    // Start loading game over graphics from the disk
-    Gameover_3,
-
-    // When the file is loaded, move it into the VRAM
-    Gameover_4,
-
-    // foreground melting
-    Gameover_5,
-
-    // Game over text starts brightening
-    Gameover_6,
-
-    // Start using Game Over textures that looks brighter
-    Gameover_7,
-
-    // Revert back to the slightly less bright Game Over text
-    Gameover_8,
-
-    // Game over screen fade out
-    Gameover_9,
-
-    Gameover_10,
-
-    // Return to the title screen (if you are not in ST0)
-    Gameover_11,
-
-    Gameover_Alt = 99,
-    Gameover_Init_Alt,
-    Gameover_AllocResources_Alt,
-    Gameover_2_Alt,
-    Gameover_3_Alt,
-    Gameover_11_Alt = 111,
-} GameSteps;
-
 // Game over melting effect
 void func_800E5358(void) {
     Primitive* poly = &g_PrimBuf[D_8013640C];
@@ -207,16 +163,16 @@ void HandleGameOver(void) {
             LoadImage(&g_Vram.D_800ACDA8, (u32*)0x8019A000);
             StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
         } else {
-            if (func_800E81FC(8, SimFileType_System) < 0) {
+            if (LoadFileSim(8, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(9, SimFileType_System) < 0) {
+            if (LoadFileSim(9, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(10, SimFileType_System) < 0) {
+            if (LoadFileSim(10, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(11, SimFileType_System) < 0) {
+            if (LoadFileSim(11, SimFileType_System) < 0) {
                 break;
             }
         }
@@ -376,15 +332,13 @@ void func_800E6218(void) {
 
 void func_800E6250(void) {
     if (D_8006CBC4 != 0) {
-        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
+        while (LoadFileSim(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
             ;
-        while (func_800E81FC(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
+        while (LoadFileSim(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
             ;
-        while (
-            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
+        while (LoadFileSim((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
             ;
-        while (
-            func_800E81FC((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
+        while (LoadFileSim((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
             ;
     }
 }

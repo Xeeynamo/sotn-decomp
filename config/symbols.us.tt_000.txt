@@ -1,1 +1,2 @@
+UpdateAnim = 0x80173C64;
 DestroyEntity = 0x80173E0C;
