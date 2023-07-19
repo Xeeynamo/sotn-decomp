@@ -1,6 +1,7 @@
 #include "dra.h"
 #include "lba.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 #if USE_CD_SPEED_DOUBLE == 0
 #define CDL_MODE_SPEED CdlModeSpeedNormal
@@ -935,3 +936,4 @@ void UpdateCd(void) {
         func_8010838C(CdStep_CdShellOpenErr);
     }
 }
+#endif

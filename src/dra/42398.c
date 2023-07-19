@@ -1,4 +1,5 @@
 #include "dra.h"
+#if defined(VERSION_US)
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -810,3 +811,4 @@ void HandleTitle(void) {
         break;
     }
 }
+#endif

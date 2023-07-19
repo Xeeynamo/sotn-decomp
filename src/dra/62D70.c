@@ -3,6 +3,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80102D70(void) {
     switch (D_801379AC.start) {
@@ -393,3 +394,4 @@ void func_80107360(
     poly->u3 = u + width;
     poly->v3 = v + height;
 }
+#endif

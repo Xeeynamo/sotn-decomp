@@ -1,4 +1,5 @@
 #include "dra.h"
+#if defined(VERSION_US)
 
 #define CH(x) ((x)-0x20)
 
@@ -1653,3 +1654,4 @@ s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 u8 GetEquipItemCategory(s32 equipId) {
     return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
 }
+#endif
