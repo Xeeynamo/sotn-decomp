@@ -611,8 +611,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6013320, func_06013320);
 // _sd_reset2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601333C, func_0601333C);
 
-void func_06013394(void)
-{
+void func_06013394(void) {
     DAT_060644c1 = 1;
     DAT_060644dc = 2;
 }
