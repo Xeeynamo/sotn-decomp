@@ -70,7 +70,7 @@ Entity* func_8017110C(Entity* self) {
         if (e->hitboxState == 0) {
             continue;
         }
-        if (e->flags & 0x200000) {
+        if (e->flags & FLAG_UNK_00200000) {
             continue;
         }
 
@@ -113,8 +113,8 @@ Entity* func_8017110C(Entity* self) {
             continue;
         }
 
-        if (!(e->flags & 0x80000)) {
-            e->flags |= 0x80000;
+        if (!(e->flags & FLAG_UNK_80000)) {
+            e->flags |= FLAG_UNK_80000;
             return e;
         }
         if (e->hitPoints >= D_80170664[D_80174C30.unk0 / 10][0]) {
