@@ -952,7 +952,7 @@ typedef struct {
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
-    /* 8003C89C */ void (*func_800E2438)(const char* str);
+    /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
     /* 8003C8A4 */ void* unused130;
     /* 8003C8A8 */ void* unused134;

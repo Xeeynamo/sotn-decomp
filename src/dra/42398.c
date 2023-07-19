@@ -10,7 +10,6 @@
 #define DISP_UNK2_H DISP_ALL_H
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 
-void func_800E2398(const char* str);
 s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
@@ -33,13 +32,23 @@ void SoundInit(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
-extern const char* aO;
+const char aO[] = "\no\n";
+const char D_800DB3B8[] = "sim:c:\\bin\\dra000.bmp";
+const char D_800DB3D0[] = "cre err:%s\n";
+const char D_800DB3DC[] = "wr err\n";
+const char D_800DB3E4[] = "clo err\n";
+const char D_800DB3F0[] = "sim:c:\\bin\\dra000.mov";
+const char D_800DB408[] = "pale";
+const char D_800DB410[] = "reverse";
+const char D_800DB418[] = "light";
+const char D_800DB420[] = "dark";
+const char D_800DB428[] = "normal";
 
-void func_800E2398(const char* str) {
+void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
-    FntPrint(str);
-    if (D_80136300++ & 4) {
-        FntPrint(&aO); // TODO: rodata split
+    FntPrint(msg);
+    if (g_DebugWaitInfoTimer++ & 4) {
+        FntPrint(&aO); // TODO: inline
     }
     DrawSync(0);
     VSync(0);
@@ -48,16 +57,193 @@ void func_800E2398(const char* str) {
     FntFlush(-1);
 }
 
-void func_800E2438(const char* str) {
+void DebugInputWait(const char* msg) {
     while (PadRead(0))
-        func_800E2398(str);
+        DebugShowWaitInfo(msg);
     while (!PadRead(0))
-        func_800E2398(str);
+        DebugShowWaitInfo(msg);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E249C);
+void DebugCaptureScreen(void) {
+    const int BmpHeaderLen = 0x36;
+    const int MaxScreenshotCount = 1000;
+    const int BytesPerPixel = 3;
+    char fileName[0x100];
+    u8 bmp[0x100];
+    s8 buffer[0x30];
+    s32 fid;
+    s32 width;
+    s32 height;
+    u32 fileSize;
+    s32 bufferPos;
+    s8* dst;
+    u16* src;
+    s32 i;
+    s32 j;
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/42398", func_800E2824);
+    if (!(g_pads[1].tapped & PAD_SELECT && g_pads[1].pressed & PAD_UP)) {
+        return;
+    }
+
+    StoreImage(&g_CurrentBuffer->disp.disp, (u32*)0x80200000);
+    DrawSync(0);
+
+    for (i = 0; i < MaxScreenshotCount; i++) {
+        __builtin_memcpy(fileName, D_800DB3B8, sizeof(D_800DB3B8));
+        fileName[14] += i / 100;
+        fileName[15] += i / 10 - i / 100 * 10;
+        fileName[16] += i % 10;
+        fid = open(fileName, O_RDONLY);
+        if (fid < 0) {
+            break;
+        }
+        close(fid);
+    }
+
+    fid = open(fileName, O_CREAT);
+    if (fid < 0) {
+        FntPrint(D_800DB3D0, &fileName);
+        return;
+    }
+
+    width = g_CurrentBuffer->disp.disp.w;
+    height = g_CurrentBuffer->disp.disp.h;
+    for (i = 0; i < BmpHeaderLen; i++) {
+        bmp[i] = 0;
+    }
+    fileSize = BmpHeaderLen + width * height * BytesPerPixel;
+    bmp[0x00] = 'B';               // Bitmap signature
+    bmp[0x01] = 'M';               // for Windows OS
+    bmp[0x02] = fileSize;          // total file size of
+    bmp[0x03] = fileSize >> 8;     // the bitmap file
+    bmp[0x04] = fileSize >> 16;    // in little endian
+    bmp[0x05] = fileSize >> 24;    //
+    bmp[0x0A] = BmpHeaderLen;      // Data offset
+    bmp[0x0E] = 40;                // header size
+    bmp[0x1A] = 1;                 // number of color planes
+    bmp[0x1C] = BytesPerPixel * 8; // bits per pixel
+    bmp[0x12] = width;
+    bmp[0x13] = width / 256;
+    bmp[0x16] = height;
+    bmp[0x17] = height / 256;
+    if (write(fid, &bmp, BmpHeaderLen) < 0) {
+        FntPrint(D_800DB3DC);
+        return;
+    }
+
+    bufferPos = 0;
+    dst = buffer;
+    src = 0x80200000;
+    for (i = height - 1; i >= 0; i--) {
+        u16* start = buffer;
+        for (j = 0; j < width; j++) {
+            u16 pixelColor = src[j + i * width];
+            *dst++ = (pixelColor >> 7) & 0xF8; // B
+            *dst++ = (pixelColor >> 2) & 0xF8; // G
+            *dst++ = (pixelColor & 0x1F) << 3; // R
+            if (++bufferPos == 0x10) {
+                if (write(fid, start, bufferPos * BytesPerPixel) < 0) {
+                    FntPrint(D_800DB3DC);
+                    return;
+                }
+                bufferPos = 0;
+                dst = start;
+            }
+        }
+    }
+
+    if (bufferPos != 0) {
+        if (write(fid, &buffer, bufferPos * BytesPerPixel) < 0) {
+            FntPrint(D_800DB3DC);
+            return;
+        }
+    }
+    if (close(fid) < 0) {
+        FntPrint(D_800DB3E4);
+        return;
+    }
+    DebugInputWait(fileName);
+}
+
+void DebugCaptureVideo(void) {
+    const int MaxVideoFramesCount = 1000;
+    char fileName[0x100];
+    u8 bmp[0x100];
+    u16 buffer[0x10];
+    s32 fid;
+    s32 bufferPos;
+    s32 i;
+    s32 j;
+    u16* start;
+    u16* src;
+    u16* dst;
+
+    for (i = 0; i < 4; i++) {
+        if (g_Settings.buttonConfig[i] != 3 - i) {
+            return;
+        }
+    }
+
+    if (g_DebugIsRecordingVideo == false) {
+        if (!(g_pads[0].tapped & PAD_TRIANGLE)) {
+            return;
+        }
+
+        for (i = 0; i < MaxVideoFramesCount; i++) {
+            __builtin_memcpy(fileName, D_800DB3F0, sizeof(D_800DB3F0));
+            fileName[14] += i / 100;
+            fileName[15] += i / 10 - i / 100 * 10;
+            fileName[16] += i % 10;
+            g_DebugRecordVideoFid = open(fileName, O_RDONLY);
+            if (g_DebugRecordVideoFid < 0) {
+                break;
+            }
+            close(g_DebugRecordVideoFid);
+        }
+
+        g_DebugRecordVideoFid = open(fileName, O_CREAT);
+        if (g_DebugRecordVideoFid < 0) {
+            FntPrint(D_800DB3D0, fileName);
+            return;
+        }
+        g_DebugIsRecordingVideo = true;
+    } else if (g_pads[0].tapped & PAD_TRIANGLE) {
+        g_DebugIsRecordingVideo = false;
+        if (close(g_DebugRecordVideoFid) < 0) {
+            FntPrint(D_800DB3E4);
+        }
+        return;
+    }
+
+    StoreImage(&g_CurrentBuffer->disp.disp, (u_long*)0x80200000);
+    DrawSync(0);
+
+    src = 0x80200000;
+    i = 0;
+    bufferPos = 0;
+    dst = buffer;
+    start = buffer;
+    for (; i < 0x40; i++) {
+        for (j = 0; j < 0x40; j++) {
+            *dst++ = src[0x6060 + i * 0x100 + j];
+            if (++bufferPos == 0x10) {
+                if (write(g_DebugRecordVideoFid, start, bufferPos * 2) < 0) {
+                    FntPrint(D_800DB3DC);
+                    return;
+                }
+                bufferPos = 0;
+                dst = start;
+            }
+        }
+    }
+
+    if (bufferPos != 0) {
+        if (write(g_DebugRecordVideoFid, buffer, bufferPos * 2) < 0) {
+            FntPrint(D_800DB3DC);
+            return;
+        }
+    }
+}
 
 void func_800E2B00(void) {
     DR_MODE* drMode;
@@ -457,7 +643,7 @@ loop_5:
     g_DebugPalIdx = 0;
     D_801362C4 = 0;
     D_801362C8 = 0;
-    D_801362D8 = 0;
+    g_DebugIsRecordingVideo = false;
     g_DemoMode = Demo_None;
     D_8003C704 = 0;
     D_800973EC = 0;
