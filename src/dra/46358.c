@@ -304,7 +304,7 @@ void HandleNowLoading(void) {
             (LoadFileSim(D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
             break;
         }
-        func_800FA7E8();
+        CheckWeaponCombo();
         g_GameStep++;
         break;
     case 14:

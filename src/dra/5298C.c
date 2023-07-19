@@ -1337,9 +1337,9 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA3C4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 
-extern u32 D_8013AEE4;
-
-void func_800FA7E8(void) {
+// If you use both attack buttons at once, see if something special happens.
+// Applies to Shield Rod + Shield, or dual Heaven Swords
+void CheckWeaponCombo(void) {
     s32 weapon0;
     s32 weapon1;
     s32 combo1;
