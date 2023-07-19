@@ -4,8 +4,8 @@
 | zero/f_nonmat/f6011F40.s     | func_06011F40 | 15     | 1        |                                 |       |
 | zero/f_nonmat/f6018FC4.s     | func_06018FC4 | 15     | 1        |                                 |       |
 | game/f_nonmat/f607AF0C.s     | func_0607AF0C | 17     | 0        | https://decomp.me/scratch/honea | 0.711 |
-| game/f_nonmat/f607C0A0.s     | func_0607C0A0 | 17     | 0        |                                 |       |
-| zero/f_nonmat/f6013394.s     | func_06013394 | 17     | 0        |                                 |       |
+| game/f_nonmat/f607C0A0.s     | func_0607C0A0 | 17     | 0        | https://decomp.me/scratch/f6qn4 | 0.507 |
+| zero/f_nonmat/f6013394.s     | func_06013394 | 17     | 0        | https://decomp.me/scratch/5EEK4 | 0.707 |
 | zero/f_nonmat/f60133B0.s     | func_060133B0 | 17     | 0        |                                 |       |
 | zero/f_nonmat/f60195F0.s     | func_060195F0 | 17     | 0        |                                 |       |
 | game/f_nonmat/f607872C.s     | func_0607872C | 17     | 1        |                                 |       |
@@ -359,7 +359,7 @@
 | zero/f_nonmat/f6008048.s     | func_06008048 | 95     | 4        |                                 |       |
 | game/f_nonmat/f6078F58.s     | func_06078F58 | 96     | 3        |                                 |       |
 | zero/f_nonmat/f600AE30.s     | func_0600AE30 | 97     | 6        |                                 |       |
-| game/f_nonmat/f606F21C.s     | func_0606F21C | 97     | 11       | https://decomp.me/scratch/jYozd | 0.79  |
+| game/f_nonmat/f606F21C.s     | func_0606F21C | 97     | 11       | https://decomp.me/scratch/jYozd | 0.849 |
 | zero/f_nonmat/f600CD70.s     | func_0600CD70 | 97     | 11       |                                 |       |
 | game/f_nonmat/f6074C28.s     | func_06074C28 | 98     | 0        |                                 |       |
 | game/f_nonmat/f6078550.s     | func_06078550 | 98     | 3        |                                 |       |
