@@ -112,7 +112,7 @@ jobs:
         run: |
           cat dependencies/* > dependencies.tar.gz
           tar -xf dependencies.tar.gz
-          mv *.cue sotn.${{ matrix.version }}.cue
+          mv *.cue sotn.${{ matrix.dependency }}.cue || mv *.iso sotn.${{ matrix.dependency }}.iso
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
@@ -153,7 +153,7 @@ jobs:
         run: |
           cat dependencies/* > dependencies.tar.gz
           tar -xf dependencies.tar.gz
-          mv *.cue sotn.${{ matrix.version }}.cue
+          mv *.cue sotn.${{ matrix.dependency }}.cue || mv *.iso sotn.${{ matrix.dependency }}.iso
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
