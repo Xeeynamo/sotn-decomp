@@ -22,12 +22,12 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        version: ["us"]
+        version: ["us", "hd"]
         include:
           - dependency: us
             version: us
-          # - dependency: pspeu
-          #   version: hd
+          - dependency: pspeu
+            version: hd
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -65,21 +65,13 @@ jobs:
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
-        if: matrix.version == 'us'
         run: make -j extract
-      - name: Split game data (DRA only)
-        if: matrix.version != 'us'
-        run: make -j extract_dra
       - name: Build binaries
-        if: matrix.version == 'us'
         run: make -j build
-      - name: Build binaries (DRA only)
-        if: matrix.version != 'us'
-        run: make -j dra
       - name: Check if they match
         run: make check
       - name: Remove clutter from build folder
-        run: rm -rf build/asm build/src
+        run: rm -rf build/$(VERSION)/asm build/$(VERSION)/src build/$(VERSION)/assets
       - name: Export build folder
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         uses: actions/upload-artifact@v3
@@ -89,12 +81,12 @@ jobs:
   generate-progress-report:
     strategy:
       matrix:
-        version: ["us"]
+        version: ["us", "hd"]
         include:
           - dependency: us
             version: us
-          # - dependency: pspeu
-          #   version: hd
+          - dependency: pspeu
+            version: hd
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest

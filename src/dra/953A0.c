@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_801353A0(void) {
     if (*(u16*)&D_801396F4 == 0)
@@ -119,3 +120,4 @@ void func_801361F8(void) {
 }
 
 void nullsub_10(void) {}
+#endif

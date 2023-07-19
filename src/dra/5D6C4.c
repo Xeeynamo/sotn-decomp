@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 var_a0;
@@ -1341,3 +1342,4 @@ void func_801026BC(s32 arg0) {
 }
 
 void func_801027A4(void) { func_801026BC(0); }
+#endif

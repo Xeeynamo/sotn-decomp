@@ -1,5 +1,6 @@
 #include "dra.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_801092E8(s32 arg0) {
     D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
@@ -891,3 +892,4 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80111018);
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801112AC);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8011151C);
+#endif
