@@ -35,7 +35,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004F50, func_06004F50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005208, func_06005208);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005310, func_06005310);
+
+void func_06005310(void) { func_06006FA8(); }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005328, func_06005328);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600544C, func_0600544C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005470, func_06005470);
@@ -538,7 +540,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011B28, func_06011B28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011C28, func_06011C28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F40, func_06011F40);
+
+void func_06011F40(void) { func_06018D88(); }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F58, func_06011F58);
 
 // _KeyOffBGM2
@@ -606,7 +610,13 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6013320, func_06013320);
 
 // _sd_reset2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601333C, func_0601333C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6013394, func_06013394);
+
+void func_06013394(void)
+{
+    DAT_060644c1 = 1;
+    DAT_060644dc = 2;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60133B0, func_060133B0);
 
 // _conve
@@ -705,7 +715,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018EE0, func_06018EE0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018F04, func_06018F04);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018F20, func_06018F20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018FA8, func_06018FA8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018FC4, func_06018FC4);
+
+void func_06018FC4(void) { func_06033024(); }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018FDC, func_06018FDC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019058, func_06019058);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6019074, func_06019074);
