@@ -92,7 +92,9 @@ endef
 
 all: build check
 saturn: build_saturn_native check_saturn_native
-build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build: build_$(VERSION)
+build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_hd: dra
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/
@@ -107,9 +109,9 @@ format:
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
-	mkdir -p expected
-	rm -rf expected/build
-	cp -r build expected/
+	mkdir -p expected/build
+	rm -rf expected/build/$(VERSION)
+	cp -r build/$(VERSION) expected/build/
 
 main: main_dirs $(MAIN_TARGET).exe
 main_dirs:
@@ -234,7 +236,9 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract: extract_$(VERSION)
+extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract_hd: extract_dra
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
 extract_dra: $(SPLAT_APP)
@@ -460,6 +464,7 @@ build_saturn_copy_files:
 	cp  ./src/saturn/stage_02.h $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/warp.c $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/sattypes.h $(SATURN_BUILD_DIR)
+	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game

@@ -106,31 +106,31 @@ void HandleNowLoading(void) {
             var_s0 = STAGE_ST0;
             if (g_StageId == var_s0 ||
                 g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-                if (func_800E81FC(5, SimFileType_System) < 0) {
+                if (LoadFileSim(5, SimFileType_System) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8002, SimFileType_Vh) < 0) {
+                if (LoadFileSim(0x8002, SimFileType_Vh) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8003, SimFileType_Vb) < 0) {
+                if (LoadFileSim(0x8003, SimFileType_Vb) < 0) {
                     break;
                 }
                 if (g_StageId == var_s0) {
-                    if (func_800E81FC(0x8004, SimFileType_Vh) < 0) {
+                    if (LoadFileSim(0x8004, SimFileType_Vh) < 0) {
                         break;
                     }
-                    if (func_800E81FC(0x8005, SimFileType_Vb) < 0) {
+                    if (LoadFileSim(0x8005, SimFileType_Vb) < 0) {
                         break;
                     }
                 }
             } else {
-                if (func_800E81FC(4, SimFileType_System) < 0) {
+                if (LoadFileSim(4, SimFileType_System) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8000, SimFileType_Vh) < 0) {
+                if (LoadFileSim(0x8000, SimFileType_Vh) < 0) {
                     break;
                 }
-                if (func_800E81FC(0x8001, SimFileType_Vb) < 0) {
+                if (LoadFileSim(0x8001, SimFileType_Vb) < 0) {
                     break;
                 }
             }
@@ -147,10 +147,10 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
-                if (func_800E81FC(13, 0) < 0) {
+                if (LoadFileSim(13, 0) < 0) {
                     break;
                 }
-            } else if (func_800E81FC(1, 0) < 0) {
+            } else if (LoadFileSim(1, 0) < 0) {
                 break;
             }
             g_GameStep++;
@@ -166,7 +166,7 @@ void HandleNowLoading(void) {
         break;
     case 5:
         if (!g_UseDisk) {
-            if (func_800E81FC(0, 5) >= 0) {
+            if (LoadFileSim(0, 5) >= 0) {
                 g_GameStep++;
             }
         } else if (!g_IsUsingCd) {
@@ -182,8 +182,8 @@ void HandleNowLoading(void) {
         break;
     case 7:
         if (!g_UseDisk) {
-            if (func_800E81FC(0, 2) >= 0) {
-                if (func_800E81FC(0, 3) >= 0) {
+            if (LoadFileSim(0, 2) >= 0) {
+                if (LoadFileSim(0, 3) >= 0) {
                     g_GameStep++;
                 }
             }
@@ -200,11 +200,11 @@ void HandleNowLoading(void) {
         break;
     case 9:
         if (!g_UseDisk) {
-            if (func_800E81FC(0, 1) < 0) {
+            if (LoadFileSim(0, 1) < 0) {
                 break;
             }
             var_a0 = g_StagesLba[g_StageId].seqIdx;
-            if (var_a0 >= 0 && func_800E81FC(var_a0, 4) < 0) {
+            if (var_a0 >= 0 && LoadFileSim(var_a0, 4) < 0) {
                 break;
             }
             g_GameStep++;
@@ -255,7 +255,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[3] == 0x19) {
                 var_s0 = D_800A4B04[0xD8].weaponId;
             }
-            if (func_800E81FC(var_s0, 7) < 0) {
+            if (LoadFileSim(var_s0, 7) < 0) {
                 break;
             }
             pfnWeapon = D_8017A000.func_8017A01C;
@@ -268,7 +268,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[3] == 0x19) {
                 var_s0 = D_800A4B04[0xD8].weaponId;
             }
-            if (func_800E81FC(var_s0, 8) >= 0) {
+            if (LoadFileSim(var_s0, 8) >= 0) {
                 D_8003C908.D_8003C910 = var_s0;
                 pfnWeapon = D_8017D000.func_8017A01C;
                 pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
@@ -299,10 +299,9 @@ void HandleNowLoading(void) {
             }
             pfnWeapon = D_8017D000.func_8017A01C;
             pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
-        } else if ((func_800E81FC(
-                        D_8003C908.D_8003C90C, SimFileType_Weapon0Chr) < 0) ||
-                   (func_800E81FC(
-                        D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
+        } else if (
+            (LoadFileSim(D_8003C908.D_8003C90C, SimFileType_Weapon0Chr) < 0) ||
+            (LoadFileSim(D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
             break;
         }
         func_800FA7E8();

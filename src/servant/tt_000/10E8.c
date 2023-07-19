@@ -4,13 +4,16 @@ extern SpriteParts* D_80170040[];
 extern u16 D_80170448[];
 extern s32 D_801704A8;
 extern Sprite D_80170608[];
+extern s32 D_80170664[][5];
 extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch D_80171094[];
+extern s32 D_801748D8[];
 extern Collider D_80174AD8;
 extern Unkstruct_8011A3AC D_80174C30;
 extern Point16 D_80174C3C[][16];
 extern s32 D_80174D3C;
+extern s32 D_80174D40;
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -47,7 +50,93 @@ void func_801710E8(Entity* entity, s32* arg1) {
     }
 }
 
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_8017110C);
+Entity* func_8017110C(Entity* self) {
+    const int EntitySearchCount = 128;
+    s32 foundIndex;
+    s32 i;
+    u32 found;
+    Entity* e;
+    s32 distance;
+    s32 entityX;
+    s32 selfX;
+
+    found = 0;
+    e = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < EntitySearchCount; i++, e++) {
+        D_801748D8[i] = 0;
+        if (e->entityId == 0) {
+            continue;
+        }
+        if (e->hitboxState == 0) {
+            continue;
+        }
+        if (e->flags & FLAG_UNK_00200000) {
+            continue;
+        }
+
+        entityX = e->posX.i.hi;
+        if (entityX < -0x10) {
+            continue;
+        }
+        if (entityX > 0x110) {
+            continue;
+        }
+        if (e->posY.i.hi > 0xF0) {
+            continue;
+        }
+        if (e->posY.i.hi < 0) {
+            continue;
+        }
+        if (e->hitboxState & 8 && D_80170664[D_80174C30.unk0 / 10][1] == 0) {
+            continue;
+        }
+
+        selfX = self->posX.i.hi;
+        distance = self->posX.i.hi - entityX;
+        if (distance < 0) {
+            distance = -distance;
+        }
+        if (distance < 64) {
+            distance = self->posY.i.hi - e->posY.i.hi;
+            if (distance < 0) {
+                distance = -distance;
+            }
+            if (distance < 64) {
+                continue;
+            }
+        }
+
+        if ((self->facing ? entityX < selfX : selfX < entityX) != 0) {
+            continue;
+        }
+        if (e->hitPoints >= 0x7000) {
+            continue;
+        }
+
+        if (!(e->flags & FLAG_UNK_80000)) {
+            e->flags |= FLAG_UNK_80000;
+            return e;
+        }
+        if (e->hitPoints >= D_80170664[D_80174C30.unk0 / 10][0]) {
+            found++;
+            D_801748D8[i] = 1;
+        }
+    }
+
+    if (found > 0) {
+        foundIndex = D_80174D40 % EntitySearchCount;
+        for (i = 0; i < 0x80; i++) {
+            if (D_801748D8[foundIndex] != 0) {
+                e = &g_Entities[STAGE_ENTITY_START + foundIndex];
+                D_80174D40 = (foundIndex + 1) % EntitySearchCount;
+                return e;
+            }
+            foundIndex = (foundIndex + 1) % EntitySearchCount;
+        }
+    }
+
+    return NULL;
+}
 
 s32 func_801713C8(Entity* entity) {
     if (entity->hitboxState == 0)

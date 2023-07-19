@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80111830(void) {
     s32 var_v0;
@@ -171,3 +172,4 @@ void func_801139CC(s32 arg0) {
         PLAYER.accelerationY = 0;
     }
 }
+#endif

@@ -7,7 +7,7 @@ void func_8015BCD0(void) {
     g_Player.D_80072EFC = 4;
     switch (PLAYER.step_s) {
     case 0:
-        if (LOW(PLAYER.animFrameIdx) == 0x10005 &&
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
             func_801606BC(g_CurrentEntity, 0x4D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -18,7 +18,7 @@ void func_8015BCD0(void) {
 
     case 2:
         func_8015BB80();
-        if (LOW(PLAYER.animFrameIdx) == 0x10005 &&
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
             func_801606BC(g_CurrentEntity, 0x2004D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -29,7 +29,7 @@ void func_8015BCD0(void) {
 
     case 4:
         func_8015BB80();
-        if (LOW(PLAYER.animFrameIdx) == 0x10005 &&
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
             func_801606BC(g_CurrentEntity, 0x4004D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
@@ -124,7 +124,7 @@ void func_8015C178(void) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }
 
-        if ((LOW(PLAYER.animFrameIdx) == 0x10012) &&
+        if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
             (g_Player.pl_vram_flag & 1)) {
             func_801606BC(g_CurrentEntity, 0, 0);
         }

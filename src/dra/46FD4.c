@@ -108,8 +108,8 @@ void nullsub_9(void) {}
 void HandlePrologueEnd(void) {
     if (g_GameStep == 1) {
         if ((g_UseDisk && !g_IsUsingCd) ||
-            (!g_UseDisk && func_800E81FC(6, SimFileType_System) >= 0 &&
-             func_800E81FC(7, SimFileType_System) >= 0)) {
+            (!g_UseDisk && LoadFileSim(6, SimFileType_System) >= 0 &&
+             LoadFileSim(7, SimFileType_System) >= 0)) {
             if (func_80131F68() != 0) {
                 PlaySfx(0x80);
             }
@@ -138,7 +138,7 @@ void HandleMainMenu(void) {
         if (g_UseDisk && g_IsUsingCd)
             break;
 
-        if (g_UseDisk || func_800E81FC(12, SimFileType_System) >= 0) {
+        if (g_UseDisk || LoadFileSim(12, SimFileType_System) >= 0) {
             g_GameStep++;
         }
         break;
@@ -153,8 +153,8 @@ void HandleMainMenu(void) {
         if (g_UseDisk && g_IsUsingCd)
             break;
 
-        if (g_UseDisk || func_800E81FC(0, SimFileType_Vh) >= 0 &&
-                             func_800E81FC(0, SimFileType_Vb) >= 0) {
+        if (g_UseDisk || LoadFileSim(0, SimFileType_Vh) >= 0 &&
+                             LoadFileSim(0, SimFileType_Vb) >= 0) {
             g_GameStep++;
         }
         break;
@@ -169,7 +169,7 @@ void HandleMainMenu(void) {
         if (g_UseDisk && g_IsUsingCd)
             break;
 
-        if (g_UseDisk || func_800E81FC(0, SimFileType_StagePrg) >= 0) {
+        if (g_UseDisk || LoadFileSim(0, SimFileType_StagePrg) >= 0) {
             D_8003C9A4 = 0;
             g_GameStep++;
         }
@@ -223,19 +223,19 @@ void HandleEnding(void) {
             StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
             LoadClut2(g_Clut, 0x200, 0xF0);
         } else {
-            if (func_800E81FC(14, SimFileType_System) < 0) {
+            if (LoadFileSim(14, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(15, SimFileType_System) < 0) {
+            if (LoadFileSim(15, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(16, SimFileType_System) < 0) {
+            if (LoadFileSim(16, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(17, SimFileType_System) < 0) {
+            if (LoadFileSim(17, SimFileType_System) < 0) {
                 break;
             }
-            if (func_800E81FC(4, SimFileType_System) < 0) {
+            if (LoadFileSim(4, SimFileType_System) < 0) {
                 break;
             }
             LoadClut2(g_Clut, 0x200, 0xF0);
@@ -255,7 +255,7 @@ void HandleEnding(void) {
                 break;
             }
         } else {
-            if (func_800E81FC(0, SimFileType_StagePrg) < 0) {
+            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
                 break;
             }
         }
@@ -285,7 +285,7 @@ void HandleEnding(void) {
                 return;
             }
         } else {
-            if (func_800E81FC(4, SimFileType_System) < 0) {
+            if (LoadFileSim(4, SimFileType_System) < 0) {
                 break;
             }
         }

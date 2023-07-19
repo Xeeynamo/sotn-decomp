@@ -1,6 +1,7 @@
 #include "zero.h"
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "saturn/scl.h"
 
 INCLUDE_ASM("asm/saturn/zero/data", d6004080, d_06004080);
 
@@ -71,13 +72,15 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E9C, func_06006E9C);
 // _IsCdOpened
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006ED4, func_06006ED4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006EF8, func_06006EF8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006F50, func_06006F50);
 
-// _CdSeek
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006F5C, func_06006F5C);
+bool func_06006F50(void) { return 1; }
 
-// _GetFileReadStat
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006F68, func_06006F68);
+// func_06006F5C
+bool CdSeek(void) { return 1; }
+
+// func_06006F68
+bool GetFileReadStat(void) { return 0; }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006F74, func_06006F74);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006FA8, func_06006FA8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60071C8, func_060071C8);
@@ -122,7 +125,13 @@ void InitScuDma(void) {
 
 // _VDP1_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008264, func_06008264);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008298, func_06008298);
+
+void func_06008298(void) {
+    int i;
+    for (i = 0; i < 8; i++) {
+        func_06008588(i);
+    }
+}
 
 // _INIT_TRANS
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60082C8, func_060082C8);
@@ -200,7 +209,31 @@ void DmaScroll(s32* src, s32* dest, u32 cnt) {
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600871C, func_0600871C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60089F0, func_060089F0);
+
+void func_060089F0(struct Unk0605CD90* param_1) {
+    u16 sVar2;
+    s16* psVar5;
+    s16* psVar7;
+    u16 i; // r2
+    u16 j; // r1
+
+    psVar7 = DAT_0605c120[3] + 1;
+    sVar2 = param_1->unk24 * 0x1000;
+    j = 0;
+    psVar5 = param_1->unk8 + j * 0x20;
+    for (j = 0; j < 32; j++) {
+        for (i = 0; i < 32; i++) {
+            *psVar5++ = *psVar7++ + sVar2;
+        }
+        psVar5 = 0x400 + param_1->unk8 + j * 0x20;
+
+        for (i = 0; i < 10; i++) {
+            *psVar5++ = *psVar7++ + sVar2;
+        }
+        psVar5 = param_1->unk8 + (j + 1) * 0x20;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008A70, func_06008A70);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008AB4, func_06008AB4);
 
@@ -438,7 +471,35 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF08, func_0600FF08);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FF64, func_0600FF64);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FFB8, func_0600FFB8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010008, func_06010008);
+
+void func_06010008(void) {
+    struct Unk0605d6c0* puVar2;
+    SclConfig temp;
+
+    DAT_06062224[1] = 0;
+    DAT_06062224[0] = 0;
+    ClearDebugPrintTilemap();
+    SCL_InitConfigTb(&temp);
+    temp.dispenbl = 1;
+    temp.charsize = 0;
+    temp.pnamesize = 1;
+    temp.platesize = 0;
+    temp.coltype = 0;
+    temp.datatype = 0;
+    temp.mapover = 0;
+    temp.flip = 0;
+    temp.patnamecontrl = 0x66;
+    temp.plate_addr[0] = VDP2_25E58000;
+    temp.plate_addr[1] = VDP2_25E58000;
+    temp.plate_addr[2] = VDP2_25E58000;
+    temp.plate_addr[3] = VDP2_25E58000;
+    SCL_SetConfig(SCL_NBG0, &temp);
+    puVar2 = &DAT_0605d6c0;
+    puVar2->unk30 = 0x10;
+    puVar2->unk34 = &DAT_06039214;
+    puVar2->unk38 = VDP2_25F00600;
+    puVar2->unk3c = 0x80;
+}
 
 // 0x060100b8
 // clears the debug print tilemap area, debug prints are at least used by
@@ -463,7 +524,13 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6010400, func_06010400);
 
 // _pause_seq
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60110C0, func_060110C0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011264, func_06011264);
+
+void func_06011264(void) {
+    // set input capture flag on sub-sh2
+    *((u16*)SH2_REG_M_FRT_IC) = 0xffff;
+    return;
+}
+
 INCLUDE_ASM("asm/saturn/zero/data", d6011278, d_06011278);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011AA0, func_06011AA0);
@@ -672,17 +739,27 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AC48, func_0601AC48);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AD14, func_0601AD14);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE2C, func_0601AE2C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE5C, func_0601AE5C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AE9C, func_0601AE9C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AEA8, func_0601AEA8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AEB4, func_0601AEB4);
+
+s32 func_0601AE9C(void) { return 0xff; }
+
+s32 func_0601AEA8(void) { return 0xff; }
+
+void func_0601AEB4(void) { DAT_060645D0 = DAT_060cf040; }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AECC, func_0601AECC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AEF4, func_0601AEF4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AF2C, func_0601AF2C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AF44, func_0601AF44);
+
+void func_0601AF2C(void) { DAT_06064674 = DAT_060a5000; }
+
+void func_0601AF44(void) { DAT_06064580 = DAT_060a5000; }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AF5C, func_0601AF5C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B184, func_0601B184);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B19C, func_0601B19C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B1B4, func_0601B1B4);
+
+void func_0601B184(void) { DAT_060645e0 = DAT_060a5000; }
+
+void func_0601B19C(void) { DAT_06064644 = DAT_060dc000; }
+
+void func_0601B1B4(void) { DAT_06064690 = DAT_06066000; }
 
 // _SET_GAME_OVERLAYADDR
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B1CC, func_0601B1CC);
@@ -1435,7 +1512,12 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028BE4, func_06028BE4);
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028C0C, func_06028C0C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028C34, func_06028C34);
+
+// _SCL_InitConfigTb
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6028D10, func_06028D10);
+
+// _SCL_SetConfig = 0x06028ddc splitter bug
+
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f602915A, func_0602915A);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602A654, func_0602A654);
 

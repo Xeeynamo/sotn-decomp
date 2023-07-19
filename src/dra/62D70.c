@@ -3,6 +3,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80102D70(void) {
     switch (D_801379AC.start) {
@@ -40,7 +41,7 @@ s32 func_80102E04(void) {
         break;
 
     case 1:
-        if (func_800E9B18(new_var2, 0) != temp_s0) {
+        if (MemcardFormat(new_var2, 0) != temp_s0) {
             D_80137E50 = D_80137E50 - 1;
             if (D_80137E50 == -1) {
                 temp_s0 = -1;
@@ -309,7 +310,7 @@ bool func_8010715C(s32 mapTilesetId) {
         return false;
 
     if (!g_UseDisk) {
-        if (func_800E81FC(mapTilesetId, SimFileType_Monster) < 0) {
+        if (LoadFileSim(mapTilesetId, SimFileType_Monster) < 0) {
             return false;
         }
     } else {
@@ -393,3 +394,4 @@ void func_80107360(
     poly->u3 = u + width;
     poly->v3 = v + height;
 }
+#endif

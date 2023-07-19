@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 var_a0;
@@ -567,7 +568,7 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLingingReversed) {
+    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLiningReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
@@ -1341,3 +1342,4 @@ void func_801026BC(s32 arg0) {
 }
 
 void func_801027A4(void) { func_801026BC(0); }
+#endif

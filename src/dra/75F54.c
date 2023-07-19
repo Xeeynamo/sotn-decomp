@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80115F54(void) {
     Unkstruct_800ECBF8_1* temp_s0;
@@ -272,7 +273,7 @@ void func_80118640(void) {
 }
 
 void func_80118670(void) {
-    if (LOW(PLAYER.animFrameIdx) == 0x10007) {
+    if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         func_8011AAFC(g_CurrentEntity, 0x160028, 0);
         PlaySfx(NA_SE_PL_MP_GAUGE);
         func_8011AAFC(g_CurrentEntity, 0x70, 0);
@@ -2874,3 +2875,4 @@ void func_80134E64(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134F50);
 void func_80134F50();
+#endif

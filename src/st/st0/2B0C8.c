@@ -407,7 +407,7 @@ s32 func_801AC458(s16 arg0) {
         if (AnimateEntity(D_80180964, e2) == 0) {
             ret++;
         }
-        if (LOW(e2->animFrameIdx) == 6) {
+        if (e2->animFrameIdx == 6 && e2->animFrameDuration == 0) {
             g_CurrentEntity->ext.stub[0x24] = 1;
         }
         break;

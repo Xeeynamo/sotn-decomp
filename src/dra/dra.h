@@ -239,12 +239,22 @@ typedef struct {
     u8 soundFrame;
 } animSoundEvent;
 
+// All the Joseph's Cloak color fields are in RGB555 format
+typedef struct {
+    u16 liningDark;
+    u16 liningLight;
+    u16 exteriorDark;
+    u16 exteriorLight;
+} JosephsCloak;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
 extern u8 D_800A0170[];
+extern u8 D_800A01B0[];
+extern RECT D_800A01C0[];
 extern s32 D_800A0248;
 extern SimFile D_800A024C[];
 extern SimFile D_800A036C[];
@@ -320,6 +330,7 @@ extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
 extern Unkstruct_801092E8 D_800A37D8;
+extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
@@ -413,12 +424,13 @@ extern s32 g_softResetTimer;
 extern s32 D_80136300;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern s32 D_80136410;
 extern s32 D_80136414[];
 extern SimFile* D_8013644C;
 extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
-extern u8 D_80137460[]; // button timers
+extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
@@ -657,8 +669,8 @@ void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void SetGameState(GameState gameState);
 void func_800E4970(void);
-s32 func_800E81FC(s32 id, SimFileType type);
-void func_800E8D24(void);
+s32 LoadFileSim(s32 id, SimFileType type);
+void ResetPadsRepeat(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
 s32 func_800E9208(void);
