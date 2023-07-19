@@ -1338,9 +1338,37 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA3C4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 
-// DECOMP_ME_WIP func_800FA7E8 https://decomp.me/scratch/JL0hI
-// has some logic related to the weapon struct
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA7E8);
+// If you use both attack buttons at once, see if something special happens.
+// Applies to Shield Rod + Shield, or dual Heaven Swords
+void CheckWeaponCombo(void) {
+    s32 weapon0;
+    s32 weapon1;
+    s32 combo1;
+    s32 combo2;
+    s32 comboBits;
+    s32 i;
+    s32 oddComboCheck;
+
+    weapon0 = g_Status.equipment[0];
+    weapon1 = g_Status.equipment[1];
+
+    combo1 = D_800A4B04[weapon0].comboSub & D_800A4B04[weapon1].comboMain;
+    oddComboCheck = 0x80000000;
+    oddComboCheck &= -(combo1 == 0);
+
+    combo2 = D_800A4B04[weapon0].comboMain & D_800A4B04[weapon1].comboSub;
+    comboBits = combo1 | combo2;
+
+    if (comboBits != 0) {
+        for (i = 0xAA; i < 0xD9; i++) {
+            if (comboBits & D_800A4B04[i].comboSub) {
+                D_8013AEE4 = oddComboCheck + i;
+                return;
+            }
+        }
+    }
+    D_8013AEE4 = 0;
+}
 
 bool LoadWeaponPrg(s32 equipIndex) {
     s32 equipId;
