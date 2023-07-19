@@ -214,6 +214,7 @@ typedef struct Primitive {
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
 #define FLAG_UNK_40000 0x40000
+#define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
 #define FLAG_UNK_00200000 0x00200000
 

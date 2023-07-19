@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 s32 DecompressData(u8* dst, u8* src);
 
@@ -1476,3 +1477,4 @@ void FreePrimitives(s32 primitiveIndex) {
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderPrimitives);
+#endif

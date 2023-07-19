@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80113AAC(void) {
     s32 var_s1 = 0;
@@ -234,3 +235,4 @@ void func_80115C50(void) {
         }
     }
 }
+#endif
