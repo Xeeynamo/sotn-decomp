@@ -117,4 +117,19 @@ void func_06033024();
 extern u8 DAT_060644c1;
 extern u8 DAT_060644dc;
 
+extern s32 DAT_060476a4;
+extern s32 DAT_060476a0;
+extern s32 DAT_06064354;
+extern s32 DAT_060644AC;
+
+struct Unk0600E050 {
+    u8 pad[0x4];
+    s16 unk4;
+    s16 pad6;
+    s16 unk8;
+    u8 pada[2];
+    s16 unkc;
+    s16 unke;
+};
+
 #endif
