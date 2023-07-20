@@ -527,9 +527,9 @@ s32 DebugUpdate(void) {
     if (g_DebugEnabled) {
         if (g_DebugMode != DEBUG_PALETTE_VIEWER) {
             if (g_pads[1].tapped & PAD_CROSS) {
-                D_801362B0++;
-                if (D_801362B0 == 5) {
-                    D_801362B0 = 0;
+                g_DebugHitboxViewMode++;
+                if (g_DebugHitboxViewMode == 5) {
+                    g_DebugHitboxViewMode = 0;
                 }
             }
             if (g_pads[1].tapped & PAD_SQUARE) {
@@ -837,9 +837,9 @@ void entrypoint_sotn(void) {
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
 #if defined(VERSION_US)
-    D_80098850 = 0;
+    g_DebugPlayer = 0;
 #elif defined(VERSION_HD)
-    D_80098850 = 1;
+    g_DebugPlayer = 1;
 #endif
 loop_5:
     D_8003C73C = 0;
@@ -855,7 +855,7 @@ loop_5:
     D_801362B4 = 0x20;
     g_DebugCurPal = 0x200;
     g_DebugEnabled = 0;
-    D_801362B0 = 0;
+    g_DebugHitboxViewMode = 0;
     D_801362B8 = 0;
     D_801362BC = 0;
     g_DebugMode = DEBUG_NORMAL;
@@ -901,8 +901,8 @@ loop_5:
             RenderTilemap();
             RenderEntities();
             if (g_GameState == Game_Play && g_DebugEnabled) {
-                if (D_801362B0 != 0) {
-                    DrawEntitiesHitbox(D_801362B0);
+                if (g_DebugHitboxViewMode != 0) {
+                    DrawEntitiesHitbox(g_DebugHitboxViewMode);
                 }
             }
         }

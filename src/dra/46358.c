@@ -75,7 +75,7 @@ void HandleNowLoading(void) {
         } else {
             __builtin_memcpy(g_Status.saveName, "alucard ", sizeof("alucard "));
             g_DemoMode = Demo_None;
-            if (D_80098850 != 0) {
+            if (g_DebugPlayer != 0) {
                 if (g_pads[1].pressed & PAD_UP) {
                     __builtin_memcpy(
                         g_Status.saveName, "richter ", sizeof("richter "));

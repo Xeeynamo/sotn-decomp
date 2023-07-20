@@ -408,7 +408,7 @@ extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
 extern char* aAtariNuki;
 extern s32 g_DebugFreeze;
-extern s32 D_801362B0;
+extern s32 g_DebugHitboxViewMode;
 extern u32 D_801362B4;
 extern s32 D_801362B8;
 extern s32 D_801362BC;

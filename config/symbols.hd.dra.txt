@@ -1,4 +1,3 @@
-g_Settings = 0x8003C9F8;
 g_saveIconPalette = 0x800A0518;
 g_saveIconTexture = 0x800A1F18;
 D_800A2438 = 0x800A23F8;
@@ -675,7 +674,7 @@ func_80136010 = 0x80135BEC;
 func_801361F8 = 0x80135DD4;
 nullsub_10 = 0x80135E80;
 g_DebugFreeze = 0x80135E88;
-D_801362B0 = 0x80135E8C;
+g_DebugHitboxViewMode = 0x80135E8C;
 D_801362B4 = 0x80135E90;
 D_801362B8 = 0x80135E94;
 D_801362BC = 0x80135E98;

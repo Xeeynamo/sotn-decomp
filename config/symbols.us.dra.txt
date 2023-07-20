@@ -1027,6 +1027,7 @@ PlaySfx = 0x801347F8;
 IncrementRingBufferPos = 0x80135C00;
 nullsub_10 = 0x801362A4;
 g_DebugFreeze = 0x801362AC;
+g_DebugHitboxViewMode = 0x801362B0;
 g_DebugPalIdx = 0x801362C0;
 g_DebugColorChannel = 0x801362C4;
 g_CurrentOT = 0x801362CC;
