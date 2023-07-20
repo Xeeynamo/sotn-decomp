@@ -43,3 +43,6 @@ _PfnEntityUpdates = 0x06064648;
 _GetDistanceToPlayerX = 0x0607A9F8;
 _GetDistanceToPlayerY = 0x0607AA1C;
 _GetSideToPlayer = 0x0607AAF4;
+_g_EnemyDefs = 0x06080288;
+_g_roomCount = 0x0605c5b0;
+___sdivsi3 = 0x06030e6c;
