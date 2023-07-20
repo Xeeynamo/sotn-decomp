@@ -1,7 +1,6 @@
 #include "dra.h"
 #include "lba.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 #if USE_CD_SPEED_DOUBLE == 0
 #define CDL_MODE_SPEED CdlModeSpeedNormal
@@ -404,23 +403,25 @@ void func_80107EF0(void) {
 void func_801080DC(void) {
     int new_var2;
     s32 new_var;
+    CdThing* new_var3;
     RECT* r;
 
     new_var2 = 6;
     if (g_Cd.D_80137F70 == 3 || g_Cd.D_80137F70 == 7) {
         switch (g_CdCallback) {
         case CdCallback_1:
-            g_Cd.dstRect.x = D_800AC958[g_Cd_D_80137F74];
-            g_Cd.dstRect.y = ((g_Cd_D_80137F74 << new_var2) & 0x80) + 0x100;
+            g_Cd.dstRect.x = D_800AC958[g_Cd.D_80137F74];
+            g_Cd.dstRect.y = ((g_Cd.D_80137F74 << new_var2) & 0x80) + 0x100;
             g_Cd.dstRect.w = 0x20;
             g_Cd.dstRect.h = 0x80;
-            if (g_Cd_D_80137F74 == 0x1A) {
+            if (g_Cd.D_80137F74 == 0x1A) {
                 g_Cd.dstRect.y = 0x181;
                 g_Cd.dstRect.h = 0x7F;
-                if (!g_Cd_D_80137F74 && !g_Cd_D_80137F74) {
+                if (!g_Cd.D_80137F74 && !g_Cd.D_80137F74) {
                 }
             }
-            if (g_Cd_D_80137F74 == 0x20) {
+            new_var3 = &g_Cd;
+            if (new_var3->D_80137F74 == 0x20) {
                 g_Cd.dstRect.x = 0;
                 g_Cd.dstRect.y = 0xF0;
                 g_Cd.dstRect.w = 0x100;
@@ -503,6 +504,9 @@ void func_80107460(void);
 void PlaySfx(s32);
 void SsVabClose(short);
 
+#if defined(VERSION_HD)
+INCLUDE_ASM("asm/hd/dra/nonmatchings/cd", UpdateCd);
+#else
 void UpdateCd(void) {
     unsigned char result[8];
     unsigned char setModeArg[24];
