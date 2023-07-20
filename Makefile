@@ -440,16 +440,9 @@ build_saturn_copy_files:
 	rm -rf $(SATURN_BUILD_DIR)
 	mkdir -p $(SATURN_BUILD_DIR)
 	cp -r ./tools/saturn_toolchain/GCCSH/* $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/inc_asm.h $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/macro.inc $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/game.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/t_bat.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/zero.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/zero.h $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/stage_02.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/stage_02.h $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/warp.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/sattypes.h $(SATURN_BUILD_DIR)
+	cp -r ./src/saturn/*.c $(SATURN_BUILD_DIR)
+	cp -r ./src/saturn/*.h $(SATURN_BUILD_DIR)
 	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
