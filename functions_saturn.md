@@ -2,15 +2,8 @@
 |------------------------------|---------------|--------|----------|---------------------------------|-------|
 | game/f_nonmat/f607AF0C.s     | func_0607AF0C | 17     | 0        | https://decomp.me/scratch/honea | 0.711 |
 | game/f_nonmat/f607C0A0.s     | func_0607C0A0 | 17     | 0        | https://decomp.me/scratch/f6qn4 | 0.507 |
-| zero/f_nonmat/f60133B0.s     | func_060133B0 | 17     | 0        |                                 |       |
-| zero/f_nonmat/f60195F0.s     | func_060195F0 | 17     | 0        |                                 |       |
 | game/f_nonmat/f607872C.s     | func_0607872C | 17     | 1        |                                 |       |
-| zero/f_nonmat/f6018F04.s     | func_06018F04 | 17     | 1        |                                 |       |
-| zero/f_nonmat/f601269C.s     | func_0601269C | 18     | 1        |                                 |       |
-| zero/f_nonmat/f60126B8.s     | func_060126B8 | 18     | 1        |                                 |       |
-| zero/f_nonmat/f6019058.s     | func_06019058 | 18     | 1        |                                 |       |
-| zero/f_nonmat/f600E050.s     | func_0600E050 | 19     | 0        |                                 |       |
-| zero/f_nonmat/f600E0A4.s     | func_0600E0A4 | 19     | 0        |                                 |       |
+| zero/f_nonmat/f6018F04.s     | func_06018F04 | 17     | 1        | https://decomp.me/scratch/8MBlN | 0.704 |
 | zero/f_nonmat/f600652C.s     | func_0600652C | 19     | 1        |                                 |       |
 | zero/f_nonmat/f6016B9C.s     | func_06016B9C | 19     | 1        |                                 |       |
 | zero/f_nonmat/f6016BBC.s     | func_06016BBC | 19     | 1        |                                 |       |
