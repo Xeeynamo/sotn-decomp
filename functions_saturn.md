@@ -561,7 +561,6 @@
 | stage_02/f_nonmat/f60E0684.s | func_060E0684 | 299    | 34       |                                 |       |
 | t_bat/f_nonmat/f60D141C.s    | func_060D141C | 301    | 44       |                                 |       |
 | zero/f_nonmat/f6006C00.s     | func_06006C00 | 301    | 47       |                                 |       |
-| game/f_nonmat/f60705CC.s     | func_060705CC | 302    | 29       | https://decomp.me/scratch/px2cd | 0.897 |
 | game/f_nonmat/f60668D4.s     | func_060668D4 | 309    | 4        |                                 |       |
 | game/f_nonmat/f6074724.s     | func_06074724 | 310    | 51       |                                 |       |
 | zero/f_nonmat/f6005E3C.s     | func_06005E3C | 311    | 51       |                                 |       |
