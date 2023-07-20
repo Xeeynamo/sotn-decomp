@@ -33,7 +33,9 @@
 #endif
 
 // omit .global
+#ifdef USE_INCLUDE_ASM
 __asm__(".include \"macro.inc\"\n");
+#endif
 
 #else
 #define INCLUDE_ASM(FOLDER, NAME)
