@@ -1348,7 +1348,7 @@ extern u8 D_80097F49;
 extern u8 D_80097F4A;
 extern s32 D_800987B4;
 extern s32 D_800987C8;
-extern s32 D_80098850;
+extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
 void PadInit(s32 arg0);
