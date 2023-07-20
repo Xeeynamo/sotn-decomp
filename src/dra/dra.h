@@ -9,6 +9,20 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 typedef enum {
+    DEBUG_NORMAL,
+    DEBUG_TEXTURE_VIEWER,
+    DEBUG_TILESET_VIEWER,
+    DEBUG_PALETTE_VIEWER,
+    DEBUG_END,
+} DebugMode;
+
+typedef enum {
+    DEBUG_COLOR_CHANNEL_RED,
+    DEBUG_COLOR_CHANNEL_GREEN,
+    DEBUG_COLOR_CHANNEL_BLUE,
+} DebugColorChannel;
+
+typedef enum {
     SimFileType_System,
     SimFileType_StagePrg,
     SimFileType_Vh,
@@ -413,7 +427,7 @@ extern u32 D_801362B4;
 extern s32 D_801362B8;
 extern s32 D_801362BC;
 extern s32 g_DebugPalIdx;
-extern u32 g_DebugColorChannel;
+extern DebugColorChannel g_DebugColorChannel;
 extern u32 D_801362C8;
 extern u32* g_CurrentOT;
 extern s32 D_801362D0[];
