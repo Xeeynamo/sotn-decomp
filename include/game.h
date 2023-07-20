@@ -249,6 +249,20 @@ typedef s16 AnimSet;
 #define DIAG_EOS 0x00          // end of string
 
 typedef enum {
+    DEBUG_NORMAL,
+    DEBUG_TEXTURE_VIEWER,
+    DEBUG_TILESET_VIEWER,
+    DEBUG_PALETTE_VIEWER,
+    DEBUG_END,
+} DebugMode;
+
+typedef enum {
+    DEBUG_COLOR_CHANNEL_RED,
+    DEBUG_COLOR_CHANNEL_GREEN,
+    DEBUG_COLOR_CHANNEL_BLUE,
+} DebugColorChannel;
+
+typedef enum {
     Game_Init,
     Game_Title,
     Game_Play,

@@ -2441,7 +2441,7 @@ void func_80132C2C(s16 arg0) {
         }
 
         if (isFound) {
-            D_800BD1C0++;
+            g_DebugEnabled++;
             D_80139868[D_801396F4] = 0xE;
             D_801396F4++;
             if (D_801396F4 == 0x100) {

@@ -1,5 +1,4 @@
 #include "dra.h"
-#if defined(VERSION_US)
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -8,7 +7,13 @@
 #define DISP_MENU_H DISP_ALL_H
 #define DISP_UNK2_W 512
 #define DISP_UNK2_H DISP_ALL_H
+
+#if defined(VERSION_US)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
+#elif defined(VERSION_HD)
+#define PAD_RESETCOMBO                                                         \
+    ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
+#endif
 
 s32 LoadVabData(void);
 void func_800E385C(u32*);
@@ -339,37 +344,226 @@ void func_800E2B00(void) {
     g_GpuUsage.drawModes++;
 }
 
-void func_800E2E98(s32 colorAdd) {
+void DebugEditColorChannel(s32 colorAdd) {
     s32 newColorChannel;
-    s32 otherColorChannels;
-    u16 firstColor;
+    s32 color;
+    u16 originalColor;
     u16* palette;
 
     palette = g_Clut + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
-    firstColor = palette[0];
-    switch (D_801362C4) {
-    case 0:
-        otherColorChannels = firstColor & 0xFFE0;
-        newColorChannel = (firstColor + colorAdd) & 0x1F;
+    originalColor = palette[0];
+    switch (g_DebugColorChannel) {
+    case DEBUG_COLOR_CHANNEL_RED:
+        color = originalColor & 0xFFE0;
+        color |= (originalColor + colorAdd) & 0x1F;
+        *palette = color;
         break;
-    case 1:
-        otherColorChannels = firstColor & 0xFC1F;
-        newColorChannel = (firstColor + (colorAdd << 5)) & 0x3E0;
+    case DEBUG_COLOR_CHANNEL_GREEN:
+        color = originalColor & 0xFC1F;
+        color |= (originalColor + (colorAdd << 5)) & 0x3E0;
+        *palette = color;
         break;
-    case 2:
-        otherColorChannels = firstColor & 0x83FF;
-        newColorChannel = (firstColor + (colorAdd << 10)) & 0x7C00;
+    case DEBUG_COLOR_CHANNEL_BLUE:
+        color = originalColor & 0x83FF;
+        color |= (originalColor + (colorAdd << 10)) & 0x7C00;
+        *palette = color;
         break;
-    default:
-        return;
     }
-    *palette = otherColorChannels |= newColorChannel;
 }
 
-s32 nullsub_8(void) {}
+s32 DebugUpdate(void) {
+#if defined(VERSION_HD)
+    DebugCaptureScreen();
+    DebugCaptureVideo();
+    if (g_DebugEnabled) {
+        FntPrint("debug on\n");
+        if (g_DebugEnabled && g_DebugMode != DEBUG_NORMAL) {
+            if (g_DebugMode == DEBUG_PALETTE_VIEWER) {
+                // control debug palette menu
+                if (g_pads[1].tapped & PAD_UP) {
+                    if (g_pads[1].pressed & PAD_R2) {
+                        g_DebugCurPal -= COLORS_PER_PAL;
+                        if (g_DebugCurPal > 0x800) {
+                            g_DebugCurPal += 0x300;
+                        }
+                    } else if (g_pads[1].pressed & PAD_R1) {
+                        DebugEditColorChannel(-1);
+                    } else {
+                        D_801362B4 -= COLORS_PER_PAL;
+                        if (D_801362B4 < 0x20) {
+                            D_801362B4 += 0x60;
+                        }
+                    }
+                }
+                if (g_pads[1].tapped & PAD_DOWN) {
+                    if (g_pads[1].pressed & PAD_R2) {
+                        g_DebugCurPal += COLORS_PER_PAL;
+                        if (g_DebugCurPal >= 0x300) {
+                            g_DebugCurPal -= 0x300;
+                        }
+                    } else if (g_pads[1].pressed & PAD_R1) {
+                        DebugEditColorChannel(1);
+                    } else {
+                        D_801362B4 += COLORS_PER_PAL;
+                        if (D_801362B4 >= 0x80) {
+                            D_801362B4 -= 0x60;
+                        }
+                    }
+                }
+                if (g_pads[1].tapped & PAD_LEFT) {
+                    if (g_pads[1].pressed & PAD_R2) {
+                        g_DebugCurPal--;
+                        if (g_DebugCurPal > 0x800) {
+                            g_DebugCurPal += 0x300;
+                        }
+                    } else if (g_pads[1].pressed & PAD_R1) {
+                        g_DebugPalIdx--;
+                        g_DebugPalIdx &= COLORS_PER_PAL - 1;
+                    } else {
+                        D_801362B4--;
+                        if (D_801362B4 < 0x20) {
+                            D_801362B4 += 0x60;
+                        }
+                    }
+                }
+                if (g_pads[1].tapped & PAD_RIGHT) {
+                    if (g_pads[1].pressed & PAD_R2) {
+                        g_DebugCurPal++;
+                        if (g_DebugCurPal >= 0x300) {
+                            g_DebugCurPal -= 0x300;
+                        }
+                    } else if (g_pads[1].pressed & PAD_R1) {
+                        g_DebugPalIdx++;
+                        g_DebugPalIdx &= COLORS_PER_PAL - 1;
+                    } else {
+                        D_801362B4++;
+                        if (D_801362B4 >= 0x80) {
+                            D_801362B4 -= 0x60;
+                        }
+                    }
+                }
+                if (g_pads[1].pressed & PAD_R1) {
+                    if (g_pads[1].tapped & PAD_CIRCLE) {
+                        g_DebugColorChannel = DEBUG_COLOR_CHANNEL_RED;
+                    }
+                    if (g_pads[1].tapped & PAD_TRIANGLE) {
+                        g_DebugColorChannel = DEBUG_COLOR_CHANNEL_GREEN;
+                    }
+                    if (g_pads[1].tapped & PAD_CROSS) {
+                        g_DebugColorChannel = DEBUG_COLOR_CHANNEL_BLUE;
+                    }
+                    if (g_pads[1].tapped & PAD_SQUARE) {
+                        D_801362C8 = (D_801362C8 + 1) % 5;
+                    }
+                }
+                if (g_pads[1].pressed & PAD_R2 &&
+                    g_pads[1].tapped & PAD_SQUARE) {
+                    g_Clut[g_DebugCurPal * 0x10 + g_DebugPalIdx] ^= 0x8000;
+                }
+            } else {
+                // tileset viewer debug cont
+                FntPrint("dd on\n");
+                if (g_pads[1].tapped & PAD_UP) {
+                    D_801362BC -= 0x80;
+                    if (D_801362BC < 0) {
+                        D_801362BC = 0x180;
+                    }
+                }
+                if (g_pads[1].tapped & PAD_DOWN) {
+                    D_801362BC += 0x80;
+                    if (D_801362BC > 0x180) {
+                        D_801362BC = 0;
+                    }
+                }
+                if (g_pads[1].tapped & PAD_LEFT) {
+                    D_801362B8 -= 0x80;
+                    if (D_801362B8 < 0) {
+                        D_801362B8 = 0x380;
+                    }
+                }
+                if (g_pads[1].tapped & PAD_RIGHT) {
+                    D_801362B8 += 0x80;
+                    if (D_801362B8 > 0x380) {
+                        D_801362B8 = 0;
+                    }
+                }
+            }
+
+            // each debug mode has its own viewport resolution
+            switch (g_DebugMode) {
+            case DEBUG_TEXTURE_VIEWER:
+                SetDefDispEnv(&g_GpuBuffers[0].disp, D_801362B8, D_801362BC,
+                              0x200, 0x1E0);
+                SetDefDispEnv(&g_GpuBuffers[1].disp, D_801362B8, D_801362BC,
+                              0x200, 0x1E0);
+                break;
+            case DEBUG_TILESET_VIEWER:
+                SetDefDispEnv(&g_GpuBuffers[0].disp, D_801362B8, D_801362BC,
+                              DISP_STAGE_W, DISP_STAGE_H);
+                SetDefDispEnv(&g_GpuBuffers[1].disp, D_801362B8, D_801362BC,
+                              DISP_STAGE_W, DISP_STAGE_H);
+                break;
+            case 3: // palette viewer at 256x240
+                SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0,
+                              DISP_STAGE_W, DISP_STAGE_H);
+                SetDefDispEnv(
+                    &g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+                func_800E2B00();
+                break;
+            }
+        }
+    }
+    if (g_pads[1].tapped & PAD_START) {
+        g_DebugEnabled ^= 1;
+        if (!g_DebugEnabled) {
+            // when disabled, revert into the Stage resolution mode
+            SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W,
+                          DISP_STAGE_H);
+            SetDefDispEnv(
+                &g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+            return 1;
+        }
+    }
+    if (g_DebugEnabled) {
+        if (g_DebugMode != DEBUG_PALETTE_VIEWER) {
+            if (g_pads[1].tapped & PAD_CROSS) {
+                D_801362B0++;
+                if (D_801362B0 == 5) {
+                    D_801362B0 = 0;
+                }
+            }
+            if (g_pads[1].tapped & PAD_SQUARE) {
+                // enable or disable advancing frame by frame
+                g_DebugFreeze ^= 1;
+            }
+        }
+
+        // rotate between the different debug modes
+        if (g_pads[1].tapped & PAD_TRIANGLE) {
+            if (!(g_pads[1].pressed & PAD_R1)) {
+                g_DebugMode++;
+                g_DebugMode %= DEBUG_END;
+                if (g_DebugMode == 0) {
+                    SetDefDispEnv(&g_GpuBuffers[0].disp, DISP_STAGE_W, 0,
+                                  DISP_STAGE_W, DISP_STAGE_H);
+                    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W,
+                                  DISP_STAGE_H);
+                }
+            }
+        }
+    }
+
+    if (g_DebugEnabled && g_DebugFreeze != 0 &&
+        !(g_pads[1].tapped & PAD_CIRCLE) &&
+        g_DebugMode != DEBUG_PALETTE_VIEWER) {
+        return 0; // do not run next frame
+    }
+    return 1; // run next frame
+#endif
+}
 
 void PrintGpuInfo(void) {
-    if (D_800BD1C0 == 0)
+    if (!g_DebugEnabled)
         return;
 
     if (g_pads[1].pressed & PAD_SELECT) {
@@ -385,19 +579,18 @@ void PrintGpuInfo(void) {
         FntPrint("eff :%03x\n", D_800A2438);
     }
 
-    if (D_80138FB0 == 3) {
+    if (g_DebugMode == DEBUG_PALETTE_VIEWER) {
         u16 r, g, b;
 
-        switch (D_801362C4) {
-        case 0:
+        switch (g_DebugColorChannel) {
+        case DEBUG_COLOR_CHANNEL_RED:
             FntPrint("red");
             break;
-
-        case 1:
+        case DEBUG_COLOR_CHANNEL_GREEN:
             FntPrint("green");
             break;
 
-        case 2:
+        case DEBUG_COLOR_CHANNEL_BLUE:
             FntPrint("blue");
             break;
         }
@@ -419,7 +612,7 @@ void PrintGpuInfo(void) {
 }
 
 void PrintHBlankInfo(void) {
-    if (D_800BD1C0 != 0 && D_80138FB0 != 3) {
+    if (g_DebugEnabled && g_DebugMode != DEBUG_PALETTE_VIEWER) {
         if (g_blinkTimer & 1) {
             FntPrint("l=%03x/100\n", D_801362D0[1]);
             FntPrint("l=%03x/100\n", D_801362D0[0]);
@@ -450,10 +643,21 @@ void SsVabClose(short vab_id);
     while (func_800219E0(0) != 1)
 
 s32 LoadVabData(void) {
-    LOAD_VAB(0, &aPbav, D_800BD1C8[0], D_8013B6A0, 269488);
-    LOAD_VAB(1, &aPbav_0, D_800BD1C8[1], D_8017D350, 57744);
-    LOAD_VAB(2, &aPbav_1, D_800BD1C8[2], D_801A9C80, 64496);
-    LOAD_VAB(3, &aPbav_2, D_800BD1C8[3], D_8018B4E0, 108048);
+    const int vab0Len = 269488;
+#if defined(VERSION_US)
+    const int vab1Len = 57744;
+    const int vab2Len = 64496;
+    const int vab3Len = 108048;
+#elif defined(VERSION_HD)
+    const int vab1Len = 57808;
+    const int vab2Len = 65200;
+    const int vab3Len = 107792;
+#endif
+
+    LOAD_VAB(0, &aPbav, D_800BD1C8[0], D_8013B6A0, vab0Len);
+    LOAD_VAB(1, &aPbav_0, D_800BD1C8[1], D_8017D350, vab1Len);
+    LOAD_VAB(2, &aPbav_1, D_800BD1C8[2], D_801A9C80, vab2Len);
+    LOAD_VAB(3, &aPbav_2, D_800BD1C8[3], D_8018B4E0, vab3Len);
     func_80131EBC(&aPqes, 0x618);
     func_80131EBC(&aPqes_0, 0x201);
     func_80131EBC(&aPqes_1, 0x205);
@@ -575,9 +779,14 @@ void func_800E38CC(void) {
 }
 
 void entrypoint_sotn(void) {
+#if defined(VERSION_HD)
+    CdlFILE fp;
+#endif
     s32 i;
 
+#if defined(VERSION_US)
     SetVideoMode(0);
+#endif
     InitializePads();
     InitCARD(1);
     StartCARD();
@@ -601,7 +810,14 @@ void entrypoint_sotn(void) {
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
+#if defined(VERSION_US)
     func_80131ED8(0xB9B6);
+#elif defined(VERSION_HD)
+    do {
+
+    } while (CdSearchFile(&fp, "\\SD\\XA_STR1.;1") == 0);
+    func_80131ED8(CdPosToInt(&fp));
+#endif
     SoundInit();
     while (LoadVabData() < 0)
         ;
@@ -620,7 +836,11 @@ void entrypoint_sotn(void) {
     g_GpuMaxUsage.tile = 0;
     g_GpuMaxUsage.sp = 0;
     g_GpuMaxUsage.env = 0;
+#if defined(VERSION_US)
     D_80098850 = 0;
+#elif defined(VERSION_HD)
+    D_80098850 = 1;
+#endif
 loop_5:
     D_8003C73C = 0;
     SetStageDisplayBuffer();
@@ -634,14 +854,14 @@ loop_5:
     func_800EAEEC();
     D_801362B4 = 0x20;
     g_DebugCurPal = 0x200;
-    D_800BD1C0 = 0;
+    g_DebugEnabled = 0;
     D_801362B0 = 0;
     D_801362B8 = 0;
     D_801362BC = 0;
-    D_80138FB0 = 0;
-    D_801362AC = 0;
+    g_DebugMode = DEBUG_NORMAL;
+    g_DebugFreeze = 0;
     g_DebugPalIdx = 0;
-    D_801362C4 = 0;
+    g_DebugColorChannel = DEBUG_COLOR_CHANNEL_RED;
     D_801362C8 = 0;
     g_DebugIsRecordingVideo = false;
     g_DemoMode = Demo_None;
@@ -654,7 +874,9 @@ loop_5:
     D_80097904 = 0;
     D_8006C3AC = 0;
     D_80097C98 = 0;
+#if defined(VERSION_US)
     g_softResetTimer = 0;
+#endif
     D_800978C4 = 1;
 
     while (true) {
@@ -672,13 +894,13 @@ loop_5:
         g_GpuUsage.sp16 = 0;
         g_GpuUsage.tile = 0;
         g_GpuUsage.sp = 0;
-        if (nullsub_8() != 0) {
+        if (DebugUpdate() != 0) {
             UpdateGame();
         }
         if (D_8003C0F8 == 0 && D_800973EC == 0) {
             RenderTilemap();
             RenderEntities();
-            if (g_GameState == Game_Play && D_800BD1C0 != 0) {
+            if (g_GameState == Game_Play && g_DebugEnabled) {
                 if (D_801362B0 != 0) {
                     DrawEntitiesHitbox(D_801362B0);
                 }
@@ -686,13 +908,20 @@ loop_5:
         }
         RenderPrimitives();
         UpdateCd();
+#if defined(VERSION_HD)
+        PrintGpuInfo();
+#endif
         func_800E385C(g_CurrentOT);
         DrawSync(0);
         D_801362D4 = GsGetVcount();
+#if defined(VERSION_HD)
+        PrintHBlankInfo();
+#endif
         VSync(D_8003C73C);
         GsClearVcount();
         func_800EB314();
         ReadPads();
+#if defined(VERSION_US)
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
             if (g_pads[0].tapped & PAD_START) {
                 g_softResetTimer = 1;
@@ -707,6 +936,10 @@ loop_5:
         }
         if (g_softResetTimer >= 0x80) {
             g_softResetTimer = 0;
+#elif defined(VERSION_HD)
+        if (g_pads->pressed == PAD_RESETCOMBO && g_pads->tapped & PAD_START &&
+            D_800978C4 != 0) {
+#endif
             ClearBackbuffer();
             func_801073C0();
             PlaySfx(0x12);
@@ -715,6 +948,9 @@ loop_5:
             VSync(D_8003C73C);
             func_80132760();
             SetGameState(Game_Title);
+#if defined(VERSION_HD)
+            FntFlush(-1);
+#endif
             goto loop_5;
         }
         PutDrawEnv(&g_CurrentBuffer->draw);
@@ -779,6 +1015,9 @@ loop_5:
             }
         }
         rand();
+#if defined(VERSION_HD)
+        FntFlush(-1);
+#endif
     }
 }
 
@@ -908,6 +1147,7 @@ void HandleTitle(void) {
         }
         g_GameStep++;
         break;
+#if defined(VERSION_US)
     case 100:
         if (!g_IsUsingCd) {
             RECT rect;
@@ -946,6 +1186,7 @@ void HandleTitle(void) {
             g_GameStep = 1;
         }
         break;
+#endif
     case 1:
         if (g_UseDisk) {
             if (g_IsUsingCd) {
@@ -962,17 +1203,29 @@ void HandleTitle(void) {
         g_GameStep++;
         break;
     case 2:
+#if defined(VERSION_US)
         g_GameStep = 3;
+#else
+        g_GameStep++;
+#endif
         break;
     case 3:
+#if defined(VERSION_US)
         g_GameStep = 4;
+#else
+        g_GameStep++;
+#endif
         break;
     case 4:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StagePrg;
         }
+#if defined(VERSION_US)
         g_GameStep = 5;
+#else
+        g_GameStep++;
+#endif
         break;
     case 5:
         if (g_UseDisk) {
@@ -988,13 +1241,24 @@ void HandleTitle(void) {
         g_GameStep++;
         break;
     case 6:
+#if defined(VERSION_US)
         if (g_GameState == Game_Title) {
             callback = g_api.o.TestCollisions;
         } else {
             callback = g_api.o.InitRoomEntities;
         }
+#else
+        if (g_GameState == Game_Init) {
+            callback = g_api.o.InitRoomEntities;
+        } else {
+            callback = g_api.o.TestCollisions;
+        }
+#endif
         callback();
         break;
     }
 }
+
+#if defined(VERSION_HD)
+const int filesplit_42398_rodata = 0x00000000;
 #endif
