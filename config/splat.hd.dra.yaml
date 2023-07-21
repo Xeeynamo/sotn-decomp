@@ -37,7 +37,7 @@ segments:
       - [0x3B938, rodata]
       - [0x3BCF0, rodata] # jtbl_800DBCF0
       - [0x3BD08, rodata] # jtbl_800DBD08
-      - [0x3BD60, rodata, 47BB8]
+      - [0x3BD60, .rodata, 47BB8]
       - [0x3BE60, rodata]
       - [0x3BE78, rodata] # jtbl_800DBE78
       - [0x3BE90, rodata] # jtbl_800DBE90
@@ -158,12 +158,12 @@ segments:
       - [0x458E4, c, gameover]
       - [0x46A0C, c, 46358]
       - [0x47688, c, 46FD4]
-      - [0x48250, c, 47BB8_hd]
+      - [0x48250, c, 47BB8]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
       - [0x52EE4, c, 52860]
-      - [0x53010, c, 5298C_hd]
+      - [0x53010, c, 5298C]
       - [0x5D678, c, 5D6C4_hd]
       - [0x62654, c, 627C4]
       - [0x62C00, c, 62D70_hd]
