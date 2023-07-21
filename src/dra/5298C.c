@@ -865,9 +865,6 @@ void DrawStatChanges(void) {
     }
 }
 
-#if defined(VERSION_HD) // TODO
-INCLUDE_ASM("dra/nonmatchings/5298C", DrawPauseMenu);
-#else
 void DrawPauseMenu(s32 arg0) {
     MenuContext* ctx;
     s32 temp_s1;
@@ -962,13 +959,22 @@ void DrawPauseMenu(s32 arg0) {
     }
 
     DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
+#if defined(VERSION_US)
     func_800F66BC(D_800A2D6C, x, y + 20, ctx, 1);
+#elif defined(VERSION_HD)
+    func_800F66BC(D_800A83AC[0], x, y + 20, ctx, 1);
+#endif
     DrawMenuInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
     if (ctx == (&g_MenuData.menus[1])) {
         x = 32;
         y = 120;
     } else {
+#if defined(VERSION_US)
         DrawMenuStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
+#elif defined(VERSION_HD)
+        func_800F66BC(
+            D_800A83AC[g_MenuNavigation.cursorEquip + 0x11], 24, 40, ctx, true);
+#endif
         x = 12;
         y = 70;
     }
@@ -989,7 +995,6 @@ void DrawPauseMenu(s32 arg0) {
         }
     }
 }
-#endif
 
 INCLUDE_ASM("dra/nonmatchings/5298C", DrawSpellMenu);
 
@@ -1512,7 +1517,6 @@ bool func_800FACB8(void) {
     return false;
 }
 
-// INCLUDE_ASM("dra/nonmatchings/5298C", func_800FAD34); // TODO FIX ME!!!!
 void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     D_80137608 = 0;
     func_800F9808(2);
