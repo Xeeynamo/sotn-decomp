@@ -14,23 +14,23 @@ segments:
     subsegments:
       - start: 0x0
         type: data
-        file: 60
+        file: stage_02
         end: 0x3f
       - start: 0x40
         type: c
-        file: 60
+        file: stage_02
         end: 0x6a7f
 
       # something wrong with this func fixme
       - start: 0x6a80
         type: data
-        file: 60
+        file: stage_02
         end: 0x72db
 
       # and this one too
       - start: 0x72dc
         type: data
-        file: 60
+        file: stage_02
         end: 0x87a3
 
       # alignment issue at 7c1e
@@ -38,21 +38,21 @@ segments:
       # and this one
       - start: 0x87a4
         type: data
-        file: 60
+        file: stage_02
         end: 0x8907
 
       - start: 0x8908
         type: c
-        file: 60
+        file: stage_02
         end: 0x10A93
 
       # and this one
       - start: 0x10A94
         type: data
-        file: 60
+        file: stage_02
         end: 0x10c4f
 
       - start: 0x10c50
         type: data
-        file: 60
+        file: stage_02
         end: 0x19037
