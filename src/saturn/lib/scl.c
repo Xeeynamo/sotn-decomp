@@ -120,7 +120,7 @@ Uint32 SCL_AllocColRam(Uint32 Surface, Uint32 NumOfColors, Uint8 transparent) {
     SCL_FreeColRam(Surface);
 
     if (SclColRamAlloc2048[0] != 0)
-        return ((Uint32)NULL); /* �A���P�[�g�G���[ */
+        return ((Uint32)NULL);
 
     switch (SCL_GetColRamMode()) {
     case SCL_CRM15_1024:
