@@ -132,4 +132,18 @@ struct Unk0600E050 {
     s16 unke;
 };
 
+void func_0601B600();
+extern s32 DAT_06038a44;
+
+s32 func_06017FA4(s32 param_1, s32 param_2, s32 param_3);
+
+void func_060082E8(void);
+void func_0600841C(void);
+
+void func_0600AD98(void);
+void func_0600B254(void);
+
+extern s32 DAT_06064214;
+extern s8 DAT_060644C0;
+
 #endif
