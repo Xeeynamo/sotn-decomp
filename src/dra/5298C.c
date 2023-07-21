@@ -654,9 +654,6 @@ void DrawMenuChar(u8 ch, int x, int y, MenuContext* context) {
                   0x196, 0x1E, 1, 0);
 }
 
-#if defined(VERSION_HD) // TODO
-INCLUDE_ASM("dra/nonmatchings/5298C", DrawMenuStr);
-#else
 void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     const int ChWidth = 8;
     const int ChHeight = 8;
@@ -664,18 +661,21 @@ void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     s32 xcopy;
     s32 ycopy;
 
-    s32 s4 = D_8013784C;
+    s32 s4 = D_8013784C; // FAKE can be removed in HD but not in US
 
     D_80137614 = 0;
     while (1) {
         xcopy = x;
         ycopy = y;
         ch = *str++;
+#if defined(VERSION_US)
         if (*str == 0xC0 && *(str + 1) == 0xD2) {
             D_8013784C = 2;
             str += 2;
-        } else
+        } else {
             D_8013784C = s4;
+        }
+#endif
 
         if (ch == 0xFF) {
             ch = *str++;
@@ -694,7 +694,6 @@ void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     D_80137614 = 1;
     func_800F53D4(0x1E, context->unk18 + 2);
 }
-#endif
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     do {
