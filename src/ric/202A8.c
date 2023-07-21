@@ -31,7 +31,7 @@ void func_8015C2A8(void) {
             PLAYER.step_s = 2;
         } else if (g_Player.pl_high_jump_timer >= 0x1D) {
             PLAYER.step_s = 1;
-            PLAYER.accelerationY = -0x60000;
+            PLAYER.velocityY = -0x60000;
         }
         break;
 
@@ -41,8 +41,8 @@ void func_8015C2A8(void) {
             func_80158B04(3);
             g_Player.pl_high_jump_timer = 0;
         } else {
-            PLAYER.accelerationY += 0x6000;
-            if (PLAYER.accelerationY > 0x8000) {
+            PLAYER.velocityY += 0x6000;
+            if (PLAYER.velocityY > 0x8000) {
                 loadAnim = true;
             }
         }

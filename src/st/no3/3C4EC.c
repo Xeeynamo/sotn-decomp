@@ -68,7 +68,7 @@ void EntityPushAlucard(Entity* entity) {
         break;
 
     case 5:
-        if ((player->accelerationY > 0) &&
+        if ((player->velocityY > 0) &&
             (entity->ext.generic.unk7C.U8.unk0 == 0)) {
             g_Player.D_80072EF4 = 0x40;
             entity->ext.generic.unk7C.S8.unk0 = 1;

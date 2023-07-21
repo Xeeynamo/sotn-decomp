@@ -176,7 +176,7 @@ void func_801A8328(Entity* self) {
     Entity* newEntity;
     Collider collider;
     Primitive* prim;
-    s32 accelX;
+    s32 velX;
     s16 temp2;
 
     switch (self->step) {
@@ -214,12 +214,12 @@ void func_801A8328(Entity* self) {
             prim->next->b3 = 0x80;
             prim->priority = self->zPriority;
             prim->blendMode = 2;
-            accelX = ((Random() & 7) << 0xC) + 0x8000;
-            self->accelerationX = accelX;
+            velX = ((Random() & 7) << 0xC) + 0x8000;
+            self->velocityX = velX;
             if (self->facing == 0) {
-                self->accelerationX = -accelX;
+                self->velocityX = -velX;
             }
-            self->accelerationY = ((Random() & 7) << 0xC) - 0x8000;
+            self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
         } else {
             DestroyEntity(self);
             break;
@@ -229,7 +229,7 @@ void func_801A8328(Entity* self) {
         MoveEntity();
 
         prim = LOW(self->ext.generic.unk7C.s);
-        self->accelerationY += 0x2000;
+        self->velocityY += 0x2000;
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
 

@@ -526,17 +526,17 @@ void EntityDraculaFireball(Entity* self) {
         InitializeEntity(D_801805EC);
 
         if (self->facing == 0) {
-            self->accelerationX = -0x20000;
+            self->velocityX = -0x20000;
         } else {
-            self->accelerationX = 0x20000;
+            self->velocityX = 0x20000;
         }
 
         if (self->params == 1) {
-            self->accelerationY = -0x8000;
+            self->velocityY = -0x8000;
         }
 
         if (self->params == 2) {
-            self->accelerationY = 0x8000;
+            self->velocityY = 0x8000;
         }
         self->ext.generic.unk8C.modeU16.unk0 = 0x28;
 
@@ -545,7 +545,7 @@ void EntityDraculaFireball(Entity* self) {
         MoveEntity();
 
         if (--self->ext.generic.unk8C.modeS16.unk0 == 0) {
-            self->accelerationY = 0;
+            self->velocityY = 0;
         }
         return;
     }
@@ -590,9 +590,9 @@ void EntityDraculaMeteorball(Entity* entity) {
         }
 
         if (entity->facing != 0) {
-            entity->accelerationX += speedX;
+            entity->velocityX += speedX;
         } else {
-            entity->accelerationX -= speedX;
+            entity->velocityX -= speedX;
         }
 
         if (!(g_blinkTimer & 3)) {
@@ -624,7 +624,7 @@ void func_801AD838(Entity* entity) {
         InitializeEntity(D_801805EC);
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
-        entity->accelerationY = -0x10000;
+        entity->velocityY = -0x10000;
     }
     MoveEntity();
 
@@ -642,22 +642,22 @@ void EntityDraculaGlass(Entity* entity) {
         entity->animCurFrame = 0x59;
         entity->unk19 = 4;
         entity->hitboxState = 0;
-        entity->accelerationX = -0x10000;
-        entity->accelerationY = 0;
+        entity->velocityX = -0x10000;
+        entity->velocityY = 0;
         if (entity->params) {
             s16 radians;
             s32 speed;
             entity->animCurFrame = 0x5C;
             speed = (Random() & 0x1F) + 0x10;
             radians = (Random() * 6) + 0x900;
-            entity->accelerationX = speed * rcos(radians);
-            entity->accelerationY = speed * rsin(radians);
+            entity->velocityX = speed * rcos(radians);
+            entity->velocityY = speed * rsin(radians);
             SetStep(3);
         }
     case 1:
         MoveEntity();
         entity->rotAngle += 0x20;
-        entity->accelerationY += 0x2000;
+        entity->velocityY += 0x2000;
         if (entity->posY.i.hi >= 205) {
             g_api.PlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.i.hi = 204;
@@ -681,7 +681,7 @@ void EntityDraculaGlass(Entity* entity) {
         break;
     case 3:
         MoveEntity();
-        entity->accelerationY += 0x2000;
+        entity->velocityY += 0x2000;
         if (entity->posY.i.hi >= 205) {
             DestroyEntity(entity);
         }
@@ -721,11 +721,11 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->unk19 |= 7;
             self->rotAngle = 0x1C0 - angle;
             if (self->facing != 0) {
-                self->accelerationX = rcos(angle) * 0x60;
+                self->velocityX = rcos(angle) * 0x60;
             } else {
-                self->accelerationX = -(rcos(angle) * 0x60);
+                self->velocityX = -(rcos(angle) * 0x60);
             }
-            self->accelerationY = rsin(angle) * 0x60;
+            self->velocityY = rsin(angle) * 0x60;
         }
     }
     if (self->params != 0) {
@@ -746,8 +746,8 @@ void EntityDraculaMegaFireball(Entity* self) {
 
 void EntityDraculaRainAttack(Entity* self) {
     Entity* newEntity;
-    s32 accelY;
-    s32 accelX;
+    s32 velY;
+    s32 velX;
     s16 angle;
     s32 i;
 
@@ -767,15 +767,15 @@ void EntityDraculaRainAttack(Entity* self) {
         if (self->params != 0) {
             self->hitboxState = 0;
             self->animCurFrame = 0x59;
-            accelX = (Random() & 0x1F) + 0x10;
+            velX = (Random() & 0x1F) + 0x10;
             angle = (Random() * 6) + 0x900;
-            self->accelerationX = accelX * rcos(angle);
-            accelY = accelX * rsin(angle);
+            self->velocityX = velX * rcos(angle);
+            velY = velX * rsin(angle);
             self->step = 3;
-            self->accelerationY = accelY;
+            self->velocityY = velY;
             break;
         }
-        self->accelerationY = 0x40000;
+        self->velocityY = 0x40000;
 
     case 1:
         MoveEntity();
@@ -802,7 +802,7 @@ void EntityDraculaRainAttack(Entity* self) {
 
     case 3:
         MoveEntity();
-        self->accelerationY += 0x2000;
+        self->velocityY += 0x2000;
         if (self->posY.i.hi >= 0xF1) {
             DestroyEntity(self);
         }

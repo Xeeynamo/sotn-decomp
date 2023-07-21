@@ -224,8 +224,8 @@ extern u8 D_80182484[];     // animation: Swing Sword
 extern u8 D_801824A0[];     // animation: Jumping
 extern u8 D_801824AC[];     // animation: Landing
 extern s8 D_801824C8[];     // Skeleton parts array selector
-extern s32 D_801824D0[];    // Skeleton parts accelerationX
-extern s32 D_801824EC[];    // Skeleton parts accelerationY
+extern s32 D_801824D0[];    // Skeleton parts velocityX
+extern s32 D_801824EC[];    // Skeleton parts velocityY
 extern u16 D_80182508[];    // Skeleton parts posX
 extern u16 D_80182518[];    // Skeleton parts posY
 extern s8 D_80182528[2][4]; // Skeleton attack timer cycle

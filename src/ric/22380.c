@@ -152,7 +152,7 @@ void func_801601DC(Entity* entity) {
         posY = 15;
         entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
         entity->posX.i.hi = entity->posX.i.hi - posX + (rand() % 20);
-        entity->accelerationY = -0x6000 - (rand() & 0x3FFF);
+        entity->velocityY = -0x6000 - (rand() & 0x3FFF);
         entity->step++;
         break;
 
@@ -160,7 +160,7 @@ void func_801601DC(Entity* entity) {
         if (entity->unk6C >= 17) {
             entity->unk6C += 248;
         }
-        entity->posY.val += entity->accelerationY;
+        entity->posY.val += entity->velocityY;
         entity->unk1A += 8;
         entity->unk1C += 8;
         if (entity->animFrameDuration < 0) {
@@ -360,16 +360,16 @@ void func_80161C2C(Entity* self) {
 
         rnd = rand() & 31;
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
-        self->accelerationY = -0x8000;
-        self->accelerationX = PLAYER.accelerationX >> 2;
+        self->velocityY = -0x8000;
+        self->velocityX = PLAYER.velocityX >> 2;
         self->step++;
         break;
 
     case 1:
         self->unk1A -= 4;
         self->unk1C -= 4;
-        self->posY.val += self->accelerationY;
-        self->posX.val += self->accelerationX;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
             self->blendMode = 0x10;
             if (!(params & 1) && (self->animFrameDuration == step)) {
@@ -396,7 +396,7 @@ void func_80161EF8(Entity* self) {
         self->flags =
             FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority + 4;
-        self->accelerationY = (rand() & 0x3FFF) - 0x10000;
+        self->velocityY = (rand() & 0x3FFF) - 0x10000;
         self->step++;
         break;
 
@@ -405,7 +405,7 @@ void func_80161EF8(Entity* self) {
             (self->animFrameDuration == self->step) && (rand() & 1)) {
             func_801606BC(self, 4, 0);
         }
-        self->posY.val += self->accelerationY;
+        self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {
             func_80156C60(self);
         }

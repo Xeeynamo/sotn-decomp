@@ -684,8 +684,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
 
 void MoveEntity(Entity* entity) {
-    entity->posX.val += entity->accelerationX;
-    entity->posY.val += entity->accelerationY;
+    entity->posX.val += entity->velocityX;
+    entity->posY.val += entity->velocityY;
 }
 
 void func_06079BB4(s32* param_1) {

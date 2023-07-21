@@ -246,13 +246,13 @@ void EntitySuccubusPetal(Entity* self) {
             angle = angle;
         }
         temp_s2 = ((rand() * 4) + 0x38000) >> 0xC;
-        self->accelerationX = temp_s2 * rcos(angle);
-        self->accelerationY = temp_s2 * rsin(angle);
+        self->velocityX = temp_s2 * rcos(angle);
+        self->velocityY = temp_s2 * rsin(angle);
         self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x10;
 
     case 1:
-        self->accelerationX = self->accelerationX - (self->accelerationX >> 6);
-        self->accelerationY = self->accelerationY - (self->accelerationY >> 6);
+        self->velocityX = self->velocityX - (self->velocityX >> 6);
+        self->velocityY = self->velocityY - (self->velocityY >> 6);
         MoveEntity();
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;

@@ -4,7 +4,7 @@ extern s32 D_80180660;
 
 void EntityUnkId1C(Entity* self) {
     Entity* newEntity;
-    s32 accelX;
+    s32 velX;
     s8* hitbox;
     s32 i;
 
@@ -28,13 +28,12 @@ void EntityUnkId1C(Entity* self) {
     case 0:
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
-        accelX =
-            self->ext.generic.unkA0 - (self->posX.i.hi + g_Camera.posX.i.hi)
-            << 0x10;
-        if (accelX < 0) {
-            accelX += 0x3F;
+        velX = self->ext.generic.unkA0 - (self->posX.i.hi + g_Camera.posX.i.hi)
+               << 0x10;
+        if (velX < 0) {
+            velX += 0x3F;
         }
-        self->accelerationX = accelX >> 6;
+        self->velocityX = velX >> 6;
         self->ext.generic.unk80.modeS16.unk0 = 0x40;
 
     case 1:
