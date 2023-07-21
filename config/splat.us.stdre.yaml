@@ -39,7 +39,7 @@ segments:
       - [0x14AC, rodata]
       - [0x16C0, rodata]
       - [0x1171C, .rodata, 11A64] #.rodata, 11A64
-      - [0x11728, .rodata, 12104] # EntitySuccubus
+      - [0x11728, .rodata, succubus] # EntitySuccubus
       #- [0x11770, rodata]
       #- [0x117A0, rodata]
       - [0x117F0, .rodata, 13B3C]
@@ -49,7 +49,7 @@ segments:
       - [0x119C4, .rodata, 1C7DC]
       - [0x119DC, rodata]
       - [0x11A64, c, 11A64]
-      - [0x11A64, c, 12104]
+      - [0x11A64, c, succubus]
       - [0x13B3C, c, 13B3C]
       #- [0x13E18, c, 13E18]
       - [0x14214, c, 14214]
