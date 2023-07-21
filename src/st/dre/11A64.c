@@ -201,4 +201,3 @@ void EntityBackgroundClouds(Entity* self) {
     g_GpuBuffers[1].draw.g0 = 24;
     g_GpuBuffers[1].draw.b0 = 24;
 }
-

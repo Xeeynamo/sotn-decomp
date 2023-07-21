@@ -192,7 +192,7 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194F14);
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194FF4);
 
 // dialogue with mother opens as alucard walks right ID 20
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntitySuccubusIntroCutscene);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntitySuccubusCutscene);
 
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - *(s16*)D_8009740C;

@@ -39,8 +39,8 @@ void EntityUnkId1C(Entity* self) {
 
     case 1:
         MoveEntity();
-        newEntity = self->ext.generic.unk9C;
-        self->animCurFrame = newEntity->animCurFrame;
+        newEntity = self->ext.generic.unk9C; // Get ptr from the real Succubus
+        self->animCurFrame = newEntity->animCurFrame; // Sync animFrames from real Succubus
         self->facing = newEntity->facing;
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             self->hitboxState = 3;
