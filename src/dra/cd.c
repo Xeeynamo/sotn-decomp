@@ -63,16 +63,9 @@ typedef struct {
     s16 D_80137F94;
 } CdThing;
 
-CdCallbacks g_CdCallback;
+extern CdCallbacks g_CdCallback;
 extern CdThing g_Cd;
 extern CdlLOC g_CdLoc;
-extern s32 g_Cd_D_80137F68;
-extern s32 g_Cd_D_80137F70;
-extern s32 g_Cd_D_80137F74;
-extern s32 g_Cd_D_80137F78[];
-extern s8* g_Cd_D_80137F88;
-extern s32 g_Cd_overlayBlockCount;
-extern s32 g_Cd_overlayLastBlockSize;
 extern s16 D_80137F94;
 
 void func_801073C0(void) {
@@ -504,10 +497,13 @@ void func_80107460(void);
 void PlaySfx(s32);
 void SsVabClose(short);
 
-#if defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/cd", UpdateCd);
-#else
 void UpdateCd(void) {
+#if defined(VERSION_US)
+    const bool UseEuWarning = true;
+#elif defined(VERSION_HD)
+    const bool UseEuWarning = false;
+#endif
+
     unsigned char result[8];
     unsigned char setModeArg[24];
     u32* var_v1;
@@ -537,7 +533,7 @@ void UpdateCd(void) {
     g_IsUsingCd = g_CdStep;
     if (g_LoadFile == CdFile_StagePrg) {
         cdFile = &D_800ACC34;
-        if (g_StageId == STAGE_EU_WARNING) {
+        if (UseEuWarning && g_StageId == STAGE_EU_WARNING) {
             D_800ACC34.loc = OFF_WARNING_TIM;
             D_800ACC34.size = LEN_WARNING_TIM;
             D_800ACC34.nextCdFileType = CdFile_NoNext;
@@ -646,14 +642,14 @@ void UpdateCd(void) {
         if (cdFileSize < 0) {
             cdFileSize += 0x1FFF;
         }
-        g_Cd_D_80137F68 = cdFileSize >> 13;
+        g_Cd.D_80137F68 = cdFileSize >> 13;
         temp_a0 = cdFile->unkC;
         D_80137F94 = temp_a0;
         var_v0_3 = *pLoadFile;
         if (var_v0_3 < 0) {
             var_v0_3 += 0x7FF;
         }
-        g_Cd_overlayBlockCount = var_v0_3 >> 11;
+        g_Cd.overlayBlockCount = var_v0_3 >> 11;
         temp_v1_2 = (var_v0_4 = *pLoadFile);
         if (temp_v1_2 < 0) {
             var_v0_4 += 0x7FF;
@@ -661,13 +657,13 @@ void UpdateCd(void) {
 
         // how many bytes long will be the last block to read?
         // eg. if the file is 0x820 long, then the value will be 0x20
-        g_Cd_overlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
+        g_Cd.overlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
         D_80137F96 = cdFile->unkF;
-        g_Cd_D_80137F88 = D_800ACD10[cdFile->unkD];
+        g_Cd.D_80137F88 = D_800ACD10[cdFile->unkD];
         D_80137F6C = 0;
-        g_Cd_D_80137F78[0] = 0;
-        g_Cd_D_80137F70 = 0;
-        g_Cd_D_80137F74 = 0;
+        g_Cd.D_80137F70 = 0;
+        g_Cd.D_80137F74 = 0;
+        g_Cd.D_80137F78 = 0;
         if (g_LoadFile & 0x8000) {
             CdIntToPos(cdFile->loc, &cd->loc);
             if (CdControl(CdlSeekL, &cd->loc, 0) != 0) {
@@ -940,4 +936,3 @@ void UpdateCd(void) {
         func_8010838C(CdStep_CdShellOpenErr);
     }
 }
-#endif
