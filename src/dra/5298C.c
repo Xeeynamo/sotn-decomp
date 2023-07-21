@@ -1077,15 +1077,13 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
     DrawMenuStr(c_strRelics, x + 14, y + 36, menu);
     DrawMenuStr(c_strSystem, x + 14, y + 52, menu);
 }
-#elif defined(VERSION_HD) // TODO clean-up
-extern s32 D_801371B4;
-extern s32 D_801371D4;
+#elif defined(VERSION_HD)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
     func_800F66BC(c_strSpells, x + 0xC, y, menu, true);
-    func_800F66BC(c_strFamiliars, x + 6, y + 0x10, menu, D_801371B4 != 0);
+    func_800F66BC(c_strFamiliars, x + 6, y + 0x10, menu, D_801375DC != 0);
     func_800F66BC(c_strEquip, x + 6, y + 0x20, menu, true);
     func_800F66BC(c_strRelics, x, y + 0x30, menu, true);
-    func_800F66BC(c_strSystem, x + 6, y + 0x40, menu, D_801371D4 != 0);
+    func_800F66BC(c_strSystem, x + 6, y + 0x40, menu, D_801375FC != 0);
 }
 #endif
 
