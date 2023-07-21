@@ -992,8 +992,8 @@ bool func_8010FDF8(s32 arg0) {
         return 1;
     }
 
-    if (arg0 & 0x20 && func_800FE3A8(0xD) &&
-        g_Player.padTapped & PAD_CROSS && !(g_Player.unk44 & 1)) {
+    if (arg0 & 0x20 && func_800FE3A8(0xD) && g_Player.padTapped & PAD_CROSS &&
+        !(g_Player.unk44 & 1)) {
         func_8010E940();
         return 1;
     }
