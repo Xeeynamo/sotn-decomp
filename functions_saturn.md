@@ -4,13 +4,13 @@
 | game/f_nonmat/f607C0A0.s     | func_0607C0A0 | 17     | 0        | https://decomp.me/scratch/f6qn4 | 0.507 |
 | game/f_nonmat/f607872C.s     | func_0607872C | 17     | 1        |                                 |       |
 | zero/f_nonmat/f6018F04.s     | func_06018F04 | 17     | 1        | https://decomp.me/scratch/8MBlN | 0.704 |
-| zero/f_nonmat/f6016F9C.s     | func_06016F9C | 19     | 2        |                                 |       |
-| zero/f_nonmat/f600CB04.s     | func_0600CB04 | 20     | 0        |                                 |       |
+| zero/f_nonmat/f6016F9C.s     | func_06016F9C | 19     | 2        | https://decomp.me/scratch/hEOH8 | 0.839 |
+| zero/f_nonmat/f600CB04.s     | func_0600CB04 | 20     | 0        | https://decomp.me/scratch/kFsbY | 0.965 |
 | game/f_nonmat/f6070580.s     | func_06070580 | 20     | 1        | https://decomp.me/scratch/hwV55 | 0.306 |
 | game/f_nonmat/f6074048.s     | func_06074048 | 20     | 1        |                                 |       |
-| zero/f_nonmat/f6009038.s     | func_06009038 | 20     | 1        |                                 |       |
-| zero/f_nonmat/f600A330.s     | func_0600A330 | 20     | 1        |                                 |       |
-| zero/f_nonmat/f600FB9C.s     | func_0600FB9C | 20     | 1        |                                 |       |
+| zero/f_nonmat/f6009038.s     | func_06009038 | 20     | 1        | https://decomp.me/scratch/ESQQX | 0.266 |
+| zero/f_nonmat/f600A330.s     | func_0600A330 | 20     | 1        | https://decomp.me/scratch/bAQnN | 0.5   |
+| zero/f_nonmat/f600FB9C.s     | func_0600FB9C | 20     | 1        | https://decomp.me/scratch/Mou95 | 0.75  |
 | zero/f_nonmat/f6018FA8.s     | func_06018FA8 | 20     | 2        |                                 |       |
 | game/f_nonmat/f607718C.s     | func_0607718C | 21     | 0        |                                 |       |
 | game/f_nonmat/f60771B0.s     | func_060771B0 | 21     | 0        |                                 |       |
