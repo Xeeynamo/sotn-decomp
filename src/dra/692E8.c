@@ -880,26 +880,29 @@ bool func_8010FDF8(s32 branchFlags) {
     }
     YAccel = -((branchFlags & 0x8000) != 0) & 0x2C00;
     if (branchFlags & 0x10000) {
-        YAccel = 0x2C00;
-        if ((PLAYER.accelerationY + 0x1FFF) < 0x7FFFU &&
+        if (-0x2000 < PLAYER.accelerationY && PLAYER.accelerationY < 0x6000 &&
             !(g_Player.unk44 & 0x20) && g_Player.padPressed & PAD_CROSS) {
-            YAccel = 0x8CC;
+            YAccel = 0x08CC;
+        } else {
+            YAccel = 0x2C00;
         }
     }
 
     if (branchFlags & 0x200) {
-        YAccel = 0x2C00;
-        if ((PLAYER.accelerationY + 0x1FFF) < 0x7FFFU) {
+        if (-0x2000 < PLAYER.accelerationY && PLAYER.accelerationY < 0x6000) {
             YAccel = 0x1600;
+        } else {
+            YAccel = 0x2C00;
         }
     }
 
     if (D_80097448 >= 0x29) {
-        tempYAccel = YAccel;
         if (YAccel < 0) {
             tempYAccel = YAccel + 3;
+        } else {
+            tempYAccel = YAccel;
         }
-        YAccel = tempYAccel >> 2;
+        YAccel = (tempYAccel) >> 2;
     }
 
     PLAYER.accelerationY += YAccel;
@@ -918,7 +921,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 if ((g_Player.unk46 & 0x7FFF) == 0xFF) {
                     func_8010E570(0);
                     func_8010FAF4();
-                stupidplace:
+                label:
                     PlaySfx(0x64C, 0x30, 0);
                     return 1;
                 }
@@ -926,7 +929,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 if (PLAYER.accelerationY > 0x6E000) {
                     func_8010E470(1, 0);
                     func_80134714(0x647);
-                    func_8011AAFC(g_CurrentEntity, 0U, 0);
+                    func_8011AAFC(g_CurrentEntity, 0, 0);
                 } else {
                     if (g_Player.unk44 & 0x10) {
                         func_8010E6AC(1);
@@ -941,24 +944,24 @@ bool func_8010FDF8(s32 branchFlags) {
             }
 
             if (PLAYER.accelerationY > 0x6E000) {
-                if ((PLAYER.step_s == 0x70) || (PLAYER.step == 4)) {
+                if ((PLAYER.step_s == 112) || (PLAYER.step == 4)) {
                     func_8010E470(3, PLAYER.accelerationX / 2);
                 } else {
                     func_8010E470(1, 0);
                 }
                 PlaySfx(0x647);
-                func_8011AAFC(g_CurrentEntity, 0U, 0);
+                func_8011AAFC(g_CurrentEntity, 0, 0);
                 return 1;
             }
 
             if (g_Player.unk44 & 0x10) {
                 func_8010E6AC(1);
-                goto stupidplace;
+                goto label;
             }
 
             if (ABS(PLAYER.accelerationX) > 0x20000) {
                 PlaySfx(0x647);
-                func_8011AAFC(g_CurrentEntity, 0U, 0);
+                func_8011AAFC(g_CurrentEntity, 0, 0);
                 func_8010E570(PLAYER.accelerationX);
             } else {
                 PlaySfx(0x64C, 0x30, 0);
@@ -969,7 +972,7 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.accelerationX);
             PlaySfx(0x647);
-            func_8011AAFC(g_CurrentEntity, 0U, 0);
+            func_8011AAFC(g_CurrentEntity, 0, 0);
             return 1;
         }
     }
