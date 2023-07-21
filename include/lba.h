@@ -1,5 +1,11 @@
 
 #define OFF_WARNING_TIM 24545
 #define LEN_WARNING_TIM 327700
+
+#if defined(VERSION_US)
 #define OFF_BIN_FGAME2 25170
 #define OFF_BIN_FGAME 25038
+#elif defined(VERSION_HD)
+#define OFF_BIN_FGAME2 25248
+#define OFF_BIN_FGAME 25116
+#endif

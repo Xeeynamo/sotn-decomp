@@ -75,7 +75,6 @@ segments:
       - [0x3CED4, rodata] # jtbl_800DCED4
       - [0x3CEF0, rodata]
       - [0x40C74, .rodata, cd]
-      - [0x40C90, rodata, cd_UpdateCd]
       - [0x40D64, rodata] # jtbl_800E0D64
       - [0x40D64, rodata] # jtbl_800E0D64
       - [0x40DA4, rodata] # jtbl_800E0DA4
