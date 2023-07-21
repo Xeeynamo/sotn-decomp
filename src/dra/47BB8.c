@@ -1,12 +1,12 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 s32 DecompressData(u8* dst, u8* src);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7BB8);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E7BB8);
 
 void func_800E7D08(void) {
     s32 i;
@@ -21,7 +21,7 @@ void func_800E7D08(void) {
 
 #ifndef NON_MATCHING
 void LoadStageTileset(u8* pTilesetData, s32 y);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
+INCLUDE_ASM("dra/nonmatchings/47BB8", LoadStageTileset);
 #else
 void LoadStageTileset(u8* pTilesetData, s32 y) {
     int new_var;
@@ -57,7 +57,7 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
 // Not matching due to case 2/11
 #ifndef NON_EQUIVALENT
 s32 func_800E7E08(u32);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7E08);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E7E08);
 #else
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
@@ -495,7 +495,7 @@ void func_800E92F4(void) {
     D_8013B3D0 = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E930C);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E930C);
 
 extern Unkstruct_8013B15C D_8013B15C[];
 
@@ -505,7 +505,7 @@ s32 func_800E9508(s32 arg0) {
     return temp;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9530);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
@@ -589,7 +589,7 @@ s32 func_800E9804(s32 arg0) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9880);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E9880);
 
 s32 MemcardFormat(s32 slot, s32 block) {
     char savePath[0x8];
@@ -634,7 +634,7 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
 }
 
 void StoreSaveData(SaveData* save, s32 arg1, s32 memcardIcon);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", StoreSaveData);
+INCLUDE_ASM("dra/nonmatchings/47BB8", StoreSaveData);
 
 s32 LoadSaveData(SaveData* save) {
     s32 i;
@@ -723,7 +723,7 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA5E4);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA5E4);
 #else
 extern s32 D_8003C78C;
 extern s32* D_800A3BB8[];
@@ -790,9 +790,9 @@ void func_800EA5E4(s32 arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA720);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA720);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA7CC);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA7CC);
 
 s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(4);
@@ -913,7 +913,7 @@ u32 DecompressReadNibble(void) {
 
 // reg swap + fake stuff
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DecompressData);
+INCLUDE_ASM("dra/nonmatchings/47BB8", DecompressData);
 #else
 s32 DecompressData(u8* dst, u8* src) {
     u32 buf[8];
@@ -1018,7 +1018,7 @@ s32 DecompressData(u8* dst, u8* src) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB314);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EB314);
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
@@ -1080,7 +1080,7 @@ bool func_800EB720(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EB758);
 
 void ResetEntityArray(void) {
     Entity* entity;
@@ -1098,11 +1098,11 @@ void ResetEntityArray(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderEntities);
+INCLUDE_ASM("dra/nonmatchings/47BB8", RenderEntities);
 
 // The loop at the end is weird, the rest is matching
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECBF8);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800ECBF8);
 #else
 typedef struct {
     s16 unk0, unk2;
@@ -1221,7 +1221,7 @@ void HideAllBackgroundLayers(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderTilemap);
+INCLUDE_ASM("dra/nonmatchings/47BB8", RenderTilemap);
 
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708.flags = 0;
@@ -1476,5 +1476,4 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderPrimitives);
-#endif
+INCLUDE_ASM("dra/nonmatchings/47BB8", RenderPrimitives);
