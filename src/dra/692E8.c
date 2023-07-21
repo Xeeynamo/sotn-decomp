@@ -869,17 +869,17 @@ void func_8010FD88(void) {
     PlaySfx(NA_SE_AL_BACKSLIDE);
 }
 
-bool func_8010FDF8(s32 arg0) {
+bool func_8010FDF8(s32 branchFlags) {
     u8 stackpad[0x28];
     s32 tempYAccel;
     s32 tempTriangle;
     s32 YAccel;
 
-    if (arg0 & 8 && g_Player.unk46 == 0) {
+    if (branchFlags & 8 && g_Player.unk46 == 0) {
         func_8010E27C();
     }
-    YAccel = -((arg0 & 0x8000) != 0) & 0x2C00;
-    if (arg0 & 0x10000) {
+    YAccel = -((branchFlags & 0x8000) != 0) & 0x2C00;
+    if (branchFlags & 0x10000) {
         YAccel = 0x2C00;
         if ((PLAYER.accelerationY + 0x1FFF) < 0x7FFFU &&
             !(g_Player.unk44 & 0x20) && g_Player.padPressed & PAD_CROSS) {
@@ -887,7 +887,7 @@ bool func_8010FDF8(s32 arg0) {
         }
     }
 
-    if (arg0 & 0x200) {
+    if (branchFlags & 0x200) {
         YAccel = 0x2C00;
         if ((PLAYER.accelerationY + 0x1FFF) < 0x7FFFU) {
             YAccel = 0x1600;
@@ -907,13 +907,13 @@ bool func_8010FDF8(s32 arg0) {
     if (PLAYER.accelerationY > 0x70000) {
         PLAYER.accelerationY = 0x70000;
     }
-    if ((arg0 & 0x80) && (g_Player.pl_vram_flag & 2) &&
+    if ((branchFlags & 0x80) && (g_Player.pl_vram_flag & 2) &&
         (PLAYER.accelerationY < -0x10000)) {
         PLAYER.accelerationY = -0x10000;
     }
 
     if (PLAYER.accelerationY >= 0) {
-        if (arg0 & 1 && g_Player.pl_vram_flag & 1) {
+        if (branchFlags & 1 && g_Player.pl_vram_flag & 1) {
             if (g_Player.unk46 != 0) {
                 if ((g_Player.unk46 & 0x7FFF) == 0xFF) {
                     func_8010E570(0);
@@ -966,19 +966,20 @@ bool func_8010FDF8(s32 arg0) {
             }
             return 1;
         }
-        if (arg0 & 0x20000 && g_Player.pl_vram_flag & 1) {
+        if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.accelerationX);
             PlaySfx(0x647);
             func_8011AAFC(g_CurrentEntity, 0U, 0);
             return 1;
         }
     }
-    if (arg0 & 4 && !(g_Player.pl_vram_flag & 1)) {
+    if (branchFlags & 4 && !(g_Player.pl_vram_flag & 1)) {
         func_8010E7AC();
         return 1;
     }
 
-    if (arg0 & 0x1000 && g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) &&
+    if (branchFlags & 0x1000 &&
+        g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) &&
         func_8010EDB8() != 0) {
         return 1;
     }
@@ -987,23 +988,23 @@ bool func_8010FDF8(s32 arg0) {
         return 0;
     }
 
-    if (arg0 & 0x10 && g_Player.padTapped & PAD_CROSS) {
+    if (branchFlags & 0x10 && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
         return 1;
     }
 
-    if (arg0 & 0x20 && func_800FE3A8(0xD) && g_Player.padTapped & PAD_CROSS &&
-        !(g_Player.unk44 & 1)) {
+    if (branchFlags & 0x20 && func_800FE3A8(0xD) &&
+        g_Player.padTapped & PAD_CROSS && !(g_Player.unk44 & 1)) {
         func_8010E940();
         return 1;
     }
 
-    if (arg0 & 0x2000 && g_Player.padPressed & PAD_DOWN) {
+    if (branchFlags & 0x2000 && g_Player.padPressed & PAD_DOWN) {
         func_8010E470(2, 0);
         return 1;
     }
 
-    if (arg0 & 0x40000 && PLAYER.ext.generic.unkAC != 0xDB) {
+    if (branchFlags & 0x40000 && PLAYER.ext.generic.unkAC != 0xDB) {
         if (g_Player.unk46 & 0x7FFF) {
             tempTriangle = g_Player.padPressed & PAD_TRIANGLE;
         } else {
