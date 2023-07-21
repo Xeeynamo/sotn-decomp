@@ -869,8 +869,153 @@ void func_8010FD88(void) {
     PlaySfx(NA_SE_AL_BACKSLIDE);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010FDF8);
-s32 func_8010FDF8(/*?*/ s32);
+bool func_8010FDF8(s32 arg0) {
+    u8 stackpad[0x28];
+    s32 tempYAccel;
+    s32 tempTriangle;
+    s32 YAccel;
+
+    if (arg0 & 8 && g_Player.unk46 == 0) {
+        func_8010E27C();
+    }
+    YAccel = -((arg0 & 0x8000) != 0) & 0x2C00;
+    if (arg0 & 0x10000) {
+        YAccel = 0x2C00;
+        if ((PLAYER.accelerationY + 0x1FFF) < 0x7FFFU &&
+            !(g_Player.unk44 & 0x20) && g_Player.padPressed & PAD_CROSS) {
+            YAccel = 0x8CC;
+        }
+    }
+
+    if (arg0 & 0x200) {
+        YAccel = 0x2C00;
+        if ((PLAYER.accelerationY + 0x1FFF) < 0x7FFFU) {
+            YAccel = 0x1600;
+        }
+    }
+
+    if (D_80097448 >= 0x29) {
+        tempYAccel = YAccel;
+        if (YAccel < 0) {
+            tempYAccel = YAccel + 3;
+        }
+        YAccel = tempYAccel >> 2;
+    }
+
+    PLAYER.accelerationY += YAccel;
+
+    if (PLAYER.accelerationY > 0x70000) {
+        PLAYER.accelerationY = 0x70000;
+    }
+    if ((arg0 & 0x80) && (g_Player.pl_vram_flag & 2) &&
+        (PLAYER.accelerationY < -0x10000)) {
+        PLAYER.accelerationY = -0x10000;
+    }
+
+    if (PLAYER.accelerationY >= 0) {
+        if (arg0 & 1 && g_Player.pl_vram_flag & 1) {
+            if (g_Player.unk46 != 0) {
+                if ((g_Player.unk46 & 0x7FFF) == 0xFF) {
+                    func_8010E570(0);
+                    func_8010FAF4();
+                stupidplace:
+                    PlaySfx(0x64C, 0x30, 0);
+                    return 1;
+                }
+
+                if (PLAYER.accelerationY > 0x6E000) {
+                    func_8010E470(1, 0);
+                    func_80134714(0x647);
+                    func_8011AAFC(g_CurrentEntity, 0U, 0);
+                } else {
+                    if (g_Player.unk44 & 0x10) {
+                        func_8010E6AC(1);
+                    } else {
+                        func_8010E570(0);
+                    }
+                    PlaySfx(0x64C, 0x30, 0);
+                }
+
+                func_8010FAF4();
+                return 1;
+            }
+
+            if (PLAYER.accelerationY > 0x6E000) {
+                if ((PLAYER.step_s == 0x70) || (PLAYER.step == 4)) {
+                    func_8010E470(3, PLAYER.accelerationX / 2);
+                } else {
+                    func_8010E470(1, 0);
+                }
+                PlaySfx(0x647);
+                func_8011AAFC(g_CurrentEntity, 0U, 0);
+                return 1;
+            }
+
+            if (g_Player.unk44 & 0x10) {
+                func_8010E6AC(1);
+                goto stupidplace;
+            }
+
+            if (ABS(PLAYER.accelerationX) > 0x20000) {
+                PlaySfx(0x647);
+                func_8011AAFC(g_CurrentEntity, 0U, 0);
+                func_8010E570(PLAYER.accelerationX);
+            } else {
+                PlaySfx(0x64C, 0x30, 0);
+                func_8010E570(0);
+            }
+            return 1;
+        }
+        if (arg0 & 0x20000 && g_Player.pl_vram_flag & 1) {
+            func_8010E470(3, PLAYER.accelerationX);
+            PlaySfx(0x647);
+            func_8011AAFC(g_CurrentEntity, 0U, 0);
+            return 1;
+        }
+    }
+    if (arg0 & 4 && !(g_Player.pl_vram_flag & 1)) {
+        func_8010E7AC();
+        return 1;
+    }
+
+    if (arg0 & 0x1000 && g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) &&
+        func_8010EDB8() != 0) {
+        return 1;
+    }
+
+    if (g_Player.unk46 & 0x8000) {
+        return 0;
+    }
+
+    if (arg0 & 0x10 && g_Player.padTapped & PAD_CROSS) {
+        func_8010E83C(1);
+        return 1;
+    }
+
+    if (arg0 & 0x20 && func_800FE3A8(0xD) != 0 &&
+        g_Player.padTapped & PAD_CROSS && !(g_Player.unk44 & 1)) {
+        func_8010E940();
+        return 1;
+    }
+
+    if (arg0 & 0x2000 && g_Player.padPressed & PAD_DOWN) {
+        func_8010E470(2, 0);
+        return 1;
+    }
+
+    if (arg0 & 0x40000 && PLAYER.ext.generic.unkAC != 0xDB) {
+        if (g_Player.unk46 & 0x7FFF) {
+            tempTriangle = g_Player.padPressed & PAD_TRIANGLE;
+        } else {
+            tempTriangle = g_Player.padTapped & PAD_TRIANGLE;
+        }
+        if (tempTriangle != 0) {
+            func_8010FD88();
+            return 1;
+        }
+    }
+    return 0;
+}
 
 // DECOMP_ME_WIP func_80110394 https://decomp.me/scratch/Akstc 94.80%
 INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80110394);
