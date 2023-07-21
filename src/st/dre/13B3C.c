@@ -62,7 +62,7 @@ void EntitySuccubusPetal(Entity* self) {
     }
 }
 
-void EntityUnkId1B(Entity* entity) {
+void EntitySuccubusWingOverlay(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_801804E8);
     }
@@ -72,20 +72,20 @@ void EntityUnkId1B(Entity* entity) {
     entity->posY.i.hi = entity[-1].posY.i.hi;
     entity->facing = entity[-1].facing;
 
-    if (entity[-1].animCurFrame == 0x32) {
-        entity->animCurFrame = 0x3E;
+    if (entity[-1].animCurFrame == 50) {
+        entity->animCurFrame = 62;
     }
 
-    if (entity[-1].animCurFrame == 0x33) {
-        entity->animCurFrame = 0x3F;
+    if (entity[-1].animCurFrame == 51) {
+        entity->animCurFrame = 63;
     }
 
     entity->zPriority = PLAYER.zPriority + 4;
 }
 
-extern s32 D_80180660;
+extern s32 D_80180660; // clones counter
 
-void EntityUnkId1C(Entity* self) {
+void EntitySuccubusClone(Entity* self) {
     Entity* newEntity;
     s32 accelX;
     s8* hitbox;
@@ -112,7 +112,7 @@ void EntityUnkId1C(Entity* self) {
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
         accelX =
-            self->ext.generic.unkA0 - (self->posX.i.hi + g_Camera.posX.i.hi)
+            self->ext.succubus.clonePosX - (self->posX.i.hi + g_Camera.posX.i.hi)
             << 0x10;
         if (accelX < 0) {
             accelX += 0x3F;
@@ -122,8 +122,8 @@ void EntityUnkId1C(Entity* self) {
 
     case 1:
         MoveEntity();
-        newEntity = self->ext.generic.unk9C; // Get ptr from the real Succubus
-        self->animCurFrame = newEntity->animCurFrame; // Sync animFrames from real Succubus
+        newEntity = self->ext.succubus.real; 
+        self->animCurFrame = newEntity->animCurFrame;
         self->facing = newEntity->facing;
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             self->hitboxState = 3;
@@ -132,7 +132,7 @@ void EntityUnkId1C(Entity* self) {
         break;
 
     case 2:
-        newEntity = self->ext.generic.unk9C;
+        newEntity = self->ext.succubus.real;
         self->animCurFrame = newEntity->animCurFrame;
         self->facing = newEntity->facing;
         if (newEntity->ext.generic.unk84.U8.unk1 != 0) {
