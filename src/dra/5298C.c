@@ -1,4 +1,5 @@
 #include "dra.h"
+#if defined(VERSION_US)
 
 #define CH(x) ((x)-0x20)
 
@@ -546,19 +547,30 @@ void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x64, 0x40, 0x20, 0, 0xC0, 0x150, 0x9C, 0, 0, 1);
 }
 
-// seems to be equivalent to floor(number * .75)
-// Cloak color components are 5 bit. Examples:
-// 31 -> 23
-// 15 -> 11
-s32 DarkenCloakColor(s32 color) {
-    s32 temp_v0 = color * 3;
-    s32 phi_v0 = temp_v0 < 0 ? temp_v0 + 3 : temp_v0;
-    return phi_v0 >> 2;
-}
+// Equivalent of floor(number * .75)
+// Cloak color components are 5 bit.
+// Examples: 31->23, 15->11
+s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
-// Apply cloak palette
 // Creates light and dark versions of cloak colors in BGR555 format
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", ApplyJosephsCloakPalette);
+void ApplyJosephsCloakPalette(void) {
+    g_JosephsCloak.liningDark =
+        DarkenCloakColor(g_Settings.cloakColors[3]) +
+        ((DarkenCloakColor(g_Settings.cloakColors[4]) << 5) - 0x8000) +
+        (DarkenCloakColor(g_Settings.cloakColors[5]) << 0xA);
+    g_JosephsCloak.liningLight =
+        (g_Settings.cloakColors[3] +
+         ((g_Settings.cloakColors[4] << 5) - 0x8000)) +
+        ((u32)g_Settings.cloakColors[5] << 0xA);
+    g_JosephsCloak.exteriorDark =
+        DarkenCloakColor(g_Settings.cloakColors[0]) +
+        ((DarkenCloakColor(g_Settings.cloakColors[1]) << 5) - 0x8000) +
+        (DarkenCloakColor(g_Settings.cloakColors[2]) << 0xA);
+    g_JosephsCloak.exteriorLight =
+        g_Settings.cloakColors[0] +
+        ((g_Settings.cloakColors[1] << 5) - 0x8000) +
+        ((u32)g_Settings.cloakColors[2] << 0xA);
+}
 
 void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
@@ -747,7 +759,7 @@ void DrawSettingsReverseCloak(MenuContext* context) {
     DrawMenuStr(c_strNormal, 176, 48, context);
     DrawMenuStr(c_strReversal, 176, 64, context);
     func_800F5E68(
-        context, g_Settings.isCloakLingingReversed, 174, 46, 64, 12, 4, 1);
+        context, g_Settings.isCloakLiningReversed, 174, 46, 64, 12, 4, 1);
 }
 
 void DrawSettingsSound(MenuContext* context) {
@@ -1039,7 +1051,7 @@ void func_800F8858(MenuContext* context) {
     const char** pStrEquipTypes = &c_strSSword;
     s32 y = 8;
 
-    for (; i < EQUIP_TYPE_COUNT; i++) {
+    for (; i < ITEM_END; i++) {
         DrawMenuStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
                     context->cursorX + 4, context->cursorY + y, context);
         y += 16;
@@ -1326,9 +1338,37 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA3C4);
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
 
-// DECOMP_ME_WIP func_800FA7E8 https://decomp.me/scratch/JL0hI
-// has some logic related to the weapon struct
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA7E8);
+// If you use both attack buttons at once, see if something special happens.
+// Applies to Shield Rod + Shield, or dual Heaven Swords
+void CheckWeaponCombo(void) {
+    s32 weapon0;
+    s32 weapon1;
+    s32 combo1;
+    s32 combo2;
+    s32 comboBits;
+    s32 i;
+    s32 oddComboCheck;
+
+    weapon0 = g_Status.equipment[0];
+    weapon1 = g_Status.equipment[1];
+
+    combo1 = D_800A4B04[weapon0].comboSub & D_800A4B04[weapon1].comboMain;
+    oddComboCheck = 0x80000000;
+    oddComboCheck &= -(combo1 == 0);
+
+    combo2 = D_800A4B04[weapon0].comboMain & D_800A4B04[weapon1].comboSub;
+    comboBits = combo1 | combo2;
+
+    if (comboBits != 0) {
+        for (i = 0xAA; i < 0xD9; i++) {
+            if (comboBits & D_800A4B04[i].comboSub) {
+                D_8013AEE4 = oddComboCheck + i;
+                return;
+            }
+        }
+    }
+    D_8013AEE4 = 0;
+}
 
 bool LoadWeaponPrg(s32 equipIndex) {
     s32 equipId;
@@ -1349,8 +1389,8 @@ bool LoadWeaponPrg(s32 equipIndex) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_Weapon0 + equipIndex;
     } else {
-        if (func_800E81FC(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
-            func_800E81FC(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
+        if (LoadFileSim(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
+            LoadFileSim(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
             return 0;
         }
     }
@@ -1642,3 +1682,4 @@ s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 u8 GetEquipItemCategory(s32 equipId) {
     return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
 }
+#endif

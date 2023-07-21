@@ -74,6 +74,11 @@ struct Unk0605d6c0 {
     u32 src;
     u32 dest;
     u32 cnt;
+    u8 unk[0x20];
+    s32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3c;
 };
 
 struct Unk0605CD90 DAT_0605CD90[];
@@ -81,5 +86,64 @@ struct Unk0605CD90 DAT_0605CD90[];
 #define DMA_SRC_ADDR 0x002E0000
 
 extern s32* DAT_0605c120[];
+
+#define VDP2_25E58000 0x25E58000
+#define VDP2_25F00600 0x25F00600
+
+extern s16 DAT_06062224[];
+extern s32 DAT_06039214;
+void ClearDebugPrintTilemap();
+
+#define SH2_REG_M_FRT_IC 0x21000000
+
+extern s32 DAT_060645d0;
+extern s32 DAT_060cf040;
+
+extern s32* DAT_06064674;
+extern s32* DAT_060a5000;
+extern s32* DAT_06064580;
+extern s32* DAT_060645e0;
+
+extern s32* DAT_06064644;
+extern s32* DAT_060dc000;
+
+extern s32* DAT_06064690;
+extern s32* DAT_06066000;
+
+void func_06006FA8(void);
+int func_06018D88(void);
+void func_06033024();
+
+extern u8 DAT_060644c1;
+extern u8 DAT_060644dc;
+
+extern s32 DAT_060476a4;
+extern s32 DAT_060476a0;
+extern s32 DAT_06064354;
+extern s32 DAT_060644AC;
+
+struct Unk0600E050 {
+    u8 pad[0x4];
+    s16 unk4;
+    s16 pad6;
+    s16 unk8;
+    u8 pada[2];
+    s16 unkc;
+    s16 unke;
+};
+
+void func_0601B600();
+extern s32 DAT_06038a44;
+
+s32 func_06017FA4(s32 param_1, s32 param_2, s32 param_3);
+
+void func_060082E8(void);
+void func_0600841C(void);
+
+void func_0600AD98(void);
+void func_0600B254(void);
+
+extern s32 DAT_06064214;
+extern s8 DAT_060644C0;
 
 #endif

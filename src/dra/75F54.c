@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#if defined(VERSION_US)
 
 void func_80115F54(void) {
     Unkstruct_800ECBF8_1* temp_s0;
@@ -2440,7 +2441,7 @@ void func_80132C2C(s16 arg0) {
         }
 
         if (isFound) {
-            D_800BD1C0++;
+            g_DebugEnabled++;
             D_80139868[D_801396F4] = 0xE;
             D_801396F4++;
             if (D_801396F4 == 0x100) {
@@ -2874,3 +2875,4 @@ void func_80134E64(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134F50);
 void func_80134F50();
+#endif

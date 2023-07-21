@@ -9,6 +9,20 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 typedef enum {
+    DEBUG_NORMAL,
+    DEBUG_TEXTURE_VIEWER,
+    DEBUG_TILESET_VIEWER,
+    DEBUG_PALETTE_VIEWER,
+    DEBUG_END,
+} DebugMode;
+
+typedef enum {
+    DEBUG_COLOR_CHANNEL_RED,
+    DEBUG_COLOR_CHANNEL_GREEN,
+    DEBUG_COLOR_CHANNEL_BLUE,
+} DebugColorChannel;
+
+typedef enum {
     SimFileType_System,
     SimFileType_StagePrg,
     SimFileType_Vh,
@@ -239,12 +253,22 @@ typedef struct {
     u8 soundFrame;
 } animSoundEvent;
 
+// All the Joseph's Cloak color fields are in RGB555 format
+typedef struct {
+    u16 liningDark;
+    u16 liningLight;
+    u16 exteriorDark;
+    u16 exteriorLight;
+} JosephsCloak;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
 extern s32 D_800A015C;
 extern s16 D_800A0160[];
 extern u8 D_800A0170[];
+extern u8 D_800A01B0[];
+extern RECT D_800A01C0[];
 extern s32 D_800A0248;
 extern SimFile D_800A024C[];
 extern SimFile D_800A036C[];
@@ -320,6 +344,7 @@ extern const char* D_800A83AC[];
 extern const char* c_strSSword;
 extern s32 D_800A3194[];
 extern Unkstruct_801092E8 D_800A37D8;
+extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern SubweaponDef g_Subweapons[];
@@ -370,7 +395,7 @@ extern const char aPbav_1[];
 extern const char aPbav_2[];
 extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
-extern s32 D_800BD1C0;
+extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 D_800BD1C8[6];
 extern const char D_800DB524[];
@@ -396,29 +421,31 @@ extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
 extern char* aAtariNuki;
-extern s32 D_801362AC;
-extern s32 D_801362B0;
-extern s32 D_801362B4;
+extern s32 g_DebugFreeze;
+extern s32 g_DebugHitboxViewMode;
+extern u32 D_801362B4;
 extern s32 D_801362B8;
 extern s32 D_801362BC;
 extern s32 g_DebugPalIdx;
-extern u32 D_801362C4;
-extern s32 D_801362C8;
+extern DebugColorChannel g_DebugColorChannel;
+extern u32 D_801362C8;
 extern u32* g_CurrentOT;
 extern s32 D_801362D0[];
 extern s32 D_801362D4;
-extern s32 D_801362D8;
+extern s32 g_DebugIsRecordingVideo;
 extern GpuUsage g_GpuMaxUsage;
 extern s32 g_softResetTimer;
-extern s32 D_80136300;
+extern s32 g_DebugWaitInfoTimer;
+extern s32 g_DebugRecordVideoFid;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
+extern s32 D_80136410;
 extern s32 D_80136414[];
 extern SimFile* D_8013644C;
 extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
-extern u8 D_80137460[]; // button timers
+extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 extern s32 D_80137470;
 extern s32 D_80137474;
 extern u16 D_80137478[];
@@ -526,7 +553,7 @@ extern s32 D_80138F7C;
 extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
-extern s32 D_80138FB0;
+extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern Unkstruct_80138FC0 D_80138FC0[0x10];
@@ -536,7 +563,7 @@ extern s32 D_80139008;
 extern s16 D_80139010;
 extern u8 D_80139014;
 extern s8 D_80139018[];
-extern s32 g_DebugCurPal;
+extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_80139058[];
@@ -591,6 +618,7 @@ extern s16 D_8013AE94;
 extern s32 D_8013AE9C;
 extern s32 D_8013AED0;
 extern s16 D_8013AED4[];
+extern u32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
@@ -657,8 +685,8 @@ void func_800E34A4(s8 arg0);
 void func_800E34DC(s32 arg0);
 void SetGameState(GameState gameState);
 void func_800E4970(void);
-s32 func_800E81FC(s32 id, SimFileType type);
-void func_800E8D24(void);
+s32 LoadFileSim(s32 id, SimFileType type);
+void ResetPadsRepeat(void);
 void func_800E8DF0(void);
 s32 func_800E912C(void);
 s32 func_800E9208(void);
@@ -714,7 +742,7 @@ void DrawSettingsSound(MenuContext* context);
 void DrawPauseMenu(s32 arg0);
 void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
-void func_800FA7E8(void);
+void CheckWeaponCombo(void);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 void func_800FAF44(s32);

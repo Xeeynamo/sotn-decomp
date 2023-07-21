@@ -59,9 +59,12 @@ typedef struct Entity {
     /* 0x30 */ u16 params;
     /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ u32 flags;
-    /* 0x38 */ s16 ghidra_pad_38;
+    /* 0x38 */ u16 enemyId;
     /* 0x3A */ u16 hitboxState; // hitbox state
-    /* 0x3C */ char pad_3C[0x8];
+    /* 0x3C */ char pad_3C[2];
+    /* 0x3E */ s16 attack;
+    /* 0x40 */ s16 attackElement;
+    /* 0x42 */ s16 pad_42;
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
@@ -129,7 +132,9 @@ typedef struct {
     s32 hearts;
     s32 heartsMax;
     s32 mp;
-    char pad[35];
+    s32 mpMax;
+    s32 statsBase[4];
+    char pad[15];
     s32 statsTotal[4];
     char pad3[0x14];
     u32 subWeapon;

@@ -239,7 +239,7 @@ void DemoSaveFile(void) {
     }
 
     __builtin_memcpy(buf, "  OK", sizeof("  OK"));
-    func_800E2438(buf);
+    DebugInputWait(buf);
 }
 
 void DemoInit(s32 arg0) {

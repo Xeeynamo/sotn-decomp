@@ -139,7 +139,6 @@ typedef struct Primitive {
 #define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
-#define EQUIP_TYPE_COUNT 11
 
 #define RIC_PRG_PTR 0x8013C000
 #define FAMILIAR_PTR 0x80170000
@@ -215,6 +214,7 @@ typedef struct Primitive {
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
 #define FLAG_UNK_40000 0x40000
+#define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
 #define FLAG_UNK_00200000 0x00200000
 
@@ -261,6 +261,65 @@ typedef enum {
     Game_Ending,
     Game_99 = 99,
 } GameState;
+
+typedef enum {
+    // Clean-up and reset all the gameplay related memory
+    Play_Reset = 0,
+    // Re-initialize stage-specific resources
+    Play_Init,
+    // Set random seed if playing a demo
+    Play_PrepareDemo,
+    // Normal gameplay
+    Play_Default,
+    // Releases all the resources from the unloading stage
+    Play_PrepareNextStage,
+    // Load graphics for those stages without a CD room transition
+    Play_LoadStageChr,
+    // Wait until the previous operation is complete
+    Play_WaitStageChr,
+    // Load the sound effects specific for the selected stage
+    Play_LoadStageSfx,
+    // Wait until the previous operation is complete
+    Play_WaitStageSfx,
+    // Load the overlay program from the disk
+    Play_LoadStagePrg,
+    // Wait until the previous operation is complete
+    Play_WaitStagePrg,
+
+    // Deallocate stage resources
+    Gameover_Init = 0,
+    // Make screenshot and allocate 3D model for the melting foreground
+    Gameover_AllocResources,
+    // Wait for something...?
+    Gameover_2,
+    // Start loading game over graphics from the disk
+    Gameover_3,
+    // When the file is loaded, move it into the VRAM
+    Gameover_4,
+    // foreground melting
+    Gameover_5,
+    // Game over text starts brightening
+    Gameover_6,
+    // Start using Game Over textures that looks brighter
+    Gameover_7,
+    // Revert back to the slightly less bright Game Over text
+    Gameover_8,
+    // Game over screen fade out
+    Gameover_9,
+    // unknown
+    Gameover_10,
+    // Return to the title screen (if you are not in ST0)
+    Gameover_11,
+
+    Gameover_Alt = 99,
+    Gameover_Init_Alt,
+    Gameover_AllocResources_Alt,
+    Gameover_2_Alt,
+    Gameover_3_Alt,
+    Gameover_11_Alt = 111,
+
+    NowLoading_2 = 2,
+} GameSteps;
 
 typedef enum {
     Demo_None,
@@ -493,6 +552,21 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
+typedef enum {
+    ITEM_S_SWORD,
+    ITEM_SWORD,
+    ITEM_THROW_1,
+    ITEM_FIST,
+    ITEM_CLUB,
+    ITEM_TWOHAND,
+    ITEM_FOOD,
+    ITEM_BOMB,
+    ITEM_THROW_2,
+    ITEM_SHIELD,
+    ITEM_MEDICINE,
+    ITEM_END,
+} ItemCategory;
+
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 
 typedef struct {
@@ -583,11 +657,10 @@ typedef struct {
     /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
     /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
     /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[32];
-    /* 0x0B0, 0x8003CAA8 */ s32 cloakExteriorColors[3];
-    /* 0x0BC, 0x8003CAB4 */ s32 cloakLiningColors[3];
+    /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];
     /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
-    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[EQUIP_TYPE_COUNT];
-    /* 0x100, 0x8003CAF8 */ s32 isCloakLingingReversed;
+    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[ITEM_END];
+    /* 0x100, 0x8003CAF8 */ s32 isCloakLiningReversed;
     /* 0x104, 0x8003CAFC */ s32 isSoundMono;
     /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
     /* 0x10C, 0x8003CB04 */ s32 D_8003CB04;
@@ -755,20 +828,6 @@ typedef struct {
     /* 0x12 */ u16 sp22; // entity->entityRoomIndex
 } SubweaponDef;          /* size=0x14 */
 
-typedef enum {
-    ITEM_S_SWORD,
-    ITEM_SWORD,
-    ITEM_THROW_1,
-    ITEM_FIST,
-    ITEM_CLUB,
-    ITEM_TWOHAND,
-    ITEM_FOOD,
-    ITEM_BOMB,
-    ITEM_THROW_2,
-    ITEM_SHIELD,
-    ITEM_MEDICINE
-} ItemCategory;
-
 // Defines the equipment that can be set on left and right hand
 // This includes weapons, throw weapons, consumable and restoration items.
 // D_800A4B04 it is assumed the equip data starts from here
@@ -793,8 +852,8 @@ typedef struct {
     /* 0x19 */ u8 isConsumable;
     /* 0x1A */ u8 enemyInvincibilityFrames;
     /* 0x1B */ u8 unk1B;
-    /* 0x1C */ u32 unk1C;
-    /* 0x20 */ u32 unk20;
+    /* 0x1C */ u32 comboSub;
+    /* 0x20 */ u32 comboMain;
     /* 0x24 */ u16 mpUsage;
     /* 0x26 */ u16 stunFrames;
     /* 0x28 */ u16 hitType;
@@ -893,7 +952,7 @@ typedef struct {
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
-    /* 8003C89C */ void (*func_800E2438)(const char* str);
+    /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
     /* 8003C8A4 */ void* unused130;
     /* 8003C8A8 */ void* unused134;
@@ -1104,7 +1163,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
 // column will disappear.
-extern u8 D_8003BDEC[];
+extern u8 D_8003BDEC[0x300];
 extern u8 D_8003BE23;
 extern u8 D_8003BEEC[];
 extern u8 D_8003BF9C[];
@@ -1120,6 +1179,7 @@ extern s16 D_8003C712;
 extern s32 D_8003C728;
 extern s32 D_8003C730;
 extern GameState g_GameState;
+extern s32 D_8003C738;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern u32 g_roomCount;
@@ -1247,7 +1307,7 @@ extern s32 D_8009744C;
 extern s32 D_80097450;
 extern u16 D_8009748A[];
 extern u16 D_8009748E[];
-extern Pad g_pads[];
+extern Pad g_pads[PAD_COUNT];
 extern u32 g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
@@ -1288,7 +1348,7 @@ extern u8 D_80097F49;
 extern u8 D_80097F4A;
 extern s32 D_800987B4;
 extern s32 D_800987C8;
-extern s32 D_80098850;
+extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
 void PadInit(s32 arg0);

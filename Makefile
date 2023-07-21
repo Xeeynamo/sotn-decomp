@@ -15,10 +15,12 @@ LD              := $(CROSS)ld
 CPP             := $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
-CC_FLAGS        += -mcpu=3000 -quiet -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fgnu-linker -mgas -msoft-float -gcoff
-CPP_FLAGS       += -Iinclude -undef -Wall -lang-c -fno-builtin
+PSXCC_FLAGS		:= -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
+CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
+CPP_FLAGS       += -Iinclude -undef -Wall -fno-builtin
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
 CPP_FLAGS       += -D_internal_version_$(VERSION)
+LD_FLAGS		:= -nostdlib
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
@@ -79,20 +81,19 @@ define list_o_files
 endef
 
 define link
-	$(LD) -o $(2) \
+	$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(1).ld \
 		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt \
-		--no-check-sections \
-		-nostdlib \
-		-s
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
 all: build check
 saturn: build_saturn_native check_saturn_native
-build: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build: build_$(VERSION)
+build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_hd: dra
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/
@@ -107,9 +108,9 @@ format:
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
-	mkdir -p expected
-	rm -rf expected/build
-	cp -r build expected/
+	mkdir -p expected/build
+	rm -rf expected/build/$(VERSION)
+	cp -r build/$(VERSION) expected/build/
 
 main: main_dirs $(MAIN_TARGET).exe
 main_dirs:
@@ -117,14 +118,11 @@ main_dirs:
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
 	$(OBJCOPY) -O binary $< $@
 $(MAIN_TARGET).elf: $(MAIN_O_FILES)
-	$(LD) -o $@ \
+	$(LD) $(LD_FLAGS) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(MAIN).ld \
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt \
-	--no-check-sections \
-	-nostdlib \
-	-s
+	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
 
 dra: dra_dirs $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
@@ -201,15 +199,12 @@ $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad)
-	$(LD) -o $(BUILD_DIR)/stmad_fix.elf \
+	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
-		--no-check-sections \
-		-nostdlib \
-		-s
+		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
 tt_%_dirs:
@@ -222,19 +217,18 @@ st%_dirs:
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
-	$(LD) -o $@ \
+	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
 		-T stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt \
-		--no-check-sections \
-		-nostdlib \
-		-s
+		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
-extract: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract: extract_$(VERSION)
+extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract_hd: extract_dra
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
 extract_dra: $(SPLAT_APP)
@@ -410,7 +404,8 @@ $(SATURN_SPLITTER_APP):
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) $< | $(CC) $(CC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+#	$(CROSS)gcc -c -nostartfiles -nodefaultlibs -ggdb -gdwarf-4 $(CPP_FLAGS) $(CC_FLAGS) $(LD_FLAGS) $< -o $@
+	$(CPP) $(CPP_FLAGS) -lang-c $< | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS)  | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 build_saturn_dosemu_docker_container:
 	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile .
@@ -445,16 +440,10 @@ build_saturn_copy_files:
 	rm -rf $(SATURN_BUILD_DIR)
 	mkdir -p $(SATURN_BUILD_DIR)
 	cp -r ./tools/saturn_toolchain/GCCSH/* $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/inc_asm.h $(SATURN_BUILD_DIR)
 	cp  ./src/saturn/macro.inc $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/game.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/t_bat.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/zero.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/zero.h $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/stage_02.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/stage_02.h $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/warp.c $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/sattypes.h $(SATURN_BUILD_DIR)
+	cp -r ./src/saturn/*.c $(SATURN_BUILD_DIR)
+	cp -r ./src/saturn/*.h $(SATURN_BUILD_DIR)
+	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game

@@ -68,3 +68,63 @@ jobs:
         run: make build_saturn_native
       - name: Check saturn
         run: make check_saturn_native
+
+  function-finder-saturn:
+    if: github.repository == 'Xeeynamo/sotn-decomp' && github.ref == 'refs/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          submodules: false
+      - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: Clone dependencies
+        uses: actions/checkout@v3
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: saturn
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+          path: 'disks/dependencies'
+      - name: Setting up dependencies
+        working-directory: disks
+        run: |
+          cat dependencies/* > dependencies.tar.gz
+          tar -xf dependencies.tar.gz
+          mv *.cue sotn.saturn.cue
+          mv *.bin sotn.saturn.bin
+      - name: Install bchunk 7zip
+        run: |
+          sudo apt-get install p7zip-full bchunk binutils-sh-elf
+      - name: Prep
+        run: make extract_disk_saturn
+      - name: Extract asm
+        run: make extract_saturn
+
+      - name: Clone asset repository
+        uses: actions/checkout@v3
+        with:
+          ref: 'gh-functions-saturn'
+          path: 'gh-functions-saturn'
+      - name: Set-up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install secondary pre-requirements
+        run: pip3 install requests
+      - name: Generate duplicates and function report
+        run: python3 tools/function_finder_saturn.py > gh-functions-saturn/functions_saturn.md
+      - name: Commit all reports
+        run: |
+            git config --global user.name 'GitHub Action' 
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git commit -m 'Update reports' || true
+            git push
+        working-directory: gh-functions-saturn
