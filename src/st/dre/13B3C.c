@@ -209,3 +209,157 @@ void EntityUnkId1C(Entity* self) {
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
+
+
+// Pink ball projectile shot by succubus duplicates ID 0x1D
+void EntityPinkBallProjectile(Entity* self) {
+    Entity* entity;
+    s16 temp_s0;
+    s16 temp_v0;
+
+    if (D_80180664 & 2) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180500);
+        self->blendMode = 0x30;
+        self->unk19 = 3;
+        self->unk1C = 0;
+        self->unk1A = 0;
+
+    case 1:
+        self->unk1A = self->unk1C += 4;
+        if (self->unk1A > 256) {
+            self->unk19 = 0;
+        }
+        AnimateEntity(D_80180794, self);
+
+        entity = self->ext.generic.unk9C;
+        if (entity->ext.generic.unk84.U8.unk1 != 0) {
+            self->unk19 = 0;
+            self->step++;
+        }
+        if (entity->flags & 0x100) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 2:
+        temp_s0 = (self->params << 0xA) + 0x200;
+        self->accelerationX = rcos(temp_s0) * 0x38;
+        self->accelerationY = rsin(temp_s0) * 0x38;
+        self->ext.generic.unkA2 = temp_s0;
+        self->ext.generic.unk80.modeS16.unk0 = 128;
+        self->step++;
+
+    case 3:
+        AnimateEntity(D_80180794, self);
+        MoveEntity();
+        temp_v0 = func_8019AF08(self, g_Entities);
+        temp_s0 = func_8019AF88(0x10, self->ext.generic.unkA2, temp_v0);
+        self->accelerationX = rcos(temp_s0) * 0x38;
+        self->accelerationY = rsin(temp_s0) * 0x38;
+        self->ext.generic.unkA2 = temp_s0;
+
+        if (self->hitFlags & 0x80) {
+            self->step = 4;
+        }
+
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+            self->step = 4;
+        }
+        break;
+
+    case 4:
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+        AnimateEntity(D_80180794, self);
+        MoveEntity();
+        break;
+    }
+}
+
+// Extending wing spike from succubus ID 0x1E
+void EntitySuccubusWingSpike(Entity* self) {
+    s32 temp_s2;
+    s16 var_s0;
+
+    if (D_80180664 & 2) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_801804E8);
+        self->unk19 = 4;
+        self->animCurFrame = 0;
+        var_s0 = D_801807F0[self->params];
+        self->rotAngle = var_s0;
+        self->unk19 |= 1;
+        self->unk1A = 0x100;
+        CreateEntityFromEntity(0x1F, self, &self[1]);
+        self[1].facing = self->facing;
+        self[1].params = self->params;
+        self[1].rotAngle = self->rotAngle;
+
+    case 1:
+        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->animCurFrame = 85;
+        self->unk1A += 0x40;
+        if (self->unk1A > 0x600) {
+            self->unk1A = 0x600;
+        }
+
+        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 == 0) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        self->unk1A -= 0x40;
+        if (self->unk1A < 0x100) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+
+    var_s0 = self->rotAngle;
+    temp_s2 = (self->unk1A * 0xB) >> 6;
+    if (self->facing == 0) {
+        var_s0 = 0x800 - var_s0;
+    }
+
+    self[1].posX.i.hi = self->posX.i.hi;
+    self[1].posY.i.hi = self->posY.i.hi;
+    self[1].posX.i.hi += temp_s2 * rcos(var_s0) >> 0xC;
+    self[1].posY.i.hi -= temp_s2 * rsin(var_s0) >> 0xC;
+}
+
+void EntityUnkId1F(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_8018050C);
+        entity->animCurFrame = 0;
+        entity->unk19 = 4;
+        entity->hitboxState = 0;
+    case 1:
+        if (entity[-1].animCurFrame != 0) {
+            entity->hitboxState = 1;
+            entity->animCurFrame = 0x56;
+        }
+        if (entity->hitFlags != 0) {
+            D_80180668 = 1;
+        }
+        if (entity[-1].entityId != 0x1E) {
+            DestroyEntity(entity);
+        }
+    }
+}
