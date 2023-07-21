@@ -456,21 +456,21 @@ build_saturn_copy_files:
 	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
 build_saturn_dosemu_native:
-	cd build/saturn && FILENAME=game sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=t_bat sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=zero sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=stage_02 sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=warp sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/gfs sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/spr sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/dma sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/scl sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/csh sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/per sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/cdc sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/mth sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/bup sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=lib/sys sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=game sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=t_bat sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=zero sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=stage_02 sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=warp sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/gfs sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/spr sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/dma sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/scl sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/csh sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/per sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/cdc sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/mth sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/bup sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/sys sh ./compile_dosemu.sh
 
 build_saturn_dosemu_docker:
 	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
