@@ -89,9 +89,9 @@ void EntityBoneScimitar(Entity* self) {
         self->ext.generic.unk80.modeS8.unk0 = self->facing;
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->accelerationX = -0x8000;
+            self->velocityX = -0x8000;
         } else {
-            self->accelerationX = 0x8000;
+            self->velocityX = 0x8000;
         }
 
         if (GetDistanceToPlayerX() < 76) {
@@ -107,9 +107,9 @@ void EntityBoneScimitar(Entity* self) {
         self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->accelerationX = -0x8000;
+            self->velocityX = -0x8000;
         } else {
-            self->accelerationX = 0x8000;
+            self->velocityX = 0x8000;
         }
 
         if (GetDistanceToPlayerX() > 92) {
@@ -161,12 +161,12 @@ void EntityBoneScimitar(Entity* self) {
                     facing = facing_;
                 }
                 if (facing == 0) {
-                    self->accelerationX = -0x20000;
+                    self->velocityX = -0x20000;
                 } else {
-                    self->accelerationX = 0x20000;
+                    self->velocityX = 0x20000;
                 }
 
-                self->accelerationY = -0x30000;
+                self->velocityY = -0x30000;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -190,7 +190,7 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_SPECIAL:
         self->facing = (GetSideToPlayer() & 1) ^ 1;
         func_801BCB5C(&D_80182540);
-        if (((((u32)self->accelerationX) >> 0x1F) ^ self->facing) != 0) {
+        if (((((u32)self->velocityX) >> 0x1F) ^ self->facing) != 0) {
             AnimateEntity(D_80182464, self);
         } else {
             AnimateEntity(D_80182474, self);
@@ -198,7 +198,7 @@ void EntityBoneScimitar(Entity* self) {
 
         switch (self->step_s) {
         case BONE_SCIMITAR_WALK_RIGHT:
-            self->accelerationX = 0x8000;
+            self->velocityX = 0x8000;
             if (((s16)((g_Camera.posX.i.hi + self->posX.i.hi) -
                        ((u16)self->ext.generic.unk9C))) > 32) {
                 self->step_s++;
@@ -206,7 +206,7 @@ void EntityBoneScimitar(Entity* self) {
             break;
 
         case BONE_SCIMITAR_WALK_LEFT:
-            self->accelerationX = -0x8000;
+            self->velocityX = -0x8000;
             if (((s16)((g_Camera.posX.i.hi + ((u16)self->posX.i.hi)) -
                        ((u16)self->ext.generic.unk9C))) < -32) {
                 self->step_s--;
@@ -242,8 +242,8 @@ void EntityBoneScimitar(Entity* self) {
                 newEntity->posX.i.hi += D_80182508[i];
             }
             newEntity->posY.i.hi += D_80182518[i];
-            newEntity->accelerationX = D_801824D0[i];
-            newEntity->accelerationY = D_801824EC[i];
+            newEntity->velocityX = D_801824D0[i];
+            newEntity->velocityY = D_801824EC[i];
             newEntity->params |= self->params << 8;
         }
 
@@ -285,7 +285,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     entity->animCurFrame = *(u8*)&entity->params + 16;
 
     if (entity->facing != 0) {
-        entity->accelerationX = -entity->accelerationX;
+        entity->velocityX = -entity->velocityX;
     }
 
     if (entity->params & 0xF00) {

@@ -31,7 +31,7 @@ void func_801026BC(s32);
 void DrawEntitiesHitbox(s32 blendMode);
 void UpdateCd(void);
 s32 func_8010E27C(void);
-void AccelerateX(s32);
+void SetSpeedX(s32);
 void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
 void SoundInit(void);
 void func_801353A0(void);

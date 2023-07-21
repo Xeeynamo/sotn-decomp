@@ -128,8 +128,8 @@ void EntityEnemyBlood(Entity* self) {
                         0xB40 - i * 64, ((Random() & 0xF) * 0x10) + 0x180);
                 }
 
-                *(s32*)&prim->u1 = self->accelerationX;
-                *(s32*)&prim->r2 = self->accelerationY;
+                *(s32*)&prim->u1 = self->velocityX;
+                *(s32*)&prim->r2 = self->velocityY;
 
                 var_a0_2 = *(s32*)&prim->u1;
                 if (var_a0_2 <= -1) {
@@ -152,13 +152,13 @@ void EntityEnemyBlood(Entity* self) {
             }
 
             if (params != 0) {
-                self->accelerationX = 0x14000;
+                self->velocityX = 0x14000;
                 self->ext.generic.unk80.modeS32 = -0x200;
             } else {
-                self->accelerationX = -0x14000;
+                self->velocityX = -0x14000;
                 self->ext.generic.unk80.modeS32 = 0x200;
             }
-            self->accelerationY = 0;
+            self->velocityY = 0;
             break;
         }
         DestroyEntity(self);
@@ -173,7 +173,7 @@ void EntityEnemyBlood(Entity* self) {
         if (self->hitboxState != 0) {
             if (g_Player.unk0C & 0x02000000) {
                 posX = self->posX.i.hi;
-                self->accelerationX += self->ext.generic.unk80.modeS32;
+                self->velocityX += self->ext.generic.unk80.modeS32;
 
                 MoveEntity(self); // argument pass necessary to match
 

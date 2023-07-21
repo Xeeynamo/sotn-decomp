@@ -108,9 +108,9 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_WALK_TOWARDS_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
-                self->accelerationX = -0x3000;
+                self->velocityX = -0x3000;
             } else {
-                self->accelerationX = 0x3000;
+                self->velocityX = 0x3000;
             }
             self->step_s++;
         }
@@ -122,9 +122,9 @@ void EntityAxeKnight(Entity* self) {
 
         if (animStatus == 0) {
             if (self->facing == 0) {
-                self->accelerationX = -0x3000;
+                self->velocityX = -0x3000;
             } else {
-                self->accelerationX = 0x3000;
+                self->velocityX = 0x3000;
             }
             if (GetDistanceToPlayerX() < 96) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
@@ -134,19 +134,19 @@ void EntityAxeKnight(Entity* self) {
 
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
             if (self->facing == 0) {
-                self->accelerationX -= 0x300;
+                self->velocityX -= 0x300;
             } else {
-                self->accelerationX += 0x300;
+                self->velocityX += 0x300;
             }
         } else if (self->facing != 0) {
-            self->accelerationX -= 0x300;
+            self->velocityX -= 0x300;
         } else {
-            self->accelerationX += 0x300;
+            self->velocityX += 0x300;
         }
 
         if (func_801BCF74(&D_80182180) & 0x60) {
-            self->posX.val -= self->accelerationX;
-            self->accelerationX = 0;
+            self->posX.val -= self->velocityX;
+            self->velocityX = 0;
         }
         func_801C4550();
         break;
@@ -154,9 +154,9 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_WALK_AWAY_FROM_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
-                self->accelerationX = 0x3000;
+                self->velocityX = 0x3000;
             } else {
-                self->accelerationX = -0x3000;
+                self->velocityX = -0x3000;
             }
             self->step_s++;
         }
@@ -167,9 +167,9 @@ void EntityAxeKnight(Entity* self) {
         }
         if (animStatus == 0) {
             if (self->facing == 0) {
-                self->accelerationX = 0x3000;
+                self->velocityX = 0x3000;
             } else {
-                self->accelerationX = -0x3000;
+                self->velocityX = -0x3000;
             }
 
             if (GetDistanceToPlayerX() > 80) {
@@ -180,19 +180,19 @@ void EntityAxeKnight(Entity* self) {
 
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
             if (self->facing == 0) {
-                self->accelerationX += 0x200;
+                self->velocityX += 0x200;
             } else {
-                self->accelerationX -= 0x200;
+                self->velocityX -= 0x200;
             }
         } else if (self->facing != 0) {
-            self->accelerationX += 0x200;
+            self->velocityX += 0x200;
         } else {
-            self->accelerationX -= 0x200;
+            self->velocityX -= 0x200;
         }
 
         if (func_801BCF74(&D_80182180) & 0x60) {
-            self->posX.val -= self->accelerationX;
-            self->accelerationX = 0;
+            self->posX.val -= self->velocityX;
+            self->velocityX = 0;
         }
         func_801C4550();
         break;
@@ -323,7 +323,7 @@ void EntityAxeKnightRotateAxe(void) {
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {
-    s32 accelerationX;
+    s32 velocityX;
 
     if (entity->flags & 0x100) {
         func_801C29B0(NA_SE_EN_AXE_KNIGHT_BREAK_AXE);
@@ -335,13 +335,13 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     case 0:
         InitializeEntity(D_80180C70);
         entity->unk19 = 4;
-        entity->accelerationY = D_801822C8[entity->params];
-        accelerationX = D_801822BC[entity->params];
+        entity->velocityY = D_801822C8[entity->params];
+        velocityX = D_801822BC[entity->params];
 
         if (entity->facing == 0) {
-            entity->accelerationX = -accelerationX;
+            entity->velocityX = -velocityX;
         } else {
-            entity->accelerationX = accelerationX;
+            entity->velocityX = velocityX;
         }
 
         entity->ext.generic.unk7C.s = -0x40;
@@ -356,9 +356,9 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         EntityAxeKnightRotateAxe();
         if ((u16)entity->ext.generic.unk7C.s < 0x20) {
             if (entity->facing != 0) {
-                entity->accelerationX -= 0x2000;
+                entity->velocityX -= 0x2000;
             } else {
-                entity->accelerationX += 0x2000;
+                entity->velocityX += 0x2000;
             }
         }
 
@@ -368,7 +368,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 
     case 2:
         EntityAxeKnightRotateAxe();
-        entity->accelerationY += 0x2000;
+        entity->velocityY += 0x2000;
         MoveEntity();
         break;
     }

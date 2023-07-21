@@ -873,24 +873,24 @@ init_entity:
 s32 func_801746A0(s32 arg0) {
     s32 tmp;
 
-    if (PLAYER.accelerationY < 0) {
+    if (PLAYER.velocityY < 0) {
         if (!(g_Player.pl_vram_flag & 1)) {
             return 1;
         }
     }
 
-    tmp = PLAYER.accelerationY;
+    tmp = PLAYER.velocityY;
     if (tmp > 0) {
         if (!(g_Player.pl_vram_flag & 2)) {
             return 1;
         }
     }
 
-    if (PLAYER.accelerationX < 0 && !(g_Player.pl_vram_flag & 8))
+    if (PLAYER.velocityX < 0 && !(g_Player.pl_vram_flag & 8))
         return 1;
 
-    tmp = PLAYER.accelerationX;
-    if (PLAYER.accelerationX > 0 && !(g_Player.pl_vram_flag & 4))
+    tmp = PLAYER.velocityX;
+    if (PLAYER.velocityX > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
     if (arg0 == 0)

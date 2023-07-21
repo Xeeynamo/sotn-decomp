@@ -316,9 +316,9 @@ void func_801B19A0(Entity* self) {
             rnd2 = (Random() * 6) + 0x900;
         }
 
-        self->accelerationX = rnd * rcos(rnd2);
-        self->accelerationY = rnd * rsin(rnd2);
-        if (self->accelerationX < 0) {
+        self->velocityX = rnd * rcos(rnd2);
+        self->velocityY = rnd * rsin(rnd2);
+        if (self->velocityX < 0) {
             self->facing = 1;
         }
 
@@ -329,7 +329,7 @@ void func_801B19A0(Entity* self) {
             self->rotAngle += 0x20;
         }
 
-        self->accelerationY += 0x2000;
+        self->velocityY += 0x2000;
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
@@ -347,7 +347,7 @@ void func_801B19A0(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            if (self->accelerationY < 0x8000) {
+            if (self->velocityY < 0x8000) {
                 newEntity =
                     AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                 if (newEntity != NULL) {
@@ -358,9 +358,9 @@ void func_801B19A0(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            self->accelerationY = -self->accelerationY;
-            self->accelerationY *= 2;
-            self->accelerationY /= 3;
+            self->velocityY = -self->velocityY;
+            self->velocityY *= 2;
+            self->velocityY /= 3;
         }
     }
 }
@@ -536,23 +536,23 @@ void EntityMoveableBox(Entity* self) {
 
     case 1:
         player = &PLAYER;
-        self->accelerationX = 0;
-        self->accelerationY = 0;
+        self->velocityX = 0;
+        self->velocityY = 0;
 
         if (var_s1 & 1) {
             temp_s1 = GetSideToPlayer();
-            if (temp_s1 & 1 && player->accelerationX > 0) {
+            if (temp_s1 & 1 && player->velocityX > 0) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
-                self->accelerationX = 0x8000;
+                self->velocityX = 0x8000;
             }
             temp_s1 = GetSideToPlayer();
-            if (!(primIndex = (temp_s1 & 1)) && (player->accelerationX < 0)) {
+            if (!(primIndex = (temp_s1 & 1)) && (player->velocityX < 0)) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
-                self->accelerationX = -0x8000;
+                self->velocityX = -0x8000;
             }
         }
 
@@ -571,7 +571,7 @@ void EntityMoveableBox(Entity* self) {
             if ((self->ext.generic.unk84.unk == 0) &&
                 ((s16)D_801CB736[var_s1] != 0)) {
                 var_s1 = 0;
-                self->posX.val -= self->accelerationX;
+                self->posX.val -= self->velocityX;
             }
             self->ext.generic.unk84.unk = var_s1;
             if (var_s1 != 0) {
@@ -632,21 +632,21 @@ void EntityCannonLever(Entity* self) {
 
     case 1:
         if (self->hitFlags != 0) {
-            self->accelerationX = -0x40000;
+            self->velocityX = -0x40000;
             self->step++;
         }
         break;
 
     case 2:
         MoveEntity();
-        temp_v1_2 = self->accelerationX;
+        temp_v1_2 = self->velocityX;
         if (temp_v1_2 < 0) {
             var_v0 = temp_v1_2 + 0xF;
         } else {
             var_v0 = temp_v1_2;
         }
         temp_v0_2 = temp_v1_2 - (var_v0 >> 4);
-        self->accelerationX = temp_v0_2;
+        self->velocityX = temp_v0_2;
         if (temp_v0_2 < 0x2000) {
             self->step++;
         }
@@ -719,7 +719,7 @@ void EntityCannon(Entity* self) {
         if (D_80180ED0[0] != 0) {
             g_api.func_80102CD8(1);
             g_api.PlaySfx(0x6AC);
-            self->accelerationX = 0x80000;
+            self->velocityX = 0x80000;
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -737,7 +737,7 @@ void EntityCannon(Entity* self) {
         self->posX.i.lo = 0;
         MoveEntity();
 
-        temp = self->accelerationX;
+        temp = self->velocityX;
         if (temp < 0) {
             var_v0 = temp + 7;
         } else {
@@ -745,7 +745,7 @@ void EntityCannon(Entity* self) {
         }
 
         temp2 = temp - (var_v0 >> 3);
-        self->accelerationX = temp - (var_v0 >> 3);
+        self->velocityX = temp - (var_v0 >> 3);
 
         if (temp2 < 0x2000) {
             self->step++;
@@ -769,7 +769,7 @@ void EntityCannonShot(Entity* self) {
         self->animCurFrame = 1;
         self->palette = 0x81AF;
         self->zPriority = 0x6F;
-        self->accelerationX = -0x80000;
+        self->velocityX = -0x80000;
 
     case 1:
         MoveEntity();

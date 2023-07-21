@@ -32,13 +32,13 @@ void EntitySpittleBone(Entity* self) {
             newEntity->ext.generic.unk7C.S8.unk0 =
                 self->ext.generic.unk7C.S8.unk0;
             if (self->facing != 0) {
-                self->accelerationX = 0x10000;
+                self->velocityX = 0x10000;
                 newEntity->posX.i.hi += 16;
             } else {
-                self->accelerationX = -0x10000;
+                self->velocityX = -0x10000;
                 newEntity->posX.i.hi -= 16;
             }
-            newEntity->accelerationX = self->accelerationX;
+            newEntity->velocityX = self->velocityX;
             self->step++;
         }
         break;
@@ -81,8 +81,8 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->unk19 |= 4;
                 newEntity->rotAngle = self->rotAngle;
                 newEntity->step = 4;
-                newEntity->accelerationX = D_80182504[i];
-                newEntity->accelerationY = 0xFFFD0000 - ((Random() & 3) << 0xF);
+                newEntity->velocityX = D_80182504[i];
+                newEntity->velocityY = 0xFFFD0000 - ((Random() & 3) << 0xF);
                 newEntity->ext.generic.unk80.modeS16.unk2 =
                     D_801824E2[i + 0x3A];
             }
@@ -101,7 +101,7 @@ void EntitySpittleBone(Entity* self) {
 
     case 4:
         MoveEntity();
-        self->accelerationY += 0x2800;
+        self->velocityY += 0x2800;
         self->ext.generic.unk80.modeS16.unk2--;
         if (self->ext.generic.unk80.modeS16.unk2 == 0) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -163,7 +163,7 @@ void EntitySpittleBoneSpit(Entity* self) {
     case 2:
         AnimateEntity(D_80182534, self);
         MoveEntity();
-        self->accelerationY += 0x1000;
+        self->velocityY += 0x1000;
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects != 0) {
             func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
