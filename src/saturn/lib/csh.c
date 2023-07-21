@@ -11,4 +11,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602BA94, func_0602BA94);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602BB3C, func_0602BB3C);
 
 INCLUDE_ASM("asm/saturn/zero/data", d602bb98, d_0602bb98);
-

@@ -109,53 +109,56 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602A654, func_0602A654);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602A6DC, func_0602A6DC);
 
 // func_0602A778
-Uint32  SCL_AllocColRam(Uint32 Surface, Uint32 NumOfColors, Uint8 transparent)
-{
-/*	Uint8	Max256;
-	Uint32	i,Size256;	*/
+Uint32 SCL_AllocColRam(Uint32 Surface, Uint32 NumOfColors, Uint8 transparent) {
+    /*	Uint8	Max256;
+        Uint32	i,Size256;	*/
 
-	Uint8	Max256 = 0;
-	Uint32	i;
-	Uint32	Size256 = 0;
+    Uint8 Max256 = 0;
+    Uint32 i;
+    Uint32 Size256 = 0;
 
-	SCL_FreeColRam(Surface);
+    SCL_FreeColRam(Surface);
 
-	if(SclColRamAlloc2048[0] != 0)
-		return((Uint32 )NULL); /* �A���P�[�g�G���[ */
+    if (SclColRamAlloc2048[0] != 0)
+        return ((Uint32)NULL); /* �A���P�[�g�G���[ */
 
-	switch(SCL_GetColRamMode()){
-		case SCL_CRM15_1024:
-			if(1024 < NumOfColors)	return((Uint32 )NULL);
-			Max256=4;
-			Size256=512;
-			break;
-		case SCL_CRM15_2048:
-			if(2048 < NumOfColors)	return((Uint32 )NULL);
-			Max256=8;
-			Size256=512;
-			break;
-		case SCL_CRM24_1024:
-			if(1024 < NumOfColors)	return((Uint32 )NULL);
-			Max256=4;
-			Size256=1024;
-			break;
-	}
+    switch (SCL_GetColRamMode()) {
+    case SCL_CRM15_1024:
+        if (1024 < NumOfColors)
+            return ((Uint32)NULL);
+        Max256 = 4;
+        Size256 = 512;
+        break;
+    case SCL_CRM15_2048:
+        if (2048 < NumOfColors)
+            return ((Uint32)NULL);
+        Max256 = 8;
+        Size256 = 512;
+        break;
+    case SCL_CRM24_1024:
+        if (1024 < NumOfColors)
+            return ((Uint32)NULL);
+        Max256 = 4;
+        Size256 = 1024;
+        break;
+    }
 
-	if(256 >= NumOfColors){
-		for(i=0;i<Max256;i++){
-			if(SclColRamAlloc256[i]==0){
-				SclColRamAlloc256[i]=Surface;
-				SCL_SetColRamOffset(Surface,i,transparent);
-				return(SCL_COLRAM_ADDR+(Size256*i));
-			}
-		}
-	}else{
-		for(i=0;i<Max256;i++)
-			if(SclColRamAlloc256[i] != 0) return((Uint32 )NULL);
-		SclColRamAlloc2048[0] = Surface;
-		SCL_SetColRamOffset(Surface,0,transparent);
-		return(SCL_COLRAM_ADDR);
-	}
+    if (256 >= NumOfColors) {
+        for (i = 0; i < Max256; i++) {
+            if (SclColRamAlloc256[i] == 0) {
+                SclColRamAlloc256[i] = Surface;
+                SCL_SetColRamOffset(Surface, i, transparent);
+                return (SCL_COLRAM_ADDR + (Size256 * i));
+            }
+        }
+    } else {
+        for (i = 0; i < Max256; i++)
+            if (SclColRamAlloc256[i] != 0)
+                return ((Uint32)NULL);
+        SclColRamAlloc2048[0] = Surface;
+        SCL_SetColRamOffset(Surface, 0, transparent);
+        return (SCL_COLRAM_ADDR);
+    }
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602A964, func_0602A964);
