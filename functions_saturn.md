@@ -4,13 +4,13 @@
 | game/f_nonmat/f607C0A0.s     | func_0607C0A0 | 17     | 0        | https://decomp.me/scratch/f6qn4 | 0.507 |
 | game/f_nonmat/f607872C.s     | func_0607872C | 17     | 1        |                                 |       |
 | zero/f_nonmat/f6018F04.s     | func_06018F04 | 17     | 1        | https://decomp.me/scratch/8MBlN | 0.704 |
-| zero/f_nonmat/f600652C.s     | func_0600652C | 19     | 1        |                                 |       |
-| zero/f_nonmat/f6016B9C.s     | func_06016B9C | 19     | 1        |                                 |       |
+| zero/f_nonmat/f600652C.s     | func_0600652C | 19     | 1        | https://decomp.me/scratch/Gtamm | 0.744 |
+| zero/f_nonmat/f6016B9C.s     | func_06016B9C | 19     | 1        | https://decomp.me/scratch/N6iEU | 0.872 |
 | zero/f_nonmat/f6016BBC.s     | func_06016BBC | 19     | 1        |                                 |       |
-| zero/f_nonmat/f60082C8.s     | func_060082C8 | 19     | 2        |                                 |       |
-| zero/f_nonmat/f600B234.s     | func_0600B234 | 19     | 2        |                                 |       |
-| zero/f_nonmat/f6012DFC.s     | func_06012DFC | 19     | 2        |                                 |       |
-| zero/f_nonmat/f6013320.s     | func_06013320 | 19     | 2        |                                 |       |
+| zero/f_nonmat/f60082C8.s     | func_060082C8 | 19     | 2        | https://decomp.me/scratch/tgbC1 | 0.866 |
+| zero/f_nonmat/f600B234.s     | func_0600B234 | 19     | 2        | https://decomp.me/scratch/6nF2c | 0.744 |
+| zero/f_nonmat/f6012DFC.s     | func_06012DFC | 19     | 2        | https://decomp.me/scratch/BXMcv | 0.854 |
+| zero/f_nonmat/f6013320.s     | func_06013320 | 19     | 2        | https://decomp.me/scratch/oNzR9 | 0.854 |
 | zero/f_nonmat/f6016F9C.s     | func_06016F9C | 19     | 2        |                                 |       |
 | zero/f_nonmat/f600CB04.s     | func_0600CB04 | 20     | 0        |                                 |       |
 | game/f_nonmat/f6070580.s     | func_06070580 | 20     | 1        | https://decomp.me/scratch/hwV55 | 0.306 |
