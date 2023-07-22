@@ -52,3 +52,115 @@ _SCL_GetColRamMode = 0x06025214;
 _SCL_SetColRamOffset = 0x0602b52c;
 _SclColRamAlloc256 = 0x06065690;
 _SclColRamAlloc2048 = 0x060656c8;
+
+_Scl_s_reg = 0x06065450;
+_Scl_d_reg = 0x06065480;
+_SclRa = 0x060655d0;
+_SclRb = 0x06064768;
+___ashlsi3 = 0x06030f0c;
+___udivsi3 = 0x06031048;
+_SclProcess = 0x604820c;
+_SclCurSclNum = 0x06048208;
+_Scl_n_reg = 0x06065620;
+_SclRotregBuff = 0x06048214;
+_SclRbgKtbAddr = 0x06064760;
+_SclRbgKtbOffset = 0x060654f8;
+_SclRotateDisp = 0x060654c8;
+_SclRotateMoveZ = 0x060654d0;
+_SCL_Rotate = 0x0602ab9c;
+_MTH_Div = 0x0602f570;
+_Scl_r_reg = 0x060654e0;
+
+
+_SclK_TableFlag = 0x060655f4;
+_SclK_TableNum = 0x060655e8;
+_SclK_TableBuff = 0x33333333;
+_SCL_Memcpyw = 0x06024b20;
+_SclK_TableBuff = 0x06064770;
+_SclRotateTableAddress = 0x060655f0;
+_regaddr = 0x06057e18;
+_DMA_ScuMemCopy = 0x06065620;
+_Scl_w_reg = 0x06065600;
+
+_SclLengthLsTbl = 0x06048204;
+_SclAddrLsTbl = 0x060655e0;
+_SclLengthCsTbl = 0x06048206;
+_SclAddrCsTbl = 0x06065440;
+_SCL_PriIntProc = 0x06024c20;
+
+
+_SCL_AutoExec = 0x06025ae4;
+_SclPriBuffDirty = 0x06065680;
+_SclOtherPri = 0x06065700;
+_SclRealOtherPri = 0x06048238;
+_SclSpPriNum = 0x06065d18;
+_SclRealSpPriNum = 0x0604823c;
+_SclBgPriNum = 0x060656d0;
+_SclRealBgPriNum = 0x06048240;
+_SclSpColMix = 0x060656b8;
+_SclRealSpColMix = 0x06048244;
+_SclBgColMix = 0x060656e0;
+_SclRealBgColMix = 0x06048248;
+_SclColOffset = 0x06065670;
+_SclRealColOffset = 0x0604824c;
+
+_SpFrameChgMode = 0x0604821c;
+_SpFrameEraseMode = 0x06048220;
+_SpFbcrMode = 0x060646f8;
+_VBInterval = 0x06048224;
+_ReqDisplayFlag = 0x0604822c;
+_ReqDisplayFlag2 = 0x06048230;
+
+_VBIntervalCounter = 0x06048228;
+_VBIntrDisableDepth = 0x06048234;
+_frameChgFlag = 0x06057e1c;
+
+_SpTvMode = 0x060646fe;
+_SpDie = 0x060646fc;
+_SpInitialFlag = 0x060481c4;
+
+
+_SCL_InitSclOtherPri = 0x06026534;
+_SCL_InitSclSpPriNum = 0x06026c30;
+_SCL_InitSclBgPriNum = 0x06026d3c;
+_SCL_InitSclSpColMix = 0x06026df0;
+_SCL_InitSclBgColMix = 0x06026eec;
+_SCL_InitSclColOffset = 0x06026fc4;
+_SclAutoVeFlag  = 0x060656da;
+
+
+_SclAutoSurface = 0x06065684;
+_SclAutoInterval = 0x060656f4; 
+_SclAutoCount = 0x0606568c;
+_SclAutoIndex =0x060656e8;
+_SclAutoMax = 0x060656c0;
+_SclAutoRed = 0x060656f0;
+_SclAutoGreen = 0x06065688;
+_SclAutoBlue = 0x060656ee;
+_SclAutoEndRed = 0x06065682;
+_SclAutoEndGreen = 0x0606568a;
+_SclAutoEndBlue = 0x060656d6;
+_SclAutoEndRed2 = 0x06065d10;
+_SclAutoEndGreen2 = 0x060656d8;
+_SclAutoEndBlue2 = 0x06065660;
+_SclAutoCurRate = 0x060656b0;
+_SclAutoEndRate = 0x060656ec;
+_SclAutoVeFlag = 0x060656da;
+_SclAutoPlusFlag = 0x060656b1;
+_SclAutoRGB = 0x06065710;
+
+_SCL_SetColRam = 0x0602b450;
+_SCL_IncColOffset = 0x060263e0;
+
+
+_SclDisplayY = 0x06048210;
+_SclDisplayX = 0x0604820e;
+_SCL_SetLineColReg = 0x06028a00;
+___sdivsi3 = 0x11111111;
+ 
+
+_fsin = 0x0602fc26;
+___ashiftrt_r4_24 = 0x06030e2a;
+_fcos = 0x0602fc20;
+
+_SclLineColRamOffset = 0x11111111;
