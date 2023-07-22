@@ -32,7 +32,7 @@ typedef union {
         s16 hi;
         s16 lo;
     } i;
-} Fixed32;
+} SotnFixed32;
 
 struct Entity;
 
@@ -40,8 +40,8 @@ typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
-    /* 0x04 */ Fixed32 posX;
-    /* 0x08 */ Fixed32 posY;
+    /* 0x04 */ SotnFixed32 posX;
+    /* 0x08 */ SotnFixed32 posY;
     /* 0x0c */ s32 velocityX;
     /* 0x10 */ s32 velocityY;
     /* 0x14 */ u16 hitboxOffX;
