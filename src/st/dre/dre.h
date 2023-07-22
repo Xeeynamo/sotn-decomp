@@ -21,10 +21,10 @@ typedef enum {
     /* 0x10 */ E_DUMMY_10,
 
     /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
-    /* 0x1B */ E_ID_1B,
+    /* 0x1B */ E_SUCCUBUS_WING_OVERLAY,
     /* 0x1C */ E_SUCCUBUS_CLONE,
     /* 0x1D */ E_SUCCUBUS_PINK_BALL_PROJECTILE,
-    /* 0x1E */ E_SUCCUBUS_WING_SPIKES = 0x1E,
+    /* 0x1E */ E_SUCCUBUS_WING_SPIKE,
     /* 0x1F */ E_ID_1F,
     /* 0x20 */ E_SUCCUBUS_CUTSCENE,
 } DRE_EntityIDs;

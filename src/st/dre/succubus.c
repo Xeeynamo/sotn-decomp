@@ -108,7 +108,7 @@ void EntitySuccubus(Entity* self) {
         InitializeEntity(D_801804D0);
         self->animCurFrame = 82;
         SetStep(SUCCUBUS_CS_1);
-        CreateEntityFromCurrentEntity(E_ID_1B, &self[1]);
+        CreateEntityFromCurrentEntity(E_SUCCUBUS_WING_OVERLAY, &self[1]);
 
     case SUCCUBUS_CS_1:
         if (D_8003BDEC[SeenCutscene] || (g_DemoMode != Demo_None)) {
@@ -818,8 +818,7 @@ void EntitySuccubus(Entity* self) {
             D_80180668 = 0;
             for (facing = 0; facing < 2; facing++) {
                 for (i = 0; i < 4; i++, entity += 2) {
-                    CreateEntityFromEntity(
-                        E_SUCCUBUS_WING_SPIKES, self, entity);
+                    CreateEntityFromEntity(E_SUCCUBUS_WING_SPIKE, self, entity);
                     entity->params = i;
                     entity->zPriority = self->zPriority;
                     entity->ext.succubus.real = self;

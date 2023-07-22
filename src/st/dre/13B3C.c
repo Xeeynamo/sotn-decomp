@@ -88,8 +88,8 @@ extern s32 D_80180660; // clones counter
 
 void EntitySuccubusClone(Entity* self) {
     Entity* newEntity;
-    s32 velX;
     s8* hitbox;
+    s32 velX;
     s32 i;
 
     if (D_80180660 == 0) {
@@ -179,9 +179,9 @@ void EntitySuccubusClone(Entity* self) {
             }
         }
         if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
-            func_801A046C(0x872);
-            func_801A046C(0x87C);
-            func_801A046C(0x62C);
+            func_801A046C(NA_VO_SU_GRUNT_2);
+            func_801A046C(NA_VO_SU_CRYSTAL_1);
+            func_801A046C(NA_SE_SU_SHOOT_PINKBALLS);
             self->ext.succubus.unk85 = 1;
         }
         break;
@@ -248,7 +248,7 @@ void EntityPinkBallProjectile(Entity* self) {
         break;
 
     case 2:
-        temp_s0 = (self->params << 0xA) + 0x200;
+        temp_s0 = (self->params << 10) + 0x200;
         self->velocityX = rcos(temp_s0) * 0x38;
         self->velocityY = rsin(temp_s0) * 0x38;
         self->ext.succubus.unkA2 = temp_s0;
@@ -343,24 +343,24 @@ void EntitySuccubusWingSpike(Entity* self) {
     self[1].posY.i.hi -= temp_s2 * rsin(var_s0) >> 0xC;
 }
 
-void EntityUnkId1F(Entity* entity) {
-    switch (entity->step) {
+void EntityUnkId1F(Entity* self) {
+    switch (self->step) {
     case 0:
         InitializeEntity(D_8018050C);
-        entity->animCurFrame = 0;
-        entity->unk19 = 4;
-        entity->hitboxState = 0;
+        self->animCurFrame = 0;
+        self->unk19 = 4;
+        self->hitboxState = 0;
 
     case 1:
-        if (entity[-1].animCurFrame != 0) {
-            entity->hitboxState = 1;
-            entity->animCurFrame = 86;
+        if (self[-1].animCurFrame != 0) {
+            self->hitboxState = 1;
+            self->animCurFrame = 86;
         }
-        if (entity->hitFlags != 0) {
+        if (self->hitFlags != 0) {
             D_80180668 = 1;
         }
-        if (entity[-1].entityId != 0x1E) {
-            DestroyEntity(entity);
+        if (self[-1].entityId != 0x1E) {
+            DestroyEntity(self);
         }
     }
 }
