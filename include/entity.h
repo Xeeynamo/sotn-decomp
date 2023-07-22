@@ -259,6 +259,7 @@ typedef struct ET_Succubus {
     /* 0x90 */ char pad_90[0xC];
     /* 0x9C */ struct Entity* real;
     /* 0xA0 */ s16 clonePosX;
+    /* 0xA2 */ s16 unkA2;
 } ET_Succubus;
 
 typedef union {

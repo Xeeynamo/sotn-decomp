@@ -300,7 +300,6 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_DYING_ANIM_2:
             AnimateEntity(D_80180778, self);
-            break;
         }
         break;
 

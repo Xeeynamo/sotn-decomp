@@ -43,25 +43,26 @@ void EntitySuccubusPetal(Entity* self) {
         temp_s2 = ((rand() * 4) + 0x38000) >> 0xC;
         self->accelerationX = temp_s2 * rcos(angle);
         self->accelerationY = temp_s2 * rsin(angle);
-        self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x10;
+        self->ext.succubus.timer = (Random() & 0x1F) + 0x10;
 
     case 1:
         self->accelerationX = self->accelerationX - (self->accelerationX >> 6);
         self->accelerationY = self->accelerationY - (self->accelerationY >> 6);
         MoveEntity();
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;
+        if (--self->ext.succubus.timer == 0) {
+            self->ext.succubus.timer = (Random() & 0x1F) + 0x20;
             self->step++;
         }
         break;
 
     case 2:
         MoveEntity();
-        self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
+        self->rotAngle += self->ext.succubus.timer;
         break;
     }
 }
 
+// Wings that appear over the player when the succubus does her charge attack
 void EntitySuccubusWingOverlay(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_801804E8);
@@ -111,21 +112,21 @@ void EntitySuccubusClone(Entity* self) {
     case 0:
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
-        accelX =
-            self->ext.succubus.clonePosX - (self->posX.i.hi + g_Camera.posX.i.hi)
-            << 0x10;
+        accelX = self->ext.succubus.clonePosX -
+                     (self->posX.i.hi + g_Camera.posX.i.hi)
+                 << 0x10;
         if (accelX < 0) {
             accelX += 0x3F;
         }
         self->accelerationX = accelX >> 6;
-        self->ext.generic.unk80.modeS16.unk0 = 0x40;
+        self->ext.succubus.timer = 64;
 
     case 1:
         MoveEntity();
-        newEntity = self->ext.succubus.real; 
+        newEntity = self->ext.succubus.real;
         self->animCurFrame = newEntity->animCurFrame;
         self->facing = newEntity->facing;
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.succubus.timer == 0) {
             self->hitboxState = 3;
             SetStep(2);
         }
@@ -135,43 +136,43 @@ void EntitySuccubusClone(Entity* self) {
         newEntity = self->ext.succubus.real;
         self->animCurFrame = newEntity->animCurFrame;
         self->facing = newEntity->facing;
-        if (newEntity->ext.generic.unk84.U8.unk1 != 0) {
-            self->ext.generic.unk80.modeS16.unk0 = (self->params * 0x30) + 1;
+        if (newEntity->ext.succubus.unk85 != 0) {
+            self->ext.succubus.timer = (self->params * 48) + 1;
             SetStep(3);
         }
         break;
 
     case 3:
         self->animCurFrame = 26;
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.succubus.timer == 0) {
             SetStep(4);
         }
         break;
 
     case 4:
         if (self->step_s == 0) {
-            self->ext.generic.unk84.S8.unk1 = 0;
+            self->ext.succubus.unk85 = 0;
             self->step_s++;
         }
 
         if (AnimateEntity(D_80180780, self) == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = 0x120;
+            self->ext.succubus.timer = 288;
             SetStep(3);
         }
 
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
             func_801A046C(0x6E2);
             for (i = 0; i < 2; i++) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x1D, self, newEntity);
+                    CreateEntityFromEntity(E_SUCCUBUS_PINK_BALL_PROJECTILE, self, newEntity);
                     newEntity->params = i;
                     if (i != 0) {
                         newEntity->posX.i.hi -= 2;
                     } else {
                         newEntity->posX.i.hi += 2;
                     }
-                    newEntity->ext.generic.unk9C = self;
+                    newEntity->ext.succubus.real = self;
                     newEntity->posY.i.hi -= 10;
                     newEntity->zPriority = self->zPriority + 1;
                 }
@@ -181,21 +182,21 @@ void EntitySuccubusClone(Entity* self) {
             func_801A046C(0x872);
             func_801A046C(0x87C);
             func_801A046C(0x62C);
-            self->ext.generic.unk84.S8.unk1 = 1;
+            self->ext.succubus.unk85 = 1;
         }
         break;
 
     case 5:
         if (self->step_s == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = 0x20;
+            self->ext.succubus.timer = 32;
             self->step_s++;
         }
-        if (self->ext.generic.unk80.modeS16.unk0 & 1) {
+        if (self->ext.succubus.timer & 1) {
             self->animSet = 0;
         } else {
             self->animSet = ANIMSET_OVL(1);
         }
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.succubus.timer == 0) {
             DestroyEntity(self);
             return;
         }
@@ -209,7 +210,6 @@ void EntitySuccubusClone(Entity* self) {
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }
-
 
 // Pink ball projectile shot by succubus duplicates ID 0x1D
 void EntityPinkBallProjectile(Entity* self) {
@@ -237,8 +237,8 @@ void EntityPinkBallProjectile(Entity* self) {
         }
         AnimateEntity(D_80180794, self);
 
-        entity = self->ext.generic.unk9C;
-        if (entity->ext.generic.unk84.U8.unk1 != 0) {
+        entity = self->ext.succubus.real;
+        if (entity->ext.succubus.unk85 != 0) {
             self->unk19 = 0;
             self->step++;
         }
@@ -251,24 +251,24 @@ void EntityPinkBallProjectile(Entity* self) {
         temp_s0 = (self->params << 0xA) + 0x200;
         self->accelerationX = rcos(temp_s0) * 0x38;
         self->accelerationY = rsin(temp_s0) * 0x38;
-        self->ext.generic.unkA2 = temp_s0;
-        self->ext.generic.unk80.modeS16.unk0 = 128;
+        self->ext.succubus.unkA2 = temp_s0;
+        self->ext.succubus.timer = 128;
         self->step++;
 
     case 3:
         AnimateEntity(D_80180794, self);
         MoveEntity();
         temp_v0 = func_8019AF08(self, g_Entities);
-        temp_s0 = func_8019AF88(0x10, self->ext.generic.unkA2, temp_v0);
+        temp_s0 = func_8019AF88(0x10, self->ext.succubus.unkA2, temp_v0);
         self->accelerationX = rcos(temp_s0) * 0x38;
         self->accelerationY = rsin(temp_s0) * 0x38;
-        self->ext.generic.unkA2 = temp_s0;
+        self->ext.succubus.unkA2 = temp_s0;
 
         if (self->hitFlags & 0x80) {
             self->step = 4;
         }
 
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.succubus.timer == 0) {
             self->step = 4;
         }
         break;
@@ -300,13 +300,13 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->rotAngle = var_s0;
         self->unk19 |= 1;
         self->unk1A = 0x100;
-        CreateEntityFromEntity(0x1F, self, &self[1]);
+        CreateEntityFromEntity(E_ID_1F, self, &self[1]);
         self[1].facing = self->facing;
         self[1].params = self->params;
         self[1].rotAngle = self->rotAngle;
 
     case 1:
-        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
+        if (self->ext.succubus.real->ext.succubus.unk85 != 0) {
             self->step++;
         }
         break;
@@ -318,7 +318,7 @@ void EntitySuccubusWingSpike(Entity* self) {
             self->unk1A = 0x600;
         }
 
-        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 == 0) {
+        if (self->ext.succubus.real->ext.succubus.unk85 == 0) {
             self->step++;
         }
         break;
@@ -350,10 +350,11 @@ void EntityUnkId1F(Entity* entity) {
         entity->animCurFrame = 0;
         entity->unk19 = 4;
         entity->hitboxState = 0;
+
     case 1:
         if (entity[-1].animCurFrame != 0) {
             entity->hitboxState = 1;
-            entity->animCurFrame = 0x56;
+            entity->animCurFrame = 86;
         }
         if (entity->hitFlags != 0) {
             D_80180668 = 1;

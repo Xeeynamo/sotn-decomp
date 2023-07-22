@@ -24,7 +24,8 @@ typedef enum {
     /* 0x1C */ E_SUCCUBUS_CLONE,
     /* 0x1D */ E_SUCCUBUS_PINK_BALL_PROJECTILE,
     /* 0x1E */ E_SUCCUBUS_WING_SPIKES = 0x1E,
-    /* 0x20 */ E_SUCCUBUS_CUTSCENE = 0x20,
+    /* 0x1F */ E_ID_1F,
+    /* 0x20 */ E_SUCCUBUS_CUTSCENE,
 } DRE_EntityIDs;
 
 void ReplaceBreakableWithItemDrop(Entity* arg0);
