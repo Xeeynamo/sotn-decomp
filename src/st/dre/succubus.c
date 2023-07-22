@@ -1,8 +1,12 @@
-
+/*
+ * Overlay: DRE
+ * Enemy: Succubus Boss
+ * ID: 0x19
+ * BOSS ID: 9
+ */
 
 #include "dre.h"
 
-// ID 0x19
 typedef enum {
     /* 0 */ SUCCUBUS_INIT,
     /* 1 */ SUCCUBUS_CS_1,
