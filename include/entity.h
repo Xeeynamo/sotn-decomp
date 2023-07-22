@@ -251,7 +251,7 @@ typedef struct ET_Succubus {
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ u8 unk84; // facing ?
     /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
+    /* 0x86 */ u8 nextAttack;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ u16 nextStep;
     /* 0x8A */ char pad_8A[0x4];

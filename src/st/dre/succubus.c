@@ -338,14 +338,14 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_FLY_0:
             self->velocityY = 0;
             self->ext.succubus.timer = (Random() & 31) + 32;
-            self->ext.succubus.unk86 = 8;
+            self->ext.succubus.nextAttack = SUCCUBUS_PETAL_ATTACK;
             self->ext.succubus.unk8E = 88;
             if (!(Random() % 4)) {
                 if (Random() % 2) {
-                    self->ext.succubus.unk86 = 12;
+                    self->ext.succubus.nextAttack = SUCCUBUS_SPIKE_ATTACK;
                     self->ext.succubus.unk8E = 120;
                 } else {
-                    self->ext.succubus.unk86 = 11;
+                    self->ext.succubus.nextAttack = SUCCUBUS_CLONE_ATTACK;
                 }
             }
             self->ext.succubus.unk84 = 0;
@@ -378,7 +378,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
 
-            if (self->ext.succubus.unk86 == 11) {
+            if (self->ext.succubus.nextAttack == SUCCUBUS_CLONE_ATTACK) {
                 posX = 64;
             } else {
                 posX = 96;
@@ -418,10 +418,10 @@ void EntitySuccubus(Entity* self) {
 
             if (self->ext.succubus.timer == 0) {
                 if (GetDistanceToPlayerX() < 96) {
-                    if (self->ext.succubus.unk86 == 8) {
+                    if (self->ext.succubus.nextAttack == SUCCUBUS_PETAL_ATTACK) {
                         SetStep(SUCCUBUS_PETAL_ATTACK);
                     } else {
-                        self->ext.succubus.nextStep = self->ext.succubus.unk86;
+                        self->ext.succubus.nextStep = self->ext.succubus.nextAttack;
                         SetStep(SUCCUBUS_NEXT_ACTION_CHECK);
                     }
                 }
