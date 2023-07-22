@@ -11,7 +11,7 @@ void func_80162C84(Entity* entity) {
         entity->palette = 0x8149;
         entity->animSet = ANIMSET_OVL(19);
         func_8015C920(&D_80154ED4);
-        entity->accelerationX = -0x1C000;
+        entity->velocityX = -0x1C000;
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
         entity->ext.generic.unk7E.modeU16 = 0;
@@ -26,7 +26,7 @@ void func_80162C84(Entity* entity) {
             g_api.PlaySfx(0x883);
         }
 
-        entity->posX.val += entity->accelerationX;
+        entity->posX.val += entity->velocityX;
         if (((s16)entity->ext.generic.unk7E.modeU16 == 0) &&
             (entity->posX.i.hi < 256)) {
             g_api.PlaySfx(0x87D);
@@ -34,7 +34,7 @@ void func_80162C84(Entity* entity) {
         }
         if (entity->posX.i.hi < 0xE0) {
             func_8015C920(&D_80154EF8);
-            entity->accelerationX = 0;
+            entity->velocityX = 0;
             entity->step++;
             func_801606BC(entity, 0x40000, 0);
         }
@@ -331,10 +331,10 @@ s32 func_8016840C(s16 x, s16 y) {
     Collider collider;
     u16 temp;
 
-    if (g_CurrentEntity->accelerationX != 0) {
+    if (g_CurrentEntity->velocityX != 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
                              g_CurrentEntity->posY.i.hi + x, &collider, 0);
-        if (g_CurrentEntity->accelerationX > 0) {
+        if (g_CurrentEntity->velocityX > 0) {
             temp = collider.unk14;
         } else {
             temp = collider.unk1C;
@@ -372,7 +372,7 @@ void func_80169C10(Entity* entity) {
         entity->primIndex = primIndex;
         if (primIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-            entity->accelerationY = 0x8000;
+            entity->velocityY = 0x8000;
             entity->posX.i.hi =
                 ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
             entity->posY.i.hi =
@@ -393,7 +393,7 @@ void func_80169C10(Entity* entity) {
         break;
 
     default:
-        entity->posY.val += entity->accelerationY;
+        entity->posY.val += entity->velocityY;
         poly = &g_PrimBuf[entity->primIndex];
         if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
             func_80156C60(entity);
@@ -504,7 +504,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016CC74);
 
 void func_8016D328(Entity* entity) {
     s16 primIndex;
-    s32 acceleration;
+    s32 newVelocity;
 
     switch (entity->step) {
     case 0:
@@ -530,9 +530,9 @@ void func_8016D328(Entity* entity) {
             entity->hitboxWidth = 8;
             entity->hitboxHeight = 8;
             entity->flags |= FLAG_UNK_100000;
-            acceleration = (rand() % 512) + 0x300;
-            entity->accelerationX = rcos(acceleration) * 32;
-            entity->accelerationY = -(rsin(acceleration) * 32);
+            newVelocity = (rand() % 512) + 0x300;
+            entity->velocityX = rcos(newVelocity) * 32;
+            entity->velocityY = -(rsin(newVelocity) * 32);
             entity->step++;
         } else {
             func_80156C60(entity);
@@ -543,8 +543,8 @@ void func_8016D328(Entity* entity) {
         if (++entity->ext.generic.unk7C.s >= 39) {
             func_80156C60(entity);
         } else {
-            entity->posX.val += entity->accelerationX;
-            entity->posY.val += entity->accelerationY;
+            entity->posX.val += entity->velocityX;
+            entity->posY.val += entity->velocityY;
         }
         break;
     }

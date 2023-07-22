@@ -30,7 +30,7 @@ typedef union {
     s32 val;
     struct {
         s16 hi;
-        s16 lo
+        s16 lo;
     } i;
 } Fixed32;
 
@@ -42,8 +42,8 @@ typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
     /* 0x04 */ Fixed32 posX;
     /* 0x08 */ Fixed32 posY;
-    /* 0x0c */ s32 accelerationX;
-    /* 0x10 */ s32 accelerationY;
+    /* 0x0c */ s32 velocityX;
+    /* 0x10 */ s32 velocityY;
     /* 0x14 */ u16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ s16 unk18;

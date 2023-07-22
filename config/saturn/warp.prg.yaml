@@ -14,13 +14,13 @@ segments:
     subsegments:
       - start: 0x0
         type: data
-        file: 14
+        file: warp
         end: 0x3f
       - start: 0x40
         type: c
-        file: 14
+        file: warp
         end: 0x1D74
       - start: 0x1D74
         type: data
-        file: 14
+        file: warp
         end: 0x6488

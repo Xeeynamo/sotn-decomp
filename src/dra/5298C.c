@@ -1,9 +1,9 @@
+#define INCLUDE_ASM_NEW
 #include "dra.h"
-#if defined(VERSION_US)
 
 #define CH(x) ((x)-0x20)
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F298C);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F298C);
 
 bool func_800F483C(void) {
     s32 buf[BUTTON_COUNT];
@@ -252,7 +252,11 @@ void CalcDefense(void) {
         g_Status.D_80097C2A |= 0x1000;
     }
     if (D_80139850 != 0) {
+#if defined(VERSION_US)
         g_Status.D_80097C2C |= 0x200;
+#elif defined(VERSION_HD)
+        g_Status.D_80097C2A |= 0x200;
+#endif
     }
     if (D_80139854 != 0) {
         g_Status.D_80097C2A |= 0x800;
@@ -438,7 +442,7 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F5904);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F5904);
 
 void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
@@ -540,7 +544,7 @@ void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
     DrawMenuRect(context, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawRelicsMenu);
+INCLUDE_ASM("dra/nonmatchings/5298C", DrawRelicsMenu);
 
 void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x24, 0x40, 0x40, 0, 0x80, 0x150, 0x9C, 1, 0, 0);
@@ -657,18 +661,21 @@ void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     s32 xcopy;
     s32 ycopy;
 
-    s32 s4 = D_8013784C;
+    s32 s4 = D_8013784C; // FAKE can be removed in HD but not in US
 
     D_80137614 = 0;
     while (1) {
         xcopy = x;
         ycopy = y;
         ch = *str++;
+#if defined(VERSION_US)
         if (*str == 0xC0 && *(str + 1) == 0xD2) {
             D_8013784C = 2;
             str += 2;
-        } else
+        } else {
             D_8013784C = s4;
+        }
+#endif
 
         if (ch == 0xFF) {
             ch = *str++;
@@ -711,16 +718,16 @@ void func_800F6A48(void) {
     func_800EA5E4(0x411);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F6A70);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6A70);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F6BEC);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6BEC);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F6CC0);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F6DC8);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6DC8);
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawSettingsButton);
+INCLUDE_ASM("dra/nonmatchings/5298C", DrawSettingsButton);
 #else
 extern u8 c_chPlaystationButtons[];
 extern u8 c_chShoulderButtons[];
@@ -756,23 +763,37 @@ void DrawSettingsButton(MenuContext* ctx) {
 #endif
 
 void DrawSettingsReverseCloak(MenuContext* context) {
-    DrawMenuStr(c_strNormal, 176, 48, context);
-    DrawMenuStr(c_strReversal, 176, 64, context);
-    func_800F5E68(
-        context, g_Settings.isCloakLiningReversed, 174, 46, 64, 12, 4, 1);
+#if defined(VERSION_US)
+    const int StrX = 176;
+    const int ImgW = 64;
+#elif defined(VERSION_HD)
+    const int StrX = 128;
+    const int ImgW = 40;
+#endif
+
+    DrawMenuStr(c_strNormal, StrX, 48, context);
+    DrawMenuStr(c_strReversal, StrX, 64, context);
+    func_800F5E68(context, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW,
+                  12, 4, 1);
 }
 
 void DrawSettingsSound(MenuContext* context) {
+#if defined(VERSION_US)
+    const int ImgW = 53;
+#elif defined(VERSION_HD)
+    const int ImgW = 37;
+#endif
+
     s16 cursorX = context->cursorX;
     s16 cursorY = context->cursorY;
     s32 subMenuX = cursorX + 4;
     DrawMenuStr(c_strStereo, subMenuX, cursorY + 4, context);
     DrawMenuStr(c_strMono, subMenuX, cursorY + 0x14, context);
-    func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2, 53,
-                  12, 4, 1);
+    func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2,
+                  ImgW, 12, 4, 1);
 }
 
-u8 statChangeArrow(u16 arg0, u16 arg1) {
+u8 StatChangeArrow(u16 arg0, u16 arg1) {
     if (arg0 == arg1) {
         return 0xE4; // Right arrow
     }
@@ -813,16 +834,16 @@ void DrawStatChanges(void) {
     // Print the destination value for the square attack item
     DrawMenuInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
     // Show arrow icon for increasing, decreasing, or staying the same
-    arrow = statChangeArrow(g_Status.attackHands[0], g_NewAttackRightHand);
+    arrow = StatChangeArrow(g_Status.attackHands[0], g_NewAttackRightHand);
     DrawMenuChar(arrow, 0x13C, 0x50, ctx);
 
     // Same but for the circle attack item
     DrawMenuInt(g_NewAttackLeftHand, 0x154, 0x5A, ctx);
-    arrow = statChangeArrow(g_Status.attackHands[1], g_NewAttackLeftHand);
+    arrow = StatChangeArrow(g_Status.attackHands[1], g_NewAttackLeftHand);
     DrawMenuChar(arrow, 0x13C, 0x5A, ctx);
     // And repeat for defense.
     DrawMenuInt(g_NewDefenseEquip, 0x154, 0x6A, ctx);
-    arrow = statChangeArrow(g_Status.defenseEquip, g_NewDefenseEquip);
+    arrow = StatChangeArrow(g_Status.defenseEquip, g_NewDefenseEquip);
     DrawMenuChar(arrow, 0x13C, 0x6A, ctx);
 
     // Iterate through the 4 stats (STR CON INT LCK) doing the same.
@@ -836,7 +857,7 @@ void DrawStatChanges(void) {
                     xcoord + 0x2C, ycoord, ctx);
         // Indication of change
         arrow =
-            statChangeArrow((g_Status.statsBase[i] + g_Status.statsEquip[i]),
+            StatChangeArrow((g_Status.statsBase[i] + g_Status.statsEquip[i]),
                             g_NewPlayerStatsTotal[i]);
         DrawMenuChar(arrow, xcoord + 0x34, ycoord, ctx);
         // Final value for the stat
@@ -938,13 +959,22 @@ void DrawPauseMenu(s32 arg0) {
     }
 
     DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
+#if defined(VERSION_US)
     func_800F66BC(D_800A2D6C, x, y + 20, ctx, 1);
+#elif defined(VERSION_HD)
+    func_800F66BC(D_800A83AC[0], x, y + 20, ctx, 1);
+#endif
     DrawMenuInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
     if (ctx == (&g_MenuData.menus[1])) {
         x = 32;
         y = 120;
     } else {
+#if defined(VERSION_US)
         DrawMenuStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
+#elif defined(VERSION_HD)
+        func_800F66BC(
+            D_800A83AC[g_MenuNavigation.cursorEquip + 0x11], 24, 40, ctx, true);
+#endif
         x = 12;
         y = 70;
     }
@@ -966,9 +996,9 @@ void DrawPauseMenu(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", DrawSpellMenu);
+INCLUDE_ASM("dra/nonmatchings/5298C", DrawSpellMenu);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F7F64);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F7F64);
 
 void func_800F82F4(void) {
     RECT dstRect;
@@ -986,11 +1016,17 @@ void func_800F82F4(void) {
 }
 
 void DrawSystemMenu(MenuContext* ctx) {
+#if defined(VERSION_US)
+    const int Width = 128;
+#else
+    const int Width = 80;
+#endif
+
     const char** new_var;
     s32 strIdx;
     s8** menuOptions;
 
-    func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, 128, 12, 4,
+    func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, Width, 12, 4,
                   D_800978F8 == 0x101);
 
     new_var = &c_strButton;
@@ -1009,7 +1045,7 @@ void DrawSystemMenu(MenuContext* ctx) {
     DrawMenuStr(menuOptions[strIdx], 32, 128, ctx);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F84CC);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F84CC);
 
 void func_800F86E4(void) {
     s32 i;
@@ -1022,43 +1058,60 @@ void func_800F86E4(void) {
     FreePrimitives(D_80137840);
 }
 
-void func_800F8754(MenuContext* context, s32 x, s32 y) {
-    s32 curX;
-    s32 phi_a1;
-
+#if defined(VERSION_US)
+void func_800F8754(MenuContext* menu, s32 x, s32 y) {
     if (D_801375DC == 0) {
         D_8013784C = 1;
     }
 
-    DrawMenuStr(c_strSpells, x + 14, y + 20, context);
+    DrawMenuStr(c_strSpells, x + 14, y + 20, menu);
     if (D_801375FC == 0) {
         D_8013784C = 1;
     } else {
         D_8013784C = 0;
     }
 
-    phi_a1 = x + 2;
-    DrawMenuStr(c_strFamiliars, phi_a1, y + 68, context);
+    DrawMenuStr(c_strFamiliars, x + 2, y + 68, menu);
     D_8013784C = 0;
-    DrawMenuStr(c_strEquip, x + 18, y + 4, context);
-    curX = x + 14;
-    DrawMenuStr(c_strRelics, curX, y + 36, context);
-    DrawMenuStr(c_strSystem, curX, y + 52, context);
+    DrawMenuStr(c_strEquip, x + 18, y + 4, menu);
+    DrawMenuStr(c_strRelics, x + 14, y + 36, menu);
+    DrawMenuStr(c_strSystem, x + 14, y + 52, menu);
 }
+#elif defined(VERSION_HD)
+void func_800F8754(MenuContext* menu, s32 x, s32 y) {
+    func_800F66BC(c_strSpells, x + 0xC, y, menu, true);
+    func_800F66BC(c_strFamiliars, x + 6, y + 0x10, menu, D_801375DC != 0);
+    func_800F66BC(c_strEquip, x + 6, y + 0x20, menu, true);
+    func_800F66BC(c_strRelics, x, y + 0x30, menu, true);
+    func_800F66BC(c_strSystem, x + 6, y + 0x40, menu, D_801375FC != 0);
+}
+#endif
 
 void func_800F8858(MenuContext* context) {
+#if defined(VERSION_US)
+    const int TextY = 8;
+    const int UnkX = 72;
+#elif defined(VERSION_HD)
+    const int TextY = 4;
+    const int UnkX = 40;
+#endif
     s32 i = 0;
     const char** pStrEquipTypes = &c_strSSword;
-    s32 y = 8;
+    s32 y = TextY;
 
     for (; i < ITEM_END; i++) {
+#if defined(VERSION_US)
         DrawMenuStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
                     context->cursorX + 4, context->cursorY + y, context);
+#elif defined(VERSION_HD)
+        func_800F66BC(
+            pStrEquipTypes[g_Settings.equipOrderTypes[i]], context->cursorX + 4,
+            context->cursorY + y, context, true);
+#endif
         y += 16;
     }
-
     func_800F5E68(context, D_80137618, context->cursorX + 2,
-                  context->cursorY + 4, 72, 16, 0, 1);
+                  context->cursorY + 4, UnkX, 16, 0, true);
 }
 
 void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
@@ -1213,7 +1266,7 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F8F28);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F8F28);
 
 void func_800F9690(void) {
     POLY_GT4* poly = &g_PrimBuf[D_8013783C];
@@ -1293,9 +1346,11 @@ void func_800F9808(u32 arg0) {
     LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F98AC);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F98AC);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F99B8);
+#if defined(VERSION_US)
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F99B8);
+#endif
 
 void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
@@ -1307,6 +1362,7 @@ void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
     func_800F98AC(arg0, arg1);
 }
 
+#if defined(VERSION_US)
 void func_800F9D88(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
         D_8013794C = &D_80082FE4;
@@ -1315,6 +1371,7 @@ void func_800F9D88(s32 arg0, s32 arg1, s32 arg2) {
     D_80137954 = 0x100;
     func_800F99B8(arg0, arg1, 0);
 }
+#endif
 
 void func_800F9DD0(u8* arg0, u8* arg1) {
     s32 i;
@@ -1327,16 +1384,15 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-// DECOMP_ME_WIP func_800F9E18 https://decomp.me/scratch/VmuNt 99.46%
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F9E18);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800F9F40);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9F40);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA034);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA3C4);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA3C4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA60C);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA60C);
 
 // If you use both attack buttons at once, see if something special happens.
 // Applies to Shield Rod + Shield, or dual Heaven Swords
@@ -1398,7 +1454,7 @@ bool LoadWeaponPrg(s32 equipIndex) {
     return 1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FA9DC);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA9DC);
 
 void func_800FAB1C(void) {
     const int START = 4;
@@ -1413,7 +1469,7 @@ void func_800FAB1C(void) {
     }
 }
 
-Unkstruct_80137638 D_80137638[];
+extern Unkstruct_80137638 D_80137638[];
 
 void func_800FAB8C(s32 arg0) {
     D_80137638[arg0].unk0 = 1;
@@ -1465,12 +1521,16 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
 
     if (arg1) {
         D_80137608 = 1;
+#if defined(VERSION_US)
         func_800F99B8(arg0, 2, 0);
+#elif defined(VERSION_HD)
+        func_800F98AC(arg0, 2);
+#endif
         LoadEquipIcon(equipIcon, palette, 0x1F);
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FADC0);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FADC0);
 
 void func_800FAE98(void) {
     func_800FADC0();
@@ -1571,14 +1631,23 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FB23C);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FB23C);
 
 void func_800FB9BC(void) {
+    const int ItemsPerRow = 2;
+#if defined(VERSION_US)
+    const int VertScrollWindow = 120;
+    const int YScrollPerElement = 14;
+#elif defined(VERSION_HD)
+    const int VertScrollWindow = 140;
+    const int YScrollPerElement = 15;
+#endif
+
     s32 i;
+    MenuContext* context;
 
-    MenuContext* context = &g_MenuData.menus[0];
-
-    for (i = 0; i < 0x10; i++, context++) {
+    context = &g_MenuData.menus[0];
+    for (i = 0; i < 16; i++, context++) {
         context->cursorX = context->unk1.x = MenuContextData[i].cursorX;
         context->cursorY = context->unk1.y = MenuContextData[i].cursorY;
         context->cursorW = context->unk1.w = MenuContextData[i].cursorW;
@@ -1590,13 +1659,16 @@ void func_800FB9BC(void) {
         context->unk18 = MenuContextData[i].unk08;
         context->unk1C = 2;
     }
-    D_801376C4 = D_801376C8 = -((g_MenuNavigation.cursorRelic / 2) * 120) / 14;
+    D_801376C4 = D_801376C8 =
+        -((g_MenuNavigation.cursorRelic / ItemsPerRow) * VertScrollWindow) /
+        YScrollPerElement;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBAC4);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FBAC4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5298C", func_800FBC24);
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800FBC24);
 
+#if defined(VERSION_US)
 void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
                    s32 blend, s32 color) {
     GpuBuffer* gpuBuffer;
@@ -1617,6 +1689,7 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     AddPrim(&gpuBuffer->ot[0x1FF], sprt);
     g_GpuUsage.sp++;
 }
+#endif
 
 s32 func_800FD4C0(s32 bossId, s32 action) {
     s32 temp_v0;
@@ -1682,4 +1755,3 @@ s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
 u8 GetEquipItemCategory(s32 equipId) {
     return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
 }
-#endif

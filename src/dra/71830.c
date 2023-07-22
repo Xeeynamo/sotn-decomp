@@ -96,13 +96,13 @@ bool func_80111D24(void) {
     hitboxRightMargin = collider.effects & EFFECT_MIST_ONLY;
 
     if (hitboxRightMargin & hitboxLeftMargin) {
-        AccelerateX(speed);
+        SetSpeedX(speed);
         return true;
     } else if (hitboxRightMargin != 0) {
-        PLAYER.accelerationX = -speed;
+        PLAYER.velocityX = -speed;
         return true;
     } else if (hitboxLeftMargin != 0) {
-        PLAYER.accelerationX = speed;
+        PLAYER.velocityX = speed;
         return true;
     }
     return false;
@@ -132,7 +132,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801120B4);
 
 void func_80112B64(void) {
     if (func_8010FDF8(0x4301C) == 0) {
-        AccelerateX(0x18000);
+        SetSpeedX(0x18000);
         if (func_8010E27C() == 0) {
             func_8010E570(0);
         }
@@ -147,7 +147,7 @@ void func_80113148(void) {
     } else if (func_8010FDF8(0x9029) == 0) {
         func_8010E1EC(0x1000);
         if (func_8010E27C() != 0) {
-            AccelerateX(0xC000);
+            SetSpeedX(0xC000);
         }
     }
 }
@@ -168,8 +168,8 @@ void func_801139CC(s32 arg0) {
         PlaySfx(NA_SE_SECRET_STAIRS);
     }
     if (arg0 & 2) {
-        PLAYER.accelerationX = 0;
-        PLAYER.accelerationY = 0;
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
     }
 }
 #endif

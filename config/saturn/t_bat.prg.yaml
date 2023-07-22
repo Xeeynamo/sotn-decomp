@@ -14,13 +14,13 @@ segments:
     subsegments:
       - start: 0x0
         type: data
-        file: 60
+        file: t_bat
         end: 0x5F
       - start: 0x60
         type: c
-        file: 60
+        file: t_bat
         end: 0x2857
       - start: 0x2858
         type: data
-        file: 60
+        file: t_bat
         end: 0x7000

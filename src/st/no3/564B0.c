@@ -56,9 +56,9 @@ void EntityZombie(Entity* self) {
         AnimateEntity(D_80183C7C, self);
         temp_a0 = func_801C52EC(&D_80183CBC);
         if (self->facing != 0) {
-            self->accelerationX = 0x8000;
+            self->velocityX = 0x8000;
         } else {
-            self->accelerationX = -0x8000;
+            self->velocityX = -0x8000;
         }
 
         if (temp_a0 & 0xC0) {

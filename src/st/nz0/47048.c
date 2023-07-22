@@ -156,16 +156,16 @@ void func_801C7538(Entity* entity) {
         entity->unk19 = 4;
         entity->animCurFrame = entity->params;
         entity->palette += entity->ext.generic.unk84.S16.unk2;
-        entity->accelerationX = entity->ext.generic.unk84.S16.unk0 << 12;
-        entity->accelerationX += 0x8000 - (Random() << 8);
-        entity->accelerationY -= (Random() & 0x1F) << 12;
+        entity->velocityX = entity->ext.generic.unk84.S16.unk0 << 12;
+        entity->velocityX += 0x8000 - (Random() << 8);
+        entity->velocityY -= (Random() & 0x1F) << 12;
         break;
 
     case 1:
         MoveEntity();
-        entity->accelerationY += 0x2000;
+        entity->velocityY += 0x2000;
 
-        if (entity->accelerationX != 0) {
+        if (entity->velocityX != 0) {
             if (entity->facing == 0) {
                 new_var = (u16)entity->rotAngle - 16;
                 var_v0 = new_var;
@@ -193,14 +193,14 @@ void func_801C7654(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
         entity->blendMode = 0x70;
-        entity->accelerationX = rcos(entity->rotAngle) * 0x10;
-        entity->accelerationY = rsin(entity->rotAngle) * 0x10;
+        entity->velocityX = rcos(entity->rotAngle) * 0x10;
+        entity->velocityY = rsin(entity->rotAngle) * 0x10;
         break;
 
     case 1:
         AnimateEntity(D_801825F0, entity);
         MoveEntity();
-        entity->accelerationY += 0x2000;
+        entity->velocityY += 0x2000;
 
         g_api.CheckCollision(
             entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
@@ -208,8 +208,8 @@ void func_801C7654(Entity* entity) {
         if (collider.effects & EFFECT_SOLID) {
             entity->unk19 = 2;
             entity->unk1C = 0x100;
-            entity->accelerationY = 0x4000;
-            entity->accelerationX *= 8;
+            entity->velocityY = 0x4000;
+            entity->velocityX *= 8;
             entity->step++;
         }
         break;
@@ -234,15 +234,15 @@ void func_801C77B8(Entity* entity) {
         entity->unk19 = 3;
         entity->unk1C = 0x100;
         entity->unk1A = 0x100;
-        entity->accelerationX = 0;
+        entity->velocityX = 0;
         entity->animCurFrame = entity->params + 8;
-        entity->accelerationY = D_80182600[entity->params];
+        entity->velocityY = D_80182600[entity->params];
         break;
 
     case 1:
         MoveEntity();
         temp_v1_2 = entity->unk1C - 8;
-        entity->accelerationY -= 0x400;
+        entity->velocityY -= 0x400;
         entity->unk1C = temp_v1_2;
         entity->unk1A = temp_v1_2;
 
@@ -265,7 +265,7 @@ void func_801C7884(Entity* entity) {
         MoveEntity();
         AnimateEntity(D_80181D3C[params], entity);
 
-        entity->accelerationY = rsin(entity->rotAngle) * 2;
+        entity->velocityY = rsin(entity->rotAngle) * 2;
         entity->rotAngle += 0x20;
 
         if (entity[-1].step != 1) {

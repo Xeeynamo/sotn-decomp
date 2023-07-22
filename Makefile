@@ -443,6 +443,7 @@ build_saturn_copy_files:
 	cp  ./src/saturn/macro.inc $(SATURN_BUILD_DIR)
 	cp -r ./src/saturn/*.c $(SATURN_BUILD_DIR)
 	cp -r ./src/saturn/*.h $(SATURN_BUILD_DIR)
+	cp -r ./src/saturn/lib $(SATURN_BUILD_DIR)/lib
 	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
@@ -455,11 +456,21 @@ build_saturn_copy_files:
 	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
 build_saturn_dosemu_native:
-	cd build/saturn && FILENAME=game sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=t_bat sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=zero sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=stage_02 sh ./compile_dosemu.sh
-	cd build/saturn && FILENAME=warp sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=game sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=t_bat sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=zero sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=stage_02 sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=warp sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/gfs sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/spr sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/dma sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/scl sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/csh sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/per sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/cdc sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/mth sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/bup sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/sys sh ./compile_dosemu.sh
 
 build_saturn_dosemu_docker:
 	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
@@ -476,7 +487,7 @@ build_saturn_link_docker_ld:
 	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib -s"
 
 build_saturn_link_native_ld:
-	cd build/saturn && sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -T zero_user_syms.txt -verbose zero.o --no-check-sections -nostdlib -s
+	cd build/saturn && sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -T zero_user_syms.txt -verbose zero.o lib/gfs.o lib/spr.o lib/dma.o lib/scl.o lib/csh.o lib/per.o lib/cdc.o lib/mth.o lib/bup.o lib/sys.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s
