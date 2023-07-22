@@ -54,8 +54,8 @@ typedef enum {
     /* 2 */ SUCCUBUS_CLONE_ATTACK_WAIT,
     /* 3 */ SUCCUBUS_CLONE_ATTACK_PLACE_REAL,
     /* 4 */ SUCCUBUS_CLONE_ATTACK_ANIM_2,
-    /* 5 */ SUCCUBUS_CLONE_ATTACK_SET_SHOTTING,
-    /* 6 */ SUCCUBUS_CLONE_ATTACK_STOP_SHUTTING,
+    /* 5 */ SUCCUBUS_CLONE_ATTACK_SET_SHOOTING,
+    /* 6 */ SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING,
     /* 7 */ SUCCUBUS_CLONE_ATTACK_SHOOT_PINKBALLS, // unused
 } SuccubusCloneAttackSubSteps;
 
@@ -741,20 +741,20 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_CLONE_ATTACK_ANIM_2:
             if (AnimateEntity(D_80180734, self) == 0) {
-                SetSubStep(SUCCUBUS_CLONE_ATTACK_SET_SHOTTING);
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_SET_SHOOTING);
             }
             break;
 
-        case SUCCUBUS_CLONE_ATTACK_SET_SHOTTING:
+        case SUCCUBUS_CLONE_ATTACK_SET_SHOOTING:
             if (AnimateEntity(D_80180760, self) == 0) {
                 self->ext.succubus.unk85 = true;
                 // PinkBall attack delay set
                 self->ext.succubus.timer = (self->params * 48) + 1;
-                SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHUTTING);
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
             }
             break;
 
-        case SUCCUBUS_CLONE_ATTACK_STOP_SHUTTING:
+        case SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING:
             self->animCurFrame = 26;
             if (--self->ext.succubus.timer == 0) {
                 self->ext.succubus.unk85 = false;
@@ -764,7 +764,7 @@ void EntitySuccubus(Entity* self) {
                  * inaccessible causing the real Succubus to be
                  * unable to do the PinkBall attack.
                  */
-                SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHUTTING);
+                SetSubStep(SUCCUBUS_CLONE_ATTACK_STOP_SHOOTING);
             }
             if (D_80180660 == 0) {
                 SetStep(SUCCUBUS_IDLE);
