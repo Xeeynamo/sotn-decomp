@@ -1,4 +1,5 @@
 #include "stage.h"
+#define STAGE_DRE_H
 
 typedef enum {
     /* 0x00 */ E_NONE,

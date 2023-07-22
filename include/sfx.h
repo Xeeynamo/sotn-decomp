@@ -20,6 +20,7 @@
  * SH = Shaft
  * ML = Master Librarian
  * FE = Ferryman
+ * SU = Succubus
  * AL = Alucard
  * MA = Maria
  * RI = Richter
@@ -236,3 +237,24 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_DR_HURT_4 0x85D
 #define NA_SE_PL_TELEPORT 0x8BA
 #define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
+
+// STAGE DRE
+#define NA_SE_SU_SHOOT_PINKBALLS 0x62C
+#define NA_SE_SU_LANDING 0x646
+#define NA_VO_SU_CRYSTAL_2 0x6AF
+#define NA_SE_SU_FLAPING_WINGS 0x6C6
+#define NA_SE_SU_PETAL_ATTACK 0x6B0
+#define NA_SE_SU_CREATE_CLONES 0x6D5
+#define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
+#define NA_VO_SU_LAUGH 0x86E
+// Blank, may be a leftover from the Jap version.
+#define NA_VO_SU_BLANK 0x86F
+#define NA_VO_SU_GRUNT_1 0x870
+#define NA_VO_SU_GRUNT_2 0x872
+#define NA_VO_SU_GRUNT_3 0x874
+#define NA_VO_SU_HURT_1 0x879
+#define NA_VO_SU_HURT_2 0x87A
+#define NA_VO_SU_CRYSTAL_1 0x87C
+#define NA_VO_SU_SUCK_YOU_DRY 0x876
+#define NA_VO_SU_NO_SCREAM 0x87B
+#define NA_VO_SU_DELICIOUS 0x8D1
