@@ -43,14 +43,14 @@ void EntitySuccubusPetal(Entity* self) {
         temp_s2 = ((rand() * 4) + 0x38000) >> 0xC;
         self->velocityX = temp_s2 * rcos(angle);
         self->velocityY = temp_s2 * rsin(angle);
-        self->ext.succubus.timer = (Random() & 0x1F) + 0x10;
+        self->ext.succubus.timer = (Random() & 31) + 16;
 
     case 1:
         self->velocityX = self->velocityX - (self->velocityX >> 6);
         self->velocityY = self->velocityY - (self->velocityY >> 6);
         MoveEntity();
         if (--self->ext.succubus.timer == 0) {
-            self->ext.succubus.timer = (Random() & 0x1F) + 0x20;
+            self->ext.succubus.timer = (Random() & 31) + 32;
             self->step++;
         }
         break;
@@ -113,8 +113,8 @@ void EntitySuccubusClone(Entity* self) {
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
         velX = self->ext.succubus.clonePosX -
-                     (self->posX.i.hi + g_Camera.posX.i.hi)
-                 << 0x10;
+                   (self->posX.i.hi + g_Camera.posX.i.hi)
+               << 0x10;
         if (velX < 0) {
             velX += 0x3F;
         }
@@ -165,7 +165,8 @@ void EntitySuccubusClone(Entity* self) {
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_SUCCUBUS_PINK_BALL_PROJECTILE, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_SUCCUBUS_PINK_BALL_PROJECTILE, self, newEntity);
                     newEntity->params = i;
                     if (i != 0) {
                         newEntity->posX.i.hi -= 2;
@@ -300,7 +301,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->rotAngle = var_s0;
         self->unk19 |= 1;
         self->unk1A = 0x100;
-        CreateEntityFromEntity(E_ID_1F, self, &self[1]);
+        CreateEntityFromEntity(E_SUCCUBUS_WING_SPIKE_TIP, self, &self[1]);
         self[1].facing = self->facing;
         self[1].params = self->params;
         self[1].rotAngle = self->rotAngle;
@@ -343,7 +344,7 @@ void EntitySuccubusWingSpike(Entity* self) {
     self[1].posY.i.hi -= temp_s2 * rsin(var_s0) >> 0xC;
 }
 
-void EntityUnkId1F(Entity* self) {
+void EntitySuccubusWingSpikeTip(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_8018050C);

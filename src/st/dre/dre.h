@@ -25,7 +25,7 @@ typedef enum {
     /* 0x1C */ E_SUCCUBUS_CLONE,
     /* 0x1D */ E_SUCCUBUS_PINK_BALL_PROJECTILE,
     /* 0x1E */ E_SUCCUBUS_WING_SPIKE,
-    /* 0x1F */ E_ID_1F,
+    /* 0x1F */ E_SUCCUBUS_WING_SPIKE_TIP,
     /* 0x20 */ E_SUCCUBUS_CUTSCENE,
 } DRE_EntityIDs;
 
