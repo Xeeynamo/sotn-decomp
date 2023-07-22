@@ -41,13 +41,13 @@ void EntitySuccubusPetal(Entity* self) {
             angle = angle;
         }
         temp_s2 = ((rand() * 4) + 0x38000) >> 0xC;
-        self->accelerationX = temp_s2 * rcos(angle);
-        self->accelerationY = temp_s2 * rsin(angle);
+        self->velocityX = temp_s2 * rcos(angle);
+        self->velocityY = temp_s2 * rsin(angle);
         self->ext.succubus.timer = (Random() & 0x1F) + 0x10;
 
     case 1:
-        self->accelerationX = self->accelerationX - (self->accelerationX >> 6);
-        self->accelerationY = self->accelerationY - (self->accelerationY >> 6);
+        self->velocityX = self->velocityX - (self->velocityX >> 6);
+        self->velocityY = self->velocityY - (self->velocityY >> 6);
         MoveEntity();
         if (--self->ext.succubus.timer == 0) {
             self->ext.succubus.timer = (Random() & 0x1F) + 0x20;
@@ -88,7 +88,7 @@ extern s32 D_80180660; // clones counter
 
 void EntitySuccubusClone(Entity* self) {
     Entity* newEntity;
-    s32 accelX;
+    s32 velX;
     s8* hitbox;
     s32 i;
 
@@ -112,13 +112,13 @@ void EntitySuccubusClone(Entity* self) {
     case 0:
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
-        accelX = self->ext.succubus.clonePosX -
+        velX = self->ext.succubus.clonePosX -
                      (self->posX.i.hi + g_Camera.posX.i.hi)
                  << 0x10;
-        if (accelX < 0) {
-            accelX += 0x3F;
+        if (velX < 0) {
+            velX += 0x3F;
         }
-        self->accelerationX = accelX >> 6;
+        self->velocityX = velX >> 6;
         self->ext.succubus.timer = 64;
 
     case 1:
@@ -249,8 +249,8 @@ void EntityPinkBallProjectile(Entity* self) {
 
     case 2:
         temp_s0 = (self->params << 0xA) + 0x200;
-        self->accelerationX = rcos(temp_s0) * 0x38;
-        self->accelerationY = rsin(temp_s0) * 0x38;
+        self->velocityX = rcos(temp_s0) * 0x38;
+        self->velocityY = rsin(temp_s0) * 0x38;
         self->ext.succubus.unkA2 = temp_s0;
         self->ext.succubus.timer = 128;
         self->step++;
@@ -260,8 +260,8 @@ void EntityPinkBallProjectile(Entity* self) {
         MoveEntity();
         temp_v0 = func_8019AF08(self, g_Entities);
         temp_s0 = func_8019AF88(0x10, self->ext.succubus.unkA2, temp_v0);
-        self->accelerationX = rcos(temp_s0) * 0x38;
-        self->accelerationY = rsin(temp_s0) * 0x38;
+        self->velocityX = rcos(temp_s0) * 0x38;
+        self->velocityY = rsin(temp_s0) * 0x38;
         self->ext.succubus.unkA2 = temp_s0;
 
         if (self->hitFlags & 0x80) {
