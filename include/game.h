@@ -238,7 +238,6 @@ typedef struct Primitive {
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
-typedef s16 AnimSet;
 
 #define FONT_W 8               // small font size used for dialogues and menu
 #define FONT_H 8               // small font size used for dialogues and menu
@@ -491,7 +490,7 @@ typedef struct Entity {
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
     /* 0x52 */ s16 animFrameDuration;
-    /* 0x54 */ AnimSet animSet;
+    /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 unk58;
     /* 0x5A */ s16 unk5A;
@@ -510,7 +509,7 @@ typedef struct Entity {
 } Entity; // size = 0xBC
 
 typedef struct {
-    /* 0x00 */ AnimSet animSet;
+    /* 0x00 */ s16 animSet;
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
