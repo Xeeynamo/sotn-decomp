@@ -158,9 +158,9 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.D_80072EFC = 1;
         if (g_DemoMode != Demo_None) {
             self->ext.generic.unk7C.s = 64;
-            break;
+        } else {
+            self->ext.generic.unk7C.s = 128;
         }
-        self->ext.generic.unk7C.s = 128;
         break;
 
     case 1:
@@ -170,16 +170,12 @@ void EntityCSMoveAlucard(Entity* self) {
         }
         if (g_Player.unk0C & 7) {
             if (g_blinkTimer & 1) {
-                if (!(g_Player.unk0C & 1)) {
-                    if (!(g_Player.unk0C & 2)) {
-                        if (g_Player.unk0C & 4) {
-                            g_Player.D_80072EF4 = 2;
-                        }
-                    } else {
-                        g_Player.D_80072EF4 = 4;
-                    }
-                } else {
+                if (g_Player.unk0C & 1) {
                     g_Player.D_80072EF4 = 8;
+                } else if (g_Player.unk0C & 2) {
+                    g_Player.D_80072EF4 = 4;
+                } else if (g_Player.unk0C & 4) {
+                    g_Player.D_80072EF4 = 2;
                 }
             }
         } else if (self->ext.generic.unk7C.u == 0) {
@@ -243,9 +239,9 @@ void EntityCSMoveAlucard(Entity* self) {
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_80180944, self) == 0) {
             SetStep(7);
-            break;
+        } else {
+            player->animCurFrame = self->animCurFrame;
         }
-        player->animCurFrame = self->animCurFrame;
         break;
 
     case 7:
