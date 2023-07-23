@@ -50,6 +50,7 @@ LayoutEntity* D_801802F4[];
 
 /* *** Initializers *** */
 extern u16 D_80180464[];
+extern u16 D_8018047C[]; // EntityCSMoveAlucard
 extern u16 D_80180488[]; // EntityBackgroundClouds
 extern u16 D_80180494[];
 extern u16 D_801804A0[];
@@ -92,6 +93,7 @@ extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
 extern s32 D_801807F8[];
 extern u8 D_80180830[];
+extern u8 D_80180944[]; // Animation
 extern u16 D_8018097C[];
 extern s16 D_80180D80[];
 extern u16 D_80180470[];
