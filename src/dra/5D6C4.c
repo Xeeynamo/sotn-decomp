@@ -792,11 +792,16 @@ void func_800FF7B8(s32 arg0) {
             g_Status.equipment[1] = 0;
             g_Status.equipment[3] = 0;
             if (g_StageId == STAGE_NO3) {
-                func_800FD4C0(26, 1);
-                func_800FD4C0(9, 1);
-                func_800FD4C0(4, 1);
-                func_800FD4C0(14, 1);
-                func_800FD4C0(12, 1);
+                TimeAttackController(
+                    TIMEATTACK_EVENT_FIRST_MARIA_MEET, TIMEATTACK_SET_RECORD);
+                TimeAttackController(
+                    TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_RECORD);
+                TimeAttackController(TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
+                                     TIMEATTACK_SET_RECORD);
+                TimeAttackController(
+                    TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
+                TimeAttackController(
+                    TIMEATTACK_EVENT_DEATH_DEFEAT, TIMEATTACK_SET_RECORD);
             }
             g_Status.timerHours = 0;
             D_80097C34 = 0;
@@ -879,7 +884,8 @@ void func_800FF7B8(s32 arg0) {
                     }
                 }
 
-                temp_v0 = func_800FD4C0(0, 0);
+                temp_v0 = TimeAttackController(
+                    TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_GET_RECORD);
                 if (temp_v0 < 101) {
                     g_Status.hpMax += 5;
                     g_Status.mpMax += 5;

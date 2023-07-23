@@ -746,7 +746,7 @@ void CheckWeaponCombo(void);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 void func_800FAF44(s32);
-s32 func_800FD4C0(s32 bossId, s32 action);
+s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
 u8* GetEquipOrder(s32 equipTypeFilter);

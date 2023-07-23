@@ -12,7 +12,9 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
 
         res = phi_s1->x == chunkX;
         if (res && phi_s1->y == chunkY && phi_s1->stageId == g_StageId &&
-            (phi_s1->bossId == 0xFF || func_800FD4C0(phi_s1->bossId, 0) == 0)) {
+            (phi_s1->eventId == TIMEATTACK_EVENT_INVALID ||
+             TimeAttackController(phi_s1->eventId, TIMEATTACK_GET_RECORD) ==
+                 0)) {
             return phi_s1->unk10 + 2;
         }
     }
@@ -421,8 +423,10 @@ void func_800F24F4(void) {
         phi_v1 = g_StageId;
         if (phi_v1 == (STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG)) {
             if ((castleX == phi_v1) && (castleY == 0x24)) {
-                if (func_800FD4C0(22, 0) == 0) {
-                    func_800FD4C0(22, 1);
+                if (TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
+                                         TIMEATTACK_GET_RECORD) == 0) {
+                    TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
+                                         TIMEATTACK_SET_RECORD);
                 }
                 phi_v1 = g_StageId;
             }
@@ -438,7 +442,8 @@ void func_800F24F4(void) {
                     phi_a0 = 1;
                 } else {
                     phi_a0 = 1;
-                    if (func_800FD4C0(1, 0)) {
+                    if (TimeAttackController(TIMEATTACK_EVENT_ORLOX_DEFEAT,
+                                             TIMEATTACK_GET_RECORD)) {
                         goto block_18;
                     }
                 }

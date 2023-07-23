@@ -206,7 +206,8 @@ void HandleGameOver(void) {
                     PlaySfx(0x530);
                     break;
                 }
-            } else if (func_800FD4C0(0x1A, 0)) {
+            } else if (TimeAttackController(TIMEATTACK_EVENT_FIRST_MARIA_MEET,
+                                            TIMEATTACK_GET_RECORD) != 0) {
                 if (rand() & 7) {
                     PlaySfx(0x33B);
                 } else {

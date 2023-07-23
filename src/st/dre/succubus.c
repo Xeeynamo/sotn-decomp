@@ -219,7 +219,8 @@ void EntitySuccubus(Entity* self) {
 
         case 1:
             g_api.PlaySfx(MU_ENCHANTED_BANQUET);
-            g_api.func_800FD4C0(9, 2);
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_VISITED);
             self->velocityX = 0;
             self->velocityY = -0x40000;
             self->step_s++;
@@ -253,7 +254,8 @@ void EntitySuccubus(Entity* self) {
             g_Entities[200].params = 1;
             D_80180660 = 0;
             D_80180664 |= 2;
-            g_api.func_800FD4C0(9, 1);
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_RECORD);
             self->velocityX = 0;
             self->velocityY = 0;
             posY = self->posY.i.hi + g_Camera.posY.i.hi;

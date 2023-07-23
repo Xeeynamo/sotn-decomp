@@ -328,6 +328,50 @@ typedef enum {
     Demo_Playback,
 } DemoMode;
 
+typedef enum {
+    TIMEATTACK_INVALID = -1,
+    TIMEATTACK_GET_RECORD,
+    TIMEATTACK_SET_RECORD,
+    TIMEATTACK_SET_VISITED,
+} TimeAttackActions;
+
+typedef enum {
+    TIMEATTACK_EVENT_DRACULA_DEFEAT,
+    TIMEATTACK_EVENT_ORLOX_DEFEAT,
+    TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT,
+    TIMEATTACK_EVENT_GRANFALOON_DEFEAT,
+    TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
+    TIMEATTACK_EVENT_SCYLLA_DEFEAT,
+    TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT,
+    TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT,
+    TIMEATTACK_EVENT_BEELZEBUB_DEFEAT,
+    TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
+    TIMEATTACK_EVENT_KARASUMAN_DEFEAT,
+    TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
+    TIMEATTACK_EVENT_DEATH_DEFEAT,
+    TIMEATTACK_EVENT_CERBERUS_DEFEAT,
+    TIMEATTACK_EVENT_SAVE_RICHTER,
+    TIMEATTACK_EVENT_MEDUSA_DEFEAT,
+    TIMEATTACK_EVENT_THE_CREATURE_DEFEAT,
+    TIMEATTACK_EVENT_LESSER_DEMON_DEFEAT,
+    TIMEATTACK_EVENT_DOPPLEGANGER_40_DEFEAT,
+    TIMEATTACK_EVENT_AKMODAN_II_DEFEAT,
+    TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT,
+    TIMEATTACK_EVENT_GALAMOTH_DEFEAT,
+    TIMEATTACK_EVENT_FINAL_SAVEPOINT,
+    TIMEATTACK_EVENT_MEET_DEATH,
+    TIMEATTACK_EVENT_GET_HOLYGLASSES,
+    TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN,
+    TIMEATTACK_EVENT_FIRST_MARIA_MEET,
+    TIMEATTACK_EVENT_UNUSED_27,
+    TIMEATTACK_EVENT_UNUSED_28,
+    TIMEATTACK_EVENT_UNUSED_29,
+    TIMEATTACK_EVENT_UNUSED_30,
+    TIMEATTACK_EVENT_UNUSED_31,
+    TIMEATTACK_EVENT_END,
+    TIMEATTACK_EVENT_INVALID = 0xFF,
+} TimeAttackEvents;
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -424,7 +468,7 @@ typedef struct {
     /* 0x00 */ s32 x;
     /* 0x04 */ s32 y;
     /* 0x08 */ s32 stageId;
-    /* 0x0C */ s32 bossId;
+    /* 0x0C */ TimeAttackEvents eventId;
     /* 0x10 */ s32 unk10;
 } RoomBossTeleport; /* size=0x14 */
 
@@ -655,7 +699,7 @@ typedef struct {
 typedef struct {
     /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
     /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
-    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[32];
+    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[TIMEATTACK_EVENT_END];
     /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];
     /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
     /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[ITEM_END];
@@ -927,7 +971,8 @@ typedef struct {
     /* 8003C834 */ Accessory* D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
-    /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
+    /* 8003C840 */ s32 (*TimeAttackController)(
+        TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
@@ -989,7 +1034,8 @@ extern void (*g_api_LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
 extern Equipment* g_api_D_800A4B04;
 extern Accessory* g_api_D_800A7718;
 extern void (*g_api_AddHearts)(s32 value);
-extern s32 (*g_api_func_800FD4C0)(s32 bossId, s32 action);
+extern s32 (*g_api_TimeAttackController)(
+    TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 itemId, s32 itemCategory);
