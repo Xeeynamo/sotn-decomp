@@ -777,8 +777,9 @@ void func_80174210(Entity* self, s32 arg1) {
             do {
                 temp_s0 = &D_80170760[var_s2];
                 if (temp_s0->unk8 == -1 || temp_s0->unk8 == D_801710A0) {
-                    if ((temp_s0->unkC < 0 && !(g_StageId & 0x20)) ||
-                        !(g_StageId & 0x20)) {
+                    if ((temp_s0->unkC < 0 &&
+                         !(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) ||
+                        !(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
                         if (ABS(temp_s0->unkC) == D_801710A4 &&
                             temp_s0->unk10 == D_801710A8) {
                             if (temp_s0->cameraX == cameraX &&
@@ -937,7 +938,7 @@ s32 func_801747B8(void) {
 s32 func_80174864(void) {
     int tmp;
 
-    if (g_StageId - 0x20 < 0x15) {
+    if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1) {
         if (D_8003C708.flags == 0x22) {
             return 1;
         }

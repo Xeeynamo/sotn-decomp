@@ -143,10 +143,10 @@ s32 func_800E7E08(u32 arg0) {
             ;
         break;
     case 7:
-        if (g_StageId == 2) {
+        if (g_StageId == STAGE_LIB) {
             func_80131EBC(&aPqes_1, 0x202);
         }
-        if (g_StageId == 6) {
+        if (g_StageId == STAGE_DAI) {
             func_80131EBC(&aPqes_1, 0x204);
         }
         break;

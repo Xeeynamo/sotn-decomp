@@ -149,66 +149,6 @@ typedef struct Primitive {
 #define DEMO_KEY_PTR 0x801E8000
 #define DEBUG_PTR 0x80280000
 
-#define STAGE_NO0 0x00
-#define STAGE_NO1 0x01
-#define STAGE_LIB 0x02
-#define STAGE_CAT 0x03
-#define STAGE_NO2 0x04
-#define STAGE_CHI 0x05
-#define STAGE_DAI 0x06
-#define STAGE_NP3 0x07
-#define STAGE_CEN 0x08
-#define STAGE_NO4 0x09
-#define STAGE_ARE 0x0A
-#define STAGE_TOP 0x0B
-#define STAGE_NZ0 0x0C
-#define STAGE_NZ1 0x0D
-#define STAGE_WRP 0x0E
-#define STAGE_NO1_ALT 0x0F
-#define STAGE_NO0_ALT 0x10
-#define STAGE_DRE 0x12
-#define STAGE_UNK_13 0x13
-#define STAGE_UNK_14 0x14
-#define STAGE_UNK_15 0x15
-#define STAGE_BO7 0x16
-#define STAGE_MAR 0x17
-#define STAGE_BO6 0x18
-#define STAGE_BO5 0x19
-#define STAGE_BO4 0x1A
-#define STAGE_BO3 0x1B
-#define STAGE_BO2 0x1C
-#define STAGE_BO1 0x1D
-#define STAGE_BO0 0x1E
-#define STAGE_ST0 0x1F
-#define STAGE_RCEN (STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG)
-#define STAGE_RNZ1 0x35
-#define STAGE_RBO8 0x36
-#define STAGE_RBO7 0x37
-#define STAGE_RBO6 0x38
-#define STAGE_RBO5 0x39
-#define STAGE_RBO4 0x3A
-#define STAGE_RBO3 0x3B
-#define STAGE_RBO2 0x3C
-#define STAGE_RBO1 0x3D
-#define STAGE_RBO0 0x3E
-#define STAGE_MAD 0x40
-#define STAGE_NO3 0x41
-#define STAGE_IWA_LOAD 0x42
-#define STAGE_IGA_LOAD 0x43
-#define STAGE_HAGI_LOAD 0x44
-#define STAGE_SEL 0x45
-#define STAGE_TE1 0x46
-#define STAGE_TE2 0x47
-#define STAGE_TE3 0x48
-#define STAGE_TE4 0x49
-#define STAGE_TE5 0x4A
-#define STAGE_TOP_ALT 0x4B
-#define STAGE_INVERTEDCASTLE_MASK 0x1F
-#define STAGE_INVERTEDCASTLE_FLAG 0x20
-#define STAGE_EU_WARNING 0x70 // EU piracy legal message thing
-#define STAGE_ENDING 0xFE
-#define STAGE_MEMORYCARD 0xFF
-
 // Flags for entity->flags
 #define FLAG_UNK_2000 0x2000
 #define FLAG_UNK_10000 0x10000
@@ -260,6 +200,69 @@ typedef enum {
     Game_Ending,
     Game_99 = 99,
 } GameState;
+
+#define STAGE_INVERTEDCASTLE_MASK 0x1F
+#define STAGE_INVERTEDCASTLE_FLAG 0x20
+typedef enum {
+    STAGE_NO0 = 0x00,
+    STAGE_NO1 = 0x01,
+    STAGE_LIB = 0x02,
+    STAGE_CAT = 0x03,
+    STAGE_NO2 = 0x04,
+    STAGE_CHI = 0x05,
+    STAGE_DAI = 0x06,
+    STAGE_NP3 = 0x07,
+    STAGE_CEN = 0x08,
+    STAGE_NO4 = 0x09,
+    STAGE_ARE = 0x0A,
+    STAGE_TOP = 0x0B,
+    STAGE_NZ0 = 0x0C,
+    STAGE_NZ1 = 0x0D,
+    STAGE_WRP = 0x0E,
+    STAGE_NO1_ALT = 0x0F,
+    STAGE_NO0_ALT = 0x10,
+    STAGE_DRE = 0x12,
+    STAGE_NZ0_DEMO = 0x13,
+    STAGE_NZ1_DEMO = 0x14,
+    STAGE_LIB_DEMO = 0x15,
+    STAGE_BO7 = 0x16,
+    STAGE_MAR = 0x17,
+    STAGE_BO6 = 0x18,
+    STAGE_BO5 = 0x19,
+    STAGE_BO4 = 0x1A,
+    STAGE_BO3 = 0x1B,
+    STAGE_BO2 = 0x1C,
+    STAGE_BO1 = 0x1D,
+    STAGE_BO0 = 0x1E,
+    STAGE_ST0 = 0x1F,
+    STAGE_RNO0 = STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RCEN = STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNZ1 = 0x35,
+    STAGE_RBO8 = 0x36,
+    STAGE_RBO7 = 0x37,
+    STAGE_RBO6 = 0x38,
+    STAGE_RBO5 = 0x39,
+    STAGE_RBO4 = 0x3A,
+    STAGE_RBO3 = 0x3B,
+    STAGE_RBO2 = 0x3C,
+    STAGE_RBO1 = 0x3D,
+    STAGE_RBO0 = 0x3E,
+    STAGE_MAD = 0x40,
+    STAGE_NO3 = 0x41,
+    STAGE_IWA_LOAD = 0x42,
+    STAGE_IGA_LOAD = 0x43,
+    STAGE_HAGI_LOAD = 0x44,
+    STAGE_SEL = 0x45,
+    STAGE_TE1 = 0x46,
+    STAGE_TE2 = 0x47,
+    STAGE_TE3 = 0x48,
+    STAGE_TE4 = 0x49,
+    STAGE_TE5 = 0x4A,
+    STAGE_TOP_ALT = 0x4B,
+    STAGE_EU_WARNING = 0x70, // EU piracy legal message screen,
+    STAGE_ENDING = 0xFE,
+    STAGE_MEMORYCARD = 0xFF,
+} Stages;
 
 typedef enum {
     // Clean-up and reset all the gameplay related memory
@@ -467,7 +470,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s32 x;
     /* 0x04 */ s32 y;
-    /* 0x08 */ s32 stageId;
+    /* 0x08 */ Stages stageId;
     /* 0x0C */ TimeAttackEvents eventId;
     /* 0x10 */ s32 unk10;
 } RoomBossTeleport; /* size=0x14 */
@@ -1353,7 +1356,7 @@ extern s32 D_80097450;
 extern u16 D_8009748A[];
 extern u16 D_8009748E[];
 extern Pad g_pads[PAD_COUNT];
-extern u32 g_StageId;
+extern Stages g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
 extern s32 g_UseDisk;

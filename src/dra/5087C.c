@@ -354,9 +354,9 @@ INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2014);
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2120);
 
 void func_800F223C(void) {
-    g_StageId ^= 0x20;
+    g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
     func_800F2120();
-    g_StageId ^= 0x20;
+    g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
 }
 
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2288);

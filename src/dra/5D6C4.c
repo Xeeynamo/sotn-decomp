@@ -580,7 +580,8 @@ void func_800FF60C(void) {
 void func_800FF60C();
 
 void func_800FF6C4(void) {
-    if ((g_StageId != 0x1F) && (g_CurrentPlayableCharacter == PLAYER_ALUCARD)) {
+    if (g_StageId != STAGE_ST0 &&
+        g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
         func_800FF60C();
     }
 }
@@ -977,7 +978,7 @@ void func_800FF7B8(s32 arg0) {
                 g_Status.exp = 11000;
                 g_Status.level = 20;
                 var_s0_9 = 0x10;
-                if (g_StageId & 0x20) {
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
                     g_Status.exp = 110000;
                 }
 
@@ -1325,7 +1326,7 @@ void func_801026BC(s32 arg0) {
     if (arg0 == 0) {
         poly->pad3 = 8;
         return;
-    } else if (!(g_StageId & 0x20)) {
+    } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
         SetPolyRect(poly, 0, 1, 255, 255);
     } else {
         poly->x2 = 255;
