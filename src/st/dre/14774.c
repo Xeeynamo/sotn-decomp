@@ -203,7 +203,7 @@ void EntityCSMoveAlucard(Entity* self) {
             self->step++;
         }
         g_Player.D_80072EFC = 1;
-        return;
+        break;
 
     case 3: // Alucard stops walking
         g_Player.D_80072EF4 = 0;
