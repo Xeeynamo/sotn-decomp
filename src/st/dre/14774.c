@@ -1,158 +1,5 @@
 #include "dre.h"
 
-// Pink ball projectile shot by succubus duplicates ID 0x1D
-void EntityPinkBallProjectile(Entity* self) {
-    Entity* entity;
-    s16 temp_s0;
-    s16 temp_v0;
-
-    if (D_80180664 & 2) {
-        DestroyEntity(self);
-        return;
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180500);
-        self->blendMode = 0x30;
-        self->unk19 = 3;
-        self->unk1C = 0;
-        self->unk1A = 0;
-
-    case 1:
-        self->unk1A = self->unk1C += 4;
-        if (self->unk1A > 256) {
-            self->unk19 = 0;
-        }
-        AnimateEntity(D_80180794, self);
-
-        entity = self->ext.generic.unk9C;
-        if (entity->ext.generic.unk84.U8.unk1 != 0) {
-            self->unk19 = 0;
-            self->step++;
-        }
-        if (entity->flags & 0x100) {
-            DestroyEntity(self);
-        }
-        break;
-
-    case 2:
-        temp_s0 = (self->params << 0xA) + 0x200;
-        self->velocityX = rcos(temp_s0) * 0x38;
-        self->velocityY = rsin(temp_s0) * 0x38;
-        self->ext.generic.unkA2 = temp_s0;
-        self->ext.generic.unk80.modeS16.unk0 = 128;
-        self->step++;
-
-    case 3:
-        AnimateEntity(D_80180794, self);
-        MoveEntity();
-        temp_v0 = func_8019AF08(self, g_Entities);
-        temp_s0 = func_8019AF88(0x10, self->ext.generic.unkA2, temp_v0);
-        self->velocityX = rcos(temp_s0) * 0x38;
-        self->velocityY = rsin(temp_s0) * 0x38;
-        self->ext.generic.unkA2 = temp_s0;
-
-        if (self->hitFlags & 0x80) {
-            self->step = 4;
-        }
-
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-            self->step = 4;
-        }
-        break;
-
-    case 4:
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        AnimateEntity(D_80180794, self);
-        MoveEntity();
-        break;
-    }
-}
-
-// Extending wing spike from succubus ID 0x1E
-void EntitySuccubusWingSpike(Entity* self) {
-    s32 temp_s2;
-    s16 var_s0;
-
-    if (D_80180664 & 2) {
-        DestroyEntity(self);
-        return;
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_801804E8);
-        self->unk19 = 4;
-        self->animCurFrame = 0;
-        var_s0 = D_801807F0[self->params];
-        self->rotAngle = var_s0;
-        self->unk19 |= 1;
-        self->unk1A = 0x100;
-        CreateEntityFromEntity(0x1F, self, &self[1]);
-        self[1].facing = self->facing;
-        self[1].params = self->params;
-        self[1].rotAngle = self->rotAngle;
-
-    case 1:
-        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
-            self->step++;
-        }
-        break;
-
-    case 2:
-        self->animCurFrame = 85;
-        self->unk1A += 0x40;
-        if (self->unk1A > 0x600) {
-            self->unk1A = 0x600;
-        }
-
-        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 == 0) {
-            self->step++;
-        }
-        break;
-
-    case 3:
-        self->unk1A -= 0x40;
-        if (self->unk1A < 0x100) {
-            DestroyEntity(self);
-            return;
-        }
-    }
-
-    var_s0 = self->rotAngle;
-    temp_s2 = (self->unk1A * 0xB) >> 6;
-    if (self->facing == 0) {
-        var_s0 = 0x800 - var_s0;
-    }
-
-    self[1].posX.i.hi = self->posX.i.hi;
-    self[1].posY.i.hi = self->posY.i.hi;
-    self[1].posX.i.hi += temp_s2 * rcos(var_s0) >> 0xC;
-    self[1].posY.i.hi -= temp_s2 * rsin(var_s0) >> 0xC;
-}
-
-void EntityUnkId1F(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_8018050C);
-        entity->animCurFrame = 0;
-        entity->unk19 = 4;
-        entity->hitboxState = 0;
-    case 1:
-        if (entity[-1].animCurFrame != 0) {
-            entity->hitboxState = 1;
-            entity->animCurFrame = 0x56;
-        }
-        if (entity->hitFlags != 0) {
-            D_80180668 = 1;
-        }
-        if (entity[-1].entityId != 0x1E) {
-            DestroyEntity(entity);
-        }
-    }
-}
-
 void func_80194774(void) {
     D_801A3EE4 = 2;
     D_801A3EE2 = 2;
@@ -163,7 +10,65 @@ void func_80194774(void) {
     D_801A3EDE = D_801A3EE0 + 20;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801947C8);
+s32 func_801947C8(s32 arg0) {
+    Primitive* prim;
+    s16 firstPrimIndex;
+
+    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
+    D_801A3F10[0] = firstPrimIndex;
+    if (firstPrimIndex == -1) {
+        D_801A3F10[0] = 0;
+        return 0;
+    }
+    D_801A3ED8 = arg0;
+    D_801A3F14 = 0;
+    D_801A3F0C = -1;
+    D_801A3F08 = -1;
+    func_80194774();
+
+    if (prim && prim) { // !FAKE
+    }
+
+    prim = D_801A3EF0[0] = &g_PrimBuf[D_801A3F10[0]];
+
+    prim->blendMode = BLEND_VISIBLE;
+    prim = D_801A3EF0[1] = prim->next;
+
+    prim->blendMode = BLEND_VISIBLE;
+    prim = D_801A3EF0[2] = prim->next;
+
+    prim->blendMode = BLEND_VISIBLE;
+    prim = D_801A3EF0[3] = prim->next;
+
+    prim->blendMode = BLEND_VISIBLE;
+    prim = D_801A3EF0[4] = prim->next;
+
+    prim->blendMode = BLEND_VISIBLE;
+    prim = D_801A3EF0[5] = prim->next;
+
+    prim->type = 4;
+    prim->blendMode = BLEND_VISIBLE;
+
+    prim = prim->next;
+    prim->type = PRIM_G4;
+    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = 0;
+    prim->x0 = prim->x2 = 4;
+    prim->x1 = prim->x3 = 0xF8;
+    prim->priority = 0x1FD;
+    prim->blendMode = BLEND_VISIBLE;
+
+    prim = prim->next;
+    prim->type = PRIM_TILE;
+    prim->x0 = 3;
+    prim->y0 = 0x2F;
+    prim->v0 = 0x4A;
+    prim->r0 = prim->g0 = prim->b0 = 0xFF;
+    prim->priority = 0x1FC;
+    prim->blendMode = BLEND_VISIBLE;
+    return 1;
+}
 
 void func_8019498C(s16 yOffset) {
     RECT rect;
@@ -175,9 +80,9 @@ void func_8019498C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801949E8);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_801949E8);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194AA0);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194AA0);
 
 void func_80194C24(s32 arg0) {
     D_801A3F18 = arg0 + 0x100000;
@@ -185,14 +90,40 @@ void func_80194C24(s32 arg0) {
     D_801A3F14 = 1;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194C50);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194C50);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194F14);
+void func_80194F14(Entity* self) {
+    /** TODO: !FAKE
+     * do while (0) fixed instruction reordering at
+     * entity->flags ^= FLAG_HAS_PRIMS;
+     * but intruduces a problem in PlaySfx, which is fixed
+     * by using gameApi pointer.
+     */
+    GameApi* gameApi;
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194FF4);
+    if (g_pads[0].tapped == PAD_START) {
+        D_801A3ED4 = 1;
+        g_api.FreePrimitives(self->primIndex);
+        do {
+            self->flags ^= FLAG_HAS_PRIMS;
+        } while (0);
+        if (D_801A3F0C != -1) {
+            g_api.FreePrimitives(D_801A3F0C);
+        }
+        if (D_801A3F08 != -1) {
+            g_api.FreePrimitives(D_801A3F08);
+        }
+        gameApi = &g_api;
+        (*gameApi).PlaySfx(SET_STOP_MUSIC);
+        self->step = 1;
+        self->step_s = 0;
+    }
+}
+
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194FF4);
 
 // dialogue with mother opens as alucard walks right ID 20
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntitySuccubusIntroCutscene);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntitySuccubusCutscene);
 
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - *(s16*)D_8009740C;
@@ -206,16 +137,16 @@ void func_801961DC(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityUnkId21);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId21);
 
 // appears to load from the CD and freeze the game
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityUnkId23);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId23);
 
 // Fades to white
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityFadeToWhite1);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityFadeToWhite1);
 
 // Fades to white ID 24
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityFadeToWhite2);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityFadeToWhite2);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -305,11 +236,11 @@ void Update(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801972BC);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_801972BC);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801973C4);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_801973C4);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityNumericDamage);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityNumericDamage);
 
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     DestroyEntity(entity);
@@ -422,9 +353,9 @@ void func_80198EC0(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80198F18);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80198F18);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80199014);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80199014);
 
 void func_80199128(s16 arg0) {
     while (1) {
@@ -446,9 +377,9 @@ void func_80199174(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801991CC);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_801991CC);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801992C8);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_801992C8);
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_80180220[objLayoutId];
@@ -546,7 +477,7 @@ s32 func_801996F8(Entity* e) {
     return diff;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityRedDoor);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -932,11 +863,11 @@ void SetStep(u8 step) {
     entity->animFrameDuration = 0;
 }
 
-void func_8019B008(u8 arg0) {
+void SetSubStep(u8 step_s) {
     Entity* entity;
 
     entity = g_CurrentEntity;
-    entity->step_s = arg0;
+    entity->step_s = step_s;
     entity->animFrameIdx = 0;
     entity->animFrameDuration = 0;
 }
@@ -1062,7 +993,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019B45C);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_8019B45C);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 params;
@@ -1169,7 +1100,7 @@ void func_8019BA38(u16 arg0) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019BAB8);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_8019BAB8);
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
@@ -1227,7 +1158,7 @@ void CollectLifeVessel(void) {
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityPrizeDrop);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityPrizeDrop);
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;
