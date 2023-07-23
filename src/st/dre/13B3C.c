@@ -193,7 +193,7 @@ void EntitySuccubusClone(Entity* self) {
             self->step_s++;
         }
         if (self->ext.succubus.timer & 1) {
-            self->animSet = 0;
+            self->animSet = ANIMSET_DRA(0);
         } else {
             self->animSet = ANIMSET_OVL(1);
         }
