@@ -359,6 +359,8 @@ void func_800F223C(void) {
 
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2288);
 
+extern s32 D_80097400[];
+
 void func_800F2404(s32 arg0) {
     s32* temp;
     s32* ptr;

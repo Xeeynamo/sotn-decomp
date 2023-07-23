@@ -1294,7 +1294,6 @@ extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern s32 D_800973F8;
 extern s32 D_800973FC;
-extern s32 D_80097400[];
 extern s32 D_8009740C[];
 extern s32 D_80097410;
 extern s32 D_80097414;

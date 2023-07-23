@@ -278,6 +278,8 @@ void func_8018F8EC(u16 index) {
     }
 }
 
+extern s32 D_80097400[];
+
 // platform that lifts you into chamber, starts cutscene, gives you holy glasses
 void EntityPlatform(Entity* self) {
     Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;

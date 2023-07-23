@@ -168,6 +168,8 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B7C54);
 // cutscene where alucard and maria discuss castle changing
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", EntityMariaCutscene);
 
+extern s32 D_80097400[];
+
 void func_801B8E0C(Entity* self) {
     switch (self->step) {
     case 0:
