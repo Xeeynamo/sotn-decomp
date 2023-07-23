@@ -129,10 +129,14 @@ segments:
 
       # after SCL
       - start: 0x26B1C
-        type: data
+        type: c
+        file: lib/scl
+        end: 0x274AB
+
+      - start: 0x274AC
+        type: c
         file: lib/scl
         end: 0x27933
-
 
       # SEGA_CSH.A
       - start: 0x27934

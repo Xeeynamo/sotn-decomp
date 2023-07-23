@@ -1861,5 +1861,239 @@ static Fixed32 Fcos(Fixed32 a) {
     return (val);
 }
 
-// bad split, 3 funcs in here
-INCLUDE_ASM("asm/saturn/zero/data", d602AB9C, d_0602AB9C);
+extern Fixed32 currentMatrix[2][9];
+
+// SCL_Rotate, but apparently edited by the devs to remove unused
+// dimensions for space saving reasons?
+// func_0602AB9C
+void SCL_Rotate(Fixed32 xy, Fixed32 z, Fixed32 disp) {
+    Uint16 TbNum;
+
+    switch (SclCurSclNum) {
+    case SCL_RBG_TB_A:
+        TbNum = 0;
+        break;
+    case SCL_RBG_TB_B:
+        TbNum = 1;
+        break;
+    default:
+        return;
+        break;
+    }
+
+    currentMatrix[TbNum][0] = FIXED(1);
+    currentMatrix[TbNum][1] = FIXED(0);
+    currentMatrix[TbNum][2] = FIXED(0);
+    currentMatrix[TbNum][3] = FIXED(0);
+    currentMatrix[TbNum][4] = FIXED(1);
+    currentMatrix[TbNum][5] = FIXED(0);
+    currentMatrix[TbNum][6] = FIXED(0);
+    currentMatrix[TbNum][7] = FIXED(0);
+    currentMatrix[TbNum][8] = FIXED(1);
+
+    if (SclRbgKtbAddr[TbNum]) {
+        SclRotateXy[TbNum] += xy;
+    } else {
+        SclRotateXy[TbNum] = 0;
+    }
+
+    SclRotateZ[TbNum] += z;
+
+    if (!SclRotateXy[TbNum] && xy) {
+        switch (SclCurSclNum) {
+        case SCL_RBG_TB_A:
+            Scl_r_reg.k_contrl &= 0xff00;
+            break;
+        case SCL_RBG_TB_B:
+            Scl_r_reg.k_contrl &= 0x00ff;
+            break;
+        }
+    }
+
+    if (disp)
+        SCL_RotateZD(disp);
+
+    if (SclRbgKtbOffset[TbNum] && SclRotateDisp[TbNum]) {
+        SclRotateXy[TbNum] = 0;
+    }
+
+    if (SclRotateXy[TbNum] || SclRotateMoveZ[TbNum]) {
+        currentMatrix[TbNum][0] = SclRotregBuff[TbNum].zoom.x;
+        currentMatrix[TbNum][4] = SclRotregBuff[TbNum].zoom.y;
+    } else if ((TbNum == 0 && (Scl_r_reg.k_contrl & 0x00ff)) ||
+               (TbNum == 1 && (Scl_r_reg.k_contrl & 0xff00))) {
+        currentMatrix[TbNum][0] = SclRotregBuff[TbNum].zoom.x;
+        currentMatrix[TbNum][4] = SclRotregBuff[TbNum].zoom.y;
+        SclRotregBuff[TbNum].matrix_a = SclRotregBuff[TbNum].zoom.x;
+        SclRotregBuff[TbNum].matrix_e = SclRotregBuff[TbNum].zoom.y;
+    }
+
+#if 0
+	if(SclRotateZ[TbNum])	SCL_RotateZ(SclRotateZ[TbNum]);
+
+	if( SclRotateXy[TbNum] || SclRotateMoveZ[TbNum] ) {
+		if(SclRotXySw[TbNum]==0 || SclRbgKtbOffset[TbNum])
+			SCL_RotateX(SclRotateXy[TbNum]);
+		else	SCL_RotateY(SclRotateXy[TbNum]);
+	}
+#endif
+}
+
+extern Fixed32 SclCsx[2], SclCsy[2];
+
+// func_0602B024
+void SCL_RotateZD(Fixed32 r) {
+    Uint16 TbNum;
+
+    switch (SclCurSclNum) {
+    case SCL_RBG_TB_A:
+        TbNum = 0;
+        break;
+    case SCL_RBG_TB_B:
+        TbNum = 1;
+        break;
+    default:
+        return;
+        break;
+    }
+
+    if (SclRbgKtbOffset[TbNum] &&
+        (SclRotateXy[TbNum] || SclRotateMoveZ[TbNum])) {
+        SclRotateDisp[TbNum] = 0;
+        return;
+    }
+
+    SclRotateDisp[TbNum] += r;
+
+    if (SclRotateDisp[TbNum] >= FIXED(360))
+        SclRotateDisp[TbNum] -= FIXED(360);
+    if (SclRotateDisp[TbNum] < FIXED(0))
+        SclRotateDisp[TbNum] += FIXED(360);
+
+    SclRotregBuff[TbNum].screenst.x =
+        SclCsx[TbNum] - MUL_FIXED(Fcos(SclRotateDisp[TbNum]), SclCsx[TbNum]) -
+        MUL_FIXED((-Fsin(SclRotateDisp[TbNum])), SclCsy[TbNum]);
+    SclRotregBuff[TbNum].screenst.y =
+        SclCsy[TbNum] - MUL_FIXED(Fsin(SclRotateDisp[TbNum]), SclCsx[TbNum]) -
+        MUL_FIXED((Fcos(SclRotateDisp[TbNum])), SclCsy[TbNum]);
+    SclRotregBuff[TbNum].screenst.z = FIXED(0);
+    SclRotregBuff[TbNum].screendlt.x = -Fsin(SclRotateDisp[TbNum]);
+    SclRotregBuff[TbNum].screendlt.y = Fcos(SclRotateDisp[TbNum]);
+    SclRotregBuff[TbNum].delta.x = Fcos(SclRotateDisp[TbNum]);
+    SclRotregBuff[TbNum].delta.y = Fsin(SclRotateDisp[TbNum]);
+}
+
+void SCL_SetColRam(Uint32 Object, Uint32 Index, Uint32 num, void* Color) {
+    Uint32 *color32, *ram32;
+    Uint16 *color16, *ram16;
+
+    if (SCL_GetColRamMode() == 2) {
+        color32 = (Uint32*)Color;
+        ram32 = (Uint32*)((Uint32)SCL_COLRAM_ADDR +
+                          ((SCL_GetColRamOffset(Object) * 0x400))) +
+                Index;
+
+        if (num == 1) {
+            ram32[0] = color32[0];
+        } else {
+            SCL_Memcpyw(ram32, color32, num * 4);
+        }
+    } else {
+        color16 = (Uint16*)Color;
+        ram16 = (Uint16*)((Uint32)SCL_COLRAM_ADDR +
+                          ((SCL_GetColRamOffset(Object) * 0x200))) +
+                Index;
+
+        if (num == 1) {
+            ram16[0] = color16[0];
+        } else {
+            SCL_Memcpyw(ram16, color16, num * 2);
+        }
+    }
+}
+
+extern Uint32 SclLineColRamOffset;
+
+// func_0602B52C
+void SCL_SetColRamOffset(Uint32 Object, Uint32 Offset, Uint8 transparent) {
+    if (Object & SCL_SPR)
+        SCL_SET_SPCAOS(Offset);
+
+    if ((Object & SCL_NBG0) || (Object & SCL_RBG1)) {
+        SCL_SET_N0CAOS(Offset);
+        if (transparent)
+            Scl_s_reg.dispenbl |= 0x0100;
+        else
+            Scl_s_reg.dispenbl &= 0xfeff;
+    }
+
+    if ((Object & SCL_NBG1) || (Object & SCL_EXBG)) {
+        SCL_SET_N1CAOS(Offset);
+        if (transparent)
+            Scl_s_reg.dispenbl |= 0x0200;
+        else
+            Scl_s_reg.dispenbl &= 0xfdff;
+    }
+
+    if (Object & SCL_NBG2) {
+        SCL_SET_N2CAOS(Offset);
+        if (transparent)
+            Scl_s_reg.dispenbl |= 0x0400;
+        else
+            Scl_s_reg.dispenbl &= 0xfbff;
+    }
+
+    if (Object & SCL_NBG3) {
+        SCL_SET_N3CAOS(Offset);
+        if (transparent)
+            Scl_s_reg.dispenbl |= 0x0800;
+        else
+            Scl_s_reg.dispenbl &= 0xf7ff;
+    }
+
+    if (Object & SCL_RBG0) {
+        SCL_SET_R0CAOS(Offset);
+        if (transparent)
+            Scl_s_reg.dispenbl |= 0x1000;
+        else
+            Scl_s_reg.dispenbl &= 0xefff;
+    }
+
+    if (Object & SCL_LNCL) {
+        SclLineColRamOffset = Offset;
+    }
+}
+
+extern Uint32 SclLineColRamOffset;
+// func_0602B85C
+Uint32 SCL_GetColRamOffset(Uint32 Object) {
+    switch (Object) {
+    case SCL_SPR:
+        return (SCL_GET_SPCAOS());
+        break;
+    case SCL_NBG0:
+    case SCL_RBG1:
+        return (SCL_GET_N0CAOS());
+        break;
+    case SCL_NBG1:
+    case SCL_EXBG:
+        return (SCL_GET_N1CAOS());
+        break;
+    case SCL_NBG2:
+        return (SCL_GET_N2CAOS());
+        break;
+    case SCL_NBG3:
+        return (SCL_GET_N3CAOS());
+        break;
+    case SCL_RBG0:
+        return (SCL_GET_R0CAOS());
+        break;
+    case SCL_LNCL:
+        return (SclLineColRamOffset);
+        break;
+    default:
+        break;
+    }
+}
+
+const u16 pad_602B9B2 = 0;
