@@ -22,7 +22,7 @@ INCLUDE_ASM("asm/us/main/nonmatchings/72A4", rsin);
 extern s16 D_8002C3CC[];
 extern s16 rsin_tbl[];
 s32 sin_1(s32 arg0) {
-    s16 *new_var;
+    s16* new_var;
     if (arg0 < 0x801) {
         if (arg0 < 0x401) {
             return rsin_tbl[arg0];
