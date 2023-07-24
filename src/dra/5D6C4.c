@@ -145,24 +145,24 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
     }
 }
 
-s16 GetStatusAlimentTimer(s32 kind, s16 timer) {
+s16 GetStatusAlimentTimer(StatusAliments statusAliment, s16 timer) {
     s16 ret;
     s32 var_v1;
 
-    switch (kind) {
-    case 0: // Poisoned
+    switch (statusAliment) {
+    case STATUS_ALIMENT_POISON:
         ret = timer - (g_Status.statsTotal[STAT_CON] * 16);
         if (ret < 256) {
             ret = 256;
         }
         break;
-    case 1: // Cursed
+    case STATUS_ALIMENT_CURSE:
         ret = timer - (g_Status.statsTotal[STAT_CON] * 4);
         if (ret < 64) {
             ret = 64;
         }
         break;
-    case 2: // Petrified
+    case STATUS_ALIMENT_PETRIFIED:
         ret = timer;
         var_v1 = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
         if (var_v1 < 0) {
@@ -173,11 +173,11 @@ s16 GetStatusAlimentTimer(s32 kind, s16 timer) {
         }
         ret -= var_v1;
         break;
-    case 3: // Dark Metamorphosis
+    case STATUS_ALIMENT_DARK_METAMORPHOSIS:
         ret = timer + (g_Status.statsTotal[STAT_INT] * 4);
         break;
-    case 4:
-    case 5: // used by EntityPlayerPinkEffect
+    case STATUS_ALIMENT_UNK04:
+    case STATUS_ALIMENT_UNK05:
         ret = timer;
         if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, 4) != 0) {
             ret += ret / 2;

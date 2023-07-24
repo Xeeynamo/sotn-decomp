@@ -157,6 +157,15 @@ typedef enum {
     Player_Unk40,
 } PlayerSteps;
 
+typedef enum {
+    STATUS_ALIMENT_POISON,
+    STATUS_ALIMENT_CURSE,
+    STATUS_ALIMENT_PETRIFIED,
+    STATUS_ALIMENT_DARK_METAMORPHOSIS,
+    STATUS_ALIMENT_UNK04,
+    STATUS_ALIMENT_UNK05, // used by EntityPlayerPinkEffect
+} StatusAliments;
+
 // Info necessary to load a file from the Cd in UpdateCd
 typedef struct {
     s32 loc;        // lba offset, might be a s32
@@ -755,7 +764,7 @@ const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void func_800FD9D4(SpellDef* spell, s32 id);
-s16 GetStatusAlimentTimer(s32, s16);
+s16 GetStatusAlimentTimer(StatusAliments statusAliment, s16 timer);
 void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
