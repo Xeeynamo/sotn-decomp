@@ -56,12 +56,11 @@ typedef struct {
     void (*Init)();
     void (*Update)();
     bool showMenu;
+    bool pauseGame;
     const char* name;
 } DebugMenu;
 
-void Dummy() {}
-void DummyYummyTummy() {}
-void Update(Entity*);
+void DummyDummyDummy() {}
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
@@ -79,63 +78,54 @@ void UpdateStageSelect(void);
 void Foo() {}
 
 DebugMenu g_DebugMenus[] = {
-    DummyYummyTummy,     DummyYummyTummy,        true,  "Debug mode",
-    InitEntitySpawn,     UpdateDraEntitySpawn,   true,  "DRA spawn",
-    InitEntitySpawn,     UpdateStageEntitySpawn, true,  "Stage spawn",
-    InitSfxPlayer,       UpdateSfxPlayer,        true,  "SFX player",
-    InitDraTest800FD874, UpdateDraTest800FD874,  true,  "Inventory",
-    InitCollisionViewer, UpdateCollisionViewer,  false, "Collision viewer",
-    InitFlagChecker,     UpdateFlagChecker,      true,  "Castleflags",
-    InitStageSelect,     UpdateStageSelect,      true,  "Stages",
+    DummyDummyDummy,     DummyDummyDummy,        true,  false, "Debug mode",
+    InitEntitySpawn,     UpdateDraEntitySpawn,   true,  true,  "DRA spawn",
+    InitEntitySpawn,     UpdateStageEntitySpawn, true,  true,  "Stage spawn",
+    InitSfxPlayer,       UpdateSfxPlayer,        true,  true,  "Snd player",
+    InitDraTest800FD874, UpdateDraTest800FD874,  true,  true,  "Inventory",
+    InitCollisionViewer, UpdateCollisionViewer,  false, false, "Collision map",
+    InitFlagChecker,     UpdateFlagChecker,      true,  true,  "Castleflags",
+    InitStageSelect,     UpdateStageSelect,      true,  true,  "Stages",
 };
 
 int g_DebugMode;
+bool g_EntitiesPaused;
+int g_PrimIndex;
 Primitive* g_PrimFirst;
 Primitive* g_PrimCur;
 
 void DestroyEntity(Entity* item);
-void Init() {
-    Entity* e;
+void Init(void) {
     int i;
 
-    // forces to make the game think that the Familiar is actually active
-    e = &g_Entities[4];
-    DestroyEntity(e);
-    e->posX.val = PLAYER.posX.val;
-    e->posY.val = PLAYER.posY.val;
-    e->entityId = 0xD1;
-    e->params = 0;
-    e->pfnUpdate = Update;
-
-    // the following two flags are important to disallow the game engine to
-    // destroy the entity when the room chnages.
-    e->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
-
-    e->flags |= FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-    e->primIndex = g_api.AllocPrimitives(PRIM_TILE, 5);
-    if (e->primIndex == -1) {
+    g_PrimIndex = g_api.AllocPrimitives(PRIM_TILE, 5);
+    if (g_PrimIndex == -1) {
         g_PrimFirst = NULL;
         return;
     }
 
-    g_PrimFirst = &g_PrimBuf[e->primIndex];
+    g_PrimFirst = &g_PrimBuf[g_PrimIndex];
     DRAW_RESET();
     DRAW_RECT(159, 22, 90, 14, 0xFF, 0xFF, 0xFF, 0x00, 1);
     FILL_RECT(159, 22, 90, 14, 0x50, 0x50, 0x30, 0x41);
 
+    g_EntitiesPaused = false;
     g_DebugMode = 0;
     for (i = 0; i < LEN(g_DebugMenus); i++) {
         g_DebugMenus[i].Init();
     }
 }
-
-void Update(Entity* e) {
+bool Update(void) {
     BeginFont();
     if (g_pads->tapped & PAD_R2) {
         g_DebugMode++;
         if (g_DebugMode >= LEN(g_DebugMenus)) {
             g_DebugMode = 0;
         }
+    }
+
+    if (g_DebugMenus[g_DebugMode].pauseGame != g_EntitiesPaused) {
+        g_EntitiesPaused ^= 1;
     }
 
     if (g_DebugMenus[g_DebugMode].showMenu) {
@@ -149,4 +139,6 @@ void Update(Entity* e) {
     g_DebugMenus[g_DebugMode].Update();
 
     EndFont();
+
+    return !g_EntitiesPaused;
 }
