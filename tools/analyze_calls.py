@@ -2,6 +2,8 @@
 #USAGE: Invoke with no arguments to start interactive graphical mode. User will be prompted for
 #functions one at a time, and a graph will be made for each one they give.
 #Invoke with one argument, a function name, for command line mode. Callers and callees will be printed.
+#Invoke with one argument, ALL, to automatically generate call trees for every function in the game,
+#as well as an index.html to connect them all. This is meant to be hosted on the web.
 
 #Credit to xeeynamo for creation of analyze_calls, and sonicdcer for suggestion of command line mode.
 
@@ -10,7 +12,6 @@
 
 #all just for drawing the graph
 import graphviz
-import matplotlib.pyplot as plt
 from PIL import Image
 import io
 #regex matching, file access
@@ -22,7 +23,6 @@ import sys
 callable_registers = ["$v0", "$v1", "$a0","$a1","$t2"]
 
 def handle_jal_call(full_file,call_index, known_func_list):
-    debug = False #("8011A638" in full_file[call_index])
     call_line = full_file[call_index]
     call_target = call_line.split(" ")[-1].strip()
     if call_target in known_func_list: #easy, just a direct function call by name
@@ -34,8 +34,6 @@ def handle_jal_call(full_file,call_index, known_func_list):
         while(call_target not in full_file[call_index-searchback] or 'beqz' in full_file[call_index-searchback] or 'jalr' in full_file[call_index-searchback]):
             searchback+=1
         callreg_setline = full_file[call_index-searchback]
-        if(debug):
-            print(callreg_setline)
         if "g_api" in callreg_setline:
             #regex that will pull out the function being called
             match = re.search(r'%lo\(([^)]+)\)', callreg_setline)
@@ -63,7 +61,7 @@ def handle_jal_call(full_file,call_index, known_func_list):
                 if match:
                     return match.group(1)
             else:
-                match = re.search(r'\((.*)\)',full_file[call_index-searchback]) #use anything in parentheses
+                match = re.search(r'\(([^)]*)\)',full_file[call_index-searchback]) #use anything in parentheses
                 if match:
                     return match.group(1)
         #Special cases that would otherwise fail. Disable any one of these to see where it's needed.
@@ -149,8 +147,9 @@ def build_call_tree():
         f = str(path)
         if 'mad' in f: #Skip mad for now, it has weird symbols
             continue
-        if not 'nonmatchings' in f:
+        if not 'nonmatchings' in f or 'psxsdk' in f:
             continue
+        overlay =  path.parents[2].name
         with open(f) as opened_f:
             filelines = opened_f.read().split('\n')
             foundfuncs = {}
@@ -161,7 +160,7 @@ def build_call_tree():
                         foundfuncs[funcname] = 1
                     else:
                         foundfuncs[funcname] +=1
-            tree_dict[path.stem] = ",".join([f'{func}-{count}' for func,count in foundfuncs.items()])
+            tree_dict[path.stem] = ",".join([overlay] + [f'{func}-{count}' for func,count in foundfuncs.items()])
     return tree_dict
 
 def get_all_c_files(src_dir):
@@ -178,15 +177,20 @@ class NonMatchingFunc(object):
 
         self.asm_path = nonmatching_path
         self.name = os.path.splitext(os.path.basename(nonmatching_path))[0]
-        self.overlay_name = split[split.index("nonmatchings") - 1]
-        self.text_offset = split[split.index("nonmatchings") + 1]
-
+        nm_index = split.index("nonmatchings")
+        self.overlay_name = split[nm_index - 1]
+        self.text_offset = '/'.join(split[nm_index + 1:-1])
         assumed_path = f"/{self.overlay_name}/{self.text_offset}.c"
         c_paths = [src for src in src_files if src.endswith(assumed_path)]
-        assert len(c_paths) == 1
+        if len(c_paths) != 1:
+            print(c_paths)
+            print(nonmatching_path)
+            print(assumed_path)
+            print(split)
+            kill=3/0
         self.src_path = c_paths[0]
 
-def get_nonmatching_functions(base_path, func_name) -> list:
+def get_nonmatching_functions(base_path, func_name, overlay=None) -> list:
     function_list = list()
     for root, dirs, files in os.walk(base_path):
         if "/nonmatchings/" in root:
@@ -196,7 +200,18 @@ def get_nonmatching_functions(base_path, func_name) -> list:
                     function = NonMatchingFunc(full_path)
                     function_list.append(function)
     if len(function_list) > 1:
-        print(f'Found multiple functions named {func_name}, showing one')
+        overlay_matches = []
+        for potential_func in function_list:
+            if f'/{overlay}/' in potential_func.asm_path:
+                overlay_matches.append(potential_func)
+        if len(overlay_matches) > 1:
+            print(f'Multiple matches, failed to whittle')
+            print(base_path)
+            print(func_name)
+            print(overlay)
+            print([x.asm_path for x in overlay_matches])
+        elif len(overlay_matches) == 0:
+            print(f'Multiple matches but none match overlay {overlay}')
     elif len(function_list) == 0:
         print('Function not found')
         print(func_name)
@@ -217,53 +232,70 @@ def is_decompiled(srcfile,fname):
     return True
 
 def analyze_function(fname,tree):
-    foundfunc = get_nonmatching_functions('../asm', fname)
+    overlay = tree[fname][0].split(';')[0]
+    foundfunc = get_nonmatching_functions('../asm', fname,overlay)
     decomp_done = str(is_decompiled(foundfunc.src_path,fname))
-    if MODE == 'GRAPHICAL':
-        graph = graphviz.Digraph(format='png')
+    if 'GRAPHICAL' in MODE:
+        graph = graphviz.Digraph(fname)
         graph_colors = {'N/A':'lightblue','True':'green','False':'red'}
-        graph.node(fname,style='filled',fillcolor=graph_colors[decomp_done])
+        graph.node(f'{overlay}/{fname}',style='filled',fillcolor=graph_colors[decomp_done])
     if MODE == 'CMDLINE':
         print(f"Analyzing {fname}; Decompiled: {decomp_done}")
         print(f"Functions called:")
     #Look through our asm file, and see who else we call.
-    if len(tree[fname]) < 2:
+    if len(tree[fname]) < 2 and MODE != 'GRAPHICAL_ALL':
         print("No functions called.")
     else:
-        for item in tree[fname]:
+        overlay = tree[fname][0]
+        for item in tree[fname][1:]:
             func,count = item.split('-')
-            if func in tree['IGNORE_FUNCS'] or func == 'pfnEntityUpdate':
+            if func in tree['IGNORE_FUNCS'] or func in ['pfnEntityUpdate','UnknownSDKFunction','UnknownEntityFunction'] or 'D_' in func:
                 decomp_done = 'N/A'
             else:
-                function_object = get_nonmatching_functions('../asm',func)
+                function_object = get_nonmatching_functions('../asm',func,overlay)
                 decomp_done = str(is_decompiled(function_object.src_path,func))
-            if MODE == 'GRAPHICAL':
-                graph.node(func,style='filled',fillcolor=graph_colors[decomp_done])
-                graph.edge(fname,func,count)
+            if 'GRAPHICAL' in MODE:
+                graph.node(f'{overlay}/{func}',style='filled',fillcolor=graph_colors[decomp_done],href=func+'.svg')
+                graph.edge(f'{overlay}/{fname}',f'{overlay}/{func}',count)
             if MODE == 'CMDLINE':
                 print(f'{func} called {count} times; Decompiled: {decomp_done}')
     #The opposite, find who calls us
     if MODE == 'CMDLINE':
         print(f'\nFunctions which call this:')
     for key,value in tree.items():
+        overlay = value[0]
+        callees = value[1:]
         if key == 'IGNORE_FUNCS':
             continue
-        if any(fname in callee for callee in value):
-            callee_dict = {a:b for a,b in (x.split('-') for x in value)}
+        if any(callee.startswith(f'{fname}-') for callee in callees):
+            callee_dict = {a:b for a,b in (x.split('-') for x in callees)}
             if fname not in callee_dict:
-                fname = "g_api_" + fname
+                if ("g_api_" + fname) in callee_dict:
+                    fname = "g_api_" + fname
+                else:
+                    print(f"Function {fname} is not in {callee_dict}.")
+                    print(key)
+                    kill=2/0
             call_count = callee_dict[fname]
-            key_as_func = get_nonmatching_functions('../asm',key)
+            key_as_func = get_nonmatching_functions('../asm',key,overlay)
             decomp_done = str(is_decompiled(key_as_func.src_path,key))
-            if MODE == 'GRAPHICAL':
-                graph.node(key,style='filled',fillcolor=graph_colors[decomp_done])
-                graph.edge(key,fname,call_count)
+            if 'GRAPHICAL' in MODE:
+                graph.node(f'{overlay}/{key}',style='filled',fillcolor=graph_colors[decomp_done],href=key+'.svg')
+                graph.edge(f'{overlay}/{key}',f'{overlay}/{fname}',call_count)
             if MODE == 'CMDLINE':
                 print(f'Called by {key} {call_count} times; Decompiled: {decomp_done}')
-    if MODE == 'GRAPHICAL':
-        imgbytes = graph.pipe()
+    #Display the graph in a window on the screen
+    if MODE == 'GRAPHICAL_SINGLE':
+        imgbytes = graph.pipe(format='png')
         img = Image.open(io.BytesIO(imgbytes))
         img.show()
+    #Save graphs to files
+    if MODE == 'GRAPHICAL_ALL':
+        filename = f'generated_graphs/{fname}.svg'
+        imgbytes = graph.pipe(format='svg')
+        with open(filename,'wb') as f:
+            f.write(imgbytes)
+
 
 call_tree_filename = 'sotn_calltree.txt'
 src_files = get_all_c_files('../src')
@@ -286,15 +318,52 @@ if __name__ == "__main__":
        tree[fname] = calls.split(",")
 
     if len(sys.argv) == 1:
-        MODE = 'GRAPHICAL'
+        MODE = 'GRAPHICAL_SINGLE'
+    elif sys.argv[1] == 'ALL':
+        MODE = 'GRAPHICAL_ALL'
     elif len(sys.argv) == 2:
         MODE = 'CMDLINE'
     else:
         print("Too many arguments!")
-    if MODE == 'GRAPHICAL':
+    if MODE == 'GRAPHICAL_SINGLE':
         while(True):
             startfunc = input("Give function to analyze:\n")
             analyze_function(startfunc,tree)
+    if MODE == 'GRAPHICAL_ALL':
+        import multiprocessing
+        from functools import partial
+        print("Initiating autogeneration of call tree diagrams")
+        funclist = list(tree.keys())[1:]
+        #with multiprocessing.Pool() as pool:
+        #    file_generator = partial(analyze_function,tree=tree)
+        #    pool.map(file_generator,funclist)
+        print("All trees have been generated.")
+        #Generate an index.html to direct to all of them
+        overlays = {}
+        for func in funclist:
+            overlay = tree[func][0]
+            if overlay not in overlays:
+                overlays[overlay] = []
+            overlays[overlay].append(func)
+        #Sort the names
+        for overlay in overlays:
+            overlays[overlay].sort()
+        print(overlays)
+        html = '<html><head><meta charset="UTF-8"></head><body>'
+    for overlay, funcs in overlays.items():
+        # create a heading for the overlay
+        html += f'<h2>{overlay}</h2>'
+
+        # create an unordered list of functions
+        html += '<ul>'
+        for func in funcs:
+            dec_done = is_decompiled(get_nonmatching_functions('../asm', func,overlay).src_path,func)
+            dec_symbol = '✅' if dec_done else '❌'
+            html += f'<li><a href="{func}.svg">{dec_symbol + func}</a></li>'
+        html += '</ul>'
+        html += '</body></html>'
+        with open('generated_graphs/index.html','w') as f:
+            f.write(html)
     if MODE == 'CMDLINE':
-        analyze_function(sys.argv[1],tree)
+            analyze_function(sys.argv[1],tree)
 
