@@ -33,6 +33,7 @@ disks/
 .vscode/settings.json
 tools/go
 tools/sotn_calltree.txt
+tools/generated_graphs/*
 tools/saturn_toolchain/GCCSH
 config/saturn/game_syms.txt
 config/saturn/stage_02_syms.txt
