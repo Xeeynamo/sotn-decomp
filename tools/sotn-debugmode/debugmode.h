@@ -8,3 +8,9 @@ void InitFont();
 void SetFontCoord(int x, int y);
 void BeginFont();
 void EndFont();
+
+void DbgBeginDrawMenu(void);
+void DbgEndDrawMenu(void);
+void DbgDrawMenuRect(int x, int y, int w, int h);
+void DbgDrawCursor(int x, int y, int w, int h);
+Lba* DbgGetStageLba(int stageId);

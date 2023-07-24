@@ -19,8 +19,8 @@ typedef struct {
     u32 Unk3C;
 } ServantDesc;
 
-const u32 INJECT = 0x80170C80;
 void Dummy(Entity*);
+const u32 INJECT = 0x80280DD4 - 0x110000;
 ServantDesc g_ServantDesc = {
     INJECT, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
     Dummy,  Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
