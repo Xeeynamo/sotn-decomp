@@ -16,6 +16,8 @@ typedef unsigned long long u64;
 
 #define NULL 0
 
+#define STAGE_INVERTEDCASTLE_MASK 0x1F
+#define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
 #define TOTAL_ENTITY_COUNT 256
 
