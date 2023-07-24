@@ -423,7 +423,7 @@
 | zero/f_nonmat/f600FC04.s     | func_0600FC04 | 133    | 13       |                                 |       |
 | zero/f_nonmat/f60046E8.s     | func_060046E8 | 136    | 2        |                                 |       |
 | game/f_nonmat/f6077260.s     | func_06077260 | 136    | 9        |                                 |       |
-| stage_02/f_nonmat/f60DD690.s | func_060DD690 | 137    | 14       |                                 |       |
+| stage_02/f_nonmat/f60DD690.s | func_060DD690 | 137    | 14       | https://decomp.me/scratch/nFgdd | 0.626 |
 | zero/f_nonmat/f600CED0.s     | func_0600CED0 | 140    | 3        |                                 |       |
 | zero/f_nonmat/f6007A34.s     | func_06007A34 | 140    | 15       |                                 |       |
 | zero/f_nonmat/f6016D84.s     | func_06016D84 | 141    | 21       |                                 |       |
