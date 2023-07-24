@@ -105,7 +105,8 @@ void EntityDracula(Entity* self) {
 
         case 3:
             if (AnimateEntity(D_80180A2C, self) == 0) {
-                g_api.func_800FD4C0(0, 2);
+                g_api.TimeAttackController(
+                    TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_VISITED);
                 SetStep(4);
             }
         }

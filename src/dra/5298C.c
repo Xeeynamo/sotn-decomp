@@ -1691,37 +1691,36 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
 }
 #endif
 
-s32 func_800FD4C0(s32 bossId, s32 action) {
+s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action) {
     s32 temp_v0;
     s32 temp_v1;
     s32 seconds;
     s32 timer;
 
     switch (action) {
-    // get the time attack for a specific defeated boss. this is also
-    // responsible to check if the player should teleport into a boss room
-    case 0:
-        return g_Settings.timeAttackRecords[bossId];
+    case TIMEATTACK_GET_RECORD:
+        // get the time attack for a specific defeated boss. this is also
+        // responsible to check if the player should teleport into a boss room
+        return g_Settings.timeAttackRecords[eventId];
 
-    // set new time attack record if the boss was not previously defeated
-    case 1:
-        timer = g_Settings.timeAttackRecords[bossId];
+    case TIMEATTACK_SET_RECORD:
+        // set new time attack record if the boss was not previously defeated
+        timer = g_Settings.timeAttackRecords[eventId];
         if (timer = timer != 0) {
-            return g_Settings.timeAttackRecords[bossId];
+            return g_Settings.timeAttackRecords[eventId];
         }
 
         seconds = g_Status.timerSeconds;
-        g_Settings.timeAttackRecords[bossId] = seconds;
+        g_Settings.timeAttackRecords[eventId] = seconds;
         temp_v1 = (g_Status.timerMinutes * 100) + seconds;
-        g_Settings.timeAttackRecords[bossId] = temp_v1;
+        g_Settings.timeAttackRecords[eventId] = temp_v1;
         temp_v0 = (g_Status.timerHours * 10000) + temp_v1;
-        g_Settings.timeAttackRecords[bossId] = temp_v0;
+        g_Settings.timeAttackRecords[eventId] = temp_v0;
         return temp_v0;
 
-    // set boss visited
-    // not exactly sure yet why this flag is needed
-    case 2:
-        g_Settings.D_8003CB00 |= 1 << bossId;
+    case TIMEATTACK_SET_VISITED:
+        // not exactly sure yet why this flag is needed
+        g_Settings.D_8003CB00 |= 1 << eventId;
     }
 }
 
@@ -1750,7 +1749,9 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
     }
 }
 
-s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
+s32 func_800FD664(s32 arg0) {
+    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
+}
 
 u8 GetEquipItemCategory(s32 equipId) {
     return D_800A4B04[g_Status.equipment[equipId]].itemCategory;

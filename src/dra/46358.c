@@ -333,7 +333,7 @@ void HandleNowLoading(void) {
         break;
     case 16:
         func_800E5D30(var_s1, 0x40, 0x70, 1);
-        if (((s32)g_StageId) >= 0x35) {
+        if (((s32)g_StageId) >= STAGE_RNZ1) {
             D_8006C374 = g_StagesLba[g_StageId].unk28;
         } else {
             D_8006C374 =
