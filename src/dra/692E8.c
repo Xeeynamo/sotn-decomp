@@ -801,7 +801,7 @@ void func_8010FB24(void) {
     func_8010E3E0();
 }
 
-void func_8010FB68(void) { // Related to Dark Methamorphosis
+void func_8010FB68(void) { // Related to Dark Metamorphosis
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellDarkMetamorphosis);

@@ -173,7 +173,7 @@ s16 GetStatusAlimentTimer(s32 kind, s16 timer) {
         }
         ret -= var_v1;
         break;
-    case 3: // Dark Methamorphosis
+    case 3: // Dark Metamorphosis
         ret = timer + (g_Status.statsTotal[STAT_INT] * 4);
         break;
     case 4:
