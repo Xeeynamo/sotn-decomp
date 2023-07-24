@@ -1,8 +1,8 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_80111830(void) {
     s32 var_v0;
@@ -71,7 +71,7 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801119C4);
+INCLUDE_ASM("dra/nonmatchings/71830", func_801119C4);
 
 void func_80111CC0(void) {
     if (g_Player.D_80072F02 != 0) {
@@ -108,7 +108,7 @@ bool func_80111D24(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_80111DE8);
+INCLUDE_ASM("dra/nonmatchings/71830", func_80111DE8);
 
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
@@ -128,7 +128,7 @@ bool func_8011203C(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801120B4);
+INCLUDE_ASM("dra/nonmatchings/71830", func_801120B4);
 
 void func_80112B64(void) {
     if (func_8010FDF8(0x4301C) == 0) {
@@ -139,7 +139,7 @@ void func_80112B64(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_80112BB0);
+INCLUDE_ASM("dra/nonmatchings/71830", func_80112BB0);
 
 void func_80113148(void) {
     if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
@@ -152,7 +152,7 @@ void func_80113148(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/71830", func_801131C4);
+INCLUDE_ASM("dra/nonmatchings/71830", func_801131C4);
 
 void func_801139CC(s32 arg0) {
     s32 move = PLAYER.facing != 0 ? -3 : 3;
@@ -172,4 +172,3 @@ void func_801139CC(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
-#endif
