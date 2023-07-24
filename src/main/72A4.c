@@ -19,7 +19,24 @@ INCLUDE_ASM("asm/us/main/nonmatchings/72A4", GsClearVcount);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", rsin);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", sin_1);
+extern s16 D_8002C3CC[];
+extern s16 rsin_tbl[];
+s32 sin_1(s32 arg0) {
+    s16 *new_var;
+    if (arg0 < 0x801) {
+        if (arg0 < 0x401) {
+            return rsin_tbl[arg0];
+        } else {
+            return rsin_tbl[0x800 - arg0];
+        }
+    } else {
+        if (arg0 < 0xC01) {
+            return -1 * D_8002C3CC[arg0];
+        } else {
+            return -1 * rsin_tbl[0x1000 - arg0];
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", rcos);
 
