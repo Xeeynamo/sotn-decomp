@@ -85,16 +85,15 @@ def get_c_files(c_path):
 
 
 def find_wip(o):
-    if o[4] == "":
-        name = o[0]
-        # look for a WIP on decomp.me
-        function_name = os.path.basename(name).split(".")[0]
-        result = find_scratches(function_name)
+    name = o[0]
+    # look for a WIP on decomp.me
+    function_name = os.path.basename(name).split(".")[0]
+    result = find_scratches(function_name, "ps1")
 
-        if result:
-            return f"{result[0]} (Scraped {result[1]})"
+    if result:
+        return {"link": result[0], "percent": result[1]}
 
-    return ""
+    return None
 
 
 if __name__ == "__main__":
@@ -146,8 +145,9 @@ if __name__ == "__main__":
     # Update output with the results
     for i, o in enumerate(output):
         # keep the in-source results as definitive
-        o[4] = results[i]["link"]
-        o[5] = results[i]["percent"]
+        if results[i] != None:
+            o[4] = results[i]["link"]
+            o[5] = results[i]["percent"]
 
     headers = ["Filename", "Length", "Branches", "Jtbl", "WIP", "%"]
     print(tabulate(output, headers=headers, tablefmt="github"))

@@ -3,7 +3,7 @@ import json
 import requests
 
 
-def find_scratches(name):
+def find_scratches(name, platform):
     try:
         response = requests.get(f"https://decomp.me/api/scratch?search={name}")
         response.raise_for_status()
@@ -22,7 +22,7 @@ def find_scratches(name):
         # seems to give approximate matches, skip these
         if result["name"] != name:
             continue
-        if result["platform"] != "saturn":
+        if result["platform"] != platform:
             continue
 
         score = result["score"]

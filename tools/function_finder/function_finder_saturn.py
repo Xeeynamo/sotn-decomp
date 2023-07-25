@@ -68,7 +68,7 @@ def get_asm_files(asm_path, overlay):
 
 def find_wip(function):
     # look for a WIP on decomp.me
-    result = find_scratches(function["function_name"])
+    result = find_scratches(function["function_name"], "saturn")
 
     if result:
         return {"link": result[0], "percent": result[1]}
