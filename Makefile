@@ -103,6 +103,9 @@ format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
+	black tools/*.py
+	black $(find tools/splat_ext -name "*.py" -type f -print)
+	black $(find tools/split_jpt_yaml -name "*.py" -type f -print)
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 check:
