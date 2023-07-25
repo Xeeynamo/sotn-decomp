@@ -1,4 +1,4 @@
-#include <game.h>
+#include "debugmode.h"
 
 int g_OtIdx;
 
@@ -76,6 +76,88 @@ void DbgDrawCursor(int x, int y, int w, int h) {
     poly->r0 = poly->r1 = poly->r2 = poly->r3 = blinkValue - 0x20;
     poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0;
     poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
+}
+
+int DbgGetMenuItemCount(DbgMenuCtrl* ctrl) {
+    int i;
+
+    for (i = 0; ctrl->items[i].action != NULL; i++) {
+    }
+    return i;
+}
+
+void DbgMenuCtrlInit(DbgMenuCtrl* ctrl) {
+    int i;
+
+    ctrl->nItems = DbgGetMenuItemCount(ctrl);
+    for (i = 0; i < ctrl->nItems; i++) {
+        ctrl->items[i].param = ctrl->items[i].min;
+    }
+    ctrl->option = 0;
+}
+
+void DbgMenuNavigate(DbgMenuCtrl* ctrl) {
+    DbgMenuItem* item;
+    int prevParam;
+
+    if (!ctrl->isInit) {
+        DbgMenuCtrlInit(ctrl);
+        ctrl->isInit = true;
+    }
+
+    DbgDrawMenuRect(4, 44, ctrl->menuWidth + 10, 8 + ctrl->nItems * 8);
+    DbgDrawCursor(9, 48 + ctrl->option * 8, ctrl->menuWidth, 8);
+
+    item = &ctrl->items[ctrl->option];
+    prevParam = item->param;
+    if (g_pads->tapped & PAD_L1) {
+        item->param -= ctrl->pageScroll;
+    }
+    if (g_pads->tapped & PAD_R1) {
+        item->param += ctrl->pageScroll;
+    }
+    if (g_pads->repeat & PAD_LEFT) {
+        item->param--;
+    }
+    if (g_pads->repeat & PAD_RIGHT) {
+        item->param++;
+    }
+    if (item->param < item->min) {
+        item->param = item->max;
+    } else if (item->param > item->max) {
+        item->param = item->min;
+    }
+
+    switch (item->kind) {
+    case DbgMenu_ActionOnInput:
+        if (g_pads->tapped & PAD_CROSS && item->action) {
+            item->action(item->param);
+        }
+        break;
+    case DbgMenu_ActionOnChange:
+        if (item->param != prevParam) {
+            item->action(item->param);
+        }
+        break;
+    case DbgMenu_ActionOnFrame:
+        item->action(item->param);
+        break;
+    }
+
+    if (g_pads->tapped & PAD_UP) {
+        ctrl->option--;
+        if (ctrl->option < 0) {
+            ctrl->option = ctrl->nItems - 1;
+        }
+        PLAY_MENU_SOUND();
+    }
+    if (g_pads->tapped & PAD_DOWN) {
+        ctrl->option++;
+        if (ctrl->option >= ctrl->nItems) {
+            ctrl->option = 0;
+            PLAY_MENU_SOUND();
+        }
+    }
 }
 
 Lba* DbgGetStageLba(int stageId) {

@@ -10,12 +10,14 @@ typedef struct {
 } DebugMenu;
 
 void DummyDummyDummy() {}
+void InitDebugFlagsPlayer(void);
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
 void InitCollisionViewer(void);
 void InitFlagChecker(void);
 void InitStageSelect(void);
+void UpdateDebugFlagsPlayer();
 void UpdateDraEntitySpawn();
 void UpdateStageEntitySpawn();
 void UpdateSfxPlayer(void);
@@ -24,17 +26,16 @@ void UpdateCollisionViewer(void);
 void UpdateFlagChecker(void);
 void UpdateStageSelect(void);
 
-void Foo() {}
-
 DebugMenu g_DebugMenus[] = {
-    DummyDummyDummy,     DummyDummyDummy,        true,  false, "Debug mode",
-    InitEntitySpawn,     UpdateDraEntitySpawn,   true,  true,  "DRA spawn",
-    InitEntitySpawn,     UpdateStageEntitySpawn, true,  true,  "Stage spawn",
-    InitSfxPlayer,       UpdateSfxPlayer,        true,  true,  "Snd player",
-    InitDraTest800FD874, UpdateDraTest800FD874,  true,  true,  "Inventory",
-    InitCollisionViewer, UpdateCollisionViewer,  false, false, "Collision map",
-    InitFlagChecker,     UpdateFlagChecker,      true,  true,  "Castleflags",
-    InitStageSelect,     UpdateStageSelect,      true,  true,  "Stages",
+    DummyDummyDummy,      DummyDummyDummy,        true,  false, "R2 = debug",
+    InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true,  true,  "Debug mode",
+    InitEntitySpawn,      UpdateDraEntitySpawn,   true,  true,  "DRA spawn",
+    InitEntitySpawn,      UpdateStageEntitySpawn, true,  true,  "Stage spawn",
+    InitSfxPlayer,        UpdateSfxPlayer,        true,  true,  "Snd player",
+    InitDraTest800FD874,  UpdateDraTest800FD874,  true,  true,  "Inventory",
+    InitCollisionViewer,  UpdateCollisionViewer,  false, false, "Collision map",
+    InitFlagChecker,      UpdateFlagChecker,      true,  true,  "Castleflags",
+    InitStageSelect,      UpdateStageSelect,      true,  true,  "Stages",
 };
 
 int g_DebugMode;
@@ -58,10 +59,10 @@ bool Update(void) {
 
     if (g_pads->tapped & PAD_R2) {
         if (!g_DebugModePaused) {
-        g_DebugMode++;
-        if (g_DebugMode >= LEN(g_DebugMenus)) {
-            g_DebugMode = 0;
-        }
+            g_DebugMode++;
+            if (g_DebugMode >= LEN(g_DebugMenus)) {
+                g_DebugMode = 0;
+            }
         } else {
             g_DebugModePaused = false;
         }
