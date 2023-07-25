@@ -17,9 +17,6 @@ INCLUDE_ASM("asm/us/main/nonmatchings/72A4", GsGetVcount);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", GsClearVcount);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/main/nonmatchings/72A4", rsin);
-// #else
 s32 rsin(s32 arg0) {
     if (arg0 >= 0) {
         return sin_1(arg0 & 0xFFF);
@@ -28,7 +25,6 @@ s32 rsin(s32 arg0) {
     } // TODO: !FAKE
     return -sin_1(-arg0 & 0xFFF);
 }
-// #endif
 
 extern s16 D_8002C3CC[];
 extern s16 rsin_tbl[];
