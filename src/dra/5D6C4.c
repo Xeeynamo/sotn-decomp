@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
+#include "items.h"
 #if defined(VERSION_US)
 
 s32 func_800FD6C4(s32 equipTypeFilter) {
@@ -144,56 +145,48 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
     }
 }
 
-// TODO get rid of the asm volatile
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDB18);
-#else
-s16 func_800FDB18(s32 arg0, s32 arg1) {
-    s16 temp_v0;
-    s32 ret;
+s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
+    s16 ret;
     s32 var_v1;
 
-    switch (arg0) {
-    case 0:
-        temp_v0 = arg1 - (g_Status.statsTotal[1] * 0x10);
-        // asm volatile("move $16, $2");
-        if (temp_v0 < 0x100) {
-            ret = 0x100;
+    switch (statusAilment) {
+    case STATUS_AILMENT_POISON:
+        ret = timer - (g_Status.statsTotal[STAT_CON] * 16);
+        if (ret < 256) {
+            ret = 256;
         }
         break;
-    case 1:
-        temp_v0 = arg1 - (g_Status.statsTotal[1] * 4);
-        // asm volatile("move $16, $2");
-        if (temp_v0 < 0x40) {
-            ret = 0x40;
+    case STATUS_AILMENT_CURSE:
+        ret = timer - (g_Status.statsTotal[STAT_CON] * 4);
+        if (ret < 64) {
+            ret = 64;
         }
         break;
-    case 2:
-        ret = arg1;
-        var_v1 = (((rand() % 12) + g_Status.statsTotal[1]) - 9) / 10;
+    case STATUS_AILMENT_PETRIFIED:
+        ret = timer;
+        var_v1 = (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
         if (var_v1 < 0) {
             var_v1 = 0;
         }
         if (var_v1 > 4) {
             var_v1 = 4;
         }
-        ret = ret - var_v1;
+        ret -= var_v1;
         break;
-    case 3:
-        ret = arg1 + (g_Status.statsTotal[2] * 4);
+    case STATUS_AILMENT_DARK_METAMORPHOSIS:
+        ret = timer + (g_Status.statsTotal[STAT_INT] * 4);
         break;
-    case 4:
-    case 5:
-        ret = arg1;
-        if (CheckEquipmentItemCount(80, 4)) {
-            ret += ((s32)(((s16)ret) + (((u32)(ret << 0x10)) >> 0x1F))) >> 1;
+    case STATUS_AILMENT_UNK04:
+    case STATUS_AILMENT_UNK05:
+        ret = timer;
+        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, 4) != 0) {
+            ret += ret / 2;
         }
         break;
     }
 
     return ret;
 }
-#endif
 
 bool func_800FDC94(s32 arg0) {
     u8 temp = D_800A841C[arg0 * 0x1C];
