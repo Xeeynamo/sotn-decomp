@@ -809,7 +809,8 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     func_8010DA48(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
     PlaySfx(NA_SE_PL_MP_GAUGE);
-    g_Player.D_80072F16 = GetStatusAlimentTimer(3, 0x400);
+    g_Player.D_80072F16 =
+        GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
     func_8011AAFC(g_CurrentEntity, 0x110028, 0);
     func_80118C28(0xB);

@@ -1135,7 +1135,7 @@ typedef struct {
     /* 80072F78 */ u16 unk58;
     /* 80072F7A */ u16 unk5A;
     /* 80072F7C */ u16 unk5C;
-    /* 80072F7E */ u16 unk5E; // status aliment timer
+    /* 80072F7E */ u16 unk5E; // status ailment timer
     /* 80072F80 */ u16 unk60;
     /* 80072F82 */ u16 unk62;
     /* 80072F84 */ u16 unk64;
