@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # Very closely related to analyze_calls.py (and uses some of the same internal Python functions).
 # USAGE: Invoke with no arguments to start interactive graphical mode. User will be prompted for
 # functions one at a time, and a graph will be made for each one they give.
@@ -21,6 +23,7 @@ import os
 from pathlib import Path
 import sys
 
+output_dir = "function_calls"
 callable_registers = ["$v0", "$v1", "$a0", "$a1", "$t2"]
 
 
@@ -96,7 +99,7 @@ def handle_jal_call(full_file, call_index, known_func_list):
 def get_g_api_funcs():
     funclist = []
     curr_struct_lines = []
-    with open("../include/game.h") as f:
+    with open("include/game.h") as f:
         lines = f.readlines()
     for line in lines:
         if "typedef struct" in line:
@@ -139,7 +142,7 @@ def get_sdk_funcs():
     # weird thing where setjmp is commented out in libc.h; we add it manually here for now.
     functions.append("setjmp")
     for sdkfile in ["libgpu.h", "libc.h", "libcd.h", "libapi.h", "kernel.h"]:
-        with open(f"../include/psxsdk/{sdkfile}") as f:
+        with open(f"include/psxsdk/{sdkfile}") as f:
             lines = f.readlines()
             for line in lines:
                 match = re.search(
@@ -154,7 +157,7 @@ def get_main_funcs():
     functions = []
     files = ["9C54.s", "160B4.s"]
     for file in files:
-        with open(f"../asm/us/main/{file}") as f:
+        with open(f"asm/us/main/{file}") as f:
             lines = f.readlines()
             for line in lines:
                 if "glabel" in line:
@@ -165,7 +168,7 @@ def get_main_funcs():
 def get_all_funcnames():
     api = get_g_api_funcs()
     sdk = get_sdk_funcs()
-    cfuncs = [s.stem for s in Path("../asm").rglob("*.s") if "nonmatchings" in str(s)]
+    cfuncs = [s.stem for s in Path("asm").rglob("*.s") if "nonmatchings" in str(s)]
     # files in src/main are from sdk and remain as asm, not broken out into function files
     mainfuncs = get_main_funcs()
     return api + sdk + cfuncs + mainfuncs
@@ -180,7 +183,7 @@ def build_call_tree():
     print("Functions loaded.")
     print(f"Function count: {len(all_func_names)}")
     print("Building call trees...")
-    for path in Path("../asm").rglob("*.s"):
+    for path in Path("asm").rglob("*.s"):
         f = str(path)
         if "mad" in f:  # Skip mad for now, it has weird symbols
             continue
@@ -279,7 +282,7 @@ def is_decompiled(srcfile, fname):
 
 def analyze_function(fname, tree):
     overlay = tree[fname][0].split(";")[0]
-    foundfunc = get_nonmatching_functions("../asm", fname, overlay)
+    foundfunc = get_nonmatching_functions("asm", fname, overlay)
     decomp_done = str(is_decompiled(foundfunc.src_path, fname))
     if "GRAPHICAL" in MODE:
         graph = graphviz.Digraph(fname)
@@ -305,7 +308,7 @@ def analyze_function(fname, tree):
             ):
                 decomp_done = "N/A"
             else:
-                function_object = get_nonmatching_functions("../asm", func, overlay)
+                function_object = get_nonmatching_functions("asm", func, overlay)
                 decomp_done = str(is_decompiled(function_object.src_path, func))
             if "GRAPHICAL" in MODE:
                 graph.node(
@@ -335,7 +338,7 @@ def analyze_function(fname, tree):
                     print(key)
                     kill = 2 / 0
             call_count = callee_dict[fname]
-            key_as_func = get_nonmatching_functions("../asm", key, overlay)
+            key_as_func = get_nonmatching_functions("asm", key, overlay)
             decomp_done = str(is_decompiled(key_as_func.src_path, key))
             if "GRAPHICAL" in MODE:
                 graph.node(
@@ -354,21 +357,21 @@ def analyze_function(fname, tree):
         img.show()
     # Save graphs to files
     if MODE == "GRAPHICAL_ALL":
-        filename = f"generated_graphs/{fname}.svg"
+        filename = f"{output_dir}/{fname}.svg"
         imgbytes = graph.pipe(format="svg")
         with open(filename, "wb") as f:
             f.write(imgbytes)
 
 
 call_tree_filename = "sotn_calltree.txt"
-src_files = get_all_c_files("../src")
+src_files = get_all_c_files("src")
 
 if __name__ == "__main__":
     tree = {}
     # Check if tree needs to be built.
     if not os.path.exists(call_tree_filename):
         # This is an arbitrary file for a decompiled function. It only exists after a force extract.
-        if not os.path.exists("../asm/us/main/nonmatchings/5A38/ResetCallback.s"):
+        if not os.path.exists("asm/us/main/nonmatchings/5A38/ResetCallback.s"):
             print("Need to run `make force_extract` to build call tree!")
         tree = build_call_tree()
         with open(call_tree_filename, "w") as f:
@@ -388,14 +391,15 @@ if __name__ == "__main__":
         MODE = "CMDLINE"
     else:
         print("Too many arguments!")
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     if MODE == "GRAPHICAL_SINGLE":
         while True:
             startfunc = input("Give function to analyze:\n")
             analyze_function(startfunc, tree)
     if MODE == "GRAPHICAL_ALL":
-        import multiprocessing
-        from functools import partial
-
         print("Initiating autogeneration of call tree diagrams")
         funclist = list(tree.keys())[1:]
         # with multiprocessing.Pool() as pool:
@@ -422,13 +426,13 @@ if __name__ == "__main__":
         html += "<ul>"
         for func in funcs:
             dec_done = is_decompiled(
-                get_nonmatching_functions("../asm", func, overlay).src_path, func
+                get_nonmatching_functions("asm", func, overlay).src_path, func
             )
             dec_symbol = "✅" if dec_done else "❌"
             html += f'<li><a href="{func}.svg">{dec_symbol + func}</a></li>'
         html += "</ul>"
         html += "</body></html>"
-        with open("generated_graphs/index.html", "w") as f:
+        with open(f"{output_dir}/index.html", "w") as f:
             f.write(html)
     if MODE == "CMDLINE":
         analyze_function(sys.argv[1], tree)

@@ -32,8 +32,6 @@ disks/
 
 .vscode/settings.json
 tools/go
-tools/sotn_calltree.txt
-tools/generated_graphs/*
 tools/saturn_toolchain/GCCSH
 config/saturn/game_syms.txt
 config/saturn/stage_02_syms.txt
@@ -41,3 +39,5 @@ config/saturn/t_bat_syms.txt
 config/saturn/zero_syms.txt
 asm/saturn
 
+sotn_calltree.txt
+function_calls
