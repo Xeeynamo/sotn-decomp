@@ -39,10 +39,12 @@ bool g_ShowDebugMessages;
 bool g_ShowCollisionLayer;
 bool g_FrameByFrame;
 int g_ShowDrawCalls;
+bool g_ShowHBlankInfo;
 int (*g_Hook)(void);
 
 void DrawCollisionLayer();
 void ShowDrawCalls(int mode);
+void ShowHBlankInfo();
 void DestroyEntity(Entity* item);
 
 void Init(void) {
@@ -54,6 +56,8 @@ void Init(void) {
     g_ShowDebugMessages = false;
     g_ShowCollisionLayer = false;
     g_FrameByFrame = false;
+    g_ShowDrawCalls = 0;
+    g_ShowHBlankInfo = false;
     g_Hook = NULL;
     for (i = 0; i < LEN(g_DebugMenus); i++) {
         g_DebugMenus[i].Init();
@@ -116,6 +120,9 @@ bool Update(void) {
     }
     if (g_ShowDrawCalls != 0 && !skipFntOverride && !isDebugMenuVisible) {
         ShowDrawCalls(g_ShowDrawCalls);
+    }
+    if (g_ShowHBlankInfo != 0 && !skipFntOverride && !isDebugMenuVisible) {
+        ShowHBlankInfo();
     }
 
     entityPaused = g_Hook ? !!g_Hook() : UpdateLogic();
@@ -190,7 +197,7 @@ void DrawCollisionLayer() {
 }
 
 void ShowDrawCalls(int mode) {
-    const GpuUsage* gpuMaxUsage = (GpuUsage*)0x801362DCU;
+    const GpuUsage* const gpuMaxUsage = (GpuUsage*)0x801362DCU;
     GpuUsage* gpuUsage;
 
     switch (mode) {
@@ -216,4 +223,16 @@ void ShowDrawCalls(int mode) {
     FntPrint("sp  :%03x\n", gpuUsage->sp);
     FntPrint("tile:%03x\n", gpuUsage->tile);
     FntPrint("env :%03x\n", gpuUsage->env);
+}
+
+void ShowHBlankInfo() {
+    GpuUsage* const gpuMaxUsage = (GpuUsage*)0x801362D0U;
+    if (g_blinkTimer & 1) {
+        FntPrint("l=%03x/100\n", gpuMaxUsage[1]);
+        FntPrint("l=%03x/100\n", gpuMaxUsage[0]);
+    } else {
+        FntPrint("l=%03x/100\n", gpuMaxUsage[0]);
+        FntPrint("l=%03x/100\n", gpuMaxUsage[1]);
+    }
+    gpuMaxUsage[0] = gpuMaxUsage[1];
 }

@@ -39,6 +39,8 @@ void SetShowDebugMessages(bool isVisible) {
     g_ShowDebugMessages = isVisible;
     if (isVisible) {
         g_ShowCollisionLayer = false;
+        g_ShowDrawCalls = 0;
+        g_ShowHBlankInfo = false;
     }
 }
 void SetShowCollisionLayer(bool isVisible) {
@@ -47,7 +49,18 @@ void SetShowCollisionLayer(bool isVisible) {
         g_ShowDebugMessages = false;
     }
 }
-void SetShowDrawCalls(int param) { g_ShowDrawCalls = param; }
+void SetShowDrawCalls(int param) {
+    g_ShowDrawCalls = param;
+    if (param != 0) {
+        g_ShowDebugMessages = false;
+    }
+}
+void SetShowHBlankInfo(bool isVisible) {
+    g_ShowHBlankInfo = isVisible;
+    if (isVisible) {
+        g_ShowDebugMessages = false;
+    }
+}
 
 DbgMenuItem g_DebugFlagsItems[] = {
     /**/ {0, 0, 0x4F, ChangeStage, DbgMenu_ActionOnInput},
@@ -58,6 +71,7 @@ DbgMenuItem g_DebugFlagsItems[] = {
     /**/ {0, false, true, SetShowDebugMessages, DbgMenu_ActionOnChange},
     /**/ {0, false, true, SetShowCollisionLayer, DbgMenu_ActionOnChange},
     /**/ {0, 0, 2, SetShowDrawCalls, DbgMenu_ActionOnChange},
+    /**/ {0, 0, 2, SetShowHBlankInfo, DbgMenu_ActionOnChange},
     /**/ MENU_END,
 };
 DbgMenuCtrl g_DebugFlagsCtrl = {
@@ -91,6 +105,7 @@ void UpdateDebugFlagsPlayer(void) {
     FntPrint("Show debug messages: %s\n", g_ShowDebugMessages ? "on" : "off");
     FntPrint("Show collision layer: %s\n", g_ShowCollisionLayer ? "on" : "off");
     FntPrint("Show draw calls: %s\n", c_DrawCalls[g_DebugFlagsItems[7].param]);
+    FntPrint("Show HBlank info: %s\n", g_ShowHBlankInfo ? "on" : "off");
 
     DbgMenuNavigate(&g_DebugFlagsCtrl);
 }
