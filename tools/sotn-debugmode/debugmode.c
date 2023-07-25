@@ -41,6 +41,7 @@ DebugMenu g_DebugMenus[] = {
 int g_DebugMode;
 bool g_DebugModePaused;
 bool g_EntitiesPaused;
+bool (*g_Hook)(void);
 
 void DestroyEntity(Entity* item);
 void Init(void) {
@@ -53,10 +54,8 @@ void Init(void) {
         g_DebugMenus[i].Init();
     }
 }
-bool Update(void) {
-    BeginFont();
-    DbgBeginDrawMenu();
 
+bool UpdateLogic() {
     if (g_pads->tapped & PAD_R2) {
         if (!g_DebugModePaused) {
             g_DebugMode++;
@@ -90,8 +89,24 @@ bool Update(void) {
     SetFontCoord(8, 48);
     g_DebugMenus[g_DebugMode].Update();
 
+    return !g_EntitiesPaused;
+}
+
+bool Update(void) {
+    bool entityPaused;
+
+    BeginFont();
+    DbgBeginDrawMenu();
+
+    entityPaused = g_Hook ? !!g_Hook() : UpdateLogic();
+    if (g_Hook) {
+        entityPaused = !!g_Hook();
+    }
+
     DbgEndDrawMenu();
     EndFont();
 
-    return !g_EntitiesPaused;
+    return entityPaused;
 }
+
+void SetHook(int (*hook)(void)) { g_Hook = hook; }
