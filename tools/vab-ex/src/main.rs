@@ -1,12 +1,12 @@
-use std::fs::File;
-use std::io::{Read, Result};
-use std::io::Seek;
-use std::io::SeekFrom;
-use std::path::PathBuf;
 use std::env;
 use std::fs;
+use std::fs::File;
+use std::io::Seek;
+use std::io::SeekFrom;
+use std::io::Write;
+use std::io::{Read, Result};
 use std::path::Path;
-use std::io::{Write};
+use std::path::PathBuf;
 // Resources
 
 // vabtool at https://archive.org/details/Sony-PSX-tools
@@ -22,27 +22,6 @@ fn read_u8(file: &mut File) -> Result<u8> {
     let mut buffer = [0; 1];
     file.read_exact(&mut buffer)?;
     Ok(u8::from_le_bytes(buffer))
-}
-
-fn read_u8_at_offset(file: &mut File, offset: u64) -> Result<u8> {
-    file.seek(SeekFrom::Start(offset))?;
-    let mut buffer = [0; 1];
-    file.read_exact(&mut buffer)?;
-    Ok(buffer[0])
-}
-
-fn read_u16_at_offset(file: &mut File, offset: u64) -> Result<u16> {
-    file.seek(SeekFrom::Start(offset))?;
-    let mut buffer = [0; 2];
-    file.read_exact(&mut buffer)?;
-    Ok(u16::from_le_bytes(buffer))
-}
-
-fn read_u32_at_offset(file: &mut File, offset: u64) -> Result<u32> {
-    file.seek(SeekFrom::Start(offset))?;
-    let mut buffer = [0; 4];
-    file.read_exact(&mut buffer)?;
-    Ok(u32::from_le_bytes(buffer))
 }
 
 fn main() {
@@ -89,12 +68,12 @@ fn main() {
     }
 }
 
-fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) -> Result<()> {
+fn write_vag(vag_name: String, pcm_name: String, start_pos: u64, data_size: u64) -> Result<()> {
     let mut vag = File::open(&vag_name)?;
     let mut pcm = File::create(&pcm_name)?;
 
     // TODO figure out actual rates
-    let samp_freq: u32 = 44100/4;
+    let samp_freq: u32 = 44100 / 4;
 
     // Write header chunk
     pcm.write_all(b"RIFF")?;
@@ -113,7 +92,12 @@ fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) 
     // Write sample rate
     pcm.write_all(&[(samp_freq & 0xff) as u8, (samp_freq >> 8) as u8, 0, 0])?;
     // Write byte rate (SampleRate * NumChannels * BitsPerSample/8)
-    pcm.write_all(&[(samp_freq * 2) as u8, (samp_freq * 2 >> 8) as u8, (samp_freq * 2 >> 16) as u8, (samp_freq * 2 >> 24) as u8])?;
+    pcm.write_all(&[
+        (samp_freq * 2) as u8,
+        (samp_freq * 2 >> 8) as u8,
+        (samp_freq * 2 >> 16) as u8,
+        (samp_freq * 2 >> 24) as u8,
+    ])?;
     // Write block align (NumChannels * BitsPerSample/8), thus 2
     pcm.write_all(&[2, 0])?;
     // Write BitsPerSample
@@ -140,19 +124,19 @@ fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) 
     let _pos = vag.seek(SeekFrom::Start(start_pos));
 
     while vag.seek(SeekFrom::Current(0))? < (data_size + 48 + start_pos) {
-        let predict_nr = read_u8(& mut vag)?;
+        let predict_nr = read_u8(&mut vag)?;
         let shift_factor = predict_nr & 0xf;
         let predict_nr = predict_nr >> 4;
-        let mut d : i32;
+        let mut d: i32;
         let mut s: i32;
-        let flags = read_u8(& mut vag)?;
+        let flags = read_u8(&mut vag)?;
 
         if flags == 7 {
             break;
         }
 
         for i in (0..28).step_by(2) {
-            d = read_u8(& mut vag)? as i32;
+            d = read_u8(&mut vag)? as i32;
             // print!("{} , ", d);
             s = (d & 0xf) << 12;
             if s & 0x8000 != 0 {
@@ -167,7 +151,8 @@ fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) 
         }
 
         for i in 0..28 {
-            samples[i] = samples[i] + s_1 * f[predict_nr as usize][0] + s_2 * f[predict_nr as usize][1];
+            samples[i] =
+                samples[i] + s_1 * f[predict_nr as usize][0] + s_2 * f[predict_nr as usize][1];
             s_2 = s_1;
             s_1 = samples[i];
             d = (samples[i] + 0.5) as i32;
@@ -180,21 +165,32 @@ fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) 
 
     // Now write ChunkSize
     pcm.seek(SeekFrom::Start(4))?;
-    pcm.write_all(&[(sz - 8) as u8, ((sz - 8) >> 8) as u8, ((sz - 8) >> 16) as u8, ((sz - 8) >> 24) as u8])?;
+    pcm.write_all(&[
+        (sz - 8) as u8,
+        ((sz - 8) >> 8) as u8,
+        ((sz - 8) >> 16) as u8,
+        ((sz - 8) >> 24) as u8,
+    ])?;
 
     // Now write Subchunk2Size
     pcm.seek(SeekFrom::Start(40))?;
-    pcm.write_all(&[(sz - 44) as u8, ((sz - 44) >> 8) as u8, ((sz - 44) >> 16) as u8, ((sz - 44) >> 24) as u8])?;
+    pcm.write_all(&[
+        (sz - 44) as u8,
+        ((sz - 44) >> 8) as u8,
+        ((sz - 44) >> 16) as u8,
+        ((sz - 44) >> 24) as u8,
+    ])?;
 
     Ok(())
 }
 
 #[allow(dead_code)]
 struct HeaderStruct {
-    id: u32,
+    id: String,
     version: u32,
     vab_id: u32,
     total_size: u32,
+    reserved_1: u16,
     num_programs: u16,
     num_tones: u16,
     num_vags: u16,
@@ -202,10 +198,11 @@ struct HeaderStruct {
     master_pan: u8,
     bank_attr_1: u8,
     bank_attr_2: u8,
+    reserved_2: u32,
 }
 
-fn read_header(file: & mut File) -> Result<HeaderStruct> {
-    let id = read_u32_at_offset(file, 0)?;
+fn read_header(file: &Vec<u8>) -> Result<HeaderStruct> {
+    let id = little_endian_ascii_to_str(file, 0, 4)?;
     println!("ID: {}", id);
 
     let version = read_u32_at_offset(file, 4)?;
@@ -217,8 +214,8 @@ fn read_header(file: & mut File) -> Result<HeaderStruct> {
     let total_size = read_u32_at_offset(file, 12)?;
     println!("Total Size: {}", total_size);
 
-    let reserved = read_u16_at_offset(file, 16)?;
-    println!("Reserved: {}", reserved);
+    let reserved_1 = read_u16_at_offset(file, 16)?;
+    println!("Reserved: {}", reserved_1);
 
     let num_programs = read_u16_at_offset(file, 18)?;
     println!("Number of Programs: {}", num_programs);
@@ -241,11 +238,15 @@ fn read_header(file: & mut File) -> Result<HeaderStruct> {
     let bank_attr_2 = read_u8_at_offset(file, 27)?;
     println!("Bank Attributes 2: {}", bank_attr_2);
 
+    let reserved_2 = read_u32_at_offset(file, 28)?;
+    println!("Reserved2: {}", reserved_2);
+
     Ok(HeaderStruct {
         id,
         version,
         vab_id,
         total_size,
+        reserved_1,
         num_programs,
         num_tones,
         num_vags,
@@ -253,54 +254,351 @@ fn read_header(file: & mut File) -> Result<HeaderStruct> {
         master_pan,
         bank_attr_1,
         bank_attr_2,
+        reserved_2,
     })
 }
 
 fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
-    let mut file = File::open(in_vh)?;
+    match fs::read(in_vh) {
+        Ok(file_data) => {
+            let header = read_header(&file_data).unwrap();
 
-    let header = read_header(& mut file).unwrap();
+            let vag_offset_table_start = 0x20 + (32 * 16 * header.num_programs);
+            println!("vag_offset_table_start {}", vag_offset_table_start);
 
+            let off_progs = 0 + 0x20;
+            let off_tone_attrs = off_progs + (16 * 128);
+            let off_vag_offsets = off_tone_attrs + (32 * 16 * header.num_programs);
+            let mut vag_offset = 0;
+
+            for vag_num in 1..header.num_vags + 1 {
+                let off = off_vag_offsets + vag_num * 2;
+                let vag_size = (read_u16_at_offset(&file_data, off.into())?) as u32 * 8;
+
+                println!("vag offset {} size {}", vag_offset, vag_size);
+
+                write_vag(
+                    in_vb.to_string(),
+                    format!("{}/out{}.wav", out_dir, vag_num),
+                    vag_offset,
+                    vag_size as u64,
+                )
+                .unwrap();
+                vag_offset += vag_size as u64;
+            }
+        }
+        Err(e) => {
+            println!("Error reading the file: {}", e);
+        }
+    }
+
+    // let mut file = File::open(in_vh)?;
+
+    Ok(())
+}
+
+#[allow(dead_code)]
+struct Program {
+    num_tones: u8,
+    volume: u8,
+    priority: u8,
+    mode: u8,
+    pan: u8,
+    attr: u8,
+    name: String,
+}
+
+fn read_programs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Program>> {
+    let mut result = Vec::<Program>::new();
     for program_num in 0..header.num_programs {
         let offset = 0x20 + program_num * 16;
 
         println!("----- Program {} -----", program_num);
 
-        let num_tones = read_u8_at_offset(&mut file, (offset + 0).into() )?;
-        println!(" Number of Tones: {}", num_tones);    
+        let num_tones = read_u8_at_offset(file, (offset + 0).into())?;
+        println!(" Number of Tones: {}", num_tones);
 
-        let volume = read_u8_at_offset(&mut file, (offset + 1).into())?;
-        println!(" Volume: {}", volume);    
+        let volume = read_u8_at_offset(file, (offset + 1).into())?;
+        println!(" Volume: {}", volume);
 
-        let priority = read_u8_at_offset(&mut file, (offset + 2).into())?;
+        let priority = read_u8_at_offset(file, (offset + 2).into())?;
         println!(" Priority: {}", priority);
 
-        let mode = read_u8_at_offset(&mut file, (offset + 3).into())?;
+        let mode = read_u8_at_offset(file, (offset + 3).into())?;
         println!(" Mode: {}", mode);
 
-        let pan = read_u8_at_offset(&mut file, (offset + 4).into())?;
+        let pan = read_u8_at_offset(file, (offset + 4).into())?;
         println!(" Pan: {}", pan);
+
+        let attr = read_u8_at_offset(file, (offset + 5).into())?;
+        println!(" Attr: {}", attr);
+
+        let name = little_endian_ascii_to_str(file, (offset + 6).into(), 10)?;
+        println!(" Name: {:?}", name);
+
+        result.push(Program {
+            num_tones,
+            volume,
+            priority,
+            mode,
+            pan,
+            attr,
+            name,
+        });
     }
-  
-    let vag_offset_table_start = 0x20 + (32 * 16 * header.num_programs);    
-    println!("vag_offset_table_start {}", vag_offset_table_start );
+    Ok(result)
+}
 
-    let off_progs = 0 + 0x20;
-    let off_tone_attrs = off_progs + (16 * 128);
-    let off_vag_offsets = off_tone_attrs + (32 * 16 * header.num_programs);
-    let mut vag_offset = 0;
+#[derive(Clone)]
+#[allow(dead_code)]
+struct ToneAttr {
+    prior: u8,
+    mode: u8,
+    volume: u8,
+    pan: u8,
+    center: u8,
+    shift: u8,
+    min: u8,
+    max: u8,
+    vib_w: u8,
+    vib_t: u8,
+    por_w: u8,
+    por_t: u8,
+    pb_min: u8,
+    pb_max: u8,
+    adsr_1: u16,
+    adsr_2: u16,
+    prog: u8,
+    vag: u8,
+    tone_name: String,
+}
 
-    for vag_num in 1..header.num_vags + 1 {
-        let off = off_vag_offsets + vag_num * 2;
-        let vag_size = (read_u16_at_offset(&mut file, off.into() )?) as u32 * 8;
+fn read_tone_attrs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Vec<ToneAttr>>> {
+    let mut result: Vec<Vec<ToneAttr>> = vec![Vec::new(); header.num_programs.into()];
 
-        println!("vag offset {} size {}", vag_offset, vag_size);
+    for program_num in 0..header.num_programs {
+        let off_progs = 0 + 0x20;
+        let off_tone_attrs = off_progs + (16 * 128);
 
-        write_vag(
-            in_vb.to_string(),
-            format!("{}/out{}.wav", out_dir, vag_num), 
-            vag_offset, vag_size as u64).unwrap();
-            vag_offset += vag_size as u64; 
+        for tone_attr_num in 0..16 {
+            let off_current_tone_attr = off_tone_attrs + (32 * tone_attr_num * program_num);
+
+            println!(
+                "----- Program {} - ToneAttr {} -----",
+                program_num, tone_attr_num
+            );
+
+            let prior = read_u8_at_offset(file, (off_current_tone_attr + 0).into())?;
+            println!(" prior: {}", prior);
+
+            let mode = read_u8_at_offset(file, (off_current_tone_attr + 1).into())?;
+            println!(" mode: {}", mode);
+
+            let volume = read_u8_at_offset(file, (off_current_tone_attr + 2).into())?;
+            println!(" volume: {}", volume);
+
+            let pan = read_u8_at_offset(file, (off_current_tone_attr + 3).into())?;
+            println!(" pan: {}", pan);
+
+            let center = read_u8_at_offset(file, (off_current_tone_attr + 4).into())?;
+            println!(" center: {}", center);
+
+            let shift = read_u8_at_offset(file, (off_current_tone_attr + 5).into())?;
+            println!(" shift: {}", shift);
+
+            let min = read_u8_at_offset(file, (off_current_tone_attr + 6).into())?;
+            println!(" min: {}", min);
+
+            let max = read_u8_at_offset(file, (off_current_tone_attr + 7).into())?;
+            println!(" max: {}", max);
+
+            let vib_w = read_u8_at_offset(file, (off_current_tone_attr + 8).into())?;
+            println!(" vib_w: {}", vib_w);
+
+            let vib_t = read_u8_at_offset(file, (off_current_tone_attr + 9).into())?;
+            println!(" vib_t: {}", vib_t);
+
+            let por_w = read_u8_at_offset(file, (off_current_tone_attr + 10).into())?;
+            println!(" por_w: {}", por_w);
+
+            let por_t = read_u8_at_offset(file, (off_current_tone_attr + 11).into())?;
+            println!(" por_t: {}", por_t);
+
+            let pb_min = read_u8_at_offset(file, (off_current_tone_attr + 12).into())?;
+            println!(" pb_min: {}", pb_min);
+
+            let pb_max = read_u8_at_offset(file, (off_current_tone_attr + 13).into())?;
+            println!(" pb_max: {}", pb_max);
+
+            // ???
+
+            let adsr_1 = read_u16_at_offset(file, (off_current_tone_attr + 16).into())?;
+            println!(" adsr_1: {}", adsr_1);
+
+            let adsr_2 = read_u16_at_offset(file, (off_current_tone_attr + 18).into())?;
+            println!(" adsr_2: {}", adsr_2);
+
+            // 1-based in editor?
+            let prog = read_u8_at_offset(file, (off_current_tone_attr + 20).into())?;
+            println!(" prog: {}", prog);
+
+            // 1-based in editor?
+            let vag = read_u8_at_offset(file, (off_current_tone_attr + 21).into())?;
+            println!(" vag: {}", vag);
+
+            let tone_name =
+                little_endian_ascii_to_str(file, (off_current_tone_attr + 22).into(), 10)?;
+            println!(" Tone Name: {:?}", tone_name);
+
+            result[program_num as usize].push(ToneAttr {
+                prior,
+                mode,
+                volume,
+                pan,
+                center,
+                shift,
+                min,
+                max,
+                vib_w,
+                vib_t,
+                por_w,
+                por_t,
+                pb_min,
+                pb_max,
+                adsr_1,
+                adsr_2,
+                prog,
+                vag,
+                tone_name,
+            });
+        }
     }
-    Ok(())
+    Ok(result)
+}
+
+fn read_u8_at_offset(data: &Vec<u8>, offset: u64) -> Result<u8> {
+    if offset >= data.len() as u64 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "Offset is beyond the end of the data.",
+        ));
+    }
+    Ok(data[offset as usize])
+}
+
+fn read_u16_at_offset(data: &Vec<u8>, offset: u64) -> Result<u16> {
+    if offset + 2 > data.len() as u64 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "Offset is beyond the end of the data.",
+        ));
+    }
+    let buffer: [u8; 2] = [data[offset as usize], data[offset as usize + 1]];
+    Ok(u16::from_le_bytes(buffer))
+}
+
+fn read_u32_at_offset(data: &Vec<u8>, offset: u64) -> Result<u32> {
+    if offset + 4 > data.len() as u64 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "Offset is beyond the end of the data.",
+        ));
+    }
+    let buffer: [u8; 4] = [
+        data[offset as usize],
+        data[offset as usize + 1],
+        data[offset as usize + 2],
+        data[offset as usize + 3],
+    ];
+    Ok(u32::from_le_bytes(buffer))
+}
+
+fn little_endian_ascii_to_str(bytes: &Vec<u8>, pos: u64, len: u64) -> Result<String> {
+    let mut result = String::new();
+    let mut i: i64 = (pos + len - 1).try_into().unwrap();
+    while i >= pos as i64 {
+        result.push(bytes[i as usize] as char);
+        i -= 1;
+    }
+
+    Ok(result)
+}
+
+#[test]
+fn test_header() {
+    let file_path = "../../disks/us/ST/DRE/SD_ZKDRE.VH";
+    match fs::read(file_path) {
+        Ok(file_data) => {
+            let header = read_header(&file_data).unwrap();
+            assert!(header.id.as_str() == "VABp");
+            assert!(header.version == 7);
+            assert!(header.vab_id == 0);
+            assert!(header.total_size == 113712);
+            assert!(header.reserved_1 == 61166);
+            assert!(header.num_programs == 6);
+            assert!(header.num_tones == 96);
+            assert!(header.num_vags == 15);
+            assert!(header.master_volume == 127);
+            assert!(header.master_pan == 64);
+            assert!(header.bank_attr_1 == 0);
+            assert!(header.bank_attr_2 == 0);
+            assert!(header.reserved_2 == 4294967295);
+        }
+        Err(e) => {
+            println!("Error reading the file: {}", e);
+        }
+    }
+}
+
+#[test]
+fn test_programs() {
+    let file_path = "../../disks/us/ST/DRE/SD_ZKDRE.VH";
+    match fs::read(file_path) {
+        Ok(file_data) => {
+            let header = read_header(&file_data).unwrap();
+            let programs = read_programs(&file_data, &header).unwrap();
+
+            // Vab File Editor seems to think there's 7 programs. Why?
+
+            assert!(programs[0].num_tones == 0);
+            assert!(programs[0].volume == 127);
+            assert!(programs[0].priority == 255);
+            assert!(programs[0].mode == 255);
+            assert!(programs[0].pan == 63);
+            assert!(programs[0].attr == 255);
+
+            assert!(programs[1].num_tones == 0);
+            assert!(programs[1].volume == 127);
+            assert!(programs[1].priority == 255);
+            assert!(programs[1].mode == 255);
+            assert!(programs[1].pan == 63);
+            assert!(programs[1].attr == 255);
+        }
+        Err(e) => {
+            println!("Error reading the file: {}", e);
+        }
+    }
+}
+
+#[test]
+fn test_tone_attrs() {
+    let file_path = "../../disks/us/ST/DRE/SD_ZKDRE.VH";
+    match fs::read(file_path) {
+        Ok(file_data) => {
+            let header = read_header(&file_data).unwrap();
+            let programs = read_programs(&file_data, &header).unwrap();
+            let tone_attrs = read_tone_attrs(&file_data, &header).unwrap();
+
+            // program 2, tone attr 0
+            assert!(tone_attrs[2][0].prior == 8);
+            assert!(tone_attrs[2][0].pan == 64);
+            assert!(tone_attrs[2][0].center == 82);
+            assert!(tone_attrs[2][0].shift == 109);
+            assert!(tone_attrs[2][0].adsr_1 == 33023);
+            assert!(tone_attrs[2][0].adsr_2 == 24512);
+        }
+        Err(e) => {
+            println!("Error reading the file: {}", e);
+        }
+    }
 }
