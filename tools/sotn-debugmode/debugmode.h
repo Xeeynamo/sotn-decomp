@@ -39,6 +39,8 @@ void PrintDefaultFont();
 extern bool g_ShowDebugMessages;
 extern bool g_ShowCollisionLayer;
 extern bool g_FrameByFrame;
+extern int g_ShowDrawCalls;
+
 void SetHook(int (*hook)(void));
 
 void DbgBeginDrawMenu(void);

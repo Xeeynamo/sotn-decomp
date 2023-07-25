@@ -31,31 +31,33 @@ void SetNoClip(int param) {
     D_80098850 = param; // TODO merge: rename g_DebugPlayer
 }
 void SetFrameByFrame(bool isEnabled) { g_FrameByFrame = isEnabled; }
-void ShowHitboxes(int param) {
+void SetShowHitboxes(int param) {
     *g_DraDebugHitboxViewMode = param;
     *g_DraDebugHitboxViewEnabled = param;
 }
-void ShowDebugMessages(bool isVisible) {
+void SetShowDebugMessages(bool isVisible) {
     g_ShowDebugMessages = isVisible;
     if (isVisible) {
         g_ShowCollisionLayer = false;
     }
 }
-void ShowCollisionLayer(bool isVisible) {
+void SetShowCollisionLayer(bool isVisible) {
     g_ShowCollisionLayer = isVisible;
     if (isVisible) {
         g_ShowDebugMessages = false;
     }
 }
+void SetShowDrawCalls(int param) { g_ShowDrawCalls = param; }
 
 DbgMenuItem g_DebugFlagsItems[] = {
     /**/ {0, 0, 0x4F, ChangeStage, DbgMenu_ActionOnInput},
     /**/ {0, 0, 1, ChangePlayer, DbgMenu_ActionOnInput},
     /**/ {0, false, true, SetNoClip, DbgMenu_ActionOnChange},
     /**/ {0, false, true, SetFrameByFrame, DbgMenu_ActionOnChange},
-    /**/ {0, false, true, ShowHitboxes, DbgMenu_ActionOnChange},
-    /**/ {0, false, true, ShowDebugMessages, DbgMenu_ActionOnChange},
-    /**/ {0, false, true, ShowCollisionLayer, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, SetShowHitboxes, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, SetShowDebugMessages, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, SetShowCollisionLayer, DbgMenu_ActionOnChange},
+    /**/ {0, 0, 2, SetShowDrawCalls, DbgMenu_ActionOnChange},
     /**/ MENU_END,
 };
 DbgMenuCtrl g_DebugFlagsCtrl = {
@@ -63,6 +65,12 @@ DbgMenuCtrl g_DebugFlagsCtrl = {
     236,
     0x40,
     false,
+};
+
+const char* const c_DrawCalls[] = {
+    "off",
+    "current",
+    "max",
 };
 
 void InitDebugFlagsPlayer(void) {
@@ -82,6 +90,7 @@ void UpdateDebugFlagsPlayer(void) {
     FntPrint("Show hitboxes: %s\n", *g_DraDebugHitboxViewMode ? "on" : "off");
     FntPrint("Show debug messages: %s\n", g_ShowDebugMessages ? "on" : "off");
     FntPrint("Show collision layer: %s\n", g_ShowCollisionLayer ? "on" : "off");
+    FntPrint("Show draw calls: %s\n", c_DrawCalls[g_DebugFlagsItems[7].param]);
 
     DbgMenuNavigate(&g_DebugFlagsCtrl);
 }

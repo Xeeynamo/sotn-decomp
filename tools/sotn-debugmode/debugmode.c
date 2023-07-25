@@ -38,9 +38,11 @@ bool g_EntitiesPaused;
 bool g_ShowDebugMessages;
 bool g_ShowCollisionLayer;
 bool g_FrameByFrame;
+int g_ShowDrawCalls;
 int (*g_Hook)(void);
 
 void DrawCollisionLayer();
+void ShowDrawCalls(int mode);
 void DestroyEntity(Entity* item);
 
 void Init(void) {
@@ -107,10 +109,13 @@ bool Update(void) {
     if (g_ShowDebugMessages) {
         PrintDefaultFont();
     }
-    if (g_ShowCollisionLayer && !isDebugMenuVisible) {
+    if (g_ShowCollisionLayer && !skipFntOverride && !isDebugMenuVisible) {
         if (g_GameState == Game_Play) {
             DrawCollisionLayer();
         }
+    }
+    if (g_ShowDrawCalls != 0 && !skipFntOverride && !isDebugMenuVisible) {
+        ShowDrawCalls(g_ShowDrawCalls);
     }
 
     entityPaused = g_Hook ? !!g_Hook() : UpdateLogic();
@@ -182,4 +187,33 @@ void DrawCollisionLayer() {
         }
         FntPrint("\n\n");
     }
+}
+
+void ShowDrawCalls(int mode) {
+    const GpuUsage* gpuMaxUsage = (GpuUsage*)0x801362DCU;
+    GpuUsage* gpuUsage;
+
+    switch (mode) {
+    case 1:
+        gpuUsage = &g_GpuUsage;
+        FntPrint("cur call count\n");
+        FntPrint("NOT IMPLEMENTED YET\n");
+        break;
+    case 2:
+        gpuUsage = gpuMaxUsage;
+        FntPrint("max call count\n");
+        break;
+    default:
+        return;
+    }
+
+    FntPrint("dr  :%03x\n", gpuUsage->drawModes);
+    FntPrint("gt4 :%03x\n", gpuUsage->gt4);
+    FntPrint("g4  :%03x\n", gpuUsage->g4);
+    FntPrint("gt3 :%03x\n", gpuUsage->gt3);
+    FntPrint("line:%03x\n", gpuUsage->line);
+    FntPrint("sp16:%03x\n", gpuUsage->sp16);
+    FntPrint("sp  :%03x\n", gpuUsage->sp);
+    FntPrint("tile:%03x\n", gpuUsage->tile);
+    FntPrint("env :%03x\n", gpuUsage->env);
 }
