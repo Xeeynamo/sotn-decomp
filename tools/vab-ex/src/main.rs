@@ -7,6 +7,9 @@ use std::io::Write;
 use std::io::{Read, Result};
 use std::path::Path;
 use std::path::PathBuf;
+use serde::{Serialize, Deserialize};
+use serde_json;
+
 // Resources
 
 // vabtool at https://archive.org/details/Sony-PSX-tools
@@ -184,6 +187,8 @@ fn write_vag(vag_name: String, pcm_name: String, start_pos: u64, data_size: u64)
     Ok(())
 }
 
+#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize)]
 #[allow(dead_code)]
 struct HeaderStruct {
     id: String,
@@ -258,6 +263,12 @@ fn read_header(file: &Vec<u8>) -> Result<HeaderStruct> {
     })
 }
 
+fn write_string_to_file(file_path: &str, content: &str) -> std::io::Result<()> {
+    let mut file = File::create(file_path)?;
+    file.write_all(content.as_bytes())?;
+    Ok(())
+}
+
 fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
     match fs::read(in_vh) {
         Ok(file_data) => {
@@ -286,17 +297,35 @@ fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
                 .unwrap();
                 vag_offset += vag_size as u64;
             }
+
+            let programs = read_programs(&file_data, &header).unwrap();
+            let tone_attrs = read_tone_attrs(&file_data, &header).unwrap();
+        
+            let vh_file = VhFile{
+                header: header.clone(),
+                programs: programs,
+                tone_attrs: tone_attrs
+            };
+        
+            let vh_file_json = serde_json::to_string_pretty(&vh_file).unwrap();
+
+            let json_path = format!("{}/vh.json", out_dir);
+
+            match write_string_to_file(&json_path, &vh_file_json) {
+                Ok(()) => println!("String successfully written to the file."),
+                Err(e) => eprintln!("Error writing to the file: {}", e),
+            }            
         }
         Err(e) => {
             println!("Error reading the file: {}", e);
         }
     }
 
-    // let mut file = File::open(in_vh)?;
-
     Ok(())
 }
 
+#[derive(Debug)]
+#[derive(Serialize, Deserialize)]
 #[allow(dead_code)]
 struct Program {
     num_tones: u8,
@@ -310,30 +339,33 @@ struct Program {
 
 fn read_programs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Program>> {
     let mut result = Vec::<Program>::new();
-    for program_num in 0..header.num_programs {
+
+    // have to ignore the header value header.num_programs.
+    // Always 128 entries
+    for program_num in 0..128 {
         let offset = 0x20 + program_num * 16;
 
         println!("----- Program {} -----", program_num);
 
-        let num_tones = read_u8_at_offset(file, (offset + 0).into())?;
+        let num_tones = read_u8_at_offset(file, (offset + 0).try_into().unwrap())?;
         println!(" Number of Tones: {}", num_tones);
 
-        let volume = read_u8_at_offset(file, (offset + 1).into())?;
+        let volume = read_u8_at_offset(file, (offset + 1).try_into().unwrap())?;
         println!(" Volume: {}", volume);
 
-        let priority = read_u8_at_offset(file, (offset + 2).into())?;
+        let priority = read_u8_at_offset(file, (offset + 2).try_into().unwrap())?;
         println!(" Priority: {}", priority);
 
-        let mode = read_u8_at_offset(file, (offset + 3).into())?;
+        let mode = read_u8_at_offset(file, (offset + 3).try_into().unwrap())?;
         println!(" Mode: {}", mode);
 
-        let pan = read_u8_at_offset(file, (offset + 4).into())?;
+        let pan = read_u8_at_offset(file, (offset + 4).try_into().unwrap())?;
         println!(" Pan: {}", pan);
 
-        let attr = read_u8_at_offset(file, (offset + 5).into())?;
+        let attr = read_u8_at_offset(file, (offset + 5).try_into().unwrap())?;
         println!(" Attr: {}", attr);
 
-        let name = little_endian_ascii_to_str(file, (offset + 6).into(), 10)?;
+        let name = little_endian_ascii_to_str(file, (offset + 6).try_into().unwrap(), 10)?;
         println!(" Name: {:?}", name);
 
         result.push(Program {
@@ -349,6 +381,8 @@ fn read_programs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Program>> 
     Ok(result)
 }
 
+#[derive(Debug)]
+#[derive(Serialize, Deserialize)]
 #[derive(Clone)]
 #[allow(dead_code)]
 struct ToneAttr {
@@ -366,6 +400,8 @@ struct ToneAttr {
     por_t: u8,
     pb_min: u8,
     pb_max: u8,
+    unk14: u8,
+    unk15: u8,
     adsr_1: u16,
     adsr_2: u16,
     prog: u8,
@@ -374,14 +410,20 @@ struct ToneAttr {
 }
 
 fn read_tone_attrs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Vec<ToneAttr>>> {
-    let mut result: Vec<Vec<ToneAttr>> = vec![Vec::new(); header.num_programs.into()];
+    let mut result: Vec<Vec<ToneAttr>> = vec![Vec::new(); (header.num_programs + 1).into()];
 
-    for program_num in 0..header.num_programs {
+    for program_num in 0..header.num_programs+1 {
         let off_progs = 0 + 0x20;
         let off_tone_attrs = off_progs + (16 * 128);
 
         for tone_attr_num in 0..16 {
-            let off_current_tone_attr = off_tone_attrs + (32 * tone_attr_num * program_num);
+            let tone_attr_size = 32;
+            let tone_attrs_per_program_size = 32 * 16;
+
+            let off_current_tone_attr = 
+                off_tone_attrs + 
+                tone_attrs_per_program_size * program_num + 
+                tone_attr_size * tone_attr_num;
 
             println!(
                 "----- Program {} - ToneAttr {} -----",
@@ -430,7 +472,11 @@ fn read_tone_attrs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Vec<Tone
             let pb_max = read_u8_at_offset(file, (off_current_tone_attr + 13).into())?;
             println!(" pb_max: {}", pb_max);
 
-            // ???
+            let unk14 = read_u8_at_offset(file, (off_current_tone_attr + 14).into())?;
+            println!(" unk14: {}", unk14);
+
+            let unk15 = read_u8_at_offset(file, (off_current_tone_attr + 15).into())?;
+            println!(" unk15: {}", unk15);
 
             let adsr_1 = read_u16_at_offset(file, (off_current_tone_attr + 16).into())?;
             println!(" adsr_1: {}", adsr_1);
@@ -465,6 +511,8 @@ fn read_tone_attrs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Vec<Tone
                 por_t,
                 pb_min,
                 pb_max,
+                unk14,
+                unk15,
                 adsr_1,
                 adsr_2,
                 prog,
@@ -474,6 +522,53 @@ fn read_tone_attrs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Vec<Tone
         }
     }
     Ok(result)
+}
+
+
+fn write_tone_attrs(file: & mut Vec<u8>, 
+    header: &HeaderStruct, tone_attrs: &Vec<Vec<ToneAttr>>) -> Result<()> {
+
+    for program_num in 0..header.num_programs+1 {
+        let off_progs = 0 + 0x20;
+        let off_tone_attrs = off_progs + (16 * 128);
+
+        for tone_attr_num in 0..16 {
+            let tone_attr_size = 32;
+            let tone_attrs_per_program_size = 32 * 16;
+
+            let off_current_tone_attr = 
+                off_tone_attrs + 
+                tone_attrs_per_program_size * program_num + 
+                tone_attr_size * tone_attr_num;
+
+            let current_tone_attr = &tone_attrs[program_num as usize][tone_attr_num as usize];
+
+            println!("writing program {} tone_attr {} to {}", program_num, tone_attr_num, off_current_tone_attr);
+
+            write_u8_at_offset(file, (off_current_tone_attr + 0).try_into().unwrap(), &current_tone_attr.prior)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 1).try_into().unwrap(), &current_tone_attr.mode)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 2).try_into().unwrap(), &current_tone_attr.volume)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 3).try_into().unwrap(), &current_tone_attr.pan)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 4).try_into().unwrap(), &current_tone_attr.center)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 5).try_into().unwrap(), &current_tone_attr.shift)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 6).try_into().unwrap(), &current_tone_attr.min)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 7).try_into().unwrap(), &current_tone_attr.max)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 8).try_into().unwrap(), &current_tone_attr.vib_w)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 9).try_into().unwrap(), &current_tone_attr.vib_t)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 10).try_into().unwrap(), &current_tone_attr.por_w)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 11).try_into().unwrap(), &current_tone_attr.por_t)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 12).try_into().unwrap(), &current_tone_attr.pb_min)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 13).try_into().unwrap(), &current_tone_attr.pb_max)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 14).try_into().unwrap(), &current_tone_attr.unk14)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 15).try_into().unwrap(), &current_tone_attr.unk15)?;
+            write_u16_at_offset(file, (off_current_tone_attr + 16).try_into().unwrap(), &current_tone_attr.adsr_1)?;
+            write_u16_at_offset(file, (off_current_tone_attr + 18).try_into().unwrap(), &current_tone_attr.adsr_2)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 20).try_into().unwrap(), &current_tone_attr.prog)?;
+            write_u8_at_offset(file, (off_current_tone_attr + 21).try_into().unwrap(), &current_tone_attr.vag)?;
+            string_to_little_endian_bytes(&current_tone_attr.tone_name, file, (off_current_tone_attr + 22).try_into().unwrap());
+        }
+    }
+    Ok(())
 }
 
 fn read_u8_at_offset(data: &Vec<u8>, offset: u64) -> Result<u8> {
@@ -513,6 +608,45 @@ fn read_u32_at_offset(data: &Vec<u8>, offset: u64) -> Result<u32> {
     Ok(u32::from_le_bytes(buffer))
 }
 
+fn write_u8_at_offset(data: &mut Vec<u8>, offset: u64, value: &u8) -> Result<()> {
+    if offset >= data.len() as u64 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "Offset is beyond the end of the data.",
+        ));
+    }
+    data[offset as usize] = *value;
+    Ok(())
+}
+
+fn write_u16_at_offset(data: &mut Vec<u8>, offset: u64, value: &u16) -> Result<()> {
+    if offset + 2 > data.len() as u64 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "Offset is beyond the end of the data.",
+        ));
+    }
+    let bytes = value.to_le_bytes();
+    data[offset as usize] = bytes[0];
+    data[offset as usize + 1] = bytes[1];
+    Ok(())
+}
+
+fn write_u32_at_offset(data: &mut Vec<u8>, offset: u64, value: &u32) -> Result<()> {
+    if offset + 4 > data.len() as u64 {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "Offset is beyond the end of the data.",
+        ));
+    }
+    let bytes = value.to_le_bytes();
+    data[offset as usize] = bytes[0];
+    data[offset as usize + 1] = bytes[1];
+    data[offset as usize + 2] = bytes[2];
+    data[offset as usize + 3] = bytes[3];
+    Ok(())
+}
+
 fn little_endian_ascii_to_str(bytes: &Vec<u8>, pos: u64, len: u64) -> Result<String> {
     let mut result = String::new();
     let mut i: i64 = (pos + len - 1).try_into().unwrap();
@@ -522,6 +656,14 @@ fn little_endian_ascii_to_str(bytes: &Vec<u8>, pos: u64, len: u64) -> Result<Str
     }
 
     Ok(result)
+}
+
+fn string_to_little_endian_bytes(input: &str, bytes: &mut Vec<u8>, pos: usize) {
+    let mut i = pos;
+    for c in input.chars().rev() {
+        bytes[i] = c as u8;
+        i += 1;
+    }
 }
 
 #[test]
@@ -596,6 +738,119 @@ fn test_tone_attrs() {
             assert!(tone_attrs[2][0].shift == 109);
             assert!(tone_attrs[2][0].adsr_1 == 33023);
             assert!(tone_attrs[2][0].adsr_2 == 24512);
+        }
+        Err(e) => {
+            println!("Error reading the file: {}", e);
+        }
+    }
+}
+
+#[derive(Debug)]
+#[derive(Serialize, Deserialize)]
+#[allow(dead_code)]
+struct VhFile {
+    header: HeaderStruct,
+    programs: Vec<Program>,
+    tone_attrs: Vec<Vec<ToneAttr>> 
+}
+
+fn write_header(file: & mut Vec<u8>, header: &HeaderStruct) -> Result<()> {
+    string_to_little_endian_bytes(&header.id, file, 0);
+    write_u32_at_offset(file, 4, &header.version)?;
+    write_u32_at_offset(file, 8, &header.vab_id)?;
+    write_u32_at_offset(file, 12, &header.total_size)?;
+    write_u16_at_offset(file, 16, &header.reserved_1)?;
+    write_u16_at_offset(file, 18, &header.num_programs)?;
+    write_u16_at_offset(file, 20, &header.num_tones)?;
+    write_u16_at_offset(file, 22, &header.num_vags)?;
+    write_u8_at_offset(file, 24, &header.master_volume)?;
+    write_u8_at_offset(file, 25, &header.master_pan)?;
+    write_u8_at_offset(file, 26, &header.bank_attr_1)?;
+    write_u8_at_offset(file, 27, &header.bank_attr_2)?;
+    write_u32_at_offset(file, 28, &header.reserved_2)?;
+    Ok(())
+}
+
+fn write_programs(file: & mut Vec<u8>, programs: &Vec<Program>) -> Result<()> {
+    for program_num in 0..programs.len() {
+        let current_program = &programs[program_num];
+        let offset = 0x20 + program_num * 16;
+        write_u8_at_offset(file, (offset + 0).try_into().unwrap(), &current_program.num_tones)?;
+        write_u8_at_offset(file, (offset + 1).try_into().unwrap(), &current_program.volume)?;
+        write_u8_at_offset(file, (offset + 2).try_into().unwrap(), &current_program.priority)?;
+        write_u8_at_offset(file, (offset + 3).try_into().unwrap(), &current_program.mode)?;
+        write_u8_at_offset(file, (offset + 4).try_into().unwrap(), &current_program.pan)?;
+        write_u8_at_offset(file, (offset + 5).try_into().unwrap(), &current_program.attr)?;
+        string_to_little_endian_bytes(&current_program.name, file, (offset + 6).into());
+    }
+    Ok(())
+}
+
+fn check_serialize_deserialize(file_data: &Vec<u8>)
+{
+    let header = read_header(&file_data).unwrap();
+    let programs = read_programs(&file_data, &header).unwrap();
+    let tone_attrs = read_tone_attrs(&file_data, &header).unwrap();
+
+    let vh_file = VhFile{
+        header: header.clone(),
+        programs: programs,
+        tone_attrs: tone_attrs
+    };
+
+    let vh_file_json = serde_json::to_string_pretty(&vh_file).unwrap();
+
+    println!("{}", vh_file_json);
+
+    let deserialized: VhFile = serde_json::from_str(&vh_file_json).unwrap();
+
+    // AA as sentitinel value, rarer than 0x00
+    let mut test_bytes = vec![0xAA; file_data.len()];
+
+    write_header(& mut test_bytes, &deserialized.header);
+
+    for i in 0..0x20
+    {
+        assert!(test_bytes[i] == file_data[i]);
+    }
+
+    write_programs(& mut test_bytes, &deserialized.programs);
+    
+    println!("Checking from {} to {}",  0x20,(0x20 + 16 * deserialized.programs.len()));
+    // 16 x 128 (Max programs)
+    for i in 0x20..(0x20 + 16 * 128)
+    {
+        if(test_bytes[i] != file_data[i])
+        {
+            println!("mismatch i {} test_bytes[i] {} file_data[i] {}", i, test_bytes[i], file_data[i]);
+            assert!(test_bytes[i] == file_data[i]);
+        }  
+    }
+
+    write_tone_attrs(& mut test_bytes, 
+        &deserialized.header, &deserialized.tone_attrs);
+    
+    let off_progs = 0 + 0x20;
+    let off_tone_attrs = off_progs + (16 * 128);
+
+    println!("off_tone_attrs {}", off_tone_attrs);
+
+    for i in off_tone_attrs..test_bytes.len()
+    {
+        if(test_bytes[i] != file_data[i])
+        {
+            println!("mismatch i {} test_bytes[i] {} file_data[i] {}", i, test_bytes[i], file_data[i]);
+            assert!(test_bytes[i] == file_data[i]);
+        }  
+    }
+}
+
+#[test]
+fn test_serialize() {
+    let file_path = "../../disks/us/ST/DRE/SD_ZKDRE.VH";
+    match fs::read(file_path) {
+        Ok(file_data) => {
+            check_serialize_deserialize(&file_data);
         }
         Err(e) => {
             println!("Error reading the file: {}", e);
