@@ -7,6 +7,7 @@ on:
       - '*/*.h'
       - '**/*.c'
       - '**/*.h'
+      - '**/*.py'
       - 'config/symbols.*.txt'
   pull_request_target:
   workflow_dispatch:
