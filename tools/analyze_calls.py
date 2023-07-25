@@ -13,6 +13,8 @@
 # This gets saved to sotn_calltree.txt. To regenerate this tree, simply delete the file.
 
 # all just for drawing the graph
+from functools import partial
+import multiprocessing
 import graphviz
 from PIL import Image
 import io
@@ -402,9 +404,9 @@ if __name__ == "__main__":
     if MODE == "GRAPHICAL_ALL":
         print("Initiating autogeneration of call tree diagrams")
         funclist = list(tree.keys())[1:]
-        # with multiprocessing.Pool() as pool:
-        #    file_generator = partial(analyze_function,tree=tree)
-        #    pool.map(file_generator,funclist)
+        with multiprocessing.Pool() as pool:
+            file_generator = partial(analyze_function, tree=tree)
+            pool.map(file_generator, funclist)
         print("All trees have been generated.")
         # Generate an index.html to direct to all of them
         overlays = {}
@@ -418,21 +420,21 @@ if __name__ == "__main__":
             overlays[overlay].sort()
         print(overlays)
         html = '<html><head><meta charset="UTF-8"></head><body>'
-    for overlay, funcs in overlays.items():
-        # create a heading for the overlay
-        html += f"<h2>{overlay}</h2>"
+        for overlay, funcs in overlays.items():
+            # create a heading for the overlay
+            html += f"<h2>{overlay}</h2>"
 
-        # create an unordered list of functions
-        html += "<ul>"
-        for func in funcs:
-            dec_done = is_decompiled(
-                get_nonmatching_functions("asm", func, overlay).src_path, func
-            )
-            dec_symbol = "✅" if dec_done else "❌"
-            html += f'<li><a href="{func}.svg">{dec_symbol + func}</a></li>'
-        html += "</ul>"
-        html += "</body></html>"
-        with open(f"{output_dir}/index.html", "w") as f:
-            f.write(html)
+            # create an unordered list of functions
+            html += "<ul>"
+            for func in funcs:
+                dec_done = is_decompiled(
+                    get_nonmatching_functions("asm", func, overlay).src_path, func
+                )
+                dec_symbol = "✅" if dec_done else "❌"
+                html += f'<li><a href="{func}.svg">{dec_symbol + func}</a></li>'
+            html += "</ul>"
+            html += "</body></html>"
+            with open(f"{output_dir}/index.html", "w") as f:
+                f.write(html)
     if MODE == "CMDLINE":
         analyze_function(sys.argv[1], tree)
