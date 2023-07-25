@@ -40,4 +40,5 @@ config/saturn/stage_02_syms.txt
 config/saturn/t_bat_syms.txt
 config/saturn/zero_syms.txt
 asm/saturn
-
+tools/ghidra/symbols/target
+tools/ghidra/out
