@@ -7,7 +7,6 @@ use std::env;
 use std::fs;
 use std::path::Path;
 use std::io::{Write};
-
 // Resources
 
 // vabtool at https://archive.org/details/Sony-PSX-tools
@@ -138,6 +137,8 @@ fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) 
         [122.0 / 64.0, -60.0 / 64.0],
     ];
 
+    let _pos = vag.seek(SeekFrom::Start(start_pos));
+
     while vag.seek(SeekFrom::Current(0))? < (data_size + 48 + start_pos) {
         let predict_nr = read_u8(& mut vag)?;
         let shift_factor = predict_nr & 0xf;
@@ -164,12 +165,6 @@ fn write_vag(vag_name:String, pcm_name: String, start_pos: u64, data_size: u64) 
             }
             samples[i + 1] = (s >> shift_factor) as f64;
         }
-
-        // for i in 0..28
-        // {
-        //     print!("{}, ", samples[i]);
-        // }
-        // println!("");
 
         for i in 0..28 {
             samples[i] = samples[i] + s_1 * f[predict_nr as usize][0] + s_2 * f[predict_nr as usize][1];
@@ -305,7 +300,6 @@ fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
             in_vb.to_string(),
             format!("{}/out{}.wav", out_dir, vag_num), 
             vag_offset, vag_size as u64).unwrap();
-
             vag_offset += vag_size as u64; 
     }
     Ok(())
