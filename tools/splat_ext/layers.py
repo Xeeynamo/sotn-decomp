@@ -14,14 +14,17 @@ from segtypes.n64.segment import N64Segment
 from util.symbols import spim_context
 import utils
 
+
 def raise_err(str):
     sys.stderr.write("\033[91merror: " + str + "\u001b[0m" + "\n")
     raise Exception(str)
+
 
 def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str):
     obj = json.loads(content)
 
     layer_set = {}
+
     def get_int(myobj, name, min, max):
         value = myobj.get(name)
         if value == None:
@@ -31,11 +34,13 @@ def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str)
         if value > max:
             raise_err(f"expect '{name}' to be less than {max}\ncurrent object: {myobj}")
         return value
+
     def get_bool(myobj, name):
         value = myobj.get(name)
         if value == None:
             raise_err(f"expect '{name}' but found nothing\ncurrent object: {myobj}")
         return value
+
     def get_str(myobj, name):
         value = myobj.get(name)
         if value == None:
@@ -43,7 +48,7 @@ def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str)
         return value
 
     def write_layer(layer):
-        hash = json.dumps(layer) # 🤮
+        hash = json.dumps(layer)  # 🤮
         if hash in layer_set:
             return layer_set[hash]
         id = f"DATA_LAYER_{len(layer_set)}"
@@ -56,14 +61,16 @@ def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str)
         else:
             data = get_str(layer, "data")
             tiledef = get_str(layer, "tiledef")
-            flags = get_int(layer, "left", 0, 0x3F) | \
-                get_int(layer, "top", 0, 0x3F) << 6 | \
-                get_int(layer, "right", 0, 0x3F) << 12 | \
-                get_int(layer, "bottom", 0, 0x3F) << 18 | \
-                get_int(layer, "scrollMode", 0, 15) << 24 | \
-                (1 if get_bool(layer, "isSaveRoom") else 0) << 29 | \
-                (1 if get_bool(layer, "isLoadingRoom") else 0) << 30
-            zPriority = get_int(layer, "zPriority", 0, 32768) # s16 or u16?
+            flags = (
+                get_int(layer, "left", 0, 0x3F)
+                | get_int(layer, "top", 0, 0x3F) << 6
+                | get_int(layer, "right", 0, 0x3F) << 12
+                | get_int(layer, "bottom", 0, 0x3F) << 18
+                | get_int(layer, "scrollMode", 0, 15) << 24
+                | (1 if get_bool(layer, "isSaveRoom") else 0) << 29
+                | (1 if get_bool(layer, "isLoadingRoom") else 0) << 30
+            )
+            zPriority = get_int(layer, "zPriority", 0, 32768)  # s16 or u16?
             unkE = get_int(layer, "unkE", 0, 255)
             unkF = get_int(layer, "unkF", 0, 255)
             writer.write(f"\t.word {data}, {tiledef}, 0x{flags:08X}\n")
@@ -78,7 +85,7 @@ def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str)
         fgSym = write_layer(room.get("fg"))
         bgSym = write_layer(room.get("bg"))
         buf += f".word {fgSym}, {bgSym}\n"
-    writer.write(f".global g_TileLayers\n") # TODO: symbol name hardcoded 🤮
+    writer.write(f".global g_TileLayers\n")  # TODO: symbol name hardcoded 🤮
     writer.write(f"g_TileLayers:\n{buf}")
 
 
@@ -96,7 +103,7 @@ class PSXSegLayers(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = self.parse_layers(rom_bytes[self.rom_start:self.rom_end])
+        data = self.parse_layers(rom_bytes[self.rom_start : self.rom_end])
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
@@ -127,15 +134,24 @@ class PSXSegLayers(N64Segment):
         roomDefStart = ram_start
         while True:
             fgPtr = utils.to_u32(data[roomOff:])
-            bgPtr = utils.to_u32(data[roomOff + 4:])
-            if bgPtr < 0x80180000 or fgPtr >= 0x801E0000 or \
-                bgPtr < 0x80180000 or fgPtr >= 0x801E0000 or \
-                bgPtr >= ram_end or fgPtr >= ram_end:
-                log.error(f"data for '{self.name}' does not describe a set of room layers")
+            bgPtr = utils.to_u32(data[roomOff + 4 :])
+            if (
+                bgPtr < 0x80180000
+                or fgPtr >= 0x801E0000
+                or bgPtr < 0x80180000
+                or fgPtr >= 0x801E0000
+                or bgPtr >= ram_end
+                or fgPtr >= ram_end
+            ):
+                log.error(
+                    f"data for '{self.name}' does not describe a set of room layers"
+                )
                 raise err
             if fgPtr < ram_start or bgPtr < ram_start:
                 min_start = min(fgPtr, bgPtr)
-                log.error(f"data for '{self.name}' needs to start at least from {min_start}")
+                log.error(
+                    f"data for '{self.name}' needs to start at least from {min_start}"
+                )
                 raise err
             layerDefOffsets.add(fgPtr)
             layerDefOffsets.add(bgPtr)
@@ -144,17 +160,19 @@ class PSXSegLayers(N64Segment):
             roomDefStart = max(roomDefStart, max(fgPtr, bgPtr))
             if ram_start + roomOff - 16 == roomDefStart:
                 break
-            
+
             roomOff -= 8
             if roomOff <= 0:
-                log.error(f"data for '{self.name}' needs to start at least from {min_start}")
+                log.error(
+                    f"data for '{self.name}' needs to start at least from {min_start}"
+                )
                 raise err
 
         # Creates a dictionary of layers, so we can re-use them when a layer is
         # used by multiple rooms.
         layerPool = {}
         for off in layerDefOffsets:
-            layerDefData = data[off - ram_start:]
+            layerDefData = data[off - ram_start :]
             dataOff = utils.to_u32(layerDefData[0:])
             tiledefOff = utils.to_u32(layerDefData[4:])
             flags = utils.to_u32(layerDefData[8:])
@@ -175,7 +193,7 @@ class PSXSegLayers(N64Segment):
                 }
             else:
                 layerPool[off] = None
-        
+
         # NOTE: I am not sure if LayerDef{0, 0, 0, 0, 0, 0} comes always first
         # or it is just a coincidence due to the fact the first room of the
         # two stage I analalysed always contains an empty bg??
@@ -185,7 +203,7 @@ class PSXSegLayers(N64Segment):
             fg = layerPool[utils.to_u32(data[roomOff:])]
             if fg != None:
                 room["fg"] = fg
-            bg = layerPool[utils.to_u32(data[roomOff + 4:])]
+            bg = layerPool[utils.to_u32(data[roomOff + 4 :])]
             if bg != None:
                 room["bg"] = bg
             rooms.append(room)
@@ -195,6 +213,7 @@ class PSXSegLayers(N64Segment):
 
 
 if __name__ == "__main__":
+
     def get_file_name(full_path):
         file_name = os.path.basename(full_path)
         exts = os.path.splitext(file_name)

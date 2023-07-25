@@ -5,23 +5,35 @@ import os
 import sys
 
 parser = argparse.ArgumentParser(
-    description="Converts a binary file into C-compatible data")
+    description="Converts a binary file into C-compatible data"
+)
 group_size = parser.add_mutually_exclusive_group()
-group_size.add_argument("-1", "--byte", help="write as a 8-bit array (default)",
-                        action='store_true', required=False)
-group_size.add_argument("-2", "--word", help="write as a 16-bit array",
-                        action='store_true', required=False)
-group_size.add_argument("-4", "--dword", help="write as a 32-bit array",
-                        action='store_true', required=False)
+group_size.add_argument(
+    "-1",
+    "--byte",
+    help="write as a 8-bit array (default)",
+    action="store_true",
+    required=False,
+)
+group_size.add_argument(
+    "-2", "--word", help="write as a 16-bit array", action="store_true", required=False
+)
+group_size.add_argument(
+    "-4", "--dword", help="write as a 32-bit array", action="store_true", required=False
+)
 group_sign = parser.add_mutually_exclusive_group()
-group_sign.add_argument("-u", "--unsigned", help="write values as unsigned (default)",
-                        action='store_true', required=False)
-group_sign.add_argument("-s", "--signed", help="write values as signed",
-                        action='store_true', required=False)
-parser.add_argument("filein", help="binary file name to convert",
-                    nargs=1, default=None)
-parser.add_argument("name", help="variable name",
-                    nargs=1, default=None)
+group_sign.add_argument(
+    "-u",
+    "--unsigned",
+    help="write values as unsigned (default)",
+    action="store_true",
+    required=False,
+)
+group_sign.add_argument(
+    "-s", "--signed", help="write values as signed", action="store_true", required=False
+)
+parser.add_argument("filein", help="binary file name to convert", nargs=1, default=None)
+parser.add_argument("name", help="variable name", nargs=1, default=None)
 args = parser.parse_args()
 
 

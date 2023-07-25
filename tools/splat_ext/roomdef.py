@@ -47,7 +47,7 @@ class PSXSegRoomdef(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = self.parse_roomdef(rom_bytes[self.rom_start:self.rom_end])
+        data = self.parse_roomdef(rom_bytes[self.rom_start : self.rom_end])
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
@@ -56,13 +56,17 @@ class PSXSegRoomdef(N64Segment):
         expected_data_size = count * item_size + 4
         if len(data) != expected_data_size:
             log.write(
-                f"data for '{self.name}' is {expected_data_size - len(data)} too long. Data might look incorrect.", status="warn")
+                f"data for '{self.name}' is {expected_data_size - len(data)} too long. Data might look incorrect.",
+                status="warn",
+            )
 
         items = []
         for i in range(0, count):
             if data[i * item_size + 0] == 64:
                 log.write(
-                    f"data for '{self.name}' includes the array terminator. Try reducing the size of the subsegment.", status="warn")
+                    f"data for '{self.name}' includes the array terminator. Try reducing the size of the subsegment.",
+                    status="warn",
+                )
             item = {
                 "left": data[i * item_size + 0],
                 "top": data[i * item_size + 1],
@@ -77,7 +81,8 @@ class PSXSegRoomdef(N64Segment):
 
         if data[count * item_size] != 64:
             log.write(
-                f"data for '{self.name}' does not end with a terminator.", status="warn")
+                f"data for '{self.name}' does not end with a terminator.", status="warn"
+            )
 
         return items
 

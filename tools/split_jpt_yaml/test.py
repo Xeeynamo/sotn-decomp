@@ -205,6 +205,7 @@ glabel D_801B7618
                       .balign 4
 """
 
+
 class Testing(unittest.TestCase):
     def test(self):
         segments = []
@@ -213,52 +214,83 @@ class Testing(unittest.TestCase):
         assert segments[0][0] == 0x3CC2C
         assert segments[1][0] == 0x3CC54
         assert segments[2][0] == 0x3CC70
-        assert names[0x3CC2C] == 'jpt_80102918'
-        assert names[0x3CC54] == 'jpt_80102D9C'
+        assert names[0x3CC2C] == "jpt_80102918"
+        assert names[0x3CC54] == "jpt_80102D9C"
 
     # check that it can switch between jump tables and data
     def test2(self):
         segments = []
         names = {}
         check_file(test_string2, "jtbl_", segments, names)
-        assert segments[0][0] == 0x37458 # jtbl_801B7458
-        assert segments[1][0] == 0x37478 # jtbl_801B7478
-        assert segments[2][0] == 0x374DC # jtbl_801B74DC
-        assert segments[3][0] == 0x374F4 # jtbl_801B74F4
-        assert segments[4][0] == 0x37514 # jtbl_801B7514
-        assert segments[5][0] == 0x37564 # jtbl_801B7564
-        assert segments[6][0] == 0x37578 # jtbl_801B7578
-        assert segments[7][0] == 0x37590 # D_801B7590
-        assert segments[8][0] == 0x375E0 # jtbl_801B75E0
-        assert segments[9][0] == 0x37600 # jtbl_801B7600
-        assert segments[10][0] == 0x37618 # D_801B7618
+        assert segments[0][0] == 0x37458  # jtbl_801B7458
+        assert segments[1][0] == 0x37478  # jtbl_801B7478
+        assert segments[2][0] == 0x374DC  # jtbl_801B74DC
+        assert segments[3][0] == 0x374F4  # jtbl_801B74F4
+        assert segments[4][0] == 0x37514  # jtbl_801B7514
+        assert segments[5][0] == 0x37564  # jtbl_801B7564
+        assert segments[6][0] == 0x37578  # jtbl_801B7578
+        assert segments[7][0] == 0x37590  # D_801B7590
+        assert segments[8][0] == 0x375E0  # jtbl_801B75E0
+        assert segments[9][0] == 0x37600  # jtbl_801B7600
+        assert segments[10][0] == 0x37618  # D_801B7618
 
         for segment in segments:
             print(segment)
 
     # check that it merges with the existing yaml correctly
     def test3(self):
-        test_segments = [[0, 'rodata'], [2336, 'rodata'], [2732, 'rodata'], [3520, 'rodata'], [3536, 'rodata'], [3664, 'rodata'], 
-            [3696, 'rodata'], [3712, 'rodata'], [3728, 'rodata'], [3744, 'rodata'], [4592, 'rodata'], [6976, 'rodata'], 
-            [9936, 'rodata'], [12672, 'rodata'], [14752, 'rodata'], [15040, 'rodata'], [15088, 'rodata'], [15152, 'rodata'], 
-            [19680, 'rodata'], [226272, 'rodata'], [226280, 'rodata'], [226324, '.rodata', '3C4EC'], [226348, '.rodata', '3E134'], 
-            [226368, 'rodata'], [226392, 'rodata'], [226856, 'rodata'], [227048, 'rodata'], [227236, '.rodata', 56264], [227256, 'rodata'], 
-            [227284, 'c'], [247020, 'c', '3C4EC'], [254260, 'c', '3E134'], [352868, 'c'], [356528, 'data']]
+        test_segments = [
+            [0, "rodata"],
+            [2336, "rodata"],
+            [2732, "rodata"],
+            [3520, "rodata"],
+            [3536, "rodata"],
+            [3664, "rodata"],
+            [3696, "rodata"],
+            [3712, "rodata"],
+            [3728, "rodata"],
+            [3744, "rodata"],
+            [4592, "rodata"],
+            [6976, "rodata"],
+            [9936, "rodata"],
+            [12672, "rodata"],
+            [14752, "rodata"],
+            [15040, "rodata"],
+            [15088, "rodata"],
+            [15152, "rodata"],
+            [19680, "rodata"],
+            [226272, "rodata"],
+            [226280, "rodata"],
+            [226324, ".rodata", "3C4EC"],
+            [226348, ".rodata", "3E134"],
+            [226368, "rodata"],
+            [226392, "rodata"],
+            [226856, "rodata"],
+            [227048, "rodata"],
+            [227236, ".rodata", 56264],
+            [227256, "rodata"],
+            [227284, "c"],
+            [247020, "c", "3C4EC"],
+            [254260, "c", "3E134"],
+            [352868, "c"],
+            [356528, "data"],
+        ]
 
         names = {}
         execute([test_string2], "jtbl_", test_segments, names)
 
-        assert [0x37458, "rodata"] in test_segments # jtbl_801B7458
-        assert [0x37478, "rodata"] in test_segments # jtbl_801B7478
-        assert [0x374DC, "rodata"] in test_segments # jtbl_801B74DC
-        assert [0x374F4, "rodata"] in test_segments # jtbl_801B74F4
-        assert [0x37514, "rodata"] in test_segments # jtbl_801B7514
-        assert [0x37564, "rodata"] in test_segments # jtbl_801B7564
-        assert [0x37578, "rodata"] in test_segments # jtbl_801B7578
-        assert [0x37590, "rodata"] in test_segments # D_801B7590
-        assert [0x375E0, "rodata"] in test_segments # jtbl_801B75E0
-        assert [0x37600, "rodata"] in test_segments # jtbl_801B7600
-        assert [0x37618, "rodata"] in test_segments # D_801B7618
+        assert [0x37458, "rodata"] in test_segments  # jtbl_801B7458
+        assert [0x37478, "rodata"] in test_segments  # jtbl_801B7478
+        assert [0x374DC, "rodata"] in test_segments  # jtbl_801B74DC
+        assert [0x374F4, "rodata"] in test_segments  # jtbl_801B74F4
+        assert [0x37514, "rodata"] in test_segments  # jtbl_801B7514
+        assert [0x37564, "rodata"] in test_segments  # jtbl_801B7564
+        assert [0x37578, "rodata"] in test_segments  # jtbl_801B7578
+        assert [0x37590, "rodata"] in test_segments  # D_801B7590
+        assert [0x375E0, "rodata"] in test_segments  # jtbl_801B75E0
+        assert [0x37600, "rodata"] in test_segments  # jtbl_801B7600
+        assert [0x37618, "rodata"] in test_segments  # D_801B7618
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

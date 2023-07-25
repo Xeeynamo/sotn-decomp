@@ -9,27 +9,27 @@ import sys
 from pathlib import Path
 
 clut_indices = [
-    0x8000*0+0x5C00+0x20*0,
-    0x8000*0+0x5C00+0x20*1,
-    0x8000*0+0x7C00+0x20*0,
-    0x8000*0+0x7C00+0x20*1,
-    0x8000*1+0x5C00+0x20*0,
-    0x8000*1+0x5C00+0x20*1,
-    0x8000*1+0x7C00+0x20*0,
-    0x8000*1+0x7C00+0x20*1,
-    0x8000*2+0x5C00+0x20*0,
-    0x8000*2+0x5C00+0x20*1,
-    0x8000*2+0x7C00+0x20*0,
-    0x8000*2+0x7C00+0x20*1,
-    0x8000*3+0x5C00+0x20*0,
-    0x8000*3+0x5C00+0x20*1,
-    0x8000*3+0x7C00+0x20*0,
-    0x8000*3+0x7C00+0x20*1,
+    0x8000 * 0 + 0x5C00 + 0x20 * 0,
+    0x8000 * 0 + 0x5C00 + 0x20 * 1,
+    0x8000 * 0 + 0x7C00 + 0x20 * 0,
+    0x8000 * 0 + 0x7C00 + 0x20 * 1,
+    0x8000 * 1 + 0x5C00 + 0x20 * 0,
+    0x8000 * 1 + 0x5C00 + 0x20 * 1,
+    0x8000 * 1 + 0x7C00 + 0x20 * 0,
+    0x8000 * 1 + 0x7C00 + 0x20 * 1,
+    0x8000 * 2 + 0x5C00 + 0x20 * 0,
+    0x8000 * 2 + 0x5C00 + 0x20 * 1,
+    0x8000 * 2 + 0x7C00 + 0x20 * 0,
+    0x8000 * 2 + 0x7C00 + 0x20 * 1,
+    0x8000 * 3 + 0x5C00 + 0x20 * 0,
+    0x8000 * 3 + 0x5C00 + 0x20 * 1,
+    0x8000 * 3 + 0x7C00 + 0x20 * 0,
+    0x8000 * 3 + 0x7C00 + 0x20 * 1,
 ]
 
 
 def get_clut_pos_start(pal_index: int):
-    return clut_indices[int(pal_index % 16)]+0x40*int(pal_index / 16)
+    return clut_indices[int(pal_index % 16)] + 0x40 * int(pal_index / 16)
 
 
 def ensure_dir_exists(file_path):
@@ -38,7 +38,6 @@ def ensure_dir_exists(file_path):
 
 
 def encode(input_base: str, output_file: str):
-
     def unroll_rows(rows):
         list_of_rows = []
         for row in rows:
@@ -46,7 +45,7 @@ def encode(input_base: str, output_file: str):
         return list_of_rows
 
     def encode_quadrant(dst: bytearray, start: int, rows, quad: int):
-        assert (quad >= 0 and quad < 4)
+        assert quad >= 0 and quad < 4
         start_row = 128 if (quad & 2) == 2 else 0
         start_col = 128 if (quad & 1) == 1 else 0
 
@@ -106,22 +105,22 @@ def encode(input_base: str, output_file: str):
 
         row_list = unroll_rows(rows)
         for i in range(0, 16):
-            encode_pal(dst, clut_indices[0x0]+0x40*i, row_list[i*16+0x0])
-            encode_pal(dst, clut_indices[0x1]+0x40*i, row_list[i*16+0x1])
-            encode_pal(dst, clut_indices[0x2]+0x40*i, row_list[i*16+0x2])
-            encode_pal(dst, clut_indices[0x3]+0x40*i, row_list[i*16+0x3])
-            encode_pal(dst, clut_indices[0x4]+0x40*i, row_list[i*16+0x4])
-            encode_pal(dst, clut_indices[0x5]+0x40*i, row_list[i*16+0x5])
-            encode_pal(dst, clut_indices[0x6]+0x40*i, row_list[i*16+0x6])
-            encode_pal(dst, clut_indices[0x7]+0x40*i, row_list[i*16+0x7])
-            encode_pal(dst, clut_indices[0x8]+0x40*i, row_list[i*16+0x8])
-            encode_pal(dst, clut_indices[0x9]+0x40*i, row_list[i*16+0x9])
-            encode_pal(dst, clut_indices[0xA]+0x40*i, row_list[i*16+0xA])
-            encode_pal(dst, clut_indices[0xB]+0x40*i, row_list[i*16+0xB])
-            encode_pal(dst, clut_indices[0xC]+0x40*i, row_list[i*16+0xC])
-            encode_pal(dst, clut_indices[0xD]+0x40*i, row_list[i*16+0xD])
-            encode_pal(dst, clut_indices[0xE]+0x40*i, row_list[i*16+0xE])
-            encode_pal(dst, clut_indices[0xF]+0x40*i, row_list[i*16+0xF])
+            encode_pal(dst, clut_indices[0x0] + 0x40 * i, row_list[i * 16 + 0x0])
+            encode_pal(dst, clut_indices[0x1] + 0x40 * i, row_list[i * 16 + 0x1])
+            encode_pal(dst, clut_indices[0x2] + 0x40 * i, row_list[i * 16 + 0x2])
+            encode_pal(dst, clut_indices[0x3] + 0x40 * i, row_list[i * 16 + 0x3])
+            encode_pal(dst, clut_indices[0x4] + 0x40 * i, row_list[i * 16 + 0x4])
+            encode_pal(dst, clut_indices[0x5] + 0x40 * i, row_list[i * 16 + 0x5])
+            encode_pal(dst, clut_indices[0x6] + 0x40 * i, row_list[i * 16 + 0x6])
+            encode_pal(dst, clut_indices[0x7] + 0x40 * i, row_list[i * 16 + 0x7])
+            encode_pal(dst, clut_indices[0x8] + 0x40 * i, row_list[i * 16 + 0x8])
+            encode_pal(dst, clut_indices[0x9] + 0x40 * i, row_list[i * 16 + 0x9])
+            encode_pal(dst, clut_indices[0xA] + 0x40 * i, row_list[i * 16 + 0xA])
+            encode_pal(dst, clut_indices[0xB] + 0x40 * i, row_list[i * 16 + 0xB])
+            encode_pal(dst, clut_indices[0xC] + 0x40 * i, row_list[i * 16 + 0xC])
+            encode_pal(dst, clut_indices[0xD] + 0x40 * i, row_list[i * 16 + 0xD])
+            encode_pal(dst, clut_indices[0xE] + 0x40 * i, row_list[i * 16 + 0xE])
+            encode_pal(dst, clut_indices[0xF] + 0x40 * i, row_list[i * 16 + 0xF])
 
         return None
 
@@ -142,25 +141,34 @@ def encode(input_base: str, output_file: str):
 
 def decode(input_file: str, output_base: str, pal_idx: int):
     def copy_quadrant(dst: bytearray, src: bytes, h: int, src_idx: int, dst_quad: int):
-        src = src[src_idx * 128 * 64:][: 128*64]
+        src = src[src_idx * 128 * 64 :][: 128 * 64]
         dst_idx = (dst_quad & 1) * 64 + int(dst_quad / 2) * 128 * 128
         for y in range(0, h):
             for x in range(0, 64):
-                ch = src[y*0x40+x]
+                ch = src[y * 0x40 + x]
                 dst[dst_idx + y * 128 + x] = ((ch & 0xF) << 4) | (ch >> 4)
 
     def generate_grey_palette() -> List[Tuple[int, int, int, int]]:
         def generate_grey_color(intensity: int) -> Tuple[int, int, int, int]:
             return intensity, intensity, intensity, 255
+
         return [
-            generate_grey_color(0x00), generate_grey_color(0x11),
-            generate_grey_color(0x22), generate_grey_color(0x33),
-            generate_grey_color(0x44), generate_grey_color(0x55),
-            generate_grey_color(0x66), generate_grey_color(0x77),
-            generate_grey_color(0x88), generate_grey_color(0x99),
-            generate_grey_color(0xAA), generate_grey_color(0xBB),
-            generate_grey_color(0xCC), generate_grey_color(0xDD),
-            generate_grey_color(0xEE), generate_grey_color(0xFF),
+            generate_grey_color(0x00),
+            generate_grey_color(0x11),
+            generate_grey_color(0x22),
+            generate_grey_color(0x33),
+            generate_grey_color(0x44),
+            generate_grey_color(0x55),
+            generate_grey_color(0x66),
+            generate_grey_color(0x77),
+            generate_grey_color(0x88),
+            generate_grey_color(0x99),
+            generate_grey_color(0xAA),
+            generate_grey_color(0xBB),
+            generate_grey_color(0xCC),
+            generate_grey_color(0xDD),
+            generate_grey_color(0xEE),
+            generate_grey_color(0xFF),
         ]
 
     def generate_tileset(output_file: str, src: bytes, idx: int, pal, has_clut: bool):
@@ -181,8 +189,12 @@ def decode(input_file: str, output_base: str, pal_idx: int):
         start = pal_idx * 32
         for i in range(0, 16):
             c = src[i * 2 + 0] | (src[i * 2 + 1] << 8)
-            c = ((c & 0x1F) << 11) | ((c & 0x3E0) << 1) | (
-                (c & 0x7C00) >> 9) | ((c ^ 0x8000) >> 15)
+            c = (
+                ((c & 0x1F) << 11)
+                | ((c & 0x3E0) << 1)
+                | ((c & 0x7C00) >> 9)
+                | ((c ^ 0x8000) >> 15)
+            )
             dst[start + i * 2 + 1] = c & 0xFF
             dst[start + i * 2 + 0] = (c >> 8) & 0xFF
 
@@ -194,29 +206,29 @@ def decode(input_file: str, output_base: str, pal_idx: int):
     def decode_palette(data: bytearray) -> List[Tuple[int, int, int, int]]:
         palette = []
         for i in range(0, 16):
-            palette.append(decode_color(data[i * 2:]))
+            palette.append(decode_color(data[i * 2 :]))
         return palette
 
     def generate_clut(output_file: str, src: bytes):
         img: n64img.image.Image = n64img.image.RGBA16(None, 16, 256)
         img.data = bytearray(img.size())
         for i in range(0, 16):
-            copy_pal(img.data, i*0x10+0x0, src[clut_indices[0x0]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x1, src[clut_indices[0x1]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x2, src[clut_indices[0x2]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x3, src[clut_indices[0x3]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x4, src[clut_indices[0x4]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x5, src[clut_indices[0x5]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x6, src[clut_indices[0x6]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x7, src[clut_indices[0x7]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x8, src[clut_indices[0x8]+0x40*i:])
-            copy_pal(img.data, i*0x10+0x9, src[clut_indices[0x9]+0x40*i:])
-            copy_pal(img.data, i*0x10+0xA, src[clut_indices[0xA]+0x40*i:])
-            copy_pal(img.data, i*0x10+0xB, src[clut_indices[0xB]+0x40*i:])
-            copy_pal(img.data, i*0x10+0xC, src[clut_indices[0xC]+0x40*i:])
-            copy_pal(img.data, i*0x10+0xD, src[clut_indices[0xD]+0x40*i:])
-            copy_pal(img.data, i*0x10+0xE, src[clut_indices[0xE]+0x40*i:])
-            copy_pal(img.data, i*0x10+0xF, src[clut_indices[0xF]+0x40*i:])
+            copy_pal(img.data, i * 0x10 + 0x0, src[clut_indices[0x0] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x1, src[clut_indices[0x1] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x2, src[clut_indices[0x2] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x3, src[clut_indices[0x3] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x4, src[clut_indices[0x4] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x5, src[clut_indices[0x5] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x6, src[clut_indices[0x6] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x7, src[clut_indices[0x7] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x8, src[clut_indices[0x8] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0x9, src[clut_indices[0x9] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0xA, src[clut_indices[0xA] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0xB, src[clut_indices[0xB] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0xC, src[clut_indices[0xC] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0xD, src[clut_indices[0xD] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0xE, src[clut_indices[0xE] + 0x40 * i :])
+            copy_pal(img.data, i * 0x10 + 0xF, src[clut_indices[0xF] + 0x40 * i :])
         img.write(output_file)
 
     with open(input_file, "rb") as f_in:
@@ -227,7 +239,7 @@ def decode(input_file: str, output_base: str, pal_idx: int):
     if pal_idx is None or pal_idx < 0:
         pal = generate_grey_palette()
     else:
-        pal = decode_palette(src_data[get_clut_pos_start(pal_idx):])
+        pal = decode_palette(src_data[get_clut_pos_start(pal_idx) :])
 
     for i in range(0, 4):
         generate_tileset(f"{output_base}_{i}.png", src_data, i, pal, True)
@@ -237,19 +249,27 @@ def decode(input_file: str, output_base: str, pal_idx: int):
 
 
 parser = argparse.ArgumentParser(description="convert stage graphics")
-parser.add_argument("mode",
-                    choices=['e', 'd'],
-                    help="(e)ncode PNG to stage graphics or (d)ecode stage graphics to PNG")
+parser.add_argument(
+    "mode",
+    choices=["e", "d"],
+    help="(e)ncode PNG to stage graphics or (d)ecode stage graphics to PNG",
+)
 parser.add_argument("input")
 parser.add_argument("output")
-parser.add_argument("--pal", type=int, required=False, default=-1, dest="pal",
-                    help="export to PNG using a specific palette index")
+parser.add_argument(
+    "--pal",
+    type=int,
+    required=False,
+    default=-1,
+    dest="pal",
+    help="export to PNG using a specific palette index",
+)
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    if args.mode == 'e':
+    if args.mode == "e":
         err = encode(args.input, args.output)
         if err != None:
             sys.stderr.write(f"ERROR: {err}")
-    elif args.mode == 'd':
+    elif args.mode == "d":
         decode(args.input, args.output, args.pal)
