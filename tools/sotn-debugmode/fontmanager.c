@@ -56,3 +56,9 @@ void EndFont() {
     FntFlush(g_FontStreamId);
     SetDumpFnt(0);
 }
+
+void PrintDefaultFont() {
+    Font[g_FontStreamId].x = DefaultFontX;
+    Font[g_FontStreamId].y = DefaultFontY;
+    FntFlush(-1);
+}

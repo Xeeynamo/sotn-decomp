@@ -10,13 +10,6 @@ int HookLoadStage();
 int HookLoadAlucard();
 int HookLoadRichter();
 
-void EnableNoClip(int param) {
-    D_80098850 = param; // TODO merge: rename g_DebugPlayer
-}
-void EnableShowHitboxes(int param) {
-    *g_DraDebugHitboxViewMode = param;
-    *g_DraDebugHitboxViewEnabled = param;
-}
 void ChangeStage(int param) {
     g_DbgLoadState = 0;
     g_mapTilesetId = param;
@@ -34,35 +27,61 @@ void ChangePlayer(int param) {
         break;
     }
 }
+void SetNoClip(int param) {
+    D_80098850 = param; // TODO merge: rename g_DebugPlayer
+}
+void SetFrameByFrame(bool isEnabled) { g_FrameByFrame = isEnabled; }
+void ShowHitboxes(int param) {
+    *g_DraDebugHitboxViewMode = param;
+    *g_DraDebugHitboxViewEnabled = param;
+}
+void ShowDebugMessages(bool isVisible) {
+    g_ShowDebugMessages = isVisible;
+    if (isVisible) {
+        g_ShowCollisionLayer = false;
+    }
+}
+void ShowCollisionLayer(bool isVisible) {
+    g_ShowCollisionLayer = isVisible;
+    if (isVisible) {
+        g_ShowDebugMessages = false;
+    }
+}
 
 DbgMenuItem g_DebugFlagsItems[] = {
-    /**/ {0, 0, 1, EnableNoClip, DbgMenu_ActionOnChange},
-    /**/ {0, 0, 1, EnableShowHitboxes, DbgMenu_ActionOnChange},
     /**/ {0, 0, 0x4F, ChangeStage, DbgMenu_ActionOnInput},
     /**/ {0, 0, 1, ChangePlayer, DbgMenu_ActionOnInput},
+    /**/ {0, false, true, SetNoClip, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, SetFrameByFrame, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, ShowHitboxes, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, ShowDebugMessages, DbgMenu_ActionOnChange},
+    /**/ {0, false, true, ShowCollisionLayer, DbgMenu_ActionOnChange},
     /**/ MENU_END,
 };
 DbgMenuCtrl g_DebugFlagsCtrl = {
     g_DebugFlagsItems,
-    200,
+    236,
     0x40,
     false,
 };
 
 void InitDebugFlagsPlayer(void) {
-    g_DebugFlagsItems[2].param = g_StageId;
-    g_DebugFlagsItems[3].param = g_CurrentPlayableCharacter;
+    g_DebugFlagsItems[0].param = g_StageId;
+    g_DebugFlagsItems[1].param = g_CurrentPlayableCharacter;
 }
 void UpdateDebugFlagsPlayer(void) {
-    int stageCursor = g_DebugFlagsItems[2].param;
+    int stageCursor = g_DebugFlagsItems[0].param;
     Lba* lba = DbgGetStageLba(stageCursor);
 
-    FntPrint("No clip mode: %s\n", D_80098850 ? "on" : "off");
-    FntPrint("Show hitboxes: %s\n", *g_DraDebugHitboxViewMode ? "on" : "off");
     FntPrint("Stage: %02X %s (%s, %s)\n", stageCursor, lba->name, lba->ovlName,
              lba->gfxName);
     FntPrint(
-        "Player: %s\n", g_DebugFlagsItems[3].param ? "Richter" : "Alucard");
+        "Player: %s\n", g_DebugFlagsItems[1].param ? "Richter" : "Alucard");
+    FntPrint("No clip: %s\n", D_80098850 ? "on" : "off");
+    FntPrint("Frame by frame: %s  (L1+L2)\n", g_FrameByFrame ? "on" : "off");
+    FntPrint("Show hitboxes: %s\n", *g_DraDebugHitboxViewMode ? "on" : "off");
+    FntPrint("Show debug messages: %s\n", g_ShowDebugMessages ? "on" : "off");
+    FntPrint("Show collision layer: %s\n", g_ShowCollisionLayer ? "on" : "off");
 
     DbgMenuNavigate(&g_DebugFlagsCtrl);
 }

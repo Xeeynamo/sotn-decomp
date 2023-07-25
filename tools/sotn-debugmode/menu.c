@@ -87,11 +87,17 @@ int DbgGetMenuItemCount(DbgMenuCtrl* ctrl) {
 }
 
 void DbgMenuCtrlInit(DbgMenuCtrl* ctrl) {
+    DbgMenuItem* item;
     int i;
 
     ctrl->nItems = DbgGetMenuItemCount(ctrl);
     for (i = 0; i < ctrl->nItems; i++) {
-        ctrl->items[i].param = ctrl->items[i].min;
+        item = &ctrl->items[i];
+        if (item->param < item->min) {
+            item->param = item->min;
+        } else if (item->param >= item->max) {
+            item->param = item->max - 1;
+        }
     }
     ctrl->option = 0;
 }
@@ -155,8 +161,8 @@ void DbgMenuNavigate(DbgMenuCtrl* ctrl) {
         ctrl->option++;
         if (ctrl->option >= ctrl->nItems) {
             ctrl->option = 0;
-            PLAY_MENU_SOUND();
         }
+        PLAY_MENU_SOUND();
     }
 }
 

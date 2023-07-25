@@ -34,6 +34,11 @@ void InitFont();
 void SetFontCoord(int x, int y);
 void BeginFont();
 void EndFont();
+void PrintDefaultFont();
+
+extern bool g_ShowDebugMessages;
+extern bool g_ShowCollisionLayer;
+extern bool g_FrameByFrame;
 void SetHook(int (*hook)(void));
 
 void DbgBeginDrawMenu(void);

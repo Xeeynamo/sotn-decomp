@@ -14,39 +14,45 @@ void InitDebugFlagsPlayer(void);
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
-void InitCollisionViewer(void);
 void InitFlagChecker(void);
 void UpdateDebugFlagsPlayer();
 void UpdateDraEntitySpawn();
 void UpdateStageEntitySpawn();
 void UpdateSfxPlayer(void);
 void UpdateDraTest800FD874(void);
-void UpdateCollisionViewer(void);
 void UpdateFlagChecker(void);
 
 DebugMenu g_DebugMenus[] = {
-    DummyDummyDummy,      DummyDummyDummy,        true,  false, "R2 = debug",
-    InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true,  true,  "Debug mode",
-    InitEntitySpawn,      UpdateDraEntitySpawn,   true,  true,  "DRA spawn",
-    InitEntitySpawn,      UpdateStageEntitySpawn, true,  true,  "Stage spawn",
-    InitSfxPlayer,        UpdateSfxPlayer,        true,  true,  "Snd player",
-    InitDraTest800FD874,  UpdateDraTest800FD874,  true,  true,  "Inventory",
-    InitCollisionViewer,  UpdateCollisionViewer,  false, false, "Collision map",
-    InitFlagChecker,      UpdateFlagChecker,      true,  true,  "Castleflags",
+    DummyDummyDummy,      DummyDummyDummy,        true, false, "R2 = debug",
+    InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true, true,  "Debug mode",
+    InitEntitySpawn,      UpdateDraEntitySpawn,   true, true,  "DRA spawn",
+    InitEntitySpawn,      UpdateStageEntitySpawn, true, true,  "Stage spawn",
+    InitSfxPlayer,        UpdateSfxPlayer,        true, true,  "Snd player",
+    InitDraTest800FD874,  UpdateDraTest800FD874,  true, true,  "Inventory",
+    InitFlagChecker,      UpdateFlagChecker,      true, true,  "Castleflags",
 };
 
 int g_DebugMode;
 bool g_DebugModePaused;
 bool g_EntitiesPaused;
+bool g_ShowDebugMessages;
+bool g_ShowCollisionLayer;
+bool g_FrameByFrame;
 int (*g_Hook)(void);
 
+void DrawCollisionLayer();
 void DestroyEntity(Entity* item);
+
 void Init(void) {
     int i;
 
     g_EntitiesPaused = false;
     g_DebugMode = 0;
-    g_DebugModePaused = 0;
+    g_DebugModePaused = false;
+    g_ShowDebugMessages = false;
+    g_ShowCollisionLayer = false;
+    g_FrameByFrame = false;
+    g_Hook = NULL;
     for (i = 0; i < LEN(g_DebugMenus); i++) {
         g_DebugMenus[i].Init();
     }
@@ -90,20 +96,90 @@ bool UpdateLogic() {
 }
 
 bool Update(void) {
-    bool entityPaused;
+    bool entityPaused = false;
+    bool isDebugMenuVisible = g_DebugModePaused == false && g_DebugMode != 0;
+    bool skipFntOverride = g_ShowDebugMessages && !isDebugMenuVisible;
 
-    BeginFont();
-    DbgBeginDrawMenu();
+    if (!skipFntOverride) {
+        BeginFont();
+        DbgBeginDrawMenu();
+    }
+    if (g_ShowDebugMessages) {
+        PrintDefaultFont();
+    }
+    if (g_ShowCollisionLayer && !isDebugMenuVisible) {
+        if (g_GameState == Game_Play) {
+            DrawCollisionLayer();
+        }
+    }
 
     entityPaused = g_Hook ? !!g_Hook() : UpdateLogic();
     if (g_Hook) {
         entityPaused = !!g_Hook();
     }
 
-    DbgEndDrawMenu();
-    EndFont();
+    if (!skipFntOverride) {
+        DbgEndDrawMenu();
+        EndFont();
+    }
+
+    if (g_FrameByFrame) {
+        return g_pads->repeat & PAD_L2 || g_pads->tapped & PAD_L1;
+    }
 
     return entityPaused;
 }
 
 void SetHook(int (*hook)(void)) { g_Hook = hook; }
+
+u8 GetColType(s32 x, s32 y) {
+    // borrowing first part of CheckCollision
+    s32 absX;
+    s32 absY;
+    u8 colType;
+    int new_var;
+    // g_Camera.posX.i.lo doesn't seem to work like I expect
+    u16* cameraX = (u16*)0x80073074;
+    u16* cameraY = (u16*)0x8007307C;
+    absX = x + *cameraX;
+    absY = y + *cameraY;
+    new_var = 0x10;
+    if (absX < 0 || (u32)absX >= g_CurrentRoom.hSize << 8 || absY < 0 ||
+        (u32)absY >= g_CurrentRoom.vSize << 8) {
+        colType = 0;
+    } else {
+
+        // 16x16 blocks
+        u16 colTile = g_CurrentRoomTileLayout
+                          .fg[(absX >> 4) +
+                              (((absY >> 4) * g_CurrentRoom.hSize) * new_var)];
+        colType = D_80073088->collision[colTile];
+    }
+    return colType;
+}
+
+void DrawCollisionLayer() {
+    int x;
+    int y;
+    u8 colType;
+    u16 cameraX = *(u16*)0x80073074;
+    u16 cameraY = *(u16*)0x8007307C;
+
+    // skip first 4 rows since we are stuck with their FntOpen settings
+    SetFontCoord(-(cameraX & 0xF) + 8, -(cameraY & 0xF) + 16);
+    for (y = 16; y < 224; y += 16) {
+        // skip first column since we are stuck with their FntOpen settings
+        FntPrint(" ", colType);
+        for (x = 16; x < 256; x += 16) {
+            colType = GetColType(x, y);
+
+            // skip empty tiles
+            if (colType == 0) {
+                FntPrint("  ", colType);
+            } else {
+                FntPrint("%02x", colType);
+            }
+        }
+        FntPrint("\n\n");
+    }
+}
