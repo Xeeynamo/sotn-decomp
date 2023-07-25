@@ -16,7 +16,6 @@ void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
 void InitCollisionViewer(void);
 void InitFlagChecker(void);
-void InitStageSelect(void);
 void UpdateDebugFlagsPlayer();
 void UpdateDraEntitySpawn();
 void UpdateStageEntitySpawn();
@@ -24,7 +23,6 @@ void UpdateSfxPlayer(void);
 void UpdateDraTest800FD874(void);
 void UpdateCollisionViewer(void);
 void UpdateFlagChecker(void);
-void UpdateStageSelect(void);
 
 DebugMenu g_DebugMenus[] = {
     DummyDummyDummy,      DummyDummyDummy,        true,  false, "R2 = debug",
@@ -35,13 +33,12 @@ DebugMenu g_DebugMenus[] = {
     InitDraTest800FD874,  UpdateDraTest800FD874,  true,  true,  "Inventory",
     InitCollisionViewer,  UpdateCollisionViewer,  false, false, "Collision map",
     InitFlagChecker,      UpdateFlagChecker,      true,  true,  "Castleflags",
-    InitStageSelect,      UpdateStageSelect,      true,  true,  "Stages",
 };
 
 int g_DebugMode;
 bool g_DebugModePaused;
 bool g_EntitiesPaused;
-bool (*g_Hook)(void);
+int (*g_Hook)(void);
 
 void DestroyEntity(Entity* item);
 void Init(void) {
