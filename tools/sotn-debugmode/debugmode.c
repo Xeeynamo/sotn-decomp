@@ -38,10 +38,8 @@ DebugMenu g_DebugMenus[] = {
 };
 
 int g_DebugMode;
+bool g_DebugModePaused;
 bool g_EntitiesPaused;
-int g_PrimIndex;
-Primitive* g_PrimFirst;
-Primitive* g_PrimCur;
 
 void DestroyEntity(Entity* item);
 void Init(void) {
@@ -49,6 +47,7 @@ void Init(void) {
 
     g_EntitiesPaused = false;
     g_DebugMode = 0;
+    g_DebugModePaused = 0;
     for (i = 0; i < LEN(g_DebugMenus); i++) {
         g_DebugMenus[i].Init();
     }
@@ -58,11 +57,24 @@ bool Update(void) {
     DbgBeginDrawMenu();
 
     if (g_pads->tapped & PAD_R2) {
+        if (!g_DebugModePaused) {
         g_DebugMode++;
         if (g_DebugMode >= LEN(g_DebugMenus)) {
             g_DebugMode = 0;
         }
-        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        } else {
+            g_DebugModePaused = false;
+        }
+        PLAY_MENU_SOUND();
+    }
+
+    if (g_DebugModePaused) {
+        return;
+    }
+
+    if (g_pads->pressed & PAD_TRIANGLE || g_pads->pressed & PAD_START) {
+        g_DebugModePaused = true;
+        return;
     }
 
     if (g_DebugMenus[g_DebugMode].pauseGame != g_EntitiesPaused) {
@@ -73,7 +85,6 @@ bool Update(void) {
         DbgDrawMenuRect(159, 22, 90, 14);
         SetFontCoord(160, 26);
         FntPrint("%s\n", g_DebugMenus[g_DebugMode].name);
-    } else {
     }
     SetFontCoord(8, 48);
     g_DebugMenus[g_DebugMode].Update();
