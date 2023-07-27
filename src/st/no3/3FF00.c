@@ -1,7 +1,5 @@
 #include "no3.h"
 
-extern s32 D_801D7DD0;
-
 void EntityRoomTransition2(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
