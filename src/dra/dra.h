@@ -779,11 +779,11 @@ void DestroyEntity(Entity*);
 void DestroyEntities(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(POLY_GT4* poly, s32 colorIntensity);
-void func_80107360(
-    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
+void SetTexturedPrimRect(
+    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
 void func_801092E8(s32);
-void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
+void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
 u32 UpdateAnim(s8* frameProps, s32*);
 void func_8010DFF0(s32, s32);

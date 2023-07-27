@@ -70,14 +70,14 @@ void func_80102EB8(void) {
     poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
-        func_80107360(poly1, 98, 79, 96, 0, 0, 0);
+        SetTexturedPrimRect(poly1, 98, 79, 96, 0, 0, 0);
         func_801072DC(poly1);
         poly1->tpage = 0x10;
         poly1->clut = 0x1A1;
         poly1->pad2 = g_zEntityCenter.S16.unk0 + 32;
         poly1->pad3 = 8;
         poly1->p1 = 0;
-        SetPolyRect(poly2, 80, 79, 96, 0);
+        SetPrimRect(poly2, 80, 79, 96, 0);
         func_801072DC(poly2);
         func_801071CC(poly2, 96, 0);
         func_801071CC(poly2, 96, 1);
@@ -364,7 +364,7 @@ void func_801072FC(POLY_G4* poly) {
     setRGB3(poly, 0, 0, 0);
 }
 
-void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
+void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;
@@ -375,8 +375,8 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->y3 = y + height;
 }
 
-void func_80107360(
-    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
+void SetTexturedPrimRect(
+    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;

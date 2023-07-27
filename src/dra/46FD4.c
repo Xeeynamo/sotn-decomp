@@ -19,13 +19,13 @@ void HandleVideoPlayback(void) {
                 SetCgiDisplayBuffer(0x140);
                 D_8013640C = AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
-                func_80107360(prim, 44, 96, 232, 32, 0, 0);
+                SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);
                 prim->tpage = 0x1C;
                 prim->blendMode = 4;
                 prim->p1 = 0x40;
                 prim = prim->next;
-                func_80107360(prim, 60, 208, 192, 16, 0, 32);
+                SetTexturedPrimRect(prim, 60, 208, 192, 16, 0, 32);
                 func_801072DC(prim);
                 prim->tpage = 0x1C;
                 prim->blendMode = 8;
