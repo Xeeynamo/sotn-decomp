@@ -313,6 +313,10 @@ extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
+
+extern const char* c_strLuckModeCode;
+extern const char* c_strAxeArmorCode;
+
 extern const char* c_strALUCARD;
 extern const char** c_strSTR;
 extern const char* c_strCON;
@@ -364,6 +368,7 @@ extern Equipment D_800A4B04[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
+extern unkStruct_800A872C D_800A872C[];
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
@@ -740,7 +745,7 @@ void DrawMenuSprite(
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
-void func_800FF7B8(s32 arg0);
+void InitStatsAndGear(bool debugMode);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);

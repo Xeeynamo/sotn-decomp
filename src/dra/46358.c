@@ -214,7 +214,7 @@ void HandleNowLoading(void) {
         break;
     case 10:
         if (g_DemoMode == Demo_None) {
-            func_800FF7B8(0);
+            InitStatsAndGear(0);
         }
         D_8003C908.D_8003C90C = -1;
         D_8003C908.D_8003C910 = -1;
