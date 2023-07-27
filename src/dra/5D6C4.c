@@ -1219,8 +1219,9 @@ void func_8010189C(void) {
 
     if (poly != NULL) {
         for (i = 0; poly != NULL; i++) {
-            SetTexturedPrimRect(poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
-                          D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
+            SetTexturedPrimRect(
+                poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
+                D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
             poly->tpage = 0x1F;
             new_var = &D_800A2F48[i];
             poly->clut = *new_var;
