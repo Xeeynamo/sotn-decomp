@@ -592,7 +592,7 @@ void func_800FF708(s32 arg0, s32 arg1) {
     g_Status.equipment[arg1 + 2] = rnd;
 }
 
-void InitStatsAndGear(bool debugMode) {
+void InitStatsAndGear(bool DeathTakeItems) {
     s32 dracDefeatTime;
     s32 prologueBonusState;
     s32 i;
@@ -603,7 +603,7 @@ void InitStatsAndGear(bool debugMode) {
         func_800FF60C();
         return;
     }
-    if (debugMode == 1) {
+    if (DeathTakeItems) {
         // Remove Alucard Sword from left hand
         if (g_Status.equipment[0] == 0x7B) {
             g_Status.equipment[0] = 0;
