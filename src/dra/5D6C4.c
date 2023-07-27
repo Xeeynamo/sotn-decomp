@@ -1167,7 +1167,7 @@ void DrawHudRichter(void) {
             prim->tpage = 0x1B;
             prim->clut = 0x100;
             prim->priority = 0x1EE;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim->p1 = (rand() & 0x3F) + 1;
             prim->p2 = 0;
             prim = prim->next;
@@ -1261,7 +1261,7 @@ void func_801024DC(void) {
         prim->u0 = 0x80;
         prim->v0 = 0xF0;
         prim->priority = 0x1FD;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
     D_801379A8 = 0;
@@ -1281,7 +1281,7 @@ void func_801024DC(void) {
     prim = prim2;
     prim->v1 = 0;
     prim->u2 = 0;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 }
 
 extern Unkstruct_80086FFA D_80086FFA[];
@@ -1305,7 +1305,7 @@ void func_80102628(s32 arg0) {
             poly->g0 = 0;
             poly->r0 = 0;
             poly->priority = 0x1FD;
-            poly->blendMode = 8;
+            poly->blendMode = BLEND_VISIBLE;
             poly->x0 = temp * (i & 1);
             poly = poly->next;
             i++;
@@ -1317,7 +1317,7 @@ void func_801026BC(s32 arg0) {
     Primitive* poly = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        poly->blendMode = 8;
+        poly->blendMode = BLEND_VISIBLE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
         SetPrimRect(poly, 0, 1, 255, 255);

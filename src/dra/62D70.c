@@ -75,7 +75,7 @@ void func_80102EB8(void) {
         poly1->tpage = 0x10;
         poly1->clut = 0x1A1;
         poly1->priority = g_zEntityCenter.S16.unk0 + 32;
-        poly1->blendMode = 8;
+        poly1->blendMode = BLEND_VISIBLE;
         poly1->p1 = 0;
         SetPrimRect(poly2, 80, 79, 96, 0);
         func_801072DC(poly2);
@@ -85,7 +85,7 @@ void func_80102EB8(void) {
             poly2->r2 = poly2->r3 = 0;
         poly2->tpage = 0x1F;
         poly2->priority = g_zEntityCenter.S16.unk0 + 31;
-        poly2->blendMode = 8;
+        poly2->blendMode = BLEND_VISIBLE;
         poly1 = poly1->next;
         poly2 = poly2->next;
     }
@@ -93,7 +93,7 @@ void func_80102EB8(void) {
     for (i = 0; i < 12; i++) {
         func_80107250(poly3, 255);
         poly3->priority = g_zEntityCenter.S16.unk0 + 32;
-        poly3->blendMode = 8;
+        poly3->blendMode = BLEND_VISIBLE;
         poly3 = poly3->next;
     }
 }

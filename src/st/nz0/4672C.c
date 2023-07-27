@@ -228,7 +228,7 @@ void EntitySpittleBoneSpit(Entity* self) {
                 g_api.CheckCollision(
                     prim->x0, (s16)(prim->y0 + 16), &collider, 0);
                 if (collider.effects != 0) {
-                    prim->blendMode = 8;
+                    prim->blendMode = BLEND_VISIBLE;
                 }
             }
             prim = prim->next;

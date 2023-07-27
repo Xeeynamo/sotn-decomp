@@ -22,7 +22,7 @@ void EntityStageTitleFadeout(Entity* self) {
             self->ext.stageTitleCard.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim = prim->next;
             }
             prim = self->ext.stageTitleCard.prim;
@@ -74,7 +74,7 @@ void EntityStageTitleFadeout(Entity* self) {
         prim->r0 += 248;
         if (prim->r0 > 248) {
             prim->r0 = 0;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
             prim->blendMode = 0;
             self->step = 5;
@@ -93,7 +93,7 @@ void EntityStageTitleFadeout(Entity* self) {
         prim->r0 += 248;
         if (prim->r0 > 248) {
             prim->r0 = 0;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             PLAYER.zPriority = g_zEntityCenter.S16.unk0;
             self->step = 1;
         }
@@ -170,7 +170,7 @@ void EntityStageTitleFadeout(Entity* self) {
 
             for (prim = self->ext.stageTitleCard.prim; prim != NULL;
                  prim = prim->next) {
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
             }
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
@@ -251,7 +251,7 @@ void EntityStageTitleCard(Entity* self) {
 
             prim = prim->next;
             while (prim != NULL) {
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim = prim->next;
             }
             D_8003C8B8 = 0;
@@ -335,7 +335,7 @@ void EntityStageTitleCard(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
 
         for (prim = prim->next; prim != NULL; prim = prim->next) {
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
         }
         self->ext.stageTitleCard.unk88 = 0x20;
         self->step++;

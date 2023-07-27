@@ -135,7 +135,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         }
 
         while (prim != NULL) {
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
     }

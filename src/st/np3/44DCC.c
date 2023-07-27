@@ -246,7 +246,7 @@ void EntityMerman2(Entity* self) {
         case MERMAN2_JUMPING_IN_AIR:
             prim = self->ext.merman2.prim;
             if (self->velocityY > ~0xBFFF) {
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 self->animCurFrame = 18;
                 self->hitboxHeight = 8;
                 self->rotAngle -= 0x80;
@@ -562,7 +562,7 @@ void EntityMerman2(Entity* self) {
             if (!(g_blinkTimer % 10)) {
                 prim->clut += 2;
                 if (prim->clut >= 0x2A0) {
-                    prim->blendMode = 8;
+                    prim->blendMode = BLEND_VISIBLE;
                     self->step_s++;
                 } else {
                     newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
@@ -632,7 +632,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         ((POLY_GT4*)poly->next)->b3 += 252;
         LOH(poly->next->u1) -= 128;
         if (poly->next->b3 < 16) {
-            poly->blendMode = 8;
+            poly->blendMode = BLEND_VISIBLE;
         }
     }
 

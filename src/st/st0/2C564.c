@@ -60,7 +60,7 @@ void EntityDracula(Entity* self) {
         self->ext.dracula.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
         SetStep(2);
@@ -277,7 +277,7 @@ void EntityDracula(Entity* self) {
             self->hitboxState = 0;
             g_isDraculaFirstFormDefeated = 1;
             while (prim != NULL) {
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim = prim->next;
             }
             g_api.PlaySfx(NA_SE_VO_DR_PLAYTIME_IS_OVER);
@@ -426,7 +426,7 @@ void EntityDracula(Entity* self) {
             prim = self->ext.dracula.prim;
             prim = prim->next;
             while (prim != NULL) {
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim = prim->next;
             }
             CreateEntityFromCurrentEntity(0x2B, &self[2]);

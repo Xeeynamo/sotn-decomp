@@ -28,7 +28,7 @@ void HandleVideoPlayback(void) {
                 SetTexturedPrimRect(prim, 60, 208, 192, 16, 0, 32);
                 func_801072DC(prim);
                 prim->tpage = 0x1C;
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 g_GameStep++;
                 return;
             }
@@ -50,7 +50,7 @@ void HandleVideoPlayback(void) {
             if (temp == 96) {
                 temp2 = prim->next;
 #if defined(VERSION_US)
-                ((Primitive*)temp2)->blendMode = 8;
+                ((Primitive*)temp2)->blendMode = BLEND_VISIBLE;
 #elif defined(VERSION_HD)
                 ((Primitive*)temp2)->blendMode = 0;
 #endif
@@ -74,7 +74,7 @@ void HandleVideoPlayback(void) {
             temp = prim->r0 - 1;
             func_80107250(prim, temp);
             if (temp == 64) {
-                ((Primitive*)prim->next)->blendMode = 8;
+                ((Primitive*)prim->next)->blendMode = BLEND_VISIBLE;
             }
             if (temp == 0) {
                 FreePrimitives(D_8013640C);
