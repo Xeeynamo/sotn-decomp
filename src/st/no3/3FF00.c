@@ -5,19 +5,19 @@ extern s32 D_801D7DD0;
 void EntityRoomTransition2(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
-    //Used as both a loop variable and a temp
+    // Used as both a loop variable and a temp
     s32 localVar;
 
-    //These are weird fake vars needed for matching
+    // These are weird fake vars needed for matching
     Entity* gents = g_Entities;
-    Unkstruct8* layout = &g_CurrentRoomTileLayout; 
+    Unkstruct8* layout = &g_CurrentRoomTileLayout;
 
     if (self->ext.generic.unk80.modeS32 == 0 && self->step < 4) {
         g_api.PlaySfx(0x631);
         self->ext.generic.unk80.modeS32 = 0x200;
     }
     self->ext.generic.unk80.modeS32--;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180AD0);
@@ -28,14 +28,14 @@ void EntityRoomTransition2(Entity* self) {
         D_801D7DD0 |= 0x100;
         return;
     case 1:
-        //Evil use of local 'gents' instead of PLAYER
+        // Evil use of local 'gents' instead of PLAYER
         if (gents[0].posX.i.hi < 0x34) {
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             g_Player.D_80072EF4 = 0x2000;
         } else {
             g_Player.D_80072EF4 = 0;
             D_801D7DD0 |= 0x80;
-            self->step ++;
+            self->step++;
         }
         g_Player.D_80072EFC = 1;
         return;
@@ -43,7 +43,7 @@ void EntityRoomTransition2(Entity* self) {
         if (D_801D7DD0 & 0x20) {
             g_api.func_800FF7B8(1);
             g_api.PlaySfx(0x6A2);
-            for(localVar = 0; localVar < 6; localVar++){
+            for (localVar = 0; localVar < 6; localVar++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity == NULL) {
                     break;
@@ -53,7 +53,7 @@ void EntityRoomTransition2(Entity* self) {
             }
             g_Player.D_80072EF4 = 0x10000;
             self->ext.generic.unk7C.s = 0x10;
-            self->step ++;
+            self->step++;
         }
         g_Player.D_80072EFC = 1;
         return;
@@ -73,9 +73,9 @@ void EntityRoomTransition2(Entity* self) {
                 prim->b0 = 0;
                 prim->r0 = 0;
                 prim->blendMode = 0x35;
-                self->step ++;
+                self->step++;
             } else {
-                self->ext.generic.unk7C.s ++;
+                self->ext.generic.unk7C.s++;
             }
         }
         g_Player.D_80072EF4 = 0;
@@ -85,7 +85,7 @@ void EntityRoomTransition2(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->r0 = prim->g0 = prim->b0 = prim->b0 + 8;
         if (prim->r0 >= 0xF0) {
-            self->step ++;
+            self->step++;
             DestroyEntity(&g_Entities[208]);
             g_CurrentRoom.bg[0].D_800730F4 |= 1;
             g_api.PlaySfx(0xA1);
