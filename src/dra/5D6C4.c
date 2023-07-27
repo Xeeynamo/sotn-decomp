@@ -1200,7 +1200,7 @@ bool func_8010183C(s32 arg0) {
 void DrawHudRichter(void);
 
 void func_8010189C(void) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s32 i;
     u16* new_var;
 
@@ -1224,8 +1224,8 @@ void func_8010189C(void) {
             poly->tpage = 0x1F;
             new_var = &D_800A2F48[i];
             poly->clut = *new_var;
-            poly->pad2 = 0x1F0;
-            poly->pad3 = D_800A2F64[i];
+            poly->priority = 0x1F0;
+            poly->blendMode = D_800A2F64[i];
 
             if (i == 5) {
                 SetPrimRect(
@@ -1242,7 +1242,7 @@ void func_8010189C(void) {
                 poly->p3 = (7 & rand()) + 1;
             }
 
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
         }
     }
 }
@@ -1289,7 +1289,7 @@ extern Unkstruct_80086FFA D_80086FFA[];
 u16 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
 
 void func_80102628(s32 arg0) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s32 temp;
     s32 i = 0;
 
@@ -1304,20 +1304,20 @@ void func_80102628(s32 arg0) {
             poly->b0 = 0;
             poly->g0 = 0;
             poly->r0 = 0;
-            poly->pad2 = 0x1FD;
-            poly->pad3 = 8;
+            poly->priority = 0x1FD;
+            poly->blendMode = 8;
             poly->x0 = temp * (i & 1);
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
             i++;
         }
     }
 }
 
 void func_801026BC(s32 arg0) {
-    POLY_GT4* poly = &g_PrimBuf[D_801379A0];
+    Primitive* poly = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        poly->pad3 = 8;
+        poly->blendMode = 8;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
         SetPrimRect(poly, 0, 1, 255, 255);
@@ -1335,9 +1335,9 @@ void func_801026BC(s32 arg0) {
     func_80107250(poly, arg0 * 2);
 
     if (arg0 == 0x40) {
-        poly->pad3 = 0;
+        poly->blendMode = 0;
     } else {
-        poly->pad3 = 0x35;
+        poly->blendMode = 0x35;
     }
 }
 

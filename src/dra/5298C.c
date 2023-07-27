@@ -459,7 +459,7 @@ void DrawMenuSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB) {
     u32* ot = g_CurrentBuffer->ot;
-    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    Primitive* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     s32 otIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
@@ -468,12 +468,12 @@ void DrawMenuSprite(
         otIdx--;
     }
 
-    poly->code &= 0xFD;
+    poly->type &= 0xFD;
 
     if (arg9 != 0) {
-        poly->code |= 1;
+        poly->type |= 1;
     } else {
-        poly->code &= 0xFC;
+        poly->type &= 0xFC;
     }
 
     SetTexturedPrimRect(poly, x, y, width, height, u, v);

@@ -31,7 +31,7 @@ void func_800E5358(void) {
 }
 
 void func_800E5498(void) {
-    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    Primitive* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     GpuBuffer* buffer = g_CurrentBuffer;
 
     setSemiTrans(poly, true);
