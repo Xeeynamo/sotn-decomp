@@ -603,7 +603,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         func_800FF60C();
         return;
     }
-    if (DeathTakeItems) {
+    if (DeathTakeItems == 1) {
         // Remove Alucard Sword from left hand
         if (g_Status.equipment[0] == 0x7B) {
             g_Status.equipment[0] = 0;
