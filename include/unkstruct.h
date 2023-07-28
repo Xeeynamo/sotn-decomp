@@ -286,3 +286,9 @@ typedef struct {
     s16* coords;
     s16 unk8;
 } Unkstruct_80102CD8;
+
+typedef struct {
+    s16 unk0;
+    u8 unk2;
+    u8 unk3;
+} unkstruct_800ACF7C;
