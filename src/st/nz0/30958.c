@@ -1181,8 +1181,8 @@ void func_801B3C38(Entity* self) {
     s32 velocityY;
     s32 params;
     s32 temp_s0;
-    s32 var_v0;
-    s32 var_v0_2;
+    s32 adjVelocityX;
+    s32 adjVelocityY;
     u32 temp_v0;
     s32 rnd;
 
@@ -1273,19 +1273,19 @@ void func_801B3C38(Entity* self) {
         if (self->animFrameIdx >= 13) {
             velocityX = self->velocityX;
             if (velocityX < 0) {
-                var_v0 = velocityX + 3;
+                adjVelocityX = velocityX + 3;
             } else {
-                var_v0 = velocityX;
+                adjVelocityX = velocityX;
             }
-            self->velocityX = velocityX - (var_v0 >> 2);
+            self->velocityX = velocityX - (adjVelocityX >> 2);
 
             velocityY = self->velocityY;
             if (velocityY < 0) {
-                var_v0_2 = velocityY + 3;
+                adjVelocityY = velocityY + 3;
             } else {
-                var_v0_2 = velocityY;
+                adjVelocityY = velocityY;
             }
-            self->velocityY = velocityY - (var_v0_2 >> 2);
+            self->velocityY = velocityY - (adjVelocityY >> 2);
         }
         MoveEntity();
         if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
