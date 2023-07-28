@@ -240,9 +240,6 @@ void func_800FDE00(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE044);
-#else
 s32 func_800FE044(s32 arg0, s32 arg1) {
     s32 oldHeartMax;
     s32 activeFamiliar;
@@ -332,7 +329,7 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         // reuse it here. Strange logic, the familiarXPBoost seems to be log
         // base 2 of arg0/familiar.exp.
 
-        playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].exp);
+        playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].level);
 
         for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
             playerXPBoost >>= 1;
@@ -348,7 +345,6 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
             (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
     }
 }
-#endif
 
 bool func_800FE3A8(s32 arg0) {
     /*
