@@ -1253,9 +1253,9 @@ void func_801B3C38(Entity* self) {
         InitializeEntity(D_80180BE0);
         params = self->params & 0xF;
         obj = &D_80180FE0[params];
-        self->palette = obj->unk4 + 0x2E0;
-        self->blendMode = obj->unk6;
-        self->animSet = obj->unk0;
+        self->palette = obj->palette + 0x2E0;
+        self->blendMode = obj->blendMode;
+        self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
         self->ext.generic.unk80.modeS32 = obj->unk8;
         self->step = params + 1;
