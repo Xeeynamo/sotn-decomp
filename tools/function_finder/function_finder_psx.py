@@ -4,45 +4,9 @@
 from pathlib import Path
 from tabulate import tabulate
 import os
-import requests
-import json
-import time
 import concurrent.futures
 
-
-# search for scratches with the name on decomp.me
-def find_scratches(name):
-    try:
-        response = requests.get(f"https://decomp.me/api/scratch?search={name}")
-        response.raise_for_status()
-        scratches = json.loads(response.text)
-    except requests.exceptions.HTTPError as http_err:
-        return None
-    except Exception as err:
-        return None
-
-    best_result = None
-    best_percent = 0
-
-    for result in scratches["results"]:
-        # seems to give approximate matches, skip these
-        if result["name"] != name:
-            continue
-        if result["platform"] != "ps1":
-            continue
-
-        score = result["score"]
-        max_score = result["max_score"]
-        percent = (max_score - score) / max_score
-
-        if percent > best_percent:
-            best_percent = percent
-            best_result = result
-
-    if best_result:
-        return [f"https://decomp.me{best_result['url']}", round(best_percent, 3)]
-
-    return None
+from helpers import find_scratches
 
 
 # look in asm files, read in the text and check for branches and jump tables
@@ -121,16 +85,15 @@ def get_c_files(c_path):
 
 
 def find_wip(o):
-    if o[4] == "":
-        name = o[0]
-        # look for a WIP on decomp.me
-        function_name = os.path.basename(name).split(".")[0]
-        result = find_scratches(function_name)
+    name = o[0]
+    # look for a WIP on decomp.me
+    function_name = os.path.basename(name).split(".")[0]
+    result = find_scratches(function_name, "ps1")
 
-        if result:
-            return f"{result[0]} (Scraped {result[1]})"
+    if result:
+        return {"link": result[0], "percent": result[1]}
 
-    return ""
+    return None
 
 
 if __name__ == "__main__":
@@ -150,9 +113,6 @@ if __name__ == "__main__":
         branches = f["branches"]
         jump_table = f["jump_table"]
 
-        # find WIPs
-        wip = ""
-
         # correlate asm folder to C file name
         for c_file in c_files:
             # get asm folder name from C filename
@@ -164,8 +124,17 @@ if __name__ == "__main__":
                 # found a decomp.me WIP, get the URL
                 wip = c_file[2]
 
+        wip = ""
+        wip_percentage = ""
         output.append(
-            [str(name).replace("asm/", ""), length, branches, jump_table, wip]
+            [
+                str(name).replace("asm/", ""),
+                length,
+                branches,
+                jump_table,
+                wip,
+                wip_percentage,
+            ]
         )
 
     # we are mostly waiting on IO so run in parallel
@@ -176,8 +145,9 @@ if __name__ == "__main__":
     # Update output with the results
     for i, o in enumerate(output):
         # keep the in-source results as definitive
-        if o[4] == "":
-            o[4] = results[i]
+        if results[i] != None:
+            o[4] = results[i]["link"]
+            o[5] = results[i]["percent"]
 
-    headers = ["Filename", "Length", "Branches", "Jtbl", "Decomp.me WIP"]
-    print(tabulate(output, headers=headers))
+    headers = ["Filename", "Length", "Branches", "Jtbl", "WIP", "%"]
+    print(tabulate(output, headers=headers, tablefmt="github"))

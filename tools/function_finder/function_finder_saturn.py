@@ -2,49 +2,12 @@
 
 # tool to list functions by difficulty and decomp.me WIP links
 from pathlib import Path
+from tabulate import tabulate
 import os
-import requests
-import json
-import time
 import concurrent.futures
 import argparse
 
-
-# search for scratches with the name on decomp.me
-def find_scratches(name):
-    try:
-        response = requests.get(f"https://decomp.me/api/scratch?search={name}")
-        response.raise_for_status()
-        scratches = json.loads(response.text)
-    except requests.exceptions.HTTPError as http_err:
-        return None
-    except Exception as err:
-        return None
-
-    best_result = None
-    best_percent = 0
-
-    for result in scratches["results"]:
-        if not "name" in result:
-            continue
-        # seems to give approximate matches, skip these
-        if result["name"] != name:
-            continue
-        if result["platform"] != "saturn":
-            continue
-
-        score = result["score"]
-        max_score = result["max_score"]
-        percent = (max_score - score) / max_score
-
-        if percent > best_percent:
-            best_percent = percent
-            best_result = result
-
-    if best_result:
-        return [f"https://decomp.me{best_result['url']}", round(best_percent, 3)]
-
-    return None
+from helpers import find_scratches
 
 
 # look in asm files, read in the text and check for branches and jump tables
@@ -105,46 +68,12 @@ def get_asm_files(asm_path, overlay):
 
 def find_wip(function):
     # look for a WIP on decomp.me
-    result = find_scratches(function["function_name"])
+    result = find_scratches(function["function_name"], "saturn")
 
     if result:
         return {"link": result[0], "percent": result[1]}
 
     return None
-
-
-def print_github_flavored_table(data):
-    headers = list(data[0].keys())  # Get the headers from the first row's keys
-
-    # Find the maximum length for each column
-    column_lengths = {header: len(header) for header in headers}
-
-    for row in data:
-        for key, value in row.items():
-            column_lengths[key] = max(column_lengths[key], len(str(value)))
-
-    # Print the table header
-    table = (
-        "| "
-        + " | ".join(
-            headers[i].ljust(column_lengths[headers[i]]) for i in range(len(headers))
-        )
-        + " |"
-    )
-    separator = (
-        "|-" + "-|-".join(["-" * column_lengths[header] for header in headers]) + "-|"
-    )
-
-    print(table)
-    print(separator)
-
-    # Print the table rows
-    for row in data:
-        row_values = [
-            str(value).ljust(column_lengths[key]) for key, value in row.items()
-        ]
-        table_row = "| " + " | ".join(row_values) + " |"
-        print(table_row)
 
 
 if __name__ == "__main__":
@@ -176,22 +105,21 @@ if __name__ == "__main__":
             results = [f.result() for f in futures]
 
     to_print = []
-
     for i, o in enumerate(output):
-        obj = {
-            "Filename": str(o["filename"]).replace("asm/saturn/", ""),
-            "Function Name": o["function_name"],
-            "Length": o["length"],
-            "Branches": o["branches"],
-        }
+        row = [
+            str(o["filename"]).replace("asm/saturn/", ""),
+            o["function_name"],
+            o["length"],
+            o["branches"],
+            "",
+            "",
+        ]
 
         if len(results) and results[i]:
-            obj["WIP"] = results[i]["link"]
-            obj["%"] = results[i]["percent"]
-        else:
-            obj["WIP"] = ""
-            obj["%"] = ""
+            row[4] = results[i]["link"]
+            row[5] = results[i]["percent"]
 
-        to_print.append(obj)
+        to_print.append(row)
 
-    print_github_flavored_table(to_print)
+    headers = ["Filename", "Function Name", "Length", "Branches", "WIP", "%"]
+    print(tabulate(to_print, headers=headers, tablefmt="github"))

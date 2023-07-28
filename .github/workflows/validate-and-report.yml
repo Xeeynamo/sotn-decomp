@@ -177,7 +177,7 @@ jobs:
       - name: Generate duplicates and function report
         run: |
             python3 tools/find_duplicates.py -a & \
-            python3 tools/function_finder.py > gh-duplicates/functions.txt & \
+            python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md & \
             wait
       - name: Rename duplicates report into a more meaningful file
         run: mv *_all_matches.txt gh-duplicates/duplicates.txt

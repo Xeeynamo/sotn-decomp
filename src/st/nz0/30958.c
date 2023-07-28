@@ -39,8 +39,70 @@ bool func_801B0A20(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
-// DECOMP_ME_WIP EntityBreakable https://decomp.me/scratch/0tv5m 92.76 %
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
+void EntityBreakable(Entity* self) {
+    u16 params = self->params >> 0xC;
+    s16 top, bottom, left, right;
+    Entity* newEntity;
+    Primitive* prim;
+
+    if (self->step != 0) {
+        AnimateEntity((u8*)D_80180E04[params], self);
+        if (params == 2) {
+            prim = &g_PrimBuf[self->primIndex];
+            if (g_blinkTimer & 2) {
+                prim->clut = 0x21B;
+            } else {
+                prim->clut = 0x21C;
+            }
+        }
+
+        if (self->unk44 != 0) {
+            if (params == 2) {
+                g_api.FreePrimitives(self->primIndex);
+                self->flags &= ~FLAG_HAS_PRIMS;
+            }
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                newEntity->params = D_80180E2C[params];
+            }
+            ReplaceBreakableWithItemDrop(self);
+        }
+    } else {
+        InitializeEntity(D_80180BC8);
+        self->zPriority = g_zEntityCenter.S16.unk0 - 20;
+        self->blendMode = D_80180E44[params];
+        self->hitboxHeight = D_80180E24[params];
+        self->animSet = D_80180E34[params];
+        if (params == 2) {
+            self->unk5A = 0x4B;
+            self->palette = 0x219;
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            self->flags |= FLAG_HAS_PRIMS;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->tpage = 0x12;
+            prim->u0 = prim->u2 = 0xC8;
+            prim->u1 = prim->u3 = 0xF8;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xA0;
+            left = self->posX.i.hi - 23;
+            right = self->posX.i.hi + 25;
+            prim->x0 = prim->x2 = left;
+            prim->x1 = prim->x3 = right;
+            top = self->posY.i.hi - 23;
+            bottom = self->posY.i.hi + 9;
+            prim->y0 = prim->y1 = top;
+            prim->y2 = prim->y3 = bottom;
+            prim->priority = self->zPriority;
+            prim->blendMode = 0x73;
+        }
+    }
+}
 
 // bust with red eyes that can have a candle on it
 void EntityRedEyeBust(Entity* self) {
