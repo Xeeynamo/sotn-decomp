@@ -937,8 +937,8 @@ void func_801B2FD8(Entity* self) {
         posY = camY += 4;
         posY = camY += g_Camera.posY.i.hi;
 
-        g_CurrentRoomTileLayout
-            .fg[posX + (camY = (camY >> 4) * g_CurrentRoom.hSize * 16)] = 0x5AF;
+        camY = (camY >> 4) * g_CurrentRoom.hSize * 16;
+        g_CurrentRoomTileLayout.fg[posX + camY] = 0x5AF;
 
     case 1:
         if (temp != 0) {
