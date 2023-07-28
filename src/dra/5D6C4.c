@@ -332,7 +332,7 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         // reuse it here. Strange logic, the familiarXPBoost seems to be log
         // base 2 of arg0/familiar.exp.
 
-        playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].exp);
+        playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].level);
 
         for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
             playerXPBoost >>= 1;
