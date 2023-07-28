@@ -960,7 +960,85 @@ void func_801B2AD8(Entity* self) {
 // DECOMP_ME_WIP func_801B2D08 https://decomp.me/scratch/ixW6j 93.06%
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
+void func_801B2FD8(Entity* self) {
+    s32 temp = func_801BD9A0(self, 8, 8, 4);
+    Primitive* prim;
+    Entity* player;
+    s16 primIndex;
+    s32 posX, posY;
+    s32 camY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim->type = 6;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 0x48;
+        prim->v0 = 0xC8;
+        prim->v1 = prim->u1 = 0x10;
+        prim->priority = 0x5F;
+        prim->blendMode = 2;
+
+        posX = self->posX.i.hi;
+        posX += g_Camera.posX.i.hi;
+        posX >>= 4;
+
+        // TODO: !FAKE
+        camY = self->posY.i.hi;
+        posY = camY += 4;
+        posY = camY += g_Camera.posY.i.hi;
+
+        camY = (camY >> 4) * g_CurrentRoom.hSize * 16;
+        g_CurrentRoomTileLayout.fg[posX + camY] = 0x5AF;
+
+    case 1:
+        if (temp != 0) {
+            player = &PLAYER;
+            player->posY.i.hi++;
+            self->posY.val += 0x10000;
+            posY = g_Camera.posY.i.hi + self->posY.i.hi;
+            if ((self->ext.generic.unk80.modeS32 + 4) < posY) {
+                self->posY.i.hi = (self->ext.generic.unk80.modeS16.unk0 + 4) -
+                                  g_Camera.posY.i.hi;
+                self[1].ext.stub[0xC] = 1;
+                self->step++;
+                LOW(self[1].ext.stub[0x8]) ^= 1;
+            }
+        }
+
+    default:
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi - 8;
+        prim->y0 = self->posY.i.hi - 8;
+        break;
+
+    case 2:
+        if (temp == 0) {
+            self->posY.val += ~0xFFFF;
+            posY = g_Camera.posY.i.hi + self->posY.i.hi;
+            if (posY < self->ext.generic.unk80.modeS32) {
+                self->posY.i.hi =
+                    self->ext.generic.unk80.modeS16.unk0 - g_Camera.posY.i.hi;
+                self->step = 1;
+            }
+        }
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi - 8;
+        prim->y0 = self->posY.i.hi - 8;
+        break;
+    }
+}
 
 void EntityFloorSpikes(Entity* self) {
     Primitive* prim;
