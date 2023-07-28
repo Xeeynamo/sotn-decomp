@@ -1315,4 +1315,137 @@ void func_801B3B78() {
 }
 
 // Id 0x38
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
+void func_801B3C38(Entity* self) {
+    Unkstruct_80180FE0* obj;
+    s32 velocityX;
+    s32 velocityY;
+    s32 params;
+    s32 temp_s0;
+    s32 adjVelocityX;
+    s32 adjVelocityY;
+    u32 temp_v0;
+    s32 rnd;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BE0);
+        params = self->params & 0xF;
+        obj = &D_80180FE0[params];
+        self->palette = obj->palette + 0x2E0;
+        self->blendMode = obj->blendMode;
+        self->animSet = obj->animSet;
+        self->unk5A = obj->unk2;
+        self->ext.generic.unk80.modeS32 = obj->unk8;
+        self->step = params + 1;
+
+        temp_v0 = self->params & 0xFF00;
+        if (temp_v0 != 0) {
+            self->zPriority = temp_v0 >> 8;
+        }
+
+        if (self->params & 0xF0) {
+            self->palette = 0x819F;
+            self->blendMode = 0x10;
+            self->facing = 1;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        self->velocityY = -0x10000;
+        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 2:
+        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) != 0) {
+            switch (self->step_s) {
+            case 0:
+                self->unk19 = 8;
+                self->unk6C = 0x80;
+                self->step_s++;
+                break;
+
+            case 1:
+                if (self->animFrameIdx == 5) {
+                    self->step_s++;
+                }
+                break;
+
+            case 2:
+                self->unk6C += 0xFC;
+                return;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 3:
+        if (self->step_s == 0) {
+            self->unk19 |= 4;
+            switch (self->ext.generic.unk88.U8.unk0) {
+            case 1:
+                if (self->ext.generic.unk88.U8.unk1 >= 0x4) {
+                    self->ext.generic.unk88.U8.unk1 += 0xFD;
+                    self->ext.generic.unk84.U16.unk0 -= 0x800;
+                }
+                break;
+
+            case 2:
+                self->ext.generic.unk84.S16.unk0 =
+                    (u16)self->ext.generic.unk84.S16.unk0 +
+                    ((u8)self->ext.generic.unk88.S8.unk1 * 0xC0);
+                break;
+            }
+            self->ext.generic.unk84.S16.unk0 =
+                self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            self->rotAngle = self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
+            temp_s0 /= 28;
+            self->velocityX = temp_s0 * rsin(self->ext.generic.unk84.S16.unk0);
+            self->velocityY =
+                -(temp_s0 * rcos(self->ext.generic.unk84.S16.unk0));
+            self->step_s++;
+        }
+
+        if (self->animFrameIdx >= 13) {
+            velocityX = self->velocityX;
+            if (velocityX < 0) {
+                adjVelocityX = velocityX + 3;
+            } else {
+                adjVelocityX = velocityX;
+            }
+            self->velocityX = velocityX - (adjVelocityX >> 2);
+
+            velocityY = self->velocityY;
+            if (velocityY < 0) {
+                adjVelocityY = velocityY + 3;
+            } else {
+                adjVelocityY = velocityY;
+            }
+            self->velocityY = velocityY - (adjVelocityY >> 2);
+        }
+        MoveEntity();
+        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 4:
+        if (self->step_s == 0) {
+            rnd = Random();
+            self->velocityY = -0xC000;
+            self->facing = rnd & 1;
+            self->unk1A = 0xC0;
+            self->unk19 |= 1;
+            self->step_s++;
+        }
+        MoveEntity();
+        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}

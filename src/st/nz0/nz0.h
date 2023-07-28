@@ -164,6 +164,7 @@ extern const u8 D_80180F50[];
 extern const u8 D_80180F74[];
 extern u8 D_80180F88[];
 extern u16 D_80180F9C[];
+extern Unkstruct_80180FE0 D_80180FE0[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
