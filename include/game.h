@@ -614,7 +614,11 @@ typedef enum {
 } ItemCategory;
 
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
-
+typedef struct {
+    s32 level;
+    s32 exp;
+    s32 unk8;
+} FamiliarStats;
 typedef struct {
     /* 80097964 */ u8 relics[30];
     /* 80097982 */ u8 spells[8];
@@ -657,27 +661,8 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ u32 D_80097C44;
-    /* 80097C48 */ u32 D_80097C48;
-    /* 80097C4C */ u32 D_80097C4C;
-    /* 80097C50 */ u32 D_80097C50;
-    /* 80097C54 */ u32 D_80097C54;
-    /* 80097C58 */ u32 D_80097C58;
-    /* 80097C5C */ u32 D_80097C5C;
-    /* 80097C60 */ u32 D_80097C60;
-    /* 80097C64 */ u32 D_80097C64;
-    /* 80097C68 */ u32 D_80097C68;
-    /* 80097C6C */ u32 D_80097C6C;
-    /* 80097C70 */ u32 D_80097C70;
-    /* 80097C74 */ u32 D_80097C74;
-    /* 80097C78 */ u32 D_80097C78;
-    /* 80097C7C */ u32 D_80097C7C;
-    /* 80097C80 */ u32 D_80097C80;
-    /* 80097C84 */ u32 D_80097C84;
-    /* 80097C88 */ u32 D_80097C88;
-    /* 80097C8C */ u32 D_80097C8C;
-    /* 80097C90 */ u32 D_80097C90;
-    /* 80097C94 */ u32 D_80097C94;
+    FamiliarStats statsFamiliars[7];
+
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {

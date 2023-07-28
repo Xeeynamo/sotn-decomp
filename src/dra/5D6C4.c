@@ -240,7 +240,115 @@ void func_800FDE00(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
 
+#ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE044);
+#else
+s32 func_800FE044(s32 arg0, s32 arg1) {
+    s32 oldHeartMax;
+    s32 activeFamiliar;
+    s32 levelDiff;
+    s32 i;
+    s32 familiarXPBoost;
+    u32 playerXPBoost;
+
+    if (arg1 == 0x8000) {
+        if (g_Status.hpMax == 9999) {
+            return 1;
+        }
+        g_Status.hpMax += arg0;
+        if (g_Status.hpMax > 9999) {
+            g_Status.hpMax = 9999;
+        }
+        if (g_CurrentPlayableCharacter != 0) {
+            g_Status.hpMax += arg0;
+            if (g_Status.hpMax > 9999) {
+                g_Status.hpMax = 9999;
+            }
+        }
+        g_Status.hp = g_Status.hpMax;
+        D_80137960++;
+        return 0;
+    }
+    if (arg1 == 0x4000) {
+        if (g_CurrentPlayableCharacter != 0) {
+            return 1;
+        }
+        oldHeartMax = g_Status.heartsMax;
+        if (oldHeartMax == 0x270F) {
+            return 1;
+        }
+        g_Status.heartsMax += arg0;
+        if (g_Status.heartsMax > 9999) {
+            g_Status.heartsMax = 9999;
+        }
+        g_Status.hearts += (g_Status.heartsMax - oldHeartMax);
+        D_80137964++;
+        return 0;
+    }
+
+    if (arg1 == 0x2000) {
+        g_Status.relics[arg0] = 3;
+        arg0++;
+        arg0--;
+        if (D_800A872C[arg0].unk0) {
+            g_Status.relics[arg0] = 1;
+        }
+        D_80137968++;
+        return 0;
+    }
+
+    if (arg0 != 0 && g_Status.level != 99) {
+        playerXPBoost = arg0;
+        if (arg1 < (s32)g_Status.level) {
+            levelDiff = g_Status.level - arg1;
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost = playerXPBoost * 2 / 3;
+            }
+            if (playerXPBoost == 0) {
+                playerXPBoost = 1;
+            }
+        }
+        if ((s32)g_Status.level < arg1) {
+            levelDiff = arg1 - g_Status.level;
+            if (levelDiff > 5) {
+                levelDiff = 5;
+            }
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost += playerXPBoost / 4;
+            }
+        }
+        g_Status.exp += playerXPBoost;
+        if (g_Status.exp >= D_800AC90C) {
+            g_Status.exp = D_800AC90C;
+        }
+
+        activeFamiliar = D_8006CBC4 - 1;
+        if (D_8006CBC4 == 0) {
+            return;
+        }
+
+        // Note: playerXPBoost is meaningless as a name here. But register a2 is
+        // playerXPBoost, and is used as the loop variable for this loop, so I
+        // reuse it here. Strange logic, the familiarXPBoost seems to be log
+        // base 2 of arg0/familiar.exp.
+
+        playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].exp);
+
+        for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
+            playerXPBoost >>=1; 
+        }
+        if (familiarXPBoost <= 0) {
+            familiarXPBoost = 1; 
+        }
+        g_Status.statsFamiliars[activeFamiliar].exp += familiarXPBoost;
+        if (g_Status.statsFamiliars[activeFamiliar].exp >= 9900) {
+            g_Status.statsFamiliars[activeFamiliar].exp = 9899;
+        }
+        g_Status.statsFamiliars[activeFamiliar].level =
+            (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
+    }
+}
+#endif
 
 bool func_800FE3A8(s32 arg0) {
     /*

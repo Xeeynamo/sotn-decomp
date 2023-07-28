@@ -344,8 +344,6 @@ void func_800E6250(void) {
     }
 }
 
-extern unkStruct_800A872C D_800A872C[];
-
 s32 func_800E6300(void) {
     s32 i;
 
