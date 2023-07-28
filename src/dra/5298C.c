@@ -169,8 +169,9 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == 4 && D_800A4B04[otherEquipId].itemCategory == ITEM_SHIELD) {
         totalAttack += 5;
     }
-    if (equipId == 0x7E) {                  // Equippable Sword Familiar
-        totalAttack += g_Status.statsFamiliars[4].level; // Level of sword familiar
+    if (equipId == 0x7E) { // Equippable Sword Familiar
+        totalAttack +=
+            g_Status.statsFamiliars[4].level; // Level of sword familiar
     }
     if (D_8013982C != 0) {
         totalAttack += 20;

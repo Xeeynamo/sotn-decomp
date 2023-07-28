@@ -335,10 +335,10 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].exp);
 
         for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
-            playerXPBoost >>=1; 
+            playerXPBoost >>= 1;
         }
         if (familiarXPBoost <= 0) {
-            familiarXPBoost = 1; 
+            familiarXPBoost = 1;
         }
         g_Status.statsFamiliars[activeFamiliar].exp += familiarXPBoost;
         if (g_Status.statsFamiliars[activeFamiliar].exp >= 9900) {
