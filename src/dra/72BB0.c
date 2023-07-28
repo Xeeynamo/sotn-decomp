@@ -12,7 +12,8 @@ void func_80112BB0(void) {
     if (PLAYER.step_s != 0x58) {
         func_8010E1EC(0x1000);
         if (PLAYER.velocityY < -0x10000) {
-            if (!(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
+            if (!(g_Player.unk44 & 0x40) &&
+                !(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = -0x10000;
             }
             if (g_Player.pl_vram_flag & 2) {
@@ -62,7 +63,8 @@ void func_80112BB0(void) {
             (D_80139824 != 0)) {
             PLAYER.animFrameIdx = 1;
         }
-        if ((PLAYER.animFrameIdx == 4) || (g_Player.padTapped & (PAD_DOWN | PAD_UP))) {
+        if ((PLAYER.animFrameIdx == 4) ||
+            (g_Player.padTapped & (PAD_DOWN | PAD_UP))) {
             PLAYER.step_s = 0x40;
         }
         break;
@@ -140,7 +142,8 @@ void func_80112BB0(void) {
 
     if (PLAYER.step_s < 2) {
         if (g_Player.unk44 & 1) {
-            if ((g_Player.padPressed & PAD_DOWN) && (g_Player.padTapped & PAD_CROSS)) {
+            if ((g_Player.padPressed & PAD_DOWN) &&
+                (g_Player.padTapped & PAD_CROSS)) {
                 func_8010DA48(0x22U);
                 PLAYER.step_s = 0x70;
                 func_8011AAFC(g_CurrentEntity, 5U, 0);
