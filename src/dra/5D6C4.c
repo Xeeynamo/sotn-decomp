@@ -240,7 +240,7 @@ void func_800FDE00(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
 
-s32 func_800FE044(s32 arg0, s32 arg1) {
+s32 func_800FE044(s32 amount, s32 type) {
     s32 oldHeartMax;
     s32 activeFamiliar;
     s32 levelDiff;
@@ -248,16 +248,16 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
     s32 familiarXPBoost;
     u32 playerXPBoost;
 
-    if (arg1 == 0x8000) {
+    if (type == 0x8000) {
         if (g_Status.hpMax == 9999) {
             return 1;
         }
-        g_Status.hpMax += arg0;
+        g_Status.hpMax += amount;
         if (g_Status.hpMax > 9999) {
             g_Status.hpMax = 9999;
         }
         if (g_CurrentPlayableCharacter != 0) {
-            g_Status.hpMax += arg0;
+            g_Status.hpMax += amount;
             if (g_Status.hpMax > 9999) {
                 g_Status.hpMax = 9999;
             }
@@ -266,7 +266,7 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         D_80137960++;
         return 0;
     }
-    if (arg1 == 0x4000) {
+    if (type == 0x4000) {
         if (g_CurrentPlayableCharacter != 0) {
             return 1;
         }
@@ -274,7 +274,7 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         if (oldHeartMax == 0x270F) {
             return 1;
         }
-        g_Status.heartsMax += arg0;
+        g_Status.heartsMax += amount;
         if (g_Status.heartsMax > 9999) {
             g_Status.heartsMax = 9999;
         }
@@ -283,21 +283,21 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         return 0;
     }
 
-    if (arg1 == 0x2000) {
-        g_Status.relics[arg0] = 3;
-        arg0++;
-        arg0--;
-        if (D_800A872C[arg0].unk0) {
-            g_Status.relics[arg0] = 1;
+    if (type == 0x2000) {
+        g_Status.relics[amount] = 3;
+        amount++;
+        amount--;
+        if (D_800A872C[amount].unk0) {
+            g_Status.relics[amount] = 1;
         }
         D_80137968++;
         return 0;
     }
 
-    if (arg0 != 0 && g_Status.level != 99) {
-        playerXPBoost = arg0;
-        if (arg1 < (s32)g_Status.level) {
-            levelDiff = g_Status.level - arg1;
+    if (amount != 0 && g_Status.level != 99) {
+        playerXPBoost = amount;
+        if (type < (s32)g_Status.level) {
+            levelDiff = g_Status.level - type;
             for (i = 0; i < levelDiff; i++) {
                 playerXPBoost = playerXPBoost * 2 / 3;
             }
@@ -305,8 +305,8 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
                 playerXPBoost = 1;
             }
         }
-        if ((s32)g_Status.level < arg1) {
-            levelDiff = arg1 - g_Status.level;
+        if ((s32)g_Status.level < type) {
+            levelDiff = type - g_Status.level;
             if (levelDiff > 5) {
                 levelDiff = 5;
             }
@@ -329,7 +329,7 @@ s32 func_800FE044(s32 arg0, s32 arg1) {
         // reuse it here. Strange logic, the familiarXPBoost seems to be log
         // base 2 of arg0/familiar.exp.
 
-        playerXPBoost = (arg0 / g_Status.statsFamiliars[activeFamiliar].level);
+        playerXPBoost = (amount / g_Status.statsFamiliars[activeFamiliar].level);
 
         for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
             playerXPBoost >>= 1;
