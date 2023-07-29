@@ -248,6 +248,7 @@ s32 func_800FE044(s32 amount, s32 type) {
     s32 familiarXPBoost;
     u32 playerXPBoost;
 
+    // Life Max Up
     if (type == 0x8000) {
         if (g_Status.hpMax == 9999) {
             return 1;
@@ -266,6 +267,8 @@ s32 func_800FE044(s32 amount, s32 type) {
         D_80137960++;
         return 0;
     }
+
+    // Heart Max Up
     if (type == 0x4000) {
         if (g_CurrentPlayableCharacter != 0) {
             return 1;
@@ -283,6 +286,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         return 0;
     }
 
+    // Collect a relic. "amount" here isn't an amount, it's the relic ID.
     if (type == 0x2000) {
         g_Status.relics[amount] = 3;
         // Fake! This is needed to avoid having the compiler swap
@@ -297,10 +301,13 @@ s32 func_800FE044(s32 amount, s32 type) {
         return 0;
     }
 
+    // Gain XP from defeating enemy
     if (amount != 0 && g_Status.level != 99) {
+        // Done checking types, rename variable for clarity.
+        s32 enemyLevel = type;
         playerXPBoost = amount;
-        if (type < (s32)g_Status.level) {
-            levelDiff = g_Status.level - type;
+        if (enemyLevel < (s32)g_Status.level) {
+            levelDiff = g_Status.level - enemyLevel;
             for (i = 0; i < levelDiff; i++) {
                 playerXPBoost = playerXPBoost * 2 / 3;
             }
@@ -308,8 +315,8 @@ s32 func_800FE044(s32 amount, s32 type) {
                 playerXPBoost = 1;
             }
         }
-        if ((s32)g_Status.level < type) {
-            levelDiff = type - g_Status.level;
+        if ((s32)g_Status.level < enemyLevel) {
+            levelDiff = enemyLevel - g_Status.level;
             if (levelDiff > 5) {
                 levelDiff = 5;
             }
