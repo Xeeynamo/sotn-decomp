@@ -1684,9 +1684,9 @@ void EntityMermanFireball(Entity* self) {
         self->hitboxHeight = 3;
 
         if (self->facing != 0) {
-            self->velocityX = 0x10000 | 0x8000;
+            self->velocityX = 0x10000 | 0x8000; // LINT_IGNORE
         } else {
-            self->velocityX = 0xFFFE0000 | 0x8000;
+            self->velocityX = 0xFFFE0000 | 0x8000; // LINT_IGNORE
         }
 
         self->unk19 = 3;
