@@ -508,7 +508,7 @@ s32 func_800FF494(EnemyDef* arg0) {
     // 0x4B is the item ID for Ring of Arcana
     // Ring of Arcana is an item that increases enemy item drop rates when
     // equipped
-    s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
+    s32 ringOfArcanaCount = CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), 4);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
