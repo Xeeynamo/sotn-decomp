@@ -902,7 +902,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                         }
                     }
                     if (i == 8) {
-                        AddToInventory(0x19, 2);
+                        AddToInventory(ADD_ITEM_AXE_LORD_ARMOR, 2);
                     }
                 }
             } else {
@@ -968,35 +968,35 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.relics[7] = 3;
                 g_Status.relics[12] = 3;
                 g_Status.relics[13] = 3;
-                AddToInventory(ITEM_FIREBRAND, 0);      // Firebrand
-                AddToInventory(ITEM_THUNDERBRAND, 0);   // Thunderbrand
-                AddToInventory(ITEM_ICEBRAND, 0);       // Icebrand
-                AddToInventory(ITEM_CLAYMORE, 0);       // Claymore
-                AddToInventory(ITEM_MACE, 0);           // Mace
-                AddToInventory(ITEM_KATANA, 0);         // Katana
-                AddToInventory(ITEM_KNIGHT_SHIELD, 0);  // Knight Shield
-                AddToInventory(ITEM_IRON_SHIELD, 0);    // Iron Shield
-                AddToInventory(ITEM_BASILARD, 0);       // Basilard
-                AddToInventory(ITEM_RAPIER, 0);         // Rapier
-                AddToInventory(ITEM_KNUCKLE_DUSTER, 0); // Knuckle Duster
-                AddToInventory(ITEM_CUTLASS, 0);        // Cutlass
-                AddToInventory(1, 2);                   // Cloth Tunic
-                AddToInventory(3, 2);                   // Bronze cuirass
-                AddToInventory(4, 2);                   // Iron cuirass
-                AddToInventory(5, 2);                   // Steel cuirass
-                AddToInventory(6, 2);                   // Silver plate
-                AddToInventory(7, 2);                   // Gold plate
-                AddToInventory(0xA, 2);                 // Fire mail
-                AddToInventory(0xD, 2);                 // Mirror cuirass
-                AddToInventory(0x1F, 1);                // Velvet hat
-                AddToInventory(0x21, 1);                // Leather hat
-                AddToInventory(0x23, 1);                // Steel helm
-                AddToInventory(0x31, 3);                // Cloth cape
-                AddToInventory(0x33, 3);                // Elven cloak
-                AddToInventory(0x35, 3);                // Royal cloak
-                AddToInventory(0x32, 3);                // Reverse cloak
-                AddToInventory(0x52, 4);                // Medal
-                AddToInventory(0x4F, 4);                // Gauntlet
+                AddToInventory(ITEM_FIREBRAND, 0);          // Firebrand
+                AddToInventory(ITEM_THUNDERBRAND, 0);       // Thunderbrand
+                AddToInventory(ITEM_ICEBRAND, 0);           // Icebrand
+                AddToInventory(ITEM_CLAYMORE, 0);           // Claymore
+                AddToInventory(ITEM_MACE, 0);               // Mace
+                AddToInventory(ITEM_KATANA, 0);             // Katana
+                AddToInventory(ITEM_KNIGHT_SHIELD, 0);      // Knight Shield
+                AddToInventory(ITEM_IRON_SHIELD, 0);        // Iron Shield
+                AddToInventory(ITEM_BASILARD, 0);           // Basilard
+                AddToInventory(ITEM_RAPIER, 0);             // Rapier
+                AddToInventory(ITEM_KNUCKLE_DUSTER, 0);     // Knuckle Duster
+                AddToInventory(ITEM_CUTLASS, 0);            // Cutlass
+                AddToInventory(ADD_ITEM_CLOTH_TUNIC, 2);    // Cloth Tunic
+                AddToInventory(ADD_ITEM_BRONZE_CUIRASS, 2); // Bronze cuirass
+                AddToInventory(ADD_ITEM_IRON_CUIRASS, 2);   // Iron cuirass
+                AddToInventory(ADD_ITEM_STEEL_CUIRASS, 2);  // Steel cuirass
+                AddToInventory(ADD_ITEM_SILVER_PLATE, 2);   // Silver plate
+                AddToInventory(ADD_ITEM_GOLD_PLATE, 2);     // Gold plate
+                AddToInventory(ADD_ITEM_FIRE_MAIL, 2);      // Fire mail
+                AddToInventory(ADD_ITEM_MIRROR_CUIRASS, 2); // Mirror cuirass
+                AddToInventory(ADD_ITEM_VELVET_HAT, 1);     // Velvet hat
+                AddToInventory(ADD_ITEM_LEATHER_HAT, 1);    // Leather hat
+                AddToInventory(ADD_ITEM_STEEL_HELM, 1);     // Steel helm
+                AddToInventory(ADD_ITEM_CLOTH_CAPE, 3);     // Cloth cape
+                AddToInventory(ADD_ITEM_ELVEN_CLOAK, 3);    // Elven cloak
+                AddToInventory(ADD_ITEM_ROYAL_CLOAK, 3);    // Royal cloak
+                AddToInventory(ADD_ITEM_REVERSE_CLOAK, 3);  // Reverse cloak
+                AddToInventory(ADD_ITEM_MEDAL, 4);          // Medal
+                AddToInventory(ADD_ITEM_GAUNTLET, 4);       // Gauntlet
                 // 80 potions!
                 for (i = 0; i < 80; i++) {
                     AddToInventory(ITEM_POTION, 0);
