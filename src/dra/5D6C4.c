@@ -285,6 +285,9 @@ s32 func_800FE044(s32 amount, s32 type) {
 
     if (type == 0x2000) {
         g_Status.relics[amount] = 3;
+        // Fake! This is needed to avoid having the compiler swap
+        // the previous and following line. There may be other methods to
+        // achieve the same goal, but this one at least works.
         amount++;
         amount--;
         if (D_800A872C[amount].unk0) {
@@ -329,7 +332,8 @@ s32 func_800FE044(s32 amount, s32 type) {
         // reuse it here. Strange logic, the familiarXPBoost seems to be log
         // base 2 of arg0/familiar.exp.
 
-        playerXPBoost = (amount / g_Status.statsFamiliars[activeFamiliar].level);
+        playerXPBoost =
+            (amount / g_Status.statsFamiliars[activeFamiliar].level);
 
         for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
             playerXPBoost >>= 1;
