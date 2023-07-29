@@ -67,17 +67,17 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     if (equipType < 5) {
         switch (equipType) {
         case 0:
-            return (g_Status.equipment[0] == itemId) +
-                   (g_Status.equipment[1] == itemId);
+            return (g_Status.equipment[SLOT_LEFT_HAND] == itemId) +
+                   (g_Status.equipment[SLOT_RIGHT_HAND] == itemId);
         case 1:
-            return g_Status.equipment[2] == itemId;
+            return g_Status.equipment[SLOT_HEAD] == itemId;
         case 2:
-            return g_Status.equipment[3] == itemId;
+            return g_Status.equipment[SLOT_ARMOR] == itemId;
         case 3:
-            return g_Status.equipment[4] == itemId;
+            return g_Status.equipment[SLOT_CAPE] == itemId;
         case 4:
-            return (g_Status.equipment[5] == itemId) +
-                   (g_Status.equipment[6] == itemId);
+            return (g_Status.equipment[SLOT_ACCESSORY_1] == itemId) +
+                   (g_Status.equipment[SLOT_ACCESSORY_2] == itemId);
         }
     }
     // seems to require missing return
@@ -259,7 +259,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 
     if (subweaponId == 0) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
-        accessoryCount = CheckEquipmentItemCount(0x4D, 4);
+        accessoryCount = CheckEquipmentItemCount(WEARABLE(ITEM_HEART_BROACH), 4);
         if (accessoryCount == 1) {
             subwpn->heartCost = subwpn->heartCost / 2;
         }
@@ -550,7 +550,7 @@ void func_800FF60C(void) {
 
     i = 0;
     while (1) {
-        if (g_Status.equipment[4] == D_800A2FBC[i]) {
+        if (g_Status.equipment[SLOT_CAPE] == D_800A2FBC[i]) {
             break;
         }
 
@@ -561,11 +561,11 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLiningReversed) {
+    if (g_Status.equipment[SLOT_CAPE] == 0x32 && g_Settings.isCloakLiningReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
-    if (g_Status.equipment[4] == 0x38) {
+    if (g_Status.equipment[SLOT_CAPE] == 0x38) {
         func_800EA5E4(0x415);
     }
 }
@@ -595,67 +595,72 @@ void func_800FF708(s32 arg0, s32 arg1) {
 void InitStatsAndGear(bool DeathTakeItems) {
     s32 dracDefeatTime;
     s32 prologueBonusState;
-    s32 i;
     u8* namePtr;
+    s32 i;
 
     if (D_8003C730 != 0) {
         func_800F53A4();
         func_800FF60C();
         return;
     }
-    if (DeathTakeItems == 1) {
+
+    if (DeathTakeItems == true) {
         // Remove Alucard Sword from left hand
-        if (g_Status.equipment[0] == 0x7B) {
-            g_Status.equipment[0] = 0;
+        if (g_Status.equipment[SLOT_LEFT_HAND] == HAND(ITEM_ALUCARD_SWORD)) {
+            g_Status.equipment[SLOT_LEFT_HAND] = HAND(ITEM_EMPTY_HAND);
             // Same from right hand
-        } else if (g_Status.equipment[1] == 0x7B) {
-            g_Status.equipment[1] = 0;
+        } else if (g_Status.equipment[SLOT_RIGHT_HAND] == HAND(ITEM_ALUCARD_SWORD)) {
+            g_Status.equipment[SLOT_RIGHT_HAND] = HAND(ITEM_EMPTY_HAND);
             // Same from inventory
-        } else if (g_Status.equipHandCount[0x7B] != 0) {
+        } else if (g_Status.equipHandCount[HAND(ITEM_ALUCARD_SWORD)] != 0) {
             // Take one (not set to zero!)
-            g_Status.equipHandCount[0x7B]--;
+            g_Status.equipHandCount[HAND(ITEM_ALUCARD_SWORD)]--;
         }
+
         // Same logic, for Alucard Shield
-        if (g_Status.equipment[0] == 0x10) {
-            g_Status.equipment[0] = 0;
-        } else if (g_Status.equipment[1] == 0x10) {
-            g_Status.equipment[1] = 0;
-        } else if (g_Status.equipHandCount[0x10] != 0) {
-            g_Status.equipHandCount[0x10]--;
+        if (g_Status.equipment[SLOT_LEFT_HAND] == HAND(ITEM_ALUCARD_SHIELD)) {
+            g_Status.equipment[SLOT_LEFT_HAND] = HAND(ITEM_EMPTY_HAND);
+        } else if (g_Status.equipment[SLOT_RIGHT_HAND] == HAND(ITEM_ALUCARD_SHIELD)) {
+            g_Status.equipment[SLOT_RIGHT_HAND] = HAND(ITEM_EMPTY_HAND);
+        } else if (g_Status.equipHandCount[HAND_COUNT(ITEM_ALUCARD_SHIELD)] != 0) {
+            g_Status.equipHandCount[HAND_COUNT(ITEM_ALUCARD_SHIELD)]--;
         }
+
         // Same logic, for Dragon Helm
-        if (g_Status.equipment[2] == 0x2D) {
+        if (g_Status.equipment[SLOT_HEAD] == WEARABLE(ITEM_DRAGON_HELM)) {
             // ID for Unequip in head slot
-            g_Status.equipment[2] = 0x1A;
-        } else if (g_Status.equipHeadCount[0x13] != 0) {
-            g_Status.equipHeadCount[0x13]--;
+            g_Status.equipment[SLOT_HEAD] = WEARABLE(ITEM_EMPTY_HEAD);
+        } else if (g_Status.equipHeadCount[HEAD_COUNT(ITEM_DRAGON_HELM)] != 0) {
+            g_Status.equipHeadCount[HEAD_COUNT(ITEM_DRAGON_HELM)]--;
         }
+
         // Same logic, for Alucard Mail
-        if (g_Status.equipment[3] == 0xF) {
-            g_Status.equipment[3] = 0;
-        } else if (g_Status.equipBodyCount[0xF] != 0) {
-            g_Status.equipBodyCount[0xF]--;
+        if (g_Status.equipment[SLOT_ARMOR] == WEARABLE(ITEM_ALUCARD_MAIL)) {
+            g_Status.equipment[SLOT_ARMOR] = WEARABLE(ITEM_NO_ARMOR);
+        } else if (g_Status.equipBodyCount[ARMOR_COUNT(ITEM_ALUCARD_MAIL)] != 0) {
+            g_Status.equipBodyCount[ARMOR_COUNT(ITEM_ALUCARD_MAIL)]--;
         }
+
         // Twilight Cloak
-        if (g_Status.equipment[4] == 0x38) {
-            g_Status.equipment[4] = 0x30;
+        if (g_Status.equipment[SLOT_CAPE] == WEARABLE(ITEM_TWILIGHT_CLOAK)) {
+            g_Status.equipment[SLOT_CAPE] = WEARABLE(ITEM_NO_CAPE);
             func_800FF60C();
-        } else if (g_Status.equipCloakCount[8] != 0) {
-            g_Status.equipCloakCount[8]--;
+        } else if (g_Status.equipCloakCount[CAPE_COUNT(ITEM_TWILIGHT_CLOAK)] != 0) {
+            g_Status.equipCloakCount[CAPE_COUNT(ITEM_TWILIGHT_CLOAK)]--;
         }
+
         // Necklace of J in Misc slot 1
-        if (g_Status.equipment[5] == 0x4E) {
-            g_Status.equipment[5] = 0x39;
+        if (g_Status.equipment[SLOT_ACCESSORY_1] == WEARABLE(ITEM_NECKLACE_OF_J)) {
+            g_Status.equipment[SLOT_ACCESSORY_1] = WEARABLE(ITEM_NO_ACCESSORY);
             // Necklace of J in Misc slot 2
-        } else if (g_Status.equipment[6] == 0x4E) {
-            g_Status.equipment[6] = 0x39;
-        } else if (g_Status.equipOtherCount[21] != 0) {
-            g_Status.equipOtherCount[21]--;
+        } else if (g_Status.equipment[SLOT_ACCESSORY_2] == WEARABLE(ITEM_NECKLACE_OF_J)) {
+            g_Status.equipment[SLOT_ACCESSORY_2] = WEARABLE(ITEM_NO_ACCESSORY);
+        } else if (g_Status.equipOtherCount[ACCESSORY_COUNT(ITEM_NECKLACE_OF_J)] != 0) {
+            g_Status.equipOtherCount[ACCESSORY_COUNT(ITEM_NECKLACE_OF_J)]--;
         }
     } else {
-
         // I think this zeros out all the rooms to mark as unvisited
-        for (i = 0; i < 0x800; i++) {
+        for (i = 0; i < 2048; i++) {
             D_8006BB74[i] = 0;
         }
         g_roomCount = 0;
@@ -731,14 +736,14 @@ void InitStatsAndGear(bool DeathTakeItems) {
             g_Status.statsBase[STAT_CON] = 10;
             g_Status.statsBase[STAT_INT] = 10;
             g_Status.statsBase[STAT_LCK] = 10;
-            g_Status.equipment[2] = 0x1A;
-            g_Status.equipment[4] = 0x30;
-            g_Status.equipment[5] = 0x39;
-            g_Status.equipment[6] = 0x39;
+            g_Status.equipment[SLOT_HEAD] = 0x1A;
+            g_Status.equipment[SLOT_CAPE] = 0x30;
+            g_Status.equipment[SLOT_ACCESSORY_1] = 0x39;
+            g_Status.equipment[SLOT_ACCESSORY_2] = 0x39;
             g_Status.gold = 0;
-            g_Status.equipment[0] = 0;
-            g_Status.equipment[1] = 0;
-            g_Status.equipment[3] = 0;
+            g_Status.equipment[SLOT_LEFT_HAND] = 0;
+            g_Status.equipment[SLOT_RIGHT_HAND] = 0;
+            g_Status.equipment[SLOT_ARMOR] = 0;
 
             // Eliminate the time attacks that Richter can't do
             if (g_StageId == STAGE_NO3) {
@@ -861,14 +866,14 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 } else if (dracDefeatTime >= 1000) {
                     g_Status.statsBase[STAT_CON]++;
                 }
-                g_Status.equipment[0] = 0x7B; // Alucard Sword
-                g_Status.equipment[1] = 0x10; // Alucard Shield
-                g_Status.equipment[2] = 0x2D; // Dragon Helm
-                g_Status.equipment[3] = 0xF;  // Alucard Mail
-                g_Status.equipment[4] = 0x38; // Twilight Cloak
-                g_Status.equipment[5] = 0x4E; // Necklace of J
+                g_Status.equipment[SLOT_LEFT_HAND] = 0x7B; // Alucard Sword
+                g_Status.equipment[SLOT_RIGHT_HAND] = 0x10; // Alucard Shield
+                g_Status.equipment[SLOT_HEAD] = 0x2D; // Dragon Helm
+                g_Status.equipment[SLOT_ARMOR] = 0xF;  // Alucard Mail
+                g_Status.equipment[SLOT_CAPE] = 0x38; // Twilight Cloak
+                g_Status.equipment[SLOT_ACCESSORY_1] = 0x4E; // Necklace of J
                 g_Status.subWeapon = 0;
-                g_Status.equipment[6] = 0x39; // Nothing
+                g_Status.equipment[SLOT_ACCESSORY_2] = 0x39; // Nothing
                 g_Status.hp = g_Status.hpMax;
                 g_Status.mp = g_Status.mpMax;
 
@@ -891,7 +896,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                     g_Status.mpMax = 1;
                     g_Status.hp = g_Status.hpMax;
                     g_Status.mp = g_Status.mpMax;
-                    g_Status.equipment[6] = 0x46; // Lapis Lazuli
+                    g_Status.equipment[SLOT_ACCESSORY_2] = 0x46; // Lapis Lazuli
                 }
 
                 if (g_IsTimeAttackUnlocked) {
@@ -945,13 +950,13 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 for (i = 0; i < 90; i++) {
                     g_Status.equipBodyCount[i] = 1;
                 }
-                g_Status.equipment[0] = 0x13; // Short Sword
-                g_Status.equipment[1] = 5;    // Leather Shield
-                g_Status.equipment[2] = 0x1A; // No headgear
-                g_Status.equipment[3] = 2;    // Hide cuirass
-                g_Status.equipment[4] = 0x30; // No cape
-                g_Status.equipment[5] = 0x39; // No misc
-                g_Status.equipment[6] = 0x39; // No misc
+                g_Status.equipment[SLOT_LEFT_HAND] = 0x13; // Short Sword
+                g_Status.equipment[SLOT_RIGHT_HAND] = 5;    // Leather Shield
+                g_Status.equipment[SLOT_HEAD] = 0x1A; // No headgear
+                g_Status.equipment[SLOT_ARMOR] = 2;    // Hide cuirass
+                g_Status.equipment[SLOT_CAPE] = 0x30; // No cape
+                g_Status.equipment[SLOT_ACCESSORY_1] = 0x39; // No misc
+                g_Status.equipment[SLOT_ACCESSORY_2] = 0x39; // No misc
                 g_Status.timerHours = 0;
                 g_Status.timerMinutes = 0;
                 g_Status.timerSeconds = 0;

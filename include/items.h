@@ -1,4 +1,29 @@
-typedef enum {
+#define ITEM_HEAD_START 0xC3
+#define ITEM_ARMOR_START 0xA9
+#define ITEM_CAPE_START 0xD9
+#define ITEM_ACCESSORY_START 0xE2
+
+#define SLOT_LEFT_HAND 0
+#define SLOT_RIGHT_HAND 1
+#define SLOT_HEAD 2
+#define SLOT_ARMOR 3
+#define SLOT_CAPE 4
+#define SLOT_ACCESSORY_1 5
+#define SLOT_ACCESSORY_2 6
+
+#define ITEM_WEARABLE_FLAG 0xA9
+
+#define HAND(x) (x)
+#define WEARABLE(x) (x - ITEM_WEARABLE_FLAG)
+
+#define HAND_COUNT(x) (x)
+#define HEAD_COUNT(x) (x - ITEM_HEAD_START)
+#define ARMOR_COUNT(x) (x - ITEM_ARMOR_START)
+#define CAPE_COUNT(x) (x - ITEM_CAPE_START)
+#define ACCESSORY_COUNT(x) (x - ITEM_ACCESSORY_START)
+
+typedef enum EquipmentItems {
+    /* Hand Items */
     /* 0x000 */ ITEM_EMPTY_HAND,
     /* 0x001 */ ITEM_MONSTER_VIAL_1,
     /* 0x002 */ ITEM_MONSTER_VIAL_2,
@@ -168,6 +193,8 @@ typedef enum {
     /* 0x0A6 */ ITEM_LIBRARY_CARD,
     /* 0x0A7 */ ITEM_ALUCART_SHIELD,
     /* 0x0A8 */ ITEM_ALUCART_SWORD,
+
+    /* Armor Items */
     /* 0x0A9 */ ITEM_NO_ARMOR,
     /* 0x0AA */ ITEM_CLOTH_TUNIC,
     /* 0x0AB */ ITEM_HIDE_CUIRASS,
@@ -194,6 +221,8 @@ typedef enum {
     /* 0x0C0 */ ITEM_DRACULA_TUNIC,
     /* 0x0C1 */ ITEM_GODS_GARB,
     /* 0x0C2 */ ITEM_AXE_LORD_ARMOR,
+
+    /* Head Items */
     /* 0x0C3 */ ITEM_EMPTY_HEAD,
     /* 0x0C4 */ ITEM_SUNGLASSES,
     /* 0x0C5 */ ITEM_BALLROOM_MASK,
@@ -216,6 +245,8 @@ typedef enum {
     /* 0x0D6 */ ITEM_DRAGON_HELM,
     /* 0x0D7 */ ITEM_SILVER_CROWN,
     /* 0x0D8 */ ITEM_WIZARD_HAT,
+
+    /* Cape Items */
     /* 0x0D9 */ ITEM_NO_CAPE,
     /* 0x0DA */ ITEM_CLOTH_CAPE,
     /* 0x0DB */ ITEM_REVERSE_CLOAK,
@@ -225,6 +256,8 @@ typedef enum {
     /* 0x0DF */ ITEM_BLOOD_CLOAK,
     /* 0x0E0 */ ITEM_JOSEPHS_CLOAK,
     /* 0x0E1 */ ITEM_TWILIGHT_CLOAK,
+
+    /* Accessory Items */
     /* 0x0E2 */ ITEM_NO_ACCESSORY,
     /* 0x0E3 */ ITEM_MOONSTONE,
     /* 0x0E4 */ ITEM_SUNSTONE,
