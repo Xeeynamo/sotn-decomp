@@ -179,7 +179,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_UNK04:
     case STATUS_AILMENT_UNK05:
         ret = timer;
-        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, 4) != 0) {
+        if (CheckEquipmentItemCount(HAND(ITEM_BWAKA_KNIFE), 4) != 0) {
             ret += ret / 2;
         }
         break;
@@ -279,11 +279,11 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
     } else {
         *subwpn = g_Subweapons[subweaponId];
-        if (CheckEquipmentItemCount(0x14, 2) != 0) {
+        if (CheckEquipmentItemCount(WEARABLE(ITEM_BRILLIANT_MAIL), 2) != 0) {
             subwpn->attack += 10;
         }
         if (subweaponId == 4 || subweaponId == 12) {
-            accessoryCount = CheckEquipmentItemCount(0x3D, 4);
+            accessoryCount = CheckEquipmentItemCount(WEARABLE(ITEM_STAUROLITE), 4);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -417,7 +417,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
 
     enemy = &sp20;
     sp20 = g_EnemyDefs[enemyEntity->enemyId];
-    if (CheckEquipmentItemCount(0x2D, 1) != 0) {
+    if (CheckEquipmentItemCount(WEARABLE(ITEM_DRAGON_HELM), 1) != 0) {
         enemy->defense /= 2;
     }
 
