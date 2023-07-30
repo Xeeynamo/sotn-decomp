@@ -226,7 +226,16 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198574);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198688);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_801988F8);
+void func_801988F8(s32 tilePos, s32 arg1) {
+    u32 i;
+
+    for (i = 0; i < 6; i++) {
+        g_CurrentRoomTileLayout.fg[tilePos] = arg1;
+        tilePos++;
+        g_CurrentRoomTileLayout.fg[tilePos] = arg1;
+        tilePos += 15;
+    }
+}
 
 void func_80198944(Entity* self) {
     Entity* entity = &self[2];
