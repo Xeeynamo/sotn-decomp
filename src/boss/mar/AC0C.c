@@ -228,7 +228,103 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198688);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_801988F8);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198944);
+void func_80198944(Entity* self) {
+    Entity* entity = &self[2];
+    Entity* entity11 = &self[11];
+    u16 params = self->params;
+    u16* temp_a0;
+    u16* fakeVar;
+
+    switch (self->step) {
+    case 0:
+        func_80191098(D_801803E4);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = params + 0xA;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 32;
+        self->zPriority = 0x40;
+        if (D_8019AF28[params] == 0) {
+            self->posX.i.hi += D_80181288[params];
+            if (self->params != 0) {
+                func_801988F8(2, 0x597);
+            } else {
+                func_801988F8(12, 0x597);
+            }
+        } else {
+            self->posX.i.hi += D_8018128C[params];
+            if (self->params != 0) {
+                func_801988F8(2, 0);
+            } else {
+                func_801988F8(12, 0);
+            }
+        }
+
+        self->ext.generic.unk7E.modeU16 = D_8019AF28[params];
+        self->posY.i.hi -= 0x3A;
+        func_8018F5E8(0x1D, entity);
+        entity->animSet = ANIMSET_OVL(1);
+        entity->animCurFrame = params + 0xA;
+        entity->zPriority = 0x3F;
+        entity->unk19 = 8;
+        entity->blendMode = 0x10;
+        entity->flags = 0x8C000000;
+        entity->posY.i.hi += 8;
+        break;
+
+    case 1:
+        fakeVar = D_8019AF28;
+        temp_a0 = fakeVar;
+        temp_a0 += params;
+        if (*temp_a0 != self->ext.generic.unk7E.modeU16) {
+            self->ext.generic.unk7E.modeU16 = *temp_a0;
+            if (self->ext.generic.unk7E.modeU16 == 0) {
+                *(u16*)&self[11].ext.stub[0x02] = 2;
+            } else {
+                *(u16*)&self[11].ext.stub[0x02] = 1;
+            }
+            self->hitboxState = 2;
+            self->step++;
+            func_80196440(0x609);
+        }
+        break;
+
+    case 2:
+        func_8019143C(self, 0x10, 0x20, 0x13);
+        if (self->step_s == 0) {
+            if (self->ext.generic.unk7E.modeU16 != 0) {
+                if (self->params != 0) {
+                    func_801988F8(2, 0);
+                } else {
+                    func_801988F8(0xC, 0);
+                }
+            }
+            self->ext.generic.unk7C.s = 0x60;
+            self->step_s++;
+        }
+
+        if (self->ext.generic.unk7E.modeU16 != 0) {
+            self->posX.val += D_801812A0[params];
+        } else {
+            self->posX.val -= D_801812A0[params];
+        }
+
+        if (--self->ext.generic.unk7C.u == 0) {
+            if (self->ext.generic.unk7E.modeU16 == 0) {
+                if (self->params != 0) {
+                    func_801988F8(2, 0x597);
+                } else {
+                    func_801988F8(0xC, 0x597);
+                }
+            }
+            entity11->ext.generic.unk7E.modeU16 = 0;
+            self->hitboxState = 0;
+            self->step_s = 0;
+            self->step--;
+        }
+        break;
+    }
+    entity->posX.i.hi = self->posX.i.hi;
+}
 
 void func_80198C74(Entity* self) {
     u16 params = self->params;
