@@ -1,4 +1,13 @@
 EntityMedusa = 0x8019179C;
+Random = 0x80193198;
+CreateEntityFromEntity = 0x80195884;
 DestroyEntity = 0x801965B0;
+AnimateEntity = 0x801966E0;
+GetDistanceToPlayerX = 0x801968B0;
+GetDistanceToPlayerY = 0x801968EC;
+GetSideToPlayer = 0x80196920;
+MoveEntity = 0x80196964;
+AllocEntity = 0x80196E20;
 SetStep = 0x801971F0;
 InitializeEntity = 0x801972C0;
+PlaySfxAtPos = 0x8019C668;

@@ -30,7 +30,7 @@ void EntityMedusa(Entity* self) {
         InitializeEntity(D_80180480);
         self->animCurFrame = 1;
         self->hitboxState = 0;
-        func_80195884(0x19, self, &self[1]);
+        CreateEntityFromEntity(0x19, self, &self[1]);
         SetStep(1);
 
     case 1:
@@ -40,33 +40,33 @@ void EntityMedusa(Entity* self) {
         break;
 
     case 2:
-        if (func_801966E0(D_801805F0, self) == 0) {
+        if (AnimateEntity(D_801805F0, self) == 0) {
             self->hitboxState = 3;
             SetStep(3);
         }
         break;
 
     case 3:
-        func_801966E0(D_801805FC, self);
+        AnimateEntity(D_801805FC, self);
 
         if (self->step_s == 0) {
             self->ext.generic.unk80.modeS16.unk0 = 64;
             self->step_s++;
         }
 
-        if (func_801968B0() < 104) {
+        if (GetDistanceToPlayerX() < 104) {
             self->ext.generic.unk84.S8.unk0 = 1;
         }
 
-        if (func_801968B0() > 128) {
+        if (GetDistanceToPlayerX() > 128) {
             self->ext.generic.unk84.S8.unk0 = 0;
         }
 
-        if (func_801968B0() > 32) {
-            self->facing = func_80196920() & 1;
+        if (GetDistanceToPlayerX() > 32) {
+            self->facing = GetSideToPlayer() & 1;
         }
 
-        func_80196964();
+        MoveEntity();
         if (self->facing == self->ext.generic.unk84.U8.unk0) {
             self->velocityX = 0x8000;
         } else {
@@ -85,8 +85,8 @@ void EntityMedusa(Entity* self) {
         }
 
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-            func_80196920();
-            if (func_801968B0() <= 64) {
+            GetSideToPlayer();
+            if (GetDistanceToPlayerX() <= 64) {
                 SetStep(5);
             } else {
                 SetStep(4);
@@ -96,16 +96,16 @@ void EntityMedusa(Entity* self) {
 
     case 5:
         if (self->step_s == 0) {
-            if (func_80193198() & 1) {
-                func_8019C668(0x7FE);
+            if (Random() & 1) {
+                PlaySfxAtPos(0x7FE);
             } else {
-                func_8019C668(0x7FF);
+                PlaySfxAtPos(0x7FF);
             }
-            func_8019C668(0x7C8);
+            PlaySfxAtPos(0x7C8);
             self->step_s++;
         }
         self->ext.generic.unk84.S8.unk1 = 1;
-        if (func_801966E0(D_80180624, self) == 0) {
+        if (AnimateEntity(D_80180624, self) == 0) {
             self->ext.generic.unk84.S8.unk1 = 0;
             SetStep(3);
         }
@@ -113,13 +113,13 @@ void EntityMedusa(Entity* self) {
 
     case 4:
         if (self->step_s == 0) {
-            if (!(func_80193198() & 3)) {
-                func_8019C668(0x7FB);
+            if (!(Random() & 3)) {
+                PlaySfxAtPos(0x7FB);
             }
             self->step_s++;
         }
 
-        if (func_801966E0(D_8018060C, self) == 0) {
+        if (AnimateEntity(D_8018060C, self) == 0) {
             SetStep(3);
             if (g_Player.unk0C & 0x80) {
                 SetStep(8);
@@ -127,9 +127,9 @@ void EntityMedusa(Entity* self) {
         }
 
         if (LOW(self->animFrameIdx) == 4) {
-            newEntity = func_80196E20(D_8007A958, &D_8007A958[32]);
+            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
-                func_80195884(0x18, self, newEntity);
+                CreateEntityFromEntity(0x18, self, newEntity);
                 newEntity->facing = self->facing;
                 if (self->facing != 0) {
                     newEntity->posX.i.hi -= 13;
@@ -137,27 +137,27 @@ void EntityMedusa(Entity* self) {
                     newEntity->posX.i.hi += 13;
                 }
                 newEntity->posY.i.hi -= 28;
-                func_8019C668(0x61F);
+                PlaySfxAtPos(0x61F);
             }
         }
         break;
 
     case 8:
         if (self->step_s == 0) {
-            func_8019C668(0x7FD);
+            PlaySfxAtPos(0x7FD);
             self->step_s++;
         }
 
-        if (func_801966E0(D_80180618, self) == 0) {
+        if (AnimateEntity(D_80180618, self) == 0) {
             SetStep(3);
         }
 
         if (LOW(self->animFrameIdx) == 3) {
-            func_8019C668(0x7D1);
+            PlaySfxAtPos(0x7D1);
             for (i = 0; i < 2; i++, rotAngle += 0x400) {
-                newEntity = func_80196E20(&g_Entities[160], &g_Entities[192]);
+                newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
-                    func_80195884(0x1A, self, newEntity);
+                    CreateEntityFromEntity(0x1A, self, newEntity);
                     newEntity->rotAngle = 0x400 * i - 0x200;
                     if (self->facing == 0) {
                         newEntity->rotAngle = (i * 0x400) + 0x600;
@@ -171,16 +171,16 @@ void EntityMedusa(Entity* self) {
 
     case 6:
         if (self->step_s == 0) {
-            if (func_80193198() & 1) {
-                func_8019C668(0x801);
+            if (Random() & 1) {
+                PlaySfxAtPos(0x801);
             } else {
-                func_8019C668(0x802);
+                PlaySfxAtPos(0x802);
             }
             self->step_s++;
         }
 
-        if (func_801966E0(D_80180630, self) == 0) {
-            self->facing = func_80196920() & 1;
+        if (AnimateEntity(D_80180630, self) == 0) {
+            self->facing = GetSideToPlayer() & 1;
             SetStep(4);
         }
         break;
@@ -188,31 +188,31 @@ void EntityMedusa(Entity* self) {
     case 7: // FUCKING_DEAD
         switch (self->step_s) {
         case 0:
-            func_8019C668(0x804);
+            PlaySfxAtPos(0x804);
             self->hitboxState = 0;
             D_80180728 |= 2;
             self->step_s++;
 
         case 1:
-            if (func_801966E0(D_8018063C, self) == 0) {
+            if (AnimateEntity(D_8018063C, self) == 0) {
                 self->ext.generic.unk80.modeS16.unk0 = 80;
-                func_8019C668(0x7C5);
+                PlaySfxAtPos(0x7C5);
                 self->step_s++;
             }
             break;
 
         case 2:
-            newEntity = func_80196E20(D_8007C0D8, &D_8007C0D8[64]);
+            newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
             if (newEntity != NULL) {
-                func_80195884(0x1B, self, newEntity);
+                CreateEntityFromEntity(0x1B, self, newEntity);
                 newEntity->params = 0;
                 newEntity->zPriority = self->zPriority + 1;
-                newEntity->posX.i.hi -= 16 - (func_80193198() & 31);
+                newEntity->posX.i.hi -= 16 - (Random() & 31);
                 newEntity->posY.i.hi += 24;
             }
 
             if (!(self->ext.generic.unk80.modeS16.unk0 & 0xF)) {
-                func_8019C668(0x661);
+                PlaySfxAtPos(0x661);
             }
 
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
@@ -331,7 +331,7 @@ void func_80192020(Entity* self) {
         self->velocityY = rsin(angle) << 7;
 
     case 1:
-        func_80196964();
+        MoveEntity();
 
         prim = self->ext.prim;
         posX = prim->x0 = self->posX.i.hi;
@@ -428,16 +428,16 @@ void func_80192998(Entity* self) {
         if (self->step_s == 0) {
             self->unk19 = 8;
             self->unk6C = 0xC0;
-            self->facing = func_80193198() & 1;
-            self->velocityX = (func_80193198() << 8) - 0x8000;
+            self->facing = Random() & 1;
+            self->velocityX = (Random() << 8) - 0x8000;
             self->velocityY = -0xC000;
-            *(s32*)&self->ext.stub[0x10] = -(func_80193198() * 16) - 0x4000;
+            *(s32*)&self->ext.stub[0x10] = -(Random() * 16) - 0x4000;
             self->step_s++;
         }
-        func_80196964();
+        MoveEntity();
         self->velocityY = self->velocityY + *(s32*)&self->ext.stub[0x10];
         self->unk6C += 0xFF;
-        if (func_801966E0(*(s32*)&self->ext.stub[0x4], self) == 0) {
+        if (AnimateEntity(*(s32*)&self->ext.stub[0x4], self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -454,7 +454,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192D64);
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80193050);
 
 // 1.000 - ('NZ0', 'Random') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80193198);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", Random);
 
 // 0.990 - ('NZ0', 'Update') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801931C8);
@@ -511,7 +511,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019575C);
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195810);
 
 // 0.990 - ('NZ0', 'CreateEntityFromEntity') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195884);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", CreateEntityFromEntity);
 
 // 1.000 - ('NZ0', 'func_801BBC3C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195900);
@@ -528,22 +528,22 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019661C);
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196698);
 
 // 0.990 - ('NZ0', 'AnimateEntity') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801966E0);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", AnimateEntity);
 
 // 0.990 - ('NZ0', 'func_801BCAD4') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196798);
 
 // 1.000 - ('NZ0', 'GetDistanceToPlayerX') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801968B0);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", GetDistanceToPlayerX);
 
 // 1.000 - ('NZ0', 'GetDistanceToPlayerY') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801968EC);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", GetDistanceToPlayerY);
 
 // 1.000 - ('NZ0', 'GetSideToPlayer') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196920);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", GetSideToPlayer);
 
 // 1.000 - ('NZ0', 'MoveEntity') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196964);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", MoveEntity);
 
 // 1.000 - ('NZ0', 'FallEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196994);
@@ -555,7 +555,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801969C0);
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196C38);
 
 // 0.990 - ('NZ0', 'AllocEntity') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196E20);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", AllocEntity);
 
 // 0.990 - ('NZ0', 'func_801BD1BC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196E80);
@@ -727,7 +727,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019BD70);
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C470);
 
 // 0.990 - ('NZ0', 'func_801C29B0') - (decompiled)
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C668);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", PlaySfxAtPos);
 
 // 0.990 - ('NZ0', 'func_801C8ADC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C760);
