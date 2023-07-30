@@ -1,6 +1,8 @@
 .SECONDEXPANSION:
 .SECONDARY:
 
+include tools/tools.mk
+
 # Binaries
 VERSION         ?= us
 MAIN            := main

@@ -20,22 +20,22 @@ if args.version == None:
         args.version = "us"
 
 
-def sort_symbol_list(symbol_file_name):
+def sort_symbols(syms):
     offsets = []
-    with open(symbol_file_name) as symbol_file:
-        for line in symbol_file:
-            line = line.strip()
-            if not line:
-                continue
-            parts = line.split()
-            if len(parts) < 3:
-                continue
-            offset = parts[2].rstrip(";")
-            offsets.append((line, int(offset, 16)))
+    for line in syms:
+        parts = line.strip().split()
+        if len(parts) >= 3:
+            offset = int(parts[2].rstrip(";"), 16)
+            offsets.append((line, offset))
     offsets.sort(key=lambda x: x[1])
+    return [line[0] for line in offsets]
+
+
+def sort_symbols_from_file(symbol_file_name):
+    with open(symbol_file_name, "r") as symbol_file:
+        sorted_lines = sort_symbols(symbol_file)
     with open(symbol_file_name, "w") as symbol_file:
-        for line, offset in offsets:
-            symbol_file.write(line + "\n")
+        symbol_file.writelines(sorted_lines)
 
 
 def sort(base_path):
@@ -49,7 +49,7 @@ def sort(base_path):
     ]
 
     for symbol_file_name in [os.path.join(base_path, f) for f in filtered_files]:
-        sort_symbol_list(symbol_file_name)
+        sort_symbols_from_file(symbol_file_name)
 
 
 if __name__ == "__main__":
