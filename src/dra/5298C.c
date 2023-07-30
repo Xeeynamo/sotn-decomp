@@ -469,12 +469,12 @@ void DrawMenuSprite(
         otIdx--;
     }
 
-    poly->type &= 0xFD;
+    poly->code &= 0xFD;
 
     if (arg9 != 0) {
-        poly->type |= 1;
+        poly->code |= 1;
     } else {
-        poly->type &= 0xFC;
+        poly->code &= 0xFC;
     }
 
     SetTexturedPrimRect(poly, x, y, width, height, u, v);
