@@ -41,12 +41,12 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         if (entity->posX.i.hi < 192) {
             SetStep(3);
             if (entity->params != 0) {
-                entity->velocityX = 0x80000;
-                entity->velocityY = 0x30000;
+                entity->velocityX = FIX(8);
+                entity->velocityY = FIX(3);
                 break;
             }
-            entity->velocityX = 0xA0000;
-            entity->velocityY = 0x1A000;
+            entity->velocityX = FIX(10);
+            entity->velocityY = FIX(1.625);
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
@@ -64,7 +64,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         } else {
             animFlag = AnimateEntity(D_801819D0, entity);
             if (entity->velocityY > (s32)0xFFFE0000) {
-                entity->velocityY -= 0x800;
+                entity->velocityY -= FIX(0.03125);
             }
         }
         MoveEntity();
@@ -80,7 +80,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 4:
         if (entity->velocityY > (s32)0xFFFE0000) {
-            entity->velocityY -= 0x800;
+            entity->velocityY -= FIX(0.03125);
         }
         animFlag = AnimateEntity(D_801819D0, entity);
         MoveEntity();
@@ -116,7 +116,7 @@ void EntityFallingLeaf(Entity* entity) {
 
     case 1:
         if (entity->velocityX > 0) {
-            entity->velocityX -= 0x1000;
+            entity->velocityX -= FIX(0.0625);
         }
         if (entity->velocityY < 0x10000) {
             entity->velocityY += 0x400;
@@ -192,6 +192,3 @@ void func_801BECCC(Entity* entity) {
 }
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEDAC);
-
-// seems to cause a room transition
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRoomTransition1);

@@ -616,6 +616,12 @@ typedef enum {
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 
 typedef struct {
+    u32 level;
+    u32 unk4;
+    u32 unk8;
+} FamiliarStats;
+
+typedef struct {
     /* 80097964 */ u8 relics[30];
     /* 80097982 */ u8 spells[8];
     /* 8009798A */ u8 equipHandCount[169];
@@ -657,27 +663,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ u32 D_80097C44;
-    /* 80097C48 */ u32 D_80097C48;
-    /* 80097C4C */ u32 D_80097C4C;
-    /* 80097C50 */ u32 D_80097C50;
-    /* 80097C54 */ u32 D_80097C54;
-    /* 80097C58 */ u32 D_80097C58;
-    /* 80097C5C */ u32 D_80097C5C;
-    /* 80097C60 */ u32 D_80097C60;
-    /* 80097C64 */ u32 D_80097C64;
-    /* 80097C68 */ u32 D_80097C68;
-    /* 80097C6C */ u32 D_80097C6C;
-    /* 80097C70 */ u32 D_80097C70;
-    /* 80097C74 */ u32 D_80097C74;
-    /* 80097C78 */ u32 D_80097C78;
-    /* 80097C7C */ u32 D_80097C7C;
-    /* 80097C80 */ u32 D_80097C80;
-    /* 80097C84 */ u32 D_80097C84;
-    /* 80097C88 */ u32 D_80097C88;
-    /* 80097C8C */ u32 D_80097C8C;
-    /* 80097C90 */ u32 D_80097C90;
-    /* 80097C94 */ u32 D_80097C94;
+    /* 80097C44 */ FamiliarStats statsFamiliars[7];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {
@@ -980,7 +966,7 @@ typedef struct {
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
     /* 8003C850 */ RelicOrb* D_800A8720;
-    /* 8003C854 */ void (*func_800FF7B8)(s32 arg0);
+    /* 8003C854 */ void* InitStatsAndGear;
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
     /* 8003C860 */ void (*func_800F53A4)(void);

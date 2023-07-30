@@ -527,17 +527,17 @@ void EntityDraculaFireball(Entity* self) {
         InitializeEntity(D_801805EC);
 
         if (self->facing == 0) {
-            self->velocityX = -0x20000;
+            self->velocityX = FIX(-2);
         } else {
-            self->velocityX = 0x20000;
+            self->velocityX = FIX(2);
         }
 
         if (self->params == 1) {
-            self->velocityY = -0x8000;
+            self->velocityY = FIX(-0.5);
         }
 
         if (self->params == 2) {
-            self->velocityY = 0x8000;
+            self->velocityY = FIX(0.5);
         }
         self->ext.generic.unk8C.modeU16.unk0 = 0x28;
 
@@ -625,7 +625,7 @@ void func_801AD838(Entity* entity) {
         InitializeEntity(D_801805EC);
         entity->animCurFrame = 0;
         entity->hitboxState = 0;
-        entity->velocityY = -0x10000;
+        entity->velocityY = FIX(-1);
     }
     MoveEntity();
 
@@ -643,7 +643,7 @@ void EntityDraculaGlass(Entity* entity) {
         entity->animCurFrame = 0x59;
         entity->unk19 = 4;
         entity->hitboxState = 0;
-        entity->velocityX = -0x10000;
+        entity->velocityX = FIX(-1);
         entity->velocityY = 0;
         if (entity->params) {
             s16 radians;
@@ -658,7 +658,7 @@ void EntityDraculaGlass(Entity* entity) {
     case 1:
         MoveEntity();
         entity->rotAngle += 0x20;
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi >= 205) {
             g_api.PlaySfx(NA_SE_BREAK_GLASS);
             entity->posY.i.hi = 204;
@@ -682,7 +682,7 @@ void EntityDraculaGlass(Entity* entity) {
         break;
     case 3:
         MoveEntity();
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi >= 205) {
             DestroyEntity(entity);
         }
@@ -776,7 +776,7 @@ void EntityDraculaRainAttack(Entity* self) {
             self->velocityY = velY;
             break;
         }
-        self->velocityY = 0x40000;
+        self->velocityY = FIX(4);
 
     case 1:
         MoveEntity();
@@ -803,7 +803,7 @@ void EntityDraculaRainAttack(Entity* self) {
 
     case 3:
         MoveEntity();
-        self->velocityY += 0x2000;
+        self->velocityY += FIX(0.125);
         if (self->posY.i.hi >= 0xF1) {
             DestroyEntity(self);
         }

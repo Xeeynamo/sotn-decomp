@@ -251,9 +251,9 @@ void EntityBloodyZombie(Entity* self) {
         func_801BCF74(D_801822E4);
 
         if (self->facing == 0) {
-            self->velocityX = -0x6000;
+            self->velocityX = FIX(-0.375);
         } else {
-            self->velocityX = 0x6000;
+            self->velocityX = FIX(0.375);
         }
 
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
@@ -287,9 +287,9 @@ void EntityBloodyZombie(Entity* self) {
         func_801BCF74(D_801822E4);
 
         if (self->facing != 0) {
-            self->velocityX = 0xC000;
+            self->velocityX = FIX(0.75);
         } else {
-            self->velocityX = -0xC000;
+            self->velocityX = FIX(-0.75);
         }
 
         if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
@@ -483,7 +483,7 @@ void func_801C5D20(Entity* self) { // BloodDrips
                 self->step_s = 1;
             }
         } else {
-            self->velocityY += 0x1800;
+            self->velocityY += FIX(0.09375);
             self->posY.val += self->velocityY;
             if ((prim->y0 - prim->y1) >= 9) {
                 prim->y1 = prim->y0 - 8;
