@@ -1,0 +1,61 @@
+options:
+  platform:     psx
+  basename:     bomar
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/BOSS/MAR/MAR.BIN
+  asm_path:     asm/us/boss/mar
+  asset_path:   assets/boss/mar
+  src_path:     src/boss/mar
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.us.bomar.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.bomar.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.bomar.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".sbss"
+segments:
+  - name: bomar
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+    - [0x0, rodata]
+    - [0xAB0, rodata]
+    - [0xFC0, rodata]
+    - [0x12D0, rodata]
+    - [0x1310, rodata]
+    - [0x1320, rodata]
+    - [0x13C0, rodata]
+    - [0x1410, rodata]
+    - [0x30F0, rodata]
+    - [0x9700, rodata]
+    - [0x9880, rodata]
+    - [0x9C20, rodata]
+    - [0x9DD0, rodata]
+    - [0x9E40, rodata]
+    - [0x9EB0, rodata]
+    - [0x9F40, rodata]
+    - [0xA090, rodata]
+    - [0xA1E0, rodata]
+    - [0xA250, rodata]
+    - [0xA300, rodata]
+    - [0xA3D0, rodata]
+    - [0xA6B0, rodata]
+    - [0xA740, rodata]
+    - [0xA8A0, rodata]
+    - [0xA910, rodata]
+    - [0xAB10, rodata]
+    - [0xAC0C, c]
+    - [0x1A200, sbss]
+
+ #  - [0x3EB00, sbss]
+  - [0x1AF70]

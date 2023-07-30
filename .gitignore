@@ -24,6 +24,9 @@ asm/*/st/*/data/*.s
 asm/*/st/*/nonmatchings/*.s
 asm/*/st/*/nonmatchings/*/*.s
 asm/*/st/*/nonmatchings/*/*/*.s
+asm/*/boss/*/data/*.s
+asm/*/boss/*/nonmatchings/*/*.s
+asm/*/boss/*/nonmatchings/*/*/*.s
 assets/
 bin/
 build/

@@ -92,7 +92,7 @@ endef
 all: build check
 saturn: build_saturn_native check_saturn_native
 build: build_$(VERSION)
-build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000 mar
 build_hd: dra
 clean:
 	git clean -fdx assets/
@@ -184,13 +184,13 @@ $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
-
+####################################
 wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
 	$(GFXSTAGE) e assets/st/wrp $@
-
+####################################
 rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
@@ -200,6 +200,12 @@ $(BUILD_DIR)/F_RWRP.BIN:
 tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
+
+mar: bomar_dirs $(BUILD_DIR)/MAR.BIN #$(BUILD_DIR)/F_MAR.BIN
+$(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
+	$(OBJCOPY) -O binary $< $@
+#$(BUILD_DIR)/F_MAR.BIN:
+#	$(GFXSTAGE) e assets/boss/mar $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
@@ -214,6 +220,8 @@ tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+bo%_dirs:
+	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
@@ -228,9 +236,11 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
+$(BUILD_DIR)/bo%.elf: $$(call list_o_files,boss/$$*)
+	$(call link,bo$*,$@)
 
 extract: extract_$(VERSION)
-extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000 extract_bomar
 extract_hd: extract_dra
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
@@ -252,6 +262,9 @@ extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
+extract_bo%: $(SPLAT_APP)
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).bo$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).bo$*.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).bo$*.yaml
 
 extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
@@ -360,6 +373,7 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
+	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
@@ -592,7 +606,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 SHELL = /bin/bash -e -o pipefail
 
 .PHONY: all, clean, format, check, expected
-.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
+.PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000, mar
 .PHONY: %_dirs
 .PHONY: extract, extract_%
 .PHONY: require-tools,update-dependencies
