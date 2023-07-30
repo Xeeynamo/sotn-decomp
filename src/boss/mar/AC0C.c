@@ -230,7 +230,67 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_801988F8);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198944);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198C74);
+void func_80198C74(Entity* self) {
+    u16 params = self->params;
+    Primitive* prim;
+    s16 primIndex;
+
+    switch (self->step) {
+    case 0:
+        if (self->step_s == 0) {
+            func_80191098(D_801803E4);
+            self->animSet = ANIMSET_OVL(1);
+            self->animCurFrame = 0x11;
+            self->zPriority = 0x80;
+            self->posX.i.hi += D_80181290[params];
+            self->posY.i.hi -= 0x2C;
+            self->step = 0;
+            self->step_s++;
+        }
+        primIndex = g_api.AllocPrimitives(1, 1);
+        if (primIndex == -1) {
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[primIndex];
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->x0 = self->posX.i.hi - 6;
+        prim->y0 = self->posY.i.hi - 16;
+        prim->u0 = 12;
+        prim->v0 = 32;
+        prim->priority = 0x7F;
+        prim->blendMode = 0;
+        self->step++;
+        break;
+
+    case 1:
+        if (self->ext.generic.unk7E.modeU16 == self->step) {
+            self->step = 2;
+            self->animFrameIdx = self->animCurFrame - 17;
+        }
+        if (self->ext.generic.unk7E.modeU16 == 2) {
+            self->step = 3;
+            self->animFrameIdx = 20 - self->animCurFrame;
+        }
+        self->animFrameDuration = 0;
+        break;
+
+    case 2:
+        func_801904B8(D_801812C4, self);
+        if (self->ext.generic.unk7E.modeU16 == 0) {
+            self->step = 1;
+        }
+        break;
+
+    case 3:
+        func_801904B8(D_801812D0, self);
+        if (self->ext.generic.unk7E.modeU16 == 0) {
+            self->step = 1;
+        }
+        break;
+    }
+}
 
 void func_80198E84(s32 arg0) {
     s32 tilePos;
