@@ -53,6 +53,8 @@ segments:
     - [0x10DA0, rodata]
     - [0x10E10, rodata]
     - [0x10E80, rodata]
+    - [0x10EE4, .rodata, 11080] # EntityMedusa
+    - [0x10EF0, rodata]
     - [0x11080, c]
     - [0x1F978, bss]
   - [0x20630]
