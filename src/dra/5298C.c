@@ -459,7 +459,7 @@ void DrawMenuSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB) {
     u32* ot = g_CurrentBuffer->ot;
-    Primitive* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     s32 otIdx = context->unk18 + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
