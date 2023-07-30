@@ -1,4 +1,4 @@
-#include "common.h"
+#include "mar.h"
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018AC0C);
 
@@ -234,7 +234,64 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198C74);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198E84);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198F24);
+void func_80198F24(Entity* self) {
+    u16 params = self->params;
+
+    switch (self->step) {
+    case 0:
+        func_80191098(D_801803E4);
+        self->animSet = -0x7FFF;
+        self->animCurFrame = params + 0x1B;
+        self->zPriority = 0x40;
+        if (D_8003BDEC[0] == 0) {
+            self->posX.i.hi += D_80181294[params];
+            func_80198E84(1);
+        } else {
+            self->posX.i.hi += D_80181298[params];
+            func_80198E84(0);
+        }
+
+        self->posY.i.hi = self->posY.i.hi + 0x58;
+        self->ext.prim = D_8003BDEC[0];
+        break;
+
+    case 1:
+        if (self->ext.prim == NULL) {
+            if (D_8003BDEC[0]) {
+                self->ext.generic.unk80.modeS16.unk0 = 0;
+                self->step++;
+            }
+        }
+        self->ext.prim = D_8003BDEC[0];
+        break;
+
+    case 2:
+        if (!((u16)self->ext.generic.unk80.modeS16.unk0 & 31)) {
+            func_80196440(0x607);
+        }
+
+        if ((++self->ext.generic.unk80.modeS16.unk0) & 1) {
+            if (params != 0) {
+                self->posX.i.hi++;
+            } else {
+                self->posX.i.hi--;
+            }
+            if ((u16)self->ext.generic.unk80.modeS16.unk0 & 1) {
+                g_backbufferY = 1;
+            } else {
+                g_backbufferY = 0;
+            }
+        } else {
+            g_backbufferY = 0;
+        }
+        if ((u16)self->ext.generic.unk80.modeS16.unk0 > 96) {
+            func_80198E84(0);
+            g_backbufferY = 0;
+            self->step--;
+        }
+        break;
+    }
+}
 
 void func_80199114(void) {}
 
