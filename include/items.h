@@ -9,11 +9,11 @@ typedef enum ItemSlots {
 } ItemSlots;
 
 typedef enum ItemTypes {
-    /* 0 */ HAND,
-    /* 1 */ HEAD,
-    /* 2 */ ARMOR,
-    /* 3 */ CAPE,
-    /* 4 */ ACCESSORY,
+    /* 0 */ HAND_TYPE,
+    /* 1 */ HEAD_TYPE,
+    /* 2 */ ARMOR_TYPE,
+    /* 3 */ CAPE_TYPE,
+    /* 4 */ ACCESSORY_TYPE,
 } ItemTypes;
 
 typedef enum EquipmentItems {

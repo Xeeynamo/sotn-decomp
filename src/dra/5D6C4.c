@@ -140,7 +140,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
-    if (CheckEquipmentItemCount(WEARABLE(ITEM_MOJO_MAIL), ARMOR) != 0) {
+    if (CheckEquipmentItemCount(WEARABLE(ITEM_MOJO_MAIL), ARMOR_TYPE) != 0) {
         spell->attack = spell->attack + spell->attack / 2;
     }
 }
@@ -179,7 +179,8 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_UNK04:
     case STATUS_AILMENT_UNK05:
         ret = timer;
-        if (CheckEquipmentItemCount(HAND(ITEM_BWAKA_KNIFE), ACCESSORY) != 0) {
+        if (CheckEquipmentItemCount(HAND(ITEM_BWAKA_KNIFE), ACCESSORY_TYPE) !=
+            0) {
             ret += ret / 2;
         }
         break;
@@ -219,7 +220,7 @@ bool func_800FDD44(s32 equipId) {
 
     equippedItem = g_Status.equipment[equipId];
     isConsumable = D_800A4B04[equippedItem].isConsumable;
-    if (!CheckEquipmentItemCount(WEARABLE(ITEM_DUPLICATOR), ACCESSORY)) {
+    if (!CheckEquipmentItemCount(WEARABLE(ITEM_DUPLICATOR), ACCESSORY_TYPE)) {
         if (isConsumable) {
             if (g_Status.equipHandCount[equippedItem] == 0) {
                 g_Status.equipment[equipId] = 0;
@@ -259,8 +260,8 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 
     if (subweaponId == 0) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
-        accessoryCount =
-            CheckEquipmentItemCount(WEARABLE(ITEM_HEART_BROACH), ACCESSORY);
+        accessoryCount = CheckEquipmentItemCount(
+            WEARABLE(ITEM_HEART_BROACH), ACCESSORY_TYPE);
         if (accessoryCount == 1) {
             subwpn->heartCost = subwpn->heartCost / 2;
         }
@@ -280,13 +281,13 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
     } else {
         *subwpn = g_Subweapons[subweaponId];
-        if (CheckEquipmentItemCount(WEARABLE(ITEM_BRILLIANT_MAIL), ARMOR) !=
-            0) {
+        if (CheckEquipmentItemCount(
+                WEARABLE(ITEM_BRILLIANT_MAIL), ARMOR_TYPE) != 0) {
             subwpn->attack += 10;
         }
         if (subweaponId == 4 || subweaponId == 12) {
-            accessoryCount =
-                CheckEquipmentItemCount(WEARABLE(ITEM_STAUROLITE), ACCESSORY);
+            accessoryCount = CheckEquipmentItemCount(
+                WEARABLE(ITEM_STAUROLITE), ACCESSORY_TYPE);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -420,7 +421,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
 
     enemy = &sp20;
     sp20 = g_EnemyDefs[enemyEntity->enemyId];
-    if (CheckEquipmentItemCount(WEARABLE(ITEM_DRAGON_HELM), HEAD) != 0) {
+    if (CheckEquipmentItemCount(WEARABLE(ITEM_DRAGON_HELM), HEAD_TYPE) != 0) {
         enemy->defense /= 2;
     }
 
@@ -512,7 +513,7 @@ s32 func_800FF494(EnemyDef* arg0) {
     // Ring of Arcana is an item that increases enemy item drop rates when
     // equipped
     s32 ringOfArcanaCount =
-        CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), ACCESSORY);
+        CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), ACCESSORY_TYPE);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
@@ -790,7 +791,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 // If we died in prologue and needed Maria's rescue
                 if (D_801397FC != 0) {
                     // Give a potion
-                    AddToInventory(HAND(ITEM_POTION), HAND);
+                    AddToInventory(HAND(ITEM_POTION), HAND_TYPE);
                     prologueBonusState = 3;
                     // If no damage was taken as Richter, bonus to each stat
                 } else if (g_Status.hp == g_Status.hpMax) {
@@ -810,7 +811,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 }
                 // If we ran out of hearts and didn't die, give heart refresh
                 if ((g_Status.hearts == 0) && (prologueBonusState < 3)) {
-                    AddToInventory(HAND(ITEM_HEART_REFRESH), HAND);
+                    AddToInventory(HAND(ITEM_HEART_REFRESH), HAND_TYPE);
                 }
 
                 // Set initial max HP to 70, unless we took no damage, then 75.
@@ -824,7 +825,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
 
                 // If we had more than 41 hearts in prologue, give neutron bomb
                 if (D_80139008 >= 41) {
-                    AddToInventory(HAND(ITEM_NEUTRON_BOMB), HAND);
+                    AddToInventory(HAND(ITEM_NEUTRON_BOMB), HAND_TYPE);
                     g_Status.statsBase[STAT_INT]++;
                 } else {
                     g_Status.statsBase[STAT_STR]++;
@@ -900,7 +901,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                         break;
                     }
                 }
-                
+
                 if (i == 8) {
                     // Being after the prologue bonuses, this erases them.
                     g_Status.statsBase[STAT_STR] = 1;
@@ -925,7 +926,8 @@ void InitStatsAndGear(bool DeathTakeItems) {
                         }
                     }
                     if (i == 8) {
-                        AddToInventory(WEARABLE(ITEM_AXE_LORD_ARMOR), ARMOR);
+                        AddToInventory(
+                            WEARABLE(ITEM_AXE_LORD_ARMOR), ARMOR_TYPE);
                     }
                 }
             } else {
@@ -993,48 +995,48 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.relics[7] = 3;
                 g_Status.relics[12] = 3;
                 g_Status.relics[13] = 3;
-                AddToInventory(HAND(ITEM_FIREBRAND), HAND);
-                AddToInventory(HAND(ITEM_THUNDERBRAND), HAND);
-                AddToInventory(HAND(ITEM_ICEBRAND), HAND);
-                AddToInventory(HAND(ITEM_CLAYMORE), HAND);
-                AddToInventory(HAND(ITEM_MACE), HAND);
-                AddToInventory(HAND(ITEM_KATANA), HAND);
-                AddToInventory(HAND(ITEM_KNIGHT_SHIELD), HAND);
-                AddToInventory(HAND(ITEM_IRON_SHIELD), HAND);
-                AddToInventory(HAND(ITEM_BASILARD), HAND);
-                AddToInventory(HAND(ITEM_RAPIER), HAND);
-                AddToInventory(HAND(ITEM_KNUCKLE_DUSTER), HAND);
-                AddToInventory(HAND(ITEM_CUTLASS), HAND);
-                AddToInventory(WEARABLE(ITEM_CLOTH_TUNIC), ARMOR);
-                AddToInventory(WEARABLE(ITEM_BRONZE_CUIRASS), ARMOR);
-                AddToInventory(WEARABLE(ITEM_IRON_CUIRASS), ARMOR);
-                AddToInventory(WEARABLE(ITEM_STEEL_CUIRASS), ARMOR);
-                AddToInventory(WEARABLE(ITEM_SILVER_PLATE), ARMOR);
-                AddToInventory(WEARABLE(ITEM_GOLD_PLATE), ARMOR);
-                AddToInventory(WEARABLE(ITEM_FIRE_MAIL), ARMOR);
-                AddToInventory(WEARABLE(ITEM_MIRROR_CUIRASS), ARMOR);
-                AddToInventory(WEARABLE(ITEM_VELVET_HAT), HEAD);
-                AddToInventory(WEARABLE(ITEM_LEATHER_HAT), HEAD);
-                AddToInventory(WEARABLE(ITEM_STEEL_HELM), HEAD);
-                AddToInventory(WEARABLE(ITEM_CLOTH_CAPE), CAPE);
-                AddToInventory(WEARABLE(ITEM_ELVEN_CLOAK), CAPE);
-                AddToInventory(WEARABLE(ITEM_ROYAL_CLOAK), CAPE);
-                AddToInventory(WEARABLE(ITEM_REVERSE_CLOAK), CAPE);
-                AddToInventory(WEARABLE(ITEM_MEDAL), ACCESSORY);
-                AddToInventory(WEARABLE(ITEM_GAUNTLET), ACCESSORY);
+                AddToInventory(HAND(ITEM_FIREBRAND), HAND_TYPE);
+                AddToInventory(HAND(ITEM_THUNDERBRAND), HAND_TYPE);
+                AddToInventory(HAND(ITEM_ICEBRAND), HAND_TYPE);
+                AddToInventory(HAND(ITEM_CLAYMORE), HAND_TYPE);
+                AddToInventory(HAND(ITEM_MACE), HAND_TYPE);
+                AddToInventory(HAND(ITEM_KATANA), HAND_TYPE);
+                AddToInventory(HAND(ITEM_KNIGHT_SHIELD), HAND_TYPE);
+                AddToInventory(HAND(ITEM_IRON_SHIELD), HAND_TYPE);
+                AddToInventory(HAND(ITEM_BASILARD), HAND_TYPE);
+                AddToInventory(HAND(ITEM_RAPIER), HAND_TYPE);
+                AddToInventory(HAND(ITEM_KNUCKLE_DUSTER), HAND_TYPE);
+                AddToInventory(HAND(ITEM_CUTLASS), HAND_TYPE);
+                AddToInventory(WEARABLE(ITEM_CLOTH_TUNIC), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_BRONZE_CUIRASS), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_IRON_CUIRASS), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_STEEL_CUIRASS), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_SILVER_PLATE), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_GOLD_PLATE), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_FIRE_MAIL), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_MIRROR_CUIRASS), ARMOR_TYPE);
+                AddToInventory(WEARABLE(ITEM_VELVET_HAT), HEAD_TYPE);
+                AddToInventory(WEARABLE(ITEM_LEATHER_HAT), HEAD_TYPE);
+                AddToInventory(WEARABLE(ITEM_STEEL_HELM), HEAD_TYPE);
+                AddToInventory(WEARABLE(ITEM_CLOTH_CAPE), CAPE_TYPE);
+                AddToInventory(WEARABLE(ITEM_ELVEN_CLOAK), CAPE_TYPE);
+                AddToInventory(WEARABLE(ITEM_ROYAL_CLOAK), CAPE_TYPE);
+                AddToInventory(WEARABLE(ITEM_REVERSE_CLOAK), CAPE_TYPE);
+                AddToInventory(WEARABLE(ITEM_MEDAL), ACCESSORY_TYPE);
+                AddToInventory(WEARABLE(ITEM_GAUNTLET), ACCESSORY_TYPE);
                 // 80 potions!
                 for (i = 0; i < 80; i++) {
-                    AddToInventory(HAND(ITEM_POTION), HAND);
+                    AddToInventory(HAND(ITEM_POTION), HAND_TYPE);
                 }
                 // 10 each of...
                 for (i = 0; i < 10; i++) {
-                    AddToInventory(HAND(ITEM_MAGIC_MISSILE), HAND);
-                    AddToInventory(HAND(ITEM_TURKEY), HAND);
-                    AddToInventory(HAND(ITEM_POT_ROAST), HAND);
-                    AddToInventory(HAND(ITEM_ANTIVENOM), HAND);
-                    AddToInventory(HAND(ITEM_BOOMERANG), HAND);
-                    AddToInventory(HAND(ITEM_JAVELIN), HAND);
-                    AddToInventory(HAND(ITEM_PENTAGRAM), HAND);
+                    AddToInventory(HAND(ITEM_MAGIC_MISSILE), HAND_TYPE);
+                    AddToInventory(HAND(ITEM_TURKEY), HAND_TYPE);
+                    AddToInventory(HAND(ITEM_POT_ROAST), HAND_TYPE);
+                    AddToInventory(HAND(ITEM_ANTIVENOM), HAND_TYPE);
+                    AddToInventory(HAND(ITEM_BOOMERANG), HAND_TYPE);
+                    AddToInventory(HAND(ITEM_JAVELIN), HAND_TYPE);
+                    AddToInventory(HAND(ITEM_PENTAGRAM), HAND_TYPE);
                 }
             }
         }
