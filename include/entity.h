@@ -268,14 +268,14 @@ typedef struct {
     /* 0x80 */ s32 unk80;
 } ET_RoomTransition2;
 
-/* 0x7C */ u8 pad0[0x4];
-/* 0x80 */ s32 unk80;
-/* 0x84 */ s16 unk84;
-/* 0x86 */ u8 pad86[2];
-/* 0x88 */ u8 unk88;
-/* 0x89 */ u8 unk89;
-}
-ET_801B3C38;
+typedef struct {
+    /* 0x7C */ u8 pad0[0x4];
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u8 pad86[2];
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+} ET_801B3C38;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;

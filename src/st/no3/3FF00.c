@@ -40,7 +40,7 @@ void EntityRoomTransition2(Entity* self) {
         return;
     case 2:
         if (D_801D7DD0 & 0x20) {
-            g_api.func_800FF7B8(1);
+            g_api.InitStatsAndGear(1);
             g_api.PlaySfx(0x6A2);
             for (localVar = 0; localVar < 6; localVar++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
