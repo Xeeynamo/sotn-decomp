@@ -1,19 +1,3 @@
-#define ITEM_HEAD_START 0xC3
-#define ITEM_ARMOR_START 0xA9
-#define ITEM_CAPE_START 0xD9
-#define ITEM_ACCESSORY_START 0xE2
-
-#define ITEM_WEARABLE_FLAG 0xA9
-
-#define HAND(x) (x)
-#define WEARABLE(x) (x - ITEM_WEARABLE_FLAG)
-
-#define HAND_COUNT(x) (x)
-#define HEAD_COUNT(x) (x - ITEM_HEAD_START)
-#define ARMOR_COUNT(x) (x - ITEM_ARMOR_START)
-#define CAPE_COUNT(x) (x - ITEM_CAPE_START)
-#define ACCESSORY_COUNT(x) (x - ITEM_ACCESSORY_START)
-
 typedef enum ItemSlots {
     /* 0 */ LEFT_HAND_SLOT,
     /* 1 */ RIGHT_HAND_SLOT,
@@ -302,3 +286,14 @@ typedef enum EquipmentItems {
     /* 0x101 */ ITEM_SECRET_BOOTS,
     /* 0x102 */ ITEM_ALUCART_MAIL
 } EquipmentItems;
+
+#define ITEM_WEARABLE_FLAG 0xA9
+
+#define HAND(x) (x)
+#define WEARABLE(x) (x - ITEM_WEARABLE_FLAG)
+
+#define HAND_COUNT(x) (x)
+#define HEAD_COUNT(x) (x - ITEM_EMPTY_HEAD)
+#define ARMOR_COUNT(x) (x - ITEM_NO_ARMOR)
+#define CAPE_COUNT(x) (x - ITEM_NO_CAPE)
+#define ACCESSORY_COUNT(x) (x - ITEM_NO_ACCESSORY)
