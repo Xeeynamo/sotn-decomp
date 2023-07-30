@@ -1034,28 +1034,28 @@ void DrawHudRichter(void) {
     D_80137970 = func_800EDD9C(4, 9);
     prim = &g_PrimBuf[D_80137970];
 
-    func_80107360(prim, 2, 22, 32, 96, 0, 0);
+    SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x101;
     prim->priority = 0x1EF;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
+    SetTexturedPrimRect(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x100;
     prim->priority = 0x1EF;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 4, 112, 9, 3, 64, 89);
+    SetTexturedPrimRect(prim, 4, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x105;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
+    SetTexturedPrimRect(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
@@ -1064,35 +1064,35 @@ void DrawHudRichter(void) {
     prim->p2 = 6;
     prim = prim->next;
 
-    func_80107360(prim, D_80137980 + 236, 112, 9, 3, 64, 89);
+    SetTexturedPrimRect(prim, D_80137980 + 236, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 14, 27, 8, 8, 0, 96);
+    SetTexturedPrimRect(prim, 14, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 22, 27, 8, 8, 0, 96);
+    SetTexturedPrimRect(prim, 22, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 18, 38, 8, 8, 0, 0);
+    SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x102;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 33, 20, 64, 24, 64, 40);
+    SetTexturedPrimRect(prim, 33, 20, 64, 24, 64, 40);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1EF;
@@ -1104,12 +1104,12 @@ void DrawHudRichter(void) {
         s32 u = 32;
         s32 x = 216;
         do {
-            func_80107360(prim, x, 22, 2, 96, u, 0);
+            SetTexturedPrimRect(prim, x, 22, 2, 96, u, 0);
             func_801072DC(prim);
             prim->tpage = 0x1B;
             prim->clut = 0x100;
             prim->priority = 0x1EE;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim->p1 = (rand() & 0x3F) + 1;
             prim->p2 = 0;
             prim = prim->next;
@@ -1142,7 +1142,7 @@ bool func_8010183C(s32 arg0) {
 void DrawHudRichter(void);
 
 void func_8010189C(void) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s32 i;
     u16* new_var;
 
@@ -1161,16 +1161,17 @@ void func_8010189C(void) {
 
     if (poly != NULL) {
         for (i = 0; poly != NULL; i++) {
-            func_80107360(poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
-                          D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
+            SetTexturedPrimRect(
+                poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
+                D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
             poly->tpage = 0x1F;
             new_var = &D_800A2F48[i];
             poly->clut = *new_var;
-            poly->pad2 = 0x1F0;
-            poly->pad3 = D_800A2F64[i];
+            poly->priority = 0x1F0;
+            poly->blendMode = D_800A2F64[i];
 
             if (i == 5) {
-                SetPolyRect(
+                SetPrimRect(
                     poly, D_800A2EED, D_800A2EFD, D_800A2F3D, D_800A2F2D);
                 poly->y0 = poly->y2;
                 poly->x1 = poly->x0;
@@ -1184,7 +1185,7 @@ void func_8010189C(void) {
                 poly->p3 = (7 & rand()) + 1;
             }
 
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
         }
     }
 }
@@ -1203,7 +1204,7 @@ void func_801024DC(void) {
         prim->u0 = 0x80;
         prim->v0 = 0xF0;
         prim->priority = 0x1FD;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
     D_801379A8 = 0;
@@ -1223,7 +1224,7 @@ void func_801024DC(void) {
     prim = prim2;
     prim->v1 = 0;
     prim->u2 = 0;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 }
 
 extern Unkstruct_80086FFA D_80086FFA[];
@@ -1231,7 +1232,7 @@ extern Unkstruct_80086FFA D_80086FFA[];
 u16 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
 
 void func_80102628(s32 arg0) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s32 temp;
     s32 i = 0;
 
@@ -1246,23 +1247,23 @@ void func_80102628(s32 arg0) {
             poly->b0 = 0;
             poly->g0 = 0;
             poly->r0 = 0;
-            poly->pad2 = 0x1FD;
-            poly->pad3 = 8;
+            poly->priority = 0x1FD;
+            poly->blendMode = BLEND_VISIBLE;
             poly->x0 = temp * (i & 1);
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
             i++;
         }
     }
 }
 
 void func_801026BC(s32 arg0) {
-    POLY_GT4* poly = &g_PrimBuf[D_801379A0];
+    Primitive* poly = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        poly->pad3 = 8;
+        poly->blendMode = BLEND_VISIBLE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-        SetPolyRect(poly, 0, 1, 255, 255);
+        SetPrimRect(poly, 0, 1, 255, 255);
     } else {
         poly->x2 = 255;
         poly->x0 = 255;
@@ -1277,9 +1278,9 @@ void func_801026BC(s32 arg0) {
     func_80107250(poly, arg0 * 2);
 
     if (arg0 == 0x40) {
-        poly->pad3 = 0;
+        poly->blendMode = 0;
     } else {
-        poly->pad3 = 0x35;
+        poly->blendMode = 0x35;
     }
 }
 
