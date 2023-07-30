@@ -614,11 +614,10 @@ typedef enum {
 } ItemCategory;
 
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
-
 typedef struct {
-    u32 level;
-    u32 unk4;
-    u32 unk8;
+    s32 level;
+    s32 exp;
+    s32 unk8;
 } FamiliarStats;
 
 typedef enum {
