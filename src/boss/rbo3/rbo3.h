@@ -6,6 +6,7 @@
 
 /* Initializers */
 extern u16 D_8018042C[];
+extern u16 D_80180468[];
 extern u16 D_80180480[]; // EntityMedusa
 extern u16 D_8018048C[];
 extern u16 D_80180498[];

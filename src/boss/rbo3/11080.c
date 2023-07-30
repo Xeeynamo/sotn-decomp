@@ -9,8 +9,125 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191148);
 // 0.990 - ('NP3', 'EntityBreakable') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191304);
 
-// Unique
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191438);
+void func_80191438(Entity* self) {
+    s16 params = self->params;
+    s16 posX;
+
+    FntPrint("set:%04x\n", params);
+    FntPrint("sx:%04x\n", g_CurrentRoom.left);
+    FntPrint("ex:%04x\n", g_CurrentRoom.right);
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180468);
+        self->animSet = 2;
+        self->animCurFrame = 1;
+        self->zPriority = 0xB0;
+        break;
+
+    case 1:
+        posX = self->posY.i.hi - PLAYER.posY.i.hi;
+        posX = ABS(posX);
+        if (posX < 32) {
+            switch (params) {
+            case 0:
+                if (playerX < 384) {
+                    g_CurrentRoom.x = 384;
+                    g_CurrentRoom.left++;
+                    self->step++;
+                }
+                break;
+
+            case 1:
+                if (playerX > 640) {
+                    g_CurrentRoom.width = 640;
+                    g_CurrentRoom.right--;
+                    self->step++;
+                }
+                break;
+
+            case 3:
+                if (playerX > 768) {
+                    g_CurrentRoom.width = 768;
+                    g_CurrentRoom.right--;
+                    self->step++;
+                }
+                break;
+
+            case 5:
+                if (playerX > 1152) {
+                    g_CurrentRoom.width = 1152;
+                    self->step++;
+                }
+                break;
+
+            case 6:
+                if (playerX < 128) {
+                    g_CurrentRoom.x = 128;
+                    self->step++;
+                }
+                break;
+
+            case 7:
+                if (playerX < 128) {
+                    g_CurrentRoom.x = 128;
+                    self->step++;
+                }
+                break;
+
+            case 8:
+                if (playerX > 640) {
+                    g_CurrentRoom.width = 640;
+                    self->step++;
+                }
+                break;
+
+            case 9:
+                if (playerX < 128) {
+                    g_CurrentRoom.x = 128;
+                    self->step++;
+                }
+                break;
+
+            case 10:
+                if (playerX > 640) {
+                    g_CurrentRoom.width = 640;
+                    g_CurrentRoom.right--;
+                    self->step++;
+                }
+                break;
+
+            case 11:
+                if (playerX < 384) {
+                    g_CurrentRoom.x = 384;
+                    g_CurrentRoom.left++;
+                    self->step++;
+                }
+                break;
+
+            case 12:
+                if (playerX > 640) {
+                    g_CurrentRoom.width = 640;
+                    g_CurrentRoom.right--;
+                    self->step++;
+                }
+                break;
+
+            case 2:
+            case 4:
+            case 13:
+            case 14:
+                if (playerX < 256) {
+                    g_CurrentRoom.x = 256;
+                    g_CurrentRoom.left++;
+                    self->step++;
+                }
+                break;
+            }
+        }
+        break;
+    }
+}
 
 void EntityMedusa(Entity* self) {
     Entity* newEntity;

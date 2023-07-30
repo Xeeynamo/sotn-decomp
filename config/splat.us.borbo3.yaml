@@ -52,7 +52,7 @@ segments:
     - [0x10D30, rodata]
     - [0x10DA0, rodata]
     - [0x10E10, rodata]
-    - [0x10E80, rodata]
+    - [0x10E80, .rodata, 11080] # func_80191438
     - [0x10EE4, .rodata, 11080] # EntityMedusa
     - [0x10EF0, rodata]
     - [0x11080, c]
