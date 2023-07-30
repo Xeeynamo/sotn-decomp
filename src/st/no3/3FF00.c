@@ -28,7 +28,7 @@ void EntityRoomTransition2(Entity* self) {
     case 1:
         // Evil use of local 'gents' instead of PLAYER
         if (gents[0].posX.i.hi < 0x34) {
-            //Using generic here because I don't know what g_Entities[1] is
+            // Using generic here because I don't know what g_Entities[1] is
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             g_Player.D_80072EF4 = 0x2000;
         } else {
@@ -57,7 +57,8 @@ void EntityRoomTransition2(Entity* self) {
         g_Player.D_80072EFC = 1;
         return;
     case 3:
-        if (D_801D7DD0 & 0x40 && !(--self->ext.roomTransition2.unk7C & 0xFFFF)) {
+        if (D_801D7DD0 & 0x40 &&
+            !(--self->ext.roomTransition2.unk7C & 0xFFFF)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
                 prim = &g_PrimBuf[localVar];
