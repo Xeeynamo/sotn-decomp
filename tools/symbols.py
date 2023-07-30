@@ -5,18 +5,16 @@ import os
 import re
 import sys
 
-parser = argparse.ArgumentParser(
-    description="Manage game symbols with various operations"
-)
+parser = argparse.ArgumentParser(description="Perform operations on game symbols")
 parser.add_argument("--version", required=False, type=str, help="Game version")
 subparsers = parser.add_subparsers(dest="command")
 
 sort_parser = subparsers.add_parser(
-    "sort", description="Sort all the symbols by their offset"
+    "sort", description="Sort all the symbols of a given GNU LD script by their offset"
 )
 cross_parser = subparsers.add_parser(
     "cross",
-    description="Cross-reference the symbols between two assembly files and print the result to stdout",
+    description="Cross-reference the symbols between two assembly files and print the result to stdout for GNU LD. Useful to cross-reference symbols between different overlays or game revisions. The assemblies must be identical.",
 )
 cross_parser.add_argument(
     "ref",
@@ -45,6 +43,7 @@ def sort_symbols(syms):
     return [line[0] for line in offsets]
 
 
+# rewrite the same file with an ordered symbol list
 def sort_symbols_from_file(symbol_file_name):
     with open(symbol_file_name, "r") as symbol_file:
         sorted_lines = sort_symbols(symbol_file)
@@ -66,25 +65,31 @@ def sort(base_path):
         sort_symbols_from_file(symbol_file_name)
 
 
+# regex helper to match a hexadecimal string without the '0x'
 def re_hex(name):
     return f"(?P<{name}>[0-9A-F]+)"
 
 
+# regex helper to parse splat's disassembler /* LOC VRAM VAL */ comments
 def re_splat_line():
     return f"/\\* {re_hex('LOC')} {re_hex('VRAM')} {re_hex('VAL')} \\*/"
 
 
+# regex helper to match C-style identifiers
 def re_ident(name):
     return f"(?P<{name}>[a-zA-Z_][a-zA-Z0-9_]*)"
 
 
+# regex helper to match assembly registers
 def re_reg(name):
     return f"(?P<{name}>\$[a-z][0-9a-z])"
 
 
+# regex helper to match the two %lo and %hi functions
 re_func = r"(?P<FUNC>\%(hi|lo))"
 
 
+# all the regex patterns supported by the MIPS assembly parser
 patterns = [
     (
         f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
@@ -126,6 +131,7 @@ patterns = [
 ]
 
 
+# tokenize a single line of MIPS assembly code
 def asm_tokenize_line(line):
     for pattern, token_names in patterns:
         match = re.match(pattern, line)
@@ -135,6 +141,7 @@ def asm_tokenize_line(line):
     return None
 
 
+# get a dictionary of all the non-matching and cross-referenced symbols
 def get_non_matching_symbols(asm_ref, asm_cross):
     def is_value_equal(a, b, key):
         if key not in a and key not in b:
@@ -225,6 +232,7 @@ def cross(asm_reference_file_name, asm_to_cross_file_name):
         )
         return
 
+    # print symbol list in GNU LD style
     for sym in syms:
         print(f"{sym} = 0x{syms[sym]:08X};")
 
