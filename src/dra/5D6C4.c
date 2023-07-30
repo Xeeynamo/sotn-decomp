@@ -140,7 +140,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
-    if (CheckEquipmentItemCount(0x15, 2) != 0) {
+    if (CheckEquipmentItemCount(WEARABLE(ITEM_MOJO_MAIL), ARMOR) != 0) {
         spell->attack = spell->attack + spell->attack / 2;
     }
 }
@@ -511,7 +511,7 @@ s32 func_800FF494(EnemyDef* arg0) {
     // Ring of Arcana is an item that increases enemy item drop rates when
     // equipped
     s32 ringOfArcanaCount =
-        CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), 4);
+        CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), ACCESSORY);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
@@ -564,12 +564,12 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if (g_Status.equipment[CAPE_SLOT] == 0x32 &&
+    if (g_Status.equipment[CAPE_SLOT] == WEARABLE(ITEM_REVERSE_CLOAK) &&
         g_Settings.isCloakLiningReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
-    if (g_Status.equipment[CAPE_SLOT] == 0x38) {
+    if (g_Status.equipment[CAPE_SLOT] == WEARABLE(ITEM_TWILIGHT_CLOAK)) {
         func_800EA5E4(0x415);
     }
 }
