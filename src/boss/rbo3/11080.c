@@ -32,234 +32,234 @@ void EntityMedusa(Entity* self) {
 
     if (self->flags & 0x100) {
         if (self->step != 7) {
-            func_801971F0(7);
+            SetStep(7);
         }
     }
 
     switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180480);
+        self->animCurFrame = 1;
+        self->hitboxState = 0;
+        func_80195884(0x19, self, &self[1]);
+        SetStep(1);
+
+    case 1:
+        if (D_80180728 & 1) {
+            SetStep(2);
+        }
+        break;
+
+    case 2:
+        if (func_801966E0(D_801805F0, self) == 0) {
+            self->hitboxState = 3;
+            SetStep(3);
+        }
+        break;
+
+    case 3:
+        func_801966E0(D_801805FC, self);
+
+        if (self->step_s == 0) {
+            self->ext.generic.unk80.modeS16.unk0 = 64;
+            self->step_s++;
+        }
+
+        if (func_801968B0() < 104) {
+            self->ext.generic.unk84.S8.unk0 = 1;
+        }
+
+        if (func_801968B0() > 128) {
+            self->ext.generic.unk84.S8.unk0 = 0;
+        }
+
+        if (func_801968B0() > 32) {
+            self->facing = func_80196920() & 1;
+        }
+
+        func_80196964();
+        if (self->facing == self->ext.generic.unk84.U8.unk0) {
+            self->velocityX = 0x8000;
+        } else {
+            self->velocityX = -0x8000;
+        }
+
+        if (self->hitFlags & 3) {
+            SetStep(6);
+        }
+
+        posX = PLAYER.posX.i.hi - self->posX.i.hi;
+        if ((g_Player.unk0C & 0x2000) && ((posX * PLAYER.velocityX) < 0)) {
+            if (ABS(posX) < 80) {
+                SetStep(5);
+            }
+        }
+
+        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+            func_80196920();
+            if (func_801968B0() <= 64) {
+                SetStep(5);
+            } else {
+                SetStep(4);
+            }
+        }
+        break;
+
+    case 5:
+        if (self->step_s == 0) {
+            if (func_80193198() & 1) {
+                func_8019C668(0x7FE);
+            } else {
+                func_8019C668(0x7FF);
+            }
+            func_8019C668(0x7C8);
+            self->step_s++;
+        }
+        self->ext.generic.unk84.S8.unk1 = 1;
+        if (func_801966E0(D_80180624, self) == 0) {
+            self->ext.generic.unk84.S8.unk1 = 0;
+            SetStep(3);
+        }
+        break;
+
+    case 4:
+        if (self->step_s == 0) {
+            if (!(func_80193198() & 3)) {
+                func_8019C668(0x7FB);
+            }
+            self->step_s++;
+        }
+
+        if (func_801966E0(D_8018060C, self) == 0) {
+            SetStep(3);
+            if (g_Player.unk0C & 0x80) {
+                SetStep(8);
+            }
+        }
+
+        if (LOW(self->animFrameIdx) == 4) {
+            newEntity = func_80196E20(D_8007A958, &D_8007A958[32]);
+            if (newEntity != NULL) {
+                func_80195884(0x18, self, newEntity);
+                newEntity->facing = self->facing;
+                if (self->facing != 0) {
+                    newEntity->posX.i.hi -= 13;
+                } else {
+                    newEntity->posX.i.hi += 13;
+                }
+                newEntity->posY.i.hi -= 28;
+                func_8019C668(0x61F);
+            }
+        }
+        break;
+
+    case 8:
+        if (self->step_s == 0) {
+            func_8019C668(0x7FD);
+            self->step_s++;
+        }
+
+        if (func_801966E0(D_80180618, self) == 0) {
+            SetStep(3);
+        }
+
+        if (LOW(self->animFrameIdx) == 3) {
+            func_8019C668(0x7D1);
+            for (i = 0; i < 2; i++, rotAngle += 0x400) {
+                newEntity = func_80196E20(&g_Entities[160], &g_Entities[192]);
+                if (newEntity != NULL) {
+                    func_80195884(0x1A, self, newEntity);
+                    newEntity->rotAngle = 0x400 * i - 0x200;
+                    if (self->facing == 0) {
+                        newEntity->rotAngle = (i * 0x400) + 0x600;
+                    }
+                    newEntity->posY.i.hi -= 16;
+                    newEntity->zPriority = self->zPriority - 2;
+                }
+            }
+        }
+        break;
+
+    case 6:
+        if (self->step_s == 0) {
+            if (func_80193198() & 1) {
+                func_8019C668(0x801);
+            } else {
+                func_8019C668(0x802);
+            }
+            self->step_s++;
+        }
+
+        if (func_801966E0(D_80180630, self) == 0) {
+            self->facing = func_80196920() & 1;
+            SetStep(4);
+        }
+        break;
+
+    case 7: // FUCKING_DEAD
+        switch (self->step_s) {
         case 0:
-            func_801972C0(D_80180480);
-            self->animCurFrame = 1;
+            func_8019C668(0x804);
             self->hitboxState = 0;
-            func_80195884(0x19, self, &self[1]);
-            func_801971F0(1);
+            D_80180728 |= 2;
+            self->step_s++;
 
         case 1:
-            if (D_80180728 & 1) {
-                func_801971F0(2);
+            if (func_801966E0(D_8018063C, self) == 0) {
+                self->ext.generic.unk80.modeS16.unk0 = 80;
+                func_8019C668(0x7C5);
+                self->step_s++;
             }
             break;
 
         case 2:
-            if (func_801966E0(D_801805F0, self) == 0) {
-                self->hitboxState = 3;
-                func_801971F0(3);
-            }
-            break;
-
-        case 3:
-            func_801966E0(D_801805FC, self);
-
-            if (self->step_s == 0) {
-                self->ext.generic.unk80.modeS16.unk0 = 64;
-                self->step_s++;
+            newEntity = func_80196E20(D_8007C0D8, &D_8007C0D8[64]);
+            if (newEntity != NULL) {
+                func_80195884(0x1B, self, newEntity);
+                newEntity->params = 0;
+                newEntity->zPriority = self->zPriority + 1;
+                newEntity->posX.i.hi -= 16 - (func_80193198() & 31);
+                newEntity->posY.i.hi += 24;
             }
 
-            if (func_801968B0() < 104) {
-                self->ext.generic.unk84.S8.unk0 = 1;
-            }
-
-            if (func_801968B0() > 128) {
-                self->ext.generic.unk84.S8.unk0 = 0;
-            }
-
-            if (func_801968B0() > 32) {
-                self->facing = func_80196920() & 1;
-            }
-
-            func_80196964();
-            if (self->facing == self->ext.generic.unk84.U8.unk0) {
-                self->velocityX = 0x8000;
-            } else {
-                self->velocityX = -0x8000;
-            }
-
-            if (self->hitFlags & 3) {
-                func_801971F0(6);
-            }
-
-            posX = PLAYER.posX.i.hi - self->posX.i.hi;
-            if ((g_Player.unk0C & 0x2000) && ((posX * PLAYER.velocityX) < 0)) {
-                if (ABS(posX) < 80) {
-                    func_801971F0(5);
-                }
+            if (!(self->ext.generic.unk80.modeS16.unk0 & 0xF)) {
+                func_8019C668(0x661);
             }
 
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-                func_80196920();
-                if (func_801968B0() <= 64) {
-                    func_801971F0(5);
-                } else {
-                    func_801971F0(4);
-                }
-            }
-            break;
-
-        case 5:
-            if (self->step_s == 0) {
-                if (func_80193198() & 1) {
-                    func_8019C668(0x7FE);
-                } else {
-                    func_8019C668(0x7FF);
-                }
-                func_8019C668(0x7C8);
+                self->animCurFrame = 0;
+                D_80180728 |= 4;
                 self->step_s++;
             }
-            self->ext.generic.unk84.S8.unk1 = 1;
-            if (func_801966E0(D_80180624, self) == 0) {
-                self->ext.generic.unk84.S8.unk1 = 0;
-                func_801971F0(3);
-            }
             break;
+        }
+        break;
 
-        case 4:
-            if (self->step_s == 0) {
-                if (!(func_80193198() & 3)) {
-                    func_8019C668(0x7FB);
-                }
-                self->step_s++;
-            }
-
-            if (func_801966E0(D_8018060C, self) == 0) {
-                func_801971F0(3);
-                if (g_Player.unk0C & 0x80) {
-                    func_801971F0(8);
-                }
-            }
-
-            if (LOW(self->animFrameIdx) == 4) {
-                newEntity = func_80196E20(D_8007A958, &D_8007A958[32]);
-                if (newEntity != NULL) {
-                    func_80195884(0x18, self, newEntity);
-                    newEntity->facing = self->facing;
-                    if (self->facing != 0) {
-                        newEntity->posX.i.hi -= 13;
-                    } else {
-                        newEntity->posX.i.hi += 13;
-                    }
-                    newEntity->posY.i.hi -= 28;
-                    func_8019C668(0x61F);
-                }
-            }
-            break;
-
-        case 8:
-            if (self->step_s == 0) {
-                func_8019C668(0x7FD);
-                self->step_s++;
-            }
-
-            if (func_801966E0(D_80180618, self) == 0) {
-                func_801971F0(3);
-            }
-
-            if (LOW(self->animFrameIdx) == 3) {
-                func_8019C668(0x7D1);
-                for (i = 0; i < 2; i++, rotAngle += 0x400) {
-                    newEntity = func_80196E20(&g_Entities[160], &g_Entities[192]);
-                    if (newEntity != NULL) {
-                        func_80195884(0x1A, self, newEntity);
-                        newEntity->rotAngle = 0x400 * i - 0x200;
-                        if (self->facing == 0) {
-                            newEntity->rotAngle = (i * 0x400) + 0x600;
-                        }
-                        newEntity->posY.i.hi -= 16;
-                        newEntity->zPriority = self->zPriority - 2;
-                    }
-                }
-            }
-            break;
-
-        case 6:
-            if (self->step_s == 0) {
-                if (func_80193198() & 1) {
-                    func_8019C668(0x801);
-                } else {
-                    func_8019C668(0x802);
-                }
-                self->step_s++;
-            }
-
-            if (func_801966E0(D_80180630, self) == 0) {
-                self->facing = func_80196920() & 1;
-                func_801971F0(4);
-            }
-            break;
-
-        case 7: // FUCKING_DEAD
-            switch (self->step_s) {
-                case 0:
-                    func_8019C668(0x804);
-                    self->hitboxState = 0;
-                    D_80180728 |= 2;
-                    self->step_s++;
-
-                case 1:
-                    if (func_801966E0(D_8018063C, self) == 0) {
-                        self->ext.generic.unk80.modeS16.unk0 = 80;
-                        func_8019C668(0x7C5);
-                        self->step_s++;
-                    }
-                    break;
-
-                case 2:
-                    newEntity = func_80196E20(D_8007C0D8, &D_8007C0D8[64]);
-                    if (newEntity != NULL) {
-                        func_80195884(0x1B, self, newEntity);
-                        newEntity->params = 0;
-                        newEntity->zPriority = self->zPriority + 1;
-                        newEntity->posX.i.hi -= 16 - (func_80193198() & 31);
-                        newEntity->posY.i.hi += 24;
-                    }
-
-                    if (!(self->ext.generic.unk80.modeS16.unk0 & 0xF)) {
-                        func_8019C668(0x661);
-                    }
-
-                    if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-                        self->animCurFrame = 0;
-                        D_80180728 |= 4;
-                        self->step_s++;
-                    }
-                    break;
-            }
-            break;
-
-        case 255:
-            /**
-             * Debug: Press SQUARE / CIRCLE on the second controller
-             * to advance/rewind current animation frame
-             */
-            FntPrint("charal %x\n", self->animCurFrame);
-            if (g_pads[1].pressed & PAD_SQUARE) {
-                if (self->params == 0) {
-                    self->animCurFrame++;
-                    self->params |= 1;
-                } else {
-                    break;
-                }
+    case 255:
+        /**
+         * Debug: Press SQUARE / CIRCLE on the second controller
+         * to advance/rewind current animation frame
+         */
+        FntPrint("charal %x\n", self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params == 0) {
+                self->animCurFrame++;
+                self->params |= 1;
             } else {
-                self->params = 0;
+                break;
             }
-            if (g_pads[1].pressed & PAD_CIRCLE) {
-                if (self->step_s == 0) {
-                    self->animCurFrame--;
-                    self->step_s |= 1;
-                }
-            } else {
-                self->step_s = 0;
+        } else {
+            self->params = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s == 0) {
+                self->animCurFrame--;
+                self->step_s |= 1;
             }
-            break;
+        } else {
+            self->step_s = 0;
+        }
+        break;
     }
 
     posX = self->posX.i.hi + g_Camera.posX.i.hi;
@@ -389,13 +389,20 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197148);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197190);
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801971F0);
+void SetStep(u8 step) {
+    Entity* entity = g_CurrentEntity;
+
+    entity->step = step;
+    entity->step_s = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
+}
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197210);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019722C);
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801972C0);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", InitializeEntity);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801973BC);
 
@@ -421,9 +428,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197EB4);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197F58);
 
-void func_80197FA8(void) {
-    func_801965B0(g_CurrentEntity);
-}
+void func_80197FA8(void) { func_801965B0(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197FD0);
 

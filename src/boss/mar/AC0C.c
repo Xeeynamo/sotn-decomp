@@ -236,8 +236,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198E84);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198F24);
 
-void func_80199114(void) {
-}
+void func_80199114(void) {}
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8019911C);
 
