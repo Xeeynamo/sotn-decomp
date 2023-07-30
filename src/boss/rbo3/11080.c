@@ -1,11 +1,15 @@
 #include "rbo3.h"
 
+// 0.990 - ('NZ0', 'func_801B0958') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191080);
 
+// 0.990 - ('NP3', 'func_801B2540') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191148);
 
+// 0.990 - ('NP3', 'EntityBreakable') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191304);
 
+// Unique
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191438);
 
 void EntityMedusa(Entity* self) {
@@ -440,104 +444,153 @@ void func_80192998(Entity* self) {
     }
 }
 
+// 0.990 - ('NZ0', 'EntityUnkId0E')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192B38);
 
+// 0.990 - ('NO3', 'EntityUnkId2F')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192D64);
 
+// 0.990 - ('NZ0', 'func_801BD9A0')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80193050);
 
+// 1.000 - ('NZ0', 'Random') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80193198);
 
+// 0.990 - ('NZ0', 'Update') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801931C8);
 
+// 0.990 - ('NZ0', 'func_801B9800') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801934C4);
 
+// 0.990 - ('NZ0', 'TestCollisions')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801935CC);
 
+// 0.990 - ('NZ0', 'EntityNumericDamage')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801946E4);
 
+// 0.990 - ('NZ0', 'CreateEntityFromLayout') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80194D88);
 
+// 0.990 - ('NZ0', 'CreateEntityWhenInVerticalRange') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80194E4C);
 
+// 0.990 - ('NZ0', 'CreateEntityWhenInHorizontalRange') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80194F64);
 
+// 0.990 - ('NZ0', 'func_801BB3B8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019507C);
 
+// 0.990 - ('NZ0', 'func_801BB404') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801950C8);
 
+// 0.990 - ('NZ0', 'func_801BB45C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195120);
 
+// 0.990 - ('NZ0', 'func_801BB558') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019521C);
 
+// 0.990 - ('NZ0', 'func_801BB3B8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195330);
 
+// 0.990 - ('NZ0', 'func_801BB404') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019537C);
 
+// 0.990 - ('NZ0', 'func_801BB710') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801953D4);
 
+// 0.990 - ('NZ0', 'func_801BB558') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801954D0);
 
+// 0.990 - ('NZ0', 'InitRoomEntities') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801955E4);
 
+// 0.990 - ('NZ0', 'func_801BBA98') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019575C);
 
+// 0.990 - ('NZ0', 'CreateEntityFromCurrentEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195810);
 
+// 0.990 - ('NZ0', 'CreateEntityFromEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195884);
 
+// 1.000 - ('NZ0', 'func_801BBC3C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195900);
 
+// 0.990 - ('NZ0', 'EntityRedDoor')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195978);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", DestroyEntity);
 
+// 0.990 - ('NZ0', 'DestroyEntityFromIndex') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019661C);
 
+// 1.000 - ('NZ0', 'PreventEntityFromRespawning') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196698);
 
+// 0.990 - ('NZ0', 'AnimateEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801966E0);
 
+// 0.990 - ('NZ0', 'func_801BCAD4') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196798);
 
+// 1.000 - ('NZ0', 'GetDistanceToPlayerX') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801968B0);
 
+// 1.000 - ('NZ0', 'GetDistanceToPlayerY') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801968EC);
 
+// 1.000 - ('NZ0', 'GetSideToPlayer') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196920);
 
+// 1.000 - ('NZ0', 'MoveEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196964);
 
+// 1.000 - ('NZ0', 'FallEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196994);
 
+// 0.990 - ('NZ0', 'func_801BCCFC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801969C0);
 
+// 0.990 - ('NZ0', 'func_801BCF74') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196C38);
 
+// 0.990 - ('NZ0', 'AllocEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196E20);
 
+// 0.990 - ('NZ0', 'func_801BD1BC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196E80);
 
+// 0.990 - ('NZ0', 'func_801BD1E8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196EAC);
 
+// 0.990 - ('NZ0', 'func_801BD204') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196EC8);
 
+// 1.000 - ('NZ0', 'func_801BD270') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196F34);
 
+// 0.990 - ('NZ0', 'func_8019AD64') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196F6C);
 
+// 0.990 - ('NZ0', 'func_801BD484') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196FB4);
 
+// 0.990 - ('NZ0', 'func_801BD338') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80196FFC);
 
+// 1.000 - ('NZ0', 'func_801BD390') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197054);
 
+// 1.000 - ('NZ0', 'func_801BD41C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801970E0);
 
+// 1.000 - ('NZ0', 'func_801BD44C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197110);
 
+// 0.990 - ('NZ0', 'func_801BD2F0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197148);
 
+// 0.990 - ('NZ0', 'func_801BD4CC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197190);
 
 void SetStep(u8 step) {
@@ -549,120 +602,180 @@ void SetStep(u8 step) {
     entity->animFrameDuration = 0;
 }
 
+// 1.000 - ('NZ0', 'SetSubStep') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197210);
 
+// 0.990 - ('NZ0', 'func_801BD568') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019722C);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", InitializeEntity);
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801973BC);
+void func_801973BC(Entity* self) {
+    if (self->step == 0) {
+        self->step++;
+    }
+}
 
+// 0.990 - ('NZ0', 'func_801BD720') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801973E4);
 
+// 0.990 - ('NZ0', 'func_801BD848') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019750C);
 
+// 0.990 - ('NZ0', 'func_801BD9A0')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197664);
 
+// 0.990 - ('NZ0', 'ReplaceBreakableWithItemDrop') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801979A8);
 
+// 1.000 - ('NZ0', 'func_801BDD9C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197A60);
 
+// 0.990 - ('NZ0', 'func_801BDE20') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197AE4);
 
+// 0.990 - ('NZ0', 'CollectHeart') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197C40);
 
+// 0.990 - ('NZ0', 'CollectGold') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197CC0);
 
+// 0.990 - ('NZ0', 'CollectSubweapon') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197D9C);
 
+// 0.990 - ('NZ0', 'CollectHeartVessel') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197EB4);
 
+// 0.990 - ('NZ0', 'CollectLifeVessel') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197F58);
 
 void func_80197FA8(void) { DestroyEntity(g_CurrentEntity); }
 
+// 0.990 - ('CEN', 'EntityPrizeDrop')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197FD0);
 
+// 0.990 - ('NZ0', 'EntityExplosion') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80198844);
 
+// 0.990 - ('NZ0', 'func_801BEC7C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80198940);
 
+// 0.990 - ('CEN', 'EntityEquipItemDrop')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801989E4);
 
+// 0.990 - ('NZ0', 'func_801BF308')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80198FCC);
 
+// 0.990 - ('NP3', 'EntityRelicOrb')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019927C);
 
+// 0.990 - ('MAD', 'EntityHeartDrop')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80199D4C);
 
+// 0.990 - ('NZ0', 'EntityUnkId0E')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80199E68);
 
+// 0.990 - ('NZ0', 'func_801C070C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A3C4);
 
+// 0.990 - ('NZ0', 'func_801C07FC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A4B4);
 
+// 0.990 - ('NZ0', 'func_801C090C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A5C4);
 
+// 0.990 - ('NZ0', 'func_801C0A3C')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A6F4);
 
+// 0.990 - ('NZ0', 'func_801C0B24') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A7DC);
 
+// 0.990 - ('NZ0', 'func_801C0C14') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A8CC);
 
+// 0.990 - ('NZ0', 'func_801C0D08') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019A9C0);
 
+// 0.990 - ('NZ0', 'func_801C0F38') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019ABF0);
 
+// 0.990 - ('NZ0', 'func_801C1034') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019ACEC);
 
+// 0.990 - ('NZ0', 'EntityIntenseExplosion') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019B26C);
 
+// 0.990 - ('NZ0', 'func_801C16B4') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019B36C);
 
+// 0.990 - ('NZ0', 'func_801C1780') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019B438);
 
+// 0.990 - ('NZ0', 'func_801C1848') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019B500);
 
+// 0.990 - ('NZ0', 'func_801C1900') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019B5B8);
 
+// 0.990 - ('NZ0', 'func_801C1AD8')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019B790);
 
+// 0.990 - ('NZ0', 'func_801C20B8')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019BD70);
 
+// 1.000 - ('NZ0', 'ClutLerp') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C470);
 
+// 0.990 - ('NZ0', 'func_801C29B0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C668);
 
+// 0.990 - ('NZ0', 'func_801C8ADC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C760);
 
+// 0.990 - ('NZ0', 'EntityStageNamePopup')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019C930);
 
+// 0.990 - ('NZ0', 'EntitySoulStealOrb') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019D5B4);
 
+// 0.990 - ('NZ0', 'EntityEnemyBlood') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019D948);
 
+// 0.990 - ('NZ0', 'EntityRoomForeground') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019DDF8);
 
+// 0.990 - ('NZ0', 'func_801C33D8')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019DEE4);
 
+// 0.990 - ('NZ0', 'func_801C9930')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E214);
 
+// 0.990 - ('NZ0', 'func_801C9D18')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E5FC);
 
+// 1.000 - ('NZ0', 'func_801C9E68') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E74C);
 
+// 1.000 - ('NZ0', 'func_801C9E98') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E77C);
 
+// 0.990 - ('NZ0', 'func_801C9F14') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E7F8);
 
+// 1.000 - ('NZ0', 'func_801C9F9C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E880);
 
+// 0.990 - ('NZ0', 'func_801CA07C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E960);
 
+// 1.000 - ('NZ0', 'func_801CA0D0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E9B4);
 
+// 0.990 - ('NZ0', 'func_801CA0FC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019E9E0);
 
+// 0.990 - ('NZ0', 'EntityMagicallySealedDoor')
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019EA44);
 
+// Unique, has co-processor instructions
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019F2F8);
