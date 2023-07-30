@@ -511,6 +511,7 @@ void func_801922EC(Entity* self) {
     }
 }
 
+// https://decomp.me/scratch/2ydQM
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801923DC);
 
 void func_80192998(Entity* self) {
