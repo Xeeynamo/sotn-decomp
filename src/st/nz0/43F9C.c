@@ -108,9 +108,9 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_WALK_TOWARDS_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
-                self->velocityX = -0x3000;
+                self->velocityX = FIX(-0.1875);
             } else {
-                self->velocityX = 0x3000;
+                self->velocityX = FIX(0.1875);
             }
             self->step_s++;
         }
@@ -122,9 +122,9 @@ void EntityAxeKnight(Entity* self) {
 
         if (animStatus == 0) {
             if (self->facing == 0) {
-                self->velocityX = -0x3000;
+                self->velocityX = FIX(-0.1875);
             } else {
-                self->velocityX = 0x3000;
+                self->velocityX = FIX(0.1875);
             }
             if (GetDistanceToPlayerX() < 96) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
@@ -154,9 +154,9 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_WALK_AWAY_FROM_PLAYER:
         if (self->step_s == 0) {
             if (self->facing == 0) {
-                self->velocityX = 0x3000;
+                self->velocityX = FIX(0.1875);
             } else {
-                self->velocityX = -0x3000;
+                self->velocityX = FIX(-0.1875);
             }
             self->step_s++;
         }
@@ -167,9 +167,9 @@ void EntityAxeKnight(Entity* self) {
         }
         if (animStatus == 0) {
             if (self->facing == 0) {
-                self->velocityX = 0x3000;
+                self->velocityX = FIX(0.1875);
             } else {
-                self->velocityX = -0x3000;
+                self->velocityX = FIX(-0.1875);
             }
 
             if (GetDistanceToPlayerX() > 80) {
@@ -356,9 +356,9 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         EntityAxeKnightRotateAxe();
         if ((u16)entity->ext.generic.unk7C.s < 0x20) {
             if (entity->facing != 0) {
-                entity->velocityX -= 0x2000;
+                entity->velocityX -= FIX(0.125);
             } else {
-                entity->velocityX += 0x2000;
+                entity->velocityX += FIX(0.125);
             }
         }
 
@@ -368,7 +368,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
 
     case 2:
         EntityAxeKnightRotateAxe();
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
         MoveEntity();
         break;
     }

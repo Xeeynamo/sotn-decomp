@@ -131,15 +131,15 @@ void func_8018DB18(Entity* self) {
         }
 
         if (facing == 0) {
-            self->velocityX = -0x10000;
+            self->velocityX = FIX(-1);
         } else {
-            self->velocityX = 0x10000;
+            self->velocityX = FIX(1);
         }
 
         temp3 = 0x8000;
         temp2 = Random() << 8;
         self->velocityX = self->velocityX + temp3 - temp2;
-        self->velocityY = -0x30000;
+        self->velocityY = FIX(-3);
         self->velocityY = (self->params >> 1) * 0x6000 - 0x30000;
         if (self->params == 6) {
             self->velocityX = 0;
@@ -175,7 +175,7 @@ void func_8018DB18(Entity* self) {
     case 1:
         MoveEntity();
         self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
-        self->velocityY += 0x4000;
+        self->velocityY += FIX(0.25);
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
         if (collider.effects & 1) {
@@ -1659,7 +1659,7 @@ void func_80195714(void) {
     }
 
     if (entity->velocityY < 0x00004000) {
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
     }
 }
 
@@ -1696,14 +1696,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->velocityY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->velocityX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->velocityX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);

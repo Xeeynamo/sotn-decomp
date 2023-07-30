@@ -229,7 +229,7 @@ void func_801A8328(Entity* self) {
         MoveEntity();
 
         prim = LOW(self->ext.generic.unk7C.s);
-        self->velocityY += 0x2000;
+        self->velocityY += FIX(0.125);
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
 

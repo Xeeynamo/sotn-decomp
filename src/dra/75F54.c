@@ -455,7 +455,7 @@ void func_80119D3C(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 2;
         entity->ext.generic.unk7C.s = 0;
         entity->step++;
-        entity->velocityY = -0x8000;
+        entity->velocityY = FIX(-0.5);
         entity->ext.generic.unk7E.modeU16 = 0x40;
         entity->animCurFrame = 0xE;
         entity->animSet = ANIMSET_DRA(3);
@@ -1215,7 +1215,7 @@ void func_80124A8C(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->animSet = ANIMSET_DRA(17);
-        entity->velocityY = -0x6000;
+        entity->velocityY = FIX(-0.375);
         SetSpeedX(0x4000);
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
@@ -1314,7 +1314,7 @@ void EntityHolyWater(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 2;
         entity->posY.i.hi += 8;
         SetSpeedX(0x14000);
-        entity->velocityY = -0x32000;
+        entity->velocityY = FIX(-3.125);
         func_8011A290(entity);
         entity->hitboxHeight = 4;
         entity->hitboxWidth = 4;
@@ -1325,7 +1325,7 @@ void EntityHolyWater(Entity* entity) {
     case 1:
         entity->posY.val += entity->velocityY;
         if (entity->velocityY <= 0x3FFFF) {
-            entity->velocityY += 0x3800;
+            entity->velocityY += FIX(0.21875);
         }
 
         temp = func_80125A30(0, 0);
@@ -1533,9 +1533,9 @@ void func_80127840(Entity* entity) {
                 entity->rotAngle += 0x400;
             }
             if (entity->velocityX < 0) {
-                entity->velocityX -= 0x1800;
+                entity->velocityX -= FIX(0.09375);
             } else {
-                entity->velocityX += 0x1800;
+                entity->velocityX += FIX(0.09375);
             }
             if (!(D_8003C8C4 & 1) && (rand() & 1)) {
                 func_8011AAFC(entity, 0x10024, 0);

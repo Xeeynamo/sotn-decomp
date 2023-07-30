@@ -262,6 +262,15 @@ typedef struct ET_Succubus {
     /* 0xA2 */ s16 unkA2;
 } ET_Succubus;
 
+typedef struct {
+    /* 0x7C */ u8 pad0[0x4];
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u8 pad86[2];
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+} ET_801B3C38;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -277,5 +286,6 @@ typedef union {
     /* 0x7C */ ET_Dracula dracula;
     /* 0x7C */ ET_Succubus succubus;
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
+    /* 0x7C */ ET_801B3C38 et38;
     /* 0x7C */ char stub[0x40];
 } Ext;

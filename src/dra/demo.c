@@ -22,7 +22,7 @@ void DemoGameInit(s32 arg0) {
         g_StageId = D_800A243C[D_80137594];
     }
 
-    func_800FF7B8(0);
+    InitStatsAndGear(0);
     if (g_StageId != STAGE_ST0) {
         g_Status.level = 99;
         for (i = 0; i < 18; i++) {

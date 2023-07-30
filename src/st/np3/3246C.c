@@ -841,7 +841,7 @@ void EntityFallingRock2(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->velocityY += 0x4000;
+        self->velocityY += FIX(0.25);
         self->rotAngle -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_80181204[animFrame];
@@ -901,7 +901,7 @@ void EntityFallingRock(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->velocityY += 0x2000;
+        self->velocityY += FIX(0.125);
         self->rotAngle -= 0x20;
 
         g_api.CheckCollision(
