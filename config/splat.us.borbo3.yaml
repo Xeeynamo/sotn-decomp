@@ -30,7 +30,5 @@ segments:
     subsegments:
     - [0x0, rodata]
     - [0x11080, c]
-
-
- #  - [0x3EB00, sbss]
+    - [0x1F978, bss]
   - [0x20630]
