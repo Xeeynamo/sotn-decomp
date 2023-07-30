@@ -358,7 +358,7 @@ void func_801B44B4(WeightSelect weight) {
     posY -= 32;
 
     while (prim != 0) {
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
 }

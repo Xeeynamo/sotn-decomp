@@ -46,7 +46,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
         break;

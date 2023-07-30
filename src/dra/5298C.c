@@ -477,7 +477,7 @@ void DrawMenuSprite(
         poly->code &= 0xFC;
     }
 
-    func_80107360(poly, x, y, width, height, u, v);
+    SetTexturedPrimRect(poly, x, y, width, height, u, v);
 
     if (ScissorPolyGT4(poly, context) == false) {
         poly->tpage = tpage;

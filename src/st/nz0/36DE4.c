@@ -102,23 +102,23 @@ s32 func_801B7520(s32 arg0) {
 
     prim = D_801CB6A0[0] = &g_PrimBuf[D_801CB6C0[0]];
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[1] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[2] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[3] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[4] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 3;
@@ -128,7 +128,7 @@ s32 func_801B7520(s32 arg0) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 1;
@@ -137,7 +137,7 @@ s32 func_801B7520(s32 arg0) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     return 1;
 }
 

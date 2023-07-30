@@ -1441,7 +1441,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
             } else {
                 poly->g1 -= poly->g3;
                 if (((u8)poly->b0 >= 6U) || ((u8)poly->g1 < 0x18U)) {
-                    poly->blendMode = 8;
+                    poly->blendMode = BLEND_VISIBLE;
                     poly->r0 = 0;
                 }
             }
