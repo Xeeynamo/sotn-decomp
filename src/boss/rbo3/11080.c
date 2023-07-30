@@ -360,7 +360,35 @@ void func_80192020(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801922EC);
+void func_801922EC(Entity* self) {
+    Entity* prevEntity;
+    s8* hitbox;
+
+    if (self->step == 0) {
+        InitializeEntity(D_8018048C);
+    }
+    prevEntity = &self[-1];
+    self->posX.i.hi = prevEntity->posX.i.hi;
+    self->posY.i.hi = prevEntity->posY.i.hi;
+    self->facing = prevEntity->facing;
+
+    if (*(u8*)&prevEntity->ext.stub[0x9] != 0) {
+        self->hitboxState = 1;
+    } else {
+        self->hitboxState = 2;
+    }
+
+    hitbox = &D_801806B0[prevEntity->animCurFrame][D_80180684];
+    hitbox++;
+    hitbox--;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
+    self->hitboxWidth = hitbox[0];
+    self->hitboxHeight = hitbox[1];
+    if (prevEntity->entityId != 0x17) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801923DC);
 
