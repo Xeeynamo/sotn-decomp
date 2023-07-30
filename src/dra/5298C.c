@@ -95,16 +95,16 @@ void func_800F4994(void) {
     if (D_80139830[0] != 0) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
-    if (g_Status.relics[27] & 2) {
+    if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_CON] += 10;
     }
-    if (g_Status.relics[29] & 2) {
+    if (g_Status.relics[RELIC_EYE_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_LCK] += 10;
     }
-    if (g_Status.relics[26] & 2) {
+    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_STR] += 10;
     }
-    if (g_Status.relics[28] & 2) {
+    if (g_Status.relics[RELIC_RING_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_INT] += 10;
     }
     if (IsAlucart() != false) {
@@ -169,8 +169,9 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == 4 && D_800A4B04[otherEquipId].itemCategory == ITEM_SHIELD) {
         totalAttack += 5;
     }
-    if (equipId == 0x7E) {                  // Equippable Sword Familiar
-        totalAttack += g_Status.D_80097C74; // Level of sword familiar
+    if (equipId == 0x7E) { // Equippable Sword Familiar
+        totalAttack +=
+            g_Status.statsFamiliars[4].level; // Level of sword familiar
     }
     if (D_8013982C != 0) {
         totalAttack += 20;
@@ -233,7 +234,7 @@ void CalcDefense(void) {
     if (CheckEquipmentItemCount(0xF, 0U) != 0) {
         g_Status.D_80097C2C |= 0x8000;
     }
-    if (g_Status.relics[25] & 2) {
+    if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
         g_Status.D_80097C2C |= 0x100;
     }
     if (D_8013983C != 0) {
@@ -476,7 +477,7 @@ void DrawMenuSprite(
         poly->code &= 0xFC;
     }
 
-    func_80107360(poly, x, y, width, height, u, v);
+    SetTexturedPrimRect(poly, x, y, width, height, u, v);
 
     if (ScissorPolyGT4(poly, context) == false) {
         poly->tpage = tpage;

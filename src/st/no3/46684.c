@@ -150,7 +150,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim->priority = self->zPriority + 1;
                 self->step_s++;
             }
@@ -1179,10 +1179,10 @@ void EntityEnemyBlood(Entity* self) {
             }
 
             if (params != 0) {
-                self->velocityX = 0x14000;
+                self->velocityX = FIX(1.25);
                 self->ext.generic.unk80.modeS32 = -0x200;
             } else {
-                self->velocityX = -0x14000;
+                self->velocityX = FIX(-1.25);
                 self->ext.generic.unk80.modeS32 = 0x200;
             }
             self->velocityY = 0;
@@ -1547,10 +1547,10 @@ void EntityMediumWaterSplash(Entity* entity) {
         InitializeEntity(D_80180B54);
         entity->animCurFrame = 0;
         if (entity->facing != 0) {
-            entity->velocityX = 0x20000;
+            entity->velocityX = FIX(2);
             return;
         }
-        entity->velocityX = -0x20000;
+        entity->velocityX = FIX(-2);
         return;
     }
     AnimateEntity(D_80183994, entity);
@@ -1578,7 +1578,7 @@ void EntityFallingObject2(Entity* self) {
         self->zPriority += 4;
     }
     MoveEntity();
-    self->velocityY += 0x2800;
+    self->velocityY += FIX(0.15625);
     if (AnimateEntity(D_801839A8, self) == 0) {
         DestroyEntity(self);
     }
@@ -1591,7 +1591,7 @@ void EntityUnkId3D(Entity* self) {
     case 0:
         InitializeEntity(D_80180AC4);
         self->animSet = ANIMSET_DRA(2);
-        self->velocityY = -0x50000;
+        self->velocityY = FIX(-5);
         self->palette = 0x8162;
         self->blendMode = 0x10;
         self->palette = 0x8018;
@@ -1617,7 +1617,7 @@ void EntityUnkId3D(Entity* self) {
     case 2:
         AnimateEntity(D_801839B0, self);
         MoveEntity();
-        self->velocityY += 0x4000;
+        self->velocityY += FIX(0.25);
         self->unk1A += 6;
         self->unk1C -= 4;
         if (self->posY.i.hi > 256) {
@@ -1632,7 +1632,7 @@ void EntityUnkId3D(Entity* self) {
     case 3:
         if (AnimateEntity(D_801839B0, self) == 0) {
             MoveEntity();
-            self->velocityY += 0x4000;
+            self->velocityY += FIX(0.25);
             self->unk1A += 6;
             self->unk1C -= 4;
         }
@@ -1652,7 +1652,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
         self->hitboxState = 0;
-        self->velocityY = 0x1000;
+        self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
         self->unk6C = 0x80;
         self->unk19 |= 8;
@@ -1662,7 +1662,7 @@ void EntityLargeFallingObject(Entity* self) {
     MoveEntity();
     temp_v0 = self->ext.generic.unk84.U8.unk0 - 1;
     self->ext.generic.unk84.U8.unk0--;
-    self->velocityY += 0x1000;
+    self->velocityY += FIX(0.0625);
     self->unk6C += 0xFE;
     if (temp_v0 == 0) {
         DestroyEntity(self);
@@ -1684,9 +1684,9 @@ void EntityMermanFireball(Entity* self) {
         self->hitboxHeight = 3;
 
         if (self->facing != 0) {
-            self->velocityX = 0x10000 | 0x8000;
+            self->velocityX = 0x10000 | 0x8000; // LINT_IGNORE
         } else {
-            self->velocityX = 0xFFFE0000 | 0x8000;
+            self->velocityX = 0xFFFE0000 | 0x8000; // LINT_IGNORE
         }
 
         self->unk19 = 3;

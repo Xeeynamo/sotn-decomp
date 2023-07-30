@@ -36,7 +36,7 @@ void func_800E5498(void) {
 
     setSemiTrans(poly, true);
     setShadeTex(poly, false);
-    SetPolyRect(poly, 0, 0, 256, 256);
+    SetPrimRect(poly, 0, 0, 256, 256);
     setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
     func_801072BC(poly);
     poly->tpage = 0x5A;
@@ -90,21 +90,21 @@ void HandleGameOver(void) {
             D_8013640C = AllocPrimitives(PRIM_GT4, 259);
             prim = &g_PrimBuf[D_8013640C];
 
-            func_80107360(prim, 0, 96, 0xFF, 0x20, 0, 0);
+            SetTexturedPrimRect(prim, 0, 96, 0xFF, 0x20, 0, 0);
             func_801072BC(prim);
             prim->tpage = 8;
             prim->blendMode = 0x75;
             prim->p1 = 0x60;
             prim = prim->next;
 
-            func_80107360(prim, 0, 0, 128, 240, 0, 0);
+            SetTexturedPrimRect(prim, 0, 0, 128, 240, 0, 0);
             func_801072DC(prim);
             prim->tpage = 0x8A;
             prim->clut = 0x100;
             prim->blendMode = 4;
             prim = prim->next;
 
-            func_80107360(prim, 128, 0, 128, 240, 0, 0);
+            SetTexturedPrimRect(prim, 128, 0, 128, 240, 0, 0);
             func_801072DC(prim);
             prim->tpage = 0x8B;
             prim->clut = 0x100;
@@ -112,7 +112,7 @@ void HandleGameOver(void) {
             prim = prim->next;
 
             for (i = 0; i < 256; i++) {
-                func_80107360(prim, i, 0, 1, 240, i & 63, 0);
+                SetTexturedPrimRect(prim, i, 0, 1, 240, i & 63, 0);
                 prim->tpage = i / 64 + 0x10C;
                 prim->priority = 0x1FF;
                 prim->blendMode = 0;
@@ -343,8 +343,6 @@ void func_800E6250(void) {
             ;
     }
 }
-
-extern unkStruct_800A872C D_800A872C[];
 
 s32 func_800E6300(void) {
     s32 i;

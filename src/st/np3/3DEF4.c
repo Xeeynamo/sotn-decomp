@@ -155,7 +155,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim->priority = self->zPriority + 1;
                 self->step_s++;
             }
@@ -1305,10 +1305,10 @@ void EntityEnemyBlood(Entity* self) {
             }
 
             if (params != 0) {
-                self->velocityX = 0x14000;
+                self->velocityX = FIX(1.25);
                 self->ext.generic.unk80.modeS32 = -0x200;
             } else {
-                self->velocityX = -0x14000;
+                self->velocityX = FIX(-1.25);
                 self->ext.generic.unk80.modeS32 = 0x200;
             }
             self->velocityY = 0;

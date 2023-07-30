@@ -1379,7 +1379,7 @@ void EntityWarpRoom(Entity* self) {
         prim->y0 = prim->y1 = 16;
         prim->y2 = prim->y3 = 240;
         prim->priority = 0x1F0;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -1495,7 +1495,7 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x10;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim->r0 = 0;
         prim->b0 = 0;
         prim->g0 = 0;
@@ -1519,7 +1519,7 @@ void EntityWarpRoom(Entity* self) {
         move_room -= 4;
         if (move_room < 0) {
             move_room = 0;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             D_8003C8B8 = 1;
             self->step = 1;
         }
@@ -1604,7 +1604,7 @@ void EntityWarpSmallRocks(Entity* entity) {
     case 1:
         if (*D_80180648 != 0) {
             *(u32*)(&entity->ext.generic.unk88) = Random() & 0x3F;
-            entity->velocityY = -0x40000;
+            entity->velocityY = FIX(-4);
             entity->step++;
         }
         break;
@@ -1615,7 +1615,7 @@ void EntityWarpSmallRocks(Entity* entity) {
                 *(u32*)&entity->ext.generic.unk88 - 1;
         } else {
             MoveEntity();
-            entity->velocityY += 0x4000;
+            entity->velocityY += FIX(0.25);
             if (entity->velocityY > ((s32)0xFFFF0000)) {
                 entity->unk19 = 3;
                 entity->unk1C = 0x100;
@@ -1661,7 +1661,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             func_801916C4(0x644);
         }
         MoveEntity();
-        entity->velocityY += 0x3000;
+        entity->velocityY += FIX(0.1875);
         y = entity->posY.i.hi + *y_unk + 5;
         if (y >= 209) {
             entity->posY.i.hi = 203 - (*y_unk);
@@ -2599,7 +2599,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     PreventEntityFromRespawning(self);
 
 #if STAGE != STAGE_ST0
-    if (!(g_Status.relics[10] & 2)) {
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
         DestroyEntity(self);
         return;
     }
@@ -2641,7 +2641,7 @@ void func_8018CAB0(void) {
     }
 
     if (entity->velocityY < 0x00004000) {
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
     }
 }
 
@@ -2740,14 +2740,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->velocityY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->velocityX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->velocityX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);

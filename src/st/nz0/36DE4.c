@@ -102,23 +102,23 @@ s32 func_801B7520(s32 arg0) {
 
     prim = D_801CB6A0[0] = &g_PrimBuf[D_801CB6C0[0]];
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[1] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[2] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[3] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[4] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 3;
@@ -128,7 +128,7 @@ s32 func_801B7520(s32 arg0) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 1;
@@ -137,7 +137,7 @@ s32 func_801B7520(s32 arg0) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     return 1;
 }
 
@@ -1155,7 +1155,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     PreventEntityFromRespawning(self);
 
 #if STAGE != STAGE_ST0
-    if (!(g_Status.relics[10] & 2)) {
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
         DestroyEntity(self);
         return;
     }
@@ -1197,7 +1197,7 @@ void func_801BDD9C(void) {
     }
 
     if (entity->velocityY < 0x00004000) {
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
     }
 }
 
@@ -1294,14 +1294,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->velocityY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->velocityX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->velocityX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);

@@ -11,7 +11,7 @@ void func_80162C84(Entity* entity) {
         entity->palette = 0x8149;
         entity->animSet = ANIMSET_OVL(19);
         func_8015C920(&D_80154ED4);
-        entity->velocityX = -0x1C000;
+        entity->velocityX = FIX(-1.75);
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
         entity->ext.generic.unk7E.modeU16 = 0;
@@ -372,7 +372,7 @@ void func_80169C10(Entity* entity) {
         entity->primIndex = primIndex;
         if (primIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-            entity->velocityY = 0x8000;
+            entity->velocityY = FIX(0.5);
             entity->posX.i.hi =
                 ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
             entity->posY.i.hi =

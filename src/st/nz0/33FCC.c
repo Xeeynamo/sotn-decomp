@@ -143,9 +143,9 @@ void EntityBossRoomBlock(Entity* self) {
 
     case 2:
         if (self->params == 0) {
-            self->velocityX = 0x10000;
+            self->velocityX = FIX(1);
         } else {
-            self->velocityX = -0x10000;
+            self->velocityX = FIX(-1);
         }
         MoveEntity();
         func_801BD9A0(self, 8, 8, 5);
@@ -168,9 +168,9 @@ void EntityBossRoomBlock(Entity* self) {
     case 4:
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         if (self->params != 0) {
-            self->velocityX = 0x10000;
+            self->velocityX = FIX(1);
         } else {
-            self->velocityX = -0x10000;
+            self->velocityX = FIX(-1);
         }
         MoveEntity();
         break;
@@ -187,7 +187,7 @@ s32 EntitySlograSpecialCollision(u16* unused) {
     s32 slograPosX;
 
     MoveEntity();
-    g_CurrentEntity->velocityY += 0x4000;
+    g_CurrentEntity->velocityY += FIX(0.25);
     slograPosX = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.hi;
 
     if (g_CurrentEntity->velocityX > 0 && slograPosX > 896) {
@@ -289,9 +289,9 @@ void EntitySlogra(Entity* self) {
         self->facing = (GetSideToPlayer() & 1) ^ 1;
 
         if (self->facing != self->ext.GS_Props.flag) {
-            self->velocityX = 0xC000;
+            self->velocityX = FIX(0.75);
         } else {
-            self->velocityX = -0xC000;
+            self->velocityX = FIX(-0.75);
         }
         func_801BCF74(&D_8018106C);
         if (self->ext.GS_Props.flag == 0) {
@@ -388,11 +388,11 @@ void EntitySlogra(Entity* self) {
             break;
 
         case SLOGRA_KNOCKBACK_ACCEL:
-            self->velocityY = -0x40000;
+            self->velocityY = FIX(-4);
             if (!(GetSideToPlayer() & 1)) {
-                self->velocityX = -0x8000;
+                self->velocityX = FIX(-0.5);
             } else {
-                self->velocityX = 0x8000;
+                self->velocityX = FIX(0.5);
             }
             func_801C29B0(NA_SE_EN_SLOGRA_HURT);
             self->step_s++;
@@ -446,9 +446,9 @@ void EntitySlogra(Entity* self) {
         self->facing = (GetSideToPlayer() & 1) ^ 1;
 
         if (!(self->facing == self->ext.GS_Props.flag)) {
-            self->velocityX = 0xC000;
+            self->velocityX = FIX(0.75);
         } else {
-            self->velocityX = -0xC000;
+            self->velocityX = FIX(-0.75);
         }
 
         func_801BCF74(&D_8018106C);
@@ -501,7 +501,7 @@ void EntitySlogra(Entity* self) {
             }
 
             MoveEntity();
-            self->velocityY += 0x4000;
+            self->velocityY += FIX(0.25);
             if (self->posY.i.hi + g_Camera.posY.i.hi > 416) {
                 self->posY.i.hi = 416 - g_Camera.posY.i.hi;
                 func_801C29B0(NA_SE_EN_SLOGRA_FLOOR_STOMP);
@@ -624,18 +624,18 @@ void EntitySlograSpear(Entity* self) {
             self->unk19 = 4;
             self->hitboxState = 0;
             if (self->facing != 0) {
-                self->velocityX = -0x24000;
+                self->velocityX = FIX(-2.25);
             } else {
-                self->velocityX = 0x24000;
+                self->velocityX = FIX(2.25);
             }
-            self->velocityY = -0x40000;
+            self->velocityY = FIX(-4);
             self->animCurFrame = 0x23;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
 
         case 1:
             MoveEntity();
-            self->velocityY += 0x2800;
+            self->velocityY += FIX(0.15625);
             self->rotAngle += 0x80;
             if (!(self->rotAngle & 0xFFF)) {
                 func_801C29B0(0x625);
@@ -662,9 +662,9 @@ void EntitySlograSpearProjectile(Entity* self) {
     case 0:
         InitializeEntity(D_80180D24);
         if (self->facing == 0) {
-            self->velocityX = -0x40000;
+            self->velocityX = FIX(-4);
         } else {
-            self->velocityX = 0x40000;
+            self->velocityX = FIX(4);
         }
 
     case 1:
@@ -888,7 +888,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_FALLING_WITHOUT_MAP_COLLISION:
             MoveEntity();
-            self->velocityY += 0x1800;
+            self->velocityY += FIX(0.09375);
             if (PLAYER.posY.i.hi - self->posY.i.hi < 48) {
                 self->step_s++;
             }
@@ -896,7 +896,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_FALLING_WITH_MAP_COLLISION:
             MoveEntity();
-            self->velocityY += 0x1800;
+            self->velocityY += FIX(0.09375);
             g_api.CheckCollision(
                 self->posX.i.hi, self->posY.i.hi + 28, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
@@ -985,11 +985,11 @@ void EntityGaibon(Entity* self) {
                     newEntity->zPriority = self->zPriority + 1;
                 }
             }
-            self->velocityY = -0x20000;
+            self->velocityY = FIX(-2);
             if (self->facing != 0) {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2);
             } else {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2);
             }
             self->ext.GS_Props.timer = 32;
             self->step_s++;
@@ -1056,7 +1056,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             self->velocityY -= 0xA00;
             if (self->velocityY < -0x20000) {
-                self->velocityY = -0x20000;
+                self->velocityY = FIX(-2);
             }
             self->ext.GS_Props.grabedAscending = 1;
             SLOGRA.posX.i.hi = self->posX.i.hi;
@@ -1080,10 +1080,10 @@ void EntityGaibon(Entity* self) {
                 self->velocityX += 0xA00;
             }
             if (self->velocityX < -0x20000) {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2);
             }
             if (self->velocityX > 0x20000) {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2);
             }
             MoveEntity();
 

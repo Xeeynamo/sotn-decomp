@@ -46,7 +46,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
         break;
@@ -163,7 +163,7 @@ void func_801C7538(Entity* entity) {
 
     case 1:
         MoveEntity();
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
 
         if (entity->velocityX != 0) {
             if (entity->facing == 0) {
@@ -200,7 +200,7 @@ void func_801C7654(Entity* entity) {
     case 1:
         AnimateEntity(D_801825F0, entity);
         MoveEntity();
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
 
         g_api.CheckCollision(
             entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
@@ -208,7 +208,7 @@ void func_801C7654(Entity* entity) {
         if (collider.effects & EFFECT_SOLID) {
             entity->unk19 = 2;
             entity->unk1C = 0x100;
-            entity->velocityY = 0x4000;
+            entity->velocityY = FIX(0.25);
             entity->velocityX *= 8;
             entity->step++;
         }
