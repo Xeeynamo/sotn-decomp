@@ -620,6 +620,45 @@ typedef struct {
     s32 unk8;
 } FamiliarStats;
 typedef struct {
+    u32 level;
+    u32 unk4;
+    u32 unk8;
+} FamiliarStats;
+
+typedef enum {
+    RELIC_SOUL_OF_BAT,
+    RELIC_FIRE_OF_BAT,
+    RELIC_ECHO_OF_BAT,
+    RELIC_FORCE_OF_ECHO,
+    RELIC_SOUL_OF_WOLF,
+    RELIC_POWER_OF_WOLF,
+    RELIC_SKILL_OF_WOLF,
+    RELIC_FORM_OF_MIST,
+    RELIC_POWER_OF_MIST,
+    RELIC_GAS_CLOUD,
+    RELIC_CUBE_OF_ZOE,
+    RELIC_SPIRIT_ORB,
+    RELIC_GRAVITY_BOOTS,
+    RELIC_LEAP_STONE,
+    RELIC_HOLY_SYMBOL,
+    RELIC_FAERIE_SCROLL,
+    RELIC_JEWEL_OF_OPEN,
+    RELIC_MERMAN_STATUE,
+    RELIC_BAT_CARD,
+    RELIC_GHOST_CARD,
+    RELIC_FAERIE_CARD,
+    RELIC_DEMON_CARD,    // 0x097979
+    RELIC_SWORD_CARD,    // 0x09797A
+    RELIC_JP_0,          // 0x09797B (nose demon or half fairy)
+    RELIC_JP_1,          // 0x09797C
+    RELIC_HEART_OF_VLAD, // 0x09797D
+    RELIC_TOOTH_OF_VLAD,
+    RELIC_RIB_OF_VLAD,
+    RELIC_RING_OF_VLAD,
+    RELIC_EYE_OF_VLAD
+} RelicIds;
+
+typedef struct {
     /* 80097964 */ u8 relics[30];
     /* 80097982 */ u8 spells[8];
     /* 8009798A */ u8 equipHandCount[169];
@@ -661,8 +700,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    FamiliarStats statsFamiliars[7];
-
+    /* 80097C44 */ FamiliarStats statsFamiliars[7];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {
@@ -965,7 +1003,7 @@ typedef struct {
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
     /* 8003C850 */ RelicOrb* D_800A8720;
-    /* 8003C854 */ void* func_800FF7B8;
+    /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
     /* 8003C860 */ void (*func_800F53A4)(void);

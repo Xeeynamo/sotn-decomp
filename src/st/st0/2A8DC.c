@@ -76,7 +76,7 @@ void EntitySecretButton(Entity* self) {
                 self->step_s++;
                 break;
             }
-            self->velocityY -= 0x2000;
+            self->velocityY -= FIX(0.125);
             break;
 
         case 2:

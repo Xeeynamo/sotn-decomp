@@ -184,7 +184,7 @@ void func_801CF254(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             self->unk1E += self->ext.generic.unkA6;
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->step = 0;
@@ -272,7 +272,7 @@ void EntityHammerWeapon(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             func_801CDC80(&self->rotAngle, 0x800, 0x20);
             break;
         }
@@ -310,9 +310,9 @@ void EntityGurkhaSword(Entity* self) {
 
     case 2:
         if (self->facing == 0) {
-            self->velocityX = -0x80000;
+            self->velocityX = FIX(-8);
         } else {
-            self->velocityX = 0x80000;
+            self->velocityX = FIX(8);
         }
         self->step++;
 
@@ -326,9 +326,9 @@ void EntityGurkhaSword(Entity* self) {
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
 
         if (self->facing != 0) {
-            self->velocityX -= 0x4000;
+            self->velocityX -= FIX(0.25);
         } else {
-            self->velocityX += 0x4000;
+            self->velocityX += FIX(0.25);
         }
 
         if ((g_blinkTimer % 16) == 0) {
@@ -356,7 +356,7 @@ void EntityGurkhaSword(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             self->rotAngle += self->ext.gurkhaSword.unkA6;
             if (--self->ext.gurkhaSword.unk80 == 0) {
                 self->step = 0;

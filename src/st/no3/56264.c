@@ -34,11 +34,11 @@ void EntityBat(Entity* entity) {
     case 2:
         if (AnimateEntity(D_80183C60, entity) == 0) {
             entity->facing = (GetSideToPlayer() & 1) ^ 1;
-            entity->velocityY = 0xE000;
+            entity->velocityY = FIX(0.875);
             if (entity->facing != 0) {
-                entity->velocityX = 0x4000;
+                entity->velocityX = FIX(0.25);
             } else {
-                entity->velocityX = -0x4000;
+                entity->velocityX = FIX(-0.25);
             }
             entity->animFrameIdx = (Random() & 3) * 3;
             entity->animFrameDuration = 0;
@@ -51,9 +51,9 @@ void EntityBat(Entity* entity) {
         MoveEntity();
         if (GetDistanceToPlayerY() < 0x20) {
             if (entity->facing == 0) {
-                entity->velocityX = -0x10000;
+                entity->velocityX = FIX(-1);
             } else {
-                entity->velocityX = 0x10000;
+                entity->velocityX = FIX(1);
             }
             *(s32*)&entity->ext.generic.unk7C.s = 0x800;
             entity->step++;

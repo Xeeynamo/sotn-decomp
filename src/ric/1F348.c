@@ -39,7 +39,7 @@ void func_8015B348(void) {
         if ((D_801545A8) == 0) {
             func_8015C920(&D_801558B4);
             PLAYER.palette = 0x814E;
-            g_CurrentEntity->velocityY = -0x10000;
+            g_CurrentEntity->velocityY = FIX(-1);
             func_801606BC(g_CurrentEntity, 0x16, 0);
             D_801545A8 = 0x30;
             g_api.PlaySfx(0x6E2);

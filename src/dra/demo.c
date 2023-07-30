@@ -22,7 +22,7 @@ void DemoGameInit(s32 arg0) {
         g_StageId = D_800A243C[D_80137594];
     }
 
-    func_800FF7B8(0);
+    InitStatsAndGear(0);
     if (g_StageId != STAGE_ST0) {
         g_Status.level = 99;
         for (i = 0; i < 18; i++) {
@@ -31,7 +31,7 @@ void DemoGameInit(s32 arg0) {
         for (; i < 30; i++) {
             g_Status.relics[i] = 1;
         }
-        g_Status.relics[9] = 1;
+        g_Status.relics[RELIC_GAS_CLOUD] = 1;
         g_Status.hp = 80;
         g_Status.hpMax = 80;
         g_Status.subWeapon = 0;
@@ -64,7 +64,7 @@ void DemoGameInit(s32 arg0) {
         if (g_StageId == STAGE_BO3) {
             g_Status.subWeapon = 3;
             g_Status.equipment[0] = ITEM_GLADIUS;
-            g_Status.relics[14] = 1;
+            g_Status.relics[RELIC_HOLY_SYMBOL] = 1;
             g_Status.hearts = 60;
         }
         if (g_StageId == STAGE_BO2) {
