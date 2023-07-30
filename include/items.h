@@ -292,10 +292,10 @@ typedef enum EquipmentItems {
 #define ITEM_CAPE_START ITEM_NO_CAPE
 #define ITEM_ACCESSORY_START ITEM_NO_ACCESSORY
 
-#define ITEM_WEARABLE_FLAG ITEM_NO_ARMOR
+#define WEARABLE_ITEM_FLAG ITEM_NO_ARMOR
 
 #define HAND(x) (x)
-#define WEARABLE(x) (x - ITEM_WEARABLE_FLAG)
+#define WEARABLE(x) (x - WEARABLE_ITEM_FLAG)
 
 #define HAND_COUNT(x) (x)
 #define HEAD_COUNT(x) (x - ITEM_HEAD_START)
