@@ -900,6 +900,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                         break;
                     }
                 }
+                
                 if (i == 8) {
                     // Being after the prologue bonuses, this erases them.
                     g_Status.statsBase[STAT_STR] = 1;
