@@ -35,6 +35,6 @@
 
 int sprintf(char* dst, const char* fmt, ...);
 
-#define FIX(x) (((x)*65536.0))
+#define FIX(x) ((u32)((x)*65536.0))
 
 #endif

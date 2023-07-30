@@ -222,12 +222,12 @@ void EntitySuccubus(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_VISITED);
             self->velocityX = 0;
-            self->velocityY = -0x40000;
+            self->velocityY = FIX(-4);
             self->step_s++;
 
         case 2:
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 self->velocityY = 0;
             }
@@ -260,7 +260,7 @@ void EntitySuccubus(Entity* self) {
             self->velocityY = 0;
             posY = self->posY.i.hi + g_Camera.posY.i.hi;
             if (posY > 160) {
-                self->velocityY = -0x20000;
+                self->velocityY = FIX(-2);
                 self->step_s = 1;
             } else {
                 self->step_s = 2;
@@ -270,7 +270,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_DYING_FALL:
             AnimateEntity(D_80180768, self);
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 self->step_s = 2;
             }
@@ -279,7 +279,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_DYING_LAND:
             AnimateEntity(D_80180768, self);
             MoveEntity();
-            self->velocityY += 0x2000;
+            self->velocityY += FIX(0.125);
             posY = self->posY.i.hi + g_Camera.posY.i.hi;
             if (posY >= 176) {
                 func_801A046C(NA_SE_SU_LANDING);
@@ -322,7 +322,7 @@ void EntitySuccubus(Entity* self) {
 
         posY = self->posY.i.hi - self->ext.succubus.yOffset;
         if (posY > 8) {
-            self->velocityY = -0xC000;
+            self->velocityY = FIX(-0.75);
         }
 
         if (--self->ext.succubus.timer == 0) {
@@ -362,21 +362,21 @@ void EntitySuccubus(Entity* self) {
             MoveEntity();
             posY = self->posY.i.hi - self->ext.succubus.yOffset;
             if (posY > 8) {
-                self->velocityY = -0xC000;
+                self->velocityY = FIX(-0.75);
             }
             if (posY < -8) {
-                self->velocityY = 0xC000;
+                self->velocityY = FIX(0.75);
             }
 
             if (self->facing != self->ext.succubus.facing) {
-                self->velocityX += 0x1800;
+                self->velocityX += FIX(0.09375);
                 if (self->velocityX >= 0x16000) {
-                    self->velocityX = 0x16000;
+                    self->velocityX = FIX(1.375);
                 }
             } else {
-                self->velocityX -= 0x1800;
+                self->velocityX -= FIX(0.09375);
                 if (self->velocityX <= -0x16000) {
-                    self->velocityX = -0x16000;
+                    self->velocityX = FIX(-1.375);
                 }
             }
 
@@ -436,14 +436,14 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_FLY_2:
             if (self->facing != self->ext.succubus.facing) {
-                self->velocityX += 0x1800;
+                self->velocityX += FIX(0.09375);
                 if (self->velocityX >= 0x16000) {
-                    self->velocityX = 0x16000;
+                    self->velocityX = FIX(1.375);
                 }
             } else {
-                self->velocityX -= 0x1800;
+                self->velocityX -= FIX(0.09375);
                 if (self->velocityX <= -0x16000) {
-                    self->velocityX = -0x16000;
+                    self->velocityX = FIX(-1.375);
                 }
             }
             AnimateEntity(D_801806E8, self);
@@ -631,11 +631,11 @@ void EntitySuccubus(Entity* self) {
                 g_Player.unk60 = 0;
                 self->hitboxState = 3;
                 if (self->facing != 0) {
-                    self->velocityX = -0x40000;
+                    self->velocityX = FIX(-4);
                 } else {
-                    self->velocityX = 0x40000;
+                    self->velocityX = FIX(4);
                 }
-                self->velocityY = -0x40000;
+                self->velocityY = FIX(-4);
                 self->animCurFrame = 47;
                 self->ext.succubus.timer = 24;
                 self->step_s++;
@@ -886,18 +886,18 @@ void EntitySuccubus(Entity* self) {
             self->ext.succubus.timer = 32;
             D_80180660 = 0;
             if (GetSideToPlayer() & 1) {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2);
             } else {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2);
             }
-            self->velocityY = -0x20000;
+            self->velocityY = FIX(-2);
             self->step_s++;
         }
         AnimateEntity(D_80180768, self);
         MoveEntity();
         self->velocityX -= self->velocityX >> 5;
         self->velocityY -= self->velocityY >> 5;
-        self->velocityY += 0x1000;
+        self->velocityY += FIX(0.0625);
         if (--self->ext.succubus.timer == 0) {
             if (Random() % 2) {
                 self->ext.succubus.nextStep = SUCCUBUS_SPIKE_ATTACK;

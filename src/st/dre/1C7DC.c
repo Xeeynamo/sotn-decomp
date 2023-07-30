@@ -915,10 +915,10 @@ void EntityEnemyBlood(Entity* self) {
             }
 
             if (params != 0) {
-                self->velocityX = 0x14000;
+                self->velocityX = FIX(1.25);
                 self->ext.generic.unk80.modeS32 = -0x200;
             } else {
-                self->velocityX = -0x14000;
+                self->velocityX = FIX(-1.25);
                 self->ext.generic.unk80.modeS32 = 0x200;
             }
             self->velocityY = 0;

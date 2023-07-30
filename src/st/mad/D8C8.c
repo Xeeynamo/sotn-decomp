@@ -1038,7 +1038,7 @@ void func_8019344C(void) {
     }
 
     if (entity->velocityY < 0x00004000) {
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
     }
 }
 
@@ -1134,14 +1134,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         g_CurrentEntity->step = 7;
         g_CurrentEntity->step_s = 0;
-        g_CurrentEntity->velocityY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->velocityX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->velocityX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);
