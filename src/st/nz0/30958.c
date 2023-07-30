@@ -1335,7 +1335,7 @@ void func_801B3C38(Entity* self) {
         self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
-        self->ext.generic.unk80.modeS32 = obj->unk8;
+        self->ext.et38.unk80 = obj->unk8;
         self->step = params + 1;
 
         temp_v0 = self->params & 0xFF00;
@@ -1353,13 +1353,13 @@ void func_801B3C38(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY = -0x10000;
-        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) != 0) {
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
             switch (self->step_s) {
             case 0:
                 self->unk19 = 8;
@@ -1385,28 +1385,25 @@ void func_801B3C38(Entity* self) {
     case 3:
         if (self->step_s == 0) {
             self->unk19 |= 4;
-            switch (self->ext.generic.unk88.U8.unk0) {
+            switch (self->ext.et38.unk88) {
             case 1:
-                if (self->ext.generic.unk88.U8.unk1 >= 0x4) {
-                    self->ext.generic.unk88.U8.unk1 += 0xFD;
-                    self->ext.generic.unk84.U16.unk0 -= 0x800;
+                if (self->ext.et38.unk89 >= 0x4) {
+                    self->ext.et38.unk89 += 0xFD;
+                    self->ext.et38.unk84 -= 0x800;
                 }
                 break;
 
             case 2:
-                self->ext.generic.unk84.S16.unk0 =
-                    (u16)self->ext.generic.unk84.S16.unk0 +
-                    ((u8)self->ext.generic.unk88.S8.unk1 * 0xC0);
+                self->ext.et38.unk84 = (u16)self->ext.et38.unk84 +
+                                       ((u8)self->ext.et38.unk89 * 0xC0);
                 break;
             }
-            self->ext.generic.unk84.S16.unk0 =
-                self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
             self->rotAngle = self->ext.generic.unk84.S16.unk0 & 0xFFF;
             temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
             temp_s0 /= 28;
-            self->velocityX = temp_s0 * rsin(self->ext.generic.unk84.S16.unk0);
-            self->velocityY =
-                -(temp_s0 * rcos(self->ext.generic.unk84.S16.unk0));
+            self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
+            self->velocityY = -(temp_s0 * rcos(self->ext.et38.unk84));
             self->step_s++;
         }
 
@@ -1428,7 +1425,7 @@ void func_801B3C38(Entity* self) {
             self->velocityY = velocityY - (adjVelocityY >> 2);
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -1443,7 +1440,7 @@ void func_801B3C38(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.generic.unk80.modeS32, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
