@@ -280,7 +280,8 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
     } else {
         *subwpn = g_Subweapons[subweaponId];
-        if (CheckEquipmentItemCount(WEARABLE(ITEM_BRILLIANT_MAIL), ARMOR) != 0) {
+        if (CheckEquipmentItemCount(WEARABLE(ITEM_BRILLIANT_MAIL), ARMOR) !=
+            0) {
             subwpn->attack += 10;
         }
         if (subweaponId == 4 || subweaponId == 12) {
