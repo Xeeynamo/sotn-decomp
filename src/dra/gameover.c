@@ -347,7 +347,7 @@ void func_800E6250(void) {
 s32 func_800E6300(void) {
     s32 i;
 
-    for (i = 0; i < 30; i++) {
+    for (i = 0; i < RELIC_END; i++) {
         if ((D_800A872C[i].unk0 > 0) && (g_Status.relics[i] & 2)) {
             return D_800A872C[i].unk0;
         }

@@ -651,7 +651,8 @@ typedef enum {
     RELIC_TOOTH_OF_VLAD,
     RELIC_RIB_OF_VLAD,
     RELIC_RING_OF_VLAD,
-    RELIC_EYE_OF_VLAD
+    RELIC_EYE_OF_VLAD,
+    RELIC_END,
 } RelicIds;
 
 typedef struct {

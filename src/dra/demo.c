@@ -25,10 +25,10 @@ void DemoGameInit(s32 arg0) {
     InitStatsAndGear(0);
     if (g_StageId != STAGE_ST0) {
         g_Status.level = 99;
-        for (i = 0; i < 18; i++) {
+        for (i = 0; i < RELIC_BAT_CARD; i++) {
             g_Status.relics[i] = 3;
         }
-        for (; i < 30; i++) {
+        for (; i < RELIC_END; i++) {
             g_Status.relics[i] = 1;
         }
         g_Status.relics[RELIC_GAS_CLOUD] = 1;

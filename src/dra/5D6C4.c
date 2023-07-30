@@ -699,7 +699,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         if ((g_StageId == STAGE_ST0) ||
             (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
 
-            for (i = 0; i < 30; i++) {
+            for (i = 0; i < RELIC_END; i++) {
                 g_Status.relics[i] = 1;
             }
             // These relics are special for Richter
@@ -765,7 +765,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.statsBase[STAT_INT] = 6;
                 g_Status.statsBase[STAT_LCK] = 6;
                 g_Status.gold = 0;
-                for (i = 0; i < 30; i++) {
+                for (i = 0; i < RELIC_END; i++) {
                     g_Status.relics[i] = 0;
                 }
                 // If we died in prologue and needed Maria's rescue
@@ -931,7 +931,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                     g_Status.exp = 110000;
                 }
 
-                for (i = 0; i < 30; i++) {
+                for (i = 0; i < RELIC_END; i++) {
                     g_Status.relics[i] = 3;
                     if (D_800A872C[i].unk0 != 0) {
                         g_Status.relics[i] = 1;
