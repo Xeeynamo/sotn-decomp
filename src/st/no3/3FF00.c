@@ -10,11 +10,11 @@ void EntityRoomTransition2(Entity* self) {
     Entity* gents = g_Entities;
     Unkstruct8* layout = &g_CurrentRoomTileLayout;
 
-    if (self->ext.generic.unk80.modeS32 == 0 && self->step < 4) {
+    if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
         g_api.PlaySfx(0x631);
-        self->ext.generic.unk80.modeS32 = 0x200;
+        self->ext.roomTransition2.unk80 = 0x200;
     }
-    self->ext.generic.unk80.modeS32--;
+    self->ext.roomTransition2.unk80--;
 
     switch (self->step) {
     case 0:
@@ -28,6 +28,7 @@ void EntityRoomTransition2(Entity* self) {
     case 1:
         // Evil use of local 'gents' instead of PLAYER
         if (gents[0].posX.i.hi < 0x34) {
+            //Using generic here because I don't know what g_Entities[1] is
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             g_Player.D_80072EF4 = 0x2000;
         } else {
@@ -50,30 +51,28 @@ void EntityRoomTransition2(Entity* self) {
                 newEntity->params = localVar;
             }
             g_Player.D_80072EF4 = 0x10000;
-            self->ext.generic.unk7C.s = 0x10;
+            self->ext.roomTransition2.unk7C = 0x10;
             self->step++;
         }
         g_Player.D_80072EFC = 1;
         return;
     case 3:
-        if (D_801D7DD0 & 0x40 && !(--self->ext.generic.unk7C.s & 0xFFFF)) {
+        if (D_801D7DD0 & 0x40 && !(--self->ext.roomTransition2.unk7C & 0xFFFF)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
                 prim = &g_PrimBuf[localVar];
                 self->primIndex = localVar;
-                self->flags |= 0x800000;
+                self->flags |= FLAG_HAS_PRIMS;
                 prim->u0 = 0xFF;
                 prim->v0 = 0xFF;
                 prim->priority = 0x50;
                 prim->x0 = 0;
                 prim->y0 = 0;
-                prim->g0 = 0;
-                prim->b0 = 0;
-                prim->r0 = 0;
+                prim->r0 = prim->b0 = prim->g0 = 0;
                 prim->blendMode = 0x35;
                 self->step++;
             } else {
-                self->ext.generic.unk7C.s++;
+                self->ext.roomTransition2.unk7C++;
             }
         }
         g_Player.D_80072EF4 = 0;
