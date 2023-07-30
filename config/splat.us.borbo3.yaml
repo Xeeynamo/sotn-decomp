@@ -1,0 +1,36 @@
+options:
+  platform:     psx
+  basename:     borbo3
+  base_path:    ..
+  build_path:   build/us
+  target_path:  disks/us/BOSS/RBO3/RBO3.BIN
+  asm_path:     asm/us/boss/rbo3
+  asset_path:   assets/boss/rbo3
+  src_path:     src/boss/rbo3
+  compiler:     GCC
+  symbol_addrs_path:    config/generated.symbols.us.borbo3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.borbo3.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.us.borbo3.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".sbss"
+segments:
+  - name: borbo3
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    subalign: 4
+    subsegments:
+    - [0x0, rodata]
+    - [0x11080, c]
+
+
+ #  - [0x3EB00, sbss]
+  - [0x20630]
