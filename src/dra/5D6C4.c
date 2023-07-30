@@ -1023,7 +1023,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 AddToInventory(WEARABLE(ITEM_GAUNTLET), ACCESSORY);
                 // 80 potions!
                 for (i = 0; i < 80; i++) {
-                    AddToInventory(0x9F, 0);
+                    AddToInventory(HAND(ITEM_POTION), HAND);
                 }
                 // 10 each of...
                 for (i = 0; i < 10; i++) {
