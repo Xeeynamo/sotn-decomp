@@ -1604,7 +1604,7 @@ void EntityWarpSmallRocks(Entity* entity) {
     case 1:
         if (*D_80180648 != 0) {
             *(u32*)(&entity->ext.generic.unk88) = Random() & 0x3F;
-            entity->velocityY = -0x40000;
+            entity->velocityY = FIX(-4);
             entity->step++;
         }
         break;
@@ -1615,7 +1615,7 @@ void EntityWarpSmallRocks(Entity* entity) {
                 *(u32*)&entity->ext.generic.unk88 - 1;
         } else {
             MoveEntity();
-            entity->velocityY += 0x4000;
+            entity->velocityY += FIX(0.25);
             if (entity->velocityY > ((s32)0xFFFF0000)) {
                 entity->unk19 = 3;
                 entity->unk1C = 0x100;
@@ -1661,7 +1661,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             func_801916C4(0x644);
         }
         MoveEntity();
-        entity->velocityY += 0x3000;
+        entity->velocityY += FIX(0.1875);
         y = entity->posY.i.hi + *y_unk + 5;
         if (y >= 209) {
             entity->posY.i.hi = 203 - (*y_unk);
@@ -2641,7 +2641,7 @@ void func_8018CAB0(void) {
     }
 
     if (entity->velocityY < 0x00004000) {
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
     }
 }
 
@@ -2740,14 +2740,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->velocityY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->velocityX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->velocityX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);

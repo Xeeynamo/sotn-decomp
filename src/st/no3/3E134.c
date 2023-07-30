@@ -41,12 +41,12 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         if (entity->posX.i.hi < 192) {
             SetStep(3);
             if (entity->params != 0) {
-                entity->velocityX = 0x80000;
-                entity->velocityY = 0x30000;
+                entity->velocityX = FIX(8);
+                entity->velocityY = FIX(3);
                 break;
             }
-            entity->velocityX = 0xA0000;
-            entity->velocityY = 0x1A000;
+            entity->velocityX = FIX(10);
+            entity->velocityY = FIX(1.625);
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
@@ -64,7 +64,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         } else {
             animFlag = AnimateEntity(D_801819D0, entity);
             if (entity->velocityY > (s32)0xFFFE0000) {
-                entity->velocityY -= 0x800;
+                entity->velocityY -= FIX(0.03125);
             }
         }
         MoveEntity();
@@ -80,7 +80,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 4:
         if (entity->velocityY > (s32)0xFFFE0000) {
-            entity->velocityY -= 0x800;
+            entity->velocityY -= FIX(0.03125);
         }
         animFlag = AnimateEntity(D_801819D0, entity);
         MoveEntity();
@@ -116,7 +116,7 @@ void EntityFallingLeaf(Entity* entity) {
 
     case 1:
         if (entity->velocityX > 0) {
-            entity->velocityX -= 0x1000;
+            entity->velocityX -= FIX(0.0625);
         }
         if (entity->velocityY < 0x10000) {
             entity->velocityY += 0x400;
@@ -1161,7 +1161,7 @@ void func_801C6114(void) {
     }
 
     if (entity->velocityY < 0x00004000) {
-        entity->velocityY += 0x2000;
+        entity->velocityY += FIX(0.125);
     }
 }
 
@@ -1261,14 +1261,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->velocityY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->velocityX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->velocityX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);

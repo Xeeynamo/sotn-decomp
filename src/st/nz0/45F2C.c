@@ -48,9 +48,9 @@ void EntitySkeleton(Entity* self) {
         AnimateEntity(D_801823DC, self);
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->velocityX = -0x8000;
+            self->velocityX = FIX(-0.5);
         } else {
-            self->velocityX = 0x8000;
+            self->velocityX = FIX(0.5);
         }
 
         if (GetDistanceToPlayerX() < 76) {
@@ -65,9 +65,9 @@ void EntitySkeleton(Entity* self) {
         AnimateEntity(D_801823EC, self);
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->velocityX = -0x8000;
+            self->velocityX = FIX(-0.5);
         } else {
-            self->velocityX = 0x8000;
+            self->velocityX = FIX(0.5);
         }
 
         if (GetDistanceToPlayerX() > 92) {
@@ -120,12 +120,12 @@ void EntitySkeleton(Entity* self) {
                 }
 
                 if (facing == 0) {
-                    self->velocityX = -0x20000;
+                    self->velocityX = FIX(-2);
                 } else {
-                    self->velocityX = 0x20000;
+                    self->velocityX = FIX(2);
                 }
 
-                self->velocityY = -0x30000;
+                self->velocityY = FIX(-3);
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -229,7 +229,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
             velocityX = -velocityX;
         }
 
-        entity->velocityY = -0x48000;
+        entity->velocityY = FIX(-4.5);
         entity->velocityX = velocityX;
         entity->unk19 = 4;
     }

@@ -117,7 +117,7 @@ void EntityMerman2(Entity* self) {
         if (self->params != 0) {
             self->palette++;
         }
-        self->velocityY = -0x10000;
+        self->velocityY = FIX(-1);
         break;
 
     case MERMAN2_SWIMMING_UP:
@@ -146,7 +146,7 @@ void EntityMerman2(Entity* self) {
         posY -= 24;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (!(collider.effects & EFFECT_WATER)) {
-            self->velocityY = 0x8000;
+            self->velocityY = FIX(0.5);
         }
         pos = D_80181230;
         pos += (self->params >> 8) & 1;
@@ -168,7 +168,7 @@ void EntityMerman2(Entity* self) {
         switch (self->step_s) {
         case MERMAN2_JUMPING_SETUP:
             self->velocityX = 0;
-            self->velocityY = -0x88000;
+            self->velocityY = FIX(-8.5);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
@@ -303,7 +303,7 @@ void EntityMerman2(Entity* self) {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                                FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
                 MoveEntity();
-                self->velocityY += 0x4000;
+                self->velocityY += FIX(0.25);
             }
         }
         break;
@@ -331,9 +331,9 @@ void EntityMerman2(Entity* self) {
                 self->facing ^= 1;
             }
             if (self->facing == 0) {
-                self->velocityX = -0x6000;
+                self->velocityX = FIX(-0.375);
             } else {
-                self->velocityX = 0x6000;
+                self->velocityX = FIX(0.375);
             }
 
             if (colRes & 0x80) {
@@ -401,11 +401,11 @@ void EntityMerman2(Entity* self) {
                 self->rotAngle = 0;
                 self->unk19 |= 4;
                 if (self->facing != 0) {
-                    self->velocityX = -0x60000;
+                    self->velocityX = FIX(-6);
                 } else {
-                    self->velocityX = 0x60000;
+                    self->velocityX = FIX(6);
                 }
-                self->velocityY = -0x1000;
+                self->velocityY = FIX(-0.0625);
                 self->posY.i.hi -= 1;
                 self->step_s++;
             }
@@ -417,9 +417,9 @@ void EntityMerman2(Entity* self) {
             }
             if (self->velocityX != 0) {
                 if (self->facing != 0) {
-                    self->velocityX += 0x3000;
+                    self->velocityX += FIX(0.1875);
                 } else {
-                    self->velocityX -= 0x3000;
+                    self->velocityX -= FIX(0.1875);
                 }
             }
             posX = self->posX.i.hi;
@@ -434,11 +434,11 @@ void EntityMerman2(Entity* self) {
                 self->velocityX = 0;
             }
             self->rotAngle += self->ext.merman2.rotation;
-            self->velocityY -= 0x2000;
+            self->velocityY -= FIX(0.125);
 
             if (func_801BC8E4(&D_80182248) & 1) {
                 if (self->facing == 0) {
-                    self->velocityX = 0x28000;
+                    self->velocityX = FIX(2.5);
                 } else {
                     self->velocityX = ~0x27FFF;
                 }
@@ -484,7 +484,7 @@ void EntityMerman2(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY += 0x4000;
+        self->velocityY += FIX(0.25);
         if (!(func_801C6458(0x1B)) && !(self->ext.merman2.isUnderwater)) {
             self->ext.merman2.ignoreCol = 0;
             SetStep(MERMAN2_WALKING_TO_PLAYER);
@@ -498,11 +498,11 @@ void EntityMerman2(Entity* self) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             if (!(GetSideToPlayer() & 1)) {
-                self->velocityX = -0x20000;
+                self->velocityX = FIX(-2);
             } else {
-                self->velocityX = 0x20000;
+                self->velocityX = FIX(2);
             }
-            self->velocityY = -0x10000;
+            self->velocityY = FIX(-1);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
@@ -551,7 +551,7 @@ void EntityMerman2(Entity* self) {
         case 1:
             func_801BC8E4(&D_80182258);
             prim = self->ext.merman2.prim;
-            self->velocityY -= 0x3000;
+            self->velocityY -= FIX(0.1875);
             if (self->facing != 0) {
                 prim->next->x1 = self->posX.i.hi - 3;
             } else {
@@ -653,10 +653,10 @@ void EntityMediumWaterSplash(Entity* entity) {
         InitializeEntity(D_80180AC0);
         entity->animCurFrame = 0;
         if (entity->facing != 0) {
-            entity->velocityX = 0x20000;
+            entity->velocityX = FIX(2);
             return;
         }
-        entity->velocityX = -0x20000;
+        entity->velocityX = FIX(-2);
         return;
     }
     AnimateEntity(D_801822A4, entity);
@@ -682,7 +682,7 @@ void func_801C7D80(Entity* self) {
         self->zPriority += 4;
     }
     MoveEntity();
-    self->velocityY += 0x2800;
+    self->velocityY += FIX(0.15625);
     if (AnimateEntity(D_801822B8, self) == 0) {
         DestroyEntity(self);
     }
@@ -696,7 +696,7 @@ void func_801C7E18(Entity* self) {
     case 0:
         InitializeEntity(D_80180A54);
         self->animSet = ANIMSET_DRA(2);
-        self->velocityY = -0x50000;
+        self->velocityY = FIX(-5);
         self->palette = 0x8162;
         self->blendMode = 0x10;
         self->palette = 0x8018;
@@ -722,7 +722,7 @@ void func_801C7E18(Entity* self) {
     case 2:
         AnimateEntity(D_801822C0, self);
         MoveEntity();
-        self->velocityY += 0x4000;
+        self->velocityY += FIX(0.25);
         self->unk1A += 6;
         self->unk1C -= 4;
         if (self->posY.i.hi > 256) {
@@ -737,7 +737,7 @@ void func_801C7E18(Entity* self) {
     case 3:
         if (AnimateEntity(D_801822C0, self) == 0) {
             MoveEntity();
-            self->velocityY += 0x4000;
+            self->velocityY += FIX(0.25);
             self->unk1A += 6;
             self->unk1C -= 4;
         }
@@ -756,7 +756,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->animCurFrame = 13;
         self->ext.generic.unk84.S8.unk0 = 0x20;
         self->hitboxState = 0;
-        self->velocityY = 0x1000;
+        self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
         self->unk6C = 0x80;
         self->unk19 |= 8;
@@ -766,7 +766,7 @@ void EntityLargeFallingObject(Entity* self) {
     MoveEntity();
     temp_v0 = self->ext.generic.unk84.U8.unk0 - 1;
     self->ext.generic.unk84.U8.unk0--;
-    self->velocityY += 0x1000;
+    self->velocityY += FIX(0.0625);
     self->unk6C += 0xFE;
     if (temp_v0 == 0) {
         DestroyEntity(self);
