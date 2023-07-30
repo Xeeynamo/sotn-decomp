@@ -2,7 +2,6 @@
 
 import argparse
 import os
-from pydoc import describe
 import re
 import sys
 
