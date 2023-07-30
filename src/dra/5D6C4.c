@@ -240,7 +240,122 @@ void func_800FDE00(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE044);
+s32 func_800FE044(s32 amount, s32 type) {
+    s32 oldHeartMax;
+    s32 activeFamiliar;
+    s32 levelDiff;
+    s32 i;
+    s32 familiarXPBoost;
+    u32 playerXPBoost;
+
+    // Life Max Up
+    if (type == 0x8000) {
+        if (g_Status.hpMax == 9999) {
+            return 1;
+        }
+        g_Status.hpMax += amount;
+        if (g_Status.hpMax > 9999) {
+            g_Status.hpMax = 9999;
+        }
+        if (g_CurrentPlayableCharacter != 0) {
+            g_Status.hpMax += amount;
+            if (g_Status.hpMax > 9999) {
+                g_Status.hpMax = 9999;
+            }
+        }
+        g_Status.hp = g_Status.hpMax;
+        D_80137960++;
+        return 0;
+    }
+
+    // Heart Max Up
+    if (type == 0x4000) {
+        if (g_CurrentPlayableCharacter != 0) {
+            return 1;
+        }
+        oldHeartMax = g_Status.heartsMax;
+        if (oldHeartMax == 9999) {
+            return 1;
+        }
+        g_Status.heartsMax += amount;
+        if (g_Status.heartsMax > 9999) {
+            g_Status.heartsMax = 9999;
+        }
+        g_Status.hearts += (g_Status.heartsMax - oldHeartMax);
+        D_80137964++;
+        return 0;
+    }
+
+    // Collect a relic. "amount" here isn't an amount, it's the relic ID.
+    if (type == 0x2000) {
+        g_Status.relics[amount] = 3;
+        // Fake! This is needed to avoid having the compiler swap
+        // the previous and following line. There may be other methods to
+        // achieve the same goal, but this one at least works.
+        amount++;
+        amount--;
+        if (D_800A872C[amount].unk0) {
+            g_Status.relics[amount] = 1;
+        }
+        D_80137968++;
+        return 0;
+    }
+
+    // Gain XP from defeating enemy
+    if (amount != 0 && g_Status.level != 99) {
+        // Done checking types, rename variable for clarity.
+        s32 enemyLevel = type;
+        playerXPBoost = amount;
+        if (enemyLevel < (s32)g_Status.level) {
+            levelDiff = g_Status.level - enemyLevel;
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost = playerXPBoost * 2 / 3;
+            }
+            if (playerXPBoost == 0) {
+                playerXPBoost = 1;
+            }
+        }
+        if ((s32)g_Status.level < enemyLevel) {
+            levelDiff = enemyLevel - g_Status.level;
+            if (levelDiff > 5) {
+                levelDiff = 5;
+            }
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost += playerXPBoost / 4;
+            }
+        }
+        g_Status.exp += playerXPBoost;
+        if (g_Status.exp >= D_800AC90C) {
+            g_Status.exp = D_800AC90C;
+        }
+
+        activeFamiliar = D_8006CBC4 - 1;
+        if (D_8006CBC4 == 0) {
+            return;
+        }
+
+        // Note: playerXPBoost is meaningless as a name here. But register a2 is
+        // playerXPBoost, and is used as the loop variable for this loop, so I
+        // reuse it here. Strange logic, the familiarXPBoost seems to be log
+        // base 2 of arg0/familiar.exp.
+
+        playerXPBoost =
+            (amount / g_Status.statsFamiliars[activeFamiliar].level);
+
+        for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
+            playerXPBoost >>= 1;
+        }
+        if (familiarXPBoost <= 0) {
+            familiarXPBoost = 1;
+        }
+        g_Status.statsFamiliars[activeFamiliar].exp += familiarXPBoost;
+        if (g_Status.statsFamiliars[activeFamiliar].exp >= 9900) {
+            g_Status.statsFamiliars[activeFamiliar].exp = 9899;
+        }
+        g_Status.statsFamiliars[activeFamiliar].level =
+            (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
+    }
+}
 
 bool func_800FE3A8(s32 arg0) {
     /*
@@ -671,7 +786,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
 
         for (i = 0; i < 7; i++) {
             g_Status.statsFamiliars[i].level = 1;
-            g_Status.statsFamiliars[i].unk4 = 0;
+            g_Status.statsFamiliars[i].exp = 0;
             g_Status.statsFamiliars[i].unk8 = 0;
         }
 
@@ -703,10 +818,10 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.relics[i] = 1;
             }
             // These relics are special for Richter
-            g_Status.relics[10] |= 2;
-            g_Status.relics[11] |= 2;
-            g_Status.relics[15] |= 2;
-            g_Status.relics[16] |= 2;
+            g_Status.relics[RELIC_CUBE_OF_ZOE] |= 2;
+            g_Status.relics[RELIC_SPIRIT_ORB] |= 2;
+            g_Status.relics[RELIC_FAERIE_SCROLL] |= 2;
+            g_Status.relics[RELIC_JEWEL_OF_OPEN] |= 2;
             // Zero out all time attack records
             for (i = 0; i < 32; i++) {
                 g_Settings.timeAttackRecords[i] = 0;
@@ -957,17 +1072,17 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.timerSeconds = 0;
                 g_Status.timerFrames = 0;
                 g_Status.subWeapon = 0;
-                g_Status.relics[10] = 3;
-                g_Status.relics[11] = 3;
-                g_Status.relics[15] = 3;
-                g_Status.relics[0] = 3;
-                g_Status.relics[1] = 3;
-                g_Status.relics[4] = 3;
-                g_Status.relics[5] = 3;
-                g_Status.relics[6] = 3;
-                g_Status.relics[7] = 3;
-                g_Status.relics[12] = 3;
-                g_Status.relics[13] = 3;
+                g_Status.relics[RELIC_CUBE_OF_ZOE] = 3;
+                g_Status.relics[RELIC_SPIRIT_ORB] = 3;
+                g_Status.relics[RELIC_FAERIE_SCROLL] = 3;
+                g_Status.relics[RELIC_SOUL_OF_BAT] = 3;
+                g_Status.relics[RELIC_FIRE_OF_BAT] = 3;
+                g_Status.relics[RELIC_SOUL_OF_WOLF] = 3;
+                g_Status.relics[RELIC_POWER_OF_WOLF] = 3;
+                g_Status.relics[RELIC_SKILL_OF_WOLF] = 3;
+                g_Status.relics[RELIC_FORM_OF_MIST] = 3;
+                g_Status.relics[RELIC_GRAVITY_BOOTS] = 3;
+                g_Status.relics[RELIC_LEAP_STONE] = 3;
                 AddToInventory(0x6F, 0); // Firebrand
                 AddToInventory(0x70, 0); // Thunderbrand
                 AddToInventory(0x71, 0); // Icebrand
@@ -1034,28 +1149,28 @@ void DrawHudRichter(void) {
     D_80137970 = func_800EDD9C(4, 9);
     prim = &g_PrimBuf[D_80137970];
 
-    func_80107360(prim, 2, 22, 32, 96, 0, 0);
+    SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x101;
     prim->priority = 0x1EF;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
+    SetTexturedPrimRect(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x100;
     prim->priority = 0x1EF;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 4, 112, 9, 3, 64, 89);
+    SetTexturedPrimRect(prim, 4, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x105;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
+    SetTexturedPrimRect(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
@@ -1064,35 +1179,35 @@ void DrawHudRichter(void) {
     prim->p2 = 6;
     prim = prim->next;
 
-    func_80107360(prim, D_80137980 + 236, 112, 9, 3, 64, 89);
+    SetTexturedPrimRect(prim, D_80137980 + 236, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 14, 27, 8, 8, 0, 96);
+    SetTexturedPrimRect(prim, 14, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 22, 27, 8, 8, 0, 96);
+    SetTexturedPrimRect(prim, 22, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 18, 38, 8, 8, 0, 0);
+    SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x102;
     prim->priority = 0x1F0;
     prim->blendMode = 0x2000;
     prim = prim->next;
 
-    func_80107360(prim, 33, 20, 64, 24, 64, 40);
+    SetTexturedPrimRect(prim, 33, 20, 64, 24, 64, 40);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1EF;
@@ -1104,12 +1219,12 @@ void DrawHudRichter(void) {
         s32 u = 32;
         s32 x = 216;
         do {
-            func_80107360(prim, x, 22, 2, 96, u, 0);
+            SetTexturedPrimRect(prim, x, 22, 2, 96, u, 0);
             func_801072DC(prim);
             prim->tpage = 0x1B;
             prim->clut = 0x100;
             prim->priority = 0x1EE;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim->p1 = (rand() & 0x3F) + 1;
             prim->p2 = 0;
             prim = prim->next;
@@ -1142,7 +1257,7 @@ bool func_8010183C(s32 arg0) {
 void DrawHudRichter(void);
 
 void func_8010189C(void) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s32 i;
     u16* new_var;
 
@@ -1161,16 +1276,17 @@ void func_8010189C(void) {
 
     if (poly != NULL) {
         for (i = 0; poly != NULL; i++) {
-            func_80107360(poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
-                          D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
+            SetTexturedPrimRect(
+                poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
+                D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
             poly->tpage = 0x1F;
             new_var = &D_800A2F48[i];
             poly->clut = *new_var;
-            poly->pad2 = 0x1F0;
-            poly->pad3 = D_800A2F64[i];
+            poly->priority = 0x1F0;
+            poly->blendMode = D_800A2F64[i];
 
             if (i == 5) {
-                SetPolyRect(
+                SetPrimRect(
                     poly, D_800A2EED, D_800A2EFD, D_800A2F3D, D_800A2F2D);
                 poly->y0 = poly->y2;
                 poly->x1 = poly->x0;
@@ -1184,7 +1300,7 @@ void func_8010189C(void) {
                 poly->p3 = (7 & rand()) + 1;
             }
 
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
         }
     }
 }
@@ -1203,7 +1319,7 @@ void func_801024DC(void) {
         prim->u0 = 0x80;
         prim->v0 = 0xF0;
         prim->priority = 0x1FD;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
     D_801379A8 = 0;
@@ -1223,7 +1339,7 @@ void func_801024DC(void) {
     prim = prim2;
     prim->v1 = 0;
     prim->u2 = 0;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 }
 
 extern Unkstruct_80086FFA D_80086FFA[];
@@ -1231,7 +1347,7 @@ extern Unkstruct_80086FFA D_80086FFA[];
 u16 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
 
 void func_80102628(s32 arg0) {
-    POLY_GT4* poly;
+    Primitive* poly;
     s32 temp;
     s32 i = 0;
 
@@ -1246,23 +1362,23 @@ void func_80102628(s32 arg0) {
             poly->b0 = 0;
             poly->g0 = 0;
             poly->r0 = 0;
-            poly->pad2 = 0x1FD;
-            poly->pad3 = 8;
+            poly->priority = 0x1FD;
+            poly->blendMode = BLEND_VISIBLE;
             poly->x0 = temp * (i & 1);
-            poly = (POLY_GT4*)poly->tag;
+            poly = poly->next;
             i++;
         }
     }
 }
 
 void func_801026BC(s32 arg0) {
-    POLY_GT4* poly = &g_PrimBuf[D_801379A0];
+    Primitive* poly = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        poly->pad3 = 8;
+        poly->blendMode = BLEND_VISIBLE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-        SetPolyRect(poly, 0, 1, 255, 255);
+        SetPrimRect(poly, 0, 1, 255, 255);
     } else {
         poly->x2 = 255;
         poly->x0 = 255;
@@ -1277,9 +1393,9 @@ void func_801026BC(s32 arg0) {
     func_80107250(poly, arg0 * 2);
 
     if (arg0 == 0x40) {
-        poly->pad3 = 0;
+        poly->blendMode = 0;
     } else {
-        poly->pad3 = 0x35;
+        poly->blendMode = 0x35;
     }
 }
 

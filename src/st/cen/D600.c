@@ -548,9 +548,9 @@ void EntityRoomDarkness(Entity* self) {
 
     case 2:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         self->step++;
         break;
     }
@@ -645,14 +645,14 @@ void EntityElevatorStationary(Entity* self) {
         prim->v2 = prim->v3 = prim->u1 = prim->u3 = 0x38;
         prim->v0 = temp;
         prim->priority = 0x6B;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
 
         while (prim != NULL) {
             prim->tpage = 0x12;
             prim->clut = 0x223;
             prim->priority = 0x6A;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
 
@@ -764,7 +764,7 @@ void EntityElevatorStationary(Entity* self) {
     }
 
     while (prim != NULL) {
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
 
@@ -833,7 +833,7 @@ void EntityMovingElevator(Entity* self) {
             prim->v2 = prim->v3 = 0x26;
             prim->clut = 0x223;
             prim->priority = 0x6A;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
 
@@ -889,7 +889,7 @@ void EntityMovingElevator(Entity* self) {
     }
 
     while (prim != NULL) {
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
 

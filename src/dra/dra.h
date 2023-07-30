@@ -369,6 +369,7 @@ extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
 extern unkStruct_800A872C D_800A872C[];
+extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
@@ -377,6 +378,7 @@ extern u8 D_800ACFB4[][4];
 extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern u8 D_800AD094[];
@@ -571,6 +573,8 @@ extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern Unkstruct_80138FC0 D_80138FC0[0x10];
+extern s16 D_80138FC8;
+extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
@@ -606,6 +610,7 @@ extern s32 D_8013980C;
 extern u8 D_80139810;
 extern s16 D_80139814[];
 extern s16 D_80139820;
+extern s32 D_80139824;
 extern s32 D_80139828[];
 extern s32 D_8013982C;
 extern s32 D_80139830[];
@@ -784,11 +789,11 @@ void DestroyEntity(Entity*);
 void DestroyEntities(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(POLY_GT4* poly, s32 colorIntensity);
-void func_80107360(
-    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
+void SetTexturedPrimRect(
+    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
 void func_801092E8(s32);
-void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
+void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
 u32 UpdateAnim(s8* frameProps, s32*);
 void func_8010DFF0(s32, s32);

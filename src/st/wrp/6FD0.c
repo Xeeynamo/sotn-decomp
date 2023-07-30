@@ -1379,7 +1379,7 @@ void EntityWarpRoom(Entity* self) {
         prim->y0 = prim->y1 = 16;
         prim->y2 = prim->y3 = 240;
         prim->priority = 0x1F0;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -1495,7 +1495,7 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x10;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim->r0 = 0;
         prim->b0 = 0;
         prim->g0 = 0;
@@ -1519,7 +1519,7 @@ void EntityWarpRoom(Entity* self) {
         move_room -= 4;
         if (move_room < 0) {
             move_room = 0;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             D_8003C8B8 = 1;
             self->step = 1;
         }
@@ -2599,7 +2599,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     PreventEntityFromRespawning(self);
 
 #if STAGE != STAGE_ST0
-    if (!(g_Status.relics[10] & 2)) {
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
         DestroyEntity(self);
         return;
     }

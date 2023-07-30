@@ -408,23 +408,23 @@ s32 func_801A89D8(const char* textDialogue) {
 
     prim = g_Dialogue.D_801C24E4[0] = &g_PrimBuf[g_Dialogue.D_801C24FC[2]];
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[1] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[2] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[3] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[4] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 3;
@@ -434,7 +434,7 @@ s32 func_801A89D8(const char* textDialogue) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 1;
@@ -443,7 +443,7 @@ s32 func_801A89D8(const char* textDialogue) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     return 1;
 }
 
