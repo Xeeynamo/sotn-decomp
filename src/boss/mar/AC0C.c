@@ -256,7 +256,7 @@ void func_80198F24(Entity* self) {
     switch (self->step) {
     case 0:
         func_80191098(D_801803E4);
-        self->animSet = -0x7FFF;
+        self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 0x1B;
         self->zPriority = 0x40;
         if (D_8003BDEC[0] == 0) {
