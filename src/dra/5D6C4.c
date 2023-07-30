@@ -179,7 +179,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_UNK04:
     case STATUS_AILMENT_UNK05:
         ret = timer;
-        if (CheckEquipmentItemCount(HAND(ITEM_BWAKA_KNIFE), 4) != 0) {
+        if (CheckEquipmentItemCount(HAND(ITEM_BWAKA_KNIFE), ACCESSORY) != 0) {
             ret += ret / 2;
         }
         break;
@@ -219,7 +219,7 @@ bool func_800FDD44(s32 equipId) {
 
     equippedItem = g_Status.equipment[equipId];
     isConsumable = D_800A4B04[equippedItem].isConsumable;
-    if (!CheckEquipmentItemCount(0x54, 4)) {
+    if (!CheckEquipmentItemCount(WEARABLE(ITEM_DUPLICATOR), ACCESSORY)) {
         if (isConsumable) {
             if (g_Status.equipHandCount[equippedItem] == 0) {
                 g_Status.equipment[equipId] = 0;
@@ -260,7 +260,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     if (subweaponId == 0) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
         accessoryCount =
-            CheckEquipmentItemCount(WEARABLE(ITEM_HEART_BROACH), 4);
+            CheckEquipmentItemCount(WEARABLE(ITEM_HEART_BROACH), ACCESSORY);
         if (accessoryCount == 1) {
             subwpn->heartCost = subwpn->heartCost / 2;
         }
@@ -280,12 +280,12 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
     } else {
         *subwpn = g_Subweapons[subweaponId];
-        if (CheckEquipmentItemCount(WEARABLE(ITEM_BRILLIANT_MAIL), 2) != 0) {
+        if (CheckEquipmentItemCount(WEARABLE(ITEM_BRILLIANT_MAIL), ARMOR) != 0) {
             subwpn->attack += 10;
         }
         if (subweaponId == 4 || subweaponId == 12) {
             accessoryCount =
-                CheckEquipmentItemCount(WEARABLE(ITEM_STAUROLITE), 4);
+                CheckEquipmentItemCount(WEARABLE(ITEM_STAUROLITE), ACCESSORY);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -419,7 +419,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
 
     enemy = &sp20;
     sp20 = g_EnemyDefs[enemyEntity->enemyId];
-    if (CheckEquipmentItemCount(WEARABLE(ITEM_DRAGON_HELM), 1) != 0) {
+    if (CheckEquipmentItemCount(WEARABLE(ITEM_DRAGON_HELM), HEAD) != 0) {
         enemy->defense /= 2;
     }
 
