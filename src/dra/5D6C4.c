@@ -274,7 +274,7 @@ s32 func_800FE044(s32 amount, s32 type) {
             return 1;
         }
         oldHeartMax = g_Status.heartsMax;
-        if (oldHeartMax == 0x270F) {
+        if (oldHeartMax == 9999) {
             return 1;
         }
         g_Status.heartsMax += amount;
