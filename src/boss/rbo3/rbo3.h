@@ -5,6 +5,7 @@
 #include "stage.h"
 
 /* Initializers */
+extern u16 D_8018042C[];
 extern u16 D_80180480[]; // EntityMedusa
 extern u16 D_8018048C[];
 extern u16 D_80180498[];
@@ -20,6 +21,7 @@ extern s32 D_80180648[];
 extern u8 D_80180670[];
 extern s32 D_80180684[];
 extern u8 D_801806B0[];
+extern Unkstruct_80180FE0 D_8018071C[];
 extern s32 D_80180728;
 extern s8 D_80190EE4;
 

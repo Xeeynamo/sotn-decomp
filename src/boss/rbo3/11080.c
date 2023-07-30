@@ -392,7 +392,53 @@ void func_801922EC(Entity* self) {
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801923DC);
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192998);
+void func_80192998(Entity* self) {
+    s32 objParams;
+    u32 priorityParams;
+    Unkstruct_80180FE0* obj;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_8018042C);
+        objParams = self->params & 0xF;
+        obj = &D_8018071C[objParams];
+        self->palette = obj->palette + 0x2E0;
+        self->blendMode = obj->blendMode;
+        self->animSet = obj->animSet;
+        self->unk5A = obj->unk2;
+        *(s32*)&self->ext.stub[0x4] = obj->unk8;
+        self->step = objParams + 1;
+        priorityParams = self->params & 0xFF00;
+        if (priorityParams != 0) {
+            self->zPriority = priorityParams >> 8;
+        }
+
+        if (self->params & 0xF0) {
+            self->palette = 0x819F;
+            self->blendMode = 0x10;
+            self->facing = 1;
+        }
+        break;
+
+    case 1:
+        if (self->step_s == 0) {
+            self->unk19 = 8;
+            self->unk6C = 0xC0;
+            self->facing = func_80193198() & 1;
+            self->velocityX = (func_80193198() << 8) - 0x8000;
+            self->velocityY = -0xC000;
+            *(s32*)&self->ext.stub[0x10] = -(func_80193198() * 16) - 0x4000;
+            self->step_s++;
+        }
+        func_80196964();
+        self->velocityY = self->velocityY + *(s32*)&self->ext.stub[0x10];
+        self->unk6C += 0xFF;
+        if (func_801966E0(*(s32*)&self->ext.stub[0x4], self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192B38);
 
