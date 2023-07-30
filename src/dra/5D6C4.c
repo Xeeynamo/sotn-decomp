@@ -703,10 +703,10 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.relics[i] = 1;
             }
             // These relics are special for Richter
-            g_Status.relics[10] |= 2;
-            g_Status.relics[11] |= 2;
-            g_Status.relics[15] |= 2;
-            g_Status.relics[16] |= 2;
+            g_Status.relics[RELIC_CUBE_OF_ZOE] |= 2;
+            g_Status.relics[RELIC_SPIRIT_ORB] |= 2;
+            g_Status.relics[RELIC_FAERIE_SCROLL] |= 2;
+            g_Status.relics[RELIC_JEWEL_OF_OPEN] |= 2;
             // Zero out all time attack records
             for (i = 0; i < 32; i++) {
                 g_Settings.timeAttackRecords[i] = 0;
@@ -957,17 +957,17 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.timerSeconds = 0;
                 g_Status.timerFrames = 0;
                 g_Status.subWeapon = 0;
-                g_Status.relics[10] = 3;
-                g_Status.relics[11] = 3;
-                g_Status.relics[15] = 3;
-                g_Status.relics[0] = 3;
-                g_Status.relics[1] = 3;
-                g_Status.relics[4] = 3;
-                g_Status.relics[5] = 3;
-                g_Status.relics[6] = 3;
-                g_Status.relics[7] = 3;
-                g_Status.relics[12] = 3;
-                g_Status.relics[13] = 3;
+                g_Status.relics[RELIC_CUBE_OF_ZOE] = 3;
+                g_Status.relics[RELIC_SPIRIT_ORB] = 3;
+                g_Status.relics[RELIC_FAERIE_SCROLL] = 3;
+                g_Status.relics[RELIC_SOUL_OF_BAT] = 3;
+                g_Status.relics[RELIC_FIRE_OF_BAT] = 3;
+                g_Status.relics[RELIC_SOUL_OF_WOLF] = 3;
+                g_Status.relics[RELIC_POWER_OF_WOLF] = 3;
+                g_Status.relics[RELIC_SKILL_OF_WOLF] = 3;
+                g_Status.relics[RELIC_FORM_OF_MIST] = 3;
+                g_Status.relics[RELIC_GRAVITY_BOOTS] = 3;
+                g_Status.relics[RELIC_LEAP_STONE] = 3;
                 AddToInventory(0x6F, 0); // Firebrand
                 AddToInventory(0x70, 0); // Thunderbrand
                 AddToInventory(0x71, 0); // Icebrand

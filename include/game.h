@@ -621,6 +621,39 @@ typedef struct {
     u32 unk8;
 } FamiliarStats;
 
+typedef enum {
+    RELIC_SOUL_OF_BAT,
+    RELIC_FIRE_OF_BAT,
+    RELIC_ECHO_OF_BAT,
+    RELIC_FORCE_OF_ECHO,
+    RELIC_SOUL_OF_WOLF,
+    RELIC_POWER_OF_WOLF,
+    RELIC_SKILL_OF_WOLF,
+    RELIC_FORM_OF_MIST,
+    RELIC_POWER_OF_MIST,
+    RELIC_GAS_CLOUD,
+    RELIC_CUBE_OF_ZOE,
+    RELIC_SPIRIT_ORB,
+    RELIC_GRAVITY_BOOTS,
+    RELIC_LEAP_STONE,
+    RELIC_HOLY_SYMBOL,
+    RELIC_FAERIE_SCROLL,
+    RELIC_JEWEL_OF_OPEN,
+    RELIC_MERMAN_STATUE,
+    RELIC_BAT_CARD,
+    RELIC_GHOST_CARD,
+    RELIC_FAERIE_CARD,
+    RELIC_DEMON_CARD,    // 0x097979
+    RELIC_SWORD_CARD,    // 0x09797A
+    RELIC_JP_0,          // 0x09797B (nose demon or half fairy)
+    RELIC_JP_1,          // 0x09797C
+    RELIC_HEART_OF_VLAD, // 0x09797D
+    RELIC_TOOTH_OF_VLAD,
+    RELIC_RIB_OF_VLAD,
+    RELIC_RING_OF_VLAD,
+    RELIC_EYE_OF_VLAD
+} RelicIds;
+
 typedef struct {
     /* 80097964 */ u8 relics[30];
     /* 80097982 */ u8 spells[8];

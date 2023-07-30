@@ -95,16 +95,16 @@ void func_800F4994(void) {
     if (D_80139830[0] != 0) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
-    if (g_Status.relics[27] & 2) {
+    if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_CON] += 10;
     }
-    if (g_Status.relics[29] & 2) {
+    if (g_Status.relics[RELIC_EYE_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_LCK] += 10;
     }
-    if (g_Status.relics[26] & 2) {
+    if (g_Status.relics[RELIC_TOOTH_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_STR] += 10;
     }
-    if (g_Status.relics[28] & 2) {
+    if (g_Status.relics[RELIC_RING_OF_VLAD] & 2) {
         g_Status.statsEquip[STAT_INT] += 10;
     }
     if (IsAlucart() != false) {
@@ -234,7 +234,7 @@ void CalcDefense(void) {
     if (CheckEquipmentItemCount(0xF, 0U) != 0) {
         g_Status.D_80097C2C |= 0x8000;
     }
-    if (g_Status.relics[25] & 2) {
+    if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
         g_Status.D_80097C2C |= 0x100;
     }
     if (D_8013983C != 0) {

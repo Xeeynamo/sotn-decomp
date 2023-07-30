@@ -1001,7 +1001,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     PreventEntityFromRespawning(self);
 
 #if STAGE != STAGE_ST0
-    if (!(g_Status.relics[10] & 2)) {
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
         DestroyEntity(self);
         return;
     }
