@@ -621,6 +621,9 @@ typedef struct {
     u32 unk8;
 } FamiliarStats;
 
+#define RELIC_FLAG_DISABLE 0
+#define RELIC_FLAG_FOUND 1
+#define RELIC_FLAG_ACTIVE 2
 typedef enum {
     RELIC_SOUL_OF_BAT,
     RELIC_FIRE_OF_BAT,

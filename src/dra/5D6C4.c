@@ -700,7 +700,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
             (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
 
             for (i = 0; i < RELIC_END; i++) {
-                g_Status.relics[i] = 1;
+                g_Status.relics[i] = RELIC_FLAG_FOUND;
             }
             // These relics are special for Richter
             g_Status.relics[RELIC_CUBE_OF_ZOE] |= 2;
@@ -766,7 +766,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.statsBase[STAT_LCK] = 6;
                 g_Status.gold = 0;
                 for (i = 0; i < RELIC_END; i++) {
-                    g_Status.relics[i] = 0;
+                    g_Status.relics[i] = RELIC_FLAG_DISABLE;
                 }
                 // If we died in prologue and needed Maria's rescue
                 if (D_801397FC != 0) {
@@ -932,9 +932,9 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 }
 
                 for (i = 0; i < RELIC_END; i++) {
-                    g_Status.relics[i] = 3;
+                    g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
                     if (D_800A872C[i].unk0 != 0) {
-                        g_Status.relics[i] = 1;
+                        g_Status.relics[i] = RELIC_FLAG_FOUND;
                     }
                 }
                 // In Demo mode, Alucard gets 50 of everything holdable
