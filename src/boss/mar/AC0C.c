@@ -232,7 +232,23 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198944);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198C74);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198E84);
+void func_80198E84(s32 arg0) {
+    s32 tilePos;
+    s16 i, j;
+
+    for (tilePos = 0xC4, i = 0; i < 2; i++) {
+        for (j = 0; j < 8; j++) {
+            if (arg0 != 0) {
+                g_CurrentRoomTileLayout.fg[tilePos] = 0x597;
+                tilePos++;
+            } else {
+                g_CurrentRoomTileLayout.fg[tilePos] = D_801812DC[j];
+                tilePos++;
+            }
+        }
+        tilePos += 8;
+    }
+}
 
 void func_80198F24(Entity* self) {
     u16 params = self->params;

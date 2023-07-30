@@ -9,5 +9,6 @@ extern u16 D_801803E4[];
 
 extern u16 D_80181294[];
 extern u16 D_80181298[];
+extern s16 D_801812DC[];
 
 #endif
