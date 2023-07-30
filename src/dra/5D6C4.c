@@ -786,7 +786,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
 
         for (i = 0; i < 7; i++) {
             g_Status.statsFamiliars[i].level = 1;
-            g_Status.statsFamiliars[i].unk4 = 0;
+            g_Status.statsFamiliars[i].exp = 0;
             g_Status.statsFamiliars[i].unk8 = 0;
         }
 

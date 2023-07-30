@@ -619,11 +619,6 @@ typedef struct {
     s32 exp;
     s32 unk8;
 } FamiliarStats;
-typedef struct {
-    u32 level;
-    u32 unk4;
-    u32 unk8;
-} FamiliarStats;
 
 typedef enum {
     RELIC_SOUL_OF_BAT,
