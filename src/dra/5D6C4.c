@@ -67,17 +67,17 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     if (equipType < 5) {
         switch (equipType) {
         case 0:
-            return (g_Status.equipment[SLOT_LEFT_HAND] == itemId) +
-                   (g_Status.equipment[SLOT_RIGHT_HAND] == itemId);
+            return (g_Status.equipment[LEFT_HAND_SLOT] == itemId) +
+                   (g_Status.equipment[RIGHT_HAND_SLOT] == itemId);
         case 1:
-            return g_Status.equipment[SLOT_HEAD] == itemId;
+            return g_Status.equipment[HEAD_SLOT] == itemId;
         case 2:
-            return g_Status.equipment[SLOT_ARMOR] == itemId;
+            return g_Status.equipment[ARMOR_SLOT] == itemId;
         case 3:
-            return g_Status.equipment[SLOT_CAPE] == itemId;
+            return g_Status.equipment[CAPE_SLOT] == itemId;
         case 4:
-            return (g_Status.equipment[SLOT_ACCESSORY_1] == itemId) +
-                   (g_Status.equipment[SLOT_ACCESSORY_2] == itemId);
+            return (g_Status.equipment[ACCESSORY_1_SLOT] == itemId) +
+                   (g_Status.equipment[ACCESSORY_2_SLOT] == itemId);
         }
     }
     // seems to require missing return
@@ -259,7 +259,8 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 
     if (subweaponId == 0) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
-        accessoryCount = CheckEquipmentItemCount(WEARABLE(ITEM_HEART_BROACH), 4);
+        accessoryCount =
+            CheckEquipmentItemCount(WEARABLE(ITEM_HEART_BROACH), 4);
         if (accessoryCount == 1) {
             subwpn->heartCost = subwpn->heartCost / 2;
         }
@@ -283,7 +284,8 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             subwpn->attack += 10;
         }
         if (subweaponId == 4 || subweaponId == 12) {
-            accessoryCount = CheckEquipmentItemCount(WEARABLE(ITEM_STAUROLITE), 4);
+            accessoryCount =
+                CheckEquipmentItemCount(WEARABLE(ITEM_STAUROLITE), 4);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -508,7 +510,8 @@ s32 func_800FF494(EnemyDef* arg0) {
     // 0x4B is the item ID for Ring of Arcana
     // Ring of Arcana is an item that increases enemy item drop rates when
     // equipped
-    s32 ringOfArcanaCount = CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), 4);
+    s32 ringOfArcanaCount =
+        CheckEquipmentItemCount(WEARABLE(ITEM_RING_OF_ARCANA), 4);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
@@ -550,7 +553,7 @@ void func_800FF60C(void) {
 
     i = 0;
     while (1) {
-        if (g_Status.equipment[SLOT_CAPE] == D_800A2FBC[i]) {
+        if (g_Status.equipment[CAPE_SLOT] == D_800A2FBC[i]) {
             break;
         }
 
@@ -561,11 +564,12 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if (g_Status.equipment[SLOT_CAPE] == 0x32 && g_Settings.isCloakLiningReversed) {
+    if (g_Status.equipment[CAPE_SLOT] == 0x32 &&
+        g_Settings.isCloakLiningReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
-    if (g_Status.equipment[SLOT_CAPE] == 0x38) {
+    if (g_Status.equipment[CAPE_SLOT] == 0x38) {
         func_800EA5E4(0x415);
     }
 }
@@ -593,9 +597,9 @@ void func_800FF708(s32 arg0, s32 arg1) {
 }
 
 void InitStatsAndGear(bool DeathTakeItems) {
-    s32 dracDefeatTime;
     s32 prologueBonusState;
-    u8* namePtr;
+    s32 dracDefeatTime;
+    u8* fileName;
     s32 i;
 
     if (D_8003C730 != 0) {
@@ -606,11 +610,12 @@ void InitStatsAndGear(bool DeathTakeItems) {
 
     if (DeathTakeItems == true) {
         // Remove Alucard Sword from left hand
-        if (g_Status.equipment[SLOT_LEFT_HAND] == HAND(ITEM_ALUCARD_SWORD)) {
-            g_Status.equipment[SLOT_LEFT_HAND] = HAND(ITEM_EMPTY_HAND);
+        if (g_Status.equipment[LEFT_HAND_SLOT] == HAND(ITEM_ALUCARD_SWORD)) {
+            g_Status.equipment[LEFT_HAND_SLOT] = HAND(ITEM_EMPTY_HAND);
             // Same from right hand
-        } else if (g_Status.equipment[SLOT_RIGHT_HAND] == HAND(ITEM_ALUCARD_SWORD)) {
-            g_Status.equipment[SLOT_RIGHT_HAND] = HAND(ITEM_EMPTY_HAND);
+        } else if (
+            g_Status.equipment[RIGHT_HAND_SLOT] == HAND(ITEM_ALUCARD_SWORD)) {
+            g_Status.equipment[RIGHT_HAND_SLOT] = HAND(ITEM_EMPTY_HAND);
             // Same from inventory
         } else if (g_Status.equipHandCount[HAND(ITEM_ALUCARD_SWORD)] != 0) {
             // Take one (not set to zero!)
@@ -618,44 +623,52 @@ void InitStatsAndGear(bool DeathTakeItems) {
         }
 
         // Same logic, for Alucard Shield
-        if (g_Status.equipment[SLOT_LEFT_HAND] == HAND(ITEM_ALUCARD_SHIELD)) {
-            g_Status.equipment[SLOT_LEFT_HAND] = HAND(ITEM_EMPTY_HAND);
-        } else if (g_Status.equipment[SLOT_RIGHT_HAND] == HAND(ITEM_ALUCARD_SHIELD)) {
-            g_Status.equipment[SLOT_RIGHT_HAND] = HAND(ITEM_EMPTY_HAND);
-        } else if (g_Status.equipHandCount[HAND_COUNT(ITEM_ALUCARD_SHIELD)] != 0) {
+        if (g_Status.equipment[LEFT_HAND_SLOT] == HAND(ITEM_ALUCARD_SHIELD)) {
+            g_Status.equipment[LEFT_HAND_SLOT] = HAND(ITEM_EMPTY_HAND);
+        } else if (
+            g_Status.equipment[RIGHT_HAND_SLOT] == HAND(ITEM_ALUCARD_SHIELD)) {
+            g_Status.equipment[RIGHT_HAND_SLOT] = HAND(ITEM_EMPTY_HAND);
+        } else if (
+            g_Status.equipHandCount[HAND_COUNT(ITEM_ALUCARD_SHIELD)] != 0) {
             g_Status.equipHandCount[HAND_COUNT(ITEM_ALUCARD_SHIELD)]--;
         }
 
         // Same logic, for Dragon Helm
-        if (g_Status.equipment[SLOT_HEAD] == WEARABLE(ITEM_DRAGON_HELM)) {
+        if (g_Status.equipment[HEAD_SLOT] == WEARABLE(ITEM_DRAGON_HELM)) {
             // ID for Unequip in head slot
-            g_Status.equipment[SLOT_HEAD] = WEARABLE(ITEM_EMPTY_HEAD);
+            g_Status.equipment[HEAD_SLOT] = WEARABLE(ITEM_EMPTY_HEAD);
         } else if (g_Status.equipHeadCount[HEAD_COUNT(ITEM_DRAGON_HELM)] != 0) {
             g_Status.equipHeadCount[HEAD_COUNT(ITEM_DRAGON_HELM)]--;
         }
 
         // Same logic, for Alucard Mail
-        if (g_Status.equipment[SLOT_ARMOR] == WEARABLE(ITEM_ALUCARD_MAIL)) {
-            g_Status.equipment[SLOT_ARMOR] = WEARABLE(ITEM_NO_ARMOR);
-        } else if (g_Status.equipBodyCount[ARMOR_COUNT(ITEM_ALUCARD_MAIL)] != 0) {
+        if (g_Status.equipment[ARMOR_SLOT] == WEARABLE(ITEM_ALUCARD_MAIL)) {
+            g_Status.equipment[ARMOR_SLOT] = WEARABLE(ITEM_NO_ARMOR);
+        } else if (
+            g_Status.equipBodyCount[ARMOR_COUNT(ITEM_ALUCARD_MAIL)] != 0) {
             g_Status.equipBodyCount[ARMOR_COUNT(ITEM_ALUCARD_MAIL)]--;
         }
 
         // Twilight Cloak
-        if (g_Status.equipment[SLOT_CAPE] == WEARABLE(ITEM_TWILIGHT_CLOAK)) {
-            g_Status.equipment[SLOT_CAPE] = WEARABLE(ITEM_NO_CAPE);
+        if (g_Status.equipment[CAPE_SLOT] == WEARABLE(ITEM_TWILIGHT_CLOAK)) {
+            g_Status.equipment[CAPE_SLOT] = WEARABLE(ITEM_NO_CAPE);
             func_800FF60C();
-        } else if (g_Status.equipCloakCount[CAPE_COUNT(ITEM_TWILIGHT_CLOAK)] != 0) {
+        } else if (
+            g_Status.equipCloakCount[CAPE_COUNT(ITEM_TWILIGHT_CLOAK)] != 0) {
             g_Status.equipCloakCount[CAPE_COUNT(ITEM_TWILIGHT_CLOAK)]--;
         }
 
         // Necklace of J in Misc slot 1
-        if (g_Status.equipment[SLOT_ACCESSORY_1] == WEARABLE(ITEM_NECKLACE_OF_J)) {
-            g_Status.equipment[SLOT_ACCESSORY_1] = WEARABLE(ITEM_NO_ACCESSORY);
+        if (g_Status.equipment[ACCESSORY_1_SLOT] ==
+            WEARABLE(ITEM_NECKLACE_OF_J)) {
+            g_Status.equipment[ACCESSORY_1_SLOT] = WEARABLE(ITEM_NO_ACCESSORY);
             // Necklace of J in Misc slot 2
-        } else if (g_Status.equipment[SLOT_ACCESSORY_2] == WEARABLE(ITEM_NECKLACE_OF_J)) {
-            g_Status.equipment[SLOT_ACCESSORY_2] = WEARABLE(ITEM_NO_ACCESSORY);
-        } else if (g_Status.equipOtherCount[ACCESSORY_COUNT(ITEM_NECKLACE_OF_J)] != 0) {
+        } else if (g_Status.equipment[ACCESSORY_2_SLOT] ==
+                   WEARABLE(ITEM_NECKLACE_OF_J)) {
+            g_Status.equipment[ACCESSORY_2_SLOT] = WEARABLE(ITEM_NO_ACCESSORY);
+        } else if (
+            g_Status.equipOtherCount[ACCESSORY_COUNT(ITEM_NECKLACE_OF_J)] !=
+            0) {
             g_Status.equipOtherCount[ACCESSORY_COUNT(ITEM_NECKLACE_OF_J)]--;
         }
     } else {
@@ -736,14 +749,14 @@ void InitStatsAndGear(bool DeathTakeItems) {
             g_Status.statsBase[STAT_CON] = 10;
             g_Status.statsBase[STAT_INT] = 10;
             g_Status.statsBase[STAT_LCK] = 10;
-            g_Status.equipment[SLOT_HEAD] = 0x1A;
-            g_Status.equipment[SLOT_CAPE] = 0x30;
-            g_Status.equipment[SLOT_ACCESSORY_1] = 0x39;
-            g_Status.equipment[SLOT_ACCESSORY_2] = 0x39;
+            g_Status.equipment[HEAD_SLOT] = WEARABLE(ITEM_EMPTY_HEAD);
+            g_Status.equipment[CAPE_SLOT] = WEARABLE(ITEM_NO_CAPE);
+            g_Status.equipment[ACCESSORY_1_SLOT] = WEARABLE(ITEM_NO_ACCESSORY);
+            g_Status.equipment[ACCESSORY_2_SLOT] = WEARABLE(ITEM_NO_ACCESSORY);
             g_Status.gold = 0;
-            g_Status.equipment[SLOT_LEFT_HAND] = 0;
-            g_Status.equipment[SLOT_RIGHT_HAND] = 0;
-            g_Status.equipment[SLOT_ARMOR] = 0;
+            g_Status.equipment[LEFT_HAND_SLOT] = HAND(ITEM_EMPTY_HAND);
+            g_Status.equipment[RIGHT_HAND_SLOT] = HAND(ITEM_EMPTY_HAND);
+            g_Status.equipment[ARMOR_SLOT] = WEARABLE(ITEM_NO_ARMOR);
 
             // Eliminate the time attacks that Richter can't do
             if (g_StageId == STAGE_NO3) {
@@ -776,7 +789,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 // If we died in prologue and needed Maria's rescue
                 if (D_801397FC != 0) {
                     // Give a potion
-                    AddToInventory(0x9F, 0);
+                    AddToInventory(HAND(ITEM_POTION), HAND);
                     prologueBonusState = 3;
                     // If no damage was taken as Richter, bonus to each stat
                 } else if (g_Status.hp == g_Status.hpMax) {
@@ -796,7 +809,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 }
                 // If we ran out of hearts and didn't die, give heart refresh
                 if ((g_Status.hearts == 0) && (prologueBonusState < 3)) {
-                    AddToInventory(0x8E, 0);
+                    AddToInventory(HAND(ITEM_HEART_REFRESH), HAND);
                 }
 
                 // Set initial max HP to 70, unless we took no damage, then 75.
@@ -810,7 +823,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
 
                 // If we had more than 41 hearts in prologue, give neutron bomb
                 if (D_80139008 >= 41) {
-                    AddToInventory(0x47, 0);
+                    AddToInventory(HAND(ITEM_NEUTRON_BOMB), HAND);
                     g_Status.statsBase[STAT_INT]++;
                 } else {
                     g_Status.statsBase[STAT_STR]++;
@@ -866,21 +879,23 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 } else if (dracDefeatTime >= 1000) {
                     g_Status.statsBase[STAT_CON]++;
                 }
-                g_Status.equipment[SLOT_LEFT_HAND] = 0x7B; // Alucard Sword
-                g_Status.equipment[SLOT_RIGHT_HAND] = 0x10; // Alucard Shield
-                g_Status.equipment[SLOT_HEAD] = 0x2D; // Dragon Helm
-                g_Status.equipment[SLOT_ARMOR] = 0xF;  // Alucard Mail
-                g_Status.equipment[SLOT_CAPE] = 0x38; // Twilight Cloak
-                g_Status.equipment[SLOT_ACCESSORY_1] = 0x4E; // Necklace of J
+                g_Status.equipment[LEFT_HAND_SLOT] = HAND(ITEM_ALUCARD_SWORD);
+                g_Status.equipment[RIGHT_HAND_SLOT] = HAND(ITEM_ALUCARD_SHIELD);
+                g_Status.equipment[HEAD_SLOT] = WEARABLE(ITEM_DRAGON_HELM);
+                g_Status.equipment[ARMOR_SLOT] = WEARABLE(ITEM_ALUCARD_MAIL);
+                g_Status.equipment[CAPE_SLOT] = WEARABLE(ITEM_TWILIGHT_CLOAK);
+                g_Status.equipment[ACCESSORY_1_SLOT] =
+                    WEARABLE(ITEM_NECKLACE_OF_J);
                 g_Status.subWeapon = 0;
-                g_Status.equipment[SLOT_ACCESSORY_2] = 0x39; // Nothing
+                g_Status.equipment[ACCESSORY_2_SLOT] =
+                    WEARABLE(ITEM_NO_ACCESSORY);
                 g_Status.hp = g_Status.hpMax;
                 g_Status.mp = g_Status.mpMax;
 
                 // Luck mode code check! This is X-X!V''Q
-                namePtr = c_strLuckModeCode;
+                fileName = c_strLuckModeCode;
                 for (i = 0; i < 8; i++) {
-                    if (g_SaveName[i] != *namePtr++) {
+                    if (g_SaveName[i] != *fileName++) {
                         break;
                     }
                 }
@@ -896,24 +911,25 @@ void InitStatsAndGear(bool DeathTakeItems) {
                     g_Status.mpMax = 1;
                     g_Status.hp = g_Status.hpMax;
                     g_Status.mp = g_Status.mpMax;
-                    g_Status.equipment[SLOT_ACCESSORY_2] = 0x46; // Lapis Lazuli
+                    g_Status.equipment[ACCESSORY_2_SLOT] =
+                        WEARABLE(ITEM_LAPIS_LAZULI);
                 }
 
                 if (g_IsTimeAttackUnlocked) {
-                    namePtr = c_strAxeArmorCode;
+                    fileName = c_strAxeArmorCode;
                     for (i = 0; i < 8; i++) {
-                        if (g_SaveName[i] != *namePtr++) {
+                        if (g_SaveName[i] != *fileName++) {
                             break;
                         }
                     }
                     if (i == 8) {
-                        AddToInventory(0x19, 2);
+                        AddToInventory(WEARABLE(ITEM_AXE_LORD_ARMOR), ARMOR);
                     }
                 }
             } else {
                 // This Else block is for this function if called outside
                 // the "Entrance (first visit)" overlay. Applies to demo mode.
-                for (i = 0; i < 0x20; i++) {
+                for (i = 0; i < 32; i++) {
                     g_Settings.timeAttackRecords[i] = 0;
                 }
                 g_Status.statsBase[STAT_STR] = 6;
@@ -950,13 +966,15 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 for (i = 0; i < 90; i++) {
                     g_Status.equipBodyCount[i] = 1;
                 }
-                g_Status.equipment[SLOT_LEFT_HAND] = 0x13; // Short Sword
-                g_Status.equipment[SLOT_RIGHT_HAND] = 5;    // Leather Shield
-                g_Status.equipment[SLOT_HEAD] = 0x1A; // No headgear
-                g_Status.equipment[SLOT_ARMOR] = 2;    // Hide cuirass
-                g_Status.equipment[SLOT_CAPE] = 0x30; // No cape
-                g_Status.equipment[SLOT_ACCESSORY_1] = 0x39; // No misc
-                g_Status.equipment[SLOT_ACCESSORY_2] = 0x39; // No misc
+                g_Status.equipment[LEFT_HAND_SLOT] = HAND(ITEM_SHORT_SWORD);
+                g_Status.equipment[RIGHT_HAND_SLOT] = HAND(ITEM_LEATHER_SHIELD);
+                g_Status.equipment[HEAD_SLOT] = WEARABLE(ITEM_EMPTY_HEAD);
+                g_Status.equipment[ARMOR_SLOT] = WEARABLE(ITEM_HIDE_CUIRASS);
+                g_Status.equipment[CAPE_SLOT] = WEARABLE(ITEM_NO_CAPE);
+                g_Status.equipment[ACCESSORY_1_SLOT] =
+                    WEARABLE(ITEM_NO_ACCESSORY);
+                g_Status.equipment[ACCESSORY_2_SLOT] =
+                    WEARABLE(ITEM_NO_ACCESSORY);
                 g_Status.timerHours = 0;
                 g_Status.timerMinutes = 0;
                 g_Status.timerSeconds = 0;
@@ -973,48 +991,48 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.relics[7] = 3;
                 g_Status.relics[12] = 3;
                 g_Status.relics[13] = 3;
-                AddToInventory(0x6F, 0); // Firebrand
-                AddToInventory(0x70, 0); // Thunderbrand
-                AddToInventory(0x71, 0); // Icebrand
-                AddToInventory(0x62, 0); // Claymore
-                AddToInventory(0x80, 0); // Mace
-                AddToInventory(0x64, 0); // Katana
-                AddToInventory(6, 0);    // Knight Shield
-                AddToInventory(7, 0);    // Iron Shield
-                AddToInventory(0x12, 0); // Basilard
-                AddToInventory(0x17, 0); // Rapier
-                AddToInventory(0x55, 0); // Knuckle Duster
-                AddToInventory(0x58, 0); // Cutlass
-                AddToInventory(1, 2);    // Cloth Tunic
-                AddToInventory(3, 2);    // Bronze cuirass
-                AddToInventory(4, 2);    // Iron cuirass
-                AddToInventory(5, 2);    // Steel cuirass
-                AddToInventory(6, 2);    // Silver plate
-                AddToInventory(7, 2);    // Gold plate
-                AddToInventory(0xA, 2);  // Fire mail
-                AddToInventory(0xD, 2);  // Mirror cuirass
-                AddToInventory(0x1F, 1); // Velvet hat
-                AddToInventory(0x21, 1); // Leather hat
-                AddToInventory(0x23, 1); // Steel helm
-                AddToInventory(0x31, 3); // Cloth cape
-                AddToInventory(0x33, 3); // Elven cloak
-                AddToInventory(0x35, 3); // Royal cloak
-                AddToInventory(0x32, 3); // Reverse cloak
-                AddToInventory(0x52, 4); // Medal
-                AddToInventory(0x4F, 4); // Gauntlet
+                AddToInventory(HAND(ITEM_FIREBRAND), HAND);
+                AddToInventory(HAND(ITEM_THUNDERBRAND), HAND);
+                AddToInventory(HAND(ITEM_ICEBRAND), HAND);
+                AddToInventory(HAND(ITEM_CLAYMORE), HAND);
+                AddToInventory(HAND(ITEM_MACE), HAND);
+                AddToInventory(HAND(ITEM_KATANA), HAND);
+                AddToInventory(HAND(ITEM_KNIGHT_SHIELD), HAND);
+                AddToInventory(HAND(ITEM_IRON_SHIELD), HAND);
+                AddToInventory(HAND(ITEM_BASILARD), HAND);
+                AddToInventory(HAND(ITEM_RAPIER), HAND);
+                AddToInventory(HAND(ITEM_KNUCKLE_DUSTER), HAND);
+                AddToInventory(HAND(ITEM_CUTLASS), HAND);
+                AddToInventory(WEARABLE(ITEM_CLOTH_TUNIC), ARMOR);
+                AddToInventory(WEARABLE(ITEM_BRONZE_CUIRASS), ARMOR);
+                AddToInventory(WEARABLE(ITEM_IRON_CUIRASS), ARMOR);
+                AddToInventory(WEARABLE(ITEM_STEEL_CUIRASS), ARMOR);
+                AddToInventory(WEARABLE(ITEM_SILVER_PLATE), ARMOR);
+                AddToInventory(WEARABLE(ITEM_GOLD_PLATE), ARMOR);
+                AddToInventory(WEARABLE(ITEM_FIRE_MAIL), ARMOR);
+                AddToInventory(WEARABLE(ITEM_MIRROR_CUIRASS), ARMOR);
+                AddToInventory(WEARABLE(ITEM_VELVET_HAT), HEAD);
+                AddToInventory(WEARABLE(ITEM_LEATHER_HAT), HEAD);
+                AddToInventory(WEARABLE(ITEM_STEEL_HELM), HEAD);
+                AddToInventory(WEARABLE(ITEM_CLOTH_CAPE), CAPE);
+                AddToInventory(WEARABLE(ITEM_ELVEN_CLOAK), CAPE);
+                AddToInventory(WEARABLE(ITEM_ROYAL_CLOAK), CAPE);
+                AddToInventory(WEARABLE(ITEM_REVERSE_CLOAK), CAPE);
+                AddToInventory(WEARABLE(ITEM_MEDAL), ACCESSORY);
+                AddToInventory(WEARABLE(ITEM_GAUNTLET), ACCESSORY);
                 // 80 potions!
                 for (i = 0; i < 80; i++) {
                     AddToInventory(0x9F, 0);
                 }
                 // 10 each of...
                 for (i = 0; i < 10; i++) {
-                    AddToInventory(0x19, 0); // Magic Missile
-                    AddToInventory(0x45, 0); // Turkey
-                    AddToInventory(0x43, 0); // Pot Roast
-                    AddToInventory(0x90, 0); // Antivenom
-                    AddToInventory(0x51, 0); // Boomerang
-                    AddToInventory(0x52, 0); // Javelin
-                    AddToInventory(0x49, 0); // Pentagram
+                    AddToInventory(HAND(ITEM_MAGIC_MISSILE), HAND);
+                    AddToInventory(HAND(ITEM_TURKEY), HAND);
+                    AddToInventory(HAND(ITEM_POT_ROAST), HAND);
+                    AddToInventory(HAND(ITEM_ANTIVENOM), HAND);
+                    AddToInventory(HAND(ITEM_BOOMERANG), HAND);
+                    AddToInventory(HAND(ITEM_JAVELIN), HAND);
+                    AddToInventory(HAND(ITEM_PENTAGRAM), HAND);
                 }
             }
         }
