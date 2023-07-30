@@ -8,6 +8,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191304);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191438);
 
+// EntityMedusa
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019179C);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192020);
