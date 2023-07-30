@@ -222,7 +222,32 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197CBC);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197FEC);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198574);
+void func_80198574(Entity* self) {
+    Entity* entity5 = &self[5];
+    u16 params = self->params;
+
+    if (self->step == 0) {
+        func_80191098(D_801803E4);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = params + 25;
+        self->zPriority = 0x3F - params;
+        self->unk19 = 4;
+        func_8018F5E8(0x1D, entity5);
+        entity5->unk19 = 0xC;
+        entity5->blendMode = 0x10;
+        entity5->animSet = ANIMSET_OVL(1);
+        entity5->animCurFrame = params + 25;
+        entity5->zPriority = 0x3F - params;
+        entity5->flags = 0x8C000000;
+        entity5->posY.i.hi += 4;
+    }
+
+    self->rotAngle = (*(s32*)&self->ext.stub[0x00] << 0xC) / 3600;
+    if (params != 0) {
+        self->rotAngle = self->rotAngle + 0x400;
+    }
+    entity5->rotAngle = self->rotAngle = self->rotAngle & 0xFFF;
+}
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198688);
 
