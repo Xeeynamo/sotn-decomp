@@ -290,6 +290,11 @@ typedef struct {
 } Unkstruct_80102CD8;
 
 typedef struct {
+    s16 unk0;
+    u8 unk2;
+    u8 unk3;
+} unkstruct_800ACF7C;
+typedef struct {
     /* 0x0 */ s16 animSet;
     /* 0x2 */ s16 unk2; // Entity::unk5A
     /* 0x4 */ u16 palette;

@@ -377,6 +377,7 @@ extern u8 D_800ACFB4[][4];
 extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern u8 D_800AD094[];
@@ -571,6 +572,8 @@ extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern Unkstruct_80138FC0 D_80138FC0[0x10];
+extern s16 D_80138FC8;
+extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
@@ -606,6 +609,7 @@ extern s32 D_8013980C;
 extern u8 D_80139810;
 extern s16 D_80139814[];
 extern s16 D_80139820;
+extern s32 D_80139824;
 extern s32 D_80139828[];
 extern s32 D_8013982C;
 extern s32 D_80139830[];
