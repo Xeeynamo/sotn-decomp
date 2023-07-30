@@ -1,3 +1,4 @@
 EntityMedusa = 0x8019179C;
+DestroyEntity = 0x801965B0;
 SetStep = 0x801971F0;
 InitializeEntity = 0x801972C0;

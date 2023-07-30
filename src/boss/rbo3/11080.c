@@ -8,21 +8,6 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191304);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191438);
 
-// EntityMedusa
-// INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019179C);
-extern u16 D_80180480[]; // Init
-extern u8 D_801805F0[];
-extern u8 D_801805FC[];
-extern u8 D_8018060C[];
-extern u8 D_80180618[];
-extern u8 D_80180624[];
-extern u8 D_80180630[];
-extern u8 D_8018063C[];
-extern s32 D_80180648[];
-extern u8 D_80180670[];
-extern s32 D_80180728;
-extern s8 D_80190EE4;
-
 void EntityMedusa(Entity* self) {
     Entity* newEntity;
     s8* hitbox;
@@ -281,7 +266,99 @@ void EntityMedusa(Entity* self) {
     self->hitboxHeight = hitbox[1];
 }
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80192020);
+void func_80192020(Entity* self) {
+    Primitive* prim;
+    s32 posX, posY;
+    s16 primIndex;
+    s32 var_a2;
+    s16 angle;
+    u16 angle2;
+    u16 var_v0;
+
+    if (self->flags & 0x100) {
+        SetStep(2);
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180498);
+        self->hitboxHeight = 1;
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim->x0 = prim->x1 = self->posX.i.hi;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+        prim->r0 = 255;
+        prim->g0 = 64;
+        prim->b0 = 128;
+        prim->b1 = prim->g1 = prim->r1 = 0;
+        prim->priority = self->zPriority;
+        prim->blendMode = 0x33;
+        posX = PLAYER.posX.i.hi - self->posX.i.hi;
+        posY = PLAYER.posY.i.hi - self->posY.i.hi;
+
+        angle = ratan2(posY, posX);
+        if (self->facing != 0) {
+            angle2 = angle - 1;
+            if (angle2 < 0x5FF) {
+                angle = 0x600;
+                angle2 = 0x600;
+            }
+            var_v0 = angle + 0x5FF;
+            if (var_v0 < 0x5FF) {
+                angle = -0x600;
+            }
+        } else {
+            if (angle > 0x200) {
+                angle = 0x200;
+                angle = 0x200;
+            }
+            if (angle < -0x200) {
+                angle = -0x200;
+            }
+        }
+        self->velocityX = rcos(angle) << 7;
+        self->velocityY = rsin(angle) << 7;
+
+    case 1:
+        func_80196964();
+
+        prim = self->ext.prim;
+        posX = prim->x0 = self->posX.i.hi;
+        posY = prim->y0 = self->posY.i.hi;
+
+        var_a2 = 0;
+        if (self->velocityX > 0) {
+            var_a2 = (posX <= 288) ^ 1;
+        } else if (posX < -32) {
+            var_a2 = 1;
+        }
+        if (self->velocityY > 0) {
+            if (posY > 288) {
+                var_a2 = 1;
+            }
+        } else if (posY < -32) {
+            var_a2 = 1;
+        }
+        if (var_a2 != 0) {
+            self->hitboxState = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (func_8019E9E0(self->ext.prim, 16) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801922EC);
 
@@ -339,7 +416,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195900);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80195978);
 
-INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801965B0);
+INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", DestroyEntity);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_8019661C);
 
@@ -428,7 +505,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197EB4);
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197F58);
 
-void func_80197FA8(void) { func_801965B0(g_CurrentEntity); }
+void func_80197FA8(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80197FD0);
 
