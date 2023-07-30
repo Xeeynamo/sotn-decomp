@@ -658,7 +658,7 @@ if __name__ == "__main__":
     for key in roms_bytes:
         for root, dirs, files in os.walk(build_dir):
             for file in files:
-                if key.lower() + ".map" == file or "st" + key.lower() + ".map" == file:
+                if key.lower() + ".map" == file or "st" + key.lower() + ".map" == file or "bo" + key.lower() + ".map" == file:
                     map_files[key] = os.path.join(root, file)
 
     map_symbols = parse_map(map_files)
