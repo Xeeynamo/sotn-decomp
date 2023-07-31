@@ -1,8 +1,6 @@
 .SECONDEXPANSION:
 .SECONDARY:
 
-include tools/tools.mk
-
 # Binaries
 VERSION         ?= us
 MAIN            := main
@@ -592,6 +590,8 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
 
 SHELL = /bin/bash -e -o pipefail
+
+include tools/tools.mk
 
 .PHONY: all, clean, format, check, expected
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
