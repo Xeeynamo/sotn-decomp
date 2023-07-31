@@ -660,7 +660,7 @@ typedef enum {
 typedef enum {
     FAMILIAR_BAT,
     FAMILIAR_GHOST,
-    FAMILIAR_FAIRIE,
+    FAMILIAR_FAERIE,
     FAMILIAR_DEMON,
     FAMILIAR_SWORD,
     FAMILIAR_YOUSEI,    // JP only
