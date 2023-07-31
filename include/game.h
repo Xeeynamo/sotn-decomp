@@ -658,6 +658,18 @@ typedef enum {
 } RelicIds;
 
 typedef enum {
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_WOLF_CHARGE,
+    SPELL_SOUL_STEAL,
+    SPELL_WING_SMASH,
+    SPELL_SWORD_BROTHERS,
+    NUM_SPELLS,
+} SpellIds;
+
+typedef enum {
     FAMILIAR_BAT,
     FAMILIAR_GHOST,
     FAMILIAR_FAERIE,
@@ -670,7 +682,7 @@ typedef enum {
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
-    /* 80097982 */ u8 spells[8];
+    /* 80097982 */ u8 spells[NUM_SPELLS];
     /* 8009798A */ u8 equipHandCount[169];
     /* 80097A33 */ u8 equipBodyCount[26];
     /* 80097A4D */ u8 equipHeadCount[22];

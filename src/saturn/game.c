@@ -194,13 +194,13 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
 
 // SAT: func_0606F760
-bool func_800FDC94(s32 arg0) {
-    u8 temp = D_800A841C[arg0].unk1C;
+bool CastSpell(SpellIds spellId) {
+    u8 mpUsage = g_SpellDefs[spellId].mpUsage;
 
-    if (g_Status.mp < temp) {
+    if (g_Status.mp < mpUsage) {
         return false;
     } else {
-        g_Status.mp -= temp;
+        g_Status.mp -= mpUsage;
         return true;
     }
 }
