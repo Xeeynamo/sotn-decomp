@@ -186,7 +186,7 @@ jobs:
         run: |
             make -j extract
             python3 tools/find_duplicates.py -a & \
-            python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md & \
+            python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md & \
             wait
             mv *_all_matches.txt gh-duplicates/duplicates.txt
       - name: Commit all reports
