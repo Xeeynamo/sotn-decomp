@@ -181,7 +181,7 @@ jobs:
             python3 tools/analyze_calls.py ALL
             rm -rf gh-duplicates/function_calls/ || true
             mv function_calls gh-duplicates/
-            make clean
+            git clean -fdx asm/ 
       - name: Generate duplicates and function report
         run: |
             make -j extract
