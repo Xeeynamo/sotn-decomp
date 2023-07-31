@@ -620,6 +620,9 @@ typedef struct {
     s32 unk8;
 } FamiliarStats;
 
+#define RELIC_FLAG_DISABLE 0
+#define RELIC_FLAG_FOUND 1
+#define RELIC_FLAG_ACTIVE 2
 typedef enum {
     RELIC_SOUL_OF_BAT,
     RELIC_FIRE_OF_BAT,
@@ -650,7 +653,8 @@ typedef enum {
     RELIC_TOOTH_OF_VLAD,
     RELIC_RIB_OF_VLAD,
     RELIC_RING_OF_VLAD,
-    RELIC_EYE_OF_VLAD
+    RELIC_EYE_OF_VLAD,
+    NUM_RELICS,
 } RelicIds;
 
 typedef struct {
