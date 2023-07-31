@@ -17,5 +17,5 @@ extern u8 D_801812C4[];
 extern u8 D_801812D0[];
 extern s16 D_801812DC[];
 extern u16 D_8019AF28[];
-
+extern s16 D_8019AF2A;
 #endif

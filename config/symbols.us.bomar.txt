@@ -1,0 +1,2 @@
+CreateEntityFromCurrentEntity = 0x8018F5E8;
+InitializeEntity = 0x80191098;

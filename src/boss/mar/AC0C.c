@@ -64,7 +64,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018F3BC);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018F534);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018F5E8);
+INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", CreateEntityFromCurrentEntity);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018F65C);
 
@@ -128,7 +128,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80190FE8);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80191004);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80191098);
+INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", InitializeEntity);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80191194);
 
@@ -220,19 +220,174 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197BD0);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197CBC);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197FEC);
+// Clock room controller
+void func_80197FEC(Entity* self) {
+    PlayerStatus* status = &g_Status;
+    Entity* newEntity;
+    Primitive* prim;
+    s16 primIndex;
+    u16 i;
+    u16 j;
+
+    // Plays the clock bell
+    if (self->ext.generic.unk84.U16.unk0 != 0) {
+        if (self->ext.generic.unk84.U16.unk2 == 0) {
+            g_api.PlaySfx(0x7A6); // Clock bell
+            if (--self->ext.generic.unk84.U16.unk0) {
+                self->ext.generic.unk84.S16.unk2 = 64;
+            }
+        } else {
+            self->ext.generic.unk84.U16.unk2--;
+        }
+    }
+
+    // Controls the statues
+    if (D_800973FC == 0) {
+        if (PLAYER.posY.i.hi > 128) {
+            D_8019AF28[0] = false; // right statue closed
+        }
+    } else if (self->ext.generic.unk88.U16.unk2 == 0) {
+        D_8019AF28[0] = true; // right statue open
+    }
+
+    self->ext.generic.unk88.S16.unk2 = D_800973FC;
+    if (self->step != 0) {
+        if ((status->timerFrames == 0) && (status->timerSeconds == 0)) {
+            if (status->timerMinutes & 1) {
+                D_8019AF2A = false; // left statue closed
+            } else {
+                D_8019AF2A = true; // left statue open
+            }
+        }
+    } else if (status->timerMinutes & 1) {
+        D_8019AF2A = false; // left statue closed
+    } else {
+        D_8019AF2A = true; // left statue open
+    }
+
+    switch (self->step) {
+    case 0:
+        if (g_blinkTimer == ((g_blinkTimer / 60) * 0x3C)) {
+            g_api.PlaySfx(0x7A9); // Clock tick
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            prim = &g_PrimBuf[primIndex];
+            prim->r0 = prim->g0 = prim->b0 = 0;
+            prim->y2 = prim->y3 = prim->x1 = prim->x3 = 0x100;
+            prim->priority = 0x1F0;
+            prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
+            prim->blendMode = 8;
+            *(s32*)&prim->r1 = *(s32*)&prim->r0;
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            *(s32*)&prim->r3 = *(s32*)&prim->r0;
+            InitializeEntity(D_801803E4);
+            g_api.PlaySfx(SET_STOP_MUSIC);
+            D_80097928 = 1;
+            D_8019AF28[0] = false; // right statue closed
+            self->animSet = ANIMSET_OVL(1);
+            self->animCurFrame = 23;
+            D_80097910 = 0;
+            self->zPriority = 0x40;
+
+            newEntity = &self[5];
+            for (i = 0; i < 2; i++) {
+                CreateEntityFromCurrentEntity(0x17, newEntity);
+                newEntity->params = i;
+                newEntity++;
+            }
+
+            newEntity = &self[7];
+            *(s32*)&self[5].ext.stub[0x00] = (s32)(status->timerMinutes * 0x3C);
+            *(s32*)&self[6].ext.stub[0x00] =
+                (s32)((status->timerHours * 0x12C) +
+                      (status->timerMinutes * 5));
+
+            for (i = 0; i < 2; i++) {
+                CreateEntityFromCurrentEntity(0x18, newEntity);
+                newEntity->params = i;
+                newEntity++;
+            }
+
+            if ((status->timerMinutes >= 10) && (status->timerMinutes < 30)) {
+                *(s16*)&self[7].ext.stub[0x04] = 1;
+            } else {
+                *(s16*)&self[7].ext.stub[0x04] = 0;
+            }
+
+            if ((u32)(status->timerMinutes >= 30) &&
+                (status->timerMinutes < 50)) {
+                *(s16*)&self[8].ext.stub[0x04] = 1;
+            } else {
+                *(s16*)&self[8].ext.stub[0x04] = 0;
+            }
+
+            CreateEntityFromCurrentEntity(0x1D, &self[9]);
+            self[9].animSet = ANIMSET_OVL(1);
+            self[9].animCurFrame = 0x17;
+            self[9].zPriority = 0x40;
+            self[9].palette = 0x804B;
+            self[9].unk19 = 8;
+            self[9].blendMode = 0x10;
+            self[9].flags = 0x8C000000;
+            self[9].posY.i.hi += 4;
+
+            newEntity = &self[1];
+            for (i = 0; i < 2; i++) {
+                CreateEntityFromCurrentEntity(0x19, newEntity);
+                newEntity->params = i;
+                newEntity++;
+            }
+
+            newEntity = &self[12];
+            for (j = 0; j < 2; j++) {
+                CreateEntityFromCurrentEntity(0x1A, newEntity);
+                newEntity->params = j;
+                newEntity++;
+            }
+
+            newEntity = &self[14];
+            for (j = 0; j < 2; j++) {
+                CreateEntityFromCurrentEntity(0x1B, newEntity);
+                newEntity->params = j;
+                newEntity++;
+            }
+        }
+        break;
+
+    case 1:
+        if (status->timerFrames == 0) {
+            g_api.PlaySfx(0x7A9); // clock tick
+        }
+        *(s32*)&self[5].ext.stub[0x00] = status->timerMinutes * 60;
+        *(s32*)&self[6].ext.stub[0x00] =
+            (status->timerHours * 300) + (status->timerMinutes * 5);
+        if ((status->timerSeconds == 0) && (status->timerFrames == 0) &&
+            (status->timerMinutes == 0)) {
+            self->ext.generic.unk84.S16.unk0 =
+                ((status->timerHours + 11) % 12) + 1;
+            if (self->ext.generic.unk84.U16.unk0 == 0) {
+                self->ext.generic.unk84.U16.unk0 = 12;
+            }
+        }
+        break;
+    }
+}
 
 void func_80198574(Entity* self) {
     Entity* entity5 = &self[5];
     u16 params = self->params;
 
     if (self->step == 0) {
-        func_80191098(D_801803E4);
+        InitializeEntity(D_801803E4);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
         self->unk19 = 4;
-        func_8018F5E8(0x1D, entity5);
+        CreateEntityFromCurrentEntity(0x1D, entity5);
         entity5->unk19 = 0xC;
         entity5->blendMode = 0x10;
         entity5->animSet = ANIMSET_OVL(1);
@@ -271,7 +426,7 @@ void func_80198944(Entity* self) {
 
     switch (self->step) {
     case 0:
-        func_80191098(D_801803E4);
+        InitializeEntity(D_801803E4);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 0xA;
         self->hitboxWidth = 16;
@@ -295,7 +450,7 @@ void func_80198944(Entity* self) {
 
         self->ext.generic.unk7E.modeU16 = D_8019AF28[params];
         self->posY.i.hi -= 0x3A;
-        func_8018F5E8(0x1D, entity);
+        CreateEntityFromCurrentEntity(0x1D, entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = params + 0xA;
         entity->zPriority = 0x3F;
@@ -368,7 +523,7 @@ void func_80198C74(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->step_s == 0) {
-            func_80191098(D_801803E4);
+            InitializeEntity(D_801803E4);
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 0x11;
             self->zPriority = 0x80;
@@ -440,12 +595,13 @@ void func_80198E84(s32 arg0) {
     }
 }
 
+// Stone doors on the floor leading to CEN
 void func_80198F24(Entity* self) {
     u16 params = self->params;
 
     switch (self->step) {
     case 0:
-        func_80191098(D_801803E4);
+        InitializeEntity(D_801803E4);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 0x1B;
         self->zPriority = 0x40;
