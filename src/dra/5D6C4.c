@@ -188,13 +188,13 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     return ret;
 }
 
-bool func_800FDC94(s32 arg0) {
-    u8 temp = D_800A841C[arg0 * 0x1C];
+bool CastSpell(SpellIds spellId) {
+    u8 mpUsage = g_SpellDefs[spellId].mpUsage;
 
-    if (g_Status.mp < (s32)temp) {
+    if (g_Status.mp < mpUsage) {
         return false;
     } else {
-        g_Status.mp -= temp;
+        g_Status.mp -= mpUsage;
         return true;
     }
 }
@@ -805,7 +805,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         g_Status.equipCloakCount[0] = 1;
         g_Status.equipOtherCount[0] = 1;
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < LEN(g_Status.spells); i++) {
             g_Status.spells[i] = 0;
         }
         g_Status.spellsLearnt = 0;
