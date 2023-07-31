@@ -657,6 +657,17 @@ typedef enum {
     NUM_RELICS,
 } RelicIds;
 
+typedef enum {
+    FAMILIAR_BAT,
+    FAMILIAR_GHOST,
+    FAMILIAR_FAERIE,
+    FAMILIAR_DEMON,
+    FAMILIAR_SWORD,
+    FAMILIAR_YOUSEI,     // JP only
+    FAMILIAR_NOSE_DEMON, // JP only
+    NUM_FAMILIARS
+} FamiliarIds;
+
 typedef struct {
     /* 80097964 */ u8 relics[30];
     /* 80097982 */ u8 spells[8];
@@ -699,7 +710,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ FamiliarStats statsFamiliars[7];
+    /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {

@@ -784,7 +784,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         g_Status.level = 1;
         g_Status.killCount = 0;
 
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < NUM_FAMILIARS; i++) {
             g_Status.statsFamiliars[i].level = 1;
             g_Status.statsFamiliars[i].exp = 0;
             g_Status.statsFamiliars[i].unk8 = 0;
