@@ -313,10 +313,6 @@ extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
-
-extern const char* c_strLuckModeCode;
-extern const char* c_strAxeArmorCode;
-
 extern const char* c_strALUCARD;
 extern const char** c_strSTR;
 extern const char* c_strCON;

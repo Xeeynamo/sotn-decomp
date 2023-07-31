@@ -1,9 +1,9 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
 #include "items.h"
-#if defined(VERSION_US)
 
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 var_a0;
@@ -88,7 +88,7 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
 const u32 rodataPadding_800DCBD8 = 0;
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", AddToInventory);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", AddToInventory);
 #else
 void AddToInventory(u16 itemId, s32 itemCategory) {
     u8 temp_a1;
@@ -238,7 +238,7 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", func_800FDE20);
 
 s32 func_800FE044(s32 amount, s32 type) {
     s32 oldHeartMax;
@@ -345,6 +345,9 @@ s32 func_800FE044(s32 amount, s32 type) {
         for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
             playerXPBoost >>= 1;
         }
+#if defined(VERSION_HD)
+        familiarXPBoost -= 2;
+#endif
         if (familiarXPBoost <= 0) {
             familiarXPBoost = 1;
         }
@@ -397,7 +400,11 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         if (CheckEquipmentItemCount(0x14, 2) != 0) {
             subwpn->attack += 10;
         }
+#if defined(VERSION_US)
         if (subweaponId == 4 || subweaponId == 12) {
+#elif defined(VERSION_HD)
+        if (subweaponId == 4) {
+#endif
             accessoryCount = CheckEquipmentItemCount(0x3D, 4);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
@@ -472,7 +479,7 @@ void AddHearts(s32 value) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE97C);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", func_800FE97C);
 
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
@@ -487,7 +494,7 @@ void func_800FEE6C(void) {
     } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FEEA4);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", func_800FEEA4);
 
 s32 func_800FF064(s32 arg0) {
     s32 playerMP;
@@ -587,7 +594,11 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
                 damage += SquareRoot0(g_roomCount);
                 break;
             case 3:
+#if defined(VERSION_US)
                 damage += (rand() % g_Status.statsTotal[3]) + 1;
+#elif defined(VERSION_HD)
+                damage += (rand() % g_Status.statsTotal[3]);
+#endif
                 break;
             }
             result = DAMAGE_FLAG_CRITICAL;
@@ -707,7 +718,17 @@ void func_800FF708(s32 arg0, s32 arg1) {
     g_Status.equipment[arg1 + 2] = rnd;
 }
 
-void InitStatsAndGear(bool DeathTakeItems) {
+extern const char* g_CheatCodes[2];
+// I cannot use the following declaration because it forces to import both data
+// and rodata, leading to a linker error as we are not yet importing data in DRA
+// const char g_CheatCodes[2][12] = {
+// {'x', '-', 'x', '!', 'v', '\'', '\'', 'q', '\0', '\0', '\0', '\0'},
+// {'a', 'x', 'e', 'a', 'r', 'm', 'o', 'r', '\0', '\n', '\r', '\n'},
+// };
+#if defined(VERSION_HD)
+INCLUDE_ASM("dra/nonmatchings/5D6C4", InitStatsAndGear);
+#else
+void InitStatsAndGear(bool isDeathTakingItems) {
     s32 dracDefeatTime;
     s32 prologueBonusState;
     s32 i;
@@ -718,7 +739,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         func_800FF60C();
         return;
     }
-    if (DeathTakeItems == 1) {
+    if (isDeathTakingItems == 1) {
         // Remove Alucard Sword from left hand
         if (g_Status.equipment[0] == 0x7B) {
             g_Status.equipment[0] = 0;
@@ -768,7 +789,6 @@ void InitStatsAndGear(bool DeathTakeItems) {
             g_Status.equipOtherCount[21]--;
         }
     } else {
-
         // I think this zeros out all the rooms to mark as unvisited
         for (i = 0; i < 0x800; i++) {
             D_8006BB74[i] = 0;
@@ -988,7 +1008,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.mp = g_Status.mpMax;
 
                 // Luck mode code check! This is X-X!V''Q
-                namePtr = c_strLuckModeCode;
+                namePtr = g_CheatCodes[0];
                 for (i = 0; i < 8; i++) {
                     if (g_SaveName[i] != *namePtr++) {
                         break;
@@ -1010,7 +1030,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 }
 
                 if (g_IsTimeAttackUnlocked) {
-                    namePtr = c_strAxeArmorCode;
+                    namePtr = g_CheatCodes[1];
                     for (i = 0; i < 8; i++) {
                         if (g_SaveName[i] != *namePtr++) {
                             break;
@@ -1131,6 +1151,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
     }
     func_800F53A4();
 }
+#endif
 
 void DrawHudRichter(void) {
     Primitive* prim;
@@ -1234,7 +1255,7 @@ void DrawHudRichter(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80100B50);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", func_80100B50);
 
 extern Unkstruct_80137990 D_80137990;
 
@@ -1305,7 +1326,7 @@ void func_8010189C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_80101A80);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", func_80101A80);
 
 void func_801024DC(void) {
     Primitive* prim;
@@ -1400,4 +1421,3 @@ void func_801026BC(s32 arg0) {
 }
 
 void func_801027A4(void) { func_801026BC(0); }
-#endif
