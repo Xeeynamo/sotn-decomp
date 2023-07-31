@@ -85,7 +85,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_8013572C);
 s16 IncrementRingBufferPos(s16 arg0) {
     arg0++;
 
-    if (arg0 == MAX_SND_COUNT) {
+    if (arg0 == LEN(g_sfxRingBuffer1)) {
         arg0 = 0;
     }
 

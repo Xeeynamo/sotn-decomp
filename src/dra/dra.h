@@ -626,7 +626,7 @@ extern s32 D_80139848;
 extern s32 D_8013984C;
 extern s32 D_80139850;
 extern s32 D_80139854;
-extern s16 D_80139868[];
+extern s16 D_80139868[MAX_SND_COUNT];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
 extern s16 g_sfxRingBufferPos2; // D_80139A70
@@ -658,7 +658,7 @@ extern s16 D_8013AEF0;
 extern s32 D_8013B158;
 extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
-extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
+extern s16 g_sfxRingBuffer2[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];
