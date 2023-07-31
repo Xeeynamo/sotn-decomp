@@ -2738,7 +2738,6 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
 }
 
 void PlaySfx(s16 sfxId) {
-    const int SfxStart = 0x600;
     if (D_8013AEEC != 0) {
         if (sfxId > SFX_START && sfxId <= SFX_LAST) {
             g_sfxRingBuffer1[g_sfxRingBufferPos1].sndId = sfxId - SFX_START;
