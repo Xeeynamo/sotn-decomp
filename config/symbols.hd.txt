@@ -1126,3 +1126,4 @@ _svm_vab_count = 0x8009880C;
 g_DebugPlayer = 0x80098850;
 D_8017A000 = 0x8017A000;
 D_8017D000 = 0x8017D000;
+SpuGetAllKeysStatus = 0x8002B458;
