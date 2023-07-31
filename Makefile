@@ -593,6 +593,8 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 
 SHELL = /bin/bash -e -o pipefail
 
+include tools/tools.mk
+
 .PHONY: all, clean, format, check, expected
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs

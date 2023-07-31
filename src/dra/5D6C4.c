@@ -240,7 +240,122 @@ void func_800FDE00(void) {
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FDE20);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/5D6C4", func_800FE044);
+s32 func_800FE044(s32 amount, s32 type) {
+    s32 oldHeartMax;
+    s32 activeFamiliar;
+    s32 levelDiff;
+    s32 i;
+    s32 familiarXPBoost;
+    u32 playerXPBoost;
+
+    // Life Max Up
+    if (type == 0x8000) {
+        if (g_Status.hpMax == 9999) {
+            return 1;
+        }
+        g_Status.hpMax += amount;
+        if (g_Status.hpMax > 9999) {
+            g_Status.hpMax = 9999;
+        }
+        if (g_CurrentPlayableCharacter != 0) {
+            g_Status.hpMax += amount;
+            if (g_Status.hpMax > 9999) {
+                g_Status.hpMax = 9999;
+            }
+        }
+        g_Status.hp = g_Status.hpMax;
+        D_80137960++;
+        return 0;
+    }
+
+    // Heart Max Up
+    if (type == 0x4000) {
+        if (g_CurrentPlayableCharacter != 0) {
+            return 1;
+        }
+        oldHeartMax = g_Status.heartsMax;
+        if (oldHeartMax == 9999) {
+            return 1;
+        }
+        g_Status.heartsMax += amount;
+        if (g_Status.heartsMax > 9999) {
+            g_Status.heartsMax = 9999;
+        }
+        g_Status.hearts += (g_Status.heartsMax - oldHeartMax);
+        D_80137964++;
+        return 0;
+    }
+
+    // Collect a relic. "amount" here isn't an amount, it's the relic ID.
+    if (type == 0x2000) {
+        g_Status.relics[amount] = 3;
+        // Fake! This is needed to avoid having the compiler swap
+        // the previous and following line. There may be other methods to
+        // achieve the same goal, but this one at least works.
+        amount++;
+        amount--;
+        if (D_800A872C[amount].unk0) {
+            g_Status.relics[amount] = 1;
+        }
+        D_80137968++;
+        return 0;
+    }
+
+    // Gain XP from defeating enemy
+    if (amount != 0 && g_Status.level != 99) {
+        // Done checking types, rename variable for clarity.
+        s32 enemyLevel = type;
+        playerXPBoost = amount;
+        if (enemyLevel < (s32)g_Status.level) {
+            levelDiff = g_Status.level - enemyLevel;
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost = playerXPBoost * 2 / 3;
+            }
+            if (playerXPBoost == 0) {
+                playerXPBoost = 1;
+            }
+        }
+        if ((s32)g_Status.level < enemyLevel) {
+            levelDiff = enemyLevel - g_Status.level;
+            if (levelDiff > 5) {
+                levelDiff = 5;
+            }
+            for (i = 0; i < levelDiff; i++) {
+                playerXPBoost += playerXPBoost / 4;
+            }
+        }
+        g_Status.exp += playerXPBoost;
+        if (g_Status.exp >= D_800AC90C) {
+            g_Status.exp = D_800AC90C;
+        }
+
+        activeFamiliar = D_8006CBC4 - 1;
+        if (D_8006CBC4 == 0) {
+            return;
+        }
+
+        // Note: playerXPBoost is meaningless as a name here. But register a2 is
+        // playerXPBoost, and is used as the loop variable for this loop, so I
+        // reuse it here. Strange logic, the familiarXPBoost seems to be log
+        // base 2 of arg0/familiar.exp.
+
+        playerXPBoost =
+            (amount / g_Status.statsFamiliars[activeFamiliar].level);
+
+        for (familiarXPBoost = 0; playerXPBoost != 0; familiarXPBoost++) {
+            playerXPBoost >>= 1;
+        }
+        if (familiarXPBoost <= 0) {
+            familiarXPBoost = 1;
+        }
+        g_Status.statsFamiliars[activeFamiliar].exp += familiarXPBoost;
+        if (g_Status.statsFamiliars[activeFamiliar].exp >= 9900) {
+            g_Status.statsFamiliars[activeFamiliar].exp = 9899;
+        }
+        g_Status.statsFamiliars[activeFamiliar].level =
+            (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
+    }
+}
 
 bool func_800FE3A8(s32 arg0) {
     /*
@@ -671,7 +786,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
 
         for (i = 0; i < 7; i++) {
             g_Status.statsFamiliars[i].level = 1;
-            g_Status.statsFamiliars[i].unk4 = 0;
+            g_Status.statsFamiliars[i].exp = 0;
             g_Status.statsFamiliars[i].unk8 = 0;
         }
 

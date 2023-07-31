@@ -369,6 +369,7 @@ extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s8 D_800A841C[]; // related to player MP
 extern unkStruct_800A872C D_800A872C[];
+extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
