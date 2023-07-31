@@ -620,6 +620,9 @@ typedef struct {
     s32 unk8;
 } FamiliarStats;
 
+#define RELIC_FLAG_DISABLE 0
+#define RELIC_FLAG_FOUND 1
+#define RELIC_FLAG_ACTIVE 2
 typedef enum {
     RELIC_SOUL_OF_BAT,
     RELIC_FIRE_OF_BAT,
@@ -650,8 +653,20 @@ typedef enum {
     RELIC_TOOTH_OF_VLAD,
     RELIC_RIB_OF_VLAD,
     RELIC_RING_OF_VLAD,
-    RELIC_EYE_OF_VLAD
+    RELIC_EYE_OF_VLAD,
+    NUM_RELICS,
 } RelicIds;
+
+typedef enum {
+    FAMILIAR_BAT,
+    FAMILIAR_GHOST,
+    FAMILIAR_FAERIE,
+    FAMILIAR_DEMON,
+    FAMILIAR_SWORD,
+    FAMILIAR_YOUSEI,     // JP only
+    FAMILIAR_NOSE_DEMON, // JP only
+    NUM_FAMILIARS
+} FamiliarIds;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
@@ -695,7 +710,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ FamiliarStats statsFamiliars[7];
+    /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {
