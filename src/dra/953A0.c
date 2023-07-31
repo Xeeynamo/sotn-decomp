@@ -41,7 +41,33 @@ void func_801353A0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135484);
+void func_80135484(s16 arg0, s32 arg1, s32 arg2, s32 volume, u16 arg4) {
+    u16 volumeMod;
+    u16 calcVolume;
+    s32 progId;
+
+    if (arg2 != 0) {
+        D_80138F28 |= (1 << (arg1 * 4 + 0)) + (1 << (arg1 * 4 + 1)) +
+                      (1 << (arg1 * 4 + 2)) + (1 << (arg1 * 4 + 3));
+    }
+
+    volumeMod = volume;
+    if (volumeMod == 0xFFFF) {
+        D_8013B620[arg1] = (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
+        D_8013B614[arg1] = 0;
+    } else {
+        calcVolume = (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
+        D_8013B620[arg1] = (calcVolume * volumeMod) >> 7;
+        D_8013B614[arg1] = arg4;
+    }
+    D_8013AE84[arg1] = arg0;
+    D_8013B5EC[arg1] = D_800BF554[arg0].unk4;
+    progId = D_800BF554[arg0].prog + 1;
+    D_8013B628[arg1] = D_800C1ECC[progId];
+    D_8013B66C[arg1] = 0;
+    D_8013B648[arg1] = arg0;
+    D_8013AEA0[arg1] = D_800BF554[arg0].unk6;
+}
 
 void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 volume, s16 distance) {
     if (arg2 != 0) {
