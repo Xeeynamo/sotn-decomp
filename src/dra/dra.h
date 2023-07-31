@@ -8,6 +8,10 @@
 #define DAMAGE_FLAG_ABSORB 0x8000
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
+#define SFX_START (0x600)
+#define SFX_LAST (0x8E0)
+#define MAX_SND_COUNT (0x100)
+
 typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
@@ -414,6 +418,7 @@ extern s16 D_800BD19C[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 D_800BD1C8[6];
+extern s32 D_800C1ECC[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
@@ -594,7 +599,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
-extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
+extern SfxRingBufferItem g_sfxRingBuffer1[MAX_SND_COUNT];
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;

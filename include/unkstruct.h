@@ -70,9 +70,9 @@ typedef struct {
     /* 0x01 */ u8 prog;
     /* 0x02 */ u8 note;
     /* 0x03 */ s8 volume;
-    /* 0x04 */ u8 pad0;
+    /* 0x04 */ u8 unk4;
     /* 0x05 */ u8 tone;
-    /* 0x06 */ u8 pad1;
+    /* 0x06 */ u8 unk6;
 } Unkstruct_800BF554; // size = 0x7
 
 typedef struct {
@@ -148,7 +148,7 @@ typedef struct {
 
 // related to SFX
 typedef struct {
-    /* 0x00 */ s16 unk00;
+    /* 0x00 */ s16 sndId;
     /* 0x02 */ u16 unk02;
     /* 0x04 */ s16 unk04;
 } SfxRingBufferItem;

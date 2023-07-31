@@ -51,7 +51,7 @@ void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 volume, s16 distance) {
         (arg1 * 2) + 12, D_800BF554[arg0].vabid, D_800BF554[arg0].prog,
         D_800BF554[arg0].tone, D_800BF554[arg0].note, volume, distance);
     D_8013B650[arg1] = arg0;
-    D_8013AED4[arg1] = D_800BF554[arg0].pad1;
+    D_8013AED4[arg1] = D_800BF554[arg0].unk6;
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_8013572C);
@@ -59,7 +59,7 @@ INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_8013572C);
 s16 IncrementRingBufferPos(s16 arg0) {
     arg0++;
 
-    if (arg0 == 0x100) {
+    if (arg0 == MAX_SND_COUNT) {
         arg0 = 0;
     }
 
@@ -69,24 +69,24 @@ s16 IncrementRingBufferPos(s16 arg0) {
 void func_80135C2C(void) {
     s16 sfxBufPos;
     s32 isFound;
-    s16 temp_s2;
+    s16 sndId;
 
     if (g_sfxRingBufferPos1 == D_80138FAC)
         return;
     while (D_80138FAC != g_sfxRingBufferPos1) {
-        temp_s2 = g_sfxRingBuffer1[D_80138FAC].unk00;
-        g_sfxRingBuffer1[D_80138FAC].unk00 = 0;
+        sndId = g_sfxRingBuffer1[D_80138FAC].sndId;
+        g_sfxRingBuffer1[D_80138FAC].sndId = 0;
         isFound = 0;
         for (sfxBufPos = IncrementRingBufferPos(D_80138FAC);
              sfxBufPos != g_sfxRingBufferPos1;
              sfxBufPos = IncrementRingBufferPos(sfxBufPos)) {
-            if (temp_s2 == g_sfxRingBuffer1[sfxBufPos].unk00) {
+            if (sndId == g_sfxRingBuffer1[sfxBufPos].sndId) {
                 isFound = 1;
                 break;
             }
         }
         if (isFound == 0) {
-            func_8013572C(temp_s2, g_sfxRingBuffer1[D_80138FAC].unk02,
+            func_8013572C(sndId, g_sfxRingBuffer1[D_80138FAC].unk02,
                           g_sfxRingBuffer1[D_80138FAC].unk04);
         }
 
