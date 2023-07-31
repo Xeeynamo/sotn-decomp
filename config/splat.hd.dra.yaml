@@ -99,7 +99,7 @@ segments:
       - [0x414A4, .rodata, 72BB0] # jtbl_800E14A4
       - [0x4166C, rodata] # jtbl_800E166C
       - [0x417E4, rodata] # jtbl_800E17E4
-      - [0x417FC, rodata] # jtbl_800E17FC
+      - [0x417FC, .rodata, 73AAC]
       - [0x41810, rodata]
       - [0x41824, rodata] # jtbl_800E1824
       - [0x41864, rodata] # jtbl_800E1864
@@ -152,7 +152,7 @@ segments:
       - [0x41F90, rodata] # jtbl_800E1F90
       - [0x41FA8, rodata] # jtbl_800E1FA8
       - [0x41FD0, rodata] # jtbl_800E1FD0
-      - [0x42270, rodata] # jtbl_800E2270
+      - [0x42270, .rodata, 953A0]
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
       - [0x458E4, c, gameover]
@@ -171,10 +171,10 @@ segments:
       - [0x69100, c, 692E8_hd]
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]
-      - [0x7379C, c, 73AAC_hd]
+      - [0x7379C, c, 73AAC]
       - [0x75A90, c, 75DA0]
       - [0x75C44, c, 75F54_hd]
-      - [0x94F7C, c, 953A0_hd]
+      - [0x94F7C, c, 953A0]
       - [0x95E88, sbss]
   - name: dra_data
     type: data
