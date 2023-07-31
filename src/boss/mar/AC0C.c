@@ -220,7 +220,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197BD0);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197CBC);
 
-// Clock room controller
+// Clock room controller Entity ID 0x16
 void func_80197FEC(Entity* self) {
     PlayerStatus* status = &g_Status;
     Entity* newEntity;
@@ -301,10 +301,9 @@ void func_80197FEC(Entity* self) {
             }
 
             newEntity = &self[7];
-            *(s32*)&self[5].ext.stub[0x00] = (s32)(status->timerMinutes * 0x3C);
+            *(s32*)&self[5].ext.stub[0x00] = status->timerMinutes * 0x3C;
             *(s32*)&self[6].ext.stub[0x00] =
-                (s32)((status->timerHours * 0x12C) +
-                      (status->timerMinutes * 5));
+                (status->timerHours * 0x12C) + (status->timerMinutes * 5);
 
             for (i = 0; i < 2; i++) {
                 CreateEntityFromCurrentEntity(0x18, newEntity);
@@ -318,8 +317,7 @@ void func_80197FEC(Entity* self) {
                 *(s16*)&self[7].ext.stub[0x04] = 0;
             }
 
-            if ((u32)(status->timerMinutes >= 30) &&
-                (status->timerMinutes < 50)) {
+            if ((status->timerMinutes >= 30) && (status->timerMinutes < 50)) {
                 *(s16*)&self[8].ext.stub[0x04] = 1;
             } else {
                 *(s16*)&self[8].ext.stub[0x04] = 0;
@@ -377,6 +375,7 @@ void func_80197FEC(Entity* self) {
     }
 }
 
+// Entity ID 0x17
 void func_80198574(Entity* self) {
     Entity* entity5 = &self[5];
     u16 params = self->params;
@@ -404,6 +403,7 @@ void func_80198574(Entity* self) {
     entity5->rotAngle = self->rotAngle = self->rotAngle & 0xFFF;
 }
 
+// Entity ID 0x18
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198688);
 
 void func_801988F8(s32 tilePos, s32 arg1) {
@@ -417,6 +417,7 @@ void func_801988F8(s32 tilePos, s32 arg1) {
     }
 }
 
+// Entity ID 0x19
 void func_80198944(Entity* self) {
     Entity* entity = &self[2];
     Entity* entity11 = &self[11];
@@ -515,6 +516,7 @@ void func_80198944(Entity* self) {
     entity->posX.i.hi = self->posX.i.hi;
 }
 
+// Entity ID 0x1A
 void func_80198C74(Entity* self) {
     u16 params = self->params;
     Primitive* prim;
@@ -595,7 +597,7 @@ void func_80198E84(s32 arg0) {
     }
 }
 
-// Stone doors on the floor leading to CEN
+// Stone doors on the floor leading to CEN Entity ID 0x1B
 void func_80198F24(Entity* self) {
     u16 params = self->params;
 
@@ -655,6 +657,7 @@ void func_80198F24(Entity* self) {
     }
 }
 
+// Entity ID 0x1C
 void func_80199114(void) {}
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8019911C);
