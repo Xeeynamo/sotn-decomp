@@ -403,8 +403,81 @@ void func_80198574(Entity* self) {
     entity5->rotAngle = self->rotAngle = self->rotAngle & 0xFFF;
 }
 
-// Entity ID 0x18
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80198688);
+// Birdcage doors on the clock Entity ID 0x18
+void func_80198688(Entity* self) {
+    u16 params = self->params;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_801803E4);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame =
+            D_801812A8[self->ext.generic.unk80.modeS16.unk0 & 1];
+        self->zPriority = 0x3C;
+        self->unk1A = self->unk1C = 0x100;
+        self->ext.generic.unk7E.modeU16 =
+            (u16)self->ext.generic.unk80.modeS16.unk0;
+        self->unk6C = 0x80;
+        self->posX.i.hi = D_80181280[params] - g_Camera.posX.i.hi;
+        self->posY.i.hi = D_80181284[params] - g_Camera.posY.i.hi;
+        break;
+
+    case 1:
+        if (self->ext.generic.unk7E.modeU16 !=
+            (u16)self->ext.generic.unk80.modeS16.unk0) {
+            self->unk19 = 0xB;
+            self->ext.generic.unk7C.u = 64;
+            self->ext.generic.unk7E.modeU16 =
+                self->ext.generic.unk80.modeS16.unk0;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 2:
+        self->unk1A = self->unk1C = self->unk1C - 2;
+        self->unk6C += 0xFF;
+        if (--self->ext.generic.unk7C.u == 0) {
+            self->ext.generic.unk7C.s = 64;
+            self->zPriority = 0;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 3:
+        self->posX.val += 0x2000;
+        if (--self->ext.generic.unk7C.u == 0) {
+            self->ext.generic.unk7C.s = 64;
+            self->animCurFrame =
+                D_801812A8[self->ext.generic.unk80.modeS16.unk0 & 1];
+            self->posX.i.hi -= 8;
+            self->posY.i.hi += 8;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 4:
+        self->posY.val -= 0x2000;
+        if (!(--self->ext.generic.unk7C.u)) {
+            self->ext.generic.unk7C.s = 64;
+            self->zPriority = 0x3C;
+            self->step++;
+            g_api.PlaySfx(0x608);
+        }
+        break;
+
+    case 5:
+        self->unk1A = self->unk1C = self->unk1C + 2;
+        self->unk6C += 1;
+        if (--self->ext.generic.unk7C.u == 0) {
+            self->unk19 = 0;
+            self->step = 1;
+        }
+        break;
+    }
+}
 
 void func_801988F8(s32 tilePos, s32 arg1) {
     u32 i;
@@ -516,7 +589,7 @@ void func_80198944(Entity* self) {
     entity->posX.i.hi = self->posX.i.hi;
 }
 
-// Entity ID 0x1A
+// Gears that spin while the statues are moving Entity ID 0x1A
 void func_80198C74(Entity* self) {
     u16 params = self->params;
     Primitive* prim;

@@ -54,6 +54,8 @@ segments:
     - [0xA8A0, rodata]
     - [0xA910, rodata]
     - [0xAB10, rodata]
+    - [0xABD0, .rodata, AC0C] # func_80198688
+    - [0xABE8, rodata]
     - [0xAC0C, c]
     - [0x1A200, sbss]
 
