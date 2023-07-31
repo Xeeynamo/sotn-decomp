@@ -663,7 +663,7 @@ typedef enum {
     FAMILIAR_FAERIE,
     FAMILIAR_DEMON,
     FAMILIAR_SWORD,
-    FAMILIAR_YOUSEI,    // JP only
+    FAMILIAR_YOUSEI,     // JP only
     FAMILIAR_NOSE_DEMON, // JP only
     NUM_FAMILIARS
 } FamiliarIds;
