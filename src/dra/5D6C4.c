@@ -725,13 +725,11 @@ extern const char* g_CheatCodes[2];
 // {'x', '-', 'x', '!', 'v', '\'', '\'', 'q', '\0', '\0', '\0', '\0'},
 // {'a', 'x', 'e', 'a', 'r', 'm', 'o', 'r', '\0', '\n', '\r', '\n'},
 // };
-#if defined(VERSION_HD)
-INCLUDE_ASM("dra/nonmatchings/5D6C4", InitStatsAndGear);
-#else
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 dracDefeatTime;
     s32 prologueBonusState;
     s32 i;
+    s32 equipId;
     u8* namePtr;
 
     if (D_8003C730 != 0) {
@@ -739,7 +737,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         func_800FF60C();
         return;
     }
-    if (isDeathTakingItems == 1) {
+    if (isDeathTakingItems == true) {
         // Remove Alucard Sword from left hand
         if (g_Status.equipment[0] == 0x7B) {
             g_Status.equipment[0] = 0;
@@ -1060,12 +1058,16 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 g_Status.hearts = 1234;
                 g_Status.heartsMax = 2000;
                 g_Status.exp = 11000;
+#if defined(VERSION_US)
                 g_Status.level = 20;
-
-                if (g_StageId & 0x20) {
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
                     g_Status.exp = 110000;
                 }
-
+#elif defined(VERSION_HD)
+                if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                    g_Status.exp = 40000;
+                }
+#endif
                 for (i = 0; i < LEN(g_Status.relics); i++) {
                     g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
                     if (D_800A872C[i].unk0 != 0) {
@@ -1080,6 +1082,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 for (i = 0; i < 90; i++) {
                     g_Status.equipBodyCount[i] = 1;
                 }
+#if defined(VERSION_US)
                 g_Status.equipment[0] = 0x13; // Short Sword
                 g_Status.equipment[1] = 5;    // Leather Shield
                 g_Status.equipment[2] = 0x1A; // No headgear
@@ -1146,12 +1149,42 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     AddToInventory(0x52, 0); // Javelin
                     AddToInventory(0x49, 0); // Pentagram
                 }
+#elif defined(VERSION_HD)
+                g_Status.timerHours = 0;
+                g_Status.timerMinutes = 0;
+                g_Status.timerSeconds = 0;
+                g_Status.timerFrames = 0;
+                g_Status.subWeapon = 6;
+                if (rand() & 3) {
+                    g_Status.subWeapon = (rand() % 9) + 1;
+                }
+                do {
+                loop_check_equip_id_1:
+                    equipId = rand() % 169;
+                    if (equipId == 216) {
+                        goto loop_check_equip_id_1;
+                    }
+                } while (D_800A4B04[equipId].itemCategory > 4);
+                g_Status.equipment[0] = equipId;
+                do {
+                loop_check_equip_id_2:
+                    equipId = rand() % 169;
+                    if (equipId == 216) {
+                        goto loop_check_equip_id_2;
+                    }
+                } while (D_800A4B04[equipId].itemCategory == 5);
+                g_Status.equipment[1] = equipId;
+                func_800FF708(0, 0);
+                func_800FF708(1, 1);
+                func_800FF708(2, 2);
+                func_800FF708(3, 3);
+                func_800FF708(3, 4);
+#endif
             }
         }
     }
     func_800F53A4();
 }
-#endif
 
 void DrawHudRichter(void) {
     Primitive* prim;
