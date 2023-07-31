@@ -28,7 +28,7 @@ void DemoGameInit(s32 arg0) {
         for (i = 0; i < RELIC_BAT_CARD; i++) {
             g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
         }
-        for (; i < NUM_RELICS; i++) {
+        for (; i < LEN(g_Status.relics); i++) {
             g_Status.relics[i] = RELIC_FLAG_FOUND;
         }
         g_Status.relics[RELIC_GAS_CLOUD] = RELIC_FLAG_FOUND;
