@@ -193,7 +193,7 @@ class TestCrossReferenceSymbols(unittest.TestCase):
             "/* 72D1C 80112D1C 04004014 */  bnez       $v0, .L80112D30",
             "/* 72B9C 80112B9C 0B80013C */  lui        $at, %hi(D_800AD040)",
             "/* 72BA0 80112BA0 21082200 */  addu       $at, $at, $v0",
-            "/* 72BA4 80112BA4 40D02394 */  lhu        $v1, %lo(D_800AD040)($at)",
+            "/* 72BA4 80112BA4 40D02394 */  lhu        $zero, %lo(D_800AD040)($at)",
             ".L80112AD8:",
             "/* 72AD8 80112AD8 0780043C */  lui        $a0, %hi(PLAYER_animFrameIdx)",
             "/* 72ADC 80112ADC 28348424 */  addiu      $a0, $a0, %lo(PLAYER_animFrameIdx)",
@@ -206,7 +206,7 @@ class TestCrossReferenceSymbols(unittest.TestCase):
         self.assertEqual(status, "ok")
         self.assertEqual(
             symbols,
-            {"g_MyStruct_field": 2147954532, "D_80139824": 2148192320},
+            {"g_MyStruct_field": 0x80072F64, "D_80139824": 0x800AD040},
         )
 
     def test_fail_if_the_line_count_between_the_sources_is_different(self):

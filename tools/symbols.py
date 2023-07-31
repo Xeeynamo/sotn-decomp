@@ -82,7 +82,7 @@ def re_ident(name):
 
 # regex helper to match assembly registers
 def re_reg(name):
-    return f"(?P<{name}>\$[a-z][0-9a-z])"
+    return f"(?P<{name}>\$[0-9a-z]+)"
 
 
 # regex helper to match the two %lo and %hi functions
