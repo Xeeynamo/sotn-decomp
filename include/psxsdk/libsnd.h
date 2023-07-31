@@ -84,4 +84,6 @@ short SsUtKeyOnV(
  */
 void func_80026D4C(s16, short voll, short volr);
 
+void SpuGetAllKeysStatus(char* status);
+
 #endif
