@@ -65,8 +65,8 @@ void EntitySecretButton(Entity* self) {
         case 0:
             self->unk19 = 0xC;
             self->unk6C = 0x60;
-            self->accelerationX = 0;
-            self->accelerationY = 0;
+            self->velocityX = 0;
+            self->velocityY = 0;
             self->step_s++;
 
         case 1:
@@ -76,7 +76,7 @@ void EntitySecretButton(Entity* self) {
                 self->step_s++;
                 break;
             }
-            self->accelerationY -= 0x2000;
+            self->velocityY -= FIX(0.125);
             break;
 
         case 2:
@@ -217,8 +217,8 @@ void EntitySecretStairs(Entity* self) {
             posX = g_Camera.posX.i.hi + self->posX.i.hi;
             posY = g_Camera.posY.i.hi + self->posY.i.hi;
             angle = ratan2(temp_s1 - posY, temp_s0 - posX);
-            self->accelerationX = rcos(angle) * 12;
-            self->accelerationY = rsin(angle) * 12;
+            self->velocityX = rcos(angle) * 12;
+            self->velocityY = rsin(angle) * 12;
             self->step_s++;
             break;
 

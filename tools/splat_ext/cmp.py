@@ -6,7 +6,9 @@ from util import options, log
 
 class PSXSegCmp(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
-        super().__init__(rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml),
+        super().__init__(
+            rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml
+        ),
         self.name = self.get_symbol_name()
 
     # does splat provide this without extracting the symbols for every file?
@@ -18,7 +20,7 @@ class PSXSegCmp(N64Segment):
                 for line in f:
                     if line.isspace():
                         continue
-                    tokens = line.strip().split('=')
+                    tokens = line.strip().split("=")
                     if len(tokens) < 2:
                         continue
                     addr = tokens[1].replace(";", "").strip()
@@ -41,7 +43,7 @@ class PSXSegCmp(N64Segment):
 
         # we are forced to also write the compressed file as we do not have
         # a matching compression algorithm
-        data = rom_bytes[self.rom_start:self.rom_end]
+        data = rom_bytes[self.rom_start : self.rom_end]
         with open(self.cmp_path(), "wb") as f:
             f.write(data)
 

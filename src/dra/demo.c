@@ -6,23 +6,23 @@ void DemoGameInit(s32 arg0) {
 
     if (arg0 != 2) {
         if (g_StageId == STAGE_NZ0) {
-            g_StageId = 0x13;
+            g_StageId = STAGE_NZ0_DEMO;
         }
         if (g_StageId == STAGE_NZ1) {
-            g_StageId = 0x14;
+            g_StageId = STAGE_NZ1_DEMO;
         }
         if (g_StageId == STAGE_LIB) {
-            g_StageId = 0x15;
+            g_StageId = STAGE_LIB_DEMO;
         }
         if (g_StageId == (STAGE_NZ1 | STAGE_INVERTEDCASTLE_FLAG)) {
-            g_StageId = 0x35;
+            g_StageId = STAGE_RNZ1;
         }
     } else {
         D_80137594 = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
         g_StageId = D_800A243C[D_80137594];
     }
 
-    func_800FF7B8(0);
+    InitStatsAndGear(0);
     if (g_StageId != STAGE_ST0) {
         g_Status.level = 99;
         for (i = 0; i < 18; i++) {
@@ -31,7 +31,7 @@ void DemoGameInit(s32 arg0) {
         for (; i < 30; i++) {
             g_Status.relics[i] = 1;
         }
-        g_Status.relics[9] = 1;
+        g_Status.relics[RELIC_GAS_CLOUD] = 1;
         g_Status.hp = 80;
         g_Status.hpMax = 80;
         g_Status.subWeapon = 0;
@@ -50,7 +50,7 @@ void DemoGameInit(s32 arg0) {
         g_Status.equipment[4] = 0x30;
         g_Status.equipment[5] = 0x39;
         g_Status.equipment[6] = 0x39;
-        if (g_StageId == STAGE_UNK_13) {
+        if (g_StageId == STAGE_NZ0_DEMO) {
             g_Status.subWeapon = 2;
             g_Status.equipment[0] = ITEM_SHORT_SWORD;
         }
@@ -64,13 +64,13 @@ void DemoGameInit(s32 arg0) {
         if (g_StageId == STAGE_BO3) {
             g_Status.subWeapon = 3;
             g_Status.equipment[0] = ITEM_GLADIUS;
-            g_Status.relics[14] = 1;
+            g_Status.relics[RELIC_HOLY_SYMBOL] = 1;
             g_Status.hearts = 60;
         }
         if (g_StageId == STAGE_BO2) {
             g_Status.equipment[0] = ITEM_CUTLASS;
         }
-        if (g_StageId == STAGE_UNK_15) {
+        if (g_StageId == STAGE_LIB_DEMO) {
             g_Status.equipment[0] = ITEM_CUTLASS;
             g_Status.statsBase[0] = 15;
         }
@@ -94,7 +94,7 @@ void DemoGameInit(s32 arg0) {
         if (g_StageId == STAGE_DRE) {
             g_Status.equipment[0] = ITEM_CLAYMORE;
         }
-        if (g_StageId == STAGE_UNK_14) {
+        if (g_StageId == STAGE_NZ1_DEMO) {
             g_Status.equipment[0] = ITEM_FALCHION;
             g_Status.equipment[1] = ITEM_IRON_SHIELD;
             g_Status.statsBase[0] = 20;
@@ -239,7 +239,7 @@ void DemoSaveFile(void) {
     }
 
     __builtin_memcpy(buf, "  OK", sizeof("  OK"));
-    func_800E2438(buf);
+    DebugInputWait(buf);
 }
 
 void DemoInit(s32 arg0) {

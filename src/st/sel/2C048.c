@@ -55,7 +55,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
 }

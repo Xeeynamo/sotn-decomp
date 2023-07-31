@@ -1,5 +1,6 @@
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "game.h"
 
 // __game_start
 INCLUDE_ASM("asm/saturn/game/data", d6066000, d_06066000);
@@ -102,7 +103,9 @@ bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
 }
 
 // SAT: func_0606F328
-s32 func_800FD664(s32 arg0) { return g_StageId & 0x20 ? arg0 << 1 : arg0; }
+s32 func_800FD664(s32 arg0) {
+    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
+}
 
 // SAT: func_0606F348
 u8 GetEquipItemCategory(s32 equipId) {
@@ -375,7 +378,100 @@ void func_800FF0F4(s32 arg0) { D_80139828[arg0] = 0x1000; }
 // SAT: func_060705B8
 s32 func_800FF110(s32 arg0) { return D_80139828[arg0]; }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60705CC, func_060705CC);
+// SAT: func_060705CC
+u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
+    s32 stats[4];
+    EnemyDef sp20;
+    EnemyDef* enemy;
+    u16 temp_v1;
+    u16 elementMask;
+    s32 higherStatIdx;
+    s32 i;
+    u16 element;
+    u16 damage;
+    u16 result;
+    u16 stuff;
+
+    enemy = &sp20;
+    sp20 = g_EnemyDefs[enemyEntity->enemyId];
+    if (CheckEquipmentItemCount(0x2D, 1) != 0) {
+        enemy->defense /= 2;
+    }
+
+    element = attackerEntity->attackElement;
+    damage = attackerEntity->attack;
+    if (element == 0) {
+        element = 0x20;
+    }
+    if (element & 0xFF80) {
+        elementMask = 0xFF80;
+    } else {
+        elementMask = 0x7F;
+    }
+
+    result = 0;
+    temp_v1 = element & elementMask;
+    if (temp_v1 == (temp_v1 & (elementMask & enemy->immunes))) {
+        result = DAMAGE_FLAG_IMMUNE;
+    } else if (temp_v1 == (temp_v1 & (elementMask & enemy->absorbs))) {
+        result = damage + DAMAGE_FLAG_ABSORB;
+    } else {
+        if (temp_v1 == (temp_v1 & (elementMask & enemy->strengths))) {
+            damage /= 2;
+        }
+        if (element & enemy->weaknesses) {
+            damage *= 2;
+        }
+        if (attackerEntity->entityRoomIndex > (rand() & 0xFF)) {
+            for (i = 0; i < 4; i++) {
+                stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
+            }
+
+            higherStatIdx = 0;
+            for (i = 1; i < 4; i++) {
+                if (stats[i] > stats[higherStatIdx]) {
+                    higherStatIdx = i;
+                }
+            }
+
+            switch (higherStatIdx) {
+            case 0:
+                damage *= 2;
+                break;
+            case 1:
+                if (enemy->defense > damage) {
+                    damage += enemy->defense / 2;
+                } else {
+                    damage += damage / 2;
+                }
+                break;
+            case 2:
+                damage += SquareRoot0(g_roomCount);
+                break;
+            case 3:
+                damage += (rand() % g_Status.statsTotal[3]) + 1;
+                break;
+            }
+            result = DAMAGE_FLAG_CRITICAL;
+        } else {
+            result = DAMAGE_FLAG_NORMAL;
+        }
+
+        if (damage > enemy->defense) {
+            damage = damage - enemy->defense;
+        } else {
+            damage = 1;
+        }
+
+        if (damage < 0 || damage >= 10000) {
+            damage = 9999;
+        }
+
+        result += damage;
+    }
+
+    return result;
+}
 
 // SAT: func_060707F0
 s32 func_800FF460(s32 arg0) {
@@ -590,8 +686,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
 
 void MoveEntity(Entity* entity) {
-    entity->posX.val += entity->accelerationX;
-    entity->posY.val += entity->accelerationY;
+    entity->posX.val += entity->velocityX;
+    entity->posY.val += entity->velocityY;
 }
 
 void func_06079BB4(s32* param_1) {

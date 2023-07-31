@@ -16,6 +16,8 @@ typedef unsigned long long u64;
 
 #define NULL 0
 
+#define STAGE_INVERTEDCASTLE_MASK 0x1F
+#define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
 #define TOTAL_ENTITY_COUNT 256
 
@@ -30,9 +32,9 @@ typedef union {
     s32 val;
     struct {
         s16 hi;
-        s16 lo
+        s16 lo;
     } i;
-} Fixed32;
+} SotnFixed32;
 
 struct Entity;
 
@@ -40,10 +42,10 @@ typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
-    /* 0x04 */ Fixed32 posX;
-    /* 0x08 */ Fixed32 posY;
-    /* 0x0c */ s32 accelerationX;
-    /* 0x10 */ s32 accelerationY;
+    /* 0x04 */ SotnFixed32 posX;
+    /* 0x08 */ SotnFixed32 posY;
+    /* 0x0c */ s32 velocityX;
+    /* 0x10 */ s32 velocityY;
     /* 0x14 */ u16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ s16 unk18;
@@ -59,9 +61,12 @@ typedef struct Entity {
     /* 0x30 */ u16 params;
     /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ u32 flags;
-    /* 0x38 */ s16 ghidra_pad_38;
+    /* 0x38 */ u16 enemyId;
     /* 0x3A */ u16 hitboxState; // hitbox state
-    /* 0x3C */ char pad_3C[0x8];
+    /* 0x3C */ char pad_3C[2];
+    /* 0x3E */ s16 attack;
+    /* 0x40 */ s16 attackElement;
+    /* 0x42 */ s16 pad_42;
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
@@ -129,7 +134,9 @@ typedef struct {
     s32 hearts;
     s32 heartsMax;
     s32 mp;
-    char pad[35];
+    s32 mpMax;
+    s32 statsBase[4];
+    char pad[15];
     s32 statsTotal[4];
     char pad3[0x14];
     u32 subWeapon;

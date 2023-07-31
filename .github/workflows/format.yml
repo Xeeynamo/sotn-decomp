@@ -7,6 +7,7 @@ on:
       - '*/*.h'
       - '**/*.c'
       - '**/*.h'
+      - '**/*.py'
       - 'config/symbols.*.txt'
   pull_request_target:
   workflow_dispatch:
@@ -23,6 +24,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - name: Install black
+        run: pip install black
       - name: Clone main repository
         uses: actions/checkout@v3
         with:

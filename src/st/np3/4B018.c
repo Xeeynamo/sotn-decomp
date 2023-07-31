@@ -174,8 +174,8 @@ void func_801CF254(Entity* self) {
         case 0:
             temp_s1 = (Random() & 0x1F) + 0x10;
             temp_s0_2 = (Random() * 6) + 0x900;
-            self->accelerationX = (s32)(temp_s1 * rcos((s32)temp_s0_2)) / 2;
-            self->accelerationY = temp_s1 * rsin((s32)temp_s0_2);
+            self->velocityX = (s32)(temp_s1 * rcos((s32)temp_s0_2)) / 2;
+            self->velocityY = temp_s1 * rsin((s32)temp_s0_2);
             self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;
             self->unk3C = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -184,7 +184,7 @@ void func_801CF254(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->accelerationY += 0x2000;
+            self->velocityY += FIX(0.125);
             self->unk1E += self->ext.generic.unkA6;
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
                 self->step = 0;
@@ -239,7 +239,7 @@ void func_801CF254(Entity* self) {
 
 void EntityHammerWeapon(Entity* self) {
     s16 temp_s0;
-    s32 accel;
+    s32 velY;
     s32 temp_s1;
     s16 angle;
 
@@ -262,17 +262,17 @@ void EntityHammerWeapon(Entity* self) {
         case 0:
             temp_s1 = (Random() & 0x1F) + 0x10;
             temp_s0 = (Random() * 6) + 0x900;
-            self->accelerationX = (temp_s1 * rcos(temp_s0)) / 2;
-            accel = temp_s1 * rsin(temp_s0);
+            self->velocityX = (temp_s1 * rcos(temp_s0)) / 2;
+            velY = temp_s1 * rsin(temp_s0);
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
-            self->accelerationY = accel;
+            self->velocityY = velY;
             break;
 
         case 1:
             MoveEntity();
-            self->accelerationY += 0x2000;
+            self->velocityY += FIX(0.125);
             func_801CDC80(&self->rotAngle, 0x800, 0x20);
             break;
         }
@@ -310,9 +310,9 @@ void EntityGurkhaSword(Entity* self) {
 
     case 2:
         if (self->facing == 0) {
-            self->accelerationX = -0x80000;
+            self->velocityX = FIX(-8);
         } else {
-            self->accelerationX = 0x80000;
+            self->velocityX = FIX(8);
         }
         self->step++;
 
@@ -326,16 +326,16 @@ void EntityGurkhaSword(Entity* self) {
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
 
         if (self->facing != 0) {
-            self->accelerationX -= 0x4000;
+            self->velocityX -= FIX(0.25);
         } else {
-            self->accelerationX += 0x4000;
+            self->velocityX += FIX(0.25);
         }
 
         if ((g_blinkTimer % 16) == 0) {
             func_801C2598(0x625);
         }
 
-        if (ABS(self->accelerationX) == 0x80000) {
+        if (ABS(self->velocityX) == 0x80000) {
             self->ext.gurkhaSword.unk8C = 0;
             self->step = 1;
         }
@@ -346,8 +346,8 @@ void EntityGurkhaSword(Entity* self) {
         case 0:
             rnd = (Random() & 0x1F) + 0x10;
             angle = (Random() * 6) + 0x900;
-            self->accelerationX = (rnd * rcos(angle)) / 2;
-            self->accelerationY = rnd * rsin(angle);
+            self->velocityX = (rnd * rcos(angle)) / 2;
+            self->velocityY = rnd * rsin(angle);
             self->ext.gurkhaSword.unk80 = (Random() & 0x1F) + 0x20;
             self->hitboxState = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -356,7 +356,7 @@ void EntityGurkhaSword(Entity* self) {
 
         case 1:
             MoveEntity();
-            self->accelerationY += 0x2000;
+            self->velocityY += FIX(0.125);
             self->rotAngle += self->ext.gurkhaSword.unkA6;
             if (--self->ext.gurkhaSword.unk80 == 0) {
                 self->step = 0;

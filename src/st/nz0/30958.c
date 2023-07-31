@@ -39,8 +39,70 @@ bool func_801B0A20(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
 
-// DECOMP_ME_WIP EntityBreakable https://decomp.me/scratch/0tv5m 92.76 %
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", EntityBreakable);
+void EntityBreakable(Entity* self) {
+    u16 params = self->params >> 0xC;
+    s16 top, bottom, left, right;
+    Entity* newEntity;
+    Primitive* prim;
+
+    if (self->step != 0) {
+        AnimateEntity((u8*)D_80180E04[params], self);
+        if (params == 2) {
+            prim = &g_PrimBuf[self->primIndex];
+            if (g_blinkTimer & 2) {
+                prim->clut = 0x21B;
+            } else {
+                prim->clut = 0x21C;
+            }
+        }
+
+        if (self->unk44 != 0) {
+            if (params == 2) {
+                g_api.FreePrimitives(self->primIndex);
+                self->flags &= ~FLAG_HAS_PRIMS;
+            }
+            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+                newEntity->params = D_80180E2C[params];
+            }
+            ReplaceBreakableWithItemDrop(self);
+        }
+    } else {
+        InitializeEntity(D_80180BC8);
+        self->zPriority = g_zEntityCenter.S16.unk0 - 20;
+        self->blendMode = D_80180E44[params];
+        self->hitboxHeight = D_80180E24[params];
+        self->animSet = D_80180E34[params];
+        if (params == 2) {
+            self->unk5A = 0x4B;
+            self->palette = 0x219;
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (self->primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            self->flags |= FLAG_HAS_PRIMS;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->tpage = 0x12;
+            prim->u0 = prim->u2 = 0xC8;
+            prim->u1 = prim->u3 = 0xF8;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xA0;
+            left = self->posX.i.hi - 23;
+            right = self->posX.i.hi + 25;
+            prim->x0 = prim->x2 = left;
+            prim->x1 = prim->x3 = right;
+            top = self->posY.i.hi - 23;
+            bottom = self->posY.i.hi + 9;
+            prim->y0 = prim->y1 = top;
+            prim->y2 = prim->y3 = bottom;
+            prim->priority = self->zPriority;
+            prim->blendMode = 0x73;
+        }
+    }
+}
 
 // bust with red eyes that can have a candle on it
 void EntityRedEyeBust(Entity* self) {
@@ -135,7 +197,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         }
 
         while (prim != NULL) {
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
     }
@@ -316,9 +378,9 @@ void func_801B19A0(Entity* self) {
             rnd2 = (Random() * 6) + 0x900;
         }
 
-        self->accelerationX = rnd * rcos(rnd2);
-        self->accelerationY = rnd * rsin(rnd2);
-        if (self->accelerationX < 0) {
+        self->velocityX = rnd * rcos(rnd2);
+        self->velocityY = rnd * rsin(rnd2);
+        if (self->velocityX < 0) {
             self->facing = 1;
         }
 
@@ -329,7 +391,7 @@ void func_801B19A0(Entity* self) {
             self->rotAngle += 0x20;
         }
 
-        self->accelerationY += 0x2000;
+        self->velocityY += FIX(0.125);
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
@@ -347,7 +409,7 @@ void func_801B19A0(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            if (self->accelerationY < 0x8000) {
+            if (self->velocityY < 0x8000) {
                 newEntity =
                     AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                 if (newEntity != NULL) {
@@ -358,9 +420,9 @@ void func_801B19A0(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            self->accelerationY = -self->accelerationY;
-            self->accelerationY *= 2;
-            self->accelerationY /= 3;
+            self->velocityY = -self->velocityY;
+            self->velocityY *= 2;
+            self->velocityY /= 3;
         }
     }
 }
@@ -536,23 +598,23 @@ void EntityMoveableBox(Entity* self) {
 
     case 1:
         player = &PLAYER;
-        self->accelerationX = 0;
-        self->accelerationY = 0;
+        self->velocityX = 0;
+        self->velocityY = 0;
 
         if (var_s1 & 1) {
             temp_s1 = GetSideToPlayer();
-            if (temp_s1 & 1 && player->accelerationX > 0) {
+            if (temp_s1 & 1 && player->velocityX > 0) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
-                self->accelerationX = 0x8000;
+                self->velocityX = FIX(0.5);
             }
             temp_s1 = GetSideToPlayer();
-            if (!(primIndex = (temp_s1 & 1)) && (player->accelerationX < 0)) {
+            if (!(primIndex = (temp_s1 & 1)) && (player->velocityX < 0)) {
                 if (!(g_blinkTimer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
-                self->accelerationX = -0x8000;
+                self->velocityX = FIX(-0.5);
             }
         }
 
@@ -571,7 +633,7 @@ void EntityMoveableBox(Entity* self) {
             if ((self->ext.generic.unk84.unk == 0) &&
                 ((s16)D_801CB736[var_s1] != 0)) {
                 var_s1 = 0;
-                self->posX.val -= self->accelerationX;
+                self->posX.val -= self->velocityX;
             }
             self->ext.generic.unk84.unk = var_s1;
             if (var_s1 != 0) {
@@ -632,21 +694,21 @@ void EntityCannonLever(Entity* self) {
 
     case 1:
         if (self->hitFlags != 0) {
-            self->accelerationX = -0x40000;
+            self->velocityX = FIX(-4);
             self->step++;
         }
         break;
 
     case 2:
         MoveEntity();
-        temp_v1_2 = self->accelerationX;
+        temp_v1_2 = self->velocityX;
         if (temp_v1_2 < 0) {
             var_v0 = temp_v1_2 + 0xF;
         } else {
             var_v0 = temp_v1_2;
         }
         temp_v0_2 = temp_v1_2 - (var_v0 >> 4);
-        self->accelerationX = temp_v0_2;
+        self->velocityX = temp_v0_2;
         if (temp_v0_2 < 0x2000) {
             self->step++;
         }
@@ -719,7 +781,7 @@ void EntityCannon(Entity* self) {
         if (D_80180ED0[0] != 0) {
             g_api.func_80102CD8(1);
             g_api.PlaySfx(0x6AC);
-            self->accelerationX = 0x80000;
+            self->velocityX = FIX(8);
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -737,7 +799,7 @@ void EntityCannon(Entity* self) {
         self->posX.i.lo = 0;
         MoveEntity();
 
-        temp = self->accelerationX;
+        temp = self->velocityX;
         if (temp < 0) {
             var_v0 = temp + 7;
         } else {
@@ -745,7 +807,7 @@ void EntityCannon(Entity* self) {
         }
 
         temp2 = temp - (var_v0 >> 3);
-        self->accelerationX = temp - (var_v0 >> 3);
+        self->velocityX = temp - (var_v0 >> 3);
 
         if (temp2 < 0x2000) {
             self->step++;
@@ -769,7 +831,7 @@ void EntityCannonShot(Entity* self) {
         self->animCurFrame = 1;
         self->palette = 0x81AF;
         self->zPriority = 0x6F;
-        self->accelerationX = -0x80000;
+        self->velocityX = FIX(-8);
 
     case 1:
         MoveEntity();
@@ -898,7 +960,85 @@ void func_801B2AD8(Entity* self) {
 // DECOMP_ME_WIP func_801B2D08 https://decomp.me/scratch/ixW6j 93.06%
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2D08);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B2FD8);
+void func_801B2FD8(Entity* self) {
+    s32 temp = func_801BD9A0(self, 8, 8, 4);
+    Primitive* prim;
+    Entity* player;
+    s16 primIndex;
+    s32 posX, posY;
+    s32 camY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim->type = 6;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 0x48;
+        prim->v0 = 0xC8;
+        prim->v1 = prim->u1 = 0x10;
+        prim->priority = 0x5F;
+        prim->blendMode = 2;
+
+        posX = self->posX.i.hi;
+        posX += g_Camera.posX.i.hi;
+        posX >>= 4;
+
+        // TODO: !FAKE
+        camY = self->posY.i.hi;
+        posY = camY += 4;
+        posY = camY += g_Camera.posY.i.hi;
+
+        camY = (camY >> 4) * g_CurrentRoom.hSize * 16;
+        g_CurrentRoomTileLayout.fg[posX + camY] = 0x5AF;
+
+    case 1:
+        if (temp != 0) {
+            player = &PLAYER;
+            player->posY.i.hi++;
+            self->posY.val += 0x10000;
+            posY = g_Camera.posY.i.hi + self->posY.i.hi;
+            if ((self->ext.generic.unk80.modeS32 + 4) < posY) {
+                self->posY.i.hi = (self->ext.generic.unk80.modeS16.unk0 + 4) -
+                                  g_Camera.posY.i.hi;
+                self[1].ext.stub[0xC] = 1;
+                self->step++;
+                LOW(self[1].ext.stub[0x8]) ^= 1;
+            }
+        }
+
+    default:
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi - 8;
+        prim->y0 = self->posY.i.hi - 8;
+        break;
+
+    case 2:
+        if (temp == 0) {
+            self->posY.val += ~0xFFFF;
+            posY = g_Camera.posY.i.hi + self->posY.i.hi;
+            if (posY < self->ext.generic.unk80.modeS32) {
+                self->posY.i.hi =
+                    self->ext.generic.unk80.modeS16.unk0 - g_Camera.posY.i.hi;
+                self->step = 1;
+            }
+        }
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi - 8;
+        prim->y0 = self->posY.i.hi - 8;
+        break;
+    }
+}
 
 void EntityFloorSpikes(Entity* self) {
     Primitive* prim;
@@ -1175,4 +1315,134 @@ void func_801B3B78() {
 }
 
 // Id 0x38
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B3C38);
+void func_801B3C38(Entity* self) {
+    Unkstruct_80180FE0* obj;
+    s32 velocityX;
+    s32 velocityY;
+    s32 params;
+    s32 temp_s0;
+    s32 adjVelocityX;
+    s32 adjVelocityY;
+    u32 temp_v0;
+    s32 rnd;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BE0);
+        params = self->params & 0xF;
+        obj = &D_80180FE0[params];
+        self->palette = obj->palette + 0x2E0;
+        self->blendMode = obj->blendMode;
+        self->animSet = obj->animSet;
+        self->unk5A = obj->unk2;
+        self->ext.et38.unk80 = obj->unk8;
+        self->step = params + 1;
+
+        temp_v0 = self->params & 0xFF00;
+        if (temp_v0 != 0) {
+            self->zPriority = temp_v0 >> 8;
+        }
+
+        if (self->params & 0xF0) {
+            self->palette = 0x819F;
+            self->blendMode = 0x10;
+            self->facing = 1;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        self->velocityY = FIX(-1);
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 2:
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
+            switch (self->step_s) {
+            case 0:
+                self->unk19 = 8;
+                self->unk6C = 0x80;
+                self->step_s++;
+                break;
+
+            case 1:
+                if (self->animFrameIdx == 5) {
+                    self->step_s++;
+                }
+                break;
+
+            case 2:
+                self->unk6C += 0xFC;
+                return;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 3:
+        if (self->step_s == 0) {
+            self->unk19 |= 4;
+            switch (self->ext.et38.unk88) {
+            case 1:
+                if (self->ext.et38.unk89 >= 0x4) {
+                    self->ext.et38.unk89 += 0xFD;
+                    self->ext.et38.unk84 -= 0x800;
+                }
+                break;
+
+            case 2:
+                self->ext.et38.unk84 = (u16)self->ext.et38.unk84 +
+                                       ((u8)self->ext.et38.unk89 * 0xC0);
+                break;
+            }
+            self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
+            self->rotAngle = self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
+            temp_s0 /= 28;
+            self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
+            self->velocityY = -(temp_s0 * rcos(self->ext.et38.unk84));
+            self->step_s++;
+        }
+
+        if (self->animFrameIdx >= 13) {
+            velocityX = self->velocityX;
+            if (velocityX < 0) {
+                adjVelocityX = velocityX + 3;
+            } else {
+                adjVelocityX = velocityX;
+            }
+            self->velocityX = velocityX - (adjVelocityX >> 2);
+
+            velocityY = self->velocityY;
+            if (velocityY < 0) {
+                adjVelocityY = velocityY + 3;
+            } else {
+                adjVelocityY = velocityY;
+            }
+            self->velocityY = velocityY - (adjVelocityY >> 2);
+        }
+        MoveEntity();
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 4:
+        if (self->step_s == 0) {
+            rnd = Random();
+            self->velocityY = FIX(-0.75);
+            self->facing = rnd & 1;
+            self->unk1A = 0xC0;
+            self->unk19 |= 1;
+            self->step_s++;
+        }
+        MoveEntity();
+        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}

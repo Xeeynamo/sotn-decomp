@@ -312,7 +312,7 @@ void func_801B9C44(WeightSelect weight) {
     posY -= 32;
 
     while (prim != 0) {
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
 }
@@ -610,8 +610,8 @@ void EntityMermanRockLeftSide(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
                     newEntity->params = *params++;
-                    newEntity->accelerationX = -0x8000 - (Random() << 8);
-                    newEntity->accelerationY = -Random() * 0x100;
+                    newEntity->velocityX = -0x8000 - (Random() << 8);
+                    newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
@@ -705,8 +705,8 @@ void EntityMermanRockRightSide(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x27, self, newEntity);
                     newEntity->params = *params++;
-                    newEntity->accelerationX = (Random() << 8) + 0x8000;
-                    newEntity->accelerationY = -Random() * 0x100;
+                    newEntity->velocityX = (Random() << 8) + 0x8000;
+                    newEntity->velocityY = -Random() * 0x100;
                     newEntity->facing = 1;
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
@@ -793,14 +793,14 @@ void EntityFallingRock2(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->accelerationY += 0x4000;
+        self->velocityY += FIX(0.25);
         self->rotAngle -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_8018133C[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
 
         if (collider.effects & EFFECT_SOLID) {
-            if (self->accelerationY > 0x40000) {
+            if (self->velocityY > 0x40000) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(2, self, newEntity);
@@ -813,14 +813,14 @@ void EntityFallingRock2(Entity* self) {
                 return;
             }
             self->posY.i.hi = self->posY.i.hi + collider.unk18;
-            temp_a0 = -self->accelerationY;
-            self->accelerationY = -self->accelerationY;
+            temp_a0 = -self->velocityY;
+            self->velocityY = -self->velocityY;
             if (temp_a0 < 0) {
                 var_a1 = temp_a0 + 7;
             } else {
                 var_a1 = temp_a0;
             }
-            self->accelerationY = temp_a0 - (var_a1 >> 3);
+            self->velocityY = temp_a0 - (var_a1 >> 3);
         }
         break;
     }
@@ -846,16 +846,16 @@ void EntityFallingRock(Entity* self) {
         self->unk19 |= 7;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
-        self->accelerationX = rnd * rcos(rndAngle);
-        self->accelerationY = rnd * rsin(rndAngle);
-        if (self->accelerationX > 0) {
+        self->velocityX = rnd * rcos(rndAngle);
+        self->velocityY = rnd * rsin(rndAngle);
+        if (self->velocityX > 0) {
             self->facing = 1;
         }
         break;
 
     case 1:
         MoveEntity();
-        self->accelerationY += 0x2000;
+        self->velocityY += FIX(0.125);
         self->rotAngle -= 0x20;
 
         g_api.CheckCollision(

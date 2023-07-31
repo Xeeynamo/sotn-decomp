@@ -39,11 +39,11 @@ segments:
       - [0x8258, data]
       - [0x8900, data]
       - [0xCEB0, data]
-      - [0xD670, rodata] # not rodata but data
-      - [0x2217C, rodata]
-      - [0x227B0, rodata]
+      - [0xD670, data]
+      - [0x2217C, data]
+      - [0x227B0, data]
       - [0x3B3B0, rodata]
-      - [0x3B430, .rodata, 42398]
+      - [0x3B3B4, .rodata, 42398]
       - [0x3B530, .rodata, play]
       - [0x3B560, .rodata, gameover]
       - [0x3B720, .rodata, 46358]
@@ -81,7 +81,6 @@ segments:
       - [0x3CB94, rodata] # jpt_800FC5B8
       - [0x3CBAC, .rodata, 5D6C4] # jpt_800FD6E0
       - [0x3CBC4, .rodata, 5D6C4]
-      - [0x3CBDC, rodata] # jpt_800FDB40
       - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
       - [0x3CC2C, rodata] # jpt_80102918
@@ -110,7 +109,7 @@ segments:
       - [0x413C0, .rodata, 71830]
       - [0x41400, rodata]
       - [0x41410, rodata] # jpt_80112264
-      - [0x41588, rodata] # jpt_80112C9C
+      - [0x41588, .rodata, 72BB0] # jpt_80112C9C
       - [0x41750, rodata] # jpt_80113328
       - [0x418C8, rodata] # jpt_80113938
       - [0x418E0, .rodata, 73AAC]
@@ -184,6 +183,7 @@ segments:
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
       - [0x71830, c, 71830]
+      - [0x72BB0, c, 72BB0]
       - [0x73AAC, c, 73AAC]
       - [0x75DA0, c, 75DA0]
       - [0x75F54, c, 75F54]

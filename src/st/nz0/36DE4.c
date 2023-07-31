@@ -102,23 +102,23 @@ s32 func_801B7520(s32 arg0) {
 
     prim = D_801CB6A0[0] = &g_PrimBuf[D_801CB6C0[0]];
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[1] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[2] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[3] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[4] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = D_801CB6A0[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 3;
@@ -128,7 +128,7 @@ s32 func_801B7520(s32 arg0) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 1;
@@ -137,7 +137,7 @@ s32 func_801B7520(s32 arg0) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     return 1;
 }
 
@@ -767,13 +767,13 @@ s16 GetSideToPlayer(void) {
 }
 
 void MoveEntity() {
-    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
+    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
 }
 
 void FallEntity(void) {
-    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->accelerationY += FALL_GRAVITY;
+    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->velocityY += FALL_GRAVITY;
     }
 }
 
@@ -786,7 +786,7 @@ s32 func_801BCCFC(u16* sensors) {
 
     MoveEntity();
     FallEntity();
-    if (g_CurrentEntity->accelerationY >= 0) {
+    if (g_CurrentEntity->velocityY >= 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
         for (i = 0; i < 4; i++) {
@@ -800,8 +800,8 @@ s32 func_801BCCFC(u16* sensors) {
                         if (!(colBack.effects & EFFECT_SOLID)) {
                             g_CurrentEntity->posY.i.hi =
                                 (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
-                            g_CurrentEntity->accelerationX = 0;
-                            g_CurrentEntity->accelerationY = 0;
+                            g_CurrentEntity->velocityX = 0;
+                            g_CurrentEntity->velocityY = 0;
                             g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
                             return 1;
                         }
@@ -818,8 +818,8 @@ s32 func_801BCCFC(u16* sensors) {
                 if (!(colBack.effects & EFFECT_SOLID)) {
                     g_CurrentEntity->posY.i.hi =
                         g_CurrentEntity->posY.i.hi + col.unk18;
-                    g_CurrentEntity->accelerationX = 0;
-                    g_CurrentEntity->accelerationY = 0;
+                    g_CurrentEntity->velocityX = 0;
+                    g_CurrentEntity->velocityY = 0;
                     g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
                     return 1;
                 }
@@ -836,7 +836,7 @@ s32 func_801BCF74(s16* posX) {
     s16 temp4;
     s16 x, y;
 
-    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
     temp2 = g_CurrentEntity->posY.i.hi + 3;
     g_CurrentEntity->posY.i.hi = temp2;
     x = g_CurrentEntity->posX.i.hi + *posX;
@@ -849,8 +849,8 @@ s32 func_801BCF74(s16* posX) {
     posX++;
 
     g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
-    if (g_CurrentEntity->accelerationX != 0) {
-        if (g_CurrentEntity->accelerationX < 0) {
+    if (g_CurrentEntity->velocityX != 0) {
+        if (g_CurrentEntity->velocityX < 0) {
             temp4 = x - *posX;
             posX++;
         } else {
@@ -863,8 +863,8 @@ s32 func_801BCF74(s16* posX) {
             if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
                 EFFECT_UNK_0002) {
                 g_CurrentEntity->posX.val =
-                    g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
-                g_CurrentEntity->accelerationX = 0;
+                    g_CurrentEntity->posX.val - g_CurrentEntity->velocityX;
+                g_CurrentEntity->velocityX = 0;
                 return 0xFF;
             }
             return 0x61;
@@ -877,8 +877,8 @@ s32 func_801BCF74(s16* posX) {
             }
             return 1;
         }
-        g_CurrentEntity->posX.val -= g_CurrentEntity->accelerationX;
-        g_CurrentEntity->accelerationX = 0;
+        g_CurrentEntity->posX.val -= g_CurrentEntity->velocityX;
+        g_CurrentEntity->velocityX = 0;
 
         return 0x80;
     }
@@ -904,8 +904,8 @@ s32 func_801BD1BC(u8 arg0, s16 arg1) { return D_80181978[arg0] * arg1; }
 s16 func_801BD1E8(u8 arg0) { return D_80181978[arg0]; } // Unique
 
 void func_801BD204(s32 arg0, s16 arg1) {
-    g_CurrentEntity->accelerationX = func_801BD1BC(arg0, arg1);
-    g_CurrentEntity->accelerationY = func_801BD1BC(arg0 - 0x40, arg1);
+    g_CurrentEntity->velocityX = func_801BD1BC(arg0, arg1);
+    g_CurrentEntity->velocityY = func_801BD1BC(arg0 - 0x40, arg1);
 }
 
 u8 func_801BD270(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
@@ -963,7 +963,7 @@ void func_801BD390(u16 slope, s16 speed) {
         moveX += 15;
     }
 
-    entity->accelerationX = moveX >> 4;
+    entity->velocityX = moveX >> 4;
 
     moveY = rsin(slope) * speed;
     entity = g_CurrentEntity;
@@ -972,7 +972,7 @@ void func_801BD390(u16 slope, s16 speed) {
         moveY += 15;
     }
 
-    entity->accelerationY = moveY >> 4;
+    entity->velocityY = moveY >> 4;
 }
 
 u16 func_801BD41C(s16 x, s16 y) { return ratan2(y, x); }
@@ -1083,17 +1083,17 @@ void EntityDummy(Entity* arg0) {
 s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
-    s32 accelerationX;
+    s32 velocityX;
     u16 temp_a1;
     s16 x;
     s16 y;
 
-    accelerationX = g_CurrentEntity->accelerationX;
-    if (accelerationX != 0) {
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX != 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
         for (i = 0; i < sensorCount; i++) {
-            if (accelerationX < 0) {
+            if (velocityX < 0) {
                 s16 newX = x + *hitSensors++;
                 x = newX;
             } else {
@@ -1113,12 +1113,12 @@ s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
 }
 
 void func_801BD848(u16* hitSensors, s16 sensorCount) {
-    s32 accelerationX = g_CurrentEntity->accelerationX;
+    s32 velocityX = g_CurrentEntity->velocityX;
     Collider collider;
     s16 x, y;
     s16 i;
 
-    if (accelerationX == 0) {
+    if (velocityX == 0) {
         return;
     }
 
@@ -1126,7 +1126,7 @@ void func_801BD848(u16* hitSensors, s16 sensorCount) {
     y = g_CurrentEntity->posY.i.hi;
 
     for (i = 0; i < sensorCount; i++) {
-        if (accelerationX < 0) {
+        if (velocityX < 0) {
             x += *hitSensors++;
         } else {
             x -= *hitSensors++;
@@ -1137,7 +1137,7 @@ void func_801BD848(u16* hitSensors, s16 sensorCount) {
 
         if ((collider.effects & EFFECT_UNK_0002) &&
             (!(collider.effects & EFFECT_UNK_8000) || (i != 0))) {
-            if (accelerationX < 0) {
+            if (velocityX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
                 g_CurrentEntity->posX.i.hi += collider.unk14;
@@ -1155,7 +1155,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     PreventEntityFromRespawning(self);
 
 #if STAGE != STAGE_ST0
-    if (!(g_Status.relics[10] & 2)) {
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
         DestroyEntity(self);
         return;
     }
@@ -1184,11 +1184,11 @@ void func_801BDD9C(void) {
     Entity* entity;
 
     entity = g_CurrentEntity;
-    if (entity->accelerationY >= 0) {
+    if (entity->velocityY >= 0) {
         temp_v1 =
             entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
         entity->ext.generic.unk84.unk = temp_v1;
-        entity->accelerationX = temp_v1;
+        entity->velocityX = temp_v1;
         if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
             entity->ext.generic.unk88.S16.unk0 =
                 -entity->ext.generic.unk88.S16.unk0;
@@ -1196,19 +1196,19 @@ void func_801BDD9C(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->accelerationY < 0x00004000) {
-        entity->accelerationY += 0x2000;
+    if (entity->velocityY < 0x00004000) {
+        entity->velocityY += FIX(0.125);
     }
 }
 
 void func_801BDE20(u16 arg0) {
     Collider collider;
 
-    if (g_CurrentEntity->accelerationX < 0) {
+    if (g_CurrentEntity->velocityX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi - 7, &collider, 0);
         if (collider.effects & EFFECT_NOTHROUGH) {
-            g_CurrentEntity->accelerationY = 0;
+            g_CurrentEntity->velocityY = 0;
         }
     }
 
@@ -1222,8 +1222,8 @@ void func_801BDE20(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->accelerationX = 0;
-        g_CurrentEntity->accelerationY = 0;
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
 
         if (collider.effects & EFFECT_QUICKSAND) {
             g_CurrentEntity->posY.val += 0x2000;
@@ -1294,14 +1294,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->accelerationX = -0x20000;
+            g_CurrentEntity->velocityX = FIX(-2);
             return;
         }
-        g_CurrentEntity->accelerationX = 0x20000;
+        g_CurrentEntity->velocityX = FIX(2);
         return;
     }
     DestroyEntity(g_CurrentEntity);

@@ -22,12 +22,12 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        version: ["us"]
+        version: ["us", "hd"]
         include:
           - dependency: us
             version: us
-          # - dependency: pspeu
-          #   version: hd
+          - dependency: pspeu
+            version: hd
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -65,21 +65,13 @@ jobs:
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
-        if: matrix.version == 'us'
         run: make -j extract
-      - name: Split game data (DRA only)
-        if: matrix.version != 'us'
-        run: make -j extract_dra
       - name: Build binaries
-        if: matrix.version == 'us'
         run: make -j build
-      - name: Build binaries (DRA only)
-        if: matrix.version != 'us'
-        run: make -j dra
       - name: Check if they match
         run: make check
       - name: Remove clutter from build folder
-        run: rm -rf build/asm build/src
+        run: rm -rf build/$(VERSION)/asm build/$(VERSION)/src build/$(VERSION)/assets
       - name: Export build folder
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         uses: actions/upload-artifact@v3
@@ -89,12 +81,12 @@ jobs:
   generate-progress-report:
     strategy:
       matrix:
-        version: ["us"]
+        version: ["us", "hd"]
         include:
           - dependency: us
             version: us
-          # - dependency: pspeu
-          #   version: hd
+          - dependency: pspeu
+            version: hd
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -112,7 +104,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: xeeynamo/sotn-decomp-dependencies
-          ref: ${{ matrix.version }}
+          ref: ${{ matrix.dependency }}
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
@@ -120,7 +112,7 @@ jobs:
         run: |
           cat dependencies/* > dependencies.tar.gz
           tar -xf dependencies.tar.gz
-          mv *.cue sotn.${{ matrix.version }}.cue
+          mv *.cue sotn.${{ matrix.dependency }}.cue || mv *.iso sotn.${{ matrix.dependency }}.iso
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
@@ -136,6 +128,9 @@ jobs:
     strategy:
       matrix:
         version: ["us"]
+        include:
+          - dependency: us
+            version: us
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -150,7 +145,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: xeeynamo/sotn-decomp-dependencies
-          ref: ${{ matrix.version }}
+          ref: ${{ matrix.dependency }}
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
       - name: Setting up dependencies
@@ -158,7 +153,7 @@ jobs:
         run: |
           cat dependencies/* > dependencies.tar.gz
           tar -xf dependencies.tar.gz
-          mv *.cue sotn.${{ matrix.version }}.cue
+          mv *.cue sotn.${{ matrix.dependency }}.cue || mv *.iso sotn.${{ matrix.dependency }}.iso
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
@@ -182,7 +177,7 @@ jobs:
       - name: Generate duplicates and function report
         run: |
             python3 tools/find_duplicates.py -a & \
-            python3 tools/function_finder.py > gh-duplicates/functions.txt & \
+            python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md & \
             wait
       - name: Rename duplicates report into a more meaningful file
         run: mv *_all_matches.txt gh-duplicates/duplicates.txt

@@ -1,221 +1,220 @@
-#include "dre.h"
+#include "no3.h"
 
-// Pink ball projectile shot by succubus duplicates ID 0x1D
-void EntityPinkBallProjectile(Entity* self) {
-    Entity* entity;
-    s16 temp_s0;
-    s16 temp_v0;
+void EntityRoomTransition2(Entity* self) {
+    Entity* newEntity;
+    Primitive* prim;
+    // Used as both a loop variable and a temp
+    s32 localVar;
 
-    if (D_80180664 & 2) {
-        DestroyEntity(self);
-        return;
+    // These are weird fake vars needed for matching
+    Entity* gents = g_Entities;
+    Unkstruct8* layout = &g_CurrentRoomTileLayout;
+
+    if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
+        g_api.PlaySfx(0x631);
+        self->ext.roomTransition2.unk80 = 0x200;
     }
+    self->ext.roomTransition2.unk80--;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180500);
-        self->blendMode = 0x30;
-        self->unk19 = 3;
-        self->unk1C = 0;
-        self->unk1A = 0;
-
+        InitializeEntity(D_80180AD0);
+        layout->unk40 = 0xFC;
+        g_Player.D_80072EF4 = 0x2000;
+        D_8003C8B8 = 0;
+        g_Player.D_80072EFC = 1;
+        D_801D7DD0 |= 0x100;
+        return;
     case 1:
-        self->unk1A = self->unk1C += 4;
-        if (self->unk1A > 256) {
-            self->unk19 = 0;
-        }
-        AnimateEntity(D_80180794, self);
-
-        entity = self->ext.generic.unk9C;
-        if (entity->ext.generic.unk84.U8.unk1 != 0) {
-            self->unk19 = 0;
+        // Evil use of local 'gents' instead of PLAYER
+        if (gents[0].posX.i.hi < 0x34) {
+            // Using generic here because I don't know what g_Entities[1] is
+            g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+            g_Player.D_80072EF4 = 0x2000;
+        } else {
+            g_Player.D_80072EF4 = 0;
+            D_801D7DD0 |= 0x80;
             self->step++;
         }
-        if (entity->flags & 0x100) {
-            DestroyEntity(self);
-        }
-        break;
-
+        g_Player.D_80072EFC = 1;
+        return;
     case 2:
-        temp_s0 = (self->params << 0xA) + 0x200;
-        self->accelerationX = rcos(temp_s0) * 0x38;
-        self->accelerationY = rsin(temp_s0) * 0x38;
-        self->ext.generic.unkA2 = temp_s0;
-        self->ext.generic.unk80.modeS16.unk0 = 128;
-        self->step++;
-
+        if (D_801D7DD0 & 0x20) {
+            g_api.InitStatsAndGear(1);
+            g_api.PlaySfx(0x6A2);
+            for (localVar = 0; localVar < 6; localVar++) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity == NULL) {
+                    break;
+                }
+                CreateEntityFromEntity(0x59, gents, newEntity);
+                newEntity->params = localVar;
+            }
+            g_Player.D_80072EF4 = 0x10000;
+            self->ext.roomTransition2.unk7C = 0x10;
+            self->step++;
+        }
+        g_Player.D_80072EFC = 1;
+        return;
     case 3:
-        AnimateEntity(D_80180794, self);
-        MoveEntity();
-        temp_v0 = func_8019AF08(self, g_Entities);
-        temp_s0 = func_8019AF88(0x10, self->ext.generic.unkA2, temp_v0);
-        self->accelerationX = rcos(temp_s0) * 0x38;
-        self->accelerationY = rsin(temp_s0) * 0x38;
-        self->ext.generic.unkA2 = temp_s0;
-
-        if (self->hitFlags & 0x80) {
-            self->step = 4;
+        if (D_801D7DD0 & 0x40 &&
+            !(--self->ext.roomTransition2.unk7C & 0xFFFF)) {
+            localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
+            if (localVar != -1) {
+                prim = &g_PrimBuf[localVar];
+                self->primIndex = localVar;
+                self->flags |= FLAG_HAS_PRIMS;
+                prim->u0 = 0xFF;
+                prim->v0 = 0xFF;
+                prim->priority = 0x50;
+                prim->x0 = 0;
+                prim->y0 = 0;
+                prim->r0 = prim->b0 = prim->g0 = 0;
+                prim->blendMode = 0x35;
+                self->step++;
+            } else {
+                self->ext.roomTransition2.unk7C++;
+            }
         }
-
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-            self->step = 4;
-        }
-        break;
-
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
+        return;
     case 4:
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        AnimateEntity(D_80180794, self);
-        MoveEntity();
-        break;
-    }
-}
-
-// Extending wing spike from succubus ID 0x1E
-void EntitySuccubusWingSpike(Entity* self) {
-    s32 temp_s2;
-    s16 var_s0;
-
-    if (D_80180664 & 2) {
-        DestroyEntity(self);
+        prim = &g_PrimBuf[self->primIndex];
+        prim->r0 = prim->g0 = prim->b0 = prim->b0 + 8;
+        if (prim->r0 >= 0xF0) {
+            self->step++;
+            DestroyEntity(&g_Entities[208]);
+            g_CurrentRoom.bg[0].D_800730F4 |= 1;
+            g_api.PlaySfx(0xA1);
+            g_api.PlaySfx(0x30F);
+        }
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
+        return;
+    case 5:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->r0 = prim->g0 = prim->b0 = prim->b0 - 8;
+        if (prim->r0 == 0) {
+            DestroyEntity(self);
+            gents = &g_Entities[192];
+            layout->unk40 = 0;
+            D_8003C8B8 = 1;
+            DestroyEntity(gents);
+            CreateEntityFromCurrentEntity(0x17, gents);
+        }
+        g_Player.D_80072EF4 = 0;
+        g_Player.D_80072EFC = 1;
         return;
     }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_801804E8);
-        self->unk19 = 4;
-        self->animCurFrame = 0;
-        var_s0 = D_801807F0[self->params];
-        self->rotAngle = var_s0;
-        self->unk19 |= 1;
-        self->unk1A = 0x100;
-        CreateEntityFromEntity(0x1F, self, &self[1]);
-        self[1].facing = self->facing;
-        self[1].params = self->params;
-        self[1].rotAngle = self->rotAngle;
-
-    case 1:
-        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 != 0) {
-            self->step++;
-        }
-        break;
-
-    case 2:
-        self->animCurFrame = 85;
-        self->unk1A += 0x40;
-        if (self->unk1A > 0x600) {
-            self->unk1A = 0x600;
-        }
-
-        if (self->ext.generic.unk9C->ext.generic.unk84.U8.unk1 == 0) {
-            self->step++;
-        }
-        break;
-
-    case 3:
-        self->unk1A -= 0x40;
-        if (self->unk1A < 0x100) {
-            DestroyEntity(self);
-            return;
-        }
-    }
-
-    var_s0 = self->rotAngle;
-    temp_s2 = (self->unk1A * 0xB) >> 6;
-    if (self->facing == 0) {
-        var_s0 = 0x800 - var_s0;
-    }
-
-    self[1].posX.i.hi = self->posX.i.hi;
-    self[1].posY.i.hi = self->posY.i.hi;
-    self[1].posX.i.hi += temp_s2 * rcos(var_s0) >> 0xC;
-    self[1].posY.i.hi -= temp_s2 * rsin(var_s0) >> 0xC;
 }
 
-void EntityUnkId1F(Entity* entity) {
+// shows the sword taken from you by Death. Using a different params shows
+// the other items?
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityDeathStolenItem);
+
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityUnkId5A);
+
+void EntityUnkId5B(Entity* entity) {
+    Entity* newEntity;
+
+    entity->posX.i.hi = entity[-1].posX.i.hi;
+    entity->posY.i.hi = entity[-1].posY.i.hi;
+
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_8018050C);
+        InitializeEntity(D_80180B00);
+        entity->animSet = ANIMSET_OVL(8);
+        entity->palette = 0x2D6;
         entity->animCurFrame = 0;
-        entity->unk19 = 4;
-        entity->hitboxState = 0;
+        entity->unk5A = 0x44;
+        break;
+
     case 1:
-        if (entity[-1].animCurFrame != 0) {
-            entity->hitboxState = 1;
-            entity->animCurFrame = 0x56;
+        if (entity->ext.generic.unk7C.u != 0) {
+            switch (entity->ext.generic.unk7C.u) {
+            case 1:
+                AnimateEntity(D_80181B40, entity);
+                break;
+            case 2:
+                AnimateEntity(D_80181B4C, entity);
+                break;
+            case 3:
+                AnimateEntity(D_80181B4C, entity);
+                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                if (newEntity == NULL) {
+                    break;
+                }
+                CreateEntityFromCurrentEntity(0x5E, newEntity);
+                newEntity->animCurFrame = entity->animCurFrame;
+                newEntity->params = 1;
+                break;
+            }
+        } else {
+            entity->animCurFrame = 0;
         }
-        if (entity->hitFlags != 0) {
-            D_80180668 = 1;
+    }
+    entity->ext.generic.unk7C.s = 0;
+}
+
+void EntityUnkId5E(Entity* entity) {
+    s16 animCurFrame;
+
+    switch (entity->step) {
+    case 0:
+        animCurFrame = entity->animCurFrame;
+        InitializeEntity(D_80180B00);
+        entity->animCurFrame = animCurFrame;
+        entity->animSet = ANIMSET_OVL(8);
+        entity->palette = 0x2D6;
+        entity->unk5A = 0x44;
+        if (entity->params != 0) {
+            entity->unk19 = 8;
+            entity->ext.generic.unk84.U16.unk0 = 0x40;
+        } else {
+            entity->unk19 = 0xC;
+            entity->ext.generic.unk84.U16.unk0 = 0x20;
         }
-        if (entity[-1].entityId != 0x1E) {
+        entity->unk6C = 0x40;
+        entity->blendMode = 0x30;
+        break;
+
+    case 1:
+        if (!(--entity->ext.generic.unk84.U16.unk0)) {
             DestroyEntity(entity);
+            break;
+        }
+        if (entity->params != 0) {
+            entity->unk6C = (s8)entity->unk6C - 1;
+        } else {
+            entity->unk6C += -2;
+        }
+        break;
+    }
+}
+
+void func_801C13F8() {
+    Entity* entity;
+    s16 temp_s3;
+    s32 i;
+    s8 temp_s4;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
+            entity->params = 2;
+            entity->ext.generic.unk88.S8.unk1 = 6 - i;
+            entity->ext.generic.unk84.S16.unk0 = temp_s3;
+            entity->ext.generic.unk88.S8.unk0 = temp_s4;
         }
     }
 }
 
-void func_80194774(void) {
-    D_801A3EE4 = 2;
-    D_801A3EE2 = 2;
-    D_801A3EE6 = 0;
-    D_801A3EEA = 0;
-    D_801A3EEE = 0;
-    D_801A3EEF = 8;
-    D_801A3EDE = D_801A3EE0 + 20;
-}
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801947C8);
-
-void func_8019498C(s16 yOffset) {
-    RECT rect;
-
-    rect.y = (yOffset * 12) + 384;
-    rect.w = 64;
-    rect.x = 0;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801949E8);
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194AA0);
-
-void func_80194C24(s32 arg0) {
-    D_801A3F18 = arg0 + 0x100000;
-    D_801A3F16 = 0;
-    D_801A3F14 = 1;
-}
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194C50);
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194F14);
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80194FF4);
-
-// dialogue with mother opens as alucard walks right ID 20
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntitySuccubusIntroCutscene);
-
-void func_801961DC(s16 arg0) {
-    s16 temp_v0 = arg0 - *(s16*)D_8009740C;
-
-    if (temp_v0 > 1) {
-        D_8009740C[0]++;
-    } else if (temp_v0 < -1) {
-        D_8009740C[0]--;
-    } else {
-        D_8009740C[0] = arg0;
-    }
-}
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityUnkId21);
-
-// appears to load from the CD and freeze the game
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityUnkId23);
-
-// Fades to white
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityFadeToWhite1);
-
-// Fades to white ID 24
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityFadeToWhite2);
+// A single "puff" of the warg explosion animation, opaque
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityWargExplosionPuffOpaque);
 
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
@@ -228,8 +227,8 @@ void Update(void) {
     s32* unk;
 
     for (i = 0; i < 0x20; i++) {
-        if (D_801A3F8C[i]) {
-            D_801A3F8C[i]--;
+        if (D_801D7DD8[i]) {
+            D_801D7DD8[i]--;
         }
     }
 
@@ -274,7 +273,7 @@ void Update(void) {
 
             if (unk34 & 0xF) {
                 entity->palette =
-                    D_8018097C[(entity->nFramesInvincibility << 1) |
+                    D_80181CC0[(entity->nFramesInvincibility << 1) |
                                (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
@@ -305,11 +304,11 @@ void Update(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801972BC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C1B78);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801973C4);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C1C80);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityNumericDamage);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityNumericDamage);
 
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
     DestroyEntity(entity);
@@ -402,80 +401,80 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     }
 }
 
-void func_80198E74(s16 arg0) {
-    while (1) {
-        if ((D_801A32C4->posX != 0xFFFE) && ((s32)D_801A32C4->posX >= arg0)) {
-            break;
-        }
-
-        D_801A32C4++;
-    }
-}
-
-void func_80198EC0(s16 arg0) {
+void func_801C3730(s16 arg0) {
     while (true) {
-        if ((D_801A32C4->posX != 0xFFFF) &&
-            ((arg0 >= (s32)D_801A32C4->posX) || (D_801A32C4->posX == 0xFFFE))) {
+        if ((D_801D7110->posX != (u16)~1) && !(D_801D7110->posX < arg0)) {
             break;
         }
-        D_801A32C4--;
+        D_801D7110++;
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80198F18);
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_80199014);
-
-void func_80199128(s16 arg0) {
-    while (1) {
-        if ((D_801A32C8[1] != 0xFFFE) && ((s32)D_801A32C8[1] >= arg0)) {
-            break;
-        }
-
-        D_801A32C8 += 5;
-    }
-}
-
-void func_80199174(s16 arg0) {
+void func_801C377C(s16 arg0) {
     while (true) {
-        if ((D_801A32C8[1] != 0xFFFF) &&
-            (((s32)arg0 >= D_801A32C8[1]) || (D_801A32C8[1] == 0xFFFE))) {
+        if ((D_801D7110->posX == (u16)~0) ||
+            ((arg0 < D_801D7110->posX) && (D_801D7110->posX != (u16)~1))) {
+            D_801D7110--;
+        } else {
             break;
         }
-        D_801A32C8 -= 5;
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801991CC);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C37D4);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_801992C8);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C38D0);
+
+void func_801C39E4(s16 arg0) {
+    while (true) {
+        if ((D_801D7114[1] != (u16)~1) && !(D_801D7114[1] < arg0)) {
+            break;
+        }
+        D_801D7114 += 5;
+    }
+}
+
+void func_801C3A30(s16 arg0) {
+    while (true) {
+        if (D_801D7114[1] == (u16)~0)
+            D_801D7114 -= 5;
+        else if ((arg0 >= (s32)D_801D7114[1]) || (D_801D7114[1] == (u16)~1))
+            break;
+        else
+            D_801D7114 -= 5;
+    }
+}
+
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C3A88);
+
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C3B84);
 
 void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = D_80180220[objLayoutId];
+    u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
     s16 temp_s0;
     s16 arg0;
     s16 i;
     u16* temp_v1;
 
-    D_801A32C4 = pObjLayoutStart;
-    D_801A32C8 = D_801802F4[objLayoutId];
+    D_801D7110 = pObjLayoutStart;
+    D_801D7114 = D_80180850[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
-        D_801A32C4 = pObjLayoutStart + 1;
+        D_801D7110 = pObjLayoutStart + 1;
         arg0 = Random() & 0xFF;
         for (i = 0; true; i++) {
-            temp_v1 = D_801A32C4;
-            D_801A32C4 = temp_v1 + 1;
+            temp_v1 = D_801D7110;
+            D_801D7110 = temp_v1 + 1;
             arg0 -= temp_v1[0];
             if (arg0 < 0) {
                 break;
             }
-            D_801A32C4 = temp_v1 + 3;
+            D_801D7110 = temp_v1 + 3;
         }
-        D_801A32C4 = (temp_v1[2] << 0x10) + temp_v1[1];
-        D_801A32C8 += i * 2 + 2;
-        D_801A32C8 = (D_801A32C8[1] << 0x10) + D_801A32C8[0];
+        D_801D7110 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_801D7114 += i * 2 + 2;
+        D_801D7114 = (D_801D7114[1] << 0x10) + D_801D7114[0];
     }
     arg0 = currentRoomTileLayout->unkA;
     temp_s0 = arg0 + 0x140;
@@ -484,32 +483,35 @@ void InitRoomEntities(s32 objLayoutId) {
         i = 0;
     }
 
-    D_801A32CC = 0;
-    D_801A32D0 = 0;
-    func_80198E74(i);
-    func_80198F18(temp_s0);
-    func_80199128(currentRoomTileLayout->unkE + 0x120);
+    D_801D7118 = 0;
+    D_801D711C = 0;
+    func_801C3730(i);
+    func_801C37D4(temp_s0);
+    func_801C39E4(currentRoomTileLayout->unkE + 0x120);
 }
 
-void func_80199554(void) {
+void func_801C37D4(s16);
+void func_801C38D0(s16);
+void func_801C3A88(s16);
+void func_801C3B84(s16);
+
+void func_801C3E10(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
 
     if (D_80097908 != 0) {
         s16 tmp = g_Camera.posX.i.hi;
-        if (D_80097908 > 0) {
-            func_80198F18(tmp + 0x140);
-        } else {
-            func_80199014(tmp - 0x40);
-        }
+        if (D_80097908 > 0)
+            func_801C37D4(tmp + 0x140);
+        else
+            func_801C38D0(tmp - 0x40);
     }
 
     if (D_8009790C != 0) {
         s16 tmp = currentRoomTileLayout->unkE;
-        if (D_8009790C > 0) {
-            func_801991CC(tmp + 0x120);
-        } else {
-            func_801992C8(tmp - 0x40);
-        }
+        if (D_8009790C > 0)
+            func_801C3A88(currentRoomTileLayout->unkE + 0x120);
+        else
+            func_801C3B84(tmp - 0x40);
     }
 }
 
@@ -529,7 +531,7 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-s32 func_801996F8(Entity* e) {
+s32 func_801C3FB4(Entity* e) {
     s16 diff;
 
     diff = PLAYER.posX.i.hi - e->posX.i.hi;
@@ -546,7 +548,7 @@ s32 func_801996F8(Entity* e) {
     return diff;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityRedDoor);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -581,40 +583,9 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-s32 AnimateEntity(const u8 frames[], Entity* entity) {
-    s32 flag = 0;
-    u16 currentFrameIndex = entity->animFrameIdx * 2;
-    u8* currentFrame = frames + currentFrameIndex;
+#include "st/AnimateEntity.h"
 
-    if (entity->animFrameDuration == 0) {
-        if (currentFrame[0] > 0) {
-            flag = 0x80;
-            if (currentFrame[0] == 0xFF) {
-                return false;
-            }
-
-            entity->animFrameDuration = *currentFrame++;
-            entity->animCurFrame = *currentFrame++;
-            entity->animFrameIdx++;
-        } else {
-            currentFrame = frames;
-            entity->animFrameIdx = 0;
-            entity->animFrameDuration = 0;
-            entity->animFrameDuration = *currentFrame++;
-            entity->animCurFrame = *currentFrame++;
-            entity->animFrameIdx++;
-            return false;
-        }
-    }
-
-    entity->animFrameDuration = entity->animFrameDuration - 1;
-    entity->animCurFrame = currentFrame[-1];
-    flag |= true;
-
-    return (u8)flag;
-}
-
-u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
+u8 func_801C4E4C(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];
     s16 var_a1 = 0;
@@ -665,7 +636,7 @@ s32 GetDistanceToPlayerY(void) {
     return yDistance;
 }
 
-s16 GetSideToPlayer(void) {
+s32 GetSideToPlayer(void) {
     s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
@@ -675,17 +646,17 @@ s16 GetSideToPlayer(void) {
 }
 
 void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->accelerationY;
+    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
 }
 
 void FallEntity(void) {
-    if (g_CurrentEntity->accelerationY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->accelerationY += FALL_GRAVITY;
+    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
+        g_CurrentEntity->velocityY += FALL_GRAVITY;
     }
 }
 
-s32 func_8019A7B8(u16* sensors) {
+s32 func_801C5074(u16* sensors) {
     Collider col;
     Collider colBack;
     s16 x;
@@ -694,7 +665,7 @@ s32 func_8019A7B8(u16* sensors) {
 
     MoveEntity();
     FallEntity();
-    if (g_CurrentEntity->accelerationY >= 0) {
+    if (g_CurrentEntity->velocityY >= 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
         for (i = 0; i < 4; i++) {
@@ -708,8 +679,8 @@ s32 func_8019A7B8(u16* sensors) {
                         if (!(colBack.effects & EFFECT_SOLID)) {
                             g_CurrentEntity->posY.i.hi =
                                 (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
-                            g_CurrentEntity->accelerationX = 0;
-                            g_CurrentEntity->accelerationY = 0;
+                            g_CurrentEntity->velocityX = 0;
+                            g_CurrentEntity->velocityY = 0;
                             g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
                             return 1;
                         }
@@ -726,8 +697,8 @@ s32 func_8019A7B8(u16* sensors) {
                 if (!(colBack.effects & EFFECT_SOLID)) {
                     g_CurrentEntity->posY.i.hi =
                         g_CurrentEntity->posY.i.hi + col.unk18;
-                    g_CurrentEntity->accelerationX = 0;
-                    g_CurrentEntity->accelerationY = 0;
+                    g_CurrentEntity->velocityX = 0;
+                    g_CurrentEntity->velocityY = 0;
                     g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
                     return 1;
                 }
@@ -738,13 +709,13 @@ s32 func_8019A7B8(u16* sensors) {
     return 0;
 }
 
-s32 func_8019AA30(s16* posX) {
+s32 func_801C52EC(s16* posX) {
     Collider collider;
     s16 temp2;
     s16 temp4;
     s16 x, y;
 
-    g_CurrentEntity->posX.val += g_CurrentEntity->accelerationX;
+    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
     temp2 = g_CurrentEntity->posY.i.hi + 3;
     g_CurrentEntity->posY.i.hi = temp2;
     x = g_CurrentEntity->posX.i.hi + *posX;
@@ -757,8 +728,8 @@ s32 func_8019AA30(s16* posX) {
     posX++;
 
     g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
-    if (g_CurrentEntity->accelerationX != 0) {
-        if (g_CurrentEntity->accelerationX < 0) {
+    if (g_CurrentEntity->velocityX != 0) {
+        if (g_CurrentEntity->velocityX < 0) {
             temp4 = x - *posX;
             posX++;
         } else {
@@ -771,8 +742,8 @@ s32 func_8019AA30(s16* posX) {
             if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
                 EFFECT_UNK_0002) {
                 g_CurrentEntity->posX.val =
-                    g_CurrentEntity->posX.val - g_CurrentEntity->accelerationX;
-                g_CurrentEntity->accelerationX = 0;
+                    g_CurrentEntity->posX.val - g_CurrentEntity->velocityX;
+                g_CurrentEntity->velocityX = 0;
                 return 0xFF;
             }
             return 0x61;
@@ -785,8 +756,8 @@ s32 func_8019AA30(s16* posX) {
             }
             return 1;
         }
-        g_CurrentEntity->posX.val -= g_CurrentEntity->accelerationX;
-        g_CurrentEntity->accelerationX = 0;
+        g_CurrentEntity->posX.val -= g_CurrentEntity->velocityX;
+        g_CurrentEntity->velocityX = 0;
 
         return 0x80;
     }
@@ -795,7 +766,6 @@ s32 func_8019AA30(s16* posX) {
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
-
     while (current < end) {
         if (current->entityId == E_NONE) {
             DestroyEntity(current);
@@ -807,37 +777,32 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
+s32 func_801C5534(u8 arg0, s16 arg1) { return D_801820C4[arg0] * arg1; }
 
-extern s16 D_80180D80[];
-s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
+s16 func_801C5560(u8 arg0) { return D_801820C4[arg0]; }
 
-void func_8019ACC0(s32 arg0, s16 arg1) {
-    g_CurrentEntity->accelerationX = func_8019AC78(arg0, arg1);
-    g_CurrentEntity->accelerationY = func_8019AC78(arg0 - 0x40, arg1);
+void func_801C557C(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_801C5534(arg0, arg1);
+    g_CurrentEntity->velocityY = func_801C5534(arg0 - 0x40, arg1);
 }
 
-u8 func_8019AD2C(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
-
-u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
-    u16 x, y;
-
-    x = arg1->zPriority - arg0->zPriority;
-    y = arg1->palette - arg0->palette;
-
-    return func_8019AD2C(x, y);
+u8 func_801C55E8(s16 arg0, s16 arg1) {
+    return ((ratan2(arg1, arg0) >> 4) + 0x40);
 }
 
-u8 func_8019ADAC(s16 arg0, s16 arg1) {
-    s16 x, y;
-
-    x = arg0 - g_CurrentEntity->posX.i.hi;
-    y = arg1 - g_CurrentEntity->posY.i.hi;
-
-    return func_8019AD2C(x, y);
+u8 func_801C5620(Entity* arg0, Entity* arg1) {
+    s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
+    s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
+    return func_801C55E8(a, b);
 }
 
-u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
+u8 func_801C5668(s32 arg0, s32 arg1) {
+    s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
+    s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
+    return func_801C55E8(a, b);
+}
+
+u8 func_801C56B0(u8 arg0, u8 arg1, u8 arg2) {
     u8 var_v0;
     s8 temp_a2 = arg2 - arg1;
 
@@ -860,7 +825,8 @@ u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_8019AE4C(u16 slope, s16 speed) {
+// Duplicate
+void func_801C5708(u16 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;
@@ -872,7 +838,7 @@ void func_8019AE4C(u16 slope, s16 speed) {
         moveX += 15;
     }
 
-    entity->accelerationX = moveX >> 4;
+    entity->velocityX = moveX >> 4;
 
     moveY = rsin(slope) * speed;
     entity = g_CurrentEntity;
@@ -881,24 +847,24 @@ void func_8019AE4C(u16 slope, s16 speed) {
         moveY += 15;
     }
 
-    entity->accelerationY = moveY >> 4;
+    entity->velocityY = moveY >> 4;
 }
 
-u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
+u16 func_801C5794(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_8019AF08(Entity* a, Entity* b) {
+u16 func_801C57C4(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
-u16 func_8019AF40(s32 x, s32 y) {
+u16 func_801C57FC(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
-u16 func_8019AF88(u16 arg0, s16 arg1, s16 arg2) {
+u16 func_801C5844(u16 arg0, u16 arg1, u16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -923,31 +889,24 @@ u16 func_8019AF88(u16 arg0, s16 arg1, s16 arg2) {
 }
 
 void SetStep(u8 step) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    entity->step = step;
-    entity->step_s = 0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_8019B008(u8 arg0) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    entity->step_s = arg0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+void func_801C58C4(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_8019B024(u16 arg0, u16 arg1) {
+void func_801C58E0(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
-        func_801A046C(arg1);
+        func_801CAD28(arg1);
     }
-
     if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);
         return;
@@ -955,8 +914,8 @@ void func_8019B024(u16 arg0, u16 arg1) {
 
     entity = g_CurrentEntity;
     entity->unk19 = 0;
-    entity->entityId = E_EXPLOSION;
-    entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    entity->entityId = 2;
+    entity->pfnUpdate = EntityExplosion;
     entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
@@ -991,26 +950,26 @@ void InitializeEntity(u16 arg0[]) {
     }
 }
 
-void func_8019B1B4(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->step++;
     }
 }
 
-s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
+s32 func_801C5A98(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
-    s32 accelerationX;
+    s32 velocityX;
     u16 temp_a1;
     s16 x;
     s16 y;
 
-    accelerationX = g_CurrentEntity->accelerationX;
-    if (accelerationX != 0) {
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX != 0) {
         x = g_CurrentEntity->posX.i.hi;
         y = g_CurrentEntity->posY.i.hi;
         for (i = 0; i < sensorCount; i++) {
-            if (accelerationX < 0) {
+            if (velocityX < 0) {
                 s16 newX = x + *hitSensors++;
                 x = newX;
             } else {
@@ -1029,20 +988,20 @@ s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_8019B304(u16* hitSensors, s16 sensorCount) {
+void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
-    s32 accelerationX;
+    s32 velocityX;
     s16 x;
     s16 y;
 
-    accelerationX = g_CurrentEntity->accelerationX;
-    if (accelerationX == 0)
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX == 0)
         return;
     x = g_CurrentEntity->posX.i.hi;
     y = g_CurrentEntity->posY.i.hi;
     for (i = 0; i < sensorCount; i++) {
-        if (accelerationX < 0) {
+        if (velocityX < 0) {
             x = x + *hitSensors++;
         } else {
             x = x - *hitSensors++;
@@ -1052,7 +1011,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
         g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_UNK_0002 &&
             (!(collider.effects & EFFECT_UNK_8000) || i != 0)) {
-            if (accelerationX < 0) {
+            if (velocityX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
                 g_CurrentEntity->posX.i.hi += collider.unk14;
@@ -1062,7 +1021,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019B45C);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", func_801C5D18);
 
 void ReplaceBreakableWithItemDrop(Entity* self) {
     u16 params;
@@ -1070,7 +1029,7 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     PreventEntityFromRespawning(self);
 
 #if STAGE != STAGE_ST0
-    if (!(g_Status.relics[10] & 2)) {
+    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
         DestroyEntity(self);
         return;
     }
@@ -1094,36 +1053,36 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     self->step = 0;
 }
 
-void func_8019B858(void) {
+void func_801C6114(void) {
     s32 temp_v1;
-    Entity* entity = g_CurrentEntity;
+    Entity* entity;
 
-    if (entity->accelerationY >= 0) {
+    entity = g_CurrentEntity;
+    if (entity->velocityY >= 0) {
         temp_v1 =
-            entity->ext.generic.unk84.unk + entity->ext.generic.unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
         entity->ext.generic.unk84.unk = temp_v1;
-        entity->accelerationX = temp_v1;
-
-        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
-            entity->ext.generic.unk88.U16.unk0 =
-                -entity->ext.generic.unk88.U16.unk0;
+        entity->velocityX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
 
-    if (entity->accelerationY < 0x00004000) {
-        entity->accelerationY += 0x2000;
+    if (entity->velocityY < 0x00004000) {
+        entity->velocityY += 0x2000;
     }
 }
 
-void func_8019B8DC(u16 arg0) {
+void func_801C6198(u16 arg0) {
     Collider collider;
 
-    if (g_CurrentEntity->accelerationX < 0) {
+    if (g_CurrentEntity->velocityX < 0) {
         g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
                              g_CurrentEntity->posY.i.hi - 7, &collider, 0);
         if (collider.effects & EFFECT_NOTHROUGH) {
-            g_CurrentEntity->accelerationY = 0;
+            g_CurrentEntity->velocityY = 0;
         }
     }
 
@@ -1137,8 +1096,8 @@ void func_8019B8DC(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->accelerationX = 0;
-        g_CurrentEntity->accelerationY = 0;
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
 
         if (collider.effects & EFFECT_QUICKSAND) {
             g_CurrentEntity->posY.val += 0x2000;
@@ -1151,16 +1110,17 @@ void func_8019B8DC(u16 arg0) {
 
     if (!(collider.effects & EFFECT_NOTHROUGH)) {
         MoveEntity();
-        func_8019B858();
+        func_801C6114();
     }
 }
 
-void func_8019BA38(u16 arg0) {
+extern s8 D_801824F0[]; // c_HeartPrizes
+void CollectHeart(u16 arg0) {
     s32* hearts;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     hearts = &g_Status.hearts;
-    *hearts += c_HeartPrizes[arg0];
+    *hearts += D_801824F0[arg0];
 
     if (g_Status.heartsMax < *hearts) {
         *hearts = g_Status.heartsMax;
@@ -1169,7 +1129,27 @@ void func_8019BA38(u16 arg0) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", func_8019BAB8);
+void CollectGold(u16 goldSize) {
+    s32 *gold, *unk;
+    u16 goldSizeIndex;
+
+    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
+    gold = &g_Status.gold;
+    goldSizeIndex = goldSize - 2;
+    *gold += c_GoldPrizes[goldSizeIndex];
+    if (*gold > MAX_GOLD) {
+        *gold = MAX_GOLD;
+    }
+
+    unk = &D_80097410;
+    if (*unk) {
+        g_api.FreePrimitives(D_80097414);
+        *unk = 0;
+    }
+
+    func_801D06FC(D_80182438[goldSizeIndex], 1);
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
@@ -1177,13 +1157,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
     g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
     subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_801810B0[subWeaponIdx];
+    g_Status.subWeapon = D_801823F4[subWeaponIdx];
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
         g_CurrentEntity->unk6D = 0x10;
     } else {
-        subWeapon = D_801810E0[subWeapon];
+        subWeapon = D_80182424[subWeapon];
         g_CurrentEntity->unk6D = 0x60;
     }
 
@@ -1191,14 +1171,14 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
-        g_CurrentEntity->accelerationY = -0x28000;
+        g_CurrentEntity->velocityY = -0x28000;
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
         if (player->facing != 1) {
-            g_CurrentEntity->accelerationX = -0x20000;
+            g_CurrentEntity->velocityX = -0x20000;
             return;
         }
-        g_CurrentEntity->accelerationX = 0x20000;
+        g_CurrentEntity->velocityX = 0x20000;
         return;
     }
     DestroyEntity(g_CurrentEntity);
@@ -1221,74 +1201,8 @@ void CollectHeartVessel(void) {
 
 void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
+    g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14214", EntityPrizeDrop);
-
-void EntityExplosion(Entity* entity) {
-    u32 temp_v0;
-    u32 temp;
-
-    if (!entity->step) {
-        InitializeEntity(D_80180470);
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->blendMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->blendMode = 0x10;
-        }
-
-        temp_v0 = entity->params & 0xFF00;
-
-        if (temp_v0 != 0) {
-            entity->zPriority = (u16)(temp_v0 >> 8);
-        }
-
-        entity->params &= 0xF;
-        entity->accelerationY = D_801811B0[entity->params];
-        return;
-    }
-
-    entity->posY.val += entity->accelerationY;
-    if (!AnimateEntity(D_8018125C[entity->params], entity)) {
-        DestroyEntity(entity);
-    }
-}
-
-void func_8019C738(Entity* entity, s32 renderFlags) {
-    POLY_GT4* poly;
-    s16 left, top, right, bottom;
-
-    poly = &g_PrimBuf[entity->primIndex];
-
-    left = entity->posX.i.hi - 7;
-    right = entity->posX.i.hi + 7;
-    poly->x2 = left;
-    poly->x0 = left;
-    poly->x3 = right;
-    poly->x1 = right;
-
-    top = entity->posY.i.hi - 7;
-    bottom = entity->posY.i.hi + 7;
-    poly->y1 = top;
-    poly->y0 = top;
-    poly->y3 = bottom;
-    poly->y2 = bottom;
-
-    if (renderFlags & RENDERFLAGS_NOSHADOW) {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                255;
-    } else {
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 =
-            poly->g2 = poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
-                128;
-    }
-}
