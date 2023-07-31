@@ -160,11 +160,6 @@ typedef struct {
 } SubweaponDef;          /* size=0x14 */
 
 typedef struct {
-    char pad_0[0x1B];
-    s8 unk1C;
-} Unkstruct_800A841C; // related to player MP
-
-typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* description;
     /* 0x08 */ s16 attack;
@@ -296,6 +291,18 @@ typedef enum {
     ITEM_MEDICINE
 } ItemCategory;
 
+typedef enum {
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_WOLF_CHARGE,
+    SPELL_SOUL_STEAL,
+    SPELL_WING_SMASH,
+    SPELL_SWORD_BROTHERS,
+    NUM_SPELLS,
+} SpellIds;
+
 s32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
@@ -323,7 +330,6 @@ extern s32 D_8013B5E8;
 extern Unkstruct_800A2D98 D_801375CC;
 extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
-extern Unkstruct_800A841C D_800A841C[]; // related to player MP
 extern PlayerStatus g_Status;
 extern SubweaponDef g_Subweapons[];
 

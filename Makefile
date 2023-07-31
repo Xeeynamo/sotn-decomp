@@ -99,10 +99,14 @@ clean:
 	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
+	git clean -fdx function_calls/
+	git clean -fdx sotn_calltree.txt
 format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
+	$(PYTHON) tools/lints/fixed.py src/ || true
+	$(PYTHON) tools/lints/relics.py src/
 	black tools/*.py
 	black tools/splat_ext/*.py
 	black tools/split_jpt_yaml/*.py
@@ -590,6 +594,8 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
 
 SHELL = /bin/bash -e -o pipefail
+
+include tools/tools.mk
 
 .PHONY: all, clean, format, check, expected
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000

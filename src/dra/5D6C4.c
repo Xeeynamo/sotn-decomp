@@ -188,13 +188,13 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     return ret;
 }
 
-bool func_800FDC94(s32 arg0) {
-    u8 temp = D_800A841C[arg0 * 0x1C];
+bool CastSpell(SpellIds spellId) {
+    u8 mpUsage = g_SpellDefs[spellId].mpUsage;
 
-    if (g_Status.mp < (s32)temp) {
+    if (g_Status.mp < mpUsage) {
         return false;
     } else {
-        g_Status.mp -= temp;
+        g_Status.mp -= mpUsage;
         return true;
     }
 }
@@ -784,7 +784,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         g_Status.level = 1;
         g_Status.killCount = 0;
 
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < NUM_FAMILIARS; i++) {
             g_Status.statsFamiliars[i].level = 1;
             g_Status.statsFamiliars[i].exp = 0;
             g_Status.statsFamiliars[i].unk8 = 0;
@@ -805,7 +805,7 @@ void InitStatsAndGear(bool DeathTakeItems) {
         g_Status.equipCloakCount[0] = 1;
         g_Status.equipOtherCount[0] = 1;
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < LEN(g_Status.spells); i++) {
             g_Status.spells[i] = 0;
         }
         g_Status.spellsLearnt = 0;
@@ -814,8 +814,8 @@ void InitStatsAndGear(bool DeathTakeItems) {
         if ((g_StageId == STAGE_ST0) ||
             (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
 
-            for (i = 0; i < 30; i++) {
-                g_Status.relics[i] = 1;
+            for (i = 0; i < LEN(g_Status.relics); i++) {
+                g_Status.relics[i] = RELIC_FLAG_FOUND;
             }
             // These relics are special for Richter
             g_Status.relics[RELIC_CUBE_OF_ZOE] |= 2;
@@ -880,8 +880,8 @@ void InitStatsAndGear(bool DeathTakeItems) {
                 g_Status.statsBase[STAT_INT] = 6;
                 g_Status.statsBase[STAT_LCK] = 6;
                 g_Status.gold = 0;
-                for (i = 0; i < 30; i++) {
-                    g_Status.relics[i] = 0;
+                for (i = 0; i < LEN(g_Status.relics); i++) {
+                    g_Status.relics[i] = RELIC_FLAG_DISABLE;
                 }
                 // If we died in prologue and needed Maria's rescue
                 if (D_801397FC != 0) {
@@ -1046,10 +1046,10 @@ void InitStatsAndGear(bool DeathTakeItems) {
                     g_Status.exp = 110000;
                 }
 
-                for (i = 0; i < 30; i++) {
-                    g_Status.relics[i] = 3;
+                for (i = 0; i < LEN(g_Status.relics); i++) {
+                    g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
                     if (D_800A872C[i].unk0 != 0) {
-                        g_Status.relics[i] = 1;
+                        g_Status.relics[i] = RELIC_FLAG_FOUND;
                     }
                 }
                 // In Demo mode, Alucard gets 50 of everything holdable

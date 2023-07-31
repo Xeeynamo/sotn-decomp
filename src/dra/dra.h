@@ -215,7 +215,7 @@ typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
-    /* 0x0C */ s8 mpUsage;
+    /* 0x0C */ u8 mpUsage;
     /* 0x0D */ s8 unk0D;
     /* 0x0E */ s16 unk0E;
     /* 0x10 */ s16 unk10;
@@ -371,7 +371,6 @@ extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
-extern s8 D_800A841C[]; // related to player MP
 extern unkStruct_800A872C D_800A872C[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
