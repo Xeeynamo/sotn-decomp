@@ -1,8 +1,8 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_801353A0(void) {
     if (*(u16*)&D_801396F4 == 0)
@@ -41,7 +41,7 @@ void func_801353A0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135484);
+INCLUDE_ASM("dra/nonmatchings/953A0", func_80135484);
 
 void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 volume, s16 distance) {
     if (arg2 != 0) {
@@ -54,7 +54,7 @@ void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 volume, s16 distance) {
     D_8013AED4[arg1] = D_800BF554[arg0].pad1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_8013572C);
+INCLUDE_ASM("dra/nonmatchings/953A0", func_8013572C);
 
 s16 IncrementRingBufferPos(s16 arg0) {
     arg0++;
@@ -94,10 +94,10 @@ void func_80135C2C(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80135D8C);
+INCLUDE_ASM("dra/nonmatchings/953A0", func_80135D8C);
 void func_80135D8C();
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/953A0", func_80136010);
+INCLUDE_ASM("dra/nonmatchings/953A0", func_80136010);
 
 void func_801361F8(void) {
     if (D_8013AEEC != 0) {
@@ -120,4 +120,3 @@ void func_801361F8(void) {
 }
 
 void nullsub_10(void) {}
-#endif
