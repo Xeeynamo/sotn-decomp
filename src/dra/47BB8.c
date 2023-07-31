@@ -732,7 +732,7 @@ s32 func_800EA5E4(u32 arg0) {
         return 1;
     }
     unkStruct = &D_8006C3C4;
-    for (j = 0; j < 32; unkStruct++) {
+    for (j = 0; j < LEN(D_8006C3C4); unkStruct++) {
         j++;
         if (unkStruct->unk8 != 0) {
             continue;
@@ -748,7 +748,7 @@ s32 func_800EA5E4(u32 arg0) {
         ones_end = (clut->unk4 + clut->unk8) - 1;
         ones_start >>= 8;
         ones_end >>= 8;
-        for (i = 0; i < 0x30; i++) {
+        for (i = 0; i < LEN(unkStruct->unkArray); i++) {
             unkStruct->unkArray[i] = 0;
         }
         for (i = ones_start; ones_end >= i; i++) {
