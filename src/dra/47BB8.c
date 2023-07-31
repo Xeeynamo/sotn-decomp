@@ -711,8 +711,8 @@ s32 func_800EA5E4(u32 arg0) {
     u16 temp_v0;
     s32 i;
     s32 j;
-    u32 temp_a1;
-    u32 temp_a2;
+    u32 ones_start;
+    u32 ones_end;
     UnkStructClut* clut;
     Unkstruct_8006C3C4* unkStruct;
 
@@ -742,17 +742,19 @@ s32 func_800EA5E4(u32 arg0) {
         unkStruct->unk8 = (temp_v0 | clut->unk0);
         unkStruct->unkA = 0;
         unkStruct->unkC = 0;
-        temp_a1 = clut->unk4;
-        temp_a2 = (u32)((temp_a1 + clut->unk8) - 1);
-        temp_a1 >>= 8;
-        temp_a2 >>= 8;
 
+        //Set unkStruct's array to all zeros, except within this range
+        ones_start = clut->unk4;
+        ones_end = (clut->unk4 + clut->unk8) - 1;
+        ones_start >>= 8;
+        ones_end >>= 8;
         for (i = 0; i < 0x30; i++) {
             unkStruct->unkArray[i] = 0;
         }
-        for (i = temp_a1; temp_a2 >= i; i++) {
+        for (i = ones_start; ones_end >= i; i++) {
             unkStruct->unkArray[i] = 1;
         }
+
         if ((u8)unkStruct->unk8 == 2 || (u8)unkStruct->unk8 == 16) {
             unkStruct->unkE = 0x1F;
         }
