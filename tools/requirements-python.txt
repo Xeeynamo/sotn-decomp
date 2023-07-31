@@ -18,3 +18,4 @@ n64img==0.3.3
 PyYAML
 pylibyaml
 pygfxd
+pillow
