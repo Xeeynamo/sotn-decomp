@@ -1929,7 +1929,8 @@ void func_8012CB4C(void) {
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
-        if (D_80138FC0[1].x == 255 && func_800FE3A8(6) && func_800FDC94(4)) {
+        if (D_80138FC0[1].x == 255 && func_800FE3A8(6) &&
+            CastSpell(SPELL_WOLF_CHARGE)) {
             func_8010E27C();
             PLAYER.step_s = 2;
             D_800B0914 = 4;
