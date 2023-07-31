@@ -710,7 +710,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ FamiliarStats statsFamiliars[7];
+    /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {
