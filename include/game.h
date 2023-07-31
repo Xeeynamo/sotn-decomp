@@ -664,7 +664,8 @@ typedef enum {
     FAMILIAR_DEMON,
     FAMILIAR_SWORD,
     FAMILIAR_YOUSEI,    // JP only
-    FAMILIAR_NOSE_DEMON // JP only
+    FAMILIAR_NOSE_DEMON, // JP only
+    NUM_FAMILIARS
 } FamiliarIds;
 
 typedef struct {
