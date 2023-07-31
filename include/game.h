@@ -657,6 +657,16 @@ typedef enum {
     NUM_RELICS,
 } RelicIds;
 
+typedef enum {
+    FAMILIAR_BAT,
+    FAMILIAR_GHOST,
+    FAMILIAR_FAIRIE,
+    FAMILIAR_DEMON,
+    FAMILIAR_SWORD,
+    FAMILIAR_YOUSEI,    // JP only
+    FAMILIAR_NOSE_DEMON // JP only
+} FamiliarIds;
+
 typedef struct {
     /* 80097964 */ u8 relics[30];
     /* 80097982 */ u8 spells[8];
