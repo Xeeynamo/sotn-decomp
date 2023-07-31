@@ -25,13 +25,13 @@ void DemoGameInit(s32 arg0) {
     InitStatsAndGear(0);
     if (g_StageId != STAGE_ST0) {
         g_Status.level = 99;
-        for (i = 0; i < 18; i++) {
-            g_Status.relics[i] = 3;
+        for (i = 0; i < RELIC_BAT_CARD; i++) {
+            g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
         }
-        for (; i < 30; i++) {
-            g_Status.relics[i] = 1;
+        for (; i < LEN(g_Status.relics); i++) {
+            g_Status.relics[i] = RELIC_FLAG_FOUND;
         }
-        g_Status.relics[RELIC_GAS_CLOUD] = 1;
+        g_Status.relics[RELIC_GAS_CLOUD] = RELIC_FLAG_FOUND;
         g_Status.hp = 80;
         g_Status.hpMax = 80;
         g_Status.subWeapon = 0;
