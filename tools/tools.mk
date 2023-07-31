@@ -1,2 +1,2 @@
 test:
-	python3 tools/tests/test_symbols.py
+	python3 tools/symbols_test.py
