@@ -195,7 +195,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
 
 // SAT: func_0606F760
 bool CastSpell(SpellIds spellId) {
-    s32 mpUsage = g_SpellDefs[spellId].mpUsage;
+    u8 mpUsage = g_SpellDefs[spellId].mpUsage;
 
     if (g_Status.mp < mpUsage) {
         return false;
