@@ -835,7 +835,7 @@ typedef struct {
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
-    /* 8003C78C */ s32** cluts;
+    /* 8003C78C */ UnkStructClut** cluts;
     /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;

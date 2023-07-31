@@ -743,7 +743,7 @@ s32 func_800EA5E4(u32 arg0) {
         unkStruct->unkA = 0;
         unkStruct->unkC = 0;
 
-        //Set unkStruct's array to all zeros, except within this range
+        // Set unkStruct's array to all zeros, except within this range
         ones_start = clut->unk4;
         ones_end = (clut->unk4 + clut->unk8) - 1;
         ones_start >>= 8;
