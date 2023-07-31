@@ -171,7 +171,10 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
-        run: pip3 install -r tools/requirements-python.txt
+        run: |
+            pip3 install -r tools/requirements-python.txt & \
+            (sudo apt-get update && sudo apt-get install graphviz) & \
+            wait
       - name: Generate function calls chart
         run: |
             make force_extract
