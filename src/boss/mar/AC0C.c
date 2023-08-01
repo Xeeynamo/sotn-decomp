@@ -221,7 +221,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197BD0);
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197CBC);
 
 // Clock room controller Entity ID 0x16
-void func_80197FEC(Entity* self) {
+void ClockRoomController(Entity* self) {
     PlayerStatus* status = &g_Status;
     Entity* newEntity;
     Primitive* prim;
@@ -295,7 +295,7 @@ void func_80197FEC(Entity* self) {
 
             newEntity = &self[5];
             for (i = 0; i < 2; i++) {
-                CreateEntityFromCurrentEntity(0x17, newEntity);
+                CreateEntityFromCurrentEntity(E_func_80198574, newEntity);
                 newEntity->params = i;
                 newEntity++;
             }
@@ -306,7 +306,7 @@ void func_80197FEC(Entity* self) {
                 (status->timerHours * 0x12C) + (status->timerMinutes * 5);
 
             for (i = 0; i < 2; i++) {
-                CreateEntityFromCurrentEntity(0x18, newEntity);
+                CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, newEntity);
                 newEntity->params = i;
                 newEntity++;
             }
@@ -404,7 +404,7 @@ void func_80198574(Entity* self) {
 }
 
 // Birdcage doors on the clock Entity ID 0x18
-void func_80198688(Entity* self) {
+void BirdcageDoor(Entity* self) {
     u16 params = self->params;
 
     switch (self->step) {
@@ -523,10 +523,10 @@ void func_80198944(Entity* self) {
         }
 
         self->ext.generic.unk7E.modeU16 = D_8019AF28[params];
-        self->posY.i.hi -= 0x3A;
+        self->posY.i.hi -= 58;
         CreateEntityFromCurrentEntity(0x1D, entity);
         entity->animSet = ANIMSET_OVL(1);
-        entity->animCurFrame = params + 0xA;
+        entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
         entity->unk19 = 8;
         entity->blendMode = 0x10;

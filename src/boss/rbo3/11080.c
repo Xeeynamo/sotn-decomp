@@ -185,9 +185,9 @@ void EntityMedusa(Entity* self) {
 
         MoveEntity();
         if (self->facing == self->ext.generic.unk84.U8.unk0) {
-            self->velocityX = 0x8000;
+            self->velocityX = FIX(0.5);
         } else {
-            self->velocityX = -0x8000;
+            self->velocityX = FIX(-0.5);
         }
 
         if (self->hitFlags & 3) {
@@ -548,7 +548,7 @@ void func_80192998(Entity* self) {
             self->unk6C = 0xC0;
             self->facing = Random() & 1;
             self->velocityX = (Random() << 8) - 0x8000;
-            self->velocityY = -0xC000;
+            self->velocityY = FIX(-0.75);
             *(s32*)&self->ext.stub[0x10] = -(Random() * 16) - 0x4000;
             self->step_s++;
         }
