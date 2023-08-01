@@ -156,15 +156,12 @@ def get_sdk_funcs():
 
 
 def get_main_funcs():
-    functions = []
-    files = ["9C54.s", "160B4.s"]
-    for file in files:
-        with open(f"asm/us/main/{file}") as f:
-            lines = f.readlines()
-            for line in lines:
-                if "glabel" in line:
-                    functions.append(line.split()[1])
-    return functions
+    with open(f"config/symbols.us.txt") as f:
+        symbols = f.readlines()
+    index_first_func = next((i for i, s in enumerate(symbols) if s.startswith("__main")), None)
+    index_last_func = next((i for i, s in enumerate(symbols) if s.startswith("SpuGetAllKeysStatus")), None)
+    symbols = symbols[index_first_func:index_last_func+1]
+    return [line.split(" = ")[0] for line in symbols]
 
 
 def get_all_funcnames():
