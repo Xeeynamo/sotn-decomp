@@ -317,10 +317,6 @@ extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
-
-extern const char* c_strLuckModeCode;
-extern const char* c_strAxeArmorCode;
-
 extern const char* c_strALUCARD;
 extern const char** c_strSTR;
 extern const char* c_strCON;
@@ -364,6 +360,7 @@ extern Unkstruct_801092E8 D_800A37D8;
 extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
+extern UnkStructClut* D_800A3BB8[];
 extern SubweaponDef g_Subweapons[];
 extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
@@ -716,7 +713,7 @@ s32 func_800E9208(void);
 void func_800E928C(void);
 void func_800E92E4(void);
 void func_800E92F4(void);
-void func_800EA5E4(s32);
+s32 func_800EA5E4(u32);
 void func_800EA538(s32);
 void func_800EAD7C(void);
 void func_800EAEEC(void);
@@ -754,7 +751,7 @@ void DrawMenuSprite(
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
-void InitStatsAndGear(bool debugMode);
+void InitStatsAndGear(bool isDeathTakingItems);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);

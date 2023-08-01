@@ -98,33 +98,14 @@ typedef struct {
 } Unkstruct_8013B15C; // size = 0x278
 
 typedef struct {
-    /* 0x00 */ u16 unk0;
-    /* 0x02 */ u16 unk2;
-    /* 0x04 */ u16 unk4;
-    /* 0x06 */ u16 unk6;
-    /* 0x08 */ u16 unk8;
-    /* 0x0A */ u16 unkA;
-    /* 0x0C */ u16 unkC;
-    /* 0x0E */ u16 unkE;
-    /* 0x10 */ u16 unk10;
-    /* 0x12 */ u16 unk12;
-    /* 0x14 */ u16 unk14;
-    /* 0x16 */ u16 unk16;
-    /* 0x18 */ u16 unk18;
-    /* 0x1A */ u16 unk1A;
-    /* 0x1C */ u16 unk1C;
-    /* 0x2E */ u16 unk1E;
-    /* 0x20 */ u16 unk20;
-    /* 0x22 */ u16 unk22;
-    /* 0x24 */ u16 unk24;
-    /* 0x26 */ u16 unk26;
-    /* 0x28 */ u16 unk28;
-    /* 0x2A */ u16 unk2A;
-    /* 0x2C */ u16 unk2C;
-    /* 0x2E */ u8 unk2E;
-    /* 0x2F */ u8 unk2F;
-    /* 0x30 */ char padA[0x10];
-} Unkstruct_8006C3CC; // size = 0x40
+    struct UnkStructClut* struct1;
+    struct UnkStructClut* struct2;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u8 unkArray[0x30];
+} Unkstruct_8006C3C4; // size = 0x40
 
 typedef struct {
     /* 0x00 */ s16 unk0; /* D_800ACEC6 */
@@ -302,3 +283,11 @@ typedef struct {
     /* 0x7 */ char pad_7;
     /* 0x8 */ s32 unk8;
 } Unkstruct_80180FE0;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+} UnkStructClut;

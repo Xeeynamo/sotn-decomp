@@ -672,10 +672,8 @@ void func_800EA48C(char* dstname, s32 saveSlot) {
     dstname[0x11] += saveSlot % 10;
 }
 
-extern Unkstruct_8006C3CC D_8006C3CC[];
-
 void func_800EA538(s32 arg0) {
-    Unkstruct_8006C3CC* var_v0;
+    Unkstruct_8006C3C4* var_v0;
     s32 temp;
     s32 v1;
     s32 i;
@@ -686,8 +684,8 @@ void func_800EA538(s32 arg0) {
 
     if (arg0 != 0) {
         for (i = 0; i < 32; i++) {
-            if (v1 & D_8006C3CC[i].unk0) {
-                D_8006C3CC[i].unk0 = 0;
+            if (v1 & D_8006C3C4[i].unk8) {
+                D_8006C3C4[i].unk8 = 0;
             }
         }
         return;
@@ -709,73 +707,61 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[2] = arg3;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA5E4);
-#else
-extern s32 D_8003C78C;
-extern s32* D_800A3BB8[];
-
-void func_800EA5E4(s32 arg0) {
-    Unkstruct_8006C3CC* var_t0;
-    s32 temp_a0;
-    s32 temp_v0;
-    s32 var_v1;
-    s32 var_v1_2;
-    u32 temp_a1;
-    u32 temp_a2;
-    u32 var_v1_3;
-    u8 temp_v1_2;
-    u8* var_a0_2;
-    Unkstruct_800EA5E4* var_a0;
-    u8* var_v0;
+s32 func_800EA5E4(u32 arg0) {
+    u16 temp_v0;
+    s32 i;
+    s32 j;
+    u32 ones_start;
+    u32 ones_end;
+    UnkStructClut* clut;
+    Unkstruct_8006C3C4* unkStruct;
 
     temp_v0 = arg0 & 0xFF00;
-    temp_a0 = arg0 & 0xFF;
+    arg0 = arg0 & 0xFF;
+
     if (temp_v0 & 0x8000) {
-        var_a0 = g_api.o.cluts[temp_a0];
+        clut = g_api.o.cluts[arg0];
     } else {
-        var_a0 = D_800A3BB8[temp_a0];
+        clut = D_800A3BB8[arg0];
     }
-    if (var_a0->unk0 == 0 || var_a0->unk0 == -1) {
-        return;
+
+    if (clut->unk0 == 0) {
+        return 1;
     }
-    var_v1 = 0;
-    var_t0 = D_8006C3C4;
-    for (; var_v1 < 0x20; var_t0++, var_v1++) {
-        if (var_t0->unk8 != 0)
+    if (clut->unk0 == -1) {
+        return 1;
+    }
+    unkStruct = &D_8006C3C4;
+    for (j = 0; j < LEN(D_8006C3C4); unkStruct++) {
+        j++;
+        if (unkStruct->unk8 != 0) {
             continue;
-        var_t0->unk0 = var_a0->unk0;
-        var_t0->unk4 = (void*)(var_a0 + 0xC);
-        var_t0->unkA = 0;
-        var_t0->unkC = 0;
-        var_t0->unk8 = temp_v0 | var_a0->unk0;
+        }
+        unkStruct->struct1 = clut;
+        unkStruct->struct2 = &clut->unkC;
+        unkStruct->unk8 = (temp_v0 | clut->unk0);
+        unkStruct->unkA = 0;
+        unkStruct->unkC = 0;
 
-        temp_a1 = var_a0->unk4;
-        var_v1_2 = 0x2F;
-        var_a0_2 = &var_t0->unk2F;
-        temp_a2 = (u32)((temp_a1 + var_a0->unk8) - 1) >> 8;
-        do {
-            var_a0_2[0x10] = 0;
-            var_v1_2 -= 1;
-            var_a0_2 -= 1;
-        } while (var_v1_2 >= 0);
-
-        var_v1_3 = temp_a1 >> 8;
-        var_v0 = var_t0 + var_v1_3;
-        while (temp_a2 >= var_v1_3) {
-            var_v0[0x10] = 1;
-            var_v1_3++;
-            var_v0 = var_t0 + var_v1_3;
+        // Set unkStruct's array to all zeros, except within this range
+        ones_start = clut->unk4;
+        ones_end = (clut->unk4 + clut->unk8) - 1;
+        ones_start >>= 8;
+        ones_end >>= 8;
+        for (i = 0; i < LEN(unkStruct->unkArray); i++) {
+            unkStruct->unkArray[i] = 0;
+        }
+        for (i = ones_start; ones_end >= i; i++) {
+            unkStruct->unkArray[i] = 1;
         }
 
-        temp_v1_2 = var_t0->unk8;
-        if (temp_v1_2 == 2 || temp_v1_2 == 0x10) {
-            var_t0->unkE = 0x1F;
+        if ((u8)unkStruct->unk8 == 2 || (u8)unkStruct->unk8 == 16) {
+            unkStruct->unkE = 0x1F;
         }
-        break;
+        return 0;
     }
+    return -1;
 }
-#endif
 
 INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA720);
 
