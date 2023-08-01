@@ -2173,7 +2173,7 @@ bool func_80131F68(void) {
 
 s16 func_80131F94(void) { return D_8013B668; }
 
-void func_80131FA4(s16 arg0) { SsUtSetReverbDepth(arg0, arg0); }
+void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
 void func_80131FCC(void) {
     if (D_8013B680 == 0) {
@@ -2285,7 +2285,7 @@ void func_80132264(void) {
     D_80139010 = 0;
     D_80139A74 = 0;
     D_8013B69C = 0;
-    D_8013B658 = 0;
+    g_SeqAccessNum = 0;
     D_80138FBC = 0;
     D_8013901C = 0;
     D_80139800 = 0;
@@ -2351,13 +2351,13 @@ void func_80132500(u8 soundMode) {
 void SoundInit(void) {
     D_8013AEEC = 1;
     SsInitHot();
-    SsSetTickMode(1);
+    SsSetTickMode(SS_TICK60);
     func_80132500(STEREO_SOUND);
     SsSetReservedVoice(0x10);
     SsStart();
-    SsSetTableSize(D_80138460, 0x10, 1);
+    SsSetTableSize(g_SeqTable, SEQ_TABLE_S_MAX, SEQ_TABLE_T_MAX);
     SsUtSetReverbType(SS_REV_TYPE_STUDIO_B);
-    SpuClearReverbWorkArea(3);
+    SpuClearReverbWorkArea(SS_REV_TYPE_STUDIO_B);
     SsUtReverbOn();
     func_80132134();
     D_8013B668 = 0x78;
@@ -2366,7 +2366,7 @@ void SoundInit(void) {
     D_80138F24[0] = -0x38; // !FAKE: D_80138F24 part of an array / struct
     func_80132028(0xE, D_80138F24, 0);
     func_80132264();
-    func_80131FA4(0xA);
+    SetReverbDepth(10);
     func_8002ABF4(0);
     func_80029FBC(0);
     CdReadyCallback(NULL);
@@ -2505,8 +2505,8 @@ void func_80133780(s8 arg0) { SsSetSerialAttr(0, 1, arg0 == 1); }
 
 void func_801337B4(void) {
     if (D_80139810 != 0) {
-        SsSeqStop(D_8013B658);
-        SsSeqClose(D_8013B658);
+        SsSeqStop(g_SeqAccessNum);
+        SsSeqClose(g_SeqAccessNum);
         func_8013415C();
         D_80139810 = 0;
         D_801390C4 = 0;
@@ -2578,7 +2578,7 @@ void func_801341B4(void) {
         break;
 
     case 2:
-        func_80131FA4(0);
+        SetReverbDepth(0);
         func_801337B4();
         func_80132C2C(3);
         D_800BD1C4 = 3;

@@ -1,6 +1,21 @@
 #ifndef LIBSND_H
 #define LIBSND_H
 
+#define SS_SEQ_TABSIZ 176
+
+#define SS_NOTICK 0x1000
+#define SS_NOTICK0 0
+#define SS_TICK60 1
+#define SS_TICK240 2
+#define SS_TICK120 3
+#define SS_TICK50 4
+#define SS_TICKVSYNC 5
+#define SS_TICKMODE_MAX 6
+
+#define SS_IMEDIATE 0
+#define SS_IMMEDIATE 0
+#define SS_WAIT_COMPLETED 1
+
 #define SS_REV_TYPE_OFF 0
 #define SS_REV_TYPE_ROOM 1
 #define SS_REV_TYPE_STUDIO_A 2
@@ -90,10 +105,14 @@ short SsUtKeyOnV(
     short volr   // Volume, right (0-127)
 );
 
-/*
- * Not known
- */
-void SsUtSetVVol(s16, short voll, short volr);
+// Sets the left and right volumes of the specified voice, vc. Since libsnd uses
+// an exponential volume calculation for sounds being keyed on, the input
+// volumes voll and volr are modified as (vol * vol / 127).
+// 0 if successful, -1 if unsuccessful.
+short SsUtSetVVol(short vc,   // Voice number (0-23)
+                  short voll, // Volume left (0-127)
+                  short volr  // Volume right (0-127)
+);
 
 void SpuGetAllKeysStatus(char* status);
 
