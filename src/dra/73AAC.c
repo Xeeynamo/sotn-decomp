@@ -1,8 +1,8 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_80113AAC(void) {
     s32 var_s1 = 0;
@@ -176,11 +176,11 @@ block_13:
 }
 
 void AlucardHandleDamage(DamageParam* param, s16 arg1, s16 arg2);
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", AlucardHandleDamage);
+INCLUDE_ASM("dra/nonmatchings/73AAC", AlucardHandleDamage);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80114DF4);
+INCLUDE_ASM("dra/nonmatchings/73AAC", func_80114DF4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80115394);
+INCLUDE_ASM("dra/nonmatchings/73AAC", func_80115394);
 
 void func_80115BB0(void) {
     PLAYER.unk19 = 4;
@@ -235,4 +235,3 @@ void func_80115C50(void) {
         }
     }
 }
-#endif

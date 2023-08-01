@@ -620,6 +620,9 @@ typedef struct {
     s32 unk8;
 } FamiliarStats;
 
+#define RELIC_FLAG_DISABLE 0
+#define RELIC_FLAG_FOUND 1
+#define RELIC_FLAG_ACTIVE 2
 typedef enum {
     RELIC_SOUL_OF_BAT,
     RELIC_FIRE_OF_BAT,
@@ -650,12 +653,36 @@ typedef enum {
     RELIC_TOOTH_OF_VLAD,
     RELIC_RIB_OF_VLAD,
     RELIC_RING_OF_VLAD,
-    RELIC_EYE_OF_VLAD
+    RELIC_EYE_OF_VLAD,
+    NUM_RELICS,
 } RelicIds;
+
+typedef enum {
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_WOLF_CHARGE,
+    SPELL_SOUL_STEAL,
+    SPELL_WING_SMASH,
+    SPELL_SWORD_BROTHERS,
+    NUM_SPELLS,
+} SpellIds;
+
+typedef enum {
+    FAMILIAR_BAT,
+    FAMILIAR_GHOST,
+    FAMILIAR_FAERIE,
+    FAMILIAR_DEMON,
+    FAMILIAR_SWORD,
+    FAMILIAR_YOUSEI,     // JP only
+    FAMILIAR_NOSE_DEMON, // JP only
+    NUM_FAMILIARS
+} FamiliarIds;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
-    /* 80097982 */ u8 spells[8];
+    /* 80097982 */ u8 spells[NUM_SPELLS];
     /* 8009798A */ u8 equipHandCount[169];
     /* 80097A33 */ u8 equipBodyCount[26];
     /* 80097A4D */ u8 equipHeadCount[22];
@@ -695,7 +722,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ FamiliarStats statsFamiliars[7];
+    /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {

@@ -156,8 +156,6 @@ jobs:
           mv *.cue sotn.${{ matrix.dependency }}.cue || mv *.iso sotn.${{ matrix.dependency }}.iso
       - name: Extract dependencies
         run: make extract_disk
-      - name: Split game data
-        run: make -j extract
       - name: Obtain built binaries
         uses: actions/download-artifact@v3
         with:
@@ -173,14 +171,24 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
-        run: pip3 install -r tools/requirements-python.txt
+        run: |
+            pip3 install -r tools/requirements-python.txt & \
+            (sudo apt-get update && sudo apt-get install graphviz) & \
+            wait
+      - name: Generate function calls chart
+        run: |
+            make force_extract
+            python3 tools/analyze_calls.py ALL
+            rm -rf gh-duplicates/function_calls/ || true
+            mv function_calls gh-duplicates/
+            git clean -fdx asm/ 
       - name: Generate duplicates and function report
         run: |
+            make -j extract
             python3 tools/find_duplicates.py -a & \
-            python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md & \
+            python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md & \
             wait
-      - name: Rename duplicates report into a more meaningful file
-        run: mv *_all_matches.txt gh-duplicates/duplicates.txt
+            mv *_all_matches.txt gh-duplicates/duplicates.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 

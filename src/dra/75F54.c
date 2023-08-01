@@ -1929,7 +1929,8 @@ void func_8012CB4C(void) {
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
-        if (D_80138FC0[1].x == 255 && func_800FE3A8(6) && func_800FDC94(4)) {
+        if (D_80138FC0[1].x == 255 && func_800FE3A8(6) &&
+            CastSpell(SPELL_WOLF_CHARGE)) {
             func_8010E27C();
             PLAYER.step_s = 2;
             D_800B0914 = 4;
@@ -2254,24 +2255,25 @@ void func_80132264(void) {
     do {
         D_80138F84[D_80138454] = 0;
     } while (++D_80138454 < 0xA);
-    D_80138454 = 0;
-    do {
+
+    for (D_80138454 = 0; D_80138454 < LEN(D_80139868); D_80138454++) {
         D_80139868[D_80138454] = 0;
-    } while (++D_80138454 < 0x100);
+    }
+
     D_801396F4 = 0;
     D_8013AEE8 = 0;
-    D_80138454 = 0;
-    do {
+    for (D_80138454 = 0; D_80138454 < LEN(g_sfxRingBuffer2); D_80138454++) {
         g_sfxRingBuffer2[D_80138454] = 0;
-    } while (++D_80138454 < 0x100);
+    }
+
     D_80139A68 = 0;
     g_sfxRingBufferPos2 = 0;
-    D_80138454 = 0;
-    do {
-        g_sfxRingBuffer1[D_80138454].unk00 = 0;
+    for (D_80138454 = 0; D_80138454 < LEN(g_sfxRingBuffer1); D_80138454++) {
+        g_sfxRingBuffer1[D_80138454].sndId = 0;
         g_sfxRingBuffer1[D_80138454].unk02 = 0;
         g_sfxRingBuffer1[D_80138454].unk04 = 0;
-    } while (++D_80138454 < 0x100);
+    }
+
     D_80139A6C = 0x20;
     D_8013AE7C = 0x7F;
     D_80138FAC = 0;
@@ -2704,7 +2706,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
     return ret;
 }
 
-u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
+u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
     u32 ret;
     u32 var_v0;
     s16 temp_v0;
@@ -2715,8 +2717,8 @@ u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
     if (D_8013AEEC == 0) {
         return -2;
     }
-    if ((u32)((arg0 - 0x601) & 0xFFFF) < 0x2E0) {
-        g_sfxRingBuffer1[g_sfxRingBufferPos1].unk00 = arg0 - 0x600;
+    if (sfxId > SFX_START && sfxId <= SFX_LAST) {
+        g_sfxRingBuffer1[g_sfxRingBufferPos1].sndId = sfxId - SFX_START;
         g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = arg1 & 0x7F;
         var = (arg2 + 8);
         if (var > 16) {
@@ -2725,7 +2727,9 @@ u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
         } else {
             g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = arg2;
         }
-        if (++g_sfxRingBufferPos1 == 0x100) {
+
+        g_sfxRingBufferPos1++;
+        if (g_sfxRingBufferPos1 == LEN(g_sfxRingBuffer1)) {
             g_sfxRingBufferPos1 = 0;
         }
     } else {
@@ -2735,16 +2739,14 @@ u32 func_80134714(s32 arg0, s32 arg1, u16 arg2) {
 }
 
 void PlaySfx(s16 sfxId) {
-    u16 offset;
-
     if (D_8013AEEC != 0) {
-        offset = (u32)(sfxId - 0x601);
-        if (offset < 0x2E0) {
-            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk00 = sfxId - 0x600;
+        if (sfxId > SFX_START && sfxId <= SFX_LAST) {
+            g_sfxRingBuffer1[g_sfxRingBufferPos1].sndId = sfxId - SFX_START;
             g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = 0xFFFF;
             g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = 0;
+
             g_sfxRingBufferPos1++;
-            if (g_sfxRingBufferPos1 == 0x100) {
+            if (g_sfxRingBufferPos1 == LEN(g_sfxRingBuffer1)) {
                 g_sfxRingBufferPos1 = 0;
             }
         } else {

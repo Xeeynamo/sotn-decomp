@@ -8,6 +8,10 @@
 #define DAMAGE_FLAG_ABSORB 0x8000
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
+#define SFX_START (0x600)
+#define SFX_LAST (0x8E0)
+#define MAX_SND_COUNT (0x100)
+
 typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
@@ -211,7 +215,7 @@ typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
-    /* 0x0C */ s8 mpUsage;
+    /* 0x0C */ u8 mpUsage;
     /* 0x0D */ s8 unk0D;
     /* 0x0E */ s16 unk0E;
     /* 0x10 */ s16 unk10;
@@ -367,7 +371,6 @@ extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
-extern s8 D_800A841C[]; // related to player MP
 extern unkStruct_800A872C D_800A872C[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
@@ -414,6 +417,7 @@ extern s16 D_800BD19C[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 D_800BD1C8[6];
+extern s32 D_800C1ECC[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
@@ -594,7 +598,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
-extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
+extern SfxRingBufferItem g_sfxRingBuffer1[MAX_SND_COUNT];
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
@@ -621,7 +625,7 @@ extern s32 D_80139848;
 extern s32 D_8013984C;
 extern s32 D_80139850;
 extern s32 D_80139854;
-extern s16 D_80139868[];
+extern s16 D_80139868[MAX_SND_COUNT];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
 extern s16 g_sfxRingBufferPos2; // D_80139A70
@@ -653,7 +657,7 @@ extern s16 D_8013AEF0;
 extern s32 D_8013B158;
 extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
-extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
+extern s16 g_sfxRingBuffer2[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];
