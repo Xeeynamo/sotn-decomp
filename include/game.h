@@ -835,7 +835,7 @@ typedef struct {
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
-    /* 8003C78C */ s32** cluts;
+    /* 8003C78C */ UnkStructClut** cluts;
     /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;
@@ -991,7 +991,7 @@ typedef struct {
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(
         s32 handId, Equipment* res, s32 equipId);
-    /* 8003C7D4 */ void (*func_800EA5E4)(s32);
+    /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
@@ -1062,7 +1062,7 @@ extern void (*g_api_SetSpeedX)(s32 value);
 extern Entity* (*g_api_GetFreeDraEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
-extern void (*g_api_func_800EA5E4)(s32);
+extern s32 (*g_api_func_800EA5E4)(u32);
 extern void (*g_api_func_800EAF28)(s32);
 extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
@@ -1314,7 +1314,7 @@ extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
-extern Unkstruct_8006C3CC D_8006C3C4[32];
+extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern u16 g_Clut[];
 extern u32 D_8006EBCC;
