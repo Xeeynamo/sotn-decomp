@@ -12,9 +12,6 @@
 #define SFX_LAST (0x8E0)
 #define MAX_SND_COUNT (0x100)
 
-#define SEQ_TABLE_S_MAX 0x10
-#define SEQ_TABLE_T_MAX 1
-
 typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
@@ -178,7 +175,7 @@ typedef struct {
     s32 loc;        // lba offset, might be a s32
     CdCallbacks cb; // sets g_CdCallback
     s32 size;       // file size
-    u8 vabId;       // index for g_VabAddrs, between 0 and 5?
+    u8 unkC;        // index for D_800BD1C8, between 0 and 5?
     u8 unkD;        // index for D_800ACD10, between 0 and 6?
     u8 nextCdFileType;
     u8 unkF;
@@ -416,7 +413,7 @@ extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
-extern s32 g_VabAddrs[6];
+extern s32 D_800BD1C8[6];
 extern s32 D_800C1ECC[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
@@ -563,7 +560,7 @@ extern s32 D_80138438;
 extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
-extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
+extern s32 D_80138460;
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern u8 D_80138F24[]; // Confirmed part of an array / struct
@@ -667,7 +664,7 @@ extern s16 D_8013B620[];
 extern s32 D_8013B628[];
 extern s16 D_8013B648[];
 extern s16 D_8013B650[];
-extern s16 g_SeqAccessNum;
+extern s16 D_8013B658;
 extern s32 D_8013B660;
 extern s16 D_8013B664;
 extern s16 D_8013B668;
@@ -696,6 +693,9 @@ void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void DemoInit(s32 arg0);
 void DemoUpdate(void);
+void func_800209B4(s32*, s32, s32);
+void func_80021E38(s32);
+void func_80021EEC(void);
 void func_80028D3C(s32, s32);
 void func_80029FBC(s32);
 void func_8002A09C(void*);

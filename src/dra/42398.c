@@ -629,18 +629,18 @@ extern const char aPqes_0[];
 extern const char aPqes_1[];
 
 void SsVabClose(short vab_id);
-#define LOAD_VAB(vab_id, name, addr, data, dataLen)                            \
+#define LOAD_VAB(vab_id, name, pos, data, dataLen)                             \
     SsVabClose(vab_id);                                                        \
-    while (SsVabTransCompleted(SS_IMEDIATE) != 1)                              \
+    while (func_800219E0(0) != 1)                                              \
         ;                                                                      \
                                                                                \
-    if (SsVabOpenHeadSticky(name, vab_id, addr) < 0) {                         \
+    if (func_80021350(name, vab_id, pos) < 0) {                                \
         return -1;                                                             \
     }                                                                          \
-    if (SsVabTransBodyPartly(data, dataLen, vab_id) < 0) {                     \
+    if (func_80021880(data, dataLen, vab_id) < 0) {                            \
         return -1;                                                             \
     }                                                                          \
-    while (SsVabTransCompleted(SS_IMEDIATE) != 1)
+    while (func_800219E0(0) != 1)
 
 s32 LoadVabData(void) {
     const int vab0Len = 269488;
@@ -654,10 +654,10 @@ s32 LoadVabData(void) {
     const int vab3Len = 107792;
 #endif
 
-    LOAD_VAB(0, &aPbav, g_VabAddrs[0], D_8013B6A0, vab0Len);
-    LOAD_VAB(1, &aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
-    LOAD_VAB(2, &aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
-    LOAD_VAB(3, &aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
+    LOAD_VAB(0, &aPbav, D_800BD1C8[0], D_8013B6A0, vab0Len);
+    LOAD_VAB(1, &aPbav_0, D_800BD1C8[1], D_8017D350, vab1Len);
+    LOAD_VAB(2, &aPbav_1, D_800BD1C8[2], D_801A9C80, vab2Len);
+    LOAD_VAB(3, &aPbav_2, D_800BD1C8[3], D_8018B4E0, vab3Len);
     func_80131EBC(&aPqes, 0x618);
     func_80131EBC(&aPqes_0, 0x201);
     func_80131EBC(&aPqes_1, 0x205);

@@ -39,7 +39,7 @@ extern CdFileSeq D_800ACCF8[];
 extern s32 D_800ACD10[];
 extern void (*g_CdCallbacks[])(void);
 extern s32 D_800ACD7C;
-extern s32 g_VabAddrs[];
+extern s32 D_800BD1C8[];
 extern u8 D_80137F96;
 extern s32 D_80137FA0;
 extern s16 D_80137FA8;
@@ -57,16 +57,16 @@ typedef struct {
     s32 D_80137F7C;
     u8* overlayCopySrc;
     u8* overlayCopyDst;
-    s8* addr;
+    s8* D_80137F88;
     s32 overlayBlockCount;
     s32 overlayLastBlockSize;
-    short g_VabId;
+    s16 D_80137F94;
 } CdThing;
 
 extern CdCallbacks g_CdCallback;
 extern CdThing g_Cd;
 extern CdlLOC g_CdLoc;
-extern short g_VabId;
+extern s16 D_80137F94;
 
 void func_801073C0(void) {
     CdReadyCallback(NULL);
@@ -288,7 +288,7 @@ void func_80107B04(void) {
 void func_80107C6C(void) {
     s32 len;
 
-    if (g_Cd.D_80137F74 != 0 && (s16)SsVabTransCompleted(SS_IMEDIATE) != 1) {
+    if (g_Cd.D_80137F74 != 0 && (s16)func_800219E0(0) != 1) {
         func_801073C0();
         g_Cd.D_80137F78 = -1;
         return;
@@ -299,7 +299,7 @@ void func_80107C6C(void) {
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
-    D_80137FA8 = SsVabTransBodyPartly(g_Cd.overlayCopySrc, len, g_VabId);
+    D_80137FA8 = func_80021880(g_Cd.overlayCopySrc, len, (s32)D_80137F94);
     if (D_80137FA8 == -1) {
         CdDataCallback(NULL);
         g_Cd.D_80137F78 = -3;
@@ -323,7 +323,7 @@ void func_80107DB4(void) {
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
-    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Cd.addr;
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Cd.D_80137F88;
     g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
 #if USE_MICRO_OPTIMIZATIONS == 1
     MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
@@ -354,14 +354,14 @@ void func_80107EF0(void) {
     void (*var_a0)();
     s32 i;
     s32 len;
-    short res;
+    s16 res;
 
     if (g_Cd.overlayBlockCount != 0) {
         len = CD_BLOCK_LEN;
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
-    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Cd.addr;
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Cd.D_80137F88;
     g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
 #if USE_MICRO_OPTIMIZATIONS == 1
     MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
@@ -377,7 +377,8 @@ void func_80107EF0(void) {
     g_Cd.overlayBlockCount--;
     if (g_Cd.overlayBlockCount < 0 ||
         (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
-        res = SsVabOpenHeadSticky(g_Cd.addr, g_VabId, g_VabAddrs[g_VabId]);
+        res =
+            func_80021350(g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
         if (res < 0) {
             g_Cd.D_80137F78 = -2;
             CdDataCallback(NULL);
@@ -518,6 +519,7 @@ void UpdateCd(void) {
     u32 temp_v1_3;
     u32 temp_v1_4;
     u32* temp_s0;
+    u8 temp_a0;
     u32* var_a1;
     u16* clutAddr;
 
@@ -641,7 +643,8 @@ void UpdateCd(void) {
             cdFileSize += 0x1FFF;
         }
         g_Cd.D_80137F68 = cdFileSize >> 13;
-        g_VabId = cdFile->vabId;
+        temp_a0 = cdFile->unkC;
+        D_80137F94 = temp_a0;
         var_v0_3 = *pLoadFile;
         if (var_v0_3 < 0) {
             var_v0_3 += 0x7FF;
@@ -656,7 +659,7 @@ void UpdateCd(void) {
         // eg. if the file is 0x820 long, then the value will be 0x20
         g_Cd.overlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
         D_80137F96 = cdFile->unkF;
-        g_Cd.addr = D_800ACD10[cdFile->unkD];
+        g_Cd.D_80137F88 = D_800ACD10[cdFile->unkD];
         D_80137F6C = 0;
         g_Cd.D_80137F70 = 0;
         g_Cd.D_80137F74 = 0;
@@ -668,11 +671,11 @@ void UpdateCd(void) {
             }
         } else {
             if (cd->cb == CdCallback_16 || cd->cb == CdCallback_Vh) {
-                SsVabClose(g_VabId);
+                SsVabClose(temp_a0);
             }
             if (g_CdCallback != CdCallback_16 &&
                     g_CdCallback != CdCallback_Vh ||
-                (s16)SsVabTransCompleted(SS_IMEDIATE) == 1) {
+                (s16)func_800219E0(0) == 1) {
                 CdIntToPos(cdFile->loc, &g_CdLoc);
                 if (g_CdCallback == CdCallback_12) {
                     CdIntToPos(
@@ -778,13 +781,13 @@ void UpdateCd(void) {
             break;
 
         case CdCallback_16:
-            D_80137FB0 = (short)SsVabOpenHeadSticky(
-                g_Cd.addr, g_VabId, g_VabAddrs[g_VabId]);
+            D_80137FB0 = (s16)func_80021350(
+                g_Cd.D_80137F88, D_80137F94, D_800BD1C8[D_80137F94]);
             break;
 
         case CdCallback_17:
         case CdCallback_Vh:
-            while ((s16)SsVabTransCompleted(SS_IMEDIATE) != 1) {
+            while ((s16)func_800219E0(0) != 1) {
             }
             break;
 

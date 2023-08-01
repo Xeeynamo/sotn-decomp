@@ -1457,6 +1457,14 @@ void func_8001C550(s32);
 s32 func_8001D290(s32, s32);
 s32 func_8001D374(s8, s16, s16);
 void func_8001D2E0(s32, s32, s32);
+void func_800202E0(s16);
+void func_80020F44(s16);
+void func_80021174(void);
+void func_80021188(void);
+s32 func_80021350(const char* str, s32, s32);
+s32 func_80021880(s32*, s32, s32);
+s32 func_800219E0(s32);
+void func_80021F6C(s16, s16);
 void func_8002A024(s32, s32);
 
 #endif

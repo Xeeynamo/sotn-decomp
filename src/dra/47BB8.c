@@ -49,7 +49,7 @@ INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E7E08);
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
 extern u32 D_800A04CC;
-extern s32 g_VabAddrs[];
+extern s32 D_800BD1C8[];
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
 extern s32* g_StageOverlay;
@@ -114,19 +114,19 @@ s32 func_800E7E08(u32 arg0) {
         DrawSync(0);
         break;
     case 4:
-        while (SsVabTransCompleted(SS_IMEDIATE) != 1)
+        while (func_800219E0(0) != 1)
             ;
-        if (SsVabOpenHeadSticky(
-                D_8013644C->addr, D_800A0248, g_VabAddrs[D_800A0248]) < 0) {
+        if (func_80021350(
+                D_8013644C->addr, D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
             return -1;
         }
         break;
     case 5:
-        if (SsVabTransBodyPartly(
-                (s32*)0x80280000, D_8013644C->size, D_800A0248) == -1) {
+        if (func_80021880((s32*)0x80280000, D_8013644C->size, D_800A0248) ==
+            -1) {
             return -1;
         }
-        while (SsVabTransCompleted(SS_IMEDIATE) != 1)
+        while (func_800219E0(0) != 1)
             ;
         break;
     case 7:
