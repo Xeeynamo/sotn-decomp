@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/ut_roff", func_80021F0C);
+void func_80029148(s32);
+
+void func_80021F0C(void) { func_80029148(0); }

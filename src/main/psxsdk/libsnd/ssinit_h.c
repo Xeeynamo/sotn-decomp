@@ -1,3 +1,11 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/ssinit_h", SsInitHot);
+void ResetCallback();
+void SpuInit();
+void _SsInit();
+
+void SsInitHot(void) {
+    ResetCallback();
+    SpuInit();
+    _SsInit();
+}

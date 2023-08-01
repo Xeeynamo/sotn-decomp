@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/vm_don", SpuVmDamperOn);
+extern s16 _svm_damper;
+
+void SpuVmDamperOn(void) { _svm_damper = 2; }

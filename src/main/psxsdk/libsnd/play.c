@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/play", _SsSndPlay);
+void _SsSeqPlay(s16, s16);
+
+void _SsSndPlay(s16 arg0, s16 arg1) { _SsSeqPlay(arg0, arg1); }

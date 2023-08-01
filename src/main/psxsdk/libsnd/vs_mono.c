@@ -1,5 +1,7 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/vs_mono", SsSetMono);
+extern s16 _svm_stereo_mono;
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/vs_mono", SsSetStereo);
+void SsSetMono(void) { _svm_stereo_mono = 1; }
+
+void SsSetStereo(void) { _svm_stereo_mono = 0; }
