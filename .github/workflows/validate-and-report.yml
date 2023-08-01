@@ -179,8 +179,6 @@ jobs:
         run: |
             make force_extract
             python3 tools/analyze_calls.py ALL
-            rm -rf gh-duplicates/function_calls/ || true
-            mv function_calls gh-duplicates/
             git clean -fdx asm/ 
       - name: Generate duplicates and function report
         run: |
@@ -188,6 +186,8 @@ jobs:
             python3 tools/find_duplicates.py -a & \
             python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md & \
             wait
+            rm -rf gh-duplicates/function_calls/ || true
+            mv function_calls gh-duplicates/
             mv *_all_matches.txt gh-duplicates/duplicates.txt
       - name: Commit all reports
         run: |
