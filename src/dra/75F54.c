@@ -2173,7 +2173,7 @@ bool func_80131F68(void) {
 
 s16 func_80131F94(void) { return D_8013B668; }
 
-void func_80131FA4(s16 arg0) { func_80021F6C(arg0, arg0); }
+void func_80131FA4(s16 arg0) { SsUtSetReverbDepth(arg0, arg0); }
 
 void func_80131FCC(void) {
     if (D_8013B680 == 0) {
@@ -2319,7 +2319,7 @@ void func_80132500(u8 soundMode) {
     switch (soundMode) {
     case MONO_SOUND:
         if (D_801390A8 != 0) {
-            func_80021174();
+            SsSetMono();
             audioVolume.val2 = 128; // CD (R) --> SPU (R)
             audioVolume.val0 = 128; // CD (L) --> SPU (L)
             audioVolume.val3 = 128; // CD Right sound transferred to left
@@ -2331,7 +2331,7 @@ void func_80132500(u8 soundMode) {
         break;
     case STEREO_SOUND:
         if (D_801390A8 != 1) {
-            func_80021188();
+            SsSetStereo();
             audioVolume.val2 = 224; // CD (R) --> SPU (R)
             audioVolume.val0 = 224; // CD (L) --> SPU (L)
             audioVolume.val3 = 0;
@@ -2355,10 +2355,10 @@ void SoundInit(void) {
     func_80132500(STEREO_SOUND);
     SsSetReservedVoice(0x10);
     SsStart();
-    func_800209B4(&D_80138460, 0x10, 1);
-    func_80021E38(3);
+    SsSetTableSize(D_80138460, 0x10, 1);
+    SsUtSetReverbType(SS_REV_TYPE_STUDIO_B);
     SpuClearReverbWorkArea(3);
-    func_80021EEC();
+    SsUtReverbOn();
     func_80132134();
     D_8013B668 = 0x78;
     SsSetSerialAttr(0, 0, 1);
@@ -2505,7 +2505,7 @@ void func_80133780(s8 arg0) { SsSetSerialAttr(0, 1, arg0 == 1); }
 
 void func_801337B4(void) {
     if (D_80139810 != 0) {
-        func_80020F44(D_8013B658);
+        SsSeqStop(D_8013B658);
         SsSeqClose(D_8013B658);
         func_8013415C();
         D_80139810 = 0;
@@ -2860,8 +2860,8 @@ void func_80134D14(void) {
                   D_800BF554[D_80139804].note, volume, D_8013AE94);
     g_VolR = (volume * D_800BD19C[D_8013AE94 * 2 + 0]) >> 8;
     g_VolL = (volume * D_800BD19C[D_8013AE94 * 2 + 1]) >> 8;
-    func_80026D4C(0x16, g_VolL, g_VolR);
-    func_80026D4C(0x17, g_VolL, g_VolR);
+    SsUtSetVVol(0x16, g_VolL, g_VolR);
+    SsUtSetVVol(0x17, g_VolL, g_VolR);
 }
 
 void func_80134E64(void) {
@@ -2871,8 +2871,8 @@ void func_80134E64(void) {
     volume = volume * D_8013AEE0 >> 7;
     g_VolR = (volume * D_800BD19C[D_8013AE94 * 2 + 0]) >> 8;
     g_VolL = (volume * D_800BD19C[D_8013AE94 * 2 + 1]) >> 8;
-    func_80026D4C(0x16, g_VolL, g_VolR);
-    func_80026D4C(0x17, g_VolL, g_VolR);
+    SsUtSetVVol(0x16, g_VolL, g_VolR);
+    SsUtSetVVol(0x17, g_VolL, g_VolR);
 }
 
 INCLUDE_ASM("asm/us/dra/nonmatchings/75F54", func_80134F50);

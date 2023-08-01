@@ -13,6 +13,7 @@ __pycache__
 
 asm/*/*/*.s
 asm/*/*/data/*.s
+asm/**/psxsdk/lib*/*/*.s
 asm/*/*/nonmatchings/*.s
 asm/*/*/nonmatchings/*/*.s
 asm/*/*/nonmatchings/*/*/*.s

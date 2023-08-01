@@ -114,19 +114,19 @@ s32 func_800E7E08(u32 arg0) {
         DrawSync(0);
         break;
     case 4:
-        while (func_800219E0(0) != 1)
+        while (SsVabTransCompleted(0) != 1)
             ;
-        if (func_80021350(
+        if (SsVabOpenHeadSticky(
                 D_8013644C->addr, D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
             return -1;
         }
         break;
     case 5:
-        if (func_80021880((s32*)0x80280000, D_8013644C->size, D_800A0248) ==
-            -1) {
+        if (SsVabTransBodyPartly(
+                (s32*)0x80280000, D_8013644C->size, D_800A0248) == -1) {
             return -1;
         }
-        while (func_800219E0(0) != 1)
+        while (SsVabTransCompleted(0) != 1)
             ;
         break;
     case 7:

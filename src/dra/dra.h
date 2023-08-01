@@ -560,7 +560,7 @@ extern s32 D_80138438;
 extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
-extern s32 D_80138460;
+extern char D_80138460[];
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern u8 D_80138F24[]; // Confirmed part of an array / struct
@@ -693,9 +693,6 @@ void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void DemoInit(s32 arg0);
 void DemoUpdate(void);
-void func_800209B4(s32*, s32, s32);
-void func_80021E38(s32);
-void func_80021EEC(void);
 void func_80028D3C(s32, s32);
 void func_80029FBC(s32);
 void func_8002A09C(void*);

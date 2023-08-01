@@ -1,6 +1,17 @@
 #ifndef LIBSND_H
 #define LIBSND_H
 
+#define SS_REV_TYPE_OFF 0
+#define SS_REV_TYPE_ROOM 1
+#define SS_REV_TYPE_STUDIO_A 2
+#define SS_REV_TYPE_STUDIO_B 3
+#define SS_REV_TYPE_STUDIO_C 4
+#define SS_REV_TYPE_HALL 5
+#define SS_REV_TYPE_SPACE 6
+#define SS_REV_TYPE_ECHO 7
+#define SS_REV_TYPE_DELAY 8
+#define SS_REV_TYPE_PIPE 9
+
 // Closes the SEQ data holding the seq_acces_num that is no longer necessary.
 extern void SsSeqClose(short seq_access_num);
 
@@ -82,8 +93,60 @@ short SsUtKeyOnV(
 /*
  * Not known
  */
-void func_80026D4C(s16, short voll, short volr);
+void SsUtSetVVol(s16, short voll, short volr);
 
 void SpuGetAllKeysStatus(char* status);
+
+// Specify the area of a SEQ/SEP data attribute table
+void SsSetTableSize(
+    char* table, // Pointer to SEQ/SEP data attribute table area variable
+    short s_max, // Maximum times to open SEQ/SEP data (up to 32)
+    short t_max  // Number of SEQ included in SEP
+);
+
+// Terminate SEQ data reading.
+void SsSeqStop(short seq_access_num // SEQ access number
+);
+
+// Sets the output to monaural mode. Forces all libsnd keyed-on voices to have
+// equivalent left and right volumes.Stereo mode is the system default mode.
+void SsSetMono(void);
+
+// Sets the output to stereo mode. The sound system default output is stereo.
+void SsSetStereo(void);
+
+// Open a VAB header and specify transfer address in sound buffer.
+s32 /*short*/ SsVabOpenHeadSticky(
+    u_char* addr, // Start address of VAB header (.VH) in main memory
+    short vabid,  // Desired VAB ID or -1
+    u_long sbaddr // Start address in sound buffer where VabBody is to be
+                  // transferred
+);
+
+// Starts transferring a VAB body in main memory, whose VAB header was opened
+// with SsVabOpenHead(), to the sound buffer.
+s32 /*short*/ SsVabTransBodyPartly(
+    u_char* addr, // Pointer to starting address of the segment transfer buffer
+    u_long bufsize, // Buffer size
+    short vabid     // VAB ID
+);
+
+// Determines whether data transfer to SPU local memory has terminated
+s32 /*short*/ SsVabTransCompleted(
+    short immediateFlag // Transfer status recognition flag
+);
+
+// Set reverb type
+void SsUtSetReverbType(short type);
+
+// Turns on global Reverb at the type and depth set by SsUtSetReverbType() and
+// SsUtSetReverbDepth().
+void SsUtReverbOn(void);
+
+// Set a reverb depth
+void SsUtSetReverbDepth(
+    short ldepth, // Left channel depth. Value between 0 and 127
+    short rdepth  // Right channel depth. Value between 0 and 127
+);
 
 #endif

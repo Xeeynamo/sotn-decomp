@@ -631,16 +631,16 @@ extern const char aPqes_1[];
 void SsVabClose(short vab_id);
 #define LOAD_VAB(vab_id, name, pos, data, dataLen)                             \
     SsVabClose(vab_id);                                                        \
-    while (func_800219E0(0) != 1)                                              \
+    while (SsVabTransCompleted(0) != 1)                                        \
         ;                                                                      \
                                                                                \
-    if (func_80021350(name, vab_id, pos) < 0) {                                \
+    if (SsVabOpenHeadSticky(name, vab_id, pos) < 0) {                          \
         return -1;                                                             \
     }                                                                          \
-    if (func_80021880(data, dataLen, vab_id) < 0) {                            \
+    if (SsVabTransBodyPartly(data, dataLen, vab_id) < 0) {                     \
         return -1;                                                             \
     }                                                                          \
-    while (func_800219E0(0) != 1)
+    while (SsVabTransCompleted(0) != 1)
 
 s32 LoadVabData(void) {
     const int vab0Len = 269488;
