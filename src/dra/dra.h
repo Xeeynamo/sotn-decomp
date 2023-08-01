@@ -317,10 +317,6 @@ extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
-
-extern const char* c_strLuckModeCode;
-extern const char* c_strAxeArmorCode;
-
 extern const char* c_strALUCARD;
 extern const char** c_strSTR;
 extern const char* c_strCON;
@@ -754,7 +750,7 @@ void DrawMenuSprite(
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
-void InitStatsAndGear(bool debugMode);
+void InitStatsAndGear(bool isDeathTakingItems);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
