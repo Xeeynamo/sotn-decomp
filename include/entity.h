@@ -277,6 +277,24 @@ typedef struct {
     /* 0x89 */ u8 unk89;
 } ET_801B3C38;
 
+typedef struct {
+    /* 0x7C */ s32 hand;
+    /* 0x80 */ char pad_80[0x4];
+    /* 0x84 */ u16 bellTimer;
+    /* 0x86 */ u16 bellDuration;
+} ET_Clock;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u16 unk80; // likely shared, used but not set
+} ET_Birdcage;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 unk7E;
+} ET_Statue;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -294,5 +312,8 @@ typedef union {
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
     /* 0x7C */ ET_RoomTransition2 roomTransition2;
     /* 0x7C */ ET_801B3C38 et38;
+    /* 0x7C */ ET_Clock clock;
+    /* 0x7C */ ET_Birdcage birdcage;
+    /* 0x7C */ ET_Statue statue;
     /* 0x7C */ char stub[0x40];
 } Ext;

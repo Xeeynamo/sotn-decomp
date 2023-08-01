@@ -1,4 +1,13 @@
+g_StoneDoorTiles = 0x801812DC;
 CreateEntityFromCurrentEntity = 0x8018F5E8;
 InitializeEntity = 0x80191098;
-ClockRoomController = 0x80197FEC;
-BirdcageDoor = 0x80198688;
+EntityDummy = 0x80191194;
+EntityClockRoomController = 0x80197FEC;
+EntityClockHands = 0x80198574;
+EntityBirdcageDoor = 0x80198688;
+UpdateStatueTiles = 0x801988F8;
+EntityStatue = 0x80198944;
+EntityStatueGear = 0x80198C74;
+UpdateStoneDoorTiles = 0x80198E84;
+EntityStoneDoor = 0x80198F24;
+g_Statues = 0x8019AF28;

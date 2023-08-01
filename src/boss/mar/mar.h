@@ -24,15 +24,20 @@ typedef enum {
     /* 0x10 */ E_DUMMY_10,
 
     /* 0x16 */ E_CLOCKROOM_CONTROLLER = 0x16,
-    /* 0x17 */ E_func_80198574,
+    /* 0x17 */ E_CLOCK_HANDS,
     /* 0x18 */ E_BIRDCAGE_DOOR,
+    /* 0x19 */ E_STATUE,
+    /* 0x1A */ E_STATUE_GEAR,
+    /* 0x1B */ E_STONE_DOOR,
+    /* 0x1C */ E_func_80199114,
+    /* 0x1D */ E_DUMMY_1D,
 } EntityIDs;
 
 /* Initializers */
 extern u16 D_801803E4[];
 
-extern u16 D_80181280[];
-extern u16 D_80181284[];
+extern s16 D_80181280[];
+extern s16 D_80181284[];
 extern u16 D_80181288[];
 extern u16 D_8018128C[];
 extern u16 D_80181290[];
@@ -42,7 +47,7 @@ extern s32 D_801812A0[];
 extern u16 D_801812A8[];
 extern u8 D_801812C4[];
 extern u8 D_801812D0[];
-extern s16 D_801812DC[];
-extern u16 D_8019AF28[];
-extern s16 D_8019AF2A;
+extern s16 g_StoneDoorTiles[];
+extern u16 g_Statues[];
+
 #endif

@@ -130,7 +130,11 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80191004);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", InitializeEntity);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80191194);
+void EntityDummy(Entity* self) {
+    if (self->step == 0) {
+        self->step++;
+    }
+}
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_801911BC);
 
@@ -220,49 +224,56 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197BD0);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_80197CBC);
 
-// Clock room controller Entity ID 0x16
-void ClockRoomController(Entity* self) {
+// ID 0x16
+void EntityClockRoomController(Entity* self) {
     PlayerStatus* status = &g_Status;
+    const int birdcageDoor1 = 7;
+    const int birdcageDoor2 = 8;
+    const int stoneDoors = 14;
+    const int minuteHand = 5;
+    const int hourHand = 6;
+    const int statues = 1;
+    const int shadow = 9;
+    const int gears = 12;
     Entity* newEntity;
     Primitive* prim;
     s16 primIndex;
-    u16 i;
-    u16 j;
+    u16 i, j;
 
     // Plays the clock bell
-    if (self->ext.generic.unk84.U16.unk0 != 0) {
-        if (self->ext.generic.unk84.U16.unk2 == 0) {
+    if (self->ext.clock.bellTimer != 0) {
+        if (self->ext.clock.bellDuration == 0) {
             g_api.PlaySfx(0x7A6); // Clock bell
-            if (--self->ext.generic.unk84.U16.unk0) {
-                self->ext.generic.unk84.S16.unk2 = 64;
+            if (--self->ext.clock.bellTimer) {
+                self->ext.clock.bellDuration = 64;
             }
         } else {
-            self->ext.generic.unk84.U16.unk2--;
+            self->ext.clock.bellDuration--;
         }
     }
 
     // Controls the statues
     if (D_800973FC == 0) {
         if (PLAYER.posY.i.hi > 128) {
-            D_8019AF28[0] = false; // right statue closed
+            g_Statues[0] = false; // right statue closed
         }
     } else if (self->ext.generic.unk88.U16.unk2 == 0) {
-        D_8019AF28[0] = true; // right statue open
+        g_Statues[0] = true; // right statue open
     }
 
     self->ext.generic.unk88.S16.unk2 = D_800973FC;
     if (self->step != 0) {
         if ((status->timerFrames == 0) && (status->timerSeconds == 0)) {
             if (status->timerMinutes & 1) {
-                D_8019AF2A = false; // left statue closed
+                g_Statues[1] = false; // left statue closed
             } else {
-                D_8019AF2A = true; // left statue open
+                g_Statues[1] = true; // left statue open
             }
         }
     } else if (status->timerMinutes & 1) {
-        D_8019AF2A = false; // left statue closed
+        g_Statues[1] = false; // left statue closed
     } else {
-        D_8019AF2A = true; // left statue open
+        g_Statues[1] = true; // left statue open
     }
 
     switch (self->step) {
@@ -272,87 +283,97 @@ void ClockRoomController(Entity* self) {
         }
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
-        if (primIndex != -1) {
-            self->primIndex = primIndex;
-            self->flags |= FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[primIndex];
-            prim->r0 = prim->g0 = prim->b0 = 0;
-            prim->y2 = prim->y3 = prim->x1 = prim->x3 = 0x100;
-            prim->priority = 0x1F0;
-            prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
-            prim->blendMode = 8;
-            *(s32*)&prim->r1 = *(s32*)&prim->r0;
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
-            *(s32*)&prim->r3 = *(s32*)&prim->r0;
-            InitializeEntity(D_801803E4);
-            g_api.PlaySfx(SET_STOP_MUSIC);
-            D_80097928 = 1;
-            D_8019AF28[0] = false; // right statue closed
-            self->animSet = ANIMSET_OVL(1);
-            self->animCurFrame = 23;
-            D_80097910 = 0;
-            self->zPriority = 0x40;
+        if (primIndex == -1) {
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[primIndex];
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->y2 = prim->y3 = prim->x1 = prim->x3 = 0x100;
+        prim->priority = 0x1F0;
+        prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
+        prim->blendMode = BLEND_VISIBLE;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
 
-            newEntity = &self[5];
-            for (i = 0; i < 2; i++) {
-                CreateEntityFromCurrentEntity(E_func_80198574, newEntity);
-                newEntity->params = i;
-                newEntity++;
-            }
+        InitializeEntity(D_801803E4);
+        g_api.PlaySfx(SET_STOP_MUSIC);
+        D_80097928 = 1;
+        g_Statues[0] = false; // right statue closed
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 23;
+        D_80097910 = 0;
+        self->zPriority = 0x40;
 
-            newEntity = &self[7];
-            *(s32*)&self[5].ext.stub[0x00] = status->timerMinutes * 0x3C;
-            *(s32*)&self[6].ext.stub[0x00] =
-                (status->timerHours * 0x12C) + (status->timerMinutes * 5);
+        // Create clock hands
+        newEntity = &self[5];
+        for (i = 0; i < 2; i++) {
+            CreateEntityFromCurrentEntity(E_CLOCK_HANDS, newEntity);
+            newEntity->params = i;
+            newEntity++;
+        }
 
-            for (i = 0; i < 2; i++) {
-                CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, newEntity);
-                newEntity->params = i;
-                newEntity++;
-            }
+        // Clock set
+        self[minuteHand].ext.clock.hand = status->timerMinutes * 0x3C;
+        self[hourHand].ext.clock.hand =
+            (status->timerHours * 0x12C) + (status->timerMinutes * 5);
 
-            if ((status->timerMinutes >= 10) && (status->timerMinutes < 30)) {
-                *(s16*)&self[7].ext.stub[0x04] = 1;
-            } else {
-                *(s16*)&self[7].ext.stub[0x04] = 0;
-            }
+        // Create Birdcage doors
+        newEntity = &self[birdcageDoor1];
+        for (i = 0; i < 2; i++) {
+            CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, newEntity);
+            newEntity->params = i;
+            newEntity++;
+        }
 
-            if ((status->timerMinutes >= 30) && (status->timerMinutes < 50)) {
-                *(s16*)&self[8].ext.stub[0x04] = 1;
-            } else {
-                *(s16*)&self[8].ext.stub[0x04] = 0;
-            }
+        if ((status->timerMinutes >= 10) && (status->timerMinutes < 30)) {
+            self[birdcageDoor1].ext.birdcage.unk80 = true;
+        } else {
+            self[birdcageDoor1].ext.birdcage.unk80 = false;
+        }
 
-            CreateEntityFromCurrentEntity(0x1D, &self[9]);
-            self[9].animSet = ANIMSET_OVL(1);
-            self[9].animCurFrame = 0x17;
-            self[9].zPriority = 0x40;
-            self[9].palette = 0x804B;
-            self[9].unk19 = 8;
-            self[9].blendMode = 0x10;
-            self[9].flags = 0x8C000000;
-            self[9].posY.i.hi += 4;
+        if ((status->timerMinutes >= 30) && (status->timerMinutes < 50)) {
+            self[birdcageDoor2].ext.birdcage.unk80 = true;
+        } else {
+            self[birdcageDoor2].ext.birdcage.unk80 = false;
+        }
 
-            newEntity = &self[1];
-            for (i = 0; i < 2; i++) {
-                CreateEntityFromCurrentEntity(0x19, newEntity);
-                newEntity->params = i;
-                newEntity++;
-            }
+        // Shadow for the Bighorn sheep head on the center
+        CreateEntityFromCurrentEntity(E_DUMMY_1D, &self[shadow]);
+        self[shadow].animSet = ANIMSET_OVL(1);
+        self[shadow].animCurFrame = 23;
+        self[shadow].zPriority = 0x40;
+        self[shadow].palette = 0x804B;
+        self[shadow].unk19 = 8;
+        self[shadow].blendMode = 0x10;
+        self[shadow].flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_08000000 |
+                             FLAG_UNK_04000000;
+        self[shadow].posY.i.hi += 4;
 
-            newEntity = &self[12];
-            for (j = 0; j < 2; j++) {
-                CreateEntityFromCurrentEntity(0x1A, newEntity);
-                newEntity->params = j;
-                newEntity++;
-            }
+        // Create path blocking statues
+        newEntity = &self[statues];
+        for (i = 0; i < 2; i++) {
+            CreateEntityFromCurrentEntity(E_STATUE, newEntity);
+            newEntity->params = i;
+            newEntity++;
+        }
 
-            newEntity = &self[14];
-            for (j = 0; j < 2; j++) {
-                CreateEntityFromCurrentEntity(0x1B, newEntity);
-                newEntity->params = j;
-                newEntity++;
-            }
+        // Create the gears that drive the statues
+        newEntity = &self[gears];
+        for (j = 0; j < 2; j++) {
+            CreateEntityFromCurrentEntity(E_STATUE_GEAR, newEntity);
+            newEntity->params = j;
+            newEntity++;
+        }
+
+        // Create the stones on the floor
+        newEntity = &self[stoneDoors];
+        for (j = 0; j < 2; j++) {
+            CreateEntityFromCurrentEntity(E_STONE_DOOR, newEntity);
+            newEntity->params = j;
+            newEntity++;
         }
         break;
 
@@ -360,9 +381,11 @@ void ClockRoomController(Entity* self) {
         if (status->timerFrames == 0) {
             g_api.PlaySfx(0x7A9); // clock tick
         }
-        *(s32*)&self[5].ext.stub[0x00] = status->timerMinutes * 60;
-        *(s32*)&self[6].ext.stub[0x00] =
-            (status->timerHours * 300) + (status->timerMinutes * 5);
+
+        // Update clock hands
+        self[minuteHand].ext.clock.hand = status->timerMinutes * 0x3C;
+        self[hourHand].ext.clock.hand =
+            (status->timerHours * 0x12C) + (status->timerMinutes * 5);
         if ((status->timerSeconds == 0) && (status->timerFrames == 0) &&
             (status->timerMinutes == 0)) {
             self->ext.generic.unk84.S16.unk0 =
@@ -376,8 +399,8 @@ void ClockRoomController(Entity* self) {
 }
 
 // Entity ID 0x17
-void func_80198574(Entity* self) {
-    Entity* entity5 = &self[5];
+void EntityClockHands(Entity* self) {
+    Entity* handShadow = &self[5];
     u16 params = self->params;
 
     if (self->step == 0) {
@@ -386,59 +409,59 @@ void func_80198574(Entity* self) {
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
         self->unk19 = 4;
-        CreateEntityFromCurrentEntity(0x1D, entity5);
-        entity5->unk19 = 0xC;
-        entity5->blendMode = 0x10;
-        entity5->animSet = ANIMSET_OVL(1);
-        entity5->animCurFrame = params + 25;
-        entity5->zPriority = 0x3F - params;
-        entity5->flags = 0x8C000000;
-        entity5->posY.i.hi += 4;
+
+        // Create hand shadows
+        CreateEntityFromCurrentEntity(E_DUMMY_1D, handShadow);
+        handShadow->unk19 = 0xC;
+        handShadow->blendMode = 0x10;
+        handShadow->animSet = ANIMSET_OVL(1);
+        handShadow->animCurFrame = params + 25;
+        handShadow->zPriority = 0x3F - params;
+        handShadow->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_08000000 |
+                            FLAG_UNK_04000000;
+        handShadow->posY.i.hi += 4;
     }
 
-    self->rotAngle = (*(s32*)&self->ext.stub[0x00] << 0xC) / 3600;
+    self->rotAngle = (self->ext.clock.hand * 0x1000) / 3600;
     if (params != 0) {
-        self->rotAngle = self->rotAngle + 0x400;
+        self->rotAngle += 0x400;
     }
-    entity5->rotAngle = self->rotAngle = self->rotAngle & 0xFFF;
+
+    handShadow->rotAngle = self->rotAngle &= 0xFFF;
 }
 
 // Birdcage doors on the clock Entity ID 0x18
-void BirdcageDoor(Entity* self) {
+void EntityBirdcageDoor(Entity* self) {
     u16 params = self->params;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_801803E4);
         self->animSet = ANIMSET_OVL(1);
-        self->animCurFrame =
-            D_801812A8[self->ext.generic.unk80.modeS16.unk0 & 1];
+        self->animCurFrame = D_801812A8[self->ext.birdcage.unk80 & 1];
         self->zPriority = 0x3C;
         self->unk1A = self->unk1C = 0x100;
-        self->ext.generic.unk7E.modeU16 =
-            (u16)self->ext.generic.unk80.modeS16.unk0;
+        self->ext.birdcage.unk7E = self->ext.birdcage.unk80;
         self->unk6C = 0x80;
         self->posX.i.hi = D_80181280[params] - g_Camera.posX.i.hi;
         self->posY.i.hi = D_80181284[params] - g_Camera.posY.i.hi;
         break;
 
     case 1:
-        if (self->ext.generic.unk7E.modeU16 !=
-            (u16)self->ext.generic.unk80.modeS16.unk0) {
+        if (self->ext.birdcage.unk7E != self->ext.birdcage.unk80) {
             self->unk19 = 0xB;
-            self->ext.generic.unk7C.u = 64;
-            self->ext.generic.unk7E.modeU16 =
-                self->ext.generic.unk80.modeS16.unk0;
+            self->ext.birdcage.timer = 64;
+            self->ext.birdcage.unk7E = self->ext.birdcage.unk80;
             self->step++;
             g_api.PlaySfx(0x608);
         }
         break;
 
     case 2:
-        self->unk1A = self->unk1C = self->unk1C - 2;
+        self->unk1A = self->unk1C -= 2;
         self->unk6C += 0xFF;
-        if (--self->ext.generic.unk7C.u == 0) {
-            self->ext.generic.unk7C.s = 64;
+        if (--self->ext.birdcage.timer == 0) {
+            self->ext.birdcage.timer = 64;
             self->zPriority = 0;
             self->step++;
             g_api.PlaySfx(0x608);
@@ -447,10 +470,9 @@ void BirdcageDoor(Entity* self) {
 
     case 3:
         self->posX.val += 0x2000;
-        if (--self->ext.generic.unk7C.u == 0) {
-            self->ext.generic.unk7C.s = 64;
-            self->animCurFrame =
-                D_801812A8[self->ext.generic.unk80.modeS16.unk0 & 1];
+        if (--self->ext.birdcage.timer == 0) {
+            self->ext.birdcage.timer = 64;
+            self->animCurFrame = D_801812A8[self->ext.birdcage.unk80 & 1];
             self->posX.i.hi -= 8;
             self->posY.i.hi += 8;
             self->step++;
@@ -460,8 +482,8 @@ void BirdcageDoor(Entity* self) {
 
     case 4:
         self->posY.val -= 0x2000;
-        if (!(--self->ext.generic.unk7C.u)) {
-            self->ext.generic.unk7C.s = 64;
+        if (--self->ext.birdcage.timer == 0) {
+            self->ext.birdcage.timer = 64;
             self->zPriority = 0x3C;
             self->step++;
             g_api.PlaySfx(0x608);
@@ -469,9 +491,9 @@ void BirdcageDoor(Entity* self) {
         break;
 
     case 5:
-        self->unk1A = self->unk1C = self->unk1C + 2;
+        self->unk1A = self->unk1C += 2;
         self->unk6C += 1;
-        if (--self->ext.generic.unk7C.u == 0) {
+        if (--self->ext.birdcage.timer == 0) {
             self->unk19 = 0;
             self->step = 1;
         }
@@ -479,19 +501,19 @@ void BirdcageDoor(Entity* self) {
     }
 }
 
-void func_801988F8(s32 tilePos, s32 arg1) {
+void UpdateStatueTiles(s32 tilePos, s32 tile) {
     u32 i;
 
     for (i = 0; i < 6; i++) {
-        g_CurrentRoomTileLayout.fg[tilePos] = arg1;
+        g_CurrentRoomTileLayout.fg[tilePos] = tile;
         tilePos++;
-        g_CurrentRoomTileLayout.fg[tilePos] = arg1;
+        g_CurrentRoomTileLayout.fg[tilePos] = tile;
         tilePos += 15;
     }
 }
 
 // Entity ID 0x19
-void func_80198944(Entity* self) {
+void EntityStatue(Entity* self) {
     Entity* entity = &self[2];
     Entity* entity11 = &self[11];
     u16 params = self->params;
@@ -502,45 +524,50 @@ void func_80198944(Entity* self) {
     case 0:
         InitializeEntity(D_801803E4);
         self->animSet = ANIMSET_OVL(1);
-        self->animCurFrame = params + 0xA;
+        self->animCurFrame = params + 10;
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->zPriority = 0x40;
-        if (D_8019AF28[params] == 0) {
+
+        if (g_Statues[params] == 0) {
             self->posX.i.hi += D_80181288[params];
             if (self->params != 0) {
-                func_801988F8(2, 0x597);
+                UpdateStatueTiles(2, 0x597);
             } else {
-                func_801988F8(12, 0x597);
+                UpdateStatueTiles(12, 0x597);
             }
         } else {
             self->posX.i.hi += D_8018128C[params];
             if (self->params != 0) {
-                func_801988F8(2, 0);
+                UpdateStatueTiles(2, 0);
             } else {
-                func_801988F8(12, 0);
+                UpdateStatueTiles(12, 0);
             }
         }
 
-        self->ext.generic.unk7E.modeU16 = D_8019AF28[params];
+        self->ext.statue.unk7E = g_Statues[params];
         self->posY.i.hi -= 58;
-        CreateEntityFromCurrentEntity(0x1D, entity);
+
+        // Create shadow for the statue
+        CreateEntityFromCurrentEntity(E_DUMMY_1D, entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
         entity->unk19 = 8;
         entity->blendMode = 0x10;
-        entity->flags = 0x8C000000;
+        entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_UNK_08000000 |
+                        FLAG_UNK_04000000;
         entity->posY.i.hi += 8;
         break;
 
     case 1:
-        fakeVar = D_8019AF28;
+        //! FAKE
+        fakeVar = g_Statues;
         temp_a0 = fakeVar;
         temp_a0 += params;
-        if (*temp_a0 != self->ext.generic.unk7E.modeU16) {
-            self->ext.generic.unk7E.modeU16 = *temp_a0;
-            if (self->ext.generic.unk7E.modeU16 == 0) {
+        if (*temp_a0 != self->ext.statue.unk7E) {
+            self->ext.statue.unk7E = *temp_a0;
+            if (self->ext.statue.unk7E == 0) {
                 *(u16*)&self[11].ext.stub[0x02] = 2;
             } else {
                 *(u16*)&self[11].ext.stub[0x02] = 1;
@@ -554,32 +581,32 @@ void func_80198944(Entity* self) {
     case 2:
         func_8019143C(self, 0x10, 0x20, 0x13);
         if (self->step_s == 0) {
-            if (self->ext.generic.unk7E.modeU16 != 0) {
+            if (self->ext.statue.unk7E != 0) {
                 if (self->params != 0) {
-                    func_801988F8(2, 0);
+                    UpdateStatueTiles(2, 0);
                 } else {
-                    func_801988F8(0xC, 0);
+                    UpdateStatueTiles(12, 0);
                 }
             }
-            self->ext.generic.unk7C.s = 0x60;
+            self->ext.statue.timer = 96;
             self->step_s++;
         }
 
-        if (self->ext.generic.unk7E.modeU16 != 0) {
+        if (self->ext.statue.unk7E != 0) {
             self->posX.val += D_801812A0[params];
         } else {
             self->posX.val -= D_801812A0[params];
         }
 
-        if (--self->ext.generic.unk7C.u == 0) {
-            if (self->ext.generic.unk7E.modeU16 == 0) {
+        if (--self->ext.statue.timer == 0) {
+            if (self->ext.statue.unk7E == 0) {
                 if (self->params != 0) {
-                    func_801988F8(2, 0x597);
+                    UpdateStatueTiles(2, 0x597);
                 } else {
-                    func_801988F8(0xC, 0x597);
+                    UpdateStatueTiles(0xC, 0x597);
                 }
             }
-            entity11->ext.generic.unk7E.modeU16 = 0;
+            entity11->ext.statue.unk7E = 0;
             self->hitboxState = 0;
             self->step_s = 0;
             self->step--;
@@ -590,7 +617,7 @@ void func_80198944(Entity* self) {
 }
 
 // Gears that spin while the statues are moving Entity ID 0x1A
-void func_80198C74(Entity* self) {
+void EntityStatueGear(Entity* self) {
     u16 params = self->params;
     Primitive* prim;
     s16 primIndex;
@@ -652,17 +679,19 @@ void func_80198C74(Entity* self) {
     }
 }
 
-void func_80198E84(s32 arg0) {
+void UpdateStoneDoorTiles(bool doorState) {
     s32 tilePos;
     s16 i, j;
 
     for (tilePos = 0xC4, i = 0; i < 2; i++) {
         for (j = 0; j < 8; j++) {
-            if (arg0 != 0) {
+            if (doorState) {
+                // Open stone doors
                 g_CurrentRoomTileLayout.fg[tilePos] = 0x597;
                 tilePos++;
             } else {
-                g_CurrentRoomTileLayout.fg[tilePos] = D_801812DC[j];
+                // Close stone doors
+                g_CurrentRoomTileLayout.fg[tilePos] = g_StoneDoorTiles[j];
                 tilePos++;
             }
         }
@@ -671,35 +700,36 @@ void func_80198E84(s32 arg0) {
 }
 
 // Stone doors on the floor leading to CEN Entity ID 0x1B
-void func_80198F24(Entity* self) {
+void EntityStoneDoor(Entity* self) {
     u16 params = self->params;
+    const int centerCubeDoor = 0;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_801803E4);
         self->animSet = ANIMSET_OVL(1);
-        self->animCurFrame = params + 0x1B;
+        self->animCurFrame = params + 27;
         self->zPriority = 0x40;
-        if (D_8003BDEC[0] == 0) {
+        if (D_8003BDEC[centerCubeDoor] == 0) {
             self->posX.i.hi += D_80181294[params];
-            func_80198E84(1);
+            UpdateStoneDoorTiles(true);
         } else {
             self->posX.i.hi += D_80181298[params];
-            func_80198E84(0);
+            UpdateStoneDoorTiles(false);
         }
 
         self->posY.i.hi = self->posY.i.hi + 0x58;
-        self->ext.prim = D_8003BDEC[0];
+        self->ext.prim = D_8003BDEC[centerCubeDoor];
         break;
 
     case 1:
         if (self->ext.prim == NULL) {
-            if (D_8003BDEC[0]) {
+            if (D_8003BDEC[centerCubeDoor]) {
                 self->ext.generic.unk80.modeS16.unk0 = 0;
                 self->step++;
             }
         }
-        self->ext.prim = D_8003BDEC[0];
+        self->ext.prim = D_8003BDEC[centerCubeDoor];
         break;
 
     case 2:
@@ -721,8 +751,9 @@ void func_80198F24(Entity* self) {
         } else {
             g_backbufferY = 0;
         }
+
         if ((u16)self->ext.generic.unk80.modeS16.unk0 > 96) {
-            func_80198E84(0);
+            UpdateStoneDoorTiles(false);
             g_backbufferY = 0;
             self->step--;
         }
@@ -731,7 +762,7 @@ void func_80198F24(Entity* self) {
 }
 
 // Entity ID 0x1C
-void func_80199114(void) {}
+void func_80199114(Entity* self) {}
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8019911C);
 
