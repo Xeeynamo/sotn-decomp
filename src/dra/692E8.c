@@ -1,6 +1,6 @@
+#define INCLUDE_ASM_NEW
 #include "dra.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_801092E8(s32 arg0) {
     D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
@@ -26,7 +26,7 @@ void func_80109328(void) {
 }
 
 void func_801093C4(Primitive*);
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801093C4);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_801093C4);
 
 void func_80109594(void) {
     Entity* e;
@@ -84,11 +84,17 @@ void func_80109594(void) {
         prim = prim->next;
     }
     func_801093C4(prim);
+
+#if defined(VERSION_US)
     g_Player.unk20[0] = 0x10;
     g_Player.D_80072EFC = 0x10;
     g_Player.D_80072EF4 = 0;
     D_80137FB8 = 0;
     D_80137FBC = 1;
+#elif defined(VERSION_HD)
+    D_80137FB8 = 0;
+#endif
+
     if (g_Status.mp != g_Status.mpMax) {
         D_80137FB4 = 0;
     } else {
@@ -149,12 +155,12 @@ void func_80109990(void) {
 }
 
 void func_80109A44(s32 arg0);
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80109A44);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_80109A44);
 
 // regalloc
 // DECOMP_ME_WIP func_8010A234 https://decomp.me/scratch/rdeqb
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A234);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010A234);
 #else
 void func_8010A234(s32 arg0) {
     s32 temp;
@@ -218,9 +224,9 @@ void func_8010A3F0(void) {
 }
 
 s32 func_8010A4A4(void);
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010A4A4);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010A4A4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", EntityAlucard);
+INCLUDE_ASM("dra/nonmatchings/692E8", EntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
@@ -233,24 +239,24 @@ void func_8010BF64(Unkstruct_8010BF64* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010BFFC);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010BFFC);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010C36C);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010C36C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010C9F4);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010C9F4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010D010);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010D010);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010D2C8);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010D2C8);
 
 void SetPlayerStep(PlayerSteps step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010D59C);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010D59C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010D800);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010D800);
 
 void func_8010DA2C(s32* arg0) {
     g_CurrentEntity->unk4C = arg0;
@@ -264,7 +270,7 @@ void func_8010DA48(u32 arg0) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DA70);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010DA70);
 
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     u16* frameIndex;
@@ -284,7 +290,8 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
     return PLAYER.animFrameDuration >= 0 ? 0 : -1;
 }
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010DBFC);
+
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010DBFC);
 
 u32 UpdateAnim(s8* frameProps, s32* frames) {
     AnimationFrame* animFrame;
@@ -411,7 +418,6 @@ void func_8010E0D0(s32 arg0) {
     }
     func_8010DFF0(1, 1);
 }
-
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         func_8011AAFC(g_CurrentEntity, 0x15002C, 0);
@@ -553,7 +559,7 @@ void func_8010E4D0(void) {
     func_8010E470(0, 0);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010E570);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010E570);
 void func_8010E570(/*?*/ s32);
 
 void func_8010E6AC(s32 arg0) {
@@ -786,7 +792,7 @@ void func_8010ED54(u8 arg0) {
     g_Player.unk48 = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8010EDB8);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8010EDB8);
 
 void func_8010FAF4(void) {
     DestroyEntity(&g_Entities[UNK_ENTITY_10]);
@@ -1023,23 +1029,22 @@ bool func_8010FDF8(s32 branchFlags) {
 }
 
 // DECOMP_ME_WIP func_80110394 https://decomp.me/scratch/Akstc 94.80%
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80110394);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_80110394);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801104D0);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_801104D0);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801106A4);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_801106A4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8011081C);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8011081C);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80110968);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_80110968);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80110BC8);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_80110BC8);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80110DF8);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_80110DF8);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_80111018);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_80111018);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_801112AC);
+INCLUDE_ASM("dra/nonmatchings/692E8", func_801112AC);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/692E8", func_8011151C);
-#endif
+INCLUDE_ASM("dra/nonmatchings/692E8", func_8011151C);
