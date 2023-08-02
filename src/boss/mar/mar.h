@@ -34,6 +34,7 @@ typedef enum {
 } EntityIDs;
 
 /* Initializers */
+extern u16 D_801803B4[];
 extern u16 D_801803E4[];
 
 extern s16 D_80181280[];
