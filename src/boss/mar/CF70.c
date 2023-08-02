@@ -334,13 +334,13 @@ void EntityClockRoomController(Entity* self) {
             if (status->timerMinutes & 1) {
                 g_Statues[1] = false; // left statue closed
             } else {
-                g_Statues[1] = true;  // left statue open
+                g_Statues[1] = true; // left statue open
             }
         }
     } else if (status->timerMinutes & 1) {
         g_Statues[1] = false; // left statue closed
     } else {
-        g_Statues[1] = true;  // left statue open
+        g_Statues[1] = true; // left statue open
     }
 
     switch (self->step) {
