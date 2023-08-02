@@ -50,7 +50,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801903F4);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190470);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801904B8);
+INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", AnimateEntity);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190570);
 
@@ -94,7 +94,7 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190F20);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190F68);
 
-INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190FC8);
+INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", SetStep);
 
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190FE8);
 
@@ -637,14 +637,14 @@ void EntityStatueGear(Entity* self) {
         break;
 
     case 2:
-        func_801904B8(D_801812C4, self);
+        AnimateEntity(D_801812C4, self);
         if (self->ext.statue.step == 0) {
             self->step = 1;
         }
         break;
 
     case 3:
-        func_801904B8(D_801812D0, self);
+        AnimateEntity(D_801812D0, self);
         if (self->ext.statue.step == 0) {
             self->step = 1;
         }

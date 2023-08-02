@@ -28,21 +28,6 @@ INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B850);
 // on hold until D_80097400 type descovery is resolved
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018C90C);
 
-// INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018CA94);
-
-extern u8 D_80180690[];
-extern u8 D_801806A4[];
-extern u8 D_801806B8[];
-extern u8 D_801806CC[];
-extern u8 D_801806E4[];
-extern u8 D_801806EC[];
-extern u8 D_80180700[];
-extern u8 D_80180718[];
-extern u8 D_80180724[];
-extern u8 D_80180738[];
-extern s32 D_8019AE70;
-extern s32 D_8019AF20;
-
 void func_8018CA94(Entity* self) {
     s32 posX;
     s32 posX2;
@@ -56,7 +41,7 @@ void func_8018CA94(Entity* self) {
     u16 temp_v1_4;
 
     if ((D_8019AE70 != 0) && (self->step < 12)) {
-        func_80190FC8(12); // SetStep
+        SetStep(12);
     }
 
     switch (self->step) {
@@ -77,29 +62,29 @@ void func_8018CA94(Entity* self) {
 
         case 2:
             if (D_8019AF20 & 8) {
-                func_80190FC8(3);
+                SetStep(3);
             }
             break;
 
         case 3:
-            func_801904B8(D_80180690, self);
+            AnimateEntity(D_80180690, self);
             if (D_8019AF20 & 0x10) {
-                func_80190FC8(4);
+                SetStep(4);
             }
             break;
 
         case 4:
-            func_801904B8(D_801806A4, self);
+            AnimateEntity(D_801806A4, self);
             if (D_8019AF20 & 0x20) {
-                func_80190FC8(5);
+                SetStep(5);
                 return;
             }
             break;
 
         case 5:
-            func_801904B8(D_801806B8, self);
+            AnimateEntity(D_801806B8, self);
             if (D_8019AF20 & 0x40) {
-                func_80190FC8(6);
+                SetStep(6);
             }
             break;
 
@@ -118,42 +103,42 @@ void func_8018CA94(Entity* self) {
             break;
 
         case 8:
-            func_801904B8(D_801806CC, self);
+            AnimateEntity(D_801806CC, self);
             if (D_8019AF20 & 0x200) {
-                func_80190FC8(9);
+                SetStep(9);
             }
             break;
 
         case 9:
-            func_801904B8(D_801806E4, self);
+            AnimateEntity(D_801806E4, self);
             if (D_8019AF20 & 0x400) {
-                func_80190FC8(10);
+                SetStep(10);
             }
             break;
 
         case 10:
-            func_801904B8(D_801806EC, self);
+            AnimateEntity(D_801806EC, self);
             if (D_8019AF20 & 0x800) {
-                func_80190FC8(11);
+                SetStep(11);
             }
             break;
 
         case 11:
-            func_801904B8(D_80180700, self);
+            AnimateEntity(D_80180700, self);
             if (D_8019AF20 & 0x1000) {
-                func_80190FC8(12);
+                SetStep(12);
             }
             break;
 
         case 12:
-            if (func_801904B8(D_80180718, self) == 0) {
-                func_80190FC8(13);
+            if (AnimateEntity(D_80180718, self) == 0) {
+                SetStep(13);
                 self->velocityX = 0x18000;
             }
             break;
 
         case 13:
-            if ((func_801904B8(D_80180724, self) & 0x80) && ((self->animFrameIdx == 3) || (self->animFrameIdx == 7))) {
+            if ((AnimateEntity(D_80180724, self) & 0x80) && ((self->animFrameIdx == 3) || (self->animFrameIdx == 7))) {
                 posX = self->posX.i.hi - 120;
                 temp = posX >> 4;
 
@@ -171,24 +156,24 @@ void func_8018CA94(Entity* self) {
 
             MoveEntity();
             if (self->posX.i.hi >= 0xB9) {
-                func_80190FC8(0xE);
+                SetStep(0xE);
                 self->velocityY = -0x40000;
                 return;
             }
             break;
 
         case 14:
-            func_801904B8(D_80180738, self);
+            AnimateEntity(D_80180738, self);
             self->velocityY += 0x3000;
             MoveEntity();
             if ((self->velocityY > 0) && (self->posY.i.hi >= 132)) {
                 self->velocityY = 0;
-                func_80190FC8(15);
+                SetStep(15);
             }
             break;
 
         case 15:
-            if ((func_801904B8(D_80180724, self) & 0x80) && ((self->animFrameIdx == 3) || (self->animFrameIdx == 7))) {
+            if ((AnimateEntity(D_80180724, self) & 0x80) && ((self->animFrameIdx == 3) || (self->animFrameIdx == 7))) {
                 posX2 = self->posX.i.hi - 120;
                 temp = posX2 >> 4;
 

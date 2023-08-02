@@ -37,6 +37,17 @@ typedef enum {
 extern u16 D_801803B4[];
 extern u16 D_801803E4[];
 
+extern u8 D_80180690[];
+extern u8 D_801806A4[];
+extern u8 D_801806B8[];
+extern u8 D_801806CC[];
+extern u8 D_801806E4[];
+extern u8 D_801806EC[];
+extern u8 D_80180700[];
+extern u8 D_80180718[];
+extern u8 D_80180724[];
+extern u8 D_80180738[];
+
 extern s16 D_80181280[];
 extern s16 D_80181284[];
 extern u16 D_80181288[];
@@ -50,5 +61,8 @@ extern u8 D_801812C4[];
 extern u8 D_801812D0[];
 extern s16 g_StoneDoorTiles[];
 extern u16 g_Statues[];
+
+extern s32 D_8019AE70;
+extern s32 D_8019AF20;
 
 #endif

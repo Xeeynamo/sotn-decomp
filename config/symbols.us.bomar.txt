@@ -1,7 +1,9 @@
 g_StoneDoorTiles = 0x801812DC;
 CreateEntityFromCurrentEntity = 0x8018F5E8;
 InitializeEntity = 0x80191098;
+AnimateEntity = 0x801904B8;
 MoveEntity = 0x8019073C;
+SetStep = 0x80190FC8;
 EntityDummy = 0x80191194;
 EntityClockRoomController = 0x80197FEC;
 EntityClockHands = 0x80198574;
