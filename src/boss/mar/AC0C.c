@@ -44,13 +44,6 @@ void func_8018CA94(Entity* self) {
     s32 posX;
     s32 posX2;
     s32 temp;
-    s32 var_a2_2;
-    s32 var_v0;
-    s32 var_v0_2;
-    s32 var_v0_3;
-    u16 temp_v1;
-    u16 temp_v1_2;
-    u16 temp_v1_4;
 
     if ((D_8019AE70 != 0) && (self->step < 12)) {
         SetStep(12);
