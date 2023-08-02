@@ -161,7 +161,7 @@ void func_8018CA94(Entity* self) {
         }
 
         MoveEntity();
-        if (self->posX.i.hi >= 0xB9) {
+        if (self->posX.i.hi > 184) {
             SetStep(14);
             self->velocityY = FIX(-4);
             return;
