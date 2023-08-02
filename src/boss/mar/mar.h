@@ -33,6 +33,11 @@ typedef enum {
     /* 0x1D */ E_DUMMY_1D,
 } EntityIDs;
 
+typedef enum Statues {
+    /* 0 */ RIGHT_STATUE,
+    /* 1 */ LEFT_STATUE,
+} Statues;
+
 /* Initializers */
 extern u16 D_801803B4[];
 extern u16 D_801803E4[];

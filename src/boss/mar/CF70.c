@@ -322,25 +322,25 @@ void EntityClockRoomController(Entity* self) {
     // Controls the statues
     if (D_800973FC == 0) {
         if (PLAYER.posY.i.hi > 128) {
-            g_Statues[0] = false; // right statue closed
+            g_Statues[RIGHT_STATUE] = false;
         }
     } else if (self->ext.clockRoom.unk8A == 0) {
-        g_Statues[0] = true; // right statue open
+        g_Statues[RIGHT_STATUE] = true;
     }
 
     self->ext.clockRoom.unk8A = D_800973FC;
     if (self->step != 0) {
         if ((status->timerFrames == 0) && (status->timerSeconds == 0)) {
             if (status->timerMinutes & 1) {
-                g_Statues[1] = false; // left statue closed
+                g_Statues[LEFT_STATUE] = false;
             } else {
-                g_Statues[1] = true; // left statue open
+                g_Statues[LEFT_STATUE] = true;
             }
         }
     } else if (status->timerMinutes & 1) {
-        g_Statues[1] = false; // left statue closed
+        g_Statues[LEFT_STATUE] = false;
     } else {
-        g_Statues[1] = true; // left statue open
+        g_Statues[LEFT_STATUE] = true;
     }
 
     switch (self->step) {
@@ -368,7 +368,7 @@ void EntityClockRoomController(Entity* self) {
         InitializeEntity(D_801803E4);
         g_api.PlaySfx(SET_STOP_MUSIC);
         D_80097928 = 1;
-        g_Statues[0] = false; // right statue closed
+        g_Statues[RIGHT_STATUE] = false; // right statue closed
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 23;
         D_80097910 = 0;
