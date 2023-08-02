@@ -156,15 +156,16 @@ def get_sdk_funcs():
 
 
 def get_main_funcs():
-    functions = []
-    files = ["9C54.s", "160B4.s"]
-    for file in files:
-        with open(f"asm/us/main/{file}") as f:
-            lines = f.readlines()
-            for line in lines:
-                if "glabel" in line:
-                    functions.append(line.split()[1])
-    return functions
+    with open(f"config/symbols.us.txt") as f:
+        symbols = f.readlines()
+    index_first_func = next(
+        (i for i, s in enumerate(symbols) if s.startswith("__main")), None
+    )
+    index_last_func = next(
+        (i for i, s in enumerate(symbols) if s.startswith("SpuGetAllKeysStatus")), None
+    )
+    symbols = symbols[index_first_func : index_last_func + 1]
+    return [line.split(" = ")[0] for line in symbols]
 
 
 def get_all_funcnames():
@@ -229,11 +230,11 @@ class NonMatchingFunc(object):
         assumed_path = f"/{self.overlay_name}/{self.text_offset}.c"
         c_paths = [src for src in src_files if src.endswith(assumed_path)]
         if len(c_paths) != 1:
+            print("Error getting cpath")
             print(c_paths)
             print(nonmatching_path)
             print(assumed_path)
             print(split)
-            kill = 3 / 0
         self.src_path = c_paths[0]
 
 
@@ -418,7 +419,6 @@ if __name__ == "__main__":
         # Sort the names
         for overlay in overlays:
             overlays[overlay].sort()
-        print(overlays)
         html = '<html><head><meta charset="UTF-8"></head><body>'
         for overlay, funcs in overlays.items():
             # create a heading for the overlay
