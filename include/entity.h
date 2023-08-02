@@ -282,18 +282,25 @@ typedef struct {
     /* 0x80 */ char pad_80[0x4];
     /* 0x84 */ u16 bellTimer;
     /* 0x86 */ u16 bellDuration;
-} ET_Clock;
+    /* 0x88 */ char pad_88[0x2];
+    /* 0x8A */ u16 unk8A; // might belong to another struct
+} ET_ClockRoom;
 
 typedef struct {
     /* 0x7C */ u16 timer;
-    /* 0x7E */ u16 unk7E;
-    /* 0x80 */ u16 unk80; // likely shared, used but not set
+    /* 0x7E */ u16 prevState;
+    /* 0x80 */ u16 state;
 } ET_Birdcage;
 
 typedef struct {
     /* 0x7C */ u16 timer;
-    /* 0x7E */ u16 unk7E;
+    /* 0x7E */ u16 step;
 } ET_Statue;
+
+typedef struct {
+    /* 0x7C */ s32 flag;
+    /* 0x80 */ u16 unk80;
+} ET_StoneDoor;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
@@ -312,8 +319,9 @@ typedef union {
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
     /* 0x7C */ ET_RoomTransition2 roomTransition2;
     /* 0x7C */ ET_801B3C38 et38;
-    /* 0x7C */ ET_Clock clock;
+    /* 0x7C */ ET_ClockRoom clockRoom;
     /* 0x7C */ ET_Birdcage birdcage;
     /* 0x7C */ ET_Statue statue;
+    /* 0x7C */ ET_StoneDoor stoneDoor;
     /* 0x7C */ char stub[0x40];
 } Ext;
