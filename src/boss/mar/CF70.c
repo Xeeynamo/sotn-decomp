@@ -1,105 +1,156 @@
 #include "mar.h"
 
+// 1.000 - ('NZ0', 'Random') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018CF70);
 
+// 0.990 - ('NZ0', 'Update') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018CFA0);
 
+// 0.990 - ('NZ0', 'func_801B9800') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018D29C);
 
+// 0.990 - ('NZ0', 'TestCollisions')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018D3A4);
 
+// 0.990 - ('NZ0', 'EntityNumericDamage')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018E4BC);
 
+// 0.990 - ('NZ0', 'CreateEntityFromLayout') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018EB60);
 
+// 0.990 - ('NZ0', 'CreateEntityWhenInHorizontalRange') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018EC24);
 
+// 0.990 - ('ST0', 'CreateEntityWhenInVerticalRange') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018ED3C);
 
+// 0.990 - ('NZ0', 'func_801BB3B8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018EE54);
 
+// 0.990 - ('NZ0', 'func_801BB404') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018EEA0);
 
+// 0.990 - ('NZ0', 'func_801BB45C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018EEF8);
 
+// 0.990 - ('NZ0', 'func_801BB558') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018EFF4);
 
+// 0.990 - ('NZ0', 'func_801BB66C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F108);
 
+// 0.990 - ('NZ0', 'func_801BB6B8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F154);
 
+// 0.990 - ('NZ0', 'func_801BB45C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F1AC);
 
+// 0.990 - ('NZ0', 'func_801BB558') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F2A8);
 
+// 0.990 - ('NZ0', 'InitRoomEntities') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F3BC);
 
+// 0.990 - ('NZ0', 'func_801BBA98') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F534);
 
+// 0.990 - ('NZ0', 'CreateEntityFromCurrentEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", CreateEntityFromCurrentEntity);
 
+// 0.990 - ('NZ0', 'CreateEntityFromEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F65C);
 
+// 1.000 - ('NZ0', 'func_801BBC3C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F6D8);
 
+// 0.990 - ('NZ0', 'func_801C0A3C')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8018F750);
 
+// 1.000 - ('NZ0', 'DestroyEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190388);
 
+// 0.990 - ('NZ0', 'DestroyEntityFromIndex') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801903F4);
 
+// 1.000 - ('NZ0', 'PreventEntityFromRespawning') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190470);
 
+// 0.990 - ('NZ0', 'AnimateEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", AnimateEntity);
 
+// 0.990 - ('NZ0', 'func_801BCAD4') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190570);
 
+// 1.000 - ('NZ0', 'GetDistanceToPlayerX') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190688);
 
+// 1.000 - ('NZ0', 'GetDistanceToPlayerY') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801906C4);
 
+// 1.000 - ('NZ0', 'GetSideToPlayer') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801906F8);
 
+// 1.000 - ('NZ0', 'MoveEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", MoveEntity);
 
+// 1.000 - ('NZ0', 'FallEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019076C);
 
+// 0.990 - ('NZ0', 'func_801BCCFC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190798);
 
+// 0.990 - ('NZ0', 'func_801BCF74') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190A10);
 
+// 0.990 - ('NZ0', 'AllocEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190BF8);
 
+// 0.990 - ('NZ0', 'func_801BD1BC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190C58);
 
+// 0.990 - ('NZ0', 'func_801BD1E8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190C84);
 
+// 0.990 - ('NZ0', 'func_801BD204') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190CA0);
 
+// 1.000 - ('NZ0', 'func_801BD270') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190D0C);
 
+// 0.990 - ('NZ0', 'func_8019AD64') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190D44);
 
+// 0.990 - ('NZ0', 'func_801BD2F0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190D8C);
 
+// 0.990 - ('NZ0', 'func_801BD338') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190DD4);
 
+// 1.000 - ('NZ0', 'func_801BD390') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190E2C);
 
+// 1.000 - ('NZ0', 'func_801BD41C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190EB8);
 
+// 1.000 - ('NZ0', 'func_801BD44C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190EE8);
 
+// 1.000 - ('NZ0', 'func_801BD484') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190F20);
 
+// 0.990 - ('NZ0', 'func_801BD4CC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190F68);
 
+// 1.000 - ('NZ0', 'SetStep') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", SetStep);
 
+// 1.000 - ('NZ0', 'SetSubStep') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80190FE8);
 
+// 0.990 - ('NZ0', 'func_801BD568') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191004);
 
+// 1.000 - ('NZ0', 'InitializeEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", InitializeEntity);
 
 void EntityDummy(Entity* self) {
@@ -108,92 +159,136 @@ void EntityDummy(Entity* self) {
     }
 }
 
+// 0.990 - ('NZ0', 'func_801BD720') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801911BC);
 
+// 0.990 - ('NZ0', 'func_801BD848') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801912E4);
 
+// 0.990 - ('NZ0', 'func_801BD9A0')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019143C);
 
+// 0.990 - ('NZ0', 'ReplaceBreakableWithItemDrop') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191780);
 
+// 1.000 - ('NZ0', 'func_801BDD9C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191838);
 
+// 0.990 - ('NZ0', 'func_801BDE20') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801918BC);
 
+// 0.990 - ('NZ0', 'CollectHeart') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191A18);
 
+// 0.990 - ('NZ0', 'CollectGold') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191A98);
 
+// 0.990 - ('NZ0', 'CollectSubweapon') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191B74);
 
+// 0.990 - ('NZ0', 'CollectHeartVessel') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191C8C);
 
+// 0.990 - ('NZ0', 'CollectLifeVessel') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191D30);
 
+// 0.990 - ('NZ0', 'DestroyCurrentEntity') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191D80);
 
+// 0.990 - ('CEN', 'EntityPrizeDrop')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80191DA8);
 
+// 0.990 - ('NZ0', 'EntityExplosion') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019261C);
 
+// 0.990 - ('NZ0', 'func_801BEC7C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80192718);
 
+// 0.990 - ('NZ0', 'EntityEquipItemDrop') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801927BC);
 
+// 0.990 - ('NZ0', 'func_801BF308')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80192DA4);
 
+// 0.990 - ('NZ0', 'EntityRelicOrb')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80193054);
 
+// 0.990 - ('MAD', 'EntityHeartDrop')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80193B24);
 
+// 0.990 - ('WRP', 'EntityWarpSmallRocks')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80193C40);
 
+// 0.990 - ('NZ0', 'func_801C070C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019419C);
 
+// 0.990 - ('NZ0', 'func_801C07FC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019428C);
 
+// 0.990 - ('NZ0', 'func_801C090C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019439C);
 
+// 0.990 - ('NZ0', 'func_801C0A3C')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801944CC);
 
+// 0.990 - ('NZ0', 'func_801C0B24') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801945B4);
 
+// 0.990 - ('NZ0', 'func_801C0C14') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801946A4);
 
+// 0.990 - ('NZ0', 'func_801C0D08') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80194798);
 
+// 0.990 - ('NZ0', 'func_801C0F38') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801949C8);
 
+// 0.990 - ('NZ0', 'func_801C1034') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80194AC4);
 
+// 0.990 - ('NZ0', 'EntityIntenseExplosion') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80195044);
 
+// 0.990 - ('NZ0', 'func_801C16B4') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80195144);
 
+// 0.990 - ('NZ0', 'func_801C1780') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80195210);
 
+// 0.990 - ('NZ0', 'func_801C1848') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801952D8);
 
+// 0.990 - ('NZ0', 'func_801C1900') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80195390);
 
+// 0.990 - ('NZ0', 'func_801C1AD8')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80195568);
 
+// 0.990 - ('NZ0', 'func_801C20B8')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80195B48);
 
+// 1.000 - ('NZ0', 'ClutLerp') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80196248);
 
+// 0.990 - ('NZ0', 'func_801C29B0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80196440);
 
+// 0.990 - ('NZ0', 'func_801C8ADC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80196538);
 
+// 0.990 - ('NZ0', 'EntityStageNamePopup')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80196708);
 
+// 0.990 - ('NZ0', 'EntitySoulStealOrb') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019738C);
 
+// 0.990 - ('NZ0', 'EntityEnemyBlood') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80197720);
 
+// 0.990 - ('NZ0', 'EntityRoomForeground') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80197BD0);
 
+// 0.990 - ('NZ0', 'func_801C33D8')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80197CBC);
 
 // ID 0x16
@@ -239,13 +334,13 @@ void EntityClockRoomController(Entity* self) {
             if (status->timerMinutes & 1) {
                 g_Statues[1] = false; // left statue closed
             } else {
-                g_Statues[1] = true; // left statue open
+                g_Statues[1] = true;  // left statue open
             }
         }
     } else if (status->timerMinutes & 1) {
         g_Statues[1] = false; // left statue closed
     } else {
-        g_Statues[1] = true; // left statue open
+        g_Statues[1] = true;  // left statue open
     }
 
     switch (self->step) {
@@ -736,22 +831,32 @@ void EntityStoneDoor(Entity* self) {
 // Entity ID 0x1C
 void func_80199114(Entity* self) {}
 
+// 0.990 - ('NZ0', 'func_801C9930')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019911C);
 
+// 0.990 - ('NZ0', 'func_801C9D18')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80199504);
 
+// 1.000 - ('NZ0', 'func_801C9E68') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80199654);
 
+// 1.000 - ('NZ0', 'func_801C9E98') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80199684);
 
+// 0.990 - ('NZ0', 'func_801C9F14') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80199700);
 
+// 1.000 - ('NZ0', 'func_801C9F9C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80199788);
 
+// 0.990 - ('NZ0', 'func_801CA07C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_80199868);
 
+// 1.000 - ('NZ0', 'func_801CA0D0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801998BC);
 
+// 0.990 - ('NZ0', 'func_801CA0FC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_801998E8);
 
+// 0.990 - ('NZ0', 'EntityRedDoor')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/CF70", func_8019994C);

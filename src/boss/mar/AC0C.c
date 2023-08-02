@@ -1,31 +1,43 @@
 #include "mar.h"
 
+// 0.990 - ('NZ0', 'func_801B0958') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018AC0C);
 
+// 0.990 - ('NP3', 'func_801B2540') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018ACD4);
 
+// 0.990 - ('NP3', 'EntityBreakable') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018AE90);
 
+// 0.990 - ('NZ0', 'func_801B74CC') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018AFC4);
 
+// 0.990 - ('NZ0', 'func_801B7520') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B018);
 
+// 1.000 - ('NZ0', 'func_801B76E4') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B1DC);
 
+// 0.990 - ('ST0', 'func_801A8BF8') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B238);
 
+// 0.990 - ('ST0', 'func_801A8CB0') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B2F0);
 
+// 0.990 - ('NZ0', 'func_801B797C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B474);
 
+// 0.990 - ('ST0', 'func_801A8E60') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B4A0);
 
+// 0.990 - ('ST0', 'func_801A910C') - (decompiled)
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B74C);
 
+// 0.969 - ('NZ0', 'EntityMariaCutscene')
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018B850);
 
 // https://decomp.me/scratch/qHybN Matching,
-// on hold until D_80097400 type descovery is resolved
+// on hold until D_80097400 type discovery is resolved
 INCLUDE_ASM("asm/us/boss/mar/nonmatchings/AC0C", func_8018C90C);
 
 void func_8018CA94(Entity* self) {
@@ -47,7 +59,7 @@ void func_8018CA94(Entity* self) {
     switch (self->step) {
         case 0:
             InitializeEntity(D_801803B4);
-            self->animSet = -0x7FFE;
+            self->animSet = ANIMSET_OVL(2);
             self->animCurFrame = 1;
             self->unk5A = 0x48;
             self->palette = 0x210;
@@ -96,7 +108,7 @@ void func_8018CA94(Entity* self) {
             break;
 
         case 7:
-            self->animCurFrame = 0x12;
+            self->animCurFrame = 18;
             if (D_8019AF20 & 0x100) {
                 self->step++;
             }
@@ -156,7 +168,7 @@ void func_8018CA94(Entity* self) {
 
             MoveEntity();
             if (self->posX.i.hi >= 0xB9) {
-                SetStep(0xE);
+                SetStep(14);
                 self->velocityY = -0x40000;
                 return;
             }
