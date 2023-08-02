@@ -9,6 +9,7 @@ INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191148);
 // 0.990 - ('NP3', 'EntityBreakable') - (decompiled)
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_80191304);
 
+// Entity 0x16
 void func_80191438(Entity* self) {
     s16 params = self->params;
     s16 posX;
@@ -129,6 +130,7 @@ void func_80191438(Entity* self) {
     }
 }
 
+// Entity 0x17
 void EntityMedusa(Entity* self) {
     Entity* newEntity;
     s8* hitbox;
@@ -172,11 +174,11 @@ void EntityMedusa(Entity* self) {
         }
 
         if (GetDistanceToPlayerX() < 104) {
-            self->ext.generic.unk84.S8.unk0 = 1;
+            self->ext.medusa.facing = 1;
         }
 
         if (GetDistanceToPlayerX() > 128) {
-            self->ext.generic.unk84.S8.unk0 = 0;
+            self->ext.medusa.facing = 0;
         }
 
         if (GetDistanceToPlayerX() > 32) {
@@ -184,7 +186,7 @@ void EntityMedusa(Entity* self) {
         }
 
         MoveEntity();
-        if (self->facing == self->ext.generic.unk84.U8.unk0) {
+        if (self->facing == self->ext.medusa.facing) {
             self->velocityX = FIX(0.5);
         } else {
             self->velocityX = FIX(-0.5);
@@ -221,9 +223,9 @@ void EntityMedusa(Entity* self) {
             PlaySfxAtPos(0x7C8);
             self->step_s++;
         }
-        self->ext.generic.unk84.S8.unk1 = 1;
+        self->ext.medusa.unk85 = 1;
         if (AnimateEntity(D_80180624, self) == 0) {
-            self->ext.generic.unk84.S8.unk1 = 0;
+            self->ext.medusa.unk85 = 0;
             SetStep(3);
         }
         break;
@@ -244,7 +246,7 @@ void EntityMedusa(Entity* self) {
         }
 
         if (LOW(self->animFrameIdx) == 4) {
-            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x18, self, newEntity);
                 newEntity->facing = self->facing;
@@ -387,6 +389,7 @@ void EntityMedusa(Entity* self) {
     self->hitboxHeight = hitbox[1];
 }
 
+// Entity 0x18
 void func_80192020(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
@@ -481,6 +484,7 @@ void func_80192020(Entity* self) {
     }
 }
 
+// Entity 0x19
 void func_801922EC(Entity* self) {
     Entity* prevEntity;
     s8* hitbox;
@@ -493,7 +497,7 @@ void func_801922EC(Entity* self) {
     self->posY.i.hi = prevEntity->posY.i.hi;
     self->facing = prevEntity->facing;
 
-    if (*(u8*)&prevEntity->ext.stub[0x9] != 0) {
+    if (prevEntity->ext.e_801922EC.unk85 != 0) {
         self->hitboxState = 1;
     } else {
         self->hitboxState = 2;
@@ -511,9 +515,11 @@ void func_801922EC(Entity* self) {
     }
 }
 
-// https://decomp.me/scratch/2ydQM
+// DECOMP_ME_WIP https://decomp.me/scratch/2ydQM
+// Entity ID 0x1A
 INCLUDE_ASM("asm/us/boss/rbo3/nonmatchings/11080", func_801923DC);
 
+// Entity ID 0x1B
 void func_80192998(Entity* self) {
     s32 objParams;
     u32 priorityParams;
@@ -528,7 +534,7 @@ void func_80192998(Entity* self) {
         self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
-        *(s32*)&self->ext.stub[0x4] = obj->unk8;
+        self->ext.e_80192998.unk80 = obj->unk8;
         self->step = objParams + 1;
         priorityParams = self->params & 0xFF00;
         if (priorityParams != 0) {
@@ -549,13 +555,13 @@ void func_80192998(Entity* self) {
             self->facing = Random() & 1;
             self->velocityX = (Random() << 8) - 0x8000;
             self->velocityY = FIX(-0.75);
-            *(s32*)&self->ext.stub[0x10] = -(Random() * 16) - 0x4000;
+            self->ext.e_80192998.unk8C = -(Random() * 16) - 0x4000;
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY = self->velocityY + *(s32*)&self->ext.stub[0x10];
+        self->velocityY = self->velocityY + self->ext.e_80192998.unk8C;
         self->unk6C += 0xFF;
-        if (AnimateEntity(*(s32*)&self->ext.stub[0x4], self) == 0) {
+        if (AnimateEntity(self->ext.e_80192998.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;

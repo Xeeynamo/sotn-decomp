@@ -280,7 +280,22 @@ typedef struct {
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ u8 facing;
+    /* 0x85 */ s8 unk85;
 } E_Medusa;
+
+typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s32* unk80;
+    /* 0x84 */ char pad_84[0x8];
+    /* 0x8C */ s32 unk8C;
+} E_80192998;
+
+typedef struct {
+    /* 0x7C */ char pad7C[0x9];
+    /* 0x85 */ u8 unk85;
+} E_801922EC;
 
 typedef struct {
     /* 0x7C */ s32 hand;
@@ -325,6 +340,8 @@ typedef union {
     /* 0x7C */ ET_RoomTransition2 roomTransition2;
     /* 0x7C */ ET_801B3C38 et38;
     /* 0x7C */ E_Medusa medusa;
+    /* 0x7C */ E_80192998 e_80192998;
+    /* 0x7C */ E_801922EC e_801922EC;
     /* 0x7C */ ET_ClockRoom clockRoom;
     /* 0x7C */ ET_Birdcage birdcage;
     /* 0x7C */ ET_Statue statue;
