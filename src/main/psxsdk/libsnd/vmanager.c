@@ -49,7 +49,11 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOff);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeKeyOn);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeKeyOff);
+void SpuVmKeyOff(s32, s16, s16, u16);
+
+void SpuVmSeKeyOff(s16 arg0, s16 arg1, u16 arg2) {
+    SpuVmKeyOff(0x21, arg0, arg1, arg2);
+}
 
 void KeyOnCheck(void) {}
 
