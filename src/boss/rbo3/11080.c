@@ -167,7 +167,7 @@ void EntityMedusa(Entity* self) {
         AnimateEntity(D_801805FC, self);
 
         if (self->step_s == 0) {
-            self->ext.generic.unk80.modeS16.unk0 = 64;
+            self->ext.medusa.timer = 64;
             self->step_s++;
         }
 
@@ -201,7 +201,7 @@ void EntityMedusa(Entity* self) {
             }
         }
 
-        if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        if (--self->ext.medusa.timer == 0) {
             GetSideToPlayer();
             if (GetDistanceToPlayerX() <= 64) {
                 SetStep(5);
@@ -230,7 +230,7 @@ void EntityMedusa(Entity* self) {
 
     case 4:
         if (self->step_s == 0) {
-            if (!(Random() & 3)) {
+            if (!(Random() % 4)) {
                 PlaySfxAtPos(0x7FB);
             }
             self->step_s++;
@@ -302,7 +302,7 @@ void EntityMedusa(Entity* self) {
         }
         break;
 
-    case 7: // FUCKING_DEAD
+    case 7: // Dying
         switch (self->step_s) {
         case 0:
             PlaySfxAtPos(0x804);
@@ -312,7 +312,7 @@ void EntityMedusa(Entity* self) {
 
         case 1:
             if (AnimateEntity(D_8018063C, self) == 0) {
-                self->ext.generic.unk80.modeS16.unk0 = 80;
+                self->ext.medusa.timer = 80;
                 PlaySfxAtPos(0x7C5);
                 self->step_s++;
             }
@@ -328,11 +328,11 @@ void EntityMedusa(Entity* self) {
                 newEntity->posY.i.hi += 24;
             }
 
-            if (!(self->ext.generic.unk80.modeS16.unk0 & 0xF)) {
+            if (!(self->ext.medusa.timer & 0xF)) {
                 PlaySfxAtPos(0x661);
             }
 
-            if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+            if (--self->ext.medusa.timer == 0) {
                 self->animCurFrame = 0;
                 D_80180728 |= 4;
                 self->step_s++;

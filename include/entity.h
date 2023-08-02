@@ -278,6 +278,11 @@ typedef struct {
 } ET_801B3C38;
 
 typedef struct {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+} E_Medusa;
+
+typedef struct {
     /* 0x7C */ s32 hand;
     /* 0x80 */ char pad_80[0x4];
     /* 0x84 */ u16 bellTimer;
@@ -319,6 +324,7 @@ typedef union {
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
     /* 0x7C */ ET_RoomTransition2 roomTransition2;
     /* 0x7C */ ET_801B3C38 et38;
+    /* 0x7C */ E_Medusa medusa;
     /* 0x7C */ ET_ClockRoom clockRoom;
     /* 0x7C */ ET_Birdcage birdcage;
     /* 0x7C */ ET_Statue statue;
