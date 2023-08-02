@@ -188,13 +188,11 @@ $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
-####################################
 wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
 	$(GFXSTAGE) e assets/st/wrp $@
-####################################
 rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
