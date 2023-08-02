@@ -230,11 +230,11 @@ class NonMatchingFunc(object):
         assumed_path = f"/{self.overlay_name}/{self.text_offset}.c"
         c_paths = [src for src in src_files if src.endswith(assumed_path)]
         if len(c_paths) != 1:
-            print("CPATH MATCH FAILURE")
             print(c_paths)
             print(nonmatching_path)
             print(assumed_path)
             print(split)
+            kill = 3 / 0
         self.src_path = c_paths[0]
 
 
@@ -419,6 +419,7 @@ if __name__ == "__main__":
         # Sort the names
         for overlay in overlays:
             overlays[overlay].sort()
+        print(overlays)
         html = '<html><head><meta charset="UTF-8"></head><body>'
         for overlay, funcs in overlays.items():
             # create a heading for the overlay
