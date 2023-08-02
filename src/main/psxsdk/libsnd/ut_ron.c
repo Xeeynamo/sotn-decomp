@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/ut_ron", SsUtReverbOn);
+void func_80029148(s32);
+
+void SsUtReverbOn(void) { func_80029148(1); }

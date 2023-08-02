@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/ssquit", SsQuit);
+void SpuQuit();
+
+void SsQuit(void) { SpuQuit(); }
