@@ -29,7 +29,7 @@ typedef enum {
     /* 0x19 */ E_STATUE,
     /* 0x1A */ E_STATUE_GEAR,
     /* 0x1B */ E_STONE_DOOR,
-    /* 0x1C */ E_func_80199114,
+    /* 0x1C */ E_ID_1C,
     /* 0x1D */ E_DUMMY_1D,
 } EntityIDs;
 
