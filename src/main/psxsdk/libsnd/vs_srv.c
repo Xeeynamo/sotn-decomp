@@ -1,4 +1,11 @@
 #include "common.h"
 
-INCLUDE_ASM(
-    "asm/us/main/nonmatchings/psxsdk/libsnd/vs_srv", SsSetReservedVoice);
+extern u8 spuVmMaxVoice;
+
+u8 SsSetReservedVoice(u8 voices) {
+    if ((voices >= 0x19) || (voices == 0)) {
+        return -1;
+    }
+    spuVmMaxVoice = voices;
+    return spuVmMaxVoice;
+}
