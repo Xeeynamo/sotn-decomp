@@ -206,8 +206,6 @@ $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 mar: bomar_dirs $(BUILD_DIR)/MAR.BIN #$(BUILD_DIR)/F_MAR.BIN
 $(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
 	$(OBJCOPY) -O binary $< $@
-#$(BUILD_DIR)/F_MAR.BIN:
-#	$(GFXSTAGE) e assets/boss/mar $@
 
 rbo3: borbo3_dirs $(BUILD_DIR)/RBO3.BIN
 $(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
