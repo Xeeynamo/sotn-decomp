@@ -58,6 +58,7 @@ segments:
     - [0xABD0, .rodata, CF70] # func_80198688
     - [0xABE8, rodata]
     - [0xAC0C, c]
+    - [0xCF70, c]
     - [0x1A200, sbss]
 
  #  - [0x3EB00, sbss]
