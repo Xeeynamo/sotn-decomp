@@ -1,8 +1,10 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/ssvol", _SsSndSetVol);
-
 void SpuVmSetSeqVol(s16, u16, u16, s32);
+
+void _SsSndSetVol(s32 arg0, s32 arg1, u16 arg2, u16 arg3) {
+    SpuVmSetSeqVol(arg0 | (arg1 << 8), arg2, arg3, 0);
+}
 
 void SsSeqSetVol(s16 arg0, s32 arg1, s32 arg2) {
     SpuVmSetSeqVol(arg0, arg1, arg2, 0);
