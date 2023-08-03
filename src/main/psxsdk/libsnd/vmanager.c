@@ -99,8 +99,24 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetVVol);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtSetVVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAutoVol);
+void SeAutoVol(s16, s16, s16, s16);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAutoPan);
+s16 SsUtAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
+    if (!(vc >= 0x18U)) {
+        SeAutoVol(vc, start_vol, end_vol, delta_time);
+        return 0;
+    }
+    return -1;
+}
+
+void SeAutoPan(s16, s16, s16, s16);
+
+s16 SsUtAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
+    if (!(vc >= 0x18U)) {
+        SeAutoPan(vc, start_pan, end_pan, delta_time);
+        return 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAllKeyOff);

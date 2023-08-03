@@ -18,5 +18,13 @@ void _SsTrapIntrVSync(void) {
     D_80032EF8();
 }
 
-INCLUDE_ASM(
-    "asm/us/main/nonmatchings/psxsdk/libsnd/ssstart", _SsSeqCalledTbyT_1per2);
+extern s32 D_80032F04;
+
+void _SsSeqCalledTbyT_1per2(void) {
+    if (D_80032F04 == 0) {
+        D_80032F04 = 1;
+        return;
+    }
+    D_80032F04 = 0;
+    D_80032EF8();
+}
