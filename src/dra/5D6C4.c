@@ -761,8 +761,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         if (g_Status.equipment[2] == 0x2D) {
             // ID for Unequip in head slot
             g_Status.equipment[2] = 0x1A;
-        } else if (g_Status.equipHeadCount[0x13] != 0) {
-            g_Status.equipHeadCount[0x13]--;
+        } else if (g_Status.equipBodyCount[0x2d] != 0) {
+            g_Status.equipBodyCount[0x2d]--;
         }
         // Same logic, for Alucard Mail
         if (g_Status.equipment[3] == 0xF) {
@@ -774,8 +774,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         if (g_Status.equipment[4] == 0x38) {
             g_Status.equipment[4] = 0x30;
             func_800FF60C();
-        } else if (g_Status.equipCloakCount[8] != 0) {
-            g_Status.equipCloakCount[8]--;
+        } else if (g_Status.equipBodyCount[56] != 0) {
+            g_Status.equipBodyCount[56]--;
         }
         // Necklace of J in Misc slot 1
         if (g_Status.equipment[5] == 0x4E) {
@@ -783,8 +783,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             // Necklace of J in Misc slot 2
         } else if (g_Status.equipment[6] == 0x4E) {
             g_Status.equipment[6] = 0x39;
-        } else if (g_Status.equipCloakCount[21+9] != 0) {
-            g_Status.equipCloakCount[21+9]--;
+        } else if (g_Status.equipBodyCount[78] != 0) {
+            g_Status.equipBodyCount[78]--;
         }
     } else {
         // I think this zeros out all the rooms to mark as unvisited
@@ -818,10 +818,10 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipBodyOrder[i] = i;
         }
         g_Status.equipHandCount[0] = 1;
-        g_Status.equipHeadCount[0] = 1;
+        g_Status.equipBodyCount[26] = 1;
         g_Status.equipBodyCount[0] = 1;
-        g_Status.equipCloakCount[0] = 1;
-        g_Status.equipCloakCount[0+9] = 1;
+        g_Status.equipBodyCount[48] = 1;
+        g_Status.equipBodyCount[57] = 1;
 
         for (i = 0; i < LEN(g_Status.spells); i++) {
             g_Status.spells[i] = 0;
