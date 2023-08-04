@@ -686,13 +686,13 @@ typedef struct {
     /* 8009798A */ u8 equipHandCount[169];
     /* 80097A33 */ u8 equipBodyCount[26];
     /* 80097A4D */ u8 equipHeadCount[22];
-    /* 80097A63 */ u8 equipCloakCount[9];
-    /* 80097A6C */ u8 equipOtherCount[33];
+    /* 80097A63 */ u8 equipCloakCount[9+33];
+    // /* 80097A6C */ u8 equipOtherCount[33];
     /* 80097A8D */ u8 equipHandOrder[169];
     /* 80097B36 */ u8 equipBodyOrder[26];
     /* 80097B50 */ u8 equipHeadOrder[22];
-    /* 80097B66 */ u8 equipCloakOrder[9];
-    /* 80097B6F */ u8 equipOtherOrder[33];
+    /* 80097B66 */ u8 equipCloakOrder[9+33];
+    // /* 80097B6F */ u8 equipOtherOrder[33];
     /* 80097B90 */ u8 saveName[12];
     /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;

@@ -783,8 +783,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             // Necklace of J in Misc slot 2
         } else if (g_Status.equipment[6] == 0x4E) {
             g_Status.equipment[6] = 0x39;
-        } else if (g_Status.equipOtherCount[21] != 0) {
-            g_Status.equipOtherCount[21]--;
+        } else if (g_Status.equipCloakCount[21+9] != 0) {
+            g_Status.equipCloakCount[21+9]--;
         }
     } else {
         // I think this zeros out all the rooms to mark as unvisited
@@ -821,7 +821,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.equipHeadCount[0] = 1;
         g_Status.equipBodyCount[0] = 1;
         g_Status.equipCloakCount[0] = 1;
-        g_Status.equipOtherCount[0] = 1;
+        g_Status.equipCloakCount[0+9] = 1;
 
         for (i = 0; i < LEN(g_Status.spells); i++) {
             g_Status.spells[i] = 0;
