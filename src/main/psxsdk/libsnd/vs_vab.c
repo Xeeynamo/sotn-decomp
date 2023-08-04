@@ -2,7 +2,7 @@
 #include "libsnd_internal.h"
 
 void SsVabClose(s16 vabid) {
-    if ((vabid < 0x10U) && (svm_vab_used[vabid] == 1)) {
+    if ((vabid >= 0 && vabid < 0x10) && (svm_vab_used[vabid] == 1)) {
         func_80028FF4(D_80098810[vabid]);
         svm_vab_used[vabid] = 0;
         _svm_vab_count -= 1;

@@ -14,7 +14,7 @@ struct Unk {
     u16 unk10;
 };
 
-void _SsUtResolveADSR(s32 arg0, u32 arg1, struct Unk* arg2);
+void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2);
 void _SsSeqPlay(s16, s16);
 void _SsClose(s16);
 

@@ -12,7 +12,7 @@ void SsEnd(void) {
             InterruptCallback(0, D_80032EFC);
             D_80032EFC = 0;
         } else {
-            InterruptCallback(6, 0);
+            InterruptCallback(6, NULL);
         }
         ExitCriticalSection();
         D_80032F02 = 0xFF;

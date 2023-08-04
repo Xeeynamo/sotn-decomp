@@ -37,12 +37,9 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOnWithAdsr);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOff);
 
 void SpuVmNoiseOn(s32 arg0, s32 arg1) {
-    s16 temp_v0;
-
     D_800978D7 = 0x7F;
-    temp_v0 = SpuVmAlloc(0xFF);
-    D_800978E2 = temp_v0;
-    if (temp_v0 < spuVmMaxVoice) {
+    D_800978E2 = SpuVmAlloc(0xFF);
+    if (D_800978E2 < spuVmMaxVoice) {
         vmNoiseOn2(D_800978E2, arg0, arg1, 0x80FF, 0x5FC8);
     }
 }
