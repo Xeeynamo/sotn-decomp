@@ -1,6 +1,5 @@
 #include "common.h"
-
-extern s16 _svm_stereo_mono;
+#include "libsnd_internal.h"
 
 void SsSetMono(void) { _svm_stereo_mono = 1; }
 

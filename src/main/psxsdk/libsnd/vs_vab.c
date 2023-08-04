@@ -1,26 +1,13 @@
 #include "common.h"
+#include "libsnd_internal.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/vs_vab", SsVabClose);
-
-typedef struct VabHdr {
-    s32 form;
-    s32 ver;
-    s32 id;
-    u32 fsize;
-    u16 reserved0;
-    u16 ps;
-    u16 ts;
-    u16 vs;
-    u8 mvol;
-    u8 pan;
-    u8 attr1;
-    u8 attr2;
-    u32 reserved1;
-} VabHdr;
-
-s16 SsVabOpenHead(u8*, s16);
-s16 SsVabTransBody(u8*, s16);
-extern s32 D_80098854[];
+void SsVabClose(s16 vabid) {
+    if ((vabid < 0x10U) && (svm_vab_used[vabid] == 1)) {
+        func_80028FF4(D_80098810[vabid]);
+        svm_vab_used[vabid] = 0;
+        _svm_vab_count -= 1;
+    }
+}
 
 s16 SsVabOpen(u8* addr, VabHdr* vab_header) {
     s16 vab_id;

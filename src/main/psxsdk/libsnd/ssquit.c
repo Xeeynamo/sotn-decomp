@@ -1,5 +1,4 @@
 #include "common.h"
-
-void SpuQuit();
+#include "libsnd_internal.h"
 
 void SsQuit(void) { SpuQuit(); }
