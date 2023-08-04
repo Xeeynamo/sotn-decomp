@@ -70,6 +70,8 @@ jobs:
         run: make -j build
       - name: Check if they match
         run: make check
+      - name: Analyze calls dry run
+        run: ./tools/analyze_calls.py ALL_DRY
       - name: Remove clutter from build folder
         run: rm -rf build/$(VERSION)/asm build/$(VERSION)/src build/$(VERSION)/assets
       - name: Export build folder
