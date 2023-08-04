@@ -1,7 +1,5 @@
 #include "common.h"
-
-void _spu_setInTransfer(s32);
-extern u8 svm_vab_used[];
+#include "libsnd_internal.h"
 
 s16 SsVabFakeBody(s16 vabid) {
     if ((vabid < 0x11U) && (svm_vab_used[vabid] == 2)) {
