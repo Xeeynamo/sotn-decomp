@@ -97,7 +97,7 @@ void SeAutoPan(s16, s16, s16, s16);
 struct SeqStruct {
     u8 unk0;
     u8* read_pos;
-    u8 pad[0x3c-8];
+    u8 pad[0x3c - 8];
     u8 unk3C;
     s16 unk3E;
     s16 unk40;
