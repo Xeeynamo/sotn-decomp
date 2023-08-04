@@ -35,7 +35,7 @@ void _SsStart(s32);
 extern void (*D_80032EF8)();
 extern void (*D_80032EFC)();
 extern s32 D_80032F04;
-void SpuVmSeKeyOff(s16 arg0, s16 arg1, u16 arg2);
+
 void SpuVmSeKeyOn(s32, u8, u16, u8, u16, u16);
 void SpuVmSetSeqVol(s16, u16, u16, s32);
 s32 SpuVmGetSeqVol(s16, s16*, s16*);
