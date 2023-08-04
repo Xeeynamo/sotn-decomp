@@ -1,8 +1,5 @@
 #include "common.h"
-
-void ResetCallback();
-void SpuInit();
-void _SsInit();
+#include "libsnd_internal.h"
 
 void SsInitHot(void) {
     ResetCallback();

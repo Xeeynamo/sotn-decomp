@@ -1,5 +1,6 @@
 #define INCLUDE_ASM_NEW
 #include "common.h"
+#include "libsnd_internal.h"
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmAlloc);
 
@@ -35,7 +36,13 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOnWithAdsr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOff);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOn);
+void SpuVmNoiseOn(s32 arg0, s32 arg1) {
+    D_800978D7 = 0x7F;
+    D_800978E2 = SpuVmAlloc(0xFF);
+    if (D_800978E2 < spuVmMaxVoice) {
+        vmNoiseOn2(D_800978E2, arg0, arg1, 0x80FF, 0x5FC8);
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmPBVoice);
 
@@ -48,8 +55,6 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOn);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOff);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeKeyOn);
-
-void SpuVmKeyOff(s32, s16, s16, u16);
 
 void SpuVmSeKeyOff(s16 arg0, s16 arg1, u16 arg2) {
     SpuVmKeyOff(0x21, arg0, arg1, arg2);
@@ -99,8 +104,20 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetVVol);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtSetVVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAutoVol);
+s16 SsUtAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
+    if (!(vc >= 0x18U)) {
+        SeAutoVol(vc, start_vol, end_vol, delta_time);
+        return 0;
+    }
+    return -1;
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAutoPan);
+s16 SsUtAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
+    if (!(vc >= 0x18U)) {
+        SeAutoPan(vc, start_pan, end_pan, delta_time);
+        return 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAllKeyOff);
