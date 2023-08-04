@@ -22,7 +22,7 @@ s32 _SsReadDeltaValue(s16 arg0, s16 arg1) {
         } while (temp_v1_2 & 0x80);
     }
 
-    temp_v0 = ((var_a0 << 2) + var_a0) * 2;
+    temp_v0 = var_a0 * 10;
     temp_a1->unk80 += temp_v0;
     return temp_v0;
 }
