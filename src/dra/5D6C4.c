@@ -12,7 +12,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 
     switch (equipTypeFilter) {
     case 0:
-        return 0xA9; // test
+        return 0xA9; // test 1
     case 1:
         var_a1 = 0;
         break;
