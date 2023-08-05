@@ -116,7 +116,7 @@ void func_800F4994(void) {
     }
 
     for (i = 0; i < 4; i++) {
-        if (g_Status.statsEquip[i] >= 100) {
+        if (g_Status.statsEquip[i] > 99) {
             g_Status.statsEquip[i] = 99;
         }
         g_Status.statsTotal[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
