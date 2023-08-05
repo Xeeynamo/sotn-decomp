@@ -186,7 +186,7 @@ typedef enum HandItems {
     /* 0x0A6 */ ITEM_LIBRARY_CARD,
     /* 0x0A7 */ ITEM_ALUCART_SHIELD,
     /* 0x0A8 */ ITEM_ALUCART_SWORD,
-    /* 0x0A9 */ ITEM_HAND_END,
+    /* 0x0A9 */ NUM_HAND_ITEMS,
 } HandItems;
 
 typedef enum BodyItems {
@@ -280,5 +280,5 @@ typedef enum BodyItems {
     /* 0x57 */ ITEM_NAUGLAMIR,
     /* 0x58 */ ITEM_SECRET_BOOTS,
     /* 0x59 */ ITEM_ALUCART_MAIL,
-    /* 0x5A */ ITEM_BODY_END,
+    /* 0x5A */ NUM_BODY_ITEMS,
 } BodyItems;
