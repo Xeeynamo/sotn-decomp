@@ -11,18 +11,18 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 
     switch (equipTypeFilter) {
     case HAND_TYPE:
-        return 0xA9;
+        return ITEM_HAND_END;
     case HEAD_TYPE:
-        equipType = 0;
+        equipType = HEAD_TYPE - 1;
         break;
     case ARMOR_TYPE:
-        equipType = 1;
+        equipType = ARMOR_TYPE - 1;
         break;
     case CAPE_TYPE:
-        equipType = 2;
+        equipType = CAPE_TYPE - 1;
         break;
     case ACCESSORY_TYPE:
-        equipType = 3;
+        equipType = ACCESSORY_TYPE - 1;
         break;
     }
 
