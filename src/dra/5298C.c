@@ -41,7 +41,7 @@ bool func_800F483C(void) {
 
 bool IsAlucart(void) {
     if (CheckEquipmentItemCount(ITEM_ALUCART_SWORD, HAND_TYPE) &&
-        CheckEquipmentItemCount(0xA7, HAND_TYPE) &&
+        CheckEquipmentItemCount(ITEM_ALUCART_SHIELD, HAND_TYPE) &&
         CheckEquipmentItemCount(ITEM_ALUCART_MAIL, ARMOR_TYPE))
         return true;
     return false;
