@@ -5,37 +5,33 @@
 #include "sfx.h"
 
 s32 func_800FD6C4(s32 equipTypeFilter) {
-    s32 var_a0;
-    s32 var_v1;
-    s32 var_a1;
+    s32 itemCount;
+    s32 equipType;
+    s32 i;
 
     switch (equipTypeFilter) {
-    case 0:
+    case HAND_TYPE:
         return 0xA9;
-    case 1:
-        var_a1 = 0;
+    case HEAD_TYPE:
+        equipType = 0;
         break;
-    case 2:
-        var_a1 = 1;
+    case ARMOR_TYPE:
+        equipType = 1;
         break;
-    case 3:
-        var_a1 = 2;
+    case CAPE_TYPE:
+        equipType = 2;
         break;
-    case 4:
-        var_a1 = 3;
-    default:
+    case ACCESSORY_TYPE:
+        equipType = 3;
         break;
     }
-    var_a0 = 0;
-    var_v1 = 0;
-    do {
-        if (D_800A7734[var_v1].unk00 == var_a1) {
-            var_a0 += 1;
-        }
-        var_v1 += 1;
-    } while (var_v1 < 90);
 
-    return var_a0;
+    for (itemCount = 0, i = 0; i < 90; i++) {
+        if (D_800A7734[i].unk00 == equipType) {
+            itemCount++;
+        }
+    }
+    return itemCount;
 }
 
 const u32 rodataPadding_jpt_800FD6E0 = 0;
