@@ -195,7 +195,8 @@ void EntityEnemyBlood(Entity* self) {
                     if (g_Player.unk56 == 0) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;
-                        if (g_api.CheckEquipmentItemCount(0x3C, 4)) {
+                        if (g_api.CheckEquipmentItemCount(
+                                ITEM_BLOODSTONE, ACCESSORY_TYPE)) {
                             g_Player.unk58 *= 2;
                         }
                     }

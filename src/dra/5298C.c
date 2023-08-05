@@ -40,8 +40,9 @@ bool func_800F483C(void) {
 }
 
 bool IsAlucart(void) {
-    if (CheckEquipmentItemCount(0xA8, 0) && CheckEquipmentItemCount(0xA7, 0) &&
-        CheckEquipmentItemCount(0x59, 2))
+    if (CheckEquipmentItemCount(ITEM_ALUCART_SWORD, HAND_TYPE) &&
+        CheckEquipmentItemCount(0xA7, HAND_TYPE) &&
+        CheckEquipmentItemCount(ITEM_ALUCART_MAIL, ARMOR_TYPE))
         return true;
     return false;
 }
@@ -58,6 +59,7 @@ void func_800F4994(void) {
     for (i = 0; i < 4; i++, statsPtr++) {
         *statsPtr = 0;
     }
+
     // Iterate through each Accessory
     for (i = 0; i < 5; i++) {
         // Iterate through the 4 stats (STR, CON, INT, LCK)
@@ -70,22 +72,26 @@ void func_800F4994(void) {
         }
     }
     hourOfDay = g_Status.timerHours % 24;
+
     // Hours of sunstone effectiveness
     if (6 <= hourOfDay && hourOfDay < 18) {
         // Sunstone check
-        correctStonesEquipped = CheckEquipmentItemCount(0x3BU, 4U);
+        correctStonesEquipped =
+            CheckEquipmentItemCount(ITEM_SUNSTONE, ACCESSORY_TYPE);
         statsPtr = &g_Status.statsEquip;
         for (i = 0; i < 4; i++, statsPtr++) {
             *statsPtr += correctStonesEquipped * 5;
         }
     } else {
         // Moonstone check
-        correctStonesEquipped = CheckEquipmentItemCount(0x3AU, 4U);
+        correctStonesEquipped =
+            CheckEquipmentItemCount(ITEM_MOONSTONE, ACCESSORY_TYPE);
         statsPtr = &g_Status.statsEquip;
         for (i = 0; i < 4; i++, statsPtr++) {
             *statsPtr += correctStonesEquipped * 5;
         }
     }
+
     if (D_80139830[2] != 0) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
@@ -110,6 +116,7 @@ void func_800F4994(void) {
     if (IsAlucart() != false) {
         g_Status.statsEquip[STAT_LCK] += 30;
     }
+
     for (i = 0; i < 4; i++) {
         if (g_Status.statsEquip[i] >= 100) {
             g_Status.statsEquip[i] = 99;
@@ -140,10 +147,13 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
          D_800A4B04[equipId].attack == 1)) {
         return 0;
     }
-    if (equipId == 0x10) {
+
+    if (equipId == ITEM_ALUCARD_SHIELD) {
         return 0;
     }
+
     equipmentAttackBonus = 0;
+
     for (i = 0; i < 5; i++) {
         equipmentAttackBonus +=
             (u16)D_800A7718[g_Status.equipment[2 + i]].attBonus;
@@ -160,18 +170,17 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
 
     totalAttack += equipmentAttackBonus;
 
-    if (equipId == 0x7D) { // Badelaire sword
+    if (equipId == ITEM_BADELAIRE) {
         totalAttack += g_Status.timerHours;
     }
-    if (equipId == 0x8D) { // Muramasa sword
+    if (equipId == ITEM_MURAMASA) {
         totalAttack += SquareRoot0(g_Status.D_80097C40);
     }
     if (equipId == 4 && D_800A4B04[otherEquipId].itemCategory == ITEM_SHIELD) {
         totalAttack += 5;
     }
-    if (equipId == 0x7E) { // Equippable Sword Familiar
-        totalAttack += g_Status.statsFamiliars[FAMILIAR_SWORD]
-                           .level; // Level of sword familiar
+    if (equipId == ITEM_SWORD_FAMILIAR) {
+        totalAttack += g_Status.statsFamiliars[FAMILIAR_SWORD].level;
     }
     if (D_8013982C != 0) {
         totalAttack += 20;
@@ -226,12 +235,11 @@ void CalcDefense(void) {
         g_Status.D_80097C2C |= acc->unk14;
         g_Status.D_80097C2E |= acc->unk16;
     }
-    // Mirror cuirass
-    if (CheckEquipmentItemCount(0xD, 0U) != 0) {
+
+    if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, HAND_TYPE) != 0) {
         g_Status.D_80097C2C |= 0x200;
     }
-    // Alucard Mail
-    if (CheckEquipmentItemCount(0xF, 0U) != 0) {
+    if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, HAND_TYPE) != 0) {
         g_Status.D_80097C2C |= 0x8000;
     }
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
@@ -264,13 +272,13 @@ void CalcDefense(void) {
     }
 
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
-    // Walk armor
-    if (CheckEquipmentItemCount(0x13, 2) != 0) {
+
+    if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, ARMOR_TYPE) != 0) {
         totalDefense += g_roomCount / 60;
     }
 
     if (*D_80139828 != 0) {
-        totalDefense += 0x14;
+        totalDefense += 20;
     }
     if (totalDefense < 0) {
         totalDefense = 0;
@@ -1204,8 +1212,10 @@ void BlinkMenuCursor(s32 left, s32 top, s32 right, s32 bottom, s32 arg4) {
     } else {
         var_s2 = 0x80;
     }
+
     SetSemiTrans(temp_s0, 0);
     SetShadeTex(temp_s0, 1);
+
     if (g_blinkTimer & 0x20) {
         blink_value = g_blinkTimer & 0x1F;
     } else {
@@ -1406,8 +1416,8 @@ void CheckWeaponCombo(void) {
     s32 i;
     s32 oddComboCheck;
 
-    weapon0 = g_Status.equipment[0];
-    weapon1 = g_Status.equipment[1];
+    weapon0 = g_Status.equipment[LEFT_HAND_SLOT];
+    weapon1 = g_Status.equipment[RIGHT_HAND_SLOT];
 
     combo1 = D_800A4B04[weapon0].comboSub & D_800A4B04[weapon1].comboMain;
     oddComboCheck = 0x80000000;
@@ -1432,13 +1442,15 @@ bool LoadWeaponPrg(s32 equipIndex) {
     s32 weaponId;
 
     equipId = g_Status.equipment[equipIndex];
-    if (g_Status.equipment[3] == 0x19) {
+    if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
         equipId = 0xD8;
     }
+
     weaponId = D_800A4B04[equipId].weaponId;
     if (weaponId == D_8003C90C[equipIndex] || weaponId == 0xFF) {
         return 1;
     }
+
     if (g_UseDisk) {
         if (g_IsUsingCd) {
             return 0;

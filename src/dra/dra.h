@@ -2,6 +2,7 @@
 #define DRA_H
 
 #include "game.h"
+#include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
 #define DAMAGE_FLAG_CRITICAL 0x4000

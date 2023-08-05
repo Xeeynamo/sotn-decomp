@@ -3,7 +3,6 @@
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#include "items.h"
 
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 var_a0;
@@ -67,17 +66,17 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     if (equipType < 5) {
         switch (equipType) {
         case 0:
-            return (g_Status.equipment[0] == itemId) +
-                   (g_Status.equipment[1] == itemId);
+            return (g_Status.equipment[LEFT_HAND_SLOT] == itemId) +
+                   (g_Status.equipment[RIGHT_HAND_SLOT] == itemId);
         case 1:
-            return g_Status.equipment[2] == itemId;
+            return g_Status.equipment[HEAD_SLOT] == itemId;
         case 2:
-            return g_Status.equipment[3] == itemId;
+            return g_Status.equipment[ARMOR_SLOT] == itemId;
         case 3:
-            return g_Status.equipment[4] == itemId;
+            return g_Status.equipment[CAPE_SLOT] == itemId;
         case 4:
-            return (g_Status.equipment[5] == itemId) +
-                   (g_Status.equipment[6] == itemId);
+            return (g_Status.equipment[ACCESSORY_1_SLOT] == itemId) +
+                   (g_Status.equipment[ACCESSORY_2_SLOT] == itemId);
         }
     }
     // seems to require missing return
@@ -140,7 +139,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
-    if (CheckEquipmentItemCount(0x15, 2) != 0) {
+    if (CheckEquipmentItemCount(ITEM_MOJO_MAIL, ARMOR_TYPE) != 0) {
         spell->attack = spell->attack + spell->attack / 2;
     }
 }
@@ -179,7 +178,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_UNK04:
     case STATUS_AILMENT_UNK05:
         ret = timer;
-        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, 4) != 0) {
+        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, ACCESSORY_TYPE) != 0) {
             ret += ret / 2;
         }
         break;
@@ -213,16 +212,14 @@ void LearnSpell(s32 spellId) {
     }
 }
 
-bool func_800FDD44(s32 equipId) {
-    s32 equippedItem;
-    bool isConsumable;
+bool func_800FDD44(s32 itemType) {
+    s32 equippedItem = g_Status.equipment[itemType];
+    bool isConsumable = D_800A4B04[equippedItem].isConsumable;
 
-    equippedItem = g_Status.equipment[equipId];
-    isConsumable = D_800A4B04[equippedItem].isConsumable;
-    if (!CheckEquipmentItemCount(0x54, 4)) {
+    if (CheckEquipmentItemCount(ITEM_DUPLICATOR, ACCESSORY_TYPE) == 0) {
         if (isConsumable) {
             if (g_Status.equipHandCount[equippedItem] == 0) {
-                g_Status.equipment[equipId] = 0;
+                g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
                 func_800F53A4();
                 return true;
             }
@@ -377,7 +374,8 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 
     if (subweaponId == 0) {
         *subwpn = g_Subweapons[g_Status.subWeapon];
-        accessoryCount = CheckEquipmentItemCount(0x4D, 4);
+        accessoryCount =
+            CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
         if (accessoryCount == 1) {
             subwpn->heartCost = subwpn->heartCost / 2;
         }
@@ -397,7 +395,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
     } else {
         *subwpn = g_Subweapons[subweaponId];
-        if (CheckEquipmentItemCount(0x14, 2) != 0) {
+        if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, ARMOR_TYPE) != 0) {
             subwpn->attack += 10;
         }
 #if defined(VERSION_US)
@@ -405,7 +403,8 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 #elif defined(VERSION_HD)
         if (subweaponId == 4) {
 #endif
-            accessoryCount = CheckEquipmentItemCount(0x3D, 4);
+            accessoryCount =
+                CheckEquipmentItemCount(ITEM_STAUROLITE, ACCESSORY_TYPE);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -539,7 +538,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
 
     enemy = &sp20;
     sp20 = g_EnemyDefs[enemyEntity->enemyId];
-    if (CheckEquipmentItemCount(0x2D, 1) != 0) {
+    if (CheckEquipmentItemCount(ITEM_DRAGON_HELM, HEAD_TYPE) != 0) {
         enemy->defense /= 2;
     }
 
@@ -631,10 +630,11 @@ s32 func_800FF460(s32 arg0) {
 
 // Determine what type of item to drop
 s32 func_800FF494(EnemyDef* arg0) {
-    // 0x4B is the item ID for Ring of Arcana
-    // Ring of Arcana is an item that increases enemy item drop rates when
-    // equipped
-    s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4B, 4);
+    /* Ring of Arcana is an item that increases
+     * enemy item drop rates when equipped
+     */
+    s32 ringOfArcanaCount =
+        CheckEquipmentItemCount(ITEM_RING_OF_ARCANA, ACCESSORY_TYPE);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
@@ -676,7 +676,7 @@ void func_800FF60C(void) {
 
     i = 0;
     while (1) {
-        if (g_Status.equipment[4] == D_800A2FBC[i]) {
+        if (g_Status.equipment[CAPE_SLOT] == D_800A2FBC[i]) {
             break;
         }
 
@@ -687,11 +687,12 @@ void func_800FF60C(void) {
     }
 
     var_a0_2 = D_800A2FC0[i];
-    if (g_Status.equipment[4] == 0x32 && g_Settings.isCloakLiningReversed) {
+    if (g_Status.equipment[CAPE_SLOT] == ITEM_REVERSE_CLOAK &&
+        g_Settings.isCloakLiningReversed) {
         var_a0_2++;
     }
     func_800EA5E4(var_a0_2);
-    if (g_Status.equipment[4] == 0x38) {
+    if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
         func_800EA5E4(0x415);
     }
 }
@@ -726,69 +727,64 @@ extern const char* g_CheatCodes[2];
 // {'a', 'x', 'e', 'a', 'r', 'm', 'o', 'r', '\0', '\n', '\r', '\n'},
 // };
 void InitStatsAndGear(bool isDeathTakingItems) {
-    s32 dracDefeatTime;
     s32 prologueBonusState;
-    s32 i;
+    s32 dracDefeatTime;
+    u8* fileName;
     s32 equipId;
-    u8* namePtr;
+    s32 i;
 
     if (D_8003C730 != 0) {
         func_800F53A4();
         func_800FF60C();
         return;
     }
+
     if (isDeathTakingItems == true) {
-        // Remove Alucard Sword from left hand
-        if (g_Status.equipment[0] == 0x7B) {
-            g_Status.equipment[0] = 0;
-            // Same from right hand
-        } else if (g_Status.equipment[1] == 0x7B) {
-            g_Status.equipment[1] = 0;
-            // Same from inventory
-        } else if (g_Status.equipHandCount[0x7B] != 0) {
-            // Take one (not set to zero!)
-            g_Status.equipHandCount[0x7B]--;
+        if (g_Status.equipment[LEFT_HAND_SLOT] == ITEM_ALUCARD_SWORD) {
+            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipment[RIGHT_HAND_SLOT] == ITEM_ALUCARD_SWORD) {
+            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SWORD] != 0) {
+            g_Status.equipHandCount[ITEM_ALUCARD_SWORD]--;
         }
-        // Same logic, for Alucard Shield
-        if (g_Status.equipment[0] == 0x10) {
-            g_Status.equipment[0] = 0;
-        } else if (g_Status.equipment[1] == 0x10) {
-            g_Status.equipment[1] = 0;
-        } else if (g_Status.equipHandCount[0x10] != 0) {
-            g_Status.equipHandCount[0x10]--;
+
+        if (g_Status.equipment[LEFT_HAND_SLOT] == ITEM_ALUCARD_SHIELD) {
+            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipment[RIGHT_HAND_SLOT] == ITEM_ALUCARD_SHIELD) {
+            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SHIELD] != 0) {
+            g_Status.equipHandCount[ITEM_ALUCARD_SHIELD]--;
         }
-        // Same logic, for Dragon Helm
-        if (g_Status.equipment[2] == 0x2D) {
-            // ID for Unequip in head slot
-            g_Status.equipment[2] = 0x1A;
-        } else if (g_Status.equipBodyCount[0x2d] != 0) {
-            g_Status.equipBodyCount[0x2d]--;
+
+        if (g_Status.equipment[HEAD_SLOT] == ITEM_DRAGON_HELM) {
+            g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+        } else if (g_Status.equipBodyCount[ITEM_DRAGON_HELM] != 0) {
+            g_Status.equipBodyCount[ITEM_DRAGON_HELM]--;
         }
-        // Same logic, for Alucard Mail
-        if (g_Status.equipment[3] == 0xF) {
-            g_Status.equipment[3] = 0;
-        } else if (g_Status.equipBodyCount[0xF] != 0) {
-            g_Status.equipBodyCount[0xF]--;
+
+        if (g_Status.equipment[ARMOR_SLOT] == ITEM_ALUCARD_MAIL) {
+            g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
+        } else if (g_Status.equipBodyCount[ITEM_ALUCARD_MAIL] != 0) {
+            g_Status.equipBodyCount[ITEM_ALUCARD_MAIL]--;
         }
-        // Twilight Cloak
-        if (g_Status.equipment[4] == 0x38) {
-            g_Status.equipment[4] = 0x30;
+
+        if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
+            g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
             func_800FF60C();
-        } else if (g_Status.equipBodyCount[56] != 0) {
-            g_Status.equipBodyCount[56]--;
+        } else if (g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK] != 0) {
+            g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK]--;
         }
-        // Necklace of J in Misc slot 1
-        if (g_Status.equipment[5] == 0x4E) {
-            g_Status.equipment[5] = 0x39;
-            // Necklace of J in Misc slot 2
-        } else if (g_Status.equipment[6] == 0x4E) {
-            g_Status.equipment[6] = 0x39;
-        } else if (g_Status.equipBodyCount[78] != 0) {
-            g_Status.equipBodyCount[78]--;
+
+        if (g_Status.equipment[ACCESSORY_1_SLOT] == ITEM_NECKLACE_OF_J) {
+            g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
+        } else if (g_Status.equipment[ACCESSORY_2_SLOT] == ITEM_NECKLACE_OF_J) {
+            g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
+        } else if (g_Status.equipBodyCount[ITEM_NECKLACE_OF_J] != 0) {
+            g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]--;
         }
     } else {
         // I think this zeros out all the rooms to mark as unvisited
-        for (i = 0; i < 0x800; i++) {
+        for (i = 0; i < 2048; i++) {
             D_8006BB74[i] = 0;
         }
         g_roomCount = 0;
@@ -817,11 +813,12 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipBodyCount[i] = 0;
             g_Status.equipBodyOrder[i] = i;
         }
-        g_Status.equipHandCount[0] = 1;
-        g_Status.equipBodyCount[26] = 1;
-        g_Status.equipBodyCount[0] = 1;
-        g_Status.equipBodyCount[48] = 1;
-        g_Status.equipBodyCount[57] = 1;
+
+        g_Status.equipHandCount[ITEM_EMPTY_HAND] = 1;
+        g_Status.equipBodyCount[ITEM_EMPTY_HEAD] = 1;
+        g_Status.equipBodyCount[ITEM_NO_ARMOR] = 1;
+        g_Status.equipBodyCount[ITEM_NO_CAPE] = 1;
+        g_Status.equipBodyCount[ITEM_NO_ACCESSORY] = 1;
 
         for (i = 0; i < LEN(g_Status.spells); i++) {
             g_Status.spells[i] = 0;
@@ -835,11 +832,13 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             for (i = 0; i < LEN(g_Status.relics); i++) {
                 g_Status.relics[i] = RELIC_FLAG_FOUND;
             }
+
             // These relics are special for Richter
             g_Status.relics[RELIC_CUBE_OF_ZOE] |= 2;
             g_Status.relics[RELIC_SPIRIT_ORB] |= 2;
             g_Status.relics[RELIC_FAERIE_SCROLL] |= 2;
             g_Status.relics[RELIC_JEWEL_OF_OPEN] |= 2;
+
             // Zero out all time attack records
             for (i = 0; i < 32; i++) {
                 g_Settings.timeAttackRecords[i] = 0;
@@ -848,11 +847,13 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Settings.D_8003CB04 = 0;
 
             g_Status.subWeapon = 0;
+
             // If this function is called outside the start of the game,
             // Richter gets a random subweapon.
             if ((g_StageId != STAGE_ST0) && (g_StageId != STAGE_NO3)) {
                 g_Status.subWeapon = (rand() % 9) + 1;
             }
+
             // Richter's stats table
             g_Status.hp = 50;
             g_Status.hpMax = 50;
@@ -864,14 +865,14 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.statsBase[STAT_CON] = 10;
             g_Status.statsBase[STAT_INT] = 10;
             g_Status.statsBase[STAT_LCK] = 10;
-            g_Status.equipment[2] = 0x1A;
-            g_Status.equipment[4] = 0x30;
-            g_Status.equipment[5] = 0x39;
-            g_Status.equipment[6] = 0x39;
+            g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+            g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
+            g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
+            g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
             g_Status.gold = 0;
-            g_Status.equipment[0] = 0;
-            g_Status.equipment[1] = 0;
-            g_Status.equipment[3] = 0;
+            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
+            g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
 
             // Eliminate the time attacks that Richter can't do
             if (g_StageId == STAGE_NO3) {
@@ -901,10 +902,10 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 for (i = 0; i < LEN(g_Status.relics); i++) {
                     g_Status.relics[i] = RELIC_FLAG_DISABLE;
                 }
+
                 // If we died in prologue and needed Maria's rescue
                 if (D_801397FC != 0) {
-                    // Give a potion
-                    AddToInventory(0x9F, 0);
+                    AddToInventory(ITEM_POTION, HAND_TYPE);
                     prologueBonusState = 3;
                     // If no damage was taken as Richter, bonus to each stat
                 } else if (g_Status.hp == g_Status.hpMax) {
@@ -915,16 +916,17 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     prologueBonusState = 0;
                     // If Richter finished over half HP, bonus to strength
                 } else if (g_Status.hp >= g_Status.hpMax / 2) {
-                    g_Status.statsBase[STAT_STR] += 1;
+                    g_Status.statsBase[STAT_STR]++;
                     prologueBonusState = 1;
                     // If under half HP, bonus to constitution
                 } else {
-                    g_Status.statsBase[STAT_CON] += 1;
+                    g_Status.statsBase[STAT_CON]++;
                     prologueBonusState = 2;
                 }
+
                 // If we ran out of hearts and didn't die, give heart refresh
                 if ((g_Status.hearts == 0) && (prologueBonusState < 3)) {
-                    AddToInventory(0x8E, 0);
+                    AddToInventory(ITEM_HEART_REFRESH, HAND_TYPE);
                 }
 
                 // Set initial max HP to 70, unless we took no damage, then 75.
@@ -938,7 +940,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
                 // If we had more than 41 hearts in prologue, give neutron bomb
                 if (D_80139008 >= 41) {
-                    AddToInventory(0x47, 0);
+                    AddToInventory(ITEM_NEUTRON_BOMB, HAND_TYPE);
                     g_Status.statsBase[STAT_INT]++;
                 } else {
                     g_Status.statsBase[STAT_STR]++;
@@ -994,21 +996,21 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 } else if (dracDefeatTime >= 1000) {
                     g_Status.statsBase[STAT_CON]++;
                 }
-                g_Status.equipment[0] = 0x7B; // Alucard Sword
-                g_Status.equipment[1] = 0x10; // Alucard Shield
-                g_Status.equipment[2] = 0x2D; // Dragon Helm
-                g_Status.equipment[3] = 0xF;  // Alucard Mail
-                g_Status.equipment[4] = 0x38; // Twilight Cloak
-                g_Status.equipment[5] = 0x4E; // Necklace of J
+                g_Status.equipment[LEFT_HAND_SLOT] = ITEM_ALUCARD_SWORD;
+                g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_ALUCARD_SHIELD;
+                g_Status.equipment[HEAD_SLOT] = ITEM_DRAGON_HELM;
+                g_Status.equipment[ARMOR_SLOT] = ITEM_ALUCARD_MAIL;
+                g_Status.equipment[CAPE_SLOT] = ITEM_TWILIGHT_CLOAK;
+                g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NECKLACE_OF_J;
                 g_Status.subWeapon = 0;
-                g_Status.equipment[6] = 0x39; // Nothing
+                g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
                 g_Status.hp = g_Status.hpMax;
                 g_Status.mp = g_Status.mpMax;
 
                 // Luck mode code check! This is X-X!V''Q
-                namePtr = g_CheatCodes[0];
+                fileName = g_CheatCodes[0];
                 for (i = 0; i < 8; i++) {
-                    if (g_SaveName[i] != *namePtr++) {
+                    if (g_SaveName[i] != *fileName++) {
                         break;
                     }
                 }
@@ -1024,24 +1026,24 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     g_Status.mpMax = 1;
                     g_Status.hp = g_Status.hpMax;
                     g_Status.mp = g_Status.mpMax;
-                    g_Status.equipment[6] = 0x46; // Lapis Lazuli
+                    g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_LAPIS_LAZULI;
                 }
 
                 if (g_IsTimeAttackUnlocked) {
-                    namePtr = g_CheatCodes[1];
+                    fileName = g_CheatCodes[1];
                     for (i = 0; i < 8; i++) {
-                        if (g_SaveName[i] != *namePtr++) {
+                        if (g_SaveName[i] != *fileName++) {
                             break;
                         }
                     }
                     if (i == 8) {
-                        AddToInventory(0x19, 2);
+                        AddToInventory(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE);
                     }
                 }
             } else {
                 // This Else block is for this function if called outside
                 // the "Entrance (first visit)" overlay. Applies to demo mode.
-                for (i = 0; i < 0x20; i++) {
+                for (i = 0; i < 32; i++) {
                     g_Settings.timeAttackRecords[i] = 0;
                 }
                 g_Status.statsBase[STAT_STR] = 6;
@@ -1074,6 +1076,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                         g_Status.relics[i] = RELIC_FLAG_FOUND;
                     }
                 }
+
                 // In Demo mode, Alucard gets 50 of everything holdable
                 for (i = 0; i < 169; i++) {
                     g_Status.equipHandCount[i] = 50;
@@ -1083,13 +1086,13 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     g_Status.equipBodyCount[i] = 1;
                 }
 #if defined(VERSION_US)
-                g_Status.equipment[0] = 0x13; // Short Sword
-                g_Status.equipment[1] = 5;    // Leather Shield
-                g_Status.equipment[2] = 0x1A; // No headgear
-                g_Status.equipment[3] = 2;    // Hide cuirass
-                g_Status.equipment[4] = 0x30; // No cape
-                g_Status.equipment[5] = 0x39; // No misc
-                g_Status.equipment[6] = 0x39; // No misc
+                g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
+                g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
+                g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+                g_Status.equipment[ARMOR_SLOT] = ITEM_HIDE_CUIRASS;
+                g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
+                g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
+                g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
                 g_Status.timerHours = 0;
                 g_Status.timerMinutes = 0;
                 g_Status.timerSeconds = 0;
@@ -1106,48 +1109,53 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 g_Status.relics[RELIC_FORM_OF_MIST] = 3;
                 g_Status.relics[RELIC_GRAVITY_BOOTS] = 3;
                 g_Status.relics[RELIC_LEAP_STONE] = 3;
-                AddToInventory(0x6F, 0); // Firebrand
-                AddToInventory(0x70, 0); // Thunderbrand
-                AddToInventory(0x71, 0); // Icebrand
-                AddToInventory(0x62, 0); // Claymore
-                AddToInventory(0x80, 0); // Mace
-                AddToInventory(0x64, 0); // Katana
-                AddToInventory(6, 0);    // Knight Shield
-                AddToInventory(7, 0);    // Iron Shield
-                AddToInventory(0x12, 0); // Basilard
-                AddToInventory(0x17, 0); // Rapier
-                AddToInventory(0x55, 0); // Knuckle Duster
-                AddToInventory(0x58, 0); // Cutlass
-                AddToInventory(1, 2);    // Cloth Tunic
-                AddToInventory(3, 2);    // Bronze cuirass
-                AddToInventory(4, 2);    // Iron cuirass
-                AddToInventory(5, 2);    // Steel cuirass
-                AddToInventory(6, 2);    // Silver plate
-                AddToInventory(7, 2);    // Gold plate
-                AddToInventory(0xA, 2);  // Fire mail
-                AddToInventory(0xD, 2);  // Mirror cuirass
-                AddToInventory(0x1F, 1); // Velvet hat
-                AddToInventory(0x21, 1); // Leather hat
-                AddToInventory(0x23, 1); // Steel helm
-                AddToInventory(0x31, 3); // Cloth cape
-                AddToInventory(0x33, 3); // Elven cloak
-                AddToInventory(0x35, 3); // Royal cloak
-                AddToInventory(0x32, 3); // Reverse cloak
-                AddToInventory(0x52, 4); // Medal
-                AddToInventory(0x4F, 4); // Gauntlet
-                // 80 potions!
+
+                AddToInventory(ITEM_FIREBRAND, HAND_TYPE);
+                AddToInventory(ITEM_THUNDERBRAND, HAND_TYPE);
+                AddToInventory(ITEM_ICEBRAND, HAND_TYPE);
+                AddToInventory(ITEM_CLAYMORE, HAND_TYPE);
+                AddToInventory(ITEM_MACE, HAND_TYPE);
+                AddToInventory(ITEM_KATANA, HAND_TYPE);
+                AddToInventory(ITEM_KNIGHT_SHIELD, HAND_TYPE);
+                AddToInventory(ITEM_IRON_SHIELD, HAND_TYPE);
+                AddToInventory(ITEM_BASILARD, HAND_TYPE);
+                AddToInventory(ITEM_RAPIER, HAND_TYPE);
+                AddToInventory(ITEM_KNUCKLE_DUSTER, HAND_TYPE);
+                AddToInventory(ITEM_CUTLASS, HAND_TYPE);
+
+                AddToInventory(ITEM_CLOTH_TUNIC, ARMOR_TYPE);
+                AddToInventory(ITEM_BRONZE_CUIRASS, ARMOR_TYPE);
+                AddToInventory(ITEM_IRON_CUIRASS, ARMOR_TYPE);
+                AddToInventory(ITEM_STEEL_CUIRASS, ARMOR_TYPE);
+                AddToInventory(ITEM_SILVER_PLATE, ARMOR_TYPE);
+                AddToInventory(ITEM_GOLD_PLATE, ARMOR_TYPE);
+                AddToInventory(ITEM_FIRE_MAIL, ARMOR_TYPE);
+                AddToInventory(ITEM_MIRROR_CUIRASS, ARMOR_TYPE);
+
+                AddToInventory(ITEM_VELVET_HAT, HEAD_TYPE);
+                AddToInventory(ITEM_LEATHER_HAT, HEAD_TYPE);
+                AddToInventory(ITEM_STEEL_HELM, HEAD_TYPE);
+
+                AddToInventory(ITEM_CLOTH_CAPE, CAPE_TYPE);
+                AddToInventory(ITEM_ELVEN_CLOAK, CAPE_TYPE);
+                AddToInventory(ITEM_ROYAL_CLOAK, CAPE_TYPE);
+                AddToInventory(ITEM_REVERSE_CLOAK, CAPE_TYPE);
+
+                AddToInventory(ITEM_MEDAL, ACCESSORY_TYPE);
+                AddToInventory(ITEM_GAUNTLET, ACCESSORY_TYPE);
+
                 for (i = 0; i < 80; i++) {
-                    AddToInventory(0x9F, 0);
+                    AddToInventory(ITEM_POTION, HAND_TYPE);
                 }
-                // 10 each of...
+
                 for (i = 0; i < 10; i++) {
-                    AddToInventory(0x19, 0); // Magic Missile
-                    AddToInventory(0x45, 0); // Turkey
-                    AddToInventory(0x43, 0); // Pot Roast
-                    AddToInventory(0x90, 0); // Antivenom
-                    AddToInventory(0x51, 0); // Boomerang
-                    AddToInventory(0x52, 0); // Javelin
-                    AddToInventory(0x49, 0); // Pentagram
+                    AddToInventory(ITEM_MAGIC_MISSILE, HAND_TYPE);
+                    AddToInventory(ITEM_TURKEY, HAND_TYPE);
+                    AddToInventory(ITEM_POT_ROAST, HAND_TYPE);
+                    AddToInventory(ITEM_ANTIVENOM, HAND_TYPE);
+                    AddToInventory(ITEM_BOOMERANG, HAND_TYPE);
+                    AddToInventory(ITEM_JAVELIN, HAND_TYPE);
+                    AddToInventory(ITEM_PENTAGRAM, HAND_TYPE);
                 }
 #elif defined(VERSION_HD)
                 g_Status.timerHours = 0;
@@ -1155,9 +1163,11 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 g_Status.timerSeconds = 0;
                 g_Status.timerFrames = 0;
                 g_Status.subWeapon = 6;
+
                 if (rand() & 3) {
                     g_Status.subWeapon = (rand() % 9) + 1;
                 }
+
                 do {
                 loop_check_equip_id_1:
                     equipId = rand() % 169;
@@ -1165,7 +1175,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                         goto loop_check_equip_id_1;
                     }
                 } while (D_800A4B04[equipId].itemCategory > 4);
-                g_Status.equipment[0] = equipId;
+
+                g_Status.equipment[LEFT_HAND_SLOT] = equipId;
                 do {
                 loop_check_equip_id_2:
                     equipId = rand() % 169;
@@ -1173,7 +1184,8 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                         goto loop_check_equip_id_2;
                     }
                 } while (D_800A4B04[equipId].itemCategory == 5);
-                g_Status.equipment[1] = equipId;
+
+                g_Status.equipment[RIGHT_HAND_SLOT] = equipId;
                 func_800FF708(0, 0);
                 func_800FF708(1, 1);
                 func_800FF708(2, 2);
