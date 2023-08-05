@@ -109,9 +109,9 @@ def split(name, spritesheet, out_path):
 
         spritesheet_desc.append(
             {
-                "name": out_sprite_path,
                 "x": x,
                 "y": y,
+                "name": out_sprite_path,
             }
         )
     with open(os.path.join(out_path, f"{name}.spritesheet.json"), "w") as f:
