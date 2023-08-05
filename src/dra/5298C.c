@@ -48,25 +48,23 @@ bool IsAlucart(void) {
 }
 
 void func_800F4994(void) {
+    s32* statsPtr = &g_Status.statsEquip;
     s32 correctStonesEquipped;
-    s32 j;
-    s32 i;
-    s32* statsPtr;
-    u32 statBonus;
+    s32 statBonus;
     u32 hourOfDay;
+    s32 i, j;
 
-    statsPtr = &g_Status.statsEquip;
     for (i = 0; i < 4; i++, statsPtr++) {
         *statsPtr = 0;
     }
 
-    // Iterate through each Accessory
+    // Iterate through each Item Slot
     for (i = 0; i < 5; i++) {
         // Iterate through the 4 stats (STR, CON, INT, LCK)
         for (j = 0; j < 4; j++) {
-            statBonus = D_800A7718[g_Status.equipment[2 + i]].statsBonus[j];
-            if ((s32)statBonus >= 0x81) {
-                statBonus -= 0x100;
+            statBonus = D_800A7718[g_Status.equipment[HEAD_SLOT + i]].statsBonus[j];
+            if (statBonus > 128) {
+                statBonus -= 256;
             }
             g_Status.statsEquip[j] += statBonus;
         }
