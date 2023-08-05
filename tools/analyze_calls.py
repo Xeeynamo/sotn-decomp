@@ -96,6 +96,7 @@ def handle_jal_call(full_file, call_index, known_func_list):
     print(call_line)
     print(full_file[3])
     print("Failed to return a value")
+    exit(1)
 
 
 def get_g_api_funcs():
@@ -235,6 +236,7 @@ class NonMatchingFunc(object):
             print(nonmatching_path)
             print(assumed_path)
             print(split)
+            exit(2)
         self.src_path = c_paths[0]
 
 
@@ -258,12 +260,14 @@ def get_nonmatching_functions(base_path, func_name, overlay=None) -> list:
             print(func_name)
             print(overlay)
             print([x.asm_path for x in overlay_matches])
+            exit(3)
         elif len(overlay_matches) == 0:
             print(f"Multiple matches but none match overlay {overlay}")
+            exit(4)
     elif len(function_list) == 0:
         print("Function not found")
         print(func_name)
-        kill = 1 / 0
+        exit(5)
     return function_list[0]
 
 
@@ -297,7 +301,7 @@ def analyze_function(fname, tree):
         print(f"Analyzing {fname}; Decompiled: {decomp_done}")
         print(f"Functions called:")
     # Look through our asm file, and see who else we call.
-    if len(tree[fname]) < 2 and MODE != "GRAPHICAL_ALL":
+    if len(tree[fname]) < 2 and "GRAPHICAL_ALL" not in MODE:
         print("No functions called.")
     else:
         overlay = tree[fname][0]
@@ -339,7 +343,7 @@ def analyze_function(fname, tree):
                 else:
                     print(f"Function {fname} is not in {callee_dict}.")
                     print(key)
-                    kill = 2 / 0
+                    exit(6)
             call_count = callee_dict[fname]
             key_as_func = get_nonmatching_functions("asm", key, overlay)
             decomp_done = str(is_decompiled(key_as_func.src_path, key))
@@ -376,6 +380,7 @@ if __name__ == "__main__":
         # This is an arbitrary file for a decompiled function. It only exists after a force extract.
         if not os.path.exists("asm/us/main/nonmatchings/5A38/ResetCallback.s"):
             print("Need to run `make force_extract` to build call tree!")
+            exit(7)
         tree = build_call_tree()
         with open(call_tree_filename, "w") as f:
             for key, value in tree.items():
@@ -386,10 +391,16 @@ if __name__ == "__main__":
         fname, calls = line[:-1].split(":")
         tree[fname] = calls.split(",")
 
+    # Run with no arguments to get interactive rendering of one graph at a time
     if len(sys.argv) == 1:
         MODE = "GRAPHICAL_SINGLE"
+    # Run with ALL to generate a graph for every function, and an HTML directory
     elif sys.argv[1] == "ALL":
         MODE = "GRAPHICAL_ALL"
+    # Run with ALL_DRY to do a dry-run, which is like GRAPHICAL_ALL without file writes
+    elif sys.argv[1] == "ALL_DRY":
+        MODE = "GRAPHICAL_ALL_DRY"
+    # Run with function name to do text-mode description of calls for that function
     elif len(sys.argv) == 2:
         MODE = "CMDLINE"
     else:
@@ -436,5 +447,13 @@ if __name__ == "__main__":
             html += "</body></html>"
             with open(f"{output_dir}/index.html", "w") as f:
                 f.write(html)
+    if MODE == "GRAPHICAL_ALL_DRY":
+        print("Initiating dry-run of call tree diagrams")
+        funclist = list(tree.keys())[1:]
+        with multiprocessing.Pool() as pool:
+            file_generator = partial(analyze_function, tree=tree)
+            pool.map(file_generator, funclist)
+        print("Dry run complete. Deleting call tree.")
+        os.remove(call_tree_filename)
     if MODE == "CMDLINE":
         analyze_function(sys.argv[1], tree)

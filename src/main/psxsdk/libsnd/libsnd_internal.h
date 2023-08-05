@@ -92,4 +92,16 @@ void SpuVmKeyOff(s32, s16, s16, u16);
 void SeAutoVol(s16, s16, s16, s16);
 void SeAutoPan(s16, s16, s16, s16);
 
+// similar to
+// https://github.com/AliveTeam/sound_rev/blob/7a9223139c3375bf10e96a4ac17d77b973979e20/psx_seq_player/lib_snd.hpp#L127C1-L184C7
+struct SeqStruct {
+    u8* seq_ptr;
+    u8* read_pos;
+    u8 pad8[0x78];
+    u32 unk80;
+    u8 pad84[40];
+};
+
+extern struct SeqStruct* _ss_score[32];
+
 #endif
