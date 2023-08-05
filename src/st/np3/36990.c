@@ -970,7 +970,7 @@ void EntityGaibon(Entity* self) {
             }
             MoveEntity();
             self->velocityY -= 0xA00;
-            if (self->velocityY < -0x20000) {
+            if (self->velocityY < FIX(-2.0)) {
                 self->velocityY = FIX(-2);
             }
             self->ext.GS_Props.grabedAscending = 1;
@@ -994,10 +994,10 @@ void EntityGaibon(Entity* self) {
             } else {
                 self->velocityX += 0xA00;
             }
-            if (self->velocityX < -0x20000) {
+            if (self->velocityX < FIX(-2.0)) {
                 self->velocityX = FIX(-2);
             }
-            if (self->velocityX > 0x20000) {
+            if (self->velocityX > FIX(2.0)) {
                 self->velocityX = FIX(2);
             }
             MoveEntity();
@@ -1095,7 +1095,7 @@ void EntityGaibon(Entity* self) {
             AnimateEntity(&D_80181520, self);
             MoveEntity();
             self->velocityY -= 0xA00;
-            if (self->velocityY < -0x20000) {
+            if (self->velocityY < FIX(-2.0)) {
                 self->velocityY = FIX(-2);
             }
             SLOGRA.posX.i.hi = self->posX.i.hi;

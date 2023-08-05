@@ -218,7 +218,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
         }
     } else {
         InitializeEntity(D_80180CA0);
-        entity->posY.val -= 0x1000;
+        entity->posY.val -= FIX(0.0625);
         xDistanceToPlayer = GetDistanceToPlayerX();
         xDistanceToPlayer /= 32;
         xDistanceToPlayer = CLAMP_MAX(xDistanceToPlayer, 7);
