@@ -418,7 +418,7 @@ void EntityPlatform(Entity* self) {
 
         if (D_8019D424 & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
-            g_Entities[204].params = ITEM_HOLY_GLASSES;
+            g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
             g_Entities[204].flags = 0;
             self->step++;

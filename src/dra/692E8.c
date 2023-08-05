@@ -130,7 +130,7 @@ void func_80109594(void) {
     if (weapon() != 0x2D) {
         return;
     }
-    if (CheckEquipmentItemCount(0x19, 2) == 0) {
+    if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE) == 0) {
         return;
     }
     func_8010FAF4();
@@ -168,7 +168,8 @@ void func_8010A234(s32 arg0) {
     temp = D_8017A000.func_8017A018();
 
     do { // !FAKE
-        if ((temp == 0x2D) && (CheckEquipmentItemCount(0x19, 2) != 0)) {
+        if ((temp == 0x2D) &&
+            (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE) != 0)) {
             if (!(*(s32*)&g_Player.unk0C & 0x01000000)) {
                 PlaySfx(NA_SE_VO_AL_WHAT);
                 g_Player.D_80072EF4 = 0;

@@ -343,11 +343,11 @@ void EntityEquipItemDrop(Entity* self) {
             D_801D33F4[index] = 0x1E0;
             self->ext.generic.unk8C.modeU16.unk0 = index;
 
-            if (itemId < 169) {
+            if (itemId < NUM_HAND_ITEMS) {
                 g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
                                     g_api.D_800A4B04[itemId].palette, index);
             } else {
-                itemId -= 169;
+                itemId -= NUM_HAND_ITEMS;
                 g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
                                     g_api.D_800A7718[itemId].palette, index);
             }
@@ -442,13 +442,13 @@ void EntityEquipItemDrop(Entity* self) {
 
         g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
 
-        if (itemId < 169) {
+        if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.D_800A4B04[itemId].name;
-            g_api.AddToInventory(itemId, 0);
+            g_api.AddToInventory(itemId, HAND_TYPE);
         } else {
-            itemId -= 169;
+            itemId -= NUM_HAND_ITEMS;
             itemName = g_api.D_800A7718[itemId].name;
-            g_api.AddToInventory(itemId, 2);
+            g_api.AddToInventory(itemId, ARMOR_TYPE);
         }
 
         func_801C3E14(itemName, 1);
@@ -1348,7 +1348,8 @@ void EntityEnemyBlood(Entity* self) {
                     if (g_Player.unk56 == 0) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;
-                        if (g_api.CheckEquipmentItemCount(0x3C, 4)) {
+                        if (g_api.CheckEquipmentItemCount(
+                                ITEM_BLOODSTONE, ACCESSORY_TYPE)) {
                             g_Player.unk58 *= 2;
                         }
                     }
