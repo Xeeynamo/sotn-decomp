@@ -62,7 +62,8 @@ void func_800F4994(void) {
     for (i = 0; i < 5; i++) {
         // Iterate through the 4 stats (STR, CON, INT, LCK)
         for (j = 0; j < 4; j++) {
-            statBonus = D_800A7718[g_Status.equipment[HEAD_SLOT + i]].statsBonus[j];
+            statBonus =
+                D_800A7718[g_Status.equipment[HEAD_SLOT + i]].statsBonus[j];
             if (statBonus > 128) {
                 statBonus -= 256;
             }
