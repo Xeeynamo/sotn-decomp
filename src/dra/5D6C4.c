@@ -140,7 +140,7 @@ void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
     if (CheckEquipmentItemCount(ITEM_MOJO_MAIL, ARMOR_TYPE) != 0) {
-        spell->attack = spell->attack + spell->attack / 2;
+        spell->attack += spell->attack / 2;
     }
 }
 
