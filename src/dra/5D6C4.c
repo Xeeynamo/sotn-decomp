@@ -1043,7 +1043,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             } else {
                 // This Else block is for this function if called outside
                 // the "Entrance (first visit)" overlay. Applies to demo mode.
-                for (i = 0; i < 32; i++) {
+                for (i = 0; i < LEN(g_Settings.timeAttackRecords); i++) {
                     g_Settings.timeAttackRecords[i] = 0;
                 }
                 g_Status.statsBase[STAT_STR] = 6;
