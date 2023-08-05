@@ -96,9 +96,11 @@ void SeAutoPan(s16, s16, s16, s16);
 // https://github.com/AliveTeam/sound_rev/blob/7a9223139c3375bf10e96a4ac17d77b973979e20/psx_seq_player/lib_snd.hpp#L127C1-L184C7
 struct SeqStruct {
     u8 unk0;
+    u8 pad1[3];
     u8* read_pos;
-    u8 pad[0x3c - 8];
+    u8 pad[0x34];
     u8 unk3C;
+    u8 pad3D;
     s16 unk3E;
     s16 unk40;
     s16 unk42;
