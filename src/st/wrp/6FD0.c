@@ -2640,7 +2640,7 @@ void func_8018CAB0(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < FIX(0.25); {
+    if (entity->velocityY < FIX(0.25)) {
         entity->velocityY += FIX(0.125);
     }
 }

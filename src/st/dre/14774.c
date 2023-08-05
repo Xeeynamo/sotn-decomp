@@ -1042,7 +1042,7 @@ void func_8019B858(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < FIX(0.25); {
+    if (entity->velocityY < FIX(0.25)) {
         entity->velocityY += FIX(0.125);
     }
 }

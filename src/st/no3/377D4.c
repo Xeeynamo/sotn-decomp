@@ -800,7 +800,7 @@ void EntityFallingRock2(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
 
         if (collider.effects & EFFECT_SOLID) {
-            if (self->velocityY > FIX(4.0); {
+            if (self->velocityY > FIX(4.0)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(2, self, newEntity);

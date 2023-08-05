@@ -11,24 +11,33 @@ impl LineTransformer for FixedTransformer {
     }
 }
 
-fn fixed(x: f64, group: &str) -> String {
+fn fixed(x: f64, group: &str, has_semicolon: &bool) -> String {
     let formatted_str = format!("{:.20}", x);
     let mut trimmed_str = formatted_str.trim_end_matches('0').to_string();
     if trimmed_str.ends_with('.') {
         trimmed_str.push('0');
     }
-    format!("{}FIX({});", group, trimmed_str)
+    if (*has_semicolon) {
+        format!("{}FIX({});", group, trimmed_str)
+    } else {
+        format!("{}FIX({}))", group, trimmed_str)
+    }
 }
 
-fn gen_patterns(patterns: &mut Vec<String>) {
+struct Pattern {
+    regex: Regex,
+    should_replace: bool,
+}
+
+fn gen_patterns(patterns: &mut Vec<Pattern>) {
     let regs = [
-        r"(OBJECT->NAME\s*\=\s*)(-?0x[0-9a-fA-F]+);",  // =
-        r"(OBJECT->NAME\s*\+=\s*)(-?0x[0-9a-fA-F]+);", // +=
-        r"(OBJECT->NAME\s*-=\s*)(-?0x[0-9a-fA-F]+);",  // -=
-        r"(OBJECT->NAME\s*>\s*)(-?0x[0-9a-fA-F]+)\)",  // >
-        r"(OBJECT->NAME\s*>=\s*)(-?0x[0-9a-fA-F]+)\)", // >=
-        r"(OBJECT->NAME\s*<\s*)(-?0x[0-9a-fA-F]+)\)",  // <
-        r"(OBJECT->NAME\s*<=\s*)(-?0x[0-9a-fA-F]+)\)", // <=
+        (r"(OBJECT->NAME\s*\=\s*)(-?0x[0-9a-fA-F]+);", true), // =
+        (r"(OBJECT->NAME\s*\+=\s*)(-?0x[0-9a-fA-F]+);", true), // +=
+        (r"(OBJECT->NAME\s*-=\s*)(-?0x[0-9a-fA-F]+);", true), // -=
+        (r"(OBJECT->NAME\s*>\s*)(-?0x[0-9a-fA-F]+)\)", false), // >
+        (r"(OBJECT->NAME\s*>=\s*)(-?0x[0-9a-fA-F]+)\)", false), // >=
+        (r"(OBJECT->NAME\s*<\s*)(-?0x[0-9a-fA-F]+)\)", false), // <
+        (r"(OBJECT->NAME\s*<=\s*)(-?0x[0-9a-fA-F]+)\)", false), // <=
     ];
 
     let objs = ["entity", "g_CurrentEntity", "self"];
@@ -37,9 +46,14 @@ fn gen_patterns(patterns: &mut Vec<String>) {
 
     for obj in objs.iter() {
         for name in names.iter() {
-            for reg in regs.iter() {
-                let temp = reg.replace("OBJECT", obj).replace("NAME", name);
-                patterns.push(temp.to_string());
+            for (regex_str, rep) in regs.iter() {
+                let temp = regex_str.replace("OBJECT", obj).replace("NAME", name);
+                let regex = Regex::new(&temp).unwrap();
+                let should_replace = *rep;
+                patterns.push(Pattern {
+                    regex,
+                    should_replace,
+                });
             }
         }
     }
@@ -81,7 +95,7 @@ fn hex_string_to_float(hex_str: &str) -> Option<f64> {
 
 fn transform_line_fixed(line: &str) -> String {
     for pattern in PATTERNS.iter() {
-        if let Some(thing) = pattern.captures(line) {
+        if let Some(thing) = pattern.regex.captures(line) {
             if let Some(hex_str) = thing.get(2) {
                 if let Some(conv) = hex_string_to_float(hex_str.into()) {
                     if count_digits_after_decimal(conv) > 5 || count_digits_before_decimal(conv) > 3
@@ -90,8 +104,9 @@ fn transform_line_fixed(line: &str) -> String {
                         return line.to_string();
                     } else {
                         if let Some(group_str) = thing.get(1) {
-                            let fixed_value = fixed(conv, group_str.as_str());
-                            return pattern.replace(line, &fixed_value).to_string();
+                            let fixed_value =
+                                fixed(conv, group_str.as_str(), &pattern.should_replace);
+                            return pattern.regex.replace(line, &fixed_value).to_string();
                         }
                     }
                 }
@@ -101,17 +116,14 @@ fn transform_line_fixed(line: &str) -> String {
     line.to_string()
 }
 
-fn get_regexes() -> Vec<Regex> {
+fn get_regexes() -> Vec<Pattern> {
     let mut patterns = Vec::new();
     gen_patterns(&mut patterns);
     patterns
-        .iter()
-        .map(|pattern| Regex::new(pattern).unwrap())
-        .collect()
 }
 
 lazy_static! {
-    static ref PATTERNS: Vec<Regex> = get_regexes();
+    static ref PATTERNS: Vec<Pattern> = get_regexes();
 }
 
 #[cfg(test)]

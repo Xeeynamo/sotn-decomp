@@ -409,7 +409,7 @@ void func_801B19A0(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            if (self->velocityY < FIX(0.5); {
+            if (self->velocityY < FIX(0.5)) {
                 newEntity =
                     AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                 if (newEntity != NULL) {

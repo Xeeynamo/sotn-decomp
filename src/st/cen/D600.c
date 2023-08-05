@@ -182,7 +182,7 @@ void func_8018DB18(Entity* self) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY / 2;
             self->velocityX -= self->velocityX / 3;
-            if (self->velocityY > FIX(-0.625); {
+            if (self->velocityY > FIX(-0.625)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(
@@ -1658,7 +1658,7 @@ void func_80195714(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < FIX(0.25); {
+    if (entity->velocityY < FIX(0.25)) {
         entity->velocityY += FIX(0.125);
     }
 }

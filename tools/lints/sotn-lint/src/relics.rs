@@ -53,7 +53,9 @@ fn replace_enum(captures: &regex::Captures) -> String {
             }
         }
     }
-    captures.get(0).map_or_else(|| "".to_string(), |m| m.as_str().to_string())
+    captures
+        .get(0)
+        .map_or_else(|| "".to_string(), |m| m.as_str().to_string())
 }
 
 lazy_static! {
@@ -65,7 +67,8 @@ lazy_static! {
 }
 
 fn transform_line_relics(line: &str) -> String {
-    REGEX.replace_all(line, |captures: &regex::Captures| replace_enum(captures))
+    REGEX
+        .replace_all(line, |captures: &regex::Captures| replace_enum(captures))
         .to_string()
 }
 

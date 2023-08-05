@@ -749,7 +749,7 @@ bool func_8018FC4C(Point16* unk) {
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->posY.i.hi += collider.unk18;
             g_CurrentEntity->velocityY = -g_CurrentEntity->velocityY / 2;
-            if (g_CurrentEntity->velocityY > FIX(-1.0); {
+            if (g_CurrentEntity->velocityY > FIX(-1.0)) {
                 return true;
             }
         }

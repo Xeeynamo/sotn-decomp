@@ -1196,7 +1196,7 @@ void func_801BDD9C(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < FIX(0.25); {
+    if (entity->velocityY < FIX(0.25)) {
         entity->velocityY += FIX(0.125);
     }
 }
