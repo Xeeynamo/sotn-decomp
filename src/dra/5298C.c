@@ -727,7 +727,7 @@ void func_800F6BEC(MenuContext* context) {
     s32 i;
 
     for (i = 0; i < 3; i++) {
-        DrawMenuChar(D_800A2D7C[i], x + 32, 80 + i * 12, context);
+        DrawMenuChar(D_800A2D7C[i], x + 32, (i * 12) + 80, context);
         DrawMenuInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
     }
     func_800F5E68(
