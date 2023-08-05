@@ -37,7 +37,7 @@ void func_801B6DE4(Entity* self) {
 
     case 1:
         if (temp_s1 != 0) {
-            self->posY.val += 0x10000;
+            self->posY.val += FIX(1.0);
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if ((self->ext.generic.unk80.modeS32 + 4) < temp) {
                 self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0 -
@@ -1196,7 +1196,7 @@ void func_801BDD9C(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < 0x00004000) {
+    if (entity->velocityY < FIX(0.25); {
         entity->velocityY += FIX(0.125);
     }
 }
@@ -1226,7 +1226,7 @@ void func_801BDE20(u16 arg0) {
         g_CurrentEntity->velocityY = 0;
 
         if (collider.effects & EFFECT_QUICKSAND) {
-            g_CurrentEntity->posY.val += 0x2000;
+            g_CurrentEntity->posY.val += FIX(0.125);
         } else {
             g_CurrentEntity->posY.i.hi += collider.unk18;
         }

@@ -622,7 +622,7 @@ bool func_801C92B0(Point16* unk) {
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->posY.i.hi += collider.unk18;
             g_CurrentEntity->velocityY = -g_CurrentEntity->velocityY / 2;
-            if (g_CurrentEntity->velocityY > -0x10000) {
+            if (g_CurrentEntity->velocityY > FIX(-1.0); {
                 return true;
             }
         }
@@ -823,7 +823,7 @@ void EntityIntenseExplosion(Entity* entity) {
         entity->zPriority += 8;
     } else {
         entity->animFrameDuration++;
-        entity->posY.val -= 0x4000;
+        entity->posY.val -= FIX(0.25);
 
         if (!(entity->animFrameDuration & 1)) {
             entity->animCurFrame++;

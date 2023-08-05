@@ -1042,7 +1042,7 @@ void func_8019B858(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < 0x00004000) {
+    if (entity->velocityY < FIX(0.25); {
         entity->velocityY += FIX(0.125);
     }
 }
@@ -1072,7 +1072,7 @@ void func_8019B8DC(u16 arg0) {
         g_CurrentEntity->velocityY = 0;
 
         if (collider.effects & EFFECT_QUICKSAND) {
-            g_CurrentEntity->posY.val += 0x2000;
+            g_CurrentEntity->posY.val += FIX(0.125);
             return;
         }
 

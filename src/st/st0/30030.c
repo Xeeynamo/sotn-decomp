@@ -1015,7 +1015,7 @@ void func_801B5EC8(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < 0x00004000) {
+    if (entity->velocityY < FIX(0.25); {
         entity->velocityY += FIX(0.125);
     }
 }
@@ -1045,7 +1045,7 @@ void func_801B5F4C(u16 arg0) {
         g_CurrentEntity->velocityY = 0;
 
         if (res.effects & 4) {
-            g_CurrentEntity->posY.val += 0x2000;
+            g_CurrentEntity->posY.val += FIX(0.125);
             return;
         }
 

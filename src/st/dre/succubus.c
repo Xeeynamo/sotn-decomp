@@ -370,12 +370,12 @@ void EntitySuccubus(Entity* self) {
 
             if (self->facing != self->ext.succubus.facing) {
                 self->velocityX += FIX(0.09375);
-                if (self->velocityX >= 0x16000) {
+                if (self->velocityX >= FIX(1.375); {
                     self->velocityX = FIX(1.375);
                 }
             } else {
                 self->velocityX -= FIX(0.09375);
-                if (self->velocityX <= -0x16000) {
+                if (self->velocityX <= FIX(-1.375); {
                     self->velocityX = FIX(-1.375);
                 }
             }
@@ -437,12 +437,12 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_FLY_2:
             if (self->facing != self->ext.succubus.facing) {
                 self->velocityX += FIX(0.09375);
-                if (self->velocityX >= 0x16000) {
+                if (self->velocityX >= FIX(1.375); {
                     self->velocityX = FIX(1.375);
                 }
             } else {
                 self->velocityX -= FIX(0.09375);
-                if (self->velocityX <= -0x16000) {
+                if (self->velocityX <= FIX(-1.375); {
                     self->velocityX = FIX(-1.375);
                 }
             }

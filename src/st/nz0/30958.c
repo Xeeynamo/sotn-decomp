@@ -409,7 +409,7 @@ void func_801B19A0(Entity* self) {
                 DestroyEntity(self);
                 break;
             }
-            if (self->velocityY < 0x8000) {
+            if (self->velocityY < FIX(0.5); {
                 newEntity =
                     AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
                 if (newEntity != NULL) {
@@ -460,7 +460,7 @@ void func_801B1C18(Entity* self) {
         if (temp_s1 != 0) {
             player = &PLAYER;
             player->posY.i.hi++;
-            self->posY.val += 0x10000;
+            self->posY.val += FIX(1.0);
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 468) {
                 self->posY.i.hi = 468 - g_Camera.posY.i.hi;
@@ -533,7 +533,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
 
     case 1:
         if (self->params & D_80180EB4) {
-            self->posY.val += 0x10000;
+            self->posY.val += FIX(1.0);
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 480) {
                 self->posY.i.hi = 480 - g_Camera.posY.i.hi;
@@ -935,7 +935,7 @@ void func_801B2AD8(Entity* self) {
         }
 
         if (var_a0 != 0) {
-            self->posY.val += 0x10000;
+            self->posY.val += FIX(1.0);
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp > 376) {
                 self->posY.i.hi = 376 - g_Camera.posY.i.hi;
@@ -1006,7 +1006,7 @@ void func_801B2FD8(Entity* self) {
         if (temp != 0) {
             player = &PLAYER;
             player->posY.i.hi++;
-            self->posY.val += 0x10000;
+            self->posY.val += FIX(1.0);
             posY = g_Camera.posY.i.hi + self->posY.i.hi;
             if ((self->ext.generic.unk80.modeS32 + 4) < posY) {
                 self->posY.i.hi = (self->ext.generic.unk80.modeS16.unk0 + 4) -
@@ -1089,7 +1089,7 @@ void EntityFloorSpikes(Entity* self) {
     case 1:
         self->hitboxState = 1;
         if (self->ext.generic.unk84.unk != 0) {
-            self->posY.val += 0x10000;
+            self->posY.val += FIX(1.0);
             new_var = g_Camera.posY.i.hi + self->posY.i.hi;
             var_v1 = g_Camera.posY.i.hi;
             if (new_var > self->ext.generic.unk80.modeS32) {
