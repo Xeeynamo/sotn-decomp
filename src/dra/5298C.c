@@ -728,7 +728,22 @@ void func_800F6A48(void) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6A70);
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6BEC);
+void func_800F6BEC(MenuContext* context) {
+#if defined(VERSION_HD)
+    s32 x = 128;
+#else
+    s32 x = 176;
+#endif
+    s32 y;
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        DrawMenuChar(D_800A2D7C[i], x + 32, (i * 12) + 80, context);
+        DrawMenuInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
+    }
+    func_800F5E68(
+        context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
+}
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
 

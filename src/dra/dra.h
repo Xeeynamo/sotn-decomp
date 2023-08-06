@@ -300,6 +300,7 @@ extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
 extern s32 D_800A2D68;
 extern s32 D_800A2D6C;
+extern u8 D_800A2D7C[];
 extern u8 c_chPlaystationButtons[];
 extern u8 c_chShoulderButtons[];
 extern Unkstruct_800A2D98 D_800A2D98[];

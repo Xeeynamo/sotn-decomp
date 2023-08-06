@@ -14,6 +14,7 @@ c_strSSword = 0x800A2D38;
 c_strSystem = 0x800A2D80;
 c_chPlaystationButtons = 0x800A2D88;
 c_chShoulderButtons = 0x800A2D8C;
+D_800A2D7C = 0x800A2D94;
 D_800A2D98_hd = 0x800A2D98;
 D_800A2D98 = 0x800A2DA8;
 MenuContextData = 0x800A2E10;
