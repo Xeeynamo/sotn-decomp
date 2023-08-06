@@ -1,9 +1,7 @@
-
-#include "common.h"
+#define INCLUDE_ASM_NEW
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_80102D70(void) {
     switch (D_801379AC.start) {
@@ -152,14 +150,14 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103238);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80103238);
 
 void func_80103EAC(void) {
     D_80137E4C = 0;
     func_800E92F4();
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103ED4);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80103ED4);
 
 void func_8010427C(void) {
     FreePrimitives(D_80137E40);
@@ -167,18 +165,18 @@ void func_8010427C(void) {
     FreePrimitives(D_80137E48);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801042C4);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_801042C4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80104790);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80104790);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105078);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80105078);
 
 void func_80105408(void) {
     g_Player.D_80072EF4 = 0x1000;
     g_Player.D_80072EFC = 1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105428);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80105428);
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -303,7 +301,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106A28);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80106A28);
 
 bool func_8010715C(s32 mapTilesetId) {
     if (g_IsUsingCd)
@@ -394,4 +392,3 @@ void SetTexturedPrimRect(
     poly->u3 = u + width;
     poly->v3 = v + height;
 }
-#endif
