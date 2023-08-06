@@ -131,7 +131,75 @@ void EntityUnkId53(Entity* entity) {
 // large foreground tree during intro
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityForegroundTree);
 
+// DECOMP_ME_WIP https://decomp.me/scratch/T8Lwy
+#ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId50);
+#else
+extern u16 D_80180AD0[];
+extern s16 D_801814EC[];
+
+void EntityUnkId50(Entity* self) {
+    Unkstruct8* layout = &g_CurrentRoomTileLayout;
+    Entity* newEntity;
+    Entity* temp;
+    u16 temp_s3;
+    s32 var_v0;
+    u16* ptr;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AD0);
+        ptr = &D_801814EC;
+        temp = D_8007C0D8;
+        self->unk68 = 0xC0;
+        self->ext.generic.unk7C.s = 0;
+        self->flags |= FLAG_UNK_08000000;
+    loop_4: //! FAKE
+        while (*ptr <= 0x120) {
+            newEntity = AllocEntity(temp, &temp[64]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(0x11, newEntity);
+                newEntity->posX.i.hi = *ptr;
+                ptr++;
+                newEntity->params = *ptr;
+                ptr++;
+                newEntity->unk68 = 0xC0;
+            } else {
+                ptr += 2;
+            }
+            self->ext.generic.unk7C.u++;
+            goto loop_4;
+        }
+        break;
+
+    case 1:
+        self->posX.i.hi = 128;
+        do { //! FAKE
+            //! REG SWAP
+            ptr = D_801814EC;
+            ptr += self->ext.generic.unk7C.u * 2;
+            var_v0 = layout->unkA * 0xC0;
+        } while (0);
+
+        if (var_v0 < 0) {
+            var_v0 += 0xFF;
+        }
+        temp_s3 = (var_v0 >> 8) + 288;
+        if (temp_s3 >= ptr[0]) {
+            newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(0x11, newEntity);
+                newEntity->posX.i.hi = temp_s3 - ptr[0] + 288;
+                newEntity->posX.i.lo = self->posX.i.lo;
+                newEntity->params = ptr[1];
+                newEntity->unk68 = 0xC0;
+            }
+            self->ext.generic.unk7C.u++;
+        }
+        break;
+    }
+}
+#endif
 
 // part of parallax background with pine trees
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
