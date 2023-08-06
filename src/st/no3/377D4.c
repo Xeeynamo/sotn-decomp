@@ -228,7 +228,7 @@ void EntityCavernDoor(Entity* self) {
         break;
 
     case 2:
-        self->posY.val += 0x6000;
+        self->posY.val += FIX(0.375);
         if (++self->ext.generic.unk80.modeS32 & 1) {
             self->posX.i.hi++;
         } else {
@@ -336,7 +336,7 @@ void EntityClickSwitch(Entity* entity) {
     case 1:
         if (temp_a0 != 0) {
             player->posY.i.hi++;
-            entity->posY.val += 0xC000;
+            entity->posY.val += FIX(0.75);
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
@@ -397,7 +397,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         break;
 
     case 2:
-        self->posY.val += 0x8000;
+        self->posY.val += FIX(0.5);
         if ((self->posY.i.hi + g_Camera.posY.i.hi) >= 175) {
             self->posY.i.hi = 175 - g_Camera.posY.i.hi;
             self->step++;
@@ -472,7 +472,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         break;
 
     case 2:
-        self->posY.val -= 0x8000;
+        self->posY.val -= FIX(0.5);
         temp = self->posY.i.hi + g_Camera.posY.i.hi;
         if (temp <= -16) {
             self->posY.i.hi = -16 - g_Camera.posY.i.hi;
@@ -800,7 +800,7 @@ void EntityFallingRock2(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
 
         if (collider.effects & EFFECT_SOLID) {
-            if (self->velocityY > 0x40000) {
+            if (self->velocityY > FIX(4.0)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(2, self, newEntity);
@@ -928,7 +928,7 @@ void EntitySwitch(Entity* entity) {
     case 1:
         if (temp_a0 != 0) {
             player->posY.i.hi++;
-            entity->posY.val += 0x4000;
+            entity->posY.val += FIX(0.25);
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Camera.posY.i.hi;
                 D_8003BDEC[0x32] = 1;
@@ -1001,7 +1001,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         break;
 
     case 2:
-        self->posY.val += 0x6000;
+        self->posY.val += FIX(0.375);
         if (++self->ext.generic.unk80.modeS32 & 1) {
             self->posX.i.hi++;
         } else {

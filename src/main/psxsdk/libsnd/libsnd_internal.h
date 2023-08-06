@@ -95,13 +95,61 @@ void SeAutoPan(s16, s16, s16, s16);
 // similar to
 // https://github.com/AliveTeam/sound_rev/blob/7a9223139c3375bf10e96a4ac17d77b973979e20/psx_seq_player/lib_snd.hpp#L127C1-L184C7
 struct SeqStruct {
-    u8* seq_ptr;
+    u8 unk0;
+    u8 pad1[3];
     u8* read_pos;
-    u8 pad8[0x78];
+    u8 pad[0x34];
+    u8 unk3C;
+    u8 pad3D;
+    s16 unk3E;
+    s16 unk40;
+    s16 unk42;
+    s16 unk44;
+    u8 pad46[46];
+    s16 unk74;
+    s16 unk76;
+    s16 unk78;
+    s16 unk7A;
+    u8 pad7C[2];
     u32 unk80;
-    u8 pad84[40];
+    u8 pad84[0xc];
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9C;
+    s32 unkA0;
+    s32 unkA4;
+    u8 padA6[2];
 };
 
 extern struct SeqStruct* _ss_score[32];
+
+typedef struct {
+    short left;  /* Lch */
+    short right; /* Rch */
+} SpuVolume;
+
+typedef struct {
+    SpuVolume volume; /* volume       */
+    long reverb;      /* reverb on/off */
+    long mix;         /* mixing on/off */
+} SpuExtAttr;
+
+typedef struct {
+    unsigned long mask; /* settings mask */
+
+    SpuVolume mvol;     /* master volume */
+    SpuVolume mvolmode; /* master volume mode */
+    SpuVolume mvolx;    /* current master volume */
+    SpuExtAttr cd;      /* CD input attributes */
+    SpuExtAttr ext;     /* external digital input attributes */
+} SpuCommonAttr;
+
+#define SPU_COMMON_MVOLL (0x01 << 0) /* master volume (left) */
+#define SPU_COMMON_MVOLR (0x01 << 1) /* master volume (right) */
+extern void SpuSetCommonAttr(SpuCommonAttr* attr);
+
+extern s16 _snd_seq_s_max;
+extern s16 _snd_seq_t_max;
 
 #endif

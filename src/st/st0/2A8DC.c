@@ -114,7 +114,7 @@ void EntitySecretStairsCeiling(Entity* entity) {
         break;
 
     case 2:
-        entity->posY.val -= 0x4000;
+        entity->posY.val -= FIX(0.25);
         if (entity->posY.i.hi < -16) {
             entity->step++;
         }

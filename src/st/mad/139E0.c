@@ -433,7 +433,7 @@ bool func_80195E68(Point16* unk) {
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->posY.i.hi += collider.unk18;
             g_CurrentEntity->velocityY = -g_CurrentEntity->velocityY / 2;
-            if (g_CurrentEntity->velocityY > -0x10000) {
+            if (g_CurrentEntity->velocityY > FIX(-1.0)) {
                 return true;
             }
         }
@@ -636,7 +636,7 @@ void EntityIntenseExplosion(Entity* entity) {
         return;
     } else {
         entity->animFrameDuration++;
-        entity->posY.val -= 0x4000;
+        entity->posY.val -= FIX(0.25);
 
         if (!(entity->animFrameDuration & 1)) {
             entity->animCurFrame++;
@@ -960,7 +960,8 @@ void EntityEnemyBlood(Entity* self) {
                     if (g_Player.unk56 == 0) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;
-                        if (g_api.CheckEquipmentItemCount(0x3C, 4)) {
+                        if (g_api.CheckEquipmentItemCount(
+                                ITEM_BLOODSTONE, ACCESSORY_TYPE)) {
                             g_Player.unk58 *= 2;
                         }
                     }

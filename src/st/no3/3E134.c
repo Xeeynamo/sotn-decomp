@@ -118,10 +118,10 @@ void EntityFallingLeaf(Entity* entity) {
         if (entity->velocityX > 0) {
             entity->velocityX -= FIX(0.0625);
         }
-        if (entity->velocityY < 0x10000) {
+        if (entity->velocityY < FIX(1.0)) {
             entity->velocityY += 0x400;
         }
-        if (entity->velocityY > 0x10000) {
+        if (entity->velocityY > FIX(1.0)) {
             entity->velocityY -= 0x400;
         }
         MoveEntity();

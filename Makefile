@@ -105,8 +105,7 @@ format:
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
 	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h")
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
-	$(PYTHON) tools/lints/fixed.py src/ || true
-	$(PYTHON) tools/lints/relics.py src/
+	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 	black tools/*.py
 	black tools/splat_ext/*.py
 	black tools/split_jpt_yaml/*.py

@@ -182,7 +182,7 @@ void func_8018DB18(Entity* self) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY / 2;
             self->velocityX -= self->velocityX / 3;
-            if (self->velocityY > -0xA000) {
+            if (self->velocityY > FIX(-0.625)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(
@@ -418,7 +418,7 @@ void EntityPlatform(Entity* self) {
 
         if (D_8019D424 & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
-            g_Entities[204].params = ITEM_HOLY_GLASSES;
+            g_Entities[204].params = NUM_HAND_ITEMS + ITEM_HOLY_GLASSES;
             g_Entities[204].step = 5;
             g_Entities[204].flags = 0;
             self->step++;
@@ -686,7 +686,7 @@ void EntityElevatorStationary(Entity* self) {
         g_Player.D_80072EF4 = 0;
         switch (self->step_s) {
         case 0:
-            self->posY.val += 0x8000;
+            self->posY.val += FIX(0.5);
             player->posY.i.hi++;
             posY = g_Camera.posY.i.hi + self->posY.i.hi;
             if ((g_blinkTimer % 16) == 0) {
@@ -728,7 +728,7 @@ void EntityElevatorStationary(Entity* self) {
             break;
 
         case 1:
-            self->posY.val -= 0x8000;
+            self->posY.val -= FIX(0.5);
             if ((g_blinkTimer % 16) == 0) {
                 func_8019A328(0x60D);
             }
@@ -855,7 +855,7 @@ void EntityMovingElevator(Entity* self) {
     case 3:
         g_Player.D_80072EFC = 2;
         g_Player.D_80072EF4 = 0;
-        self->posY.val += 0x8000;
+        self->posY.val += FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
         g_Player.pl_vram_flag = 0x41;
         break;
@@ -863,7 +863,7 @@ void EntityMovingElevator(Entity* self) {
     case 2:
         g_Player.D_80072EFC = self->step;
         g_Player.D_80072EF4 = 0;
-        self->posY.val -= 0x8000;
+        self->posY.val -= FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
         g_Player.pl_vram_flag = 0x41;
         break;
@@ -1658,7 +1658,7 @@ void func_80195714(void) {
         entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < 0x00004000) {
+    if (entity->velocityY < FIX(0.25)) {
         entity->velocityY += FIX(0.125);
     }
 }

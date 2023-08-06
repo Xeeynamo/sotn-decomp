@@ -354,11 +354,11 @@ void EntityEquipItemDrop(Entity* self) {
             D_80194728[index] = 0x1E0;
             self->ext.equipItemDrop.unk8C = index;
 
-            if (itemId < 169) {
+            if (itemId < NUM_HAND_ITEMS) {
                 g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
                                     g_api.D_800A4B04[itemId].palette, index);
             } else {
-                itemId -= 169;
+                itemId -= NUM_HAND_ITEMS;
                 g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
                                     g_api.D_800A7718[itemId].palette, index);
             }
@@ -453,13 +453,13 @@ void EntityEquipItemDrop(Entity* self) {
 
         g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
 
-        if (itemId < 169) {
+        if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.D_800A4B04[itemId].name;
-            g_api.AddToInventory(itemId, 0);
+            g_api.AddToInventory(itemId, HAND_TYPE);
         } else {
-            itemId -= 169;
+            itemId -= NUM_HAND_ITEMS;
             itemName = g_api.D_800A7718[itemId].name;
-            g_api.AddToInventory(itemId, 2);
+            g_api.AddToInventory(itemId, ARMOR_TYPE);
         }
 
         func_80192F40(itemName, 1);
@@ -749,7 +749,7 @@ bool func_8018FC4C(Point16* unk) {
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->posY.i.hi += collider.unk18;
             g_CurrentEntity->velocityY = -g_CurrentEntity->velocityY / 2;
-            if (g_CurrentEntity->velocityY > -0x10000) {
+            if (g_CurrentEntity->velocityY > FIX(-1.0)) {
                 return true;
             }
         }
@@ -949,7 +949,7 @@ void EntityIntenseExplosion(Entity* entity) {
         entity->zPriority += 8;
     } else {
         entity->animFrameDuration++;
-        entity->posY.val -= 0x4000;
+        entity->posY.val -= FIX(0.25);
 
         if ((entity->animFrameDuration & 1) == 0) {
             entity->animCurFrame++;
@@ -1407,7 +1407,8 @@ void EntityEnemyBlood(Entity* self) {
                     if (g_Player.unk56 == 0) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;
-                        if (g_api.CheckEquipmentItemCount(0x3C, 4)) {
+                        if (g_api.CheckEquipmentItemCount(
+                                ITEM_BLOODSTONE, ACCESSORY_TYPE)) {
                             g_Player.unk58 *= 2;
                         }
                     }
