@@ -113,10 +113,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B11E8);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1298);
 
-s32 Random(void) {
-    g_randomNext = (g_randomNext * 0x01010101) + 1;
-    return g_randomNext >> 0x18;
-}
+#include "../random.h"
 
 void Update(void) {
     s16 i;

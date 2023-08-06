@@ -214,10 +214,7 @@ void func_801B8E0C(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B8F94);
 
-s32 Random(void) {
-    g_randomNext = (g_randomNext * 0x01010101) + 1;
-    return g_randomNext >> 0x18;
-}
+#include "../random.h"
 
 u16 D_80181574[];
 u16 D_801CB740[];

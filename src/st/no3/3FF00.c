@@ -216,10 +216,7 @@ void func_801C13F8() {
 // A single "puff" of the warg explosion animation, opaque
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityWargExplosionPuffOpaque);
 
-s32 Random(void) {
-    g_randomNext = (g_randomNext * 0x01010101) + 1;
-    return g_randomNext >> 0x18;
-}
+#include "../random.h"
 
 void Update(void) {
     s16 i;
