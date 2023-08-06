@@ -421,6 +421,8 @@ extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
 extern s32 D_800C1ECC[];
 extern const char D_800DB524[];
+extern Unkstruct_800F9F40 D_800DC6EC;
+extern Unkstruct_800F9F40 D_800DC70C[];
 extern const char a0104x04x;
 extern const char a2304x04x;
 extern const char aBlue;

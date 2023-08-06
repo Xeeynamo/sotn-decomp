@@ -1411,7 +1411,31 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9F40);
+void func_800F9F40(void) {
+    Unkstruct_800F9F40* var_a2;
+    Unkstruct_800F9F40* var_a3;
+    Unkstruct_800F9F40* ptr;
+    char buffer[38];
+    s32 idx;
+    u8 spellId;
+    s32 i;
+
+    for (i = 0, ptr = D_800DC70C, idx = 0x80; i < 8; i++) {
+        spellId = D_80097902[idx];
+        if (spellId & 0x80) {
+            spellId ^= 0x80;
+            var_a3 = (Unkstruct_800F9F40*)buffer;
+            var_a2 = (Unkstruct_800F9F40*)&D_800DC6EC;
+            do {
+                __builtin_memcpy(var_a3++, var_a2++, 0x10);
+            } while (var_a2 != ptr);
+            __builtin_memcpy(var_a3++, var_a2++, 0xB);
+            func_800F9DD0(g_SpellDefs[spellId].name, buffer);
+            func_800F99B8(&buffer, idx, 0);
+        }
+        idx++;
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
 
