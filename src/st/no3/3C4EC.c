@@ -325,14 +325,14 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
 void EntityBackgroundCastleWall(Entity* entity) {
     Entity* newEntity;
 
-    newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
+    newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(0x11U, newEntity);
+        CreateEntityFromCurrentEntity(0x11, newEntity);
         newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
-        newEntity = AllocEntity(newEntity, &D_8007C0D8[64]);
+        newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(0x11U, newEntity);
+            CreateEntityFromCurrentEntity(0x11, newEntity);
             newEntity->params = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;
