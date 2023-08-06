@@ -126,10 +126,10 @@ def serialize_spritesheet(writer, name: str, content: str, optimized: bool) -> s
             return f"size for '{file_name}' is {width}x{height} but it must be less than {max_width}x{max_height}"
         if (width & 3) != 0:
             return f"size for '{file_name}' is {width}x{height} but the width must be a multiple of 4"
-        if info["planes"] != 1 or info["bitdepth"] != 8:
+        if info["planes"] != 1 or (info["bitdepth"] != 8 and info["bitdepth"] != 4):
             return f"'{file_name}' must be an indexed image"
-        if len(palette) != 16:
-            return f"'{file_name}' palette must be of 16 colors but found {len(palette)} colors instead"
+        if len(palette) > 16:
+            return f"'{file_name}' palette must be of 16 colors or less but found {len(palette)} colors instead"
 
         bytes_per_row = int(width / 2)
         padding = 4 - (int((width * height + 1) / 2) & 3)
