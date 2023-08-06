@@ -1353,7 +1353,7 @@ extern Entity D_80074C08[];
 
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[]; // &g_Entities[160]
-extern Entity D_8007C0D8[];
+extern Entity D_8007C0D8[]; // &g_Entities[192]
 extern Entity D_8007D858[]; // &g_Entities[224]
 extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
