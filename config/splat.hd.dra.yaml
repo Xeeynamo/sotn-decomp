@@ -171,7 +171,7 @@ segments:
       - [0x7291C, c, 72BB0]
       - [0x7379C, c, 73AAC]
       - [0x75A90, c, 75DA0]
-      - [0x75C44, c, 75F54_hd]
+      - [0x75C44, c, 75F54]
       - [0x94F7C, c, 953A0]
       - [0x95E88, sbss]
   - name: dra_data
