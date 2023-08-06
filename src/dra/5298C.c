@@ -1393,7 +1393,9 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
         *arg1++ = *arg0++;
     }
 }
-
+#if defined(VERSION_HD)
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
+#else
 void func_800F9E18(s32 arg0) {
     s32 var_s0 = arg0 * 5;
     s32 var_s1 = var_s0 + 5;
@@ -1427,6 +1429,7 @@ void func_800F9E18(s32 arg0) {
         var_s0++;
     }
 }
+#endif
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9F40);
 
