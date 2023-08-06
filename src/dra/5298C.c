@@ -1411,6 +1411,9 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
 
+#if defined(VERSION_HD)
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9F40);
+#else
 void func_800F9F40(void) {
     Unkstruct_800F9F40* var_a2;
     Unkstruct_800F9F40* var_a3;
@@ -1436,6 +1439,7 @@ void func_800F9F40(void) {
         idx++;
     }
 }
+#endif
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
 
