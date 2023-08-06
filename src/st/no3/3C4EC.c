@@ -143,7 +143,7 @@ void EntityUnkId50(Entity* self) {
     case 0:
         InitializeEntity(D_80180AD0);
         ptr = D_801814EC;
-        temp = D_8007C0D8;
+        temp = &g_Entities[192];
         self->unk68 = 0xC0;
         self->ext.generic.unk7C.s = 0;
         self->flags |= FLAG_UNK_08000000;
