@@ -206,7 +206,7 @@ void EntityUnkId52(Entity* self) {
         self->ext.generic.unk7C.s = 0;
         self->flags |= FLAG_UNK_08000000;
     label:
-        while (*ptr < 0x121) {
+        while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x11, newEntity);
