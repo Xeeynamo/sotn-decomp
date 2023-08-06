@@ -721,6 +721,9 @@ void func_800F6A48(void) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6A70);
 
+#if defined(VERSION_HD)
+INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6BEC);
+#else
 void func_800F6BEC(MenuContext* context) {
     s32 x = 176;
     s32 y;
@@ -733,6 +736,7 @@ void func_800F6BEC(MenuContext* context) {
     func_800F5E68(
         context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
 }
+#endif
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
 
