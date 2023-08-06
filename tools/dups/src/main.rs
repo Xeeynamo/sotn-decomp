@@ -92,20 +92,33 @@ struct File {
     funcs: Vec<Function>,
 }
 
-// usage
-// make force_extract
-// cargo run --release ../../asm/us/st/nz0/nonmatchings/ ../../asm/us/st/np3/nonmatchings/ .95
-fn main() {
-    let args : Vec<String> = std::env::args().collect();
-    let dirs : Vec<String> = std::env::args().skip(1).take(2).collect();
+use clap::Parser;
 
-    let threshold: f64 = match args[3].parse() {
-        Ok(num) => num,
-        Err(_) => {
-            println!("Error: The third argument is not a valid number.");
-            return;
-        }
-    };
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = "\n
+Finds duplicates in two asm directories and prints them out in order to identify patterns
+
+Usage:
+
+make force_extract
+cargo run --release -- --dir ../../asm/us/st/nz0/nonmatchings/ --dir ../../asm/us/st/np3/nonmatchings/ --threshold .94
+")]
+
+struct Args {
+    /// Levenshtein similarity threshold
+    #[arg(short, long)]
+    threshold: f64,
+
+    /// Directory to parse asm from (2 required)
+    #[arg(short, long)]
+    dir: Vec<String>,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    let threshold = args.threshold;
+    let dirs = args.dir;
 
     let mut files = Vec::new();
 
