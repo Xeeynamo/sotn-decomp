@@ -1431,6 +1431,7 @@ void func_800F9E18(s32 arg0) {
 }
 #endif
 
+// DECOMP_ME_WIP https://decomp.me/scratch/AKGyX
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9F40);
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
