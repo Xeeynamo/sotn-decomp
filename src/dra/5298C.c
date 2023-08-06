@@ -1394,7 +1394,39 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
+void func_800F9E18(s32 arg0) {
+    s32 var_s0 = arg0 * 5;
+    s32 var_s1 = var_s0 + 5;
+    char buffer[38];
+    s32 temp_s3;
+    u8 temp;
+    s32 t;
+
+    temp_s3 = var_s1;
+    if (arg0 == 0) {
+        ClearImage(&D_800A2D90, 0, 0, 0);
+        DrawSync(0);
+    }
+
+    var_s1 = var_s0;
+    while (var_s1 < temp_s3) {
+        t = (var_s1 * 8) + 4;
+        strcpy(buffer, D_800A8710[t]);
+        if (!(var_s0 & 1)) {
+            func_800F99B8(buffer, (var_s0 / 2) + 0x80, 1);
+        } else {
+            func_800F99B8(buffer, (var_s0 / 2) + 0x103, 1);
+        }
+        strcpy(buffer, D_800A8720[t]);
+        if (!(var_s0 & 1)) {
+            func_800F99B8(buffer, (var_s0 / 2) + 0x280, 1);
+        } else {
+            func_800F99B8(buffer, (var_s0 / 2) + 0x303, 1);
+        }
+        var_s1++;
+        var_s0++;
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9F40);
 
