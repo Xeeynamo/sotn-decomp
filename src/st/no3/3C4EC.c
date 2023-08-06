@@ -152,10 +152,8 @@ void EntityUnkId50(Entity* self) {
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x11, newEntity);
-                newEntity->posX.i.hi = *ptr;
-                ptr++;
-                newEntity->params = *ptr;
-                ptr++;
+                newEntity->posX.i.hi = *ptr++;
+                newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
             } else {
                 ptr += 2;
