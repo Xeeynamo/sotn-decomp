@@ -285,7 +285,7 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     }
 }
 
-extern u16 D_80194728[];
+extern u16 UNK_Update0[];
 
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
@@ -327,7 +327,7 @@ void EntityEquipItemDrop(Entity* self) {
 
         if (!(collider.effects & EFFECT_NOTHROUGH_PLUS)) {
             for (index = 0; index < 32; index++) {
-                if (D_80194728[index] == 0) {
+                if (UNK_Update0[index] == 0) {
                     break;
                 }
             }
@@ -351,7 +351,7 @@ void EntityEquipItemDrop(Entity* self) {
 
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            D_80194728[index] = 0x1E0;
+            UNK_Update0[index] = 0x1E0;
             self->ext.equipItemDrop.unk8C = index;
 
             if (itemId < NUM_HAND_ITEMS) {
@@ -426,7 +426,7 @@ void EntityEquipItemDrop(Entity* self) {
                 self->step++;
             }
         } else {
-            D_80194728[self->ext.equipItemDrop.unk8C] = 0x10;
+            UNK_Update0[self->ext.equipItemDrop.unk8C] = 0x10;
         }
         break;
 

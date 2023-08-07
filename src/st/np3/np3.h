@@ -176,7 +176,7 @@ extern u8 D_801815E0[];
 extern u8 D_801815EC[];
 extern u8 D_801815FC[];
 extern u16 D_80181618[];
-extern u16 D_8018164C[];
+extern u16 UNK_Invincibility0[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];
@@ -240,7 +240,7 @@ extern u8 D_801D2770;
 extern u8 D_801D2774;
 extern LayoutEntity* D_801D2768;
 extern LayoutEntity* D_801D276C;
-extern u16 D_801D33F4[];
+extern u16 UNK_Update0[];
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking
