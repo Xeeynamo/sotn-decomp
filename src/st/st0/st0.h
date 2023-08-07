@@ -153,7 +153,7 @@ extern u32 D_80181CF0[];
 // *** EntityDracula properties END ***
 
 extern s16 D_80181990[];
-extern s16 D_801815EC[];
+extern s16 UNK_Invincibility0[];
 extern u32 D_80181D7C[];
 extern u16 D_80181DA4[];
 extern u8* D_80181E28[];
@@ -169,7 +169,7 @@ extern u8 D_801824CC[];
 extern u16* D_801C00A4;
 extern s32 D_801C24C8;
 extern s32 D_801C2580;
-extern u16 D_801C2584[];
+extern u16 UNK_Update0[];
 
 // *** EntitySoulStealOrb properties START ***
 
