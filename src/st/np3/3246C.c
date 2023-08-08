@@ -136,7 +136,90 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2F30);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B32A8);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B3704);
+void func_801B3704(Entity* self, s16 primIndex) {
+    volatile char pad[8]; //! FAKE
+    Primitive* prim;
+    VECTOR vec;
+    MATRIX mtx;
+    long sxy;
+    long p;
+    long flag;
+    s32 temp_s3;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 var_v1;
+    s32 i;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180AA8);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= 0x800000;
+        while (prim != 0) {
+            prim->tpage = 0xF;
+            prim->clut = D_801810A8[self->params & 0xF];
+            prim->u0 = prim->u2 = 0xBF;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xB8;
+            prim->priority = 0x5A;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+    }
+    var_v1 = D_80181098[(self->params & 0xF) * 2];
+    temp_s3 = var_v1;
+
+    SetGeomScreen(0x400);
+    if (self->params & 0x100) {
+        SetGeomOffset(0x80, 0x98);
+    } else {
+        SetGeomOffset(0x80, 0x80);
+    }
+
+    RotMatrix(D_801810B8, &mtx);
+    vec.vx = self->posX.i.hi - 128;
+    vec.vy = self->posY.i.hi - 128;
+    vec.vz = temp_s3 + 0x400;
+    TransMatrix(&mtx, &vec);
+    SetRotMatrix(&mtx);
+    SetTransMatrix(&mtx);
+    RotTransPers(D_801810B8, &sxy, &p, &flag);
+    temp_a1 = sxy & 0xFFFF;
+    temp_a2 = sxy >> 0x10;
+
+    i = temp_a1;
+    if (i < 0) {
+        var_v1 = temp_a1 + 0x3F;
+    } else {
+        var_v1 = temp_a1;
+    }
+
+    prim = self->ext.prim;
+    i -= (var_v1 >> 6) << 6;
+    i -= 64;
+    i -= D_8018109A[(self->params & 0xF) * 2];
+    while (i < 320) {
+        prim->x1 = prim->x3 = i + 64;
+        prim->x0 = prim->x2 = i;
+        prim->y0 = prim->y1 = temp_a2 - 56;
+        prim->y2 = prim->y3 = temp_a2;
+        prim->blendMode = 2;
+        prim = prim->next;
+        i += 64;
+    }
+
+    while (prim != 0) {
+        prim->blendMode = 8;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B39CC);
 
