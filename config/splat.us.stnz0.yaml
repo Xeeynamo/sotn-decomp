@@ -96,6 +96,7 @@ segments:
       - [0x33FCC, c] # Slogra & Gaibon Boss
       - [0x36DE4, c]
       - [0x394D4, c]
+      - [0x39908, c]
       - [0x3E30C, c]
       - [0x43708, c] # EntityBoneScimitar
       - [0x43F9C, c] # EntityAxeKnight
