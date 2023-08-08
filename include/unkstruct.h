@@ -299,6 +299,7 @@ typedef struct Unkstruct_800F9F40 {
     /* 0xA */ s8 unkA;
     /* 0xC */ s16 unkC;
 } Unkstruct_800F9F40;
+
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* desc;
