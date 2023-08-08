@@ -215,7 +215,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
         i += 64;
     }
 
-    while (prim != 0) {
+    while (prim != NULL) {
         prim->blendMode = 8;
         prim = prim->next;
     }
