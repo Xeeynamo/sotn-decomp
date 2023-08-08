@@ -88,4 +88,8 @@ extern s8 D_8019D38F;
 extern s32 D_8019D424;
 extern u8 D_8019C76C;
 extern u8 D_8019C770;
+
+extern u16 UNK_Update0[];
+extern u16 UNK_Invincibility0[];
+
 #endif

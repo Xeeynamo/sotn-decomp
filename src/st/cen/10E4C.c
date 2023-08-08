@@ -1,7 +1,7 @@
 #include "cen.h"
 #include "../random.h"
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", func_80190E7C);
+#include "../update.h"
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", func_80191178);
 
