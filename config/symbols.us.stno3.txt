@@ -61,6 +61,7 @@ EntityWargExplosionPuffOpaque = 0x801C14B8;
 Random = 0x801C184C;
 Update = 0x801C187C;
 UpdateStageEntities = 0x801C1B78;
+TestCollisions = 0x801C1C80;
 EntityNumericDamage = 0x801C2D98;
 CreateEntityFromLayout = 0x801C343C;
 CreateEntityWhenInVerticalRange = 0x801C3500;
