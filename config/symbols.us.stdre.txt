@@ -28,6 +28,7 @@ EntityFadeToWhite2 = 0x80196CC8;
 Random = 0x80196F90;
 Update = 0x80196FC0;
 UpdateStageEntities = 0x801972BC;
+TestCollisions = 0x801973C4;
 EntityNumericDamage = 0x801984DC;
 CreateEntityFromLayout = 0x80198B80;
 CreateEntityWhenInVerticalRange = 0x80198C44;

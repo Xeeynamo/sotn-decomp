@@ -28,6 +28,7 @@ SetGameState = 0x801B0030;
 Random = 0x801B186C;
 Update = 0x801B189C;
 UpdateStageEntities = 0x801B1B98;
+TestCollisions = 0x801B1CA0;
 EntityNumericDamage = 0x801B2A3C;
 CreateEntityFromLayout = 0x801B30E0;
 CreateEntityWhenInVerticalRange = 0x801B31A4;

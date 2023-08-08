@@ -35,6 +35,7 @@ EntityLargeGaibonProjectile = 0x801B8E94;
 Random = 0x801B90BC;
 Update = 0x801B90EC;
 UpdateStageEntities = 0x801B93E8;
+TestCollisions = 0x801B94F0;
 EntityNumericDamage = 0x801BA608;
 CreateEntityFromLayout = 0x801BACAC;
 CreateEntityWhenInVerticalRange = 0x801BAD70;

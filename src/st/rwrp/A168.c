@@ -5,7 +5,7 @@
 
 #include "../update_stage_entities.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", func_8018A59C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", TestCollisions);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", func_8018B6B4);
 

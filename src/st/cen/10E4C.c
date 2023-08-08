@@ -5,7 +5,7 @@
 
 #include "../update_stage_entities.h"
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", func_80191280);
+INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", TestCollisions);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", EntityNumericDamage);
 

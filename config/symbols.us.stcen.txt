@@ -15,6 +15,7 @@ EntityMovingElevator = 0x80190B64;
 Random = 0x80190E4C;
 Update = 0x80190E7C;
 UpdateStageEntities = 0x80191178;
+TestCollisions = 0x80191280;
 EntityNumericDamage = 0x80192398;
 CreateEntityWhenInVerticalRange = 0x80192B00;
 CreateEntityWhenInHorizontalRange = 0x80192C18;
