@@ -151,7 +151,7 @@ void EntityUnkId50(Entity* self) {
         while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x11, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
                 newEntity->posX.i.hi = *ptr++;
                 newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
@@ -175,7 +175,7 @@ void EntityUnkId50(Entity* self) {
         if (temp_s3 >= ptr[0]) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x11, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
                 newEntity->posX.i.hi = temp_s3 - ptr[0] + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = ptr[1];
@@ -209,7 +209,7 @@ void EntityUnkId52(Entity* self) {
         while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x11, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
                 newEntity->posX.i.hi = *ptr;
                 newEntity->params = 0x10;
                 newEntity->unk68 = 0x18;
@@ -232,7 +232,7 @@ void EntityUnkId52(Entity* self) {
         if (temp_s3 >= *ptr) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x11, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
                 newEntity->posX.i.hi = temp_s3 - *ptr + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
