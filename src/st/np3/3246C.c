@@ -149,7 +149,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
     s32 temp_a2;
     s32 var_v1;
     s32 i;
-    
+
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -182,7 +182,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
     } else {
         SetGeomOffset(0x80, 0x80);
     }
-    
+
     RotMatrix(D_801810B8, &mtx);
     vec.vx = self->posX.i.hi - 128;
     vec.vy = self->posY.i.hi - 128;
@@ -193,18 +193,18 @@ void func_801B3704(Entity* self, s16 primIndex) {
     RotTransPers(D_801810B8, &sxy, &p, &flag);
     temp_a1 = sxy & 0xFFFF;
     temp_a2 = sxy >> 0x10;
-    
+
     i = temp_a1;
     if (i < 0) {
         var_v1 = temp_a1 + 0x3F;
     } else {
         var_v1 = temp_a1;
     }
-    
+
     prim = self->ext.prim;
     i -= (var_v1 >> 6) << 6;
     i -= 64;
-    i -=  D_80181098[self->params % 16][1];
+    i -= D_80181098[self->params % 16][1];
     while (i < 320) {
         prim->x1 = prim->x3 = i + 64;
         prim->x0 = prim->x2 = i;
