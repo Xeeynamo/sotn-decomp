@@ -82,6 +82,7 @@ segments:
       - [0x6F80, rodata] # EntityUnkId0E
       - [0x6F94, rodata] # EntityStageNamePopup
       - [0x6FD0, c]
+      - [0x81E8, c]
       - [0xD020, c]
       - [0x13AA0, sbss] # bss?
   - [0x14768]

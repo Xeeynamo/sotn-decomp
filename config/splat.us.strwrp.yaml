@@ -36,5 +36,6 @@ segments:
       - [0x8C88, rodata]
       - [0x8D78, rodata]
       - [0x8DF0, c]
+      - [0xA168, c]
       - [0x15A20, data]
   - [0x166E8]

@@ -50,6 +50,7 @@ segments:
       - [0x11A64, c, succubus]
       - [0x13B3C, c, 13B3C]
       - [0x14774, c, 14774]
+      - [0x16F90, c]
       - [0x1C7DC, c, 1C7DC]
       - [0x23260, data]
   - [0x23FCC]
