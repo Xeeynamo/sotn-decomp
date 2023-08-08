@@ -18,7 +18,7 @@
             "cwd": "${workspaceRoot}",
             "autorun": [
                 "set substitute-path /project .",
-                "file build/sotn-debugmode.elf",
+                "file build/sotn-debugmodule.elf",
                 "continue",
             ],
             "valuesFormatting": "parseText"

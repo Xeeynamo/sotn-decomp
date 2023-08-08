@@ -370,8 +370,8 @@ disk_prepare: build $(SOTNDISK)
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare
-	cd tools/sotn-debugmode && make
-	cp $(BUILD_DIR)/../sotn-debugmode.bin $(DISK_DIR)/SERVANT/TT_000.BIN
+	cd tools/sotn-debugmodule && make
+	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)

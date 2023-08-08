@@ -40,7 +40,7 @@ asm/saturn
 .vscode/settings.json
 tools/go
 
-!tools/sotn-debugmode/sotn-debugmode.ld
+!tools/sotn-debugmodule/sotn-debugmodule.ld
 tools/sotn_calltree.txt
 tools/saturn_toolchain/GCCSH
 
