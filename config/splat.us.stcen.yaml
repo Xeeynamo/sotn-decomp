@@ -34,6 +34,7 @@ segments:
       - [0xD4B0, .rodata, D600]
       - [0xD4D8, rodata]
       - [0xD600, c]
+      - [0x10E4C, c]
       - [0x1B274, c]
       - [0x1C704, rodata]
       - [0x1C764, rodata]
