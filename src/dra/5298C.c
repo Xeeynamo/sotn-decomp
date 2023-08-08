@@ -1408,9 +1408,40 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
         *arg1++ = *arg0++;
     }
 }
-
+#if defined(VERSION_HD)
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
+#else
+void func_800F9E18(s32 arg0) {
+    const int ItemsPerRow = 2;
+    char buffer[38];
+    s32 nHalfScreenSize = arg0 * 5;
+    s32 i = (arg0 * 5) + 5;
+    s32 nItems = i;
 
+    if (arg0 == 0) {
+        ClearImage(&D_800A2D90, 0, 0, 0);
+        DrawSync(0);
+    }
+
+    for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
+        strcpy(buffer, g_RelicsDesc[i * ItemsPerRow + 0].name);
+        if ((nHalfScreenSize % ItemsPerRow) == 0) {
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
+        } else {
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
+        }
+
+        strcpy(buffer, g_RelicsDesc[i * ItemsPerRow + 1].name);
+        if ((nHalfScreenSize % ItemsPerRow) == 0) {
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
+        } else {
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 771, 1);
+        }
+    }
+}
+#endif
+
+// DECOMP_ME_WIP https://decomp.me/scratch/AKGyX
 void func_800F9F40(void) {
     Unkstruct_800F9F40* var_a2;
     Unkstruct_800F9F40* var_a3;

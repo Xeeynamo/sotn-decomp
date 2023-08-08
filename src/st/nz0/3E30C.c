@@ -318,7 +318,7 @@ void EntityEquipItemDrop(Entity* self) {
 
         if (!(collider.effects & EFFECT_NOTHROUGH_PLUS)) {
             for (index = 0; index < 32; index++) {
-                if (D_801CB740[index] == 0) {
+                if (UNK_Update0[index] == 0) {
                     break;
                 }
             }
@@ -342,7 +342,7 @@ void EntityEquipItemDrop(Entity* self) {
 
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            D_801CB740[index] = 0x1E0;
+            UNK_Update0[index] = 0x1E0;
             self->ext.generic.unk8C.modeU16.unk0 = index;
 
             if (itemId < NUM_HAND_ITEMS) {
@@ -417,7 +417,7 @@ void EntityEquipItemDrop(Entity* self) {
                 self->step++;
             }
         } else {
-            D_801CB740[self->ext.generic.unk8C.modeS16.unk0] = 0x10;
+            UNK_Update0[self->ext.generic.unk8C.modeS16.unk0] = 0x10;
         }
         break;
 
