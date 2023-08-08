@@ -145,7 +145,7 @@ void EntityUnkId50(Entity* self) {
         ptr = D_801814EC;
         temp = &g_Entities[192];
         self->unk68 = 0xC0;
-        self->ext.generic.unk7C.s = 0;
+        self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_UNK_08000000;
     label:
         while (*ptr <= 288) {
@@ -158,14 +158,14 @@ void EntityUnkId50(Entity* self) {
             } else {
                 ptr += 2;
             }
-            self->ext.generic.unk7C.u++;
+            self->ext.et_801BCC4C.unk7C++;
             goto label;
         }
         break;
 
     case 1:
         self->posX.i.hi = 128;
-        ptr = &D_801814EC[self->ext.generic.unk7C.u * 2];
+        ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
         var_v0 = roomLayout->unkA * 0xC0;
 
         if (var_v0 < 0) {
@@ -181,7 +181,7 @@ void EntityUnkId50(Entity* self) {
                 newEntity->params = ptr[1];
                 newEntity->unk68 = 0xC0;
             }
-            self->ext.generic.unk7C.u++;
+            self->ext.et_801BCC4C.unk7C++;
         }
         break;
     }
@@ -203,7 +203,7 @@ void EntityUnkId52(Entity* self) {
         InitializeEntity(D_80180AD0);
         ptr = D_801817F8;
         temp = &g_Entities[192];
-        self->ext.generic.unk7C.s = 0;
+        self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_UNK_08000000;
     label:
         while (*ptr <= 288) {
@@ -215,14 +215,14 @@ void EntityUnkId52(Entity* self) {
                 newEntity->unk68 = 0x18;
             }
             ptr++;
-            self->ext.generic.unk7C.u++;
+            self->ext.et_801BCC4C.unk7C++;
             goto label;
         }
         break;
 
     case 1:
         self->posX.i.hi = 0x80;
-        ptr = &D_801817F8[self->ext.generic.unk7C.u];
+        ptr = &D_801817F8[self->ext.et_801BCC4C.unk7C];
 
         var_v0 = layout->unkA * 0x18;
         if (var_v0 < 0) {
@@ -236,12 +236,12 @@ void EntityUnkId52(Entity* self) {
                 newEntity->posX.i.hi = temp_s3 - *ptr + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
-                if (self->ext.generic.unk7C.u == 5) {
+                if (self->ext.et_801BCC4C.unk7C == 5) {
                     newEntity->params = 0x11;
                 }
                 newEntity->unk68 = 0x18;
             }
-            self->ext.generic.unk7C.u++;
+            self->ext.et_801BCC4C.unk7C++;
         }
         break;
     }
@@ -327,12 +327,12 @@ void EntityBackgroundCastleWall(Entity* entity) {
 
     newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(0x11, newEntity);
+        CreateEntityFromCurrentEntity(E_ID_11, newEntity);
         newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
         newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(0x11, newEntity);
+            CreateEntityFromCurrentEntity(E_ID_11, newEntity);
             newEntity->params = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;
