@@ -1397,36 +1397,31 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
 #else
 void func_800F9E18(s32 arg0) {
-    s32 var_s0 = arg0 * 5;
-    s32 var_s1 = var_s0 + 5;
+    const int ItemsPerRow = 2;
     char buffer[38];
-    s32 temp_s3;
-    u8 temp;
-    s32 t;
+    s32 nHalfScreenSize = arg0 * 5;
+    s32 i = (arg0 * 5) + 5;
+    s32 nItems = i;
 
-    temp_s3 = var_s1;
     if (arg0 == 0) {
         ClearImage(&D_800A2D90, 0, 0, 0);
         DrawSync(0);
     }
 
-    var_s1 = var_s0;
-    while (var_s1 < temp_s3) {
-        t = (var_s1 * 8) + 4;
-        strcpy(buffer, D_800A8710[t]);
-        if (!(var_s0 & 1)) {
-            func_800F99B8(buffer, (var_s0 / 2) + 0x80, 1);
+    for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
+        strcpy(buffer, g_RelicsDesc[i * ItemsPerRow + 0].name);
+        if ((nHalfScreenSize % ItemsPerRow) == 0) {
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
         } else {
-            func_800F99B8(buffer, (var_s0 / 2) + 0x103, 1);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
         }
-        strcpy(buffer, D_800A8720[t]);
-        if (!(var_s0 & 1)) {
-            func_800F99B8(buffer, (var_s0 / 2) + 0x280, 1);
+
+        strcpy(buffer, g_RelicsDesc[i * ItemsPerRow + 1].name);
+        if ((nHalfScreenSize % ItemsPerRow) == 0) {
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
         } else {
-            func_800F99B8(buffer, (var_s0 / 2) + 0x303, 1);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 771, 1);
         }
-        var_s1++;
-        var_s0++;
     }
 }
 #endif
