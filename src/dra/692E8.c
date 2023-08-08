@@ -1,6 +1,7 @@
 #define INCLUDE_ASM_NEW
 #include "dra.h"
 #include "sfx.h"
+#include "player.h"
 
 void func_801092E8(s32 arg0) {
     D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
@@ -224,7 +225,7 @@ void func_8010A3F0(void) {
     g_Player.unk10 = 0;
 }
 
-s32 GetTeleportToOtherCastle(void) {
+TeleportCheck GetTeleportToOtherCastle(void) {
     s32 xCheckTop;
     s32 yCheckTop;
     s32 xCheckRTop;
@@ -232,7 +233,7 @@ s32 GetTeleportToOtherCastle(void) {
 
     // Is player in the pose when pressing UP?
     if (PLAYER.step != 0 || PLAYER.step_s != 1) {
-        return 0;
+        return TELEPORT_CHECK_NONE;
     }
 
     // Check for X/Y boundaries in TOP
@@ -241,8 +242,7 @@ s32 GetTeleportToOtherCastle(void) {
         if (ABS(xCheckTop) < 4) {
             yCheckTop = (g_CurrentRoom.top << 8) + playerY - 2127;
             if (ABS(yCheckTop) < 4) {
-                // Allow caller to teleport to TOP
-                return 2;
+                return TELEPORT_CHECK_TO_RTOP;
             }
         }
     }
@@ -254,20 +254,18 @@ s32 GetTeleportToOtherCastle(void) {
 #if defined(VERSION_US)
             yCheckRTop = (g_CurrentRoom.top << 8) + playerY - 14407;
             if (ABS(yCheckRTop) < 4) {
-                // Allow caller to teleport to RTOP
-                return 4;
+                return TELEPORT_CHECK_TO_TOP;
             }
 #elif defined(VERSION_HD)
             yCheckRTop = (g_CurrentRoom.top << 8) + playerY;
             if (ABS(yCheckRTop) - 14407 < 4) {
-                // Allow caller to teleport to RTOP
-                return 4;
+                return TELEPORT_CHECK_TO_TOP;
             }
 #endif
         }
     }
 
-    return 0;
+    return TELEPORT_CHECK_NONE;
 }
 
 INCLUDE_ASM("dra/nonmatchings/692E8", EntityAlucard);
