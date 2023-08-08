@@ -15,7 +15,7 @@ s16** g_SpriteBanks[];
 void* g_Cluts[];
 RoomDef g_TileLayers[];
 void* g_EntityGfxs[];
-void func_80188514(void);
+void UpdateStageEntities(void);
 
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
@@ -28,7 +28,7 @@ Overlay g_StageOverlay = {
     /* 0x1C */ NULL,
     /* 0x20 */ g_TileLayers,
     /* 0x24 */ g_EntityGfxs,
-    /* 0x28 */ func_80188514,
+    /* 0x28 */ UpdateStageEntities,
     /* 0x2C */ 0x00000000,
     /* 0x30 */ 0x00000000,
     /* 0x34 */ 0x00000000,

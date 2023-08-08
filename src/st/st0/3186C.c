@@ -3,7 +3,7 @@
 
 #include "../update.h"
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/3186C", func_801B1B98);
+INCLUDE_ASM("asm/us/st/st0/nonmatchings/3186C", UpdateStageEntities);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/3186C", func_801B1CA0);
 

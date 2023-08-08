@@ -14,6 +14,7 @@ EntityUnkId1B = 0x80190A78;
 EntityMovingElevator = 0x80190B64;
 Random = 0x80190E4C;
 Update = 0x80190E7C;
+UpdateStageEntities = 0x80191178;
 EntityNumericDamage = 0x80192398;
 CreateEntityWhenInVerticalRange = 0x80192B00;
 CreateEntityWhenInHorizontalRange = 0x80192C18;

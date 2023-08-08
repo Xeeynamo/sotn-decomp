@@ -67,6 +67,7 @@ EntityLargeGaibonProjectile = 0x801B6BBC;
 EntityMariaCutscene = 0x801B7D58;
 Random = 0x801B94D4;
 Update = 0x801B9504;
+UpdateStageEntities = 0x801B9800;
 TestCollisions = 0x801B9908;
 EntityNumericDamage = 0x801BAA20;
 CreateEntityFromLayout = 0x801BB0C4;

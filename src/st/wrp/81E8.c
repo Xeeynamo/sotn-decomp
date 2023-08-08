@@ -20,7 +20,7 @@ extern LayoutEntity* g_pStObjLayout[];
 
 #include "../update.h"
 
-void func_80188514(void) {
+void UpdateStageEntities(void) {
     Entity* entity;
     for (entity = &g_Entities[STAGE_ENTITY_START];
          entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
