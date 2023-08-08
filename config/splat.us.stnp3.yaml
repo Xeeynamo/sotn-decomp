@@ -71,6 +71,7 @@ segments:
       - [0x3246C, c]
       - [0x36990, c] # Gaibon & Slogra boss
       - [0x390BC, c]
+      - [0x394F0, c]
       - [0x3DEF4, c]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
