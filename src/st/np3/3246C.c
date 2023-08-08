@@ -160,7 +160,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
         self->ext.prim = prim;
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         while (prim != 0) {
             prim->tpage = 0xF;
             prim->clut = D_801810A8[self->params & 0xF];
