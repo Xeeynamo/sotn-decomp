@@ -35,6 +35,7 @@ void SetFontCoord(int x, int y);
 void BeginFont();
 void EndFont();
 void PrintDefaultFont();
+void PauseDebugMode();
 
 extern bool g_ShowDebugMessages;
 extern bool g_ShowCollisionLayer;

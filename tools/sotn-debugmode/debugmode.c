@@ -16,8 +16,7 @@ void InitSfxPlayer(void);
 void InitDraTest800FD874(void);
 void InitFlagChecker(void);
 void UpdateDebugFlagsPlayer();
-void UpdateDraEntitySpawn();
-void UpdateStageEntitySpawn();
+void UpdateEntitySpawn();
 void UpdateSfxPlayer(void);
 void UpdateDraTest800FD874(void);
 void UpdateFlagChecker(void);
@@ -25,8 +24,7 @@ void UpdateFlagChecker(void);
 DebugMenu g_DebugMenus[] = {
     DummyDummyDummy,      DummyDummyDummy,        true, false, "R2 = debug",
     InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true, true,  "Debug mode",
-    InitEntitySpawn,      UpdateDraEntitySpawn,   true, true,  "DRA spawn",
-    InitEntitySpawn,      UpdateStageEntitySpawn, true, true,  "Stage spawn",
+    InitEntitySpawn,      UpdateEntitySpawn,      true, true,  "Entity spwn",
     InitSfxPlayer,        UpdateSfxPlayer,        true, true,  "Snd player",
     InitDraTest800FD874,  UpdateDraTest800FD874,  true, true,  "Inventory",
     InitFlagChecker,      UpdateFlagChecker,      true, true,  "Castleflags",
@@ -82,7 +80,7 @@ bool UpdateLogic() {
     }
 
     if (g_pads->pressed & PAD_TRIANGLE || g_pads->pressed & PAD_START) {
-        g_DebugModePaused = true;
+        PauseDebugMode();
         return;
     }
 
@@ -141,6 +139,8 @@ bool Update(void) {
 
     return entityPaused;
 }
+
+void PauseDebugMode() { g_DebugModePaused = true; }
 
 void SetHook(int (*hook)(void)) { g_Hook = hook; }
 
