@@ -3,7 +3,7 @@
 
 #include "../update.h"
 
-void func_801B9800(void) {
+void UpdateStageEntities(void) {
     Entity* entity;
     for (entity = &g_Entities[STAGE_ENTITY_START];
          entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
