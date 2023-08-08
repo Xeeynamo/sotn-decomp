@@ -1403,6 +1403,7 @@ extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 D_800978F8;
+extern char D_80097902[];
 extern s32 D_80097904;
 extern s32 D_80097908;
 extern s32 D_8009790C;
