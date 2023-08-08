@@ -51,7 +51,7 @@ extern s32 D_80097908;
 
 // ST/MAD
 extern u16 D_8018052C[];
-extern u16 D_801806B4[];
+extern u16 UNK_Invincibility0[];
 extern u16 D_80180544[];
 extern ObjInit2 D_8018056C[];
 extern u16 D_80180D1C[];
@@ -79,7 +79,7 @@ extern LayoutEntity* D_801997D8;
 extern u16* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
-extern u16 D_80199E54[];
+extern u16 UNK_Update0[];
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];

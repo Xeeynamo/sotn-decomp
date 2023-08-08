@@ -81,3 +81,5 @@ EntityRoomForeground = 0x80198B00;
 GetDistanceToPlayerY = 0x80192078;
 GetDistanceToPlayerX = 0x8019203C;
 GetSideToPlayer = 0x801920AC;
+UNK_Invincibility0 = 0x801806B4;
+UNK_Update0 = 0x80199E54;

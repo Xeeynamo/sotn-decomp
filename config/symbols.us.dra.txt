@@ -149,6 +149,7 @@ c_strThrow2 = 0x800A8404;
 c_strShield = 0x800A8408;
 c_strMedicine = 0x800A840C;
 g_SpellDefs = 0x800A8410;
+g_RelicsDesc = 0x800A8720;
 g_EnemyDefs = 0x800A8900;
 c_arrExpNext = 0x800AC784;
 c_lbaBinTitle0 = 0x800AC9D8;
