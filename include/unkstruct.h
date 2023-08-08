@@ -292,6 +292,14 @@ typedef struct {
     s32 unk10;
 } UnkStructClut;
 
+typedef struct Unkstruct_800F9F40 {
+    /* 0x0 */ s32 unk0;
+    /* 0x4 */ s32 unk4;
+    /* 0x8 */ s16 unk8;
+    /* 0xA */ s8 unkA;
+    /* 0xC */ s16 unkC;
+} Unkstruct_800F9F40;
+
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* desc;
