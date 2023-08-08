@@ -1671,4 +1671,3 @@ void EntityWarpSmallRocks(Entity* entity) {
     }
 }
 #endif
-

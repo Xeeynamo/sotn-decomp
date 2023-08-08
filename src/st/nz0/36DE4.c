@@ -213,4 +213,3 @@ void func_801B8E0C(Entity* self) {
 }
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B8F94);
-

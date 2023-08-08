@@ -112,4 +112,3 @@ void func_801B1198(s16 arg0) {
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B11E8);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1298);
-

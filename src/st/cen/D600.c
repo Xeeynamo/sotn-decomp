@@ -897,4 +897,3 @@ void EntityMovingElevator(Entity* self) {
         DestroyEntity(self);
     }
 }
-

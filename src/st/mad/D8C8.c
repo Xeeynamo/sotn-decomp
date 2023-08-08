@@ -150,4 +150,3 @@ void EntityBreakable(Entity* entity) {
         entity->animSet = g_eBreakableanimSets[breakableType];
     }
 }
-

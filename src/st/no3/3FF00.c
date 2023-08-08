@@ -215,4 +215,3 @@ void func_801C13F8() {
 
 // A single "puff" of the warg explosion animation, opaque
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityWargExplosionPuffOpaque);
-
