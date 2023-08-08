@@ -173,7 +173,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
             prim = prim->next;
         }
     }
-    var_v1 = D_80181098[self->params & 0xF][0];
+    var_v1 = D_80181098[self->params % 16][0];
     temp_s3 = var_v1;
 
     SetGeomScreen(0x400);
@@ -204,7 +204,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
     prim = self->ext.prim;
     i -= (var_v1 >> 6) << 6;
     i -= 64;
-    i -=  D_80181098[self->params & 0xF][1];
+    i -=  D_80181098[self->params % 16][1];
     while (i < 320) {
         prim->x1 = prim->x3 = i + 64;
         prim->x0 = prim->x2 = i;
