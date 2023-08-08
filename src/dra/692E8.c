@@ -231,7 +231,7 @@ s32 CanTeleportToOtherCastle(void) {
     s32 yCheckRTop;
 
     // Is player in the pose when pressing UP?
-    if (LOW(PLAYER.step) != 0x10000) {
+    if (PLAYER.step != 0 || PLAYER.step_s != 1) {
         return 0;
     }
 
