@@ -1,7 +1,7 @@
 #include "rwrp.h"
 #include "../random.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", Update);
+#include "../update.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", func_8018A494);
 

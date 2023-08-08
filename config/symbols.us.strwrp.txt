@@ -1,4 +1,5 @@
 g_SpriteBanks = 0x80180040;
+UNK_Invincibility0 = 0x80180690;
 g_Rooms = 0x801811AC;
 Random = 0x8018A168;
 Update = 0x8018A198;
@@ -12,3 +13,4 @@ CollectSubweapon = 0x8018ED6C;
 ClutLerp = 0x8019344C;
 EntitySoulStealOrb = 0x80194590;
 func_801951F0 = 0x801951F0;
+UNK_Update0 = 0x801966A8;
