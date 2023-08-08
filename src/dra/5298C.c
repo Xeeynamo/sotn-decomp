@@ -1408,6 +1408,7 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
         *arg1++ = *arg0++;
     }
 }
+
 #if defined(VERSION_HD)
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
 #else
