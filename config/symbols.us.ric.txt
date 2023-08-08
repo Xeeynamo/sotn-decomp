@@ -34,3 +34,4 @@ DebugShowWaitInfo = 0x8015E380;
 DebugInputWait = 0x8015E420;
 func_8017328C = 0x8017328C;
 g_DebugWaitInfoTimer = 0x80174F7C;
+CanTeleportToOtherCastle = 0x80156CCC;

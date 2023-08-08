@@ -21,7 +21,43 @@ void func_80156C60(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156CCC);
+s32 CanTeleportToOtherCastle(void) {
+    s32 xCheckTop;
+    s32 yCheckTop;
+    s32 xCheckRTop;
+    s32 yCheckRTop;
+
+    // Is player in the pose when pressing UP?
+    if (LOW(PLAYER.step) != 0x10000) {
+        return 0;
+    }
+
+    // Check for X/Y boundaries in TOP
+    if (g_StageId == STAGE_TOP) {
+        xCheckTop = (g_CurrentRoom.left << 8) + playerX - 8000;
+        if (ABS(xCheckTop) < 4) {
+            yCheckTop = (g_CurrentRoom.top << 8) + playerY - 2127;
+            if (ABS(yCheckTop) < 4) {
+                // Allow caller to teleport to TOP
+                return 2;
+            }
+        }
+    }
+
+    // Check for X/Y boundaries in RTOP
+    if (g_StageId == STAGE_RTOP) {
+        xCheckRTop = (g_CurrentRoom.left << 8) + playerX - 8384;
+        if (ABS(xCheckRTop) < 4) {
+            yCheckRTop = (g_CurrentRoom.top << 8) + playerY;
+            if (ABS(yCheckRTop) - 14407 < 4) {
+                // Allow caller to teleport to RTOP
+                return 4;
+            }
+        }
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156DE4);
 

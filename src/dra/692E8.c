@@ -249,7 +249,7 @@ s32 CanTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        xCheckRTop = (g_CurrentRoom.left << 8) + playerX) - 8384;
+        xCheckRTop = (g_CurrentRoom.left << 8) + playerX - 8384;
         if (ABS(xCheckRTop) < 4) {
 #if defined(VERSION_US)
             yCheckRTop = (g_CurrentRoom.top << 8) + playerY - 14407;
