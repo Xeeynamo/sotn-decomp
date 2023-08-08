@@ -1695,7 +1695,7 @@ void EntityMermanFireball(Entity* self) {
 
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_UNK_15, self, entity);
+            CreateEntityFromEntity(E_ID_15, self, entity);
             entity->ext.generic.unk94 = 4;
             entity->unk19 = 3;
             entity->zPriority = self->zPriority + 8;

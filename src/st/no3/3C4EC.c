@@ -131,12 +131,121 @@ void EntityUnkId53(Entity* entity) {
 // large foreground tree during intro
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityForegroundTree);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId50);
+void EntityUnkId50(Entity* self) {
+    Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
+    Entity* newEntity;
+    Entity* temp;
+    u16 temp_s3;
+    s32 var_v0;
+    u16* ptr;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AD0);
+        ptr = D_801814EC;
+        temp = &g_Entities[192];
+        self->unk68 = 0xC0;
+        self->ext.et_801BCC4C.unk7C = 0;
+        self->flags |= FLAG_UNK_08000000;
+    label:
+        while (*ptr <= 288) {
+            newEntity = AllocEntity(temp, &temp[64]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                newEntity->posX.i.hi = *ptr++;
+                newEntity->params = *ptr++;
+                newEntity->unk68 = 0xC0;
+            } else {
+                ptr += 2;
+            }
+            self->ext.et_801BCC4C.unk7C++;
+            goto label;
+        }
+        break;
+
+    case 1:
+        self->posX.i.hi = 128;
+        ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
+        var_v0 = roomLayout->unkA * 0xC0;
+
+        if (var_v0 < 0) {
+            var_v0 += 0xFF;
+        }
+        temp_s3 = (var_v0 >> 8) + 288;
+        if (temp_s3 >= ptr[0]) {
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                newEntity->posX.i.hi = temp_s3 - ptr[0] + 288;
+                newEntity->posX.i.lo = self->posX.i.lo;
+                newEntity->params = ptr[1];
+                newEntity->unk68 = 0xC0;
+            }
+            self->ext.et_801BCC4C.unk7C++;
+        }
+        break;
+    }
+}
 
 // part of parallax background with pine trees
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId52);
+void EntityUnkId52(Entity* self) {
+    Unkstruct8* layout = &g_CurrentRoomTileLayout;
+    Entity* newEntity;
+    Entity* temp;
+    u16 temp_s3;
+    s32 var_v0;
+    u16* ptr;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AD0);
+        ptr = D_801817F8;
+        temp = &g_Entities[192];
+        self->ext.et_801BCC4C.unk7C = 0;
+        self->flags |= FLAG_UNK_08000000;
+    label:
+        while (*ptr <= 288) {
+            newEntity = AllocEntity(temp, &temp[64]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                newEntity->posX.i.hi = *ptr;
+                newEntity->params = 0x10;
+                newEntity->unk68 = 0x18;
+            }
+            ptr++;
+            self->ext.et_801BCC4C.unk7C++;
+            goto label;
+        }
+        break;
+
+    case 1:
+        self->posX.i.hi = 0x80;
+        ptr = &D_801817F8[self->ext.et_801BCC4C.unk7C];
+
+        var_v0 = layout->unkA * 0x18;
+        if (var_v0 < 0) {
+            var_v0 += 0xFF;
+        }
+        temp_s3 = (var_v0 >> 8) + 288;
+        if (temp_s3 >= *ptr) {
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                newEntity->posX.i.hi = temp_s3 - *ptr + 288;
+                newEntity->posX.i.lo = self->posX.i.lo;
+                newEntity->params = 0x10;
+                if (self->ext.et_801BCC4C.unk7C == 5) {
+                    newEntity->params = 0x11;
+                }
+                newEntity->unk68 = 0x18;
+            }
+            self->ext.et_801BCC4C.unk7C++;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 
@@ -216,14 +325,14 @@ void EntityUnkId55(Entity* entity, u16 arg2) {
 void EntityBackgroundCastleWall(Entity* entity) {
     Entity* newEntity;
 
-    newEntity = AllocEntity(D_8007C0D8, &D_8007C0D8[64]);
+    newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(0x11U, newEntity);
+        CreateEntityFromCurrentEntity(E_ID_11, newEntity);
         newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
-        newEntity = AllocEntity(newEntity, &D_8007C0D8[64]);
+        newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(0x11U, newEntity);
+            CreateEntityFromCurrentEntity(E_ID_11, newEntity);
             newEntity->params = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;
