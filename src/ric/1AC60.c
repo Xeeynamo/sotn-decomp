@@ -21,7 +21,7 @@ void func_80156C60(Entity* entity) {
         *ptr++ = 0;
 }
 
-s32 CanTeleportToOtherCastle(void) {
+s32 GetTeleportToOtherCastle(void) {
     s32 xCheckTop;
     s32 yCheckTop;
     s32 xCheckRTop;

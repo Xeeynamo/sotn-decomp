@@ -224,7 +224,7 @@ void func_8010A3F0(void) {
     g_Player.unk10 = 0;
 }
 
-s32 CanTeleportToOtherCastle(void) {
+s32 GetTeleportToOtherCastle(void) {
     s32 xCheckTop;
     s32 yCheckTop;
     s32 xCheckRTop;
