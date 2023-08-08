@@ -161,7 +161,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
         self->primIndex = primIndex;
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        while (prim != 0) {
+        while (prim != NULL) {
             prim->tpage = 0xF;
             prim->clut = D_801810A8[self->params & 0xF];
             prim->u0 = prim->u2 = 0xBF;
