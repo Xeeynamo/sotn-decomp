@@ -1442,7 +1442,6 @@ void func_800F9E18(s32 arg0) {
 }
 #endif
 
-// DECOMP_ME_WIP https://decomp.me/scratch/AKGyX
 void func_800F9F40(void) {
     Unkstruct_800F9F40* var_a2;
     Unkstruct_800F9F40* var_a3;
