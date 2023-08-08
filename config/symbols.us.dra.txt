@@ -994,6 +994,7 @@ CopyStageOvlCallback = 0x801074BC;
 CopyRicOvlCallback = 0x80107614;
 CopySupportOvlCallback = 0x80107750;
 UpdateCd = 0x80108448;
+GetTeleportToOtherCastle = 0x8010A4A4;
 EntityAlucard = 0x8010A5BC;
 SetPlayerStep = 0x8010D584;
 UpdateUnarmedAnim = 0x8010DB38;

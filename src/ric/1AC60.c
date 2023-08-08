@@ -5,6 +5,7 @@
  */
 
 #include "ric.h"
+#include "player.h"
 
 void func_80156C60(Entity* entity) {
     s32 i;
@@ -21,7 +22,41 @@ void func_80156C60(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156CCC);
+TeleportCheck GetTeleportToOtherCastle(void) {
+    s32 xCheckTop;
+    s32 yCheckTop;
+    s32 xCheckRTop;
+    s32 yCheckRTop;
+
+    // Is player in the pose when pressing UP?
+    if (PLAYER.step != 0 || PLAYER.step_s != 1) {
+        return TELEPORT_CHECK_NONE;
+    }
+
+    // Check for X/Y boundaries in TOP
+    if (g_StageId == STAGE_TOP) {
+        xCheckTop = (g_CurrentRoom.left << 8) + playerX - 8000;
+        if (ABS(xCheckTop) < 4) {
+            yCheckTop = (g_CurrentRoom.top << 8) + playerY - 2127;
+            if (ABS(yCheckTop) < 4) {
+                return TELEPORT_CHECK_TO_RTOP;
+            }
+        }
+    }
+
+    // Check for X/Y boundaries in RTOP
+    if (g_StageId == STAGE_RTOP) {
+        xCheckRTop = (g_CurrentRoom.left << 8) + playerX - 8384;
+        if (ABS(xCheckRTop) < 4) {
+            yCheckRTop = (g_CurrentRoom.top << 8) + playerY;
+            if (ABS(yCheckRTop) - 14407 < 4) {
+                return TELEPORT_CHECK_TO_TOP;
+            }
+        }
+    }
+
+    return TELEPORT_CHECK_NONE;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156DE4);
 
