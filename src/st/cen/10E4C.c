@@ -3,7 +3,7 @@
 
 #include "../update.h"
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", UpdateStageEntities);
+#include "../update_stage_entities.h"
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/10E4C", func_80191280);
 

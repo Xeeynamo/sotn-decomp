@@ -3,7 +3,7 @@
 
 #include "../update.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", UpdateStageEntities);
+#include "../update_stage_entities.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A168", func_8018A59C);
 
