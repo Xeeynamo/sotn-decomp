@@ -4,4 +4,3 @@
 #include "../update.h"
 
 #include "../update_stage_entities.h"
-
