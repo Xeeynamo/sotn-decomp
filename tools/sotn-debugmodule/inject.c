@@ -19,8 +19,15 @@ typedef struct {
     u32 Unk3C;
 } ServantDesc;
 
+// The INJECT value will change every time information is added to the .data or
+// .rodata section. To get a refreshed value, compile the debug module, look for
+// sotn-debugmode.map, find InjectMain and copy&paste the hex value on its left.
+const u32 INJECT_MAIN_ADDR = 0x802809b4;
+const u32 MODULE_ADDR = 0x80280000;
+const u32 LOAD_ADDR = 0x80170000;
+const u32 INJECT = INJECT_MAIN_ADDR - (MODULE_ADDR - LOAD_ADDR);
+
 void Dummy(Entity*);
-const u32 INJECT = 0x802809b4 - 0x110000;
 ServantDesc g_ServantDesc = {
     INJECT, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
     Dummy,  Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
@@ -30,7 +37,7 @@ ServantDesc g_ServantDesc = {
 #define JAL(addr) ((((u32)(addr)&0x3FFFFFFU) >> 2) | 0x0C000000U)
 
 int MainLoop();
-void Inject(void) {
+void InjectMain(void) {
     u32* const InjectPoint = 0x800E3D00U;
     int i;
 
