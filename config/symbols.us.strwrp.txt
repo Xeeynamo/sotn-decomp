@@ -3,7 +3,6 @@ UNK_Invincibility0 = 0x80180690;
 g_Rooms = 0x801811AC;
 Random = 0x8018A168;
 Update = 0x8018A198;
-Update = 0x8018A198;
 CreateEntityWhenInVerticalRange = 0x8018BE1C;
 CreateEntityWhenInHorizontalRange = 0x8018BF34;
 DestroyEntity = 0x8018D580;
