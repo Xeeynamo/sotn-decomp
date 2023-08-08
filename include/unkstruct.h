@@ -291,3 +291,20 @@ typedef struct {
     s32 unkC;
     s32 unk10;
 } UnkStructClut;
+
+typedef struct Unkstruct_800F9F40 {
+    /* 0x0 */ s32 unk0;
+    /* 0x4 */ s32 unk4;
+    /* 0x8 */ s16 unk8;
+    /* 0xA */ s8 unkA;
+    /* 0xC */ s16 unkC;
+} Unkstruct_800F9F40;
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* desc;
+    /* 0x08 */ s16 unk08;
+    /* 0x0A */ s16 unk0A;
+    /* 0x0C */ s16 unk0C;
+    /* 0x0E */ s16 unk0E;
+} RelicDesc;

@@ -1353,7 +1353,7 @@ extern Entity D_80074C08[];
 
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[]; // &g_Entities[160]
-extern Entity D_8007C0D8[];
+extern Entity D_8007C0D8[]; // &g_Entities[192]
 extern Entity D_8007D858[]; // &g_Entities[224]
 extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
@@ -1402,6 +1402,7 @@ extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 D_800978F8;
+extern char D_80097902[];
 extern s32 D_80097904;
 extern s32 D_80097908;
 extern s32 D_8009790C;

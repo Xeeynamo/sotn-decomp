@@ -277,6 +277,10 @@ typedef struct {
     /* 0x89 */ u8 unk89;
 } ET_801B3C38;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+} ET_801BCC4C;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -294,5 +298,6 @@ typedef union {
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
     /* 0x7C */ ET_RoomTransition2 roomTransition2;
     /* 0x7C */ ET_801B3C38 et38;
+    /* 0x7C */ ET_801BCC4C et_801BCC4C;
     /* 0x7C */ char stub[0x40];
 } Ext;
