@@ -1,15 +1,20 @@
 SECTIONS {
     . = 0x80280000;
 
-    .data* : {
+    .inject : {
+        *(.inject-head*)
+        *(.inject-func*)
+    }
+
+    .data : {
         *(.data*)
     }
 
-    .rodata* : {
+    .rodata : {
         *(.rodata*)
     }
 
-    .text* : {
+    .text : {
         *(.text*)
     }
 
