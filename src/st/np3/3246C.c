@@ -148,7 +148,6 @@ void func_801B3704(Entity* self, s16 primIndex) {
     s32 temp_a1;
     s32 temp_a2;
     s32 var_v1;
-    s32 i;
 
     if (self->step == 0) {
         InitializeEntity(D_80180AA8);
@@ -163,13 +162,13 @@ void func_801B3704(Entity* self, s16 primIndex) {
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->tpage = 0xF;
-            prim->clut = D_801810A8[self->params & 0xF];
+            prim->clut = D_801810A8[self->params % 16];
             prim->u0 = prim->u2 = 0xBF;
             prim->u1 = prim->u3 = 0xFF;
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xB8;
             prim->priority = 0x5A;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
         }
     }
@@ -194,29 +193,28 @@ void func_801B3704(Entity* self, s16 primIndex) {
     temp_a1 = sxy & 0xFFFF;
     temp_a2 = sxy >> 0x10;
 
-    i = temp_a1;
-    if (i < 0) {
+    if (temp_a1 < 0) {
         var_v1 = temp_a1 + 0x3F;
     } else {
         var_v1 = temp_a1;
     }
 
     prim = self->ext.prim;
-    i -= (var_v1 >> 6) << 6;
-    i -= 64;
-    i -= D_80181098[self->params % 16][1];
-    while (i < 320) {
-        prim->x1 = prim->x3 = i + 64;
-        prim->x0 = prim->x2 = i;
+    temp_a1 -= (var_v1 >> 6) << 6;
+    temp_a1 -= 64;
+    temp_a1 -= D_80181098[self->params % 16][1];
+    while (temp_a1 < 320) {
+        prim->x1 = prim->x3 = temp_a1 + 64;
+        prim->x0 = prim->x2 = temp_a1;
         prim->y0 = prim->y1 = temp_a2 - 56;
         prim->y2 = prim->y3 = temp_a2;
         prim->blendMode = 2;
         prim = prim->next;
-        i += 64;
+        temp_a1 += 64;
     }
 
     while (prim != NULL) {
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         prim = prim->next;
     }
 }
