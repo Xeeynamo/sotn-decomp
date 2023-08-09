@@ -253,7 +253,7 @@ void InitEntitySpawn(void) {
     g_EntityEnd = 0x80;
     g_SpawnX = 176;
     g_SpawnY = 122;
-    g_IsSpawnPreviewEnabled = true;
+    g_IsSpawnPreviewEnabled = false;
     g_IsSpawnPlaceMode = false;
 }
 
