@@ -13,12 +13,10 @@ void DummyDummyDummy() {}
 void InitDebugFlagsPlayer(void);
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
-void InitDraTest800FD874(void);
 void InitFlagChecker(void);
 void UpdateDebugFlagsPlayer();
 void UpdateEntitySpawn();
 void UpdateSfxPlayer(void);
-void UpdateDraTest800FD874(void);
 void UpdateFlagChecker(void);
 
 DebugMenu g_DebugMenus[] = {
@@ -26,7 +24,6 @@ DebugMenu g_DebugMenus[] = {
     InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true, true,  "Debug mode",
     InitEntitySpawn,      UpdateEntitySpawn,      true, true,  "Entity spwn",
     InitSfxPlayer,        UpdateSfxPlayer,        true, true,  "Snd player",
-    InitDraTest800FD874,  UpdateDraTest800FD874,  true, true,  "Inventory",
     InitFlagChecker,      UpdateFlagChecker,      true, true,  "Castleflags",
 };
 
