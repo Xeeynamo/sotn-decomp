@@ -231,7 +231,58 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", func_800FDE20);
+u32 func_800FDE20(void) {
+    s32 i;
+    s32 statsGained;
+    s32 statgain;
+
+    if (D_80137960 != 0) {
+        D_80137960 -= 1;
+        return 3;
+    }
+    if (D_80137964 != 0) {
+        D_80137964 -= 1;
+        return 2;
+    }
+    if (D_80137968 != 0) {
+        D_80137968 -= 1;
+        return 4;
+    }
+    if (g_Status.level == 99) {
+        return 0;
+    }
+    if (c_arrExpNext[g_Status.level] <= g_Status.exp) {
+        g_Status.level++;
+        statsGained = 0;
+        g_Status.mpMax += 4 + (rand() & 1);
+        g_Status.hp += D_800A2EC0[(s32)g_Status.level / 10];
+        g_Status.hpMax += D_800A2EC0[(s32)g_Status.level / 10];
+        g_Status.heartsMax += 2;
+        func_800FDE20();
+        for(i=0; i < 4; i++){
+            //Flip a coin to decide if you will gain a stat here
+            statgain = rand() & 1;
+            g_Status.statsBase[i] += statgain;
+            
+            if (g_Status.statsBase[i] > 99) {
+                g_Status.statsBase[i] = 99;
+                statgain = 0;
+            }
+            statsGained += statgain;
+        } 
+        //If we gained less than 2 stats (got unlucky) give a mercy point to random stat
+        if (statsGained < 2) {
+            //Note this is its own random event, so there's a chance to get +2 to one stat.
+            i = rand() & 3;
+            g_Status.statsBase[i]++;
+            if (g_Status.statsBase[i] > 99) {
+                g_Status.statsBase[i] = 99;
+            }
+        }
+        return 1;
+    }
+    return 0;
+}
 
 s32 func_800FE044(s32 amount, s32 type) {
     s32 oldHeartMax;
