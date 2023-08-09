@@ -258,21 +258,24 @@ u32 func_800FDE20(void) {
         g_Status.hp += D_800A2EC0[(s32)g_Status.level / 10];
         g_Status.hpMax += D_800A2EC0[(s32)g_Status.level / 10];
         g_Status.heartsMax += 2;
+        // Run again, in case we have enough EXP to level up twice
         func_800FDE20();
-        for(i=0; i < 4; i++){
-            //Flip a coin to decide if you will gain a stat here
+        for (i = 0; i < 4; i++) {
+            // Flip a coin to decide if you will gain a stat here
             statgain = rand() & 1;
             g_Status.statsBase[i] += statgain;
-            
+
             if (g_Status.statsBase[i] > 99) {
                 g_Status.statsBase[i] = 99;
                 statgain = 0;
             }
             statsGained += statgain;
-        } 
-        //If we gained less than 2 stats (got unlucky) give a mercy point to random stat
+        }
+        // If we gained less than 2 stats (got unlucky) give a mercy point to
+        // random stat
         if (statsGained < 2) {
-            //Note this is its own random event, so there's a chance to get +2 to one stat.
+            // Note this is its own random event, so there's a chance to get +2
+            // to one stat.
             i = rand() & 3;
             g_Status.statsBase[i]++;
             if (g_Status.statsBase[i] > 99) {
