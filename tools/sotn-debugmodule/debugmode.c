@@ -108,16 +108,17 @@ bool Update(void) {
     if (g_ShowDebugMessages) {
         PrintDefaultFont();
     }
-    if (g_ShowCollisionLayer && !skipFntOverride && !isDebugMenuVisible) {
-        if (g_GameState == Game_Play) {
-            DrawCollisionLayer();
+
+    if (!skipFntOverride && !isDebugMenuVisible) {
+        if (g_ShowCollisionLayer) {
+            if (g_GameState == Game_Play) {
+                DrawCollisionLayer();
+            }
+        } else if (g_ShowDrawCalls) {
+            ShowDrawCalls(g_ShowDrawCalls);
+        } else if (g_ShowHBlankInfo) {
+            ShowHBlankInfo();
         }
-    }
-    if (g_ShowDrawCalls != 0 && !skipFntOverride && !isDebugMenuVisible) {
-        ShowDrawCalls(g_ShowDrawCalls);
-    }
-    if (g_ShowHBlankInfo != 0 && !skipFntOverride && !isDebugMenuVisible) {
-        ShowHBlankInfo();
     }
 
     entityPaused = g_Hook ? !!g_Hook() : UpdateLogic();

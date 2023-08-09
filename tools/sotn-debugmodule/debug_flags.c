@@ -45,18 +45,24 @@ void SetShowCollisionLayer(bool isVisible) {
     g_ShowCollisionLayer = isVisible;
     if (isVisible) {
         g_ShowDebugMessages = false;
+        g_ShowDrawCalls = 0;
+        g_ShowHBlankInfo = false;
     }
 }
 void SetShowDrawCalls(int param) {
     g_ShowDrawCalls = param;
     if (param != 0) {
+        g_ShowCollisionLayer = false;
         g_ShowDebugMessages = false;
+        g_ShowHBlankInfo = false;
     }
 }
 void SetShowHBlankInfo(bool isVisible) {
     g_ShowHBlankInfo = isVisible;
     if (isVisible) {
+        g_ShowCollisionLayer = false;
         g_ShowDebugMessages = false;
+        g_ShowDrawCalls = 0;
     }
 }
 
