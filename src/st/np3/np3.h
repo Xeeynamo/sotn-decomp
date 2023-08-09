@@ -77,6 +77,9 @@ extern ObjInit2 D_80180C10[];
 extern u8 D_80180D98[];
 extern u8 D_80180DA0[];
 extern u16 D_80180DA8[];
+extern s16 D_80181098[][2];
+extern s16 D_801810A8[];
+extern SVECTOR D_801810B8[];
 extern u16 D_801810F8[];
 extern s32 g_TrapDoorFlag; // 0 = Closed, 1 = Open
 extern const u8 D_80181108[];
