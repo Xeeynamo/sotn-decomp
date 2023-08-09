@@ -171,10 +171,12 @@ void SetEntityPreview(int mode, u16 id, u16 params) {
         e->entityId = id;
         e->params = params;
         e->pfnUpdate = pfnUpdate;
-        e->zPriority = 0x7FFF;
+        e->zPriority = 0x1F0;
         e->posX.i.hi = g_SpawnX;
         e->posY.i.hi = g_SpawnY;
         g_CurrentEntity = e;
+        e->pfnUpdate(e); // runs three cycles to ensure we can preview
+        e->pfnUpdate(e); // some graphics from the entity
         e->pfnUpdate(e);
     }
 }
