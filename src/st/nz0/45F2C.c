@@ -7,7 +7,7 @@
 
 void func_801C5F2C(Entity* self) {
     if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
-        self->posX.val -= self->accelerationX;
+        self->posX.val -= self->velocityX;
     }
 
     if (!(func_801BD720(&D_801824C0, 3) & 2)) {
@@ -48,9 +48,9 @@ void EntitySkeleton(Entity* self) {
         AnimateEntity(D_801823DC, self);
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->accelerationX = -0x8000;
+            self->velocityX = FIX(-0.5);
         } else {
-            self->accelerationX = 0x8000;
+            self->velocityX = FIX(0.5);
         }
 
         if (GetDistanceToPlayerX() < 76) {
@@ -65,9 +65,9 @@ void EntitySkeleton(Entity* self) {
         AnimateEntity(D_801823EC, self);
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->accelerationX = -0x8000;
+            self->velocityX = FIX(-0.5);
         } else {
-            self->accelerationX = 0x8000;
+            self->velocityX = FIX(0.5);
         }
 
         if (GetDistanceToPlayerX() > 92) {
@@ -120,12 +120,12 @@ void EntitySkeleton(Entity* self) {
                 }
 
                 if (facing == 0) {
-                    self->accelerationX = -0x20000;
+                    self->velocityX = FIX(-2);
                 } else {
-                    self->accelerationX = 0x20000;
+                    self->velocityX = FIX(2);
                 }
 
-                self->accelerationY = -0x30000;
+                self->velocityY = FIX(-3);
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -162,8 +162,8 @@ void EntitySkeleton(Entity* self) {
                     newEntity->posX.i.hi += D_80182468[i];
                 }
                 newEntity->posY.i.hi += D_80182474[i];
-                newEntity->accelerationX = D_80182438[i];
-                newEntity->accelerationY = D_80182450[i];
+                newEntity->velocityX = D_80182438[i];
+                newEntity->velocityY = D_80182450[i];
             } else {
                 break;
             }
@@ -195,12 +195,12 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
     entity->animCurFrame = entity->params + 15;
 
     if (entity->facing != 0) {
-        entity->accelerationX = -entity->accelerationX;
+        entity->velocityX = -entity->velocityX;
     }
 }
 
 void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
-    s32 accelerationX;
+    s32 velocityX;
     u32 xDistanceToPlayer;
 
     if (entity->step) {
@@ -210,7 +210,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
         }
 
         entity->rotAngle += 0x80;
-        entity->accelerationY += 0x2400;
+        entity->velocityY += 0x2400;
         MoveEntity();
 
         if (entity->posY.i.hi > 240) {
@@ -218,19 +218,19 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
         }
     } else {
         InitializeEntity(D_80180CA0);
-        entity->posY.val -= 0x1000;
+        entity->posY.val -= FIX(0.0625);
         xDistanceToPlayer = GetDistanceToPlayerX();
         xDistanceToPlayer /= 32;
         xDistanceToPlayer = CLAMP_MAX(xDistanceToPlayer, 7);
-        accelerationX = D_80182488[xDistanceToPlayer];
+        velocityX = D_80182488[xDistanceToPlayer];
         xDistanceToPlayer = entity->facing;
 
         if (xDistanceToPlayer > 0) {
-            accelerationX = -accelerationX;
+            velocityX = -velocityX;
         }
 
-        entity->accelerationY = -0x48000;
-        entity->accelerationX = accelerationX;
+        entity->velocityY = FIX(-4.5);
+        entity->velocityX = velocityX;
         entity->unk19 = 4;
     }
 }

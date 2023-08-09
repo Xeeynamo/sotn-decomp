@@ -75,7 +75,8 @@ segments:
       - [0x2065C, tilelayout, D_801A065C]
       - [0x2085C, tilelayout, D_801A085C]
       - [0x20A5C, data]
-      - [0x305A4, rodata]
+      - [0x305A4, .rodata, 30958] # func_801B3C38
+      - [0x305B8, rodata]
       - [0x305E8, .rodata, 33FCC] # EntityBossRoomBlock
       - [0x305FC, .rodata, 33FCC] # EntitySlogra
       - [0x30618, rodata] # EntityGaibon .rodata, 33FCC
@@ -94,6 +95,8 @@ segments:
       - [0x30958, c]
       - [0x33FCC, c] # Slogra & Gaibon Boss
       - [0x36DE4, c]
+      - [0x394D4, c]
+      - [0x39908, c]
       - [0x3E30C, c]
       - [0x43708, c] # EntityBoneScimitar
       - [0x43F9C, c] # EntityAxeKnight

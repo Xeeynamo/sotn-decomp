@@ -7,7 +7,7 @@ void func_8015B348(void) {
         D_80097420[0] = 4;
         func_8015C93C(0x2000);
 
-        if (PLAYER.accelerationX == 0) {
+        if (PLAYER.velocityX == 0) {
             func_8015C920(&D_80155748);
             g_Player.D_80072F1A = 4;
             func_801606BC(g_CurrentEntity, 0x1D, 0);
@@ -39,7 +39,7 @@ void func_8015B348(void) {
         if ((D_801545A8) == 0) {
             func_8015C920(&D_801558B4);
             PLAYER.palette = 0x814E;
-            g_CurrentEntity->accelerationY = -0x10000;
+            g_CurrentEntity->velocityY = FIX(-1);
             func_801606BC(g_CurrentEntity, 0x16, 0);
             D_801545A8 = 0x30;
             g_api.PlaySfx(0x6E2);
@@ -51,7 +51,7 @@ void func_8015B348(void) {
     case 3:
         D_801545A8--;
         if ((D_801545A8) == 0) {
-            PLAYER.accelerationY = 0;
+            PLAYER.velocityY = 0;
             D_801545A8 = 0xC0;
             func_801606BC(g_CurrentEntity, 0x24, 0);
             func_801606BC(g_CurrentEntity, 0x20025, 0);

@@ -110,4 +110,40 @@ extern s32* DAT_060dc000;
 extern s32* DAT_06064690;
 extern s32* DAT_06066000;
 
+void func_06006FA8(void);
+int func_06018D88(void);
+void func_06033024();
+
+extern u8 DAT_060644c1;
+extern u8 DAT_060644dc;
+
+extern s32 DAT_060476a4;
+extern s32 DAT_060476a0;
+extern s32 DAT_06064354;
+extern s32 DAT_060644AC;
+
+struct Unk0600E050 {
+    u8 pad[0x4];
+    s16 unk4;
+    s16 pad6;
+    s16 unk8;
+    u8 pada[2];
+    s16 unkc;
+    s16 unke;
+};
+
+void func_0601B600();
+extern s32 DAT_06038a44;
+
+s32 func_06017FA4(s32 param_1, s32 param_2, s32 param_3);
+
+void func_060082E8(void);
+void func_0600841C(void);
+
+void func_0600AD98(void);
+void func_0600B254(void);
+
+extern s32 DAT_06064214;
+extern s8 DAT_060644C0;
+
 #endif

@@ -75,7 +75,7 @@ void HandleNowLoading(void) {
         } else {
             __builtin_memcpy(g_Status.saveName, "alucard ", sizeof("alucard "));
             g_DemoMode = Demo_None;
-            if (D_80098850 != 0) {
+            if (g_DebugPlayer != 0) {
                 if (g_pads[1].pressed & PAD_UP) {
                     __builtin_memcpy(
                         g_Status.saveName, "richter ", sizeof("richter "));
@@ -214,7 +214,7 @@ void HandleNowLoading(void) {
         break;
     case 10:
         if (g_DemoMode == Demo_None) {
-            func_800FF7B8(0);
+            InitStatsAndGear(0);
         }
         D_8003C908.D_8003C90C = -1;
         D_8003C908.D_8003C910 = -1;
@@ -227,11 +227,12 @@ void HandleNowLoading(void) {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_Weapon0;
-                var_s0 = D_800A4B04[g_Status.equipment[0]].weaponId;
+                var_s0 =
+                    D_800A4B04[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
                 if (var_s0 == 0xFF) {
                     var_s0 = 1;
                 }
-                if (g_Status.equipment[3] == 0x19) {
+                if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                     var_s0 = D_800A4B04[0xD8].weaponId;
                 }
                 D_8003C908.D_8003C90C = var_s0;
@@ -248,11 +249,11 @@ void HandleNowLoading(void) {
             pfnWeapon(D_800A4B04[D_8003C908.D_8003C90C].unk10);
             goto block_102;
         } else {
-            var_s0 = D_800A4B04[g_Status.equipment[0]].weaponId;
+            var_s0 = D_800A4B04[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
             }
-            if (g_Status.equipment[3] == 0x19) {
+            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 var_s0 = D_800A4B04[0xD8].weaponId;
             }
             if (LoadFileSim(var_s0, 7) < 0) {
@@ -261,11 +262,11 @@ void HandleNowLoading(void) {
             pfnWeapon = D_8017A000.func_8017A01C;
             D_8003C908.D_8003C90C = var_s0;
             pfnWeapon(D_800A4B04[D_8003C908.D_8003C90C].unk10);
-            var_s0 = D_800A4B04[g_Status.equipment[1]].weaponId;
+            var_s0 = D_800A4B04[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
             }
-            if (g_Status.equipment[3] == 0x19) {
+            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 var_s0 = D_800A4B04[0xD8].weaponId;
             }
             if (LoadFileSim(var_s0, 8) >= 0) {
@@ -281,11 +282,11 @@ void HandleNowLoading(void) {
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Weapon1;
-            var_s0 = D_800A4B04[g_Status.equipment[1]].weaponId;
+            var_s0 = D_800A4B04[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
             }
-            if (g_Status.equipment[3] == 0x19) {
+            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 var_s0 = D_800A4B04[0xD8].weaponId;
             }
             D_8003C908.D_8003C910 = var_s0;
@@ -304,7 +305,7 @@ void HandleNowLoading(void) {
             (LoadFileSim(D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {
             break;
         }
-        func_800FA7E8();
+        CheckWeaponCombo();
         g_GameStep++;
         break;
     case 14:
@@ -333,7 +334,7 @@ void HandleNowLoading(void) {
         break;
     case 16:
         func_800E5D30(var_s1, 0x40, 0x70, 1);
-        if (((s32)g_StageId) >= 0x35) {
+        if (((s32)g_StageId) >= STAGE_RNZ1) {
             D_8006C374 = g_StagesLba[g_StageId].unk28;
         } else {
             D_8006C374 =

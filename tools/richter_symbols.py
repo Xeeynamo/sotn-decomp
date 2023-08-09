@@ -11,15 +11,15 @@ if len(sys.argv) < 2:
 
 filename = sys.argv[1]
 
-start_address = 0x00028a00
-end_address = 0x0002f000
+start_address = 0x00028A00
+end_address = 0x0002F000
 
 # Read the binary file within the specified address range
-with open(filename, 'rb') as file:
+with open(filename, "rb") as file:
     file.seek(start_address)
     data = file.read(end_address - start_address)
 
-lines = data.decode().split('\r\n')
+lines = data.decode().split("\r\n")
 
 # first and last lines are incomplete:
 #                       60cb664 _parts_p_circle

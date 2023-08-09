@@ -17,7 +17,7 @@
             ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
             "\t.set reorder\n"                                                 \
             "\t.set at\n"                                                      \
-            "\t.end\t" #NAME);
+            "\t.end\t" #NAME)
 #else
 #define INCLUDE_ASM(FOLDER, NAME)                                              \
     __asm__(".section .text\n"                                                 \

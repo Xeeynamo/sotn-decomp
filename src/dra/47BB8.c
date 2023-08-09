@@ -1,12 +1,12 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 s32 DecompressData(u8* dst, u8* src);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7BB8);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E7BB8);
 
 void func_800E7D08(void) {
     s32 i;
@@ -19,50 +19,37 @@ void func_800E7D08(void) {
     D_800A04EC = 1;
 }
 
-#ifndef NON_MATCHING
-void LoadStageTileset(u8* pTilesetData, s32 y);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", LoadStageTileset);
-#else
 void LoadStageTileset(u8* pTilesetData, s32 y) {
-    int new_var;
     RECT rect;
-    u16* var_s2;
+    u8* pTilesetDataSrc;
     s32 i;
-    s32 new_var2;
 
-    i = 0;
-    new_var2 = y;
-    new_var = y + 0x80;
-    var_s2 = D_800AC958;
     rect.w = 0x20;
     rect.h = 0x80;
-    for (; i < 0x20; i++) {
-        rect.x = *var_s2;
+    for (i = 0; i < 0x20; i++) {
+        pTilesetDataSrc = pTilesetData + 0x2000 * i;
+        rect.x = D_800AC958[i];
         if (i & 2) {
-            rect.y = new_var;
+            rect.y = y + 0x80;
         } else {
-            rect.y = new_var2;
-        }
-        LoadImage(&rect, pTilesetData);
-        while (DrawSync(1)) {
-            ;
+            rect.y = y;
         }
 
-        var_s2++;
-        pTilesetData += 0x2000;
+        LoadImage(&rect, pTilesetDataSrc);
+        while (DrawSync(1)) {
+        }
     }
 }
-#endif
 
 // Not matching due to case 2/11
 #ifndef NON_EQUIVALENT
 s32 func_800E7E08(u32);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E7E08);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E7E08);
 #else
 extern u32 D_8006EBCC;
 extern u32 D_80070BCC;
 extern u32 D_800A04CC;
-extern s32 D_800BD1C8[];
+extern s32 g_VabAddrs[];
 extern const char aPqes_1[]; // pQES
 extern RECT rect;
 extern s32* g_StageOverlay;
@@ -127,26 +114,26 @@ s32 func_800E7E08(u32 arg0) {
         DrawSync(0);
         break;
     case 4:
-        while (func_800219E0(0) != 1)
+        while (SsVabTransCompleted(SS_IMEDIATE) != 1)
             ;
-        if (func_80021350(
-                D_8013644C->addr, D_800A0248, D_800BD1C8[D_800A0248]) < 0) {
+        if (SsVabOpenHeadSticky(
+                D_8013644C->addr, D_800A0248, g_VabAddrs[D_800A0248]) < 0) {
             return -1;
         }
         break;
     case 5:
-        if (func_80021880((s32*)0x80280000, D_8013644C->size, D_800A0248) ==
-            -1) {
+        if (SsVabTransBodyPartly(
+                (s32*)0x80280000, D_8013644C->size, D_800A0248) == -1) {
             return -1;
         }
-        while (func_800219E0(0) != 1)
+        while (SsVabTransCompleted(SS_IMEDIATE) != 1)
             ;
         break;
     case 7:
-        if (g_StageId == 2) {
+        if (g_StageId == STAGE_LIB) {
             func_80131EBC(&aPqes_1, 0x202);
         }
-        if (g_StageId == 6) {
+        if (g_StageId == STAGE_DAI) {
             func_80131EBC(&aPqes_1, 0x204);
         }
         break;
@@ -495,7 +482,7 @@ void func_800E92F4(void) {
     D_8013B3D0 = 0;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E930C);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E930C);
 
 extern Unkstruct_8013B15C D_8013B15C[];
 
@@ -505,7 +492,7 @@ s32 func_800E9508(s32 arg0) {
     return temp;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9530);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E9530);
 
 u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
 
@@ -589,7 +576,7 @@ s32 func_800E9804(s32 arg0) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800E9880);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E9880);
 
 s32 MemcardFormat(s32 slot, s32 block) {
     char savePath[0x8];
@@ -634,7 +621,7 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
 }
 
 void StoreSaveData(SaveData* save, s32 arg1, s32 memcardIcon);
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", StoreSaveData);
+INCLUDE_ASM("dra/nonmatchings/47BB8", StoreSaveData);
 
 s32 LoadSaveData(SaveData* save) {
     s32 i;
@@ -685,10 +672,8 @@ void func_800EA48C(char* dstname, s32 saveSlot) {
     dstname[0x11] += saveSlot % 10;
 }
 
-extern Unkstruct_8006C3CC D_8006C3CC[];
-
 void func_800EA538(s32 arg0) {
-    Unkstruct_8006C3CC* var_v0;
+    Unkstruct_8006C3C4* var_v0;
     s32 temp;
     s32 v1;
     s32 i;
@@ -699,8 +684,8 @@ void func_800EA538(s32 arg0) {
 
     if (arg0 != 0) {
         for (i = 0; i < 32; i++) {
-            if (v1 & D_8006C3CC[i].unk0) {
-                D_8006C3CC[i].unk0 = 0;
+            if (v1 & D_8006C3C4[i].unk8) {
+                D_8006C3C4[i].unk8 = 0;
             }
         }
         return;
@@ -722,77 +707,65 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[2] = arg3;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA5E4);
-#else
-extern s32 D_8003C78C;
-extern s32* D_800A3BB8[];
-
-void func_800EA5E4(s32 arg0) {
-    Unkstruct_8006C3CC* var_t0;
-    s32 temp_a0;
-    s32 temp_v0;
-    s32 var_v1;
-    s32 var_v1_2;
-    u32 temp_a1;
-    u32 temp_a2;
-    u32 var_v1_3;
-    u8 temp_v1_2;
-    u8* var_a0_2;
-    Unkstruct_800EA5E4* var_a0;
-    u8* var_v0;
+s32 func_800EA5E4(u32 arg0) {
+    u16 temp_v0;
+    s32 i;
+    s32 j;
+    u32 ones_start;
+    u32 ones_end;
+    UnkStructClut* clut;
+    Unkstruct_8006C3C4* unkStruct;
 
     temp_v0 = arg0 & 0xFF00;
-    temp_a0 = arg0 & 0xFF;
+    arg0 = arg0 & 0xFF;
+
     if (temp_v0 & 0x8000) {
-        var_a0 = g_api.o.cluts[temp_a0];
+        clut = g_api.o.cluts[arg0];
     } else {
-        var_a0 = D_800A3BB8[temp_a0];
+        clut = D_800A3BB8[arg0];
     }
-    if (var_a0->unk0 == 0 || var_a0->unk0 == -1) {
-        return;
+
+    if (clut->unk0 == 0) {
+        return 1;
     }
-    var_v1 = 0;
-    var_t0 = D_8006C3C4;
-    for (; var_v1 < 0x20; var_t0++, var_v1++) {
-        if (var_t0->unk8 != 0)
+    if (clut->unk0 == -1) {
+        return 1;
+    }
+    unkStruct = &D_8006C3C4;
+    for (j = 0; j < LEN(D_8006C3C4); unkStruct++) {
+        j++;
+        if (unkStruct->unk8 != 0) {
             continue;
-        var_t0->unk0 = var_a0->unk0;
-        var_t0->unk4 = (void*)(var_a0 + 0xC);
-        var_t0->unkA = 0;
-        var_t0->unkC = 0;
-        var_t0->unk8 = temp_v0 | var_a0->unk0;
+        }
+        unkStruct->struct1 = clut;
+        unkStruct->struct2 = &clut->unkC;
+        unkStruct->unk8 = (temp_v0 | clut->unk0);
+        unkStruct->unkA = 0;
+        unkStruct->unkC = 0;
 
-        temp_a1 = var_a0->unk4;
-        var_v1_2 = 0x2F;
-        var_a0_2 = &var_t0->unk2F;
-        temp_a2 = (u32)((temp_a1 + var_a0->unk8) - 1) >> 8;
-        do {
-            var_a0_2[0x10] = 0;
-            var_v1_2 -= 1;
-            var_a0_2 -= 1;
-        } while (var_v1_2 >= 0);
-
-        var_v1_3 = temp_a1 >> 8;
-        var_v0 = var_t0 + var_v1_3;
-        while (temp_a2 >= var_v1_3) {
-            var_v0[0x10] = 1;
-            var_v1_3++;
-            var_v0 = var_t0 + var_v1_3;
+        // Set unkStruct's array to all zeros, except within this range
+        ones_start = clut->unk4;
+        ones_end = (clut->unk4 + clut->unk8) - 1;
+        ones_start >>= 8;
+        ones_end >>= 8;
+        for (i = 0; i < LEN(unkStruct->unkArray); i++) {
+            unkStruct->unkArray[i] = 0;
+        }
+        for (i = ones_start; ones_end >= i; i++) {
+            unkStruct->unkArray[i] = 1;
         }
 
-        temp_v1_2 = var_t0->unk8;
-        if (temp_v1_2 == 2 || temp_v1_2 == 0x10) {
-            var_t0->unkE = 0x1F;
+        if ((u8)unkStruct->unk8 == 2 || (u8)unkStruct->unk8 == 16) {
+            unkStruct->unkE = 0x1F;
         }
-        break;
+        return 0;
     }
+    return -1;
 }
-#endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA720);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA720);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EA7CC);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EA7CC);
 
 s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(4);
@@ -913,7 +886,7 @@ u32 DecompressReadNibble(void) {
 
 // reg swap + fake stuff
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", DecompressData);
+INCLUDE_ASM("dra/nonmatchings/47BB8", DecompressData);
 #else
 s32 DecompressData(u8* dst, u8* src) {
     u32 buf[8];
@@ -1018,7 +991,7 @@ s32 DecompressData(u8* dst, u8* src) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB314);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EB314);
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
@@ -1080,7 +1053,7 @@ bool func_800EB720(void) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800EB758);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800EB758);
 
 void ResetEntityArray(void) {
     Entity* entity;
@@ -1098,11 +1071,11 @@ void ResetEntityArray(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderEntities);
+INCLUDE_ASM("dra/nonmatchings/47BB8", RenderEntities);
 
 // The loop at the end is weird, the rest is matching
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", func_800ECBF8);
+INCLUDE_ASM("dra/nonmatchings/47BB8", func_800ECBF8);
 #else
 typedef struct {
     s16 unk0, unk2;
@@ -1221,7 +1194,7 @@ void HideAllBackgroundLayers(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderTilemap);
+INCLUDE_ASM("dra/nonmatchings/47BB8", RenderTilemap);
 
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708.flags = 0;
@@ -1476,5 +1449,4 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/47BB8", RenderPrimitives);
-#endif
+INCLUDE_ASM("dra/nonmatchings/47BB8", RenderPrimitives);

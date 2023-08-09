@@ -1,8 +1,8 @@
+#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_80113AAC(void) {
     s32 var_s1 = 0;
@@ -30,7 +30,7 @@ void func_80113AAC(void) {
             }
         } else if (g_Player.unk4A > 28) {
             PLAYER.step_s = 1;
-            PLAYER.accelerationY = -0x60000;
+            PLAYER.velocityY = -0x60000;
             func_8010DA48(0x1B);
         }
         break;
@@ -40,8 +40,8 @@ void func_80113AAC(void) {
             PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
-            PLAYER.accelerationY += 0x6000;
-            if (PLAYER.accelerationY > 0x8000) {
+            PLAYER.velocityY += 0x6000;
+            if (PLAYER.velocityY > 0x8000) {
                 var_s1 = 1;
             }
         }
@@ -67,7 +67,7 @@ void func_80113AAC(void) {
         break;
 
     case 4:
-        PLAYER.accelerationY += 0x1000;
+        PLAYER.velocityY += 0x1000;
         if (PLAYER.animFrameDuration < 0) {
             var_s1 = 2;
         }
@@ -155,8 +155,8 @@ void func_80113F7C(void) {
     posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
 
     if (ABS(posX) < 16) {
-        if (entity->accelerationX != 0) {
-            if (entity->accelerationX >= 0) {
+        if (entity->velocityX != 0) {
+            if (entity->velocityX >= 0) {
                 PLAYER.entityRoomIndex = 1;
                 return;
             }
@@ -176,16 +176,16 @@ block_13:
 }
 
 void AlucardHandleDamage(DamageParam* param, s16 arg1, s16 arg2);
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", AlucardHandleDamage);
+INCLUDE_ASM("dra/nonmatchings/73AAC", AlucardHandleDamage);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80114DF4);
+INCLUDE_ASM("dra/nonmatchings/73AAC", func_80114DF4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/73AAC", func_80115394);
+INCLUDE_ASM("dra/nonmatchings/73AAC", func_80115394);
 
 void func_80115BB0(void) {
     PLAYER.unk19 = 4;
-    PLAYER.accelerationY = 0;
-    PLAYER.accelerationX = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
     PLAYER.animFrameDuration = 4;
 
     if (D_80097420[0] == 0) {
@@ -235,4 +235,3 @@ void func_80115C50(void) {
         }
     }
 }
-#endif

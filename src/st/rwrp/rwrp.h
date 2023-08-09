@@ -24,4 +24,7 @@ extern u16 D_80181110[];
 extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
 
+extern u16 UNK_Update0[];
+extern u16 UNK_Invincibility0[];
+
 #endif

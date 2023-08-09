@@ -13,6 +13,7 @@ def get_root_dir():
             if os.path.isdir(dir) and dir == "src":
                 return os.path.normpath(base_dir)
         return search_root_dir(os.path.join(base_dir, ".."))
+
     script_dir = os.path.dirname(os.path.realpath(__file__))
     return search_root_dir(base_dir=script_dir)
 
@@ -45,18 +46,19 @@ def import_c_file(src_file) -> str:
 
     with tempfile.NamedTemporaryFile(suffix=".c") as tmp:
         stock_macros = subprocess.check_output(
-            ["gcc", "-E", "-P", "-dM", tmp.name], cwd=root_dir, encoding="utf-8")
+            ["gcc", "-E", "-P", "-dM", tmp.name], cwd=root_dir, encoding="utf-8"
+        )
 
     out_text = ""
     try:
-        out_text += subprocess.check_output(cpp_command,
-                                            cwd=root_dir, encoding="utf-8")
-        out_text += subprocess.check_output(cpp_command2,
-                                            cwd=root_dir, encoding="utf-8")
+        out_text += subprocess.check_output(cpp_command, cwd=root_dir, encoding="utf-8")
+        out_text += subprocess.check_output(
+            cpp_command2, cwd=root_dir, encoding="utf-8"
+        )
     except subprocess.CalledProcessError:
         print(
             "Failed to preprocess input file, when running command:\n"
-            + ' '.join(cpp_command),
+            + " ".join(cpp_command),
             file=sys.stderr,
         )
         sys.exit(1)

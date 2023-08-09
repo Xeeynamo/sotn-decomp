@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-#Note: This file was created by bismurphy. It is effectively the same as
-#equipment.py, just with the current best-known state of the accessory
-#struct subbed into the two locations where it comes up.
-#Longer term, would be cool if equipment and accessories could be parsed
-#by the same Python script, rather than tons of duplicate code.
+# Note: This file was created by bismurphy. It is effectively the same as
+# equipment.py, just with the current best-known state of the accessory
+# struct subbed into the two locations where it comes up.
+# Longer term, would be cool if equipment and accessories could be parsed
+# by the same Python script, rather than tons of duplicate code.
 import json
 import os
 import sys
@@ -41,7 +41,7 @@ def serialize_accessory(content: str) -> bytearray:
         serialized_data += utils.from_u32(item["unk1C"])
 
     expected_data_size = item_count * item_size
-    assert (len(serialized_data) == expected_data_size)
+    assert len(serialized_data) == expected_data_size
 
     return serialized_data
 
@@ -60,33 +60,39 @@ class PSXSegAccessory(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = self.parse_accessory(
-            rom_bytes[self.rom_start:self.rom_end], rom_bytes)
+        data = self.parse_accessory(rom_bytes[self.rom_start : self.rom_end], rom_bytes)
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
     def parse_accessory(self, data: bytearray, rom: bytearray) -> list:
         def get_ptr_data(src_ptr_data):
-            return rom[utils.to_u32(src_ptr_data) - (self.vram_start - self.rom_start):]
+            return rom[
+                utils.to_u32(src_ptr_data) - (self.vram_start - self.rom_start) :
+            ]
 
         count = int(len(data) / item_size)
         expected_data_size = count * item_size
         if len(data) != expected_data_size:
             log.write(
-                f"data for '{self.name}' is {expected_data_size - len(data)} too long. Data might look incorrect.", status="warn")
+                f"data for '{self.name}' is {expected_data_size - len(data)} too long. Data might look incorrect.",
+                status="warn",
+            )
 
         items = []
         for i in range(0, count):
-            item_data = data[i * item_size:][:item_size]
+            item_data = data[i * item_size :][:item_size]
             item = {
                 # debugging stuff
                 "id": i,
                 "id_hex": hex(i)[2:].upper(),
                 "ram_addr": hex(self.vram_start + i * item_size)[2:].upper(),
-                "name_resolved": utils.sotn_menu_name_to_str(get_ptr_data(item_data[0x00:])),
-                "desc_resolved": utils.sotn_menu_desc_to_str(get_ptr_data(item_data[0x04:])),
+                "name_resolved": utils.sotn_menu_name_to_str(
+                    get_ptr_data(item_data[0x00:])
+                ),
+                "desc_resolved": utils.sotn_menu_desc_to_str(
+                    get_ptr_data(item_data[0x04:])
+                ),
                 # debugging stuff ends
-
                 "name_addr": utils.to_ptr_str(item_data[0x00:]),
                 "desc_addr": utils.to_ptr_str(item_data[0x04:]),
                 "attBonus": utils.to_s16(item_data[0x08:]),

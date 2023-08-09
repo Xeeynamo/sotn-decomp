@@ -5,6 +5,7 @@
  */
 
 #include "ric.h"
+#include "player.h"
 
 void func_80156C60(Entity* entity) {
     s32 i;
@@ -21,7 +22,41 @@ void func_80156C60(Entity* entity) {
         *ptr++ = 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156CCC);
+TeleportCheck GetTeleportToOtherCastle(void) {
+    s32 xCheckTop;
+    s32 yCheckTop;
+    s32 xCheckRTop;
+    s32 yCheckRTop;
+
+    // Is player in the pose when pressing UP?
+    if (PLAYER.step != 0 || PLAYER.step_s != 1) {
+        return TELEPORT_CHECK_NONE;
+    }
+
+    // Check for X/Y boundaries in TOP
+    if (g_StageId == STAGE_TOP) {
+        xCheckTop = (g_CurrentRoom.left << 8) + playerX - 8000;
+        if (ABS(xCheckTop) < 4) {
+            yCheckTop = (g_CurrentRoom.top << 8) + playerY - 2127;
+            if (ABS(yCheckTop) < 4) {
+                return TELEPORT_CHECK_TO_RTOP;
+            }
+        }
+    }
+
+    // Check for X/Y boundaries in RTOP
+    if (g_StageId == STAGE_RTOP) {
+        xCheckRTop = (g_CurrentRoom.left << 8) + playerX - 8384;
+        if (ABS(xCheckRTop) < 4) {
+            yCheckRTop = (g_CurrentRoom.top << 8) + playerY;
+            if (ABS(yCheckRTop) - 14407 < 4) {
+                return TELEPORT_CHECK_TO_TOP;
+            }
+        }
+    }
+
+    return TELEPORT_CHECK_NONE;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156DE4);
 
@@ -77,8 +112,8 @@ void func_80158B04(s32 arg0) {
     }
 
     if (arg0 & 2) {
-        PLAYER.accelerationX = 0;
-        PLAYER.accelerationY = 0;
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
     }
 }
 
@@ -207,7 +242,7 @@ void func_80158FA4(void) {
                     func_801606BC(g_CurrentEntity, 0, 0);
                 }
             } else {
-                PLAYER.accelerationX = 0;
+                PLAYER.velocityX = 0;
             }
         } else if (PLAYER.step_s == 0) {
             func_8015CA84(0x24000);
@@ -263,8 +298,8 @@ void func_80159C04(void) {
     temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
 
     if (ABS(temp_v0) < 16) {
-        if (entity->accelerationX != 0) {
-            if (entity->accelerationX < 0) {
+        if (entity->velocityX != 0) {
+            if (entity->velocityX < 0) {
                 PLAYER.entityRoomIndex = 0;
                 return;
             } else {
@@ -290,9 +325,9 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A9B0);
 
 void func_8015AFE0(void) {
     if (PLAYER.step_s == 0) {
-        PLAYER.accelerationY += 0x3800;
-        if (PLAYER.accelerationY > 0) {
-            PLAYER.accelerationY = 0;
+        PLAYER.velocityY += 0x3800;
+        if (PLAYER.velocityY > 0) {
+            PLAYER.velocityY = 0;
             PLAYER.step_s = 1;
         }
     } else if (g_Player.unk4E != 0) {
@@ -302,7 +337,7 @@ void func_8015AFE0(void) {
         g_Player.unk44 = 0;
     }
     if (g_Player.unk72 != 0) {
-        PLAYER.accelerationY = 0;
+        PLAYER.velocityY = 0;
     }
 }
 

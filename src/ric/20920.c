@@ -7,28 +7,28 @@ void func_8015C920(AnimationFrame* unk0) {
 }
 
 void func_8015C93C(s32 speed) {
-    if (g_CurrentEntity->accelerationX < 0) {
-        g_CurrentEntity->accelerationX += speed;
-        if (g_CurrentEntity->accelerationX > 0) {
-            g_CurrentEntity->accelerationX = 0;
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += speed;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
         }
     } else {
-        g_CurrentEntity->accelerationX -= speed;
-        if (g_CurrentEntity->accelerationX < 0)
-            g_CurrentEntity->accelerationX = 0;
+        g_CurrentEntity->velocityX -= speed;
+        if (g_CurrentEntity->velocityX < 0)
+            g_CurrentEntity->velocityX = 0;
     }
 }
 
 void func_8015C984(s32 speed) {
-    if (g_CurrentEntity->accelerationY < 0) {
-        g_CurrentEntity->accelerationY += speed;
-        if (g_CurrentEntity->accelerationY > 0) {
-            g_CurrentEntity->accelerationY = 0;
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += speed;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
         }
     } else {
-        g_CurrentEntity->accelerationY -= speed;
-        if (g_CurrentEntity->accelerationY < 0) {
-            g_CurrentEntity->accelerationY = 0;
+        g_CurrentEntity->velocityY -= speed;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
         }
     }
 }
@@ -62,13 +62,13 @@ s32 func_8015C9CC(void) {
 void func_8015CA84(s32 speed) {
     if (g_CurrentEntity->facing == 1)
         speed = -speed;
-    g_CurrentEntity->accelerationX = speed;
+    g_CurrentEntity->velocityX = speed;
 }
 
 void func_8015CAAC(s32 speed) {
     if (PLAYER.entityRoomIndex == 1)
         speed = -speed;
-    PLAYER.accelerationX = speed;
+    PLAYER.velocityX = speed;
 }
 
 void func_8015CAD4(s32 arg0, s16 arg1) {
@@ -128,11 +128,11 @@ void func_8015CC70(s16 arg0) {
     }
 }
 
-void func_8015CCC8(s32 arg0, s32 accelerationX) {
+void func_8015CCC8(s32 arg0, s32 velocityX) {
     SetPlayerStep(2);
     func_8015C920(&D_801554C0);
-    PLAYER.accelerationX = accelerationX;
-    PLAYER.accelerationY = 0;
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
     if (arg0 == 1) {
         PLAYER.unk4C = &D_801554B0;
         PLAYER.step_s = 4;
@@ -147,9 +147,9 @@ void func_8015CCC8(s32 arg0, s32 accelerationX) {
     }
 }
 
-void func_8015CD98(s32 accelerationX) {
-    PLAYER.accelerationX = accelerationX;
-    PLAYER.accelerationY = 0;
+void func_8015CD98(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
     g_Player.unk44 = 0;
     SetPlayerStep(0);
     func_8015C920(&D_801553BC);
@@ -168,7 +168,7 @@ void func_8015CDE0(s32 arg0) {
     SetPlayerStep(1);
     func_8015C920(&D_80155488);
     func_8015CA84(0x14000);
-    PLAYER.accelerationY = 0;
+    PLAYER.velocityY = 0;
 }
 
 void func_8015CE7C(void) {
@@ -180,7 +180,7 @@ void func_8015CE7C(void) {
         func_8015C920(&D_80155670);
         func_8015CA84(0x24000);
         g_Player.D_80072F16 = 0x28;
-        PLAYER.accelerationY = 0;
+        PLAYER.velocityY = 0;
         func_801606BC(g_CurrentEntity, 0x50001, 0);
     }
 }
@@ -190,7 +190,7 @@ void func_8015CF08(void) {
      * TODO: labels are !FAKE
      */
     if ((g_Player.unk50 != 0x19) && (g_Player.unk50 != 0x17)) {
-        PLAYER.accelerationX = 0;
+        PLAYER.velocityX = 0;
     }
     if (g_Player.unk50 != 1) {
         if (g_Player.unk50 != 0x19) {
@@ -205,7 +205,7 @@ block_6:
         g_Player.unk44 = 0x10;
     }
     SetPlayerStep(3);
-    PLAYER.accelerationY = 0x20000;
+    PLAYER.velocityY = 0x20000;
     g_Player.D_80072F0A = 8;
     g_Player.D_80072F0C = 8;
     g_Player.D_80072F02 = 0;
@@ -215,7 +215,7 @@ block_6:
         g_Player.D_80072F0A = 0;
         PLAYER.animFrameIdx = 2;
         PLAYER.animFrameDuration = 0x10;
-        PLAYER.accelerationX /= 2;
+        PLAYER.velocityX /= 2;
     }
 }
 
@@ -239,7 +239,7 @@ void func_8015D020(void) {
     } else {
         func_8015C920(&D_801554F0);
         temp = 4;
-        PLAYER.accelerationX = 0;
+        PLAYER.velocityX = 0;
     block_8:
         g_Player.unk44 = temp;
     }
@@ -247,17 +247,17 @@ void func_8015D020(void) {
     SetPlayerStep(4);
 
     if (D_80154570 != 0) {
-        PLAYER.accelerationY = -0x4B000;
+        PLAYER.velocityY = -0x4B000;
     } else {
-        PLAYER.accelerationY = -0x57000;
+        PLAYER.velocityY = -0x57000;
     }
 }
 
 void func_8015D120(void) {
     SetPlayerStep(8);
-    PLAYER.accelerationX = 0;
+    PLAYER.velocityX = 0;
     func_8015CA84(0x14000);
-    PLAYER.accelerationY = -0x78000;
+    PLAYER.velocityY = -0x78000;
     g_Player.pl_high_jump_timer = 0;
     func_8015C920(&D_8015579C);
     func_8015CC28();
@@ -265,7 +265,7 @@ void func_8015D120(void) {
     g_api.PlaySfx(0x6FB);
     g_Player.D_80072F18 = 4;
     if (g_Player.unk72 != 0) {
-        PLAYER.accelerationY = 0;
+        PLAYER.velocityY = 0;
     }
 }
 

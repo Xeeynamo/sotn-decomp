@@ -27,9 +27,7 @@ void ChangePlayer(int param) {
         break;
     }
 }
-void SetNoClip(int param) {
-    D_80098850 = param; // TODO merge: rename g_DebugPlayer
-}
+void SetNoClip(int param) { g_DebugPlayer = param; }
 void SetFrameByFrame(bool isEnabled) { g_FrameByFrame = isEnabled; }
 void SetShowHitboxes(int param) {
     *g_DraDebugHitboxViewMode = param;
@@ -99,7 +97,7 @@ void UpdateDebugFlagsPlayer(void) {
              lba->gfxName);
     FntPrint(
         "Player: %s\n", g_DebugFlagsItems[1].param ? "Richter" : "Alucard");
-    FntPrint("No clip: %s\n", D_80098850 ? "on" : "off");
+    FntPrint("No clip: %s\n", g_DebugPlayer ? "on" : "off");
     FntPrint("Frame by frame: %s  (L1+L2)\n", g_FrameByFrame ? "on" : "off");
     FntPrint("Show hitboxes: %s\n", *g_DraDebugHitboxViewMode ? "on" : "off");
     FntPrint("Show debug messages: %s\n", g_ShowDebugMessages ? "on" : "off");

@@ -29,7 +29,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0x3B5F8, rodata] # jtbl_800DB5F8
+      - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
       - [0x3B808, .rodata, 46358]
@@ -37,7 +37,7 @@ segments:
       - [0x3B938, rodata]
       - [0x3BCF0, rodata] # jtbl_800DBCF0
       - [0x3BD08, rodata] # jtbl_800DBD08
-      - [0x3BD60, rodata, 47BB8]
+      - [0x3BD60, .rodata, 47BB8]
       - [0x3BE60, rodata]
       - [0x3BE78, rodata] # jtbl_800DBE78
       - [0x3BE90, rodata] # jtbl_800DBE90
@@ -64,19 +64,16 @@ segments:
       - [0x3C7C8, rodata] # jtbl_800DC7C8
       - [0x3CBE8, rodata] # jtbl_800DCBE8
       - [0x3CC00, rodata] # jtbl_800DCC00
-      - [0x3CC18, rodata] # jtbl_800DCC18
-      - [0x3CC30, rodata] # jtbl_800DCC30
-      - [0x3CC48, rodata] # jtbl_800DCC48
+      - [0x3CC18, .rodata, 5D6C4]
       - [0x3CC60, rodata]
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
       - [0x3CC98, rodata] # jtbl_800DCC98
-      - [0x3CCC0, rodata] # jtbl_800DCCC0
+      - [0x3CCC0, .rodata, 62D70]
       - [0x3CCDC, rodata]
       - [0x3CED4, rodata] # jtbl_800DCED4
       - [0x3CEF0, rodata]
-      - [0x40C74, rodata] # jtbl_800E0C74
-      - [0x40C90, rodata]
-      - [0x40D14, rodata] # jtbl_800E0D14
+      - [0x40C74, .rodata, cd]
+      - [0x40D64, rodata] # jtbl_800E0D64
       - [0x40D64, rodata] # jtbl_800E0D64
       - [0x40DA4, rodata] # jtbl_800E0DA4
       - [0x40DE4, rodata] # jtbl_800E0DE4
@@ -94,13 +91,13 @@ segments:
       - [0x4127C, rodata] # jtbl_800E127C
       - [0x4129C, rodata] # jtbl_800E129C
       - [0x412BC, rodata]
-      - [0x412DC, rodata] # jtbl_800E12DC
+      - [0x412DC, .rodata, 71830]
       - [0x4131C, rodata]
       - [0x4132C, rodata] # jtbl_800E132C
-      - [0x414A4, rodata] # jtbl_800E14A4
+      - [0x414A4, .rodata, 72BB0] # jtbl_800E14A4
       - [0x4166C, rodata] # jtbl_800E166C
       - [0x417E4, rodata] # jtbl_800E17E4
-      - [0x417FC, rodata] # jtbl_800E17FC
+      - [0x417FC, .rodata, 73AAC]
       - [0x41810, rodata]
       - [0x41824, rodata] # jtbl_800E1824
       - [0x41864, rodata] # jtbl_800E1864
@@ -153,28 +150,29 @@ segments:
       - [0x41F90, rodata] # jtbl_800E1F90
       - [0x41FA8, rodata] # jtbl_800E1FA8
       - [0x41FD0, rodata] # jtbl_800E1FD0
-      - [0x42270, rodata] # jtbl_800E2270
-      - [0x422B4, c, 42398_hd]
+      - [0x42270, .rodata, 953A0]
+      - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
       - [0x458E4, c, gameover]
       - [0x46A0C, c, 46358]
       - [0x47688, c, 46FD4]
-      - [0x48250, c, 47BB8_hd]
+      - [0x48250, c, 47BB8]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
       - [0x52EE4, c, 52860]
-      - [0x53010, c, 5298C_hd]
-      - [0x5D678, c, 5D6C4_hd]
+      - [0x53010, c, 5298C]
+      - [0x5D678, c, 5D6C4]
       - [0x62654, c, 627C4]
-      - [0x62C00, c, 62D70_hd]
-      - [0x67200, c, cd_hd]
-      - [0x69100, c, 692E8_hd]
-      - [0x71574, c, 71830_hd]
-      - [0x7379C, c, 73AAC_hd]
+      - [0x62C00, c, 62D70]
+      - [0x67200, c, cd]
+      - [0x69100, c, 692E8]
+      - [0x71574, c, 71830]
+      - [0x7291C, c, 72BB0]
+      - [0x7379C, c, 73AAC]
       - [0x75A90, c, 75DA0]
-      - [0x75C44, c, 75F54_hd]
-      - [0x94F7C, c, 953A0_hd]
+      - [0x75C44, c, 75F54]
+      - [0x94F7C, c, 953A0]
       - [0x95E88, sbss]
   - name: dra_data
     type: data

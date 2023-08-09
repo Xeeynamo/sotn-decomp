@@ -62,6 +62,7 @@ segments:
       - [0xD874, rodata]
       - [0xD884, rodata]
       - [0xD8C8, c]
+      - [0xE964, c]
       - [0x139E0, c]
       - [0x197D8, data]
   - [0x19E94]

@@ -245,6 +245,42 @@ typedef struct {
     /* 0x8E */ s16 unk8E;
 } ET_StageTitleCard;
 
+typedef struct ET_Succubus {
+    /* 0x7C */ char pad_7C[0x4];
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ u8 facing;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 nextAttack;
+    /* 0x87 */ u8 unk87;
+    /* 0x88 */ u16 nextStep;
+    /* 0x8A */ char pad_8A[0x4];
+    /* 0x8E */ s16 yOffset;
+    /* 0x90 */ char pad_90[0xC];
+    /* 0x9C */ struct Entity* real;
+    /* 0xA0 */ s16 clonePosX;
+    /* 0xA2 */ s16 unkA2;
+} ET_Succubus;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ char pad_7E[2];
+    /* 0x80 */ s32 unk80;
+} ET_RoomTransition2;
+
+typedef struct {
+    /* 0x7C */ u8 pad0[0x4];
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u8 pad86[2];
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+} ET_801B3C38;
+
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+} ET_801BCC4C;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -258,6 +294,10 @@ typedef union {
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
+    /* 0x7C */ ET_Succubus succubus;
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
+    /* 0x7C */ ET_RoomTransition2 roomTransition2;
+    /* 0x7C */ ET_801B3C38 et38;
+    /* 0x7C */ ET_801BCC4C et_801BCC4C;
     /* 0x7C */ char stub[0x40];
 } Ext;

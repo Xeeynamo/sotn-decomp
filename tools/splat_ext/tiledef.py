@@ -43,7 +43,7 @@ class PSXSegTiledef(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = self.parse_tiledef(rom_bytes[self.rom_start:self.rom_end])
+        data = self.parse_tiledef(rom_bytes[self.rom_start : self.rom_end])
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
@@ -57,6 +57,7 @@ class PSXSegTiledef(N64Segment):
 
 
 if __name__ == "__main__":
+
     def get_file_name(full_path):
         file_name = os.path.basename(full_path)
         exts = os.path.splitext(file_name)

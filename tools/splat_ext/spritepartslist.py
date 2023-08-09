@@ -16,7 +16,9 @@ from util.symbols import spim_context
 import utils
 
 
-def generate_assembly_spritepartslist(writer: io.BufferedWriter, name: str, content: str):
+def generate_assembly_spritepartslist(
+    writer: io.BufferedWriter, name: str, content: str
+):
     obj = json.loads(content)
 
     writer.write(".section .data\n")
@@ -41,18 +43,15 @@ class PSXSegSpritepartslist(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = self.parse_spritepartslist(
-            rom_bytes[self.rom_start:self.rom_end])
+        data = self.parse_spritepartslist(rom_bytes[self.rom_start : self.rom_end])
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
     def parse_spritepartslist(self, data: bytearray):
-        sprite_parts_list = [
-            0
-        ]
+        sprite_parts_list = [0]
         idx = 1
         while True:
-            addr = utils.to_u32(data[idx * 4:])
+            addr = utils.to_u32(data[idx * 4 :])
             idx += 1
             if addr == 0:
                 break
@@ -62,6 +61,7 @@ class PSXSegSpritepartslist(N64Segment):
 
 
 if __name__ == "__main__":
+
     def get_file_name(full_path):
         file_name = os.path.basename(full_path)
         exts = os.path.splitext(file_name)

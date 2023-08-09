@@ -4,8 +4,8 @@
 #include "sfx.h"
 
 void func_80115DA0(void) {
-    PLAYER.accelerationY = 0;
-    PLAYER.accelerationX = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
     g_Player.D_80072EF4 = 0;
     g_Player.D_80072EFC = 4;
 

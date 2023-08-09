@@ -149,66 +149,6 @@ typedef struct Primitive {
 #define DEMO_KEY_PTR 0x801E8000
 #define DEBUG_PTR 0x80280000
 
-#define STAGE_NO0 0x00
-#define STAGE_NO1 0x01
-#define STAGE_LIB 0x02
-#define STAGE_CAT 0x03
-#define STAGE_NO2 0x04
-#define STAGE_CHI 0x05
-#define STAGE_DAI 0x06
-#define STAGE_NP3 0x07
-#define STAGE_CEN 0x08
-#define STAGE_NO4 0x09
-#define STAGE_ARE 0x0A
-#define STAGE_TOP 0x0B
-#define STAGE_NZ0 0x0C
-#define STAGE_NZ1 0x0D
-#define STAGE_WRP 0x0E
-#define STAGE_NO1_ALT 0x0F
-#define STAGE_NO0_ALT 0x10
-#define STAGE_DRE 0x12
-#define STAGE_UNK_13 0x13
-#define STAGE_UNK_14 0x14
-#define STAGE_UNK_15 0x15
-#define STAGE_BO7 0x16
-#define STAGE_MAR 0x17
-#define STAGE_BO6 0x18
-#define STAGE_BO5 0x19
-#define STAGE_BO4 0x1A
-#define STAGE_BO3 0x1B
-#define STAGE_BO2 0x1C
-#define STAGE_BO1 0x1D
-#define STAGE_BO0 0x1E
-#define STAGE_ST0 0x1F
-#define STAGE_RCEN (STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG)
-#define STAGE_RNZ1 0x35
-#define STAGE_RBO8 0x36
-#define STAGE_RBO7 0x37
-#define STAGE_RBO6 0x38
-#define STAGE_RBO5 0x39
-#define STAGE_RBO4 0x3A
-#define STAGE_RBO3 0x3B
-#define STAGE_RBO2 0x3C
-#define STAGE_RBO1 0x3D
-#define STAGE_RBO0 0x3E
-#define STAGE_MAD 0x40
-#define STAGE_NO3 0x41
-#define STAGE_IWA_LOAD 0x42
-#define STAGE_IGA_LOAD 0x43
-#define STAGE_HAGI_LOAD 0x44
-#define STAGE_SEL 0x45
-#define STAGE_TE1 0x46
-#define STAGE_TE2 0x47
-#define STAGE_TE3 0x48
-#define STAGE_TE4 0x49
-#define STAGE_TE5 0x4A
-#define STAGE_TOP_ALT 0x4B
-#define STAGE_INVERTEDCASTLE_MASK 0x1F
-#define STAGE_INVERTEDCASTLE_FLAG 0x20
-#define STAGE_EU_WARNING 0x70 // EU piracy legal message thing
-#define STAGE_ENDING 0xFE
-#define STAGE_MEMORYCARD 0xFF
-
 // Flags for entity->flags
 #define FLAG_UNK_2000 0x2000
 #define FLAG_UNK_10000 0x10000
@@ -238,7 +178,6 @@ typedef struct Primitive {
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
-typedef s16 AnimSet;
 
 #define FONT_W 8               // small font size used for dialogues and menu
 #define FONT_H 8               // small font size used for dialogues and menu
@@ -261,6 +200,70 @@ typedef enum {
     Game_Ending,
     Game_99 = 99,
 } GameState;
+
+#define STAGE_INVERTEDCASTLE_MASK 0x1F
+#define STAGE_INVERTEDCASTLE_FLAG 0x20
+typedef enum {
+    STAGE_NO0 = 0x00,
+    STAGE_NO1 = 0x01,
+    STAGE_LIB = 0x02,
+    STAGE_CAT = 0x03,
+    STAGE_NO2 = 0x04,
+    STAGE_CHI = 0x05,
+    STAGE_DAI = 0x06,
+    STAGE_NP3 = 0x07,
+    STAGE_CEN = 0x08,
+    STAGE_NO4 = 0x09,
+    STAGE_ARE = 0x0A,
+    STAGE_TOP = 0x0B,
+    STAGE_NZ0 = 0x0C,
+    STAGE_NZ1 = 0x0D,
+    STAGE_WRP = 0x0E,
+    STAGE_NO1_ALT = 0x0F,
+    STAGE_NO0_ALT = 0x10,
+    STAGE_DRE = 0x12,
+    STAGE_NZ0_DEMO = 0x13,
+    STAGE_NZ1_DEMO = 0x14,
+    STAGE_LIB_DEMO = 0x15,
+    STAGE_BO7 = 0x16,
+    STAGE_MAR = 0x17,
+    STAGE_BO6 = 0x18,
+    STAGE_BO5 = 0x19,
+    STAGE_BO4 = 0x1A,
+    STAGE_BO3 = 0x1B,
+    STAGE_BO2 = 0x1C,
+    STAGE_BO1 = 0x1D,
+    STAGE_BO0 = 0x1E,
+    STAGE_ST0 = 0x1F,
+    STAGE_RTOP = STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNO0 = STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RCEN = STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNZ1 = 0x35,
+    STAGE_RBO8 = 0x36,
+    STAGE_RBO7 = 0x37,
+    STAGE_RBO6 = 0x38,
+    STAGE_RBO5 = 0x39,
+    STAGE_RBO4 = 0x3A,
+    STAGE_RBO3 = 0x3B,
+    STAGE_RBO2 = 0x3C,
+    STAGE_RBO1 = 0x3D,
+    STAGE_RBO0 = 0x3E,
+    STAGE_MAD = 0x40,
+    STAGE_NO3 = 0x41,
+    STAGE_IWA_LOAD = 0x42,
+    STAGE_IGA_LOAD = 0x43,
+    STAGE_HAGI_LOAD = 0x44,
+    STAGE_SEL = 0x45,
+    STAGE_TE1 = 0x46,
+    STAGE_TE2 = 0x47,
+    STAGE_TE3 = 0x48,
+    STAGE_TE4 = 0x49,
+    STAGE_TE5 = 0x4A,
+    STAGE_TOP_ALT = 0x4B,
+    STAGE_EU_WARNING = 0x70, // EU piracy legal message screen,
+    STAGE_ENDING = 0xFE,
+    STAGE_MEMORYCARD = 0xFF,
+} Stages;
 
 typedef enum {
     // Clean-up and reset all the gameplay related memory
@@ -328,6 +331,50 @@ typedef enum {
     Demo_End,
     Demo_Playback,
 } DemoMode;
+
+typedef enum {
+    TIMEATTACK_INVALID = -1,
+    TIMEATTACK_GET_RECORD,
+    TIMEATTACK_SET_RECORD,
+    TIMEATTACK_SET_VISITED,
+} TimeAttackActions;
+
+typedef enum {
+    TIMEATTACK_EVENT_DRACULA_DEFEAT,
+    TIMEATTACK_EVENT_ORLOX_DEFEAT,
+    TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT,
+    TIMEATTACK_EVENT_GRANFALOON_DEFEAT,
+    TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
+    TIMEATTACK_EVENT_SCYLLA_DEFEAT,
+    TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT,
+    TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT,
+    TIMEATTACK_EVENT_BEELZEBUB_DEFEAT,
+    TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
+    TIMEATTACK_EVENT_KARASUMAN_DEFEAT,
+    TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
+    TIMEATTACK_EVENT_DEATH_DEFEAT,
+    TIMEATTACK_EVENT_CERBERUS_DEFEAT,
+    TIMEATTACK_EVENT_SAVE_RICHTER,
+    TIMEATTACK_EVENT_MEDUSA_DEFEAT,
+    TIMEATTACK_EVENT_THE_CREATURE_DEFEAT,
+    TIMEATTACK_EVENT_LESSER_DEMON_DEFEAT,
+    TIMEATTACK_EVENT_DOPPLEGANGER_40_DEFEAT,
+    TIMEATTACK_EVENT_AKMODAN_II_DEFEAT,
+    TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT,
+    TIMEATTACK_EVENT_GALAMOTH_DEFEAT,
+    TIMEATTACK_EVENT_FINAL_SAVEPOINT,
+    TIMEATTACK_EVENT_MEET_DEATH,
+    TIMEATTACK_EVENT_GET_HOLYGLASSES,
+    TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN,
+    TIMEATTACK_EVENT_FIRST_MARIA_MEET,
+    TIMEATTACK_EVENT_UNUSED_27,
+    TIMEATTACK_EVENT_UNUSED_28,
+    TIMEATTACK_EVENT_UNUSED_29,
+    TIMEATTACK_EVENT_UNUSED_30,
+    TIMEATTACK_EVENT_UNUSED_31,
+    TIMEATTACK_EVENT_END,
+    TIMEATTACK_EVENT_INVALID = 0xFF,
+} TimeAttackEvents;
 
 struct Entity;
 
@@ -424,8 +471,8 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s32 x;
     /* 0x04 */ s32 y;
-    /* 0x08 */ s32 stageId;
-    /* 0x0C */ s32 bossId;
+    /* 0x08 */ Stages stageId;
+    /* 0x0C */ TimeAttackEvents eventId;
     /* 0x10 */ s32 unk10;
 } RoomBossTeleport; /* size=0x14 */
 
@@ -451,8 +498,8 @@ typedef struct {
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
-    /* 0x08 */ s32 accelerationX;
-    /* 0x0C */ s32 accelerationY;
+    /* 0x08 */ s32 velocityX;
+    /* 0x0C */ s32 velocityY;
 #ifdef STAGE
     /* 0x10 */ s16 hitboxOffX;
 #else // hack to match in DRA and RIC
@@ -491,7 +538,7 @@ typedef struct Entity {
     /* 0x4C */ AnimationFrame* unk4C;
     /* 0x50 */ u16 animFrameIdx;
     /* 0x52 */ s16 animFrameDuration;
-    /* 0x54 */ AnimSet animSet;
+    /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 unk58;
     /* 0x5A */ s16 unk5A;
@@ -510,7 +557,7 @@ typedef struct Entity {
 } Entity; // size = 0xBC
 
 typedef struct {
-    /* 0x00 */ AnimSet animSet;
+    /* 0x00 */ s16 animSet;
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
@@ -568,20 +615,79 @@ typedef enum {
 } ItemCategory;
 
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
+typedef struct {
+    s32 level;
+    s32 exp;
+    s32 unk8;
+} FamiliarStats;
+
+#define RELIC_FLAG_DISABLE 0
+#define RELIC_FLAG_FOUND 1
+#define RELIC_FLAG_ACTIVE 2
+typedef enum {
+    RELIC_SOUL_OF_BAT,
+    RELIC_FIRE_OF_BAT,
+    RELIC_ECHO_OF_BAT,
+    RELIC_FORCE_OF_ECHO,
+    RELIC_SOUL_OF_WOLF,
+    RELIC_POWER_OF_WOLF,
+    RELIC_SKILL_OF_WOLF,
+    RELIC_FORM_OF_MIST,
+    RELIC_POWER_OF_MIST,
+    RELIC_GAS_CLOUD,
+    RELIC_CUBE_OF_ZOE,
+    RELIC_SPIRIT_ORB,
+    RELIC_GRAVITY_BOOTS,
+    RELIC_LEAP_STONE,
+    RELIC_HOLY_SYMBOL,
+    RELIC_FAERIE_SCROLL,
+    RELIC_JEWEL_OF_OPEN,
+    RELIC_MERMAN_STATUE,
+    RELIC_BAT_CARD,
+    RELIC_GHOST_CARD,
+    RELIC_FAERIE_CARD,
+    RELIC_DEMON_CARD,    // 0x097979
+    RELIC_SWORD_CARD,    // 0x09797A
+    RELIC_JP_0,          // 0x09797B (nose demon or half fairy)
+    RELIC_JP_1,          // 0x09797C
+    RELIC_HEART_OF_VLAD, // 0x09797D
+    RELIC_TOOTH_OF_VLAD,
+    RELIC_RIB_OF_VLAD,
+    RELIC_RING_OF_VLAD,
+    RELIC_EYE_OF_VLAD,
+    NUM_RELICS,
+} RelicIds;
+
+typedef enum {
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_WOLF_CHARGE,
+    SPELL_SOUL_STEAL,
+    SPELL_WING_SMASH,
+    SPELL_SWORD_BROTHERS,
+    NUM_SPELLS,
+} SpellIds;
+
+typedef enum {
+    FAMILIAR_BAT,
+    FAMILIAR_GHOST,
+    FAMILIAR_FAERIE,
+    FAMILIAR_DEMON,
+    FAMILIAR_SWORD,
+    FAMILIAR_YOUSEI,     // JP only
+    FAMILIAR_NOSE_DEMON, // JP only
+    NUM_FAMILIARS
+} FamiliarIds;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
-    /* 80097982 */ u8 spells[8];
+    /* 80097982 */ u8 spells[NUM_SPELLS];
     /* 8009798A */ u8 equipHandCount[169];
-    /* 80097A33 */ u8 equipBodyCount[26];
-    /* 80097A4D */ u8 equipHeadCount[22];
-    /* 80097A63 */ u8 equipCloakCount[9];
-    /* 80097A6C */ u8 equipOtherCount[33];
+    /* 80097A33 */ u8 equipBodyCount[90];
     /* 80097A8D */ u8 equipHandOrder[169];
-    /* 80097B36 */ u8 equipBodyOrder[26];
-    /* 80097B50 */ u8 equipHeadOrder[22];
-    /* 80097B66 */ u8 equipCloakOrder[9];
-    /* 80097B6F */ u8 equipOtherOrder[33];
+    /* 80097B36 */ u8 equipBodyOrder[90];
     /* 80097B90 */ u8 saveName[12];
     /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;
@@ -611,27 +717,7 @@ typedef struct {
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
     /* 80097C40 */ u32 D_80097C40;
-    /* 80097C44 */ u32 D_80097C44;
-    /* 80097C48 */ u32 D_80097C48;
-    /* 80097C4C */ u32 D_80097C4C;
-    /* 80097C50 */ u32 D_80097C50;
-    /* 80097C54 */ u32 D_80097C54;
-    /* 80097C58 */ u32 D_80097C58;
-    /* 80097C5C */ u32 D_80097C5C;
-    /* 80097C60 */ u32 D_80097C60;
-    /* 80097C64 */ u32 D_80097C64;
-    /* 80097C68 */ u32 D_80097C68;
-    /* 80097C6C */ u32 D_80097C6C;
-    /* 80097C70 */ u32 D_80097C70;
-    /* 80097C74 */ u32 D_80097C74;
-    /* 80097C78 */ u32 D_80097C78;
-    /* 80097C7C */ u32 D_80097C7C;
-    /* 80097C80 */ u32 D_80097C80;
-    /* 80097C84 */ u32 D_80097C84;
-    /* 80097C88 */ u32 D_80097C88;
-    /* 80097C8C */ u32 D_80097C8C;
-    /* 80097C90 */ u32 D_80097C90;
-    /* 80097C94 */ u32 D_80097C94;
+    /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
 typedef struct {
@@ -656,7 +742,7 @@ typedef struct {
 typedef struct {
     /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
     /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
-    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[32];
+    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[TIMEATTACK_EVENT_END];
     /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];
     /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
     /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[ITEM_END];
@@ -744,7 +830,7 @@ typedef struct {
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
-    /* 8003C78C */ s32** cluts;
+    /* 8003C78C */ UnkStructClut** cluts;
     /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ void** entityGfxs;
@@ -852,8 +938,8 @@ typedef struct {
     /* 0x19 */ u8 isConsumable;
     /* 0x1A */ u8 enemyInvincibilityFrames;
     /* 0x1B */ u8 unk1B;
-    /* 0x1C */ u32 unk1C;
-    /* 0x20 */ u32 unk20;
+    /* 0x1C */ u32 comboSub;
+    /* 0x20 */ u32 comboMain;
     /* 0x24 */ u16 mpUsage;
     /* 0x26 */ u16 stunFrames;
     /* 0x28 */ u16 hitType;
@@ -896,11 +982,11 @@ typedef struct {
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
-    /* 8003C7C8 */ void (*AccelerateX)(s32 value);
+    /* 8003C7C8 */ void (*SetSpeedX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(
         s32 handId, Equipment* res, s32 equipId);
-    /* 8003C7D4 */ void (*func_800EA5E4)(s32);
+    /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
     /* 8003C7D8 */ void (*func_800EAF28)(s32);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
@@ -928,12 +1014,13 @@ typedef struct {
     /* 8003C834 */ Accessory* D_800A7718;
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
-    /* 8003C840 */ s32 (*func_800FD4C0)(s32 bossId, s32 action);
+    /* 8003C840 */ s32 (*TimeAttackController)(
+        TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
     /* 8003C850 */ RelicOrb* D_800A8720;
-    /* 8003C854 */ void* func_800FF7B8;
+    /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
     /* 8003C860 */ void (*func_800F53A4)(void);
@@ -952,7 +1039,7 @@ typedef struct {
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
     /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
-    /* 8003C89C */ void (*func_800E2438)(const char* str);
+    /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
     /* 8003C8A4 */ void* unused130;
     /* 8003C8A8 */ void* unused134;
@@ -966,11 +1053,11 @@ extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);
 extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 extern void (*g_api_func_80102CD8)(s32 arg0);
 extern void (*g_api_UpdateAnim)(FrameProperty* frameProps, s32* arg1);
-extern void (*g_api_AccelerateX)(s32 value);
+extern void (*g_api_SetSpeedX)(s32 value);
 extern Entity* (*g_api_GetFreeDraEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
-extern void (*g_api_func_800EA5E4)(s32);
+extern s32 (*g_api_func_800EA5E4)(u32);
 extern void (*g_api_func_800EAF28)(s32);
 extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
@@ -990,7 +1077,8 @@ extern void (*g_api_LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
 extern Equipment* g_api_D_800A4B04;
 extern Accessory* g_api_D_800A7718;
 extern void (*g_api_AddHearts)(s32 value);
-extern s32 (*g_api_func_800FD4C0)(s32 bossId, s32 action);
+extern s32 (*g_api_TimeAttackController)(
+    TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 itemId, s32 itemCategory);
@@ -1136,7 +1224,7 @@ typedef struct {
     /* 80072F78 */ u16 unk58;
     /* 80072F7A */ u16 unk5A;
     /* 80072F7C */ u16 unk5C;
-    /* 80072F7E */ u16 unk5E;
+    /* 80072F7E */ u16 unk5E; // status ailment timer
     /* 80072F80 */ u16 unk60;
     /* 80072F82 */ u16 unk62;
     /* 80072F84 */ u16 unk64;
@@ -1221,7 +1309,7 @@ extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
-extern Unkstruct_8006C3CC D_8006C3C4[32];
+extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 D_8006CBC4;
 extern u16 g_Clut[];
 extern u32 D_8006EBCC;
@@ -1266,7 +1354,7 @@ extern Entity D_80074C08[];
 
 extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[]; // &g_Entities[160]
-extern Entity D_8007C0D8[];
+extern Entity D_8007C0D8[]; // &g_Entities[192]
 extern Entity D_8007D858[]; // &g_Entities[224]
 extern Entity D_8007DE38[];
 extern Multi g_zEntityCenter;
@@ -1308,13 +1396,14 @@ extern s32 D_80097450;
 extern u16 D_8009748A[];
 extern u16 D_8009748E[];
 extern Pad g_pads[PAD_COUNT];
-extern u32 g_StageId;
+extern Stages g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC;
 extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 D_800978F8;
+extern char D_80097902[];
 extern s32 D_80097904;
 extern s32 D_80097908;
 extern s32 D_8009790C;
@@ -1348,7 +1437,7 @@ extern u8 D_80097F49;
 extern u8 D_80097F4A;
 extern s32 D_800987B4;
 extern s32 D_800987C8;
-extern s32 D_80098850;
+extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
 void PadInit(s32 arg0);
@@ -1364,14 +1453,6 @@ void func_8001C550(s32);
 s32 func_8001D290(s32, s32);
 s32 func_8001D374(s8, s16, s16);
 void func_8001D2E0(s32, s32, s32);
-void func_800202E0(s16);
-void func_80020F44(s16);
-void func_80021174(void);
-void func_80021188(void);
-s32 func_80021350(const char* str, s32, s32);
-s32 func_80021880(s32*, s32, s32);
-s32 func_800219E0(s32);
-void func_80021F6C(s16, s16);
 void func_8002A024(s32, s32);
 
 #endif

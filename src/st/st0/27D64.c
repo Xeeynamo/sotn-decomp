@@ -176,7 +176,7 @@ void func_801A8328(Entity* self) {
     Entity* newEntity;
     Collider collider;
     Primitive* prim;
-    s32 accelX;
+    s32 velX;
     s16 temp2;
 
     switch (self->step) {
@@ -214,12 +214,12 @@ void func_801A8328(Entity* self) {
             prim->next->b3 = 0x80;
             prim->priority = self->zPriority;
             prim->blendMode = 2;
-            accelX = ((Random() & 7) << 0xC) + 0x8000;
-            self->accelerationX = accelX;
+            velX = ((Random() & 7) << 0xC) + 0x8000;
+            self->velocityX = velX;
             if (self->facing == 0) {
-                self->accelerationX = -accelX;
+                self->velocityX = -velX;
             }
-            self->accelerationY = ((Random() & 7) << 0xC) - 0x8000;
+            self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
         } else {
             DestroyEntity(self);
             break;
@@ -229,7 +229,7 @@ void func_801A8328(Entity* self) {
         MoveEntity();
 
         prim = LOW(self->ext.generic.unk7C.s);
-        self->accelerationY += 0x2000;
+        self->velocityY += FIX(0.125);
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
 
@@ -408,23 +408,23 @@ s32 func_801A89D8(const char* textDialogue) {
 
     prim = g_Dialogue.D_801C24E4[0] = &g_PrimBuf[g_Dialogue.D_801C24FC[2]];
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[1] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[2] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[3] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[4] = prim->next;
 
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.D_801C24E4[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 3;
@@ -434,7 +434,7 @@ s32 func_801A89D8(const char* textDialogue) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
     prim->type = 1;
@@ -443,7 +443,7 @@ s32 func_801A89D8(const char* textDialogue) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = 8;
+    prim->blendMode = BLEND_VISIBLE;
     return 1;
 }
 

@@ -107,10 +107,10 @@ void func_801CA07C(Primitive* poly) {
 
 void func_801CA0D0(Primitive* poly) {
     poly->p3 = 0;
-    poly->blendMode = 8;
+    poly->blendMode = BLEND_VISIBLE;
     poly->next->p3 = 0;
     poly->next->type = 4;
-    poly->next->blendMode = 8;
+    poly->next->blendMode = BLEND_VISIBLE;
 }
 
 //! FAKE

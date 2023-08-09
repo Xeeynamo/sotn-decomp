@@ -21,4 +21,4 @@ class PSXSegRaw(N64Segment):
         path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(path, "wb") as f:
-            f.write(rom_bytes[self.rom_start:self.rom_end])
+            f.write(rom_bytes[self.rom_start : self.rom_end])

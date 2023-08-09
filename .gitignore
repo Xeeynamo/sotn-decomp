@@ -14,6 +14,7 @@ __pycache__
 
 asm/*/*/*.s
 asm/*/*/data/*.s
+asm/**/psxsdk/lib*/*/*.s
 asm/*/*/nonmatchings/*.s
 asm/*/*/nonmatchings/*/*.s
 asm/*/*/nonmatchings/*/*/*.s
@@ -31,16 +32,16 @@ build/
 expected/
 disks/
 
+.vscode/settings.json
+tools/go
+
+!tools/sotn-debugmodule/sotn-debugmodule.ld
+tools/saturn_toolchain/GCCSH
 config/saturn/game_syms.txt
 config/saturn/stage_02_syms.txt
 config/saturn/t_bat_syms.txt
 config/saturn/zero_syms.txt
 asm/saturn
 
-.vscode/settings.json
-tools/go
-
-!tools/sotn-debugmodule/sotn-debugmodule.ld
-tools/sotn_calltree.txt
-tools/saturn_toolchain/GCCSH
-
+sotn_calltree.txt
+function_calls

@@ -1,25 +1,26 @@
 #include "stage.h"
 
-typedef enum {
-    E_NONE,
-    E_BREAKABLE,
-    E_EXPLOSION,
-    E_PRIZE_DROP,
-    E_NUMERIC_DAMAGE,
-    E_RED_DOOR,
-    E_INTENSE_EXPLOSION,
-    E_SOUL_STEAL_ORB,
-    E_ROOM_FOREGROUND,
-    E_STAGE_NAME_POPUP,
-    E_EQUIP_ITEM_DROP,
-    E_RELIC_ORB,
-    E_HEART_DROP,
-    E_ENEMY_BLOOD,
-    E_SAVE_GAME_POPUP,
-    E_DUMMY_0F,
-    E_DUMMY_10,
+typedef enum EntityIDs {
+    /* 0x00 */ E_NONE,
+    /* 0x01 */ E_BREAKABLE,
+    /* 0x02 */ E_EXPLOSION,
+    /* 0x03 */ E_PRIZE_DROP,
+    /* 0x04 */ E_NUMERIC_DAMAGE,
+    /* 0x05 */ E_RED_DOOR,
+    /* 0x06 */ E_INTENSE_EXPLOSION,
+    /* 0x07 */ E_SOUL_STEAL_ORB,
+    /* 0x08 */ E_ROOM_FOREGROUND,
+    /* 0x09 */ E_STAGE_NAME_POPUP,
+    /* 0x0A */ E_EQUIP_ITEM_DROP,
+    /* 0x0B */ E_RELIC_ORB,
+    /* 0x0C */ E_HEART_DROP,
+    /* 0x0D */ E_ENEMY_BLOOD,
+    /* 0x0E */ E_SAVE_GAME_POPUP,
+    /* 0x0F */ E_DUMMY_0F,
+    /* 0x10 */ E_DUMMY_10,
 
-    E_UNK_15 = 0x15,
+    /* 0x11 */ E_ID_11 = 0x11,
+    /* 0x15 */ E_ID_15 = 0x15,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -60,6 +61,8 @@ extern u8 D_80181344[];
 extern const u8 D_80181390[];
 extern u16 D_8018139C[];
 extern u16 D_8018139E[];
+extern u16 D_801814EC[];
+extern u16 D_801817F8[];
 extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
@@ -67,7 +70,7 @@ extern s32 D_801819EC[];
 extern u8 D_80181B40[];
 extern u8 D_80181B4C[];
 extern u16 D_80181C8C[];
-extern u16 D_80181CC0[];
+extern u16 UNK_Invincibility0[];
 extern s16 D_801820C4[];
 extern u16 D_801823F4[];
 extern u8* D_80182438[];
@@ -120,7 +123,9 @@ extern s32 D_801D7D58;
 extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
-extern u16 D_801D7DD8[];
+extern s32 D_801D7DD0;
+extern u16 UNK_Update0[];
+
 extern LayoutEntity* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 

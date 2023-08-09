@@ -74,8 +74,8 @@ extern u8 D_801820B0[];     // animation: Swing Sword
 extern u8 D_801820CC[];     // animation: Jumping
 extern u8 D_801820D8[];     // animation: Landing
 extern s8 D_801820F4[];     // Skeleton parts array selector
-extern s32 D_801820FC[];    // Skeleton parts accelerationX
-extern s32 D_80182118[];    // Skeleton parts accelerationY
+extern s32 D_801820FC[];    // Skeleton parts velocityX
+extern s32 D_80182118[];    // Skeleton parts velocityY
 extern u16 D_80182134[];    // Skeleton parts posX
 extern u16 D_80182144[];    // Skeleton parts posY
 extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
@@ -143,6 +143,11 @@ extern u8 D_80181340[];
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
 extern ObjInit2 D_80180D64[];
+extern s32 D_80180E04[];
+extern u8 D_80180E24[];
+extern u8 D_80180E2C[];
+extern s16 D_80180E34[];
+extern s8 D_80180E44[];
 extern u16* D_80180E54;
 extern u16* D_80180E94;
 extern s32 D_80180EB4;
@@ -159,6 +164,7 @@ extern const u8 D_80180F50[];
 extern const u8 D_80180F74[];
 extern u8 D_80180F88[];
 extern u16 D_80180F9C[];
+extern Unkstruct_80180FE0 D_80180FE0[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
@@ -172,7 +178,7 @@ extern const u8 D_80181378[];
 extern const u8 D_80181388[];
 extern s32 D_801813A4;
 extern u16 D_801813B0[];
-extern u16 D_80181574[];
+extern u16 UNK_Invincibility0[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
@@ -239,8 +245,8 @@ extern u8 D_801823FC[];  // animation: Throwing bone
 extern u8 D_8018240C[];  // animation: Jumping?
 extern u8 D_80182418[];  // animation: Jumping?
 extern s8 D_80182430[];  // skeleton pieces array selector
-extern s32 D_80182438[]; // accelerationX
-extern s32 D_80182450[]; // accelerationY
+extern s32 D_80182438[]; // velocityX
+extern s32 D_80182450[]; // velocityY
 extern u16 D_80182468[]; // posX
 extern u16 D_80182474[]; // posY
 extern u8 D_80182480[2][4];
@@ -259,6 +265,7 @@ extern s32 D_80182600[];
 extern s32 D_8018216C;
 extern s32 D_80182174;
 extern u16 D_80180BD4[];
+extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* D_80181D3C[];
@@ -357,7 +364,7 @@ extern s16 D_801CB6C6;
 extern s32 D_801CB6C8;
 extern s32 D_801CB734;
 extern u16 D_801CB736[];
-extern u16 D_801CB740[];
+extern u16 UNK_Update0[];
 
 // *** EntitySoulStealOrb properties START ***
 

@@ -35,4 +35,7 @@
 
 int sprintf(char* dst, const char* fmt, ...);
 
+#define FIX(x) ((s32)((x)*65536.0))
+#define FIX_TO_I(x) ((s32)((x) >> 16))
+
 #endif

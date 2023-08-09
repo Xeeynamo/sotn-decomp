@@ -50,7 +50,7 @@ void func_801027C4(u32 arg0) {
 #if defined(VERSION_US)
 INCLUDE_ASM("asm/us/dra/nonmatchings/627C4", func_801028AC);
 #elif defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/627C4", jpt_80102810);
+INCLUDE_ASM("asm/hd/dra/nonmatchings/627C4", func_801028AC);
 #endif
 
 void func_80102CD8(s32 start) {

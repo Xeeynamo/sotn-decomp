@@ -1,9 +1,7 @@
-
-#include "common.h"
+#define INCLUDE_ASM_NEW
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"
-#if defined(VERSION_US)
 
 void func_80102D70(void) {
     switch (D_801379AC.start) {
@@ -57,7 +55,7 @@ s32 func_80102E04(void) {
 }
 
 void func_80102EB8(void) {
-    POLY_GT4 *poly1, *poly2, *poly3;
+    Primitive *poly1, *poly2, *poly3;
     s32 i;
 
     D_80137E58 = AllocPrimitives(PRIM_GT4, 3);
@@ -70,31 +68,31 @@ void func_80102EB8(void) {
     poly3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
-        func_80107360(poly1, 98, 79, 96, 0, 0, 0);
+        SetTexturedPrimRect(poly1, 98, 79, 96, 0, 0, 0);
         func_801072DC(poly1);
         poly1->tpage = 0x10;
         poly1->clut = 0x1A1;
-        poly1->pad2 = g_zEntityCenter.S16.unk0 + 32;
-        poly1->pad3 = 8;
+        poly1->priority = g_zEntityCenter.S16.unk0 + 32;
+        poly1->blendMode = BLEND_VISIBLE;
         poly1->p1 = 0;
-        SetPolyRect(poly2, 80, 79, 96, 0);
+        SetPrimRect(poly2, 80, 79, 96, 0);
         func_801072DC(poly2);
         func_801071CC(poly2, 96, 0);
         func_801071CC(poly2, 96, 1);
         poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
             poly2->r2 = poly2->r3 = 0;
         poly2->tpage = 0x1F;
-        poly2->pad2 = g_zEntityCenter.S16.unk0 + 31;
-        poly2->pad3 = 8;
-        poly1 = (POLY_GT4*)poly1->tag;
-        poly2 = (POLY_GT4*)poly2->tag;
+        poly2->priority = g_zEntityCenter.S16.unk0 + 31;
+        poly2->blendMode = BLEND_VISIBLE;
+        poly1 = poly1->next;
+        poly2 = poly2->next;
     }
 
     for (i = 0; i < 12; i++) {
         func_80107250(poly3, 255);
-        poly3->pad2 = g_zEntityCenter.S16.unk0 + 32;
-        poly3->pad3 = 8;
-        poly3 = (POLY_GT4*)poly3->tag;
+        poly3->priority = g_zEntityCenter.S16.unk0 + 32;
+        poly3->blendMode = BLEND_VISIBLE;
+        poly3 = poly3->next;
     }
 }
 
@@ -152,14 +150,14 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103238);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80103238);
 
 void func_80103EAC(void) {
     D_80137E4C = 0;
     func_800E92F4();
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80103ED4);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80103ED4);
 
 void func_8010427C(void) {
     FreePrimitives(D_80137E40);
@@ -167,18 +165,18 @@ void func_8010427C(void) {
     FreePrimitives(D_80137E48);
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_801042C4);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_801042C4);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80104790);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80104790);
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105078);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80105078);
 
 void func_80105408(void) {
     g_Player.D_80072EF4 = 0x1000;
     g_Player.D_80072EFC = 1;
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80105428);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80105428);
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -303,7 +301,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
     }
 }
 
-INCLUDE_ASM("asm/us/dra/nonmatchings/62D70", func_80106A28);
+INCLUDE_ASM("dra/nonmatchings/62D70", func_80106A28);
 
 bool func_8010715C(s32 mapTilesetId) {
     if (g_IsUsingCd)
@@ -364,7 +362,7 @@ void func_801072FC(POLY_G4* poly) {
     setRGB3(poly, 0, 0, 0);
 }
 
-void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
+void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;
@@ -375,8 +373,8 @@ void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
     poly->y3 = y + height;
 }
 
-void func_80107360(
-    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
+void SetTexturedPrimRect(
+    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + width;
@@ -394,4 +392,3 @@ void func_80107360(
     poly->u3 = u + width;
     poly->v3 = v + height;
 }
-#endif

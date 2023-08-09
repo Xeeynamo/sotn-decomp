@@ -2,11 +2,33 @@
 #define DRA_H
 
 #include "game.h"
+#include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
 #define DAMAGE_FLAG_CRITICAL 0x4000
 #define DAMAGE_FLAG_ABSORB 0x8000
 #define DAMAGE_FLAG_IMMUNE 0xC000
+
+#define SFX_START (0x600)
+#define SFX_LAST (0x8E0)
+#define MAX_SND_COUNT (0x100)
+
+#define SEQ_TABLE_S_MAX 0x10
+#define SEQ_TABLE_T_MAX 1
+
+typedef enum {
+    DEBUG_NORMAL,
+    DEBUG_TEXTURE_VIEWER,
+    DEBUG_TILESET_VIEWER,
+    DEBUG_PALETTE_VIEWER,
+    DEBUG_END,
+} DebugMode;
+
+typedef enum {
+    DEBUG_COLOR_CHANNEL_RED,
+    DEBUG_COLOR_CHANNEL_GREEN,
+    DEBUG_COLOR_CHANNEL_BLUE,
+} DebugColorChannel;
 
 typedef enum {
     SimFileType_System,
@@ -143,12 +165,21 @@ typedef enum {
     Player_Unk40,
 } PlayerSteps;
 
+typedef enum {
+    STATUS_AILMENT_POISON,
+    STATUS_AILMENT_CURSE,
+    STATUS_AILMENT_PETRIFIED,
+    STATUS_AILMENT_DARK_METAMORPHOSIS,
+    STATUS_AILMENT_UNK04,
+    STATUS_AILMENT_UNK05, // used by EntityPlayerPinkEffect
+} StatusAilments;
+
 // Info necessary to load a file from the Cd in UpdateCd
 typedef struct {
     s32 loc;        // lba offset, might be a s32
     CdCallbacks cb; // sets g_CdCallback
     s32 size;       // file size
-    u8 unkC;        // index for D_800BD1C8, between 0 and 5?
+    u8 vabId;       // index for g_VabAddrs, between 0 and 5?
     u8 unkD;        // index for D_800ACD10, between 0 and 6?
     u8 nextCdFileType;
     u8 unkF;
@@ -188,7 +219,7 @@ typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
-    /* 0x0C */ s8 mpUsage;
+    /* 0x0C */ u8 mpUsage;
     /* 0x0D */ s8 unk0D;
     /* 0x0E */ s16 unk0E;
     /* 0x10 */ s16 unk10;
@@ -269,8 +300,10 @@ extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
 extern s32 D_800A2D68;
 extern s32 D_800A2D6C;
+extern u8 D_800A2D7C[];
 extern u8 c_chPlaystationButtons[];
 extern u8 c_chShoulderButtons[];
+extern RECT D_800A2D90;
 extern Unkstruct_800A2D98 D_800A2D98[];
 extern MenuContextInit MenuContextData[];
 extern u8 D_800A2EE8[];
@@ -333,6 +366,7 @@ extern Unkstruct_801092E8 D_800A37D8;
 extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
+extern UnkStructClut* D_800A3BB8[];
 extern SubweaponDef g_Subweapons[];
 extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
@@ -340,7 +374,9 @@ extern s32 c_arrExpNext[];
 extern Equipment D_800A4B04[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
-extern s8 D_800A841C[]; // related to player MP
+extern RelicDesc g_RelicsDesc[];
+extern unkStruct_800A872C D_800A872C[];
+extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
@@ -349,6 +385,7 @@ extern u8 D_800ACFB4[][4];
 extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern u8 D_800AD094[];
@@ -381,10 +418,13 @@ extern const char aPbav_1[];
 extern const char aPbav_2[];
 extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
-extern s32 D_800BD1C0;
+extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
-extern s32 D_800BD1C8[6];
+extern s32 g_VabAddrs[6];
+extern s32 D_800C1ECC[];
 extern const char D_800DB524[];
+extern Unkstruct_800F9F40 D_800DC6EC;
+extern Unkstruct_800F9F40 D_800DC70C[];
 extern const char a0104x04x;
 extern const char a2304x04x;
 extern const char aBlue;
@@ -407,21 +447,22 @@ extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
 extern char* aAtariNuki;
-extern s32 D_801362AC;
-extern s32 D_801362B0;
-extern s32 D_801362B4;
+extern s32 g_DebugFreeze;
+extern s32 g_DebugHitboxViewMode;
+extern u32 D_801362B4;
 extern s32 D_801362B8;
 extern s32 D_801362BC;
 extern s32 g_DebugPalIdx;
-extern u32 D_801362C4;
-extern s32 D_801362C8;
+extern DebugColorChannel g_DebugColorChannel;
+extern u32 D_801362C8;
 extern u32* g_CurrentOT;
 extern s32 D_801362D0[];
 extern s32 D_801362D4;
-extern s32 D_801362D8;
+extern s32 g_DebugIsRecordingVideo;
 extern GpuUsage g_GpuMaxUsage;
 extern s32 g_softResetTimer;
-extern s32 D_80136300;
+extern s32 g_DebugWaitInfoTimer;
+extern s32 g_DebugRecordVideoFid;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s32 D_80136410;
@@ -528,7 +569,7 @@ extern s32 D_80138438;
 extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
-extern s32 D_80138460;
+extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 extern const char* D_80138784[487];
 extern s32 D_80138F20;
 extern u8 D_80138F24[]; // Confirmed part of an array / struct
@@ -538,17 +579,19 @@ extern s32 D_80138F7C;
 extern s16 D_80138F80;
 extern s32 D_80138F84[];
 extern s16 D_80138FAC;
-extern s32 D_80138FB0;
+extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern Unkstruct_80138FC0 D_80138FC0[0x10];
+extern s16 D_80138FC8;
+extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern u8 D_80139014;
 extern s8 D_80139018[];
-extern s32 g_DebugCurPal;
+extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_80139058[];
@@ -561,7 +604,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
-extern SfxRingBufferItem g_sfxRingBuffer1[]; // D_801390DC
+extern SfxRingBufferItem g_sfxRingBuffer1[MAX_SND_COUNT];
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
@@ -577,6 +620,7 @@ extern s32 D_8013980C;
 extern u8 D_80139810;
 extern s16 D_80139814[];
 extern s16 D_80139820;
+extern s32 D_80139824;
 extern s32 D_80139828[];
 extern s32 D_8013982C;
 extern s32 D_80139830[];
@@ -587,7 +631,7 @@ extern s32 D_80139848;
 extern s32 D_8013984C;
 extern s32 D_80139850;
 extern s32 D_80139854;
-extern s16 D_80139868[];
+extern s16 D_80139868[MAX_SND_COUNT];
 extern s16 D_80139A68;
 extern s16 D_80139A6C;
 extern s16 g_sfxRingBufferPos2; // D_80139A70
@@ -603,6 +647,7 @@ extern s16 D_8013AE94;
 extern s32 D_8013AE9C;
 extern s32 D_8013AED0;
 extern s16 D_8013AED4[];
+extern u32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
@@ -618,7 +663,7 @@ extern s16 D_8013AEF0;
 extern s32 D_8013B158;
 extern Unkstruct_8013B160 D_8013B160[];
 extern s32 D_8013B3D0;
-extern s16 g_sfxRingBuffer2[]; // D_8013B3E8
+extern s16 g_sfxRingBuffer2[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];
@@ -628,7 +673,7 @@ extern s16 D_8013B620[];
 extern s32 D_8013B628[];
 extern s16 D_8013B648[];
 extern s16 D_8013B650[];
-extern s16 D_8013B658;
+extern s16 g_SeqAccessNum;
 extern s32 D_8013B660;
 extern s16 D_8013B664;
 extern s16 D_8013B668;
@@ -657,9 +702,6 @@ void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void DemoInit(s32 arg0);
 void DemoUpdate(void);
-void func_800209B4(s32*, s32, s32);
-void func_80021E38(s32);
-void func_80021EEC(void);
 void func_80028D3C(s32, s32);
 void func_80029FBC(s32);
 void func_8002A09C(void*);
@@ -677,7 +719,7 @@ s32 func_800E9208(void);
 void func_800E928C(void);
 void func_800E92E4(void);
 void func_800E92F4(void);
-void func_800EA5E4(s32);
+s32 func_800EA5E4(u32);
 void func_800EA538(s32);
 void func_800EAD7C(void);
 void func_800EAEEC(void);
@@ -715,7 +757,7 @@ void DrawMenuSprite(
 void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
-void func_800FF7B8(s32 arg0);
+void InitStatsAndGear(bool isDeathTakingItems);
 void func_800F98AC(s32 arg0, s32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
@@ -726,11 +768,11 @@ void DrawSettingsSound(MenuContext* context);
 void DrawPauseMenu(s32 arg0);
 void func_800F82F4(void);
 void func_800F8858(MenuContext* context);
-void func_800FA7E8(void);
+void CheckWeaponCombo(void);
 void func_800FABEC(s32 arg0);
 void func_800FAC30(void);
 void func_800FAF44(s32);
-s32 func_800FD4C0(s32 bossId, s32 action);
+s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
 u8* GetEquipOrder(s32 equipTypeFilter);
@@ -739,7 +781,7 @@ const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void func_800FD9D4(SpellDef* spell, s32 id);
-s16 func_800FDB18(s32, s32);
+s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer);
 void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
@@ -754,11 +796,11 @@ void DestroyEntity(Entity*);
 void DestroyEntities(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(POLY_GT4* poly, s32 colorIntensity);
-void func_80107360(
-    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
+void SetTexturedPrimRect(
+    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
 void func_801092E8(s32);
-void SetPolyRect(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
+void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
 u32 UpdateAnim(s8* frameProps, s32*);
 void func_8010DFF0(s32, s32);
