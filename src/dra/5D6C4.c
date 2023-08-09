@@ -260,7 +260,7 @@ u32 func_800FDE20(void) {
         g_Status.heartsMax += 2;
         // Run again, in case we have enough EXP to level up twice
         func_800FDE20();
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < LEN(g_Status.statsBase); i++) {
             // Flip a coin to decide if you will gain a stat here
             statgain = rand() & 1;
             g_Status.statsBase[i] += statgain;
