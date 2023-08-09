@@ -85,7 +85,99 @@ void EntityUnkId16(Entity* self) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundLightning);
 
 // window that opens and shuts in the background
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityShuttingWindow);
+void EntityShuttingWindow(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    SVECTOR svec;
+    SVEC4* svec4;
+    VECTOR vec;
+    MATRIX mtx;
+    s32 flag;
+    s32 p;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AC4);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.shuttingWindow.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = 0xD;
+            prim->u0 = prim->u2 = 0x9C;
+            prim->u1 = prim->u3 = 0x84;
+            prim->v1 = 4;
+            prim->v0 = 4;
+            prim->v2 = prim->v3 = 0x7C;
+            prim->priority = 0x5F;
+            prim->blendMode = 2;
+            prim = prim->next;
+        }
+
+    case 1:
+        self->ext.shuttingWindow.unk80 += 8;
+        if (self->ext.shuttingWindow.unk80 > 0x300) {
+            self->ext.shuttingWindow.unk80 = 0x300;
+            self->ext.shuttingWindow.unk82 = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
+        self->ext.shuttingWindow.unk82 -= 4;
+        if (self->ext.shuttingWindow.unk80 < 0) {
+            func_801CAD28(NA_SE_EV_WINDOW_LATCH);
+            self->ext.shuttingWindow.unk80 = 0;
+            self->ext.shuttingWindow.timer = 32;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (--self->ext.shuttingWindow.timer == 0) {
+            self->step = 1;
+        }
+        break;
+    }
+    SetGeomScreen(0x400);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+
+    svec4 = D_80181024;
+    prim = self->ext.shuttingWindow.prim;
+
+    for (i = 0; i < 2; svec4++, i++) {
+        svec.vx = 0;
+        if (i != 0) {
+            svec.vy = self->ext.shuttingWindow.unk80;
+        } else {
+            svec.vy = -self->ext.shuttingWindow.unk80;
+        }
+        svec.vz = 0;
+        RotMatrix(&svec, &mtx);
+        if (i == 0) {
+            vec.vx = -0x18;
+        } else {
+            vec.vx = 0x19;
+        }
+        vec.vy = 0;
+        vec.vz = 0x400;
+        TransMatrix(&mtx, &vec);
+        SetRotMatrix(&mtx);
+        SetTransMatrix(&mtx);
+        RotTransPers4(svec4->v0, svec4->v1, svec4->v2, svec4->v3,
+                      (long*)&prim->x0, (long*)&prim->x1, (long*)&prim->x2,
+                      (long*)&prim->x3, (long*)&p, (long*)&flag);
+        prim = prim->next;
+    }
+}
 
 // main door to the castle that closes during intro
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityCastleDoor);

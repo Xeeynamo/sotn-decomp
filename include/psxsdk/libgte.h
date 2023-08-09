@@ -18,11 +18,27 @@ typedef struct {
     short pad;        // System reserved
 } SVECTOR;            // size = 0x8
 
+typedef struct {
+    /* 0x00 */ SVECTOR* v0;
+    /* 0x04 */ SVECTOR* v1;
+    /* 0x08 */ SVECTOR* v2;
+    /* 0x0C */ SVECTOR* v3;
+} SVEC4; // size = 0x10
+
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
 void SetGeomOffset(long ofx, long ofy);
 long RotTransPers(SVECTOR*, long*, long*, long*);
 void SetGeomScreen(long h);
 void SetRotMatrix(MATRIX* m);
 MATRIX* TransMatrix(MATRIX* m, VECTOR* v);
+void SetTransMatrix(MATRIX* m);
+long RotTransPers4(
+    SVECTOR* v0, SVECTOR* v1, SVECTOR* v2,
+    SVECTOR* v3, // Pointers to vectors (input)
+    long* v10, long* v11, long* v12,
+    long* v13, // Pointers to screen coordinates
+    long* p,   // Pointer to interpolated value for depth cueing
+    long* flag // Pointer to flag
+);
 
 #endif

@@ -258,3 +258,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_VO_SU_SUCK_YOU_DRY 0x876
 #define NA_VO_SU_NO_SCREAM 0x87B
 #define NA_VO_SU_DELICIOUS 0x8D1
+
+// STAGE NO3 / NP3
+#define NA_SE_EV_WINDOW_LATCH 0x79D
