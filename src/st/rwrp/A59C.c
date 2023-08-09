@@ -3,7 +3,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", TestCollisions);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018B6B4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018BD58);
+#include "../create_entity_from_layout.h"
 
 void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 yClose;
@@ -32,7 +32,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
         entity =
             &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         if (entity->entityId == 0) {
-            func_8018BD58(entity, layoutObj);
+            CreateEntityFromLayout(entity, layoutObj);
         }
         break;
     case 0x8000:
@@ -40,7 +40,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     case 0xA000:
         entity =
             &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
-        func_8018BD58(entity, layoutObj);
+        CreateEntityFromLayout(entity, layoutObj);
         break;
     }
 }
@@ -72,7 +72,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
         entity =
             &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
         if (entity->entityId == 0) {
-            func_8018BD58(entity, layoutObj);
+            CreateEntityFromLayout(entity, layoutObj);
         }
         break;
     case 0x8000:
@@ -80,7 +80,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     case 0xA000:
         entity =
             &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
-        func_8018BD58(entity, layoutObj);
+        CreateEntityFromLayout(entity, layoutObj);
         break;
     }
 }
