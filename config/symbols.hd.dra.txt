@@ -439,6 +439,7 @@ func_800FD9D4 = 0x800FD988;
 GetStatusAilmentTimer = 0x800FDACC;
 CastSpell = 0x800FDC48;
 LearnSpell = 0x800FDC94;
+CheckAndDoLevelUp = 0x800FDE20;
 func_800FDD44 = 0x800FDCF8;
 func_800FDE00 = 0x800FDDB4;
 func_800FDE20 = 0x800FDDD4;
