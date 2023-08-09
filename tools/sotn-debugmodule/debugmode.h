@@ -40,6 +40,7 @@ void PauseDebugMode();
 extern bool g_ShowDebugMessages;
 extern bool g_ShowCollisionLayer;
 extern bool g_FrameByFrame;
+extern bool g_EntitiesPaused;
 extern int g_ShowDrawCalls;
 extern bool g_ShowHBlankInfo;
 
