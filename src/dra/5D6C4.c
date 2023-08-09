@@ -231,7 +231,7 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
-u32 func_800FDE20(void) {
+u32 CheckAndDoLevelUp(void) {
     s32 i;
     s32 statsGained;
     s32 statgain;
@@ -255,11 +255,11 @@ u32 func_800FDE20(void) {
         g_Status.level++;
         statsGained = 0;
         g_Status.mpMax += 4 + (rand() & 1);
-        g_Status.hp += D_800A2EC0[(s32)g_Status.level / 10];
-        g_Status.hpMax += D_800A2EC0[(s32)g_Status.level / 10];
+        g_Status.hp += LevelUpHPIncreaseTable[(s32)g_Status.level / 10];
+        g_Status.hpMax += LevelUpHPIncreaseTable[(s32)g_Status.level / 10];
         g_Status.heartsMax += 2;
         // Run again, in case we have enough EXP to level up twice
-        func_800FDE20();
+        CheckAndDoLevelUp();
         for (i = 0; i < LEN(g_Status.statsBase); i++) {
             // Flip a coin to decide if you will gain a stat here
             statgain = rand() & 1;

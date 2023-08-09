@@ -306,7 +306,7 @@ extern u8 c_chShoulderButtons[];
 extern RECT D_800A2D90;
 extern Unkstruct_800A2D98 D_800A2D98[];
 extern MenuContextInit MenuContextData[];
-extern s32 D_800A2EC0[];
+extern s32 LevelUpHPIncreaseTable[];
 extern u8 D_800A2EE8[];
 extern u8 D_800A2EED;
 extern u8 D_800A2EF8[];
