@@ -92,7 +92,7 @@ endef
 all: build check
 saturn: build_saturn_native check_saturn_native
 build: build_$(VERSION)
-build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra
 clean:
 	git clean -fdx assets/
@@ -241,7 +241,7 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_$(VERSION)
-extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract_us: extract_main extract_dra extract_weapon extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_hd: extract_dra
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
@@ -566,9 +566,9 @@ diff_saturn_native:
 	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
 
 # Handles assets
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/weapon%.png.o: $(ASSETS_DIR)/weapon/weapon%.png
-	./tools/png2bin.py $< $(BUILD_DIR)/assets/weapon/weapon$*.png.bin
-	$(LD) -r -b binary -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/weapon$*.png.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.png.o: $(ASSETS_DIR)/weapon/f_%.png
+	./tools/png2bin.py $< $(BUILD_DIR)/assets/weapon/f_$*.png.bin
+	$(LD) -r -b binary -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_$*.png.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
