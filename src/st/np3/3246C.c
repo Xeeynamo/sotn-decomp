@@ -233,7 +233,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->animCurFrame = 18;
         entity->rotAngle = -0x200;
         entity->unk19 |= 4;
-        CreateEntityFromEntity(0x1E, entity, &entity[1]);
+        CreateEntityFromEntity(E_ID_1E, entity, &entity[1]);
         if (D_8003BDEC[0x30] != 0) {
             entity->rotAngle = 0;
         }
@@ -751,7 +751,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0xA, self, newEntity);
+                CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
@@ -833,7 +833,7 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x27, self, newEntity);
+                    CreateEntityFromEntity(E_ID_27, self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
@@ -990,7 +990,7 @@ void EntityFallingRock(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(6, self, newEntity);
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
                 newEntity->params = 0x10;
                 if (animFrame == 0) {
                     newEntity->params = 0x13;
@@ -1069,7 +1069,7 @@ void func_801B653C(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(0x4D, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_ID_4D, g_CurrentEntity, entity);
             entity->params = 2;
             entity->ext.generic.unk88.U8.unk1 = 6 - i;
             entity->ext.generic.unk84.S16.unk0 = temp_s3;
