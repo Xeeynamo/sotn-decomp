@@ -35,7 +35,6 @@ extern u32 D_80181044[];
 extern u16 D_801810A0[]; // NOTE(sestren): Random angle offsets?
 extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties?
 extern u32 D_80181110[];
-extern u16 g_ItemIconSlots[0x20];
 
 // *** EntitySoulStealOrb properties END ***
 

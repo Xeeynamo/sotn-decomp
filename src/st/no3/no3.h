@@ -129,7 +129,6 @@ extern u8 D_80181B40[];
 extern u8 D_80181B4C[];
 extern Unkstruct_80180FE0 D_80181C5C[];
 extern u16 D_80181C8C[];
-extern u16 UNK_Invincibility0[];
 extern s16 D_801820C4[];
 extern u16 D_801823F4[];
 extern u8* D_80182438[];
@@ -200,7 +199,6 @@ extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
 extern s32 D_801D7DD0;
-extern u16 g_ItemIconSlots[0x20];
 
 extern LayoutEntity* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];

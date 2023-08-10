@@ -93,7 +93,6 @@ extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
 extern s32 D_801807F8[];
 extern u8 D_80180830[];
-extern u16 UNK_Invincibility0[];
 extern s16 D_80180D80[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_801804AC[];
@@ -151,6 +150,5 @@ extern s32 D_801A3F84;
 extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
-extern u16 g_ItemIconSlots[0x20];
 
 extern Dialogue g_Dialogue;
