@@ -128,7 +128,6 @@ void func_801B2830(Entity* self) {
     }
 }
 
-// DECOMP_ME_WIP https://decomp.me/scratch/TDYvP
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityShuttingWindow);
@@ -320,10 +319,8 @@ void func_801B3704(Entity* self, s16 primIndex) {
     }
 }
 
-// DECOMP_ME_WIP https://decomp.me/scratch/86Cmm
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B39CC);
 
-// DECOMP_ME_WIP https://decomp.me/scratch/6pDVe
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B3D24);
 
 void EntityCavernDoorLever(Entity* entity) {
