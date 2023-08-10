@@ -346,7 +346,7 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->rotAngle += 4;
             if (entity->rotAngle > 0) {
                 entity->rotAngle = 0;
-                if (D_8003BDEC[0x30] == 0) {
+                if (D_8003BDEC[48] == 0) {
                     g_api.PlaySfx(0x675);
                 }
                 D_8003BDEC[48] = 1;
@@ -412,7 +412,7 @@ void func_801B40F8(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &D_801810F8[0];
-        if (D_8003BDEC[48] != 0) {
+        if (D_8003BDEC[48]) {
             tileLayoutPtr = &D_801810F8[3];
             self->step = 128;
             self->animCurFrame = 0;
