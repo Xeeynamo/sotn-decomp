@@ -15,6 +15,7 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   extensions_path: tools/splat_ext
+  symbol_name_format: $SEG_$VRAM
   section_order:
     - ".data"
     - ".rodata"

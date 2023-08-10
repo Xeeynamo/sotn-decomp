@@ -12,7 +12,7 @@ tabulate
 requests
 graphviz
 # splat
-spimdisasm==1.13.0
+spimdisasm==1.16.0
 rabbitizer==1.7.0
 n64img==0.3.3
 PyYAML
