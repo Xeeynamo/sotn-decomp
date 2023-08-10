@@ -18,13 +18,6 @@ typedef struct {
     short pad;        // System reserved
 } SVECTOR;            // size = 0x8
 
-typedef struct {
-    /* 0x00 */ SVECTOR* v0;
-    /* 0x04 */ SVECTOR* v1;
-    /* 0x08 */ SVECTOR* v2;
-    /* 0x0C */ SVECTOR* v3;
-} SVEC4; // size = 0x10
-
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
 void SetGeomOffset(long ofx, long ofy);
 long RotTransPers(SVECTOR*, long*, long*, long*);
