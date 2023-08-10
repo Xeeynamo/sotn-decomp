@@ -51,5 +51,12 @@ void NormalColorCol(SVECTOR* v0, // Pointer to normal vector (input)
                     CVECTOR* v1, // Pointer to primary color vector (input)
                     CVECTOR* v2  // Pointer to color vector (output)
 );
+MATRIX* RotMatrixY(long r,   // Rotation angle(input)
+                   MATRIX* m // Pointer to rotation matrix (input/output)
+);
+void SetBackColor(long rbk, long gbk, long bbk);
+void SetColorMatrix(MATRIX* m);
+void SetLightMatrix(MATRIX* m);
+void SetTransMatrix(MATRIX* m);
 
 #endif
