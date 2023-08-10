@@ -529,7 +529,9 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         return 5;
     }
 
-    // Ballroom mask???
+    // Very strange to have ballroom mask check. This item is not known to
+    // have special behavior. Also, not possible to equip two. This may be
+    // a new discovery of a property of the item. Worth further analysis.
     itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, HEAD_TYPE);
     if ((itemCount != 0) && (arg0->unk0 & 0xF980)) {
         if (itemCount == 1) {
