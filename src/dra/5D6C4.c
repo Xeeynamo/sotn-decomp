@@ -477,18 +477,16 @@ void AddHearts(s32 value) {
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
 s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 ret;
-    s32 var_s1;
     s32 itemCount;
 
-    var_s1 = arg2;
     func_800F53A4();
     arg0->unk0 = arg1 & ~0x1F;
     arg0->unk4 = arg1 & 0x1F;
     if (g_Status.defenseElement & arg0->unk0) {
-        var_s1 *= 2;
+        arg2 *= 2;
     }
     if (g_Status.D_80097C2A & arg0->unk0) {
-        var_s1 /= 2;
+        arg2 /= 2;
     }
     if (g_Status.D_80097C2C & arg0->unk0) {
         if (!(g_Status.D_80097C2C & arg0->unk0 & 0x200)) {
@@ -498,10 +496,10 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 
     if (g_Status.D_80097C2E & arg0->unk0) {
-        if (var_s1 < 1) {
-            var_s1 = 1;
+        if (arg2 < 1) {
+            arg2 = 1;
         }
-        arg0->unkC = var_s1;
+        arg0->unkC = arg2;
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
             g_Status.hp += arg0->unkC;
@@ -512,15 +510,15 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         return 5;
     }
     // Player wearing cat-eye circlet. Same as above if-statement but
-    //  with var_s1 doubled. Item description says "Big HP restore" so makes
+    //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
     if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, HEAD_TYPE) != 0 &&
         arg0->unk4 == 7) {
-        var_s1 *= 2;
-        if (var_s1 < 1) {
-            var_s1 = 1;
+        arg2 *= 2;
+        if (arg2 < 1) {
+            arg2 = 1;
         }
-        arg0->unkC = var_s1;
+        arg0->unkC = arg2;
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
             g_Status.hp += arg0->unkC;
@@ -535,17 +533,17 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
     itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, HEAD_TYPE);
     if ((itemCount != 0) && (arg0->unk0 & 0xF980)) {
         if (itemCount == 1) {
-            var_s1 -= var_s1 / 5;
+            arg2 -= arg2 / 5;
         }
         if (itemCount == 2) {
-            var_s1 -= var_s1 / 3;
+            arg2 -= arg2 / 3;
         }
     }
     if (g_Player_unk0C & 0x80) {
         arg0->damageTaken = g_Status.hpMax / 8;
         ret = 8;
     } else if (arg0->unk0 & 0x200) {
-        arg0->damageTaken = var_s1 - (g_Status.defenseEquip * 2);
+        arg0->damageTaken = arg2 - (g_Status.defenseEquip * 2);
         if (arg0->damageTaken <= 0) {
             arg0->damageTaken = 0;
         }
@@ -559,7 +557,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         ret = 9;
     } else {
         if (arg0->unk4 < 16) {
-            arg0->damageTaken = var_s1 - g_Status.defenseEquip;
+            arg0->damageTaken = arg2 - g_Status.defenseEquip;
         } else {
             arg0->damageTaken = g_Status.hpMax / 8;
         }
@@ -577,7 +575,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
             if (arg0->unk4 < 2) {
                 if ((arg0->damageTaken * 2) >= g_Status.hpMax) {
                     arg0->unk4 = 4;
-                } else if ((var_s1 * 50) >= g_Status.hpMax) {
+                } else if ((arg2 * 50) >= g_Status.hpMax) {
                     arg0->unk4 = 3;
                 } else {
                     arg0->unk4 = 2;
