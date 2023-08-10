@@ -46,6 +46,10 @@ const gameMetadata = {
             "name": "DRA.BIN",
             "desc": "Game engine"
         },
+        "weapon": {
+            "name": "BIN/WEAPON0.BIN",
+            "desc": "Weapons, shield and consumable programs"
+        },
         "ric": {
             "name": "BIN/RIC.BIN",
             "desc": "Richter program"
