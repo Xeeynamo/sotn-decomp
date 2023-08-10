@@ -92,7 +92,7 @@ endef
 all: build check
 saturn: build_saturn_native check_saturn_native
 build: build_$(VERSION)
-build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra
 clean:
 	git clean -fdx assets/
@@ -204,6 +204,10 @@ tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
+weapon: weapon_dirs $(BUILD_DIR)/WEAPON0.BIN
+$(BUILD_DIR)/WEAPON0.BIN: $(BUILD_DIR)/weapon0.elf
+	$(OBJCOPY) -O binary $< $@
+
 mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
@@ -215,6 +219,8 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+weapon_dirs:
+	$(foreach dir,$(ASM_DIR)/weapon $(ASM_DIR)/weapon/data $(SRC_DIR)/weapon $(ASSETS_DIR)/weapon,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
@@ -222,6 +228,8 @@ st%_dirs:
 
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
+$(BUILD_DIR)/weapon0.elf: $$(call list_o_files,weapon)
+	$(call link,weapon,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
@@ -233,7 +241,7 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_$(VERSION)
-extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract_us: extract_main extract_dra extract_weapon extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_hd: extract_dra
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
@@ -254,6 +262,9 @@ extract_st%: $(SPLAT_APP)
 extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
+extract_weapon: $(SPLAT_APP)
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).weapon.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
 extract_saturn: $(SATURN_SPLITTER_APP)
@@ -560,6 +571,9 @@ diff_saturn_native:
 	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
 
 # Handles assets
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.png.o: $(ASSETS_DIR)/weapon/f_%.png
+	./tools/png2bin.py $< $(BUILD_DIR)/assets/weapon/f_$*.png.bin
+	$(LD) -r -b binary -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_$*.png.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
