@@ -181,7 +181,7 @@ void func_801B2F30(Entity* self) {
         self->ext.et_801B2F30.unk84 = 0;
 
         tilePos = 0x445;
-        for (i = 0, tilePtr = &D_80180FF8; i < 8; tilePtr++, i++) {
+        for (i = 0, tilePtr = D_80180FF8; i < 8; tilePtr++, i++) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
             tilePos += 0x20;
         }
@@ -223,7 +223,7 @@ void func_801B2F30(Entity* self) {
 
         if (i != 0) {
             NormalColorCol(*var_s5, &cvec2, (CVECTOR*)&prim->r0);
-            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+            LOW(prim->r2) = LOW(prim->r0);
         }
 
         if (temp_s3 > 0) {

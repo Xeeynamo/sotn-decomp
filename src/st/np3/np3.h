@@ -85,7 +85,7 @@ extern SVEC4 D_80180F6C;
 extern MATRIX D_80180F9C;
 extern SVECTOR* D_80180FD4[];
 extern u8 D_80180FE0[];
-extern u16 D_80180FF8;
+extern u16 D_80180FF8[];
 extern s16 D_80181098[][2];
 extern s16 D_801810A8[];
 extern SVECTOR D_801810B8[];
