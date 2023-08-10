@@ -231,7 +231,7 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
-s32 LevelUpHPIncreaseTable[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
+s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
 
 u32 CheckAndDoLevelUp(void) {
     s32 i;
@@ -257,8 +257,8 @@ u32 CheckAndDoLevelUp(void) {
         g_Status.level++;
         statsGained = 0;
         g_Status.mpMax += 4 + (rand() & 1);
-        g_Status.hp += LevelUpHPIncreaseTable[(s32)g_Status.level / 10];
-        g_Status.hpMax += LevelUpHPIncreaseTable[(s32)g_Status.level / 10];
+        g_Status.hp += g_LevelHPIncrease[(s32)g_Status.level / 10];
+        g_Status.hpMax += g_LevelHPIncrease[(s32)g_Status.level / 10];
         g_Status.heartsMax += 2;
         // Run again, in case we have enough EXP to level up twice
         CheckAndDoLevelUp();
