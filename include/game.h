@@ -37,6 +37,13 @@ typedef struct Vertex {
     /* 0xA */ u16 param;
 } Vertex; // size = 0xC
 
+typedef struct {
+    /* 0x00 */ SVECTOR* v0;
+    /* 0x04 */ SVECTOR* v1;
+    /* 0x08 */ SVECTOR* v2;
+    /* 0x0C */ SVECTOR* v3;
+} SVEC4; // size = 0x10
+
 // This structure is identical to Vertex but it is used for a FAKE! match.
 // The fields are shifted compared to Vertex but they are not supposed to.
 typedef struct {
@@ -55,6 +62,7 @@ typedef struct Prim {
     struct Prim* next;
     struct Vertex v[4];
 } Prim;
+
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
     /* 0x04 */ u8 r0;

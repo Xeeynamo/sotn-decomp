@@ -132,7 +132,107 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityShuttingWindow);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2F30);
+// Entity ID: 0x19
+void func_801B2F30(Entity* self) {
+    SVECTOR svec1;
+    VECTOR vec;
+    MATRIX mtx1, mtx2;
+    CVECTOR cvec1, cvec2;
+    SVECTOR svec2;
+    long sxy2, sxy3, p;
+    SVECTOR** var_s5;
+    Primitive* prim;
+    SVEC4* var_s6;
+    s16 primIndex;
+    s32 temp_s3;
+    u16* tilePtr;
+    s32 tilePos;
+    u8* temp_a0;
+    s32 i;
+
+    svec2 = D_801B1EA0;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180A6C);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        temp_a0 = D_80180FE0;
+        self->primIndex = primIndex;
+        self->ext.et_801B2F30.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        for (i = 0; i < 3; i++) {
+            prim->tpage = 0xF;
+            prim->clut = 0x41;
+            prim->priority = 0x6A;
+            prim->blendMode = 2;
+            prim->u0 = prim->u2 = *temp_a0++;
+            prim->u1 = prim->u3 = *temp_a0;
+            prim->v0 = prim->v1 = 1;
+            prim->v2 = prim->v3 = 0x81;
+            prim = prim->next;
+            temp_a0++;
+        }
+        self->ext.et_801B2F30.unk84 = 0;
+
+        tilePos = 0x445;
+        for (i = 0, tilePtr = D_80180FF8; i < 8; tilePtr++, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
+            tilePos += 0x20;
+        }
+    }
+    SetGeomScreen(0x300);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+    svec1.vx = 0;
+    svec1.vy = self->ext.et_801B2F30.unk84;
+    svec1.vz = 0;
+    RotMatrix(&svec2, &mtx1);
+    RotMatrixY(svec1.vy, &mtx1);
+    vec.vx = 0;
+    vec.vy = 0;
+    vec.vz = 0x334;
+    TransMatrix(&mtx1, &vec);
+    SetRotMatrix(&mtx1);
+    SetTransMatrix(&mtx1);
+    SetBackColor(128, 128, 128);
+    cvec1.b = cvec1.g = cvec1.r = 128;
+    cvec1.cd = 4;
+    cvec2.b = cvec2.g = cvec2.r = 64;
+    cvec2.cd = 4;
+    RotMatrix(&svec1, &mtx2);
+    SetColorMatrix(&D_80180F9C);
+    SetLightMatrix(&mtx2);
+
+    prim = self->ext.et_801B2F30.prim;
+    var_s6 = &D_80180F6C;
+    var_s5 = D_80180FD4;
+    for (i = 0; i < 3; var_s6++, var_s5++, i++) {
+        temp_s3 = RotAverageNclip4(
+            var_s6->v0, var_s6->v1, var_s6->v2, var_s6->v3, (long*)&prim->x0,
+            (long*)&prim->x1, (long*)&prim->x2, (long*)&prim->x3, &sxy2, &sxy3,
+            &p);
+        NormalColorCol(*var_s5, &cvec1, (CVECTOR*)&prim->r0);
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+
+        if (i != 0) {
+            NormalColorCol(*var_s5, &cvec2, (CVECTOR*)&prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+        }
+
+        if (temp_s3 > 0) {
+            prim->blendMode = 6;
+        } else {
+            prim->blendMode = BLEND_VISIBLE;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B32A8);
 
@@ -233,7 +333,7 @@ void EntityCavernDoorLever(Entity* entity) {
         entity->animCurFrame = 18;
         entity->rotAngle = -0x200;
         entity->unk19 |= 4;
-        CreateEntityFromEntity(0x1E, entity, &entity[1]);
+        CreateEntityFromEntity(E_ID_1E, entity, &entity[1]);
         if (D_8003BDEC[0x30] != 0) {
             entity->rotAngle = 0;
         }
@@ -243,7 +343,7 @@ void EntityCavernDoorLever(Entity* entity) {
             entity->rotAngle += 4;
             if (entity->rotAngle > 0) {
                 entity->rotAngle = 0;
-                if (D_8003BDEC[0x30] == 0) {
+                if (D_8003BDEC[48] == 0) {
                     g_api.PlaySfx(0x675);
                 }
                 D_8003BDEC[48] = 1;
@@ -309,7 +409,7 @@ void func_801B40F8(Entity* self) {
         self->zPriority = 0x9F;
 
         tileLayoutPtr = &D_801810F8[0];
-        if (D_8003BDEC[48] != 0) {
+        if (D_8003BDEC[48]) {
             tileLayoutPtr = &D_801810F8[3];
             self->step = 128;
             self->animCurFrame = 0;
@@ -751,7 +851,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0xA, self, newEntity);
+                CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = 0x43;
             }
             D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
@@ -833,7 +933,7 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x27, self, newEntity);
+                    CreateEntityFromEntity(E_ID_27, self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
@@ -990,7 +1090,7 @@ void EntityFallingRock(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(6, self, newEntity);
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
                 newEntity->params = 0x10;
                 if (animFrame == 0) {
                     newEntity->params = 0x13;
@@ -1069,7 +1169,7 @@ void func_801B653C(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
-            CreateEntityFromEntity(0x4D, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_ID_4D, g_CurrentEntity, entity);
             entity->params = 2;
             entity->ext.generic.unk88.U8.unk1 = 6 - i;
             entity->ext.generic.unk84.S16.unk0 = temp_s3;
