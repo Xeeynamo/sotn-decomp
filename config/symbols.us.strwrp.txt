@@ -1,10 +1,12 @@
 g_SpriteBanks = 0x80180040;
+PfnEntityUpdates = 0x801803E4;
 UNK_Invincibility0 = 0x80180690;
 g_Rooms = 0x801811AC;
 Random = 0x8018A168;
 Update = 0x8018A198;
 UpdateStageEntities = 0x8018A494;
 TestCollisions = 0x8018A59C;
+CreateEntityFromLayout = 0x8018BD58;
 CreateEntityWhenInVerticalRange = 0x8018BE1C;
 CreateEntityWhenInHorizontalRange = 0x8018BF34;
 DestroyEntity = 0x8018D580;

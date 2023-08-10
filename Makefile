@@ -18,7 +18,7 @@ AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 PSXCC_FLAGS		:= -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
 CPP_FLAGS       += -Iinclude -undef -Wall -fno-builtin
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
+CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS -DUSE_INCLUDE_ASM
 CPP_FLAGS       += -D_internal_version_$(VERSION)
 LD_FLAGS		:= -nostdlib
 
@@ -337,7 +337,7 @@ extract_disk_ps1%: $(SOTNDISK)
 extract_disk_saturn:
 	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
 	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/ || true
-disk: build $(SOTNDISK)
+disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
@@ -363,6 +363,11 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
+disk: disk_prepare
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+disk_debug: disk_prepare
+	cd tools/sotn-debugmodule && make
+	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
@@ -600,4 +605,4 @@ include tools/tools.mk
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
-.PHONY: require-tools,update-dependencies
+.PHONY: update-dependencies

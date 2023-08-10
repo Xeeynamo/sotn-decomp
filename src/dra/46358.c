@@ -101,7 +101,7 @@ void HandleNowLoading(void) {
         }
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
-            g_LoadFile = 2;
+            g_LoadFile = CdFile_GameChr;
         } else {
             var_s0 = STAGE_ST0;
             if (g_StageId == var_s0 ||
