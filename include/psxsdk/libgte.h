@@ -20,7 +20,7 @@ typedef struct {
 
 typedef struct {
     u_char r, g, b; // Color palette
-    u_char cd; // GPU code
+    u_char cd;      // GPU code
 } CVECTOR;
 
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
@@ -37,6 +37,19 @@ long RotTransPers4(
     long* v13, // Pointers to screen coordinates
     long* p,   // Pointer to interpolated value for depth cueing
     long* flag // Pointer to flag
+);
+long RotAverageNclip4(
+    SVECTOR* v0, SVECTOR* v1, SVECTOR* v2,
+    SVECTOR* v3, // Pointer to vectors (input)
+    long* sxy0, long* sxy1, long* sxy2,
+    long* sxy3, // Pointer to coordinates (output)
+    long* p,    // Pointer to interpolation value (output)
+    long* otz,  // Pointer to OTZ value (output)
+    long* flag  // Pointer to flag (output)
+);
+void NormalColorCol(SVECTOR* v0, // Pointer to normal vector (input)
+                    CVECTOR* v1, // Pointer to primary color vector (input)
+                    CVECTOR* v2  // Pointer to color vector (output)
 );
 
 #endif
