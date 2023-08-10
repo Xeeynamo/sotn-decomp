@@ -160,9 +160,9 @@ void func_801B2F30(Entity* self) {
             return;
         }
         prim = &g_PrimBuf[primIndex];
-        temp_a0 = &D_80180FE0;
+        temp_a0 = D_80180FE0;
         self->primIndex = primIndex;
-        self->ext.prim = prim;
+        self->ext.et_801B2F30.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
 
         for (i = 0; i < 3; i++) {
@@ -177,7 +177,7 @@ void func_801B2F30(Entity* self) {
             prim = prim->next;
             temp_a0++;
         }
-        self->ext.generic.unk84.S16.unk0 = 0;
+        self->ext.et_801B2F30.unk84 = 0;
 
         tilePos = 0x445;
         for (i = 0, tilePtr = &D_80180FF8; i < 8; tilePtr++, i++) {
@@ -188,7 +188,7 @@ void func_801B2F30(Entity* self) {
     SetGeomScreen(0x300);
     SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
     svec1.vx = 0;
-    svec1.vy = self->ext.generic.unk84.S16.unk0;
+    svec1.vy = self->ext.et_801B2F30.unk84;
     svec1.vz = 0;
     RotMatrix(&svec2, &mtx1);
     RotMatrixY(svec1.vy, &mtx1);
@@ -207,7 +207,7 @@ void func_801B2F30(Entity* self) {
     SetColorMatrix(&D_80180F9C);
     SetLightMatrix(&mtx2);
 
-    prim = self->ext.prim;
+    prim = self->ext.et_801B2F30.prim;
     var_s6 = &D_80180F6C;
     var_s5 = D_80180FD4;
     for (i = 0; i < 3; var_s6++, var_s5++, i++) {
