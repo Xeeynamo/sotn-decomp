@@ -24,7 +24,7 @@ const u32 MODULE_ADDR = 0x80280000;      // sotn-debugmodule.ld
 const u32 LOAD_ADDR = 0x80170000;        // Familiar overlay address
 const u32 INJECT = INJECT_MAIN_ADDR - (MODULE_ADDR - LOAD_ADDR);
 
-void Dummy(Entity*);
+void Dummy(Entity* e);
 ServantDesc g_ServantDesc __attribute__((section(".inject-head"))) = {
     INJECT, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
     Dummy,  Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
@@ -48,7 +48,7 @@ void __attribute__((section(".inject-func"))) InjectMain(void) {
     // Now we say to 'entrypoint_sotn' to call our main every frame
     *InjectPoint = JAL(MainLoop);
 }
-void Dummy(Entity*) {}
+void Dummy(Entity* e) {}
 
 bool g_Init = false;
 void Init(void);
