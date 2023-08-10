@@ -1,26 +1,26 @@
-#include "common.h"
+#include "weapon_private.h"
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B0D4);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B0D4);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B140);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B140);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B1D8);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B1D8);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B200);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B200);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B228);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B228);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B250);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B250);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B298);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B298);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B2E0);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B2E0);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B308);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B308);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B378);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B378);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B474);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B474);
 
 void func_8017B690(void) {}
 
@@ -32,7 +32,7 @@ void func_8017B6A8(void) {}
 
 void func_8017B6B0(void) {}
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon0", func_8017B6B8);
+INCLUDE_ASM("weapon/nonmatchings/weapon0", func_8017B6B8);
 
 void func_8017B6C0(void) {}
 

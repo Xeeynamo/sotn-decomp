@@ -1,26 +1,26 @@
-#include "common.h"
+#include "weapon_private.h"
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AC40);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AC40);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017ACAC);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017ACAC);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AD44);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AD44);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AD6C);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AD6C);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AD94);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AD94);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017ADBC);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017ADBC);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AE04);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AE04);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AE4C);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AE4C);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AE74);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AE74);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AEE4);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AEE4);
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017AFE0);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017AFE0);
 
 void func_8017B1FC(void) {}
 
@@ -32,7 +32,7 @@ void func_8017B214(void) {}
 
 void func_8017B21C(void) {}
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017B224);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017B224);
 
 void func_8017B22C(void) {}
 
@@ -50,4 +50,4 @@ void func_8017B25C(void) {}
 
 void func_8017B264(void) {}
 
-INCLUDE_ASM("config/../asm/us/weapon/nonmatchings/weapon3", func_8017B26C);
+INCLUDE_ASM("weapon/nonmatchings/weapon3", func_8017B26C);
