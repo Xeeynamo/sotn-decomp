@@ -558,7 +558,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         }
         ret = 9;
     } else {
-        if (arg0->unk4 < 0x10U) {
+        if (arg0->unk4 < 16) {
             arg0->damageTaken = var_s1 - g_Status.defenseEquip;
         } else {
             arg0->damageTaken = g_Status.hpMax / 8;
@@ -574,7 +574,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
             }
         }
         if (arg0->damageTaken > 0) {
-            if (arg0->unk4 < 2U) {
+            if (arg0->unk4 < 2) {
                 if ((arg0->damageTaken * 2) >= g_Status.hpMax) {
                     arg0->unk4 = 4;
                 } else if ((var_s1 * 50) >= g_Status.hpMax) {
@@ -587,10 +587,10 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         } else {
             if ((g_Status.defenseEquip > 99) && !(arg0->unk0 & 0x180) &&
                 !(g_Player_unk0C & 0x80)) {
-                arg0->unk4 = 0U;
+                arg0->unk4 = 0;
                 ret = 1;
             } else {
-                arg0->unk4 = 2U;
+                arg0->unk4 = 2;
                 ret = 3;
             }
             arg0->damageTaken = 1;

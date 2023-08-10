@@ -310,8 +310,8 @@ typedef struct {
 } RelicDesc;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
+    u32 unk0;
+    u32 unk4;
     s32 damageTaken;
     s32 unkC;
 } Unkstruct_800FE97C;
