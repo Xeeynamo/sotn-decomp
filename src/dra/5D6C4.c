@@ -566,10 +566,10 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         if (g_Player_unk0C & 0x4000) {
             arg0->damageTaken *= 2;
         }
-        // Check for player wearing a Talisman
+        // Check for player wearing a Talisman (chance to dodge attack)
         itemCount = CheckEquipmentItemCount(ITEM_TALISMAN, ACCESSORY_TYPE);
         if (itemCount != 0) {
-            if (itemCount * g_Status.statsTotal[3] >= (rand() & 0x1FF)) {
+            if (itemCount * g_Status.statsTotal[STAT_LCK] >= (rand() & 511)) {
                 return 2;
             }
         }
