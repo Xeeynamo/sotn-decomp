@@ -132,7 +132,107 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntityShuttingWindow);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B2F30);
+// Entity ID: 0x19
+void func_801B2F30(Entity* self) {
+    SVECTOR svec1;
+    VECTOR vec;
+    MATRIX mtx1, mtx2;
+    CVECTOR cvec1, cvec2;
+    SVECTOR svec2;
+    long sxy2, sxy3, p;
+    SVECTOR** var_s5;
+    Primitive* prim;
+    SVEC4* var_s6;
+    s16 primIndex;
+    s32 temp_s3;
+    u16* tilePtr;
+    s32 tilePos;
+    u8* temp_a0;
+    s32 i;
+
+    svec2 = D_801B1EA0;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180A6C);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        temp_a0 = &D_80180FE0;
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        for (i = 0; i < 3; i++) {
+            prim->tpage = 0xF;
+            prim->clut = 0x41;
+            prim->priority = 0x6A;
+            prim->blendMode = 2;
+            prim->u0 = prim->u2 = *temp_a0++;
+            prim->u1 = prim->u3 = *temp_a0;
+            prim->v0 = prim->v1 = 1;
+            prim->v2 = prim->v3 = 0x81;
+            prim = prim->next;
+            temp_a0++;
+        }
+        self->ext.generic.unk84.S16.unk0 = 0;
+
+        tilePos = 0x445;
+        for (i = 0, tilePtr = &D_80180FF8; i < 8; tilePtr++, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
+            tilePos += 0x20;
+        }
+    }
+    SetGeomScreen(0x300);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+    svec1.vx = 0;
+    svec1.vy = self->ext.generic.unk84.S16.unk0;
+    svec1.vz = 0;
+    RotMatrix(&svec2, &mtx1);
+    RotMatrixY(svec1.vy, &mtx1);
+    vec.vx = 0;
+    vec.vy = 0;
+    vec.vz = 0x334;
+    TransMatrix(&mtx1, &vec);
+    SetRotMatrix(&mtx1);
+    SetTransMatrix(&mtx1);
+    SetBackColor(128, 128, 128);
+    cvec1.b = cvec1.g = cvec1.r = 128;
+    cvec1.cd = 4;
+    cvec2.b = cvec2.g = cvec2.r = 64;
+    cvec2.cd = 4;
+    RotMatrix(&svec1, &mtx2);
+    SetColorMatrix(&D_80180F9C);
+    SetLightMatrix(&mtx2);
+
+    prim = self->ext.prim;
+    var_s6 = &D_80180F6C;
+    var_s5 = D_80180FD4;
+    for (i = 0; i < 3; var_s6++, var_s5++, i++) {
+        temp_s3 = RotAverageNclip4(
+            var_s6->v0, var_s6->v1, var_s6->v2, var_s6->v3, (long*)&prim->x0,
+            (long*)&prim->x1, (long*)&prim->x2, (long*)&prim->x3, &sxy2, &sxy3,
+            &p);
+        NormalColorCol(*var_s5, &cvec1, (CVECTOR*)&prim->r0);
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+
+        if (i != 0) {
+            NormalColorCol(*var_s5, &cvec2, (CVECTOR*)&prim->r0);
+            *(s32*)&prim->r2 = *(s32*)&prim->r0;
+        }
+
+        if (temp_s3 > 0) {
+            prim->blendMode = 6;
+        } else {
+            prim->blendMode = BLEND_VISIBLE;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B32A8);
 
