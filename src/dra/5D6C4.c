@@ -231,6 +231,8 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
+s32 LevelUpHPIncreaseTable[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
+
 u32 CheckAndDoLevelUp(void) {
     s32 i;
     s32 statsGained;
