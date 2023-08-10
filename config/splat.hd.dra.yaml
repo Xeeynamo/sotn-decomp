@@ -29,6 +29,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x518, data]
+      - [0x1F18, data]
+      - [0x2BC0, data]
+      - [0x2EC0, .data, 5D6C4]
+      - [0x2EE8, data]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
