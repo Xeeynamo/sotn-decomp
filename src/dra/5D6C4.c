@@ -474,7 +474,155 @@ void AddHearts(s32 value) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", func_800FE97C);
+//Note: Arg3 is unused, but is given in the call from func_80113D7C
+s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 ret;
+    s32 var_s1;
+    s32 itemCount;
+
+    var_s1 = arg2;
+    func_800F53A4();
+    arg0->unk0 = arg1 & ~0x1F;
+    arg0->unk4 = arg1 & 0x1F;
+    if (g_Status.defenseElement & arg0->unk0) {
+        var_s1 *= 2;
+    }
+    if (g_Status.D_80097C2A & arg0->unk0) {
+        var_s1 /=  2;
+    }
+    if (g_Status.D_80097C2C & arg0->unk0) {
+        if (!(g_Status.D_80097C2C & arg0->unk0 & 0x200)) {
+            return 0;
+        }
+        arg0->unk0 &= ~0x200;
+    }
+    
+    if (g_Status.D_80097C2E & arg0->unk0){
+        if (var_s1 < 1) {
+            var_s1 = 1;
+        }
+        arg0->unkC = var_s1;
+        if (g_Status.hp != g_Status.hpMax) {
+            func_800FE8F0();
+            g_Status.hp += arg0->unkC;
+            if (g_Status.hpMax < g_Status.hp) {
+                g_Status.hp = g_Status.hpMax;
+            }
+        }
+        return 5;
+    }
+    //Player wearing cat-eye circlet. Same as above if-statement but
+    // with var_s1 doubled. Item description says "Big HP restore" so makes sense
+    if (CheckEquipmentItemCount(0x2B, 1) != 0 && arg0->unk4 == 7) {
+        var_s1 *= 2;
+        if (var_s1 < 1) {
+            var_s1 = 1;
+        }
+        arg0->unkC = var_s1;
+        if (g_Status.hp != g_Status.hpMax) {
+            func_800FE8F0();
+            g_Status.hp += arg0->unkC;
+            if (g_Status.hpMax < g_Status.hp) {
+                g_Status.hp = g_Status.hpMax;
+            }
+        }
+        return 5;
+    }
+    
+    //Ballroom mask???
+    itemCount = CheckEquipmentItemCount(0x1C, 1);
+    if ((itemCount != 0) && (arg0->unk0 & 0xF980)) {
+        if (itemCount == 1) {
+            var_s1 -= var_s1 / 5;
+        }
+        if (itemCount == 2) {
+            var_s1 -= var_s1 / 3;
+        }
+    }
+    if (g_Player_unk0C & 0x80) {
+        arg0->unk8 = g_Status.hpMax / 8;
+        ret = 8;
+    }
+    else if (arg0->unk0 & 0x200) {
+        arg0->unk8 = var_s1 - (g_Status.defenseEquip * 2);
+        if (arg0->unk8 <= 0) {
+            arg0->unk8 = 0;
+        }
+        ret = 7;
+    }
+    else if (arg0->unk4 == 6) {
+        if (D_8003C8C4 == ((D_8003C8C4 / 10) * 0xA)) {
+            arg0->unk8 = 1;
+        } else {
+            arg0->unk8 = 0;
+        }
+        ret = 9;
+    }
+    else {
+        if (arg0->unk4 < 0x10U) {
+            arg0->unk8 = var_s1 - g_Status.defenseEquip;
+        } else {
+            arg0->unk8 = g_Status.hpMax / 8;
+        }
+        if (g_Player_unk0C & 0x4000) {
+            arg0->unk8 *= 2;
+        }
+        //Check for player wearing a Talisman
+        itemCount = CheckEquipmentItemCount(0x53U, 4U);
+        if (itemCount != 0){
+            if (itemCount * g_Status.statsTotal[3] >= (rand() & 0x1FF)) {
+                return 2;
+            }
+        }
+        if (arg0->unk8 > 0) {
+            if (arg0->unk4 < 2U) {
+                if ((arg0->unk8 * 2) >= g_Status.hpMax) {
+                    arg0->unk4 = 4;
+                } else if ((var_s1 * 50) >= g_Status.hpMax) {
+                    arg0->unk4 = 3;
+                } else {
+                    arg0->unk4 = 2;
+                }
+            }
+            ret = 3;
+        } else {
+            if ((g_Status.defenseEquip > 99) && !(arg0->unk0 & 0x180) && !(g_Player_unk0C & 0x80)) {
+                arg0->unk4 = 0U;
+                ret = 1;
+            } else {
+                arg0->unk4 = 2U;
+                ret = 3;
+            }
+            arg0->unk8 = 1;
+        }
+    }
+    
+    if (g_Status.hp <= arg0->unk8) {
+        g_Status.hp = 0;
+        if (ret == 7) {
+            return 7;
+        }
+        if (ret == 9) {
+            ret = 6;
+        } else {
+            ret = 4;
+        }
+    } else {
+        if (ret != 9) {
+            func_800FE8F0();
+        }
+        g_Status.hp -= arg0->unk8;
+        if ((CheckEquipmentItemCount(0x36, 3) != 0) && (ret != 9)) {
+            AddHearts(arg0->unk8);
+        }
+        if (CheckEquipmentItemCount(0x16, 2) != 0) {
+            if (*D_80139828 < 0x200) {
+                *D_80139828 = 0x200;
+            }
+        }
+    }
+    return ret;
+}
 
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird

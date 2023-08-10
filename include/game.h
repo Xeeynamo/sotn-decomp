@@ -707,7 +707,7 @@ typedef struct {
     /* 80097BFC */ u32 subWeapon;
     /* 80097C00 */ u32 equipment[7];
     /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
-    /* 80097C24 */ u32 defenseEquip;
+    /* 80097C24 */ s32 defenseEquip;
     /* 80097C28 */ u16 defenseElement;
     /* 80097C2A */ u16 D_80097C2A;
     /* 80097C2C */ u16 D_80097C2C;
