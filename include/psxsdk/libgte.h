@@ -18,6 +18,11 @@ typedef struct {
     short pad;        // System reserved
 } SVECTOR;            // size = 0x8
 
+typedef struct {
+    u_char r, g, b; // Color palette
+    u_char cd; // GPU code
+} CVECTOR;
+
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
 void SetGeomOffset(long ofx, long ofy);
 long RotTransPers(SVECTOR*, long*, long*, long*);
