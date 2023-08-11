@@ -18,7 +18,7 @@ AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 PSXCC_FLAGS		:= -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
 CPP_FLAGS       += -Iinclude -undef -Wall -fno-builtin
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS
+CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS -DUSE_INCLUDE_ASM
 CPP_FLAGS       += -D_internal_version_$(VERSION)
 LD_FLAGS		:= -nostdlib
 
@@ -92,7 +92,7 @@ endef
 all: build check
 saturn: build_saturn_native check_saturn_native
 build: build_$(VERSION)
-build_us: main dra ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
+build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra
 clean:
 	git clean -fdx assets/
@@ -204,6 +204,10 @@ tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
+weapon: weapon_dirs $(BUILD_DIR)/WEAPON0.BIN
+$(BUILD_DIR)/WEAPON0.BIN: $(BUILD_DIR)/weapon0.elf
+	$(OBJCOPY) -O binary $< $@
+
 mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
@@ -215,6 +219,8 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+weapon_dirs:
+	$(foreach dir,$(ASM_DIR)/weapon $(ASM_DIR)/weapon/data $(SRC_DIR)/weapon $(ASSETS_DIR)/weapon,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
@@ -222,6 +228,8 @@ st%_dirs:
 
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
+$(BUILD_DIR)/weapon0.elf: $$(call list_o_files,weapon)
+	$(call link,weapon,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
@@ -233,7 +241,7 @@ $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
 
 extract: extract_$(VERSION)
-extract_us: extract_main extract_dra extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
+extract_us: extract_main extract_dra extract_weapon extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
 extract_hd: extract_dra
 extract_main: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
@@ -254,6 +262,9 @@ extract_st%: $(SPLAT_APP)
 extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
+extract_weapon: $(SPLAT_APP)
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).weapon.txt
+	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
 extract_saturn: $(SATURN_SPLITTER_APP)
@@ -337,7 +348,7 @@ extract_disk_ps1%: $(SOTNDISK)
 extract_disk_saturn:
 	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
 	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/ || true
-disk: build $(SOTNDISK)
+disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
@@ -363,6 +374,11 @@ disk: build $(SOTNDISK)
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
+disk: disk_prepare
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+disk_debug: disk_prepare
+	cd tools/sotn-debugmodule && make
+	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
@@ -555,6 +571,9 @@ diff_saturn_native:
 	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
 
 # Handles assets
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.png.o: $(ASSETS_DIR)/weapon/f_%.png
+	./tools/png2bin.py $< $(BUILD_DIR)/assets/weapon/f_$*.png.bin
+	$(LD) -r -b binary -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_$*.png.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
@@ -600,4 +619,4 @@ include tools/tools.mk
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
-.PHONY: require-tools,update-dependencies
+.PHONY: update-dependencies

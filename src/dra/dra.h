@@ -786,7 +786,7 @@ void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
-s32 func_800FE97C(s32*, s32, s32, s32);
+s32 func_800FE97C(Unkstruct_800FE97C*, s32, s32, s32);
 s32 func_800FEEA4(s32, s32);
 void func_800FF0A0(s32 arg0);
 void func_80102CD8(s32);

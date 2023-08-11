@@ -3,6 +3,7 @@ D_80180040 = 0x80180040;
 g_Cluts = 0x80180160;
 g_TileLayers = 0x80180394;
 g_EntityGfxs = 0x80180888;
+PfnEntityUpdates = 0x80180A94;
 g_BossFlag = 0x80181010;
 UNK_Invincibility0 = 0x80181574;
 c_GoldPrizes = 0x80181D14;

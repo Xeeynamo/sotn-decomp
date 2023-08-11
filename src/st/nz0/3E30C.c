@@ -954,7 +954,7 @@ void func_801C16B4(Entity* entity) {
 void func_801C1780(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
-    dst->pfnUpdate = D_80180A90[entityId];
+    dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
     dst->posX.i.hi = src->posX.i.hi;
     dst->posY.i.hi = src->posY.i.hi;
     dst->unk5A = src->unk5A;

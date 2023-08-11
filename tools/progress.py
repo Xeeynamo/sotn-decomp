@@ -292,6 +292,7 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
 if __name__ == "__main__":
     progress = dict[str, DecompProgressStats]()
     progress["dra"] = DecompProgressStats("dra", "dra")
+    progress["weapon"] = DecompProgressStats("weapon", "weapon")
     progress["ric"] = DecompProgressStats("ric", "ric")
     progress["stcen"] = DecompProgressStats("stcen", "st/cen")
     progress["stdre"] = DecompProgressStats("stdre", "st/dre")

@@ -3,16 +3,7 @@ INCLUDE_ASM("asm/us/st/nz0/nonmatchings/39908", TestCollisions);
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/39908", EntityNumericDamage);
 
-void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
-    DestroyEntity(entity);
-    entity->entityId = initDesc->entityId & 0x3FF;
-    entity->pfnUpdate = D_80180A90[entity->entityId];
-    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
-    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->params = initDesc->params;
-    entity->entityRoomIndex = initDesc->entityRoomIndex >> 8;
-    entity->unk68 = (initDesc->entityId >> 0xA) & 7;
-}
+#include "../create_entity_from_layout.h"
 
 void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 yClose;
@@ -300,7 +291,7 @@ void func_801BBA98(void) {
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
-    entity->pfnUpdate = D_80180A90[entityId];
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
@@ -308,7 +299,7 @@ void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2) {
     DestroyEntity(ent2);
     ent2->entityId = entityId;
-    ent2->pfnUpdate = D_80180A90[entityId];
+    ent2->pfnUpdate = PfnEntityUpdates[entityId - 1];
     ent2->posX.i.hi = ent1->posX.i.hi;
     ent2->posY.i.hi = ent1->posY.i.hi;
 }

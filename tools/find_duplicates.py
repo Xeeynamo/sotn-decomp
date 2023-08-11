@@ -33,6 +33,7 @@ def read_roms():
     roms = dict()
     roms["MAIN"] = read_binary("main.exe")
     roms["DRA"] = read_binary("DRA.BIN")
+    roms["WEAPON"] = read_binary("WEAPON0.BIN")
     roms["RIC"] = read_binary("RIC.BIN")
     roms["CEN"] = read_binary("CEN.BIN")
     roms["DRE"] = read_binary("DRE.BIN")

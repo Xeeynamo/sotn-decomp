@@ -5,6 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug SOTN (PCSX Redux)",
+            "type": "gdb",
+            "request": "attach",
+            "target": "localhost:3333",
+            "remote": true,
+            "stopAtConnect": true,
+            "executable": "build/sotn-debugmodule.elf",
+            "linux": {
+                "gdbpath": "/usr/bin/gdb-multiarch"
+            },
+            "cwd": "${workspaceRoot}",
+            "autorun": [
+                "set substitute-path /project .",
+                "file build/sotn-debugmodule.elf",
+                "continue",
+            ],
+            "valuesFormatting": "parseText"
+        },
+        {
             "name": "Debug sotn-disk (extract)",
             "type": "go",
             "request": "launch",

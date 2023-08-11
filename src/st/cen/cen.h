@@ -37,7 +37,7 @@ typedef enum {
 } EntityIDs;
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
-void func_80192A3C(Entity*, LayoutEntity*);
+void CreateEntityFromLayout(Entity*, LayoutEntity*);
 extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
 
 extern LayoutEntity* D_801801EC[];

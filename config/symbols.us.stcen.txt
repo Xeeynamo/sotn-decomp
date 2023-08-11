@@ -17,6 +17,7 @@ Update = 0x80190E7C;
 UpdateStageEntities = 0x80191178;
 TestCollisions = 0x80191280;
 EntityNumericDamage = 0x80192398;
+CreateEntityFromLayout = 0x80192A3C;
 CreateEntityWhenInVerticalRange = 0x80192B00;
 CreateEntityWhenInHorizontalRange = 0x80192C18;
 InitRoomEntities = 0x80193298;

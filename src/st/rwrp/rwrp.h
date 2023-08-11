@@ -10,7 +10,7 @@ extern s16 D_80180A94[];
 extern ObjInit2 D_80181134[];
 extern LayoutEntity* D_80195A30;
 extern LayoutEntity* D_80195A34;
-void func_8018BD58(Entity*, LayoutEntity*);
+void CreateEntityFromLayout(Entity*, LayoutEntity*);
 
 // *** EntitySoulStealOrb properties START ***
 

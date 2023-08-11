@@ -32,6 +32,8 @@ segments:
       - [0x518, data]
       - [0x1F18, data]
       - [0x2BC0, data]
+      - [0x2EC0, .data, 5D6C4]
+      - [0x2EE8, data]
       - [0x3C40, data]
       - [0x4A00, data]
       - [0x4B04, equipment, equipments]

@@ -3,16 +3,7 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", TestCollisions);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", EntityNumericDamage);
 
-void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc) {
-    DestroyEntity(entity);
-    entity->entityId = initDesc->entityId & 0x3FF;
-    entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-    entity->posX.i.hi = initDesc->posX - g_Camera.posX.i.hi;
-    entity->posY.i.hi = initDesc->posY - g_Camera.posY.i.hi;
-    entity->params = initDesc->params;
-    entity->entityRoomIndex = initDesc->entityRoomIndex >> 8;
-    entity->unk68 = (initDesc->entityId >> 0xA) & 7;
-}
+#include "../create_entity_from_layout.h"
 
 void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 yClose;

@@ -7,6 +7,7 @@ ST/
 ctx.c
 ctx.c.m2c
 *.ld
+*.map
 *auto.*.txt
 generated.symbols.*.txt
 __pycache__
@@ -33,6 +34,8 @@ disks/
 
 .vscode/settings.json
 tools/go
+
+!tools/sotn-debugmodule/sotn-debugmodule.ld
 tools/saturn_toolchain/GCCSH
 config/saturn/game_syms.txt
 config/saturn/stage_02_syms.txt
