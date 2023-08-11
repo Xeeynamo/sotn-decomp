@@ -45,6 +45,7 @@ extern u16 D_80180B84[];
 extern u16 D_80180B90[];
 extern u16 D_80180BA8[];
 extern ObjInit2 D_80180BFC[];
+extern SVEC4 D_80181024[];
 extern u16 D_80181230[];
 extern s32 g_TrapDoorFlag; // 0 = Closed, 1 = Open
 extern u8 D_80181240[];

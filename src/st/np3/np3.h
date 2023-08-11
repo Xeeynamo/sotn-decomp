@@ -81,6 +81,7 @@ extern ObjInit2 D_80180C10[];
 extern u8 D_80180D98[];
 extern u8 D_80180DA0[];
 extern u16 D_80180DA8[];
+extern SVEC4 D_80180EEC[];
 extern SVEC4 D_80180F6C;
 extern MATRIX D_80180F9C;
 extern SVECTOR* D_80180FD4[];
