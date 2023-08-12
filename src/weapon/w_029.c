@@ -4,13 +4,13 @@ INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017ADD8);
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AE44);
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AEE8);
+INCLUDE_ASM("weapon/nonmatchings/w_029", SetSpriteBank1);
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AF10);
+INCLUDE_ASM("weapon/nonmatchings/w_029", SetSpriteBank2);
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AF38);
+INCLUDE_ASM("weapon/nonmatchings/w_029", DecelerateX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AF80);
+INCLUDE_ASM("weapon/nonmatchings/w_029", DecelerateY);
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AFC8);
 

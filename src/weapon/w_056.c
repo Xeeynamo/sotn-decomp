@@ -1,24 +1,24 @@
 #include "weapon_private.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B060);
+INCLUDE_ASM("weapon/nonmatchings/w_056", DestroyEntity);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B0CC);
+INCLUDE_ASM("weapon/nonmatchings/w_056", LoadWeaponPalette);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B164);
+INCLUDE_ASM("weapon/nonmatchings/w_056", SetSpriteBank1);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B18C);
+INCLUDE_ASM("weapon/nonmatchings/w_056", SetSpriteBank2);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B1B4);
+INCLUDE_ASM("weapon/nonmatchings/w_056", ResetAnimation);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B1DC);
+INCLUDE_ASM("weapon/nonmatchings/w_056", DecelerateX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B224);
+INCLUDE_ASM("weapon/nonmatchings/w_056", DecelerateY);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B26C);
+INCLUDE_ASM("weapon/nonmatchings/w_056", SetSpeedX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B294);
+INCLUDE_ASM("weapon/nonmatchings/w_056", DestroyEntityWeapon);
 
-INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B304);
+INCLUDE_ASM("weapon/nonmatchings/w_056", SetWeaponProperties);
 
 INCLUDE_ASM("weapon/nonmatchings/w_056", func_18C000_8017B400);
 
