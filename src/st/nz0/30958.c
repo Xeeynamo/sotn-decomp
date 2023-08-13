@@ -940,14 +940,14 @@ void func_801B2AD8(Entity* self) {
             if (temp > 376) {
                 self->posY.i.hi = 376 - g_Camera.posY.i.hi;
             }
-            D_80180EEC = 1;
+            g_CallElevator = 1;
         } else {
             self->posY.val += 0xFFFF0000;
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp < 372) {
                 self->posY.i.hi = 372 - g_Camera.posY.i.hi;
             }
-            D_80180EEC = 0;
+            g_CallElevator = 0;
         }
 
     default:
@@ -956,9 +956,6 @@ void func_801B2AD8(Entity* self) {
         poly->y0 = self->posY.i.hi - 8;
     }
 }
-
-extern u16 D_80180BF8[];
-extern s32 D_80180EEC;
 
 void EntityElevator2(Entity* self) {
     volatile int pad[3];
@@ -976,7 +973,8 @@ void EntityElevator2(Entity* self) {
             InitializeEntity(D_80180BF8);
             self->hitboxOffX = 0;
             self->hitboxOffY = 68;
-            D_80180EEC = 0;
+            g_CallElevator = 0;
+
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
             if (primIndex == -1) {
                 DestroyEntity(self);
@@ -1013,7 +1011,7 @@ void EntityElevator2(Entity* self) {
         case 1:
             //! FAKE:
             player = PLAYER_CHARACTER;
-            if (D_80180EEC != 0) {
+            if (g_CallElevator) {
                 self->posY.i.hi--;
                 camY = g_Camera.posY.i.hi;
                 if ((self->posY.i.hi + camY) < 96) {

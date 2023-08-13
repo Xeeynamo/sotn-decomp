@@ -4,6 +4,7 @@ g_Cluts = 0x80180160;
 g_TileLayers = 0x80180394;
 g_EntityGfxs = 0x80180888;
 PfnEntityUpdates = 0x80180A94;
+g_CallElevator = 0x80180EEC;
 g_BossFlag = 0x80181010;
 g_ElevatorTarget = 0x801813A4;
 g_ElevatorTargetPos = 0x801813A8;
