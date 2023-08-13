@@ -940,14 +940,14 @@ void func_801B2AD8(Entity* self) {
             if (temp > 376) {
                 self->posY.i.hi = 376 - g_Camera.posY.i.hi;
             }
-            g_CallElevator = 1;
+            g_CallElevator = true;
         } else {
             self->posY.val += 0xFFFF0000;
             temp = g_Camera.posY.i.hi + self->posY.i.hi;
             if (temp < 372) {
                 self->posY.i.hi = 372 - g_Camera.posY.i.hi;
             }
-            g_CallElevator = 0;
+            g_CallElevator = false;
         }
 
     default:
@@ -971,7 +971,7 @@ void EntityElevator2(Entity* self) {
         InitializeEntity(D_80180BF8);
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
-        g_CallElevator = 0;
+        g_CallElevator = false;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
