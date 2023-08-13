@@ -20,32 +20,32 @@ INCLUDE_ASM("weapon/nonmatchings/w_032", DestroyEntityWeapon);
 
 INCLUDE_ASM("weapon/nonmatchings/w_032", SetWeaponProperties);
 
-INCLUDE_ASM("weapon/nonmatchings/w_032", func_E4000_8017ACC4);
+INCLUDE_ASM("weapon/nonmatchings/w_032", DoWeaponAttack);
 
-void func_E4000_8017AFB0(void) {}
+void func_ptr_80170004(void) {}
 
-void func_E4000_8017AFB8(void) {}
+void func_ptr_80170008(void) {}
 
-void func_E4000_8017AFC0(void) {}
+void func_ptr_8017000C(void) {}
 
-void func_E4000_8017AFC8(void) {}
+void func_ptr_80170010(void) {}
 
-void func_E4000_8017AFD0(void) {}
+void func_ptr_80170014(void) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_032", func_E4000_8017AFD8);
+INCLUDE_ASM("weapon/nonmatchings/w_032", func_ptr_80170018);
 
-void func_E4000_8017AFE0(void) {}
+void func_ptr_80170020(void) {}
 
-void func_E4000_8017AFE8(void) {}
+void func_ptr_80170024(void) {}
 
-void func_E4000_8017AFF0(void) {}
+void func_ptr_80170028(void) {}
 
-void func_E4000_8017AFF8(void) {}
+void func_ptr_8017002C(void) {}
 
-void func_E4000_8017B000(void) {}
+void func_ptr_80170030(void) {}
 
-void func_E4000_8017B008(void) {}
+void func_ptr_80170034(void) {}
 
-void func_E4000_8017B010(void) {}
+void func_ptr_80170038(void) {}
 
-void func_E4000_8017B018(void) {}
+void func_ptr_8017003C(void) {}

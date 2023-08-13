@@ -24,32 +24,32 @@ INCLUDE_ASM("weapon/nonmatchings/w_018", func_82000_8017AAE0);
 
 INCLUDE_ASM("weapon/nonmatchings/w_018", func_82000_8017AB80);
 
-INCLUDE_ASM("weapon/nonmatchings/w_018", func_82000_8017ABE4);
+INCLUDE_ASM("weapon/nonmatchings/w_018", DoWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_018", func_82000_8017AF10);
+INCLUDE_ASM("weapon/nonmatchings/w_018", func_ptr_80170004);
 
-void func_82000_8017B14C(void) {}
+void func_ptr_80170008(void) {}
 
-void func_82000_8017B154(void) {}
+void func_ptr_8017000C(void) {}
 
-void func_82000_8017B15C(void) {}
+void func_ptr_80170010(void) {}
 
-void func_82000_8017B164(void) {}
+void func_ptr_80170014(void) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_018", func_82000_8017B16C);
+INCLUDE_ASM("weapon/nonmatchings/w_018", func_ptr_80170018);
 
-void func_82000_8017B174(void) {}
+void func_ptr_80170020(void) {}
 
-void func_82000_8017B17C(void) {}
+void func_ptr_80170024(void) {}
 
-void func_82000_8017B184(void) {}
+void func_ptr_80170028(void) {}
 
-void func_82000_8017B18C(void) {}
+void func_ptr_8017002C(void) {}
 
-void func_82000_8017B194(void) {}
+void func_ptr_80170030(void) {}
 
-void func_82000_8017B19C(void) {}
+void func_ptr_80170034(void) {}
 
-void func_82000_8017B1A4(void) {}
+void func_ptr_80170038(void) {}
 
-void func_82000_8017B1AC(void) {}
+void func_ptr_8017003C(void) {}
