@@ -991,7 +991,7 @@ void EntityDeathSkySwirl(Entity* self) {
         }
         prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->ext.prim = prim;
+        self->ext.deathSkySwirl.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         prim->tpage = 0x12;
         prim->clut = 0x1F;
@@ -1018,7 +1018,7 @@ void EntityDeathSkySwirl(Entity* self) {
     TransMatrix(&mtx, &vec);
     SetRotMatrix(&mtx);
     SetTransMatrix(&mtx);
-    prim = self->ext.prim;
+    prim = self->ext.deathSkySwirl.prim;
     prim->blendMode = 4;
 
     prim2 = prim->next;
