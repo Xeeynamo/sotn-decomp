@@ -243,7 +243,7 @@ void EntityCastleDoor(Entity* self) {
             tilePos += 0x20;
         }
         self->ext.castleDoor.rotAngle = -0x380;
-        self->ext.castleDoor.unk80 = 0x20;
+        self->ext.castleDoor.timer = 32;
         self->step = 4;
         D_8003BDEC[52] = 1;
         break;
@@ -252,13 +252,13 @@ void EntityCastleDoor(Entity* self) {
         self->ext.castleDoor.rotAngle -= 8;
         if (self->ext.castleDoor.rotAngle < -0x380) {
             self->ext.castleDoor.rotAngle = -0x380;
-            self->ext.castleDoor.unk80 = 128;
+            self->ext.castleDoor.timer = 128;
             self->step++;
         }
         break;
 
     case 3:
-        if (--self->ext.castleDoor.unk80 == 0) {
+        if (--self->ext.castleDoor.timer == 0) {
             self->step++;
         }
         break;

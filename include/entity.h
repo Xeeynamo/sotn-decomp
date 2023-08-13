@@ -283,7 +283,7 @@ typedef struct {
 
 typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
     /* 0x84 */ s16 rotAngle;
 } ET_CastleDoor;
