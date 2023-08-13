@@ -14,6 +14,7 @@ c_HeartPrizes = 0x80181E7C;
 g_Rooms = 0x80183A7C;
 EntityBreakable = 0x801B26FC;
 EntityShuttingWindow = 0x801B2C20;
+EntityCastleDoor = 0x801B2F30;
 EntityCavernDoorLever = 0x801B3E84;
 EntityCavernDoorPlatform = 0x801B4004;
 EntityClickSwitch = 0x801B4558;

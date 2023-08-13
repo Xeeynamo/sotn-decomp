@@ -225,7 +225,7 @@ void EntityShuttingWindow(Entity* self) {
 }
 
 // Entity ID: 0x19
-void func_801B2F30(Entity* self) {
+void EntityCastleDoor(Entity* self) {
     SVECTOR svec1;
     VECTOR vec;
     MATRIX mtx1, mtx2;
