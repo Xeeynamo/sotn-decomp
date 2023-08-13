@@ -982,7 +982,7 @@ void EntityElevator2(Entity* self) {
         self->primIndex = primIndex;
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        prim->type = 6;
+        prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
         prim->u0 = 8;
@@ -994,7 +994,7 @@ void EntityElevator2(Entity* self) {
 
         prim = prim->next;
         for (i = 0; i < 2; i++) {
-            prim->type = 6;
+            prim->type = PRIM_SPRT;
             prim->tpage = 0xF;
             prim->clut = 9;
             prim->u0 = 0;
@@ -1063,7 +1063,7 @@ void func_801B2FD8(Entity* self) {
         self->primIndex = primIndex;
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        prim->type = 6;
+        prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
         prim->u0 = 0x48;
@@ -1158,7 +1158,7 @@ void EntityFloorSpikes(Entity* self) {
         self->primIndex = primIndex;
         *((s32*)(&self->ext.generic.unk7C)) = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        prim->type = 6;
+        prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
         prim->u0 = 0x28;

@@ -118,7 +118,7 @@ void EntityElevator(Entity* self) {
         self->primIndex = primIndex;
         self->ext.elevator.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        prim->type = 6;
+        prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
         prim->u0 = 8;
@@ -129,7 +129,7 @@ void EntityElevator(Entity* self) {
         prim->blendMode = 2;
         prim = prim->next;
         while (prim != NULL) {
-            prim->type = 6;
+            prim->type = PRIM_SPRT;
             prim->tpage = 0xF;
             prim->clut = 9;
             prim->u0 = 0;
