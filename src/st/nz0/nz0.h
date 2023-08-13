@@ -47,7 +47,7 @@ LayoutEntity* D_801809C0[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern const u16 D_80180BE0[];
 extern u16 D_80180BEC[];
-extern u16 D_80180BF8[];  // Init Elevator2
+extern u16 D_80180BF8[]; // Init Elevator2
 extern u16 D_80180C1C[];
 extern u16 D_80180C34[];
 

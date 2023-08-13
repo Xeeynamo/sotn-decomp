@@ -89,121 +89,123 @@ void EntityElevator(Entity* self) {
     } else {
         temp = func_801BD9A0(self, 16, 5, 4);
     }
-    
+
     //! FAKE:
     player = PLAYER_CHARACTER;
 
     switch (self->step) {
-        case ELEVATOR_INIT:
-            InitializeEntity(D_80180BF8);
-            self->hitboxOffX = 0;
-            self->hitboxOffY = 68;
-            self->hitboxWidth = 16;
-            self->hitboxHeight = 5;
-            self->hitboxState = 1;
+    case ELEVATOR_INIT:
+        InitializeEntity(D_80180BF8);
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 68;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 5;
+        self->hitboxState = 1;
 
-            if (g_ElevatorTarget != 0) {
-                y = g_ElevatorTargetPos[g_ElevatorTarget];
-                self->posY.i.hi = y - g_Camera.posY.i.hi;
-            } else {
-                g_ElevatorTarget = self->params;
-            }
+        if (g_ElevatorTarget != 0) {
+            y = g_ElevatorTargetPos[g_ElevatorTarget];
+            self->posY.i.hi = y - g_Camera.posY.i.hi;
+        } else {
+            g_ElevatorTarget = self->params;
+        }
 
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
-            if (primIndex == -1) {
-                DestroyEntity(self);
-                return;
-            }
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->ext.prim = prim;
-            self->flags |= FLAG_HAS_PRIMS;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.elevator.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim->type = 6;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 8;
+        prim->v0 = 0x80;
+        prim->u1 = 0x20;
+        prim->v1 = 0x48;
+        prim->priority = 0x72;
+        prim->blendMode = 2;
+        prim = prim->next;
+        while (prim != NULL) {
             prim->type = 6;
             prim->tpage = 0xF;
             prim->clut = 9;
-            prim->u0 = 8;
+            prim->u0 = 0;
             prim->v0 = 0x80;
-            prim->u1 = 0x20;
-            prim->v1 = 0x48;
-            prim->priority = 0x72;
+            prim->u1 = 8;
+            prim->v1 = 0x40;
+            prim->priority = 0x5F;
             prim->blendMode = 2;
             prim = prim->next;
-            while (prim != NULL) {
-                prim->type = 6;
-                prim->tpage = 0xF;
-                prim->clut = 9;
-                prim->u0 = 0;
-                prim->v0 = 0x80;
-                prim->u1 = 8;
-                prim->v1 = 0x40;
-                prim->priority = 0x5F;
-                prim->blendMode = 2;
-                prim = prim->next;
-            }
-            self->ext.generic.unk84.unk = g_ElevatorTarget;
+        }
+        self->ext.elevator.elevatorTarget = g_ElevatorTarget;
 
-        case ELEVATOR_IDLE:
-            if (temp != 0) {
-                if (g_pads[0].pressed & PAD_UP) {
-                    if (--g_ElevatorTarget < 1) {
-                        g_ElevatorTarget = 1;
-                    }
-                }
-                if (g_pads[0].pressed & PAD_DOWN) {
-                    if (++g_ElevatorTarget > 3) {
-                        g_ElevatorTarget = 3;
-                    }
+    case ELEVATOR_IDLE:
+        if (temp != 0) {
+            if (g_pads[0].pressed & PAD_UP) {
+                if (--g_ElevatorTarget < 1) {
+                    g_ElevatorTarget = 1;
                 }
             }
-
-            if (g_ElevatorTarget != self->ext.generic.unk84.unk) {
-                y = g_ElevatorTargetPos[g_ElevatorTarget];
-                y -= g_Camera.posY.i.hi;
-                if (y >= self->posY.i.hi) {
-                    self->step = ELEVATOR_DESCEND;
-                } else {
-                    self->step = ELEVATOR_ASCEND;
+            if (g_pads[0].pressed & PAD_DOWN) {
+                if (++g_ElevatorTarget > 3) {
+                    g_ElevatorTarget = 3;
                 }
-                func_801C29B0(0x6E6);
             }
-            self->ext.generic.unk84.unk = g_ElevatorTarget;
-            break;
+        }
 
-        case ELEVATOR_ASCEND:
-            self->posY.i.hi--;
-            y = g_ElevatorTargetPos[self->ext.generic.unk84.unk] - g_Camera.posY.i.hi;
-            if (self->posY.i.hi >= y) {
-                if (temp != 0) {
-                    g_api.func_8010DFF0(0, 1);
-                    g_Entities[player].posY.i.hi--;
-                    D_8009748E[0]--;
-                }
+        if (g_ElevatorTarget != self->ext.elevator.elevatorTarget) {
+            y = g_ElevatorTargetPos[g_ElevatorTarget];
+            y -= g_Camera.posY.i.hi;
+            if (y >= self->posY.i.hi) {
+                self->step = ELEVATOR_DESCEND;
             } else {
-                self->posY.i.hi = y;
-                self->step = ELEVATOR_IDLE;
+                self->step = ELEVATOR_ASCEND;
             }
-            break;
+            func_801C29B0(0x6E6);
+        }
+        self->ext.elevator.elevatorTarget = g_ElevatorTarget;
+        break;
 
-        case ELEVATOR_DESCEND:
-            self->posY.i.hi++;
-            y = g_ElevatorTargetPos[self->ext.generic.unk84.unk] - g_Camera.posY.i.hi;
-            if (y < self->posY.i.hi) {
-                self->posY.i.hi = y;
-                self->step = ELEVATOR_IDLE;
-                break;
-            }
+    case ELEVATOR_ASCEND:
+        self->posY.i.hi--;
+        y = g_ElevatorTargetPos[self->ext.elevator.elevatorTarget] -
+            g_Camera.posY.i.hi;
+        if (self->posY.i.hi >= y) {
             if (temp != 0) {
                 g_api.func_8010DFF0(0, 1);
-                g_Entities[player].posY.i.hi++;
-                D_8009748E[0]++;
+                g_Entities[player].posY.i.hi--;
+                D_8009748E[0]--;
             }
+        } else {
+            self->posY.i.hi = y;
+            self->step = ELEVATOR_IDLE;
+        }
+        break;
+
+    case ELEVATOR_DESCEND:
+        self->posY.i.hi++;
+        y = g_ElevatorTargetPos[self->ext.elevator.elevatorTarget] -
+            g_Camera.posY.i.hi;
+        if (y < self->posY.i.hi) {
+            self->posY.i.hi = y;
+            self->step = ELEVATOR_IDLE;
             break;
+        }
+        if (temp != 0) {
+            g_api.func_8010DFF0(0, 1);
+            g_Entities[player].posY.i.hi++;
+            D_8009748E[0]++;
+        }
+        break;
     }
     prim = self->ext.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi;
+
     prim = prim->next;
-    
     x = self->posX.i.hi;
     y = self->posY.i.hi - 56;
     x -= 3;

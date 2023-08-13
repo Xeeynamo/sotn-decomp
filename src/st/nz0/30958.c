@@ -891,8 +891,8 @@ void EntityCannonWall(Entity* self) {
 }
 
 void func_801B2AD8(Entity* self) {
-    s16 primIndex;
     POLY_GT4* poly;
+    s16 primIndex;
     s32 var_v0;
     s32 var_a0;
     s32 temp;
@@ -901,7 +901,7 @@ void func_801B2AD8(Entity* self) {
     case 0:
         InitializeEntity(D_80180BF8);
         self->hitboxHeight = 8;
-        self->hitboxOffY = -0x16;
+        self->hitboxOffY = -22;
         self->hitboxWidth = 6;
         self->hitboxState = 1;
         CreateEntityFromEntity(0x26, self, &self[-1]);
@@ -958,87 +958,85 @@ void func_801B2AD8(Entity* self) {
 }
 
 void EntityElevator2(Entity* self) {
+    s32 temp = func_801BD9A0(self, 16, 5, 4);
     volatile int pad[3];
     Primitive* prim;
     s16 primIndex;
     s32 player;
-    s32 temp;
     s32 camY;
     s32 i;
 
-    temp = func_801BD9A0(self, 16, 5, 4);
-
     switch (self->step) {
-        case 0:
-            InitializeEntity(D_80180BF8);
-            self->hitboxOffX = 0;
-            self->hitboxOffY = 68;
-            g_CallElevator = 0;
+    case 0:
+        InitializeEntity(D_80180BF8);
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 68;
+        g_CallElevator = 0;
 
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
-            if (primIndex == -1) {
-                DestroyEntity(self);
-                return;
-            }
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->ext.prim = prim;
-            self->flags |= FLAG_HAS_PRIMS;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        prim->type = 6;
+        prim->tpage = 0xF;
+        prim->clut = 9;
+        prim->u0 = 8;
+        prim->v0 = 0x80;
+        prim->u1 = 0x20;
+        prim->v1 = 0x48;
+        prim->priority = 0x72;
+        prim->blendMode = 2;
+
+        prim = prim->next;
+        for (i = 0; i < 2; i++) {
             prim->type = 6;
             prim->tpage = 0xF;
             prim->clut = 9;
-            prim->u0 = 8;
+            prim->u0 = 0;
             prim->v0 = 0x80;
-            prim->u1 = 0x20;
-            prim->v1 = 0x48;
-            prim->priority = 0x72;
+            prim->u1 = 8;
+            prim->v1 = 0x40;
+            prim->priority = 0x5F;
             prim->blendMode = 2;
-            
             prim = prim->next;
-            for (i = 0; i < 2; i++) {
-                prim->type = 6;
-                prim->tpage = 0xF;
-                prim->clut = 9;
-                prim->u0 = 0;
-                prim->v0 = 0x80;
-                prim->u1 = 8;
-                prim->v1 = 0x40;
-                prim->priority = 0x5F;
-                prim->blendMode = 2;
-                prim = prim->next;
-            }
+        }
 
-        case 1:
-            //! FAKE:
-            player = PLAYER_CHARACTER;
-            if (g_CallElevator) {
-                self->posY.i.hi--;
-                camY = g_Camera.posY.i.hi;
-                if ((self->posY.i.hi + camY) < 96) {
-                    self->posY.i.hi = 96 - camY;
-                } else if (temp != 0) {
-                    g_Entities[player].posY.i.hi--;
-                    D_8009748E[0]--;
-                }
-            } else {
-                self->posY.i.hi++;
-                camY = g_Camera.posY.i.hi;
-                if ((self->posY.i.hi + camY) > 216) {
-                    self->posY.i.hi = 216 - camY;
-                } else if (temp != 0) {
-                    g_Entities[player].posY.i.hi++;
-                    D_8009748E[0]++;
-                }
+    case 1:
+        //! FAKE:
+        player = PLAYER_CHARACTER;
+        if (g_CallElevator) {
+            self->posY.i.hi--;
+            camY = g_Camera.posY.i.hi;
+            if ((self->posY.i.hi + camY) < 96) {
+                self->posY.i.hi = 96 - camY;
+            } else if (temp != 0) {
+                g_Entities[player].posY.i.hi--;
+                D_8009748E[0]--;
             }
+        } else {
+            self->posY.i.hi++;
+            camY = g_Camera.posY.i.hi;
+            if ((self->posY.i.hi + camY) > 216) {
+                self->posY.i.hi = 216 - camY;
+            } else if (temp != 0) {
+                g_Entities[player].posY.i.hi++;
+                D_8009748E[0]++;
+            }
+        }
     }
     prim = self->ext.prim;
     prim->x0 = self->posX.i.hi - 16;
     prim->y0 = self->posY.i.hi;
-    
+
     prim = prim->next;
     prim->x0 = self->posX.i.hi - 3;
     prim->y0 = self->posY.i.hi - 56;
-    
+
     prim = prim->next;
     prim->x0 = self->posX.i.hi - 3;
     prim->y0 = self->posY.i.hi - 120;
