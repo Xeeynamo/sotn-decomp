@@ -80,7 +80,8 @@ segments:
       - [0x305E8, .rodata, 33FCC] # EntityBossRoomBlock
       - [0x305FC, .rodata, 33FCC] # EntitySlogra
       - [0x30618, rodata] # EntityGaibon .rodata, 33FCC
-      - [0x3063C, rodata]
+      - [0x3063C, .rodata, 36DE4] # func_801B7034
+      - [0x3064C, rodata]
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, rodata]

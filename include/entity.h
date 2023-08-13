@@ -300,6 +300,12 @@ typedef struct {
     /* 0x84 */ u16 unk84;
 } ET_DeathSkySwirl;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ char pad_80[0x4];
+    /* 0x84 */ s32 elevatorTarget;
+} ET_Elevator;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -321,5 +327,6 @@ typedef union {
     /* 0x7C */ ET_ShuttingWindow shuttingWindow;
     /* 0x7C */ ET_801B2F30 et_801B2F30;
     /* 0x7C */ ET_DeathSkySwirl deathSkySwirl;
+    /* 0x7C */ ET_Elevator elevator;
     /* 0x7C */ char stub[0x40];
 } Ext;
