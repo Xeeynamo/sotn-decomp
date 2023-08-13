@@ -11,8 +11,8 @@ typedef struct {
 
 extern s16 D_4000_8017A040[];
 extern AnimSoundEvent D_4000_8017B06C[];
-extern s16* D_4000_8017B0BC[];
-extern s32 D_4000_8017B0D0;
+extern s16* D_4000_8017B0BC[5];
+extern s32 D_4000_8017B0D0; // dstClutIndex
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -29,25 +29,19 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = NULL;
 }
 
-#define N_WEAPON_PAL 12
-extern u16 D_8006EDCC[N_WEAPON_PAL * PALETTE_LEN];
 void LoadWeaponPalette(s32 clutIndex) {
     RECT dstRect;
     u16* src;
     u16* dst;
     s32 i;
-    void** new_var;
 
-    new_var = &D_8006EDCC[D_4000_8017B0D0 * LEN(D_8006EDCC)];
-    src = D_4000_8017B0BC[clutIndex];
-    do {
-        dst = new_var;
-    } while (0);
+    dst = src = D_4000_8017B0BC[clutIndex];
+    dst = D_8006EDCC[D_4000_8017B0D0];
     if (src == NULL) {
         return;
     }
 
-    for (i = 0; i < LEN(D_8006EDCC); i++) {
+    for (i = 0; i < LEN(*D_8006EDCC); i++) {
         *dst++ = *src++;
     }
 
@@ -58,11 +52,25 @@ void LoadWeaponPalette(s32 clutIndex) {
     LoadImage(&dstRect, &D_8006EDCC);
 }
 
-void SetSpriteBank1(s16* arg0);
-INCLUDE_ASM("weapon/nonmatchings/w_000", SetSpriteBank1);
+void SetSpriteBank1(s16* spriteBankPtr) {
+    s16** spriteBankDst = g_api.o.spriteBanks;
 
-void SetSpriteBank2(s16* arg0);
-INCLUDE_ASM("weapon/nonmatchings/w_000", SetSpriteBank2);
+    spriteBankDst += 0x10;
+    if (D_4000_8017B0D0 != 0) {
+        spriteBankDst += 2;
+    }
+    *spriteBankDst = spriteBankPtr;
+}
+
+void SetSpriteBank2(s16* spriteBankPtr) {
+    s16** spriteBankDst = g_api.o.spriteBanks;
+
+    spriteBankDst += 0x11;
+    if (D_4000_8017B0D0 != 0) {
+        spriteBankDst += 2;
+    }
+    *spriteBankDst = spriteBankPtr;
+}
 
 void ResetAnimation(u8 arg0) {
     g_CurrentEntity->ext.weapon.unkAC = arg0;

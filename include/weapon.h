@@ -22,4 +22,7 @@ typedef struct {
     /* 0x3C */ void* func_ptr_8017003C;
 } Weapon /* 0x40 */;
 
+#define N_WEAPON_PAL 12
+extern u16 D_8006EDCC[][N_WEAPON_PAL * PALETTE_LEN];
+
 #endif
