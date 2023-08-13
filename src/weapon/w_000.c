@@ -1,14 +1,5 @@
 #include "weapon_private.h"
 
-typedef struct {
-    /* 0x00 */ u16** frames;
-    /* 0x04 */ s8* frameProps;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ u16 soundId;
-    /* 0x0C */ u8 ACshift;
-    /* 0x0D */ u8 soundFrame;
-} AnimSoundEvent;
-
 extern s16 D_4000_8017A040[];
 extern AnimSoundEvent D_4000_8017B06C[];
 extern s16* D_4000_8017B0BC[5];

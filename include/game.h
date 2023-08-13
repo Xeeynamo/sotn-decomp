@@ -1147,6 +1147,15 @@ typedef struct {
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 typedef struct {
+    /* 0x00 */ u16** frames;
+    /* 0x04 */ s8* frameProps;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ u16 soundId;
+    /* 0x0C */ u8 ACshift;
+    /* 0x0D */ u8 soundFrame;
+} AnimSoundEvent;
+
+typedef struct {
     /* 800730D8 0x00 */ u16* layout;
     /* 800730DC 0x04 */ u32 tileDef;
     /* 800730E0 0x08 */ f32 scrollX;

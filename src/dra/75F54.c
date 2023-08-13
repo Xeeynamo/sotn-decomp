@@ -786,7 +786,7 @@ INCLUDE_ASM("dra/nonmatchings/75F54", func_8011AC3C);
 // Name comes purely from emulator breakpoint experiments, could be wrong
 void EntityUnarmedAttack(Entity* entity) {
     Equipment equip;
-    animSoundEvent* temp_s1;
+    AnimSoundEvent* temp_s1;
     u16 paramsTopBit;
 
     entity->posX.val = PLAYER.posX.val;
