@@ -1402,6 +1402,11 @@ extern s32 D_80097448; // underwater physics
 extern s32 D_8009744C;
 extern s32 D_80097450;
 extern u16 D_8009748A[];
+
+/*
+ * Elevator moving, "underflowed" to 0xFF
+ * when going up, 0x1 when going up
+*/
 extern u16 D_8009748E[];
 extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
