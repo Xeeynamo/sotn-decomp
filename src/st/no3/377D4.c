@@ -970,7 +970,69 @@ void EntityFallingRock(Entity* self) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
 
 // sky animation during death cutscene
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityDeathSkySwirl);
+void EntityDeathSkySwirl(Entity* self) {
+    Primitive* prim, *prim2;
+    s16 primIndex;
+    SVECTOR sVec;
+    VECTOR vec;
+    MATRIX mtx;
+
+    if (self->step == 0) {
+        if (D_8003BDEC[53] != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(D_80180ADC);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 65);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= 0x800000;
+        prim->tpage = 0x12;
+        prim->clut = 0x1F;
+        prim->u2 = 0;
+        prim->u0 = 0;
+        prim->u3 = 0xFF;
+        prim->u1 = 0xFF;
+        prim->v1 = 0x80;
+        prim->v0 = 0x80;
+        prim->v3 = 0xFF;
+        prim->v2 = 0xFF;
+        prim->priority = 0x1F;
+        prim->blendMode = 0;
+    }
+    g_CurrentRoom.bg[0].D_800730F4 &= 0xFFFE;
+    self->ext.deathSkySwirl.unk84 -= 32;
+    SetGeomScreen(0x100);
+    SetGeomOffset(0x80, 0xC0);
+    SetFogNear(0x100, 0x100);
+    SetFarColor(0x60, 0x60, 0x60);
+    sVec.vx = 0;
+    sVec.vy = self->ext.deathSkySwirl.unk84;
+    sVec.vz = 0;
+    RotMatrix(&sVec, &mtx);
+    vec.vy = -0xC0;
+    vec.vx = 0;
+    vec.vz = 0x200;
+    TransMatrix(&mtx, &vec);
+    SetRotMatrix(&mtx);
+    SetTransMatrix(&mtx);
+    prim = self->ext.prim;
+    prim->blendMode = 4;
+    
+    prim2 = prim->next;
+    prim2 =
+        func_801BB548(&D_8018134C, &D_80181354, &D_8018135C, &D_80181364, prim, 3, prim2, 0x1F800000);
+    prim->blendMode = 8;
+    while (prim2 != NULL) {
+        prim2->blendMode = BLEND_VISIBLE;
+        prim2 = prim2->next;
+    }
+}
 
 void EntityUnkId29(Entity* self) {
     if (self->step == 0) {
