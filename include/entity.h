@@ -281,11 +281,11 @@ typedef struct {
     /* 0x7C */ u16 unk7C;
 } ET_801BCC4C;
 
-typedef struct ET_801B2F30 {
+typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_80[0x4];
     /* 0x84 */ s16 unk84;
-} ET_801B2F30;
+} ET_CastleDoor;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -325,7 +325,7 @@ typedef union {
     /* 0x7C */ ET_801B3C38 et38;
     /* 0x7C */ ET_801BCC4C et_801BCC4C;
     /* 0x7C */ ET_ShuttingWindow shuttingWindow;
-    /* 0x7C */ ET_801B2F30 et_801B2F30;
+    /* 0x7C */ ET_CastleDoor castleDoor;
     /* 0x7C */ ET_DeathSkySwirl deathSkySwirl;
     /* 0x7C */ ET_Elevator elevator;
     /* 0x7C */ char stub[0x40];
