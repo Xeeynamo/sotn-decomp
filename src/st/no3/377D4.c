@@ -1004,10 +1004,10 @@ void EntityDeathSkySwirl(Entity* self) {
     }
     g_CurrentRoom.bg[0].D_800730F4 &= 0xFFFE;
     self->ext.deathSkySwirl.unk84 -= 32;
-    SetGeomScreen(0x100);
-    SetGeomOffset(0x80, 0xC0);
-    SetFogNear(0x100, 0x100);
-    SetFarColor(0x60, 0x60, 0x60);
+    SetGeomScreen(256);
+    SetGeomOffset(128, 192);
+    SetFogNear(256, 256);
+    SetFarColor(96, 96, 96);
     sVec.vx = 0;
     sVec.vy = self->ext.deathSkySwirl.unk84;
     sVec.vz = 0;
