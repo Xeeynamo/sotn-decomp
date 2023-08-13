@@ -20,7 +20,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_007", DestroyEntityWeapon);
 
 INCLUDE_ASM("weapon/nonmatchings/w_007", SetWeaponProperties);
 
-INCLUDE_ASM("weapon/nonmatchings/w_007", DoWeaponAttack);
+INCLUDE_ASM("weapon/nonmatchings/w_007", EntityWeaponAttack);
 
 INCLUDE_ASM("weapon/nonmatchings/w_007", func_ptr_80170004);
 

@@ -4,7 +4,7 @@
 #include <game.h>
 
 typedef struct {
-    /* 0x00 */ void (*DoWeaponAttack)(Entity* self);
+    /* 0x00 */ void (*EntityWeaponAttack)(Entity* self);
     /* 0x04 */ void* func_ptr_80170004;
     /* 0x08 */ void* func_ptr_80170008;
     /* 0x0C */ void* func_ptr_8017000C;

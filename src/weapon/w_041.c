@@ -24,7 +24,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_041", func_123000_8017A914);
 
 INCLUDE_ASM("weapon/nonmatchings/w_041", func_123000_8017A994);
 
-INCLUDE_ASM("weapon/nonmatchings/w_041", DoWeaponAttack);
+INCLUDE_ASM("weapon/nonmatchings/w_041", EntityWeaponAttack);
 
 INCLUDE_ASM("weapon/nonmatchings/w_041", func_ptr_80170004);
 

@@ -16,7 +16,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_030", SetSpeedX);
 
 INCLUDE_ASM("weapon/nonmatchings/w_030", SetWeaponProperties);
 
-INCLUDE_ASM("weapon/nonmatchings/w_030", DoWeaponAttack);
+INCLUDE_ASM("weapon/nonmatchings/w_030", EntityWeaponAttack);
 
 INCLUDE_ASM("weapon/nonmatchings/w_030", func_ptr_80170004);
 
