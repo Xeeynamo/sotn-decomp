@@ -103,7 +103,30 @@ void func_801CE04C(Entity* entity, Collider* collider) {
     entity->ext.generic.unk88.S16.unk0 = var_s0;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE120);
+s32 func_801CE120(Entity* self, s32 arg1) {
+    Collider collider;
+    s32 x = self->posX.i.hi;
+    s32 y = self->posY.i.hi + 9;
+    s32 ret = 0;
+    
+    if (arg1 != 0) {
+        x += 0x40;
+    } else {
+        x -= 0x40;
+    }
+    
+    g_api.CheckCollision(x, y - 6, &collider, 0);
+    if (collider.effects & 1) {
+        ret |= 2;
+    }
+    
+    g_api.CheckCollision(x, y + 6, &collider, 0);
+    if (!(collider.effects & 1)) {
+        ret |= 4;
+    }
+    
+    return ret;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE1E8);
 
