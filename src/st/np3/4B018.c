@@ -123,13 +123,13 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityHammer);
 // minor regalloc
 // has jumptable
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkhaHead);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkhaBodyParts);
 #else
 extern u16 D_80180B8C[];
 extern u16 D_80180BA4[];
 extern u16 D_80180BBC[];
 
-void EntityGurkhaHead(Entity* self) {
+void EntityGurkhaBodyParts(Entity* self) {
     Collider collider;
     s32 aaaa;
     s32 sp28;
