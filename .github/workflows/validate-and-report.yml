@@ -72,7 +72,7 @@ jobs:
         run: make check
       - name: Analyze calls dry run
         if: matrix.version == 'us'
-        run: make force_extract && ./tools/analyze_calls.py ALL_DRY 
+        run: make force_extract && ./tools/analyze_calls.py --ultradry
       - name: Remove clutter from build folder
         run: rm -rf build/$(VERSION)/asm build/$(VERSION)/src build/$(VERSION)/assets
       - name: Export build folder
@@ -181,7 +181,7 @@ jobs:
       - name: Generate function calls chart
         run: |
             make force_extract
-            python3 tools/analyze_calls.py ALL
+            python3 tools/analyze_calls.py
             git clean -fdx asm/ 
       - name: Generate duplicates and function report
         run: |

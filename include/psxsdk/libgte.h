@@ -58,5 +58,7 @@ void SetBackColor(long rbk, long gbk, long bbk);
 void SetColorMatrix(MATRIX* m);
 void SetLightMatrix(MATRIX* m);
 void SetTransMatrix(MATRIX* m);
+void SetFarColor(long rfc, long gfc, long bfc); // Color values (input)
+void SetFogNear(long a, long h); // Distance between visual point and screen
 
 #endif

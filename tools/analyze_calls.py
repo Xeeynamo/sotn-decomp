@@ -1,40 +1,53 @@
 #!/usr/bin/python3
 
-# Very closely related to analyze_calls.py (and uses some of the same internal Python functions).
-# USAGE: Invoke with no arguments to start interactive graphical mode. User will be prompted for
-# functions one at a time, and a graph will be made for each one they give.
-# Invoke with one argument, a function name, for command line mode. Callers and callees will be printed.
-# Invoke with one argument, ALL, to automatically generate call trees for every function in the game,
-# as well as an index.html to connect them all. This is meant to be hosted on the web.
+# Performs analysis of every function in the asm directory. For each function, finds
+# all functions called by this one, and all functions that call this one.
+# By default, this will create several thousand SVG files.
+# Run with --dry to generate data for all files as testrun, without outputting files.
+# Run with --ultradry to just do the function analysis, but skip generating SVG.
 
-# Credit to xeeynamo for creation of analyze_calls, and sonicdcer for suggestion of command line mode.
+# This will print the time taken for each step of the process, which is helpful for
+# benchmarking, as well as determining if execution is taking longer as the repo grows.
+# On my machine, all steps prior to SVG generation take less than 1 second, and SVG
+# generation takes 30 seconds (regardless of dry mode). Note times printed are cumulative
+# in the sense that the printed time is not per-step, but is time since execution start.
 
-# On first run, this will generate a call tree, traversing every function and identifying its calls.
-# This gets saved to sotn_calltree.txt. To regenerate this tree, simply delete the file.
-
-# all just for drawing the graph
-from functools import partial
-import multiprocessing
-import graphviz
-from PIL import Image
-import io
-
-# regex matching, file access
-import re
-import os
 from pathlib import Path
-import sys
+import os
+import re
+import graphviz
+import time
+import multiprocessing
 
+import argparse
+
+parser = argparse.ArgumentParser(description="Generate call diagram SVGs")
+parser.add_argument(
+    "--dry",
+    action="store_true",
+    help="Perform a dry run. Generate SVGs, but do not output to file",
+)
+parser.add_argument(
+    "--ultradry",
+    action="store_true",
+    help="Perform a dry run. Calculate call hierarchy, but skip generating SVGs",
+)
 output_dir = "function_calls"
+# All functions I've found that are used in a 'jalr' instruction in the game
 callable_registers = ["$v0", "$v1", "$a0", "$a1", "$t2"]
+# Handles drawing in the blobs
+graph_colors = {"N/A": "lightblue", "True": "green", "False": "red"}
 
 
-def handle_jal_call(full_file, call_index, known_func_list):
+# Important function. For a given line of assembly including a 'jal' or 'jalr' instruction,
+# Make an attempt to identify the function being called. For 'jal' this is usually easy.
+# For 'jalr' it tends to require more processing.
+def handle_jal_call(full_file, call_index):
     call_line = full_file[call_index]
     call_target = call_line.split(" ")[-1].strip()
-    if call_target in known_func_list:  # easy, just a direct function call by name
+    if call_target in function_lookup:  # easy, just a direct function call by name
         return call_target
-    # Check if we're calling based on a register's value
+    # Check if we're calling based on a register's value.
     if call_target in callable_registers:
         # Find what line sets that register.
         searchback = 1
@@ -48,17 +61,25 @@ def handle_jal_call(full_file, call_index, known_func_list):
         if "g_api" in callreg_setline:
             # regex that will pull out the function being called
             match = re.search(r"%lo\(([^)]+)\)", callreg_setline)
-            if match.group(1) in known_func_list:
+            # Handle members of the g_api Overlay object
+            if "g_api_o_" in match.group(1):
+                return match.group(1).replace("_", ".")
+            # Handle the first element of it, where the symbol gets truncated to just g_api
+            if "g_api" == match.group(1):
+                return "g_api.o.Update"
+            # Handle functions such as AllocPrimitives that are referenced indirectly through g_api
+            if match.group(1).replace("g_api_", "") in function_lookup:
+                return match.group(1).replace("g_api_", "")
+            # Handle remaining symbols that are just straight in GameApi
+            if match.group(1) in function_lookup:
                 return match.group(1)
-            if match.group(1) == "g_api":
-                return "g_api_o_Update"
         if (
             f"lw         {call_target}, %lo(D_" in callreg_setline
         ):  # Simply jumping to what's stored in a D_ variable
             jump_variable = callreg_setline[51:61]
             return jump_variable
         if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
-            return "pfnEntityUpdate"
+            return "UnknownpfnEntityUpdate"
         # happens in NZ0/func_801C1034. v0 is set by dereferencing a register.
         target_setter_pattern = r"lw\s+" + "\\" + call_target + r", 0x.{,2}\((\$\w+)"
         if match := re.search(target_setter_pattern, callreg_setline):
@@ -101,47 +122,7 @@ def handle_jal_call(full_file, call_index, known_func_list):
     exit(1)
 
 
-def get_g_api_funcs():
-    funclist = []
-    curr_struct_lines = []
-    with open("include/game.h") as f:
-        lines = f.readlines()
-    for line in lines:
-        if "typedef struct" in line:
-            curr_struct_lines = [line]
-        elif len(
-            curr_struct_lines
-        ):  # We're in a struct and actively have added lines to it. This one is next.
-            curr_struct_lines.append(line)
-            if line[0] == "}" and len(
-                curr_struct_lines
-            ):  # We're at the end of the struct and it's all loaded into curr_struct_lines.
-                structname = line.split(";")[0][2:]  # Grab the name
-                # If this is the struct we're looking for, process it. Otherwise forget the struct.
-                if structname == "GameApi":
-                    for line in curr_struct_lines:
-                        match = re.search(
-                            r"^\s*\/\* ([a-fA-F0-9]+) \*\/\s+[^\s]+\s+\(?\*?([^\s\;\)]+)",
-                            line,
-                        )
-                        if match:
-                            function_name = match.group(2)
-                            funclist.append("g_api_" + function_name)
-                if structname == "Overlay":
-                    for line in curr_struct_lines:
-                        match = re.search(
-                            r"^\s*\/\* ([a-fA-F0-9]+) \*\/\s+[^\s]+\s+\(?\*?([^\s\;\)]+)",
-                            line,
-                        )
-                        if match:
-                            function_name = match.group(2)
-                            funclist.append("g_api_o_" + function_name)
-                curr_struct_lines = (
-                    []
-                )  # Empty it so we go back to just piping lines to output file
-    return funclist
-
-
+# SDK functions in include/psxsdk/{whatever}.h are not in the decomp, but may be called.
 def get_sdk_funcs():
     functions = []
     # weird thing where setjmp is commented out in libc.h; we add it manually here for now.
@@ -158,6 +139,7 @@ def get_sdk_funcs():
     return functions
 
 
+# Many functions in main are not being splatted out yet, so we add them here, like SDK.
 def get_main_funcs():
     with open(f"config/symbols.us.txt") as f:
         symbols = f.readlines()
@@ -171,113 +153,20 @@ def get_main_funcs():
     return [line.split(" = ")[0] for line in symbols]
 
 
-def get_all_funcnames():
-    api = get_g_api_funcs()
-    sdk = get_sdk_funcs()
-    cfuncs = [s.stem for s in Path("asm").rglob("*.s") if "nonmatchings" in str(s)]
-    # files in src/main are from sdk and remain as asm, not broken out into function files
-    mainfuncs = get_main_funcs()
-    return api + sdk + cfuncs + mainfuncs
-
-
-def build_call_tree():
-    tree_dict = {}
-    all_func_names = get_all_funcnames()
-    tree_dict["IGNORE_FUNCS"] = ",".join(
-        get_sdk_funcs() + get_g_api_funcs() + get_main_funcs()
-    )
-    print("Functions loaded.")
-    print(f"Function count: {len(all_func_names)}")
-    print("Building call trees...")
-    for path in Path("asm").rglob("*.s"):
-        f = str(path)
-        if "mad" in f:  # Skip mad for now, it has weird symbols
-            continue
-        if not "nonmatchings" in f or "psxsdk" in f:
-            continue
-        overlay = path.parents[2].name
-        with open(f) as opened_f:
-            filelines = opened_f.read().split("\n")
-            foundfuncs = {}
-            for i, line in enumerate(filelines):
-                if "jal" in line:
-                    funcname = handle_jal_call(filelines, i, all_func_names)
-                    if funcname not in foundfuncs:
-                        foundfuncs[funcname] = 1
-                    else:
-                        foundfuncs[funcname] += 1
-            tree_dict[path.stem] = ",".join(
-                [overlay] + [f"{func}-{count}" for func, count in foundfuncs.items()]
-            )
-    return tree_dict
-
-
-def get_all_c_files(src_dir):
-    c_files_list = list()
-    for root, dirs, files in os.walk(src_dir):
-        for f in files:
-            if f.endswith(".c"):
-                c_files_list.append(os.path.join(root, f))
-    return c_files_list
-
-
-class NonMatchingFunc(object):
-    def __init__(self, nonmatching_path):
-        split = nonmatching_path.split("/")
-
-        self.asm_path = nonmatching_path
-        self.name = os.path.splitext(os.path.basename(nonmatching_path))[0]
-        nm_index = split.index("nonmatchings")
-        self.overlay_name = split[nm_index - 1]
-        self.text_offset = "/".join(split[nm_index + 1 : -1])
-        assumed_path = f"/{self.overlay_name}/{self.text_offset}.c"
-        c_paths = [src for src in src_files if src.endswith(assumed_path)]
-        if len(c_paths) != 1:
-            print("Error getting cpath")
-            print(c_paths)
-            print(nonmatching_path)
-            print(assumed_path)
-            print(split)
-            exit(2)
-        self.src_path = c_paths[0]
-
-
-def get_nonmatching_functions(base_path, func_name, overlay=None) -> list:
-    function_list = list()
-    for root, dirs, files in os.walk(base_path):
-        if "/nonmatchings/" in root:
-            for f in files:
-                if f == f"{func_name}.s":
-                    full_path = os.path.join(root, f)
-                    function = NonMatchingFunc(full_path)
-                    function_list.append(function)
-    if len(function_list) > 1:
-        overlay_matches = []
-        for potential_func in function_list:
-            if f"/{overlay}/" in potential_func.asm_path:
-                overlay_matches.append(potential_func)
-        if len(overlay_matches) > 1:
-            print(f"Multiple matches, failed to whittle")
-            print(base_path)
-            print(func_name)
-            print(overlay)
-            print([x.asm_path for x in overlay_matches])
-            exit(3)
-        elif len(overlay_matches) == 0:
-            print(f"Multiple matches but none match overlay {overlay}")
-            exit(4)
-    elif len(function_list) == 0:
-        print("Function not found")
-        print(func_name)
-        exit(5)
-    return function_list[0]
-
-
-def get_function_name(code):
-    # match a function with a return type, name, parameters, and opening curly brace
-    pattern = r"\w+\s+(\w+)\([^)]*\)\s*{"
-    match = re.match(pattern, code)
-    return match.group(1) if match is not None else None
+# Functions in gameapi are often strange, especially in the Overlay member.
+def get_gapi_funcs():
+    found_functions = []
+    # Load up symbols for the relative functions loaded into GameApi
+    with open("config/symbols.us.txt") as f:
+        symbols = f.readlines()
+        for symbol in symbols:
+            symbolname = symbol.split(" = ")[0]
+            if "g_api_" in symbolname:
+                found_functions.append(symbolname)
+                found_functions.append(symbolname.replace("_", "."))
+    # Special case, first element of struct doesn't have a dedicated symbol.
+    found_functions.append("g_api.o.Update")
+    return found_functions
 
 
 def is_decompiled(srcfile, fname):
@@ -289,173 +178,234 @@ def is_decompiled(srcfile, fname):
     return True
 
 
-def analyze_function(fname, tree):
-    overlay = tree[fname][0].split(";")[0]
-    foundfunc = get_nonmatching_functions("asm", fname, overlay)
-    decomp_done = str(is_decompiled(foundfunc.src_path, fname))
-    if "GRAPHICAL" in MODE:
-        graph = graphviz.Digraph(fname)
-        graph_colors = {"N/A": "lightblue", "True": "green", "False": "red"}
-        graph.node(
-            f"{overlay}/{fname}", style="filled", fillcolor=graph_colors[decomp_done]
-        )
-    if MODE == "CMDLINE":
-        print(f"Analyzing {fname}; Decompiled: {decomp_done}")
-        print(f"Functions called:")
-    # Look through our asm file, and see who else we call.
-    if len(tree[fname]) < 2 and "GRAPHICAL_ALL" not in MODE:
-        print("No functions called.")
-    else:
-        overlay = tree[fname][0]
-        for item in tree[fname][1:]:
-            func, count = item.split("-")
-            if (
-                func in tree["IGNORE_FUNCS"]
-                or func
-                in ["pfnEntityUpdate", "UnknownSDKFunction", "UnknownEntityFunction"]
-                or "D_" in func
-            ):
-                decomp_done = "N/A"
-            else:
-                function_object = get_nonmatching_functions("asm", func, overlay)
-                decomp_done = str(is_decompiled(function_object.src_path, func))
-            if "GRAPHICAL" in MODE:
-                graph.node(
-                    f"{overlay}/{func}",
-                    style="filled",
-                    fillcolor=graph_colors[decomp_done],
-                    href=func + ".svg",
-                )
-                graph.edge(f"{overlay}/{fname}", f"{overlay}/{func}", count)
-            if MODE == "CMDLINE":
-                print(f"{func} called {count} times; Decompiled: {decomp_done}")
-    # The opposite, find who calls us
-    if MODE == "CMDLINE":
-        print(f"\nFunctions which call this:")
-    for key, value in tree.items():
-        overlay = value[0]
-        callees = value[1:]
-        if key == "IGNORE_FUNCS":
-            continue
-        if any(callee.startswith(f"{fname}-") for callee in callees):
-            callee_dict = {a: b for a, b in (x.split("-") for x in callees)}
-            if fname not in callee_dict:
-                if ("g_api_" + fname) in callee_dict:
-                    fname = "g_api_" + fname
+def get_c_filename(asm_filename):
+    assert "asm/us" in asm_filename and "/nonmatchings/" in asm_filename
+    # Step 1: Replace asm/us for src
+    srcpath = asm_filename.replace("asm/us", "src")
+    # Step 2: Remove the nonmatchings
+    no_nonmatchings = srcpath.replace("/nonmatchings/", "/")
+    # Little known rpartition drops the function name to get the last directory, which should be c file name.
+    c_filename = no_nonmatchings.rpartition("/")[0] + ".c"
+    assert os.path.exists(c_filename)
+    return c_filename
+
+
+# Given a function name called from a caller, find which of a set of candidates is probably the function being called.
+def find_func_match(caller, candidates):
+    prefix_lengths = [
+        len(os.path.commonprefix([caller.c_filename, candidate.c_filename]))
+        for candidate in candidates
+    ]
+    # Assert that there is a single highest max (and not a tie)
+    assert prefix_lengths.count(max(prefix_lengths))
+    best_match = candidates[prefix_lengths.index(max(prefix_lengths))]
+    return best_match
+
+
+# Given a sotn_function object, go through and find all its function calls.
+# Any function called should be added as a callee for the input_function, and
+# the input_function should be added as a caller for the called function.
+def analyze(input_function):
+    with open(input_function.asm_filename) as f:
+        asm_lines = f.read().split("\n")
+        for i, line in enumerate(asm_lines):
+            if "jal" in line:
+                callee_name = handle_jal_call(asm_lines, i)
+
+                if callee_name.startswith("D_"):
+                    input_function.add_callee(fake_function(callee_name))
+                    continue
+                if callee_name.startswith("Unknown"):
+                    input_function.add_callee(fake_function(callee_name))
+                    continue
+                candidate_callees = function_lookup[callee_name]
+                assert len(candidate_callees) > 0
+                # It's one of the special cases that we establish
+                if isinstance(candidate_callees, str):
+                    input_function.add_callee(fake_function(callee_name))
+                    continue
+                # If there is only one candidate (only one function in the codebase by that name), we have it.
+                if len(candidate_callees) == 1:
+                    callee = candidate_callees[0]
+                    input_function.add_callee(callee)
+                    callee.add_caller(input_function)
                 else:
-                    print(f"Function {fname} is not in {callee_dict}.")
-                    print(key)
-                    exit(6)
-            call_count = callee_dict[fname]
-            key_as_func = get_nonmatching_functions("asm", key, overlay)
-            decomp_done = str(is_decompiled(key_as_func.src_path, key))
-            if "GRAPHICAL" in MODE:
-                graph.node(
-                    f"{overlay}/{key}",
-                    style="filled",
-                    fillcolor=graph_colors[decomp_done],
-                    href=key + ".svg",
-                )
-                graph.edge(f"{overlay}/{key}", f"{overlay}/{fname}", call_count)
-            if MODE == "CMDLINE":
-                print(f"Called by {key} {call_count} times; Decompiled: {decomp_done}")
-    # Display the graph in a window on the screen
-    if MODE == "GRAPHICAL_SINGLE":
-        imgbytes = graph.pipe(format="png")
-        img = Image.open(io.BytesIO(imgbytes))
-        img.show()
-    # Save graphs to files
-    if MODE == "GRAPHICAL_ALL":
-        filename = f"{output_dir}/{fname}.svg"
+                    best_match = find_func_match(input_function, candidate_callees)
+                    input_function.add_callee(best_match)
+                    best_match.add_caller(input_function)
+
+
+# Create an index.html which lists all functions with their overlays
+def generate_html(function_list):
+    # Sort all functions into overlays, with the name as tiebreaker to sort within overlays
+    sorted_funcs = sorted(
+        [f for f in function_list if f.overlay != "mad"],
+        key=lambda x: (x.overlay, x.name),
+    )
+    html = '<html><head><meta charset="UTF-8"></head><body>'
+    active_overlay = ""
+    # Now iterate through all functions, creating links to their SVG files.
+    for f in sorted_funcs:
+        # When the overlay changes, add a heading.
+        if f.overlay != active_overlay:
+            # End the previous overlay's list, unless this is the first overlay.
+            if active_overlay != "":
+                html += "</ul>"
+            active_overlay = f.overlay
+            html += f"<h2>{active_overlay}</h2>"
+            html += "<ul>"
+        dec_symbol = "✅" if f.decompile_status == "True" else "❌"
+        html += f'<li><a href="{f.unique_name}.svg">{dec_symbol + f.name}</a></li>'
+    html += "</ul>"
+    html += "</body></html>"
+    return html
+
+
+# This represents calls that we can't connect to a real C function. This includes SDK functions, or calls where
+# it is unclear what actual function is being called.
+class fake_function:
+    def __init__(self, name):
+        self.name = name
+        self.decompile_status = "N/A"
+        self.unique_name = name
+
+
+class sotn_function:
+    def __init__(self, name, asm_filename):
+        self.name = name
+        self.asm_filename = asm_filename
+        # From the asm filename, get the C filename
+        self.c_filename = get_c_filename(self.asm_filename)
+        self.decompile_status = str(is_decompiled(self.c_filename, self.name))
+        self.callers = {}
+        self.callees = {}
+
+        filepath_split = self.asm_filename.split("/")
+        self.overlay = filepath_split[2]
+        if self.overlay == "st":
+            self.overlay = filepath_split[3]
+        if self.overlay == "weapon":
+            self.overlay = filepath_split[4]
+        # Name used in SVG files, must be different from any other function
+        self.unique_name = ".".join([self.overlay, self.name])
+
+    def __repr__(self):
+        callernames = [c.name for c in self.callers]
+        calleenames = [c.name for c in self.callees]
+        return f"{self.name} at {self.asm_filename}\n{self.c_filename}\n{callernames}\n{calleenames}\n"
+
+    def add_callee(self, other_function):
+        if other_function.unique_name in self.callees:
+            self.callees[other_function.unique_name][0] += 1
+        else:
+            self.callees[other_function.unique_name] = [
+                1,
+                other_function.decompile_status,
+            ]
+
+    def add_caller(self, other_function):
+        if other_function.unique_name in self.callers:
+            self.callers[other_function.unique_name][0] += 1
+        else:
+            self.callers[other_function.unique_name] = [
+                1,
+                other_function.decompile_status,
+            ]
+
+    def render_svg(self):
+        graph = graphviz.Digraph(self.unique_name)
+        graph.node(
+            self.unique_name,
+            style="filled",
+            fillcolor=graph_colors[self.decompile_status],
+        )
+
+        for callee, flags in self.callees.items():
+            graph.node(
+                callee,
+                style="filled",
+                fillcolor=graph_colors[flags[1]],
+                href=callee + ".svg",
+            )
+            graph.edge(self.unique_name, callee, str(flags[0]))
+        # print("callers")
+        for caller, flags in self.callers.items():
+            graph.node(
+                caller,
+                style="filled",
+                fillcolor=graph_colors[flags[1]],
+                href=caller + ".svg",
+            )
+            graph.edge(caller, self.unique_name, str(flags[0]))
+        # print("done")
         imgbytes = graph.pipe(format="svg")
-        with open(filename, "wb") as f:
-            f.write(imgbytes)
+        return imgbytes
 
+    def create_svg_file(self):
+        with open(f"{output_dir}/{self.unique_name}.svg", "wb") as f:
+            f.write(self.render_svg())
 
-call_tree_filename = "sotn_calltree.txt"
-src_files = get_all_c_files("src")
 
 if __name__ == "__main__":
-    tree = {}
-    # Check if tree needs to be built.
-    if not os.path.exists(call_tree_filename):
-        # This is an arbitrary file for a decompiled function. It only exists after a force extract.
-        if not os.path.exists("asm/us/main/nonmatchings/5A38/ResetCallback.s"):
-            print("Need to run `make force_extract` to build call tree!")
-            exit(7)
-        tree = build_call_tree()
-        with open(call_tree_filename, "w") as f:
-            for key, value in tree.items():
-                f.write(key + ":" + value + "\n")
-    with open(call_tree_filename) as f:
-        treelines = f.readlines()
-    for line in treelines:
-        fname, calls = line[:-1].split(":")
-        tree[fname] = calls.split(",")
-
-    # Run with no arguments to get interactive rendering of one graph at a time
-    if len(sys.argv) == 1:
-        MODE = "GRAPHICAL_SINGLE"
-    # Run with ALL to generate a graph for every function, and an HTML directory
-    elif sys.argv[1] == "ALL":
-        MODE = "GRAPHICAL_ALL"
-    # Run with ALL_DRY to do a dry-run, which is like GRAPHICAL_ALL without file writes
-    elif sys.argv[1] == "ALL_DRY":
-        MODE = "GRAPHICAL_ALL_DRY"
-    # Run with function name to do text-mode description of calls for that function
-    elif len(sys.argv) == 2:
-        MODE = "CMDLINE"
-    else:
-        print("Too many arguments!")
-
+    timer = time.perf_counter()
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+    # 1: Create baseline function objects for every .s file
+    functions = [
+        sotn_function(s.stem, str(s))
+        for s in Path("asm").rglob("*.s")
+        if "nonmatchings" in str(s)
+    ]
+    if len(functions) == 0:
+        print("Error! You probably didn't run `make force_extract` first")
+        exit(2)
+    print(
+        f"Initialized {len(functions)} function objects in {time.perf_counter()-timer} seconds"
+    )
 
-    if MODE == "GRAPHICAL_SINGLE":
-        while True:
-            startfunc = input("Give function to analyze:\n")
-            analyze_function(startfunc, tree)
-    if MODE == "GRAPHICAL_ALL":
-        print("Initiating autogeneration of call tree diagrams")
-        funclist = list(tree.keys())[1:]
+    # Make sure all the functions really do have a unique name
+    assert len(functions) == len(set(f.unique_name for f in functions))
+
+    # This is a "phonebook" that allows you to get all the function objects matching any function name
+    # This is needed because functions only call another function by name. Therefore, with the name,
+    # this lookup table allows you to find the sotn_function object which is being called.
+    function_lookup = {}
+    for f in functions:
+        if f.name not in function_lookup:
+            function_lookup[f.name] = [f]
+        else:
+            function_lookup[f.name].append(f)
+    # Add SDK functions (which don't exist in ASM or C form) as bare entries
+    for f in get_sdk_funcs():
+        function_lookup[f] = "SDK"
+    # Similar for main functions
+    for f in get_main_funcs():
+        function_lookup[f] = "MAIN"
+    for f in get_gapi_funcs():
+        function_lookup[f] = "GAPI"
+    print(f"Created function lookup table in {time.perf_counter() - timer} seconds")
+    # 2: For each function, find what it calls. When finding a callee, also add itself as caller.
+    for function in functions:
+        if not any(x in function.c_filename for x in ["psxsdk", "mad"]):
+            analyze(function)
+    print(f"Calculated call relations in {time.perf_counter() - timer} seconds")
+    args = parser.parse_args()
+    if not args.ultradry:
+        print(f"Rendering in {'dry' if args.dry else 'full output'} mode")
+
+        # 3: Render all the functions, either dry or saved to file.
+        def worker(function):
+            if args.dry:
+                function.render_svg()
+            else:
+                function.create_svg_file()
+
         with multiprocessing.Pool() as pool:
-            file_generator = partial(analyze_function, tree=tree)
-            pool.map(file_generator, funclist)
-        print("All trees have been generated.")
-        # Generate an index.html to direct to all of them
-        overlays = {}
-        for func in funclist:
-            overlay = tree[func][0]
-            if overlay not in overlays:
-                overlays[overlay] = []
-            overlays[overlay].append(func)
-        # Sort the names
-        for overlay in overlays:
-            overlays[overlay].sort()
-        html = '<html><head><meta charset="UTF-8"></head><body>'
-        for overlay, funcs in overlays.items():
-            # create a heading for the overlay
-            html += f"<h2>{overlay}</h2>"
-
-            # create an unordered list of functions
-            html += "<ul>"
-            for func in funcs:
-                dec_done = is_decompiled(
-                    get_nonmatching_functions("asm", func, overlay).src_path, func
-                )
-                dec_symbol = "✅" if dec_done else "❌"
-                html += f'<li><a href="{func}.svg">{dec_symbol + func}</a></li>'
-            html += "</ul>"
-            html += "</body></html>"
+            pool.map(worker, functions)
+        print(f"Completed SVG rendering in {time.perf_counter() - timer} seconds")
+        if not args.dry:
+            html = generate_html(functions)
             with open(f"{output_dir}/index.html", "w") as f:
                 f.write(html)
-    if MODE == "GRAPHICAL_ALL_DRY":
-        print("Initiating dry-run of call tree diagrams")
-        funclist = list(tree.keys())[1:]
-        with multiprocessing.Pool() as pool:
-            file_generator = partial(analyze_function, tree=tree)
-            pool.map(file_generator, funclist)
-        print("Dry run complete. Deleting call tree.")
-        os.remove(call_tree_filename)
-    if MODE == "CMDLINE":
-        analyze_function(sys.argv[1], tree)
+            print(f"Generated HTML in {time.perf_counter() - timer} seconds")
+    print("Exiting.")
