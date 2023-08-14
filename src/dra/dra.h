@@ -521,7 +521,7 @@ extern s32 D_80137954;
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
-extern Unkstruct_oneUword displayHP;
+extern Unkstruct_oneUword g_displayHP;
 extern s32 D_80137970;
 extern s32 D_80137974;
 extern u32 D_80137978;
@@ -532,8 +532,7 @@ extern u32 D_80137988;
 extern u32 D_8013798C;
 extern Unkstruct_80137990 D_80137990;
 extern s32 D_80137994;
-extern Unkstruct_oneWord
-    healingMailTimer; // Presumably a member of some larger struct?
+extern Unkstruct_oneWord g_healingMailTimer;
 extern u32 D_8013799C;
 extern s32 D_801379A0;
 extern s32 D_801379A4;

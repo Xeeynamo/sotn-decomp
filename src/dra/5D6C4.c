@@ -1533,8 +1533,8 @@ void func_8010189C(void) {
     u16* new_var;
 
     D_8013B5E8 = 0;
-    healingMailTimer.unk0 = 0;
-    displayHP.unk0 = g_Status.hp;
+    g_healingMailTimer.unk0 = 0;
+    g_displayHP.unk0 = g_Status.hp;
 
     if ((g_StageId == STAGE_ST0) ||
         (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
@@ -1665,14 +1665,14 @@ void func_80101A80() {
     // Healing mail
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, ARMOR_TYPE)) &&
         ((g_Player.unk0C & 0x04000007) == 0x04000000)) {
-        healingMailTimer.unk0++;
-        if (healingMailTimer.unk0 >= 128) {
+        g_healingMailTimer.unk0++;
+        if (g_healingMailTimer.unk0 >= 128) {
             g_Player.unk56 = 2;
             g_Player.unk58 = 1;
-            healingMailTimer.unk0 = 0;
+            g_healingMailTimer.unk0 = 0;
         }
     } else {
-        healingMailTimer.unk0 = 0;
+        g_healingMailTimer.unk0 = 0;
     }
 
     func_800FEE6C();
@@ -1683,44 +1683,44 @@ void func_80101A80() {
     prim->clut = mp_fill_steps == 50 ? 0x162 : 0x174;
 
     if (D_8013B5E8 == 0) {
-        hpdiff = g_Status.hp - displayHP.unk0;
+        hpdiff = g_Status.hp - g_displayHP.unk0;
         if (hpdiff > 0) {
             if (hpdiff >= 11) {
-                displayHP.unk0 += (hpdiff) / 10;
+                g_displayHP.unk0 += (hpdiff) / 10;
             } else {
-                displayHP.unk0++;
+                g_displayHP.unk0++;
             }
         }
         if (hpdiff < 0) {
             if (hpdiff < -10) {
-                displayHP.unk0 += (hpdiff) / 10;
+                g_displayHP.unk0 += (hpdiff) / 10;
             } else {
-                displayHP.unk0--;
+                g_displayHP.unk0--;
             }
         }
     } else {
         D_8013B5E8--;
     }
-    if (displayHP.unk0 == g_Status.hpMax) {
+    if (g_displayHP.unk0 == g_Status.hpMax) {
         func_800EA5E4(2); // Likely related to HP showing bold when full
-    } else if (displayHP.unk0 <= g_Status.hpMax >> 2) {
+    } else if (g_displayHP.unk0 <= g_Status.hpMax >> 2) {
         func_800EA5E4(3); // Show yellow if under 1/4 health
     } else {
         func_800EA5E4(1); // Normal health display
     }
 
-    if (displayHP.unk0 >= 1000) {
+    if (g_displayHP.unk0 >= 1000) {
         leading_zeros = 0;
         digit_spacing = 6;
         stat_xpos = 3;
-    } else if (displayHP.unk0 >= 100) {
+    } else if (g_displayHP.unk0 >= 100) {
         leading_zeros = 1;
         digit_spacing = 6;
         stat_xpos = 0;
     } else {
         digit_spacing = 7;
         stat_xpos = -6;
-        if (displayHP.unk0 >= 10) {
+        if (g_displayHP.unk0 >= 10) {
             leading_zeros = 2;
         } else {
             leading_zeros = 3;
@@ -1728,7 +1728,7 @@ void func_80101A80() {
     }
     // Thousands digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((displayHP.unk0 / 1000) * 8) + 0x20;
+    prim->u2 = prim->u0 = ((g_displayHP.unk0 / 1000) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = stat_xpos;
     prim->x1 = prim->x3 = stat_xpos + 8;
@@ -1740,7 +1740,7 @@ void func_80101A80() {
     }
     // Hundreds digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((displayHP.unk0 / 100) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0 = (((g_displayHP.unk0 / 100) % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = stat_xpos + digit_spacing;
     prim->x1 = prim->x3 = stat_xpos + digit_spacing + 8;
@@ -1751,7 +1751,7 @@ void func_80101A80() {
     }
     // Tens digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((displayHP.unk0 / 10) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0 = (((g_displayHP.unk0 / 10) % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = stat_xpos + (digit_spacing * 2);
     prim->x1 = prim->x3 = stat_xpos + (digit_spacing * 2) + 8;
@@ -1762,7 +1762,7 @@ void func_80101A80() {
     }
     // Ones digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((displayHP.unk0 % 10) * 8) + 0x20;
+    prim->u2 = prim->u0 = ((g_displayHP.unk0 % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = stat_xpos + (digit_spacing * 3);
     prim->x1 = prim->x3 = stat_xpos + (digit_spacing * 3) + 8;
