@@ -189,7 +189,6 @@ void EntityWeaponAttack(Entity* self) {
     self->unk1C = PLAYER.unk1C;
     self->rotPivotY = PLAYER.rotPivotY;
 }
-// #endif
 
 void func_ptr_80170004(void) {}
 
