@@ -190,7 +190,7 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-void func_ptr_80170004(void) {}
+void func_ptr_80170004(Entity* self) {}
 
 void func_ptr_80170008(void) {}
 

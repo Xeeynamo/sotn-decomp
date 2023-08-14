@@ -22,7 +22,29 @@ INCLUDE_ASM("weapon/nonmatchings/w_015", SetWeaponProperties);
 
 INCLUDE_ASM("weapon/nonmatchings/w_015", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_015", func_ptr_80170004);
+void func_ptr_80170004(Entity* self) {
+    if (self->step == 0) {
+        self->animSet = self->ext.generic.unk8C.entityPtr->animSet;
+        self->animCurFrame = self->ext.generic.unk8C.entityPtr->animCurFrame;
+        self->facing = self->ext.generic.unk8C.entityPtr->facing;
+        self->zPriority = self->ext.generic.unk8C.entityPtr->zPriority - 2;
+        self->flags = FLAG_UNK_08000000;
+        self->palette = self->ext.generic.unk8C.entityPtr->palette;
+        self->unk5A = self->ext.generic.unk8C.entityPtr->unk5A;
+        self->ext.generic.unk7C.s = 10;
+        self->blendMode = 0x10;
+        self->unk19 = 8;
+        self->unk6C = 0x80;
+        self->step++;
+    }
+    if (self->unk6C >= 0x30) {
+        self->unk6C += 0xF8;
+    }
+
+    if (--self->ext.generic.unk7C.s == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_015", func_ptr_80170008);
 

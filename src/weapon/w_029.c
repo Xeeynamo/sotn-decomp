@@ -1,5 +1,6 @@
 #include "weapon_private.h"
 
+// Variant of DestroyEntity
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017ADD8);
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", LoadWeaponPalette);

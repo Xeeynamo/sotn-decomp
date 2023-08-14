@@ -22,7 +22,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_035", SetWeaponProperties);
 
 INCLUDE_ASM("weapon/nonmatchings/w_035", EntityWeaponAttack);
 
-void func_ptr_80170004(void) {}
+void func_ptr_80170004(Entity* self) {}
 
 void func_ptr_80170008(void) {}
 
