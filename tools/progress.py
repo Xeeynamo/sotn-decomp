@@ -85,7 +85,7 @@ class DecompProgressStats:
         depth = 4 + path.count("/")
 
         self.calculate_progress(
-            map_file.filterBySegmentType(".text"), asm_path, nonmatchings, depth
+            map_file.filterBySectionType(".text"), asm_path, nonmatchings, depth
         )
 
     # modified version of mapfile_parser.MapFile.getProgress
@@ -95,8 +95,8 @@ class DecompProgressStats:
         totalStats = ProgressStats()
         progressPerFolder: dict[str, ProgressStats] = dict()
 
-        for file in map_file.filesList:
-            if len(file.symbols) == 0:
+        for file in [file for segment in map_file for file in segment]:
+            if len(file) == 0:
                 continue
 
             folder = file.filepath.parts[pathIndex]
@@ -112,7 +112,7 @@ class DecompProgressStats:
             fullAsmFile = asmPath / extensionlessFilePath.with_suffix(".s")
             wholeFileIsUndecomped = fullAsmFile.exists()
 
-            for func in file.symbols:
+            for func in file:
                 self.functions_total += 1
                 funcAsmPath = nonmatchings / extensionlessFilePath / f"{func.name}.s"
 
@@ -129,6 +129,32 @@ class DecompProgressStats:
 
         self.code_matching = totalStats.decompedSize
         self.code_total = totalStats.decompedSize + totalStats.undecompedSize
+
+
+class DecompProgressWeaponStats:
+    name: str
+    exists: bool
+    code_matching: int
+    code_total: int
+    functions_matching: int
+    functions_total: int
+    code_matching_prev: int
+    functions_prev: int
+
+    def __init__(self):
+        self.name = "weapon"
+        self.exists = True
+        self.code_matching = 0
+        self.code_total = 0
+        self.functions_matching = 0
+        self.functions_total = 0
+        for i in range(0, 59):
+            stats = DecompProgressStats(f"weapon/w0_{i:03d}", "weapon")
+            if stats.exists:
+                self.code_matching += stats.code_matching
+                self.code_total += stats.code_total
+                self.functions_matching += stats.functions_matching
+                self.functions_total += stats.functions_total
 
 
 def remove_not_existing_overlays(progresses):
@@ -291,20 +317,20 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
 
 if __name__ == "__main__":
     progress = dict[str, DecompProgressStats]()
-    progress["dra"] = DecompProgressStats("dra", "dra")
-    progress["weapon"] = DecompProgressStats("weapon", "weapon")
-    progress["ric"] = DecompProgressStats("ric", "ric")
+    # progress["dra"] = DecompProgressStats("dra", "dra")
+    # progress["weapon"] = DecompProgressWeaponStats()
+    # progress["ric"] = DecompProgressStats("ric", "ric")
     progress["stcen"] = DecompProgressStats("stcen", "st/cen")
-    progress["stdre"] = DecompProgressStats("stdre", "st/dre")
-    progress["stmad"] = DecompProgressStats("stmad", "st/mad")
-    progress["stno3"] = DecompProgressStats("stno3", "st/no3")
-    progress["stnp3"] = DecompProgressStats("stnp3", "st/np3")
-    progress["stnz0"] = DecompProgressStats("stnz0", "st/nz0")
-    progress["stsel"] = DecompProgressStats("stsel", "st/sel")
-    progress["stst0"] = DecompProgressStats("stst0", "st/st0")
-    progress["stwrp"] = DecompProgressStats("stwrp", "st/wrp")
-    progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
-    progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
+    # progress["stdre"] = DecompProgressStats("stdre", "st/dre")
+    # progress["stmad"] = DecompProgressStats("stmad", "st/mad")
+    # progress["stno3"] = DecompProgressStats("stno3", "st/no3")
+    # progress["stnp3"] = DecompProgressStats("stnp3", "st/np3")
+    # progress["stnz0"] = DecompProgressStats("stnz0", "st/nz0")
+    # progress["stsel"] = DecompProgressStats("stsel", "st/sel")
+    # progress["stst0"] = DecompProgressStats("stst0", "st/st0")
+    # progress["stwrp"] = DecompProgressStats("stwrp", "st/wrp")
+    # progress["strwrp"] = DecompProgressStats("strwrp", "st/rwrp")
+    # progress["tt_000"] = DecompProgressStats("tt_000", "servant/tt_000")
 
     hydrate_previous_metrics(progress, args.version)
     progress = remove_not_existing_overlays(progress)
