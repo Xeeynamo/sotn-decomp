@@ -110,9 +110,9 @@ s32 func_801CE120(Entity* self, s32 arg1) {
     s32 ret = 0;
 
     if (arg1 != 0) {
-        x += 0x40;
+        x += 64;
     } else {
-        x -= 0x40;
+        x -= 64;
     }
 
     g_api.CheckCollision(x, y - 6, &collider, 0);
