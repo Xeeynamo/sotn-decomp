@@ -85,7 +85,14 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
 
                         let func =
                             parse_instructions(&buffer, &dir_path, &item_path.to_string_lossy());
-                        funcs.push(func.clone());
+
+                        // jr $ra, nop
+                        let is_null = func.ops.len() == 2
+                            && func.ops[0].op == 0x03E00008
+                            && func.ops[1].op == 0x00000000;
+                        if !is_null {
+                            funcs.push(func.clone());
+                        }
                     } else if item_path.is_dir() {
                         process_directory(&item_path.to_string_lossy(), funcs);
                     }
@@ -336,6 +343,11 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
     }
 
     let mut entries: Vec<(&Vec<u8>, &Vec<Function>)> = hash_map.map.iter().collect();
+
+    // sort by filename
+    entries.sort_by(|(_, functions1), (_, functions2)| functions1[0].file.cmp(&functions2[0].file));
+
+    // Then sort by the length of functions in reverse order
     entries.sort_by_key(|(_, functions)| std::cmp::Reverse(functions.len()));
 
     if let o_file = output_file.unwrap() {
