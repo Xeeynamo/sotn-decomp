@@ -191,15 +191,27 @@ def get_c_filename(asm_filename):
 
 
 # Given a function name called from a caller, find which of a set of candidates is probably the function being called.
+# We do this based on their C file paths, assuming that a longer shared path (usually, sharing an overlay) will correspond
+# to being the function being called. This logic may need to be improved.
 def find_func_match(caller, candidates):
     prefix_lengths = [
         len(os.path.commonprefix([caller.c_filename, candidate.c_filename]))
         for candidate in candidates
     ]
-    # Assert that there is a single highest max (and not a tie)
-    assert prefix_lengths.count(max(prefix_lengths))
-    best_match = candidates[prefix_lengths.index(max(prefix_lengths))]
-    return best_match
+    # Detect ties. If this is 1, there is a single longest match, otherwise, resolve the tie.
+    longest_match_count = prefix_lengths.count(max(prefix_lengths))
+    if longest_match_count == 1:
+        return candidates[prefix_lengths.index(max(prefix_lengths))]
+    elif longest_match_count > 1:
+        # Currently the only overlap is in UpdateAnim, which is in both dra and servant,
+        # but is called from ric and some weapons. Hard-code this to use the dra version.
+        assert candidates[0].name == "UpdateAnim"
+        for candidate in candidates:
+            if candidate.unique_name.startswith("dra."):
+                return candidate
+    else:
+        print("No candidates!")
+        exit(3)
 
 
 # Given a sotn_function object, go through and find all its function calls.
@@ -290,9 +302,7 @@ class sotn_function:
         self.unique_name = ".".join([self.overlay, self.name])
 
     def __repr__(self):
-        callernames = [c.name for c in self.callers]
-        calleenames = [c.name for c in self.callees]
-        return f"{self.name} at {self.asm_filename}\n{self.c_filename}\n{callernames}\n{calleenames}\n"
+        return f"{self.name} at {self.asm_filename}\n{self.c_filename}\n{self.callers}\n{self.callees}\n"
 
     def add_callee(self, other_function):
         if other_function.unique_name in self.callees:
