@@ -1662,7 +1662,7 @@ void func_80101A80() {
             g_Status.mp = g_Status.mpMax;
         }
     }
-    
+
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, ARMOR_TYPE)) &&
         ((g_Player.unk0C & 0x04000007) == 0x04000000)) {
         g_HealingMailTimer[0]++;
