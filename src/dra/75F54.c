@@ -552,7 +552,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     entity->attackElement = spell.attackElement;
     entity->hitboxState = spell.unk10;
     entity->nFramesInvincibility = spell.unk0D;
-    entity->stunFrames = spell.unk0E;
+    entity->stunFrames = spell.stunFrames;
     entity->unk6A = spell.unk12;
     entity->entityRoomIndex = spell.unk14;
     func_80118894(entity);
@@ -568,7 +568,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         arg0->attackElement = spell.attackElement;
         arg0->hitboxState = spell.unk10;
         arg0->nFramesInvincibility = spell.unk0D;
-        arg0->stunFrames = spell.unk0E;
+        arg0->stunFrames = spell.stunFrames;
         arg0->unk6A = spell.unk12;
         arg0->entityRoomIndex = spell.unk14;
         arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
