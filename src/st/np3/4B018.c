@@ -377,7 +377,116 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0B78);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0D40);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D1BB8);
+void func_801D1BB8(Entity* self) {
+    Primitive *prim, *prim2;
+    s32 x0, x1, y0, y1;
+    s16 primIndex;
+    s16 angle;
+    s32 i;
+
+    if (self->ext.et_801D1BB8.unk8C != 0) {
+        self->step = 8;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180BC8);
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->unk19 |= 4;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
+        if (primIndex == -1) {
+            self->ext.et_801D1BB8.prim = NULL;
+            break;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.et_801D1BB8.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        for (i = 0; prim != NULL; prim = prim->next) {
+            prim->r0 = i;
+            prim->g0 = i;
+            prim->b0 = i;
+            i += 10;
+            prim->r2 = i;
+            prim->g2 = i;
+            prim->b2 = i;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r2);
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            LOW(prim->x1) = LOW(prim->x0);
+            LOW(prim->x2) = LOW(prim->x0);
+            LOW(prim->x3) = LOW(prim->x0);
+            prim->priority = self->zPriority;
+            prim->blendMode = 0x33;
+        }
+
+    case 1:
+        self->rotAngle = self->ext.et_801D1BB8.unk9C;
+        break;
+
+    case 24:
+        self->hitboxState = 0;
+        self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
+        break;
+
+    case 8:
+        if (self->facing == 0) {
+            self->velocityX = FIX(-8.0);
+        } else {
+            self->velocityX = FIX(8.0);
+        }
+        MoveEntity();
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+    }
+
+    angle = self->rotAngle;
+    self->hitboxOffX = -1 * (rsin(angle) * 13) >> 12;
+    self->hitboxOffY = +1 * (rcos(angle) * 13) >> 12;
+    
+    prim = self->ext.et_801D1BB8.prim;
+    if (prim != NULL) {
+        for (i = 0; i < 5; i++) {
+            prim2 = prim->next;
+            LOW(prim->x0) = LOW(prim2->x0);
+            LOW(prim->x1) = LOW(prim2->x1);
+            LOW(prim->x2) = LOW(prim2->x2);
+            LOW(prim->x3) = LOW(prim2->x3);
+            if (self->ext.et_801D1BB8.unk8D) {
+                prim->blendMode = 0x33;
+            } else {
+                prim->blendMode = 0xA;
+            }
+            prim = prim2;
+        }
+    }
+
+    angle = self->rotAngle;
+    if (self->facing != 0) {
+        angle = -angle;
+    }
+
+    x0 = (-1 * (rsin(angle) * 20) >> 12) + self->posX.i.hi;
+    y0 = (+1 * (rcos(angle) * 20) >> 12) + self->posY.i.hi;
+    x1 = (+1 * (rsin(angle) * 4) >> 12) + self->posX.i.hi;
+    y1 = (-1 * (rcos(angle) * 4) >> 12) + self->posY.i.hi;
+
+    LOW(prim->x2) = LOW(prim->x0);
+    LOW(prim->x3) = LOW(prim->x1);
+
+    prim->x0 = x0;
+    prim->y0 = y0;
+    prim->y1 = y1;
+    prim->x1 = x1;
+
+    if (self->ext.et_801D1BB8.unk8D) {
+        prim->blendMode = 0x33;
+    } else {
+        prim->blendMode = 0xA;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D1F38);
 
