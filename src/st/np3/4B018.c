@@ -123,13 +123,13 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityHammer);
 // minor regalloc
 // has jumptable
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF254);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkhaHead);
 #else
 extern u16 D_80180B8C[];
 extern u16 D_80180BA4[];
 extern u16 D_80180BBC[];
 
-void func_801CF254(Entity* self) {
+void EntityGurkhaHead(Entity* self) {
     Collider collider;
     s32 aaaa;
     s32 sp28;
@@ -373,7 +373,79 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0A00);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0B40);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0B78);
+s32 func_801D0B78(void) {
+    s32 ret;
+
+    do { //! FAKE:
+    } while (0);
+
+    ret = 0;
+
+    switch (g_CurrentEntity->step) {
+        case 8:
+            if (GetDistanceToPlayerX() < 64) {
+                ret = 10;
+            }
+            if (GetDistanceToPlayerX() > 80) {
+                ret = 6;
+            }
+            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
+                ret = 7;
+            }
+            break;
+
+        case 10:
+            if (GetDistanceToPlayerX() < 88) {
+                ret = 8;
+            }
+            if (GetDistanceToPlayerX() < 56) {
+                ret = 7;
+            }
+            if (GetDistanceToPlayerX() > 80) {
+                ret = 6;
+            }
+            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
+                ret = 7;
+            }
+            break;
+
+        case 12:
+            if (GetDistanceToPlayerX() < 64) {
+                ret = 10;
+            }
+            break;
+
+        case 6:
+            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
+                ret = 7;
+            }
+            if (GetDistanceToPlayerX() < 0x30) {
+                ret = 10;
+            }
+            if (GetDistanceToPlayerX() < 80) {
+                ret = 8;
+            }
+            break;
+
+        default:
+            if (GetDistanceToPlayerX() > 80) {
+                ret = 6;
+            }
+            if (GetDistanceToPlayerX() < 64) {
+                ret = 10;
+            }
+            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
+                ret = 7;
+            }
+            break;
+    }
+
+    if (g_CurrentEntity->facing != ((GetSideToPlayer() & 1) ^ 1)) {
+        ret = 12;
+    }
+    return ret;
+}
+
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0D40);
 
@@ -445,7 +517,7 @@ void func_801D1BB8(Entity* self) {
     angle = self->rotAngle;
     self->hitboxOffX = -1 * (rsin(angle) * 13) >> 12;
     self->hitboxOffY = +1 * (rcos(angle) * 13) >> 12;
-    
+
     prim = self->ext.et_801D1BB8.prim;
     if (prim != NULL) {
         for (i = 0; i < 5; i++) {

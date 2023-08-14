@@ -93,6 +93,7 @@ EntityZombieSpawner = 0x801C9E28;
 EntityBloodSplatter = 0x801C9F98;
 EntityBloodyZombie = 0x801CA654;
 EntityHammer = 0x801CE69C;
+EntityGurkhaHead = 0x801CF254;
 EntityHammerWeapon = 0x801CF5B8;
 EntityGurkha = 0x801CF94C;
 EntityGurkhaSword = 0x801D0730;
