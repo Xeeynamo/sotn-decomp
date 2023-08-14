@@ -420,7 +420,7 @@ s32 func_801D0B78(void) {
         if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
             ret = 7;
         }
-        if (GetDistanceToPlayerX() < 0x30) {
+        if (GetDistanceToPlayerX() < 48) {
             ret = 10;
         }
         if (GetDistanceToPlayerX() < 80) {
