@@ -323,7 +323,7 @@ class sotn_function:
             ]
 
     def render_svg(self):
-        graph = graphviz.Digraph(self.unique_name)
+        graph = graphviz.Digraph(self.unique_name, graph_attr={"ranksep": "2"})
         graph.node(
             self.unique_name,
             style="filled",
@@ -337,7 +337,7 @@ class sotn_function:
                 fillcolor=graph_colors[flags[1]],
                 href=callee + ".svg",
             )
-            graph.edge(self.unique_name, callee, str(flags[0]))
+            graph.edge(self.unique_name, callee, headlabel=str(flags[0]))
         # print("callers")
         for caller, flags in self.callers.items():
             graph.node(
@@ -346,7 +346,7 @@ class sotn_function:
                 fillcolor=graph_colors[flags[1]],
                 href=caller + ".svg",
             )
-            graph.edge(caller, self.unique_name, str(flags[0]))
+            graph.edge(caller, self.unique_name, taillabel=str(flags[0]))
         # print("done")
         imgbytes = graph.pipe(format="svg")
         return imgbytes
