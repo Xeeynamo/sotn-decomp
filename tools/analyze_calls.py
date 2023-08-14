@@ -152,6 +152,20 @@ def get_main_funcs():
     symbols = symbols[index_first_func : index_last_func + 1]
     return [line.split(" = ")[0] for line in symbols]
 
+#Functions in gameapi are often strange, especially in the Overlay member.
+def get_gapi_funcs():
+    found_functions = []
+    # Load up symbols for the relative functions loaded into GameApi
+    with open("config/symbols.us.txt") as f:
+        symbols = f.readlines()
+        for symbol in symbols:
+            symbolname = symbol.split(" = ")[0]
+            if "g_api_" in symbolname:
+                found_functions.append(symbolname)
+                found_functions.append(symbolname.replace("_", "."))
+    # Special case, first element of struct doesn't have a dedicated symbol.
+    found_functions.append("g_api.o.Update")
+    return found_functions
 
 def is_decompiled(srcfile, fname):
     with open(srcfile) as f:
@@ -365,15 +379,8 @@ if __name__ == "__main__":
     # Similar for main functions
     for f in get_main_funcs():
         function_lookup[f] = "MAIN"
-    # Load up symbols for the relative functions loaded into GameApi
-    with open("config/symbols.us.txt") as f:
-        symbols = f.readlines()
-        for symbol in symbols:
-            symbolname = symbol.split(" = ")[0]
-            if "g_api_" in symbolname:
-                function_lookup[symbolname] = "GAPI"
-                function_lookup[symbolname.replace("_", ".")] = "GAPI"
-    function_lookup["g_api.o.Update"] = "GAPI"
+    for f in get_gapi_funcs():
+        function_lookup[f] = "GAPI"
     print(f"Created function lookup table in {time.perf_counter() - timer} seconds")
     # 2: For each function, find what it calls. When finding a callee, also add itself as caller.
     for function in functions:
@@ -394,9 +401,9 @@ if __name__ == "__main__":
         with multiprocessing.Pool() as pool:
             pool.map(worker, functions)
         print(f"Completed SVG rendering in {time.perf_counter() - timer} seconds")
-        print("Exiting.")
-        # if not args.dry:
-    html = generate_html(functions)
-    with open(f"{output_dir}/index.html", "w") as f:
-        f.write(html)
-    print(f"Generated HTML in {time.perf_counter() - timer} seconds")
+         if not args.dry:
+            html = generate_html(functions)
+            with open(f"{output_dir}/index.html", "w") as f:
+                f.write(html)
+            print(f"Generated HTML in {time.perf_counter() - timer} seconds")
+    print("Exiting.")
