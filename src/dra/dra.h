@@ -260,16 +260,6 @@ typedef struct {
     /* 80137692 */ u8 D_80137692;
 } MenuData;
 
-// Used in EntityUnarmedAttack, more research would be useful
-typedef struct {
-    u16** frames;
-    s8* frameProps;
-    s16 unk8;
-    u16 soundId;
-    u8 ACshift;
-    u8 soundFrame;
-} animSoundEvent;
-
 // All the Joseph's Cloak color fields are in RGB555 format
 typedef struct {
     u16 liningDark;
@@ -390,7 +380,7 @@ extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
-extern animSoundEvent* D_800AD53C[];
+extern AnimSoundEvent* D_800AD53C[];
 extern s32 D_800ADC44;
 extern RECT D_800AE130;
 extern s32 D_800AE270[];

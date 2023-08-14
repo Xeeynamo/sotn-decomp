@@ -222,12 +222,23 @@ parser.add_argument(
     default=None,
     required=False,
 )
+parser.add_argument(
+    "-f",
+    "--force",
+    help="force decompiling only the first occurrence",
+    default=None,
+    required=False,
+    action="store_true",
+)
 
 args = parser.parse_args()
 if __name__ == "__main__":
     funcs = get_nonmatching_functions(asm_dir, args.function)
     if len(funcs) == 0:
         print(f"function {args.function} not found or already decompiled")
+
+    if args.force:
+        funcs = funcs[:1]
 
     if args.overlay == None:
         if len(funcs) > 1:

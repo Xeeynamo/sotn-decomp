@@ -34,7 +34,7 @@ LayoutEntity* D_80180850[];
 extern u16 D_80180AB8[];
 extern u16 D_80180AC4[];
 extern u16 D_80180AD0[];
-extern u16 D_80180ADC[];
+extern u16 D_80180ADC[]; // Init EntityCastleDoor
 extern u16 D_80180AE8[];
 extern u16 D_80180B00[];
 extern u16 D_80180B18[];
@@ -46,6 +46,12 @@ extern u16 D_80180B90[];
 extern u16 D_80180BA8[];
 extern ObjInit2 D_80180BFC[];
 extern SVEC4 D_80181024[];
+extern SVEC4 D_801810A4;
+extern MATRIX D_801810D4;
+extern SVECTOR* D_8018110C;
+extern u8 D_80181118[];
+extern u16 D_80181120[];
+extern u16 D_80181130[8];
 extern u16 D_80181230[];
 extern s32 g_TrapDoorFlag; // 0 = Closed, 1 = Open
 extern u8 D_80181240[];
@@ -141,3 +147,5 @@ extern u16 D_801826E0[]; // NOTE(sestren): Animation frame properties?
 extern u16 D_80182740[];
 
 // *** EntitySoulStealOrb properties END ***
+
+extern SVECTOR D_801B73E0;

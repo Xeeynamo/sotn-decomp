@@ -103,7 +103,7 @@ typedef struct ET_Generic {
     } unkB8;
 } ET_Generic;
 
-typedef struct ET_EquipItemDrop {
+typedef struct {
     /* 0x00 */ u16 timer;
     /* 0x02 */ s16 unk7E;
     /* 0x04 */ u8 unk80;
@@ -119,6 +119,24 @@ typedef struct ET_EquipItemDrop {
     /* 0x16 */ s16 unk92;
     /* 0x18 */ s16 unk94;
 } ET_EquipItemDrop;
+
+typedef struct {
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ s32 unkA4;
+    /* 0xA8 */ s32 unkA8;
+    /* 0xAC */ u8 unkAC;
+    /* 0xAD */ u8 unkAD;
+    /* 0xAE */ s16 equipId;
+} ET_Weapon;
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
@@ -283,8 +301,9 @@ typedef struct {
 
 typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0x4];
-    /* 0x84 */ s16 unk84;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ char pad_82[0x2];
+    /* 0x84 */ s16 rotAngle;
 } ET_CastleDoor;
 
 typedef struct {
@@ -306,10 +325,25 @@ typedef struct {
     /* 0x84 */ s32 elevatorTarget;
 } ET_Elevator;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ char pad_80[0xC];
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ char pad_8E[0xE];
+    /* 0x9C */ u16 unk9C;
+} ET_801D1BB8;
+
+typedef struct {
+    /* 0x7C */ char pad_0[0xC];
+    /* 0x88 */ u16 unk88;
+} ET_801D0B78;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
+    /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ ET_WarpRoom warpRoom;
@@ -328,5 +362,7 @@ typedef union {
     /* 0x7C */ ET_CastleDoor castleDoor;
     /* 0x7C */ ET_DeathSkySwirl deathSkySwirl;
     /* 0x7C */ ET_Elevator elevator;
+    /* 0x7C */ ET_801D1BB8 et_801D1BB8;
+    /* 0x7C */ ET_801D0B78 et_801D0B78;
     /* 0x7C */ char stub[0x40];
 } Ext;

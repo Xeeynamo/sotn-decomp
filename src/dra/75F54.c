@@ -284,7 +284,7 @@ void func_80118670(void) {
 
 void func_801186EC(void) {
     if (PLAYER.step_s == 0) {
-        if (g_Entities[UNK_ENTITY_10].entityId == E_NONE) {
+        if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;
             func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
             PLAYER.step_s++;
@@ -323,7 +323,7 @@ void func_80118894(Entity* self) {
     s32 i;
     s32 search_value;
 
-    if (self == &g_Entities[UNK_ENTITY_10]) {
+    if (self == &g_Entities[E_WEAPON]) {
         if (!(self->params & 0x8000)) {
             self->enemyId = 1;
             return;
@@ -786,7 +786,7 @@ INCLUDE_ASM("dra/nonmatchings/75F54", func_8011AC3C);
 // Name comes purely from emulator breakpoint experiments, could be wrong
 void EntityUnarmedAttack(Entity* entity) {
     Equipment equip;
-    animSoundEvent* temp_s1;
+    AnimSoundEvent* temp_s1;
     u16 paramsTopBit;
 
     entity->posX.val = PLAYER.posX.val;

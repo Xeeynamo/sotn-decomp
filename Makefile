@@ -246,7 +246,7 @@ $(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
 $(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
 	$(OBJCOPY) -O binary $< $@
 	printf '\x00' | dd of=$@ bs=1 seek=12287 count=1 conv=notrunc
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w0_$*.map \
 		-T weapon0.ld \
@@ -254,7 +254,7 @@ $(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w1_$*.map \
 		-T weapon1.ld \

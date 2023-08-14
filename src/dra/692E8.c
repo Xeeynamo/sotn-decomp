@@ -837,7 +837,7 @@ void func_8010ED54(u8 arg0) {
 INCLUDE_ASM("dra/nonmatchings/692E8", func_8010EDB8);
 
 void func_8010FAF4(void) {
-    DestroyEntity(&g_Entities[UNK_ENTITY_10]);
+    DestroyEntity(&g_Entities[E_WEAPON]);
     g_Player.unk46 = 0;
 }
 

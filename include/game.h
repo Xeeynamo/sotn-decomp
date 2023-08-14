@@ -107,7 +107,10 @@ typedef struct Primitive {
 
 #include "entity.h"
 
-#define COLORS_PER_PAL 16
+#define COLORS_PER_PAL (16)
+#define COLOR_BPP (16)
+#define COLOR_LEN ((COLOR_BPP) / 8)
+#define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
 
@@ -1010,7 +1013,7 @@ typedef struct {
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
     /* 8003C810 */ void* func_80118B18;
-    /* 8003C814 */ void* UpdateUnarmedAnim;
+    /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
     /* 8003C81C */ void* func_80118C28;
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
@@ -1076,7 +1079,7 @@ extern bool (*g_api_func_80131F68)(void);
 extern DR_ENV* (*g_api_func_800EDB08)(POLY_GT4* poly);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
-extern void* g_api_UpdateUnarmedAnim;
+extern u32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
 extern void (*g_api_func_8010DBFC)(s32*, s32*);
 extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
@@ -1142,6 +1145,15 @@ typedef struct {
     /* 00 */ u16 count;
     /* 02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
+
+typedef struct {
+    /* 0x00 */ u16** frames;
+    /* 0x04 */ s8* frameProps;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ u16 soundId;
+    /* 0x0C */ u8 ACshift;
+    /* 0x0D */ u8 soundFrame;
+} AnimSoundEvent;
 
 typedef struct {
     /* 800730D8 0x00 */ u16* layout;

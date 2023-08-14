@@ -180,7 +180,160 @@ void EntityShuttingWindow(Entity* self) {
 }
 
 // main door to the castle that closes during intro
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityCastleDoor);
+void EntityCastleDoor(Entity* self) {
+    SVECTOR sVec1;
+    VECTOR vec1;
+    MATRIX mtx1;
+    MATRIX mtx2;
+    CVECTOR cVec1;
+    CVECTOR cVec2;
+    SVECTOR sVec2;
+    long sxy2, sxy3, p;
+    Primitive* prim;
+    SVECTOR** var_s5;
+    SVEC4* var_s6;
+    s16 primIndex;
+    s32 temp_s3;
+    s32 tilePos;
+    s32 i;
+    u16* tilePtr;
+    u8* var_a0;
+
+    sVec2 = D_801B73E0;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        var_a0 = D_80181118;
+        self->primIndex = primIndex;
+        self->ext.castleDoor.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        for (i = 0; i < 3; i++) {
+            prim->tpage = 0xF;
+            prim->clut = 0x41;
+            prim->priority = 0x6A;
+            prim->blendMode = 2;
+            //! FAKE:
+            tilePos = prim->u2 = *var_a0++;
+            prim->u0 = tilePos;
+
+            prim->u1 = prim->u3 = *var_a0;
+            prim->v0 = prim->v1 = 1;
+            prim->v2 = prim->v3 = 0x81;
+            prim = prim->next;
+            var_a0++;
+        }
+        if (D_8003BDEC[52] != 0) {
+            self->ext.castleDoor.rotAngle = 0;
+            self->step = 5;
+        }
+        break;
+
+    case 1:
+        tilePos = 0x445;
+        for (i = 0, tilePtr = D_80181120; i < 8; tilePtr++, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
+            tilePos += 0x20;
+        }
+        self->ext.castleDoor.rotAngle = -0x380;
+        self->ext.castleDoor.timer = 32;
+        self->step = 4;
+        D_8003BDEC[52] = 1;
+        break;
+
+    case 2:
+        self->ext.castleDoor.rotAngle -= 8;
+        if (self->ext.castleDoor.rotAngle < -0x380) {
+            self->ext.castleDoor.rotAngle = -0x380;
+            self->ext.castleDoor.timer = 128;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (--self->ext.castleDoor.timer == 0) {
+            self->step++;
+        }
+        break;
+
+    case 4:
+        self->ext.castleDoor.rotAngle += 0x10;
+        if (self->ext.castleDoor.rotAngle > 0) {
+            self->ext.castleDoor.rotAngle = 0;
+            self->step += 2;
+            g_api.PlaySfx(0x63D);
+            tilePos = 0x445;
+            for (i = 0, tilePtr = D_80181130; i < 8; tilePtr++, i++) {
+                g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
+                tilePos += 0x20;
+            }
+        }
+        break;
+
+    case 5:
+        self->step++;
+        tilePos = 0x445;
+        for (i = 0, tilePtr = D_80181130; i < 8; tilePtr++, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
+            tilePos += 0x20;
+        }
+        break;
+    }
+    SetGeomScreen(768);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+    sVec1.vx = 0;
+    sVec1.vy = self->ext.castleDoor.rotAngle;
+    sVec1.vz = 0;
+    RotMatrix(&sVec2, &mtx1);
+    RotMatrixY(sVec1.vy, &mtx1);
+    vec1.vx = 0;
+    vec1.vy = 0;
+    vec1.vz = 0x334;
+    TransMatrix(&mtx1, &vec1);
+    SetRotMatrix(&mtx1);
+    SetTransMatrix(&mtx1);
+    SetBackColor(128, 128, 128);
+    cVec1.b = cVec1.g = cVec1.r = 128;
+    cVec1.cd = 4;
+    cVec2.b = cVec2.g = cVec2.r = 64;
+    cVec2.cd = 4;
+    RotMatrix(&sVec1, &mtx2);
+    SetColorMatrix(&D_801810D4);
+    SetLightMatrix(&mtx2);
+
+    prim = self->ext.prim;
+    var_s6 = &D_801810A4;
+    var_s5 = &D_8018110C;
+    for (i = 0; i < 3; var_s6++, var_s5++, i++) {
+        temp_s3 = RotAverageNclip4(
+            var_s6->v0, var_s6->v1, var_s6->v2, var_s6->v3, (long*)&prim->x0,
+            (long*)&prim->x1, (long*)&prim->x2, (long*)&prim->x3, &sxy2, &sxy3,
+            &p);
+        NormalColorCol(*var_s5, &cVec1, (CVECTOR*)&prim->r0);
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+
+        if (i != 0) {
+            NormalColorCol(*var_s5, &cVec2, (CVECTOR*)&prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+        }
+
+        if (temp_s3 <= 0) {
+            prim->blendMode = BLEND_VISIBLE;
+        } else {
+            prim->blendMode = 6;
+        }
+        prim = prim->next;
+    }
+}
 
 // bushes in parallax background
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundBushes);

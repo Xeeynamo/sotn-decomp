@@ -1,23 +1,18 @@
-use std::fs;
-use std::io::Read;
 use std::env::*;
+use std::fs;
+use std::fs::File;
+use std::io::BufRead;
+use std::io::BufReader;
+use std::io::Read;
+use std::io::Write;
+use std::process::exit;
 
-#[derive(Clone)]
-pub struct Function {
-    name: String,
-    ops: Vec<Instruction>,
-    key: Vec<u8>,
-}
-
-#[derive(Clone)]
-pub struct Instruction {
-    file_addr: u64,
-    vram_addr: u64,
-    op: u32,
-}
-
+mod levenshtein_hashmap;
+mod types;
+use levenshtein_hashmap::LevenshteinHashMap;
+use types::{DupsFile, Function, Instruction};
 // parse .s file to get instructions and function name
-fn parse_instructions(input: &str) -> Function {
+fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
     let mut instructions = Vec::new();
     let mut func_name = "";
 
@@ -38,12 +33,17 @@ fn parse_instructions(input: &str) -> Function {
         if let Ok(file_addr) = u64::from_str_radix(parts[1], 16) {
             if let Ok(vram_addr) = u64::from_str_radix(parts[2], 16) {
                 if let Ok(op) = u32::from_str_radix(parts[3], 16) {
+                    // splat's output for the instruction is apparently little-endian
+                    let reversed_num = ((op >> 24) & 0xFF)
+                        | (((op >> 16) & 0xFF) << 8)
+                        | (((op >> 8) & 0xFF) << 16)
+                        | ((op & 0xFF) << 24);
 
                     // if the file address, vram address, and instruction parsed, add it
                     let instruction = Instruction {
                         file_addr,
                         vram_addr,
-                        op,
+                        op: reversed_num,
                     };
 
                     instructions.push(instruction);
@@ -58,51 +58,76 @@ fn parse_instructions(input: &str) -> Function {
         .iter()
         .map(|num| (num.op >> 26) as u8)
         .collect();
+
     Function {
         ops: instructions,
         name: func_name.to_string(),
         key: key,
+        dir: dir.to_string(),
+        file: file.to_string(),
+        similarity: 0.0,
+        decompiled: false,
     }
 }
 
 fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
-    let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");
+    match std::fs::read_dir(dir_path) {
+        Ok(entries) => {
+            entries.for_each(|entry| {
+                if let Ok(entry) = entry {
+                    let item_path = entry.path();
+                    if item_path.is_file() && item_path.to_string_lossy().ends_with(".s") {
+                        println!("checking {:?}", item_path);
 
-    entries.for_each(|entry| {
-        if let Ok(entry) = entry {
-            let item_path = entry.path();
-            if item_path.is_file() && item_path.to_string_lossy().ends_with(".s") {
-                println!("checking {:?}", item_path);
+                        let mut file = fs::File::open(item_path.clone()).unwrap();
+                        let mut buffer = String::new();
+                        file.read_to_string(&mut buffer).unwrap();
 
-                let mut file = fs::File::open(item_path).unwrap();
-                let mut buffer = String::new();
-                file.read_to_string(&mut buffer).unwrap();
+                        let func =
+                            parse_instructions(&buffer, &dir_path, &item_path.to_string_lossy());
 
-                let func = parse_instructions(&buffer);
-                funcs.push(func.clone());
-            } else if item_path.is_dir() {
-                process_directory(&item_path.to_string_lossy(), funcs);
-            }
+                        // jr $ra, nop
+                        let is_null = func.ops.len() == 2
+                            && func.ops[0].op == 0x03E00008
+                            && func.ops[1].op == 0x00000000;
+                        if !is_null {
+                            funcs.push(func.clone());
+                        }
+                    } else if item_path.is_dir() {
+                        process_directory(&item_path.to_string_lossy(), funcs);
+                    }
+                }
+            });
         }
-    });
-}
-
-struct File {
-    name: String,
-    funcs: Vec<Function>,
+        Err(error) => {
+            eprintln!("Unable to read directory: {}", error);
+            println!("Directory path: {}", dir_path);
+            exit(1);
+        }
+    }
 }
 
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about = "\n
+#[command(
+    author,
+    version,
+    about,
+    long_about = "\n
 Finds duplicates in two asm directories and prints them out in order to identify patterns
 
 Usage:
 
 make force_extract
+
+Do a 2-way compare with ordering
 cargo run --release -- --dir ../../asm/us/st/nz0/nonmatchings/ --dir ../../asm/us/st/np3/nonmatchings/ --threshold .94
-")]
+
+Clustering report for all overlays
+cargo run --release -- --threshold .94 --output-file output.txt
+"
+)]
 
 struct Args {
     /// Levenshtein similarity threshold
@@ -112,14 +137,288 @@ struct Args {
     /// Directory to parse asm from (2 required)
     #[arg(short, long)]
     dir: Vec<String>,
+
+    /// File to write output to
+    #[arg(short, long)]
+    output_file: Option<String>,
+
+    /// Base of source directory
+    #[arg(short, long)]
+    src_base: Option<String>,
 }
 
-fn main() {
-    let args = Args::parse();
+#[derive(Clone, Debug, PartialEq)]
+pub struct IncludeAsmEntry {
+    pub line: String,
+    pub path: String,
+}
 
-    let threshold = args.threshold;
-    let dirs = args.dir;
+fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
+    let entries = std::fs::read_dir(dir).expect("Unable to read directory");
 
+    let mut output = Vec::new();
+
+    entries.for_each(|entry| {
+        if let Ok(entry) = entry {
+            let item_path = entry.path();
+            if item_path.is_file() && item_path.to_string_lossy().ends_with(".c") {
+                println!("checking {:?}", item_path);
+
+                let file = File::open(item_path.clone()).expect("Unable to open file");
+                let reader = BufReader::new(file);
+                for line in reader.lines() {
+                    let line_str = line.unwrap();
+
+                    if line_str.contains("INCLUDE_ASM") {
+                        output.push(IncludeAsmEntry {
+                            line: line_str.clone(),
+                            path: item_path.to_string_lossy().to_string(),
+                        });
+                    }
+                }
+            } else if item_path.is_dir() {
+                process_directory_for_include_asm(&item_path.to_string_lossy());
+            }
+        }
+    });
+    output
+}
+
+fn get_all_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
+    process_directory_for_include_asm(dir)
+}
+#[derive(Clone)]
+struct SrcAsmPair {
+    asm_dir: String,
+    src_dir: String,
+    overlay_name: String,
+    include_asm: Vec<IncludeAsmEntry>,
+    path_matcher: String,
+}
+
+fn do_dups_report(output_file: Option<String>, threshold: f64) {
+    // full dups report
+    let mut hash_map = LevenshteinHashMap::new(threshold);
+
+    let mut files = Vec::new();
+
+    let pairs: Vec<SrcAsmPair> = vec![
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/dra/nonmatchings/"),
+            src_dir: String::from("../../src/dra/"),
+            overlay_name: String::from("DRA"),
+            include_asm: get_all_include_asm("../../src/dra/"),
+            path_matcher: "/dra/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/main/nonmatchings/"),
+            src_dir: String::from("../../src/main/"),
+            overlay_name: String::from("MAIN"),
+            include_asm: get_all_include_asm("../../src/main/"),
+            path_matcher: "/main/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/ric/nonmatchings/"),
+            src_dir: String::from("../../src/ric/"),
+            overlay_name: String::from("RIC"),
+            include_asm: get_all_include_asm("../../src/ric/"),
+            path_matcher: "/ric/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/servant/tt_000/nonmatchings/"),
+            src_dir: String::from("../../src/servant/tt_000"),
+            overlay_name: String::from("RIC"),
+            include_asm: get_all_include_asm("../../src/servant/tt_000"),
+            path_matcher: "/tt_000/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/cen/nonmatchings/"),
+            src_dir: String::from("../../src/st/cen/"),
+            overlay_name: String::from("CEN"),
+            include_asm: get_all_include_asm("../../src/st/cen/"),
+            path_matcher: "st/cen".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/dre/nonmatchings/"),
+            src_dir: String::from("../../src/st/dre/"),
+            overlay_name: String::from("DRE"),
+            include_asm: get_all_include_asm("../../src/st/dre/"),
+            path_matcher: "st/dre".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/mad/nonmatchings/"),
+            src_dir: String::from("../../src/st/mad/"),
+            overlay_name: String::from("MAD"),
+            include_asm: get_all_include_asm("../../src/st/mad/"),
+            path_matcher: "st/mad".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/no3/nonmatchings/"),
+            src_dir: String::from("../../src/st/no3/"),
+            overlay_name: String::from("NO3"),
+            include_asm: get_all_include_asm("../../src/st/no3/"),
+            path_matcher: "st/no3".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/np3/nonmatchings/"),
+            src_dir: String::from("../../src/st/np3/"),
+            overlay_name: String::from("NP3"),
+            include_asm: get_all_include_asm("../../src/st/np3/"),
+            path_matcher: "st/np3".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/nz0/nonmatchings/"),
+            src_dir: String::from("../../src/st/nz0/"),
+            overlay_name: String::from("NZ0"),
+            include_asm: get_all_include_asm("../../src/st/nz0/"),
+            path_matcher: "st/nz0".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/rwrp/nonmatchings/"),
+            src_dir: String::from("../../src/st/rwrp/"),
+            overlay_name: String::from("RWRP"),
+            include_asm: get_all_include_asm("../../src/st/rwrp/"),
+            path_matcher: "st/rwrp".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/sel/nonmatchings/"),
+            src_dir: String::from("../../src/st/sel/"),
+            overlay_name: String::from("SEL"),
+            include_asm: get_all_include_asm("../../src/st/sel/"),
+            path_matcher: "st/sel".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/st0/nonmatchings/"),
+            src_dir: String::from("../../src/st/st0/"),
+            overlay_name: String::from("ST0"),
+            include_asm: get_all_include_asm("../../src/st/st0/"),
+            path_matcher: "st/st0".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/wrp/nonmatchings/"),
+            src_dir: String::from("../../src/st/wrp/"),
+            overlay_name: String::from("WRP"),
+            include_asm: get_all_include_asm("../../src/st/wrp/"),
+            path_matcher: "st/wrp".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/weapon/nonmatchings/"),
+            src_dir: String::from("../../src/weapon/"),
+            overlay_name: String::from("WEAPON"),
+            include_asm: get_all_include_asm("../../src/weapon/"),
+            path_matcher: "/weapon/".to_string(),
+        },
+    ];
+
+    for pair in pairs.clone() {
+        let dir = pair.asm_dir;
+        let mut funcs = Vec::new();
+        process_directory(&dir, &mut funcs);
+
+        // sort functions by vram address
+        funcs.sort_by_key(|function| {
+            function
+                .ops
+                .first()
+                .map_or(u64::MAX, |instr| instr.vram_addr)
+        });
+
+        files.push(DupsFile {
+            name: dir.to_string(),
+            funcs: funcs.clone(),
+        });
+    }
+
+    for file in &files {
+        println!("file {}", file.name);
+        for func in &file.funcs {
+            println!("\t{} {}", func.name, func.ops.len());
+        }
+    }
+
+    for file in &files {
+        for func in &file.funcs {
+            hash_map.insert(func.key.clone(), func.clone());
+        }
+    }
+
+    let mut entries: Vec<(&Vec<u8>, &Vec<Function>)> = hash_map.map.iter().collect();
+
+    // sort by filename
+    entries.sort_by(|(_, functions1), (_, functions2)| functions1[0].file.cmp(&functions2[0].file));
+
+    // Then sort by the length of functions in reverse order
+    entries.sort_by_key(|(_, functions)| std::cmp::Reverse(functions.len()));
+
+    if let o_file = output_file.unwrap() {
+        let mut output_file = File::create(o_file).expect("Unable to create file");
+        writeln!(
+            output_file,
+            "| {:<4} | {:<8} | {:<35} | {:<2} ",
+            "%", "Decomp?", "Name", "Asm Path"
+        )
+        .expect("Error writing to file");
+
+        for (_, functions) in entries {
+            if functions.len() > 1 {
+                // Write separator to file
+                writeln!(output_file, "-------------------------------------------------------------------------------")
+                        .expect("Error writing to file");
+
+                let mut temp_functions = functions.clone();
+
+                // sort by the filename then the similarity
+                temp_functions.sort_by(|a, b| {
+                    let file_cmp = a.file.cmp(&b.file);
+                    if file_cmp != std::cmp::Ordering::Equal {
+                        return file_cmp;
+                    }
+
+                    a.similarity
+                        .partial_cmp(&b.similarity)
+                        .unwrap_or(std::cmp::Ordering::Equal)
+                });
+
+                for function in &mut temp_functions {
+                    // Write function details to file
+                    let mut decompiled = true;
+
+                    for pair in &pairs.clone() {
+                        if function.file.contains(&pair.path_matcher) {
+                            for inc in &pair.include_asm {
+                                if inc.line.contains(&function.name) {
+                                    decompiled = false;
+                                }
+                            }
+                        }
+                    }
+
+                    writeln!(
+                        output_file,
+                        "| {:<4.2} | {:<8} | {:<35} | {:<2} ",
+                        function.similarity, decompiled, function.name, function.file
+                    )
+                    .expect("Error writing to file");
+                }
+            }
+        }
+    } else {
+        for (_, functions) in entries {
+            if functions.len() > 1 {
+                println!("------------------------");
+
+                for function in functions {
+                    println!(
+                        "{:.2} {:?} {:?} {:?}",
+                        function.similarity, function.decompiled, function.name, function.file
+                    );
+                }
+            }
+        }
+    }
+}
+
+fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
     let mut files = Vec::new();
 
     for dir in dirs {
@@ -134,7 +433,7 @@ fn main() {
                 .map_or(u64::MAX, |instr| instr.vram_addr)
         });
 
-        files.push(File {
+        files.push(DupsFile {
             name: dir.to_string(),
             funcs: funcs.clone(),
         });
@@ -147,6 +446,7 @@ fn main() {
         }
     }
 
+    // 2 way comparison for determining patterns in overlays
     let mut pairs: Vec<Vec<Function>> = Vec::new();
 
     // print out all found duplicates with their similarity values
@@ -160,7 +460,13 @@ fn main() {
             let result = levenshtein_similarity(&func_0.key, &func_1.key);
 
             if result >= threshold {
-                println!("{:<width$} | {:<width$} | {:<width$}", func_0.name, func_1.name, result, width = 40);
+                println!(
+                    "{:<width$} | {:<width$} | {:<width$}",
+                    func_0.name,
+                    func_1.name,
+                    result,
+                    width = 40
+                );
                 let mut temp = Vec::new();
                 temp.push(func_0.clone());
                 temp.push(func_1.clone());
@@ -194,6 +500,22 @@ fn main() {
         }
 
         println!("{:<width$} | {:<width$}", func_0.name, dup_name, width = 40);
+    }
+}
+
+fn main() {
+    let args = Args::parse();
+
+    let threshold = args.threshold;
+    let dirs = args.dir;
+    let output_file = args.output_file;
+    let num_dirs = dirs.len();
+    let src_base_dir = args.src_base;
+
+    if num_dirs == 2 {
+        do_ordered_compare(dirs, threshold);
+    } else {
+        do_dups_report(output_file, threshold);
     }
 }
 
