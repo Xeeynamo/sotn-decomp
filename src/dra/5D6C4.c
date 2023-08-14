@@ -1533,8 +1533,8 @@ void func_8010189C(void) {
     u16* new_var;
 
     D_8013B5E8 = 0;
-    g_healingMailTimer.unk0 = 0;
-    g_displayHP.unk0 = g_Status.hp;
+    g_HealingMailTimer[0] = 0;
+    g_DisplayHP[0] = g_Status.hp;
 
     if ((g_StageId == STAGE_ST0) ||
         (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
@@ -1581,11 +1581,11 @@ void func_80101A80() {
     RECT rect;
     Primitive* prim;
 
-    s32 stat_xpos;
+    s32 statXPos;
     s32 hpdiff;
-    s32 mp_fill_steps;
+    s32 mpFillSteps;
     s32 leading_zeros;
-    s32 digit_spacing;
+    s32 digitSpacing;
     u16 clut;
 
     if (g_StageId == STAGE_ST0 || g_CurrentPlayableCharacter != 0) {
@@ -1662,65 +1662,65 @@ void func_80101A80() {
             g_Status.mp = g_Status.mpMax;
         }
     }
-    // Healing mail
+    
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, ARMOR_TYPE)) &&
         ((g_Player.unk0C & 0x04000007) == 0x04000000)) {
-        g_healingMailTimer.unk0++;
-        if (g_healingMailTimer.unk0 >= 128) {
+        g_HealingMailTimer[0]++;
+        if (g_HealingMailTimer[0] >= 128) {
             g_Player.unk56 = 2;
             g_Player.unk58 = 1;
-            g_healingMailTimer.unk0 = 0;
+            g_HealingMailTimer[0] = 0;
         }
     } else {
-        g_healingMailTimer.unk0 = 0;
+        g_HealingMailTimer[0] = 0;
     }
 
     func_800FEE6C();
     // Represents MP fill level in fraction of 50 (2% each)
-    mp_fill_steps = (g_Status.mp * 50) / g_Status.mpMax;
-    LoadTPage(D_800C52F8[10] + 1, 0, 0, 0x3DC, 0x100, 8, mp_fill_steps);
+    mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
+    LoadTPage(D_800C52F8[10] + 1, 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
     // Use one clut if MP is full, otherwise a different one
-    prim->clut = mp_fill_steps == 50 ? 0x162 : 0x174;
+    prim->clut = mpFillSteps == 50 ? 0x162 : 0x174;
 
     if (D_8013B5E8 == 0) {
-        hpdiff = g_Status.hp - g_displayHP.unk0;
+        hpdiff = g_Status.hp - g_DisplayHP[0];
         if (hpdiff > 0) {
             if (hpdiff >= 11) {
-                g_displayHP.unk0 += (hpdiff) / 10;
+                g_DisplayHP[0] += (hpdiff) / 10;
             } else {
-                g_displayHP.unk0++;
+                g_DisplayHP[0]++;
             }
         }
         if (hpdiff < 0) {
             if (hpdiff < -10) {
-                g_displayHP.unk0 += (hpdiff) / 10;
+                g_DisplayHP[0] += (hpdiff) / 10;
             } else {
-                g_displayHP.unk0--;
+                g_DisplayHP[0]--;
             }
         }
     } else {
         D_8013B5E8--;
     }
-    if (g_displayHP.unk0 == g_Status.hpMax) {
+    if (g_DisplayHP[0] == g_Status.hpMax) {
         func_800EA5E4(2); // Likely related to HP showing bold when full
-    } else if (g_displayHP.unk0 <= g_Status.hpMax >> 2) {
+    } else if (g_DisplayHP[0] <= g_Status.hpMax >> 2) {
         func_800EA5E4(3); // Show yellow if under 1/4 health
     } else {
         func_800EA5E4(1); // Normal health display
     }
 
-    if (g_displayHP.unk0 >= 1000) {
+    if (g_DisplayHP[0] >= 1000) {
         leading_zeros = 0;
-        digit_spacing = 6;
-        stat_xpos = 3;
-    } else if (g_displayHP.unk0 >= 100) {
+        digitSpacing = 6;
+        statXPos = 3;
+    } else if (g_DisplayHP[0] >= 100) {
         leading_zeros = 1;
-        digit_spacing = 6;
-        stat_xpos = 0;
+        digitSpacing = 6;
+        statXPos = 0;
     } else {
-        digit_spacing = 7;
-        stat_xpos = -6;
-        if (g_displayHP.unk0 >= 10) {
+        digitSpacing = 7;
+        statXPos = -6;
+        if (g_DisplayHP[0] >= 10) {
             leading_zeros = 2;
         } else {
             leading_zeros = 3;
@@ -1728,10 +1728,10 @@ void func_80101A80() {
     }
     // Thousands digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_displayHP.unk0 / 1000) * 8) + 0x20;
+    prim->u2 = prim->u0 = ((g_DisplayHP[0] / 1000) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos;
-    prim->x1 = prim->x3 = stat_xpos + 8;
+    prim->x0 = prim->x2 = statXPos;
+    prim->x1 = prim->x3 = statXPos + 8;
     prim->blendMode = 0x2000;
 
     if (leading_zeros != 0) {
@@ -1740,10 +1740,10 @@ void func_80101A80() {
     }
     // Hundreds digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_displayHP.unk0 / 100) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0 = (((g_DisplayHP[0] / 100) % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos + digit_spacing;
-    prim->x1 = prim->x3 = stat_xpos + digit_spacing + 8;
+    prim->x0 = prim->x2 = statXPos + digitSpacing;
+    prim->x1 = prim->x3 = statXPos + digitSpacing + 8;
     prim->blendMode = 0x2000;
     if (leading_zeros != 0) {
         leading_zeros--;
@@ -1751,10 +1751,10 @@ void func_80101A80() {
     }
     // Tens digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = (((g_displayHP.unk0 / 10) % 10) * 8) + 0x20;
+    prim->u2 = prim->u0 = (((g_DisplayHP[0] / 10) % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos + (digit_spacing * 2);
-    prim->x1 = prim->x3 = stat_xpos + (digit_spacing * 2) + 8;
+    prim->x0 = prim->x2 = statXPos + (digitSpacing * 2);
+    prim->x1 = prim->x3 = statXPos + (digitSpacing * 2) + 8;
     prim->blendMode = 0x2000;
 
     if (leading_zeros != 0) {
@@ -1762,19 +1762,19 @@ void func_80101A80() {
     }
     // Ones digit of HP
     prim = prim->next;
-    prim->u2 = prim->u0 = ((g_displayHP.unk0 % 10) * 8) + 0x20;
+    prim->u2 = prim->u0 = ((g_DisplayHP[0] % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos + (digit_spacing * 3);
-    prim->x1 = prim->x3 = stat_xpos + (digit_spacing * 3) + 8;
+    prim->x0 = prim->x2 = statXPos + (digitSpacing * 3);
+    prim->x1 = prim->x3 = statXPos + (digitSpacing * 3) + 8;
 
     if (g_Status.hearts >= 1000) {
         leading_zeros = 0;
-        stat_xpos = 0x3B;
+        statXPos = 0x3B;
     } else if (g_Status.hearts >= 100) {
         leading_zeros = 1;
-        stat_xpos = 0x37;
+        statXPos = 0x37;
     } else {
-        stat_xpos = 0x33;
+        statXPos = 0x33;
         if (g_Status.hearts >= 10) {
             leading_zeros = 2;
         } else {
@@ -1795,8 +1795,8 @@ void func_80101A80() {
     prim = prim->next;
     prim->u2 = prim->u0 = ((g_Status.hearts / 1000) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos;
-    prim->x1 = prim->x3 = stat_xpos + 8;
+    prim->x0 = prim->x2 = statXPos;
+    prim->x1 = prim->x3 = statXPos + 8;
     prim->blendMode = 0x2000;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1807,8 +1807,8 @@ void func_80101A80() {
     prim = prim->next;
     prim->u2 = prim->u0 = (((g_Status.hearts / 100) % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos + 4;
-    prim->x1 = prim->x3 = stat_xpos + 0xC;
+    prim->x0 = prim->x2 = statXPos + 4;
+    prim->x1 = prim->x3 = statXPos + 0xC;
     prim->blendMode = 0x2000;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1819,8 +1819,8 @@ void func_80101A80() {
     prim = prim->next;
     prim->u2 = prim->u0 = (((g_Status.hearts / 10) % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos + 8;
-    prim->x1 = prim->x3 = stat_xpos + 0x10;
+    prim->x0 = prim->x2 = statXPos + 8;
+    prim->x1 = prim->x3 = statXPos + 0x10;
     prim->blendMode = 0x2000;
     prim->clut = clut;
     if (leading_zeros != 0) {
@@ -1830,8 +1830,8 @@ void func_80101A80() {
     prim = prim->next;
     prim->u2 = prim->u0 = ((g_Status.hearts % 10) * 8) + 0x20;
     prim->u3 = prim->u1 = prim->u0 + 8;
-    prim->x0 = prim->x2 = stat_xpos + 0xC;
-    prim->x1 = prim->x3 = stat_xpos + 0x14;
+    prim->x0 = prim->x2 = statXPos + 0xC;
+    prim->x1 = prim->x3 = statXPos + 0x14;
     prim->clut = clut;
 }
 
