@@ -33,11 +33,17 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
         if let Ok(file_addr) = u64::from_str_radix(parts[1], 16) {
             if let Ok(vram_addr) = u64::from_str_radix(parts[2], 16) {
                 if let Ok(op) = u32::from_str_radix(parts[3], 16) {
+                    // splat's output for the instruction is apparently little-endian
+                    let reversed_num = ((op >> 24) & 0xFF)
+                        | (((op >> 16) & 0xFF) << 8)
+                        | (((op >> 8) & 0xFF) << 16)
+                        | ((op & 0xFF) << 24);
+
                     // if the file address, vram address, and instruction parsed, add it
                     let instruction = Instruction {
                         file_addr,
                         vram_addr,
-                        op,
+                        op: reversed_num,
                     };
 
                     instructions.push(instruction);
@@ -52,6 +58,7 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
         .iter()
         .map(|num| (num.op >> 26) as u8)
         .collect();
+
     Function {
         ops: instructions,
         name: func_name.to_string(),
