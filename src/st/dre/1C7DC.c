@@ -606,7 +606,7 @@ void func_8019F23C(u16 entityId, Entity* src, Entity* dst) {
                  FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
     if (src->palette & 0x8000) {
-        dst->palette = src->unk6A;
+        dst->palette = src->hitEffect;
     } else {
         dst->palette = src->palette;
     }

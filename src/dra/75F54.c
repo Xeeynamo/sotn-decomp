@@ -538,7 +538,7 @@ void func_8011A290(Entity* entity) {
     entity->hitboxState = subwpn.sp1C;
     entity->nFramesInvincibility = subwpn.sp17;
     entity->stunFrames = subwpn.stunFrames;
-    entity->unk6A = subwpn.sp1E;
+    entity->hitEffect = subwpn.hitEffect;
     entity->entityRoomIndex = subwpn.sp22;
     entity->ext.generic.unkB2 = subwpn.crashId;
     func_80118894(entity);
@@ -553,7 +553,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
     entity->hitboxState = spell.unk10;
     entity->nFramesInvincibility = spell.unk0D;
     entity->stunFrames = spell.stunFrames;
-    entity->unk6A = spell.unk12;
+    entity->hitEffect = spell.hitEffect;
     entity->entityRoomIndex = spell.unk14;
     func_80118894(entity);
 }
@@ -569,7 +569,7 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         arg0->hitboxState = spell.unk10;
         arg0->nFramesInvincibility = spell.unk0D;
         arg0->stunFrames = spell.stunFrames;
-        arg0->unk6A = spell.unk12;
+        arg0->hitEffect = spell.hitEffect;
         arg0->entityRoomIndex = spell.unk14;
         arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
         func_80118894(arg0);
@@ -810,7 +810,7 @@ void EntityUnarmedAttack(Entity* entity) {
         entity->hitboxState = equip.hitType;
         entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
         entity->stunFrames = equip.stunFrames;
-        entity->unk6A = equip.hitEffect;
+        entity->hitEffect = equip.hitEffect;
         entity->entityRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->step++;
@@ -846,7 +846,7 @@ void func_8011B334(Entity* entity) {
         entity->hitboxState = equip.hitType;
         entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
         entity->stunFrames = equip.stunFrames;
-        entity->unk6A = equip.hitEffect;
+        entity->hitEffect = equip.hitEffect;
         entity->entityRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->hitboxOffX = 9;

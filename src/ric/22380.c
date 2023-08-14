@@ -86,7 +86,7 @@ void func_8015FAB8(Entity* entity) {
     entity->hitboxState = subwpn->sp1C;
     entity->nFramesInvincibility = subwpn->sp17;
     entity->stunFrames = subwpn->stunFrames;
-    entity->unk6A = subwpn->sp1E;
+    entity->hitEffect = subwpn->hitEffect;
     entity->entityRoomIndex = subwpn->sp22;
     entity->attack = g_api.func_800FD664(entity->attack);
     func_8015F9F0(entity);
