@@ -34,7 +34,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x04000, data, w_000]
+      - [0x04040, data, w_000]
       - [0x050D4, c, w_000]
       - [0x05700, sbss, w_000]
   - name: f_001
@@ -49,7 +49,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x0B000, data, w_001]
+      - [0x0B040, data, w_001]
       - [0x0C014, c, w_001]
       - [0xD430, sbss, w_001]
   - name: f_002
@@ -64,7 +64,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x12000, data, w_002]
+      - [0x12040, data, w_002]
       - [0x12BDC, c, w_002]
       - [0x13200, sbss, w_002]
   - name: f_003
@@ -79,7 +79,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x19000, data, w_003]
+      - [0x19040, data, w_003]
       - [0x19C40, c, w_003]
       - [0x1A26C, sbss, w_003]
   - name: f_004
@@ -94,7 +94,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x20000, data, w_004]
+      - [0x20040, data, w_004]
       - [0x2131C, c, w_004]
       - [0x2196C, sbss, w_004]
   - name: f_005
@@ -109,7 +109,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x27000, data, w_005]
+      - [0x27040, data, w_005]
       - [0x2831C, c, w_005]
       - [0x28998, sbss, w_005]
   - name: f_006
@@ -124,7 +124,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x2E000, data, w_006]
+      - [0x2E040, data, w_006]
       - [0x2EC54, c, w_006]
       - [0x2F9B8, sbss, w_006]
   - name: f_007
@@ -139,7 +139,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x35000, data, w_007]
+      - [0x35040, data, w_007]
       - [0x35CA0, c, w_007]
       - [0x36918, sbss, w_007]
   - name: f_008
@@ -154,7 +154,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x3C000, data, w_008]
+      - [0x3C040, data, w_008]
       - [0x3CB4C, c, w_008]
       - [0x3DF78, sbss, w_008]
   - name: f_009
@@ -169,7 +169,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x43000, data, w_009]
+      - [0x43040, data, w_009]
       - [0x43B4C, c, w_009]
       - [0x450F0, sbss, w_009]
   - name: f_010
@@ -184,7 +184,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x4A000, data, w_010]
+      - [0x4A040, data, w_010]
       - [0x4ACC0, c, w_010]
       - [0x4CC1C, sbss, w_010]
   - name: f_011
@@ -199,7 +199,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x51000, data, w_011]
+      - [0x51040, data, w_011]
       - [0x51CDC, c, w_011]
       - [0x53810, sbss, w_011]
   - name: f_012
@@ -214,7 +214,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x58000, data, w_012]
+      - [0x58040, data, w_012]
       - [0x58ACC, c, w_012]
       - [0x59B28, sbss, w_012]
   - name: f_013
@@ -229,7 +229,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x5F000, data, w_013]
+      - [0x5F040, data, w_013]
       - [0x5F62C, c, w_013]
       - [0x60C10, sbss, w_013]
   - name: f_014
@@ -244,7 +244,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x66000, data, w_014]
+      - [0x66040, data, w_014]
       - [0x665BC, c, w_014]
       - [0x67584, sbss, w_014]
   - name: f_015
@@ -259,7 +259,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x6D000, data, w_015]
+      - [0x6D040, data, w_015]
       - [0x6D7E4, c, w_015]
       - [0x6EFC8, sbss, w_015]
   - name: f_016
@@ -274,7 +274,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x74000, data, w_016]
+      - [0x74040, data, w_016]
       - [0x7460C, c, w_016]
       - [0x75D74, sbss, w_016]
   - name: f_017
@@ -289,7 +289,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x7B000, data, w_017]
+      - [0x7B040, data, w_017]
       - [0x7B3AC, c, w_017]
       - [0x7C0F4, sbss, w_017]
   - name: f_018
@@ -304,7 +304,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x82000, data, w_018]
+      - [0x82040, data, w_018]
       - [0x82740, c, w_018]
       - [0x831B4, sbss, w_018]
   - name: f_019
@@ -319,7 +319,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x89000, data, w_019]
+      - [0x89040, data, w_019]
       - [0x89554, c, w_019]
       - [0x89DB4, sbss, w_019]
   - name: f_020
@@ -334,7 +334,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x90000, data, w_020]
+      - [0x90040, data, w_020]
       - [0x90BC8, c, w_020]
       - [0x92238, sbss, w_020]
   - name: f_021
@@ -349,7 +349,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x97000, data, w_021]
+      - [0x97040, data, w_021]
       - [0x977B4, c, w_021]
       - [0x98B78, sbss, w_021]
   - name: f_022
@@ -364,7 +364,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x9E000, data, w_022]
+      - [0x9E040, data, w_022]
       - [0x9E814, c, w_022]
       - [0x9EF80, sbss, w_022]
   - name: f_023
@@ -379,7 +379,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xA5000, data, w_023]
+      - [0xA5040, data, w_023]
       - [0xA5D80, c, w_023]
       - [0xA797C, sbss, w_023]
   - name: f_024
@@ -394,7 +394,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xAC000, data, w_024]
+      - [0xAC040, data, w_024]
       - [0xACDE0, c, w_024]
       - [0xAEBF4, sbss, w_024]
   - name: f_025
@@ -409,7 +409,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xB3000, data, w_025]
+      - [0xB3040, data, w_025]
       - [0xB3B74, c, w_025]
       - [0xB5918, sbss, w_025]
   - name: f_026
@@ -424,7 +424,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xBA000, data, w_026]
+      - [0xBA040, data, w_026]
       - [0xBAB9C, c, w_026]
       - [0xBCC3C, sbss, w_026]
   - name: f_027
@@ -439,7 +439,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xC1000, data, w_027]
+      - [0xC1040, data, w_027]
       - [0xC1D54, c, w_027]
       - [0xC36EC, sbss, w_027]
   - name: f_028
@@ -454,7 +454,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xC8000, data, w_028]
+      - [0xC8040, data, w_028]
       - [0xC8BF4, c, w_028]
       - [0xCA954, sbss, w_028]
   - name: f_029
@@ -469,7 +469,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xCF000, data, w_029]
+      - [0xCF040, data, w_029]
       - [0xCFDD8, c, w_029]
       - [0xD19A0, sbss, w_029]
   - name: f_030
@@ -484,7 +484,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xD6000, data, w_030]
+      - [0xD6040, data, w_030]
       - [0xD66DC, c, w_030]
       - [0xD8C44, sbss, w_030]
   - name: f_031
@@ -499,7 +499,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xDD000, data, w_031]
+      - [0xDD040, data, w_031]
       - [0xDD918, c, w_031]
       - [0xDDF88, sbss, w_031]
   - name: f_032
@@ -514,7 +514,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xE4000, data, w_032]
+      - [0xE4040, data, w_032]
       - [0xE4924, c, w_032]
       - [0xE5020, sbss, w_032]
   - name: f_033
@@ -529,7 +529,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xEB000, data, w_033]
+      - [0xEB040, data, w_033]
       - [0xEBC58, c, w_033]
       - [0xEC2C8, sbss, w_033]
   - name: f_034
@@ -544,7 +544,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xF2000, data, w_034]
+      - [0xF2040, data, w_034]
       - [0xF2950, c, w_034]
       - [0xF33F0, sbss, w_034]
   - name: f_035
@@ -559,7 +559,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xF9000, data, w_035]
+      - [0xF9040, data, w_035]
       - [0xF954C, c, w_035]
       - [0xF9B78, sbss, w_035]
   - name: f_036
@@ -574,7 +574,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x100000, data, w_036]
+      - [0x100040, data, w_036]
       - [0x10055C, c, w_036]
       - [0x100B88, sbss, w_036]
   - name: f_037
@@ -589,7 +589,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x107000, data, w_037]
+      - [0x107040, data, w_037]
       - [0x1077C4, c, w_037]
       - [0x108BE4, sbss, w_037]
   - name: f_038
@@ -604,7 +604,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x10E000, data, w_038]
+      - [0x10E040, data, w_038]
       - [0x10EDEC, c, w_038]
       - [0x10F844, sbss, w_038]
   - name: f_039
@@ -619,7 +619,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x115000, data, w_039]
+      - [0x115040, data, w_039]
       - [0x115DEC, c, w_039]
       - [0x116A28, sbss, w_039]
   - name: f_040
@@ -634,7 +634,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x11C000, data, w_040]
+      - [0x11C040, data, w_040]
       - [0x11C874, c, w_040]
       - [0x11D540, sbss, w_040]
   - name: f_041
@@ -649,7 +649,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x123000, data, w_041]
+      - [0x123040, data, w_041]
       - [0x123574, c, w_041]
       - [0x124200, sbss, w_041]
   - name: f_042
@@ -664,7 +664,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x12A000, data, w_042]
+      - [0x12A040, data, w_042]
       - [0x12A764, c, w_042]
       - [0x12B5EC, sbss, w_042]
   - name: f_043
@@ -679,7 +679,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x131000, data, w_043]
+      - [0x131040, data, w_043]
       - [0x13205C, c, w_043]
       - [0x132D74, sbss, w_043]
   - name: f_044
@@ -694,7 +694,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x138000, data, w_044]
+      - [0x138040, data, w_044]
       - [0x1382C0, c, w_044]
       - [0x138F24, sbss, w_044]
   - name: f_045
@@ -709,7 +709,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x13F000, data, w_045]
+      - [0x13F040, data, w_045]
       - [0x13F378, c, w_045]
       - [0x1403B8, sbss, w_045]
   - name: f_046
@@ -724,7 +724,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x146000, data, w_046]
+      - [0x146040, data, w_046]
       - [0x146C64, c, w_046]
       - [0x147EC0, sbss, w_046]
   - name: f_047
@@ -739,7 +739,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x14D000, data, w_047]
+      - [0x14D040, data, w_047]
       - [0x14D568, c, w_047]
       - [0x14E6A4, sbss, w_047]
   - name: f_048
@@ -754,7 +754,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x154000, data, w_048]
+      - [0x154040, data, w_048]
       - [0x155050, c, w_048]
       - [0x1563B4, sbss, w_048]
   - name: f_049
@@ -769,7 +769,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x15B000, data, w_049]
+      - [0x15B040, data, w_049]
       - [0x15C14C, c, w_049]
       - [0x15D8CC, sbss, w_049]
   - name: f_050
@@ -784,7 +784,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x162000, data, w_050]
+      - [0x162040, data, w_050]
       - [0x163080, c, w_050]
       - [0x164BF8, sbss, w_050]
   - name: f_051
@@ -799,7 +799,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x169000, data, w_051]
+      - [0x169040, data, w_051]
       - [0x169ED4, c, w_051]
       - [0x16B0E0, sbss, w_051]
   - name: f_052
@@ -814,7 +814,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x170000, data, w_052]
+      - [0x170040, data, w_052]
       - [0x170CB0, c, w_052]
       - [0x172B84, sbss, w_052]
   - name: f_053
@@ -829,7 +829,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x177000, data, w_053]
+      - [0x177040, data, w_053]
       - [0x178280, c, w_053]
       - [0x179894, sbss, w_053]
   - name: f_054
@@ -844,7 +844,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x17E000, data, w_054]
+      - [0x17E040, data, w_054]
       - [0x17EF0C, c, w_054]
       - [0x17F8F8, sbss, w_054]
   - name: f_055
@@ -859,7 +859,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x185000, data, w_055]
+      - [0x185040, data, w_055]
       - [0x1861A0, c, w_055]
       - [0x186C2C, sbss, w_055]
   - name: f_056
@@ -874,7 +874,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x18C000, data, w_056]
+      - [0x18C040, data, w_056]
       - [0x18D060, c, w_056]
       - [0x18E0B8, sbss, w_056]
   - name: f_057
@@ -889,7 +889,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x193000, data, w_057]
+      - [0x193040, data, w_057]
       - [0x1940B4, c, w_057]
       - [0x1946E0, sbss, w_057]
   - name: f_058
@@ -904,7 +904,7 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x19A000, data, w_058]
+      - [0x19A040, data, w_058]
       - [0x19AC50, c, w_058]
       - [0x19BB40, sbss, w_058]
   - [0x19D000]

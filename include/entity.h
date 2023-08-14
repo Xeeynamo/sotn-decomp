@@ -103,7 +103,7 @@ typedef struct ET_Generic {
     } unkB8;
 } ET_Generic;
 
-typedef struct ET_EquipItemDrop {
+typedef struct {
     /* 0x00 */ u16 timer;
     /* 0x02 */ s16 unk7E;
     /* 0x04 */ u8 unk80;
@@ -119,6 +119,24 @@ typedef struct ET_EquipItemDrop {
     /* 0x16 */ s16 unk92;
     /* 0x18 */ s16 unk94;
 } ET_EquipItemDrop;
+
+typedef struct {
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s32 unk9C;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ s32 unkA4;
+    /* 0xA8 */ s32 unkA8;
+    /* 0xAC */ u8 unkAC;
+    /* 0xAD */ u8 unkAD;
+    /* 0xAE */ s16 equipId;
+} ET_Weapon;
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x4];
@@ -311,6 +329,7 @@ typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
+    /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ ET_WarpRoom warpRoom;

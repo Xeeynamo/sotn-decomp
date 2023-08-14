@@ -46,6 +46,18 @@ def apply_psx_servant(config, version, name):
     config["objdump_executable"] = "mipsel-linux-gnu-objdump"
 
 
+def apply_psx_weapon(config, version, name):
+    config["baseimg"] = f"disks/{version}" + (f"SERVANT/{name}.bin").upper()
+    config["myimg"] = f"build/{version}/weapon/w0_{name[2:]}.bin"
+    config["mapfile"] = f"build/{version}/weapon/w0_{name[2:]}.map"
+    config["source_directories"] = [
+        f"src/weapon/{name}",
+        "include",
+        f"asm/{version}/weapon/{name}",
+    ]
+    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
+
+
 def apply_psx_stage(config, version, name):
     config["baseimg"] = f"disks/{version}" + (f"ST/{name}/{name}.BIN").upper()
     config["myimg"] = f"build/{version}" + (f"{name}.bin").upper()
@@ -77,6 +89,8 @@ def apply(config, args):
             apply_psx_stage(config, version, name[3:])
         elif name.startswith("tt_"):
             apply_psx_servant(config, version, name)
+        elif name.startswith("w_"):
+            apply_psx_weapon(config, version, name)
         elif name is "dra" or name is "main":
             apply_psx_base(config, version, name)
         else:

@@ -129,7 +129,7 @@ void func_80113EE0(void) {
     g_Player.unk46 = 0;
     PLAYER.rotAngle = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
-    if (g_Entities[UNK_ENTITY_10].entityId == E_UNK_22) {
+    if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
         func_8010FAF4();
     }
 }
