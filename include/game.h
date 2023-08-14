@@ -912,7 +912,7 @@ typedef struct {
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 sp17;
-    /* 0x08 */ u16 sp18;
+    /* 0x08 */ u16 stunFrames;
     /* 0x0A */ u8 unkA;
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u16 sp1C;

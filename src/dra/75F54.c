@@ -537,7 +537,7 @@ void func_8011A290(Entity* entity) {
     entity->attackElement = subwpn.attackElement;
     entity->hitboxState = subwpn.sp1C;
     entity->nFramesInvincibility = subwpn.sp17;
-    entity->stunFrames = subwpn.sp18;
+    entity->stunFrames = subwpn.stunFrames;
     entity->unk6A = subwpn.sp1E;
     entity->entityRoomIndex = subwpn.sp22;
     entity->ext.generic.unkB2 = subwpn.crashId;
