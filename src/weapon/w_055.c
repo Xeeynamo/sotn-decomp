@@ -1,51 +1,51 @@
 #include "weapon_private.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B1A0);
+INCLUDE_ASM("weapon/nonmatchings/w_055", DestroyEntity);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B20C);
+INCLUDE_ASM("weapon/nonmatchings/w_055", LoadWeaponPalette);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B2A4);
+INCLUDE_ASM("weapon/nonmatchings/w_055", SetSpriteBank1);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B2CC);
+INCLUDE_ASM("weapon/nonmatchings/w_055", SetSpriteBank2);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B2F4);
+INCLUDE_ASM("weapon/nonmatchings/w_055", ResetAnimation);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B31C);
+INCLUDE_ASM("weapon/nonmatchings/w_055", DecelerateX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B364);
+INCLUDE_ASM("weapon/nonmatchings/w_055", DecelerateY);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B3AC);
+INCLUDE_ASM("weapon/nonmatchings/w_055", SetSpeedX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B3D4);
+INCLUDE_ASM("weapon/nonmatchings/w_055", DestroyEntityWeapon);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B444);
+INCLUDE_ASM("weapon/nonmatchings/w_055", SetWeaponProperties);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B540);
+INCLUDE_ASM("weapon/nonmatchings/w_055", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017B7B0);
+INCLUDE_ASM("weapon/nonmatchings/w_055", func_ptr_80170004);
 
-void func_185000_8017BBC4(void) {}
+void func_ptr_80170008(void) {}
 
-void func_185000_8017BBCC(void) {}
+void func_ptr_8017000C(void) {}
 
-void func_185000_8017BBD4(void) {}
+void func_ptr_80170010(void) {}
 
-void func_185000_8017BBDC(void) {}
+void func_ptr_80170014(void) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_055", func_185000_8017BBE4);
+INCLUDE_ASM("weapon/nonmatchings/w_055", func_ptr_80170018);
 
-void func_185000_8017BBEC(void) {}
+void func_ptr_80170020(void) {}
 
-void func_185000_8017BBF4(void) {}
+void func_ptr_80170024(void) {}
 
-void func_185000_8017BBFC(void) {}
+void func_ptr_80170028(void) {}
 
-void func_185000_8017BC04(void) {}
+void func_ptr_8017002C(void) {}
 
-void func_185000_8017BC0C(void) {}
+void func_ptr_80170030(void) {}
 
-void func_185000_8017BC14(void) {}
+void func_ptr_80170034(void) {}
 
-void func_185000_8017BC1C(void) {}
+void func_ptr_80170038(void) {}
 
-void func_185000_8017BC24(void) {}
+void func_ptr_8017003C(void) {}

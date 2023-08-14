@@ -1,51 +1,51 @@
 #include "weapon_private.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B31C);
+INCLUDE_ASM("weapon/nonmatchings/w_005", DestroyEntity);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B388);
+INCLUDE_ASM("weapon/nonmatchings/w_005", LoadWeaponPalette);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B420);
+INCLUDE_ASM("weapon/nonmatchings/w_005", SetSpriteBank1);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B448);
+INCLUDE_ASM("weapon/nonmatchings/w_005", SetSpriteBank2);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B470);
+INCLUDE_ASM("weapon/nonmatchings/w_005", ResetAnimation);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B498);
+INCLUDE_ASM("weapon/nonmatchings/w_005", DecelerateX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B4E0);
+INCLUDE_ASM("weapon/nonmatchings/w_005", DecelerateY);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B528);
+INCLUDE_ASM("weapon/nonmatchings/w_005", SetSpeedX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B550);
+INCLUDE_ASM("weapon/nonmatchings/w_005", DestroyEntityWeapon);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B5C0);
+INCLUDE_ASM("weapon/nonmatchings/w_005", SetWeaponProperties);
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B6BC);
+INCLUDE_ASM("weapon/nonmatchings/w_005", EntityWeaponAttack);
 
-void func_27000_8017B928(void) {}
+void func_ptr_80170004(void) {}
 
-void func_27000_8017B930(void) {}
+void func_ptr_80170008(void) {}
 
-void func_27000_8017B938(void) {}
+void func_ptr_8017000C(void) {}
 
-void func_27000_8017B940(void) {}
+void func_ptr_80170010(void) {}
 
-void func_27000_8017B948(void) {}
+void func_ptr_80170014(void) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_005", func_27000_8017B950);
+INCLUDE_ASM("weapon/nonmatchings/w_005", func_ptr_80170018);
 
-void func_27000_8017B958(void) {}
+void func_ptr_80170020(void) {}
 
-void func_27000_8017B960(void) {}
+void func_ptr_80170024(void) {}
 
-void func_27000_8017B968(void) {}
+void func_ptr_80170028(void) {}
 
-void func_27000_8017B970(void) {}
+void func_ptr_8017002C(void) {}
 
-void func_27000_8017B978(void) {}
+void func_ptr_80170030(void) {}
 
-void func_27000_8017B980(void) {}
+void func_ptr_80170034(void) {}
 
-void func_27000_8017B988(void) {}
+void func_ptr_80170038(void) {}
 
-void func_27000_8017B990(void) {}
+void func_ptr_8017003C(void) {}

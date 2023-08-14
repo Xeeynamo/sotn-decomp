@@ -204,10 +204,6 @@ tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
-weapon: weapon_dirs $(BUILD_DIR)/WEAPON0.BIN
-$(BUILD_DIR)/WEAPON0.BIN: $(BUILD_DIR)/weapon0.elf
-	$(OBJCOPY) -O binary $< $@
-
 mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
@@ -219,8 +215,6 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad)
 
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-weapon_dirs:
-	$(foreach dir,$(ASM_DIR)/weapon $(ASM_DIR)/weapon/data $(SRC_DIR)/weapon $(ASSETS_DIR)/weapon,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
@@ -228,8 +222,6 @@ st%_dirs:
 
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
-$(BUILD_DIR)/weapon0.elf: $$(call list_o_files,weapon)
-	$(call link,weapon,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
@@ -239,6 +231,43 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 $(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
 	$(call link,st$*,$@)
+
+# Weapon overlays
+WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
+WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
+WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/$(SRC_DIR)/weapon $(BUILD_DIR)/weapon
+weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
+$(WEAPON_DIRS):
+	@mkdir -p $@
+$(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
+	cat $^ > $@
+$(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
+	$(OBJCOPY) -O binary $< $@
+	printf '\x00' | dd of=$@ bs=1 seek=12287 count=1 conv=notrunc
+$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
+		-Map $(BUILD_DIR)/weapon/w0_$*.map \
+		-T weapon0.ld \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
+		$^
+$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
+		-Map $(BUILD_DIR)/weapon/w1_$*.map \
+		-T weapon1.ld \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
+		$^
+$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
+	$(LD) -r -b binary -o $@ $<
+$(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
+	$(LD) -r -b binary -o $@ $<
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
+	./tools/png2bin.py $< $@
 
 extract: extract_$(VERSION)
 extract_us: extract_main extract_dra extract_weapon extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
@@ -263,7 +292,7 @@ extract_tt_%: $(SPLAT_APP)
 	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
 extract_weapon: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).weapon.txt
+	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in > $(CONFIG_DIR)/generated.symbols.$(VERSION).weapon.txt
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
@@ -571,9 +600,6 @@ diff_saturn_native:
 	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
 
 # Handles assets
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.png.o: $(ASSETS_DIR)/weapon/f_%.png
-	./tools/png2bin.py $< $(BUILD_DIR)/assets/weapon/f_$*.png.bin
-	$(LD) -r -b binary -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_$*.png.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin

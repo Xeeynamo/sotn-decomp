@@ -1,53 +1,53 @@
 #include "weapon_private.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AB74);
+INCLUDE_ASM("weapon/nonmatchings/w_025", DestroyEntity);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017ABE0);
+INCLUDE_ASM("weapon/nonmatchings/w_025", LoadWeaponPalette);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AC78);
+INCLUDE_ASM("weapon/nonmatchings/w_025", SetSpriteBank1);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017ACA0);
+INCLUDE_ASM("weapon/nonmatchings/w_025", SetSpriteBank2);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017ACC8);
+INCLUDE_ASM("weapon/nonmatchings/w_025", ResetAnimation);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017ACF0);
+INCLUDE_ASM("weapon/nonmatchings/w_025", DecelerateX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AD38);
+INCLUDE_ASM("weapon/nonmatchings/w_025", DecelerateY);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AD80);
+INCLUDE_ASM("weapon/nonmatchings/w_025", SetSpeedX);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017ADA8);
+INCLUDE_ASM("weapon/nonmatchings/w_025", DestroyEntityWeapon);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AE18);
+INCLUDE_ASM("weapon/nonmatchings/w_025", SetWeaponProperties);
 
 INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AF14);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AF7C);
+INCLUDE_ASM("weapon/nonmatchings/w_025", EntityWeaponAttack);
 
-void func_B3000_8017B390(void) {}
+void func_ptr_80170004(void) {}
 
-void func_B3000_8017B398(void) {}
+void func_ptr_80170008(void) {}
 
-void func_B3000_8017B3A0(void) {}
+void func_ptr_8017000C(void) {}
 
-void func_B3000_8017B3A8(void) {}
+void func_ptr_80170010(void) {}
 
-void func_B3000_8017B3B0(void) {}
+void func_ptr_80170014(void) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017B3B8);
+INCLUDE_ASM("weapon/nonmatchings/w_025", func_ptr_80170018);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017B3C0);
+INCLUDE_ASM("weapon/nonmatchings/w_025", func_ptr_80170020);
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017C20C);
+INCLUDE_ASM("weapon/nonmatchings/w_025", func_ptr_80170024);
 
-void func_B3000_8017C8E8(void) {}
+void func_ptr_80170028(void) {}
 
-void func_B3000_8017C8F0(void) {}
+void func_ptr_8017002C(void) {}
 
-void func_B3000_8017C8F8(void) {}
+void func_ptr_80170030(void) {}
 
-void func_B3000_8017C900(void) {}
+void func_ptr_80170034(void) {}
 
-void func_B3000_8017C908(void) {}
+void func_ptr_80170038(void) {}
 
-void func_B3000_8017C910(void) {}
+void func_ptr_8017003C(void) {}
