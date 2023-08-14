@@ -270,7 +270,7 @@ void EntityCastleDoor(Entity* self) {
             prim = prim->next;
             temp_a0++;
         }
-        self->ext.castleDoor.unk84 = 0;
+        self->ext.castleDoor.rotAngle = 0;
 
         tilePos = 0x445;
         for (i = 0, tilePtr = D_80180FF8; i < 8; tilePtr++, i++) {
@@ -281,7 +281,7 @@ void EntityCastleDoor(Entity* self) {
     SetGeomScreen(0x300);
     SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
     svec1.vx = 0;
-    svec1.vy = self->ext.castleDoor.unk84;
+    svec1.vy = self->ext.castleDoor.rotAngle;
     svec1.vz = 0;
     RotMatrix(&svec2, &mtx1);
     RotMatrixY(svec1.vy, &mtx1);
