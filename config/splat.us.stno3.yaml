@@ -49,7 +49,8 @@ segments:
       - [0x3DC8, rodata]
       - [0x4CE0, rodata]
       - [0x373E0, rodata]
-      - [0x373E8, rodata]
+      - [0x373E8, .rodata, 377D4] #EntityCastleDoor
+      - [0x37400, rodata]
       - [0x37414, .rodata, 3C4EC]
       - [0x3742C, .rodata, 3E134]
       - [0x37440, rodata]
