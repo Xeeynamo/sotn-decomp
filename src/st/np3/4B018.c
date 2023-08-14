@@ -376,68 +376,69 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0B40);
 s32 func_801D0B78(void) {
     s32 ret;
 
-    do { //! FAKE:
+    //! FAKE:
+    do {
     } while (0);
 
     ret = 0;
 
     switch (g_CurrentEntity->step) {
-        case 8:
-            if (GetDistanceToPlayerX() < 64) {
-                ret = 10;
-            }
-            if (GetDistanceToPlayerX() > 80) {
-                ret = 6;
-            }
-            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
-                ret = 7;
-            }
-            break;
+    case 8:
+        if (GetDistanceToPlayerX() < 64) {
+            ret = 10;
+        }
+        if (GetDistanceToPlayerX() > 80) {
+            ret = 6;
+        }
+        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+            ret = 7;
+        }
+        break;
 
-        case 10:
-            if (GetDistanceToPlayerX() < 88) {
-                ret = 8;
-            }
-            if (GetDistanceToPlayerX() < 56) {
-                ret = 7;
-            }
-            if (GetDistanceToPlayerX() > 80) {
-                ret = 6;
-            }
-            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
-                ret = 7;
-            }
-            break;
+    case 10:
+        if (GetDistanceToPlayerX() < 88) {
+            ret = 8;
+        }
+        if (GetDistanceToPlayerX() < 56) {
+            ret = 7;
+        }
+        if (GetDistanceToPlayerX() > 80) {
+            ret = 6;
+        }
+        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+            ret = 7;
+        }
+        break;
 
-        case 12:
-            if (GetDistanceToPlayerX() < 64) {
-                ret = 10;
-            }
-            break;
+    case 12:
+        if (GetDistanceToPlayerX() < 64) {
+            ret = 10;
+        }
+        break;
 
-        case 6:
-            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
-                ret = 7;
-            }
-            if (GetDistanceToPlayerX() < 0x30) {
-                ret = 10;
-            }
-            if (GetDistanceToPlayerX() < 80) {
-                ret = 8;
-            }
-            break;
+    case 6:
+        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+            ret = 7;
+        }
+        if (GetDistanceToPlayerX() < 0x30) {
+            ret = 10;
+        }
+        if (GetDistanceToPlayerX() < 80) {
+            ret = 8;
+        }
+        break;
 
-        default:
-            if (GetDistanceToPlayerX() > 80) {
-                ret = 6;
-            }
-            if (GetDistanceToPlayerX() < 64) {
-                ret = 10;
-            }
-            if ((u16)g_CurrentEntity->ext.generic.unk88.S16.unk0 != 0) {
-                ret = 7;
-            }
-            break;
+    default:
+        if (GetDistanceToPlayerX() > 80) {
+            ret = 6;
+        }
+        if (GetDistanceToPlayerX() < 64) {
+            ret = 10;
+        }
+        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+            ret = 7;
+        }
+        break;
     }
 
     if (g_CurrentEntity->facing != ((GetSideToPlayer() & 1) ^ 1)) {
@@ -445,7 +446,6 @@ s32 func_801D0B78(void) {
     }
     return ret;
 }
-
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0D40);
 
