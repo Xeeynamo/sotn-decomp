@@ -32,7 +32,7 @@ void func_ptr_80170010(Entity* self) {}
 
 void func_ptr_80170014(Entity* self) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_028", GetWeaponId);
+int GetWeaponId(void) { return 28; }
 
 INCLUDE_ASM("weapon/nonmatchings/w_028", func_C8000_8017B3D4);
 

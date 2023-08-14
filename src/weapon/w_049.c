@@ -34,7 +34,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170010);
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170014);
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", GetWeaponId);
+int GetWeaponId(void) { return 49; }
 
 void func_ptr_80170020(Entity* self) {}
 
