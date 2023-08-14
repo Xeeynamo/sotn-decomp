@@ -23,15 +23,15 @@ INCLUDE_ASM("weapon/nonmatchings/w_029", EntityWeaponAttack);
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170004);
 
-void func_ptr_80170008(void) {}
+void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(void) {}
+void func_ptr_8017000C(Entity* self) {}
 
-void func_ptr_80170010(void) {}
+void func_ptr_80170010(Entity* self) {}
 
-void func_ptr_80170014(void) {}
+void func_ptr_80170014(Entity* self) {}
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170018);
+int GetWeaponId(void) { return 29; }
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170020);
 
@@ -39,12 +39,12 @@ INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170024);
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170028);
 
-void func_ptr_8017002C(void) {}
+void WeaponUnused2C(void) {}
 
-void func_ptr_80170030(void) {}
+void WeaponUnused30(void) {}
 
-void func_ptr_80170034(void) {}
+void WeaponUnused34(void) {}
 
-void func_ptr_80170038(void) {}
+void WeaponUnused38(void) {}
 
-void func_ptr_8017003C(void) {}
+void WeaponUnused3C(void) {}
