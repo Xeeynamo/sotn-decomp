@@ -318,6 +318,8 @@ extern u8 D_800A2F38[];
 extern u8 D_800A2F3D;
 extern u16 D_800A2F48[];
 extern u16 D_800A2F64[];
+extern s16 D_800A2F7E[];
+extern u8 D_800A2F9B[];
 extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
 
@@ -422,6 +424,7 @@ extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
 extern s32 D_800C1ECC[];
+extern PixPattern* D_800C52F8[];
 extern const char D_800DB524[];
 extern Unkstruct_800F9F40 D_800DC6EC;
 extern Unkstruct_800F9F40 D_800DC70C[];
@@ -518,7 +521,7 @@ extern s32 D_80137954;
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
-extern s32 D_8013796C;
+extern Unkstruct_oneUword displayHP;
 extern s32 D_80137970;
 extern s32 D_80137974;
 extern u32 D_80137978;
@@ -529,7 +532,8 @@ extern u32 D_80137988;
 extern u32 D_8013798C;
 extern Unkstruct_80137990 D_80137990;
 extern s32 D_80137994;
-extern s32 D_80137998;
+extern Unkstruct_oneWord
+    healingMailTimer; // Presumably a member of some larger struct?
 extern u32 D_8013799C;
 extern s32 D_801379A0;
 extern s32 D_801379A4;

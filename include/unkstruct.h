@@ -315,3 +315,9 @@ typedef struct {
     /* 0x8 */ s32 damageTaken;
     /* 0xC */ s32 unkC;
 } Unkstruct_800FE97C;
+typedef struct {
+    s32 unk0;
+} Unkstruct_oneWord;
+typedef struct {
+    u32 unk0;
+} Unkstruct_oneUword;
