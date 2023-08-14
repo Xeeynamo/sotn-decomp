@@ -152,7 +152,8 @@ def get_main_funcs():
     symbols = symbols[index_first_func : index_last_func + 1]
     return [line.split(" = ")[0] for line in symbols]
 
-#Functions in gameapi are often strange, especially in the Overlay member.
+
+# Functions in gameapi are often strange, especially in the Overlay member.
 def get_gapi_funcs():
     found_functions = []
     # Load up symbols for the relative functions loaded into GameApi
@@ -166,6 +167,7 @@ def get_gapi_funcs():
     # Special case, first element of struct doesn't have a dedicated symbol.
     found_functions.append("g_api.o.Update")
     return found_functions
+
 
 def is_decompiled(srcfile, fname):
     with open(srcfile) as f:
@@ -401,7 +403,7 @@ if __name__ == "__main__":
         with multiprocessing.Pool() as pool:
             pool.map(worker, functions)
         print(f"Completed SVG rendering in {time.perf_counter() - timer} seconds")
-         if not args.dry:
+        if not args.dry:
             html = generate_html(functions)
             with open(f"{output_dir}/index.html", "w") as f:
                 f.write(html)
