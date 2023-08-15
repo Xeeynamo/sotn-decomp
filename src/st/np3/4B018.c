@@ -155,7 +155,7 @@ void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
 
 void func_801CDD80(s16* arg0, Entity* arg1) {
     s16* posY = arg1->posY.val;
-    
+
     while (*arg0 != 0) {
         if (*arg0 != 0xFF) {
             func_801CDD00(&g_CurrentEntity[*arg0], *posY, arg1->posX.val);
