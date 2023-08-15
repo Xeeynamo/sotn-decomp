@@ -50,12 +50,9 @@ void func_801CD734() {
         func_801CD658();
 }
 
-void func_801CD78C(Entity* arg0, s32 arg1, s32 arg2, Entity* arg3) {
-    s16 angle;
-
-    angle = arg2;
+void func_801CD78C(Entity* arg0, s32 arg1, s16 angle, Entity* arg3) {
     if (g_CurrentEntity->facing != 0) {
-        angle = -arg2;
+        angle = -angle;
     }
 
     //! FAKE:
